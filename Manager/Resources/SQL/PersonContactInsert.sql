@@ -1,0 +1,22 @@
+INSERT INTO personcontact
+(
+	personid,
+	ismaincontact,
+	creation,
+	name,
+	jobtitle,
+	phone,
+	email,
+	userid
+)
+VALUES
+(
+	@personid,
+	@ismaincontact,
+	@creation,
+	@name,
+	@jobtitle,
+	@phone,
+	@email,
+	@userid
+);

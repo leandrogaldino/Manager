@@ -1,0 +1,26 @@
+INSERT INTO personcompressorpart
+(
+	personcompressorid,
+	creation,
+	statusid,
+	partbindid,
+	parttypeid,
+	itemname,
+	productid,
+	quantity,
+	capacity,
+	userid
+)
+VALUES
+(
+	@personcompressorid,
+	@creation,
+	@statusid,
+	@partbindid,
+	@parttypeid,
+	@itemname,
+	@productid,
+	@quantity,
+	@capacity,
+	@userid
+);

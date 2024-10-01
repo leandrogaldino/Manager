@@ -1,0 +1,22 @@
+INSERT INTO compressorpart
+(
+    compressorid,
+    creation,
+    statusid,
+    parttypeid,
+    itemname,
+    productid,
+    quantity,
+    userid
+)
+VALUES
+(
+    @compressorid,
+    @creation,
+    @statusid,
+    @parttypeid,
+    @itemname,
+    @productid,
+    @quantity,
+    @userid
+);

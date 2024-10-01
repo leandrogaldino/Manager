@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Routine Id="Product" Version="2">
+	<SortedColumn>-1</SortedColumn>
+	<SortDirection>0</SortDirection>
+    <Column Index="0">
+        <Visible>True</Visible>
+        <DisplayIndex>0</DisplayIndex>
+        <Name>ID</Name>
+        <Width>70</Width>
+    </Column>    
+    <Column Index="1">
+        <Visible>True</Visible>
+        <DisplayIndex>1</DisplayIndex>
+        <Name>Criação</Name>
+        <Width>100</Width>
+    </Column>
+    <Column Index="2">
+        <Visible>True</Visible>
+        <DisplayIndex>2</DisplayIndex>
+        <Name>Status</Name>
+        <Width>100</Width>
+    </Column>
+	<Column Index="3">
+		<Visible>True</Visible>
+		<DisplayIndex>3</DisplayIndex>
+		<Name>Código</Name>
+		<Width>100</Width>
+	</Column>
+    <Column Index="4">
+        <Visible>True</Visible>
+        <DisplayIndex>4</DisplayIndex>
+        <Name>Nome</Name>
+        <Width>350</Width>
+    </Column>
+    <Column Index="5">
+        <Visible>True</Visible>
+        <DisplayIndex>5</DisplayIndex>
+        <Name>Nome Interno</Name>
+        <Width>200</Width>
+    </Column>
+    <Column Index="6">
+        <Visible>True</Visible>
+        <DisplayIndex>6</DisplayIndex>
+        <Name>Família</Name>
+        <Width>200</Width>
+    </Column>
+    <Column Index="7">
+        <Visible>True</Visible>
+        <DisplayIndex>7</DisplayIndex>
+        <Name>Grupo</Name>
+        <Width>200</Width>
+    </Column>
+	<Column Index="8">
+		<Visible>True</Visible>
+		<DisplayIndex>8</DisplayIndex>
+		<Name>Localização</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="9">
+		<Visible>True</Visible>
+		<DisplayIndex>9</DisplayIndex>
+		<Name>Qtd. Min.</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="10">
+		<Visible>True</Visible>
+		<DisplayIndex>10</DisplayIndex>
+		<Name>Qtd. Max.</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="11">
+		<Visible>True</Visible>
+		<DisplayIndex>11</DisplayIndex>
+		<Name>Peso Bruto</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="12">
+		<Visible>True</Visible>
+		<DisplayIndex>12</DisplayIndex>
+		<Name>Peso Liq.</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="13">
+		<Visible>True</Visible>
+		<DisplayIndex>13</DisplayIndex>
+		<Name>Observação</Name>
+		<Width>350</Width>
+	</Column>
+</Routine>

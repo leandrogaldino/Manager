@@ -1,0 +1,28 @@
+INSERT INTO requestitem
+(
+	requestid,
+	creation,
+	statusid,
+	itemname,
+	productid,
+	taked,
+	returned,
+	applied,
+	lossed,
+	lossreason,
+	userid
+)
+VALUES
+(
+	@requestid,
+	@creation,
+	@statusid,
+	@itemname,
+	@productid,
+	@taked,
+	@returned,
+	@applied,
+	@lossed,
+	@lossreason,
+	@userid
+);

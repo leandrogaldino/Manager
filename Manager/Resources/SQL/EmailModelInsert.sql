@@ -1,0 +1,20 @@
+INSERT INTO emailmodel
+(
+    ofuserid,
+    creation,
+    name,
+    subject,
+    body,
+    signatureid,
+    userid
+)
+VALUES
+(
+    @ofuserid,
+    @creation,
+    @name,
+    @subject,
+    @body,
+    @signatureid,
+    @userid
+);

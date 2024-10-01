@@ -1,0 +1,22 @@
+INSERT INTO emailsent
+(
+    ofuserid,
+    sentdate,
+    fromemail,
+    subject,
+    toemail,
+    ccemail,
+    bccemail,
+    attachment
+)
+VALUES
+(
+    @ofuserid,
+    @sentdate,
+    @fromemail,
+    @subject,
+    @toemail,
+    @ccemail,
+    @bccemail,
+    @attachment
+);

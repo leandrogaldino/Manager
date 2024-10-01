@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Routine Id="EmailSent" Version="1">
+	<SortedColumn>-1</SortedColumn>
+	<SortDirection>0</SortDirection>
+    <Column Index="0" ButtonState="Hidden">
+        <Visible>False</Visible>
+        <DisplayIndex>0</DisplayIndex>
+        <Name>ID</Name>
+        <Width>100</Width>
+    </Column>    
+    <Column Index="1">
+        <Visible>True</Visible>
+        <DisplayIndex>1</DisplayIndex>
+        <Name>Data/Hora</Name>
+        <Width>150</Width>
+    </Column>
+    <Column Index="2">
+        <Visible>True</Visible>
+        <DisplayIndex>2</DisplayIndex>
+        <Name>De</Name>
+        <Width>200</Width>
+    </Column>
+	<Column Index="3">
+		<Visible>True</Visible>
+		<DisplayIndex>3</DisplayIndex>
+		<Name>Assunto</Name>
+		<Width>200</Width>
+	</Column>
+    <Column Index="4">
+        <Visible>True</Visible>
+        <DisplayIndex>4</DisplayIndex>
+        <Name>Para</Name>
+        <Width>250</Width>
+    </Column>
+    <Column Index="5">
+        <Visible>True</Visible>
+        <DisplayIndex>5</DisplayIndex>
+        <Name>Cópia</Name>
+        <Width>250</Width>
+    </Column>
+    <Column Index="6">
+        <Visible>True</Visible>
+        <DisplayIndex>6</DisplayIndex>
+        <Name>Cópia Oculta</Name>
+        <Width>250</Width>
+    </Column>
+    <Column Index="7">
+        <Visible>True</Visible>
+        <DisplayIndex>7</DisplayIndex>
+        <Name>Anexos</Name>
+        <Width>70</Width>
+    </Column>	
+</Routine>

@@ -1,0 +1,22 @@
+INSERT INTO crmtreatment
+(
+	crmid,
+	creation,
+	responsibleid,
+	contact,
+	nextcontact,
+	contacttypeid,
+	summary,
+	userid
+)
+VALUES
+(
+	@crmid,
+	@creation,
+	@responsibleid,
+	@contact,
+	@nextcontact,
+	@contacttypeid,
+	@summary,
+	@userid
+);

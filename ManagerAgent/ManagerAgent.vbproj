@@ -1,0 +1,409 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E0539B76-7ADE-461D-9D0A-84EB7F8E0DF6}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>ManagerAgent.My.MyApplication</StartupObject>
+    <RootNamespace>ManagerAgent</RootNamespace>
+    <AssemblyName>ManagerAgent</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>ManagerAgent.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>ManagerAgent.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ControlLibrary">
+      <HintPath>..\..\ControlLibrary\ControlLibrary\bin\Debug\ControlLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf, Version=3.28.2.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.28.2\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.4.2.13, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.1.4.2\lib\netstandard2.0\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="ManagerCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ManagerCore\bin\Debug\ManagerCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=8.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.8.0.1\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=8.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.8.0.1\lib\net462\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WinHttpHandler, Version=8.0.0.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.WinHttpHandler.8.0.2\lib\net462\System.Net.Http.WinHttpHandler.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Source\Interfaces\ICompression.vb" />
+    <Compile Include="Source\Models\AsyncResponseModel.vb" />
+    <Compile Include="Source\Models\BackupFileModel.vb" />
+    <Compile Include="Source\Models\CloudTestResultModel.vb" />
+    <Compile Include="Source\Models\EventChildModel.vb" />
+    <Compile Include="Source\Models\EventFinalModel.vb" />
+    <Compile Include="Source\Models\EventInitialModel.vb" />
+    <Compile Include="Source\Models\RegistryModel.vb" />
+    <Compile Include="Source\Builder\EventBuilder.vb" />
+    <Compile Include="Source\Services\AppService.vb" />
+    <Compile Include="Source\Services\CompressionService.vb" />
+    <Compile Include="Source\Shared\Flags.vb" />
+    <Compile Include="Source\Tasks\TaskBackup.vb" />
+    <Compile Include="Source\Tasks\TaskBackupManual.vb" />
+    <Compile Include="Source\Tasks\TaskClean.vb" />
+    <Compile Include="Source\Tasks\TaskCleanManual.vb" />
+    <Compile Include="Source\Tasks\TaskCloudSync.vb" />
+    <Compile Include="Source\Tasks\TaskCloudSyncManual.vb" />
+    <Compile Include="Source\Tasks\TaskReleaseManual.vb" />
+    <Compile Include="Source\Tasks\TaskRelease.vb" />
+    <Compile Include="Source\Tasks\Base\TaskBase.vb" />
+    <Compile Include="Source\Services\CloudSyncService.vb" />
+    <Compile Include="Source\Services\EventService.vb" />
+    <Compile Include="Source\Models\EventModel.vb" />
+    <Compile Include="Source\Services\PasswordService.vb" />
+    <Compile Include="Source\Services\TaskStackService.vb" />
+    <Compile Include="Source\Shared\Constants.vb" />
+    <Compile Include="Source\Models\SessionModel.vb" />
+    <Compile Include="Source\Shared\Setups\SetupTasks.vb" />
+    <Compile Include="Source\Tasks\TaskRestoreBackup.vb" />
+    <Compile Include="Source\Views\Login\LoginViewModel.vb" />
+    <Compile Include="Source\Views\RestoreBackup\RestoreBackupViewModel.vb" />
+    <Compile Include="Source\Views\Settings\Backup\BackupSettingsViewModel.vb" />
+    <Compile Include="Source\Views\Settings\Backup\UcBackupDays.Designer.vb">
+      <DependentUpon>UcBackupDays.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Backup\UcBackupDays.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Clean\CleanSettingsViewModel.vb" />
+    <Compile Include="Source\Views\Settings\Clean\FrmCleanSettings.Designer.vb">
+      <DependentUpon>FrmCleanSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Clean\FrmCleanSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Cloud\CloudDatabaseSettingsViewModel.vb" />
+    <Compile Include="Source\Views\Settings\Database\DatabaseSettingsViewModel.vb" />
+    <Compile Include="Source\Views\Settings\Evaluation\EvaluationSettingsViewModel.vb" />
+    <Compile Include="Source\Views\Settings\License\LicenseKeyViewModel.vb" />
+    <Compile Include="Source\Views\Settings\Register\RegisterSettingsViewModel.vb" />
+    <Compile Include="Source\Views\Settings\Release\ReleaseSettingsViewModel.vb" />
+    <Compile Include="Source\Views\Settings\Cloud\CloudStorageSettingsViewModel.vb" />
+    <Compile Include="Source\Views\Settings\Support\SuportSettingsViewModel.vb" />
+    <Compile Include="Source\Views\Settings\User\UserSettingsViewModel.vb" />
+    <Compile Include="Source\Views\Settings\Backup\FrmBackupSettings.Designer.vb">
+      <DependentUpon>FrmBackupSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Backup\FrmBackupSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Database\FrmDatabaseSettings.Designer.vb">
+      <DependentUpon>FrmDatabaseSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Database\FrmDatabaseSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Evaluation\FrmEvaluationSettings.Designer.vb">
+      <DependentUpon>FrmEvaluationSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Evaluation\FrmEvaluationSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Register\FrmRegisterSettings.Designer.vb">
+      <DependentUpon>FrmRegisterSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Register\FrmRegisterSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Cloud\FrmCloudStorageSettings.Designer.vb">
+      <DependentUpon>FrmCloudStorageSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Cloud\FrmCloudStorageSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Support\FrmSuportSettings.Designer.vb">
+      <DependentUpon>FrmSuportSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Support\FrmSuportSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\Settings\User\FrmUserSettings.Designer.vb">
+      <DependentUpon>FrmUserSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Settings\User\FrmUserSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\Settings\License\FrmChangePassword.Designer.vb">
+      <DependentUpon>FrmChangePassword.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Settings\License\FrmChangePassword.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Cloud\FrmCloudDatabaseSettings.Designer.vb">
+      <DependentUpon>FrmCloudDatabaseSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Cloud\FrmCloudDatabaseSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\Settings\License\FrmLicenseKey.designer.vb">
+      <DependentUpon>FrmLicenseKey.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Settings\License\FrmLicenseKey.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Release\FrmReleaseSettings.Designer.vb">
+      <DependentUpon>FrmReleaseSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Settings\Release\FrmReleaseSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\Main\FrmMain.Designer.vb">
+      <DependentUpon>FrmMain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Main\FrmMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\RestoreBackup\FrmRestoreBackup.Designer.vb">
+      <DependentUpon>FrmRestoreBackup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\RestoreBackup\FrmRestoreBackup.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\Login\FrmLogin.Designer.vb">
+      <DependentUpon>FrmLogin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Login\FrmLogin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Source\Shared\Setups\SetupApp.vb" />
+    <Compile Include="Source\Shared\Setups\SetupLocator.vb" />
+    <Compile Include="Source\Shared\Setups\SetupSession.vb" />
+    <Compile Include="Source\Shared\Setups\SetupPaths.vb" />
+    <Compile Include="Source\Shared\Util.vb" />
+    <Compile Include="Source\Views\Settings\License\FrmLicenseSettings.Designer.vb">
+      <DependentUpon>FrmLicenseSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Settings\License\FrmLicenseSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\Settings\License\LicenseSettingsViewModel.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Source\Views\Settings\Backup\FrmBackupSettings.resx">
+      <DependentUpon>FrmBackupSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Settings\Backup\UcBackupDays.resx">
+      <DependentUpon>UcBackupDays.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Settings\Clean\FrmCleanSettings.resx">
+      <DependentUpon>FrmCleanSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Settings\Cloud\FrmCloudDatabaseSettings.resx">
+      <DependentUpon>FrmCloudDatabaseSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Settings\Database\FrmDatabaseSettings.resx">
+      <DependentUpon>FrmDatabaseSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Settings\Evaluation\FrmEvaluationSettings.resx">
+      <DependentUpon>FrmEvaluationSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Settings\Register\FrmRegisterSettings.resx">
+      <DependentUpon>FrmRegisterSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Settings\Release\FrmReleaseSettings.resx">
+      <DependentUpon>FrmReleaseSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Settings\Cloud\FrmCloudStorageSettings.resx">
+      <DependentUpon>FrmCloudStorageSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Settings\Support\FrmSuportSettings.resx">
+      <DependentUpon>FrmSuportSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Settings\User\FrmUserSettings.resx">
+      <DependentUpon>FrmUserSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Settings\License\FrmChangePassword.resx">
+      <DependentUpon>FrmChangePassword.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Settings\License\FrmLicenseKey.resx">
+      <DependentUpon>FrmLicenseKey.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Main\FrmMain.resx">
+      <DependentUpon>FrmMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\RestoreBackup\FrmRestoreBackup.resx">
+      <DependentUpon>FrmRestoreBackup.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Login\FrmLogin.resx">
+      <DependentUpon>FrmLogin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Settings\License\FrmLicenseSettings.resx">
+      <DependentUpon>FrmLicenseSettings.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Resources\Icon\icon-i.ico" />
+    <Content Include="Resources\Icon\icon.ico" />
+    <Content Include="Resources\Images\Backup.png" />
+    <None Include="Resources\Images\ValidKey.png" />
+    <None Include="Resources\Images\Garbage.png" />
+    <None Include="Resources\Images\Cloud.png" />
+    <Content Include="Resources\Images\ImageDelete.png" />
+    <Content Include="Resources\Images\Execute.png" />
+    <Content Include="Resources\Images\ImageInclude.png" />
+    <None Include="Resources\Images\InvalidKey.png" />
+    <None Include="Resources\Images\LoadingKey.gif" />
+    <Content Include="Resources\Images\Pause.png" />
+    <None Include="Resources\Images\Release.png" />
+    <Content Include="Resources\Images\Settings.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+</Project>

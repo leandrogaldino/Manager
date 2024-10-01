@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Routine Id="EvaluationManagement" Version="5">
+	<SortedColumn>-1</SortedColumn>
+	<SortDirection>0</SortDirection>
+	<Column Index="0" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>0</DisplayIndex>
+		<Name>ID Avaliação</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="1">
+		<Visible>True</Visible>
+		<DisplayIndex>1</DisplayIndex>
+		<Name>Cliente</Name>
+		<Width>250</Width>
+	</Column>
+	<Column Index="2">
+		<Visible>True</Visible>
+		<DisplayIndex>2</DisplayIndex>
+		<Name>Cidade</Name>
+		<Width>250</Width>
+	</Column>
+	<Column Index="3">
+		<Visible>True</Visible>
+		<DisplayIndex>3</DisplayIndex>
+		<Name>Compressor</Name>
+		<Width>150</Width>
+	</Column>
+	<Column Index="4">
+		<Visible>True</Visible>
+		<DisplayIndex>4</DisplayIndex>
+		<Name>Nº Série</Name>
+		<Width>150</Width>
+	</Column>
+	<Column Index="5">
+		<Visible>True</Visible>
+		<DisplayIndex>5</DisplayIndex>
+		<Name>Próx. Troca Hora Trabalhada</Name>
+		<Width>120</Width>
+	</Column>
+	<Column Index="6">
+		<Visible>True</Visible>
+		<DisplayIndex>6</DisplayIndex>
+		<Name>Próx. Troca Dia Corrido</Name>
+		<Width>120</Width>
+	</Column>
+	<Column Index="7">
+		<Visible>True</Visible>
+		<DisplayIndex>7</DisplayIndex>
+		<Name>Próx. Troca</Name>
+		<Width>120</Width>
+	</Column>
+</Routine>

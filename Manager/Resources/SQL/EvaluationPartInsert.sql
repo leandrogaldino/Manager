@@ -1,0 +1,22 @@
+INSERT INTO evaluationpart
+(
+	creation,
+	evaluationid,
+	personcompressorid,
+	personcompressorpartid,
+	currentcapacity,
+	sold,
+	lost,
+	userid
+)
+VALUES
+(
+	@creation,
+	@evaluationid,
+	@personcompressorid,
+	@personcompressorpartid,
+	@currentcapacity,
+	@sold,
+	@lost,
+	@userid
+);

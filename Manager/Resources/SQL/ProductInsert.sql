@@ -1,0 +1,34 @@
+INSERT INTO product
+(
+	creation,
+    statusid,
+	name,
+	internalname,
+	location,
+	unitid,
+	familyid,
+	groupid,
+	minimumquantity,
+	maximumquantity,
+	grossweight,
+	netweight,
+	note,
+	userid
+)
+VALUES
+(
+	@creation,
+	@statusid,
+	@name,
+	@internalname,
+	@location,
+	@unitid,
+	@familyid,
+	@groupid,
+	@minimumquantity,
+	@maximumquantity,
+	@grossweight,
+	@netweight,
+	@note,
+	@userid
+);

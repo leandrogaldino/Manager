@@ -1,0 +1,34 @@
+INSERT INTO person
+(
+	creation,
+    statusid,
+	entityid,
+	iscustomer,
+	isprovider,
+	isemployee,
+	istechnician,
+	iscarrier,
+	controlmaintenance,
+	document,
+	name,
+	shortname,
+	note,
+	userid
+)
+VALUES
+(
+	@creation,
+	@statusid,
+	@entityid,
+	@iscustomer,
+	@isprovider,
+	@isemployee,
+	@istechnician,
+	@iscarrier,
+	@controlmaintenance,
+	@document,
+	@name,
+	@shortname,
+	@note,
+	@userid
+);

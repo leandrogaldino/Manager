@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Routine Id="CashItemResponsible" Version="1">
+	<SortedColumn>-1</SortedColumn>
+	<SortDirection>0</SortDirection>
+    <Column Index="0">
+        <Visible>True</Visible>
+        <DisplayIndex>0</DisplayIndex>
+        <Name>Ordem</Name>
+        <Width>60</Width>
+    </Column>    
+    <Column Index="1">
+        <Visible>False</Visible>
+        <DisplayIndex>1</DisplayIndex>
+        <Name>ID</Name>
+        <Width>100</Width>
+    </Column>
+    <Column Index="2">
+        <Visible>False</Visible>
+        <DisplayIndex>2</DisplayIndex>
+        <Name>Criação</Name>
+        <Width>100</Width>
+    </Column>
+    <Column Index="3">
+        <Visible>True</Visible>
+        <DisplayIndex>3</DisplayIndex>
+        <Name>Responsável</Name>
+        <Width>255</Width>
+    </Column>       
+</Routine>

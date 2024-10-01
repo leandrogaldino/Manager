@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Routine Id="CashItem" Version="2">
+	<SortedColumn>-1</SortedColumn>
+	<SortDirection>0</SortDirection>
+    <Column Index="0">
+        <Visible>True</Visible>
+        <DisplayIndex>0</DisplayIndex>
+        <Name>Ordem</Name>
+        <Width>100</Width>
+    </Column>    
+    <Column Index="1" ButtonState="Hidden">
+        <Visible>False</Visible>
+        <DisplayIndex>1</DisplayIndex>
+        <Name>ID</Name>
+        <Width>100</Width>
+    </Column>
+    <Column Index="2">
+        <Visible>True</Visible>
+        <DisplayIndex>2</DisplayIndex>
+        <Name>Criação</Name>
+        <Width>100</Width>
+    </Column>
+    <Column Index="3">
+        <Visible>True</Visible>
+        <DisplayIndex>3</DisplayIndex>
+        <Name>Tipo</Name>
+        <Width>100</Width>
+    </Column>
+	<Column Index="4">
+		<Visible>True</Visible>
+		<DisplayIndex>4</DisplayIndex>
+		<Name>Categoria</Name>
+		<Width>100</Width>
+	</Column>
+    <Column Index="5">
+        <Visible>True</Visible>
+        <DisplayIndex>5</DisplayIndex>
+        <Name>Descrição</Name>
+        <Width>300</Width>
+    </Column>
+    <Column Index="6">
+        <Visible>True</Visible>
+        <DisplayIndex>6</DisplayIndex>
+        <Name>Data Doc.</Name>
+        <Width>110</Width>
+    </Column>
+    <Column Index="7">
+        <Visible>True</Visible>
+        <DisplayIndex>7</DisplayIndex>
+        <Name>Número Doc.</Name>
+        <Width>125</Width>
+    </Column>
+	<Column Index="8">
+		<Visible>True</Visible>
+		<DisplayIndex>8</DisplayIndex>
+		<Name>Valor</Name>
+		<Width>100</Width>
+	</Column>
+</Routine>

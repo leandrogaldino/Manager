@@ -30,15 +30,16 @@ Public Class FrmMain
 
 
     Private Async Sub FrmMain_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Await ValidateState()
-        FillDgvTasks()
-        If Not _HasDatabasePending Then DgvEvents.DataSource = Await _EventService.Read()
-        If _StateWarnings.Count = 0 Then BtnAgentState.Checked = True
+
         AddHandler _StackTaskService.TaskProgress.ProgressChanged, AddressOf OnTaskProgressChanged
         AddHandler _StackTaskService.TaskWillRun, AddressOf OnTaskWillRun
         AddHandler _StackTaskService.TaskRunned, AddressOf OnTaskRunned
         AddHandler _StackTaskService.TaskListChanged, AddressOf OnTaskWillRun
         AddHandler _StateWarnings.CollectionChanged, AddressOf OnStatePendingsChanged
+        Await ValidateState()
+        FillDgvTasks()
+        If Not _HasDatabasePending Then DgvEvents.DataSource = Await _EventService.Read()
+
     End Sub
 
 
@@ -52,8 +53,10 @@ Public Class FrmMain
         Next Pending
         If _StateWarnings.Count = 0 Then
             ScTaskWarning.Panel2Collapsed = True
+            BtnAgentState.Checked = True
         Else
             ScTaskWarning.Panel2Collapsed = False
+            BtnAgentState.Checked = False
         End If
     End Sub
 
@@ -176,6 +179,13 @@ Public Class FrmMain
         Dim ManagerDatabasePending As List(Of String) = Await _AppService.ValidateLocalDB()
         Dim CustomerStoragePending As List(Of String) = Await _AppService.ValidateStorage()
         Dim BackupPending As List(Of String) = _AppService.ValidateBackup()
+
+        If ManagerDatabasePending.Count = 0 Then
+            _HasDatabasePending = False
+        Else
+            _HasDatabasePending = True
+        End If
+
         If ManagerCloudPending.Count = 0 Then
             _SessionModel.ManagerLicenseResult = Await _LicenseService.GetOnlineLicense()
             _HasManagerCloudPending = False
@@ -208,12 +218,14 @@ Public Class FrmMain
             BtnClean.Enabled = False
             BtnRelease.Enabled = False
             BtnCloudSync.Enabled = False
+            BtnCleanEventLog.Enabled = False
         Else
             BtnAgentState.Enabled = True
             BtnBackup.Enabled = True
             BtnClean.Enabled = True
             BtnRelease.Enabled = True
             BtnCloudSync.Enabled = True
+            BtnCleanEventLog.Enabled = True
         End If
         FillDgvTasks()
     End Function
@@ -306,12 +318,16 @@ Public Class FrmMain
         End If
     End Sub
     Private Async Sub BtnSettingsLicense_Click(sender As Object, e As EventArgs) Handles BtnSettingsLicense.Click
-        If RequestLogin() Then
-            Using Frm As New FrmLicenseSettings()
+        Using Frm As New FrmLicenseSettings()
+            If Not _HasManagerCloudPending Then
+                If RequestLogin() Then
+                    Frm.ShowDialog()
+                End If
+            Else
                 Frm.ShowDialog()
-                Await ValidateState()
-            End Using
-        End If
+            End If
+            Await ValidateState()
+        End Using
     End Sub
     Private Async Sub BtnSettingsDatabase_Click(sender As Object, e As EventArgs) Handles BtnSettingsDatabase.Click
         If RequestLogin() Then
@@ -407,12 +423,17 @@ Public Class FrmMain
     End Sub
 
     Private Async Sub BtnSettingsChangeKey_Click(sender As Object, e As EventArgs) Handles BtnSettingsChangeKey.Click
-        If RequestLogin() Then
-            Using Frm As New FrmLicenseKey()
+        Dim LicenseResult = Locator.GetInstance(Of SessionModel).ManagerLicenseResult
+        Using Frm As New FrmLicenseKey()
+            If Not _HasManagerCloudPending AndAlso LicenseResult.Flag = LicenseMessages.MissingProductKey Then
                 Frm.ShowDialog()
-                Await ValidateState()
-            End Using
-        End If
+            Else
+                If RequestLogin() Then
+                    Frm.ShowDialog()
+                End If
+            End If
+            Await ValidateState()
+        End Using
     End Sub
 
     Private Sub BtnRelease_Click(sender As Object, e As EventArgs) Handles BtnRelease.Click

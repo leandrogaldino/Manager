@@ -9,23 +9,27 @@ Public Class FirestoreService
 
     Public Overrides Async Function Initialize(Settings As SettingCloudManagerDatabaseModel) As Task
         'TODO: Esse Try precisa sair daqui, mas precisa ver se nao vai dar problema nas primeiras inicializações do ManagerAgent, se der, utilizar um try la.
-        Try
-            Dim Json As String = Settings.JsonCredentials
+        'Try
+        Dim Json As String = Settings.JsonCredentials
             Dim Credential As GoogleCredential = GoogleCredential.FromJson(Json)
             Dim builder = New FirestoreDbBuilder() With {
                 .ProjectId = Settings.ProjectID,
                 .Credential = Credential
             }
             _Database = Await builder.BuildAsync()
-        Catch ex As Exception
-            _Database = Nothing
-        End Try
+        'Catch ex As Exception
+        '_Database = Nothing
+        'End Try
     End Function
 
     Public Overrides Async Function TestConnection() As Task
-        Dim List = _Database.ListRootCollectionsAsync()
-        Dim Count = Await List.CountAsync()
-        If Count = 0 Then Throw New Exception("Erro ao obter dados do banco de dados na núvem")
+        If _Database IsNot Nothing Then
+            Dim List = _Database.ListRootCollectionsAsync()
+            Dim Count = Await List.CountAsync()
+            If Count = 0 Then Throw New Exception("Erro ao obter dados do banco de dados na núvem")
+        Else
+            Throw New NullReferenceException("O banco de dados não foi definido.")
+        End If
     End Function
 
     Public Sub StartListening(Collection As String, Optional Args As List(Of Condition) = Nothing)

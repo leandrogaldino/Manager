@@ -17,7 +17,6 @@ Public Class DatabaseSettingsViewModel
     Public Sub New()
         _SettingService = Locator.GetInstance(Of SettingService)
         _SessionModel = Locator.GetInstance(Of SessionModel)
-        _Key = Locator.GetInstance(Of CryptoKeyService).ReadCryptoKey()
         LoadData()
     End Sub
 
@@ -65,7 +64,7 @@ Public Class DatabaseSettingsViewModel
         Server = _SessionModel.ManagerSetting.Database.Server
         Name = _SessionModel.ManagerSetting.Database.Name
         User = _SessionModel.ManagerSetting.Database.Username
-        Password = Cryptography.Decrypt(_SessionModel.ManagerSetting.Database.Password, _Key)
+        Password = _SessionModel.ManagerSetting.Database.Password
     End Sub
     Public Function Save() As Boolean
         Dim Pass As Boolean
@@ -76,7 +75,7 @@ Public Class DatabaseSettingsViewModel
         _SessionModel.ManagerSetting.Database.Server = Server
         _SessionModel.ManagerSetting.Database.Name = Name
         _SessionModel.ManagerSetting.Database.Username = User
-        _SessionModel.ManagerSetting.Database.Password = Cryptography.Encrypt(Password, _Key)
+        _SessionModel.ManagerSetting.Database.Password = Password
         _SettingService.Save(_SessionModel.ManagerSetting)
         If String.IsNullOrEmpty(_Server) And String.IsNullOrEmpty(_Name) And String.IsNullOrEmpty(_User) And String.IsNullOrEmpty(_Password) Then
             Pass = True

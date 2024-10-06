@@ -99,7 +99,7 @@ Public Class MySqlService
             _Connection = New MySqlConnection(_DatabaseSettings.GetConnectionString())
             If _Connection.State = ConnectionState.Closed Then Await _Connection.OpenAsync()
         End If
-        _Transaction = Await _Connection.BeginTransactionAsync()
+        If _Transaction Is Nothing Then _Transaction = Await _Connection.BeginTransactionAsync()
     End Function
 
     Public Overrides Async Function CommitTransaction() As Task

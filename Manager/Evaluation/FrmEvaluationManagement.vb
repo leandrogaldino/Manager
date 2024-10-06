@@ -255,7 +255,7 @@ Public Class FrmEvaluationManagement
                     .User = Session.User,
                     .TechnicalAdvice = SelectedEvaluation.TechnicalAdvice
                 }
-                NewEvaluation.DocumentName.SetCurrentFile(GetAutomaticPDF)
+                NewEvaluation.DocumentPath.SetCurrentFile(GetAutomaticPDF)
                 SelectedEvaluation.Technicians.ToList().ForEach(Sub(x) NewEvaluation.Technicians.Add(x))
 
 

@@ -24,6 +24,7 @@ Partial Class FrmEvaluationImport
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.PnBottomBar = New System.Windows.Forms.Panel()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnImport = New System.Windows.Forms.Button()
         Me.DgvEvaluations = New System.Windows.Forms.DataGridView()
@@ -36,6 +37,7 @@ Partial Class FrmEvaluationImport
         'PnBottomBar
         '
         Me.PnBottomBar.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.PnBottomBar.Controls.Add(Me.Button1)
         Me.PnBottomBar.Controls.Add(Me.BtnClose)
         Me.PnBottomBar.Controls.Add(Me.BtnImport)
         Me.PnBottomBar.Dock = System.Windows.Forms.DockStyle.Bottom
@@ -43,6 +45,15 @@ Partial Class FrmEvaluationImport
         Me.PnBottomBar.Name = "PnBottomBar"
         Me.PnBottomBar.Size = New System.Drawing.Size(784, 44)
         Me.PnBottomBar.TabIndex = 6
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(149, 9)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 2
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'BtnClose
         '
@@ -125,4 +136,5 @@ Partial Class FrmEvaluationImport
     Friend WithEvents DgvEvaluations As DataGridView
     Friend WithEvents SyncTimer As Timer
     Friend WithEvents RefreshTimer As Timer
+    Friend WithEvents Button1 As Button
 End Class

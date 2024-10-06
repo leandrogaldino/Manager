@@ -1,16 +1,36 @@
 ﻿Imports ManagerCore
 Imports ControlLibrary
+Imports System.ServiceModel
 Imports System.IO
+Imports DocumentFormat.OpenXml.Wordprocessing
+Imports Google.Cloud.Firestore
+
 
 'TODO: Ao importar, o formulario da avaliação ja deve vir calulado, porem depois de calvular deve-se alterar as capacityes das parts
 'TODO: Utilizar Enum nos status da sincronizacao: Não Sincronizado e Sincronizando
 Public Class FrmEvaluationImport
     Private _EvaluationData As Dictionary(Of String, Object) = Nothing
     Private _EvaluationsForm As Form
+    Private _RemoteDB As RemoteDB
+    Private _Storage As Storage
+    Private _Session As Session
 
     Public Sub New()
         InitializeComponent()
+        _Session = Locator.GetInstance(Of Session)
+        _Storage = Locator.GetInstance(Of Storage)
+        _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
+        Dim Condition As New List(Of FirestoreService.Condition) From {
+            New FirestoreService.WhereEqualToCondition("info.is_sync", False)
+        }
+
+        _RemoteDB.StartListening("evaluations", Condition)
+        AddHandler _RemoteDB.OnFirestoreChanged, Async Sub(Args)
+                                                     DgvEvaluations.Invoke(Sub() FillDgv(Args.Documents))
+                                                     Await RefreshSync()
+                                                 End Sub
     End Sub
+
     Public Sub New(EvaluationsForm As Form)
         InitializeComponent()
         _EvaluationsForm = EvaluationsForm
@@ -18,27 +38,12 @@ Public Class FrmEvaluationImport
 
     Private Sub FrmEvaluationImport_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         Utility.EnableDataGridViewDoubleBuffer(DgvEvaluations, True)
-        RefreshEvaluations()
-        SyncTimer.Stop()
+        'RefreshEvaluations()
+        'SyncTimer.Stop()
     End Sub
 
 
-    Private Sub RefreshEvaluations()
-        Dim Firestore = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
 
-        Dim Condition As New List(Of FirestoreService.Condition) From {
-            New FirestoreService.WhereEqualToCondition("info.is_sync", False)
-        }
-
-
-
-        Firestore.StartListening("evaluations", Condition)
-        'AddHandler Firestore.OnFirestoreChanged, Async Sub(Args)
-        '                                             DgvEvaluations.Invoke(Sub() FillDgv(Args.Documents))
-        '                                             Await RefreshSync()
-        '                                         End Sub
-
-    End Sub
 
 
 
@@ -63,12 +68,12 @@ Public Class FrmEvaluationImport
             For Each doc In Docs
                 Dim CloudID As String = doc("id")
                 Dim Status As String = If(String.IsNullOrEmpty(doc("info")("syncing_by")), "Não Sincronizado", "Sincronizando")
-                Dim CustomerName As String = doc("customer")("customername")
-                Dim CompressorName As String = $"{doc("compressor")("compressorname")}"
-                Dim SerialNumber As String = If(String.IsNullOrEmpty(doc("compressor")("serialnumber")), String.Empty, $"NS: {doc("compressor")("serialnumber")}")
+                Dim CustomerName As String = doc("customer")("customer_name")
+                Dim CompressorName As String = $"{doc("compressor")("compressor_name")}"
+                Dim SerialNumber As String = If(String.IsNullOrEmpty(doc("compressor")("serial_number")), String.Empty, $"NS: {doc("compressor")("serial_number")}")
                 Dim EvaluationDate As String = CDate(doc("date")).ToString("dd/MM/yyyy")
                 Dim TechniciansList As List(Of Dictionary(Of String, Object)) = DirectCast(DirectCast(doc("technicians"), IEnumerable(Of Object)).Select(Function(Item) DirectCast(Item, Dictionary(Of String, Object))).ToList(), List(Of Dictionary(Of String, Object)))
-                Dim Technicians As List(Of String) = TechniciansList.Select(Function(tech) If(tech.ContainsKey("personname"), tech("personname").ToString(), String.Empty)).ToList()
+                Dim Technicians As List(Of String) = TechniciansList.Select(Function(tech) If(tech.ContainsKey("person_name"), tech("person_name").ToString(), String.Empty)).ToList()
                 Dim row As New DataGridViewRow()
 
 
@@ -106,23 +111,54 @@ Public Class FrmEvaluationImport
 
 
     Private Async Sub DgvEvaluations_CellMouseDoubleClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DgvEvaluations.CellMouseDoubleClick
+        Dim TempPath As String
+        Dim TempSignature As String
+        Dim TempPhotos As New List(Of String)
+
+
         _EvaluationData = DgvEvaluations.Rows(e.RowIndex).Tag
 
         If DgvEvaluations.Rows(e.RowIndex).Cells("Status").Value = "Sincronizando" Then
-            MsgBox($"Essa avaliação esta sendo sincronizada por {_EvaluationData("info")("syncing_by")}")
+            CMessageBox.Show($"Essa avaliação esta sendo sincronizada por {_EvaluationData("info")("syncing_by")}", CMessageBoxType.Information)
             Exit Sub
         End If
 
-
-
         _EvaluationData("info")("sync_date") = Now.ToString("yyyy-MM-dd HH:mm:ss")
-        _EvaluationData("info")("syncing_by") = "Leandro"
+        _EvaluationData("info")("syncing_by") = _Session.User.Username
 
-        Dim Firestore = Locator.GetInstance(Of RemoteDB)("Customer")
-        Await Firestore.ExecutePut("evaluations", _EvaluationData, "1")
+
+        Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
         SyncTimer.Start()
 
-        Dim Evaluation As Evaluation = EvaluationFromDictionary(_EvaluationData)
+
+
+        Dim SignatureData As Byte() = Await _Storage.DownloadFile(_EvaluationData("signature_url"))
+
+        TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, Util.GetFilename(".png"))
+
+        Using SignatureStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)
+            Await SignatureStream.WriteAsync(SignatureData, 0, SignatureData.Length)
+        End Using
+
+        TempSignature = TempPath
+
+
+
+
+
+        For Each Photo As String In _EvaluationData("photo_urls")
+            Dim PhotoData As Byte() = Await _Storage.DownloadFile(Photo)
+            TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, Util.GetFilename(".jpg"))
+
+            Using PhotoStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)
+                Await PhotoStream.WriteAsync(PhotoData, 0, PhotoData.Length)
+            End Using
+
+            TempPhotos.Add(TempPath)
+
+        Next Photo
+
+        Dim Evaluation As Evaluation = Evaluation.FromDictionary(_EvaluationData, TempSignature, TempPhotos)
 
         Dim Form As FrmEvaluation
 
@@ -134,16 +170,16 @@ Public Class FrmEvaluationImport
 
         Form.ShowDialog()
 
-        If Form.Evaluation.ID = 0 Then
+        If Form._Evaluation.ID = 0 Then
             _EvaluationData("info")("sync_date") = String.Empty
             _EvaluationData("info")("syncing_by") = String.Empty
-            Await Firestore.ExecutePut("evaluations", _EvaluationData, "1")
+            Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
         Else
             _EvaluationData("info")("sync_date") = String.Empty
             _EvaluationData("info")("syncing_by") = String.Empty
             _EvaluationData("info")("is_sync") = True
-            _EvaluationData("info")("returnedid") = Form.Evaluation.ID
-            Await Firestore.ExecutePut("evaluations", _EvaluationData, "1")
+            _EvaluationData("info")("returnedid") = Form._Evaluation.ID
+            Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
         End If
 
 
@@ -153,48 +189,13 @@ Public Class FrmEvaluationImport
     End Sub
 
 
-    Public Function EvaluationFromDictionary(Data As Dictionary(Of String, Object)) As Evaluation
-        Dim Evaluation As New Evaluation
-        Dim EvaluationTechnician As EvaluationTechnician
-        Dim Coalescent As EvaluationPart
-        Evaluation.TechnicalAdvice = Data("advice")
-        Evaluation.AverageWorkLoad = Data("awl")
-        Evaluation.Customer = New Person().Load(Data("customer")("personid"), False)
-        Evaluation.Compressor = Evaluation.Customer.Compressors.SingleOrDefault(Function(x) x.ID = Data("compressor")("compressorid"))
-        Evaluation.EvaluationDate = Data("date")
-        Evaluation.EndTime = TimeSpan.ParseExact(Data("endtime"), "hh\:mm", Nothing)
-        Evaluation.Horimeter = Data("horimeter")
-        Dim AirFilters As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.AirFilter).ToList
-        Dim OilFilters As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.OilFilter).ToList
-        Dim Separators As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.Separator).ToList
-        Dim Oils As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.Oil).ToList
-        AirFilters.ForEach(Sub(x) x.CurrentCapacity = Data("parts")("airfilter"))
-        OilFilters.ForEach(Sub(x) x.CurrentCapacity = Data("parts")("oilfilter"))
-        Separators.ForEach(Sub(x) x.CurrentCapacity = Data("parts")("separator"))
-        Oils.ForEach(Sub(x) x.CurrentCapacity = Data("parts")("oil"))
-        For Each CoalescentData In Data("parts")("coalescents")
-            Coalescent = Evaluation.PartsElapsedDay.Where(Function(y) y.Part.PartBinded).FirstOrDefault(Function(x) x.Part.ID = CoalescentData("coalescentid"))
-            If Coalescent IsNot Nothing Then Coalescent.CurrentCapacity = DateDiff(DateInterval.Day, Today, CDate(CoalescentData("nextchange")))
-        Next CoalescentData
-        Evaluation.Responsible = Data("responsible")
-        Evaluation.StartTime = TimeSpan.ParseExact(Data("starttime"), "hh\:mm", Nothing)
-        For Each TechnicianData In Data("technicians")
-            EvaluationTechnician = New EvaluationTechnician With {
-                .Technician = New Person().Load(TechnicianData("personid"), False),
-                .IsSaved = True
-            }
-            Evaluation.Technicians.Add(EvaluationTechnician)
-        Next TechnicianData
-        'TODO: falta assinatura
-        Return Evaluation
-    End Function
+
 
     Private Async Sub SyncTimer_Tick(sender As Object, e As EventArgs) Handles SyncTimer.Tick
         If _EvaluationData IsNot Nothing AndAlso _EvaluationData.Count > 0 Then
-            If IsDate(_EvaluationData("info")("sync_date")) AndAlso Now > CDate(_EvaluationData("info")("sync_date")).AddMinutes(10) Then
+            If IsDate(_EvaluationData("info")("sync_date")) AndAlso Now > CDate(_EvaluationData("info")("sync_date")).AddMinutes(1) Then
                 _EvaluationData("info")("sync_date") = Now.ToString("yyyy-MM-dd HH:mm:ss")
-                Dim Firestore = Locator.GetInstance(Of RemoteDB)("Customer")
-                Await Firestore.ExecutePut("evaluations", _EvaluationData, "1")
+                Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
             End If
         End If
     End Sub
@@ -211,15 +212,21 @@ Public Class FrmEvaluationImport
         For Each Row As DataGridViewRow In DgvEvaluations.Rows
             If Row.Cells("Status").Value = "Sincronizando" Then
                 Dim Data As Dictionary(Of String, Object) = DirectCast(Row.Tag, Dictionary(Of String, Object))
-                If IsDate(Data("info")("sync_date")) AndAlso Now > CDate(Data("info")("sync_date")).AddMinutes(10.5) Then
+                If IsDate(Data("info")("sync_date")) AndAlso Now > CDate(Data("info")("sync_date")).AddMinutes(1.5) Then
                     Data("info")("sync_date") = String.Empty
                     Data("info")("syncing_by") = String.Empty
-                    Dim Firestore = Locator.GetInstance(Of RemoteDB)("Customer")
-                    Await Firestore.ExecutePut("evaluations", Data, "1")
+                    Await _RemoteDB.ExecutePut("evaluations", Data, Data("id"))
                 End If
             End If
         Next Row
     End Function
 
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        'RefreshEvaluations()
+    End Sub
+
+    Private Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
+
+    End Sub
 End Class
 

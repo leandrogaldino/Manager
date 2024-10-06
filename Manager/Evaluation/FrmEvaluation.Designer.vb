@@ -129,7 +129,8 @@ Partial Class FrmEvaluation
         Me.SfdDocument = New System.Windows.Forms.SaveFileDialog()
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.Tip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.LblEvaluationType = New System.Windows.Forms.ToolStripLabel()
+        Me.TabPhoto = New System.Windows.Forms.TabPage()
+        Me.TabSignature = New System.Windows.Forms.TabPage()
         Me.Panel1.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -202,7 +203,7 @@ Partial Class FrmEvaluation
         Me.TsTitle.BackColor = System.Drawing.Color.White
         Me.TsTitle.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsTitle.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsTitle.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblID, Me.LblIDValue, Me.LblStatus, Me.LblStatusValue, Me.BtnStatusValue, Me.LblCreationDate, Me.LblCreationValue, Me.LblEvaluationType})
+        Me.TsTitle.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblID, Me.LblIDValue, Me.LblStatus, Me.LblStatusValue, Me.BtnStatusValue, Me.LblCreationDate, Me.LblCreationValue})
         Me.TsTitle.Location = New System.Drawing.Point(0, 25)
         Me.TsTitle.Name = "TsTitle"
         Me.TsTitle.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -259,21 +260,21 @@ Partial Class FrmEvaluation
         '
         Me.BtnApprove.Image = Global.Manager.My.Resources.Resources.Approve
         Me.BtnApprove.Name = "BtnApprove"
-        Me.BtnApprove.Size = New System.Drawing.Size(180, 22)
+        Me.BtnApprove.Size = New System.Drawing.Size(151, 22)
         Me.BtnApprove.Text = "Aprovar"
         '
         'BtnReject
         '
         Me.BtnReject.Image = Global.Manager.My.Resources.Resources.Reject
         Me.BtnReject.Name = "BtnReject"
-        Me.BtnReject.Size = New System.Drawing.Size(180, 22)
+        Me.BtnReject.Size = New System.Drawing.Size(151, 22)
         Me.BtnReject.Text = "Rejeitar"
         '
         'BtnDisapprove
         '
         Me.BtnDisapprove.Image = Global.Manager.My.Resources.Resources.Disapprove
         Me.BtnDisapprove.Name = "BtnDisapprove"
-        Me.BtnDisapprove.Size = New System.Drawing.Size(180, 22)
+        Me.BtnDisapprove.Size = New System.Drawing.Size(151, 22)
         Me.BtnDisapprove.Text = "Desaprovar"
         '
         'LblCreationDate
@@ -392,6 +393,8 @@ Partial Class FrmEvaluation
         Me.TcEvaluation.Controls.Add(Me.TabMain)
         Me.TcEvaluation.Controls.Add(Me.TabTechnicalAdvice)
         Me.TcEvaluation.Controls.Add(Me.TabDocument)
+        Me.TcEvaluation.Controls.Add(Me.TabPhoto)
+        Me.TcEvaluation.Controls.Add(Me.TabSignature)
         Me.TcEvaluation.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TcEvaluation.Location = New System.Drawing.Point(0, 50)
         Me.TcEvaluation.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
@@ -1035,10 +1038,10 @@ Partial Class FrmEvaluation
         'TabTechnicalAdvice
         '
         Me.TabTechnicalAdvice.Controls.Add(Me.TxtTechnicalAdvice)
-        Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 22)
+        Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 26)
         Me.TabTechnicalAdvice.Name = "TabTechnicalAdvice"
         Me.TabTechnicalAdvice.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1032, 391)
+        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1032, 387)
         Me.TabTechnicalAdvice.TabIndex = 6
         Me.TabTechnicalAdvice.Text = "Parecer Técnico"
         Me.TabTechnicalAdvice.UseVisualStyleBackColor = True
@@ -1050,7 +1053,7 @@ Partial Class FrmEvaluation
         Me.TxtTechnicalAdvice.Location = New System.Drawing.Point(3, 3)
         Me.TxtTechnicalAdvice.MaxLength = 1000000
         Me.TxtTechnicalAdvice.Name = "TxtTechnicalAdvice"
-        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1026, 385)
+        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1026, 381)
         Me.TxtTechnicalAdvice.TabIndex = 1
         Me.TxtTechnicalAdvice.Text = ""
         '
@@ -1059,10 +1062,10 @@ Partial Class FrmEvaluation
         Me.TabDocument.AutoScroll = True
         Me.TabDocument.Controls.Add(Me.PdfDocumentViewer)
         Me.TabDocument.Controls.Add(Me.TsDocument)
-        Me.TabDocument.Location = New System.Drawing.Point(4, 22)
+        Me.TabDocument.Location = New System.Drawing.Point(4, 26)
         Me.TabDocument.Name = "TabDocument"
         Me.TabDocument.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabDocument.Size = New System.Drawing.Size(1032, 391)
+        Me.TabDocument.Size = New System.Drawing.Size(1032, 387)
         Me.TabDocument.TabIndex = 7
         Me.TabDocument.Text = "Documento"
         Me.TabDocument.UseVisualStyleBackColor = True
@@ -1092,7 +1095,7 @@ Partial Class FrmEvaluation
         Me.PdfDocumentViewer.ScrollDisplacementValue = 0
         Me.PdfDocumentViewer.ShowHorizontalScrollBar = True
         Me.PdfDocumentViewer.ShowVerticalScrollBar = True
-        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1026, 360)
+        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1026, 356)
         Me.PdfDocumentViewer.SpaceBetweenPages = 8
         Me.PdfDocumentViewer.TabIndex = 1
         TextSearchSettings1.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -1228,14 +1231,25 @@ Partial Class FrmEvaluation
         Me.EprInformation.ContainerControl = Me
         Me.EprInformation.Icon = CType(resources.GetObject("EprInformation.Icon"), System.Drawing.Icon)
         '
-        'LblEvaluationType
+        'TabPhoto
         '
-        Me.LblEvaluationType.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblEvaluationType.ForeColor = System.Drawing.SystemColors.HotTrack
-        Me.LblEvaluationType.Margin = New System.Windows.Forms.Padding(20, 1, 0, 2)
-        Me.LblEvaluationType.Name = "LblEvaluationType"
-        Me.LblEvaluationType.Size = New System.Drawing.Size(148, 22)
-        Me.LblEvaluationType.Text = "Avaliação Importada"
+        Me.TabPhoto.Location = New System.Drawing.Point(4, 26)
+        Me.TabPhoto.Name = "TabPhoto"
+        Me.TabPhoto.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPhoto.Size = New System.Drawing.Size(1032, 387)
+        Me.TabPhoto.TabIndex = 8
+        Me.TabPhoto.Text = "Fotos"
+        Me.TabPhoto.UseVisualStyleBackColor = True
+        '
+        'TabSignature
+        '
+        Me.TabSignature.Location = New System.Drawing.Point(4, 26)
+        Me.TabSignature.Name = "TabSignature"
+        Me.TabSignature.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabSignature.Size = New System.Drawing.Size(1032, 387)
+        Me.TabSignature.TabIndex = 9
+        Me.TabSignature.Text = "Assinatura"
+        Me.TabSignature.UseVisualStyleBackColor = True
         '
         'FrmEvaluation
         '
@@ -1365,5 +1379,6 @@ Partial Class FrmEvaluation
     Friend WithEvents BtnIncludeTechnician As ToolStripButton
     Friend WithEvents BtnDeleteTechnician As ToolStripButton
     Friend WithEvents BtnEditTechnician As ToolStripButton
-    Friend WithEvents LblEvaluationType As ToolStripLabel
+    Friend WithEvents TabPhoto As TabPage
+    Friend WithEvents TabSignature As TabPage
 End Class

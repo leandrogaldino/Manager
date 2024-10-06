@@ -2,10 +2,12 @@
 Imports Google.Cloud.Firestore
 Public Class FirestoreService
     Inherits RemoteDB
-    Public Event OnFirestoreChanged(args As FirestoreChangeEventArgs)
-    Private ReadOnly _Listener As FirestoreChangeListener
 
+    Private _Listener As FirestoreChangeListener
     Private _Database As FirestoreDb
+
+    Public Sub New()
+    End Sub
 
     Public Overrides Async Function Initialize(Settings As SettingCloudManagerDatabaseModel) As Task
         Dim Json As String = Settings.JsonCredentials
@@ -30,17 +32,19 @@ Public Class FirestoreService
     Public Overrides Sub StartListening(Collection As String, Optional Args As List(Of Condition) = Nothing)
         Dim Query As Query = _Database.Collection(Collection)
         If Args IsNot Nothing Then Query = ProcessArgs(Query, Args)
-        Dim Listener As FirestoreChangeListener = Query.Listen(Sub(Snapshot As QuerySnapshot)
-                                                                   HandleSnapshotAsync(Collection, Snapshot)
-                                                               End Sub)
+        _Listener = Query.Listen(Sub(Snapshot As QuerySnapshot)
+                                     HandleSnapshotAsync(Collection, Snapshot)
+                                 End Sub)
     End Sub
+
+
 
     Private Sub HandleSnapshotAsync(Collection As String, Snapshot As QuerySnapshot)
         Dim EventArgs As New FirestoreChangeEventArgs() With {
             .CollectionName = Collection,
             .Documents = Snapshot.Documents.Select(Function(doc) doc.ToDictionary()).ToList()
         }
-        RaiseEvent OnFirestoreChanged(EventArgs)
+        RaiseOnFirestoreChanged(EventArgs)
     End Sub
 
     Public Overrides Sub StopListening()
@@ -74,8 +78,7 @@ Public Class FirestoreService
     End Function
 
     Public Overrides Async Function ExecutePut(Collection As String, Data As Dictionary(Of String, Object), Optional DocumentID As String = Nothing) As Task(Of DateTime)
-        Dim FormatedDocumentID As String = DocumentID.Replace("/", Nothing).Replace("-", Nothing).Replace(".", Nothing)
-        Dim DocRef As DocumentReference = If(FormatedDocumentID IsNot Nothing, _Database.Collection(Collection).Document(FormatedDocumentID), _Database.Collection(Collection).Document())
+        Dim DocRef As DocumentReference = If(Not String.IsNullOrEmpty(DocumentID), _Database.Collection(Collection).Document(DocumentID), _Database.Collection(Collection).Document())
         Dim Result As WriteResult = Await DocRef.SetAsync(Data)
         Return Result.UpdateTime.ToDateTime
     End Function

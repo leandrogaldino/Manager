@@ -63,7 +63,10 @@ Public Class FrmLogin
                                                 If Session.LicenseResult.Success Then
                                                     Hide()
                                                     'FrmMain.Show()
-                                                    FrmEvaluationImport.ShowDialog()
+                                                    Using Frm As New FrmEvaluationImport
+                                                        Frm.ShowDialog()
+                                                    End Using
+
                                                 Else
                                                     Select Case Session.LicenseResult.Flag
                                                         Case LicenseMessages.OutdatedLocalLicenseKey

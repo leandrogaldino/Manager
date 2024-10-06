@@ -82,7 +82,9 @@ Public Class Evaluation
     Public Property PartsWorkedHour As New OrdenedList(Of EvaluationPart)
     Public Property PartsElapsedDay As New OrdenedList(Of EvaluationPart)
     Public Property TechnicalAdvice As String
-    Public Property DocumentName As New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
+    Public Property DocumentPath As New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
+    Public Property SignaturePath As New FileManager(ApplicationPaths.EvaluationSignatureDirectory)
+    Public Property PhotoPaths As New List(Of FileManager)
     Public ReadOnly Property RejectReason As String
         Get
             Return _RejectReason
@@ -91,6 +93,54 @@ Public Class Evaluation
     Public Sub New()
         _Routine = Routine.Evaluation
     End Sub
+
+
+
+    Public Shared Function FromDictionary(Data As Dictionary(Of String, Object), Signature As String, Photos As List(Of String)) As Evaluation
+        Dim Evaluation As New Evaluation
+        Dim EvaluationTechnician As EvaluationTechnician
+        Dim Coalescent As EvaluationPart
+        Evaluation.TechnicalAdvice = Data("advice")
+        Evaluation.AverageWorkLoad = Data("awl")
+        Evaluation.Customer = New Person().Load(Data("customer")("person_id"), False)
+        Evaluation.Compressor = Evaluation.Customer.Compressors.SingleOrDefault(Function(x) x.ID = Data("compressor")("compressor_id"))
+        Evaluation.EvaluationDate = Data("date")
+        Evaluation.EndTime = TimeSpan.ParseExact(Data("end_time"), "hh\:mm", Nothing)
+        Evaluation.Horimeter = Data("horimeter")
+        Dim AirFilters As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.AirFilter).ToList
+        Dim OilFilters As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.OilFilter).ToList
+        Dim Separators As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.Separator).ToList
+        Dim Oils As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.Oil).ToList
+        AirFilters.ForEach(Sub(x) x.CurrentCapacity = Data("parts")("air_filter"))
+        OilFilters.ForEach(Sub(x) x.CurrentCapacity = Data("parts")("oil_filter"))
+        Separators.ForEach(Sub(x) x.CurrentCapacity = Data("parts")("separator"))
+        Oils.ForEach(Sub(x) x.CurrentCapacity = Data("parts")("oil"))
+        For Each CoalescentData In Data("parts")("coalescents")
+            Coalescent = Evaluation.PartsElapsedDay.Where(Function(y) y.Part.PartBinded).FirstOrDefault(Function(x) x.Part.ID = CoalescentData("coalescent_id"))
+            If Coalescent IsNot Nothing Then Coalescent.CurrentCapacity = DateDiff(DateInterval.Day, Today, CDate(CoalescentData("next_change")))
+        Next CoalescentData
+        Evaluation.Responsible = Data("responsible")
+        Evaluation.StartTime = TimeSpan.ParseExact(Data("start_time"), "hh\:mm", Nothing)
+        For Each TechnicianData In Data("technicians")
+            EvaluationTechnician = New EvaluationTechnician With {
+                .Technician = New Person().Load(TechnicianData("person_id"), False),
+                .IsSaved = True
+            }
+            Evaluation.Technicians.Add(EvaluationTechnician)
+        Next TechnicianData
+        Evaluation.SignaturePath.SetCurrentFile(Signature)
+        For Each Photo In Photos
+            Dim PhotoFile As New FileManager(ApplicationPaths.EvaluationPhotoDirectory)
+            PhotoFile.SetCurrentFile(Photo)
+            Evaluation.PhotoPaths.Add(PhotoFile)
+        Next Photo
+        Return Evaluation
+    End Function
+
+
+
+
+
     Public Shared Function CountEvaluation(PersonCompressorID As Long, StatusFilter As List(Of EvaluationStatus), Optional IgnoreEvaluation As Long = 0) As Long
         Dim Session = Locator.GetInstance(Of Session)
         Dim StatusIntList As New List(Of Integer)
@@ -126,7 +176,7 @@ Public Class Evaluation
         PartsWorkedHour = New OrdenedList(Of EvaluationPart)
         PartsElapsedDay = New OrdenedList(Of EvaluationPart)
         TechnicalAdvice = Nothing
-        DocumentName = New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
+        DocumentPath = New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
         _RejectReason = Nothing
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As Evaluation
@@ -162,7 +212,7 @@ Public Class Evaluation
                         AverageWorkLoad = TableResult.Rows(0).Item("averageworkload")
                         TechnicalAdvice = TableResult.Rows(0).Item("technicaladvice").ToString
                         If TableResult.Rows(0).Item("documentname") IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("documentname")) Then
-                            DocumentName.SetCurrentFile(Path.Combine(ApplicationPaths.EvaluationDocumentDirectory, TableResult.Rows(0).Item("documentname").ToString), True)
+                            DocumentPath.SetCurrentFile(Path.Combine(ApplicationPaths.EvaluationDocumentDirectory, TableResult.Rows(0).Item("documentname").ToString), True)
                         End If
                         _RejectReason = TableResult.Rows(0).Item("rejectreason").ToString
                         Technicians = GetTechnicians(Tra)
@@ -284,7 +334,7 @@ Public Class Evaluation
                 Using CmdEvaluation As New MySqlCommand(My.Resources.EvaluationDelete, Con)
                     CmdEvaluation.Parameters.AddWithValue("@id", ID)
                     CmdEvaluation.ExecuteNonQuery()
-                    If File.Exists(DocumentName.OriginalFile) Then FileManager.Delete(DocumentName.OriginalFile)
+                    If File.Exists(DocumentPath.OriginalFile) Then FileManager.Delete(DocumentPath.OriginalFile)
                 End Using
             End Using
             Transaction.Complete()
@@ -311,7 +361,7 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@manualaverageworkload", ManualAverageWorkLoad)
                     CmdEvaluation.Parameters.AddWithValue("@averageworkload", AverageWorkLoad)
                     CmdEvaluation.Parameters.AddWithValue("@technicaladvice", If(String.IsNullOrEmpty(TechnicalAdvice), DBNull.Value, TechnicalAdvice))
-                    CmdEvaluation.Parameters.AddWithValue("@documentname", If(String.IsNullOrEmpty(DocumentName.CurrentFile), DBNull.Value, Path.GetFileName(DocumentName.CurrentFile)))
+                    CmdEvaluation.Parameters.AddWithValue("@documentname", If(String.IsNullOrEmpty(DocumentPath.CurrentFile), DBNull.Value, Path.GetFileName(DocumentPath.CurrentFile)))
                     CmdEvaluation.Parameters.AddWithValue("@rejectreason", If(String.IsNullOrEmpty(RejectReason), DBNull.Value, RejectReason))
                     CmdEvaluation.Parameters.AddWithValue("@userid", User.ID)
                     CmdEvaluation.ExecuteNonQuery()
@@ -356,7 +406,7 @@ Public Class Evaluation
                     End Using
                 Next PartElapsedDay
             End Using
-            DocumentName.Execute()
+            DocumentPath.Execute()
             Transaction.Complete()
         End Using
     End Sub
@@ -381,7 +431,7 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@manualaverageworkload", ManualAverageWorkLoad)
                     CmdEvaluation.Parameters.AddWithValue("@averageworkload", AverageWorkLoad)
                     CmdEvaluation.Parameters.AddWithValue("@technicaladvice", If(String.IsNullOrEmpty(TechnicalAdvice), DBNull.Value, TechnicalAdvice))
-                    CmdEvaluation.Parameters.AddWithValue("@documentname", If(String.IsNullOrEmpty(DocumentName.CurrentFile), DBNull.Value, Path.GetFileName(DocumentName.CurrentFile)))
+                    CmdEvaluation.Parameters.AddWithValue("@documentname", If(String.IsNullOrEmpty(DocumentPath.CurrentFile), DBNull.Value, Path.GetFileName(DocumentPath.CurrentFile)))
                     CmdEvaluation.Parameters.AddWithValue("@rejectreason", If(String.IsNullOrEmpty(RejectReason), DBNull.Value, RejectReason))
                     CmdEvaluation.Parameters.AddWithValue("@userid", User.ID)
                     CmdEvaluation.ExecuteNonQuery()
@@ -522,7 +572,7 @@ Public Class Evaluation
                     Next PartElapsedDay
                 End If
             End Using
-            DocumentName.Execute()
+            DocumentPath.Execute()
             Transaction.Complete()
         End Using
     End Sub

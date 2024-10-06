@@ -99,8 +99,8 @@ Public Class PersonReport
             If TableWorkedHour.Rows.Cast(Of DataRow).Count(Function(x) x.Item("nextexchange").ToString <> Nothing) + TableElapsedDay.Rows.Cast(Of DataRow).Count(Function(x) x.Item("nextexchange").ToString <> Nothing) > 0 Then
                 ReportingEvaluation = New Evaluation().Load(LastEvaluationID, False)
                 CompressorsDataChart.Add(New Tuple(Of String, Decimal)($"{ReportingEvaluation.Compressor.Compressor.Name} {If(Not String.IsNullOrEmpty(ReportingEvaluation.Compressor.SerialNumber), $"NS {ReportingEvaluation.Compressor.SerialNumber}", "")}", ReportingEvaluation.AverageWorkLoad))
-                If Not String.IsNullOrEmpty(ReportingEvaluation.DocumentName.CurrentFile) AndAlso File.Exists(ReportingEvaluation.DocumentName.CurrentFile) Then
-                    Result.Attachments.Add(New ReportResult.ReportAttachment(ReportingEvaluation.DocumentName.CurrentFile, ReportingEvaluation.Compressor.ToString & ".pdf"))
+                If Not String.IsNullOrEmpty(ReportingEvaluation.DocumentPath.CurrentFile) AndAlso File.Exists(ReportingEvaluation.DocumentPath.CurrentFile) Then
+                    Result.Attachments.Add(New ReportResult.ReportAttachment(ReportingEvaluation.DocumentPath.CurrentFile, ReportingEvaluation.Compressor.ToString & ".pdf"))
                 End If
                 WsReport.Rows(Row, Row).Height = 20
                 'NUMERO DO COMPRESSOR

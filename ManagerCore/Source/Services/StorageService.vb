@@ -4,7 +4,6 @@ Imports Google.Apis.Auth.OAuth2
 Imports Google.Apis.Download
 Imports System.Threading
 Imports Google.Apis.Upload
-Imports ControlLibrary
 Public Class StorageService
     Inherits Storage
     Private _BucketName As String
@@ -32,7 +31,6 @@ Public Class StorageService
         End Using
     End Function
     Public Overrides Async Function DownloadFile(FileName As String, Optional Progress As IProgress(Of Integer) = Nothing, Optional CancellationToken As CancellationToken = Nothing) As Task(Of Byte())
-
         Using StorageClient As StorageClient = Await GetClient()
             Using MemoryStream As New MemoryStream()
                 Dim ObjectMetadata = Await StorageClient.GetObjectAsync(_BucketName, FileName)
@@ -50,9 +48,6 @@ Public Class StorageService
                 Return DownloadedData
             End Using
         End Using
-
-
-
     End Function
 
     Public Overrides Async Function UploadFile(FileName As String, ContentType As String, FileData As Byte(), Optional Progress As IProgress(Of Integer) = Nothing, Optional CancellationToken As CancellationToken = Nothing) As Task

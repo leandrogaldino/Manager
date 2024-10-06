@@ -82,6 +82,16 @@ Public Class ApplicationPaths
             Return Path.Combine(FilesDirectory, "EvaluationDocument")
         End Get
     End Property
+    Public Shared ReadOnly Property EvaluationSignatureDirectory As String
+        Get
+            Return Path.Combine(FilesDirectory, "EvaluationSignature")
+        End Get
+    End Property
+    Public Shared ReadOnly Property EvaluationPhotoDirectory As String
+        Get
+            Return Path.Combine(FilesDirectory, "EvaluationPhoto")
+        End Get
+    End Property
     Public Shared ReadOnly Property ProductPictureDirectory As String
         Get
             Return Path.Combine(FilesDirectory, "ProductPicture")

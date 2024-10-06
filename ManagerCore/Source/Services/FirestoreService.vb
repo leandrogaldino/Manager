@@ -8,18 +8,13 @@ Public Class FirestoreService
     Private _Database As FirestoreDb
 
     Public Overrides Async Function Initialize(Settings As SettingCloudManagerDatabaseModel) As Task
-        'TODO: Esse Try precisa sair daqui, mas precisa ver se nao vai dar problema nas primeiras inicializações do ManagerAgent, se der, utilizar um try la.
-        'Try
         Dim Json As String = Settings.JsonCredentials
-            Dim Credential As GoogleCredential = GoogleCredential.FromJson(Json)
-            Dim builder = New FirestoreDbBuilder() With {
-                .ProjectId = Settings.ProjectID,
-                .Credential = Credential
-            }
-            _Database = Await builder.BuildAsync()
-        'Catch ex As Exception
-        '_Database = Nothing
-        'End Try
+        Dim Credential As GoogleCredential = GoogleCredential.FromJson(Json)
+        Dim builder = New FirestoreDbBuilder() With {
+            .ProjectId = Settings.ProjectID,
+            .Credential = Credential
+        }
+        _Database = Await builder.BuildAsync()
     End Function
 
     Public Overrides Async Function TestConnection() As Task
@@ -32,7 +27,7 @@ Public Class FirestoreService
         End If
     End Function
 
-    Public Sub StartListening(Collection As String, Optional Args As List(Of Condition) = Nothing)
+    Public Overrides Sub StartListening(Collection As String, Optional Args As List(Of Condition) = Nothing)
         Dim Query As Query = _Database.Collection(Collection)
         If Args IsNot Nothing Then Query = ProcessArgs(Query, Args)
         Dim Listener As FirestoreChangeListener = Query.Listen(Sub(Snapshot As QuerySnapshot)
@@ -41,14 +36,14 @@ Public Class FirestoreService
     End Sub
 
     Private Sub HandleSnapshotAsync(Collection As String, Snapshot As QuerySnapshot)
-        Dim eventArgs As New FirestoreChangeEventArgs() With {
+        Dim EventArgs As New FirestoreChangeEventArgs() With {
             .CollectionName = Collection,
             .Documents = Snapshot.Documents.Select(Function(doc) doc.ToDictionary()).ToList()
         }
-        RaiseEvent OnFirestoreChanged(eventArgs)
+        RaiseEvent OnFirestoreChanged(EventArgs)
     End Sub
 
-    Public Sub StopListening()
+    Public Overrides Sub StopListening()
         _Listener?.StopAsync()
     End Sub
     Public Class FirestoreChangeEventArgs

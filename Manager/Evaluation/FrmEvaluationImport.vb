@@ -24,15 +24,15 @@ Public Class FrmEvaluationImport
 
 
     Private Sub RefreshEvaluations()
-        Dim Firestore = Locator.GetInstance(Of RemoteDB)("Customer")
+        Dim Firestore = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
 
         Dim Condition As New List(Of FirestoreService.Condition) From {
             New FirestoreService.WhereEqualToCondition("info.is_sync", False)
         }
 
-        'TODO: Necessario passar o listeneter da implementacao para o contrato RemoteDB
 
-        'Firestore.StartListening("evaluations", Condition)
+
+        Firestore.StartListening("evaluations", Condition)
         'AddHandler Firestore.OnFirestoreChanged, Async Sub(Args)
         '                                             DgvEvaluations.Invoke(Sub() FillDgv(Args.Documents))
         '                                             Await RefreshSync()

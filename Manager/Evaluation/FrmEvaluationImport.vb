@@ -111,6 +111,7 @@ Public Class FrmEvaluationImport
 
 
     Private Async Sub DgvEvaluations_CellMouseDoubleClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DgvEvaluations.CellMouseDoubleClick
+        Cursor = Cursors.WaitCursor
         Dim TempPath As String
         Dim TempSignature As String
         Dim TempPhotos As New List(Of String)
@@ -170,7 +171,8 @@ Public Class FrmEvaluationImport
 
         Form.ShowDialog()
 
-        If Form._Evaluation.ID = 0 Then
+
+        If Evaluation.ID = 0 Then
             _EvaluationData("info")("sync_date") = String.Empty
             _EvaluationData("info")("syncing_by") = String.Empty
             Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
@@ -178,7 +180,7 @@ Public Class FrmEvaluationImport
             _EvaluationData("info")("sync_date") = String.Empty
             _EvaluationData("info")("syncing_by") = String.Empty
             _EvaluationData("info")("is_sync") = True
-            _EvaluationData("info")("returnedid") = Form._Evaluation.ID
+            _EvaluationData("info")("returnedid") = Evaluation.ID
             Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
         End If
 
@@ -186,6 +188,7 @@ Public Class FrmEvaluationImport
 
         _EvaluationData = Nothing
         SyncTimer.Stop()
+        Cursor = Cursors.Default
     End Sub
 
 

@@ -4,13 +4,29 @@ Imports MySql.Data.MySqlClient
 Imports ControlLibrary.Utility
 Imports ManagerCore
 Public Class FrmEvaluation
-    Public _Evaluation As Evaluation
+    Private _Evaluation As Evaluation
     Private _EvaluationsForm As FrmEvaluations
     Private _EvaluationsGrid As DataGridView
     Private _Filter As EvaluationFilter
     Private _Deleting As Boolean
     Private _Loading As Boolean
     Private _Calculated As Boolean
+
+
+    Private Property Calculated As Boolean
+        Get
+            Return _Calculated
+        End Get
+        Set(value As Boolean)
+            _Calculated = value
+            If Calculated Then
+                Size = New Size(1050, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
+            Else
+                Size = New Size(433, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
+            End If
+        End Set
+    End Property
+
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -61,7 +77,6 @@ Public Class FrmEvaluation
         BtnStatusValue.Visible = Locator.GetInstance(Of Session).User.Privilege.EvaluationApproveOrReject
         LblStatusValue.Visible = Not Locator.GetInstance(Of Session).User.Privilege.EvaluationApproveOrReject
         LblDocumentPage.Text = Nothing
-        Size = If(_Calculated, New Size(1050, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height)), New Size(433, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height)))
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -118,8 +133,7 @@ Public Class FrmEvaluation
                 DgvPartElapsedDay.Rows(0).Selected = True
                 DgvPartElapsedDay.FirstDisplayedScrollingRowIndex = 0
             End If
-            Size = New Size(1050, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
-            _Calculated = True
+            Calculated = True
             BtnCalculate.Text = "Recalcular"
         Else
             Decalculate()
@@ -168,7 +182,7 @@ Public Class FrmEvaluation
         If Dgv.SelectedRows.Count = 1 And Dgv.Rows.Count - 1 >= SelectedRowIndex Then
             Dgv.Rows(SelectedRowIndex).Selected = True
             Dgv.FirstDisplayedScrollingRowIndex = FirstDisplayedRowIndex
-            If Dgv.CurrentCell IsNot Nothing AndAlso CurrentCellIndex >= 0 And _Calculated Then
+            If Dgv.CurrentCell IsNot Nothing AndAlso CurrentCellIndex >= 0 And Calculated Then
                 Dgv.CurrentCell = Dgv.Rows(SelectedRowIndex).Cells(CurrentCellIndex)
             End If
         End If
@@ -203,7 +217,7 @@ Public Class FrmEvaluation
         If DgvTechnician.SelectedRows.Count = 1 And DgvTechnician.Rows.Count - 1 >= SelectedRowIndex Then
             DgvTechnician.Rows(SelectedRowIndex).Selected = True
             DgvTechnician.FirstDisplayedScrollingRowIndex = FirstDisplayedRowIndex
-            If DgvTechnician.CurrentCell IsNot Nothing AndAlso CurrentCellIndex >= 0 And _Calculated Then
+            If DgvTechnician.CurrentCell IsNot Nothing AndAlso CurrentCellIndex >= 0 And Calculated Then
                 DgvTechnician.CurrentCell = DgvTechnician.Rows(SelectedRowIndex).Cells(CurrentCellIndex)
             End If
         End If
@@ -338,13 +352,11 @@ Public Class FrmEvaluation
     End Sub
     Private Sub TcEvaluation_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcEvaluation.SelectedIndexChanged
         If TcEvaluation.SelectedTab Is TabMain Then
-            If _Calculated Then
-                Size = New Size(1050, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
+            If Calculated Then
                 FormBorderStyle = FormBorderStyle.FixedSingle
                 WindowState = FormWindowState.Normal
                 MaximizeBox = False
             Else
-                Size = New Size(433, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
                 FormBorderStyle = FormBorderStyle.FixedSingle
                 WindowState = FormWindowState.Normal
                 MaximizeBox = False
@@ -456,7 +468,7 @@ Public Class FrmEvaluation
             TcEvaluation.SelectedTab = TabMain
             DbxAverageWorkLoad.Select()
             Return False
-        ElseIf Not _Calculated Then
+        ElseIf Not Calculated Then
             EprValidation.SetError(BtnCalculate, "A avaliação precisa ser calculada.")
             EprValidation.SetIconAlignment(BtnCalculate, ErrorIconAlignment.MiddleLeft)
             EprValidation.SetIconPadding(BtnCalculate, -125)
@@ -853,12 +865,12 @@ Public Class FrmEvaluation
         Dim PreviousPart As EvaluationPart
         If IsValidFieldsToCalculate() Then
             EprValidation.Clear()
-            If Not _Calculated And DbxHorimeter.DecimalValue = 0 Then
+            If Not Calculated And DbxHorimeter.DecimalValue = 0 Then
                 If CMessageBox.Show("O horímetro informado foi 0 (zero). Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.No Then
                     Exit Sub
                 End If
             End If
-            If _Calculated Then
+            If Calculated Then
                 If CMessageBox.Show("Os itens dessa avaliação já foram calculados. Calcular novamente irá redefinir as capacidades e o CMT com base na avaliação anterior. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.No Then
                     Exit Sub
                 End If
@@ -929,8 +941,7 @@ Public Class FrmEvaluation
                 FillDataGridViewPart(DgvPartWorkedHour, _Evaluation.PartsWorkedHour)
                 FillDataGridViewPart(DgvPartElapsedDay, _Evaluation.PartsElapsedDay)
                 TcEvaluation.SelectedTab = TabMain
-                Size = New Size(1050, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
-                _Calculated = True
+                Calculated = True
                 BtnCalculate.Text = "Recalcular"
             Catch ex As Exception
                 Decalculate()
@@ -1047,10 +1058,9 @@ Public Class FrmEvaluation
         BtnSave.Enabled = Result = DialogResult.OK
     End Sub
     Private Sub Decalculate()
-        Size = New Size(433, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
+            Calculated = False
         DgvPartWorkedHour.DataSource = Nothing
         DgvPartElapsedDay.DataSource = Nothing
-        _Calculated = False
     End Sub
     Private Sub BtnIncludetechnician_Click(sender As Object, e As EventArgs) Handles BtnIncludeTechnician.Click
         Dim Form As New FrmEvaluationTechnician(_Evaluation, New EvaluationTechnician(), Me)

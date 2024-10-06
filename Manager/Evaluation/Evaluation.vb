@@ -100,6 +100,7 @@ Public Class Evaluation
         Dim Evaluation As New Evaluation
         Dim EvaluationTechnician As EvaluationTechnician
         Dim Coalescent As EvaluationPart
+        Evaluation.EvaluationType = If(Data("is_execution") = True, EvaluationType.Execution, EvaluationType.Gathering)
         Evaluation.TechnicalAdvice = Data("advice")
         Evaluation.AverageWorkLoad = Data("awl")
         Evaluation.Customer = New Person().Load(Data("customer")("person_id"), False)

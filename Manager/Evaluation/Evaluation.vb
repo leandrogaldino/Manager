@@ -96,10 +96,11 @@ Public Class Evaluation
 
 
 
-    Public Shared Function FromDictionary(Data As Dictionary(Of String, Object), Signature As String, Photos As List(Of String)) As Evaluation
+    Public Shared Function FromCloud(Data As Dictionary(Of String, Object), Signature As String, Photos As List(Of String)) As Evaluation
         Dim Evaluation As New Evaluation
         Dim EvaluationTechnician As EvaluationTechnician
         Dim Coalescent As EvaluationPart
+        Evaluation.EvaluationNumber = Data("id")
         Evaluation.EvaluationCreationType = EvaluationCreationType.Imported
         Evaluation.EvaluationType = If(Data("is_execution") = True, EvaluationType.Execution, EvaluationType.Gathering)
         Evaluation.TechnicalAdvice = Data("advice")
@@ -109,17 +110,47 @@ Public Class Evaluation
         Evaluation.EvaluationDate = Data("date")
         Evaluation.EndTime = TimeSpan.ParseExact(Data("end_time"), "hh\:mm", Nothing)
         Evaluation.Horimeter = Data("horimeter")
-        Dim AirFilters As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.AirFilter).ToList
-        Dim OilFilters As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.OilFilter).ToList
-        Dim Separators As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.Separator).ToList
-        Dim Oils As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.Oil).ToList
-        AirFilters.ForEach(Sub(x) x.CurrentCapacity = Data("parts")("air_filter"))
-        OilFilters.ForEach(Sub(x) x.CurrentCapacity = Data("parts")("oil_filter"))
-        Separators.ForEach(Sub(x) x.CurrentCapacity = Data("parts")("separator"))
-        Oils.ForEach(Sub(x) x.CurrentCapacity = Data("parts")("oil"))
+        Dim AirFilter As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.AirFilter).ToList
+        Dim OilFilter As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.OilFilter).ToList
+        Dim Separator As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.Separator).ToList
+        Dim Oil As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.Oil).ToList
+
+        Evaluation.PartsWorkedHour.ToList.ForEach(Sub(x)
+                                                      x.IsSaved = True
+                                                  End Sub)
+
+        AirFilter.ForEach(Sub(x)
+                              x.CurrentCapacity = Data("parts")("air_filter")("current_capacity")
+                              x.Sold = Data("parts")("air_filter")("sold")
+                              x.Lost = Data("parts")("air_filter")("lost")
+                              x.IsSaved = True
+                          End Sub)
+        OilFilter.ForEach(Sub(x)
+                              x.CurrentCapacity = Data("parts")("oil_filter")("current_capacity")
+                              x.Sold = Data("parts")("oil_filter")("sold")
+                              x.Lost = Data("parts")("oil_filter")("lost")
+                              x.IsSaved = True
+                          End Sub)
+        Separator.ForEach(Sub(x)
+                              x.CurrentCapacity = Data("parts")("separator")("current_capacity")
+                              x.Sold = Data("parts")("separator")("sold")
+                              x.Lost = Data("parts")("separator")("lost")
+                              x.IsSaved = True
+                          End Sub)
+        Oil.ForEach(Sub(x)
+                        x.CurrentCapacity = Data("parts")("oil")("current_capacity")
+                        x.Sold = Data("parts")("oil")("sold")
+                        x.Lost = Data("parts")("oil")("lost")
+                        x.IsSaved = True
+                    End Sub)
         For Each CoalescentData In Data("parts")("coalescents")
             Coalescent = Evaluation.PartsElapsedDay.Where(Function(y) y.Part.PartBinded).FirstOrDefault(Function(x) x.Part.ID = CoalescentData("coalescent_id"))
-            If Coalescent IsNot Nothing Then Coalescent.CurrentCapacity = DateDiff(DateInterval.Day, Today, CDate(CoalescentData("next_change")))
+            If Coalescent IsNot Nothing Then
+                Coalescent.CurrentCapacity = DateDiff(DateInterval.Day, Today, CDate(CoalescentData("next_change")))
+                Coalescent.Sold = CoalescentData("sold")
+                Coalescent.Lost = CoalescentData("lost")
+                Coalescent.IsSaved = True
+            End If
         Next CoalescentData
         Evaluation.Responsible = Data("responsible")
         Evaluation.StartTime = TimeSpan.ParseExact(Data("start_time"), "hh\:mm", Nothing)

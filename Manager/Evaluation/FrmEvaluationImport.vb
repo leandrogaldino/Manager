@@ -21,8 +21,10 @@ Public Class FrmEvaluationImport
 
         _RemoteDB.StartListening("evaluations", Condition)
         AddHandler _RemoteDB.OnFirestoreChanged, Async Sub(Args)
-                                                     DgvEvaluations.Invoke(Sub() FillDgv(Args.Documents))
-                                                     Await RefreshSync()
+                                                     If DgvEvaluations.Created Then
+                                                         DgvEvaluations.Invoke(Sub() FillDgv(Args.Documents))
+                                                         Await RefreshSync()
+                                                     End If
                                                  End Sub
     End Sub
 
@@ -34,7 +36,7 @@ Public Class FrmEvaluationImport
     Private Sub FrmEvaluationImport_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         Utility.EnableDataGridViewDoubleBuffer(DgvEvaluations, True)
         'RefreshEvaluations()
-        'SyncTimer.Stop()
+        SyncTimer.Stop()
     End Sub
 
 
@@ -101,7 +103,21 @@ Public Class FrmEvaluationImport
     End Sub
 
 
-
+    Private Function GetCMT(Evaluation As Evaluation) As Decimal
+        Dim Value As Decimal
+        Value = 5.71
+        If Evaluation.Horimeter >= 0 Then
+            If Evaluation.HasPreviousEvaluation(Evaluation.Compressor, Evaluation.EvaluationDate, Evaluation.ID) Then
+                If Evaluation.GetPreviousEvaluationDate(Evaluation.Compressor, Evaluation.EvaluationDate, Evaluation.ID) <= Evaluation.EvaluationDate Then
+                    Value = Evaluation.GetAverageWorkLoad(Evaluation.Compressor, Evaluation.Horimeter, Evaluation.EvaluationDate, Evaluation.ID)
+                    If Value = 0 Then Value = 0.01
+                    If Value < 0 Then Value = 5.71
+                    If Value > 24 And Value < 25 Then Value = 24
+                End If
+            End If
+        End If
+        Return Value
+    End Function
 
 
 
@@ -110,12 +126,14 @@ Public Class FrmEvaluationImport
         Dim TempPath As String
         Dim TempSignature As String
         Dim TempPhotos As New List(Of String)
-
+        Dim PreviousEvaluationID As Long
+        Dim PreviousEvaluation As Evaluation
 
         _EvaluationData = DgvEvaluations.Rows(e.RowIndex).Tag
 
         If DgvEvaluations.Rows(e.RowIndex).Cells("Status").Value = GetEnumDescription(CloudSyncStatus.Synchronizing) Then
             CMessageBox.Show($"Essa avaliação esta sendo sincronizada por {_EvaluationData("info")("syncing_by")}", CMessageBoxType.Information)
+            Cursor = Cursors.Default
             Exit Sub
         End If
 
@@ -154,7 +172,81 @@ Public Class FrmEvaluationImport
 
         Next Photo
 
-        Dim Evaluation As Evaluation = Evaluation.FromDictionary(_EvaluationData, TempSignature, TempPhotos)
+
+
+        Dim Evaluation As Evaluation = Evaluation.FromCloud(_EvaluationData, TempSignature, TempPhotos)
+
+
+        PreviousEvaluationID = Evaluation.GetPreviousEvaluationID(Evaluation.Compressor, CDate(Evaluation.EvaluationDate), Evaluation.ID)
+        PreviousEvaluation = New Evaluation().Load(PreviousEvaluationID, False)
+
+
+
+        Dim PreviousPart As EvaluationPart
+        If Evaluation.Horimeter < PreviousEvaluation.Horimeter Then
+            CMessageBox.Show("O horímetro informado é menor do que o horímetro da última avalição desse compressor, só mantenha esse valor caso a unidade tenha sido reconstruída. A capacidade atual dos itens será a mesma da última avaliação.", CMessageBoxType.Warning)
+            Cursor = Cursors.WaitCursor
+            For Each CurrentPart As EvaluationPart In Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBinded = False)
+                CurrentPart.Sold = False
+                CurrentPart.Lost = False
+                PreviousPart = PreviousEvaluation.PartsWorkedHour.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
+                If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
+                    CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity
+                Else
+                    CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
+                End If
+            Next CurrentPart
+            For Each CurrentPart As EvaluationPart In Evaluation.PartsElapsedDay.Where(Function(x) x.Part.PartBinded = False)
+                CurrentPart.Sold = False
+                CurrentPart.Lost = False
+                PreviousPart = PreviousEvaluation.PartsElapsedDay.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
+                If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
+                    CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity
+                Else
+                    CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
+                End If
+            Next CurrentPart
+            If Not Evaluation.ManualAverageWorkLoad Then Evaluation.AverageWorkLoad = PreviousEvaluation.AverageWorkLoad
+        Else
+            For Each CurrentPart As EvaluationPart In Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBinded = False)
+                CurrentPart.Sold = False
+                CurrentPart.Lost = False
+                PreviousPart = PreviousEvaluation.PartsWorkedHour.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
+                If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
+                    CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity - (Evaluation.Horimeter - PreviousEvaluation.Horimeter)
+                Else
+                    CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
+                End If
+            Next CurrentPart
+            For Each CurrentPart As EvaluationPart In Evaluation.PartsElapsedDay.Where(Function(x) x.Part.PartBinded = False)
+                CurrentPart.Sold = False
+                CurrentPart.Lost = False
+                PreviousPart = PreviousEvaluation.PartsElapsedDay.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
+                If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
+                    CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity - (Evaluation.EvaluationDate).Subtract(PreviousEvaluation.EvaluationDate).Days
+                Else
+                    CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
+                End If
+            Next CurrentPart
+            If Not Evaluation.ManualAverageWorkLoad Then Evaluation.AverageWorkLoad = GetCMT(Evaluation)
+        End If
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         Dim Form As FrmEvaluation
 
@@ -164,7 +256,13 @@ Public Class FrmEvaluationImport
             Form = New FrmEvaluation(Evaluation)
         End If
 
-        Form.ShowDialog()
+        Form.BtnSave.Enabled = True
+
+        FrmEvaluationMemory.TopMost = True
+
+        FrmEvaluationMemory.Show()
+
+        Form.ShowDialog(FrmEvaluationMemory)
 
 
         If Evaluation.ID = 0 Then

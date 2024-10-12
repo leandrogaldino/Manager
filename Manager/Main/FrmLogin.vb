@@ -62,10 +62,12 @@ Public Class FrmLogin
                                                 Session.LicenseResult = License.GetLocalLicense()
                                                 If Session.LicenseResult.Success Then
                                                     Hide()
-                                                    FrmMain.Show()
-                                                    'Using Frm As New FrmEvaluationImport
-                                                    'Frm.ShowDialog()
-                                                    ' End Using
+                                                    'FrmMain.Show()
+
+                                                    Dim frm As New FrmEvaluationImport : frm.ShowDialog()
+
+
+
 
                                                 Else
                                                     Select Case Session.LicenseResult.Flag

@@ -656,6 +656,12 @@
     <Compile Include="Evaluation\FrmEvaluationManagementPanelExport.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Evaluation\FrmEvaluationMemory.Designer.vb">
+      <DependentUpon>FrmEvaluationMemory.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Evaluation\FrmEvaluationMemory.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Evaluation\FrmEvaluationPart.Designer.vb">
       <DependentUpon>FrmEvaluationPart.vb</DependentUpon>
     </Compile>

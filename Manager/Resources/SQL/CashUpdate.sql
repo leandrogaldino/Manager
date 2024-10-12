@@ -1,6 +1,6 @@
 UPDATE cash SET
 	id = @id,
     note = @note,
-	documentname = @documentname,
+	documentpath = @documentpath,
 	userid = @userid
 WHERE cash.id = @id;

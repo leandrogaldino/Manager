@@ -112,7 +112,7 @@ Public Class FrmEvaluation
         DbxAverageWorkLoad.Text = _Evaluation.AverageWorkLoad
         TxtTechnicalAdvice.Text = _Evaluation.TechnicalAdvice
         FillDataGridViewTechnician()
-        If _Evaluation.ID > 0 Then
+        If _Evaluation.EvaluationCreationType = EvaluationCreationType.Imported Or (_Evaluation.EvaluationCreationType = EvaluationCreationType.Manual And _Evaluation.ID > 0) Then
             For Each p As EvaluationPart In _Evaluation.PartsWorkedHour.Reverse()
                 If Not p.IsSaved Then
                     _Evaluation.PartsWorkedHour.Remove(p)
@@ -508,7 +508,7 @@ Public Class FrmEvaluation
     End Function
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
-        Dim DocumentName As String = String.Empty
+        Dim DocumentPath As String = String.Empty
         Dim Success As Boolean
         Dim CurrentFile As String = _Evaluation.DocumentPath.CurrentFile
         Dim OriginalFile As String = _Evaluation.DocumentPath.OriginalFile
@@ -578,8 +578,8 @@ Public Class FrmEvaluation
                     End If
                     Success = False
                 Catch ex As Exception
-                    If Not String.IsNullOrEmpty(DocumentName) AndAlso File.Exists(DocumentName) Then
-                        File.Delete(DocumentName)
+                    If Not String.IsNullOrEmpty(DocumentPath) AndAlso File.Exists(DocumentPath) Then
+                        File.Delete(DocumentPath)
                     End If
                     CMessageBox.Show("ERRO EV020", "Ocorreu um erro salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                     Success = False

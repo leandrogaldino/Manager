@@ -3,6 +3,6 @@ UPDATE request SET
     destination = @destination,
     responsible = @responsible,
     note = @note,
-    documentname = @documentname,
+    documentpath = @documentpath,
     userid = @userid
 WHERE request.id = @id;

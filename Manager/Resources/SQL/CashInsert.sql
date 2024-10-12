@@ -4,7 +4,7 @@ INSERT INTO cash
 	creation,
 	statusid,
     note,
-	documentname,
+	documentpath,
 	userid
 )
 VALUES
@@ -13,6 +13,6 @@ VALUES
 	@creation,
 	@statusid,
 	@note,
-	@documentname,
+	@documentpath,
 	@userid
 );

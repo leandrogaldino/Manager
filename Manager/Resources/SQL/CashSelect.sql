@@ -4,7 +4,7 @@ SELECT
 	cash.creation,
 	cash.statusid,
 	cash.note,
-	cash.documentname,
+	cash.documentpath,
 	cash.userid
 FROM cash
 WHERE cash.id = @id;

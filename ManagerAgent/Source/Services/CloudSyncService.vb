@@ -81,7 +81,6 @@ Public Class CloudSyncService
                 End Select
                 LastSyncID = Change("id")
                 Dim ProgressPercentage As Integer = CInt((PerformedOperations / TotalChanges) * 100)
-                'TODO: Verificar o motivo de repetir as porcentagem no report, deve estar reportando a mesma coisa em varias iterações.
                 If Progress IsNot Nothing Then Progress.Report(ProgressPercentage)
                 If PerformedOperations >= RemainingOperations Then
                     Exit For

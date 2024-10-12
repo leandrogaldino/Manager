@@ -2,6 +2,6 @@ SELECT
 	emailsignature.id,
 	emailsignature.creation,
     emailsignature.name,
-	emailsignature.directoryname
+	emailsignature.directorypath
 FROM emailsignature
 WHERE emailsignature.id = @id;

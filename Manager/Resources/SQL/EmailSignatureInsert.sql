@@ -3,7 +3,7 @@ INSERT INTO emailsignature
     ofuserid,
     creation,
     name,
-    directoryname,
+    directorypath,
     userid
 )
 VALUES
@@ -11,6 +11,6 @@ VALUES
     @ofuserid,
     @creation,
     @name,
-    @directoryname,
+    @directorypath,
     @userid
 );

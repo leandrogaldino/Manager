@@ -12,7 +12,7 @@ UPDATE evaluation SET
     manualaverageworkload = @manualaverageworkload,
     averageworkload = @averageworkload,
     technicaladvice = @technicaladvice,
-    documentname = @documentname,
+    documentpath = @documentpath,
     rejectreason = @rejectreason,
     userid = @userid
 WHERE evaluation.id = @id;

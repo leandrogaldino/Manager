@@ -100,6 +100,7 @@ Public Class Evaluation
         Dim Evaluation As New Evaluation
         Dim EvaluationTechnician As EvaluationTechnician
         Dim Coalescent As EvaluationPart
+        Evaluation.EvaluationCreationType = EvaluationCreationType.Imported
         Evaluation.EvaluationType = If(Data("is_execution") = True, EvaluationType.Execution, EvaluationType.Gathering)
         Evaluation.TechnicalAdvice = Data("advice")
         Evaluation.AverageWorkLoad = Data("awl")
@@ -212,8 +213,8 @@ Public Class Evaluation
                         ManualAverageWorkLoad = TableResult.Rows(0).Item("manualaverageworkload")
                         AverageWorkLoad = TableResult.Rows(0).Item("averageworkload")
                         TechnicalAdvice = TableResult.Rows(0).Item("technicaladvice").ToString
-                        If TableResult.Rows(0).Item("documentname") IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("documentname")) Then
-                            DocumentPath.SetCurrentFile(Path.Combine(ApplicationPaths.EvaluationDocumentDirectory, TableResult.Rows(0).Item("documentname").ToString), True)
+                        If TableResult.Rows(0).Item("documentpath") IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("documentpath")) Then
+                            DocumentPath.SetCurrentFile(Path.Combine(ApplicationPaths.EvaluationDocumentDirectory, TableResult.Rows(0).Item("documentpath").ToString), True)
                         End If
                         _RejectReason = TableResult.Rows(0).Item("rejectreason").ToString
                         Technicians = GetTechnicians(Tra)
@@ -362,7 +363,7 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@manualaverageworkload", ManualAverageWorkLoad)
                     CmdEvaluation.Parameters.AddWithValue("@averageworkload", AverageWorkLoad)
                     CmdEvaluation.Parameters.AddWithValue("@technicaladvice", If(String.IsNullOrEmpty(TechnicalAdvice), DBNull.Value, TechnicalAdvice))
-                    CmdEvaluation.Parameters.AddWithValue("@documentname", If(String.IsNullOrEmpty(DocumentPath.CurrentFile), DBNull.Value, Path.GetFileName(DocumentPath.CurrentFile)))
+                    CmdEvaluation.Parameters.AddWithValue("@documentpath", If(String.IsNullOrEmpty(DocumentPath.CurrentFile), DBNull.Value, Path.GetFileName(DocumentPath.CurrentFile)))
                     CmdEvaluation.Parameters.AddWithValue("@rejectreason", If(String.IsNullOrEmpty(RejectReason), DBNull.Value, RejectReason))
                     CmdEvaluation.Parameters.AddWithValue("@userid", User.ID)
                     CmdEvaluation.ExecuteNonQuery()
@@ -432,7 +433,7 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@manualaverageworkload", ManualAverageWorkLoad)
                     CmdEvaluation.Parameters.AddWithValue("@averageworkload", AverageWorkLoad)
                     CmdEvaluation.Parameters.AddWithValue("@technicaladvice", If(String.IsNullOrEmpty(TechnicalAdvice), DBNull.Value, TechnicalAdvice))
-                    CmdEvaluation.Parameters.AddWithValue("@documentname", If(String.IsNullOrEmpty(DocumentPath.CurrentFile), DBNull.Value, Path.GetFileName(DocumentPath.CurrentFile)))
+                    CmdEvaluation.Parameters.AddWithValue("@documentpath", If(String.IsNullOrEmpty(DocumentPath.CurrentFile), DBNull.Value, Path.GetFileName(DocumentPath.CurrentFile)))
                     CmdEvaluation.Parameters.AddWithValue("@rejectreason", If(String.IsNullOrEmpty(RejectReason), DBNull.Value, RejectReason))
                     CmdEvaluation.Parameters.AddWithValue("@userid", User.ID)
                     CmdEvaluation.ExecuteNonQuery()

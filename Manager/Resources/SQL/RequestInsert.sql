@@ -5,7 +5,7 @@ INSERT INTO request
     destination,
     responsible,
     note,
-    documentname,
+    documentpath,
     userid
 )
 VALUES
@@ -15,6 +15,6 @@ VALUES
     @destination,
     @responsible,
     @note,
-    @documentname,
+    @documentpath,
     @userid
 );

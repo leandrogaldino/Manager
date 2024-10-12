@@ -10,7 +10,7 @@ Public Class ProductPicture
     Private _Order As Long
     Private _ID As Long
     Private _Creation As Date = Today
-    Private _Picture As Image
+
     Public ReadOnly Property Order As Long
         Get
             Return _Order
@@ -26,11 +26,11 @@ Public Class ProductPicture
             Return _Creation
         End Get
     End Property
-    Public Property PictureName As New FileManager(ApplicationPaths.ProductPictureDirectory())
-    Public ReadOnly Property Picture As Image
+    Public Property Picture As New FileManager(ApplicationPaths.ProductPictureDirectory())
+    Public ReadOnly Property PictureImage As Image
         Get
-            If Not String.IsNullOrEmpty(PictureName.CurrentFile) AndAlso File.Exists(PictureName.CurrentFile) Then
-                Return Image.FromStream(New MemoryStream(File.ReadAllBytes(PictureName.CurrentFile)))
+            If Not String.IsNullOrEmpty(Picture.CurrentFile) AndAlso File.Exists(Picture.CurrentFile) Then
+                Return Image.FromStream(New MemoryStream(File.ReadAllBytes(Picture.CurrentFile)))
             Else
                 Return Nothing
             End If
@@ -43,9 +43,9 @@ Public Class ProductPicture
         ProductPictureClone.GetType.GetField("_ID", BindingFlags.Instance Or BindingFlags.NonPublic).SetValue(ProductPictureClone, ID)
         ProductPictureClone.GetType.GetField("_Creation", BindingFlags.Instance Or BindingFlags.NonPublic).SetValue(ProductPictureClone, Creation)
         ProductPictureClone.GetType.GetField("_Order", BindingFlags.Instance Or BindingFlags.NonPublic).SetValue(ProductPictureClone, Order)
-        ProductPictureClone.PictureName = New FileManager(ApplicationPaths.ProductPictureDirectory())
-        ProductPictureClone.PictureName.SetCurrentFile(PictureName.OriginalFile, True)
-        ProductPictureClone.PictureName.SetCurrentFile(PictureName.CurrentFile)
+        ProductPictureClone.Picture = New FileManager(ApplicationPaths.ProductPictureDirectory())
+        ProductPictureClone.Picture.SetCurrentFile(Picture.OriginalFile, True)
+        ProductPictureClone.Picture.SetCurrentFile(Picture.CurrentFile)
         ProductPictureClone.Caption = Caption
         ProductPictureClone.IsSaved = IsSaved
         Return ProductPictureClone

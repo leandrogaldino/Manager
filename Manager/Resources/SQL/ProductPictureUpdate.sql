@@ -1,5 +1,5 @@
 UPDATE productpicture SET
-    picturename = @picturename,
+    picturepath = @picturepath,
     caption = @caption,
     userid = @userid
 WHERE productpicture.id = @id;

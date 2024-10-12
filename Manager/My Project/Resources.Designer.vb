@@ -336,15 +336,15 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO cash
         '''(
         '''	cashflowid,
         '''	creation,
         '''	statusid,
-        '''    note,
-        '''	documentname,
+        ''' note,
+        '''	documentpath,
         '''	userid
         ''')
         '''VALUES
@@ -353,7 +353,7 @@ Namespace My.Resources
         '''	@creation,
         '''	@statusid,
         '''	@note,
-        '''	@documentname,
+        '''	@documentpath,
         '''	@userid
         ''');
         '''.
@@ -363,7 +363,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM cashitem
         '''WHERE cashitem.id = @id;.
@@ -373,7 +373,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashItemDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;CashItem&quot; Version=&quot;2&quot;&gt;
@@ -398,7 +398,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashItemGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO cashitem
         '''(
@@ -431,7 +431,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashItemInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM cashitemresponsible
         '''WHERE cashitemresponsible.id = @id;.
@@ -441,7 +441,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashItemResponsibleDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;CashItemResponsible&quot; Version=&quot;1&quot;&gt;
@@ -466,7 +466,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashItemResponsibleGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO cashitemresponsible
         '''(
@@ -489,7 +489,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashItemResponsibleInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	cashitemresponsible.id,
@@ -503,7 +503,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashItemResponsibleSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE cashitemresponsible SET
         '''	responsibleid = @responsibleid,
@@ -515,7 +515,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashItemResponsibleUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	cashitem.id,
@@ -534,7 +534,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashItemSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE cashitem SET
         '''	itemtypeid = @itemtypeid,
@@ -551,7 +551,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashItemUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''    ROUND(
@@ -567,7 +567,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashLastBalanceSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''    (SELECT 
@@ -587,7 +587,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashPreviousBalanceSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	cash.cashflowid,
@@ -606,7 +606,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashReportCashSheet", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''	cashitem.documentdate  AS &apos;DATA&apos;,
@@ -624,7 +624,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashReportExpensesPerResponsible", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	cash.id,
@@ -632,7 +632,7 @@ Namespace My.Resources
         '''	cash.creation,
         '''	cash.statusid,
         '''	cash.note,
-        '''	cash.documentname,
+        '''	cash.documentpath,
         '''	cash.userid
         '''FROM cash
         '''WHERE cash.id = @id;.
@@ -642,7 +642,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE cash SET
         '''    statusid =  @statusid,
@@ -654,12 +654,12 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashSetStatus", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE cash SET
         '''	id = @id,
-        '''    note = @note,
-        '''	documentname = @documentname,
+        ''' note = @note,
+        '''	documentpath = @documentpath,
         '''	userid = @userid
         '''WHERE cash.id = @id;.
         '''</summary>
@@ -668,27 +668,27 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CashUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Chart() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Chart", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property City() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("City", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM city
         '''WHERE city.id = @id;.
@@ -698,7 +698,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CityDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''	city.id AS &apos;ID&apos;,
@@ -723,7 +723,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CityFilter", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;City&quot; Version=&quot;2&quot;&gt;
@@ -749,7 +749,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CityGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO city
         '''(
@@ -775,7 +775,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CityInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM cityroute
         '''WHERE cityroute.id = @id;.
@@ -785,7 +785,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CityRouteDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO cityroute
         '''(
@@ -807,7 +807,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CityRouteInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	cityroute.id,
@@ -822,7 +822,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CityRouteSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE cityroute SET
         '''    routeid =  @routeid
@@ -833,7 +833,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CityRouteUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	city.id,
@@ -851,7 +851,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CitySelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE city SET
         '''    statusid =  @statusid,
@@ -866,47 +866,47 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CityUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Clean() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Clean", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Close() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Close", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property CloseCash() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("CloseCash", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Compressor() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Compressor", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM compressor
         '''WHERE compressor.id = @id;.
@@ -916,7 +916,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CompressorDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''	productprovidercode.code AS &apos;Código&apos;,
@@ -935,7 +935,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CompressorDetailSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''	compressor.id AS &apos;ID&apos;,
@@ -958,7 +958,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CompressorFilter", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;Compressor&quot; Version=&quot;1&quot;&gt;
@@ -984,7 +984,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CompressorGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO compressor
         '''(
@@ -1008,7 +1008,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CompressorInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM compressorpart
         '''WHERE compressorpart.id = @id;.
@@ -1018,7 +1018,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CompressorPartDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;CompressorPartElapsedDay&quot; Version=&quot;3&quot;&gt;
@@ -1044,7 +1044,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CompressorPartElapsedDayGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO compressorpart
         '''(
@@ -1074,7 +1074,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CompressorPartInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	compressorpart.id,
@@ -1095,7 +1095,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CompressorPartSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE compressorpart SET
         '''	statusid = @statusid,
@@ -1110,7 +1110,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CompressorPartUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;CompressorPartWorkedHour&quot; Version=&quot;3&quot;&gt;
@@ -1136,7 +1136,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CompressorPartWorkedHourGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	compressor.id,
@@ -1152,7 +1152,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CompressorSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE compressor SET
         '''    statusid =  @statusid,
@@ -1166,47 +1166,47 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CompressorUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property ContactEmail() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ContactEmail", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property ContactPhone() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ContactPhone", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property ContactWhatsapp() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ContactWhatsapp", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property CRM() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("CRM", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;!DOCTYPE html&gt;
         '''&lt;html&gt;
@@ -1233,7 +1233,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CrmCards", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM crm
         '''WHERE crm.id = @id;.
@@ -1243,7 +1243,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CrmDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	crmtreatment.id,
@@ -1263,7 +1263,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CrmDetailSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''    crm.id AS &apos;ID&apos;,
@@ -1287,7 +1287,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CrmFilter", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;Crm&quot; Version=&quot;1&quot;&gt;
@@ -1313,7 +1313,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CrmGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO crm
         '''(
@@ -1340,7 +1340,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CrmInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	crm.id,
@@ -1358,7 +1358,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CrmSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE crm SET
         '''    statusid =  @statusid,
@@ -1370,7 +1370,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CrmSetStatus", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM crmtreatment
         '''WHERE crmtreatment.id = @id;.
@@ -1380,7 +1380,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CrmTreatmentDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO crmtreatment
         '''(
@@ -1411,7 +1411,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CrmTreatmentInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	crmtreatment.id,
@@ -1429,7 +1429,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CrmTreatmentSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE crmtreatment SET
         '''	responsibleid = @responsibleid,
@@ -1445,7 +1445,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CrmTreatmentUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE crm SET
         '''	id = @id,
@@ -1461,107 +1461,107 @@ Namespace My.Resources
                 Return ResourceManager.GetString("CrmUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Delete() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Delete", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property DeleteSmall() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("DeleteSmall", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property DeleteSmall2() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("DeleteSmall2", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Detail() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Detail", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Disapprove() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Disapprove", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Document() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Document", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Edit() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Edit", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property EditSmall() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("EditSmall", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Email() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Email", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property EmailModel() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("EmailModel", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM emailmodel
         '''WHERE emailmodel.id = @id;.
@@ -1571,7 +1571,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EmailModelDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''	emailmodel.id AS &apos;ID&apos;,
@@ -1592,7 +1592,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EmailModelFilter", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;EmailModel&quot; Version=&quot;1&quot;&gt;
@@ -1618,7 +1618,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EmailModelGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO emailmodel
         '''(
@@ -1646,7 +1646,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EmailModelInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	emailmodel.id,
@@ -1663,7 +1663,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EmailModelSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE emailmodel SET
         '''    name =  @name,
@@ -1678,17 +1678,17 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EmailModelUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property EmailSent() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("EmailSent", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''    emailsent.id AS &apos;ID&apos;,
@@ -1711,7 +1711,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EmailSentFilter", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;EmailSent&quot; Version=&quot;1&quot;&gt;
@@ -1736,7 +1736,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EmailSentGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO emailsent
         '''(
@@ -1766,7 +1766,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EmailSentInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM emailsignature
         '''WHERE emailsignature.id = @id;.
@@ -1776,7 +1776,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EmailSignatureDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''	emailsignature.id AS &apos;ID&apos;,
@@ -1795,14 +1795,14 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EmailSignatureFilter", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO emailsignature
         '''(
         '''    ofuserid,
         '''    creation,
         '''    name,
-        '''    directoryname,
+        '''    directorypath,
         '''    userid
         ''')
         '''VALUES
@@ -1810,7 +1810,7 @@ Namespace My.Resources
         '''    @ofuserid,
         '''    @creation,
         '''    @name,
-        '''    @directoryname,
+        '''    @directorypath,
         '''    @userid
         ''');.
         '''</summary>
@@ -1819,13 +1819,13 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EmailSignatureInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	emailsignature.id,
         '''	emailsignature.creation,
         '''    emailsignature.name,
-        '''	emailsignature.directoryname
+        '''	emailsignature.directorypath
         '''FROM emailsignature
         '''WHERE emailsignature.id = @id;.
         '''</summary>
@@ -1834,7 +1834,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EmailSignatureSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	emailsignature.id
@@ -1846,11 +1846,11 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EmailSignaturesSelectByUser", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE emailsignature SET
         '''    name =  @name,
-        '''    directoryname = @directoryname,
+        '''    directorypath = @directorypath,
         '''    userid = @userid
         '''WHERE emailsignature.id = @id;.
         '''</summary>
@@ -1859,17 +1859,17 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EmailSignatureUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Evaluation() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Evaluation", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	COUNT(evaluation.id)
@@ -1884,7 +1884,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationCount", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM evaluation
         '''WHERE evaluation.id = @id;.
@@ -1894,7 +1894,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''	IFNULL(personcompressorpart.itemname, product.name) AS &apos;Item&apos;,
@@ -1914,7 +1914,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationDetailSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''    evaluation.id,
@@ -1936,7 +1936,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationFilter", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;Evaluation&quot; Version=&quot;8&quot;&gt;
@@ -1962,7 +1962,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	COUNT(evaluation.evaluationdate)
@@ -1985,7 +1985,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationHasPreviousEvaluationSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO evaluation
         '''(
@@ -2003,7 +2003,7 @@ Namespace My.Resources
         '''	manualaverageworkload,
         '''	averageworkload,
         '''	technicaladvice,
-        '''	documentname,
+        '''	documentpath,
         '''	rejectreason,
         '''	userid
         ''')
@@ -2027,7 +2027,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT e.id
         '''FROM evaluation AS e
@@ -2044,17 +2044,17 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationLastEvaluationSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property EvaluationManagement() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("EvaluationManagement", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	evaluation.id evaluation,
@@ -2077,7 +2077,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationManagementFilter", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;EvaluationManagement&quot; Version=&quot;5&quot;&gt;
@@ -2096,14 +2096,15 @@ Namespace My.Resources
         '''		&lt;Width&gt;250&lt;/Width&gt;
         '''	&lt;/Column&gt;
         '''	&lt;Column Index=&quot;2&quot;&gt;
-        '''		&lt;Visible&gt;True&lt;/Visible&gt;        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationManagementGrid() As String
             Get
                 Return ResourceManager.GetString("EvaluationManagementGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT  
         '''	evaluation.id AS evaluationid,
@@ -2123,7 +2124,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationManagementPanelCustomerToVisit", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	person.shortname AS technician,
@@ -2143,7 +2144,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationManagementPanelFillChartProductivityChartSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	UCASE(MONTHNAME(evaluation.evaluationdate)) AS evaluationmonth
@@ -2159,7 +2160,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationManagementPanelMonthSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	person.id AS personid,
@@ -2189,7 +2190,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationManagementPanelNoVisited", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	person.id AS personid,
@@ -2209,7 +2210,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationManagementPanelUnitOverdue", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	MONTHNAME(evaluation.evaluationdate) AS MonthName,
@@ -2230,7 +2231,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationManagementPanelVisitsChartSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''	YEAR(evaluation.evaluationdate) AS evaluationyear
@@ -2245,7 +2246,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationManagementPanelYearSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;EvaluationManagementPartElapsedDay&quot; Version=&quot;3&quot;&gt;
@@ -2271,7 +2272,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationManagementPartElapsedDayGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''    IFNULL(personcompressorpart.itemname, product.name) AS item,
@@ -2295,7 +2296,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationManagementPartFilter", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;EvaluationManagementPartWorkedHour&quot; Version=&quot;3&quot;&gt;
@@ -2321,7 +2322,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationManagementPartWorkedHourGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	evaluation.evaluationdate + INTERVAL((personcompressor.unitcapacity - evaluation.horimeter) / evaluation.averageworkload) DAY AS nextchange
@@ -2334,7 +2335,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationManagementUnit", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM evaluationpart
         '''WHERE evaluationpart.id = @id;.
@@ -2344,7 +2345,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationPartDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO evaluationpart
         '''(
@@ -2375,7 +2376,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationPartInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	evaluationpart.id,
@@ -2397,7 +2398,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationPartSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluationpart SET
         '''    currentcapacity = @currentcapacity,
@@ -2411,7 +2412,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationPartUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''    evaluation.evaluationdate
@@ -2432,7 +2433,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationPreviousEvaluationDateSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''    evaluation.horimeter
@@ -2453,7 +2454,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationPreviousEvaluationHorimeterSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''    IFNULL(evaluation.id, 0)
@@ -2474,7 +2475,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationPreviousEvaluationIDSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	evaluation.id,
@@ -2492,7 +2493,7 @@ Namespace My.Resources
         '''	evaluation.manualaverageworkload,
         '''	evaluation.averageworkload,
         '''	evaluation.technicaladvice,
-        '''	evaluation.documentname,
+        '''	evaluation.documentpath,
         '''	evaluation.rejectreason,
         '''	evaluation.userid
         '''FROM evaluation
@@ -2503,7 +2504,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluation SET
         '''    statusid =  @statusid,
@@ -2516,7 +2517,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationSetStatus", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM evaluationtechnician
         '''WHERE evaluationtechnician.id = @id;.
@@ -2526,7 +2527,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationTechnicianDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO evaluationtechnician
         '''(
@@ -2548,7 +2549,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationTechnicianInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	evaluationtechnician.id,
@@ -2563,7 +2564,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationTechnicianSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluationtechnician SET
         '''    technicianid =  @technicianid
@@ -2574,7 +2575,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationTechnicianUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluation SET
         '''    statusid =  @statusid,
@@ -2597,127 +2598,127 @@ Namespace My.Resources
                 Return ResourceManager.GetString("EvaluationUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Export() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Export", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Filter() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Filter", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Icon semelhante a (Ícone).
         '''</summary>
         Friend ReadOnly Property icon() As System.Drawing.Icon
             Get
                 Dim obj As Object = ResourceManager.GetObject("icon", resourceCulture)
-                Return CType(obj,System.Drawing.Icon)
+                Return CType(obj, System.Drawing.Icon)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Icon semelhante a (Ícone).
         '''</summary>
         Friend ReadOnly Property icon_i() As System.Drawing.Icon
             Get
                 Dim obj As Object = ResourceManager.GetObject("icon_i", resourceCulture)
-                Return CType(obj,System.Drawing.Icon)
+                Return CType(obj, System.Drawing.Icon)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property ImageDelete() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ImageDelete", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property ImageInclude() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ImageInclude", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property ImageSave() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ImageSave", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Import() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Import", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property ImportSmall() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ImportSmall", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Include() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Include", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property IncludeSmall() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("IncludeSmall", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Icon semelhante a (Ícone).
         '''</summary>
         Friend ReadOnly Property information() As System.Drawing.Icon
             Get
                 Dim obj As Object = ResourceManager.GetObject("information", resourceCulture)
-                Return CType(obj,System.Drawing.Icon)
+                Return CType(obj, System.Drawing.Icon)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM lockedregistry
         '''WHERE 
@@ -2731,7 +2732,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("LockedRegistryDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO lockedregistry 
         '''(
@@ -2757,7 +2758,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("LockedRegistryInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	session,
@@ -2773,7 +2774,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("LockedRegistrySelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE lockedregistry SET
         '''	locktime = @locktime
@@ -2788,57 +2789,57 @@ Namespace My.Resources
                 Return ResourceManager.GetString("LockedRegistryUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Log() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Log", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property LoginPassword() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("LoginPassword", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property LoginUser() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("LoginUser", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Logo() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Logo", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Logoff() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Logoff", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''    log.user AS &apos;Usuário&apos;,
@@ -2855,17 +2856,17 @@ Namespace My.Resources
                 Return ResourceManager.GetString("LogSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Magnifier() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Magnifier", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Settings&gt;
@@ -2877,77 +2878,77 @@ Namespace My.Resources
                 Return ResourceManager.GetString("MaintenancePlan", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property NavFirst() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("NavFirst", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property NavLast() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("NavLast", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property NavNext() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("NavNext", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property NavPrevious() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("NavPrevious", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property OpenCash() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("OpenCash", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Pending() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Pending", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Person() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Person", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM personaddress
         '''WHERE personaddress.id = @id;.
@@ -2957,7 +2958,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonAddressDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''	personaddress.ismainaddress AS &apos;Principal&apos;,
@@ -2976,7 +2977,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonAddressDetailSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;PersonAddress&quot; Version=&quot;2&quot;&gt;
@@ -3001,7 +3002,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonAddressGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO personaddress
         '''(
@@ -3048,7 +3049,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonAddressInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	personaddress.id,
@@ -3074,7 +3075,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonAddressSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE personaddress SET
         '''	ismainaddress = @ismainaddress,
@@ -3098,7 +3099,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonAddressUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM personcompressor
         '''WHERE personcompressor.id = @id;.
@@ -3108,7 +3109,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonCompressorDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''    CASE
@@ -3126,7 +3127,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonCompressorDetailSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;PersonCompressor&quot; Version=&quot;2&quot;&gt;
@@ -3151,7 +3152,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonCompressorGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO personcompressor
         '''(
@@ -3186,7 +3187,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonCompressorInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM personcompressorpart
         '''WHERE personcompressorpart.id = @id;.
@@ -3196,7 +3197,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonCompressorPartDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;PersonCompressorPartElapsedDay&quot; Version=&quot;4&quot;&gt;
@@ -3220,7 +3221,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonCompressorPartElapsedDayGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO personcompressorpart
         '''(
@@ -3255,7 +3256,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonCompressorPartInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	personcompressorpart.id,
@@ -3271,14 +3272,15 @@ Namespace My.Resources
         '''WHERE 
         '''	personcompressorpart.personcompressorid = @personcompressorid AND
         '''	personcompressorpart.parttypeid = @parttypeid
-        '''ORDER BY personcompressorpart.id;        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''ORDER BY personcompressorpart.id;
+        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PersonCompressorPartSelect() As String
             Get
                 Return ResourceManager.GetString("PersonCompressorPartSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE personcompressorpart SET
         '''	statusid = @statusid,
@@ -3295,7 +3297,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonCompressorPartUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;PersonCompressorPartWorkedHour&quot; Version=&quot;4&quot;&gt;
@@ -3322,7 +3324,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonCompressorPartWorkedHourGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	personcompressor.id,
@@ -3342,7 +3344,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonCompressorSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE personcompressor SET
         '''	statusid = @statusid,
@@ -3360,7 +3362,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonCompressorUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM personcontact
         '''WHERE personcontact.id = @id;.
@@ -3370,7 +3372,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonContactDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	personcontact.ismaincontact AS &apos;Principal&apos;,
@@ -3386,7 +3388,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonContactDetailSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;PersonContact&quot; Version=&quot;1&quot;&gt;
@@ -3411,7 +3413,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonContactGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO personcontact
         '''(
@@ -3442,7 +3444,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonContactInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	personcontact.id,
@@ -3460,7 +3462,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonContactSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE personcontact SET
         '''	ismaincontact = @ismaincontact,	
@@ -3476,7 +3478,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonContactUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM person
         '''WHERE person.id = @id;.
@@ -3486,7 +3488,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''	person.id AS &apos;ID&apos;,
@@ -3511,7 +3513,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonFilter", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;Person&quot; Version=&quot;1&quot;&gt;
@@ -3537,7 +3539,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO person
         '''(
@@ -3580,7 +3582,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	person.id,
@@ -3606,7 +3608,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	person.id,
@@ -3632,7 +3634,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonSelectByDocument", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE person SET
         '''	id = @id,
@@ -3656,37 +3658,37 @@ Namespace My.Resources
                 Return ResourceManager.GetString("PersonUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Print() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Print", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property PrintSmall() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("PrintSmall", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Product() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Product", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM productcode
         '''WHERE productcode.id = @id;.
@@ -3696,7 +3698,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductCodeDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''	productcode.name AS &apos;Nome&apos;,
@@ -3709,7 +3711,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductCodeDetailSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;ProductCode&quot; Version=&quot;1&quot;&gt;
@@ -3734,7 +3736,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductCodeGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO productcode
         '''(
@@ -3759,7 +3761,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductCodeInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	productcode.id,
@@ -3774,7 +3776,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductCodeSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE productcode SET
         '''    name = @name,
@@ -3787,7 +3789,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductCodeUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM product
         '''WHERE product.id = @id;.
@@ -3797,17 +3799,17 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property ProductFamily() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ProductFamily", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM productfamily
         '''WHERE productfamily.id = @id;.
@@ -3817,7 +3819,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductFamilyDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''	productfamily.id AS &apos;ID&apos;,
@@ -3840,7 +3842,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductFamilyFilter", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;ProductFamily&quot; Version=&quot;1&quot;&gt;
@@ -3865,7 +3867,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductFamilyGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO productfamily
         '''(
@@ -3887,7 +3889,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductFamilyInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	productfamily.id,
@@ -3902,7 +3904,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductFamilySelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE productfamily SET
         '''    statusid =  @statusid,
@@ -3915,7 +3917,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductFamilyUpdate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''	product.id AS &apos;ID&apos;,
@@ -3939,7 +3941,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductFilter", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;Product&quot; Version=&quot;2&quot;&gt;
@@ -3965,17 +3967,17 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property ProductGroup() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ProductGroup", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM productgroup
         '''WHERE productgroup.id = @id;.
@@ -3985,7 +3987,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductGroupDelete", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''	productgroup.id AS &apos;ID&apos;,
@@ -4008,7 +4010,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductGroupFilter", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;ProductGroup&quot; Version=&quot;1&quot;&gt;
@@ -4026,7 +4028,8 @@ Namespace My.Resources
         '''        &lt;Name&gt;Criação&lt;/Name&gt;
         '''        &lt;Width&gt;100&lt;/Width&gt;
         '''    &lt;/Column&gt;
-        '''    &lt;Column Index=&quot;2&quot;&gt;        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''    &lt;Column Index=&quot;2&quot;&gt;
+        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property ProductGroupGrid() As String
             Get
@@ -4161,13 +4164,13 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductPictureGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO productpicture
         '''(
         '''	productid,
         '''	creation,
-        '''	picturename,
+        '''	picturepath,
         '''	caption,
         '''	userid
         ''')
@@ -4175,7 +4178,7 @@ Namespace My.Resources
         '''(
         '''	@productid,
         '''	@creation,
-        '''	@picturename,
+        '''	@picturepath,
         '''	@caption,
         '''	@userid
         ''');
@@ -4186,12 +4189,12 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductPictureInsert", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	productpicture.id,
         '''	productpicture.creation,
-        '''	productpicture.picturename,
+        '''	productpicture.picturepath,
         '''	productpicture.caption
         '''FROM productpicture
         '''WHERE productpicture.productid = @productid;.
@@ -4201,10 +4204,10 @@ Namespace My.Resources
                 Return ResourceManager.GetString("ProductPictureSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE productpicture SET
-        '''    picturename = @picturename,
+        '''    picturepath = @picturepath,
         '''    caption = @caption,
         '''    userid = @userid
         '''WHERE productpicture.id = @id;.
@@ -4847,7 +4850,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("RequestGrid", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO request
         '''(
@@ -4856,7 +4859,7 @@ Namespace My.Resources
         '''    destination,
         '''    responsible,
         '''    note,
-        '''    documentname,
+        '''    documentpath,
         '''    userid
         ''')
         '''VALUES
@@ -4866,7 +4869,7 @@ Namespace My.Resources
         '''    @destination,
         '''    @responsible,
         '''    @note,
-        '''    @documentname,
+        '''    @documentpath,
         '''    @userid
         ''');.
         '''</summary>
@@ -5008,7 +5011,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("RequestReportPendingItems", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	request.id,
@@ -5017,7 +5020,7 @@ Namespace My.Resources
         '''	request.destination,
         '''	request.responsible,
         '''	request.note,
-        '''	request.documentname,	
+        '''	request.documentpath,	
         '''	request.userid
         '''FROM request
         '''WHERE request.id = @id;.
@@ -5027,14 +5030,14 @@ Namespace My.Resources
                 Return ResourceManager.GetString("RequestSelect", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE request SET
         '''    statusid =  @statusid,
         '''    destination = @destination,
         '''    responsible = @responsible,
         '''    note = @note,
-        '''    documentname = @documentname,
+        '''    documentpath = @documentpath,
         '''    userid = @userid
         '''WHERE request.id = @id;.
         '''</summary>

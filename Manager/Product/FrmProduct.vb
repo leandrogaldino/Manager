@@ -116,7 +116,7 @@ Public Class FrmProduct
             Cursor = Cursors.WaitCursor
             _Product.Load(_ProductsGrid.SelectedRows(0).Cells("id").Value, True)
             For Each p In _Product.Pictures.Reverse
-                If Not IO.File.Exists(p.PictureName.OriginalFile) Then
+                If Not IO.File.Exists(p.Picture.OriginalFile) Then
                     _Product.Pictures.Remove(p)
                 End If
             Next p
@@ -431,7 +431,7 @@ Public Class FrmProduct
     End Function
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
-        Dim DocumentName As String = String.Empty
+        Dim DocumentPath As String = String.Empty
         Dim Success As Boolean
         TxtName.Text = RemoveAccents(TxtName.Text.Trim)
         TxtInternalName.Text = RemoveAccents(TxtInternalName.Text.Trim)

@@ -1,4 +1,10 @@
 ﻿Imports System.ComponentModel
+
+Public Enum CloudSyncStatus
+    <Description("Não Sincronizado")> UnSynchronized = 0
+    <Description("Sincronizando")> Synchronizing = 1
+End Enum
+
 Public Enum CompressorPartBind
     <Description("NENHUM")> None = 0
     <Description("FILTRO DE AR")> AirFilter = 1

@@ -54,8 +54,8 @@ Public Class Request
                         Destination = TableResult.Rows(0).Item("destination")
                         Responsible = TableResult.Rows(0).Item("responsible").ToString
                         Note = TableResult.Rows(0).Item("note").ToString
-                        If TableResult.Rows(0).Item("documentname") IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("documentname")) Then
-                            Document.SetCurrentFile(Path.Combine(ApplicationPaths.RequestDocumentDirectory, TableResult.Rows(0).Item("documentname").ToString), True)
+                        If TableResult.Rows(0).Item("documentpath") IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("documentpath")) Then
+                            Document.SetCurrentFile(Path.Combine(ApplicationPaths.RequestDocumentDirectory, TableResult.Rows(0).Item("documentpath").ToString), True)
                         End If
                         Using CmdItem As New MySqlCommand(My.Resources.RequestItemSelect, Con)
                             CmdItem.Transaction = Tra
@@ -126,7 +126,7 @@ Public Class Request
                     CmdRequest.Parameters.AddWithValue("@destination", Destination)
                     CmdRequest.Parameters.AddWithValue("@responsible", Responsible)
                     CmdRequest.Parameters.AddWithValue("@note", If(String.IsNullOrEmpty(Note), DBNull.Value, Note))
-                    CmdRequest.Parameters.AddWithValue("@documentname", If(String.IsNullOrEmpty(Document.CurrentFile), DBNull.Value, Path.GetFileName(Document.CurrentFile)))
+                    CmdRequest.Parameters.AddWithValue("@documentpath", If(String.IsNullOrEmpty(Document.CurrentFile), DBNull.Value, Path.GetFileName(Document.CurrentFile)))
                     CmdRequest.Parameters.AddWithValue("@userid", User.ID)
                     CmdRequest.ExecuteNonQuery()
                     _ID = CmdRequest.LastInsertedId
@@ -164,7 +164,7 @@ Public Class Request
                     CmdRequest.Parameters.AddWithValue("@destination", Destination)
                     CmdRequest.Parameters.AddWithValue("@responsible", Responsible)
                     CmdRequest.Parameters.AddWithValue("@note", If(String.IsNullOrEmpty(Note), DBNull.Value, Note))
-                    CmdRequest.Parameters.AddWithValue("@documentname", If(String.IsNullOrEmpty(Document.CurrentFile), DBNull.Value, Path.GetFileName(Document.CurrentFile)))
+                    CmdRequest.Parameters.AddWithValue("@documentpath", If(String.IsNullOrEmpty(Document.CurrentFile), DBNull.Value, Path.GetFileName(Document.CurrentFile)))
                     CmdRequest.Parameters.AddWithValue("@userid", User.ID)
                     CmdRequest.ExecuteNonQuery()
                 End Using

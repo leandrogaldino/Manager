@@ -1,13 +1,8 @@
 ﻿Imports ManagerCore
 Imports ControlLibrary
-Imports System.ServiceModel
 Imports System.IO
-Imports DocumentFormat.OpenXml.Wordprocessing
-Imports Google.Cloud.Firestore
+Imports ControlLibrary.Utility
 
-
-'TODO: Ao importar, o formulario da avaliação ja deve vir calulado, porem depois de calvular deve-se alterar as capacityes das parts
-'TODO: Utilizar Enum nos status da sincronizacao: Não Sincronizado e Sincronizando
 Public Class FrmEvaluationImport
     Private _EvaluationData As Dictionary(Of String, Object) = Nothing
     Private _EvaluationsForm As Form
@@ -20,8 +15,8 @@ Public Class FrmEvaluationImport
         _Session = Locator.GetInstance(Of Session)
         _Storage = Locator.GetInstance(Of Storage)
         _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
-        Dim Condition As New List(Of FirestoreService.Condition) From {
-            New FirestoreService.WhereEqualToCondition("info.is_sync", False)
+        Dim Condition As New List(Of RemoteDB.Condition) From {
+            New RemoteDB.WhereEqualToCondition("info.is_sync", False)
         }
 
         _RemoteDB.StartListening("evaluations", Condition)
@@ -67,7 +62,7 @@ Public Class FrmEvaluationImport
         If Docs IsNot Nothing AndAlso Docs.Count > 0 Then
             For Each doc In Docs
                 Dim CloudID As String = doc("id")
-                Dim Status As String = If(String.IsNullOrEmpty(doc("info")("syncing_by")), "Não Sincronizado", "Sincronizando")
+                Dim Status As String = If(String.IsNullOrEmpty(doc("info")("syncing_by")), GetEnumDescription(CloudSyncStatus.UnSynchronized), "Sincronizando")
                 Dim CustomerName As String = doc("customer")("customer_name")
                 Dim CompressorName As String = $"{doc("compressor")("compressor_name")}"
                 Dim SerialNumber As String = If(String.IsNullOrEmpty(doc("compressor")("serial_number")), String.Empty, $"NS: {doc("compressor")("serial_number")}")
@@ -78,9 +73,9 @@ Public Class FrmEvaluationImport
 
 
                 If IsDate(doc("info")("sync_date")) AndAlso Now < CDate(doc("info")("sync_date")).AddMinutes(10) Then
-                    Status = "Sincronizando"
+                    Status = GetEnumDescription(CloudSyncStatus.Synchronizing)
                 Else
-                    Status = "Não Sincronizado"
+                    Status = GetEnumDescription(CloudSyncStatus.UnSynchronized)
                 End If
 
 
@@ -119,7 +114,7 @@ Public Class FrmEvaluationImport
 
         _EvaluationData = DgvEvaluations.Rows(e.RowIndex).Tag
 
-        If DgvEvaluations.Rows(e.RowIndex).Cells("Status").Value = "Sincronizando" Then
+        If DgvEvaluations.Rows(e.RowIndex).Cells("Status").Value = GetEnumDescription(CloudSyncStatus.Synchronizing) Then
             CMessageBox.Show($"Essa avaliação esta sendo sincronizada por {_EvaluationData("info")("syncing_by")}", CMessageBoxType.Information)
             Exit Sub
         End If
@@ -213,7 +208,7 @@ Public Class FrmEvaluationImport
     Private Async Function RefreshSync() As Task
 
         For Each Row As DataGridViewRow In DgvEvaluations.Rows
-            If Row.Cells("Status").Value = "Sincronizando" Then
+            If Row.Cells("Status").Value = GetEnumDescription(CloudSyncStatus.Synchronizing) Then
                 Dim Data As Dictionary(Of String, Object) = DirectCast(Row.Tag, Dictionary(Of String, Object))
                 If IsDate(Data("info")("sync_date")) AndAlso Now > CDate(Data("info")("sync_date")).AddMinutes(1.5) Then
                     Data("info")("sync_date") = String.Empty

@@ -226,20 +226,20 @@ Public Class FrmEmailSignature
         End If
     End Function
     Private Sub BtnOpenSignature_Click(sender As Object, e As EventArgs) Handles BtnOpenSignature.Click
-        Dim DirectoryName As String
+        Dim DirectoryPath As String
         Dim SelectedDirectory As DirectoryInfo
         Dim DirectorySize As Long
         Dim DirectoryManager As TxFileManager
         If FbdSignature.ShowDialog = DialogResult.OK Then
-            DirectoryName = Util.GetFilename()
+            DirectoryPath = Util.GetFilename()
             SelectedDirectory = New DirectoryInfo(FbdSignature.SelectedPath)
             If File.Exists(Path.Combine(SelectedDirectory.FullName, "sign.html")) Then
                 SelectedDirectory.GetFiles.ToList.ForEach(Sub(x) DirectorySize += x.Length)
                 DirectorySize = DirectorySize / 1024 / 1024
                 If DirectorySize <= 1 Then
                     DirectoryManager = New TxFileManager(ApplicationPaths.ManagerTempDirectory)
-                    DirectoryManager.CopyDirectory(SelectedDirectory.FullName, Path.Combine(ApplicationPaths.ManagerTempDirectory, DirectoryName))
-                    _EmailSignature.Directory.SetCurrentDirectory(Path.Combine(ApplicationPaths.ManagerTempDirectory, DirectoryName))
+                    DirectoryManager.CopyDirectory(SelectedDirectory.FullName, Path.Combine(ApplicationPaths.ManagerTempDirectory, DirectoryPath))
+                    _EmailSignature.Directory.SetCurrentDirectory(Path.Combine(ApplicationPaths.ManagerTempDirectory, DirectoryPath))
                     If Not String.IsNullOrEmpty(_EmailSignature.Directory.CurrentDirectory) AndAlso Directory.Exists(_EmailSignature.Directory.CurrentDirectory) AndAlso File.Exists(Path.Combine(_EmailSignature.Directory.CurrentDirectory, "sign.html")) Then
                         Try
                             WbPreview.Navigate(Path.Combine(_EmailSignature.Directory.CurrentDirectory, "sign.html"))

@@ -14,7 +14,7 @@ SELECT
 	evaluation.manualaverageworkload,
 	evaluation.averageworkload,
 	evaluation.technicaladvice,
-	evaluation.documentname,
+	evaluation.documentpath,
 	evaluation.rejectreason,
 	evaluation.userid
 FROM evaluation

@@ -118,7 +118,7 @@ Public Class Product
                     CmdProduct.Parameters.AddWithValue("@id", ID)
                     CmdProduct.ExecuteNonQuery()
                     For Each p In Pictures
-                        If File.Exists(p.PictureName.OriginalFile) Then FileManager.Delete(p.PictureName.OriginalFile)
+                        If File.Exists(p.Picture.OriginalFile) Then FileManager.Delete(p.Picture.OriginalFile)
                     Next p
                 End Using
             End Using
@@ -152,7 +152,7 @@ Public Class Product
                     Using CmdPicture As New MySqlCommand(My.Resources.ProductPictureInsert, Con)
                         CmdPicture.Parameters.AddWithValue("@productid", ID)
                         CmdPicture.Parameters.AddWithValue("@creation", Picture.Creation)
-                        CmdPicture.Parameters.AddWithValue("@picturename", Path.GetFileName(Picture.PictureName.CurrentFile))
+                        CmdPicture.Parameters.AddWithValue("@picturepath", Path.GetFileName(Picture.Picture.CurrentFile))
                         CmdPicture.Parameters.AddWithValue("@caption", Picture.Caption)
                         CmdPicture.Parameters.AddWithValue("@userid", Picture.User.ID)
                         CmdPicture.ExecuteNonQuery()
@@ -195,7 +195,7 @@ Public Class Product
                 Next Price
             End Using
             For Each Picture As ProductPicture In Pictures
-                Picture.PictureName.Execute()
+                Picture.Picture.Execute()
             Next Picture
             Transaction.Complete()
         End Using
@@ -229,8 +229,8 @@ Public Class Product
                             CmdPicture.Parameters.AddWithValue("@id", Picture.ID)
                             CmdPicture.ExecuteNonQuery()
                         End Using
-                        If File.Exists(Picture.PictureName.OriginalFile) Then
-                            FileManager.Delete(Picture.PictureName.OriginalFile)
+                        If File.Exists(Picture.Picture.OriginalFile) Then
+                            FileManager.Delete(Picture.Picture.OriginalFile)
                         End If
                     End If
                 Next Picture
@@ -239,7 +239,7 @@ Public Class Product
                         Using CmdPicture As New MySqlCommand(My.Resources.ProductPictureInsert, Con)
                             CmdPicture.Parameters.AddWithValue("@productid", ID)
                             CmdPicture.Parameters.AddWithValue("@creation", Picture.Creation)
-                            CmdPicture.Parameters.AddWithValue("@picturename", Path.GetFileName(Picture.PictureName.CurrentFile))
+                            CmdPicture.Parameters.AddWithValue("@picturepath", Path.GetFileName(Picture.Picture.CurrentFile))
                             CmdPicture.Parameters.AddWithValue("@caption", Picture.Caption)
                             CmdPicture.Parameters.AddWithValue("@userid", Picture.User.ID)
                             CmdPicture.ExecuteNonQuery()
@@ -248,7 +248,7 @@ Public Class Product
                     Else
                         Using CmdPicture As New MySqlCommand(My.Resources.ProductPictureUpdate, Con)
                             CmdPicture.Parameters.AddWithValue("@id", Picture.ID)
-                            CmdPicture.Parameters.AddWithValue("@picturename", Path.GetFileName(Picture.PictureName.CurrentFile))
+                            CmdPicture.Parameters.AddWithValue("@picturepath", Path.GetFileName(Picture.Picture.CurrentFile))
                             CmdPicture.Parameters.AddWithValue("@caption", Picture.Caption)
                             CmdPicture.Parameters.AddWithValue("@userid", Picture.User.ID)
                             CmdPicture.ExecuteNonQuery()
@@ -346,7 +346,7 @@ Public Class Product
                 Next Price
             End Using
             For Each Picture As ProductPicture In Pictures
-                Picture.PictureName.Execute()
+                Picture.Picture.Execute()
             Next Picture
             Transaction.Complete()
         End Using
@@ -364,8 +364,8 @@ Public Class Product
                 Pictures = New OrdenedList(Of ProductPicture)
                 For Each Row As DataRow In TableResult.Rows
                     Picture = New ProductPicture
-                    If Row.Item("picturename").ToString IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("picturename")) Then
-                        Picture.PictureName.SetCurrentFile(Path.Combine(ApplicationPaths.ProductPictureDirectory, Row.Item("picturename").ToString), True)
+                    If Row.Item("picturepath").ToString IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("picturepath")) Then
+                        Picture.Picture.SetCurrentFile(Path.Combine(ApplicationPaths.ProductPictureDirectory, Row.Item("picturepath").ToString), True)
                     End If
                     Picture.Caption = Row.Item("caption").ToString
                     Picture.IsSaved = True

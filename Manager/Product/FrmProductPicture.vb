@@ -112,8 +112,8 @@ Public Class FrmProductPicture
         _Loading = True
         LblOrderValue.Text = _ProductPicture.Order
         LblCreationValue.Text = _ProductPicture.Creation
-        If Not String.IsNullOrEmpty(_ProductPicture.PictureName.CurrentFile) AndAlso File.Exists(_ProductPicture.PictureName.CurrentFile) Then
-            PbxPicture.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_ProductPicture.PictureName.CurrentFile)))
+        If Not String.IsNullOrEmpty(_ProductPicture.Picture.CurrentFile) AndAlso File.Exists(_ProductPicture.Picture.CurrentFile) Then
+            PbxPicture.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_ProductPicture.Picture.CurrentFile)))
             BtnDeletePicture.Visible = True
             BtnSavePicture.Visible = True
         Else
@@ -187,10 +187,10 @@ Public Class FrmProductPicture
         If OfdPicture.ShowDialog = DialogResult.OK Then
             Filename = Util.GetFilename(Path.GetExtension(OfdPicture.FileName))
             File.Copy(OfdPicture.FileName, Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
-            _ProductPicture.PictureName.SetCurrentFile(Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
-            If Not String.IsNullOrEmpty(_ProductPicture.PictureName.CurrentFile) AndAlso File.Exists(_ProductPicture.PictureName.CurrentFile) Then
+            _ProductPicture.Picture.SetCurrentFile(Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
+            If Not String.IsNullOrEmpty(_ProductPicture.Picture.CurrentFile) AndAlso File.Exists(_ProductPicture.Picture.CurrentFile) Then
                 Try
-                    PbxPicture.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_ProductPicture.PictureName.CurrentFile)))
+                    PbxPicture.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_ProductPicture.Picture.CurrentFile)))
                     BtnDeletePicture.Visible = True
                     BtnSavePicture.Visible = True
                     BtnSave.Enabled = True
@@ -214,13 +214,13 @@ Public Class FrmProductPicture
             Else SfdPicture.FilterIndex = 2
                 SignatureFormat = Imaging.ImageFormat.Bmp
             End If
-            SignatureImage = Image.FromStream(New MemoryStream(File.ReadAllBytes(_ProductPicture.PictureName.CurrentFile)))
+            SignatureImage = Image.FromStream(New MemoryStream(File.ReadAllBytes(_ProductPicture.Picture.CurrentFile)))
             SignatureImage.Save(SfdPicture.FileName, SignatureFormat)
         End If
     End Sub
     Private Sub BtnDeletePicture_Click(sender As Object, e As EventArgs) Handles BtnDeletePicture.Click
         If CMessageBox.Show("A imagem será excluída permanentemente quando esse modelo for salvo. Confirma a exclusão?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-            _ProductPicture.PictureName.SetCurrentFile(Nothing)
+            _ProductPicture.Picture.SetCurrentFile(Nothing)
             PbxPicture.Image = Nothing
             BtnDeletePicture.Visible = False
             BtnSavePicture.Visible = False

@@ -14,7 +14,7 @@ INSERT INTO evaluation
 	manualaverageworkload,
 	averageworkload,
 	technicaladvice,
-	documentname,
+	documentpath,
 	rejectreason,
 	userid
 )
@@ -34,7 +34,7 @@ VALUES
 	@manualaverageworkload,
 	@averageworkload,
 	@technicaladvice,
-	@documentname,
+	@documentpath,
 	@rejectreason,
 	@userid
 );

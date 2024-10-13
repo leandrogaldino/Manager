@@ -59,7 +59,7 @@ Public Class FrmEvaluationManagementPanelExport
         End Try
     End Sub
     Private Sub CbxGreen_CheckedChanged(sender As Object, e As EventArgs) Handles CbxToOverdue.CheckedChanged, CbxOverdue.CheckedChanged, CbxToVisit.CheckedChanged, CbxNeverVisited.CheckedChanged, CbxInDay.CheckedChanged, CbxTotal.CheckedChanged, CbxUnitOverdue.CheckedChanged, CbxUnitOverdue.CheckedChanged
-        If GetAllControls(Me).OfType(Of CheckBox).All(Function(x) x.Checked = False) Then
+        If GetAllControls(Me, True).OfType(Of CheckBox).All(Function(x) x.Checked = False) Then
             BtnGenerate.Enabled = False
         Else
             BtnGenerate.Enabled = True

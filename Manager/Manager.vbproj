@@ -656,12 +656,6 @@
     <Compile Include="Evaluation\FrmEvaluationManagementPanelExport.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluationMemory.Designer.vb">
-      <DependentUpon>FrmEvaluationMemory.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Evaluation\FrmEvaluationMemory.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Evaluation\FrmEvaluationPart.Designer.vb">
       <DependentUpon>FrmEvaluationPart.vb</DependentUpon>
     </Compile>
@@ -712,6 +706,12 @@
       <DependentUpon>FrmHtmlPreview.vb</DependentUpon>
     </Compile>
     <Compile Include="Main\FrmHtmlPreview.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\FrmLoader.Designer.vb">
+      <DependentUpon>FrmLoader.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Main\FrmLoader.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Main\FrmReport.Designer.vb">
@@ -1252,6 +1252,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main\FrmHtmlPreview.resx">
       <DependentUpon>FrmHtmlPreview.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\FrmLoader.resx">
+      <DependentUpon>FrmLoader.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\FrmLog.resx">
       <DependentUpon>FrmLog.vb</DependentUpon>

@@ -35,16 +35,8 @@ Public Class FrmEvaluationImport
 
     Private Sub FrmEvaluationImport_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         Utility.EnableDataGridViewDoubleBuffer(DgvEvaluations, True)
-        'RefreshEvaluations()
         SyncTimer.Stop()
     End Sub
-
-
-
-
-
-
-
 
     Private Sub FillDgv(Docs As List(Of Dictionary(Of String, Object)))
         ' Defina as colunas do DataGridView se ainda não estiverem definidas
@@ -129,112 +121,124 @@ Public Class FrmEvaluationImport
         Dim PreviousEvaluationID As Long
         Dim PreviousEvaluation As Evaluation
 
-        _EvaluationData = DgvEvaluations.Rows(e.RowIndex).Tag
+        Dim LoaderForm As New Form
+        LoaderForm.ShowInTaskbar = False
+        LoaderForm.BackColor = Color.Black
+        LoaderForm.FormBorderStyle = FormBorderStyle.None
 
-        If DgvEvaluations.Rows(e.RowIndex).Cells("Status").Value = GetEnumDescription(CloudSyncStatus.Synchronizing) Then
-            CMessageBox.Show($"Essa avaliação esta sendo sincronizada por {_EvaluationData("info")("syncing_by")}", CMessageBoxType.Information)
-            Cursor = Cursors.Default
-            Exit Sub
-        End If
-
-        _EvaluationData("info")("sync_date") = Now.ToString("yyyy-MM-dd HH:mm:ss")
-        _EvaluationData("info")("syncing_by") = _Session.User.Username
-
-
-        Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
-        SyncTimer.Start()
+        LoaderForm.Size = New Size(1000, 1000)
 
 
 
-        Dim SignatureData As Byte() = Await _Storage.DownloadFile(_EvaluationData("signature_url"))
+        Dim AsyncLoader As New AsyncLoader(LoaderForm, 10, False, 6000, Color.Brown)
 
-        TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, Util.GetFilename(".png"))
-
-        Using SignatureStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)
-            Await SignatureStream.WriteAsync(SignatureData, 0, SignatureData.Length)
-        End Using
-
-        TempSignature = TempPath
+        LoaderForm.Cursor = Cursors.WaitCursor
+        Await AsyncLoader.Show()
 
 
 
+        '_EvaluationData = DgvEvaluations.Rows(e.RowIndex).Tag
+
+        'If DgvEvaluations.Rows(e.RowIndex).Cells("Status").Value = GetEnumDescription(CloudSyncStatus.Synchronizing) Then
+        '    CMessageBox.Show($"Essa avaliação esta sendo sincronizada por {_EvaluationData("info")("syncing_by")}", CMessageBoxType.Information)
+        '    Cursor = Cursors.Default
+        '    Await AsyncLoader.Close()
+        '    Exit Sub
+        'End If
+
+        '_EvaluationData("info")("sync_date") = Now.ToString("yyyy-MM-dd HH:mm:ss")
+        '_EvaluationData("info")("syncing_by") = _Session.User.Username
 
 
-        For Each Photo As String In _EvaluationData("photo_urls")
-            Dim PhotoData As Byte() = Await _Storage.DownloadFile(Photo)
-            TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, Util.GetFilename(".jpg"))
-
-            Using PhotoStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)
-                Await PhotoStream.WriteAsync(PhotoData, 0, PhotoData.Length)
-            End Using
-
-            TempPhotos.Add(TempPath)
-
-        Next Photo
-
-
-
-        Dim Evaluation As Evaluation = Evaluation.FromCloud(_EvaluationData, TempSignature, TempPhotos)
-
-
-        PreviousEvaluationID = Evaluation.GetPreviousEvaluationID(Evaluation.Compressor, CDate(Evaluation.EvaluationDate), Evaluation.ID)
-        PreviousEvaluation = New Evaluation().Load(PreviousEvaluationID, False)
+        'Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
+        'SyncTimer.Start()
 
 
 
-        Dim PreviousPart As EvaluationPart
-        If Evaluation.Horimeter < PreviousEvaluation.Horimeter Then
-            CMessageBox.Show("O horímetro informado é menor do que o horímetro da última avalição desse compressor, só mantenha esse valor caso a unidade tenha sido reconstruída. A capacidade atual dos itens será a mesma da última avaliação.", CMessageBoxType.Warning)
-            Cursor = Cursors.WaitCursor
-            For Each CurrentPart As EvaluationPart In Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBinded = False)
-                CurrentPart.Sold = False
-                CurrentPart.Lost = False
-                PreviousPart = PreviousEvaluation.PartsWorkedHour.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
-                If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
-                    CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity
-                Else
-                    CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
-                End If
-            Next CurrentPart
-            For Each CurrentPart As EvaluationPart In Evaluation.PartsElapsedDay.Where(Function(x) x.Part.PartBinded = False)
-                CurrentPart.Sold = False
-                CurrentPart.Lost = False
-                PreviousPart = PreviousEvaluation.PartsElapsedDay.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
-                If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
-                    CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity
-                Else
-                    CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
-                End If
-            Next CurrentPart
-            If Not Evaluation.ManualAverageWorkLoad Then Evaluation.AverageWorkLoad = PreviousEvaluation.AverageWorkLoad
-        Else
-            For Each CurrentPart As EvaluationPart In Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBinded = False)
-                CurrentPart.Sold = False
-                CurrentPart.Lost = False
-                PreviousPart = PreviousEvaluation.PartsWorkedHour.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
-                If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
-                    CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity - (Evaluation.Horimeter - PreviousEvaluation.Horimeter)
-                Else
-                    CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
-                End If
-            Next CurrentPart
-            For Each CurrentPart As EvaluationPart In Evaluation.PartsElapsedDay.Where(Function(x) x.Part.PartBinded = False)
-                CurrentPart.Sold = False
-                CurrentPart.Lost = False
-                PreviousPart = PreviousEvaluation.PartsElapsedDay.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
-                If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
-                    CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity - (Evaluation.EvaluationDate).Subtract(PreviousEvaluation.EvaluationDate).Days
-                Else
-                    CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
-                End If
-            Next CurrentPart
-            If Not Evaluation.ManualAverageWorkLoad Then Evaluation.AverageWorkLoad = GetCMT(Evaluation)
-        End If
+        'Dim SignatureData As Byte() = Await _Storage.DownloadFile(_EvaluationData("signature_url"))
+
+        'TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, Util.GetFilename(".png"))
+
+        'Using SignatureStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)
+        '    Await SignatureStream.WriteAsync(SignatureData, 0, SignatureData.Length)
+        'End Using
+
+        'TempSignature = TempPath
 
 
 
 
 
+        'For Each Photo As String In _EvaluationData("photo_urls")
+        '    Dim PhotoData As Byte() = Await _Storage.DownloadFile(Photo)
+        '    TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, Util.GetFilename(".jpg"))
+
+        '    Using PhotoStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)
+        '        Await PhotoStream.WriteAsync(PhotoData, 0, PhotoData.Length)
+        '    End Using
+
+        '    TempPhotos.Add(TempPath)
+
+        'Next Photo
+
+
+
+        'Dim Evaluation As Evaluation = Evaluation.FromCloud(_EvaluationData, TempSignature, TempPhotos)
+
+
+        'PreviousEvaluationID = Evaluation.GetPreviousEvaluationID(Evaluation.Compressor, CDate(Evaluation.EvaluationDate), Evaluation.ID)
+        'PreviousEvaluation = New Evaluation().Load(PreviousEvaluationID, False)
+
+
+
+        'Dim PreviousPart As EvaluationPart
+        'If Evaluation.Horimeter < PreviousEvaluation.Horimeter Then
+        '    CMessageBox.Show("O horímetro informado é menor do que o horímetro da última avalição desse compressor, só mantenha esse valor caso a unidade tenha sido reconstruída. A capacidade atual dos itens será a mesma da última avaliação.", CMessageBoxType.Warning)
+        '    Cursor = Cursors.WaitCursor
+        '    For Each CurrentPart As EvaluationPart In Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBinded = False)
+        '        CurrentPart.Sold = False
+        '        CurrentPart.Lost = False
+        '        PreviousPart = PreviousEvaluation.PartsWorkedHour.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
+        '        If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
+        '            CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity
+        '        Else
+        '            CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
+        '        End If
+        '    Next CurrentPart
+        '    For Each CurrentPart As EvaluationPart In Evaluation.PartsElapsedDay.Where(Function(x) x.Part.PartBinded = False)
+        '        CurrentPart.Sold = False
+        '        CurrentPart.Lost = False
+        '        PreviousPart = PreviousEvaluation.PartsElapsedDay.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
+        '        If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
+        '            CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity
+        '        Else
+        '            CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
+        '        End If
+        '    Next CurrentPart
+        '    If Not Evaluation.ManualAverageWorkLoad Then Evaluation.AverageWorkLoad = PreviousEvaluation.AverageWorkLoad
+        'Else
+        '    For Each CurrentPart As EvaluationPart In Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBinded = False)
+        '        CurrentPart.Sold = False
+        '        CurrentPart.Lost = False
+        '        PreviousPart = PreviousEvaluation.PartsWorkedHour.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
+        '        If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
+        '            CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity - (Evaluation.Horimeter - PreviousEvaluation.Horimeter)
+        '        Else
+        '            CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
+        '        End If
+        '    Next CurrentPart
+        '    For Each CurrentPart As EvaluationPart In Evaluation.PartsElapsedDay.Where(Function(x) x.Part.PartBinded = False)
+        '        CurrentPart.Sold = False
+        '        CurrentPart.Lost = False
+        '        PreviousPart = PreviousEvaluation.PartsElapsedDay.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
+        '        If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
+        '            CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity - (Evaluation.EvaluationDate).Subtract(PreviousEvaluation.EvaluationDate).Days
+        '        Else
+        '            CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
+        '        End If
+        '    Next CurrentPart
+        '    If Not Evaluation.ManualAverageWorkLoad Then Evaluation.AverageWorkLoad = GetCMT(Evaluation)
+        'End If
 
 
 
@@ -248,40 +252,43 @@ Public Class FrmEvaluationImport
 
 
 
-        Dim Form As FrmEvaluation
-
-        If _EvaluationsForm IsNot Nothing Then
-            Form = New FrmEvaluation(Evaluation, _EvaluationsForm)
-        Else
-            Form = New FrmEvaluation(Evaluation)
-        End If
-
-        Form.BtnSave.Enabled = True
-
-        FrmEvaluationMemory.TopMost = True
-
-        FrmEvaluationMemory.Show()
-
-        Form.ShowDialog(FrmEvaluationMemory)
-
-
-        If Evaluation.ID = 0 Then
-            _EvaluationData("info")("sync_date") = String.Empty
-            _EvaluationData("info")("syncing_by") = String.Empty
-            Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
-        Else
-            _EvaluationData("info")("sync_date") = String.Empty
-            _EvaluationData("info")("syncing_by") = String.Empty
-            _EvaluationData("info")("is_sync") = True
-            _EvaluationData("info")("returnedid") = Evaluation.ID
-            Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
-        End If
 
 
 
-        _EvaluationData = Nothing
+
+
+        'Dim Form As FrmEvaluation
+
+        'If _EvaluationsForm IsNot Nothing Then
+        '    Form = New FrmEvaluation(Evaluation, _EvaluationsForm)
+        'Else
+        '    Form = New FrmEvaluation(Evaluation)
+        'End If
+
+        'Form.BtnSave.Enabled = True
+
+        Await AsyncLoader.Close()
+        'Form.ShowDialog()
+
+
+        'If Evaluation.ID = 0 Then
+        '    _EvaluationData("info")("sync_date") = String.Empty
+        '    _EvaluationData("info")("syncing_by") = String.Empty
+        '    Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
+        'Else
+        '    _EvaluationData("info")("sync_date") = String.Empty
+        '    _EvaluationData("info")("syncing_by") = String.Empty
+        '    _EvaluationData("info")("is_sync") = True
+        '    _EvaluationData("info")("returnedid") = Evaluation.ID
+        '    Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
+        'End If
+
+
+
+        '_EvaluationData = Nothing
         SyncTimer.Stop()
         Cursor = Cursors.Default
+
     End Sub
 
 
@@ -317,12 +324,6 @@ Public Class FrmEvaluationImport
         Next Row
     End Function
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        'RefreshEvaluations()
-    End Sub
 
-    Private Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
-
-    End Sub
 End Class
 

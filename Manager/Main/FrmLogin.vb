@@ -64,7 +64,7 @@ Public Class FrmLogin
                                                     Hide()
                                                     'FrmMain.Show()
 
-                                                    Dim frm As New FrmLoader : frm.Show()
+                                                    Dim frm As New FrmEvaluationImport() : frm.Show()
 
 
 

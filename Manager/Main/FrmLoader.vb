@@ -1,22 +1,25 @@
 ﻿Public Class FrmLoader
-    Private animatedImage As Image
+    Private _Message As String
 
-    Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        animatedImage = Image.FromFile("C:\Users\leand\OneDrive\Desktop\loading.gif")
-        PictureBox1.Image = animatedImage
-        ImageAnimator.Animate(animatedImage, New EventHandler(AddressOf OnFrameChanged))
+    Public Sub New(Optional Message As String = "Carregando")
+        InitializeComponent()
+        _Message = Message
     End Sub
 
-    Private Sub OnFrameChanged(sender As Object, e As EventArgs)
-        PictureBox1.Invalidate() ' Redesenha o PictureBox
+
+
+    Private Async Function InitializeLoader() As Task
+        Await WbLoader.EnsureCoreWebView2Async(Nothing)
+        Dim tempPath As String = System.IO.Path.GetTempPath()
+        Dim htmlTempPath As String = System.IO.Path.Combine(tempPath, "Loading.html")
+        IO.File.WriteAllText(htmlTempPath, My.Resources.Loading.Replace("@LoadingMessage", _Message))
+        WbLoader.CoreWebView2.Navigate("file:///" & htmlTempPath)
+    End Function
+
+    Private Async Sub FrmLoader_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Await InitializeLoader()
     End Sub
 
-    Protected Overrides Sub OnPaint(e As PaintEventArgs)
-        MyBase.OnPaint(e)
-        ImageAnimator.UpdateFrames(animatedImage) ' Atualiza o quadro atual do GIF
-    End Sub
 
-    Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        ImageAnimator.StopAnimate(animatedImage, New EventHandler(AddressOf OnFrameChanged))
-    End Sub
+
 End Class

@@ -30,23 +30,21 @@ Partial Class FrmEvaluationImport
         Me.DgvEvaluations = New System.Windows.Forms.DataGridView()
         Me.SyncTimer = New System.Windows.Forms.Timer(Me.components)
         Me.RefreshTimer = New System.Windows.Forms.Timer(Me.components)
-        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStripDropDownButton1 = New System.Windows.Forms.ToolStripDropDownButton()
         Me.ToolStripCheckBox1 = New ControlLibrary.ToolStripCheckBox()
         Me.PnBottomBar.SuspendLayout()
         CType(Me.DgvEvaluations, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'PnBottomBar
         '
-        Me.PnBottomBar.BackColor = System.Drawing.Color.Blue
+        Me.PnBottomBar.BackColor = System.Drawing.Color.WhiteSmoke
         Me.PnBottomBar.Controls.Add(Me.BtnClose)
         Me.PnBottomBar.Controls.Add(Me.BtnImport)
         Me.PnBottomBar.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PnBottomBar.Location = New System.Drawing.Point(0, 464)
+        Me.PnBottomBar.Location = New System.Drawing.Point(0, 309)
         Me.PnBottomBar.Name = "PnBottomBar"
         Me.PnBottomBar.Size = New System.Drawing.Size(718, 52)
         Me.PnBottomBar.TabIndex = 6
@@ -81,10 +79,10 @@ Partial Class FrmEvaluationImport
         Me.DgvEvaluations.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.DgvEvaluations.BackgroundColor = System.Drawing.Color.Green
+        Me.DgvEvaluations.BackgroundColor = System.Drawing.SystemColors.Control
         Me.DgvEvaluations.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.DgvEvaluations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvEvaluations.Location = New System.Drawing.Point(12, 28)
+        Me.DgvEvaluations.Location = New System.Drawing.Point(12, 12)
         Me.DgvEvaluations.MultiSelect = False
         Me.DgvEvaluations.Name = "DgvEvaluations"
         Me.DgvEvaluations.ReadOnly = True
@@ -92,7 +90,7 @@ Partial Class FrmEvaluationImport
         Me.DgvEvaluations.RowHeadersVisible = False
         Me.DgvEvaluations.RowTemplate.Height = 26
         Me.DgvEvaluations.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvEvaluations.Size = New System.Drawing.Size(694, 430)
+        Me.DgvEvaluations.Size = New System.Drawing.Size(694, 291)
         Me.DgvEvaluations.TabIndex = 24
         '
         'SyncTimer
@@ -104,15 +102,6 @@ Partial Class FrmEvaluationImport
         '
         Me.RefreshTimer.Enabled = True
         Me.RefreshTimer.Interval = 10000
-        '
-        'ToolStrip1
-        '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripLabel1, Me.ToolStripDropDownButton1, Me.ToolStripCheckBox1})
-        Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
-        Me.ToolStrip1.Name = "ToolStrip1"
-        Me.ToolStrip1.Size = New System.Drawing.Size(718, 25)
-        Me.ToolStrip1.TabIndex = 25
-        Me.ToolStrip1.Text = "ToolStrip1"
         '
         'ToolStripButton1
         '
@@ -148,23 +137,22 @@ Partial Class FrmEvaluationImport
         'FrmEvaluationImport
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
-        Me.BackColor = System.Drawing.Color.Yellow
-        Me.ClientSize = New System.Drawing.Size(718, 516)
-        Me.Controls.Add(Me.ToolStrip1)
+        Me.BackColor = System.Drawing.Color.White
+        Me.ClientSize = New System.Drawing.Size(718, 361)
         Me.Controls.Add(Me.DgvEvaluations)
         Me.Controls.Add(Me.PnBottomBar)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.KeyPreview = True
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "FrmEvaluationImport"
+        Me.ShowIcon = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Importar Avaliações"
         Me.PnBottomBar.ResumeLayout(False)
         CType(Me.DgvEvaluations, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ToolStrip1.ResumeLayout(False)
-        Me.ToolStrip1.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Friend WithEvents BtnClose As Button
@@ -173,7 +161,6 @@ Partial Class FrmEvaluationImport
     Friend WithEvents DgvEvaluations As DataGridView
     Friend WithEvents SyncTimer As Timer
     Friend WithEvents RefreshTimer As Timer
-    Friend WithEvents ToolStrip1 As ToolStrip
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
     Friend WithEvents ToolStripDropDownButton1 As ToolStripDropDownButton

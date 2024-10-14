@@ -13,19 +13,51 @@ Public Class FrmEvaluation
     Private _Calculated As Boolean
 
 
+    Private targetSize As Size
+
     Private Property Calculated As Boolean
         Get
             Return _Calculated
         End Get
         Set(value As Boolean)
             _Calculated = value
+
             If Calculated Then
-                Size = New Size(1050, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
+                targetSize = New Size(1050, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
             Else
-                Size = New Size(433, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
+                targetSize = New Size(433, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
             End If
+
+            ' Inicia o timer para redimensionar o formulário de forma suave
+            TmrResize.Start()
         End Set
     End Property
+
+    Private Sub TmrResize_Tick(sender As Object, e As EventArgs) Handles TmrResize.Tick
+        ' Define os incrementos em largura e altura
+        Dim stepWidth As Integer = Math.Max(1, Math.Abs(targetSize.Width - Me.Width) / 5) ' Incrementa no mínimo 1 pixel
+        Dim stepHeight As Integer = Math.Max(1, Math.Abs(targetSize.Height - Me.Height) / 5)
+
+        ' Aumenta ou diminui a largura gradualmente
+        If Me.Width < targetSize.Width Then
+            Me.Width = Math.Min(Me.Width + stepWidth, targetSize.Width)
+        ElseIf Me.Width > targetSize.Width Then
+            Me.Width = Math.Max(Me.Width - stepWidth, targetSize.Width)
+        End If
+
+        ' Aumenta ou diminui a altura gradualmente
+        If Me.Height < targetSize.Height Then
+            Me.Height = Math.Min(Me.Height + stepHeight, targetSize.Height)
+        ElseIf Me.Height > targetSize.Height Then
+            Me.Height = Math.Max(Me.Height - stepHeight, targetSize.Height)
+        End If
+
+        ' Verifica se o formulário já alcançou o tamanho desejado
+        If Me.Width = targetSize.Width AndAlso Me.Height = targetSize.Height Then
+            TmrResize.Stop() ' Para o timer ao alcançar o tamanho final
+        End If
+    End Sub
+
 
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
@@ -350,16 +382,20 @@ Public Class FrmEvaluation
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
         Save()
     End Sub
+
+
     Private Sub TcEvaluation_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcEvaluation.SelectedIndexChanged
         If TcEvaluation.SelectedTab Is TabMain Then
             If Calculated Then
                 FormBorderStyle = FormBorderStyle.FixedSingle
                 WindowState = FormWindowState.Normal
                 MaximizeBox = False
+                Size = New Size(1050, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
             Else
                 FormBorderStyle = FormBorderStyle.FixedSingle
                 WindowState = FormWindowState.Normal
                 MaximizeBox = False
+                Size = New Size(433, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
             End If
         Else
             FormBorderStyle = FormBorderStyle.Sizable

@@ -178,7 +178,6 @@ Public Class FrmEvaluationImport
         Next Photo
 
 
-
         Dim Evaluation As Evaluation = Evaluation.FromCloud(_EvaluationData, TempSignature, TempPhotos)
 
 
@@ -242,7 +241,6 @@ Public Class FrmEvaluationImport
 
 
 
-        'TODO: Alterar o nome e local do arquivo temporario
         'TODO: Preciso emular a soltura do botao do mouse da barra do loader se ele tiver clicado
 
 
@@ -255,6 +253,8 @@ Public Class FrmEvaluationImport
 
         Dim Form As FrmEvaluation
 
+
+
         If _EvaluationsForm IsNot Nothing Then
             Form = New FrmEvaluation(Evaluation, _EvaluationsForm)
         Else
@@ -264,6 +264,8 @@ Public Class FrmEvaluationImport
         Form.BtnSave.Enabled = True
 
         Await AsyncLoader.Close()
+
+
 
 
         Form.ShowDialog()

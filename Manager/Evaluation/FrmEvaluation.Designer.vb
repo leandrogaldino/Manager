@@ -261,21 +261,21 @@ Partial Class FrmEvaluation
         '
         Me.BtnApprove.Image = Global.Manager.My.Resources.Resources.Approve
         Me.BtnApprove.Name = "BtnApprove"
-        Me.BtnApprove.Size = New System.Drawing.Size(151, 22)
+        Me.BtnApprove.Size = New System.Drawing.Size(180, 22)
         Me.BtnApprove.Text = "Aprovar"
         '
         'BtnReject
         '
         Me.BtnReject.Image = Global.Manager.My.Resources.Resources.Reject
         Me.BtnReject.Name = "BtnReject"
-        Me.BtnReject.Size = New System.Drawing.Size(151, 22)
+        Me.BtnReject.Size = New System.Drawing.Size(180, 22)
         Me.BtnReject.Text = "Rejeitar"
         '
         'BtnDisapprove
         '
         Me.BtnDisapprove.Image = Global.Manager.My.Resources.Resources.Disapprove
         Me.BtnDisapprove.Name = "BtnDisapprove"
-        Me.BtnDisapprove.Size = New System.Drawing.Size(151, 22)
+        Me.BtnDisapprove.Size = New System.Drawing.Size(180, 22)
         Me.BtnDisapprove.Text = "Desaprovar"
         '
         'LblCreationDate
@@ -290,6 +290,7 @@ Partial Class FrmEvaluation
         '
         Me.LblCreationValue.BackColor = System.Drawing.Color.White
         Me.LblCreationValue.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblCreationValue.Margin = New System.Windows.Forms.Padding(0, 1, 20, 2)
         Me.LblCreationValue.Name = "LblCreationValue"
         Me.LblCreationValue.Size = New System.Drawing.Size(32, 22)
         Me.LblCreationValue.Text = "      "

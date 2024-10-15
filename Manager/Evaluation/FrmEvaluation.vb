@@ -24,6 +24,14 @@ Public Class FrmEvaluation
 
             If Calculated Then
                 targetSize = New Size(1050, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
+
+                Dim Tb As New Label
+
+                Tb.Text = "Avaliação Importada"
+                Dim toolStripControlHost As New ToolStripControlHost(Tb)
+                TsTitle.Items.Add(toolStripControlHost)
+
+
             Else
                 targetSize = New Size(433, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
             End If

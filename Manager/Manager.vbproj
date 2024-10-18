@@ -246,20 +246,26 @@
     <Reference Include="SixLabors.Fonts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
       <HintPath>..\packages\SixLabors.Fonts.1.0.0\lib\netstandard2.0\SixLabors.Fonts.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.Compression.Base">
+      <HintPath>..\ProjectResources\Public\Misc\Syncfusion\Syncfusion.Compression.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Core.WinForms">
+      <HintPath>..\ProjectResources\Public\Misc\Syncfusion\Syncfusion.Core.WinForms.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.ExcelToPDFConverter.Base, Version=20.1460.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\AppResources\Misc\Syncfusion\Syncfusion.ExcelToPDFConverter.Base.dll</HintPath>
+      <HintPath>..\ProjectResources\Public\Misc\Syncfusion\Syncfusion.ExcelToPDFConverter.Base.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Pdf.Base, Version=20.1460.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\AppResources\Misc\Syncfusion\Syncfusion.Pdf.Base.dll</HintPath>
+      <HintPath>..\ProjectResources\Public\Misc\Syncfusion\Syncfusion.Pdf.Base.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.PdfViewer.Windows, Version=20.1460.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\AppResources\Misc\Syncfusion\Syncfusion.PdfViewer.Windows.dll</HintPath>
+      <HintPath>..\ProjectResources\Public\Misc\Syncfusion\Syncfusion.PdfViewer.Windows.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Shared.Base, Version=20.1460.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89">
-      <HintPath>..\AppResources\Misc\Syncfusion\Syncfusion.Shared.Base.dll</HintPath>
+      <HintPath>..\ProjectResources\Public\Misc\Syncfusion\Syncfusion.Shared.Base.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.XlsIO.Base, Version=20.1460.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\AppResources\Misc\Syncfusion\Syncfusion.XlsIO.Base.dll</HintPath>
+      <HintPath>..\ProjectResources\Public\Misc\Syncfusion\Syncfusion.XlsIO.Base.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -675,6 +681,12 @@
       <DependentUpon>FrmEvaluationRejectReason.vb</DependentUpon>
     </Compile>
     <Compile Include="Evaluation\FrmEvaluationRejectReason.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Evaluation\FrmEvaluationSource.Designer.vb">
+      <DependentUpon>FrmEvaluationSource.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Evaluation\FrmEvaluationSource.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Evaluation\FrmEvaluationTechnician.Designer.vb">
@@ -1248,6 +1260,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Evaluation\FrmEvaluations.resx">
       <DependentUpon>FrmEvaluations.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Evaluation\FrmEvaluationSource.resx">
+      <DependentUpon>FrmEvaluationSource.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Evaluation\FrmEvaluationTechnician.resx">
       <DependentUpon>FrmEvaluationTechnician.vb</DependentUpon>

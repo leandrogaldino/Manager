@@ -25,7 +25,7 @@ Public Class FirestoreService
             Dim Count = Await List.CountAsync()
             If Count = 0 Then Throw New Exception("Erro ao obter dados do banco de dados na núvem")
         Else
-            Throw New NullReferenceException("O banco de dados não foi definido.")
+            Throw New Exception("O banco de dados não foi definido.")
         End If
     End Function
 

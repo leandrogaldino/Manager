@@ -76,7 +76,7 @@ IF IFNULL(OLD.note, '') <> IFNULL(NEW.note, '') THEN INSERT INTO log VALUES (NUL
 IF IFNULL(OLD.documentpath, '') <> IFNULL(NEW.documentpath, '') THEN INSERT INTO log VALUES (NULL, 11, NEW.id, 'Documento', NULL, 'Alterado', NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DELIMITER ;
-requestproductproductproductpicture
+
 
 ALTER TABLE `manager`.`request` CHANGE COLUMN `documentname` `documentpath` VARCHAR(1024) NULL DEFAULT NULL;
 

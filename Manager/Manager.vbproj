@@ -1102,6 +1102,12 @@
     <Compile Include="FrmTest.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="TileContentControl.Designer.vb">
+      <DependentUpon>TileContentControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TileContentControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="UserPrivilegePreset\FrmUserPrivilegePresets.Designer.vb">
       <DependentUpon>FrmUserPrivilegePresets.vb</DependentUpon>
     </Compile>
@@ -1406,6 +1412,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmTest.resx">
       <DependentUpon>FrmTest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TileContentControl.resx">
+      <DependentUpon>TileContentControl.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserPrivilegePreset\FrmUserPrivilegePresets.resx">
       <DependentUpon>FrmUserPrivilegePresets.vb</DependentUpon>

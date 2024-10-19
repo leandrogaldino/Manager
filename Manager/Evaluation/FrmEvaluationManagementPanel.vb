@@ -8,13 +8,13 @@ Imports ControlLibrary.Utility
 Imports ManagerCore
 
 Public Class FrmEvaluationManagementPanel
-    Private _InDayDetail As New UcCardDetail
-    Private _ToOverdueDetail As New UcCardDetail
-    Private _OverDueDetail As New UcCardDetail
-    Private _UnitOverdueDetail As New UcCardDetail
-    Private _NeverVisitDetail As New UcCardDetail
-    Private _ToVisitDetail As New UcCardDetail
-    Private _TotalDetail As New UcCardDetail
+    Private _InDayDetail As New UcEvaluationCardDetail
+    Private _ToOverdueDetail As New UcEvaluationCardDetail
+    Private _OverDueDetail As New UcEvaluationCardDetail
+    Private _UnitOverdueDetail As New UcEvaluationCardDetail
+    Private _NeverVisitDetail As New UcEvaluationCardDetail
+    Private _ToVisitDetail As New UcEvaluationCardDetail
+    Private _TotalDetail As New UcEvaluationCardDetail
     Private Sub FrmEvaluationManagementPanel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim Session = Locator.GetInstance(Of Session)
         CbxInformation.Items.AddRange(GetEnumDescriptions(GetType(EvaluationPanelInformation)).ToArray)

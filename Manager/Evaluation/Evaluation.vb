@@ -95,7 +95,6 @@ Public Class Evaluation
     End Sub
 
 
-
     Public Shared Function FromCloud(Data As Dictionary(Of String, Object), Signature As String, Photos As List(Of String)) As Evaluation
         Dim Evaluation As New Evaluation
         Dim EvaluationTechnician As EvaluationTechnician
@@ -732,4 +731,76 @@ Public Class Evaluation
             End Using
         End Using
     End Sub
+
+
+    Public Sub Calculate()
+        Dim PreviousEvaluationID As Long
+        Dim PreviousEvaluation As Evaluation
+        PreviousEvaluationID = GetPreviousEvaluationID(Compressor, CDate(EvaluationDate), ID)
+        PreviousEvaluation = New Evaluation().Load(PreviousEvaluationID, False)
+        Dim PreviousPart As EvaluationPart
+        If Horimeter < PreviousEvaluation.Horimeter Then
+            For Each CurrentPart As EvaluationPart In PartsWorkedHour
+                CurrentPart.Sold = False
+                CurrentPart.Lost = False
+                PreviousPart = PreviousEvaluation.PartsWorkedHour.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
+                If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
+                    CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity
+                Else
+                    CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
+                End If
+            Next CurrentPart
+            For Each CurrentPart As EvaluationPart In PartsElapsedDay
+                CurrentPart.Sold = False
+                CurrentPart.Lost = False
+                PreviousPart = PreviousEvaluation.PartsElapsedDay.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
+                If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
+                    CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity
+                Else
+                    CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
+                End If
+            Next CurrentPart
+            If Not ManualAverageWorkLoad Then AverageWorkLoad = PreviousEvaluation.AverageWorkLoad
+        Else
+            For Each CurrentPart As EvaluationPart In PartsWorkedHour
+                CurrentPart.Sold = False
+                CurrentPart.Lost = False
+                PreviousPart = PreviousEvaluation.PartsWorkedHour.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
+                If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
+                    CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity - (Horimeter - PreviousEvaluation.Horimeter)
+                Else
+                    CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
+                End If
+            Next CurrentPart
+            For Each CurrentPart As EvaluationPart In PartsElapsedDay
+                CurrentPart.Sold = False
+                CurrentPart.Lost = False
+                PreviousPart = PreviousEvaluation.PartsElapsedDay.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
+                If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
+                    CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity - (EvaluationDate).Subtract(PreviousEvaluation.EvaluationDate).Days
+                Else
+                    CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
+                End If
+            Next CurrentPart
+            If Not ManualAverageWorkLoad Then AverageWorkLoad = GetCMT()
+
+        End If
+
+    End Sub
+
+    Private Function GetCMT() As Decimal
+        Dim Value As Decimal
+        Value = 5.71
+        If Horimeter >= 0 Then
+            If Evaluation.HasPreviousEvaluation(Compressor, EvaluationDate, ID) Then
+                If Evaluation.GetPreviousEvaluationDate(Compressor, EvaluationDate, ID) <= EvaluationDate Then
+                    Value = Evaluation.GetAverageWorkLoad(Compressor, Horimeter, EvaluationDate, ID)
+                    If Value = 0 Then Value = 0.01
+                    If Value < 0 Then Value = 5.71
+                    If Value > 24 And Value < 25 Then Value = 24
+                End If
+            End If
+        End If
+        Return Value
+    End Function
 End Class

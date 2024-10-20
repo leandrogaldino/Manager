@@ -695,10 +695,10 @@
     <Compile Include="Evaluation\FrmEvaluationTechnician.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Evaluation\UcCardDetail.Designer.vb">
-      <DependentUpon>UcCardDetail.vb</DependentUpon>
+    <Compile Include="Evaluation\UcEvaluationCardDetail.Designer.vb">
+      <DependentUpon>UcEvaluationCardDetail.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\UcCardDetail.vb">
+    <Compile Include="Evaluation\UcEvaluationCardDetail.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="FilterExpandable\CrmStatusExpandable.vb" />
@@ -1102,10 +1102,10 @@
     <Compile Include="FrmTest.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TileContentControl.Designer.vb">
-      <DependentUpon>TileContentControl.vb</DependentUpon>
+    <Compile Include="Evaluation\UcEvaluationSourceTile.Designer.vb">
+      <DependentUpon>UcEvaluationSourceTile.vb</DependentUpon>
     </Compile>
-    <Compile Include="TileContentControl.vb">
+    <Compile Include="Evaluation\UcEvaluationSourceTile.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserPrivilegePreset\FrmUserPrivilegePresets.Designer.vb">
@@ -1273,8 +1273,8 @@
     <EmbeddedResource Include="Evaluation\FrmEvaluationTechnician.resx">
       <DependentUpon>FrmEvaluationTechnician.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\UcCardDetail.resx">
-      <DependentUpon>UcCardDetail.vb</DependentUpon>
+    <EmbeddedResource Include="Evaluation\UcEvaluationCardDetail.resx">
+      <DependentUpon>UcEvaluationCardDetail.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Helper\DataGridViewLayout.resx">
       <DependentUpon>DataGridViewLayout.vb</DependentUpon>
@@ -1413,8 +1413,8 @@
     <EmbeddedResource Include="FrmTest.resx">
       <DependentUpon>FrmTest.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TileContentControl.resx">
-      <DependentUpon>TileContentControl.vb</DependentUpon>
+    <EmbeddedResource Include="Evaluation\UcEvaluationSourceTile.resx">
+      <DependentUpon>UcEvaluationSourceTile.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserPrivilegePreset\FrmUserPrivilegePresets.resx">
       <DependentUpon>FrmUserPrivilegePresets.vb</DependentUpon>

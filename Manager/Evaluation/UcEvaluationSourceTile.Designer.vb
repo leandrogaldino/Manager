@@ -140,13 +140,13 @@ Partial Class UcEvaluationSourceTile
         Me.CbxItem1.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         Me.CbxItem1.UseVisualStyleBackColor = False
         '
-        'TileContentControl
+        'UcEvaluationSourceTile
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.Controls.Add(Me.TlpContainer)
         Me.DoubleBuffered = True
         Me.Margin = New System.Windows.Forms.Padding(0)
-        Me.Name = "TileContentControl"
+        Me.Name = "UcEvaluationSourceTile"
         Me.Size = New System.Drawing.Size(450, 30)
         Me.TlpContainer.ResumeLayout(False)
         Me.PnItem2.ResumeLayout(False)

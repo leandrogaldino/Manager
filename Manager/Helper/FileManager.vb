@@ -1,9 +1,14 @@
 ﻿Imports System.IO
 Imports ChinhDo.Transactions
 Public Class FileManager
-    Private _DestDirectory As String
+    Private _TargetDirectory As String
     Private _OriginalFile As String
     Private _CurrentFile As String
+    Public ReadOnly Property TargetDirectory As String
+        Get
+            Return _TargetDirectory
+        End Get
+    End Property
     Public Shared Property TempDirectory As String
     Public ReadOnly Property OriginalFile As String
         Get
@@ -15,9 +20,9 @@ Public Class FileManager
             Return _CurrentFile
         End Get
     End Property
-    Public Sub New(DestDirectory As String)
+    Public Sub New(TargetDirectory As String)
         TempDirectory = TempDirectory
-        _DestDirectory = DestDirectory
+        _TargetDirectory = TargetDirectory
     End Sub
     Public Sub SetCurrentFile(Filename As String, Optional AsOriginal As Boolean = False)
         If String.IsNullOrEmpty(Filename) Or String.IsNullOrWhiteSpace(Filename) Then
@@ -44,9 +49,9 @@ Public Class FileManager
         ElseIf Not String.IsNullOrEmpty(CurrentFile) And String.IsNullOrEmpty(_OriginalFile) Then
             'se tem atual mas nao tem original
             'copia o atual
-            FileManager.Copy(CurrentFile, Path.Combine(_DestDirectory, Path.GetFileName(CurrentFile)), False)
+            FileManager.Copy(CurrentFile, Path.Combine(_TargetDirectory, Path.GetFileName(CurrentFile)), False)
             'seta original igual atual
-            _CurrentFile = Path.Combine(_DestDirectory, Path.GetFileName(CurrentFile))
+            _CurrentFile = Path.Combine(_TargetDirectory, Path.GetFileName(CurrentFile))
             _OriginalFile = CurrentFile
         ElseIf Not String.IsNullOrEmpty(CurrentFile) And Not String.IsNullOrEmpty(_OriginalFile) Then
             'se tem atual e tem original
@@ -55,9 +60,9 @@ Public Class FileManager
                 'deleta o original
                 FileManager.Delete(_OriginalFile)
                 'copia o atual
-                FileManager.Copy(CurrentFile, Path.Combine(_DestDirectory, Path.GetFileName(CurrentFile)), False)
+                FileManager.Copy(CurrentFile, Path.Combine(_TargetDirectory, Path.GetFileName(CurrentFile)), False)
                 'seta original igual atual
-                _CurrentFile = Path.Combine(_DestDirectory, Path.GetFileName(CurrentFile))
+                _CurrentFile = Path.Combine(_TargetDirectory, Path.GetFileName(CurrentFile))
                 _OriginalFile = CurrentFile
             End If
         End If

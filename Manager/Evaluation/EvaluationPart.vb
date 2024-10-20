@@ -1,4 +1,5 @@
-﻿Imports ControlLibrary
+﻿Imports System.Reflection
+Imports ControlLibrary
 ''' <summary>
 ''' Representa uma peça da avaliação do compressor.
 ''' </summary>
@@ -36,4 +37,5 @@ Public Class EvaluationPart
     Public Sub New(PartType As CompressorPartType)
         _PartType = PartType
     End Sub
+
 End Class

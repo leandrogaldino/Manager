@@ -23,45 +23,45 @@ Partial Class FrmEvaluationSource
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.BtnClose = New System.Windows.Forms.Button()
-        Me.BtnSave = New System.Windows.Forms.Button()
+        Me.BtnCancel = New System.Windows.Forms.Button()
+        Me.BtnAccept = New System.Windows.Forms.Button()
         Me.LblCompressor = New System.Windows.Forms.Label()
-        Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
+        Me.FlpContainer = New System.Windows.Forms.FlowLayoutPanel()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.Panel1.Controls.Add(Me.BtnClose)
-        Me.Panel1.Controls.Add(Me.BtnSave)
+        Me.Panel1.Controls.Add(Me.BtnCancel)
+        Me.Panel1.Controls.Add(Me.BtnAccept)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel1.Location = New System.Drawing.Point(0, 253)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(484, 44)
+        Me.Panel1.Size = New System.Drawing.Size(494, 44)
         Me.Panel1.TabIndex = 4
         '
-        'BtnClose
+        'BtnCancel
         '
-        Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnClose.Location = New System.Drawing.Point(377, 7)
-        Me.BtnClose.Name = "BtnClose"
-        Me.BtnClose.Size = New System.Drawing.Size(95, 30)
-        Me.BtnClose.TabIndex = 2
-        Me.BtnClose.Text = "Fechar"
-        Me.BtnClose.UseVisualStyleBackColor = True
+        Me.BtnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.BtnCancel.Location = New System.Drawing.Point(387, 7)
+        Me.BtnCancel.Name = "BtnCancel"
+        Me.BtnCancel.Size = New System.Drawing.Size(95, 30)
+        Me.BtnCancel.TabIndex = 2
+        Me.BtnCancel.Text = "Cancelar"
+        Me.BtnCancel.UseVisualStyleBackColor = True
         '
-        'BtnSave
+        'BtnAccept
         '
-        Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnSave.Enabled = False
-        Me.BtnSave.Location = New System.Drawing.Point(276, 7)
-        Me.BtnSave.Name = "BtnSave"
-        Me.BtnSave.Size = New System.Drawing.Size(95, 30)
-        Me.BtnSave.TabIndex = 1
-        Me.BtnSave.Text = "Salvar"
-        Me.BtnSave.UseVisualStyleBackColor = True
+        Me.BtnAccept.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnAccept.Enabled = False
+        Me.BtnAccept.Location = New System.Drawing.Point(286, 7)
+        Me.BtnAccept.Name = "BtnAccept"
+        Me.BtnAccept.Size = New System.Drawing.Size(95, 30)
+        Me.BtnAccept.TabIndex = 1
+        Me.BtnAccept.Text = "Aceitar"
+        Me.BtnAccept.UseVisualStyleBackColor = True
         '
         'LblCompressor
         '
@@ -70,26 +70,26 @@ Partial Class FrmEvaluationSource
         Me.LblCompressor.ForeColor = System.Drawing.Color.White
         Me.LblCompressor.Location = New System.Drawing.Point(0, 0)
         Me.LblCompressor.Name = "LblCompressor"
-        Me.LblCompressor.Size = New System.Drawing.Size(484, 26)
+        Me.LblCompressor.Size = New System.Drawing.Size(494, 26)
         Me.LblCompressor.TabIndex = 5
         Me.LblCompressor.Text = "Escolha qual leitura você quer considerar"
         Me.LblCompressor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'FlowLayoutPanel1
+        'FlpContainer
         '
-        Me.FlowLayoutPanel1.AutoScroll = True
-        Me.FlowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(12, 29)
-        Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(470, 216)
-        Me.FlowLayoutPanel1.TabIndex = 6
+        Me.FlpContainer.AutoScroll = True
+        Me.FlpContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.FlpContainer.Location = New System.Drawing.Point(12, 29)
+        Me.FlpContainer.Name = "FlpContainer"
+        Me.FlpContainer.Size = New System.Drawing.Size(470, 216)
+        Me.FlpContainer.TabIndex = 6
         '
         'FrmEvaluationSource
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(484, 297)
-        Me.Controls.Add(Me.FlowLayoutPanel1)
+        Me.ClientSize = New System.Drawing.Size(494, 297)
+        Me.Controls.Add(Me.FlpContainer)
         Me.Controls.Add(Me.LblCompressor)
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!)
@@ -104,8 +104,8 @@ Partial Class FrmEvaluationSource
 
     End Sub
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents BtnClose As Button
-    Friend WithEvents BtnSave As Button
+    Friend WithEvents BtnCancel As Button
+    Friend WithEvents BtnAccept As Button
     Friend WithEvents LblCompressor As Label
-    Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
+    Friend WithEvents FlpContainer As FlowLayoutPanel
 End Class

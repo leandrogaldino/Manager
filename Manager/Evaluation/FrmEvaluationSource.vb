@@ -3,17 +3,17 @@
     Public Sub New(Imported As Evaluation, Calculated As Evaluation)
         InitializeComponent()
         Dim Tile As UcEvaluationSourceTile
-        Tile = New UcEvaluationSourceTile("Peça", "Técnico", "Sistema", True)
+        Tile = New UcEvaluationSourceTile("Peça", "Técnico", "Sistema", False, False, True)
         FlpContainer.Controls.Add(Tile)
         ResultEvaluation = Imported
         For Each p In Imported.PartsWorkedHour.Where(Function(x) x.Part.PartBind)
-            Tile = New UcEvaluationSourceTile(p.Part.ToString, p.CurrentCapacity, Calculated.PartsWorkedHour.First(Function(x) x.Part.ID = p.Part.ID).CurrentCapacity)
+            Tile = New UcEvaluationSourceTile(p.Part.ToString, p.CurrentCapacity, Calculated.PartsWorkedHour.First(Function(x) x.Part.ID = p.Part.ID).CurrentCapacity, False, False)
             Tile.Tag = p
             AddHandler Tile.SelectionChanged, AddressOf Control_Click
             FlpContainer.Controls.Add(Tile)
         Next p
         For Each p In Imported.PartsElapsedDay.Where(Function(x) x.Part.PartBind)
-            Tile = New UcEvaluationSourceTile(p.Part.ToString, p.CurrentCapacity, Calculated.PartsElapsedDay.First(Function(x) x.Part.ID = p.Part.ID).CurrentCapacity)
+            Tile = New UcEvaluationSourceTile(p.Part.ToString, p.CurrentCapacity, Calculated.PartsElapsedDay.First(Function(x) x.Part.ID = p.Part.ID).CurrentCapacity, False, False)
             Tile.Tag = p
             AddHandler Tile.SelectionChanged, AddressOf Control_Click
             FlpContainer.Controls.Add(Tile)

@@ -10,8 +10,11 @@ Public Class UcEvaluationSourceTile
 
 
     Private _IsHeader As Boolean = False
+    Private _IsSold As Boolean = False
+    Private _IsLost As Boolean = False
 
-    Public Sub New(Title As String, Item1 As String, item2 As String, Optional IsHeader As Boolean = False)
+
+    Public Sub New(Title As String, Item1 As String, item2 As String, IsSold As Boolean, IsLost As Boolean, Optional IsHeader As Boolean = False)
         InitializeComponent()
         LblTitle.Text = Title
         CbxItem1.Text = Item1
@@ -34,6 +37,40 @@ Public Class UcEvaluationSourceTile
             ConfigureTile()
         End Set
     End Property
+
+
+
+    <Category("TileData")>
+    <DefaultValue(False)>
+    Public Property IsSold As Boolean
+        Get
+            Return _IsSold
+        End Get
+        Set(value As Boolean)
+            _IsSold = value
+            If value Then
+                LblSoldLost.Text = "Vendido"
+            End If
+            ConfigureTile()
+        End Set
+    End Property
+
+    <Category("TileData")>
+    <DefaultValue(False)>
+    Public Property IsLost As Boolean
+        Get
+            Return _IsLost
+        End Get
+        Set(value As Boolean)
+            _IsLost = value
+            If value Then
+                LblSoldLost.Text = "Perdido"
+            End If
+            ConfigureTile()
+        End Set
+    End Property
+
+
     <Browsable(False)>
     Public ReadOnly Property SelectedValue As String
         Get
@@ -100,6 +137,22 @@ Public Class UcEvaluationSourceTile
         PnTitle.Padding = New Padding(1, Top, 1, 1)
         PnItem1.Padding = New Padding(0, Top, 1, 1)
         PnItem2.Padding = New Padding(0, Top, 1, 1)
+        PnSoldLost.Padding = New Padding(0, 0, 1, 1)
+        If IsSold Or IsLost Then
+            TlpContainer.RowCount = 2
+            If Not TlpContainer.Controls.Contains(PnSoldLost) Then
+                TlpContainer.Controls.Add(PnSoldLost, 2, 2)
+            End If
+            TlpContainer.SetRowSpan(PnTitle, 2)
+            TlpContainer.SetColumnSpan(PnSoldLost, 2)
+        Else
+            TlpContainer.RowCount = 1
+            If TlpContainer.Controls.Contains(PnSoldLost) Then
+                TlpContainer.Controls.Remove(PnSoldLost)
+            End If
+            TlpContainer.SetRowSpan(PnTitle, 1)
+
+        End If
     End Sub
     Private Sub CheckedChanged(sender As Object, e As EventArgs) Handles CbxItem1.CheckedChanged, CbxItem2.CheckedChanged
         Dim Control As CheckBox = CType(sender, CheckBox)

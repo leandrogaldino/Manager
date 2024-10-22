@@ -651,6 +651,18 @@
     <Compile Include="Email\FrmEmailImportEmailModel.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Evaluation\Control\UcEvaluationSoldLost.Designer.vb">
+      <DependentUpon>UcEvaluationSoldLost.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Evaluation\Control\UcEvaluationSoldLost.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Evaluation\Control\UcEvaluationSourceHeader.Designer.vb">
+      <DependentUpon>UcEvaluationSourceHeader.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Evaluation\Control\UcEvaluationSourceHeader.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Evaluation\EvaluationPart.vb" />
     <Compile Include="Evaluation\EvaluationTechnician.vb" />
     <Compile Include="Evaluation\FrmEvaluationImport.Designer.vb">
@@ -695,10 +707,10 @@
     <Compile Include="Evaluation\FrmEvaluationTechnician.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Evaluation\UcEvaluationCardDetail.Designer.vb">
+    <Compile Include="Evaluation\Control\UcEvaluationCardDetail.Designer.vb">
       <DependentUpon>UcEvaluationCardDetail.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\UcEvaluationCardDetail.vb">
+    <Compile Include="Evaluation\Control\UcEvaluationCardDetail.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="FilterExpandable\CrmStatusExpandable.vb" />
@@ -1102,10 +1114,10 @@
     <Compile Include="FrmTest.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Evaluation\UcEvaluationSourceTile.Designer.vb">
-      <DependentUpon>UcEvaluationSourceTile.vb</DependentUpon>
+    <Compile Include="Evaluation\Control\UcEvaluationSourceItem.Designer.vb">
+      <DependentUpon>UcEvaluationSourceItem.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\UcEvaluationSourceTile.vb">
+    <Compile Include="Evaluation\Control\UcEvaluationSourceItem.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserPrivilegePreset\FrmUserPrivilegePresets.Designer.vb">
@@ -1242,6 +1254,12 @@
     <EmbeddedResource Include="Email\FrmEmailImportEmailModel.resx">
       <DependentUpon>FrmEmailImportEmailModel.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Evaluation\Control\UcEvaluationSoldLost.resx">
+      <DependentUpon>UcEvaluationSoldLost.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Evaluation\Control\UcEvaluationSourceHeader.resx">
+      <DependentUpon>UcEvaluationSourceHeader.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Evaluation\FrmEvaluation.resx">
       <DependentUpon>FrmEvaluation.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -1273,7 +1291,7 @@
     <EmbeddedResource Include="Evaluation\FrmEvaluationTechnician.resx">
       <DependentUpon>FrmEvaluationTechnician.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\UcEvaluationCardDetail.resx">
+    <EmbeddedResource Include="Evaluation\Control\UcEvaluationCardDetail.resx">
       <DependentUpon>UcEvaluationCardDetail.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Helper\DataGridViewLayout.resx">
@@ -1413,8 +1431,8 @@
     <EmbeddedResource Include="FrmTest.resx">
       <DependentUpon>FrmTest.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\UcEvaluationSourceTile.resx">
-      <DependentUpon>UcEvaluationSourceTile.vb</DependentUpon>
+    <EmbeddedResource Include="Evaluation\Control\UcEvaluationSourceItem.resx">
+      <DependentUpon>UcEvaluationSourceItem.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserPrivilegePreset\FrmUserPrivilegePresets.resx">
       <DependentUpon>FrmUserPrivilegePresets.vb</DependentUpon>

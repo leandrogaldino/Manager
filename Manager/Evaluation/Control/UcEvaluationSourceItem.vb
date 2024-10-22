@@ -1,42 +1,35 @@
 ﻿Imports System.ComponentModel
 
-Public Class UcEvaluationSourceTile
+Public Class UcEvaluationSourceItem
 
     Public Event SelectionChanged(sender As Object, e As EventArgs)
-
+    Private _UcSoldLost As UcEvaluationSoldLost
     Private Sub OnSelectionChanged()
         RaiseEvent SelectionChanged(Me, EventArgs.Empty)
     End Sub
 
 
-    Private _IsHeader As Boolean = False
+
     Private _IsSold As Boolean = False
     Private _IsLost As Boolean = False
 
 
-    Public Sub New(Title As String, Item1 As String, item2 As String, IsSold As Boolean, IsLost As Boolean, Optional IsHeader As Boolean = False)
+    Public Sub New(Title As String, Item1 As String, item2 As String, IsSold As Boolean, IsLost As Boolean)
         InitializeComponent()
         LblTitle.Text = Title
         CbxItem1.Text = Item1
         CbxItem2.Text = item2
-        _IsHeader = IsHeader
-        ConfigureTile()
+        _UcSoldLost = New UcEvaluationSoldLost
+        CcSoldLost.DropDownControl = _UcSoldLost
     End Sub
     Public Sub New()
         InitializeComponent()
-        ConfigureTile()
+        _UcSoldLost = New UcEvaluationSoldLost
+        CcSoldLost.DropDownControl = _UcSoldLost
     End Sub
-    <Category("TileData")>
-    <DefaultValue(False)>
-    Public Property IsHeader As Boolean
-        Get
-            Return _IsHeader
-        End Get
-        Set(value As Boolean)
-            _IsHeader = value
-            ConfigureTile()
-        End Set
-    End Property
+
+
+
 
 
 
@@ -121,48 +114,7 @@ Public Class UcEvaluationSourceTile
         End Set
     End Property
     Private Sub ConfigureTile()
-        Dim Top As Single
-        If IsHeader Then
-            LblTitle.Font = New Font(LblTitle.Font, FontStyle.Bold)
-            CbxItem1.Font = New Font(CbxItem1.Font, FontStyle.Bold)
-            CbxItem1.AutoCheck = False
-            CbxItem1.FlatAppearance.MouseOverBackColor = Color.White
-            CbxItem1.FlatAppearance.CheckedBackColor = Color.White
-            CbxItem1.FlatAppearance.MouseDownBackColor = Color.White
-            CbxItem1.Cursor = Cursors.Default
-            CbxItem2.Font = New Font(CbxItem2.Font, FontStyle.Bold)
-            CbxItem2.AutoCheck = False
-            CbxItem2.FlatAppearance.MouseOverBackColor = Color.White
-            CbxItem2.FlatAppearance.CheckedBackColor = Color.White
-            CbxItem2.FlatAppearance.MouseDownBackColor = Color.White
-            CbxItem2.Cursor = Cursors.Default
-            Top = 1
 
-
-
-            TlpContainer.SetColumnSpan(PnSoldLost, 1)
-            TlpContainer.Controls.Remove(PnSoldLost)
-            TlpContainer.SetRowSpan(PnTitle, 1)
-            Height = 24
-
-
-        Else
-            LblTitle.Font = New Font(LblTitle.Font, FontStyle.Regular)
-            CbxItem1.Font = New Font(CbxItem1.Font, FontStyle.Regular)
-            CbxItem2.Font = New Font(CbxItem2.Font, FontStyle.Regular)
-            Top = 0
-
-
-            TlpContainer.SetColumnSpan(PnSoldLost, 2)
-            TlpContainer.Controls.Add(PnSoldLost)
-            TlpContainer.SetRowSpan(PnTitle, 2)
-            Height = 48
-
-        End If
-        PnTitle.Padding = New Padding(1, Top, 1, 1)
-        PnItem1.Padding = New Padding(0, Top, 1, 1)
-        PnItem2.Padding = New Padding(0, Top, 1, 1)
-        PnSoldLost.Padding = New Padding(0, 0, 1, 1)
     End Sub
     Private Sub CheckedChanged(sender As Object, e As EventArgs) Handles CbxItem1.CheckedChanged, CbxItem2.CheckedChanged
         Dim Control As CheckBox = CType(sender, CheckBox)
@@ -176,5 +128,4 @@ Public Class UcEvaluationSourceTile
         End If
         OnSelectionChanged()
     End Sub
-
 End Class

@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class UcEvaluationSourceTile
+Partial Class UcEvaluationSourceItem
     Inherits System.Windows.Forms.UserControl
 
     'O UserControl substitui o descarte para limpar a lista de componentes.
@@ -31,6 +31,7 @@ Partial Class UcEvaluationSourceTile
         Me.TlpContainer = New System.Windows.Forms.TableLayoutPanel()
         Me.PnSoldLost = New System.Windows.Forms.Panel()
         Me.BtnSoldLost = New System.Windows.Forms.Button()
+        Me.CcSoldLost = New ControlLibrary.ControlContainer()
         Me.PnItem1.SuspendLayout()
         Me.PnTitle.SuspendLayout()
         Me.PnItem2.SuspendLayout()
@@ -58,7 +59,7 @@ Partial Class UcEvaluationSourceTile
         Me.CbxItem1.Cursor = System.Windows.Forms.Cursors.Hand
         Me.CbxItem1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CbxItem1.FlatAppearance.BorderSize = 0
-        Me.CbxItem1.FlatAppearance.CheckedBackColor = System.Drawing.Color.Gainsboro
+        Me.CbxItem1.FlatAppearance.CheckedBackColor = System.Drawing.Color.WhiteSmoke
         Me.CbxItem1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.CbxItem1.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CbxItem1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -116,7 +117,7 @@ Partial Class UcEvaluationSourceTile
         Me.CbxItem2.Cursor = System.Windows.Forms.Cursors.Hand
         Me.CbxItem2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CbxItem2.FlatAppearance.BorderSize = 0
-        Me.CbxItem2.FlatAppearance.CheckedBackColor = System.Drawing.Color.Gainsboro
+        Me.CbxItem2.FlatAppearance.CheckedBackColor = System.Drawing.Color.WhiteSmoke
         Me.CbxItem2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.CbxItem2.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CbxItem2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -174,16 +175,23 @@ Partial Class UcEvaluationSourceTile
         Me.BtnSoldLost.Name = "BtnSoldLost"
         Me.BtnSoldLost.Size = New System.Drawing.Size(179, 21)
         Me.BtnSoldLost.TabIndex = 0
-        Me.BtnSoldLost.Text = "Troca: N/A"
+        Me.BtnSoldLost.Text = "Troca?"
         Me.BtnSoldLost.UseVisualStyleBackColor = False
         '
-        'UcEvaluationSourceTile
+        'CcSoldLost
+        '
+        Me.CcSoldLost.DropDownBorderColor = System.Drawing.SystemColors.HotTrack
+        Me.CcSoldLost.DropDownControl = Nothing
+        Me.CcSoldLost.DropDownEnabled = True
+        Me.CcSoldLost.HostControl = Me.BtnSoldLost
+        '
+        'UcEvaluationSourceItem
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.Controls.Add(Me.TlpContainer)
         Me.DoubleBuffered = True
         Me.Margin = New System.Windows.Forms.Padding(0)
-        Me.Name = "UcEvaluationSourceTile"
+        Me.Name = "UcEvaluationSourceItem"
         Me.Size = New System.Drawing.Size(450, 48)
         Me.PnItem1.ResumeLayout(False)
         Me.PnItem1.PerformLayout()
@@ -205,4 +213,5 @@ Partial Class UcEvaluationSourceTile
     Private WithEvents TlpContainer As TableLayoutPanel
     Private WithEvents PnSoldLost As Panel
     Friend WithEvents BtnSoldLost As Button
+    Friend WithEvents CcSoldLost As ControlLibrary.ControlContainer
 End Class

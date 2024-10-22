@@ -22,33 +22,16 @@ Partial Class FrmTest
     'Não o modifique usando o editor de códigos.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.UcEvaluationSourceTile1 = New Manager.UcEvaluationSourceTile()
         Me.SuspendLayout()
-        '
-        'UcEvaluationSourceTile1
-        '
-        Me.UcEvaluationSourceTile1.IsHeader = True
-        Me.UcEvaluationSourceTile1.IsLost = True
-        Me.UcEvaluationSourceTile1.Item1 = "1500"
-        Me.UcEvaluationSourceTile1.Item2 = "1550"
-        Me.UcEvaluationSourceTile1.Location = New System.Drawing.Point(251, 210)
-        Me.UcEvaluationSourceTile1.Margin = New System.Windows.Forms.Padding(0)
-        Me.UcEvaluationSourceTile1.Name = "UcEvaluationSourceTile1"
-        Me.UcEvaluationSourceTile1.Size = New System.Drawing.Size(450, 48)
-        Me.UcEvaluationSourceTile1.TabIndex = 0
-        Me.UcEvaluationSourceTile1.Title = "Filtro de ar"
         '
         'FrmTest
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1171, 616)
-        Me.Controls.Add(Me.UcEvaluationSourceTile1)
         Me.Name = "FrmTest"
         Me.Text = "Test"
         Me.ResumeLayout(False)
 
     End Sub
-
-    Friend WithEvents UcEvaluationSourceTile1 As UcEvaluationSourceTile
 End Class

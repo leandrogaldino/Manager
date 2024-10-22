@@ -49,6 +49,7 @@ Public Class UcEvaluationSourceTile
         Set(value As Boolean)
             _IsSold = value
             If value Then
+                _IsLost = False
                 BtnSoldLost.Text = "Troca: Vendido"
             Else
                 If Not _IsLost Then
@@ -68,6 +69,7 @@ Public Class UcEvaluationSourceTile
         Set(value As Boolean)
             _IsLost = value
             If value Then
+                _IsSold = False
                 BtnSoldLost.Text = "Troca: Perdido"
             Else
                 If Not _IsSold Then
@@ -135,15 +137,27 @@ Public Class UcEvaluationSourceTile
             CbxItem2.FlatAppearance.MouseDownBackColor = Color.White
             CbxItem2.Cursor = Cursors.Default
             Top = 1
+
+
+
             TlpContainer.SetColumnSpan(PnSoldLost, 1)
             TlpContainer.Controls.Remove(PnSoldLost)
+            TlpContainer.SetRowSpan(PnTitle, 1)
+            Height = 24
 
-            TlpContainer.RowCount = 1
+
         Else
             LblTitle.Font = New Font(LblTitle.Font, FontStyle.Regular)
             CbxItem1.Font = New Font(CbxItem1.Font, FontStyle.Regular)
             CbxItem2.Font = New Font(CbxItem2.Font, FontStyle.Regular)
             Top = 0
+
+
+            TlpContainer.SetColumnSpan(PnSoldLost, 2)
+            TlpContainer.Controls.Add(PnSoldLost)
+            TlpContainer.SetRowSpan(PnTitle, 2)
+            Height = 48
+
         End If
         PnTitle.Padding = New Padding(1, Top, 1, 1)
         PnItem1.Padding = New Padding(0, Top, 1, 1)

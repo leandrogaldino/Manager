@@ -29,14 +29,14 @@ Partial Class FrmTest
         '
         Me.UcEvaluationSourceTile1.IsHeader = True
         Me.UcEvaluationSourceTile1.IsLost = True
-        Me.UcEvaluationSourceTile1.Item1 = ""
-        Me.UcEvaluationSourceTile1.Item2 = ""
-        Me.UcEvaluationSourceTile1.Location = New System.Drawing.Point(237, 108)
+        Me.UcEvaluationSourceTile1.Item1 = "1500"
+        Me.UcEvaluationSourceTile1.Item2 = "1550"
+        Me.UcEvaluationSourceTile1.Location = New System.Drawing.Point(251, 210)
         Me.UcEvaluationSourceTile1.Margin = New System.Windows.Forms.Padding(0)
         Me.UcEvaluationSourceTile1.Name = "UcEvaluationSourceTile1"
-        Me.UcEvaluationSourceTile1.Size = New System.Drawing.Size(450, 40)
+        Me.UcEvaluationSourceTile1.Size = New System.Drawing.Size(450, 48)
         Me.UcEvaluationSourceTile1.TabIndex = 0
-        Me.UcEvaluationSourceTile1.Title = ""
+        Me.UcEvaluationSourceTile1.Title = "Filtro de ar"
         '
         'FrmTest
         '

@@ -30,8 +30,8 @@ Partial Class UcEvaluationSourceItem
         Me.CbxItem2 = New System.Windows.Forms.CheckBox()
         Me.TlpContainer = New System.Windows.Forms.TableLayoutPanel()
         Me.PnSoldLost = New System.Windows.Forms.Panel()
-        Me.BtnSoldLost = New System.Windows.Forms.Button()
         Me.CcSoldLost = New ControlLibrary.ControlContainer()
+        Me.BtnSoldLost = New System.Windows.Forms.Button()
         Me.PnItem1.SuspendLayout()
         Me.PnTitle.SuspendLayout()
         Me.PnItem2.SuspendLayout()
@@ -163,6 +163,13 @@ Partial Class UcEvaluationSourceItem
         Me.PnSoldLost.Size = New System.Drawing.Size(180, 22)
         Me.PnSoldLost.TabIndex = 2
         '
+        'CcSoldLost
+        '
+        Me.CcSoldLost.DropDownBorderColor = System.Drawing.SystemColors.HotTrack
+        Me.CcSoldLost.DropDownControl = Nothing
+        Me.CcSoldLost.DropDownEnabled = True
+        Me.CcSoldLost.HostControl = Me.BtnSoldLost
+        '
         'BtnSoldLost
         '
         Me.BtnSoldLost.BackColor = System.Drawing.Color.White
@@ -177,13 +184,6 @@ Partial Class UcEvaluationSourceItem
         Me.BtnSoldLost.TabIndex = 0
         Me.BtnSoldLost.Text = "Troca?"
         Me.BtnSoldLost.UseVisualStyleBackColor = False
-        '
-        'CcSoldLost
-        '
-        Me.CcSoldLost.DropDownBorderColor = System.Drawing.SystemColors.HotTrack
-        Me.CcSoldLost.DropDownControl = Nothing
-        Me.CcSoldLost.DropDownEnabled = True
-        Me.CcSoldLost.HostControl = Me.BtnSoldLost
         '
         'UcEvaluationSourceItem
         '
@@ -212,6 +212,6 @@ Partial Class UcEvaluationSourceItem
     Private WithEvents CbxItem2 As CheckBox
     Private WithEvents TlpContainer As TableLayoutPanel
     Private WithEvents PnSoldLost As Panel
-    Friend WithEvents BtnSoldLost As Button
     Friend WithEvents CcSoldLost As ControlLibrary.ControlContainer
+    Friend WithEvents BtnSoldLost As Button
 End Class

@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class UcEvaluationSoldLost
     Inherits System.Windows.Forms.UserControl
 
     'O UserControl substitui o descarte para limpar a lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,50 +20,63 @@ Partial Class UcEvaluationSoldLost
     'OBSERVAÇÃO: o procedimento a seguir é exigido pelo Windows Form Designer
     'Pode ser modificado usando o Windows Form Designer.  
     'Não o modifique usando o editor de códigos.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.RadioButton1 = New System.Windows.Forms.RadioButton()
-        Me.RadioButton2 = New System.Windows.Forms.RadioButton()
+        Me.CbxSold = New System.Windows.Forms.CheckBox()
+        Me.CbxLost = New System.Windows.Forms.CheckBox()
+        Me.CbxNA = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
-        'RadioButton1
+        'CbxSold
         '
-        Me.RadioButton1.Appearance = System.Windows.Forms.Appearance.Button
-        Me.RadioButton1.Location = New System.Drawing.Point(4, 4)
-        Me.RadioButton1.Margin = New System.Windows.Forms.Padding(4)
-        Me.RadioButton1.Name = "RadioButton1"
-        Me.RadioButton1.Size = New System.Drawing.Size(109, 24)
-        Me.RadioButton1.TabIndex = 0
-        Me.RadioButton1.Text = "Vendido"
-        Me.RadioButton1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadioButton1.UseVisualStyleBackColor = True
+        Me.CbxSold.AutoSize = True
+        Me.CbxSold.Font = New System.Drawing.Font("Century Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CbxSold.Location = New System.Drawing.Point(3, 16)
+        Me.CbxSold.Name = "CbxSold"
+        Me.CbxSold.Size = New System.Drawing.Size(72, 20)
+        Me.CbxSold.TabIndex = 0
+        Me.CbxSold.Text = "Vendido"
+        Me.CbxSold.UseVisualStyleBackColor = True
         '
-        'RadioButton2
+        'CbxLost
         '
-        Me.RadioButton2.Appearance = System.Windows.Forms.Appearance.Button
-        Me.RadioButton2.Location = New System.Drawing.Point(121, 4)
-        Me.RadioButton2.Margin = New System.Windows.Forms.Padding(4)
-        Me.RadioButton2.Name = "RadioButton2"
-        Me.RadioButton2.Size = New System.Drawing.Size(109, 24)
-        Me.RadioButton2.TabIndex = 0
-        Me.RadioButton2.Text = "Perdido"
-        Me.RadioButton2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadioButton2.UseVisualStyleBackColor = True
+        Me.CbxLost.AutoSize = True
+        Me.CbxLost.Font = New System.Drawing.Font("Century Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CbxLost.Location = New System.Drawing.Point(91, 16)
+        Me.CbxLost.Name = "CbxLost"
+        Me.CbxLost.Size = New System.Drawing.Size(68, 20)
+        Me.CbxLost.TabIndex = 0
+        Me.CbxLost.Text = "Perdido"
+        Me.CbxLost.UseVisualStyleBackColor = True
+        '
+        'CbxNA
+        '
+        Me.CbxNA.AutoSize = True
+        Me.CbxNA.Font = New System.Drawing.Font("Century Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CbxNA.Location = New System.Drawing.Point(174, 16)
+        Me.CbxNA.Name = "CbxNA"
+        Me.CbxNA.Size = New System.Drawing.Size(46, 20)
+        Me.CbxNA.TabIndex = 1
+        Me.CbxNA.Text = "N/A"
+        Me.CbxNA.UseVisualStyleBackColor = True
         '
         'UcEvaluationSoldLost
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.RadioButton2)
-        Me.Controls.Add(Me.RadioButton1)
+        Me.Controls.Add(Me.CbxNA)
+        Me.Controls.Add(Me.CbxLost)
+        Me.Controls.Add(Me.CbxSold)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "UcEvaluationSoldLost"
-        Me.Size = New System.Drawing.Size(235, 33)
+        Me.Size = New System.Drawing.Size(229, 50)
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
-    Friend WithEvents RadioButton1 As RadioButton
-    Friend WithEvents RadioButton2 As RadioButton
+    Private WithEvents CbxSold As CheckBox
+    Private WithEvents CbxLost As CheckBox
+    Private WithEvents CbxNA As CheckBox
 End Class

@@ -2,76 +2,33 @@
 
 Public Class UcEvaluationSourceItem
 
-    Public Event SelectionChanged(sender As Object, e As EventArgs)
-    Private _UcSoldLost As UcEvaluationSoldLost
-    Private Sub OnSelectionChanged()
-        RaiseEvent SelectionChanged(Me, EventArgs.Empty)
+    Public Event ValidateRequired(sender As Object, e As EventArgs)
+    Public ReadOnly Property UcSoldLost As UcEvaluationSoldLost
+    Private Sub OnValidateRequired()
+        RaiseEvent ValidateRequired(Me, EventArgs.Empty)
     End Sub
 
 
 
-    Private _IsSold As Boolean = False
-    Private _IsLost As Boolean = False
 
 
-    Public Sub New(Title As String, Item1 As String, item2 As String, IsSold As Boolean, IsLost As Boolean)
+
+    Public Sub New(Title As String, Item1 As String, item2 As String)
         InitializeComponent()
         LblTitle.Text = Title
         CbxItem1.Text = Item1
         CbxItem2.Text = item2
-        _UcSoldLost = New UcEvaluationSoldLost
-        CcSoldLost.DropDownControl = _UcSoldLost
+        UcSoldLost = New UcEvaluationSoldLost(CcSoldLost)
+        CcSoldLost.DropDownControl = UcSoldLost
+
     End Sub
     Public Sub New()
         InitializeComponent()
-        _UcSoldLost = New UcEvaluationSoldLost
-        CcSoldLost.DropDownControl = _UcSoldLost
+        UcSoldLost = New UcEvaluationSoldLost(CcSoldLost)
+        CcSoldLost.DropDownControl = UcSoldLost
     End Sub
 
 
-
-
-
-
-    <Category("TileData")>
-    <DefaultValue(False)>
-    Public Property IsSold As Boolean
-        Get
-            Return _IsSold
-        End Get
-        Set(value As Boolean)
-            _IsSold = value
-            If value Then
-                _IsLost = False
-                BtnSoldLost.Text = "Troca: Vendido"
-            Else
-                If Not _IsLost Then
-                    BtnSoldLost.Text = "Troca: N/A"
-                End If
-            End If
-            ConfigureTile()
-        End Set
-    End Property
-
-    <Category("TileData")>
-    <DefaultValue(False)>
-    Public Property IsLost As Boolean
-        Get
-            Return _IsLost
-        End Get
-        Set(value As Boolean)
-            _IsLost = value
-            If value Then
-                _IsSold = False
-                BtnSoldLost.Text = "Troca: Perdido"
-            Else
-                If Not _IsSold Then
-                    BtnSoldLost.Text = "Troca: N/A"
-                End If
-            End If
-            ConfigureTile()
-        End Set
-    End Property
 
     <Browsable(False)>
     Public ReadOnly Property SelectedValue As String
@@ -113,9 +70,9 @@ Public Class UcEvaluationSourceItem
             CbxItem2.Text = value
         End Set
     End Property
-    Private Sub ConfigureTile()
 
-    End Sub
+
+
     Private Sub CheckedChanged(sender As Object, e As EventArgs) Handles CbxItem1.CheckedChanged, CbxItem2.CheckedChanged
         Dim Control As CheckBox = CType(sender, CheckBox)
         Control.Image = If(Control.Checked, My.Resources.Approve, Nothing)
@@ -126,6 +83,14 @@ Public Class UcEvaluationSourceItem
                 CbxItem1.Checked = False
             End If
         End If
-        OnSelectionChanged()
+        OnValidateRequired()
+    End Sub
+
+    Private Sub CcSoldLost_Closed(sender As Object) Handles CcSoldLost.Closed
+        If UcSoldLost.IsSold Then BtnSoldLost.Text = "Troca: Vendido"
+        If UcSoldLost.IsLost Then BtnSoldLost.Text = "Troca: Perdido"
+        If UcSoldLost.IsNA Then BtnSoldLost.Text = "Troca: N/A"
+        If Not UcSoldLost.AnyChecked Then BtnSoldLost.Text = "Troca?"
+        OnValidateRequired()
     End Sub
 End Class

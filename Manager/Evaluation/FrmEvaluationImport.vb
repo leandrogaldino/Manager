@@ -120,6 +120,9 @@ Public Class FrmEvaluationImport
         End If
 
         Dim LoaderForm As New FrmLoader("Sincronizando com a nuvem")
+
+
+
         Dim AsyncLoader As New AsyncLoader(LoaderForm, 20, True, 1000, Color.White)
         LoaderForm.Cursor = Cursors.WaitCursor
         Await AsyncLoader.Show()
@@ -172,37 +175,44 @@ Public Class FrmEvaluationImport
 
         Dim FrmSource As New FrmEvaluationSource(ImportedEvaluation, CalculatedEvaluation)
 
-        FrmSource.ShowDialog()
+        Await LoaderForm.SetMessage("Importando Avaliação")
 
 
-        'TODO: Preciso emular a soltura do botao do mouse da barra do loader se ele tiver clicado
+        If FrmSource.ShowDialog() = DialogResult.OK Then
 
-
-
-
-
+            Dim Form As FrmEvaluation
 
 
 
+            If _EvaluationsForm IsNot Nothing Then
+                Form = New FrmEvaluation(ImportedEvaluation, _EvaluationsForm)
+            Else
+                Form = New FrmEvaluation(ImportedEvaluation)
+            End If
 
-        Dim Form As FrmEvaluation
+            Form.BtnSave.Enabled = True
 
 
 
-        If _EvaluationsForm IsNot Nothing Then
-            Form = New FrmEvaluation(ImportedEvaluation, _EvaluationsForm)
-        Else
-            Form = New FrmEvaluation(ImportedEvaluation)
+
+
+
+            Form.ShowDialog()
+
+
         End If
 
-        Form.BtnSave.Enabled = True
-
-        Await AsyncLoader.Close()
 
 
 
 
-        Form.ShowDialog()
+
+
+
+
+
+
+
 
 
 
@@ -224,6 +234,8 @@ Public Class FrmEvaluationImport
         SyncTimer.Stop()
         Cursor = Cursors.Default
 
+
+        Await AsyncLoader.Close()
     End Sub
 
 

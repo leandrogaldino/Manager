@@ -104,7 +104,7 @@ Public Class FrmEvaluationImport
         Dim TempPath As String
         Dim TempSignature As String
         Dim TempPhotos As New List(Of String)
-
+        Dim Form As FrmEvaluation
 
 
 
@@ -166,41 +166,52 @@ Public Class FrmEvaluationImport
         Next Photo
 
 
-        Dim ImportedEvaluation As Evaluation = Evaluation.FromCloud(_EvaluationData, TempSignature, TempPhotos)
-
-
-        Dim CalculatedEvaluation = Evaluation.FromCloud(_EvaluationData, TempSignature, TempPhotos)
-        CalculatedEvaluation.Calculate()
-
-
-        Dim FrmSource As New FrmEvaluationSource(ImportedEvaluation, CalculatedEvaluation)
-
-        Await LoaderForm.SetMessage("Importando Avaliação")
-
-
-        If FrmSource.ShowDialog() = DialogResult.OK Then
-
-            Dim Form As FrmEvaluation
 
 
 
-            If _EvaluationsForm IsNot Nothing Then
-                Form = New FrmEvaluation(ImportedEvaluation, _EvaluationsForm)
-            Else
-                Form = New FrmEvaluation(ImportedEvaluation)
+
+
+        Using FrmSource As New FrmEvaluationSource(_EvaluationData, TempSignature, TempPhotos)
+            Await LoaderForm.SetMessage("Importando Avaliação")
+
+
+            If FrmSource.ShowDialog() = DialogResult.OK Then
+
+
+
+
+
+                If _EvaluationsForm IsNot Nothing Then
+                    Form = New FrmEvaluation(FrmSource.ResultEvaluation, _EvaluationsForm)
+                Else
+                    Form = New FrmEvaluation(FrmSource.ResultEvaluation)
+                End If
+
+                Form.BtnSave.Enabled = True
+
+
+
+
+
+
+                Form.ShowDialog()
+                Form.Dispose()
+
+                If FrmSource.ResultEvaluation.ID = 0 Then
+                    _EvaluationData("info")("sync_date") = String.Empty
+                    _EvaluationData("info")("syncing_by") = String.Empty
+                    Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
+                Else
+                    _EvaluationData("info")("sync_date") = String.Empty
+                    _EvaluationData("info")("syncing_by") = String.Empty
+                    _EvaluationData("info")("is_sync") = True
+                    _EvaluationData("info")("returnedid") = FrmSource.ResultEvaluation.ID
+                    Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
+                End If
+
             End If
 
-            Form.BtnSave.Enabled = True
-
-
-
-
-
-
-            Form.ShowDialog()
-
-
-        End If
+        End Using
 
 
 
@@ -216,17 +227,8 @@ Public Class FrmEvaluationImport
 
 
 
-        If ImportedEvaluation.ID = 0 Then
-            _EvaluationData("info")("sync_date") = String.Empty
-            _EvaluationData("info")("syncing_by") = String.Empty
-            Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
-        Else
-            _EvaluationData("info")("sync_date") = String.Empty
-            _EvaluationData("info")("syncing_by") = String.Empty
-            _EvaluationData("info")("is_sync") = True
-            _EvaluationData("info")("returnedid") = ImportedEvaluation.ID
-            Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
-        End If
+
+
 
 
 

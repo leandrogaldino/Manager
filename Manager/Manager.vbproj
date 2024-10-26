@@ -1114,10 +1114,10 @@
     <Compile Include="FrmTest.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Evaluation\Control\UcEvaluationSourceItem.Designer.vb">
-      <DependentUpon>UcEvaluationSourceItem.vb</DependentUpon>
+    <Compile Include="Evaluation\Control\UcEvaluationSourcePart.Designer.vb">
+      <DependentUpon>UcEvaluationSourcePart.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\Control\UcEvaluationSourceItem.vb">
+    <Compile Include="Evaluation\Control\UcEvaluationSourcePart.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserPrivilegePreset\FrmUserPrivilegePresets.Designer.vb">
@@ -1431,8 +1431,8 @@
     <EmbeddedResource Include="FrmTest.resx">
       <DependentUpon>FrmTest.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\Control\UcEvaluationSourceItem.resx">
-      <DependentUpon>UcEvaluationSourceItem.vb</DependentUpon>
+    <EmbeddedResource Include="Evaluation\Control\UcEvaluationSourcePart.resx">
+      <DependentUpon>UcEvaluationSourcePart.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserPrivilegePreset\FrmUserPrivilegePresets.resx">
       <DependentUpon>FrmUserPrivilegePresets.vb</DependentUpon>

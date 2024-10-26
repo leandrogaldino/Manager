@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class UcEvaluationSourceItem
+Partial Class UcEvaluationSourcePart
     Inherits System.Windows.Forms.UserControl
 
     'O UserControl substitui o descarte para limpar a lista de componentes.
@@ -30,8 +30,8 @@ Partial Class UcEvaluationSourceItem
         Me.CbxItem2 = New System.Windows.Forms.CheckBox()
         Me.TlpContainer = New System.Windows.Forms.TableLayoutPanel()
         Me.PnSoldLost = New System.Windows.Forms.Panel()
-        Me.CcSoldLost = New ControlLibrary.ControlContainer()
         Me.BtnSoldLost = New System.Windows.Forms.Button()
+        Me.CcSoldLost = New ControlLibrary.ControlContainer()
         Me.PnItem1.SuspendLayout()
         Me.PnTitle.SuspendLayout()
         Me.PnItem2.SuspendLayout()
@@ -67,7 +67,7 @@ Partial Class UcEvaluationSourceItem
         Me.CbxItem1.Name = "CbxItem1"
         Me.CbxItem1.Size = New System.Drawing.Size(89, 24)
         Me.CbxItem1.TabIndex = 2
-        Me.CbxItem1.Text = "1500"
+        Me.CbxItem1.Text = "@Tech"
         Me.CbxItem1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.CbxItem1.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         Me.CbxItem1.UseVisualStyleBackColor = False
@@ -94,7 +94,7 @@ Partial Class UcEvaluationSourceItem
         Me.LblTitle.Name = "LblTitle"
         Me.LblTitle.Size = New System.Drawing.Size(268, 46)
         Me.LblTitle.TabIndex = 1
-        Me.LblTitle.Text = "Filtro de ar"
+        Me.LblTitle.Text = "@Part"
         Me.LblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'PnItem2
@@ -125,7 +125,7 @@ Partial Class UcEvaluationSourceItem
         Me.CbxItem2.Name = "CbxItem2"
         Me.CbxItem2.Size = New System.Drawing.Size(89, 24)
         Me.CbxItem2.TabIndex = 2
-        Me.CbxItem2.Text = "1550"
+        Me.CbxItem2.Text = "@System"
         Me.CbxItem2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.CbxItem2.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         Me.CbxItem2.UseVisualStyleBackColor = False
@@ -163,13 +163,6 @@ Partial Class UcEvaluationSourceItem
         Me.PnSoldLost.Size = New System.Drawing.Size(180, 22)
         Me.PnSoldLost.TabIndex = 2
         '
-        'CcSoldLost
-        '
-        Me.CcSoldLost.DropDownBorderColor = System.Drawing.SystemColors.HotTrack
-        Me.CcSoldLost.DropDownControl = Nothing
-        Me.CcSoldLost.DropDownEnabled = True
-        Me.CcSoldLost.HostControl = Me.BtnSoldLost
-        '
         'BtnSoldLost
         '
         Me.BtnSoldLost.BackColor = System.Drawing.Color.White
@@ -182,8 +175,15 @@ Partial Class UcEvaluationSourceItem
         Me.BtnSoldLost.Name = "BtnSoldLost"
         Me.BtnSoldLost.Size = New System.Drawing.Size(179, 21)
         Me.BtnSoldLost.TabIndex = 0
-        Me.BtnSoldLost.Text = "Troca?"
+        Me.BtnSoldLost.Text = "@Change"
         Me.BtnSoldLost.UseVisualStyleBackColor = False
+        '
+        'CcSoldLost
+        '
+        Me.CcSoldLost.DropDownBorderColor = System.Drawing.SystemColors.HotTrack
+        Me.CcSoldLost.DropDownControl = Nothing
+        Me.CcSoldLost.DropDownEnabled = True
+        Me.CcSoldLost.HostControl = Me.BtnSoldLost
         '
         'UcEvaluationSourceItem
         '

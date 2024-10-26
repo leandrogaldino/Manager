@@ -1,17 +1,12 @@
 ﻿Imports System.ComponentModel
 
-Public Class UcEvaluationSourceItem
+Public Class UcEvaluationSourcePart
 
     Public Event ValidateRequired(sender As Object, e As EventArgs)
     Public ReadOnly Property UcSoldLost As UcEvaluationSoldLost
     Private Sub OnValidateRequired()
         RaiseEvent ValidateRequired(Me, EventArgs.Empty)
     End Sub
-
-
-
-
-
 
     Public Sub New(Title As String, Item1 As String, item2 As String)
         InitializeComponent()

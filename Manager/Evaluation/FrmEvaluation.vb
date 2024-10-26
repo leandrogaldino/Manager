@@ -109,6 +109,8 @@ Public Class FrmEvaluation
         BtnStatusValue.Visible = Locator.GetInstance(Of Session).User.Privilege.EvaluationApproveOrReject
         LblStatusValue.Visible = Not Locator.GetInstance(Of Session).User.Privilege.EvaluationApproveOrReject
         LblDocumentPage.Text = Nothing
+        TxtEvaluationNumber.ReadOnly = _Evaluation.EvaluationCreationType <> EvaluationCreationType.Manual
+        Tip.SetToolTip(LblAverageWorkLoad, "Carga Média de Trabalho")
     End Sub
     Private Sub LoadData()
         _Loading = True

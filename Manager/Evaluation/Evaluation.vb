@@ -101,7 +101,7 @@ Public Class Evaluation
         Dim Coalescent As EvaluationPart
         Evaluation.EvaluationNumber = Data("id")
         Evaluation.EvaluationCreationType = EvaluationCreationType.Imported
-        Evaluation.EvaluationType = If(Data("is_execution") = True, EvaluationType.Execution, EvaluationType.Gathering)
+        Evaluation.EvaluationType = EvaluationType.Gathering
         Evaluation.TechnicalAdvice = Data("advice")
         Evaluation.AverageWorkLoad = Data("awl")
         Evaluation.Customer = New Person().Load(Data("customer")("person_id"), False)
@@ -119,35 +119,35 @@ Public Class Evaluation
                                                   End Sub)
 
         AirFilter.ForEach(Sub(x)
-                              x.CurrentCapacity = Data("parts")("air_filter")("current_capacity")
-                              x.Sold = Data("parts")("air_filter")("sold")
-                              x.Lost = Data("parts")("air_filter")("lost")
+                              x.CurrentCapacity = Data("parts")("air_filter")
+                              x.Sold = False
+                              x.Lost = False
                               x.IsSaved = True
                           End Sub)
         OilFilter.ForEach(Sub(x)
-                              x.CurrentCapacity = Data("parts")("oil_filter")("current_capacity")
-                              x.Sold = Data("parts")("oil_filter")("sold")
-                              x.Lost = Data("parts")("oil_filter")("lost")
+                              x.CurrentCapacity = Data("parts")("oil_filter")
+                              x.Sold = False
+                              x.Lost = False
                               x.IsSaved = True
                           End Sub)
         Separator.ForEach(Sub(x)
-                              x.CurrentCapacity = Data("parts")("separator")("current_capacity")
-                              x.Sold = Data("parts")("separator")("sold")
-                              x.Lost = Data("parts")("separator")("lost")
+                              x.CurrentCapacity = Data("parts")("separator")
+                              x.Sold = False
+                              x.Lost = False
                               x.IsSaved = True
                           End Sub)
         Oil.ForEach(Sub(x)
-                        x.CurrentCapacity = Data("parts")("oil")("current_capacity")
-                        x.Sold = Data("parts")("oil")("sold")
-                        x.Lost = Data("parts")("oil")("lost")
+                        x.CurrentCapacity = Data("parts")("oil")
+                        x.Sold = False
+                        x.Lost = False
                         x.IsSaved = True
                     End Sub)
         For Each CoalescentData In Data("parts")("coalescents")
             Coalescent = Evaluation.PartsElapsedDay.Where(Function(y) y.Part.PartBinded).FirstOrDefault(Function(x) x.Part.ID = CoalescentData("coalescent_id"))
             If Coalescent IsNot Nothing Then
                 Coalescent.CurrentCapacity = DateDiff(DateInterval.Day, Today, CDate(CoalescentData("next_change")))
-                Coalescent.Sold = CoalescentData("sold")
-                Coalescent.Lost = CoalescentData("lost")
+                Coalescent.Sold = False
+                Coalescent.Lost = False
                 Coalescent.IsSaved = True
             End If
         Next CoalescentData

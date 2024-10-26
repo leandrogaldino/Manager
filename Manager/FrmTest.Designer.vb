@@ -22,7 +22,7 @@ Partial Class FrmTest
     'Não o modifique usando o editor de códigos.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.UcEvaluationSourceItem1 = New Manager.UcEvaluationSourceItem()
+        Me.UcEvaluationSourceItem1 = New Manager.UcEvaluationSourcePart()
         Me.SuspendLayout()
         '
         'UcEvaluationSourceItem1
@@ -48,5 +48,5 @@ Partial Class FrmTest
 
     End Sub
 
-    Friend WithEvents UcEvaluationSourceItem1 As UcEvaluationSourceItem
+    Friend WithEvents UcEvaluationSourceItem1 As UcEvaluationSourcePart
 End Class

@@ -119,7 +119,7 @@ Public Class FrmEvaluationImport
             Exit Sub
         End If
 
-        Dim LoaderForm As New FrmLoader("Sincronizando com a nuvem")
+        Dim LoaderForm As New FrmLoader("Importando Avaliação")
 
 
 
@@ -172,7 +172,7 @@ Public Class FrmEvaluationImport
 
 
         Using FrmSource As New FrmEvaluationSource(_EvaluationData, TempSignature, TempPhotos)
-            Await LoaderForm.SetMessage("Importando Avaliação")
+
 
 
             If FrmSource.ShowDialog() = DialogResult.OK Then
@@ -197,20 +197,20 @@ Public Class FrmEvaluationImport
                 Form.ShowDialog()
                 Form.Dispose()
 
-                If FrmSource.ResultEvaluation.ID = 0 Then
-                    _EvaluationData("info")("sync_date") = String.Empty
-                    _EvaluationData("info")("syncing_by") = String.Empty
-                    Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
-                Else
-                    _EvaluationData("info")("sync_date") = String.Empty
-                    _EvaluationData("info")("syncing_by") = String.Empty
-                    _EvaluationData("info")("is_sync") = True
-                    _EvaluationData("info")("returnedid") = FrmSource.ResultEvaluation.ID
-                    Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
-                End If
+
 
             End If
-
+            If FrmSource.ResultEvaluation.ID = 0 Then
+                _EvaluationData("info")("sync_date") = String.Empty
+                _EvaluationData("info")("syncing_by") = String.Empty
+                Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
+            Else
+                _EvaluationData("info")("sync_date") = String.Empty
+                _EvaluationData("info")("syncing_by") = String.Empty
+                _EvaluationData("info")("is_sync") = True
+                _EvaluationData("info")("returnedid") = FrmSource.ResultEvaluation.ID
+                Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
+            End If
         End Using
 
 

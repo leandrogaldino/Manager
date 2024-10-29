@@ -1,8 +1,8 @@
 ﻿Imports System.IO
 Imports ControlLibrary
-Imports MySql.Data.MySqlClient
 Imports ControlLibrary.Utility
 Imports ManagerCore
+Imports MySql.Data.MySqlClient
 Public Class FrmEvaluation
     Private _Evaluation As Evaluation
     Private _EvaluationsForm As FrmEvaluations
@@ -11,9 +11,171 @@ Public Class FrmEvaluation
     Private _Deleting As Boolean
     Private _Loading As Boolean
     Private _Calculated As Boolean
+    Private _TargetSize As Size
+    Private _SelectedPhoto As FileManager
+    Private Property SelectedPhoto As FileManager
+        Get
+            Return _SelectedPhoto
+        End Get
+        Set(value As FileManager)
+            _SelectedPhoto = value
+            If _SelectedPhoto IsNot Nothing Then
+                PbxPhoto.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_SelectedPhoto.CurrentFile)))
+            Else
+                PbxPhoto.Image = Nothing
+            End If
+        End Set
+    End Property
+
+    Private Sub BtnIncludePhoto_Click(sender As Object, e As EventArgs) Handles BtnIncludePhoto.Click
+        Dim PhotoFile As FileManager
+        Using openFileDialog As New OpenFileDialog()
+            openFileDialog.Filter = "Imagens|*.jpg;*.jpeg;*.png;*.bmp|Todos os arquivos|*.*"
+            openFileDialog.Title = "Selecionar Imagem"
+            If openFileDialog.ShowDialog() = DialogResult.OK Then
+                Dim selectedImagePath As String = openFileDialog.FileName
+                PhotoFile = New FileManager(ApplicationPaths.EvaluationPhotoDirectory)
+                PhotoFile.SetCurrentFile(selectedImagePath)
+                _Evaluation.PhotoPaths.Add(PhotoFile)
+                SelectedPhoto = PhotoFile
+            End If
+        End Using
+        RefreshPhotoControls()
+    End Sub
+
+    Private Sub BtnRemovePhoto_Click(sender As Object, e As EventArgs) Handles BtnRemovePhoto.Click
+        Dim Index As Integer = _Evaluation.PhotoPaths.IndexOf(SelectedPhoto)
+        Dim PhotoCount As Integer = _Evaluation.PhotoPaths.Count
+        _Evaluation.PhotoPaths.Remove(SelectedPhoto)
+
+        ' Verifica se restaram fotos na lista
+        If PhotoCount = 1 Then
+            ' Se era a única foto, define SelectedPhoto como Nothing
+            SelectedPhoto = Nothing
+        ElseIf Index > 0 Then
+            ' Se havia mais de uma foto, define SelectedPhoto como o índice anterior, se existir
+            SelectedPhoto = _Evaluation.PhotoPaths(Index - 1)
+        ElseIf _Evaluation.PhotoPaths.Count > 0 Then
+            ' Se a foto removida era a primeira, seleciona a nova primeira foto
+            SelectedPhoto = _Evaluation.PhotoPaths(0)
+        End If
+        RefreshPhotoControls()
+    End Sub
+    Private Sub BtnSavePhoto_Click(sender As Object, e As EventArgs) Handles BtnSavePhoto.Click
+        ' Verifica se há uma imagem no PictureBox
+        ' Cria e configura o SaveFileDialog
+        Using saveDialog As New SaveFileDialog()
+            saveDialog.Filter = "JPEG Image|*.jpg|PNG Image|*.png|BMP Image|*.bmp"
+            saveDialog.Title = "Salvar Imagem"
+            saveDialog.FileName = "Foto"
+            ' Exibe o diálogo e verifica se o usuário clicou em 'Salvar'
+            If saveDialog.ShowDialog() = DialogResult.OK Then
+                ' Obtém a extensão do arquivo selecionado
+                Dim fileExtension As String = IO.Path.GetExtension(saveDialog.FileName).ToLower()
+                Dim imageFormat As Imaging.ImageFormat
+
+                ' Define o formato da imagem com base na extensão do arquivo
+                Select Case fileExtension
+                    Case ".jpg"
+                        imageFormat = Imaging.ImageFormat.Jpeg
+                    Case ".png"
+                        imageFormat = Imaging.ImageFormat.Png
+                    Case ".bmp"
+                        imageFormat = Imaging.ImageFormat.Bmp
+                    Case Else
+                        MessageBox.Show("Formato de arquivo não suportado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Exit Sub
+                End Select
+                ' Salva a imagem no caminho especificado
+                PbxPhoto.Image.Save(saveDialog.FileName, imageFormat)
+            End If
+        End Using
+    End Sub
+
+    Private Sub RefreshPhotoControls()
+        Dim PhotoCount As Integer = _Evaluation.PhotoPaths.Count
+        Dim PhotoIndex As Integer = _Evaluation.PhotoPaths.IndexOf(SelectedPhoto)
+
+        ' Se não houver fotos
+        If PhotoCount < 1 Then
+            LblPhotoCount.Visible = False
+            BtnSavePhoto.Enabled = False
+            BtnRemovePhoto.Enabled = False
+            BtnFirstPhoto.Enabled = False
+            BtnPreviousPhoto.Enabled = False
+            BtnNextPhoto.Enabled = False
+            BtnLastPhoto.Enabled = False
+        Else
+            ' Se há fotos
+            LblPhotoCount.Visible = True
+            LblPhotoCount.Text = $"Foto {PhotoIndex + 1} de {PhotoCount}"
+            BtnRemovePhoto.Enabled = True
+            BtnSavePhoto.Enabled = True
+
+            ' Habilitar ou desabilitar os botões de navegação
+            BtnFirstPhoto.Enabled = (PhotoIndex > 0)
+            BtnPreviousPhoto.Enabled = (PhotoIndex > 0)
+            BtnNextPhoto.Enabled = (PhotoIndex < PhotoCount - 1)
+            BtnLastPhoto.Enabled = (PhotoIndex < PhotoCount - 1)
+        End If
+    End Sub
 
 
-    Private targetSize As Size
+
+    Private Sub BtnPreviousPhoto_Click(sender As Object, e As EventArgs) Handles BtnPreviousPhoto.Click
+        SelectedPhoto = _Evaluation.PhotoPaths(_Evaluation.PhotoPaths.IndexOf(SelectedPhoto) - 1)
+        RefreshPhotoControls()
+    End Sub
+
+    Private Sub BtnNextPhoto_Click(sender As Object, e As EventArgs) Handles BtnNextPhoto.Click
+        SelectedPhoto = _Evaluation.PhotoPaths(_Evaluation.PhotoPaths.IndexOf(SelectedPhoto) + 1)
+        RefreshPhotoControls()
+    End Sub
+
+    Private Sub BtnFirstPhoto_Click(sender As Object, e As EventArgs) Handles BtnFirstPhoto.Click
+        SelectedPhoto = _Evaluation.PhotoPaths(0)
+        RefreshPhotoControls()
+    End Sub
+
+    Private Sub BtnLastPhoto_Click(sender As Object, e As EventArgs) Handles BtnLastPhoto.Click
+        SelectedPhoto = _Evaluation.PhotoPaths(_Evaluation.PhotoPaths.Count - 1)
+        RefreshPhotoControls()
+    End Sub
+
+    Private Sub BtnPhoto_EnabledChanged(sender As Object, e As EventArgs) Handles BtnSavePhoto.EnabledChanged, BtnRemovePhoto.EnabledChanged, BtnPreviousPhoto.EnabledChanged, BtnNextPhoto.EnabledChanged, BtnLastPhoto.EnabledChanged, BtnIncludePhoto.EnabledChanged, BtnFirstPhoto.EnabledChanged
+        Dim Button As NoFocusCueButton = sender
+        If Button.Enabled Then
+            Select Case True
+                Case Button Is BtnFirstPhoto
+                    Button.BackgroundImage = My.Resources.NavFirst
+                Case Button Is BtnPreviousPhoto
+                    Button.BackgroundImage = My.Resources.NavPrevious
+                Case Button Is BtnNextPhoto
+                    Button.BackgroundImage = My.Resources.NavNext
+                Case Button Is BtnLastPhoto
+                    Button.BackgroundImage = My.Resources.NavLast
+                Case Button Is BtnIncludePhoto
+                    Button.BackgroundImage = My.Resources.ImageInclude
+                Case Button Is BtnRemovePhoto
+                    Button.BackgroundImage = My.Resources.ImageDelete
+                Case Button Is BtnSavePhoto
+                    Button.BackgroundImage = My.Resources.ImageSave
+            End Select
+        Else
+            Dim Img As Image = Button.BackgroundImage
+            Dim Colors As List(Of Color) = Utility.GetImageColors(Img)
+            Img = Utility.GetRecoloredImage(Img, Color.Gray)
+            Button.BackgroundImage = Img
+        End If
+    End Sub
+
+
+
+
+
+
+
+
 
     Private Property Calculated As Boolean
         Get
@@ -23,37 +185,42 @@ Public Class FrmEvaluation
             _Calculated = value
 
             If Calculated Then
-                targetSize = New Size(1050, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
+                _TargetSize = New Size(1050, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
             Else
-                targetSize = New Size(433, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
+                _TargetSize = New Size(433, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
             End If
 
-            ' Inicia o timer para redimensionar o formulário de forma suave
-            TmrResize.Start()
+            If _Loading Then
+                Me.Size = _TargetSize
+            Else
+                ' Inicia o timer para redimensionar o formulário de forma suave
+                TmrResize.Start()
+            End If
+
         End Set
     End Property
 
     Private Sub TmrResize_Tick(sender As Object, e As EventArgs) Handles TmrResize.Tick
         ' Define os incrementos em largura e altura
-        Dim stepWidth As Integer = Math.Max(1, Math.Abs(targetSize.Width - Me.Width) / 5) ' Incrementa no mínimo 1 pixel
-        Dim stepHeight As Integer = Math.Max(1, Math.Abs(targetSize.Height - Me.Height) / 5)
+        Dim stepWidth As Integer = Math.Max(1, Math.Abs(_TargetSize.Width - Me.Width) / 5) ' Incrementa no mínimo 1 pixel
+        Dim stepHeight As Integer = Math.Max(1, Math.Abs(_TargetSize.Height - Me.Height) / 5)
 
         ' Aumenta ou diminui a largura gradualmente
-        If Me.Width < targetSize.Width Then
-            Me.Width = Math.Min(Me.Width + stepWidth, targetSize.Width)
-        ElseIf Me.Width > targetSize.Width Then
-            Me.Width = Math.Max(Me.Width - stepWidth, targetSize.Width)
+        If Me.Width < _TargetSize.Width Then
+            Me.Width = Math.Min(Me.Width + stepWidth, _TargetSize.Width)
+        ElseIf Me.Width > _TargetSize.Width Then
+            Me.Width = Math.Max(Me.Width - stepWidth, _TargetSize.Width)
         End If
 
         ' Aumenta ou diminui a altura gradualmente
-        If Me.Height < targetSize.Height Then
-            Me.Height = Math.Min(Me.Height + stepHeight, targetSize.Height)
-        ElseIf Me.Height > targetSize.Height Then
-            Me.Height = Math.Max(Me.Height - stepHeight, targetSize.Height)
+        If Me.Height < _TargetSize.Height Then
+            Me.Height = Math.Min(Me.Height + stepHeight, _TargetSize.Height)
+        ElseIf Me.Height > _TargetSize.Height Then
+            Me.Height = Math.Max(Me.Height - stepHeight, _TargetSize.Height)
         End If
 
         ' Verifica se o formulário já alcançou o tamanho desejado
-        If Me.Width = targetSize.Width AndAlso Me.Height = targetSize.Height Then
+        If Me.Width = _TargetSize.Width AndAlso Me.Height = _TargetSize.Height Then
             TmrResize.Stop() ' Para o timer ao alcançar o tamanho final
         End If
     End Sub
@@ -111,6 +278,7 @@ Public Class FrmEvaluation
         LblDocumentPage.Text = Nothing
         TxtEvaluationNumber.ReadOnly = _Evaluation.EvaluationCreationType <> EvaluationCreationType.Manual
         Tip.SetToolTip(LblAverageWorkLoad, "Carga Média de Trabalho")
+        RefreshPhotoControls()
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -190,6 +358,19 @@ Public Class FrmEvaluation
             BtnZoomIn.Enabled = False
             BtnZoomOut.Enabled = False
         End If
+
+
+
+        If _Evaluation.PhotoPaths.Count > 0 Then
+            SelectedPhoto = _Evaluation.PhotoPaths(0)
+        End If
+
+
+        If File.Exists(_Evaluation.SignaturePath.CurrentFile) Then
+            PbxSignature.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_Evaluation.SignaturePath.CurrentFile)))
+        End If
+
+
         BtnDelete.Enabled = _Evaluation.ID > 0 And Locator.GetInstance(Of Session).User.Privilege.EvaluationDelete
         Text = "Avaliação de Compressor"
         If _Evaluation.LockInfo.IsLocked And Not _Evaluation.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Evaluation.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
@@ -1096,7 +1277,7 @@ Public Class FrmEvaluation
         BtnSave.Enabled = Result = DialogResult.OK
     End Sub
     Private Sub Decalculate()
-            Calculated = False
+        Calculated = False
         DgvPartWorkedHour.DataSource = Nothing
         DgvPartElapsedDay.DataSource = Nothing
     End Sub
@@ -1130,5 +1311,7 @@ Public Class FrmEvaluation
             BtnEditTechnician.PerformClick()
         End If
     End Sub
+
+
 
 End Class

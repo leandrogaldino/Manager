@@ -62,9 +62,9 @@ Public Class FrmLogin
                                                 Session.LicenseResult = License.GetLocalLicense()
                                                 If Session.LicenseResult.Success Then
                                                     Hide()
-                                                    'FrmMain.Show()
+                                                    FrmMain.Show()
 
-                                                    Dim frm As New FrmEvaluationImport() : frm.Show()
+                                                    'Dim frm As New FrmEvaluationImport() : frm.Show()
 
 
 

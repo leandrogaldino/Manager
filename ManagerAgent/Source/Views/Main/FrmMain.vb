@@ -2,6 +2,7 @@
 Imports ManagerCore
 Imports System.Collections.ObjectModel
 Imports System.Threading
+
 'TODO: Fazer o ViewModel da Main
 Public Class FrmMain
     Private _IsWorking As Boolean

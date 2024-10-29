@@ -27,7 +27,7 @@ Partial Class FrmLoader
         '
         'WbLoader
         '
-        Me.WbLoader.ActivateBrowserOnCreation = True
+        Me.WbLoader.ActivateBrowserOnCreation = False
         Me.WbLoader.Dock = System.Windows.Forms.DockStyle.Fill
         Me.WbLoader.Location = New System.Drawing.Point(0, 0)
         Me.WbLoader.Name = "WbLoader"

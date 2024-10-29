@@ -24,29 +24,29 @@ Partial Class FrmEvaluation
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmEvaluation))
-        Dim Condition13 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Condition14 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Condition15 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim OtherField22 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField23 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField24 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField25 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim Parameter13 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Parameter14 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Parameter15 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Relation13 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Relation14 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Relation15 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Condition16 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim OtherField26 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField27 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField28 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim Parameter16 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Relation16 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim MessageBoxSettings4 As Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings = New Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings()
-        Dim PdfViewerPrinterSettings4 As Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings = New Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings()
-        Dim TextSearchSettings4 As Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings = New Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings()
-        Me.Panel1 = New System.Windows.Forms.Panel()
+        Dim Condition5 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Condition6 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Condition7 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim OtherField8 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField9 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField10 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField11 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim Parameter5 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Parameter6 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Parameter7 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Relation5 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Relation6 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Relation7 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Condition8 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim OtherField12 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField13 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField14 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim Parameter8 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Relation8 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim MessageBoxSettings2 As Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings = New Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings()
+        Dim PdfViewerPrinterSettings2 As Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings = New Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings()
+        Dim TextSearchSettings2 As Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings = New Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings()
+        Me.PnBottom = New System.Windows.Forms.Panel()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnCalculate = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
@@ -122,7 +122,20 @@ Partial Class FrmEvaluation
         Me.BtnZoomOut = New System.Windows.Forms.ToolStripButton()
         Me.LblDocumentPage = New System.Windows.Forms.ToolStripLabel()
         Me.TabPhoto = New System.Windows.Forms.TabPage()
+        Me.PnPhoto = New System.Windows.Forms.Panel()
+        Me.PbxPhoto = New System.Windows.Forms.PictureBox()
+        Me.TlpControls = New System.Windows.Forms.TableLayoutPanel()
+        Me.BtnLastPhoto = New ControlLibrary.NoFocusCueButton()
+        Me.BtnNextPhoto = New ControlLibrary.NoFocusCueButton()
+        Me.BtnSavePhoto = New ControlLibrary.NoFocusCueButton()
+        Me.BtnRemovePhoto = New ControlLibrary.NoFocusCueButton()
+        Me.BtnIncludePhoto = New ControlLibrary.NoFocusCueButton()
+        Me.BtnPreviousPhoto = New ControlLibrary.NoFocusCueButton()
+        Me.BtnFirstPhoto = New ControlLibrary.NoFocusCueButton()
+        Me.LblPhotoCount = New System.Windows.Forms.Label()
         Me.TabSignature = New System.Windows.Forms.TabPage()
+        Me.PnSignature = New System.Windows.Forms.Panel()
+        Me.PbxSignature = New System.Windows.Forms.PictureBox()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.NudHourPerDay = New System.Windows.Forms.NumericUpDown()
         Me.TmrCustomer = New System.Windows.Forms.Timer(Me.components)
@@ -132,7 +145,7 @@ Partial Class FrmEvaluation
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.Tip = New System.Windows.Forms.ToolTip(Me.components)
         Me.TmrResize = New System.Windows.Forms.Timer(Me.components)
-        Me.Panel1.SuspendLayout()
+        Me.PnBottom.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -150,21 +163,28 @@ Partial Class FrmEvaluation
         Me.TabTechnicalAdvice.SuspendLayout()
         Me.TabDocument.SuspendLayout()
         Me.TsDocument.SuspendLayout()
+        Me.TabPhoto.SuspendLayout()
+        Me.PnPhoto.SuspendLayout()
+        CType(Me.PbxPhoto, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TlpControls.SuspendLayout()
+        Me.TabSignature.SuspendLayout()
+        Me.PnSignature.SuspendLayout()
+        CType(Me.PbxSignature, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NudHourPerDay, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'Panel1
+        'PnBottom
         '
-        Me.Panel1.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.Panel1.Controls.Add(Me.BtnClose)
-        Me.Panel1.Controls.Add(Me.BtnCalculate)
-        Me.Panel1.Controls.Add(Me.BtnSave)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 467)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1040, 44)
-        Me.Panel1.TabIndex = 3
+        Me.PnBottom.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.PnBottom.Controls.Add(Me.BtnClose)
+        Me.PnBottom.Controls.Add(Me.BtnCalculate)
+        Me.PnBottom.Controls.Add(Me.BtnSave)
+        Me.PnBottom.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.PnBottom.Location = New System.Drawing.Point(0, 467)
+        Me.PnBottom.Name = "PnBottom"
+        Me.PnBottom.Size = New System.Drawing.Size(1040, 44)
+        Me.PnBottom.TabIndex = 3
         '
         'BtnClose
         '
@@ -605,21 +625,21 @@ Partial Class FrmEvaluation
         '
         Me.QbxCustomer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxCustomer.CharactersToQuery = 1
-        Condition13.FieldName = "iscustomer"
-        Condition13.Operator = "="
-        Condition13.TableNameOrAlias = "person"
-        Condition13.Value = "@iscustomer"
-        Condition14.FieldName = "statusid"
-        Condition14.Operator = "="
-        Condition14.TableNameOrAlias = "person"
-        Condition14.Value = "@statusid"
-        Condition15.FieldName = "controlmaintenance"
-        Condition15.Operator = "="
-        Condition15.TableNameOrAlias = "person"
-        Condition15.Value = "@controlmaintenance"
-        Me.QbxCustomer.Conditions.Add(Condition13)
-        Me.QbxCustomer.Conditions.Add(Condition14)
-        Me.QbxCustomer.Conditions.Add(Condition15)
+        Condition5.FieldName = "iscustomer"
+        Condition5.Operator = "="
+        Condition5.TableNameOrAlias = "person"
+        Condition5.Value = "@iscustomer"
+        Condition6.FieldName = "statusid"
+        Condition6.Operator = "="
+        Condition6.TableNameOrAlias = "person"
+        Condition6.Value = "@statusid"
+        Condition7.FieldName = "controlmaintenance"
+        Condition7.Operator = "="
+        Condition7.TableNameOrAlias = "person"
+        Condition7.Value = "@controlmaintenance"
+        Me.QbxCustomer.Conditions.Add(Condition5)
+        Me.QbxCustomer.Conditions.Add(Condition6)
+        Me.QbxCustomer.Conditions.Add(Condition7)
         Me.QbxCustomer.DebugOnTextChanged = False
         Me.QbxCustomer.DisplayFieldAlias = "Nome Curto"
         Me.QbxCustomer.DisplayFieldName = "shortname"
@@ -635,83 +655,83 @@ Partial Class FrmEvaluation
         Me.QbxCustomer.MainTableAlias = Nothing
         Me.QbxCustomer.MainTableName = "person"
         Me.QbxCustomer.Name = "QbxCustomer"
-        OtherField22.DisplayFieldAlias = "Nome"
-        OtherField22.DisplayFieldName = "name"
-        OtherField22.DisplayMainFieldName = "id"
-        OtherField22.DisplayTableAlias = Nothing
-        OtherField22.DisplayTableName = "person"
-        OtherField22.Freeze = False
-        OtherField22.IfNull = Nothing
-        OtherField22.Prefix = Nothing
-        OtherField22.Suffix = Nothing
-        OtherField23.DisplayFieldAlias = "CNPJ/CPF"
-        OtherField23.DisplayFieldName = "document"
-        OtherField23.DisplayMainFieldName = "id"
-        OtherField23.DisplayTableAlias = Nothing
-        OtherField23.DisplayTableName = "person"
-        OtherField23.Freeze = False
-        OtherField23.IfNull = Nothing
-        OtherField23.Prefix = Nothing
-        OtherField23.Suffix = Nothing
-        OtherField24.DisplayFieldAlias = "Cidade"
-        OtherField24.DisplayFieldName = "name"
-        OtherField24.DisplayMainFieldName = "id"
-        OtherField24.DisplayTableAlias = Nothing
-        OtherField24.DisplayTableName = "city"
-        OtherField24.Freeze = False
-        OtherField24.IfNull = Nothing
-        OtherField24.Prefix = Nothing
-        OtherField24.Suffix = Nothing
-        OtherField25.DisplayFieldAlias = "Estado"
-        OtherField25.DisplayFieldName = "name"
-        OtherField25.DisplayMainFieldName = "id"
-        OtherField25.DisplayTableAlias = Nothing
-        OtherField25.DisplayTableName = "state"
-        OtherField25.Freeze = False
-        OtherField25.IfNull = Nothing
-        OtherField25.Prefix = Nothing
-        OtherField25.Suffix = Nothing
-        Me.QbxCustomer.OtherFields.Add(OtherField22)
-        Me.QbxCustomer.OtherFields.Add(OtherField23)
-        Me.QbxCustomer.OtherFields.Add(OtherField24)
-        Me.QbxCustomer.OtherFields.Add(OtherField25)
-        Parameter13.ParameterName = "@iscustomer"
-        Parameter13.ParameterValue = "1"
-        Parameter14.ParameterName = "@statusid"
-        Parameter14.ParameterValue = "0"
-        Parameter15.ParameterName = "@controlmaintenance"
-        Parameter15.ParameterValue = "1"
-        Me.QbxCustomer.Parameters.Add(Parameter13)
-        Me.QbxCustomer.Parameters.Add(Parameter14)
-        Me.QbxCustomer.Parameters.Add(Parameter15)
+        OtherField8.DisplayFieldAlias = "Nome"
+        OtherField8.DisplayFieldName = "name"
+        OtherField8.DisplayMainFieldName = "id"
+        OtherField8.DisplayTableAlias = Nothing
+        OtherField8.DisplayTableName = "person"
+        OtherField8.Freeze = False
+        OtherField8.IfNull = Nothing
+        OtherField8.Prefix = Nothing
+        OtherField8.Suffix = Nothing
+        OtherField9.DisplayFieldAlias = "CNPJ/CPF"
+        OtherField9.DisplayFieldName = "document"
+        OtherField9.DisplayMainFieldName = "id"
+        OtherField9.DisplayTableAlias = Nothing
+        OtherField9.DisplayTableName = "person"
+        OtherField9.Freeze = False
+        OtherField9.IfNull = Nothing
+        OtherField9.Prefix = Nothing
+        OtherField9.Suffix = Nothing
+        OtherField10.DisplayFieldAlias = "Cidade"
+        OtherField10.DisplayFieldName = "name"
+        OtherField10.DisplayMainFieldName = "id"
+        OtherField10.DisplayTableAlias = Nothing
+        OtherField10.DisplayTableName = "city"
+        OtherField10.Freeze = False
+        OtherField10.IfNull = Nothing
+        OtherField10.Prefix = Nothing
+        OtherField10.Suffix = Nothing
+        OtherField11.DisplayFieldAlias = "Estado"
+        OtherField11.DisplayFieldName = "name"
+        OtherField11.DisplayMainFieldName = "id"
+        OtherField11.DisplayTableAlias = Nothing
+        OtherField11.DisplayTableName = "state"
+        OtherField11.Freeze = False
+        OtherField11.IfNull = Nothing
+        OtherField11.Prefix = Nothing
+        OtherField11.Suffix = Nothing
+        Me.QbxCustomer.OtherFields.Add(OtherField8)
+        Me.QbxCustomer.OtherFields.Add(OtherField9)
+        Me.QbxCustomer.OtherFields.Add(OtherField10)
+        Me.QbxCustomer.OtherFields.Add(OtherField11)
+        Parameter5.ParameterName = "@iscustomer"
+        Parameter5.ParameterValue = "1"
+        Parameter6.ParameterName = "@statusid"
+        Parameter6.ParameterValue = "0"
+        Parameter7.ParameterName = "@controlmaintenance"
+        Parameter7.ParameterValue = "1"
+        Me.QbxCustomer.Parameters.Add(Parameter5)
+        Me.QbxCustomer.Parameters.Add(Parameter6)
+        Me.QbxCustomer.Parameters.Add(Parameter7)
         Me.QbxCustomer.Prefix = Nothing
-        Relation13.Operator = "="
-        Relation13.RelateFieldName = "personid"
-        Relation13.RelateTableAlias = Nothing
-        Relation13.RelateTableName = "personaddress"
-        Relation13.RelationType = "LEFT"
-        Relation13.WithFieldName = "id"
-        Relation13.WithTableAlias = Nothing
-        Relation13.WithTableName = "person"
-        Relation14.Operator = "="
-        Relation14.RelateFieldName = "id"
-        Relation14.RelateTableAlias = Nothing
-        Relation14.RelateTableName = "city"
-        Relation14.RelationType = "LEFT"
-        Relation14.WithFieldName = "cityid"
-        Relation14.WithTableAlias = Nothing
-        Relation14.WithTableName = "personaddress"
-        Relation15.Operator = "="
-        Relation15.RelateFieldName = "id"
-        Relation15.RelateTableAlias = Nothing
-        Relation15.RelateTableName = "state"
-        Relation15.RelationType = "LEFT"
-        Relation15.WithFieldName = "stateid"
-        Relation15.WithTableAlias = Nothing
-        Relation15.WithTableName = "city"
-        Me.QbxCustomer.Relations.Add(Relation13)
-        Me.QbxCustomer.Relations.Add(Relation14)
-        Me.QbxCustomer.Relations.Add(Relation15)
+        Relation5.Operator = "="
+        Relation5.RelateFieldName = "personid"
+        Relation5.RelateTableAlias = Nothing
+        Relation5.RelateTableName = "personaddress"
+        Relation5.RelationType = "LEFT"
+        Relation5.WithFieldName = "id"
+        Relation5.WithTableAlias = Nothing
+        Relation5.WithTableName = "person"
+        Relation6.Operator = "="
+        Relation6.RelateFieldName = "id"
+        Relation6.RelateTableAlias = Nothing
+        Relation6.RelateTableName = "city"
+        Relation6.RelationType = "LEFT"
+        Relation6.WithFieldName = "cityid"
+        Relation6.WithTableAlias = Nothing
+        Relation6.WithTableName = "personaddress"
+        Relation7.Operator = "="
+        Relation7.RelateFieldName = "id"
+        Relation7.RelateTableAlias = Nothing
+        Relation7.RelateTableName = "state"
+        Relation7.RelationType = "LEFT"
+        Relation7.WithFieldName = "stateid"
+        Relation7.WithTableAlias = Nothing
+        Relation7.WithTableName = "city"
+        Me.QbxCustomer.Relations.Add(Relation5)
+        Me.QbxCustomer.Relations.Add(Relation6)
+        Me.QbxCustomer.Relations.Add(Relation7)
         Me.QbxCustomer.Size = New System.Drawing.Size(382, 23)
         Me.QbxCustomer.Suffix = Nothing
         Me.QbxCustomer.TabIndex = 14
@@ -969,11 +989,11 @@ Partial Class FrmEvaluation
         '
         Me.QbxCompressor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxCompressor.CharactersToQuery = 1
-        Condition16.FieldName = "statusid"
-        Condition16.Operator = "="
-        Condition16.TableNameOrAlias = "personcompressor"
-        Condition16.Value = "@statusid"
-        Me.QbxCompressor.Conditions.Add(Condition16)
+        Condition8.FieldName = "statusid"
+        Condition8.Operator = "="
+        Condition8.TableNameOrAlias = "personcompressor"
+        Condition8.Value = "@statusid"
+        Me.QbxCompressor.Conditions.Add(Condition8)
         Me.QbxCompressor.DebugOnTextChanged = False
         Me.QbxCompressor.DisplayFieldAlias = "Compressor"
         Me.QbxCompressor.DisplayFieldName = "name"
@@ -990,49 +1010,49 @@ Partial Class FrmEvaluation
         Me.QbxCompressor.MainTableAlias = Nothing
         Me.QbxCompressor.MainTableName = "personcompressor"
         Me.QbxCompressor.Name = "QbxCompressor"
-        OtherField26.DisplayFieldAlias = "Nº de Série"
-        OtherField26.DisplayFieldName = "serialnumber"
-        OtherField26.DisplayMainFieldName = "id"
-        OtherField26.DisplayTableAlias = Nothing
-        OtherField26.DisplayTableName = "personcompressor"
-        OtherField26.Freeze = True
-        OtherField26.IfNull = Nothing
-        OtherField26.Prefix = " NS: "
-        OtherField26.Suffix = Nothing
-        OtherField27.DisplayFieldAlias = "Patrimônio"
-        OtherField27.DisplayFieldName = "patrimony"
-        OtherField27.DisplayMainFieldName = "id"
-        OtherField27.DisplayTableAlias = Nothing
-        OtherField27.DisplayTableName = "personcompressor"
-        OtherField27.Freeze = True
-        OtherField27.IfNull = Nothing
-        OtherField27.Prefix = " PAT: "
-        OtherField27.Suffix = Nothing
-        OtherField28.DisplayFieldAlias = "Setor"
-        OtherField28.DisplayFieldName = "sector"
-        OtherField28.DisplayMainFieldName = "id"
-        OtherField28.DisplayTableAlias = Nothing
-        OtherField28.DisplayTableName = "personcompressor"
-        OtherField28.Freeze = True
-        OtherField28.IfNull = Nothing
-        OtherField28.Prefix = " SETOR: "
-        OtherField28.Suffix = Nothing
-        Me.QbxCompressor.OtherFields.Add(OtherField26)
-        Me.QbxCompressor.OtherFields.Add(OtherField27)
-        Me.QbxCompressor.OtherFields.Add(OtherField28)
-        Parameter16.ParameterName = "@statusid"
-        Parameter16.ParameterValue = "0"
-        Me.QbxCompressor.Parameters.Add(Parameter16)
+        OtherField12.DisplayFieldAlias = "Nº de Série"
+        OtherField12.DisplayFieldName = "serialnumber"
+        OtherField12.DisplayMainFieldName = "id"
+        OtherField12.DisplayTableAlias = Nothing
+        OtherField12.DisplayTableName = "personcompressor"
+        OtherField12.Freeze = True
+        OtherField12.IfNull = Nothing
+        OtherField12.Prefix = " NS: "
+        OtherField12.Suffix = Nothing
+        OtherField13.DisplayFieldAlias = "Patrimônio"
+        OtherField13.DisplayFieldName = "patrimony"
+        OtherField13.DisplayMainFieldName = "id"
+        OtherField13.DisplayTableAlias = Nothing
+        OtherField13.DisplayTableName = "personcompressor"
+        OtherField13.Freeze = True
+        OtherField13.IfNull = Nothing
+        OtherField13.Prefix = " PAT: "
+        OtherField13.Suffix = Nothing
+        OtherField14.DisplayFieldAlias = "Setor"
+        OtherField14.DisplayFieldName = "sector"
+        OtherField14.DisplayMainFieldName = "id"
+        OtherField14.DisplayTableAlias = Nothing
+        OtherField14.DisplayTableName = "personcompressor"
+        OtherField14.Freeze = True
+        OtherField14.IfNull = Nothing
+        OtherField14.Prefix = " SETOR: "
+        OtherField14.Suffix = Nothing
+        Me.QbxCompressor.OtherFields.Add(OtherField12)
+        Me.QbxCompressor.OtherFields.Add(OtherField13)
+        Me.QbxCompressor.OtherFields.Add(OtherField14)
+        Parameter8.ParameterName = "@statusid"
+        Parameter8.ParameterValue = "0"
+        Me.QbxCompressor.Parameters.Add(Parameter8)
         Me.QbxCompressor.Prefix = Nothing
-        Relation16.Operator = "="
-        Relation16.RelateFieldName = "id"
-        Relation16.RelateTableAlias = Nothing
-        Relation16.RelateTableName = "compressor"
-        Relation16.RelationType = "INNER"
-        Relation16.WithFieldName = "compressorid"
-        Relation16.WithTableAlias = Nothing
-        Relation16.WithTableName = "personcompressor"
-        Me.QbxCompressor.Relations.Add(Relation16)
+        Relation8.Operator = "="
+        Relation8.RelateFieldName = "id"
+        Relation8.RelateTableAlias = Nothing
+        Relation8.RelateTableName = "compressor"
+        Relation8.RelationType = "INNER"
+        Relation8.WithFieldName = "compressorid"
+        Relation8.WithTableAlias = Nothing
+        Relation8.WithTableName = "personcompressor"
+        Me.QbxCompressor.Relations.Add(Relation8)
         Me.QbxCompressor.Size = New System.Drawing.Size(382, 23)
         Me.QbxCompressor.Suffix = Nothing
         Me.QbxCompressor.TabIndex = 17
@@ -1083,16 +1103,16 @@ Partial Class FrmEvaluation
         Me.PdfDocumentViewer.IsTextSearchEnabled = True
         Me.PdfDocumentViewer.IsTextSelectionEnabled = True
         Me.PdfDocumentViewer.Location = New System.Drawing.Point(3, 28)
-        MessageBoxSettings4.EnableNotification = True
-        Me.PdfDocumentViewer.MessageBoxSettings = MessageBoxSettings4
+        MessageBoxSettings2.EnableNotification = True
+        Me.PdfDocumentViewer.MessageBoxSettings = MessageBoxSettings2
         Me.PdfDocumentViewer.MinimumZoomPercentage = 50
         Me.PdfDocumentViewer.Name = "PdfDocumentViewer"
         Me.PdfDocumentViewer.PageBorderThickness = 1
-        PdfViewerPrinterSettings4.PageOrientation = Syncfusion.Windows.PdfViewer.PdfViewerPrintOrientation.[Auto]
-        PdfViewerPrinterSettings4.PageSize = Syncfusion.Windows.PdfViewer.PdfViewerPrintSize.ActualSize
-        PdfViewerPrinterSettings4.PrintLocation = CType(resources.GetObject("PdfViewerPrinterSettings4.PrintLocation"), System.Drawing.PointF)
-        PdfViewerPrinterSettings4.ShowPrintStatusDialog = True
-        Me.PdfDocumentViewer.PrinterSettings = PdfViewerPrinterSettings4
+        PdfViewerPrinterSettings2.PageOrientation = Syncfusion.Windows.PdfViewer.PdfViewerPrintOrientation.[Auto]
+        PdfViewerPrinterSettings2.PageSize = Syncfusion.Windows.PdfViewer.PdfViewerPrintSize.ActualSize
+        PdfViewerPrinterSettings2.PrintLocation = CType(resources.GetObject("PdfViewerPrinterSettings2.PrintLocation"), System.Drawing.PointF)
+        PdfViewerPrinterSettings2.ShowPrintStatusDialog = True
+        Me.PdfDocumentViewer.PrinterSettings = PdfViewerPrinterSettings2
         Me.PdfDocumentViewer.ReferencePath = Nothing
         Me.PdfDocumentViewer.ScrollDisplacementValue = 0
         Me.PdfDocumentViewer.ShowHorizontalScrollBar = True
@@ -1100,10 +1120,10 @@ Partial Class FrmEvaluation
         Me.PdfDocumentViewer.Size = New System.Drawing.Size(1026, 360)
         Me.PdfDocumentViewer.SpaceBetweenPages = 8
         Me.PdfDocumentViewer.TabIndex = 1
-        TextSearchSettings4.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
-        TextSearchSettings4.HighlightAllInstance = True
-        TextSearchSettings4.OtherInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(254, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.PdfDocumentViewer.TextSearchSettings = TextSearchSettings4
+        TextSearchSettings2.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
+        TextSearchSettings2.HighlightAllInstance = True
+        TextSearchSettings2.OtherInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(254, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.PdfDocumentViewer.TextSearchSettings = TextSearchSettings2
         Me.PdfDocumentViewer.ThemeName = "Default"
         Me.PdfDocumentViewer.VerticalScrollOffset = 0
         Me.PdfDocumentViewer.VisualStyle = Syncfusion.Windows.Forms.PdfViewer.VisualStyle.[Default]
@@ -1189,6 +1209,7 @@ Partial Class FrmEvaluation
         '
         'TabPhoto
         '
+        Me.TabPhoto.Controls.Add(Me.PnPhoto)
         Me.TabPhoto.Location = New System.Drawing.Point(4, 22)
         Me.TabPhoto.Name = "TabPhoto"
         Me.TabPhoto.Padding = New System.Windows.Forms.Padding(3)
@@ -1197,15 +1218,205 @@ Partial Class FrmEvaluation
         Me.TabPhoto.Text = "Fotos"
         Me.TabPhoto.UseVisualStyleBackColor = True
         '
+        'PnPhoto
+        '
+        Me.PnPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.PnPhoto.Controls.Add(Me.PbxPhoto)
+        Me.PnPhoto.Controls.Add(Me.TlpControls)
+        Me.PnPhoto.Controls.Add(Me.LblPhotoCount)
+        Me.PnPhoto.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PnPhoto.Location = New System.Drawing.Point(3, 3)
+        Me.PnPhoto.Name = "PnPhoto"
+        Me.PnPhoto.Size = New System.Drawing.Size(1026, 385)
+        Me.PnPhoto.TabIndex = 17
+        '
+        'PbxPhoto
+        '
+        Me.PbxPhoto.BackColor = System.Drawing.Color.White
+        Me.PbxPhoto.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PbxPhoto.Location = New System.Drawing.Point(0, 28)
+        Me.PbxPhoto.Name = "PbxPhoto"
+        Me.PbxPhoto.Size = New System.Drawing.Size(1024, 332)
+        Me.PbxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PbxPhoto.TabIndex = 11
+        Me.PbxPhoto.TabStop = False
+        '
+        'TlpControls
+        '
+        Me.TlpControls.BackColor = System.Drawing.Color.White
+        Me.TlpControls.ColumnCount = 9
+        Me.TlpControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TlpControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TlpControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TlpControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TlpControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TlpControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TlpControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TlpControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TlpControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TlpControls.Controls.Add(Me.BtnLastPhoto, 7, 0)
+        Me.TlpControls.Controls.Add(Me.BtnNextPhoto, 6, 0)
+        Me.TlpControls.Controls.Add(Me.BtnSavePhoto, 5, 0)
+        Me.TlpControls.Controls.Add(Me.BtnRemovePhoto, 4, 0)
+        Me.TlpControls.Controls.Add(Me.BtnIncludePhoto, 3, 0)
+        Me.TlpControls.Controls.Add(Me.BtnPreviousPhoto, 2, 0)
+        Me.TlpControls.Controls.Add(Me.BtnFirstPhoto, 1, 0)
+        Me.TlpControls.Dock = System.Windows.Forms.DockStyle.Top
+        Me.TlpControls.Location = New System.Drawing.Point(0, 0)
+        Me.TlpControls.Name = "TlpControls"
+        Me.TlpControls.RowCount = 1
+        Me.TlpControls.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TlpControls.Size = New System.Drawing.Size(1024, 28)
+        Me.TlpControls.TabIndex = 13
+        '
+        'BtnLastPhoto
+        '
+        Me.BtnLastPhoto.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.BtnLastPhoto.BackColor = System.Drawing.Color.Transparent
+        Me.BtnLastPhoto.BackgroundImage = Global.Manager.My.Resources.Resources.NavLast
+        Me.BtnLastPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnLastPhoto.FlatAppearance.BorderSize = 0
+        Me.BtnLastPhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnLastPhoto.Location = New System.Drawing.Point(593, 5)
+        Me.BtnLastPhoto.Name = "BtnLastPhoto"
+        Me.BtnLastPhoto.Size = New System.Drawing.Size(17, 17)
+        Me.BtnLastPhoto.TabIndex = 14
+        Me.BtnLastPhoto.TooltipText = "Última Imagem"
+        Me.BtnLastPhoto.UseVisualStyleBackColor = False
+        '
+        'BtnNextPhoto
+        '
+        Me.BtnNextPhoto.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.BtnNextPhoto.BackColor = System.Drawing.Color.Transparent
+        Me.BtnNextPhoto.BackgroundImage = Global.Manager.My.Resources.Resources.NavNext
+        Me.BtnNextPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnNextPhoto.FlatAppearance.BorderSize = 0
+        Me.BtnNextPhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnNextPhoto.Location = New System.Drawing.Point(563, 5)
+        Me.BtnNextPhoto.Name = "BtnNextPhoto"
+        Me.BtnNextPhoto.Size = New System.Drawing.Size(17, 17)
+        Me.BtnNextPhoto.TabIndex = 14
+        Me.BtnNextPhoto.TooltipText = "Próxima Imagem"
+        Me.BtnNextPhoto.UseVisualStyleBackColor = False
+        '
+        'BtnSavePhoto
+        '
+        Me.BtnSavePhoto.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.BtnSavePhoto.BackColor = System.Drawing.Color.Transparent
+        Me.BtnSavePhoto.BackgroundImage = Global.Manager.My.Resources.Resources.ImageSave
+        Me.BtnSavePhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnSavePhoto.FlatAppearance.BorderSize = 0
+        Me.BtnSavePhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnSavePhoto.Location = New System.Drawing.Point(533, 5)
+        Me.BtnSavePhoto.Name = "BtnSavePhoto"
+        Me.BtnSavePhoto.Size = New System.Drawing.Size(17, 17)
+        Me.BtnSavePhoto.TabIndex = 2
+        Me.BtnSavePhoto.TooltipText = "Salvar Imagem"
+        Me.BtnSavePhoto.UseVisualStyleBackColor = False
+        '
+        'BtnRemovePhoto
+        '
+        Me.BtnRemovePhoto.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.BtnRemovePhoto.BackColor = System.Drawing.Color.Transparent
+        Me.BtnRemovePhoto.BackgroundImage = Global.Manager.My.Resources.Resources.ImageDelete
+        Me.BtnRemovePhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnRemovePhoto.FlatAppearance.BorderSize = 0
+        Me.BtnRemovePhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnRemovePhoto.Location = New System.Drawing.Point(503, 5)
+        Me.BtnRemovePhoto.Name = "BtnRemovePhoto"
+        Me.BtnRemovePhoto.Size = New System.Drawing.Size(17, 17)
+        Me.BtnRemovePhoto.TabIndex = 1
+        Me.BtnRemovePhoto.TooltipText = "Excluir Imagem"
+        Me.BtnRemovePhoto.UseVisualStyleBackColor = False
+        '
+        'BtnIncludePhoto
+        '
+        Me.BtnIncludePhoto.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.BtnIncludePhoto.BackColor = System.Drawing.Color.Transparent
+        Me.BtnIncludePhoto.BackgroundImage = Global.Manager.My.Resources.Resources.ImageInclude
+        Me.BtnIncludePhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnIncludePhoto.FlatAppearance.BorderSize = 0
+        Me.BtnIncludePhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnIncludePhoto.Location = New System.Drawing.Point(473, 5)
+        Me.BtnIncludePhoto.Name = "BtnIncludePhoto"
+        Me.BtnIncludePhoto.Size = New System.Drawing.Size(17, 17)
+        Me.BtnIncludePhoto.TabIndex = 0
+        Me.BtnIncludePhoto.TooltipText = "Incluir Imagem"
+        Me.BtnIncludePhoto.UseVisualStyleBackColor = False
+        '
+        'BtnPreviousPhoto
+        '
+        Me.BtnPreviousPhoto.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.BtnPreviousPhoto.BackColor = System.Drawing.Color.Transparent
+        Me.BtnPreviousPhoto.BackgroundImage = Global.Manager.My.Resources.Resources.NavPrevious
+        Me.BtnPreviousPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnPreviousPhoto.FlatAppearance.BorderSize = 0
+        Me.BtnPreviousPhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnPreviousPhoto.Location = New System.Drawing.Point(443, 5)
+        Me.BtnPreviousPhoto.Name = "BtnPreviousPhoto"
+        Me.BtnPreviousPhoto.Size = New System.Drawing.Size(17, 17)
+        Me.BtnPreviousPhoto.TabIndex = 14
+        Me.BtnPreviousPhoto.TooltipText = "Imagem Anterior"
+        Me.BtnPreviousPhoto.UseVisualStyleBackColor = False
+        '
+        'BtnFirstPhoto
+        '
+        Me.BtnFirstPhoto.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.BtnFirstPhoto.BackColor = System.Drawing.Color.Transparent
+        Me.BtnFirstPhoto.BackgroundImage = Global.Manager.My.Resources.Resources.NavFirst
+        Me.BtnFirstPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnFirstPhoto.FlatAppearance.BorderSize = 0
+        Me.BtnFirstPhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnFirstPhoto.Location = New System.Drawing.Point(413, 5)
+        Me.BtnFirstPhoto.Name = "BtnFirstPhoto"
+        Me.BtnFirstPhoto.Size = New System.Drawing.Size(17, 17)
+        Me.BtnFirstPhoto.TabIndex = 14
+        Me.BtnFirstPhoto.TooltipText = "Primeira Imagem"
+        Me.BtnFirstPhoto.UseVisualStyleBackColor = False
+        '
+        'LblPhotoCount
+        '
+        Me.LblPhotoCount.BackColor = System.Drawing.Color.White
+        Me.LblPhotoCount.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.LblPhotoCount.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblPhotoCount.Location = New System.Drawing.Point(0, 360)
+        Me.LblPhotoCount.Name = "LblPhotoCount"
+        Me.LblPhotoCount.Size = New System.Drawing.Size(1024, 23)
+        Me.LblPhotoCount.TabIndex = 14
+        Me.LblPhotoCount.Text = "Foto 0 de 0"
+        Me.LblPhotoCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'TabSignature
         '
-        Me.TabSignature.Location = New System.Drawing.Point(4, 22)
+        Me.TabSignature.Controls.Add(Me.PnSignature)
+        Me.TabSignature.Location = New System.Drawing.Point(4, 26)
         Me.TabSignature.Name = "TabSignature"
         Me.TabSignature.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabSignature.Size = New System.Drawing.Size(1032, 391)
+        Me.TabSignature.Size = New System.Drawing.Size(1032, 387)
         Me.TabSignature.TabIndex = 9
         Me.TabSignature.Text = "Assinatura"
         Me.TabSignature.UseVisualStyleBackColor = True
+        '
+        'PnSignature
+        '
+        Me.PnSignature.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.PnSignature.Controls.Add(Me.PbxSignature)
+        Me.PnSignature.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PnSignature.Location = New System.Drawing.Point(3, 3)
+        Me.PnSignature.Name = "PnSignature"
+        Me.PnSignature.Size = New System.Drawing.Size(1026, 381)
+        Me.PnSignature.TabIndex = 18
+        '
+        'PbxSignature
+        '
+        Me.PbxSignature.BackColor = System.Drawing.Color.White
+        Me.PbxSignature.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PbxSignature.Location = New System.Drawing.Point(0, 0)
+        Me.PbxSignature.Name = "PbxSignature"
+        Me.PbxSignature.Size = New System.Drawing.Size(1024, 379)
+        Me.PbxSignature.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PbxSignature.TabIndex = 11
+        Me.PbxSignature.TabStop = False
         '
         'DgvNavigator
         '
@@ -1263,7 +1474,7 @@ Partial Class FrmEvaluation
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(1040, 511)
         Me.Controls.Add(Me.TcEvaluation)
-        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.PnBottom)
         Me.Controls.Add(Me.TsTitle)
         Me.Controls.Add(Me.TsNavigation)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!)
@@ -1274,7 +1485,7 @@ Partial Class FrmEvaluation
         Me.Name = "FrmEvaluation"
         Me.ShowIcon = False
         Me.Text = "Avaliação de Compressor"
-        Me.Panel1.ResumeLayout(False)
+        Me.PnBottom.ResumeLayout(False)
         Me.TsTitle.ResumeLayout(False)
         Me.TsTitle.PerformLayout()
         Me.TsNavigation.ResumeLayout(False)
@@ -1297,6 +1508,13 @@ Partial Class FrmEvaluation
         Me.TabDocument.ResumeLayout(False)
         Me.TsDocument.ResumeLayout(False)
         Me.TsDocument.PerformLayout()
+        Me.TabPhoto.ResumeLayout(False)
+        Me.PnPhoto.ResumeLayout(False)
+        CType(Me.PbxPhoto, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TlpControls.ResumeLayout(False)
+        Me.TabSignature.ResumeLayout(False)
+        Me.PnSignature.ResumeLayout(False)
+        CType(Me.PbxSignature, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NudHourPerDay, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -1372,7 +1590,7 @@ Partial Class FrmEvaluation
     Friend WithEvents DgvPartElapsedDay As DataGridView
     Friend WithEvents GbxPartWorkedHour As GroupBox
     Friend WithEvents DgvPartWorkedHour As DataGridView
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents PnBottom As Panel
     Friend WithEvents BtnCalculate As Button
     Friend WithEvents EprInformation As ErrorProvider
     Friend WithEvents BtnDisapprove As ToolStripMenuItem
@@ -1388,4 +1606,17 @@ Partial Class FrmEvaluation
     Friend WithEvents TabPhoto As TabPage
     Friend WithEvents TabSignature As TabPage
     Friend WithEvents TmrResize As Timer
+    Private WithEvents PnPhoto As Panel
+    Private WithEvents PbxPhoto As PictureBox
+    Private WithEvents TlpControls As TableLayoutPanel
+    Private WithEvents BtnLastPhoto As ControlLibrary.NoFocusCueButton
+    Private WithEvents BtnNextPhoto As ControlLibrary.NoFocusCueButton
+    Private WithEvents BtnSavePhoto As ControlLibrary.NoFocusCueButton
+    Private WithEvents BtnRemovePhoto As ControlLibrary.NoFocusCueButton
+    Private WithEvents BtnIncludePhoto As ControlLibrary.NoFocusCueButton
+    Private WithEvents BtnPreviousPhoto As ControlLibrary.NoFocusCueButton
+    Private WithEvents BtnFirstPhoto As ControlLibrary.NoFocusCueButton
+    Private WithEvents LblPhotoCount As Label
+    Private WithEvents PnSignature As Panel
+    Private WithEvents PbxSignature As PictureBox
 End Class

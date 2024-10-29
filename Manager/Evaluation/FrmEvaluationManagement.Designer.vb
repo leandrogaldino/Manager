@@ -465,7 +465,7 @@ Partial Class FrmEvaluationManagement
         'DgvEvaluationManagementLayout
         '
         Me.DgvEvaluationManagementLayout.DataGridView = Me.DgvData
-        Me.DgvEvaluationManagementLayout.Routine = Routine.EvaluationManagement
+        Me.DgvEvaluationManagementLayout.Routine = Manager.Routine.EvaluationManagement
         '
         'CmsAutoEvaluation
         '

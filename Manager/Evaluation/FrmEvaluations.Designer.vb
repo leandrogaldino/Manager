@@ -59,6 +59,7 @@ Partial Class FrmEvaluations
         Me.BtnDisapprove = New System.Windows.Forms.ToolStripMenuItem()
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.DgvEvaluationLayout = New Manager.DataGridViewLayout()
+        Me.BtnImport = New System.Windows.Forms.ToolStripButton()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -87,7 +88,7 @@ Partial Class FrmEvaluations
         Me.TsMenu.BackColor = System.Drawing.Color.White
         Me.TsMenu.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsMenu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnEdit, Me.BtnDelete, Me.BtnRefresh, Me.BtnFilter, Me.BtnDetails, Me.BtnClose, Me.BtnExport})
+        Me.TsMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnEdit, Me.BtnDelete, Me.BtnRefresh, Me.BtnFilter, Me.BtnDetails, Me.BtnClose, Me.BtnExport, Me.BtnImport})
         Me.TsMenu.Location = New System.Drawing.Point(0, 0)
         Me.TsMenu.Name = "TsMenu"
         Me.TsMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -460,27 +461,27 @@ Partial Class FrmEvaluations
         '
         Me.CmsSetStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnApprove, Me.BtnReject, Me.BtnDisapprove})
         Me.CmsSetStatus.Name = "CmsApproval"
-        Me.CmsSetStatus.Size = New System.Drawing.Size(181, 92)
+        Me.CmsSetStatus.Size = New System.Drawing.Size(134, 70)
         '
         'BtnApprove
         '
         Me.BtnApprove.Image = Global.Manager.My.Resources.Resources.Approve
         Me.BtnApprove.Name = "BtnApprove"
-        Me.BtnApprove.Size = New System.Drawing.Size(180, 22)
+        Me.BtnApprove.Size = New System.Drawing.Size(133, 22)
         Me.BtnApprove.Text = "Aprovar"
         '
         'BtnReject
         '
         Me.BtnReject.Image = Global.Manager.My.Resources.Resources.Reject
         Me.BtnReject.Name = "BtnReject"
-        Me.BtnReject.Size = New System.Drawing.Size(180, 22)
+        Me.BtnReject.Size = New System.Drawing.Size(133, 22)
         Me.BtnReject.Text = "Rejeitar"
         '
         'BtnDisapprove
         '
         Me.BtnDisapprove.Image = Global.Manager.My.Resources.Resources.Disapprove
         Me.BtnDisapprove.Name = "BtnDisapprove"
-        Me.BtnDisapprove.Size = New System.Drawing.Size(180, 22)
+        Me.BtnDisapprove.Size = New System.Drawing.Size(133, 22)
         Me.BtnDisapprove.Text = "Desaprovar"
         '
         'TmrLoadDetails
@@ -489,7 +490,17 @@ Partial Class FrmEvaluations
         'DgvEvaluationLayout
         '
         Me.DgvEvaluationLayout.DataGridView = Me.DgvData
-        Me.DgvEvaluationLayout.Routine = Routine.Evaluation
+        Me.DgvEvaluationLayout.Routine = Manager.Routine.Evaluation
+        '
+        'BtnImport
+        '
+        Me.BtnImport.AutoToolTip = False
+        Me.BtnImport.Image = Global.Manager.My.Resources.Resources.Import
+        Me.BtnImport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnImport.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnImport.Name = "BtnImport"
+        Me.BtnImport.Size = New System.Drawing.Size(100, 36)
+        Me.BtnImport.Text = "Importar"
         '
         'FrmEvaluations
         '
@@ -576,4 +587,5 @@ Partial Class FrmEvaluations
     Friend WithEvents BtnReject As ToolStripMenuItem
     Friend WithEvents TmrLoadDetails As Timer
     Friend WithEvents BtnDisapprove As ToolStripMenuItem
+    Friend WithEvents BtnImport As ToolStripButton
 End Class

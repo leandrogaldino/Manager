@@ -4,6 +4,7 @@ Imports ChinhDo.Transactions
 Imports ControlLibrary
 Imports ManagerCore
 Imports MySql.Data.MySqlClient
+
 Public Class Evaluation
     Inherits ModelBase
     Private _Compressor As New PersonCompressor
@@ -99,11 +100,10 @@ Public Class Evaluation
         Dim Evaluation As New Evaluation
         Dim EvaluationTechnician As EvaluationTechnician
         Dim Coalescent As EvaluationPart
-        Evaluation.EvaluationNumber = Data("id")
+        Evaluation.EvaluationNumber = GetEvaluationNumber(EvaluationCreationType.Imported)
         Evaluation.EvaluationCreationType = EvaluationCreationType.Imported
         Evaluation.EvaluationType = EvaluationType.Gathering
         Evaluation.TechnicalAdvice = Data("advice")
-        Evaluation.AverageWorkLoad = Data("awl")
         Evaluation.Customer = New Person().Load(Data("customer")("person_id"), False)
         Evaluation.Compressor = Evaluation.Customer.Compressors.SingleOrDefault(Function(x) x.ID = Data("compressor")("compressor_id"))
         Evaluation.EvaluationDate = Data("date")
@@ -209,6 +209,8 @@ Public Class Evaluation
         PartsElapsedDay = New OrdenedList(Of EvaluationPart)
         TechnicalAdvice = Nothing
         DocumentPath = New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
+        SignaturePath = New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
+        PhotoPaths = New List(Of FileManager)
         _RejectReason = Nothing
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As Evaluation
@@ -246,6 +248,10 @@ Public Class Evaluation
                         If TableResult.Rows(0).Item("documentpath") IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("documentpath")) Then
                             DocumentPath.SetCurrentFile(Path.Combine(ApplicationPaths.EvaluationDocumentDirectory, TableResult.Rows(0).Item("documentpath").ToString), True)
                         End If
+                        If TableResult.Rows(0).Item("signaturepath") IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("signaturepath")) Then
+                            DocumentPath.SetCurrentFile(Path.Combine(ApplicationPaths.EvaluationDocumentDirectory, TableResult.Rows(0).Item("signaturepath").ToString), True)
+                        End If
+                        PhotoPaths = GetPhotos(Tra)
                         _RejectReason = TableResult.Rows(0).Item("rejectreason").ToString
                         Technicians = GetTechnicians(Tra)
                         FillParts(Tra)
@@ -260,6 +266,28 @@ Public Class Evaluation
             End Using
         End Using
         Return Me
+    End Function
+    Private Function GetPhotos(Transaction As MySqlTransaction) As OrdenedList(Of EvaluationTechnician)
+        Dim TableResult As DataTable
+        Dim Technician As EvaluationTechnician
+        Dim Technicians As New OrdenedList(Of EvaluationTechnician)
+        Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoSelect, Transaction.Connection)
+            Cmd.Transaction = Transaction
+            Cmd.Parameters.AddWithValue("@evaluationid", ID)
+            Using Adp As New MySqlDataAdapter(Cmd)
+                TableResult = New DataTable
+                Adp.Fill(TableResult)
+                For Each Row As DataRow In TableResult.Rows
+                    Technician = New EvaluationTechnician
+                    Technician.Technician = New Person().Load(Row.Item("photoid"), False)
+                    Technician.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Technician, Row.Item("id"))
+                    Technician.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Technician, Row.Item("creation"))
+                    Technician.IsSaved = True
+                    Technicians.Add(Technician)
+                Next Row
+            End Using
+        End Using
+        Return Technicians
     End Function
     Private Function GetTechnicians(Transaction As MySqlTransaction) As OrdenedList(Of EvaluationTechnician)
         Dim TableResult As DataTable
@@ -803,4 +831,39 @@ Public Class Evaluation
         End If
         Return Value
     End Function
+
+
+    Public Shared Function GetEvaluationNumber(CreationType As EvaluationCreationType) As String
+        Dim EvaluationNumber As String = String.Empty
+        Dim IsUnique As Boolean
+        Dim Session = Locator.GetInstance(Of Session)
+
+
+        Do Until IsUnique
+
+            EvaluationNumber = Utility.GetRandomString(1, 8, Nothing, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+
+            If CreationType = EvaluationCreationType.Automatic Then
+                EvaluationNumber = $"A-{EvaluationNumber}"
+            ElseIf CreationType = EvaluationCreationType.Imported Then
+                EvaluationNumber = $"I-{EvaluationNumber}"
+            End If
+
+            Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
+                Con.Open()
+                Using Cmd As New MySqlCommand("SELECT COUNT(id) FROM evaluation WHERE evaluationnumber = @evaluationnumber", Con)
+                    Cmd.Parameters.AddWithValue("@evaluationnumber", EvaluationNumber)
+                    Dim Count As Integer = Convert.ToInt32(Cmd.ExecuteScalar())
+                    IsUnique = (Count = 0)
+                End Using
+            End Using
+
+
+
+
+        Loop
+
+        Return EvaluationNumber
+    End Function
+
 End Class

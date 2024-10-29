@@ -1,4 +1,7 @@
-﻿Public Class FrmEvaluationSource
+﻿Imports ControlLibrary
+
+Public Class FrmEvaluationSource
+
     Public Property ResultEvaluation As Evaluation
     Public Sub New(EvaluationData As Dictionary(Of String, Object), Signature As String, Photos As List(Of String))
         InitializeComponent()
@@ -10,9 +13,28 @@
 
 
 
-        Dim ImportedEvaluation As Evaluation = Evaluation.FromCloud(EvaluationData, Signature, Photos)
-        Dim CalculatedEvaluation = Evaluation.FromCloud(EvaluationData, Signature, Photos)
-        CalculatedEvaluation.Calculate()
+        Dim ImportedEvaluation As Evaluation = Nothing
+        Dim CalculatedEvaluation As Evaluation = Nothing
+
+
+
+        ImportedEvaluation = Evaluation.FromCloud(EvaluationData, Signature, Photos)
+            CalculatedEvaluation = Evaluation.FromCloud(EvaluationData, Signature, Photos)
+            CalculatedEvaluation.Calculate()
+
+            ResultEvaluation = CalculatedEvaluation
+            For Each p In CalculatedEvaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind)
+                PartTile = New UcEvaluationSourcePart(p.Part.ToString, ImportedEvaluation.PartsWorkedHour.First(Function(x) x.Part.ID = p.Part.ID).CurrentCapacity, p.CurrentCapacity)
+                PartTile.Tag = p
+                AddHandler PartTile.ValidateRequired, AddressOf Control_Click
+                FlpContainer.Controls.Add(PartTile)
+            Next p
+            For Each p In CalculatedEvaluation.PartsElapsedDay.Where(Function(x) x.Part.PartBind)
+                PartTile = New UcEvaluationSourcePart(p.Part.ToString, ImportedEvaluation.PartsElapsedDay.First(Function(x) x.Part.ID = p.Part.ID).CurrentCapacity, p.CurrentCapacity)
+                PartTile.Tag = p
+                AddHandler PartTile.ValidateRequired, AddressOf Control_Click
+                FlpContainer.Controls.Add(PartTile)
+            Next p
 
 
 
@@ -20,19 +42,7 @@
 
 
 
-        ResultEvaluation = CalculatedEvaluation
-        For Each p In CalculatedEvaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind)
-            PartTile = New UcEvaluationSourcePart(p.Part.ToString, ImportedEvaluation.PartsWorkedHour.First(Function(x) x.Part.ID = p.Part.ID).CurrentCapacity, p.CurrentCapacity)
-            PartTile.Tag = p
-            AddHandler PartTile.ValidateRequired, AddressOf Control_Click
-            FlpContainer.Controls.Add(PartTile)
-        Next p
-        For Each p In CalculatedEvaluation.PartsElapsedDay.Where(Function(x) x.Part.PartBind)
-            PartTile = New UcEvaluationSourcePart(p.Part.ToString, ImportedEvaluation.PartsElapsedDay.First(Function(x) x.Part.ID = p.Part.ID).CurrentCapacity, p.CurrentCapacity)
-            PartTile.Tag = p
-            AddHandler PartTile.ValidateRequired, AddressOf Control_Click
-            FlpContainer.Controls.Add(PartTile)
-        Next p
+
     End Sub
 
     Private Sub Control_Click(sender As Object, e As EventArgs)
@@ -46,7 +56,6 @@
 
     Private Sub BtnAccept_Click(sender As Object, e As EventArgs) Handles BtnAccept.Click
 
-
         For Each Part As EvaluationPart In ResultEvaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind)
             Dim Tile As UcEvaluationSourcePart = FlpContainer.Controls.OfType(Of UcEvaluationSourcePart).First(Function(x) x.Tag.Equals(Part))
             Dim PartOnTile As EvaluationPart = Tile.Tag
@@ -54,7 +63,6 @@
             Part.Sold = Tile.UcSoldLost.IsSold
             Part.Lost = Tile.UcSoldLost.IsLost
         Next Part
-
 
         For Each Part As EvaluationPart In ResultEvaluation.PartsElapsedDay.Where(Function(x) x.Part.PartBind)
             Dim Tile As UcEvaluationSourcePart = FlpContainer.Controls.OfType(Of UcEvaluationSourcePart).First(Function(x) x.Tag.Equals(Part))
@@ -64,6 +72,13 @@
             Part.Lost = Tile.UcSoldLost.IsLost
         Next Part
 
+        If ResultEvaluation.PartsWorkedHour.Any(Function(x) x.Sold) Or ResultEvaluation.PartsElapsedDay.Any(Function(x) x.Sold) Then
+            ResultEvaluation.EvaluationType = EvaluationType.Execution
+        Else
+            ResultEvaluation.EvaluationType = EvaluationType.Gathering
+        End If
+
         DialogResult = DialogResult.OK
     End Sub
+
 End Class

@@ -654,6 +654,12 @@
     <Compile Include="Email\FrmEmailImportEmailModel.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Evaluation\Control\UcEvaluationPhotos.Designer.vb">
+      <DependentUpon>UcEvaluationPhotos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Evaluation\Control\UcEvaluationPhotos.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Evaluation\Control\UcEvaluationSoldLost.Designer.vb">
       <DependentUpon>UcEvaluationSoldLost.vb</DependentUpon>
     </Compile>
@@ -1256,6 +1262,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Email\FrmEmailImportEmailModel.resx">
       <DependentUpon>FrmEmailImportEmailModel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Evaluation\Control\UcEvaluationPhotos.resx">
+      <DependentUpon>UcEvaluationPhotos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Evaluation\Control\UcEvaluationSoldLost.resx">
       <DependentUpon>UcEvaluationSoldLost.vb</DependentUpon>

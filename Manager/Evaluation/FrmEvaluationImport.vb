@@ -2,7 +2,6 @@
 Imports ControlLibrary
 Imports System.IO
 Imports ControlLibrary.Utility
-
 Public Class FrmEvaluationImport
     Private _EvaluationData As Dictionary(Of String, Object) = Nothing
     Private _EvaluationsForm As Form
@@ -12,13 +11,22 @@ Public Class FrmEvaluationImport
 
     Public Sub New()
         InitializeComponent()
+        InitializeDbListener()
+    End Sub
+
+    Public Sub New(EvaluationsForm As Form)
+        InitializeComponent()
+        _EvaluationsForm = EvaluationsForm
+        InitializeDbListener()
+    End Sub
+
+    Private Sub InitializeDbListener()
         _Session = Locator.GetInstance(Of Session)
         _Storage = Locator.GetInstance(Of Storage)
         _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
         Dim Condition As New List(Of RemoteDB.Condition) From {
             New RemoteDB.WhereEqualToCondition("info.is_sync", False)
         }
-
         _RemoteDB.StartListening("evaluations", Condition)
         AddHandler _RemoteDB.OnFirestoreChanged, Async Sub(Args)
                                                      If DgvEvaluations.Created Then
@@ -28,10 +36,6 @@ Public Class FrmEvaluationImport
                                                  End Sub
     End Sub
 
-    Public Sub New(EvaluationsForm As Form)
-        InitializeComponent()
-        _EvaluationsForm = EvaluationsForm
-    End Sub
 
     Private Sub FrmEvaluationImport_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         Utility.EnableDataGridViewDoubleBuffer(DgvEvaluations, True)
@@ -41,7 +45,6 @@ Public Class FrmEvaluationImport
     Private Sub FillDgv(Docs As List(Of Dictionary(Of String, Object)))
         ' Defina as colunas do DataGridView se ainda não estiverem definidas
         If DgvEvaluations.Columns.Count = 0 Then
-            DgvEvaluations.Columns.Add("CloudID", "CloudID")
             DgvEvaluations.Columns.Add("Status", "Status")
             DgvEvaluations.Columns.Add("Data", "Data")
             DgvEvaluations.Columns.Add("Cliente", "Cliente")
@@ -55,7 +58,7 @@ Public Class FrmEvaluationImport
         ' Adicione os dados ao DataGridView
         If Docs IsNot Nothing AndAlso Docs.Count > 0 Then
             For Each doc In Docs
-                Dim CloudID As String = doc("id")
+
                 Dim Status As String = If(String.IsNullOrEmpty(doc("info")("syncing_by")), GetEnumDescription(CloudSyncStatus.UnSynchronized), "Sincronizando")
                 Dim CustomerName As String = doc("customer")("customer_name")
                 Dim CompressorName As String = $"{doc("compressor")("compressor_name")}"
@@ -74,24 +77,22 @@ Public Class FrmEvaluationImport
 
 
                 row.CreateCells(DgvEvaluations)
-                row.Cells(0).Value = CloudID
-                row.Cells(1).Value = Status
-                row.Cells(2).Value = EvaluationDate
-                row.Cells(3).Value = CustomerName
-                row.Cells(4).Value = $"{CompressorName}  {SerialNumber}"
-                row.Cells(5).Value = String.Join(", ", Technicians)
+                row.Cells(0).Value = Status
+                row.Cells(1).Value = EvaluationDate
+                row.Cells(2).Value = CustomerName
+                row.Cells(3).Value = $"{CompressorName}  {SerialNumber}"
+                row.Cells(4).Value = String.Join(", ", Technicians)
                 row.Tag = doc
                 DgvEvaluations.Rows.Add(row)
             Next
         End If
 
 
-        DgvEvaluations.Columns(0).Visible = False
+        DgvEvaluations.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
         DgvEvaluations.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-        DgvEvaluations.Columns(2).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-        DgvEvaluations.Columns(3).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+        DgvEvaluations.Columns(2).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+        DgvEvaluations.Columns(3).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
         DgvEvaluations.Columns(4).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-        DgvEvaluations.Columns(5).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
     End Sub
 
 
@@ -100,32 +101,75 @@ Public Class FrmEvaluationImport
 
 
     Private Async Sub DgvEvaluations_CellMouseDoubleClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DgvEvaluations.CellMouseDoubleClick
+        Await Import()
+    End Sub
+
+    Private Async Sub SyncTimer_Tick(sender As Object, e As EventArgs) Handles SyncTimer.Tick
+        If _EvaluationData IsNot Nothing AndAlso _EvaluationData.Count > 0 Then
+            If IsDate(_EvaluationData("info")("sync_date")) AndAlso Now > CDate(_EvaluationData("info")("sync_date")).AddMinutes(1) Then
+                _EvaluationData("info")("sync_date") = Now.ToString("yyyy-MM-dd HH:mm:ss")
+                Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
+            End If
+        End If
+    End Sub
+
+    Private Async Sub RefreshTimer_Tick(sender As Object, e As EventArgs) Handles RefreshTimer.Tick
+        RefreshTimer.Stop()
+        Await RefreshSync()
+        RefreshTimer.Start()
+    End Sub
+
+
+    Private Async Function RefreshSync() As Task
+        For Each Row As DataGridViewRow In DgvEvaluations.Rows
+            If Row.DataGridView.Columns.Contains("Status") Then
+                If Row.Cells("Status").Value = GetEnumDescription(CloudSyncStatus.Synchronizing) Then
+                    Dim Data As Dictionary(Of String, Object) = DirectCast(Row.Tag, Dictionary(Of String, Object))
+                    If IsDate(Data("info")("sync_date")) AndAlso Now > CDate(Data("info")("sync_date")).AddMinutes(1.5) Then
+                        Data("info")("sync_date") = String.Empty
+                        Data("info")("syncing_by") = String.Empty
+                        Await _RemoteDB.ExecutePut("evaluations", Data, Data("id"))
+                    End If
+                End If
+            End If
+        Next Row
+    End Function
+
+    Private Async Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
+        Await Import()
+    End Sub
+
+
+    Private Async Function Import() As Task
         Cursor = Cursors.WaitCursor
         Dim TempPath As String
         Dim TempSignature As String
         Dim TempPhotos As New List(Of String)
-        Dim Form As FrmEvaluation
+        Dim EvaluationForm As FrmEvaluation
+        Dim EvaluationSourceForm As FrmEvaluationSource = Nothing
+        Dim SelectedRow As DataGridViewRow
 
+        If DgvEvaluations.InvokeRequired Then
+            SelectedRow = DgvEvaluations.Invoke(Function() DgvEvaluations.SelectedRows(0))
+        Else
+            SelectedRow = DgvEvaluations.SelectedRows(0)
+        End If
 
+        _EvaluationData = SelectedRow.Tag
 
-
-
-        _EvaluationData = DgvEvaluations.Rows(e.RowIndex).Tag
-
-        If DgvEvaluations.Rows(e.RowIndex).Cells("Status").Value = GetEnumDescription(CloudSyncStatus.Synchronizing) Then
-            CMessageBox.Show($"Essa avaliação esta sendo sincronizada por {_EvaluationData("info")("syncing_by")}", CMessageBoxType.Information)
+        If SelectedRow.Cells("Status").Value = GetEnumDescription(CloudSyncStatus.Synchronizing) Then
+            CMessageBox.Show($"Essa avaliação esta sendo importada por {_EvaluationData("info")("syncing_by")}", CMessageBoxType.Information)
             Cursor = Cursors.Default
-
-            Exit Sub
+            Exit Function
         End If
 
         Dim LoaderForm As New FrmLoader("Importando Avaliação")
 
 
 
-        Dim AsyncLoader As New AsyncLoader(LoaderForm, 20, True, 1000, Color.White)
+        Dim AsyncLoader As New AsyncLoader(Me, LoaderForm, 20, True, Color.White)
         LoaderForm.Cursor = Cursors.WaitCursor
-        Await AsyncLoader.Show()
+        Await AsyncLoader.Start(2000)
 
 
 
@@ -166,113 +210,36 @@ Public Class FrmEvaluationImport
         Next Photo
 
 
-
-
-
-
-
-        Using FrmSource As New FrmEvaluationSource(_EvaluationData, TempSignature, TempPhotos)
-
-
-
-            If FrmSource.ShowDialog() = DialogResult.OK Then
-
-
-
-
-
+        Try
+            EvaluationSourceForm = New FrmEvaluationSource(_EvaluationData, TempSignature, TempPhotos)
+            If EvaluationSourceForm.ShowDialog() = DialogResult.OK Then
                 If _EvaluationsForm IsNot Nothing Then
-                    Form = New FrmEvaluation(FrmSource.ResultEvaluation, _EvaluationsForm)
+                    EvaluationForm = New FrmEvaluation(EvaluationSourceForm.ResultEvaluation, _EvaluationsForm)
                 Else
-                    Form = New FrmEvaluation(FrmSource.ResultEvaluation)
+                    EvaluationForm = New FrmEvaluation(EvaluationSourceForm.ResultEvaluation)
                 End If
-
-                Form.BtnSave.Enabled = True
-
-
-
-
-
-
-                Form.ShowDialog()
-                Form.Dispose()
-
-
-
+                EvaluationForm.BtnSave.Enabled = True
+                EvaluationForm.ShowDialog()
+                EvaluationForm.Dispose()
             End If
-            If FrmSource.ResultEvaluation.ID = 0 Then
-                _EvaluationData("info")("sync_date") = String.Empty
-                _EvaluationData("info")("syncing_by") = String.Empty
-                Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
-            Else
-                _EvaluationData("info")("sync_date") = String.Empty
-                _EvaluationData("info")("syncing_by") = String.Empty
-                _EvaluationData("info")("is_sync") = True
-                _EvaluationData("info")("returnedid") = FrmSource.ResultEvaluation.ID
-                Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
-            End If
-        End Using
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        Catch ex As Exception
+            CMessageBox.Show("ERRO EV023", "Ocorreu um erro ao importar a avaliação.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+        End Try
+        If EvaluationSourceForm Is Nothing OrElse (EvaluationSourceForm IsNot Nothing AndAlso EvaluationSourceForm.ResultEvaluation.ID = 0) Then
+            _EvaluationData("info")("sync_date") = String.Empty
+            _EvaluationData("info")("syncing_by") = String.Empty
+            Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
+        Else
+            _EvaluationData("info")("sync_date") = String.Empty
+            _EvaluationData("info")("syncing_by") = String.Empty
+            _EvaluationData("info")("is_sync") = True
+            _EvaluationData("info")("returnedid") = EvaluationSourceForm.ResultEvaluation.ID
+            Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
+        End If
+        If AsyncLoader.IsRunning Then Await AsyncLoader.Stop()
         _EvaluationData = Nothing
         SyncTimer.Stop()
         Cursor = Cursors.Default
-
-
-        Await AsyncLoader.Close()
-    End Sub
-
-
-
-
-    Private Async Sub SyncTimer_Tick(sender As Object, e As EventArgs) Handles SyncTimer.Tick
-        If _EvaluationData IsNot Nothing AndAlso _EvaluationData.Count > 0 Then
-            If IsDate(_EvaluationData("info")("sync_date")) AndAlso Now > CDate(_EvaluationData("info")("sync_date")).AddMinutes(1) Then
-                _EvaluationData("info")("sync_date") = Now.ToString("yyyy-MM-dd HH:mm:ss")
-                Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
-            End If
-        End If
-    End Sub
-
-    Private Async Sub RefreshTimer_Tick(sender As Object, e As EventArgs) Handles RefreshTimer.Tick
-        RefreshTimer.Stop()
-        Await RefreshSync()
-        RefreshTimer.Start()
-    End Sub
-
-
-    Private Async Function RefreshSync() As Task
-
-        For Each Row As DataGridViewRow In DgvEvaluations.Rows
-            If Row.Cells("Status").Value = GetEnumDescription(CloudSyncStatus.Synchronizing) Then
-                Dim Data As Dictionary(Of String, Object) = DirectCast(Row.Tag, Dictionary(Of String, Object))
-                If IsDate(Data("info")("sync_date")) AndAlso Now > CDate(Data("info")("sync_date")).AddMinutes(1.5) Then
-                    Data("info")("sync_date") = String.Empty
-                    Data("info")("syncing_by") = String.Empty
-                    Await _RemoteDB.ExecutePut("evaluations", Data, Data("id"))
-                End If
-            End If
-        Next Row
     End Function
-
-
 End Class
 

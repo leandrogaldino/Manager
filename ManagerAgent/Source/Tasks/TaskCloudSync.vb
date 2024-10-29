@@ -125,7 +125,6 @@ Public Class TaskCloudSync
                         Response.Percent = CInt((PerformedOperations / TotalChanges) * 100)
                         Response.Text = $"Sincronização com a núvem - Enviando dados para a núvem {(Response.Percent)}%"
 
-                        'TODO: Verificar o motivo de repetir as porcentagem no report, deve estar reportando a mesma coisa em varias iterações.
                         Progress?.Report(Response)
                         Await Task.Delay(Constants.WaitForLoop)
 

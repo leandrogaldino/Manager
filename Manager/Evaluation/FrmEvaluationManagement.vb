@@ -238,45 +238,49 @@ Public Class FrmEvaluationManagement
 
     Private Sub BtnAutoEvaluation_Click(sender As Object, e As EventArgs) Handles BtnAutoEvaluation.Click
         Dim Session = Locator.GetInstance(Of Session)
-        If DgvData.SelectedRows.Count = 1 Then
-            If CMessageBox.Show("Confirma o lançamento automático para esse compressor?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Dim SelectedEvaluation As Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("evaluation").Value, False)
-                Dim NewEvaluation As New Evaluation With {
-                    .AverageWorkLoad = SelectedEvaluation.AverageWorkLoad,
-                    .Compressor = SelectedEvaluation.Compressor,
-                    .Customer = SelectedEvaluation.Customer,
-                    .StartTime = New TimeSpan(0, 1, 0),
-                    .EndTime = New TimeSpan(0, 2, 0),
-                    .EvaluationDate = Today,
-                    .EvaluationNumber = "AUTOMATICO",
-                    .Horimeter = SelectedEvaluation.Horimeter + ((Today - SelectedEvaluation.EvaluationDate).Days * SelectedEvaluation.AverageWorkLoad),
-                    .EvaluationType = EvaluationType.Execution,
-                    .Responsible = SelectedEvaluation.Responsible,
-                    .User = Session.User,
-                    .TechnicalAdvice = SelectedEvaluation.TechnicalAdvice
-                }
-                NewEvaluation.DocumentPath.SetCurrentFile(GetAutomaticPDF)
-                SelectedEvaluation.Technicians.ToList().ForEach(Sub(x) NewEvaluation.Technicians.Add(x))
+        Try
+            If DgvData.SelectedRows.Count = 1 Then
+                If CMessageBox.Show("Confirma o lançamento automático para esse compressor?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+                    Dim SelectedEvaluation As Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("evaluation").Value, False)
+                    Dim NewEvaluation As New Evaluation With {
+                        .EvaluationNumber = Evaluation.GetEvaluationNumber(EvaluationCreationType.Automatic),
+                        .AverageWorkLoad = SelectedEvaluation.AverageWorkLoad,
+                        .Compressor = SelectedEvaluation.Compressor,
+                        .Customer = SelectedEvaluation.Customer,
+                        .StartTime = New TimeSpan(0, 1, 0),
+                        .EndTime = New TimeSpan(0, 2, 0),
+                        .EvaluationDate = Today,
+                        .Horimeter = SelectedEvaluation.Horimeter + ((Today - SelectedEvaluation.EvaluationDate).Days * SelectedEvaluation.AverageWorkLoad),
+                        .EvaluationType = EvaluationType.Execution,
+                        .Responsible = SelectedEvaluation.Responsible,
+                        .User = Session.User,
+                        .TechnicalAdvice = SelectedEvaluation.TechnicalAdvice
+                    }
+                    NewEvaluation.DocumentPath.SetCurrentFile(GetAutomaticPDF)
+                    SelectedEvaluation.Technicians.ToList().ForEach(Sub(x) NewEvaluation.Technicians.Add(x))
 
 
 
-                NewEvaluation.PartsWorkedHour.ToList().ForEach(Sub(x)
-                                                                   x.Lost = False
-                                                                   x.Sold = False
-                                                                   x.CurrentCapacity = x.Part.Capacity
-                                                               End Sub
-                                                               )
-                NewEvaluation.PartsElapsedDay.ToList().ForEach(Sub(x)
-                                                                   x.Lost = False
-                                                                   x.Sold = False
-                                                                   x.CurrentCapacity = x.Part.Capacity
-                                                               End Sub
-                                                               )
-                NewEvaluation.SaveChanges()
-                NewEvaluation.SetStatus(EvaluationStatus.Approved)
-                BtnRefresh.PerformClick()
+                    NewEvaluation.PartsWorkedHour.ToList().ForEach(Sub(x)
+                                                                       x.Lost = False
+                                                                       x.Sold = False
+                                                                       x.CurrentCapacity = x.Part.Capacity
+                                                                   End Sub
+                                                                   )
+                    NewEvaluation.PartsElapsedDay.ToList().ForEach(Sub(x)
+                                                                       x.Lost = False
+                                                                       x.Sold = False
+                                                                       x.CurrentCapacity = x.Part.Capacity
+                                                                   End Sub
+                                                                   )
+                    NewEvaluation.SaveChanges()
+                    NewEvaluation.SetStatus(EvaluationStatus.Approved)
+                    BtnRefresh.PerformClick()
+                End If
             End If
-        End If
+        Catch ex As Exception
+            CMessageBox.Show("ERRO EV024", "Ocorreu um erro ao gerar a avaliação.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+        End Try
     End Sub
 
 

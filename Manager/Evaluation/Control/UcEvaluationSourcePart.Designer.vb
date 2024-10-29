@@ -67,7 +67,7 @@ Partial Class UcEvaluationSourcePart
         Me.CbxItem1.Name = "CbxItem1"
         Me.CbxItem1.Size = New System.Drawing.Size(89, 24)
         Me.CbxItem1.TabIndex = 2
-        Me.CbxItem1.Text = "@Tech"
+        Me.CbxItem1.Text = "0"
         Me.CbxItem1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.CbxItem1.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         Me.CbxItem1.UseVisualStyleBackColor = False
@@ -94,7 +94,7 @@ Partial Class UcEvaluationSourcePart
         Me.LblTitle.Name = "LblTitle"
         Me.LblTitle.Size = New System.Drawing.Size(268, 46)
         Me.LblTitle.TabIndex = 1
-        Me.LblTitle.Text = "@Part"
+        Me.LblTitle.Text = "Peça"
         Me.LblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'PnItem2
@@ -125,7 +125,7 @@ Partial Class UcEvaluationSourcePart
         Me.CbxItem2.Name = "CbxItem2"
         Me.CbxItem2.Size = New System.Drawing.Size(89, 24)
         Me.CbxItem2.TabIndex = 2
-        Me.CbxItem2.Text = "@System"
+        Me.CbxItem2.Text = "0"
         Me.CbxItem2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.CbxItem2.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         Me.CbxItem2.UseVisualStyleBackColor = False
@@ -175,7 +175,7 @@ Partial Class UcEvaluationSourcePart
         Me.BtnSoldLost.Name = "BtnSoldLost"
         Me.BtnSoldLost.Size = New System.Drawing.Size(179, 21)
         Me.BtnSoldLost.TabIndex = 0
-        Me.BtnSoldLost.Text = "@Change"
+        Me.BtnSoldLost.Text = "Troca?"
         Me.BtnSoldLost.UseVisualStyleBackColor = False
         '
         'CcSoldLost
@@ -185,13 +185,13 @@ Partial Class UcEvaluationSourcePart
         Me.CcSoldLost.DropDownEnabled = True
         Me.CcSoldLost.HostControl = Me.BtnSoldLost
         '
-        'UcEvaluationSourceItem
+        'UcEvaluationSourcePart
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.Controls.Add(Me.TlpContainer)
         Me.DoubleBuffered = True
         Me.Margin = New System.Windows.Forms.Padding(0)
-        Me.Name = "UcEvaluationSourceItem"
+        Me.Name = "UcEvaluationSourcePart"
         Me.Size = New System.Drawing.Size(450, 48)
         Me.PnItem1.ResumeLayout(False)
         Me.PnItem1.PerformLayout()

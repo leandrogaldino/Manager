@@ -24,28 +24,28 @@ Partial Class FrmEvaluation
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmEvaluation))
-        Dim Condition5 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Condition6 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Condition7 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim OtherField8 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField9 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField10 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField11 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim Parameter5 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Parameter6 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Parameter7 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Relation5 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Relation6 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Relation7 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Condition8 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim OtherField12 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField13 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField14 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim Parameter8 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Relation8 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim MessageBoxSettings2 As Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings = New Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings()
-        Dim PdfViewerPrinterSettings2 As Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings = New Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings()
-        Dim TextSearchSettings2 As Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings = New Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings()
+        Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Condition3 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim OtherField1 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField2 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField3 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField4 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Parameter3 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Relation1 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Relation2 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Relation3 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Condition4 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim OtherField5 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField6 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField7 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim Parameter4 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Relation4 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim MessageBoxSettings1 As Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings = New Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings()
+        Dim PdfViewerPrinterSettings1 As Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings = New Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings()
+        Dim TextSearchSettings1 As Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings = New Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings()
         Me.PnBottom = New System.Windows.Forms.Panel()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnCalculate = New System.Windows.Forms.Button()
@@ -625,21 +625,21 @@ Partial Class FrmEvaluation
         '
         Me.QbxCustomer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxCustomer.CharactersToQuery = 1
-        Condition5.FieldName = "iscustomer"
-        Condition5.Operator = "="
-        Condition5.TableNameOrAlias = "person"
-        Condition5.Value = "@iscustomer"
-        Condition6.FieldName = "statusid"
-        Condition6.Operator = "="
-        Condition6.TableNameOrAlias = "person"
-        Condition6.Value = "@statusid"
-        Condition7.FieldName = "controlmaintenance"
-        Condition7.Operator = "="
-        Condition7.TableNameOrAlias = "person"
-        Condition7.Value = "@controlmaintenance"
-        Me.QbxCustomer.Conditions.Add(Condition5)
-        Me.QbxCustomer.Conditions.Add(Condition6)
-        Me.QbxCustomer.Conditions.Add(Condition7)
+        Condition1.FieldName = "iscustomer"
+        Condition1.Operator = "="
+        Condition1.TableNameOrAlias = "person"
+        Condition1.Value = "@iscustomer"
+        Condition2.FieldName = "statusid"
+        Condition2.Operator = "="
+        Condition2.TableNameOrAlias = "person"
+        Condition2.Value = "@statusid"
+        Condition3.FieldName = "controlmaintenance"
+        Condition3.Operator = "="
+        Condition3.TableNameOrAlias = "person"
+        Condition3.Value = "@controlmaintenance"
+        Me.QbxCustomer.Conditions.Add(Condition1)
+        Me.QbxCustomer.Conditions.Add(Condition2)
+        Me.QbxCustomer.Conditions.Add(Condition3)
         Me.QbxCustomer.DebugOnTextChanged = False
         Me.QbxCustomer.DisplayFieldAlias = "Nome Curto"
         Me.QbxCustomer.DisplayFieldName = "shortname"
@@ -655,83 +655,83 @@ Partial Class FrmEvaluation
         Me.QbxCustomer.MainTableAlias = Nothing
         Me.QbxCustomer.MainTableName = "person"
         Me.QbxCustomer.Name = "QbxCustomer"
-        OtherField8.DisplayFieldAlias = "Nome"
-        OtherField8.DisplayFieldName = "name"
-        OtherField8.DisplayMainFieldName = "id"
-        OtherField8.DisplayTableAlias = Nothing
-        OtherField8.DisplayTableName = "person"
-        OtherField8.Freeze = False
-        OtherField8.IfNull = Nothing
-        OtherField8.Prefix = Nothing
-        OtherField8.Suffix = Nothing
-        OtherField9.DisplayFieldAlias = "CNPJ/CPF"
-        OtherField9.DisplayFieldName = "document"
-        OtherField9.DisplayMainFieldName = "id"
-        OtherField9.DisplayTableAlias = Nothing
-        OtherField9.DisplayTableName = "person"
-        OtherField9.Freeze = False
-        OtherField9.IfNull = Nothing
-        OtherField9.Prefix = Nothing
-        OtherField9.Suffix = Nothing
-        OtherField10.DisplayFieldAlias = "Cidade"
-        OtherField10.DisplayFieldName = "name"
-        OtherField10.DisplayMainFieldName = "id"
-        OtherField10.DisplayTableAlias = Nothing
-        OtherField10.DisplayTableName = "city"
-        OtherField10.Freeze = False
-        OtherField10.IfNull = Nothing
-        OtherField10.Prefix = Nothing
-        OtherField10.Suffix = Nothing
-        OtherField11.DisplayFieldAlias = "Estado"
-        OtherField11.DisplayFieldName = "name"
-        OtherField11.DisplayMainFieldName = "id"
-        OtherField11.DisplayTableAlias = Nothing
-        OtherField11.DisplayTableName = "state"
-        OtherField11.Freeze = False
-        OtherField11.IfNull = Nothing
-        OtherField11.Prefix = Nothing
-        OtherField11.Suffix = Nothing
-        Me.QbxCustomer.OtherFields.Add(OtherField8)
-        Me.QbxCustomer.OtherFields.Add(OtherField9)
-        Me.QbxCustomer.OtherFields.Add(OtherField10)
-        Me.QbxCustomer.OtherFields.Add(OtherField11)
-        Parameter5.ParameterName = "@iscustomer"
-        Parameter5.ParameterValue = "1"
-        Parameter6.ParameterName = "@statusid"
-        Parameter6.ParameterValue = "0"
-        Parameter7.ParameterName = "@controlmaintenance"
-        Parameter7.ParameterValue = "1"
-        Me.QbxCustomer.Parameters.Add(Parameter5)
-        Me.QbxCustomer.Parameters.Add(Parameter6)
-        Me.QbxCustomer.Parameters.Add(Parameter7)
+        OtherField1.DisplayFieldAlias = "Nome"
+        OtherField1.DisplayFieldName = "name"
+        OtherField1.DisplayMainFieldName = "id"
+        OtherField1.DisplayTableAlias = Nothing
+        OtherField1.DisplayTableName = "person"
+        OtherField1.Freeze = False
+        OtherField1.IfNull = Nothing
+        OtherField1.Prefix = Nothing
+        OtherField1.Suffix = Nothing
+        OtherField2.DisplayFieldAlias = "CNPJ/CPF"
+        OtherField2.DisplayFieldName = "document"
+        OtherField2.DisplayMainFieldName = "id"
+        OtherField2.DisplayTableAlias = Nothing
+        OtherField2.DisplayTableName = "person"
+        OtherField2.Freeze = False
+        OtherField2.IfNull = Nothing
+        OtherField2.Prefix = Nothing
+        OtherField2.Suffix = Nothing
+        OtherField3.DisplayFieldAlias = "Cidade"
+        OtherField3.DisplayFieldName = "name"
+        OtherField3.DisplayMainFieldName = "id"
+        OtherField3.DisplayTableAlias = Nothing
+        OtherField3.DisplayTableName = "city"
+        OtherField3.Freeze = False
+        OtherField3.IfNull = Nothing
+        OtherField3.Prefix = Nothing
+        OtherField3.Suffix = Nothing
+        OtherField4.DisplayFieldAlias = "Estado"
+        OtherField4.DisplayFieldName = "name"
+        OtherField4.DisplayMainFieldName = "id"
+        OtherField4.DisplayTableAlias = Nothing
+        OtherField4.DisplayTableName = "state"
+        OtherField4.Freeze = False
+        OtherField4.IfNull = Nothing
+        OtherField4.Prefix = Nothing
+        OtherField4.Suffix = Nothing
+        Me.QbxCustomer.OtherFields.Add(OtherField1)
+        Me.QbxCustomer.OtherFields.Add(OtherField2)
+        Me.QbxCustomer.OtherFields.Add(OtherField3)
+        Me.QbxCustomer.OtherFields.Add(OtherField4)
+        Parameter1.ParameterName = "@iscustomer"
+        Parameter1.ParameterValue = "1"
+        Parameter2.ParameterName = "@statusid"
+        Parameter2.ParameterValue = "0"
+        Parameter3.ParameterName = "@controlmaintenance"
+        Parameter3.ParameterValue = "1"
+        Me.QbxCustomer.Parameters.Add(Parameter1)
+        Me.QbxCustomer.Parameters.Add(Parameter2)
+        Me.QbxCustomer.Parameters.Add(Parameter3)
         Me.QbxCustomer.Prefix = Nothing
-        Relation5.Operator = "="
-        Relation5.RelateFieldName = "personid"
-        Relation5.RelateTableAlias = Nothing
-        Relation5.RelateTableName = "personaddress"
-        Relation5.RelationType = "LEFT"
-        Relation5.WithFieldName = "id"
-        Relation5.WithTableAlias = Nothing
-        Relation5.WithTableName = "person"
-        Relation6.Operator = "="
-        Relation6.RelateFieldName = "id"
-        Relation6.RelateTableAlias = Nothing
-        Relation6.RelateTableName = "city"
-        Relation6.RelationType = "LEFT"
-        Relation6.WithFieldName = "cityid"
-        Relation6.WithTableAlias = Nothing
-        Relation6.WithTableName = "personaddress"
-        Relation7.Operator = "="
-        Relation7.RelateFieldName = "id"
-        Relation7.RelateTableAlias = Nothing
-        Relation7.RelateTableName = "state"
-        Relation7.RelationType = "LEFT"
-        Relation7.WithFieldName = "stateid"
-        Relation7.WithTableAlias = Nothing
-        Relation7.WithTableName = "city"
-        Me.QbxCustomer.Relations.Add(Relation5)
-        Me.QbxCustomer.Relations.Add(Relation6)
-        Me.QbxCustomer.Relations.Add(Relation7)
+        Relation1.Operator = "="
+        Relation1.RelateFieldName = "personid"
+        Relation1.RelateTableAlias = Nothing
+        Relation1.RelateTableName = "personaddress"
+        Relation1.RelationType = "LEFT"
+        Relation1.WithFieldName = "id"
+        Relation1.WithTableAlias = Nothing
+        Relation1.WithTableName = "person"
+        Relation2.Operator = "="
+        Relation2.RelateFieldName = "id"
+        Relation2.RelateTableAlias = Nothing
+        Relation2.RelateTableName = "city"
+        Relation2.RelationType = "LEFT"
+        Relation2.WithFieldName = "cityid"
+        Relation2.WithTableAlias = Nothing
+        Relation2.WithTableName = "personaddress"
+        Relation3.Operator = "="
+        Relation3.RelateFieldName = "id"
+        Relation3.RelateTableAlias = Nothing
+        Relation3.RelateTableName = "state"
+        Relation3.RelationType = "LEFT"
+        Relation3.WithFieldName = "stateid"
+        Relation3.WithTableAlias = Nothing
+        Relation3.WithTableName = "city"
+        Me.QbxCustomer.Relations.Add(Relation1)
+        Me.QbxCustomer.Relations.Add(Relation2)
+        Me.QbxCustomer.Relations.Add(Relation3)
         Me.QbxCustomer.Size = New System.Drawing.Size(382, 23)
         Me.QbxCustomer.Suffix = Nothing
         Me.QbxCustomer.TabIndex = 14
@@ -989,11 +989,11 @@ Partial Class FrmEvaluation
         '
         Me.QbxCompressor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxCompressor.CharactersToQuery = 1
-        Condition8.FieldName = "statusid"
-        Condition8.Operator = "="
-        Condition8.TableNameOrAlias = "personcompressor"
-        Condition8.Value = "@statusid"
-        Me.QbxCompressor.Conditions.Add(Condition8)
+        Condition4.FieldName = "statusid"
+        Condition4.Operator = "="
+        Condition4.TableNameOrAlias = "personcompressor"
+        Condition4.Value = "@statusid"
+        Me.QbxCompressor.Conditions.Add(Condition4)
         Me.QbxCompressor.DebugOnTextChanged = False
         Me.QbxCompressor.DisplayFieldAlias = "Compressor"
         Me.QbxCompressor.DisplayFieldName = "name"
@@ -1010,49 +1010,49 @@ Partial Class FrmEvaluation
         Me.QbxCompressor.MainTableAlias = Nothing
         Me.QbxCompressor.MainTableName = "personcompressor"
         Me.QbxCompressor.Name = "QbxCompressor"
-        OtherField12.DisplayFieldAlias = "Nº de Série"
-        OtherField12.DisplayFieldName = "serialnumber"
-        OtherField12.DisplayMainFieldName = "id"
-        OtherField12.DisplayTableAlias = Nothing
-        OtherField12.DisplayTableName = "personcompressor"
-        OtherField12.Freeze = True
-        OtherField12.IfNull = Nothing
-        OtherField12.Prefix = " NS: "
-        OtherField12.Suffix = Nothing
-        OtherField13.DisplayFieldAlias = "Patrimônio"
-        OtherField13.DisplayFieldName = "patrimony"
-        OtherField13.DisplayMainFieldName = "id"
-        OtherField13.DisplayTableAlias = Nothing
-        OtherField13.DisplayTableName = "personcompressor"
-        OtherField13.Freeze = True
-        OtherField13.IfNull = Nothing
-        OtherField13.Prefix = " PAT: "
-        OtherField13.Suffix = Nothing
-        OtherField14.DisplayFieldAlias = "Setor"
-        OtherField14.DisplayFieldName = "sector"
-        OtherField14.DisplayMainFieldName = "id"
-        OtherField14.DisplayTableAlias = Nothing
-        OtherField14.DisplayTableName = "personcompressor"
-        OtherField14.Freeze = True
-        OtherField14.IfNull = Nothing
-        OtherField14.Prefix = " SETOR: "
-        OtherField14.Suffix = Nothing
-        Me.QbxCompressor.OtherFields.Add(OtherField12)
-        Me.QbxCompressor.OtherFields.Add(OtherField13)
-        Me.QbxCompressor.OtherFields.Add(OtherField14)
-        Parameter8.ParameterName = "@statusid"
-        Parameter8.ParameterValue = "0"
-        Me.QbxCompressor.Parameters.Add(Parameter8)
+        OtherField5.DisplayFieldAlias = "Nº de Série"
+        OtherField5.DisplayFieldName = "serialnumber"
+        OtherField5.DisplayMainFieldName = "id"
+        OtherField5.DisplayTableAlias = Nothing
+        OtherField5.DisplayTableName = "personcompressor"
+        OtherField5.Freeze = True
+        OtherField5.IfNull = Nothing
+        OtherField5.Prefix = " NS: "
+        OtherField5.Suffix = Nothing
+        OtherField6.DisplayFieldAlias = "Patrimônio"
+        OtherField6.DisplayFieldName = "patrimony"
+        OtherField6.DisplayMainFieldName = "id"
+        OtherField6.DisplayTableAlias = Nothing
+        OtherField6.DisplayTableName = "personcompressor"
+        OtherField6.Freeze = True
+        OtherField6.IfNull = Nothing
+        OtherField6.Prefix = " PAT: "
+        OtherField6.Suffix = Nothing
+        OtherField7.DisplayFieldAlias = "Setor"
+        OtherField7.DisplayFieldName = "sector"
+        OtherField7.DisplayMainFieldName = "id"
+        OtherField7.DisplayTableAlias = Nothing
+        OtherField7.DisplayTableName = "personcompressor"
+        OtherField7.Freeze = True
+        OtherField7.IfNull = Nothing
+        OtherField7.Prefix = " SETOR: "
+        OtherField7.Suffix = Nothing
+        Me.QbxCompressor.OtherFields.Add(OtherField5)
+        Me.QbxCompressor.OtherFields.Add(OtherField6)
+        Me.QbxCompressor.OtherFields.Add(OtherField7)
+        Parameter4.ParameterName = "@statusid"
+        Parameter4.ParameterValue = "0"
+        Me.QbxCompressor.Parameters.Add(Parameter4)
         Me.QbxCompressor.Prefix = Nothing
-        Relation8.Operator = "="
-        Relation8.RelateFieldName = "id"
-        Relation8.RelateTableAlias = Nothing
-        Relation8.RelateTableName = "compressor"
-        Relation8.RelationType = "INNER"
-        Relation8.WithFieldName = "compressorid"
-        Relation8.WithTableAlias = Nothing
-        Relation8.WithTableName = "personcompressor"
-        Me.QbxCompressor.Relations.Add(Relation8)
+        Relation4.Operator = "="
+        Relation4.RelateFieldName = "id"
+        Relation4.RelateTableAlias = Nothing
+        Relation4.RelateTableName = "compressor"
+        Relation4.RelationType = "INNER"
+        Relation4.WithFieldName = "compressorid"
+        Relation4.WithTableAlias = Nothing
+        Relation4.WithTableName = "personcompressor"
+        Me.QbxCompressor.Relations.Add(Relation4)
         Me.QbxCompressor.Size = New System.Drawing.Size(382, 23)
         Me.QbxCompressor.Suffix = Nothing
         Me.QbxCompressor.TabIndex = 17
@@ -1084,10 +1084,10 @@ Partial Class FrmEvaluation
         Me.TabDocument.AutoScroll = True
         Me.TabDocument.Controls.Add(Me.PdfDocumentViewer)
         Me.TabDocument.Controls.Add(Me.TsDocument)
-        Me.TabDocument.Location = New System.Drawing.Point(4, 22)
+        Me.TabDocument.Location = New System.Drawing.Point(4, 26)
         Me.TabDocument.Name = "TabDocument"
         Me.TabDocument.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabDocument.Size = New System.Drawing.Size(1032, 391)
+        Me.TabDocument.Size = New System.Drawing.Size(1032, 387)
         Me.TabDocument.TabIndex = 7
         Me.TabDocument.Text = "Documento"
         Me.TabDocument.UseVisualStyleBackColor = True
@@ -1103,27 +1103,27 @@ Partial Class FrmEvaluation
         Me.PdfDocumentViewer.IsTextSearchEnabled = True
         Me.PdfDocumentViewer.IsTextSelectionEnabled = True
         Me.PdfDocumentViewer.Location = New System.Drawing.Point(3, 28)
-        MessageBoxSettings2.EnableNotification = True
-        Me.PdfDocumentViewer.MessageBoxSettings = MessageBoxSettings2
+        MessageBoxSettings1.EnableNotification = True
+        Me.PdfDocumentViewer.MessageBoxSettings = MessageBoxSettings1
         Me.PdfDocumentViewer.MinimumZoomPercentage = 50
         Me.PdfDocumentViewer.Name = "PdfDocumentViewer"
         Me.PdfDocumentViewer.PageBorderThickness = 1
-        PdfViewerPrinterSettings2.PageOrientation = Syncfusion.Windows.PdfViewer.PdfViewerPrintOrientation.[Auto]
-        PdfViewerPrinterSettings2.PageSize = Syncfusion.Windows.PdfViewer.PdfViewerPrintSize.ActualSize
-        PdfViewerPrinterSettings2.PrintLocation = CType(resources.GetObject("PdfViewerPrinterSettings2.PrintLocation"), System.Drawing.PointF)
-        PdfViewerPrinterSettings2.ShowPrintStatusDialog = True
-        Me.PdfDocumentViewer.PrinterSettings = PdfViewerPrinterSettings2
+        PdfViewerPrinterSettings1.PageOrientation = Syncfusion.Windows.PdfViewer.PdfViewerPrintOrientation.[Auto]
+        PdfViewerPrinterSettings1.PageSize = Syncfusion.Windows.PdfViewer.PdfViewerPrintSize.ActualSize
+        PdfViewerPrinterSettings1.PrintLocation = CType(resources.GetObject("PdfViewerPrinterSettings1.PrintLocation"), System.Drawing.PointF)
+        PdfViewerPrinterSettings1.ShowPrintStatusDialog = True
+        Me.PdfDocumentViewer.PrinterSettings = PdfViewerPrinterSettings1
         Me.PdfDocumentViewer.ReferencePath = Nothing
         Me.PdfDocumentViewer.ScrollDisplacementValue = 0
         Me.PdfDocumentViewer.ShowHorizontalScrollBar = True
         Me.PdfDocumentViewer.ShowVerticalScrollBar = True
-        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1026, 360)
+        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1026, 356)
         Me.PdfDocumentViewer.SpaceBetweenPages = 8
         Me.PdfDocumentViewer.TabIndex = 1
-        TextSearchSettings2.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
-        TextSearchSettings2.HighlightAllInstance = True
-        TextSearchSettings2.OtherInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(254, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.PdfDocumentViewer.TextSearchSettings = TextSearchSettings2
+        TextSearchSettings1.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
+        TextSearchSettings1.HighlightAllInstance = True
+        TextSearchSettings1.OtherInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(254, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.PdfDocumentViewer.TextSearchSettings = TextSearchSettings1
         Me.PdfDocumentViewer.ThemeName = "Default"
         Me.PdfDocumentViewer.VerticalScrollOffset = 0
         Me.PdfDocumentViewer.VisualStyle = Syncfusion.Windows.Forms.PdfViewer.VisualStyle.[Default]
@@ -1210,10 +1210,10 @@ Partial Class FrmEvaluation
         'TabPhoto
         '
         Me.TabPhoto.Controls.Add(Me.PnPhoto)
-        Me.TabPhoto.Location = New System.Drawing.Point(4, 22)
+        Me.TabPhoto.Location = New System.Drawing.Point(4, 26)
         Me.TabPhoto.Name = "TabPhoto"
         Me.TabPhoto.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPhoto.Size = New System.Drawing.Size(1032, 391)
+        Me.TabPhoto.Size = New System.Drawing.Size(1032, 387)
         Me.TabPhoto.TabIndex = 8
         Me.TabPhoto.Text = "Fotos"
         Me.TabPhoto.UseVisualStyleBackColor = True
@@ -1227,7 +1227,7 @@ Partial Class FrmEvaluation
         Me.PnPhoto.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PnPhoto.Location = New System.Drawing.Point(3, 3)
         Me.PnPhoto.Name = "PnPhoto"
-        Me.PnPhoto.Size = New System.Drawing.Size(1026, 385)
+        Me.PnPhoto.Size = New System.Drawing.Size(1026, 381)
         Me.PnPhoto.TabIndex = 17
         '
         'PbxPhoto
@@ -1236,7 +1236,7 @@ Partial Class FrmEvaluation
         Me.PbxPhoto.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PbxPhoto.Location = New System.Drawing.Point(0, 28)
         Me.PbxPhoto.Name = "PbxPhoto"
-        Me.PbxPhoto.Size = New System.Drawing.Size(1024, 332)
+        Me.PbxPhoto.Size = New System.Drawing.Size(1024, 328)
         Me.PbxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PbxPhoto.TabIndex = 11
         Me.PbxPhoto.TabStop = False
@@ -1379,7 +1379,7 @@ Partial Class FrmEvaluation
         Me.LblPhotoCount.BackColor = System.Drawing.Color.White
         Me.LblPhotoCount.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.LblPhotoCount.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblPhotoCount.Location = New System.Drawing.Point(0, 360)
+        Me.LblPhotoCount.Location = New System.Drawing.Point(0, 356)
         Me.LblPhotoCount.Name = "LblPhotoCount"
         Me.LblPhotoCount.Size = New System.Drawing.Size(1024, 23)
         Me.LblPhotoCount.TabIndex = 14

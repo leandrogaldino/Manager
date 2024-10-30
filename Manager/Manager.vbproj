@@ -673,6 +673,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Evaluation\EvaluationPart.vb" />
+    <Compile Include="Evaluation\EvaluationPhoto.vb" />
     <Compile Include="Evaluation\EvaluationTechnician.vb" />
     <Compile Include="Evaluation\FrmEvaluationImport.Designer.vb">
       <DependentUpon>FrmEvaluationImport.vb</DependentUpon>
@@ -1564,6 +1565,10 @@
     <Content Include="Resources\SQL\CrmTreatmentSelect.sql" />
     <Content Include="Resources\SQL\CrmTreatmentUpdate.sql" />
     <Content Include="Resources\SQL\CrmFilter.sql" />
+    <Content Include="Resources\SQL\EvaluationPhotoDelete.sql" />
+    <Content Include="Resources\SQL\EvaluationPhotoInsert.sql" />
+    <Content Include="Resources\SQL\EvaluationPhotoSelect .sql" />
+    <Content Include="Resources\SQL\EvaluationPhotoUpdate .sql" />
     <Content Include="Resources\SQL\UserPersonShortNameSelect.sql" />
     <Content Include="Resources\XML\CrmGrid.xml" />
     <None Include="Docs\.UpdateNotes">

@@ -15,6 +15,7 @@ INSERT INTO evaluation
 	averageworkload,
 	technicaladvice,
 	documentpath,
+	signaturepath,
 	rejectreason,
 	userid
 )
@@ -35,6 +36,7 @@ VALUES
 	@averageworkload,
 	@technicaladvice,
 	@documentpath,
+	@signaturepath,
 	@rejectreason,
 	@userid
 );

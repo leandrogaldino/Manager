@@ -12,15 +12,15 @@ Public Class FrmEvaluation
     Private _Loading As Boolean
     Private _Calculated As Boolean
     Private _TargetSize As Size
-    Private _SelectedPhoto As FileManager
-    Private Property SelectedPhoto As FileManager
+    Private _SelectedPhoto As EvaluationPhoto
+    Private Property SelectedPhoto As EvaluationPhoto
         Get
             Return _SelectedPhoto
         End Get
-        Set(value As FileManager)
+        Set(value As EvaluationPhoto)
             _SelectedPhoto = value
             If _SelectedPhoto IsNot Nothing Then
-                PbxPhoto.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_SelectedPhoto.CurrentFile)))
+                PbxPhoto.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_SelectedPhoto.PhotoPath.CurrentFile)))
             Else
                 PbxPhoto.Image = Nothing
             End If
@@ -28,73 +28,80 @@ Public Class FrmEvaluation
     End Property
 
     Private Sub BtnIncludePhoto_Click(sender As Object, e As EventArgs) Handles BtnIncludePhoto.Click
-        Dim PhotoFile As FileManager
-        Using openFileDialog As New OpenFileDialog()
-            openFileDialog.Filter = "Imagens|*.jpg;*.jpeg;*.png;*.bmp|Todos os arquivos|*.*"
-            openFileDialog.Title = "Selecionar Imagem"
-            If openFileDialog.ShowDialog() = DialogResult.OK Then
-                Dim selectedImagePath As String = openFileDialog.FileName
-                PhotoFile = New FileManager(ApplicationPaths.EvaluationPhotoDirectory)
-                PhotoFile.SetCurrentFile(selectedImagePath)
-                _Evaluation.PhotoPaths.Add(PhotoFile)
-                SelectedPhoto = PhotoFile
+        Dim Photo As EvaluationPhoto
+        Using Ofd As New OpenFileDialog()
+            Ofd.Filter = "Imagens|*.jpg;*.jpeg;*.png;*.bmp|Todos os arquivos|*.*"
+            Ofd.Title = "Selecionar Imagem"
+            If Ofd.ShowDialog() = DialogResult.OK Then
+                Dim SelectedPath As String = Ofd.FileName
+                Photo = New EvaluationPhoto()
+                Photo.PhotoPath.SetCurrentFile(SelectedPath)
+                _Evaluation.Photos.Add(Photo)
+                SelectedPhoto = Photo
+                EprValidation.Clear()
+                BtnSave.Enabled = True
             End If
         End Using
         RefreshPhotoControls()
     End Sub
 
     Private Sub BtnRemovePhoto_Click(sender As Object, e As EventArgs) Handles BtnRemovePhoto.Click
-        Dim Index As Integer = _Evaluation.PhotoPaths.IndexOf(SelectedPhoto)
-        Dim PhotoCount As Integer = _Evaluation.PhotoPaths.Count
-        _Evaluation.PhotoPaths.Remove(SelectedPhoto)
 
-        ' Verifica se restaram fotos na lista
-        If PhotoCount = 1 Then
-            ' Se era a única foto, define SelectedPhoto como Nothing
-            SelectedPhoto = Nothing
-        ElseIf Index > 0 Then
-            ' Se havia mais de uma foto, define SelectedPhoto como o índice anterior, se existir
-            SelectedPhoto = _Evaluation.PhotoPaths(Index - 1)
-        ElseIf _Evaluation.PhotoPaths.Count > 0 Then
-            ' Se a foto removida era a primeira, seleciona a nova primeira foto
-            SelectedPhoto = _Evaluation.PhotoPaths(0)
+        If CMessageBox.Show("A foto será excluída permanentemente quando essa avaliação for salva. Confirma a exclusão?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+            Dim Index As Integer = _Evaluation.Photos.IndexOf(SelectedPhoto)
+            Dim PhotoCount As Integer = _Evaluation.Photos.Count
+            _Evaluation.Photos.Remove(SelectedPhoto)
+
+            ' Verifica se restaram fotos na lista
+            If PhotoCount = 1 Then
+                ' Se era a única foto, define SelectedPhoto como Nothing
+                SelectedPhoto = Nothing
+            ElseIf Index > 0 Then
+                ' Se havia mais de uma foto, define SelectedPhoto como o índice anterior, se existir
+                SelectedPhoto = _Evaluation.Photos(Index - 1)
+            ElseIf _Evaluation.Photos.Count > 0 Then
+                ' Se a foto removida era a primeira, seleciona a nova primeira foto
+                SelectedPhoto = _Evaluation.Photos(0)
+            End If
+            RefreshPhotoControls()
+            EprValidation.Clear()
+            BtnSave.Enabled = True
         End If
-        RefreshPhotoControls()
     End Sub
     Private Sub BtnSavePhoto_Click(sender As Object, e As EventArgs) Handles BtnSavePhoto.Click
         ' Verifica se há uma imagem no PictureBox
         ' Cria e configura o SaveFileDialog
-        Using saveDialog As New SaveFileDialog()
-            saveDialog.Filter = "JPEG Image|*.jpg|PNG Image|*.png|BMP Image|*.bmp"
-            saveDialog.Title = "Salvar Imagem"
-            saveDialog.FileName = "Foto"
+        Using Sfd As New SaveFileDialog()
+            Sfd.Filter = "JPEG Image|*.jpg|PNG Image|*.png|BMP Image|*.bmp"
+            Sfd.Title = "Salvar Imagem"
+            Sfd.FileName = "Foto"
             ' Exibe o diálogo e verifica se o usuário clicou em 'Salvar'
-            If saveDialog.ShowDialog() = DialogResult.OK Then
+            If Sfd.ShowDialog() = DialogResult.OK Then
                 ' Obtém a extensão do arquivo selecionado
-                Dim fileExtension As String = IO.Path.GetExtension(saveDialog.FileName).ToLower()
-                Dim imageFormat As Imaging.ImageFormat
+                Dim FileExtension As String = IO.Path.GetExtension(Sfd.FileName).ToLower()
+                Dim ImageFormat As Imaging.ImageFormat
 
                 ' Define o formato da imagem com base na extensão do arquivo
-                Select Case fileExtension
+                Select Case FileExtension
                     Case ".jpg"
-                        imageFormat = Imaging.ImageFormat.Jpeg
+                        ImageFormat = Imaging.ImageFormat.Jpeg
                     Case ".png"
-                        imageFormat = Imaging.ImageFormat.Png
+                        ImageFormat = Imaging.ImageFormat.Png
                     Case ".bmp"
-                        imageFormat = Imaging.ImageFormat.Bmp
+                        ImageFormat = Imaging.ImageFormat.Bmp
                     Case Else
                         MessageBox.Show("Formato de arquivo não suportado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         Exit Sub
                 End Select
                 ' Salva a imagem no caminho especificado
-                PbxPhoto.Image.Save(saveDialog.FileName, imageFormat)
+                PbxPhoto.Image.Save(Sfd.FileName, ImageFormat)
             End If
         End Using
     End Sub
 
     Private Sub RefreshPhotoControls()
-        Dim PhotoCount As Integer = _Evaluation.PhotoPaths.Count
-        Dim PhotoIndex As Integer = _Evaluation.PhotoPaths.IndexOf(SelectedPhoto)
+        Dim PhotoCount As Integer = _Evaluation.Photos.Count
+        Dim PhotoIndex As Integer = _Evaluation.Photos.IndexOf(SelectedPhoto)
 
         ' Se não houver fotos
         If PhotoCount < 1 Then
@@ -123,22 +130,22 @@ Public Class FrmEvaluation
 
 
     Private Sub BtnPreviousPhoto_Click(sender As Object, e As EventArgs) Handles BtnPreviousPhoto.Click
-        SelectedPhoto = _Evaluation.PhotoPaths(_Evaluation.PhotoPaths.IndexOf(SelectedPhoto) - 1)
+        SelectedPhoto = _Evaluation.Photos(_Evaluation.Photos.IndexOf(SelectedPhoto) - 1)
         RefreshPhotoControls()
     End Sub
 
     Private Sub BtnNextPhoto_Click(sender As Object, e As EventArgs) Handles BtnNextPhoto.Click
-        SelectedPhoto = _Evaluation.PhotoPaths(_Evaluation.PhotoPaths.IndexOf(SelectedPhoto) + 1)
+        SelectedPhoto = _Evaluation.Photos(_Evaluation.Photos.IndexOf(SelectedPhoto) + 1)
         RefreshPhotoControls()
     End Sub
 
     Private Sub BtnFirstPhoto_Click(sender As Object, e As EventArgs) Handles BtnFirstPhoto.Click
-        SelectedPhoto = _Evaluation.PhotoPaths(0)
+        SelectedPhoto = _Evaluation.Photos(0)
         RefreshPhotoControls()
     End Sub
 
     Private Sub BtnLastPhoto_Click(sender As Object, e As EventArgs) Handles BtnLastPhoto.Click
-        SelectedPhoto = _Evaluation.PhotoPaths(_Evaluation.PhotoPaths.Count - 1)
+        SelectedPhoto = _Evaluation.Photos(_Evaluation.Photos.Count - 1)
         RefreshPhotoControls()
     End Sub
 
@@ -361,8 +368,8 @@ Public Class FrmEvaluation
 
 
 
-        If _Evaluation.PhotoPaths.Count > 0 Then
-            SelectedPhoto = _Evaluation.PhotoPaths(0)
+        If _Evaluation.Photos.Count > 0 Then
+            SelectedPhoto = _Evaluation.Photos(0)
         End If
 
 
@@ -701,13 +708,13 @@ Public Class FrmEvaluation
             TcEvaluation.SelectedTab = TabMain
             DgvPartWorkedHour.Select()
             Return False
-        ElseIf Not PdfDocumentViewer.IsDocumentLoaded Then
-            EprValidation.SetError(TsDocument, "Anexar um documento é obrigatório.")
-            EprValidation.SetIconAlignment(TsDocument, ErrorIconAlignment.MiddleLeft)
-            EprValidation.SetIconPadding(TsDocument, -180)
-            TcEvaluation.SelectedTab = TabDocument
-            BtnAttachPDF.Select()
-            Return False
+            'ElseIf Not PdfDocumentViewer.IsDocumentLoaded Then
+            '    EprValidation.SetError(TsDocument, "Anexar um documento é obrigatório.")
+            '    EprValidation.SetIconAlignment(TsDocument, ErrorIconAlignment.MiddleLeft)
+            '    EprValidation.SetIconPadding(TsDocument, -180)
+            '    TcEvaluation.SelectedTab = TabDocument
+            '    BtnAttachPDF.Select()
+            '    Return False
         ElseIf _Evaluation.PartsWorkedHour.Any(Function(x) x.CurrentCapacity > x.Part.Capacity) Then
             EprValidation.SetError(GbxPartWorkedHour, "Existe um ou mais itens com a capacidade atual superior a capacidade total.")
             EprValidation.SetIconAlignment(GbxPartWorkedHour, ErrorIconAlignment.TopRight)
@@ -729,8 +736,14 @@ Public Class FrmEvaluation
         Dim Row As DataGridViewRow
         Dim DocumentPath As String = String.Empty
         Dim Success As Boolean
-        Dim CurrentFile As String = _Evaluation.DocumentPath.CurrentFile
-        Dim OriginalFile As String = _Evaluation.DocumentPath.OriginalFile
+
+
+        ' Dim CurrentDocument As String = _Evaluation.DocumentPath.CurrentFile
+        'Dim OriginalDocument As String = _Evaluation.DocumentPath.OriginalFile
+
+
+
+
         QbxCustomer.Text = RemoveAccents(QbxCustomer.Text.Trim)
         TxtResponsible.Text = RemoveAccents(TxtResponsible.Text.Trim)
         QbxCompressor.Text = RemoveAccents(QbxCompressor.Text.Trim)
@@ -809,12 +822,12 @@ Public Class FrmEvaluation
                 Success = False
             End If
         End If
-        If Not Success Then
-            If Not File.Exists(_Evaluation.DocumentPath.OriginalFile) Then
-                _Evaluation.DocumentPath.SetCurrentFile(OriginalFile, True)
-                _Evaluation.DocumentPath.SetCurrentFile(CurrentFile)
-            End If
-        End If
+        'If Not Success Then
+        'If Not File.Exists(_Evaluation.DocumentPath.OriginalFile) Then
+        '_Evaluation.DocumentPath.SetCurrentFile(OriginalDocument, True)
+        '_Evaluation.DocumentPath.SetCurrentFile(CurrentDocument)
+        'End If
+        'End If
         Return Success
     End Function
 

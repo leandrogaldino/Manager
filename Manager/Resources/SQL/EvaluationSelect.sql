@@ -15,6 +15,7 @@ SELECT
 	evaluation.averageworkload,
 	evaluation.technicaladvice,
 	evaluation.documentpath,
+	evaluation.signaturepath,
 	evaluation.rejectreason,
 	evaluation.userid
 FROM evaluation

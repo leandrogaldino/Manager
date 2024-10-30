@@ -2414,6 +2414,64 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM evaluationphoto
+        '''WHERE evaluationphoto.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property EvaluationPhotoDelete() As String
+            Get
+                Return ResourceManager.GetString("EvaluationPhotoDelete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO evaluationphoto
+        '''(
+        '''    creation,
+        '''    evaluationid,
+        '''    photopath,
+        '''    userid
+        ''')
+        '''VALUES
+        '''(
+        '''    @creation,
+        '''    @evaluationid,
+        '''    @photopath,
+        '''    @userid
+        ''');.
+        '''</summary>
+        Friend ReadOnly Property EvaluationPhotoInsert() As String
+            Get
+                Return ResourceManager.GetString("EvaluationPhotoInsert", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	evaluationphoto.id,
+        '''	evaluationphoto.creation,
+        '''	evaluationphoto.evaluationid,
+        '''	evaluationphoto.photopath
+        '''FROM evaluationphoto
+        '''WHERE evaluationphoto.evaluationid = @evaluationid;.
+        '''</summary>
+        Friend ReadOnly Property EvaluationPhotoSelect() As String
+            Get
+                Return ResourceManager.GetString("EvaluationPhotoSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluationphoto SET
+        '''    photopath =  @photopath
+        '''WHERE evaluationphoto.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property EvaluationPhotoUpdate() As String
+            Get
+                Return ResourceManager.GetString("EvaluationPhotoUpdate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''    evaluation.evaluationdate
         '''FROM evaluation
@@ -2722,25 +2780,23 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;!DOCTYPE html&gt;
         '''&lt;html lang=&quot;pt-BR&quot;&gt;
-        '''  &lt;head&gt;
-        '''    &lt;meta charset=&quot;UTF-8&quot; /&gt;
-        '''    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+        '''&lt;head&gt;
+        '''    &lt;meta charset=&quot;UTF-8&quot;&gt;
+        '''    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
         '''    &lt;title&gt;Loading&lt;/title&gt;
         '''    &lt;style&gt;
-        '''      * {
-        '''        margin: 0;
-        '''        padding: 0;
-        '''      }
-        '''      body {
-        '''        background: #ffffff;  
-        '''      }
-        '''      .loading-area {
-        '''        display: flex; 
-        '''        flex-direction: column;
-        '''        justify-content: center;
-        '''        align-items: center; 
-        '''        height: 100vh;
-        '''        text-align: center;         ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''        body, html {
+        '''            margin: 0;
+        '''            height: 100%;
+        '''            display: flex;
+        '''            justify-content: center; 
+        '''            align-items: center; 
+        '''            background-color: transparent
+        '''        }
+        '''
+        '''        .loading-container {
+        '''            display: flex;
+        '''            flex-direction: colu [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property Loading() As String
             Get

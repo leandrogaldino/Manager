@@ -119,4 +119,34 @@ IF IFNULL(OLD.directorypath, '') <> IFNULL(NEW.directorypath, '') THEN INSERT IN
 END$$
 DELIMITER ;
 
+CREATE TABLE `evaluationphoto` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `creation` date NOT NULL,
+  `evaluationid` int NOT NULL,
+  `photopath` int NOT NULL,
+  `userid` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `evaluationid` (`evaluationid`),
+  KEY `userid` (`userid`),
+  CONSTRAINT `evaluationphoto_ibfk_1` FOREIGN KEY (`evaluationid`) REFERENCES `evaluation` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `evaluationphoto_ibfk_3` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=3532 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TRIGGER IF EXISTS `manager`.`evaluationtephotoinsert`;
+
+DELIMITER $$
+USE `manager`$$
+CREATE DEFINER=`root`@`localhost` TRIGGER `evaluationphotoinsert` AFTER INSERT ON `evaluationphoto` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 1308, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END$$
+
+CREATE DEFINER=`root`@`localhost` TRIGGER `evaluationphotoupdate` AFTER UPDATE ON `evaluationphoto` FOR EACH ROW BEGIN
+IF OLD.photopath <> NEW.photopath THEN INSERT INTO log VALUES (NULL, 1308, NEW.id, 'Foto', NULL, 'Alterado', NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` TRIGGER `evaluationphotodelete` AFTER DELETE ON `evaluationphoto` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 1308, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
+END$$
+
+DELIMITER ;
 

@@ -85,7 +85,7 @@ Public Class Evaluation
     Public Property TechnicalAdvice As String
     Public Property DocumentPath As New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
     Public Property SignaturePath As New FileManager(ApplicationPaths.EvaluationSignatureDirectory)
-    Public Property PhotoPaths As New List(Of FileManager)
+    Public Property Photos As New OrdenedList(Of EvaluationPhoto)
     Public ReadOnly Property RejectReason As String
         Get
             Return _RejectReason
@@ -161,11 +161,13 @@ Public Class Evaluation
             Evaluation.Technicians.Add(EvaluationTechnician)
         Next TechnicianData
         Evaluation.SignaturePath.SetCurrentFile(Signature)
-        For Each Photo In Photos
-            Dim PhotoFile As New FileManager(ApplicationPaths.EvaluationPhotoDirectory)
-            PhotoFile.SetCurrentFile(Photo)
-            Evaluation.PhotoPaths.Add(PhotoFile)
-        Next Photo
+        For Each p In Photos
+            Dim Photo As New EvaluationPhoto
+            Photo.PhotoPath = New FileManager(ApplicationPaths.EvaluationPhotoDirectory)
+            Photo.IsSaved = True
+            Photo.PhotoPath.SetCurrentFile(p)
+            Evaluation.Photos.Add(Photo)
+        Next p
         Return Evaluation
     End Function
 
@@ -210,7 +212,7 @@ Public Class Evaluation
         TechnicalAdvice = Nothing
         DocumentPath = New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
         SignaturePath = New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
-        PhotoPaths = New List(Of FileManager)
+        Photos = New OrdenedList(Of EvaluationPhoto)
         _RejectReason = Nothing
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As Evaluation
@@ -249,9 +251,9 @@ Public Class Evaluation
                             DocumentPath.SetCurrentFile(Path.Combine(ApplicationPaths.EvaluationDocumentDirectory, TableResult.Rows(0).Item("documentpath").ToString), True)
                         End If
                         If TableResult.Rows(0).Item("signaturepath") IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("signaturepath")) Then
-                            DocumentPath.SetCurrentFile(Path.Combine(ApplicationPaths.EvaluationDocumentDirectory, TableResult.Rows(0).Item("signaturepath").ToString), True)
+                            SignaturePath.SetCurrentFile(Path.Combine(ApplicationPaths.EvaluationSignatureDirectory, TableResult.Rows(0).Item("signaturepath").ToString), True)
                         End If
-                        PhotoPaths = GetPhotos(Tra)
+                        Photos = GetPhotos(Tra)
                         _RejectReason = TableResult.Rows(0).Item("rejectreason").ToString
                         Technicians = GetTechnicians(Tra)
                         FillParts(Tra)
@@ -267,10 +269,10 @@ Public Class Evaluation
         End Using
         Return Me
     End Function
-    Private Function GetPhotos(Transaction As MySqlTransaction) As OrdenedList(Of EvaluationTechnician)
+    Private Function GetPhotos(Transaction As MySqlTransaction) As OrdenedList(Of EvaluationPhoto)
         Dim TableResult As DataTable
-        Dim Technician As EvaluationTechnician
-        Dim Technicians As New OrdenedList(Of EvaluationTechnician)
+        Dim Photo As EvaluationPhoto
+        Dim Photos As New OrdenedList(Of EvaluationPhoto)
         Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoSelect, Transaction.Connection)
             Cmd.Transaction = Transaction
             Cmd.Parameters.AddWithValue("@evaluationid", ID)
@@ -278,16 +280,16 @@ Public Class Evaluation
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
                 For Each Row As DataRow In TableResult.Rows
-                    Technician = New EvaluationTechnician
-                    Technician.Technician = New Person().Load(Row.Item("photoid"), False)
-                    Technician.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Technician, Row.Item("id"))
-                    Technician.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Technician, Row.Item("creation"))
-                    Technician.IsSaved = True
-                    Technicians.Add(Technician)
+                    Photo = New EvaluationPhoto
+                    Photo.PhotoPath.SetCurrentFile("photopath")
+                    Photo.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Photo, Row.Item("id"))
+                    Photo.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Photo, Row.Item("creation"))
+                    Photo.IsSaved = True
+                    Photos.Add(Photo)
                 Next Row
             End Using
         End Using
-        Return Technicians
+        Return Photos
     End Function
     Private Function GetTechnicians(Transaction As MySqlTransaction) As OrdenedList(Of EvaluationTechnician)
         Dim TableResult As DataTable
@@ -384,6 +386,7 @@ Public Class Evaluation
         Technicians.ToList().ForEach(Sub(x) x.IsSaved = True)
         PartsWorkedHour.ToList().ForEach(Sub(x) x.IsSaved = True)
         PartsElapsedDay.ToList().ForEach(Sub(x) x.IsSaved = True)
+        Photos.ToList().ForEach(Sub(x) x.IsSaved = True)
     End Sub
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)
@@ -422,19 +425,20 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@averageworkload", AverageWorkLoad)
                     CmdEvaluation.Parameters.AddWithValue("@technicaladvice", If(String.IsNullOrEmpty(TechnicalAdvice), DBNull.Value, TechnicalAdvice))
                     CmdEvaluation.Parameters.AddWithValue("@documentpath", If(String.IsNullOrEmpty(DocumentPath.CurrentFile), DBNull.Value, Path.GetFileName(DocumentPath.CurrentFile)))
+                    CmdEvaluation.Parameters.AddWithValue("@signaturepath", If(String.IsNullOrEmpty(SignaturePath.CurrentFile), DBNull.Value, Path.GetFileName(SignaturePath.CurrentFile)))
                     CmdEvaluation.Parameters.AddWithValue("@rejectreason", If(String.IsNullOrEmpty(RejectReason), DBNull.Value, RejectReason))
                     CmdEvaluation.Parameters.AddWithValue("@userid", User.ID)
                     CmdEvaluation.ExecuteNonQuery()
                     _ID = CmdEvaluation.LastInsertedId
                 End Using
                 For Each Technician As EvaluationTechnician In Technicians
-                    Using Cmd As New MySqlCommand(My.Resources.EvaluationTechnicianInsert, Con)
-                        Cmd.Parameters.AddWithValue("@creation", Technician.Creation)
-                        Cmd.Parameters.AddWithValue("@evaluationid", ID)
-                        Cmd.Parameters.AddWithValue("@technicianid", Technician.Technician.ID)
-                        Cmd.Parameters.AddWithValue("@userid", Technician.User.ID)
-                        Cmd.ExecuteNonQuery()
-                        Technician.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Technician, Cmd.LastInsertedId)
+                    Using CmdTechnician As New MySqlCommand(My.Resources.EvaluationTechnicianInsert, Con)
+                        CmdTechnician.Parameters.AddWithValue("@creation", Technician.Creation)
+                        CmdTechnician.Parameters.AddWithValue("@evaluationid", ID)
+                        CmdTechnician.Parameters.AddWithValue("@technicianid", Technician.Technician.ID)
+                        CmdTechnician.Parameters.AddWithValue("@userid", Technician.User.ID)
+                        CmdTechnician.ExecuteNonQuery()
+                        Technician.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Technician, CmdTechnician.LastInsertedId)
                     End Using
                 Next Technician
                 For Each PartWorkedHour As EvaluationPart In PartsWorkedHour
@@ -465,6 +469,16 @@ Public Class Evaluation
                         PartElapsedDay.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartElapsedDay, CmdPartElapsedDay.LastInsertedId)
                     End Using
                 Next PartElapsedDay
+                For Each Photo As EvaluationPhoto In Photos
+                    Using CmdPhoto As New MySqlCommand(My.Resources.EvaluationPhotoInsert, Con)
+                        CmdPhoto.Parameters.AddWithValue("@creation", Photo.Creation)
+                        CmdPhoto.Parameters.AddWithValue("@evaluationid", ID)
+                        CmdPhoto.Parameters.AddWithValue("@photopath", Path.GetFileName(Photo.PhotoPath.CurrentFile))
+                        CmdPhoto.Parameters.AddWithValue("@userid", Photo.User.ID)
+                        CmdPhoto.ExecuteNonQuery()
+                        Photo.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Photo, CmdPhoto.LastInsertedId)
+                    End Using
+                Next Photo
             End Using
             DocumentPath.Execute()
             Transaction.Complete()
@@ -492,6 +506,7 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@averageworkload", AverageWorkLoad)
                     CmdEvaluation.Parameters.AddWithValue("@technicaladvice", If(String.IsNullOrEmpty(TechnicalAdvice), DBNull.Value, TechnicalAdvice))
                     CmdEvaluation.Parameters.AddWithValue("@documentpath", If(String.IsNullOrEmpty(DocumentPath.CurrentFile), DBNull.Value, Path.GetFileName(DocumentPath.CurrentFile)))
+                    CmdEvaluation.Parameters.AddWithValue("@signaturepath", If(String.IsNullOrEmpty(SignaturePath.CurrentFile), DBNull.Value, Path.GetFileName(SignaturePath.CurrentFile)))
                     CmdEvaluation.Parameters.AddWithValue("@rejectreason", If(String.IsNullOrEmpty(RejectReason), DBNull.Value, RejectReason))
                     CmdEvaluation.Parameters.AddWithValue("@userid", User.ID)
                     CmdEvaluation.ExecuteNonQuery()
@@ -631,6 +646,32 @@ Public Class Evaluation
                         End If
                     Next PartElapsedDay
                 End If
+                For Each Photo As EvaluationPhoto In Shadow.Photos
+                    If Not Photos.Any(Function(x) x.ID = Photo.ID And x.ID > 0) Then
+                        Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoDelete, Con)
+                            Cmd.Parameters.AddWithValue("@id", Photo.ID)
+                            Cmd.ExecuteNonQuery()
+                        End Using
+                    End If
+                Next Photo
+                For Each Photo As EvaluationPhoto In Photos
+                    If Photo.ID = 0 Then
+                        Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoInsert, Con)
+                            Cmd.Parameters.AddWithValue("@creation", Photo.Creation)
+                            Cmd.Parameters.AddWithValue("@evaluationid", ID)
+                            Cmd.Parameters.AddWithValue("@photopath", Photo.PhotoPath.CurrentFile)
+                            Cmd.Parameters.AddWithValue("@userid", Photo.User.ID)
+                            Cmd.ExecuteNonQuery()
+                            Photo.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Photo, Cmd.LastInsertedId)
+                        End Using
+                    Else
+                        Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoUpdate, Con)
+                            Cmd.Parameters.AddWithValue("@id", Photo.ID)
+                            Cmd.Parameters.AddWithValue("@photopath", Photo.PhotoPath.CurrentFile)
+                            Cmd.ExecuteNonQuery()
+                        End Using
+                    End If
+                Next Photo
             End Using
             DocumentPath.Execute()
             Transaction.Complete()
@@ -759,9 +800,7 @@ Public Class Evaluation
             End Using
         End Using
     End Sub
-
-
-    Public Sub Calculate()
+    Public Function Calculate() As Boolean
         Dim PreviousEvaluationID As Long
         Dim PreviousEvaluation As Evaluation
         PreviousEvaluationID = GetPreviousEvaluationID(Compressor, CDate(EvaluationDate), ID)
@@ -789,6 +828,7 @@ Public Class Evaluation
                 End If
             Next CurrentPart
             If Not ManualAverageWorkLoad Then AverageWorkLoad = PreviousEvaluation.AverageWorkLoad
+            Return True
         Else
             For Each CurrentPart As EvaluationPart In PartsWorkedHour
                 CurrentPart.Sold = False
@@ -811,10 +851,9 @@ Public Class Evaluation
                 End If
             Next CurrentPart
             If Not ManualAverageWorkLoad Then AverageWorkLoad = GetCMT()
-
+            Return False
         End If
-
-    End Sub
+    End Function
 
     Private Function GetCMT() As Decimal
         Dim Value As Decimal
@@ -832,23 +871,17 @@ Public Class Evaluation
         Return Value
     End Function
 
-
     Public Shared Function GetEvaluationNumber(CreationType As EvaluationCreationType) As String
         Dim EvaluationNumber As String = String.Empty
         Dim IsUnique As Boolean
         Dim Session = Locator.GetInstance(Of Session)
-
-
         Do Until IsUnique
-
             EvaluationNumber = Utility.GetRandomString(1, 8, Nothing, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
-
             If CreationType = EvaluationCreationType.Automatic Then
                 EvaluationNumber = $"A-{EvaluationNumber}"
             ElseIf CreationType = EvaluationCreationType.Imported Then
                 EvaluationNumber = $"I-{EvaluationNumber}"
             End If
-
             Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
                 Con.Open()
                 Using Cmd As New MySqlCommand("SELECT COUNT(id) FROM evaluation WHERE evaluationnumber = @evaluationnumber", Con)
@@ -857,12 +890,7 @@ Public Class Evaluation
                     IsUnique = (Count = 0)
                 End Using
             End Using
-
-
-
-
         Loop
-
         Return EvaluationNumber
     End Function
 

@@ -37,9 +37,9 @@ IF OLD.capacity <> NEW.capacity THEN INSERT INTO log VALUES (NULL, CASE WHEN old
 END$$
 DELIMITER ;
 
-ALTER TABLE `manager`.`evaluation` CHANGE COLUMN `documentname` `documentpath` VARCHAR(1024) NULL DEFAULT NULL;
+ALTER TABLE `manager`.`evaluation` CHANGE COLUMN `documentname` `documentpath` VARCHAR(255) NULL DEFAULT NULL;
 
-ALTER TABLE `manager`.`evaluation` ADD COLUMN `signaturepath` VARCHAR(1024) NULL DEFAULT NULL AFTER `documentpath`;
+ALTER TABLE `manager`.`evaluation` ADD COLUMN `signaturepath` VARCHAR(255) NULL DEFAULT NULL AFTER `documentpath`;
 
 DROP TRIGGER IF EXISTS `manager`.`evaluationupdate`;
 
@@ -63,7 +63,7 @@ IF IFNULL(OLD.signaturepath, '') <> IFNULL(NEW.signaturepath, '') THEN INSERT IN
 END$$
 DELIMITER ;
 
-ALTER TABLE `manager`.`cash` CHANGE COLUMN `documentname` `documentpath` VARCHAR(1024) NULL DEFAULT NULL;
+ALTER TABLE `manager`.`cash` CHANGE COLUMN `documentname` `documentpath` VARCHAR(255) NULL DEFAULT NULL;
 
 
 DROP TRIGGER IF EXISTS `manager`.`cashupdate`;
@@ -78,7 +78,7 @@ END$$
 DELIMITER ;
 
 
-ALTER TABLE `manager`.`request` CHANGE COLUMN `documentname` `documentpath` VARCHAR(1024) NULL DEFAULT NULL;
+ALTER TABLE `manager`.`request` CHANGE COLUMN `documentname` `documentpath` VARCHAR(255) NULL DEFAULT NULL;
 
 
 DROP TRIGGER IF EXISTS `manager`.`requestupdate`;
@@ -94,7 +94,7 @@ IF IFNULL(OLD.documentpath, '') <> IFNULL(NEW.documentpath, '') THEN INSERT INTO
 END$$
 DELIMITER ;
 
-ALTER TABLE `manager`.`productpicture` CHANGE COLUMN `picturename` `picturepath` VARCHAR(1024) NOT NULL ;
+ALTER TABLE `manager`.`productpicture` CHANGE COLUMN `picturename` `picturepath` VARCHAR(255) NOT NULL ;
 
 
 DROP TRIGGER IF EXISTS `manager`.`productpictureupdate`;
@@ -107,7 +107,7 @@ IF OLD.caption <> NEW.caption THEN INSERT INTO log VALUES (NULL, 604, NEW.id, 'L
 END$$
 DELIMITER ;
 
-ALTER TABLE `manager`.`emailsignature` CHANGE COLUMN `directoryname` `directorypath` VARCHAR(1024) NULL DEFAULT NULL ;
+ALTER TABLE `manager`.`emailsignature` CHANGE COLUMN `directoryname` `directorypath` VARCHAR(255) NULL DEFAULT NULL ;
 
 DROP TRIGGER IF EXISTS `manager`.`emailsignatureupdate`;
 
@@ -123,7 +123,7 @@ CREATE TABLE `evaluationphoto` (
   `id` int NOT NULL AUTO_INCREMENT,
   `creation` date NOT NULL,
   `evaluationid` int NOT NULL,
-  `photopath` int NOT NULL,
+  `photopath` VARCHAR(255) NOT NULL,
   `userid` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `evaluationid` (`evaluationid`),

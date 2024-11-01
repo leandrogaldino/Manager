@@ -63,7 +63,7 @@ Public Class FrmLogin
                                                 If Session.LicenseResult.Success Then
                                                     Hide()
                                                     FrmMain.Show()
-
+                                                    'Dim frm As New FrmLoader() : frm.Show()
                                                     'Dim frm As New FrmEvaluationImport() : frm.Show()
 
 

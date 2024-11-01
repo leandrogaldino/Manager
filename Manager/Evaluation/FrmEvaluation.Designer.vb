@@ -1210,10 +1210,10 @@ Partial Class FrmEvaluation
         'TabPhoto
         '
         Me.TabPhoto.Controls.Add(Me.PnPhoto)
-        Me.TabPhoto.Location = New System.Drawing.Point(4, 26)
+        Me.TabPhoto.Location = New System.Drawing.Point(4, 22)
         Me.TabPhoto.Name = "TabPhoto"
         Me.TabPhoto.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPhoto.Size = New System.Drawing.Size(1032, 387)
+        Me.TabPhoto.Size = New System.Drawing.Size(1032, 391)
         Me.TabPhoto.TabIndex = 8
         Me.TabPhoto.Text = "Fotos"
         Me.TabPhoto.UseVisualStyleBackColor = True
@@ -1227,7 +1227,7 @@ Partial Class FrmEvaluation
         Me.PnPhoto.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PnPhoto.Location = New System.Drawing.Point(3, 3)
         Me.PnPhoto.Name = "PnPhoto"
-        Me.PnPhoto.Size = New System.Drawing.Size(1026, 381)
+        Me.PnPhoto.Size = New System.Drawing.Size(1026, 385)
         Me.PnPhoto.TabIndex = 17
         '
         'PbxPhoto
@@ -1236,7 +1236,7 @@ Partial Class FrmEvaluation
         Me.PbxPhoto.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PbxPhoto.Location = New System.Drawing.Point(0, 28)
         Me.PbxPhoto.Name = "PbxPhoto"
-        Me.PbxPhoto.Size = New System.Drawing.Size(1024, 328)
+        Me.PbxPhoto.Size = New System.Drawing.Size(1024, 332)
         Me.PbxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PbxPhoto.TabIndex = 11
         Me.PbxPhoto.TabStop = False
@@ -1379,7 +1379,7 @@ Partial Class FrmEvaluation
         Me.LblPhotoCount.BackColor = System.Drawing.Color.White
         Me.LblPhotoCount.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.LblPhotoCount.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblPhotoCount.Location = New System.Drawing.Point(0, 356)
+        Me.LblPhotoCount.Location = New System.Drawing.Point(0, 360)
         Me.LblPhotoCount.Name = "LblPhotoCount"
         Me.LblPhotoCount.Size = New System.Drawing.Size(1024, 23)
         Me.LblPhotoCount.TabIndex = 14
@@ -1389,10 +1389,10 @@ Partial Class FrmEvaluation
         'TabSignature
         '
         Me.TabSignature.Controls.Add(Me.PnSignature)
-        Me.TabSignature.Location = New System.Drawing.Point(4, 26)
+        Me.TabSignature.Location = New System.Drawing.Point(4, 22)
         Me.TabSignature.Name = "TabSignature"
         Me.TabSignature.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabSignature.Size = New System.Drawing.Size(1032, 387)
+        Me.TabSignature.Size = New System.Drawing.Size(1032, 391)
         Me.TabSignature.TabIndex = 9
         Me.TabSignature.Text = "Assinatura"
         Me.TabSignature.UseVisualStyleBackColor = True
@@ -1404,7 +1404,7 @@ Partial Class FrmEvaluation
         Me.PnSignature.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PnSignature.Location = New System.Drawing.Point(3, 3)
         Me.PnSignature.Name = "PnSignature"
-        Me.PnSignature.Size = New System.Drawing.Size(1026, 381)
+        Me.PnSignature.Size = New System.Drawing.Size(1026, 385)
         Me.PnSignature.TabIndex = 18
         '
         'PbxSignature
@@ -1413,7 +1413,7 @@ Partial Class FrmEvaluation
         Me.PbxSignature.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PbxSignature.Location = New System.Drawing.Point(0, 0)
         Me.PbxSignature.Name = "PbxSignature"
-        Me.PbxSignature.Size = New System.Drawing.Size(1024, 379)
+        Me.PbxSignature.Size = New System.Drawing.Size(1024, 383)
         Me.PbxSignature.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PbxSignature.TabIndex = 11
         Me.PbxSignature.TabStop = False

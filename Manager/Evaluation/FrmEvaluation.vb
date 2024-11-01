@@ -20,7 +20,7 @@ Public Class FrmEvaluation
         Set(value As EvaluationPhoto)
             _SelectedPhoto = value
             If _SelectedPhoto IsNot Nothing Then
-                PbxPhoto.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_SelectedPhoto.PhotoPath.CurrentFile)))
+                PbxPhoto.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_SelectedPhoto.Photo.CurrentFile)))
             Else
                 PbxPhoto.Image = Nothing
             End If
@@ -35,7 +35,7 @@ Public Class FrmEvaluation
             If Ofd.ShowDialog() = DialogResult.OK Then
                 Dim SelectedPath As String = Ofd.FileName
                 Photo = New EvaluationPhoto()
-                Photo.PhotoPath.SetCurrentFile(SelectedPath)
+                Photo.Photo.SetCurrentFile(SelectedPath)
                 _Evaluation.Photos.Add(Photo)
                 SelectedPhoto = Photo
                 EprValidation.Clear()
@@ -175,14 +175,6 @@ Public Class FrmEvaluation
             Button.BackgroundImage = Img
         End If
     End Sub
-
-
-
-
-
-
-
-
 
     Private Property Calculated As Boolean
         Get
@@ -348,8 +340,8 @@ Public Class FrmEvaluation
             Decalculate()
             BtnCalculate.Text = "Calcular"
         End If
-        If Not String.IsNullOrEmpty(_Evaluation.DocumentPath.CurrentFile) AndAlso File.Exists(_Evaluation.DocumentPath.CurrentFile) Then
-            PdfDocumentViewer.Load(New MemoryStream(File.ReadAllBytes(_Evaluation.DocumentPath.CurrentFile)))
+        If Not String.IsNullOrEmpty(_Evaluation.Document.CurrentFile) AndAlso File.Exists(_Evaluation.Document.CurrentFile) Then
+            PdfDocumentViewer.Load(New MemoryStream(File.ReadAllBytes(_Evaluation.Document.CurrentFile)))
             LblDocumentPage.Text = "Página " & PdfDocumentViewer.CurrentPageIndex & " de " & PdfDocumentViewer.PageCount
             BtnDeletePDF.Enabled = True
             BtnSavePDF.Enabled = True
@@ -373,8 +365,8 @@ Public Class FrmEvaluation
         End If
 
 
-        If File.Exists(_Evaluation.SignaturePath.CurrentFile) Then
-            PbxSignature.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_Evaluation.SignaturePath.CurrentFile)))
+        If File.Exists(_Evaluation.Signature.CurrentFile) Then
+            PbxSignature.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_Evaluation.Signature.CurrentFile)))
         End If
 
 
@@ -734,12 +726,12 @@ Public Class FrmEvaluation
     End Function
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
-        Dim DocumentPath As String = String.Empty
+        'Dim DocumentPath As String = String.Empty
         Dim Success As Boolean
 
 
-        ' Dim CurrentDocument As String = _Evaluation.DocumentPath.CurrentFile
-        'Dim OriginalDocument As String = _Evaluation.DocumentPath.OriginalFile
+        ' Dim CurrentDocument As String = _Evaluation.Document.CurrentFile
+        'Dim OriginalDocument As String = _Evaluation.Document.OriginalFile
 
 
 
@@ -810,9 +802,9 @@ Public Class FrmEvaluation
                     End If
                     Success = False
                 Catch ex As Exception
-                    If Not String.IsNullOrEmpty(DocumentPath) AndAlso File.Exists(DocumentPath) Then
-                        File.Delete(DocumentPath)
-                    End If
+                    'If Not String.IsNullOrEmpty(DocumentPath) AndAlso File.Exists(DocumentPath) Then
+                    '    File.Delete(DocumentPath)
+                    'End If
                     CMessageBox.Show("ERRO EV020", "Ocorreu um erro salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                     Success = False
                 Finally
@@ -822,12 +814,14 @@ Public Class FrmEvaluation
                 Success = False
             End If
         End If
+
         'If Not Success Then
-        'If Not File.Exists(_Evaluation.DocumentPath.OriginalFile) Then
-        '_Evaluation.DocumentPath.SetCurrentFile(OriginalDocument, True)
-        '_Evaluation.DocumentPath.SetCurrentFile(CurrentDocument)
+        '    If Not File.Exists(_Evaluation.Document.OriginalFile) Then
+        '        _Evaluation.Document.SetCurrentFile(OriginalDocument, True)
+        '        _Evaluation.Document.SetCurrentFile(CurrentDocument)
+        '    End If
         'End If
-        'End If
+
         Return Success
     End Function
 
@@ -915,10 +909,10 @@ Public Class FrmEvaluation
         If OfdDocument.ShowDialog = DialogResult.OK Then
             Filename = Util.GetFilename(Path.GetExtension(OfdDocument.FileName))
             File.Copy(OfdDocument.FileName, Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
-            _Evaluation.DocumentPath.SetCurrentFile(Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
-            If Not String.IsNullOrEmpty(_Evaluation.DocumentPath.CurrentFile) AndAlso File.Exists(_Evaluation.DocumentPath.CurrentFile) Then
+            _Evaluation.Document.SetCurrentFile(Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
+            If Not String.IsNullOrEmpty(_Evaluation.Document.CurrentFile) AndAlso File.Exists(_Evaluation.Document.CurrentFile) Then
                 Try
-                    PdfDocumentViewer.Load(_Evaluation.DocumentPath.CurrentFile)
+                    PdfDocumentViewer.Load(_Evaluation.Document.CurrentFile)
                     LblDocumentPage.Text = "Página " & PdfDocumentViewer.CurrentPageIndex & " de " & PdfDocumentViewer.PageCount
                     BtnDeletePDF.Enabled = True
                     BtnSavePDF.Enabled = True
@@ -938,7 +932,7 @@ Public Class FrmEvaluation
     End Sub
     Private Sub BtnDeletePDF_Click(sender As Object, e As EventArgs) Handles BtnDeletePDF.Click
         If CMessageBox.Show("O documento será excluído permanentemente quando essa avaliação for salva. Confirma a exclusão?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-            _Evaluation.DocumentPath.SetCurrentFile(Nothing)
+            _Evaluation.Document.SetCurrentFile(Nothing)
             PdfDocumentViewer.Unload()
             LblDocumentPage.Text = Nothing
             BtnDeletePDF.Enabled = False

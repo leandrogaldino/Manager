@@ -21,6 +21,6 @@ Public Class EvaluationPhoto
             Return _Creation
         End Get
     End Property
-    Public Property PhotoPath As New FileManager(ApplicationPaths.EvaluationPhotoDirectory)
+    Public Property Photo As New FileManager(ApplicationPaths.EvaluationPhotoDirectory)
     Public ReadOnly User As User = Locator.GetInstance(Of Session).User
 End Class

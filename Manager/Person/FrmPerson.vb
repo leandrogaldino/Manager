@@ -55,9 +55,9 @@ Public Class FrmPerson
         DgvContactLayout.Load()
     End Sub
     Private Sub LoadForm()
-        Utility.EnableDataGridViewDoubleBuffer(DgvCompressor, True)
-        Utility.EnableDataGridViewDoubleBuffer(DgvAddress, True)
-        Utility.EnableDataGridViewDoubleBuffer(DgvContact, True)
+        Utility.EnableControlDoubleBuffer(DgvCompressor, True)
+        Utility.EnableControlDoubleBuffer(DgvAddress, True)
+        Utility.EnableControlDoubleBuffer(DgvContact, True)
         DgvNavigator.DataGridView = _PersonsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)

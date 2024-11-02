@@ -6,7 +6,7 @@ Public Class FrmProductPriceTables
     Private _Filter As ProductPriceTableFilter
     Public Sub New()
         InitializeComponent()
-        Utility.EnableDataGridViewDoubleBuffer(DgvData, True)
+        Utility.EnableControlDoubleBuffer(DgvData, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer1.SplitterDistance = 250
         SplitContainer2.Panel1Collapsed = True

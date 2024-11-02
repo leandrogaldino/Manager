@@ -36,7 +36,7 @@ Partial Class FrmEvaluationSource
         Me.Panel1.Controls.Add(Me.BtnCancel)
         Me.Panel1.Controls.Add(Me.BtnAccept)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 253)
+        Me.Panel1.Location = New System.Drawing.Point(0, 301)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(494, 44)
         Me.Panel1.TabIndex = 4
@@ -77,18 +77,21 @@ Partial Class FrmEvaluationSource
         '
         'FlpContainer
         '
+        Me.FlpContainer.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.FlpContainer.AutoScroll = True
         Me.FlpContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.FlpContainer.Location = New System.Drawing.Point(12, 29)
         Me.FlpContainer.Name = "FlpContainer"
-        Me.FlpContainer.Size = New System.Drawing.Size(470, 216)
+        Me.FlpContainer.Size = New System.Drawing.Size(470, 266)
         Me.FlpContainer.TabIndex = 6
         '
         'FrmEvaluationSource
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(494, 297)
+        Me.ClientSize = New System.Drawing.Size(494, 345)
         Me.Controls.Add(Me.FlpContainer)
         Me.Controls.Add(Me.LblCompressor)
         Me.Controls.Add(Me.Panel1)
@@ -98,6 +101,7 @@ Partial Class FrmEvaluationSource
         Me.MinimizeBox = False
         Me.Name = "FrmEvaluationSource"
         Me.ShowIcon = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Leitura da Avaliação"
         Me.Panel1.ResumeLayout(False)
         Me.ResumeLayout(False)

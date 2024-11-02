@@ -59,7 +59,7 @@ Public Class FrmCity
     End Sub
     Private Sub LoadForm()
         DgvNavigator.DataGridView = _CitiesGrid
-        Utility.EnableDataGridViewDoubleBuffer(DgvRoute, True)
+        Utility.EnableControlDoubleBuffer(DgvRoute, True)
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess

@@ -54,8 +54,8 @@ Public Class FrmCompressor
         DgvCompressorPartElapsedDayLayout.Load()
     End Sub
     Private Sub LoadForm()
-        Utility.EnableDataGridViewDoubleBuffer(DgvCompressorPartWorkedHour, True)
-        Utility.EnableDataGridViewDoubleBuffer(DgvCompressorPartElapsedDay, True)
+        Utility.EnableControlDoubleBuffer(DgvCompressorPartWorkedHour, True)
+        Utility.EnableControlDoubleBuffer(DgvCompressorPartElapsedDay, True)
         DgvNavigator.DataGridView = _CompressorsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)

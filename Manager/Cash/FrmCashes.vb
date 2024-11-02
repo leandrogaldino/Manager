@@ -9,8 +9,8 @@ Public Class FrmCashes
     Private _Flow As CashFlow
     Public Sub New(Flow As CashFlow)
         InitializeComponent()
-        EnableDataGridViewDoubleBuffer(DgvData, True)
-        EnableDataGridViewDoubleBuffer(DgvCashItem, True)
+        EnableControlDoubleBuffer(DgvData, True)
+        EnableControlDoubleBuffer(DgvCashItem, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Flow = Flow

@@ -6,9 +6,9 @@ Public Class FrmCompressors
     Private _Filter As CompressorFilter
     Public Sub New()
         InitializeComponent()
-        Utility.EnableDataGridViewDoubleBuffer(DgvData, True)
-        Utility.EnableDataGridViewDoubleBuffer(DgvPartWorkedHour, True)
-        Utility.EnableDataGridViewDoubleBuffer(DgvPartElapsedDay, True)
+        Utility.EnableControlDoubleBuffer(DgvData, True)
+        Utility.EnableControlDoubleBuffer(DgvPartWorkedHour, True)
+        Utility.EnableControlDoubleBuffer(DgvPartElapsedDay, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Filter = New CompressorFilter(DgvData, PgFilter)

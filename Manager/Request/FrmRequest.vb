@@ -54,7 +54,7 @@ Public Class FrmRequest
         DgvItemLayout.Load()
     End Sub
     Private Sub LoadForm()
-        Utility.EnableDataGridViewDoubleBuffer(DgvItem, True)
+        Utility.EnableControlDoubleBuffer(DgvItem, True)
         DgvNavigator.DataGridView = _RequestsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)

@@ -41,7 +41,7 @@ Public Class FrmCash
         LoadForm()
     End Sub
     Private Sub LoadForm()
-        Utility.EnableDataGridViewDoubleBuffer(DgvCashItem, True)
+        Utility.EnableControlDoubleBuffer(DgvCashItem, True)
         DgvNavigator.DataGridView = _CashesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)

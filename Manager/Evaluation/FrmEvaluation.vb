@@ -27,47 +27,49 @@ Public Class FrmEvaluation
         End Set
     End Property
 
-    Private Sub BtnIncludePhoto_Click(sender As Object, e As EventArgs) Handles BtnIncludePhoto.Click
-        Dim Photo As EvaluationPhoto
-        Using Ofd As New OpenFileDialog()
-            Ofd.Filter = "Imagens|*.jpg;*.jpeg;*.png;*.bmp|Todos os arquivos|*.*"
-            Ofd.Title = "Selecionar Imagem"
-            If Ofd.ShowDialog() = DialogResult.OK Then
-                Dim SelectedPath As String = Ofd.FileName
-                Photo = New EvaluationPhoto()
-                Photo.Photo.SetCurrentFile(SelectedPath)
-                _Evaluation.Photos.Add(Photo)
-                SelectedPhoto = Photo
-                EprValidation.Clear()
-                BtnSave.Enabled = True
-            End If
-        End Using
-        RefreshPhotoControls()
-    End Sub
+
 
     Private Sub BtnRemovePhoto_Click(sender As Object, e As EventArgs) Handles BtnRemovePhoto.Click
+        Dim Photos As List(Of EvaluationPhoto) = _Evaluation.Photos.ToList()
 
         If CMessageBox.Show("A foto será excluída permanentemente quando essa avaliação for salva. Confirma a exclusão?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-            Dim Index As Integer = _Evaluation.Photos.IndexOf(SelectedPhoto)
-            Dim PhotoCount As Integer = _Evaluation.Photos.Count
-            _Evaluation.Photos.Remove(SelectedPhoto)
+            SelectedPhoto.Photo.SetCurrentFile(Nothing)
 
-            ' Verifica se restaram fotos na lista
-            If PhotoCount = 1 Then
-                ' Se era a única foto, define SelectedPhoto como Nothing
-                SelectedPhoto = Nothing
-            ElseIf Index > 0 Then
-                ' Se havia mais de uma foto, define SelectedPhoto como o índice anterior, se existir
-                SelectedPhoto = _Evaluation.Photos(Index - 1)
-            ElseIf _Evaluation.Photos.Count > 0 Then
-                ' Se a foto removida era a primeira, seleciona a nova primeira foto
-                SelectedPhoto = _Evaluation.Photos(0)
+            ' Definir o SelectedPhoto para o item anterior com CurrentFile diferente de Nothing
+            Dim index As Integer = Photos.IndexOf(SelectedPhoto)
+            Dim found As Boolean = False
+
+            ' Tenta encontrar um item anterior com CurrentFile diferente de Nothing
+            For i As Integer = index - 1 To 0 Step -1
+                If Photos(i).Photo.CurrentFile IsNot Nothing Then
+                    SelectedPhoto = Photos(i)
+                    found = True
+                    Exit For
+                End If
+            Next
+
+            ' Se não encontrou um anterior, tenta encontrar um posterior
+            If Not found Then
+                For i As Integer = index + 1 To Photos.Count - 1
+                    If Photos(i).Photo.CurrentFile IsNot Nothing Then
+                        SelectedPhoto = Photos(i)
+                        found = True
+                        Exit For
+                    End If
+                Next
             End If
+
+            ' Se não encontrou nenhum, define como Nothing
+            If Not found Then
+                SelectedPhoto = Nothing
+            End If
+
             RefreshPhotoControls()
             EprValidation.Clear()
             BtnSave.Enabled = True
         End If
     End Sub
+
     Private Sub BtnSavePhoto_Click(sender As Object, e As EventArgs) Handles BtnSavePhoto.Click
         ' Verifica se há uma imagem no PictureBox
         ' Cria e configura o SaveFileDialog
@@ -100,8 +102,10 @@ Public Class FrmEvaluation
     End Sub
 
     Private Sub RefreshPhotoControls()
-        Dim PhotoCount As Integer = _Evaluation.Photos.Count
-        Dim PhotoIndex As Integer = _Evaluation.Photos.IndexOf(SelectedPhoto)
+
+        Dim ValidPhotos As List(Of EvaluationPhoto) = _Evaluation.Photos.Where(Function(x) x.Photo.CurrentFile IsNot Nothing).ToList
+        Dim PhotoCount As Integer = ValidPhotos.Count
+        Dim PhotoIndex As Integer = ValidPhotos.IndexOf(SelectedPhoto)
 
         ' Se não houver fotos
         If PhotoCount < 1 Then
@@ -130,22 +134,26 @@ Public Class FrmEvaluation
 
 
     Private Sub BtnPreviousPhoto_Click(sender As Object, e As EventArgs) Handles BtnPreviousPhoto.Click
-        SelectedPhoto = _Evaluation.Photos(_Evaluation.Photos.IndexOf(SelectedPhoto) - 1)
+        Dim ValidPhotos As List(Of EvaluationPhoto) = _Evaluation.Photos.Where(Function(x) x.Photo.CurrentFile IsNot Nothing).ToList
+        SelectedPhoto = ValidPhotos(ValidPhotos.IndexOf(SelectedPhoto) - 1)
         RefreshPhotoControls()
     End Sub
 
     Private Sub BtnNextPhoto_Click(sender As Object, e As EventArgs) Handles BtnNextPhoto.Click
-        SelectedPhoto = _Evaluation.Photos(_Evaluation.Photos.IndexOf(SelectedPhoto) + 1)
+        Dim ValidPhotos As List(Of EvaluationPhoto) = _Evaluation.Photos.Where(Function(x) x.Photo.CurrentFile IsNot Nothing).ToList
+        SelectedPhoto = ValidPhotos(ValidPhotos.IndexOf(SelectedPhoto) + 1)
         RefreshPhotoControls()
     End Sub
 
     Private Sub BtnFirstPhoto_Click(sender As Object, e As EventArgs) Handles BtnFirstPhoto.Click
-        SelectedPhoto = _Evaluation.Photos(0)
+        Dim ValidPhotos As List(Of EvaluationPhoto) = _Evaluation.Photos.Where(Function(x) x.Photo.CurrentFile IsNot Nothing).ToList
+        SelectedPhoto = ValidPhotos(0)
         RefreshPhotoControls()
     End Sub
 
     Private Sub BtnLastPhoto_Click(sender As Object, e As EventArgs) Handles BtnLastPhoto.Click
-        SelectedPhoto = _Evaluation.Photos(_Evaluation.Photos.Count - 1)
+        Dim ValidPhotos As List(Of EvaluationPhoto) = _Evaluation.Photos.Where(Function(x) x.Photo.CurrentFile IsNot Nothing).ToList
+        SelectedPhoto = ValidPhotos(ValidPhotos.Count - 1)
         RefreshPhotoControls()
     End Sub
 
@@ -266,8 +274,8 @@ Public Class FrmEvaluation
         BtnStatusValue.Visible = False
     End Sub
     Private Sub LoadForm()
-        Utility.EnableDataGridViewDoubleBuffer(DgvPartWorkedHour, True)
-        Utility.EnableDataGridViewDoubleBuffer(DgvPartElapsedDay, True)
+        Utility.EnableControlDoubleBuffer(DgvPartWorkedHour, True)
+        Utility.EnableControlDoubleBuffer(DgvPartElapsedDay, True)
         DgvNavigator.DataGridView = _EvaluationsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
@@ -761,6 +769,11 @@ Public Class FrmEvaluation
                     _Evaluation.ManualAverageWorkLoad = CbxManualAverageWorkLoad.Checked
                     _Evaluation.AverageWorkLoad = DbxAverageWorkLoad.Text
                     _Evaluation.TechnicalAdvice = TxtTechnicalAdvice.Text
+
+                    'For Each Photo In _Evaluation.Photos.Reverse
+                    '    If Photo.Photo.CurrentFile Is Nothing Then _Evaluation.Photos.Remove(Photo)
+                    'Next Photo
+
                     If _Evaluation.ID = 0 AndAlso Locator.GetInstance(Of Session).User.Privilege.EvaluationApproveOrReject Then
                         _Evaluation.SaveChanges()
                         BtnApprove.PerformClick()
@@ -903,6 +916,25 @@ Public Class FrmEvaluation
     End Sub
     Private Sub BtnZoomIn_Click(sender As Object, e As EventArgs) Handles BtnZoomIn.Click
         PdfDocumentViewer.ZoomTo(PdfDocumentViewer.ZoomPercentage + 10)
+    End Sub
+    Private Sub BtnIncludePhoto_Click(sender As Object, e As EventArgs) Handles BtnIncludePhoto.Click
+        Dim Filename As String
+        Dim Photo As EvaluationPhoto
+        Using Ofd As New OpenFileDialog()
+            Ofd.Filter = "Imagens|*.jpg;*.jpeg;*.png;*.bmp|Todos os arquivos|*.*"
+            Ofd.Title = "Selecionar Imagem"
+            If Ofd.ShowDialog() = DialogResult.OK Then
+                Filename = Util.GetFilename(Path.GetExtension(Ofd.FileName))
+                File.Copy(Ofd.FileName, Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
+                Photo = New EvaluationPhoto()
+                Photo.Photo.SetCurrentFile(Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
+                _Evaluation.Photos.Add(Photo)
+                SelectedPhoto = Photo
+                EprValidation.Clear()
+                BtnSave.Enabled = True
+            End If
+        End Using
+        RefreshPhotoControls()
     End Sub
     Private Sub BtnAttachPDF_Click(sender As Object, e As EventArgs) Handles BtnAttachPDF.Click
         Dim Filename As String
@@ -1256,9 +1288,6 @@ Public Class FrmEvaluation
     Private Sub EditEvaluationPart(PartType As CompressorPartType)
         Dim Result As DialogResult
         Dim Part As EvaluationPart
-
-
-
         If PartType = CompressorPartType.ElapsedDay Then
             Part = _Evaluation.PartsElapsedDay.Single(Function(x) x.Part.ID = DgvPartElapsedDay.SelectedRows(0).Cells("Part").Value.ID)
             Using Frm As New FrmEvaluationPart(Part)
@@ -1281,7 +1310,9 @@ Public Class FrmEvaluation
                 End If
             End If
         End If
-        BtnSave.Enabled = Result = DialogResult.OK
+        If Not BtnSave.Enabled Then
+            BtnSave.Enabled = Result = DialogResult.OK
+        End If
     End Sub
     Private Sub Decalculate()
         Calculated = False
@@ -1318,7 +1349,6 @@ Public Class FrmEvaluation
             BtnEditTechnician.PerformClick()
         End If
     End Sub
-
 
 
 End Class

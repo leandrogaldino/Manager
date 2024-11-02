@@ -6,7 +6,7 @@ Public Class FrmEmailSignatures
     Private _Filter As EmailSignatureFilter
     Public Sub New()
         InitializeComponent()
-        EnableDataGridViewDoubleBuffer(DgvData, True)
+        EnableControlDoubleBuffer(DgvData, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer1.SplitterDistance = 250
         SplitContainer2.Panel1Collapsed = True

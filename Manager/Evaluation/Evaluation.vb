@@ -281,7 +281,7 @@ Public Class Evaluation
                 Adp.Fill(TableResult)
                 For Each Row As DataRow In TableResult.Rows
                     Photo = New EvaluationPhoto
-                    Photo.Photo.SetCurrentFile(Row.Item("photopath").ToString)
+                    Photo.Photo.SetCurrentFile((Path.Combine(ApplicationPaths.EvaluationPhotoDirectory, Row.Item("photopath").ToString)), True)
                     Photo.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Photo, Row.Item("id"))
                     Photo.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Photo, Row.Item("creation"))
                     Photo.IsSaved = True
@@ -389,6 +389,7 @@ Public Class Evaluation
         Photos.ToList().ForEach(Sub(x) x.IsSaved = True)
     End Sub
     Public Sub Delete()
+        Dim Shadow As Evaluation = New Evaluation().Load(ID, False)
         Dim Session = Locator.GetInstance(Of Session)
         Dim FileManager As New TxFileManager(ApplicationPaths.ManagerTempDirectory)
         Using Transaction As New Transactions.TransactionScope()
@@ -398,6 +399,21 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@id", ID)
                     CmdEvaluation.ExecuteNonQuery()
                     If File.Exists(Document.OriginalFile) Then FileManager.Delete(Document.OriginalFile)
+                    If File.Exists(Signature.OriginalFile) Then FileManager.Delete(Signature.OriginalFile)
+
+                    For Each ShadowPhoto In Shadow.Photos
+                        If File.Exists(ShadowPhoto.Photo.OriginalFile) Then
+                            FileManager.Delete(ShadowPhoto.Photo.OriginalFile)
+                        End If
+                    Next ShadowPhoto
+
+
+                    Photos.ToList.ForEach(Sub(x)
+                                              If File.Exists(x.Photo.OriginalFile) Then
+                                                  FileManager.Delete(x.Photo.OriginalFile)
+                                              End If
+                                          End Sub)
+
                 End Using
             End Using
             Transaction.Complete()
@@ -656,12 +672,21 @@ Public Class Evaluation
                         End Using
                     End If
                 Next Photo
-                For Each Photo As EvaluationPhoto In Photos
+
+                For Each Photo As EvaluationPhoto In Photos.Where(Function(x) x.Photo.CurrentFile Is Nothing)
+                    Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoDelete, Con)
+                        Cmd.Parameters.AddWithValue("@id", Photo.ID)
+                        Cmd.ExecuteNonQuery()
+                    End Using
+                Next
+
+
+                For Each Photo As EvaluationPhoto In Photos.Where(Function(x) x.Photo.CurrentFile IsNot Nothing)
                     If Photo.ID = 0 Then
                         Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoInsert, Con)
                             Cmd.Parameters.AddWithValue("@creation", Photo.Creation)
                             Cmd.Parameters.AddWithValue("@evaluationid", ID)
-                            Cmd.Parameters.AddWithValue("@photopath", Photo.Photo.CurrentFile)
+                            Cmd.Parameters.AddWithValue("@photopath", Path.GetFileName(Photo.Photo.CurrentFile))
                             Cmd.Parameters.AddWithValue("@userid", Photo.User.ID)
                             Cmd.ExecuteNonQuery()
                             Photo.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Photo, Cmd.LastInsertedId)
@@ -669,13 +694,15 @@ Public Class Evaluation
                     Else
                         Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoUpdate, Con)
                             Cmd.Parameters.AddWithValue("@id", Photo.ID)
-                            Cmd.Parameters.AddWithValue("@photopath", Photo.Photo.CurrentFile)
+                            Cmd.Parameters.AddWithValue("@photopath", Path.GetFileName(Photo.Photo.CurrentFile))
                             Cmd.ExecuteNonQuery()
                         End Using
                     End If
                 Next Photo
             End Using
             Document.Execute()
+            Signature.Execute()
+            Photos.ToList.ForEach(Sub(x) x.Photo.Execute())
             Transaction.Complete()
         End Using
     End Sub

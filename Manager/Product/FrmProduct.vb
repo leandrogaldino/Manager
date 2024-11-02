@@ -56,10 +56,10 @@ Public Class FrmProduct
         DgvPictureLayout.Load()
     End Sub
     Private Sub LoadForm()
-        Utility.EnableDataGridViewDoubleBuffer(DgvProviderCode, True)
-        Utility.EnableDataGridViewDoubleBuffer(DgvCode, True)
-        Utility.EnableDataGridViewDoubleBuffer(DgvPrice, True)
-        Utility.EnableDataGridViewDoubleBuffer(DgvPicture, True)
+        Utility.EnableControlDoubleBuffer(DgvProviderCode, True)
+        Utility.EnableControlDoubleBuffer(DgvCode, True)
+        Utility.EnableControlDoubleBuffer(DgvPrice, True)
+        Utility.EnableControlDoubleBuffer(DgvPicture, True)
         DgvNavigator.DataGridView = _ProductsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)

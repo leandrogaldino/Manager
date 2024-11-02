@@ -39,7 +39,7 @@ Public Class FrmUser
         DgvEmailLayout.Load()
     End Sub
     Private Sub LoadForm()
-        Utility.EnableDataGridViewDoubleBuffer(DgvEmail, True)
+        Utility.EnableControlDoubleBuffer(DgvEmail, True)
         DgvNavigator.DataGridView = _UsersGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)

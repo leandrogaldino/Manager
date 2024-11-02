@@ -6,8 +6,8 @@ Public Class FrmRequests
     Private _Filter As RequestFilter
     Public Sub New()
         InitializeComponent()
-        Utility.EnableDataGridViewDoubleBuffer(DgvData, True)
-        Utility.EnableDataGridViewDoubleBuffer(DgvItem, True)
+        Utility.EnableControlDoubleBuffer(DgvData, True)
+        Utility.EnableControlDoubleBuffer(DgvItem, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Filter = New RequestFilter(DgvData, PgFilter)

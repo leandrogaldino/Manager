@@ -6,10 +6,10 @@ Public Class FrmProducts
     Private _Filter As ProductFilter
     Public Sub New()
         InitializeComponent()
-        Utility.EnableDataGridViewDoubleBuffer(DgvData, True)
-        Utility.EnableDataGridViewDoubleBuffer(DgvProviderCode, True)
-        Utility.EnableDataGridViewDoubleBuffer(DgvCode, True)
-        Utility.EnableDataGridViewDoubleBuffer(DgvPrice, True)
+        Utility.EnableControlDoubleBuffer(DgvData, True)
+        Utility.EnableControlDoubleBuffer(DgvProviderCode, True)
+        Utility.EnableControlDoubleBuffer(DgvCode, True)
+        Utility.EnableControlDoubleBuffer(DgvPrice, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Filter = New ProductFilter(DgvData, PgFilter)

@@ -1,8 +1,8 @@
 ﻿Imports System.ComponentModel
 
 Public Enum CloudSyncStatus
-    <Description("Não Sincronizado")> UnSynchronized = 0
-    <Description("Sincronizando")> Synchronizing = 1
+    <Description("Não Importado")> NotImported = 0
+    <Description("Importando")> Importing = 1
 End Enum
 
 Public Enum CompressorPartBind
@@ -61,7 +61,7 @@ End Enum
 ''' </summary>
 Public Enum EvaluationCreationType
     <Description(Nothing)> Manual = 0
-    <Description("Avaliação Automática")> Automatic = 1
+    <Description("Avaliação Automática")> Automatic = 0
     <Description("Avaliação Importada")> Imported = 1
 End Enum
 ''' <summary>

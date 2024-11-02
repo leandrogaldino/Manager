@@ -25,7 +25,7 @@ Public Class FrmMain
         _StackTaskService = Locator.GetInstance(Of TaskStackService)
         _AppService = Locator.GetInstance(Of AppService)
         _StateWarnings = New ObservableCollection(Of String)
-        Utility.EnableDataGridViewDoubleBuffer(DgvEvents, True)
+        Utility.EnableControlDoubleBuffer(DgvEvents, True)
         TsTitle.Renderer = New CustomToolstripRender()
     End Sub
 

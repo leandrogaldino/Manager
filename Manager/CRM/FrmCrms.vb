@@ -6,7 +6,7 @@ Public Class FrmCrms
     Private _Filter As CrmFilter
     Public Sub New()
         InitializeComponent()
-        Utility.EnableDataGridViewDoubleBuffer(DgvData, True)
+        Utility.EnableControlDoubleBuffer(DgvData, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Filter = New CrmFilter(DgvData, PgFilter)

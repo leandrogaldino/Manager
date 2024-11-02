@@ -6,10 +6,10 @@ Public Class FrmPersons
     Private _Filter As PersonFilter
     Public Sub New()
         InitializeComponent()
-        Utility.EnableDataGridViewDoubleBuffer(DgvData, True)
-        Utility.EnableDataGridViewDoubleBuffer(DgvAddress, True)
-        Utility.EnableDataGridViewDoubleBuffer(DgvCompressor, True)
-        Utility.EnableDataGridViewDoubleBuffer(DgvContact, True)
+        Utility.EnableControlDoubleBuffer(DgvData, True)
+        Utility.EnableControlDoubleBuffer(DgvAddress, True)
+        Utility.EnableControlDoubleBuffer(DgvCompressor, True)
+        Utility.EnableControlDoubleBuffer(DgvContact, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer1.SplitterDistance = 250
         SplitContainer2.Panel1Collapsed = True

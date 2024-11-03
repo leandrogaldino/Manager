@@ -77,14 +77,14 @@ Partial Class FrmPersonCompressorPartWorkedHour
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel1.Location = New System.Drawing.Point(0, 109)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(559, 44)
+        Me.Panel1.Size = New System.Drawing.Size(574, 44)
         Me.Panel1.TabIndex = 11
         '
         'BtnClose
         '
         Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnClose.Location = New System.Drawing.Point(452, 7)
+        Me.BtnClose.Location = New System.Drawing.Point(467, 7)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(95, 30)
         Me.BtnClose.TabIndex = 1
@@ -94,7 +94,7 @@ Partial Class FrmPersonCompressorPartWorkedHour
         'BtnSave
         '
         Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnSave.Location = New System.Drawing.Point(353, 7)
+        Me.BtnSave.Location = New System.Drawing.Point(368, 7)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(95, 30)
         Me.BtnSave.TabIndex = 0
@@ -111,7 +111,7 @@ Partial Class FrmPersonCompressorPartWorkedHour
         Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsNavigation.Size = New System.Drawing.Size(559, 25)
+        Me.TsNavigation.Size = New System.Drawing.Size(574, 25)
         Me.TsNavigation.TabIndex = 0
         Me.TsNavigation.Text = "ToolStrip2"
         '
@@ -194,7 +194,7 @@ Partial Class FrmPersonCompressorPartWorkedHour
         'LblQuantity
         '
         Me.LblQuantity.AutoSize = True
-        Me.LblQuantity.Location = New System.Drawing.Point(368, 55)
+        Me.LblQuantity.Location = New System.Drawing.Point(383, 55)
         Me.LblQuantity.Name = "LblQuantity"
         Me.LblQuantity.Size = New System.Drawing.Size(37, 17)
         Me.LblQuantity.TabIndex = 7
@@ -214,7 +214,7 @@ Partial Class FrmPersonCompressorPartWorkedHour
         Me.DbxQuantity.DecimalOnly = True
         Me.DbxQuantity.DecimalPlaces = 2
         Me.DbxQuantity.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxQuantity.Location = New System.Drawing.Point(371, 75)
+        Me.DbxQuantity.Location = New System.Drawing.Point(386, 75)
         Me.DbxQuantity.Name = "DbxQuantity"
         Me.DbxQuantity.Size = New System.Drawing.Size(85, 23)
         Me.DbxQuantity.TabIndex = 8
@@ -244,7 +244,7 @@ Partial Class FrmPersonCompressorPartWorkedHour
         Me.TsData.Location = New System.Drawing.Point(0, 25)
         Me.TsData.Name = "TsData"
         Me.TsData.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsData.Size = New System.Drawing.Size(559, 25)
+        Me.TsData.Size = New System.Drawing.Size(574, 25)
         Me.TsData.TabIndex = 1
         Me.TsData.Text = "ToolStrip1"
         '
@@ -314,7 +314,7 @@ Partial Class FrmPersonCompressorPartWorkedHour
         'LblCapacity
         '
         Me.LblCapacity.AutoSize = True
-        Me.LblCapacity.Location = New System.Drawing.Point(459, 55)
+        Me.LblCapacity.Location = New System.Drawing.Point(474, 55)
         Me.LblCapacity.Name = "LblCapacity"
         Me.LblCapacity.Size = New System.Drawing.Size(85, 17)
         Me.LblCapacity.TabIndex = 9
@@ -325,7 +325,7 @@ Partial Class FrmPersonCompressorPartWorkedHour
         Me.DbxCapacity.DecimalOnly = True
         Me.DbxCapacity.DecimalPlaces = 0
         Me.DbxCapacity.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxCapacity.Location = New System.Drawing.Point(462, 75)
+        Me.DbxCapacity.Location = New System.Drawing.Point(477, 75)
         Me.DbxCapacity.Name = "DbxCapacity"
         Me.DbxCapacity.Size = New System.Drawing.Size(85, 23)
         Me.DbxCapacity.TabIndex = 10
@@ -386,7 +386,7 @@ Partial Class FrmPersonCompressorPartWorkedHour
         Me.FlpProduct.Controls.Add(Me.BtnView)
         Me.FlpProduct.Controls.Add(Me.BtnNew)
         Me.FlpProduct.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-        Me.FlpProduct.Location = New System.Drawing.Point(295, 54)
+        Me.FlpProduct.Location = New System.Drawing.Point(311, 54)
         Me.FlpProduct.Name = "FlpProduct"
         Me.FlpProduct.Size = New System.Drawing.Size(69, 21)
         Me.FlpProduct.TabIndex = 6
@@ -447,7 +447,7 @@ Partial Class FrmPersonCompressorPartWorkedHour
         Relation1.WithTableAlias = Nothing
         Relation1.WithTableName = "product"
         Me.QbxItem.Relations.Add(Relation1)
-        Me.QbxItem.Size = New System.Drawing.Size(353, 23)
+        Me.QbxItem.Size = New System.Drawing.Size(368, 23)
         Me.QbxItem.Suffix = " - "
         Me.QbxItem.TabIndex = 5
         '
@@ -455,7 +455,7 @@ Partial Class FrmPersonCompressorPartWorkedHour
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(559, 153)
+        Me.ClientSize = New System.Drawing.Size(574, 153)
         Me.Controls.Add(Me.FlpProduct)
         Me.Controls.Add(Me.TsData)
         Me.Controls.Add(Me.DbxCapacity)

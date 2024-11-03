@@ -23,12 +23,12 @@ Partial Class FrmPersonCompressorPartElapsedDay
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim OtherField1 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Relation1 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Condition3 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim OtherField2 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim Parameter3 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Parameter4 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Relation2 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Condition4 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
@@ -77,14 +77,14 @@ Partial Class FrmPersonCompressorPartElapsedDay
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel1.Location = New System.Drawing.Point(0, 109)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(559, 44)
+        Me.Panel1.Size = New System.Drawing.Size(574, 44)
         Me.Panel1.TabIndex = 11
         '
         'BtnClose
         '
         Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnClose.Location = New System.Drawing.Point(452, 7)
+        Me.BtnClose.Location = New System.Drawing.Point(467, 7)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(95, 30)
         Me.BtnClose.TabIndex = 1
@@ -94,7 +94,7 @@ Partial Class FrmPersonCompressorPartElapsedDay
         'BtnSave
         '
         Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnSave.Location = New System.Drawing.Point(353, 7)
+        Me.BtnSave.Location = New System.Drawing.Point(368, 7)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(95, 30)
         Me.BtnSave.TabIndex = 0
@@ -111,7 +111,7 @@ Partial Class FrmPersonCompressorPartElapsedDay
         Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsNavigation.Size = New System.Drawing.Size(559, 25)
+        Me.TsNavigation.Size = New System.Drawing.Size(574, 25)
         Me.TsNavigation.TabIndex = 0
         Me.TsNavigation.Text = "ToolStrip2"
         '
@@ -194,7 +194,7 @@ Partial Class FrmPersonCompressorPartElapsedDay
         'LblQuantity
         '
         Me.LblQuantity.AutoSize = True
-        Me.LblQuantity.Location = New System.Drawing.Point(368, 55)
+        Me.LblQuantity.Location = New System.Drawing.Point(383, 55)
         Me.LblQuantity.Name = "LblQuantity"
         Me.LblQuantity.Size = New System.Drawing.Size(37, 17)
         Me.LblQuantity.TabIndex = 7
@@ -214,7 +214,7 @@ Partial Class FrmPersonCompressorPartElapsedDay
         Me.DbxQuantity.DecimalOnly = True
         Me.DbxQuantity.DecimalPlaces = 2
         Me.DbxQuantity.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxQuantity.Location = New System.Drawing.Point(371, 75)
+        Me.DbxQuantity.Location = New System.Drawing.Point(386, 75)
         Me.DbxQuantity.Name = "DbxQuantity"
         Me.DbxQuantity.Size = New System.Drawing.Size(85, 23)
         Me.DbxQuantity.TabIndex = 8
@@ -292,7 +292,7 @@ Partial Class FrmPersonCompressorPartElapsedDay
         Me.TsData.Location = New System.Drawing.Point(0, 25)
         Me.TsData.Name = "TsData"
         Me.TsData.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsData.Size = New System.Drawing.Size(559, 25)
+        Me.TsData.Size = New System.Drawing.Size(574, 25)
         Me.TsData.TabIndex = 1
         Me.TsData.Text = "ToolStrip1"
         '
@@ -362,7 +362,7 @@ Partial Class FrmPersonCompressorPartElapsedDay
         'LblCapacity
         '
         Me.LblCapacity.AutoSize = True
-        Me.LblCapacity.Location = New System.Drawing.Point(459, 55)
+        Me.LblCapacity.Location = New System.Drawing.Point(474, 55)
         Me.LblCapacity.Name = "LblCapacity"
         Me.LblCapacity.Size = New System.Drawing.Size(76, 17)
         Me.LblCapacity.TabIndex = 9
@@ -373,7 +373,7 @@ Partial Class FrmPersonCompressorPartElapsedDay
         Me.DbxCapacity.DecimalOnly = True
         Me.DbxCapacity.DecimalPlaces = 0
         Me.DbxCapacity.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxCapacity.Location = New System.Drawing.Point(462, 75)
+        Me.DbxCapacity.Location = New System.Drawing.Point(477, 75)
         Me.DbxCapacity.Name = "DbxCapacity"
         Me.DbxCapacity.Size = New System.Drawing.Size(85, 23)
         Me.DbxCapacity.TabIndex = 10
@@ -386,7 +386,7 @@ Partial Class FrmPersonCompressorPartElapsedDay
         Me.FlpProduct.Controls.Add(Me.BtnView)
         Me.FlpProduct.Controls.Add(Me.BtnNew)
         Me.FlpProduct.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-        Me.FlpProduct.Location = New System.Drawing.Point(295, 54)
+        Me.FlpProduct.Location = New System.Drawing.Point(311, 54)
         Me.FlpProduct.Name = "FlpProduct"
         Me.FlpProduct.Size = New System.Drawing.Size(69, 21)
         Me.FlpProduct.TabIndex = 6
@@ -395,11 +395,11 @@ Partial Class FrmPersonCompressorPartElapsedDay
         '
         Me.QbxItem.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxItem.CharactersToQuery = 1
-        Condition1.FieldName = "statusid"
-        Condition1.Operator = "="
-        Condition1.TableNameOrAlias = "product"
-        Condition1.Value = "@statusid"
-        Me.QbxItem.Conditions.Add(Condition1)
+        Condition3.FieldName = "statusid"
+        Condition3.Operator = "="
+        Condition3.TableNameOrAlias = "product"
+        Condition3.Value = "@statusid"
+        Me.QbxItem.Conditions.Add(Condition3)
         Me.QbxItem.DebugOnTextChanged = False
         Me.QbxItem.DisplayFieldAlias = "Código"
         Me.QbxItem.DisplayFieldName = "code"
@@ -416,38 +416,38 @@ Partial Class FrmPersonCompressorPartElapsedDay
         Me.QbxItem.MainTableAlias = Nothing
         Me.QbxItem.MainTableName = "product"
         Me.QbxItem.Name = "QbxItem"
-        OtherField1.DisplayFieldAlias = "Produto"
-        OtherField1.DisplayFieldName = "name"
-        OtherField1.DisplayMainFieldName = "id"
-        OtherField1.DisplayTableAlias = ""
-        OtherField1.DisplayTableName = "product"
-        OtherField1.Freeze = True
-        OtherField1.IfNull = Nothing
-        OtherField1.Prefix = Nothing
-        OtherField1.Suffix = Nothing
-        Me.QbxItem.OtherFields.Add(OtherField1)
-        Parameter1.ParameterName = "@statusid"
-        Parameter1.ParameterValue = "0"
-        Parameter2.ParameterName = "@ismainprovider"
-        Parameter2.ParameterValue = "1"
-        Me.QbxItem.Parameters.Add(Parameter1)
-        Me.QbxItem.Parameters.Add(Parameter2)
+        OtherField2.DisplayFieldAlias = "Produto"
+        OtherField2.DisplayFieldName = "name"
+        OtherField2.DisplayMainFieldName = "id"
+        OtherField2.DisplayTableAlias = ""
+        OtherField2.DisplayTableName = "product"
+        OtherField2.Freeze = True
+        OtherField2.IfNull = Nothing
+        OtherField2.Prefix = Nothing
+        OtherField2.Suffix = Nothing
+        Me.QbxItem.OtherFields.Add(OtherField2)
+        Parameter3.ParameterName = "@statusid"
+        Parameter3.ParameterValue = "0"
+        Parameter4.ParameterName = "@ismainprovider"
+        Parameter4.ParameterValue = "1"
+        Me.QbxItem.Parameters.Add(Parameter3)
+        Me.QbxItem.Parameters.Add(Parameter4)
         Me.QbxItem.Prefix = Nothing
-        Condition2.FieldName = "ismainprovider"
-        Condition2.Operator = "="
-        Condition2.TableNameOrAlias = "productprovidercode"
-        Condition2.Value = "@ismainprovider"
-        Relation1.Conditions.Add(Condition2)
-        Relation1.Operator = "="
-        Relation1.RelateFieldName = "productid"
-        Relation1.RelateTableAlias = Nothing
-        Relation1.RelateTableName = "productprovidercode"
-        Relation1.RelationType = "LEFT"
-        Relation1.WithFieldName = "id"
-        Relation1.WithTableAlias = Nothing
-        Relation1.WithTableName = "product"
-        Me.QbxItem.Relations.Add(Relation1)
-        Me.QbxItem.Size = New System.Drawing.Size(353, 23)
+        Condition4.FieldName = "ismainprovider"
+        Condition4.Operator = "="
+        Condition4.TableNameOrAlias = "productprovidercode"
+        Condition4.Value = "@ismainprovider"
+        Relation2.Conditions.Add(Condition4)
+        Relation2.Operator = "="
+        Relation2.RelateFieldName = "productid"
+        Relation2.RelateTableAlias = Nothing
+        Relation2.RelateTableName = "productprovidercode"
+        Relation2.RelationType = "LEFT"
+        Relation2.WithFieldName = "id"
+        Relation2.WithTableAlias = Nothing
+        Relation2.WithTableName = "product"
+        Me.QbxItem.Relations.Add(Relation2)
+        Me.QbxItem.Size = New System.Drawing.Size(368, 23)
         Me.QbxItem.Suffix = " - "
         Me.QbxItem.TabIndex = 4
         '
@@ -455,7 +455,7 @@ Partial Class FrmPersonCompressorPartElapsedDay
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(559, 153)
+        Me.ClientSize = New System.Drawing.Size(574, 153)
         Me.Controls.Add(Me.FlpProduct)
         Me.Controls.Add(Me.TsData)
         Me.Controls.Add(Me.DbxCapacity)

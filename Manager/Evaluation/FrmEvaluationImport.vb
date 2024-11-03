@@ -91,19 +91,12 @@ Public Class FrmEvaluationImport
                 DgvEvaluations.Rows.Add(row)
             Next
         End If
-
-
         DgvEvaluations.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
         DgvEvaluations.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
         DgvEvaluations.Columns(2).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         DgvEvaluations.Columns(3).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
         DgvEvaluations.Columns(4).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
     End Sub
-
-
-
-
-
 
     Private Async Sub DgvEvaluations_CellMouseDoubleClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DgvEvaluations.CellMouseDoubleClick
         Await Import()
@@ -160,12 +153,7 @@ Public Class FrmEvaluationImport
         Dim SignatureData As Byte()
         Dim PhotoData As Byte()
         If Await IsInternetAvailableAsync() Then
-
-
             Try
-
-
-
                 If DgvEvaluations.InvokeRequired Then
                     SelectedRow = DgvEvaluations.Invoke(Function() DgvEvaluations.SelectedRows(0))
                 Else
@@ -235,7 +223,11 @@ Public Class FrmEvaluationImport
 
                 End If
             Catch ex As Exception
-                CMessageBox.Show("ERRO EV023", "Ocorreu um erro ao importar a avaliação.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                If Not IsInternetAvailable() Then
+                    CMessageBox.Show("É necessário estar conectado à internet para importar avaliações.", CMessageBoxType.Warning)
+                Else
+                    CMessageBox.Show("ERRO EV023", "Ocorreu um erro ao importar a avaliação.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                End If
             End Try
         Else
             CMessageBox.Show("É necessário estar conectado à internet para importar avaliações.", CMessageBoxType.Warning)

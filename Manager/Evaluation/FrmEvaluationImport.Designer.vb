@@ -63,6 +63,7 @@ Partial Class FrmEvaluationImport
         'BtnImport
         '
         Me.BtnImport.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnImport.Enabled = False
         Me.BtnImport.Location = New System.Drawing.Point(512, 15)
         Me.BtnImport.Name = "BtnImport"
         Me.BtnImport.Size = New System.Drawing.Size(95, 30)

@@ -9,9 +9,9 @@ Public Class FrmEvaluations
     Private _ShowApproval As Boolean
     Public Sub New()
         InitializeComponent()
-        Utility.EnableControlDoubleBuffer(DgvData, True)
-        Utility.EnableControlDoubleBuffer(DgvPartWorkedHour, True)
-        Utility.EnableControlDoubleBuffer(DgvPartElapsedDay, True)
+        EnableControlDoubleBuffer(DgvData, True)
+        EnableControlDoubleBuffer(DgvPartWorkedHour, True)
+        EnableControlDoubleBuffer(DgvPartElapsedDay, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Filter = New EvaluationFilter(DgvData, PgFilter)
@@ -86,7 +86,7 @@ Public Class FrmEvaluations
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
-        SplitContainer1.Panel1Collapsed = If(BtnFilter.Checked, False, True)
+        SplitContainer1.Panel1Collapsed = Not BtnFilter.Checked
         SplitContainer1.SplitterDistance = 350
     End Sub
     Private Sub BtnDetails_Click(sender As Object, e As EventArgs) Handles BtnDetails.Click
@@ -293,3 +293,4 @@ Public Class FrmEvaluations
         End Using
     End Sub
 End Class
+

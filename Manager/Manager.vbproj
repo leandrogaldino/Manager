@@ -654,6 +654,7 @@
     <Compile Include="Email\FrmEmailImportEmailModel.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="VisitSchedule\VisitSchedule.vb" />
     <Compile Include="Evaluation\Control\UcEvaluationPhotos.Designer.vb">
       <DependentUpon>UcEvaluationPhotos.vb</DependentUpon>
     </Compile>

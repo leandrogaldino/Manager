@@ -32,6 +32,23 @@ Public Enum CashStatus
     <Description("ABERTO")> Opened = 0
     <Description("FECHADO")> Closed = 1
 End Enum
+
+
+
+'Pendente
+'Executando
+'Executado
+'Cancelado
+
+''' <summary>
+''' Utilizado para sinalizar os status do agendamento de visita.
+''' </summary>
+Public Enum VisitScheduleStatus
+    <Description("PENDENTE")> Pending = 0
+    <Description("INICIADA")> Started = 1
+    <Description("FINALIZADA")> Finished = 2
+    <Description("CANCELADA")> Canceled = 3
+End Enum
 ''' <summary>
 ''' Utilizado para sinalizar os status do Crm.
 ''' </summary>
@@ -178,6 +195,7 @@ Public Enum Routine
     <Description("Assinatura de E-Mail")> EmailSignature = 20
     <Description("CRM")> Crm = 21
     <Description("Atendimento do CRM")> CrmTreatment = 2101
+    <Description("Agendamento de Visita")> VisitSchedule = 22
 End Enum
 ''' <summary>
 ''' Utilizado para sinalizar erros a serem tratados nas queries.

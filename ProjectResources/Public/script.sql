@@ -1,5 +1,5 @@
 /*Como a cryptokey foi alterada, a senha de todos os usuarios deve ser resetada*/
-/*Como a cryptokey foi alterada, a senha de todos os e-mails cadastrados*/
+/*Como a cryptokey foi alterada, a senha de todos os e-mails cadastradosuser*/
 /*No caixa reicol comercio no mes 02/2024 tem um registro do expresso vedações que está sem responsavel, colocar reicol*/
 /*No caixa reicol comercio no mes 08/2023 tem um registro da di napoli que está sem responsavel, colocar reicol*/
 /*No caixa reicol comercio no mes 08/2023 tem um registro da di napoli que está sem responsavel, colocar reicol*/
@@ -95,3 +95,21 @@ END$$
 
 DELIMITER ;
 
+/*INCLUI OS PARTBIND NOS ITEMS*/
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE personcompressorpart pcp
+LEFT JOIN product p
+  ON p.id = pcp.productid
+SET pcp.partbindid = 
+  CASE
+    WHEN LOWER(COALESCE(pcp.itemname, p.name)) LIKE '%filtro de ar%' THEN 1
+    WHEN LOWER(COALESCE(pcp.itemname, p.name)) LIKE '%filtro de oleo%' THEN 2
+    WHEN LOWER(COALESCE(pcp.itemname, p.name)) LIKE '%separador%' THEN 3
+    WHEN LOWER(COALESCE(pcp.itemname, p.name)) LIKE '%oleo%' OR LOWER(COALESCE(pcp.itemname, p.name)) LIKE '%óleo%' 
+         AND LOWER(COALESCE(pcp.itemname, p.name)) NOT LIKE '%filtro%' 
+         AND LOWER(COALESCE(pcp.itemname, p.name)) NOT LIKE '%elemento%' THEN 4
+    WHEN LOWER(COALESCE(pcp.itemname, p.name)) LIKE '%coalescente%' THEN 5
+    ELSE pcp.partbindid
+  END;
+SET SQL_SAFE_UPDATES = 1;

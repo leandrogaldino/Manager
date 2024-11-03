@@ -21,6 +21,10 @@ Public Class MySqlService
         Dim Transaction As MySqlTransaction = If(_Transaction, Nothing)
         Try
             Using Cmd As New MySqlCommand(Nothing, Connection, Transaction)
+
+
+
+
                 Using Bkp As New MySqlBackup(Cmd)
                     Bkp.ImportInfo.IntervalForProgressReport = 1
                     AddHandler Bkp.ImportProgressChanged, Sub(BkpSender, BkpEventArgs)
@@ -35,6 +39,9 @@ Public Class MySqlService
 
 
                     If Connection.State <> ConnectionState.Open Then Await Connection.OpenAsync()
+
+                    Bkp.ImportFromFile(FilePath)
+
                     Using Stream As New FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, True)
                         Await Stream.FlushAsync()
                         Bkp.ImportFromStream(Stream)

@@ -37,9 +37,8 @@ IF OLD.capacity <> NEW.capacity THEN INSERT INTO log VALUES (NULL, CASE WHEN old
 END$$
 DELIMITER ;
 
-ALTER TABLE `manager`.`evaluation` CHANGE COLUMN `documentname` `documentpath` VARCHAR(255) NULL DEFAULT NULL;
 
-ALTER TABLE `manager`.`evaluation` ADD COLUMN `signaturepath` VARCHAR(255) NULL DEFAULT NULL AFTER `documentpath`;
+ALTER TABLE `manager`.`evaluation` ADD COLUMN `signaturename` VARCHAR(255) NULL DEFAULT NULL AFTER `documentname`;
 
 DROP TRIGGER IF EXISTS `manager`.`evaluationupdate`;
 
@@ -58,72 +57,17 @@ IF OLD.personcompressorid <> NEW.personcompressorid THEN INSERT INTO log VALUES 
 IF OLD.horimeter <> NEW.horimeter THEN INSERT INTO log VALUES (NULL, 13, NEW.id, 'Horímetro', FORMAT(OLD.horimeter, 0, 'pt_BR'), FORMAT(NEW.horimeter, 0, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.averageworkload <> NEW.averageworkload THEN INSERT INTO log VALUES (NULL, 13, NEW.id, 'MHD', FORMAT(OLD.averageworkload, 2, 'pt_BR'), FORMAT(NEW.averageworkload, 2, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF IFNULL(OLD.technicaladvice, '') <> IFNULL(NEW.technicaladvice, '') THEN INSERT INTO log VALUES (NULL, 13, NEW.id, 'Parecer Técnico', OLD.technicaladvice, NEW.technicaladvice, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-IF IFNULL(OLD.documentpath, '') <> IFNULL(NEW.documentpath, '') THEN INSERT INTO log VALUES (NULL, 13, NEW.id, 'Documento', NULL, 'Alterado', NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-IF IFNULL(OLD.signaturepath, '') <> IFNULL(NEW.signaturepath, '') THEN INSERT INTO log VALUES (NULL, 13, NEW.id, 'Assinatura', NULL, 'Alterado', NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF IFNULL(OLD.documentname, '') <> IFNULL(NEW.documentname, '') THEN INSERT INTO log VALUES (NULL, 13, NEW.id, 'Documento', NULL, 'Alterado', NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF IFNULL(OLD.signaturename, '') <> IFNULL(NEW.signaturename, '') THEN INSERT INTO log VALUES (NULL, 13, NEW.id, 'Assinatura', NULL, 'Alterado', NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DELIMITER ;
 
-ALTER TABLE `manager`.`cash` CHANGE COLUMN `documentname` `documentpath` VARCHAR(255) NULL DEFAULT NULL;
-
-
-DROP TRIGGER IF EXISTS `manager`.`cashupdate`;
-
-DELIMITER $$
-USE `manager`$$
-CREATE DEFINER=`root`@`localhost` TRIGGER `cashupdate` AFTER UPDATE ON `cash` FOR EACH ROW BEGIN
-IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 11, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'ABERTO' WHEN OLD.statusid = 1 THEN 'FECHADO' END, CASE WHEN NEW.statusid = 0 THEN 'ABERTO' WHEN NEW.statusid = 1 THEN 'FECHADO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-IF IFNULL(OLD.note, '') <> IFNULL(NEW.note, '') THEN INSERT INTO log VALUES (NULL, 11, NEW.id, 'Observação', OLD.note, NEW.note, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-IF IFNULL(OLD.documentpath, '') <> IFNULL(NEW.documentpath, '') THEN INSERT INTO log VALUES (NULL, 11, NEW.id, 'Documento', NULL, 'Alterado', NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-END$$
-DELIMITER ;
-
-
-ALTER TABLE `manager`.`request` CHANGE COLUMN `documentname` `documentpath` VARCHAR(255) NULL DEFAULT NULL;
-
-
-DROP TRIGGER IF EXISTS `manager`.`requestupdate`;
-
-DELIMITER $$
-USE `manager`$$
-CREATE DEFINER=`root`@`localhost` TRIGGER `requestupdate` AFTER UPDATE ON `request` FOR EACH ROW BEGIN
-IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 15, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'PENDENTE' WHEN OLD.statusid = 1 THEN 'PARC. CONCLUÍDO' WHEN OLD.statusid = 2 THEN 'CONCLUÍDO' END, CASE WHEN NEW.statusid = 0 THEN 'ATIVO' WHEN NEW.statusid = 1 THEN 'INATIVO' WHEN NEW.statusid = 2 THEN 'CONCLUÍDO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-IF OLD.destination <> NEW.destination THEN INSERT INTO log VALUES (NULL, 15, NEW.id, 'Destino', OLD.destination, NEW.destination, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-IF OLD.responsible <> NEW.responsible THEN INSERT INTO log VALUES (NULL, 15, NEW.id, 'Responsável', OLD.responsible, NEW.responsible, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-IF IFNULL(OLD.note, '') <> IFNULL(NEW.note, '') THEN INSERT INTO log VALUES (NULL, 15, NEW.id, 'Observação', OLD.note, NEW.note, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-IF IFNULL(OLD.documentpath, '') <> IFNULL(NEW.documentpath, '') THEN INSERT INTO log VALUES (NULL, 15, NEW.id, 'Documento', NULL, 'Alterado', NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-END$$
-DELIMITER ;
-
-ALTER TABLE `manager`.`productpicture` CHANGE COLUMN `picturename` `picturepath` VARCHAR(255) NOT NULL ;
-
-
-DROP TRIGGER IF EXISTS `manager`.`productpictureupdate`;
-
-DELIMITER $$
-USE `manager`$$
-CREATE DEFINER=`root`@`localhost` TRIGGER `productpictureupdate` AFTER UPDATE ON `productpicture` FOR EACH ROW BEGIN
-IF OLD.picturepath <> NEW.picturepath THEN INSERT INTO log VALUES (NULL, 604, NEW.id, 'Foto Alterada', NULL, NULL, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-IF OLD.caption <> NEW.caption THEN INSERT INTO log VALUES (NULL, 604, NEW.id, 'Legenda', OLD.caption, NEW.caption, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-END$$
-DELIMITER ;
-
-ALTER TABLE `manager`.`emailsignature` CHANGE COLUMN `directoryname` `directorypath` VARCHAR(255) NULL DEFAULT NULL ;
-
-DROP TRIGGER IF EXISTS `manager`.`emailsignatureupdate`;
-
-DELIMITER $$
-USE `manager`$$
-CREATE DEFINER=`root`@`localhost` TRIGGER `emailsignatureupdate` AFTER UPDATE ON `emailsignature` FOR EACH ROW BEGIN
-IF OLD.name <> NEW.name THEN INSERT INTO log VALUES (NULL, 20, NEW.id, 'Nome', OLD.name, NEW.name, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-IF IFNULL(OLD.directorypath, '') <> IFNULL(NEW.directorypath, '') THEN INSERT INTO log VALUES (NULL, 20, NEW.id, 'Assinatura Alterada', NULL, NULL, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-END$$
-DELIMITER ;
 
 CREATE TABLE `evaluationphoto` (
   `id` int NOT NULL AUTO_INCREMENT,
   `creation` date NOT NULL,
   `evaluationid` int NOT NULL,
-  `photopath` VARCHAR(255) NOT NULL,
+  `photoname` VARCHAR(255) NOT NULL,
   `userid` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `evaluationid` (`evaluationid`),
@@ -141,7 +85,7 @@ INSERT INTO log VALUES (NULL, 1308, NEW.id, 'Criação', NULL, NULL, NOW(), CONC
 END$$
 
 CREATE DEFINER=`root`@`localhost` TRIGGER `evaluationphotoupdate` AFTER UPDATE ON `evaluationphoto` FOR EACH ROW BEGIN
-IF OLD.photopath <> NEW.photopath THEN INSERT INTO log VALUES (NULL, 1308, NEW.id, 'Foto', NULL, 'Alterado', NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.photoname <> NEW.photoname THEN INSERT INTO log VALUES (NULL, 1308, NEW.id, 'Foto', NULL, 'Alterado', NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 
 CREATE DEFINER=`root`@`localhost` TRIGGER `evaluationphotodelete` AFTER DELETE ON `evaluationphoto` FOR EACH ROW BEGIN

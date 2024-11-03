@@ -1,8 +1,6 @@
 ﻿Imports ControlLibrary
-Imports ICSharpCode
 Imports ICSharpCode.SharpZipLib.Zip
 Imports System.IO
-Imports System.IO.Compression
 Imports System.Threading
 
 Public Class CompressionService

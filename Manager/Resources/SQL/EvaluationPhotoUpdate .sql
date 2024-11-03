@@ -1,3 +1,3 @@
 UPDATE evaluationphoto SET
-    photopath =  @photopath
+    photoname =  @photoname
 WHERE evaluationphoto.id = @id;

@@ -1,5 +1,5 @@
 UPDATE emailsignature SET
     name =  @name,
-    directorypath = @directorypath,
+    directoryname = @directoryname,
     userid = @userid
 WHERE emailsignature.id = @id;

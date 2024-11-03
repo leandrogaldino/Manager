@@ -55,8 +55,8 @@ Public Class EmailSignature
                         _ID = TableResult.Rows(0).Item("id")
                         _Creation = TableResult.Rows(0).Item("creation")
                         Name = TableResult.Rows(0).Item("name").ToString
-                        If TableResult.Rows(0).Item("directorypath") IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("directorypath")) Then
-                            Directory.SetCurrentDirectory(Path.Combine(ApplicationPaths.EmailSignatureDirectory, TableResult.Rows(0).Item("directorypath").ToString), True)
+                        If TableResult.Rows(0).Item("directoryname") IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("directoryname")) Then
+                            Directory.SetCurrentDirectory(Path.Combine(ApplicationPaths.EmailSignatureDirectory, TableResult.Rows(0).Item("directoryname").ToString), True)
                         End If
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
@@ -102,7 +102,7 @@ Public Class EmailSignature
                     CmdEmailSignature.Parameters.AddWithValue("@ofuserid", Locator.GetInstance(Of Session).User.ID)
                     CmdEmailSignature.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     CmdEmailSignature.Parameters.AddWithValue("@name", Name)
-                    CmdEmailSignature.Parameters.AddWithValue("@directorypath", If(String.IsNullOrEmpty(Directory.CurrentDirectory), DBNull.Value, Path.GetFileName(Directory.CurrentDirectory)))
+                    CmdEmailSignature.Parameters.AddWithValue("@directoryname", If(String.IsNullOrEmpty(Directory.CurrentDirectory), DBNull.Value, Path.GetFileName(Directory.CurrentDirectory)))
                     CmdEmailSignature.Parameters.AddWithValue("@userid", User.ID)
                     CmdEmailSignature.ExecuteNonQuery()
                     _ID = CmdEmailSignature.LastInsertedId
@@ -120,7 +120,7 @@ Public Class EmailSignature
                 Using CmdEmailSignature As New MySqlCommand(My.Resources.EmailSignatureUpdate, Con)
                     CmdEmailSignature.Parameters.AddWithValue("@id", ID)
                     CmdEmailSignature.Parameters.AddWithValue("@name", Name)
-                    CmdEmailSignature.Parameters.AddWithValue("@directorypath", If(String.IsNullOrEmpty(Directory.CurrentDirectory), DBNull.Value, Path.GetFileName(Directory.CurrentDirectory)))
+                    CmdEmailSignature.Parameters.AddWithValue("@directoryname", If(String.IsNullOrEmpty(Directory.CurrentDirectory), DBNull.Value, Path.GetFileName(Directory.CurrentDirectory)))
                     CmdEmailSignature.Parameters.AddWithValue("@userid", User.ID)
                     CmdEmailSignature.ExecuteNonQuery()
                 End Using

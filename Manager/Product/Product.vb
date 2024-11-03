@@ -152,7 +152,7 @@ Public Class Product
                     Using CmdPicture As New MySqlCommand(My.Resources.ProductPictureInsert, Con)
                         CmdPicture.Parameters.AddWithValue("@productid", ID)
                         CmdPicture.Parameters.AddWithValue("@creation", Picture.Creation)
-                        CmdPicture.Parameters.AddWithValue("@picturepath", Path.GetFileName(Picture.Picture.CurrentFile))
+                        CmdPicture.Parameters.AddWithValue("@picturename", Path.GetFileName(Picture.Picture.CurrentFile))
                         CmdPicture.Parameters.AddWithValue("@caption", Picture.Caption)
                         CmdPicture.Parameters.AddWithValue("@userid", Picture.User.ID)
                         CmdPicture.ExecuteNonQuery()
@@ -239,7 +239,7 @@ Public Class Product
                         Using CmdPicture As New MySqlCommand(My.Resources.ProductPictureInsert, Con)
                             CmdPicture.Parameters.AddWithValue("@productid", ID)
                             CmdPicture.Parameters.AddWithValue("@creation", Picture.Creation)
-                            CmdPicture.Parameters.AddWithValue("@picturepath", Path.GetFileName(Picture.Picture.CurrentFile))
+                            CmdPicture.Parameters.AddWithValue("@picturename", Path.GetFileName(Picture.Picture.CurrentFile))
                             CmdPicture.Parameters.AddWithValue("@caption", Picture.Caption)
                             CmdPicture.Parameters.AddWithValue("@userid", Picture.User.ID)
                             CmdPicture.ExecuteNonQuery()
@@ -248,7 +248,7 @@ Public Class Product
                     Else
                         Using CmdPicture As New MySqlCommand(My.Resources.ProductPictureUpdate, Con)
                             CmdPicture.Parameters.AddWithValue("@id", Picture.ID)
-                            CmdPicture.Parameters.AddWithValue("@picturepath", Path.GetFileName(Picture.Picture.CurrentFile))
+                            CmdPicture.Parameters.AddWithValue("@picturename", Path.GetFileName(Picture.Picture.CurrentFile))
                             CmdPicture.Parameters.AddWithValue("@caption", Picture.Caption)
                             CmdPicture.Parameters.AddWithValue("@userid", Picture.User.ID)
                             CmdPicture.ExecuteNonQuery()
@@ -364,8 +364,8 @@ Public Class Product
                 Pictures = New OrdenedList(Of ProductPicture)
                 For Each Row As DataRow In TableResult.Rows
                     Picture = New ProductPicture
-                    If Row.Item("picturepath").ToString IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("picturepath")) Then
-                        Picture.Picture.SetCurrentFile(Path.Combine(ApplicationPaths.ProductPictureDirectory, Row.Item("picturepath").ToString), True)
+                    If Row.Item("picturename").ToString IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("picturename")) Then
+                        Picture.Picture.SetCurrentFile(Path.Combine(ApplicationPaths.ProductPictureDirectory, Row.Item("picturename").ToString), True)
                     End If
                     Picture.Caption = Row.Item("caption").ToString
                     Picture.IsSaved = True

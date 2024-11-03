@@ -1,4 +1,5 @@
 /*Como a cryptokey foi alterada, a senha de todos os usuarios deve ser resetada*/
+/*Como a cryptokey foi alterada, a senha de todos os e-mails cadastrados*/
 /*No caixa reicol comercio no mes 02/2024 tem um registro do expresso vedações que está sem responsavel, colocar reicol*/
 /*No caixa reicol comercio no mes 08/2023 tem um registro da di napoli que está sem responsavel, colocar reicol*/
 /*No caixa reicol comercio no mes 08/2023 tem um registro da di napoli que está sem responsavel, colocar reicol*/

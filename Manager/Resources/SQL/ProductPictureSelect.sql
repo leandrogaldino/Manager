@@ -1,7 +1,7 @@
 SELECT
 	productpicture.id,
 	productpicture.creation,
-	productpicture.picturepath,
+	productpicture.picturename,
 	productpicture.caption
 FROM productpicture
 WHERE productpicture.productid = @productid;

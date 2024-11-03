@@ -5,7 +5,7 @@ SELECT
 	request.destination,
 	request.responsible,
 	request.note,
-	request.documentpath,	
+	request.documentname,	
 	request.userid
 FROM request
 WHERE request.id = @id;

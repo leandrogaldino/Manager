@@ -2,6 +2,6 @@ SELECT
 	evaluationphoto.id,
 	evaluationphoto.creation,
 	evaluationphoto.evaluationid,
-	evaluationphoto.photopath
+	evaluationphoto.photoname
 FROM evaluationphoto
 WHERE evaluationphoto.evaluationid = @evaluationid;

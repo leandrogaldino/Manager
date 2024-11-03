@@ -163,13 +163,13 @@ Public Class RequestReport
             WsReport.Row(Row).Height = 20
             WsReport.Range(Row, 1, Row, 7).Style.Border.BottomBorder = Excel.XLBorderStyleValues.Thin
             WsReport.Range(Row, 1, Row, 7).Style.Border.BottomBorderColor = Excel.XLColor.DimGray
-            WsReport.Range(Row, 1, Row, 1).Value = r.Item("id")
-            WsReport.Range(Row, 2, Row, 2).Value = r.Item("creation").ToString
+            WsReport.Range(Row, 1, Row, 1).Value = CInt(r.Item("id"))
+            WsReport.Range(Row, 2, Row, 2).Value = CDate(r.Item("creation")).ToString("dd/MM/yyyy")
             WsReport.Range(Row, 3, Row, 3).Value = r.Item("code").ToString
             WsReport.Range(Row, 4, Row, 4).Value = r.Item("part").ToString
-            WsReport.Range(Row, 5, Row, 5).Value = r.Item("qty")
-            WsReport.Range(Row, 6, Row, 6).Value = r.Item("responsible")
-            WsReport.Range(Row, 7, Row, 7).Value = r.Item("destination")
+            WsReport.Range(Row, 5, Row, 5).Value = CDec(r.Item("qty"))
+            WsReport.Range(Row, 6, Row, 6).Value = r.Item("responsible").ToString
+            WsReport.Range(Row, 7, Row, 7).Value = r.Item("destination").ToString
             Row += 1
         Next r
         WsReport.Row(Row).Height = 5

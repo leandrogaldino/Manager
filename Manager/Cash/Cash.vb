@@ -51,8 +51,8 @@ Public Class Cash
                         Status = TableResult.Rows(0).Item("statusid")
                         CashFlow = New CashFlow().Load(TableResult.Rows(0).Item("cashflowid"), False)
                         Note = TableResult.Rows(0).Item("note").ToString
-                        If TableResult.Rows(0).Item("documentpath") IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("documentpath")) Then
-                            Document.SetCurrentFile(Path.Combine(ApplicationPaths.CashDocumentDirectory, TableResult.Rows(0).Item("documentpath").ToString), True)
+                        If TableResult.Rows(0).Item("documentname") IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("documentname")) Then
+                            Document.SetCurrentFile(Path.Combine(ApplicationPaths.CashDocumentDirectory, TableResult.Rows(0).Item("documentname").ToString), True)
                         End If
                         CashItems = GetCashItems(Tra)
                         LockInfo = GetLockInfo(Tra)
@@ -103,7 +103,7 @@ Public Class Cash
                     CmdCash.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     CmdCash.Parameters.AddWithValue("@statusid", CInt(Status))
                     CmdCash.Parameters.AddWithValue("@note", If(String.IsNullOrEmpty(Note), DBNull.Value, Note))
-                    CmdCash.Parameters.AddWithValue("@documentpath", If(String.IsNullOrEmpty(Document.CurrentFile), DBNull.Value, Path.GetFileName(Document.CurrentFile)))
+                    CmdCash.Parameters.AddWithValue("@documentname", If(String.IsNullOrEmpty(Document.CurrentFile), DBNull.Value, Path.GetFileName(Document.CurrentFile)))
                     CmdCash.Parameters.AddWithValue("@userid", User.ID)
                     CmdCash.ExecuteNonQuery()
                     _ID = CmdCash.LastInsertedId
@@ -148,7 +148,7 @@ Public Class Cash
                 Using CmdCash As New MySqlCommand(My.Resources.CashUpdate, Con)
                     CmdCash.Parameters.AddWithValue("@id", ID)
                     CmdCash.Parameters.AddWithValue("@note", If(String.IsNullOrEmpty(Note), DBNull.Value, Note))
-                    CmdCash.Parameters.AddWithValue("@documentpath", If(String.IsNullOrEmpty(Document.CurrentFile), DBNull.Value, Path.GetFileName(Document.CurrentFile)))
+                    CmdCash.Parameters.AddWithValue("@documentname", If(String.IsNullOrEmpty(Document.CurrentFile), DBNull.Value, Path.GetFileName(Document.CurrentFile)))
                     CmdCash.Parameters.AddWithValue("@userid", User.ID)
                     CmdCash.ExecuteNonQuery()
                 End Using

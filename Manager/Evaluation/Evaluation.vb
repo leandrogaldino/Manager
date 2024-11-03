@@ -247,11 +247,11 @@ Public Class Evaluation
                         ManualAverageWorkLoad = TableResult.Rows(0).Item("manualaverageworkload")
                         AverageWorkLoad = TableResult.Rows(0).Item("averageworkload")
                         TechnicalAdvice = TableResult.Rows(0).Item("technicaladvice").ToString
-                        If TableResult.Rows(0).Item("documentpath") IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("documentpath")) Then
-                            Document.SetCurrentFile(Path.Combine(ApplicationPaths.EvaluationDocumentDirectory, TableResult.Rows(0).Item("documentpath").ToString), True)
+                        If TableResult.Rows(0).Item("documentname") IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("documentname")) Then
+                            Document.SetCurrentFile(Path.Combine(ApplicationPaths.EvaluationDocumentDirectory, TableResult.Rows(0).Item("documentname").ToString), True)
                         End If
-                        If TableResult.Rows(0).Item("signaturepath") IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("signaturepath")) Then
-                            Signature.SetCurrentFile(Path.Combine(ApplicationPaths.EvaluationSignatureDirectory, TableResult.Rows(0).Item("signaturepath").ToString), True)
+                        If TableResult.Rows(0).Item("signaturename") IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("signaturename")) Then
+                            Signature.SetCurrentFile(Path.Combine(ApplicationPaths.EvaluationSignatureDirectory, TableResult.Rows(0).Item("signaturename").ToString), True)
                         End If
                         Photos = GetPhotos(Tra)
                         _RejectReason = TableResult.Rows(0).Item("rejectreason").ToString
@@ -281,7 +281,7 @@ Public Class Evaluation
                 Adp.Fill(TableResult)
                 For Each Row As DataRow In TableResult.Rows
                     Photo = New EvaluationPhoto
-                    Photo.Photo.SetCurrentFile((Path.Combine(ApplicationPaths.EvaluationPhotoDirectory, Row.Item("photopath").ToString)), True)
+                    Photo.Photo.SetCurrentFile((Path.Combine(ApplicationPaths.EvaluationPhotoDirectory, Row.Item("photoname").ToString)), True)
                     Photo.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Photo, Row.Item("id"))
                     Photo.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Photo, Row.Item("creation"))
                     Photo.IsSaved = True
@@ -440,8 +440,8 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@manualaverageworkload", ManualAverageWorkLoad)
                     CmdEvaluation.Parameters.AddWithValue("@averageworkload", AverageWorkLoad)
                     CmdEvaluation.Parameters.AddWithValue("@technicaladvice", If(String.IsNullOrEmpty(TechnicalAdvice), DBNull.Value, TechnicalAdvice))
-                    CmdEvaluation.Parameters.AddWithValue("@documentpath", If(String.IsNullOrEmpty(Document.CurrentFile), DBNull.Value, Path.GetFileName(Document.CurrentFile)))
-                    CmdEvaluation.Parameters.AddWithValue("@signaturepath", If(String.IsNullOrEmpty(Signature.CurrentFile), DBNull.Value, Path.GetFileName(Signature.CurrentFile)))
+                    CmdEvaluation.Parameters.AddWithValue("@documentname", If(String.IsNullOrEmpty(Document.CurrentFile), DBNull.Value, Path.GetFileName(Document.CurrentFile)))
+                    CmdEvaluation.Parameters.AddWithValue("@signaturename", If(String.IsNullOrEmpty(Signature.CurrentFile), DBNull.Value, Path.GetFileName(Signature.CurrentFile)))
                     CmdEvaluation.Parameters.AddWithValue("@rejectreason", If(String.IsNullOrEmpty(RejectReason), DBNull.Value, RejectReason))
                     CmdEvaluation.Parameters.AddWithValue("@userid", User.ID)
                     CmdEvaluation.ExecuteNonQuery()
@@ -489,7 +489,7 @@ Public Class Evaluation
                     Using CmdPhoto As New MySqlCommand(My.Resources.EvaluationPhotoInsert, Con)
                         CmdPhoto.Parameters.AddWithValue("@creation", Photo.Creation)
                         CmdPhoto.Parameters.AddWithValue("@evaluationid", ID)
-                        CmdPhoto.Parameters.AddWithValue("@photopath", Path.GetFileName(Photo.Photo.CurrentFile))
+                        CmdPhoto.Parameters.AddWithValue("@photoname", Path.GetFileName(Photo.Photo.CurrentFile))
                         CmdPhoto.Parameters.AddWithValue("@userid", Photo.User.ID)
                         CmdPhoto.ExecuteNonQuery()
                         Photo.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Photo, CmdPhoto.LastInsertedId)
@@ -523,8 +523,8 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@manualaverageworkload", ManualAverageWorkLoad)
                     CmdEvaluation.Parameters.AddWithValue("@averageworkload", AverageWorkLoad)
                     CmdEvaluation.Parameters.AddWithValue("@technicaladvice", If(String.IsNullOrEmpty(TechnicalAdvice), DBNull.Value, TechnicalAdvice))
-                    CmdEvaluation.Parameters.AddWithValue("@documentpath", If(String.IsNullOrEmpty(Document.CurrentFile), DBNull.Value, Path.GetFileName(Document.CurrentFile)))
-                    CmdEvaluation.Parameters.AddWithValue("@signaturepath", If(String.IsNullOrEmpty(Signature.CurrentFile), DBNull.Value, Path.GetFileName(Signature.CurrentFile)))
+                    CmdEvaluation.Parameters.AddWithValue("@documentname", If(String.IsNullOrEmpty(Document.CurrentFile), DBNull.Value, Path.GetFileName(Document.CurrentFile)))
+                    CmdEvaluation.Parameters.AddWithValue("@signaturename", If(String.IsNullOrEmpty(Signature.CurrentFile), DBNull.Value, Path.GetFileName(Signature.CurrentFile)))
                     CmdEvaluation.Parameters.AddWithValue("@rejectreason", If(String.IsNullOrEmpty(RejectReason), DBNull.Value, RejectReason))
                     CmdEvaluation.Parameters.AddWithValue("@userid", User.ID)
                     CmdEvaluation.ExecuteNonQuery()
@@ -686,7 +686,7 @@ Public Class Evaluation
                         Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoInsert, Con)
                             Cmd.Parameters.AddWithValue("@creation", Photo.Creation)
                             Cmd.Parameters.AddWithValue("@evaluationid", ID)
-                            Cmd.Parameters.AddWithValue("@photopath", Path.GetFileName(Photo.Photo.CurrentFile))
+                            Cmd.Parameters.AddWithValue("@photoname", Path.GetFileName(Photo.Photo.CurrentFile))
                             Cmd.Parameters.AddWithValue("@userid", Photo.User.ID)
                             Cmd.ExecuteNonQuery()
                             Photo.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Photo, Cmd.LastInsertedId)
@@ -694,7 +694,7 @@ Public Class Evaluation
                     Else
                         Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoUpdate, Con)
                             Cmd.Parameters.AddWithValue("@id", Photo.ID)
-                            Cmd.Parameters.AddWithValue("@photopath", Path.GetFileName(Photo.Photo.CurrentFile))
+                            Cmd.Parameters.AddWithValue("@photoname", Path.GetFileName(Photo.Photo.CurrentFile))
                             Cmd.ExecuteNonQuery()
                         End Using
                     End If

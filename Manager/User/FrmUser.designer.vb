@@ -440,6 +440,7 @@ Partial Class FrmUser
         Condition1.TableNameOrAlias = "person"
         Condition1.Value = "@isemployee"
         Me.QbxPerson.Conditions.Add(Condition1)
+        Me.QbxPerson.DebugOnTextChanged = False
         Me.QbxPerson.DisplayFieldAlias = "Nome"
         Me.QbxPerson.DisplayFieldName = "name"
         Me.QbxPerson.DisplayMainFieldName = "id"
@@ -467,10 +468,10 @@ Partial Class FrmUser
         '
         Me.TabPrivilege.Controls.Add(Me.TvwPrivilege)
         Me.TabPrivilege.Controls.Add(Me.LblDescription)
-        Me.TabPrivilege.Location = New System.Drawing.Point(4, 26)
+        Me.TabPrivilege.Location = New System.Drawing.Point(4, 22)
         Me.TabPrivilege.Name = "TabPrivilege"
         Me.TabPrivilege.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPrivilege.Size = New System.Drawing.Size(454, 67)
+        Me.TabPrivilege.Size = New System.Drawing.Size(454, 71)
         Me.TabPrivilege.TabIndex = 8
         Me.TabPrivilege.Text = "Permissões"
         Me.TabPrivilege.UseVisualStyleBackColor = True
@@ -493,7 +494,7 @@ Partial Class FrmUser
         Me.LblDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.LblDescription.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.LblDescription.ForeColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
-        Me.LblDescription.Location = New System.Drawing.Point(3, -16)
+        Me.LblDescription.Location = New System.Drawing.Point(3, -12)
         Me.LblDescription.Name = "LblDescription"
         Me.LblDescription.Size = New System.Drawing.Size(448, 80)
         Me.LblDescription.TabIndex = 1
@@ -621,7 +622,7 @@ Partial Class FrmUser
         'DgvEmailLayout
         '
         Me.DgvEmailLayout.DataGridView = Me.DgvEmail
-        Me.DgvEmailLayout.Routine = Routine.UserEmail
+        Me.DgvEmailLayout.Routine = Manager.Routine.UserEmail
         '
         'FrmUser
         '

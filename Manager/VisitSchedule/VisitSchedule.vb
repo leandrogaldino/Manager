@@ -4,68 +4,68 @@ Imports System.Reflection
 
 Public Class VisitSchedule
     Inherits ModelBase
-    'Private _IsSaved As Boolean
-    'Public Property Status As VisitScheduleStatus
-    'Public Property VisitType As VisitScheduleType
-    'Public Property Customer As New Person
-    'Public Property Compressor As New PersonCompressor
-    'Public Property Instructions As String
-    'Public Property GeneratedEvaluation As Lazy(Of Evaluation)
+    Private _IsSaved As Boolean
+    Public Property Status As VisitScheduleStatus
+    Public Property VisitType As VisitScheduleType
+    Public Property Customer As New Person
+    Public Property Compressor As New PersonCompressor
+    Public Property Instructions As String
+    Public Property GeneratedEvaluation As Lazy(Of Evaluation)
 
-    'Public Sub New()
-    '    _Routine = Routine.VisitSchedule
-    '    _Creation = Today
-    '    Status = VisitScheduleStatus.Pending
-    '    VisitType = VisitScheduleType.Gathering
-    'End Sub
-    'Public Sub Clear()
-    '    Unlock()
-    '    _IsSaved = False
-    '    _ID = 0
-    '    _Creation = Today
-    '    Status = VisitScheduleStatus.Pending
-    '    Customer = New Person()
-    '    Compressor = New PersonCompressor()
-    '    Instructions = Nothing
-    '    GeneratedEvaluation = New Lazy(Of Evaluation)
-    'End Sub
-    'Public Function Load(Identity As Long, LockMe As Boolean) As VisitSchedule
-    '    Dim Session = Locator.GetInstance(Of Session)
-    '    Dim TableResult As New DataTable
-    '    Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
-    '        Con.Open()
-    '        Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
-    '            Using CmdVisitSchedule As New MySqlCommand(My.Resources.VisitScheduleSelect, Con)
-    '                CmdVisitSchedule.Transaction = Tra
-    '                CmdVisitSchedule.Parameters.AddWithValue("@id", Identity)
-    '                CmdVisitSchedule.Parameters.AddWithValue("@name", Nothing)
-    '                CmdVisitSchedule.Parameters.AddWithValue("@state", Nothing)
-    '                Using Adp As New MySqlDataAdapter(CmdVisitSchedule)
-    '                    Adp.Fill(TableResult)
-    '                End Using
-    '                If TableResult.Rows.Count = 0 Then
-    '                    Clear()
-    '                ElseIf TableResult.Rows.Count = 1 Then
-    '                    Clear()
-    '                    _ID = TableResult.Rows(0).Item("id")
-    '                    _Creation = TableResult.Rows(0).Item("creation")
-    '                    Status = TableResult.Rows(0).Item("statusid")
-    '                    Customer = New Person().Load(TableResult.Rows(0).Item("customerid"), False)
-    '                    Compressor = Customer.Compressors.SingleOrDefault(Function(x) x.ID = TableResult.Rows(0).Item("personcompressorid"))
-    '                    Instructions = TableResult.Rows(0).Item("instructions").ToString
-    '                    GeneratedEvaluation = New Lazy(Of Evaluation)(Function() New Evaluation().Load(1, False))
-    '                    LockInfo = GetLockInfo(Tra)
-    '                    If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
-    '                    _IsSaved = True
-    '                Else
-    '                    Throw New Exception("Registro não encontrado.")
-    '                End If
-    '            End Using
-    '            Tra.Commit()
-    '        End Using
-    '    End Using
-    '    Return Me
-    'End Function
+    Public Sub New()
+        _Routine = Routine.VisitSchedule
+        _Creation = Today
+        Status = VisitScheduleStatus.Pending
+        VisitType = VisitScheduleType.Gathering
+    End Sub
+    Public Sub Clear()
+        Unlock()
+        _IsSaved = False
+        _ID = 0
+        _Creation = Today
+        Status = VisitScheduleStatus.Pending
+        Customer = New Person()
+        Compressor = New PersonCompressor()
+        Instructions = Nothing
+        GeneratedEvaluation = New Lazy(Of Evaluation)
+    End Sub
+    Public Function Load(Identity As Long, LockMe As Boolean) As VisitSchedule
+        Dim Session = Locator.GetInstance(Of Session)
+        Dim TableResult As New DataTable
+        Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
+            Con.Open()
+            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
+                Using CmdVisitSchedule As New MySqlCommand(My.Resources.VisitScheduleSelect, Con)
+                    CmdVisitSchedule.Transaction = Tra
+                    CmdVisitSchedule.Parameters.AddWithValue("@id", Identity)
+                    CmdVisitSchedule.Parameters.AddWithValue("@name", Nothing)
+                    CmdVisitSchedule.Parameters.AddWithValue("@state", Nothing)
+                    Using Adp As New MySqlDataAdapter(CmdVisitSchedule)
+                        Adp.Fill(TableResult)
+                    End Using
+                    If TableResult.Rows.Count = 0 Then
+                        Clear()
+                    ElseIf TableResult.Rows.Count = 1 Then
+                        Clear()
+                        _ID = TableResult.Rows(0).Item("id")
+                        _Creation = TableResult.Rows(0).Item("creation")
+                        Status = TableResult.Rows(0).Item("statusid")
+                        Customer = New Person().Load(TableResult.Rows(0).Item("customerid"), False)
+                        Compressor = Customer.Compressors.SingleOrDefault(Function(x) x.ID = TableResult.Rows(0).Item("personcompressorid"))
+                        Instructions = TableResult.Rows(0).Item("instructions").ToString
+                        GeneratedEvaluation = New Lazy(Of Evaluation)(Function() New Evaluation().Load(1, False))
+                        LockInfo = GetLockInfo(Tra)
+                        If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
+                        _IsSaved = True
+                    Else
+                        Throw New Exception("Registro não encontrado.")
+                    End If
+                End Using
+                Tra.Commit()
+            End Using
+        End Using
+        Return Me
+    End Function
     'Public Shared Function GetID(CityName As String, State As String) As Long
     '    Dim Session = Locator.GetInstance(Of Session)
     '    Dim TableResult As DataTable

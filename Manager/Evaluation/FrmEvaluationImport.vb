@@ -2,6 +2,7 @@
 Imports ControlLibrary
 Imports System.IO
 Imports ControlLibrary.Utility
+Imports System.Threading
 
 Public Class FrmEvaluationImport
     Private _EvaluationData As Dictionary(Of String, Object) = Nothing
@@ -26,8 +27,8 @@ Public Class FrmEvaluationImport
         _Storage = Locator.GetInstance(Of Storage)
         _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
         Dim Condition As New List(Of RemoteDB.Condition) From {
-            New RemoteDB.WhereEqualToCondition("info.imported", False)
-        }
+New RemoteDB.WhereEqualToCondition("info.imported", False)
+}
         _RemoteDB.StartListening("evaluations", Condition)
         AddHandler _RemoteDB.OnFirestoreChanged, Async Sub(Args)
                                                      If DgvEvaluations.Created Then
@@ -160,67 +161,71 @@ Public Class FrmEvaluationImport
                     SelectedRow = DgvEvaluations.SelectedRows(0)
                 End If
                 _EvaluationData = SelectedRow.Tag
-                If SelectedRow.Cells("Status").Value = GetEnumDescription(CloudSyncStatus.Importing) Then
+                If Not SelectedRow.Cells("Status").Value = GetEnumDescription(CloudSyncStatus.Importing) Then
+
+
+
+
+                    _EvaluationData("info")("importing_date") = Now.ToString("yyyy-MM-dd HH:mm:ss")
+                    _EvaluationData("info")("importing_by") = _Session.User.Username
+
+                    Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
+
+                    SyncTimer.Start()
+
+                    SignatureData = Await _Storage.DownloadFile(_EvaluationData("signature_url"))
+
+                    TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, Util.GetFilename(".png"))
+                    Using SignatureStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)
+                        Await SignatureStream.WriteAsync(SignatureData, 0, SignatureData.Length)
+                    End Using
+                    TempSignature = TempPath
+                    For Each Photo As String In _EvaluationData("photo_urls")
+
+                        PhotoData = Await _Storage.DownloadFile(Photo)
+
+                        TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, Util.GetFilename(".jpg"))
+                        Using PhotoStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)
+                            Await PhotoStream.WriteAsync(PhotoData, 0, PhotoData.Length)
+                        End Using
+                        TempPhotos.Add(TempPath)
+                    Next Photo
+
+                    EvaluationSourceForm = New FrmEvaluationSource(_EvaluationData, TempSignature, TempPhotos)
+                    If EvaluationSourceForm.ShowDialog() = DialogResult.OK Then
+                        If _EvaluationsForm IsNot Nothing Then
+                            EvaluationForm = New FrmEvaluation(EvaluationSourceForm.ResultEvaluation, _EvaluationsForm)
+                        Else
+                            EvaluationForm = New FrmEvaluation(EvaluationSourceForm.ResultEvaluation)
+                        End If
+                        EvaluationForm.BtnSave.Enabled = True
+                        EvaluationForm.ShowDialog()
+                        EvaluationForm.Dispose()
+                    End If
+
+                    If EvaluationSourceForm Is Nothing OrElse (EvaluationSourceForm IsNot Nothing AndAlso EvaluationSourceForm.ResultEvaluation.ID = 0) Then
+                        _EvaluationData("info")("importing_by") = String.Empty
+                        _EvaluationData("info")("importing_date") = String.Empty
+                        _EvaluationData("info")("imported_id") = 0
+                        _EvaluationData("info")("importing_by") = String.Empty
+                        _EvaluationData("info")("importing_date") = String.Empty
+
+                        Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
+
+                    Else
+                        _EvaluationData("info")("imported") = True
+                        _EvaluationData("info")("imported_by") = _Session.User.Username
+                        _EvaluationData("info")("imported_date") = Now.ToString("dd/MM/yyyy HH:mm:ss")
+                        _EvaluationData("info")("imported_id") = EvaluationSourceForm.ResultEvaluation.ID
+                        _EvaluationData("info")("importing_by") = String.Empty
+                        _EvaluationData("info")("importing_date") = String.Empty
+
+                        Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
+
+                    End If
+                Else
                     CMessageBox.Show($"Essa avaliação esta sendo importada por {_EvaluationData("info")("importing_by")}", CMessageBoxType.Information)
                     Cursor = Cursors.Default
-                    Exit Function
-                End If
-                _EvaluationData("info")("importing_date") = Now.ToString("yyyy-MM-dd HH:mm:ss")
-                _EvaluationData("info")("importing_by") = _Session.User.Username
-
-                Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
-
-                SyncTimer.Start()
-
-                SignatureData = Await _Storage.DownloadFile(_EvaluationData("signature_url"))
-
-                TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, Util.GetFilename(".png"))
-                Using SignatureStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)
-                    Await SignatureStream.WriteAsync(SignatureData, 0, SignatureData.Length)
-                End Using
-                TempSignature = TempPath
-                For Each Photo As String In _EvaluationData("photo_urls")
-
-                    PhotoData = Await _Storage.DownloadFile(Photo)
-
-                    TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, Util.GetFilename(".jpg"))
-                    Using PhotoStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)
-                        Await PhotoStream.WriteAsync(PhotoData, 0, PhotoData.Length)
-                    End Using
-                    TempPhotos.Add(TempPath)
-                Next Photo
-
-                EvaluationSourceForm = New FrmEvaluationSource(_EvaluationData, TempSignature, TempPhotos)
-                If EvaluationSourceForm.ShowDialog() = DialogResult.OK Then
-                    If _EvaluationsForm IsNot Nothing Then
-                        EvaluationForm = New FrmEvaluation(EvaluationSourceForm.ResultEvaluation, _EvaluationsForm)
-                    Else
-                        EvaluationForm = New FrmEvaluation(EvaluationSourceForm.ResultEvaluation)
-                    End If
-                    EvaluationForm.BtnSave.Enabled = True
-                    EvaluationForm.ShowDialog()
-                    EvaluationForm.Dispose()
-                End If
-
-                If EvaluationSourceForm Is Nothing OrElse (EvaluationSourceForm IsNot Nothing AndAlso EvaluationSourceForm.ResultEvaluation.ID = 0) Then
-                    _EvaluationData("info")("importing_by") = String.Empty
-                    _EvaluationData("info")("importing_date") = String.Empty
-                    _EvaluationData("info")("imported_id") = 0
-                    _EvaluationData("info")("importing_by") = String.Empty
-                    _EvaluationData("info")("importing_date") = String.Empty
-
-                    Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
-
-                Else
-                    _EvaluationData("info")("imported") = True
-                    _EvaluationData("info")("imported_by") = _Session.User.Username
-                    _EvaluationData("info")("imported_date") = Now.ToString("dd/MM/yyyy HH:mm:ss")
-                    _EvaluationData("info")("imported_id") = EvaluationSourceForm.ResultEvaluation.ID
-                    _EvaluationData("info")("importing_by") = String.Empty
-                    _EvaluationData("info")("importing_date") = String.Empty
-
-                    Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
-
                 End If
             Catch ex As Exception
                 If Not IsInternetAvailable() Then

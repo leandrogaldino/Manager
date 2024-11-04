@@ -33,13 +33,6 @@ Public Enum CashStatus
     <Description("FECHADO")> Closed = 1
 End Enum
 
-
-
-'Pendente
-'Executando
-'Executado
-'Cancelado
-
 ''' <summary>
 ''' Utilizado para sinalizar os status do agendamento de visita.
 ''' </summary>
@@ -49,6 +42,17 @@ Public Enum VisitScheduleStatus
     <Description("FINALIZADA")> Finished = 2
     <Description("CANCELADA")> Canceled = 3
 End Enum
+
+''' <summary>
+''' Utilizado para sinalizar o tipo da visita.
+''' </summary>
+Public Enum VisitScheduleType
+    <Description("LEVANTAMENTO")> Gathering = 0
+    <Description("PREVENTIVA")> Preventive = 1
+    <Description("CHAMADO")> Called = 2
+    <Description("CONTRATO")> Contract = 3
+End Enum
+
 ''' <summary>
 ''' Utilizado para sinalizar os status do Crm.
 ''' </summary>

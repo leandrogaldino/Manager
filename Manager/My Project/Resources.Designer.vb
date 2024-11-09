@@ -343,7 +343,7 @@ Namespace My.Resources
         '''	creation,
         '''	statusid,
         '''    note,
-        '''	documentpath,
+        '''	documentname,
         '''	userid
         ''')
         '''VALUES
@@ -352,7 +352,7 @@ Namespace My.Resources
         '''	@creation,
         '''	@statusid,
         '''	@note,
-        '''	@documentpath,
+        '''	@documentname,
         '''	@userid
         ''');
         '''.
@@ -633,7 +633,7 @@ Namespace My.Resources
         '''	cash.creation,
         '''	cash.statusid,
         '''	cash.note,
-        '''	cash.documentpath,
+        '''	cash.documentname,
         '''	cash.userid
         '''FROM cash
         '''WHERE cash.id = @id;.
@@ -660,7 +660,7 @@ Namespace My.Resources
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE cash SET
         '''	id = @id,
         '''    note = @note,
-        '''	documentpath = @documentpath,
+        '''	documentname = @documentname,
         '''	userid = @userid
         '''WHERE cash.id = @id;.
         '''</summary>
@@ -1803,7 +1803,7 @@ Namespace My.Resources
         '''    ofuserid,
         '''    creation,
         '''    name,
-        '''    directorypath,
+        '''    directoryname,
         '''    userid
         ''')
         '''VALUES
@@ -1811,7 +1811,7 @@ Namespace My.Resources
         '''    @ofuserid,
         '''    @creation,
         '''    @name,
-        '''    @directorypath,
+        '''    @directoryname,
         '''    @userid
         ''');.
         '''</summary>
@@ -1826,7 +1826,7 @@ Namespace My.Resources
         '''	emailsignature.id,
         '''	emailsignature.creation,
         '''    emailsignature.name,
-        '''	emailsignature.directorypath
+        '''	emailsignature.directoryname
         '''FROM emailsignature
         '''WHERE emailsignature.id = @id;.
         '''</summary>
@@ -1851,7 +1851,7 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE emailsignature SET
         '''    name =  @name,
-        '''    directorypath = @directorypath,
+        '''    directoryname = @directoryname,
         '''    userid = @userid
         '''WHERE emailsignature.id = @id;.
         '''</summary>
@@ -2004,7 +2004,8 @@ Namespace My.Resources
         '''	manualaverageworkload,
         '''	averageworkload,
         '''	technicaladvice,
-        '''	documentpath,
+        '''	documentname,
+        '''	signaturename,
         '''	rejectreason,
         '''	userid
         ''')
@@ -2020,8 +2021,7 @@ Namespace My.Resources
         '''	@customerid,
         '''	@responsible,
         '''	@personcompressorid,
-        '''	@horimeter,
-        '''	@manualavera [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	@horimete [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationInsert() As String
             Get
@@ -2428,14 +2428,14 @@ Namespace My.Resources
         '''(
         '''    creation,
         '''    evaluationid,
-        '''    photopath,
+        '''    photoname,
         '''    userid
         ''')
         '''VALUES
         '''(
         '''    @creation,
         '''    @evaluationid,
-        '''    @photopath,
+        '''    @photoname,
         '''    @userid
         ''');.
         '''</summary>
@@ -2450,7 +2450,7 @@ Namespace My.Resources
         '''	evaluationphoto.id,
         '''	evaluationphoto.creation,
         '''	evaluationphoto.evaluationid,
-        '''	evaluationphoto.photopath
+        '''	evaluationphoto.photoname
         '''FROM evaluationphoto
         '''WHERE evaluationphoto.evaluationid = @evaluationid;.
         '''</summary>
@@ -2462,7 +2462,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluationphoto SET
-        '''    photopath =  @photopath
+        '''    photoname =  @photoname
         '''WHERE evaluationphoto.id = @id;.
         '''</summary>
         Friend ReadOnly Property EvaluationPhotoUpdate() As String
@@ -2551,11 +2551,10 @@ Namespace My.Resources
         '''	evaluation.manualaverageworkload,
         '''	evaluation.averageworkload,
         '''	evaluation.technicaladvice,
-        '''	evaluation.documentpath,
+        '''	evaluation.documentname,
+        '''	evaluation.signaturename,
         '''	evaluation.rejectreason,
-        '''	evaluation.userid
-        '''FROM evaluation
-        '''WHERE  [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	evaluation.use [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationSelect() As String
             Get
@@ -2573,6 +2572,16 @@ Namespace My.Resources
         Friend ReadOnly Property EvaluationSetStatus() As String
             Get
                 Return ResourceManager.GetString("EvaluationSetStatus", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property EvaluationSmall() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("EvaluationSmall", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
@@ -4253,7 +4262,7 @@ Namespace My.Resources
         '''(
         '''	productid,
         '''	creation,
-        '''	picturepath,
+        '''	picturename,
         '''	caption,
         '''	userid
         ''')
@@ -4261,7 +4270,7 @@ Namespace My.Resources
         '''(
         '''	@productid,
         '''	@creation,
-        '''	@picturepath,
+        '''	@picturename,
         '''	@caption,
         '''	@userid
         ''');
@@ -4277,7 +4286,7 @@ Namespace My.Resources
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	productpicture.id,
         '''	productpicture.creation,
-        '''	productpicture.picturepath,
+        '''	productpicture.picturename,
         '''	productpicture.caption
         '''FROM productpicture
         '''WHERE productpicture.productid = @productid;.
@@ -4290,7 +4299,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE productpicture SET
-        '''    picturepath = @picturepath,
+        '''    picturename = @picturename,
         '''    caption = @caption,
         '''    userid = @userid
         '''WHERE productpicture.id = @id;.
@@ -4942,7 +4951,7 @@ Namespace My.Resources
         '''    destination,
         '''    responsible,
         '''    note,
-        '''    documentpath,
+        '''    documentname,
         '''    userid
         ''')
         '''VALUES
@@ -4952,7 +4961,7 @@ Namespace My.Resources
         '''    @destination,
         '''    @responsible,
         '''    @note,
-        '''    @documentpath,
+        '''    @documentname,
         '''    @userid
         ''');.
         '''</summary>
@@ -5103,7 +5112,7 @@ Namespace My.Resources
         '''	request.destination,
         '''	request.responsible,
         '''	request.note,
-        '''	request.documentpath,	
+        '''	request.documentname,	
         '''	request.userid
         '''FROM request
         '''WHERE request.id = @id;.
@@ -5120,7 +5129,7 @@ Namespace My.Resources
         '''    destination = @destination,
         '''    responsible = @responsible,
         '''    note = @note,
-        '''    documentpath = @documentpath,
+        '''    documentname = @documentname,
         '''    userid = @userid
         '''WHERE request.id = @id;.
         '''</summary>
@@ -5857,6 +5866,100 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("View", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property VisitSchedule() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("VisitSchedule", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM visitschedule
+        '''WHERE visitschedule.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property VisitScheduleDelete() As String
+            Get
+                Return ResourceManager.GetString("VisitScheduleDelete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a .
+        '''</summary>
+        Friend ReadOnly Property VisitScheduleFilter() As String
+            Get
+                Return ResourceManager.GetString("VisitScheduleFilter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO visitschedule
+        '''(
+        '''    creation,
+        '''    statusid,
+        '''    visitetypeid,
+        '''    customerid,
+        '''    compressorid,
+        '''    instructions,
+        '''    evaluationid,
+        '''    userid
+        ''')
+        '''VALUES
+        '''(
+        '''    @creation,
+        '''    @statusid,
+        '''    @visitetypeid,
+        '''    @customerid,
+        '''    @compressorid,
+        '''    @instructions,
+        '''    @evaluationid,
+        '''    @userid
+        ''');.
+        '''</summary>
+        Friend ReadOnly Property VisitScheduleInsert() As String
+            Get
+                Return ResourceManager.GetString("VisitScheduleInsert", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	visitschedule.id,
+        '''	visitschedule.creation,
+        '''    visitschedule.statusid,
+        '''	visitschedule.visitetypeid,
+        '''	visitschedule.customerid,
+        '''	visitschedule.compressorid,
+        '''	visitschedule.instructions,
+        '''	visitschedule.evaluationid
+        '''FROM visitschedule
+        '''WHERE visitschedule.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property VisitScheduleSelect() As String
+            Get
+                Return ResourceManager.GetString("VisitScheduleSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE visitschedule SET
+        '''    statusid =  @statusid,
+        '''    visitetypeid = @visitetypeid,
+        '''    customerid = @customerid,
+        '''    compressorid = @compressorid,
+        '''    instructions = @instructions,
+        '''    evaluationid = @evaluationid
+        '''WHERE visitschedule.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property VisitScheduleUpdate() As String
+            Get
+                Return ResourceManager.GetString("VisitScheduleUpdate", resourceCulture)
             End Get
         End Property
         

@@ -122,12 +122,13 @@ CREATE TABLE visitschedule (
     customerid INT NOT NULL,
     personcompressorid INT NOT NULL,
     instructions LONGTEXT,
-    evaluationid INT NULL,
+    evaluationid INT DEFAULT NULL,
     userid INT NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY (customerid) REFERENCES person (id) ON DELETE RESTRICT,
     FOREIGN KEY (personcompressorid) REFERENCES personcompressor (id) ON DELETE RESTRICT,
-    FOREIGN KEY (userid) REFERENCES user (id) ON DELETE RESTRICT
+    FOREIGN KEY (userid) REFERENCES user (id) ON DELETE RESTRICT,
+	FOREIGN KEY (evaluationid) REFERENCES evaluation (id) ON DELETE SET NULL
 );
 
 

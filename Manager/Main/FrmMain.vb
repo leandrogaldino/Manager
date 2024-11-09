@@ -247,6 +247,7 @@ Public Class FrmMain
             SelectTab(Routine.Evaluation)
         End If
     End Sub
+
     Private Sub EvaluationManagementPanelClick()
         If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.EvaluationManagementPanel)) Or Control.ModifierKeys = Keys.Shift Then
             OpenTab(New FrmEvaluationManagementPanel, GetEnumDescription(Routine.EvaluationManagementPanel))

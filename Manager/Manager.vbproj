@@ -654,6 +654,18 @@
     <Compile Include="Email\FrmEmailImportEmailModel.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="VisitSchedule\FrmVisitSchedule.Designer.vb">
+      <DependentUpon>FrmVisitSchedule.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisitSchedule\FrmVisitSchedule.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VisitSchedule\FrmVisitSchedules.Designer.vb">
+      <DependentUpon>FrmVisitSchedules.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisitSchedule\FrmVisitSchedules.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="VisitSchedule\VisitSchedule.vb" />
     <Compile Include="Evaluation\Control\UcEvaluationPhotos.Designer.vb">
       <DependentUpon>UcEvaluationPhotos.vb</DependentUpon>
@@ -1469,6 +1481,9 @@
     <EmbeddedResource Include="User\FrmUsers.resx">
       <DependentUpon>FrmUsers.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="VisitSchedule\FrmVisitSchedule.resx">
+      <DependentUpon>FrmVisitSchedule.vb</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="My Project\app.manifest" />
@@ -1551,10 +1566,17 @@
     <None Include="Resources\Image\Pending.png" />
     <None Include="Resources\Image\Import.png" />
     <None Include="Resources\Html\Loading.html" />
+    <None Include="Resources\Image\EvaluationSmall.png" />
+    <None Include="Resources\Image\VisitSchedule.png" />
     <Content Include="Resources\SQL\CashFlowAuthorizedDelete.sql" />
     <Content Include="Resources\SQL\CashFlowAuthorizedInsert.sql" />
     <Content Include="Resources\SQL\CashFlowAuthorizedSelect.sql" />
     <Content Include="Resources\SQL\CashFlowAuthorizedUpdate.sql" />
+    <Content Include="Resources\SQL\VisitScheduleDelete .sql" />
+    <Content Include="Resources\SQL\VisitScheduleFilter.sql" />
+    <Content Include="Resources\SQL\VisitScheduleInsert.sql" />
+    <Content Include="Resources\SQL\VisitScheduleSelect.sql" />
+    <Content Include="Resources\SQL\VisitScheduleUpdate.sql" />
     <Content Include="Resources\SQL\CrmDetailSelect.sql" />
     <Content Include="Resources\SQL\CrmSetStatus.sql" />
     <Content Include="Resources\SQL\CrmDelete.sql" />

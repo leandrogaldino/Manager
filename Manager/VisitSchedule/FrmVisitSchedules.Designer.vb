@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class FrmRoutes
+Partial Class FrmVisitSchedules
     Inherits System.Windows.Forms.Form
 
     'Descartar substituições de formulário para limpar a lista de componentes.
@@ -30,7 +30,6 @@ Partial Class FrmRoutes
         Me.BtnFilter = New System.Windows.Forms.ToolStripButton()
         Me.BtnDetails = New System.Windows.Forms.ToolStripButton()
         Me.BtnClose = New System.Windows.Forms.ToolStripButton()
-        Me.BtnExport = New System.Windows.Forms.ToolStripButton()
         Me.SsInformation = New System.Windows.Forms.StatusStrip()
         Me.LblInfo = New System.Windows.Forms.ToolStripStatusLabel()
         Me.LblStatus = New System.Windows.Forms.ToolStripStatusLabel()
@@ -48,7 +47,8 @@ Partial Class FrmRoutes
         Me.BtnCloseDetails = New System.Windows.Forms.ToolStripButton()
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
-        Me.DgvVisitScheduleLayout = New Manager.DataGridViewLayout()
+        Me.DgvRoutesLayout = New Manager.DataGridViewLayout()
+        Me.BtnExport = New System.Windows.Forms.ToolStripButton()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -155,16 +155,6 @@ Partial Class FrmRoutes
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(36, 36)
         Me.BtnClose.Text = "Fechar"
-        '
-        'BtnExport
-        '
-        Me.BtnExport.AutoToolTip = False
-        Me.BtnExport.Image = Global.Manager.My.Resources.Resources.Export
-        Me.BtnExport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.BtnExport.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnExport.Name = "BtnExport"
-        Me.BtnExport.Size = New System.Drawing.Size(97, 36)
-        Me.BtnExport.Text = "Exportar"
         '
         'SsInformation
         '
@@ -335,8 +325,8 @@ Partial Class FrmRoutes
         Me.LblView.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
         Me.LblView.Font = New System.Drawing.Font("Century Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblView.Name = "LblView"
-        Me.LblView.Size = New System.Drawing.Size(109, 22)
-        Me.LblView.Text = "Detalhes da Visita"
+        Me.LblView.Size = New System.Drawing.Size(105, 22)
+        Me.LblView.Text = "Detalhes da Rota"
         '
         'DgvData
         '
@@ -359,10 +349,20 @@ Partial Class FrmRoutes
         Me.DgvData.Size = New System.Drawing.Size(546, 437)
         Me.DgvData.TabIndex = 0
         '
-        'DgvVisitScheduleLayout
+        'DgvRoutesLayout
         '
-        Me.DgvVisitScheduleLayout.DataGridView = Me.DgvData
-        Me.DgvVisitScheduleLayout.Routine = Manager.Routine.VisitSchedule
+        Me.DgvRoutesLayout.DataGridView = Me.DgvData
+        Me.DgvRoutesLayout.Routine = Routine.Route
+        '
+        'BtnExport
+        '
+        Me.BtnExport.AutoToolTip = False
+        Me.BtnExport.Image = Global.Manager.My.Resources.Resources.Export
+        Me.BtnExport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnExport.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnExport.Name = "BtnExport"
+        Me.BtnExport.Size = New System.Drawing.Size(97, 36)
+        Me.BtnExport.Text = "Exportar"
         '
         'FrmRoutes
         '
@@ -431,6 +431,6 @@ Partial Class FrmRoutes
     Friend WithEvents LblCounter As ToolStripStatusLabel
     Friend WithEvents BtnDetails As ToolStripButton
     Friend WithEvents ToolStripButton1 As ToolStripButton
-    Friend WithEvents DgvVisitScheduleLayout As DataGridViewLayout
+    Friend WithEvents DgvRoutesLayout As DataGridViewLayout
     Friend WithEvents BtnExport As ToolStripButton
 End Class

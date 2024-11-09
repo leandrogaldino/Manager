@@ -1,0 +1,22 @@
+INSERT INTO visitschedule
+(
+    creation,
+    statusid,
+    visitetypeid,
+    customerid,
+    compressorid,
+    instructions,
+    evaluationid,
+    userid
+)
+VALUES
+(
+    @creation,
+    @statusid,
+    @visitetypeid,
+    @customerid,
+    @compressorid,
+    @instructions,
+    @evaluationid,
+    @userid
+);

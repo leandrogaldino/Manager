@@ -20,7 +20,7 @@ Public Class FrmRoutes
         BtnExport.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralExportGrid
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvRoutesLayout.Load()
+        DgvVisitScheduleLayout.Load()
     End Sub
     Private Sub Form_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         AddHandler Parent.FindForm.Resize, AddressOf FrmMain_ResizeEnd
@@ -54,7 +54,7 @@ Public Class FrmRoutes
                         Try
                             _Route.Delete()
                             _Filter.Filter()
-                            DgvRoutesLayout.Load()
+                            DgvVisitScheduleLayout.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
@@ -76,7 +76,7 @@ Public Class FrmRoutes
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        DgvRoutesLayout.Load()
+        DgvVisitScheduleLayout.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -105,7 +105,7 @@ Public Class FrmRoutes
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        DgvRoutesLayout.Load()
+        DgvVisitScheduleLayout.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -146,7 +146,7 @@ Public Class FrmRoutes
     End Sub
     Private Sub PgFilter_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles PgFilter.PropertyValueChanged
         If _Filter.Filter() = True Then
-            DgvRoutesLayout.Load()
+            DgvVisitScheduleLayout.Load()
             LblStatus.Text = "Filtro Ativo"
             LblStatus.ForeColor = Color.DarkRed
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Bold)

@@ -56,6 +56,12 @@
     Public Property EvaluationManagementAccess As Boolean
     Public Property EvaluationManagementPanelAccess As Boolean
     Public Property EvaluationApproveOrReject As Boolean
+
+
+    Public Property VisitScheduleAccess As Boolean = True
+    Public Property VisitScheduleWrite As Boolean = True
+    Public Property VisitScheduleDelete As Boolean = True
+
     Public Property CashAccess As Boolean
     Public Property CashWrite As Boolean
     Public Property CashDelete As Boolean

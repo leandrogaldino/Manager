@@ -343,8 +343,7 @@ Public Class FrmEvaluationManagement
         End If
     End Sub
     Private Sub DgvData_MouseUp(sender As Object, e As MouseEventArgs) Handles DgvData.MouseUp
-        Dim Session = Locator.GetInstance(Of Session)
-        If _ShowCms And Session.User.Privileges.EvaluationApproveOrReject Then
+        If _ShowCms And Locator.GetInstance(Of Session).User.CanAccess(Routine.EvaluationApproveOrReject) Then
             CmsAutoEvaluation.Show(DgvData.PointToScreen(_CmsPoint))
             _ShowCms = False
         End If

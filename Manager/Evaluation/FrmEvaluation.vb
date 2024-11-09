@@ -13,6 +13,7 @@ Public Class FrmEvaluation
     Private _Calculated As Boolean
     Private _TargetSize As Size
     Private _SelectedPhoto As EvaluationPhoto
+    Private _User As User
     Private Property SelectedPhoto As EvaluationPhoto
         Get
             Return _SelectedPhoto
@@ -252,17 +253,19 @@ Public Class FrmEvaluation
         MyBase.OnResize(e)
     End Sub
     Public Sub New(Evaluation As Evaluation, EvaluationsForm As FrmEvaluations)
-        Me._Evaluation = Evaluation
+        InitializeComponent()
+        _Evaluation = Evaluation
         _EvaluationsForm = EvaluationsForm
         _EvaluationsGrid = _EvaluationsForm.DgvData
         _Filter = CType(_EvaluationsForm.PgFilter.SelectedObject, EvaluationFilter)
-        InitializeComponent()
+        _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
     End Sub
     Public Sub New(Evaluation As Evaluation)
-        Me._Evaluation = Evaluation
         InitializeComponent()
+        _Evaluation = Evaluation
+        _User = Locator.GetInstance(Of Session).User
         TsNavigation.Visible = False
         TsNavigation.Enabled = False
         TcEvaluation.Height -= TsNavigation.Height
@@ -279,9 +282,9 @@ Public Class FrmEvaluation
         DgvNavigator.DataGridView = _EvaluationsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
-        BtnStatusValue.Visible = Locator.GetInstance(Of Session).User.Privileges.EvaluationApproveOrReject
-        LblStatusValue.Visible = Not Locator.GetInstance(Of Session).User.Privileges.EvaluationApproveOrReject
+        BtnLog.Visible = _User.CanAccess(Routine.Log)
+        BtnStatusValue.Visible = _User.CanAccess(Routine.EvaluationApproveOrReject)
+        LblStatusValue.Visible = Not _User.CanAccess(Routine.EvaluationApproveOrReject)
         LblDocumentPage.Text = Nothing
         TxtEvaluationNumber.ReadOnly = _Evaluation.EvaluationCreationType <> EvaluationCreationType.Manual
         Tip.SetToolTip(LblAverageWorkLoad, "Carga Média de Trabalho")
@@ -378,7 +381,7 @@ Public Class FrmEvaluation
         End If
 
 
-        BtnDelete.Enabled = _Evaluation.ID > 0 And Locator.GetInstance(Of Session).User.Privileges.EvaluationDelete
+        BtnDelete.Enabled = _Evaluation.ID > 0 And _User.CanDelete(Routine.Evaluation)
         Text = "Avaliação de Compressor"
         If _Evaluation.LockInfo.IsLocked And Not _Evaluation.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Evaluation.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_Evaluation.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
@@ -751,7 +754,7 @@ Public Class FrmEvaluation
         If _Evaluation.LockInfo.IsLocked And _Evaluation.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_Evaluation.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
             Success = False
-        ElseIf _Evaluation.Status = EvaluationStatus.Approved AndAlso Not Locator.GetInstance(Of Session).User.Privileges.EvaluationApproveOrReject Then
+        ElseIf _Evaluation.Status = EvaluationStatus.Approved AndAlso Not _User.CanAccess(Routine.EvaluationApproveOrReject) Then
             CMessageBox.Show("Essa avaliação não pode ser alterada pois já foi aprovada.", CMessageBoxType.Information)
             Success = False
         Else
@@ -774,7 +777,7 @@ Public Class FrmEvaluation
                     '    If Photo.Photo.CurrentFile Is Nothing Then _Evaluation.Photos.Remove(Photo)
                     'Next Photo
 
-                    If _Evaluation.ID = 0 AndAlso Locator.GetInstance(Of Session).User.Privileges.EvaluationApproveOrReject Then
+                    If _Evaluation.ID = 0 AndAlso _User.CanAccess(Routine.EvaluationApproveOrReject) Then
                         _Evaluation.SaveChanges()
                         BtnApprove.PerformClick()
                     Else
@@ -786,7 +789,7 @@ Public Class FrmEvaluation
                     FillDataGridViewPart(DgvPartWorkedHour, _Evaluation.PartsWorkedHour)
                     FillDataGridViewPart(DgvPartElapsedDay, _Evaluation.PartsElapsedDay)
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privileges.EvaluationDelete
+                    BtnDelete.Enabled = _User.CanDelete(Routine.Evaluation)
                     If _Evaluation.Status = EvaluationStatus.Rejected Then
                         If CMessageBox.Show("Deseja alterar o status da avaliação para REVISADO?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                             _Evaluation.SetStatus(EvaluationStatus.Reviewed)
@@ -846,16 +849,16 @@ Public Class FrmEvaluation
     End Sub
     Private Sub QbxCustomer_Enter(sender As Object, e As EventArgs) Handles QbxCustomer.Enter
         TmrCustomer.Stop()
-        BtnViewCustomer.Visible = QbxCustomer.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
-        BtnNewCustomer.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonWrite
-        BtnFilterCustomer.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonAccess
+        BtnViewCustomer.Visible = QbxCustomer.IsFreezed And _User.CanWrite(Routine.Person)
+        BtnNewCustomer.Visible = _User.CanWrite(Routine.Person)
+        BtnFilterCustomer.Visible = _User.CanAccess(Routine.Person)
     End Sub
     Private Sub QbxCustomer_Leave(sender As Object, e As EventArgs) Handles QbxCustomer.Leave
         TmrCustomer.Stop()
         TmrCustomer.Start()
     End Sub
     Private Sub QbxCustomer_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxCustomer.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnViewCustomer.Visible = QbxCustomer.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
+        If Not _Loading Then BtnViewCustomer.Visible = QbxCustomer.IsFreezed And _User.CanWrite(Routine.Person)
         QbxCompressor.Unfreeze()
         If QbxCompressor.Conditions.Count = 2 Then QbxCompressor.Conditions.RemoveAt(1)
         If QbxCompressor.Parameters.Count = 2 Then QbxCompressor.Parameters.RemoveAt(1)

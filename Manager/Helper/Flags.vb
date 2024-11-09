@@ -144,14 +144,18 @@ Public Enum CompressorPartType
     <Description("Dia Corrido")> ElapsedDay = 1
 End Enum
 
+
+
 ''' <summary>
 ''' Utilizado para sinalizar o tipo de permissão do usuário a uma rotina.
 ''' </summary>
-Public Enum Privilege
+Public Enum PrivilegeLevel
     <Description("Acessar")> Access = 0
     <Description("Escrever")> Write = 1
     <Description("Excluir")> Delete = 2
 End Enum
+
+
 
 ''' <summary>
 ''' Utilizado para sinalizar as rotinas do sistema.
@@ -165,8 +169,6 @@ Public Enum Routine
     <Description("Compressor da Pessoa")> PersonCompressor = 203
     <Description("Item do Compressor da Pessoa (Hora de Trabalho)")> PersonCompressorPartWorkedHour = 204
     <Description("Item do Compressor da Pessoa (Dia Corrido)")> PersonCompressorPartElapsedDay = 205
-    <Description("Ficha Cadastral da Pessoa")> PersonRegistrationForm = 206
-    <Description("Plano de Manutenção")> PersonMaintenancePlan = 207
     <Description("Cidade")> City = 3
     <Description("Rota da Cidade")> CityRoute = 301
     <Description("Estado")> State = 4
@@ -183,9 +185,6 @@ Public Enum Routine
     <Description("Caixa")> Cash = 11
     <Description("Item do Caixa")> CashItem = 1101
     <Description("Responsável Pelo Item do Caixa")> CashItemResponsible = 1102
-    <Description("Folha de Caixa")> CashSheet = 1103
-    <Description("Despesas Por Responsável")> CashExpensesPerResponsible = 1104
-    <Description("Reabrir Caixa")> CashReopen = 1105
     <Description("Compressor")> Compressor = 12
     <Description("Item do Compressor (Hora de Trabalho)")> CompressorPartWorkedHour = 1201
     <Description("Item do Compressor (Dia Corrido)")> CompressorPartElapsedDay = 1202
@@ -194,27 +193,49 @@ Public Enum Routine
     <Description("Gerenciamento de Item Trocado (Hora de Trabalho)")> EvaluationManagementPartWorkedHour = 1302
     <Description("Gerenciamento de Item Trocado (Dia Corrido)")> EvaluationManagementPartElapsedDay = 1303
     <Description("Painel de Compressores")> EvaluationManagementPanel = 1304
-    <Description("Exportar Grades do Painel de Compressores")> EvaluationManagementPanelExport = 1305
     <Description("Item da Avaliação")> EvaluationPart = 1306
     <Description("Técnico da Avaliação")> EvaluationTechnician = 1307
     <Description("Foto da Avaliação")> EvaluationPhoto = 1308
     <Description("Predefinição de Permissões do Usuário")> UserPrivilegePreset = 14
     <Description("Requisição")> Request = 15
     <Description("Item da Requisição")> RequestItem = 1501
-    <Description("Folha de Requisição")> RequestSheet = 1502
-    <Description("Itens Pendentes da Requisição")> RequestPendingItems = 1503
     <Description("Modelo de E-mail")> EmailModel = 16
     <Description("E-mails Enviados")> EmailSent = 17
-    <Description("Grade Exportada")> ExportGrid = 18
     <Description("Fluxo de Caixa")> CashFlow = 19
     <Description("Funcionário Autorizado do Fluxo de Caixa")> CashFlowAuthorized = 1901
     <Description("Assinatura de E-Mail")> EmailSignature = 20
     <Description("CRM")> Crm = 21
     <Description("Atendimento do CRM")> CrmTreatment = 2101
     <Description("Agendamento de Visita")> VisitSchedule = 22
-    <Description("Histórico")> Log = 23
-    <Description("Resetar Senha")> ResetUserPassword = 24
 End Enum
+
+
+
+''' <summary>
+''' Utilizado para sinalizar as subrotinas do sistema.
+''' </summary>
+Public Enum SingleOptionPrivileges
+    <Description("Grade Exportada")> CanExportGrid = 0
+    <Description("Histórico")> CanAccessLog = 1
+    <Description("Resetar Senha")> CanResetUserPassword = 2
+    <Description("Ficha Cadastral da Pessoa")> CanAccessPersonRegistrationFormReport = 3
+    <Description("Plano de Manutenção")> CanAccessMaintenancePlanReport = 4
+    <Description("Folha de Caixa")> CanAccessCashSheetReport = 5
+    <Description("Despesas Por Responsável")> CanAccessCashExpensesPerResponsibleReport = 6
+    <Description("Reabrir Caixa")> CanReopenCash = 7
+    <Description("Exportar Grades do Painel de Compressores")> CanExportEvaluationManagementPanel = 8
+    <Description("Aprovar e Rejeitar Avaliação")> CanApproveOrRejectEvaluation = 9
+    <Description("Folha de Requisição")> CanAccessRequestSheetReport = 10
+    <Description("Itens Pendentes da Requisição")> CanAccessRequestPendingItemsReport = 11
+    <Description("Alterar o Status do CRM para pendente")> CanChangeCrmStatusToPending = 12
+    <Description("Alterar o Cliente do CRM")> CanChangeCrmCustomer = 13
+    <Description("Alterar o Responsavel do CRM")> CanChangeCrmResponsible = 14
+    <Description("Alterar o Assunto do CRM")> CanChangeCrmSubject = 15
+    <Description("Alterar o Assunto do CRM")> CanEditCrmTreatment = 16
+    <Description("Alterar o Documento da Pessoa")> CanChangePersonDocument = 17
+End Enum
+
+
 
 
 

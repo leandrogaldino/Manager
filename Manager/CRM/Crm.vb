@@ -290,7 +290,7 @@ Public Class Crm
         End Using
     End Function
     Public Function GetHtml(Optional Filter As String = Nothing) As String
-        Dim Session = Locator.GetInstance(Of Session)
+        Dim User As User = Locator.GetInstance(Of Session).User
         Dim Filename As String
         Dim FilteredTreatments As List(Of CrmTreatment)
         Dim Doc As New HtmlDocument()
@@ -357,10 +357,10 @@ Public Class Crm
                 LinkEdit.AppendChild(ImgEdit)
                 DivContactInfo.AppendChild(LinkDelete)
             Else
-                If Session.User.Privileges.CrmTreatmentEdit Then
+                If User.CanAccess(Routine.CrmTreatment) Then
                     LinkEdit.AppendChild(ImgEdit)
                 End If
-                If Session.User.Privileges.CrmTreatmentDelete Then
+                If User.CanDelete(Routine.CrmTreatment) Then
                     DivContactInfo.AppendChild(LinkDelete)
                 End If
             End If

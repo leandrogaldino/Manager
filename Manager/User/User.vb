@@ -22,7 +22,7 @@ Public Class User
     End Property
     Public Property Person As New Lazy(Of Person)(Function() New Person().Load(_PersonID, False))
     Public Property Note As String
-    Public Property Privileges As New OrdenedList(Of UserPrivilege)
+    Public Property Privileges As New UserPrivilege
     Public Property Emails As New OrdenedList(Of UserEmail)
     Public Shadows User As New Lazy(Of User)(Function() New User().Load(_UserID, False))
     Public Sub New()
@@ -32,14 +32,18 @@ Public Class User
 
 
     Public Function CanAccess(Routine As Routine) As Boolean
-        Return Privileges.Any(Function(x) x.Routine.Equals(Routine) And x.Privilege.Equals(Privilege.Access))
+        Return Privileges.RoutinePrivileges.Any(Function(x) x.Routine.Equals(Routine) And x.Level.Equals(PrivilegeLevel.Access))
     End Function
     Public Function CanWrite(Routine As Routine) As Boolean
-        Return Privileges.Any(Function(x) x.Routine.Equals(Routine) And x.Privilege.Equals(Privilege.Write))
+        Return Privileges.RoutinePrivileges.Any(Function(x) x.Routine.Equals(Routine) And x.Level.Equals(PrivilegeLevel.Write))
     End Function
 
     Public Function CanDelete(Routine As Routine) As Boolean
-        Return Privileges.Any(Function(x) x.Routine.Equals(Routine) And x.Privilege.Equals(Privilege.Delete))
+        Return Privileges.RoutinePrivileges.Any(Function(x) x.Routine.Equals(Routine) And x.Level.Equals(PrivilegeLevel.Delete))
+    End Function
+
+    Public Function CanUse(SubRoutine As SingleOptionPrivileges) As Boolean
+        Return Privileges.SubRoutinePrivileges.Any(Function(x) x.SubRoutine.Equals(SubRoutine) And x.Level.Equals(PrivilegeLevel.Access))
     End Function
 
 
@@ -82,7 +86,7 @@ Public Class User
         Username = Nothing
         _Password = Nothing
         Person = New Lazy(Of Person)(Function() New Person().Load(_PersonID, False))
-        Privileges = New OrdenedList(Of UserPrivilege)
+        Privileges = New OrdenedList(Of Privilege)
         Emails = New OrdenedList(Of UserEmail)
         Me.GetType.GetField("RequestPassword", BindingFlags.Instance Or BindingFlags.Public).SetValue(Me, False)
         User = New Lazy(Of User)(Function() New User().Load(_UserID, False))
@@ -185,13 +189,13 @@ Public Class User
                     End Using
                 Next Email
 
-                For Each Privilege As UserPrivilege In Privileges
+                For Each Privilege As Privilege In Privileges
                     Using Cmd As New MySqlCommand(My.Resources.UserPrivilegeInsert, Con)
                         Cmd.Transaction = Tra
                         Cmd.Parameters.AddWithValue("@granteduserid", ID)
                         Cmd.Parameters.AddWithValue("@creation", Privilege.Creation)
                         Cmd.Parameters.AddWithValue("@routineid", CInt(Privilege.Routine))
-                        Cmd.Parameters.AddWithValue("@privilegeid", CInt(Privilege.Privilege))
+                        Cmd.Parameters.AddWithValue("@privilegeid", CInt(Privilege.Level))
                         Cmd.Parameters.AddWithValue("@userid", Session.User.ID)
                         Cmd.ExecuteNonQuery()
                         Privilege.GetType.GetField("_ID", BindingFlags.Instance Or BindingFlags.NonPublic).SetValue(Privilege, Cmd.LastInsertedId)
@@ -262,7 +266,7 @@ Public Class User
 
 
 
-                For Each Privilege As UserPrivilege In Shadow.Privileges
+                For Each Privilege As Privilege In Shadow.Privileges
                     If Not Privileges.Any(Function(x) x.ID = Privilege.ID And x.ID > 0) Then
                         Using Cmd As New MySqlCommand(My.Resources.UserPrivilegeDelete, Con)
                             Cmd.Parameters.AddWithValue("@id", Privilege.ID)
@@ -270,7 +274,7 @@ Public Class User
                         End Using
                     End If
                 Next Privilege
-                For Each Privilege As UserPrivilege In Privileges
+                For Each Privilege As Privilege In Privileges
                     If Privilege.ID = 0 Then
                         Using Cmd As New MySqlCommand(My.Resources.UserPrivilegeInsert, Con)
                             Cmd.Transaction = Tra
@@ -278,7 +282,7 @@ Public Class User
                             Cmd.Parameters.AddWithValue("@creation", Privilege.Creation)
                             Cmd.Parameters.AddWithValue("@id", Privilege.ID)
                             Cmd.Parameters.AddWithValue("@routineid", CInt(Privilege.Routine))
-                            Cmd.Parameters.AddWithValue("@privilegeid", CInt(Privilege.Privilege))
+                            Cmd.Parameters.AddWithValue("@privilegeid", CInt(Privilege.Level))
                             Cmd.Parameters.AddWithValue("@userid", Session.User.ID)
                             Cmd.ExecuteNonQuery()
                             Privilege.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Privilege, Cmd.LastInsertedId)
@@ -322,18 +326,18 @@ Public Class User
         Return Emails
     End Function
 
-    Private Function GetUserPrivileges(Transaction As MySqlTransaction) As OrdenedList(Of UserPrivilege)
-        Dim Privilege As UserPrivilege
-        Dim Privileges As New OrdenedList(Of UserPrivilege)
+    Private Function GetUserPrivileges(Transaction As MySqlTransaction) As OrdenedList(Of Privilege)
+        Dim Privilege As Privilege
+        Dim Privileges As New OrdenedList(Of Privilege)
         Using Cmd As New MySqlCommand(My.Resources.UserPrivilegeSelect, Transaction.Connection)
             Cmd.Transaction = Transaction
             Cmd.Parameters.AddWithValue("@granteduserid", ID)
             Using Reader As MySqlDataReader = Cmd.ExecuteReader()
                 While Reader.Read()
-                    Privilege = New UserPrivilege With {
+                    Privilege = New Privilege With {
                         .IsSaved = True,
                         .Routine = Reader.GetInt32("routineid"),
-                        .Privilege = Reader.GetInt32("privilegeid")
+                        .Level = Reader.GetInt32("privilegeid")
                     }
                     Privilege.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Privilege, Reader.GetInt32("id"))
                     Privilege.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Privilege, Reader.GetDateTime("creation"))

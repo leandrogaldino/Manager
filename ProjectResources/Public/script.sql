@@ -150,3 +150,17 @@ CREATE TRIGGER `visitscheduledelete` AFTER DELETE ON `visitschedule` FOR EACH RO
 INSERT INTO log VALUES (NULL, 22, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
 END$$
 DELIMITER ;
+
+
+CREATE TABLE userprivilege (
+	id INT NOT NULL AUTO_INCREMENT,
+    creation DATE NOT NULL,
+    granteduserid INT NOT NULL,
+    routineid INT NOT NULL,
+    privilegetypeid INT NOT NULL,
+    privilegeid INT NOT NULL,
+    userid INT NOT NULL,
+	PRIMARY KEY(id),
+    FOREIGN KEY (granteduserid) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
+);

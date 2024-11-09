@@ -5585,6 +5585,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM userprivilege
+        '''WHERE userprivilege.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property UserPrivilegeDelete() As String
+            Get
+                Return ResourceManager.GetString("UserPrivilegeDelete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO userprivilege
         '''(
         '''	ofuserid,
@@ -5633,149 +5643,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM userprivilegepreset
-        '''WHERE userprivilegepreset.id = @id;.
-        '''</summary>
-        Friend ReadOnly Property UserPrivilegePresetDelete() As String
-            Get
-                Return ResourceManager.GetString("UserPrivilegePresetDelete", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
-        '''	userprivilegepreset.id AS &apos;ID&apos;,
-        '''    userprivilegepreset.creation AS &apos;Criação&apos;,
-        '''    CASE 
-        '''		WHEN userprivilegepreset.statusid = 0 THEN &quot;ATIVO&quot;
-        '''        WHEN userprivilegepreset.statusid = 1 THEN &quot;INATIVO&quot;
-        '''	END AS &apos;Status&apos;,
-        '''    userprivilegepreset.name AS &apos;Nome&apos;
-        '''FROM userprivilegepreset
-        '''WHERE
-        '''	IFNULL(userprivilegepreset.id, &apos;&apos;) LIKE @id AND
-        '''    IFNULL(userprivilegepreset.statusid, &apos;&apos;) LIKE @statusid AND
-        '''    IFNULL(userprivilegepreset.name, &apos;&apos;) LIKE CONCAT(&apos;%&apos;, @name, &apos;%&apos;)
-        '''GROUP BY userpri [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property UserPrivilegePresetFilter() As String
-            Get
-                Return ResourceManager.GetString("UserPrivilegePresetFilter", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;UserPrivilegePreset&quot; Version=&quot;1&quot;&gt;
-        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
-        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
-        '''    &lt;Column Index=&quot;0&quot;&gt;
-        '''        &lt;Visible&gt;True&lt;/Visible&gt;
-        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
-        '''        &lt;Name&gt;ID&lt;/Name&gt;
-        '''        &lt;Width&gt;100&lt;/Width&gt;
-        '''    &lt;/Column&gt;    
-        '''    &lt;Column Index=&quot;1&quot;&gt;
-        '''        &lt;Visible&gt;True&lt;/Visible&gt;
-        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''        &lt;Name&gt;Criação&lt;/Name&gt;
-        '''        &lt;Width&gt;100&lt;/Width&gt;
-        '''    &lt;/Column&gt;
-        '''    &lt;Column Inde [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property UserPrivilegePresetGrid() As String
-            Get
-                Return ResourceManager.GetString("UserPrivilegePresetGrid", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO userprivilegepreset
-        '''(
-        '''	creation,
-        '''	statusid,
-        '''	name,
-        '''	personaccess,
-        '''	personwrite,
-        '''	persondelete,
-        '''	personchangedocument,
-        '''	personregistration,
-        '''	personmaintenanceplan,
-        '''	cityaccess,
-        '''	citywrite,
-        '''	citydelete,
-        '''	compressoraccess,
-        '''	compressorwrite,
-        '''	compressordelete,
-        '''	routeaccess,
-        '''	routewrite,
-        '''	routedelete,
-        '''	crmaccess,
-        '''	crmwrite,
-        '''	crmdelete,
-        '''	crmtreatmentdelete,
-        '''	crmtreatmentedit,
-        '''	crmchangecustomer,
-        '''	crmchangeresponsible,
-        '''	crmchangesubject,
-        '''	crmchangetopendingstatus,
-        '''	producta [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property UserPrivilegePresetInsert() As String
-            Get
-                Return ResourceManager.GetString("UserPrivilegePresetInsert", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	userprivilegepreset.id,
-        '''	userprivilegepreset.creation,
-        '''	userprivilegepreset.statusid,
-        '''	userprivilegepreset.name,
-        '''	userprivilegepreset.personaccess,
-        '''	userprivilegepreset.personwrite,
-        '''	userprivilegepreset.persondelete,
-        '''	userprivilegepreset.personchangedocument,
-        '''	userprivilegepreset.personregistration,
-        '''	userprivilegepreset.personmaintenanceplan,
-        '''	userprivilegepreset.cityaccess,
-        '''    userprivilegepreset.citywrite,
-        '''	userprivilegepreset.citydelete,
-        '''	userprivilegepreset.compressoraccess,
-        '''	use [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property UserPrivilegePresetSelect() As String
-            Get
-                Return ResourceManager.GetString("UserPrivilegePresetSelect", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE userprivilegepreset SET
-        '''	statusid = @statusid,
-        '''	name = @name,
-        '''	personaccess = @personaccess,
-        '''	personwrite = @personwrite,
-        '''    persondelete = @persondelete,
-        '''	personchangedocument = @personchangedocument,
-        '''	personregistration = @personregistration,
-        '''	personmaintenanceplan = @personmaintenanceplan,
-        '''	cityaccess = @cityaccess,
-        '''	citywrite = @citywrite,
-        '''	citydelete = @citydelete,
-        '''	compressoraccess = @compressoraccess,
-        '''	compressorwrite = @compressorwrite,
-        '''	compressordelete = @compressordelete,
-        '''	 [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property UserPrivilegePresetUpdate() As String
-            Get
-                Return ResourceManager.GetString("UserPrivilegePresetUpdate", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	userprivilege.id,
         '''	userprivilege.personaccess,
@@ -5798,29 +5665,6 @@ Namespace My.Resources
         Friend ReadOnly Property UserPrivilegeSelect() As String
             Get
                 Return ResourceManager.GetString("UserPrivilegeSelect", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE userprivilege SET
-        '''	personaccess = @personaccess,
-        '''	personwrite = @personwrite,
-        '''    persondelete = @persondelete,
-        '''	personchangedocument = @personchangedocument,
-        '''	personregistration = @personregistration,
-        '''	personmaintenanceplan = @personmaintenanceplan,
-        '''	cityaccess = @cityaccess,
-        '''	citywrite = @citywrite,
-        '''	citydelete = @citydelete,
-        '''	compressoraccess = @compressoraccess,
-        '''	compressorwrite = @compressorwrite,
-        '''	compressordelete = @compressordelete,
-        '''	routeaccess = @routeaccess,
-        '''	routewrite = @ro [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property UserPrivilegeUpdate() As String
-            Get
-                Return ResourceManager.GetString("UserPrivilegeUpdate", resourceCulture)
             End Get
         End Property
         

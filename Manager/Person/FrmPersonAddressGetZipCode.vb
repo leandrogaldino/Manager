@@ -3,6 +3,7 @@ Imports ControlLibrary.Utility
 
 Public Class FrmPersonAddressGetZipCode
     Private _PersonAddress As PersonAddress
+    Private _User As User
 
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
@@ -25,6 +26,7 @@ Public Class FrmPersonAddressGetZipCode
     Public Sub New(PersonAddress As PersonAddress, AddressFinder As ViaCep.ViaCepResult)
         InitializeComponent()
         _PersonAddress = PersonAddress
+        _User = Locator.GetInstance(Of Session).User
         TxtAddressName.Text = _PersonAddress.Name
         TxtZipCode.Text = GetFormatedZipCode(_PersonAddress.ZipCode)
         TxtStreet.Text = _PersonAddress.Street
@@ -63,16 +65,16 @@ Public Class FrmPersonAddressGetZipCode
     End Sub
     Private Sub QbxCity_Enter(sender As Object, e As EventArgs) Handles QbxCity.Enter
         TmrQueriedBoxCity.Stop()
-        BtnViewCity.Visible = QbxCity.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.CityWrite
-        BtnNewCity.Visible = Locator.GetInstance(Of Session).User.Privilege.CityWrite
-        BtnFilterCity.Visible = Locator.GetInstance(Of Session).User.Privilege.CityAccess
+        BtnViewCity.Visible = QbxCity.IsFreezed And _User.CanWrite(Routine.City)
+        BtnNewCity.Visible = _User.CanWrite(Routine.City)
+        BtnFilterCity.Visible = _User.CanAccess(Routine.City)
     End Sub
     Private Sub QbxCity_Leave(sender As Object, e As EventArgs) Handles QbxCity.Leave
         TmrQueriedBoxCity.Stop()
         TmrQueriedBoxCity.Start()
     End Sub
     Private Sub QbxCity_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxCity.FreezedPrimaryKeyChanged
-        BtnViewCity.Visible = QbxCity.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.CityWrite
+        BtnViewCity.Visible = QbxCity.IsFreezed And _User.CanWrite(Routine.City)
     End Sub
     Private Sub BtnNewCity_Click(sender As Object, e As EventArgs) Handles BtnNewCity.Click
         Dim City As City

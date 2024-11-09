@@ -15,10 +15,10 @@ Public Class FrmProductFamilies
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter
 
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privilege.ProductFamilyWrite
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privilege.ProductFamilyWrite
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privilege.ProductFamilyDelete
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralExportGrid
+        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductFamilyWrite
+        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductFamilyWrite
+        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductFamilyDelete
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralExportGrid
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvProductFamilyLayout.Load()

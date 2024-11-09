@@ -1,4 +1,5 @@
-﻿Imports ControlLibrary
+﻿Imports System.Reflection
+Imports ControlLibrary
 Imports MySql.Data.MySqlClient
 Public MustInherit Class ModelBase
     Friend WithEvents Timer As New Timers.Timer With {.Enabled = True, .Interval = Locator.GetInstance(Of Session).Setting.General.Release.RefreshBlockedRegistryInterval * 1000 * 60}
@@ -154,5 +155,50 @@ Public MustInherit Class ModelBase
                 Debug.Print($"Ocorreu um erro no timer do EmailModel rotina: {Routine} registro: {ID}.")
             End Try
         End If
+    End Sub
+
+
+    ' Método Clone que cria uma cópia completa do objeto, incluindo propriedades e campos da classe base e das classes derivadas
+    Public Function Clone() As ModelBase
+        ' Cria uma nova instância do tipo da classe atual
+        Dim Cloned As ModelBase = CType(Me.MemberwiseClone(), ModelBase)
+
+        ' Clona propriedades e campos de qualquer classe derivada
+        ClonePropertiesAndFields(Me, Cloned)
+
+        Return Cloned
+    End Function
+
+    ' Função auxiliar para clonar propriedades e campos de uma classe para outra
+    Private Sub ClonePropertiesAndFields(original As Object, clone As Object)
+        ' Obtenha todas as propriedades da classe (incluindo propriedades públicas e privadas)
+        Dim properties As PropertyInfo() = original.GetType().GetProperties(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Instance)
+
+        ' Copie os valores das propriedades para a nova instância
+        For Each prop As PropertyInfo In properties
+            If prop.CanWrite Then
+                Try
+                    ' Atribua o valor da propriedade ao clone
+                    prop.SetValue(clone, prop.GetValue(original))
+                Catch ex As Exception
+                    ' Ignore exceções se não for possível copiar a propriedade
+                    Debug.Print("Erro ao copiar a propriedade: " & prop.Name)
+                End Try
+            End If
+        Next
+
+        ' Obtenha todos os campos (membros de dados) da classe
+        Dim fields As FieldInfo() = original.GetType().GetFields(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Instance)
+
+        ' Copie os valores dos campos para a nova instância
+        For Each field As FieldInfo In fields
+            Try
+                ' Atribua o valor do campo ao clone
+                field.SetValue(clone, field.GetValue(original))
+            Catch ex As Exception
+                ' Ignore exceções se não for possível copiar o campo
+                Debug.Print("Erro ao copiar o campo: " & field.Name)
+            End Try
+        Next
     End Sub
 End Class

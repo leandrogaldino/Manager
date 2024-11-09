@@ -58,7 +58,7 @@ Public Class FrmRequest
         DgvNavigator.DataGridView = _RequestsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
         LblDocumentPage.Text = Nothing
     End Sub
     Private Sub LoadData()
@@ -89,7 +89,7 @@ Public Class FrmRequest
         End If
         TxtFilterItem.Clear()
         If _Request.Items IsNot Nothing Then _Request.Items.FillDataGridView(DgvItem)
-        BtnDelete.Enabled = _Request.ID > 0 And Locator.GetInstance(Of Session).User.Privilege.RequestDelete
+        BtnDelete.Enabled = _Request.ID > 0 And Locator.GetInstance(Of Session).User.Privileges.RequestDelete
         Text = "Requisição"
         If _Request.LockInfo.IsLocked And Not _Request.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Request.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_Request.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
@@ -320,7 +320,7 @@ Public Class FrmRequest
                     LblIDValue.Text = _Request.ID
                     _Request.Items.FillDataGridView(DgvItem)
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privilege.RequestDelete
+                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privileges.RequestDelete
                     If _RequestsForm IsNot Nothing Then
                         _Filter.Filter()
                         _RequestsForm.DgvRequestLayout.Load()

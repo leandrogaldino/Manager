@@ -27,7 +27,7 @@ Public Class FrmCompressorPartElapsedDay
         DgvNavigator.DataGridView = _CompressorForm.DgvCompressorPartElapsedDay
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
     End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then
@@ -224,16 +224,16 @@ Public Class FrmCompressorPartElapsedDay
     End Sub
     Private Sub QbxItem_Enter(sender As Object, e As EventArgs) Handles QbxItem.Enter
         TmrQueriedBox.Stop()
-        BtnView.Visible = QbxItem.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.ProductWrite
-        BtnNew.Visible = Locator.GetInstance(Of Session).User.Privilege.ProductWrite
-        BtnFilter.Visible = Locator.GetInstance(Of Session).User.Privilege.ProductAccess
+        BtnView.Visible = QbxItem.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.ProductWrite
+        BtnNew.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductWrite
+        BtnFilter.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductAccess
     End Sub
     Private Sub QbxItem_Leave(sender As Object, e As EventArgs) Handles QbxItem.Leave
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
     Private Sub QbxItem_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxItem.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnView.Visible = QbxItem.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.ProductWrite
+        If Not _Loading Then BtnView.Visible = QbxItem.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.ProductWrite
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Product As Product

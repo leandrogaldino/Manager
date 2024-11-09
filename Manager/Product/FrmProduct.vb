@@ -63,7 +63,7 @@ Public Class FrmProduct
         DgvNavigator.DataGridView = _ProductsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -92,7 +92,7 @@ Public Class FrmProduct
         If _Product.Codes IsNot Nothing Then _Product.Codes.FillDataGridView(DgvCode)
         If _Product.Prices IsNot Nothing Then _Product.Prices.FillDataGridView(DgvPrice)
         If _Product.Pictures IsNot Nothing Then _Product.Pictures.FillDataGridView(DgvPicture)
-        BtnDelete.Enabled = _Product.ID > 0 And Locator.GetInstance(Of Session).User.Privilege.ProductDelete
+        BtnDelete.Enabled = _Product.ID > 0 And Locator.GetInstance(Of Session).User.Privileges.ProductDelete
         Text = "Produto"
         If _Product.LockInfo.IsLocked And Not _Product.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Product.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_Product.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
@@ -464,7 +464,7 @@ Public Class FrmProduct
                     _Product.Prices.FillDataGridView(DgvPrice)
                     _Product.Pictures.FillDataGridView(DgvPicture)
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privilege.ProductDelete
+                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privileges.ProductDelete
                     If _ProductsForm IsNot Nothing Then
                         _Filter.Filter()
                         _ProductsForm.DgvProductLayout.Load()
@@ -579,16 +579,16 @@ Public Class FrmProduct
     End Sub
     Private Sub QbxFamily_Enter(sender As Object, e As EventArgs) Handles QbxFamily.Enter
         TmrQueriedBoxFamily.Stop()
-        BtnViewFamily.Visible = QbxFamily.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.ProductFamilyWrite
-        BtnNewFamily.Visible = Locator.GetInstance(Of Session).User.Privilege.ProductFamilyWrite
-        BtnFilterFamily.Visible = Locator.GetInstance(Of Session).User.Privilege.ProductFamilyAccess
+        BtnViewFamily.Visible = QbxFamily.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.ProductFamilyWrite
+        BtnNewFamily.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductFamilyWrite
+        BtnFilterFamily.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductFamilyAccess
     End Sub
     Private Sub QbxFamily_Leave(sender As Object, e As EventArgs) Handles QbxFamily.Leave
         TmrQueriedBoxFamily.Stop()
         TmrQueriedBoxFamily.Start()
     End Sub
     Private Sub QbxFamily_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxFamily.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnViewFamily.Visible = QbxFamily.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.ProductFamilyWrite
+        If Not _Loading Then BtnViewFamily.Visible = QbxFamily.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.ProductFamilyWrite
     End Sub
     Private Sub BtnNewFamily_Click(sender As Object, e As EventArgs) Handles BtnNewFamily.Click
         Dim Family As ProductFamily
@@ -623,16 +623,16 @@ Public Class FrmProduct
     End Sub
     Private Sub QbxGroup_Enter(sender As Object, e As EventArgs) Handles QbxGroup.Enter
         TmrQueriedBoxGroup.Stop()
-        BtnViewGroup.Visible = QbxGroup.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.ProductGroupWrite
-        BtnNewGroup.Visible = Locator.GetInstance(Of Session).User.Privilege.ProductGroupWrite
-        BtnFilterGroup.Visible = Locator.GetInstance(Of Session).User.Privilege.ProductGroupAccess
+        BtnViewGroup.Visible = QbxGroup.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.ProductGroupWrite
+        BtnNewGroup.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductGroupWrite
+        BtnFilterGroup.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductGroupAccess
     End Sub
     Private Sub QbxGroup_Leave(sender As Object, e As EventArgs) Handles QbxGroup.Leave
         TmrQueriedBoxGroup.Stop()
         TmrQueriedBoxGroup.Start()
     End Sub
     Private Sub QbxGroup_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxGroup.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnViewGroup.Visible = QbxGroup.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.ProductGroupWrite
+        If Not _Loading Then BtnViewGroup.Visible = QbxGroup.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.ProductGroupWrite
     End Sub
     Private Sub BtnNewGroup_Click(sender As Object, e As EventArgs) Handles BtnNewGroup.Click
         Dim Group As ProductGroup

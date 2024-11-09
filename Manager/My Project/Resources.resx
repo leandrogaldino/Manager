@@ -682,27 +682,6 @@
   <data name="UserPrivilegeInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\UserPrivilegeInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="UserPrivilegeUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserPrivilegeUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="UserPrivilegePresetDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserPrivilegePresetDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="UserPrivilegePresetFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserPrivilegePresetFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="UserPrivilegePresetInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserPrivilegePresetInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="UserPrivilegePresetSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserPrivilegePresetSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="UserPrivilegePresetUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserPrivilegePresetUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="UserPrivilegePresetGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML\UserPrivilegePresetGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
   <data name="EvaluationManagementFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\EvaluationManagementFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -1134,5 +1113,8 @@
   </data>
   <data name="VisitSchedule" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\VisitSchedule.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserPrivilegeDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\UserPrivilegeDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

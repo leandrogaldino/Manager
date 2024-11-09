@@ -26,7 +26,7 @@ Public Class FrmProductPrice
         DgvNavigator.DataGridView = _ProductForm.DgvPrice
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
     End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then
@@ -188,16 +188,16 @@ Public Class FrmProductPrice
     End Sub
     Private Sub QbxPriceTable_Enter(sender As Object, e As EventArgs) Handles QbxPriceTable.Enter
         TmrQueriedBox.Stop()
-        BtnView.Visible = QbxPriceTable.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.ProductPriceTableWrite
-        BtnNew.Visible = Locator.GetInstance(Of Session).User.Privilege.ProductPriceTableWrite
-        BtnFilter.Visible = Locator.GetInstance(Of Session).User.Privilege.ProductPriceTableAccess
+        BtnView.Visible = QbxPriceTable.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.ProductPriceTableWrite
+        BtnNew.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductPriceTableWrite
+        BtnFilter.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductPriceTableAccess
     End Sub
     Private Sub QbxPriceTableLeave(sender As Object, e As EventArgs) Handles QbxPriceTable.Leave
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
     Private Sub QbxPriceTable_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxPriceTable.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnView.Visible = QbxPriceTable.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.ProductPriceTableWrite
+        If Not _Loading Then BtnView.Visible = QbxPriceTable.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.ProductPriceTableWrite
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim PriceTable As ProductPriceTable

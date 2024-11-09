@@ -357,10 +357,10 @@ Public Class Crm
                 LinkEdit.AppendChild(ImgEdit)
                 DivContactInfo.AppendChild(LinkDelete)
             Else
-                If Session.User.Privilege.CrmTreatmentEdit Then
+                If Session.User.Privileges.CrmTreatmentEdit Then
                     LinkEdit.AppendChild(ImgEdit)
                 End If
-                If Session.User.Privilege.CrmTreatmentDelete Then
+                If Session.User.Privileges.CrmTreatmentDelete Then
                     DivContactInfo.AppendChild(LinkDelete)
                 End If
             End If

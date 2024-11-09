@@ -9,6 +9,7 @@ Public Class FrmCompressor
     Private _Filter As CompressorFilter
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -32,6 +33,7 @@ Public Class FrmCompressor
         _CompressorsForm = CompressorsForm
         _CompressorsGrid = _CompressorsForm.DgvData
         _Filter = CType(_CompressorsForm.PgFilter.SelectedObject, CompressorFilter)
+        _User = Locator.GetInstance(Of Session).User
         InitializeComponent()
         LoadData()
         LoadForm()
@@ -59,7 +61,7 @@ Public Class FrmCompressor
         DgvNavigator.DataGridView = _CompressorsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = _User.CanAccess(Routine.Log)
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -73,7 +75,7 @@ Public Class FrmCompressor
         If _Compressor.PartsWorkedHour IsNot Nothing Then _Compressor.PartsWorkedHour.Value.FillDataGridView(DgvCompressorPartWorkedHour)
         TxtFilterPartWorkedHour.Clear()
         If _Compressor.PartsElapsedDay IsNot Nothing Then _Compressor.PartsElapsedDay.Value.FillDataGridView(DgvCompressorPartElapsedDay)
-        BtnDelete.Enabled = _Compressor.ID > 0 And Locator.GetInstance(Of Session).User.Privilege.CompressorDelete
+        BtnDelete.Enabled = _Compressor.ID > 0 And _User.CanDelete(Routine.Compressor)
         Text = "Compressor"
         If _Compressor.LockInfo.IsLocked And Not _Compressor.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Compressor.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_Compressor.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
@@ -238,7 +240,7 @@ Public Class FrmCompressor
                     _Compressor.PartsWorkedHour.Value.FillDataGridView(DgvCompressorPartWorkedHour)
                     _Compressor.PartsElapsedDay.Value.FillDataGridView(DgvCompressorPartElapsedDay)
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privilege.CompressorDelete
+                    BtnDelete.Enabled = _User.CanDelete(Routine.Compressor)
                     If _CompressorsForm IsNot Nothing Then
                         _Filter.Filter()
                         _CompressorsForm.DgvCompressorLayout.Load()
@@ -271,16 +273,16 @@ Public Class FrmCompressor
     End Sub
     Private Sub QbxManufacturer_Enter(sender As Object, e As EventArgs) Handles QbxManufacturer.Enter
         TmrQueriedBox.Stop()
-        BtnView.Visible = QbxManufacturer.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.PersonWrite
-        BtnNew.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonWrite
-        BtnFilter.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonAccess
+        BtnView.Visible = QbxManufacturer.IsFreezed And _User.CanWrite(Routine.Person)
+        BtnNew.Visible = _User.CanWrite(Routine.Person)
+        BtnFilter.Visible = _User.CanAccess(Routine.Person)
     End Sub
     Private Sub QbxManufacturer_Leave(sender As Object, e As EventArgs) Handles QbxManufacturer.Leave
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
     Private Sub QbxManufacturer_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxManufacturer.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnView.Visible = QbxManufacturer.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.PersonWrite
+        If Not _Loading Then BtnView.Visible = QbxManufacturer.IsFreezed And _User.CanWrite(Routine.Person)
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Manufacturer As Person

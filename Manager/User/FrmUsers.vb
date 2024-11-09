@@ -14,10 +14,10 @@ Public Class FrmUsers
         _Filter = New UserFilter(DgvData, PgFilter)
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privilege.UserWrite
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privilege.UserWrite
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privilege.UserDelete
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralExportGrid
+        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privileges.UserWrite
+        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privileges.UserWrite
+        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privileges.UserDelete
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralExportGrid
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvUserLayout.Load()

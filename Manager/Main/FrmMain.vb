@@ -2,6 +2,7 @@
 Imports ControlLibrary.Utility
 Imports ManagerCore
 Public Class FrmMain
+    Private _User As User
     Public Sub New()
         InitializeComponent()
         CreateEvaluationButton()
@@ -12,29 +13,31 @@ Public Class FrmMain
         CreatePersonButton()
         CreateProductButton()
         CreateUserButton()
+        _User = Locator.GetInstance(Of Session).User
         LblCompany.Text = Locator.GetInstance(Of Session).Setting.Company.ShortName
         LblVersion.Text = Locator.GetInstance(Of Session).ManagerVersion
-        BtnUser.Text = Locator.GetInstance(Of Session).User.Username
+        BtnUser.Text = _User.Username
     End Sub
     Private Sub CreateFirstSeparator()
-        If (Locator.GetInstance(Of Session).User.Privilege.EvaluationAccess Or Locator.GetInstance(Of Session).User.Privilege.RequestAccess Or Locator.GetInstance(Of Session).User.Privilege.CashAccess) And
-            (Locator.GetInstance(Of Session).User.Privilege.PersonAccess Or Locator.GetInstance(Of Session).User.Privilege.ProductAccess Or Locator.GetInstance(Of Session).User.Privilege.UserAccess) Then
+
+        If (_User.CanAccess(Routine.Evaluation) Or _User.CanAccess(Routine.Request) Or _User.CanAccess(Routine.Cash) And
+            (_User.CanAccess(Routine.Person) Or _User.CanAccess(Routine.Product) Or _User.CanAccess(Routine.User))) Then
             TsRoutine.Items.Add(New ToolStripSeparator With {.Margin = New Padding(0, 0, 5, 0)})
         End If
     End Sub
     Private Sub CreateCrmButton()
-        If Locator.GetInstance(Of Session).User.Privilege.CrmAccess Then
+        If _User.CanAccess(Routine.Crm) Then
             TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripButton("CRM", "CRM", My.Resources.CRM, AddressOf CrmClick))
         End If
     End Sub
     Private Sub CreateEvaluationButton()
-        If Locator.GetInstance(Of Session).User.Privilege.EvaluationAccess Then
-            If Locator.GetInstance(Of Session).User.Privilege.EvaluationManagementAccess Or Locator.GetInstance(Of Session).User.Privilege.EvaluationManagementPanelAccess Then
+        If _User.CanAccess(Routine.Evaluation) Then
+            If _User.CanAccess(Routine.EvaluationManagement) Or _User.CanAccess(Routine.EvaluationManagementPanel) Then
                 TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripSplitButton("Avaliação", "Cadastro de Avaliações de Compressor", My.Resources.Evaluation, AddressOf EvaluationClick))
-                If Locator.GetInstance(Of Session).User.Privilege.EvaluationManagementAccess Then
+                If _User.CanAccess(Routine.EvaluationManagement) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Avaliação").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Gerenciamento", "Gerenciamento", My.Resources.EvaluationManagement, AddressOf EvaluationManagementClick))
                 End If
-                If Locator.GetInstance(Of Session).User.Privilege.EvaluationManagementPanelAccess Then
+                If _User.CanAccess(Routine.EvaluationManagementPanel) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Avaliação").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Painel", "Painel", My.Resources.Chart, AddressOf EvaluationManagementPanelClick))
                 End If
             Else
@@ -43,10 +46,10 @@ Public Class FrmMain
         End If
     End Sub
     Private Sub CreateRequestButton()
-        If Locator.GetInstance(Of Session).User.Privilege.RequestAccess Then
-            If Locator.GetInstance(Of Session).User.Privilege.RequestPendingItems Then
+        If _User.CanAccess(Routine.Request) Then
+            If _User.CanAccess(Routine.RequestPendingItems) Then
                 TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripSplitButton("Requisição", "Requisição de Peças", My.Resources.Request, AddressOf RequestClick))
-                If Locator.GetInstance(Of Session).User.Privilege.RequestPendingItems Then
+                If _User.CanAccess(Routine.RequestPendingItems) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Requisição").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Relatório", Nothing, My.Resources.Report, Nothing, True))
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Requisição").DropDownItems.OfType(Of ToolStripMenuItem).Single(Function(y) y.Text = "Relatório").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Peças Pendentes", Nothing, Nothing, AddressOf RequestPendingPartClick))
                 End If
@@ -56,13 +59,13 @@ Public Class FrmMain
         End If
     End Sub
     Private Sub CreateCashButton()
-        If Locator.GetInstance(Of Session).User.Privilege.CashAccess Then
-            If Locator.GetInstance(Of Session).User.Privilege.CashExpensesPerResponsible Or Locator.GetInstance(Of Session).User.Privilege.CashFlowAccess Then
+        If _User.CanAccess(Routine.Cash) Then
+            If _User.CanAccess(Routine.CashExpensesPerResponsible) Or _User.CanAccess(Routine.CashFlow) Then
                 TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripSplitButton("Caixa", "Fechamento de Caixa", My.Resources.Cash, AddressOf CashClick))
-                If Locator.GetInstance(Of Session).User.Privilege.CashFlowAccess Then
+                If _User.CanAccess(Routine.CashFlow) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Caixa").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Fluxo de Caixa", "Cadastro de Fluxo de Caixa", My.Resources.CashFlow, AddressOf CashFlowClick))
                 End If
-                If Locator.GetInstance(Of Session).User.Privilege.CashExpensesPerResponsible Then
+                If _User.CanAccess(Routine.CashExpensesPerResponsible) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Caixa").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Relatório", Nothing, My.Resources.Report, Nothing, True))
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Caixa").DropDownItems.OfType(Of ToolStripMenuItem).Single(Function(y) y.Text = "Relatório").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Despesas Por Responsável", Nothing, Nothing, AddressOf CashExpensesPerResponsibleClick))
                 End If
@@ -73,28 +76,28 @@ Public Class FrmMain
         End If
     End Sub
     Private Sub CreatePersonButton()
-        If Locator.GetInstance(Of Session).User.Privilege.PersonAccess Then
-            If Locator.GetInstance(Of Session).User.Privilege.CompressorAccess Or
-                Locator.GetInstance(Of Session).User.Privilege.CityAccess Or
-                Locator.GetInstance(Of Session).User.Privilege.RouteAccess Or
-                Locator.GetInstance(Of Session).User.Privilege.PersonRegistration Or
-                Locator.GetInstance(Of Session).User.Privilege.PersonMaintenancePlan Then
+        If _User.CanAccess(Routine.Person) Then
+            If _User.CanAccess(Routine.Compressor) Or
+                _User.CanAccess(Routine.City) Or
+                _User.CanAccess(Routine.Route) Or
+                _User.CanAccess(Routine.PersonRegistrationForm) Or
+                _User.CanAccess(Routine.PersonMaintenancePlan) Then
                 TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripSplitButton("Pessoa", "Cadastro de Pessoas", My.Resources.Person, AddressOf PersonClick))
-                If Locator.GetInstance(Of Session).User.Privilege.CompressorAccess Then
+                If _User.CanAccess(Routine.Compressor) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Pessoa").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Compressor", "Cadastro de Compressores", My.Resources.Compressor, AddressOf CompressorClick))
                 End If
-                If Locator.GetInstance(Of Session).User.Privilege.CityAccess Then
+                If _User.CanAccess(Routine.City) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Pessoa").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Cidade", "Cadastro de Cidades", My.Resources.City, AddressOf CityClick))
                 End If
-                If Locator.GetInstance(Of Session).User.Privilege.RouteAccess Then
+                If _User.CanAccess(Routine.Route) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Pessoa").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Rota", "Cadastro de Rotas", My.Resources.Route, AddressOf RouteClick))
                 End If
-                If Locator.GetInstance(Of Session).User.Privilege.PersonRegistration Or Locator.GetInstance(Of Session).User.Privilege.PersonMaintenancePlan Then
+                If _User.CanAccess(Routine.PersonRegistrationForm) Or _User.CanAccess(Routine.PersonMaintenancePlan) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Pessoa").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Relatório", Nothing, My.Resources.Report, Nothing, True))
-                    If Locator.GetInstance(Of Session).User.Privilege.PersonRegistration Then
+                    If _User.CanAccess(Routine.PersonRegistrationForm) Then
                         TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Pessoa").DropDownItems.OfType(Of ToolStripMenuItem).Single(Function(y) y.Text = "Relatório").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Ficha Cadastral", Nothing, Nothing, AddressOf PersonRegistrationFormClick))
                     End If
-                    If Locator.GetInstance(Of Session).User.Privilege.PersonMaintenancePlan Then
+                    If _User.CanAccess(Routine.PersonMaintenancePlan) Then
                         TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Pessoa").DropDownItems.OfType(Of ToolStripMenuItem).Single(Function(y) y.Text = "Relatório").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Plano de Manutenção", Nothing, Nothing, AddressOf PersonMaintenancePlanClick))
                     End If
                 End If
@@ -104,22 +107,22 @@ Public Class FrmMain
         End If
     End Sub
     Private Sub CreateProductButton()
-        If Locator.GetInstance(Of Session).User.Privilege.ProductAccess Then
-            If Locator.GetInstance(Of Session).User.Privilege.ProductFamilyAccess Or
-                Locator.GetInstance(Of Session).User.Privilege.ProductGroupAccess Or
-                Locator.GetInstance(Of Session).User.Privilege.ProductPriceTableAccess Or
-                Locator.GetInstance(Of Session).User.Privilege.ProductUnitAccess Then
+        If _User.CanAccess(Routine.Product) Then
+            If _User.CanAccess(Routine.ProductFamily) Or
+                _User.CanAccess(Routine.ProductGroup) Or
+                _User.CanAccess(Routine.ProductPrice) Or
+                _User.CanAccess(Routine.ProductUnit) Then
                 TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripSplitButton("Produto", "Cadastro de Produtos", My.Resources.Product, AddressOf ProductClick))
-                If Locator.GetInstance(Of Session).User.Privilege.ProductFamilyAccess Then
+                If _User.CanAccess(Routine.ProductFamily) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Produto").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Família de Produto", "Cadastro de Famílias de Produto", My.Resources.ProductFamily, AddressOf ProductFamilyClick))
                 End If
-                If Locator.GetInstance(Of Session).User.Privilege.ProductGroupAccess Then
+                If _User.CanAccess(Routine.ProductGroup) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Produto").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Grupo de Produto", "Cadastro de Grupos de Produto", My.Resources.ProductGroup, AddressOf ProductGroupClick))
                 End If
-                If Locator.GetInstance(Of Session).User.Privilege.ProductPriceTableAccess Then
+                If _User.CanAccess(Routine.ProductPriceTable) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Produto").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Tabela de Preço", "Cadastro de Tabelas de Preço de Produto", My.Resources.ProductPriceTable, AddressOf ProductPriceTableClick))
                 End If
-                If Locator.GetInstance(Of Session).User.Privilege.ProductUnitAccess Then
+                If _User.CanAccess(Routine.ProductUnit) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Produto").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Unidade de Medida", "Cadastro de Unidades de Medida de Produto", My.Resources.ProductUnit, AddressOf ProductUnitClick))
                 End If
             Else
@@ -128,15 +131,8 @@ Public Class FrmMain
         End If
     End Sub
     Private Sub CreateUserButton()
-        If Locator.GetInstance(Of Session).User.Privilege.UserAccess Then
-            If Locator.GetInstance(Of Session).User.Privilege.UserPrivilegePresetAccess Then
-                TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripSplitButton("Usuário", "Cadastro de Usuários", My.Resources.User, AddressOf UserClick))
-                If Locator.GetInstance(Of Session).User.Privilege.UserPrivilegePresetAccess Then
-                    TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Usuário").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Predefinição de Permissão", "Cadastro de Predefinições de Permissões do Usuário", My.Resources.UserPrivilegePreset, AddressOf UserPrivilegePresetClick))
-                End If
-            Else
-                TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripButton("Usuário", "Cadastro de Usuários", My.Resources.User, AddressOf UserClick))
-            End If
+        If _User.CanAccess(Routine.User) Then
+            TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripButton("Usuário", "Cadastro de Usuários", My.Resources.User, AddressOf UserClick))
         End If
     End Sub
     Private Sub CrmClick()
@@ -226,13 +222,7 @@ Public Class FrmMain
             SelectTab(Routine.User)
         End If
     End Sub
-    Private Sub UserPrivilegePresetClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.UserPrivilegePreset)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmUserPrivilegePresets, GetEnumDescription(Routine.UserPrivilegePreset))
-        Else
-            SelectTab(Routine.UserPrivilegePreset)
-        End If
-    End Sub
+
     Private Sub EmailModelClick()
         If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.EmailModel)) Or Control.ModifierKeys = Keys.Shift Then
             OpenTab(New FrmEmailModels, GetEnumDescription(Routine.EmailModel))

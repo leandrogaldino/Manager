@@ -13,10 +13,10 @@ Public Class FrmCrms
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter
         LoadDetails()
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privilege.CrmWrite
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privilege.CrmWrite
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privilege.CrmDelete
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralExportGrid
+        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privileges.CrmWrite
+        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privileges.CrmWrite
+        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privileges.CrmDelete
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralExportGrid
     End Sub
     Private Sub Frm(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvCrmLayout.Load()

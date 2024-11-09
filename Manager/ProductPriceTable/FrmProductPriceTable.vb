@@ -53,7 +53,7 @@ Public Class FrmProductPriceTable
         DgvNavigator.DataGridView = _PriceTablesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -61,7 +61,7 @@ Public Class FrmProductPriceTable
         BtnStatusValue.Text = GetEnumDescription(_PriceTable.Status)
         LblCreationValue.Text = _PriceTable.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _PriceTable.Name
-        BtnDelete.Enabled = _PriceTable.ID > 0 And Locator.GetInstance(Of Session).User.Privilege.ProductPriceTableDelete
+        BtnDelete.Enabled = _PriceTable.ID > 0 And Locator.GetInstance(Of Session).User.Privileges.ProductPriceTableDelete
         Text = "Tabela de Preço"
         If _PriceTable.LockInfo.IsLocked And Not _PriceTable.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _PriceTable.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_PriceTable.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
@@ -209,7 +209,7 @@ Public Class FrmProductPriceTable
                     _PriceTable.Lock()
                     LblIDValue.Text = _PriceTable.ID
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privilege.ProductPriceTableDelete
+                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privileges.ProductPriceTableDelete
                     If _PriceTablesForm IsNot Nothing Then
                         _Filter.Filter()
                         _PriceTablesForm.DgvPriceTableLayout.Load()

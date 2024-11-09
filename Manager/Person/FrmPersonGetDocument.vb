@@ -1,9 +1,9 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Utility
-Imports Manager.Util
 Public Class FrmPersonGetDocument
     Private _Person As Person
     Private _Search As Consulta.CNPJ.Models.CNPJResult
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -26,6 +26,7 @@ Public Class FrmPersonGetDocument
         InitializeComponent()
         _Person = Person
         _Search = Search
+        _User = Locator.GetInstance(Of Session).User
         TxtDocument.Text = _Person.Document
         TxtName.Text = _Person.Name
         TxtShortName.Text = _Person.ShortName
@@ -102,7 +103,7 @@ Public Class FrmPersonGetDocument
                 EprValidation.SetIconAlignment(LblContactName, ErrorIconAlignment.MiddleRight)
                 TxtContactName.Select()
                 Return False
-            ElseIf Not String.IsNullOrWhiteSpace(TxtPhone.Text) And Utility.GetWhichPhoneFormat(TxtPhone.Text) = utility.PhoneFormat.InvalidPhone Then
+            ElseIf Not String.IsNullOrWhiteSpace(TxtPhone.Text) And Utility.GetWhichPhoneFormat(TxtPhone.Text) = Utility.PhoneFormat.InvalidPhone Then
                 EprValidation.SetError(LblPhone, String.Format("Telefone inválido.{0}1) Verifique se o DDD foi informado;{0}2) Verifique se há algum caractere que não seja número, parentesis ou traço;{0}3)Verifique se o telefone tem entre 10 e 11 digitos.", vbNewLine))
                 EprValidation.SetIconAlignment(LblPhone, ErrorIconAlignment.MiddleRight)
                 TxtPhone.Select()
@@ -191,16 +192,16 @@ Public Class FrmPersonGetDocument
     End Sub
     Private Sub QbxCity_Enter(sender As Object, e As EventArgs) Handles QbxCity.Enter
         TmrQueriedBoxCity.Stop()
-        BtnViewCity.Visible = QbxCity.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.CityWrite
-        BtnNewCity.Visible = Locator.GetInstance(Of Session).User.Privilege.CityWrite
-        BtnFilterCity.Visible = Locator.GetInstance(Of Session).User.Privilege.CityAccess
+        BtnViewCity.Visible = QbxCity.IsFreezed And _User.CanWrite(Routine.City)
+        BtnNewCity.Visible = _User.CanWrite(Routine.City)
+        BtnFilterCity.Visible = _User.CanAccess(Routine.City)
     End Sub
     Private Sub QbxCity_Leave(sender As Object, e As EventArgs) Handles QbxCity.Leave
         TmrQueriedBoxCity.Stop()
         TmrQueriedBoxCity.Start()
     End Sub
     Private Sub QbxCity_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxCity.FreezedPrimaryKeyChanged
-        BtnViewCity.Visible = QbxCity.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.CityWrite
+        BtnViewCity.Visible = QbxCity.IsFreezed And _User.CanWrite(Routine.City)
     End Sub
     Private Sub BtnNewCity_Click(sender As Object, e As EventArgs) Handles BtnNewCity.Click
         Dim City As City

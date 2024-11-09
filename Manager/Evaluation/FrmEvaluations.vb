@@ -19,10 +19,10 @@ Public Class FrmEvaluations
         PgFilter.SelectedObject = _Filter
         LoadDetails()
         DgvEvaluationLayout.Load()
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privilege.EvaluationWrite
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privilege.EvaluationWrite
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privilege.EvaluationDelete
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralExportGrid
+        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privileges.EvaluationWrite
+        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privileges.EvaluationWrite
+        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privileges.EvaluationDelete
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralExportGrid
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvEvaluationLayout.Load()
@@ -278,7 +278,7 @@ Public Class FrmEvaluations
         End If
     End Sub
     Private Sub DgvData_MouseUp(sender As Object, e As MouseEventArgs) Handles DgvData.MouseUp
-        If _ShowApproval And Locator.GetInstance(Of Session).User.Privilege.EvaluationApproveOrReject Then
+        If _ShowApproval And Locator.GetInstance(Of Session).User.Privileges.EvaluationApproveOrReject Then
             BtnApprove.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> GetEnumDescription(EvaluationStatus.Approved)
             BtnReject.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> GetEnumDescription(EvaluationStatus.Rejected)
             BtnDisapprove.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> GetEnumDescription(EvaluationStatus.Disapproved)

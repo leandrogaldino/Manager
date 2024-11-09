@@ -7,6 +7,7 @@ Public Class FrmPersonCompressor
     Private _PersonCompressorShadow As PersonCompressor
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -25,11 +26,12 @@ Public Class FrmPersonCompressor
         _PersonCompressor = PersonCompressor
         _PersonCompressorShadow = PersonCompressor.Clone()
         _PersonForm = PersonForm
+        _User = Locator.GetInstance(Of Session).User
         LoadForm()
         DgvNavigator.DataGridView = _PersonForm.DgvCompressor
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = _User.CanAccess(Routine.Log)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvPartWorkedHourLayout.Load()
@@ -365,16 +367,16 @@ Public Class FrmPersonCompressor
     End Sub
     Private Sub QbxCompressor_Enter(sender As Object, e As EventArgs) Handles QbxCompressor.Enter
         TmrQueriedBox.Stop()
-        BtnView.Visible = QbxCompressor.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.CompressorWrite
-        BtnNew.Visible = Locator.GetInstance(Of Session).User.Privilege.CompressorWrite
-        BtnFilter.Visible = Locator.GetInstance(Of Session).User.Privilege.CompressorAccess
+        BtnView.Visible = QbxCompressor.IsFreezed And _User.CanWrite(Routine.Compressor)
+        BtnNew.Visible = _User.CanWrite(Routine.Compressor)
+        BtnFilter.Visible = _User.CanAccess(Routine.Compressor)
     End Sub
     Private Sub QbxCompressor_Leave(sender As Object, e As EventArgs) Handles QbxCompressor.Leave
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
     Private Sub QbxCompressor_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxCompressor.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnView.Visible = QbxCompressor.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.CompressorWrite
+        If Not _Loading Then BtnView.Visible = QbxCompressor.IsFreezed And _User.CanWrite(Routine.Compressor)
         If Not _Loading Then BtnImport.Visible = QbxCompressor.IsFreezed
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click

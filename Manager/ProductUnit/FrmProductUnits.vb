@@ -14,10 +14,10 @@ Public Class FrmProductUnits
         _Filter = New ProductUnitFilter(DgvData, PgFilter)
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privilege.ProductUnitWrite
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privilege.ProductUnitWrite
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privilege.ProductUnitDelete
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralExportGrid
+        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductUnitWrite
+        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductUnitWrite
+        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductUnitDelete
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralExportGrid
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvUnitsLayout.Load()

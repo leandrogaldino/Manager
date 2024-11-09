@@ -22,10 +22,10 @@ Public Class FrmRequests
         End If
         PgFilter.SelectedObject = _Filter
         LoadDetails()
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privilege.RequestWrite
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privilege.RequestWrite
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privilege.RequestDelete
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralExportGrid
+        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privileges.RequestWrite
+        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privileges.RequestWrite
+        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privileges.RequestDelete
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralExportGrid
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvRequestLayout.Load()

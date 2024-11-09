@@ -53,7 +53,7 @@ Public Class FrmProductGroup
         DgvNavigator.DataGridView = _ProductGroupsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -61,7 +61,7 @@ Public Class FrmProductGroup
         BtnStatusValue.Text = GetEnumDescription(_ProductGroup.Status)
         LblCreationValue.Text = _ProductGroup.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _ProductGroup.Name
-        BtnDelete.Enabled = _ProductGroup.ID > 0 And Locator.GetInstance(Of Session).User.Privilege.ProductGroupDelete
+        BtnDelete.Enabled = _ProductGroup.ID > 0 And Locator.GetInstance(Of Session).User.Privileges.ProductGroupDelete
         Text = "Grupo de Produto"
         If _ProductGroup.LockInfo.IsLocked And Not _ProductGroup.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _ProductGroup.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_ProductGroup.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
@@ -210,7 +210,7 @@ Public Class FrmProductGroup
                     _ProductGroup.Lock()
                     LblIDValue.Text = _ProductGroup.ID
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privilege.ProductGroupDelete
+                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privileges.ProductGroupDelete
                     If _ProductGroupsForm IsNot Nothing Then
                         _Filter.Filter()
                         _ProductGroupsForm.DgvProductGroupLayout.Load()

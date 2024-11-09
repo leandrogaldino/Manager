@@ -53,7 +53,7 @@ Public Class FrmProductUnit
         DgvNavigator.DataGridView = _UnitsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -62,7 +62,7 @@ Public Class FrmProductUnit
         LblCreationValue.Text = _Unit.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _Unit.Name
         TxtShortName.Text = _Unit.ShortName
-        BtnDelete.Enabled = _Unit.ID > 0 And Locator.GetInstance(Of Session).User.Privilege.ProductUnitDelete
+        BtnDelete.Enabled = _Unit.ID > 0 And Locator.GetInstance(Of Session).User.Privileges.ProductUnitDelete
         Text = "Unidade de Medida"
         If _Unit.LockInfo.IsLocked And Not _Unit.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Unit.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_Unit.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
@@ -219,7 +219,7 @@ Public Class FrmProductUnit
                     _Unit.Lock()
                     LblIDValue.Text = _Unit.ID
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privilege.ProductUnitDelete
+                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privileges.ProductUnitDelete
                     If _UnitsForm IsNot Nothing Then
                         _Filter.Filter()
                         _UnitsForm.DgvUnitsLayout.Load()

@@ -8,6 +8,7 @@ Public Class FrmCity
     Private _Filter As CityFilter
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -36,8 +37,9 @@ Public Class FrmCity
         LoadForm()
     End Sub
     Public Sub New(City As City)
-        _City = City
         InitializeComponent()
+        _City = City
+        _User = Locator.GetInstance(Of Session).User
         Height -= TsNavigation.Height
         LblName.Top -= TsNavigation.Height
         TxtName.Top -= TsNavigation.Height
@@ -62,7 +64,7 @@ Public Class FrmCity
         Utility.EnableControlDoubleBuffer(DgvRoute, True)
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = _User.CanAccess(Routine.Log)
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -75,7 +77,7 @@ Public Class FrmCity
         CbxStateShortName.Text = _City.State.ShortName
         FillDataGridView()
         Text = "Cidade"
-        BtnDelete.Enabled = _City.ID > 0 And Locator.GetInstance(Of Session).User.Privilege.CityDelete
+        BtnDelete.Enabled = _City.ID > 0 And _User.CanDelete(Routine.City)
         If _City.LockInfo.IsLocked And Not _City.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _City.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_City.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
@@ -245,7 +247,7 @@ Public Class FrmCity
                     LblIDValue.Text = _City.ID
                     FillDataGridView()
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privilege.CityDelete
+                    BtnDelete.Enabled = _User.CanDelete(Routine.City)
                     If _CitiesForm IsNot Nothing Then
                         _Filter.Filter()
                         _CitiesForm.DgvCitiesLayout.Load()

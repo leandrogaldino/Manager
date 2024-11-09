@@ -14,10 +14,10 @@ Public Class FrmProductPriceTables
         _Filter = New ProductPriceTableFilter(DgvData, PgFilter)
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privilege.ProductPriceTableWrite
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privilege.ProductPriceTableWrite
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privilege.ProductPriceTableDelete
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralExportGrid
+        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductPriceTableWrite
+        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductPriceTableWrite
+        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductPriceTableDelete
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralExportGrid
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvPriceTableLayout.Load()

@@ -10,6 +10,7 @@ Public Class FrmCashFlow
     Private _Filter As CashFlowFilter
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -33,12 +34,14 @@ Public Class FrmCashFlow
         _CashFlowsForm = CashFlowsForm
         _CashFlowsGrid = _CashFlowsForm.DgvData
         _Filter = CType(_CashFlowsForm.PgFilter.SelectedObject, CashFlowFilter)
+        _User = Locator.GetInstance(Of Session).User
         InitializeComponent()
         LoadData()
         LoadForm()
     End Sub
     Public Sub New(CashFlow As CashFlow)
         _CashFlow = CashFlow
+        _User = Locator.GetInstance(Of Session).User
         InitializeComponent()
         Height -= TsNavigation.Height
         LblName.Top -= TsNavigation.Height
@@ -57,7 +60,7 @@ Public Class FrmCashFlow
         DgvNavigator.DataGridView = _CashFlowsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = _User.CanAccess(Routine.Log)
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -67,7 +70,7 @@ Public Class FrmCashFlow
         TxtName.Text = _CashFlow.Name
         FillDataGridView()
         Text = "Rota"
-        BtnDelete.Enabled = _CashFlow.ID > 0 And Locator.GetInstance(Of Session).User.Privilege.CashFlowDelete
+        BtnDelete.Enabled = _CashFlow.ID > 0 And _User.CanDelete(Routine.CashFlow)
         If _CashFlow.LockInfo.IsLocked And Not _CashFlow.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _CashFlow.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_CashFlow.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
@@ -219,7 +222,7 @@ Public Class FrmCashFlow
                     LblIDValue.Text = _CashFlow.ID
                     FillDataGridView()
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privilege.CashFlowDelete
+                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privileges.CashFlowDelete
                     If _CashFlowsForm IsNot Nothing Then
                         _Filter.Filter()
                         _CashFlowsForm.DgvCashFlowLayout.Load()

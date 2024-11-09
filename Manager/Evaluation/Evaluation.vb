@@ -2,6 +2,7 @@
 Imports System.Reflection
 Imports ChinhDo.Transactions
 Imports ControlLibrary
+Imports DocumentFormat.OpenXml.Office2016.Drawing.Charts
 Imports ManagerCore
 Imports MySql.Data.MySqlClient
 

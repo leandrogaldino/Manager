@@ -26,7 +26,7 @@ Public Class FrmCityRoute
         DgvNavigator.DataGridView = _CityForm.DgvRoute
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
     End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then
@@ -151,9 +151,9 @@ Public Class FrmCityRoute
     End Function
     Private Sub QbxRoute_Enter(sender As Object, e As EventArgs) Handles QbxRoute.Enter
         TmrQueriedBox.Stop()
-        BtnView.Visible = QbxRoute.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.RouteWrite
-        BtnNew.Visible = Locator.GetInstance(Of Session).User.Privilege.RouteWrite
-        BtnFilter.Visible = Locator.GetInstance(Of Session).User.Privilege.RouteAccess
+        BtnView.Visible = QbxRoute.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.RouteWrite
+        BtnNew.Visible = Locator.GetInstance(Of Session).User.Privileges.RouteWrite
+        BtnFilter.Visible = Locator.GetInstance(Of Session).User.Privileges.RouteAccess
     End Sub
     Private Sub QbxRoute_Leave(sender As Object, e As EventArgs) Handles QbxRoute.Leave
         TmrQueriedBox.Stop()
@@ -191,7 +191,7 @@ Public Class FrmCityRoute
         TmrQueriedBox.Stop()
     End Sub
     Private Sub QbxRoute_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxRoute.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnView.Visible = QbxRoute.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.RouteWrite
+        If Not _Loading Then BtnView.Visible = QbxRoute.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.RouteWrite
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         If BtnSave.Enabled Then

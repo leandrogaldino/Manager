@@ -138,7 +138,7 @@ Public Class FrmEmail
     End Sub
     Private Sub TxtTo_Enter(sender As Object, e As EventArgs) Handles TxtTo.Enter
         TmrTo.Stop()
-        BtnImportTo.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonAccess
+        BtnImportTo.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonAccess
     End Sub
     Private Sub TxtTo_Leave(sender As Object, e As EventArgs) Handles TxtTo.Leave
         Dim Emails As List(Of String)
@@ -154,7 +154,7 @@ Public Class FrmEmail
     End Sub
     Private Sub TxtCc_Enter(sender As Object, e As EventArgs) Handles TxtCc.Enter
         TmrCc.Stop()
-        BtnImportCc.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonAccess
+        BtnImportCc.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonAccess
     End Sub
     Private Sub TxtCc_Leave(sender As Object, e As EventArgs) Handles TxtCc.Leave
         Dim Emails As List(Of String)
@@ -170,7 +170,7 @@ Public Class FrmEmail
     End Sub
     Private Sub TxtBcc_Enter(sender As Object, e As EventArgs) Handles TxtBcc.Enter
         TmrBcc.Stop()
-        BtnImportBcc.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonAccess
+        BtnImportBcc.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonAccess
     End Sub
     Private Sub TxtBcc_Leave(sender As Object, e As EventArgs) Handles TxtBcc.Leave
         Dim Emails As List(Of String)

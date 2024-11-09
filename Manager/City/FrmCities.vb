@@ -14,10 +14,10 @@ Public Class FrmCities
         _Filter = New CityFilter(DgvData, PgFilter)
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privilege.CityWrite
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privilege.CityWrite
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privilege.CityDelete
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralExportGrid
+        BtnInclude.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.City)
+        BtnEdit.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.City)
+        BtnDelete.Visible = Locator.GetInstance(Of Session).User.CanDelete(Routine.City)
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Frm(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvCitiesLayout.Load()

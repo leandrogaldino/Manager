@@ -30,7 +30,7 @@ Public Class FrmUserEmail
         DgvNavigator.DataGridView = _UserForm.DgvEmail
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
     End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then

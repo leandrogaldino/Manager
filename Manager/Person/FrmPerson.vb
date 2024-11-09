@@ -61,7 +61,7 @@ Public Class FrmPerson
         DgvNavigator.DataGridView = _PersonsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -87,7 +87,7 @@ Public Class FrmPerson
         If _Person.Addresses IsNot Nothing Then _Person.Addresses.FillDataGridView(DgvAddress)
         If _Person.Contacts IsNot Nothing Then _Person.Contacts.FillDataGridView(DgvContact)
         If _Person.Compressors IsNot Nothing Then _Person.Compressors.FillDataGridView(DgvCompressor)
-        BtnDelete.Enabled = _Person.ID < 0 And Locator.GetInstance(Of Session).User.Privilege.PersonDelete
+        BtnDelete.Enabled = _Person.ID < 0 And Locator.GetInstance(Of Session).User.Privileges.PersonDelete
         _CompressorsShadow.Clear()
         For Each Compressor As PersonCompressor In _Person.Compressors
             _CompressorsShadow.Add(Compressor.Clone)
@@ -475,7 +475,7 @@ Public Class FrmPerson
             TcPerson.SelectedTab = TabMain
             TxtDocument.Select()
             Return False
-        ElseIf _Person.ID > 0 AndAlso (Not Locator.GetInstance(Of Session).User.Privilege.PersonChangeDocument And _Person.Document <> TxtDocument.Text) Then
+        ElseIf _Person.ID > 0 AndAlso (Not Locator.GetInstance(Of Session).User.Privileges.PersonChangeDocument And _Person.Document <> TxtDocument.Text) Then
             EprValidation.SetError(LblDocument, String.Format("Você não tem permissão para alterar o {0} de uma pessoa que já foi salva.", If(RbtIsLegalEntity.Checked, "CNPJ", "CPF")))
             EprValidation.SetIconAlignment(LblDocument, ErrorIconAlignment.MiddleRight)
             TcPerson.SelectedTab = TabMain
@@ -557,7 +557,7 @@ Public Class FrmPerson
                         _CompressorsShadow.Add(Compressor.Clone)
                     Next
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privilege.PersonDelete
+                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privileges.PersonDelete
                     If _PersonsForm IsNot Nothing Then
                         _Filter.Filter()
                         _PersonsForm.DgvPersonLayout.Load()

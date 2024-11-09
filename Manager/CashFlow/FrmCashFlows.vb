@@ -14,10 +14,10 @@ Public Class FrmCashFlows
         _Filter = New CashFlowFilter(DgvData, PgFilter)
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privilege.CashFlowAccess
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privilege.CashFlowWrite
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privilege.CashFlowDelete
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralExportGrid
+        BtnInclude.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.CashFlow)
+        BtnEdit.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.CashFlow)
+        BtnDelete.Visible = Locator.GetInstance(Of Session).User.CanDelete(Routine.CashFlow)
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvCashFlowLayout.Load()

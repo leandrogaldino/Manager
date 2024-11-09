@@ -65,14 +65,14 @@ Public Class FrmCrm
         DgvNavigator.DataGridView = _CrmsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
     End Sub
     Private Sub LoadData()
         _Loading = True
         LblIDValue.Text = _Crm.ID
         If _Crm.ID > 0 Then
             If _Crm.Status <> CrmStatus.Pending Then
-                If Locator.GetInstance(Of Session).User.Privilege.CrmChangeToPendingStatus Then
+                If Locator.GetInstance(Of Session).User.Privileges.CrmChangeToPendingStatus Then
                     BtnStatusValue.Visible = True
                     LblStatusValue.Visible = False
                 Else
@@ -90,10 +90,10 @@ Public Class FrmCrm
         End If
         LblStatusValue.Text = GetEnumDescription(_Crm.Status)
         BtnStatusValue.Text = GetEnumDescription(_Crm.Status)
-        BtnPending.Visible = _Crm.Status <> CrmStatus.Pending And Locator.GetInstance(Of Session).User.Privilege.CrmChangeToPendingStatus
+        BtnPending.Visible = _Crm.Status <> CrmStatus.Pending And Locator.GetInstance(Of Session).User.Privileges.CrmChangeToPendingStatus
         BtnFinish.Visible = _Crm.Status <> CrmStatus.Finished
         BtnLost.Visible = _Crm.Status <> CrmStatus.Lost
-        BtnDelete.Enabled = _Crm.ID > 0 And Locator.GetInstance(Of Session).User.Privilege.CrmDelete
+        BtnDelete.Enabled = _Crm.ID > 0 And Locator.GetInstance(Of Session).User.Privileges.CrmDelete
         LblCreationValue.Text = _Crm.Creation.ToString("dd/MM/yyyy")
         QbxCustomer.Unfreeze()
         QbxCustomer.Freeze(_Crm.Customer.ID)
@@ -107,10 +107,10 @@ Public Class FrmCrm
         End If
         BtnSave.Enabled = False
         If _Crm.ID > 0 Then
-            FlpCustomer.Visible = Locator.GetInstance(Of Session).User.Privilege.CrmChangeCustomer
-            QbxCustomer.ReadOnly = Not Locator.GetInstance(Of Session).User.Privilege.CrmChangeCustomer
-            QbxResponsible.ReadOnly = Not Locator.GetInstance(Of Session).User.Privilege.CrmChangeResponsible
-            TxtSubject.ReadOnly = Not Locator.GetInstance(Of Session).User.Privilege.CrmChangeSubject
+            FlpCustomer.Visible = Locator.GetInstance(Of Session).User.Privileges.CrmChangeCustomer
+            QbxCustomer.ReadOnly = Not Locator.GetInstance(Of Session).User.Privileges.CrmChangeCustomer
+            QbxResponsible.ReadOnly = Not Locator.GetInstance(Of Session).User.Privileges.CrmChangeResponsible
+            TxtSubject.ReadOnly = Not Locator.GetInstance(Of Session).User.Privileges.CrmChangeSubject
         Else
             FlpCustomer.Visible = True
             QbxCustomer.ReadOnly = False
@@ -212,11 +212,11 @@ Public Class FrmCrm
                     _Crm.SetStatus(status)
                     BtnStatusValue.Text = GetEnumDescription(_Crm.Status)
                     LblStatusValue.Text = GetEnumDescription(_Crm.Status)
-                    BtnPending.Visible = _Crm.Status <> CrmStatus.Pending And Locator.GetInstance(Of Session).User.Privilege.CrmChangeToPendingStatus
+                    BtnPending.Visible = _Crm.Status <> CrmStatus.Pending And Locator.GetInstance(Of Session).User.Privileges.CrmChangeToPendingStatus
                     BtnFinish.Visible = _Crm.Status <> CrmStatus.Finished
                     BtnLost.Visible = _Crm.Status <> CrmStatus.Lost
                     If _Crm.Status <> CrmStatus.Pending Then
-                        If Locator.GetInstance(Of Session).User.Privilege.CrmChangeToPendingStatus Then
+                        If Locator.GetInstance(Of Session).User.Privileges.CrmChangeToPendingStatus Then
                             BtnStatusValue.Visible = True
                             LblStatusValue.Visible = False
                         Else
@@ -321,7 +321,7 @@ Public Class FrmCrm
                     LblIDValue.Text = _Crm.ID
                     WebTreatments.Navigate(_Crm.GetHtml(TxtFilterTreatment.Text))
                     BtnSave.Enabled = False
-                    BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privilege.CrmDelete
+                    BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privileges.CrmDelete
                     If _CrmsForm IsNot Nothing Then
                         _Filter.Filter()
                         _CrmsForm.DgvCrmLayout.Load()
@@ -349,16 +349,16 @@ Public Class FrmCrm
     End Sub
     Private Sub QbxCustomer_Enter(sender As Object, e As EventArgs) Handles QbxCustomer.Enter
         TmrQueriedBoxCustomer.Stop()
-        BtnViewCustomer.Visible = QbxCustomer.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.PersonWrite
-        BtnNewCustomer.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonWrite
-        BtnFilterCustomer.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonAccess
+        BtnViewCustomer.Visible = QbxCustomer.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
+        BtnNewCustomer.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonWrite
+        BtnFilterCustomer.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonAccess
     End Sub
     Private Sub QbxCustomer_Leave(sender As Object, e As EventArgs) Handles QbxCustomer.Leave
         TmrQueriedBoxCustomer.Stop()
         TmrQueriedBoxCustomer.Start()
     End Sub
     Private Sub QbxCustomer_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxCustomer.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnViewCustomer.Visible = QbxCustomer.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.PersonWrite
+        If Not _Loading Then BtnViewCustomer.Visible = QbxCustomer.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
     End Sub
     Private Sub BtnNewCustomer_Click(sender As Object, e As EventArgs) Handles BtnNewCustomer.Click
         Dim Person As Person

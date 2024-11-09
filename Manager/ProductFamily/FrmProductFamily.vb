@@ -53,7 +53,7 @@ Public Class FrmProductFamily
         DgvNavigator.DataGridView = _ProductFamiliesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -61,7 +61,7 @@ Public Class FrmProductFamily
         BtnStatusValue.Text = GetEnumDescription(_ProductFamily.Status)
         LblCreationValue.Text = _ProductFamily.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _ProductFamily.Name
-        BtnDelete.Enabled = _ProductFamily.ID > 0 And Locator.GetInstance(Of Session).User.Privilege.ProductFamilyDelete
+        BtnDelete.Enabled = _ProductFamily.ID > 0 And Locator.GetInstance(Of Session).User.Privileges.ProductFamilyDelete
         Text = "Família de Produto"
         If _ProductFamily.LockInfo.IsLocked And Not _ProductFamily.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _ProductFamily.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_ProductFamily.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
@@ -210,7 +210,7 @@ Public Class FrmProductFamily
                     _ProductFamily.Lock()
                     LblIDValue.Text = _ProductFamily.ID
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privilege.ProductFamilyDelete
+                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privileges.ProductFamilyDelete
                     If _ProductFamiliesForm IsNot Nothing Then
                         _Filter.Filter()
                         _ProductFamiliesForm.DgvProductFamilyLayout.Load()

@@ -13,7 +13,7 @@ Public Class FrmEmailsSent
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter
         DgvEmailSentLayout.Load()
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralExportGrid
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralExportGrid
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvEmailSentLayout.Load()

@@ -869,7 +869,6 @@
     <Compile Include="FilterQueriedBox\ProductPriceTableQueriedBoxFilter.vb" />
     <Compile Include="FilterQueriedBox\ProductQueriedBoxFilter.vb" />
     <Compile Include="FilterQueriedBox\RouteQueriedBoxFilter.vb" />
-    <Compile Include="FilterQueriedBox\UserPrivilegePresetQueriedBoxFilter.vb" />
     <Compile Include="FiltrerConverter\DecimalConverter.vb" />
     <Compile Include="FiltrerConverter\PersonEntityConverter.vb" />
     <Compile Include="FiltrerConverter\ProductFamilyConverter.vb" />
@@ -1143,24 +1142,10 @@
     <Compile Include="Evaluation\Control\UcEvaluationSourcePart.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserPrivilegePreset\FrmUserPrivilegePresets.Designer.vb">
-      <DependentUpon>FrmUserPrivilegePresets.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UserPrivilegePreset\FrmUserPrivilegePresets.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UserPrivilegePreset\UserPrivilegePreset.vb" />
-    <Compile Include="UserPrivilegePreset\UserPrivilegePresetFilter.vb" />
     <Compile Include="User\FrmUser.designer.vb">
       <DependentUpon>FrmUser.vb</DependentUpon>
     </Compile>
     <Compile Include="User\FrmUser.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UserPrivilegePreset\FrmUserPrivilegePreset.Designer.vb">
-      <DependentUpon>FrmUserPrivilegePreset.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UserPrivilegePreset\FrmUserPrivilegePreset.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="User\FrmUserEmail.Designer.vb">
@@ -1460,14 +1445,8 @@
     <EmbeddedResource Include="Evaluation\Control\UcEvaluationSourcePart.resx">
       <DependentUpon>UcEvaluationSourcePart.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserPrivilegePreset\FrmUserPrivilegePresets.resx">
-      <DependentUpon>FrmUserPrivilegePresets.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="User\FrmUser.resx">
       <DependentUpon>FrmUser.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserPrivilegePreset\FrmUserPrivilegePreset.resx">
-      <DependentUpon>FrmUserPrivilegePreset.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="User\FrmUserEmail.resx">
       <DependentUpon>FrmUserEmail.vb</DependentUpon>
@@ -1572,6 +1551,7 @@
     <Content Include="Resources\SQL\CashFlowAuthorizedInsert.sql" />
     <Content Include="Resources\SQL\CashFlowAuthorizedSelect.sql" />
     <Content Include="Resources\SQL\CashFlowAuthorizedUpdate.sql" />
+    <Content Include="Resources\SQL\UserPrivilegeDelete.sql" />
     <Content Include="Resources\SQL\VisitScheduleDelete .sql" />
     <Content Include="Resources\SQL\VisitScheduleFilter.sql" />
     <Content Include="Resources\SQL\VisitScheduleInsert.sql" />
@@ -1749,12 +1729,6 @@
     <Content Include="Resources\SQL\RequestSelect.sql" />
     <Content Include="Resources\SQL\UserEmailInsert .sql" />
     <Content Include="Resources\SQL\UserHasPersonSelect.sql" />
-    <Content Include="Resources\SQL\UserPrivilegePresetDelete.sql" />
-    <Content Include="Resources\SQL\UserPrivilegePresetInsert.sql" />
-    <Content Include="Resources\SQL\UserPrivilegePresetFilter.sql" />
-    <Content Include="Resources\SQL\UserPrivilegePresetSelect.sql" />
-    <Content Include="Resources\SQL\UserPrivilegePresetUpdate.sql" />
-    <Content Include="Resources\SQL\UserPrivilegeUpdate.sql" />
     <Content Include="Resources\SQL\UserPrivilegeInsert.sql" />
     <Content Include="Resources\SQL\UserPrivilegeSelect.sql" />
     <Content Include="Resources\SQL\PersonCompressorPartDelete.sql" />

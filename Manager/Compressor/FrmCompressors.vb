@@ -15,10 +15,10 @@ Public Class FrmCompressors
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter
         LoadDetails()
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privilege.CompressorWrite
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privilege.CompressorWrite
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privilege.CompressorDelete
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralExportGrid
+        BtnInclude.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.Compressor)
+        BtnEdit.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.Compressor)
+        BtnDelete.Visible = Locator.GetInstance(Of Session).User.CanDelete(Routine.Compressor)
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Frm(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvCompressorLayout.Load()

@@ -25,7 +25,7 @@ Public Class FrmCrmTreatment
         _CrmForm = CrmForm
         CbxContactType.DataSource = GetEnumDescriptions(GetType(CrmTreatmentContactType))
         LoadForm()
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
     End Sub
     Private Sub Form_Closing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         If Not Locator.GetInstance(Of Session).AutoCloseApp Then

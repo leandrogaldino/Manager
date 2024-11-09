@@ -36,9 +36,9 @@ Public Class FrmPersonMaintenancePlan
     End Sub
     Private Sub QbxPerson_Enter(sender As Object, e As EventArgs) Handles QbxPerson.Enter
         TmrQueriedBox.Stop()
-        BtnViewPerson.Visible = QbxPerson.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.PersonWrite
-        BtnNewPerson.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonWrite
-        BtnFilterPerson.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonAccess
+        BtnViewPerson.Visible = QbxPerson.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
+        BtnNewPerson.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonWrite
+        BtnFilterPerson.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonAccess
     End Sub
     Private Sub QbxPerson_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxPerson.FreezedPrimaryKeyChanged
         Dim XColumn As DataGridViewCheckBoxColumn
@@ -91,7 +91,7 @@ Public Class FrmPersonMaintenancePlan
             CMessageBox.Show("ERRO PS011", "Ocorreu ao selecionar a pessoa.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally
             If QbxPerson.IsFreezed Then
-                If Locator.GetInstance(Of Session).User.Privilege.PersonWrite Then
+                If Locator.GetInstance(Of Session).User.Privileges.PersonWrite Then
                     BtnViewPerson.Visible = True
                 Else
                     BtnViewPerson.Visible = False

@@ -27,7 +27,7 @@ Public Class FrmEvaluationTechnician
         DgvNavigator.DataGridView = _EvaluationForm.DgvTechnician
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
     End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then
@@ -157,16 +157,16 @@ Public Class FrmEvaluationTechnician
     End Sub
     Private Sub QbxTechnician_Enter(sender As Object, e As EventArgs)
         TmrQueriedBox.Stop()
-        BtnViewTechnician.Visible = QbxTechnician.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.PersonWrite
-        BtnNewTechnician.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonWrite
-        BtnFilterTechnician.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonAccess
+        BtnViewTechnician.Visible = QbxTechnician.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
+        BtnNewTechnician.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonWrite
+        BtnFilterTechnician.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonAccess
     End Sub
     Private Sub QbxTechnician_Leave(sender As Object, e As EventArgs)
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
     Private Sub QbxTechnician_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs)
-        If Not _Loading Then BtnViewTechnician.Visible = QbxTechnician.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.PersonWrite
+        If Not _Loading Then BtnViewTechnician.Visible = QbxTechnician.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
     End Sub
     Private Sub BtnNewTechnician_Click(sender As Object, e As EventArgs)
         Dim Technician As Person

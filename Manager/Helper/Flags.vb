@@ -143,6 +143,16 @@ Public Enum CompressorPartType
     <Description("Hora Trabalhada")> WorkedHour = 0
     <Description("Dia Corrido")> ElapsedDay = 1
 End Enum
+
+''' <summary>
+''' Utilizado para sinalizar o tipo de permissão do usuário a uma rotina.
+''' </summary>
+Public Enum Privilege
+    <Description("Acessar")> Access = 0
+    <Description("Escrever")> Write = 1
+    <Description("Excluir")> Delete = 2
+End Enum
+
 ''' <summary>
 ''' Utilizado para sinalizar as rotinas do sistema.
 ''' </summary>
@@ -174,6 +184,8 @@ Public Enum Routine
     <Description("Item do Caixa")> CashItem = 1101
     <Description("Responsável Pelo Item do Caixa")> CashItemResponsible = 1102
     <Description("Folha de Caixa")> CashSheet = 1103
+    <Description("Despesas Por Responsável")> CashExpensesPerResponsible = 1104
+    <Description("Reabrir Caixa")> CashReopen = 1105
     <Description("Compressor")> Compressor = 12
     <Description("Item do Compressor (Hora de Trabalho)")> CompressorPartWorkedHour = 1201
     <Description("Item do Compressor (Dia Corrido)")> CompressorPartElapsedDay = 1202
@@ -200,7 +212,12 @@ Public Enum Routine
     <Description("CRM")> Crm = 21
     <Description("Atendimento do CRM")> CrmTreatment = 2101
     <Description("Agendamento de Visita")> VisitSchedule = 22
+    <Description("Histórico")> Log = 23
+    <Description("Resetar Senha")> ResetUserPassword = 24
 End Enum
+
+
+
 ''' <summary>
 ''' Utilizado para sinalizar erros a serem tratados nas queries.
 ''' </summary>

@@ -18,10 +18,10 @@ Public Class FrmPersons
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter
         LoadDetails()
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonWrite
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonWrite
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonDelete
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralExportGrid
+        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonWrite
+        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonWrite
+        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonDelete
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralExportGrid
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvPersonLayout.Load()

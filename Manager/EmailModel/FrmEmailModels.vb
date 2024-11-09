@@ -16,7 +16,7 @@ Public Class FrmEmailModels
         _Filter = New EmailModelFilter(DgvData, PgFilter)
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralExportGrid
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralExportGrid
     End Sub
     Private Sub Frm(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvEmailModelsLayout.Load()

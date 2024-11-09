@@ -81,7 +81,7 @@ Public Class FrmCashItem
         DgvNavigator.DataGridView = _CashForm.DgvCashItem
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
     End Sub
     Private Sub Frm(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvResponsiblesLayout.Load()

@@ -21,7 +21,7 @@ Public Class FrmEvaluationManagement
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter
         LoadDetails()
-        BtnExport.Visible = Session.User.Privilege.SeveralExportGrid
+        BtnExport.Visible = Session.User.Privileges.SeveralExportGrid
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvEvaluationManagementLayout.Load()
@@ -344,7 +344,7 @@ Public Class FrmEvaluationManagement
     End Sub
     Private Sub DgvData_MouseUp(sender As Object, e As MouseEventArgs) Handles DgvData.MouseUp
         Dim Session = Locator.GetInstance(Of Session)
-        If _ShowCms And Session.User.Privilege.EvaluationApproveOrReject Then
+        If _ShowCms And Session.User.Privileges.EvaluationApproveOrReject Then
             CmsAutoEvaluation.Show(DgvData.PointToScreen(_CmsPoint))
             _ShowCms = False
         End If

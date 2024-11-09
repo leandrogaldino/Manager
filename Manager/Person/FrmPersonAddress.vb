@@ -7,6 +7,7 @@ Public Class FrmPersonAddress
     Private _PersonAddress As PersonAddress
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -24,12 +25,13 @@ Public Class FrmPersonAddress
         _Person = Person
         _PersonAddress = Address
         _PersonForm = PersonForm
+        _User = Locator.GetInstance(Of Session).User
         CbxContributionType.DataSource = {GetEnumDescription(PersonContribution.TaxPayer), GetEnumDescription(PersonContribution.NonTaxPayer), GetEnumDescription(PersonContribution.TaxFree)}
         LoadForm()
         DgvNavigator.DataGridView = _PersonForm.DgvAddress
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = _User.CanAccess(Routine.Log)
     End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then
@@ -322,16 +324,16 @@ Public Class FrmPersonAddress
     End Sub
     Private Sub QbxCity_Enter(sender As Object, e As EventArgs) Handles QbxCity.Enter
         TmrQueriedBoxCity.Stop()
-        BtnViewCity.Visible = QbxCity.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.CityWrite
-        BtnNewCity.Visible = Locator.GetInstance(Of Session).User.Privilege.CityWrite
-        BtnFilterCity.Visible = Locator.GetInstance(Of Session).User.Privilege.CityAccess
+        BtnViewCity.Visible = QbxCity.IsFreezed And _User.CanWrite(Routine.City)
+        BtnNewCity.Visible = _User.CanWrite(Routine.City)
+        BtnFilterCity.Visible = _User.CanAccess(Routine.City)
     End Sub
     Private Sub QbxCity_Leave(sender As Object, e As EventArgs) Handles QbxCity.Leave
         TmrQueriedBoxCity.Stop()
         TmrQueriedBoxCity.Start()
     End Sub
     Private Sub QbxCity_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxCity.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnViewCity.Visible = QbxCity.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.CityWrite
+        If Not _Loading Then BtnViewCity.Visible = QbxCity.IsFreezed And _User.CanWrite(Routine.City)
     End Sub
     Private Sub BtnNewCity_Click(sender As Object, e As EventArgs) Handles BtnNewCity.Click
         Dim City As City
@@ -366,16 +368,16 @@ Public Class FrmPersonAddress
     End Sub
     Private Sub QbxCarrier_Enter(sender As Object, e As EventArgs) Handles QbxCarrier.Enter
         TmrQueriedBoxCarrier.Stop()
-        BtnViewCarrier.Visible = QbxCarrier.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.PersonWrite
-        BtnNewCarrier.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonWrite
-        BtnFilterCarrier.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonAccess
+        BtnViewCarrier.Visible = QbxCarrier.IsFreezed And _User.CanWrite(Routine.Person)
+        BtnNewCarrier.Visible = _User.CanWrite(Routine.Person)
+        BtnFilterCarrier.Visible = _User.CanAccess(Routine.Person)
     End Sub
     Private Sub QbxCarrier_Leave(sender As Object, e As EventArgs) Handles QbxCarrier.Leave
         TmrQueriedBoxCarrier.Stop()
         TmrQueriedBoxCarrier.Start()
     End Sub
     Private Sub QbxCarrier_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxCarrier.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnViewCarrier.Visible = QbxCarrier.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.PersonWrite
+        If Not _Loading Then BtnViewCarrier.Visible = QbxCarrier.IsFreezed And _User.CanWrite(Routine.Person)
     End Sub
     Private Sub BtnNewCarrier_Click(sender As Object, e As EventArgs) Handles BtnNewCarrier.Click
         Dim Carrier As Person

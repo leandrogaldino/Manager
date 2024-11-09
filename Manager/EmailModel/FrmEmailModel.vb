@@ -61,7 +61,7 @@ Public Class FrmEmailModel
         DgvNavigator.DataGridView = _EmailModelsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
         TsBody.Renderer = New CustomToolstripRender
         TxtFont.Text = TxtBody.Font.Name
         Sb.AppendLine("#sdl#: é substituido por bom dia, boa tarde ou boa noite.")

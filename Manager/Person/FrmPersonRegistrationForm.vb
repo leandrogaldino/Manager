@@ -39,12 +39,12 @@ Public Class FrmPersonRegistrationForm
     End Sub
     Private Sub QbxPerson_Enter(sender As Object, e As EventArgs) Handles QbxPerson.Enter
         TmrQueriedBox.Stop()
-        BtnViewPerson.Visible = QbxPerson.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.PersonWrite
-        BtnNewPerson.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonWrite
-        BtnFilterPerson.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonAccess
+        BtnViewPerson.Visible = QbxPerson.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
+        BtnNewPerson.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonWrite
+        BtnFilterPerson.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonAccess
     End Sub
     Private Sub QbxPerson_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxPerson.FreezedPrimaryKeyChanged
-        BtnViewPerson.Visible = QbxPerson.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.PersonWrite
+        BtnViewPerson.Visible = QbxPerson.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
     End Sub
     Private Sub QbxPerson_Leave(sender As Object, e As EventArgs) Handles QbxPerson.Leave
         TmrQueriedBox.Stop()

@@ -14,10 +14,10 @@ Public Class FrmRoutes
         _Filter = New RouteFilter(DgvData, PgFilter)
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privilege.RouteWrite
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privilege.RouteWrite
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privilege.RouteDelete
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralExportGrid
+        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privileges.RouteWrite
+        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privileges.RouteWrite
+        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privileges.RouteDelete
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralExportGrid
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvVisitScheduleLayout.Load()

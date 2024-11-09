@@ -11,6 +11,7 @@ Public Class FrmCash
     Private _Filter As CashFilter
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -30,11 +31,12 @@ Public Class FrmCash
         MyBase.OnResize(e)
     End Sub
     Public Sub New(Cash As Cash, CashesForm As FrmCashes)
+        InitializeComponent()
         _Cash = Cash
         _CashesForm = CashesForm
         _CashesGrid = _CashesForm.DgvData
         _Filter = CType(_CashesForm.PgFilter.SelectedObject, CashFilter)
-        InitializeComponent()
+        _User = Locator.GetInstance(Of Session).User
         LoadData()
     End Sub
     Private Sub FrmCash_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -46,14 +48,14 @@ Public Class FrmCash
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         DgvCashItemsLayout.Load()
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = _User.CanAccess(Routine.Log)
         LblDocumentPage.Text = Nothing
     End Sub
     Private Sub LoadData()
         _Loading = True
         If _Cash.ID > 0 Then
             If _Cash.Status = CashStatus.Closed Then
-                If Locator.GetInstance(Of Session).User.Privilege.CashReopen Then
+                If _User.CanAccess(Routine.CashReopen) Then
                     BtnStatusValue.Visible = True
                     LblStatusValue.Visible = False
                 Else
@@ -89,13 +91,13 @@ Public Class FrmCash
         LblIDValue.Text = _Cash.ID
         BtnStatusValue.Text = GetEnumDescription(_Cash.Status)
         LblStatusValue.Text = GetEnumDescription(_Cash.Status)
-        BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And Locator.GetInstance(Of Session).User.Privilege.CashReopen
+        BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And _User.CanAccess(Routine.CashReopen)
         BtnCloseCash.Visible = _Cash.Status <> CashStatus.Closed
         LblCreationDateValue.Text = _Cash.Creation.ToString("dd/MM/yyyy")
         TxtNote.Text = _Cash.Note
         _Cash.CashItems.FillDataGridView(DgvCashItem)
         CalculateValues()
-        BtnDelete.Enabled = _Cash.ID > 0 And Locator.GetInstance(Of Session).User.Privilege.CashDelete
+        BtnDelete.Enabled = _Cash.ID > 0 And _User.CanDelete(Routine.Cash)
         Text = "Caixa"
         If _Cash.LockInfo.IsLocked And Not _Cash.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Cash.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_Cash.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
@@ -314,7 +316,7 @@ Public Class FrmCash
                     LblCreationDateValue.Text = _Cash.Creation.ToString("dd/MM/yyyy")
                     _Cash.CashItems.FillDataGridView(DgvCashItem)
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privilege.CashDelete
+                    BtnDelete.Enabled = _User.CanDelete(Routine.Cash)
                     If _CashesForm IsNot Nothing Then
                         _Filter.Filter()
                         _CashesForm.DgvCashesLayout.Load()
@@ -519,9 +521,9 @@ Public Class FrmCash
                         BtnStatusValue.Text = GetEnumDescription(_Cash.Status)
                         LblStatusValue.Text = GetEnumDescription(_Cash.Status)
                         BtnCloseCash.Visible = _Cash.Status <> CashStatus.Closed
-                        BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And Locator.GetInstance(Of Session).User.Privilege.CashReopen
+                        BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And _User.CanAccess(Routine.CashReopen)
                         If _Cash.Status = CashStatus.Closed Then
-                            If Locator.GetInstance(Of Session).User.Privilege.CashReopen Then
+                            If _User.CanAccess(Routine.CashReopen) Then
                                 BtnStatusValue.Visible = True
                                 LblStatusValue.Visible = False
                             Else
@@ -562,7 +564,7 @@ Public Class FrmCash
             BtnStatusValue.Text = GetEnumDescription(_Cash.Status)
             LblStatusValue.Text = GetEnumDescription(_Cash.Status)
             BtnCloseCash.Visible = _Cash.Status <> CashStatus.Closed
-            BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And Locator.GetInstance(Of Session).User.Privilege.CashReopen
+            BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And _User.CanAccess(Routine.CashReopen)
             If _CashesForm IsNot Nothing Then
                 _Filter.Filter()
                 _CashesForm.DgvCashesLayout.Load()

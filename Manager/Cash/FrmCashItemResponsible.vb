@@ -27,7 +27,7 @@ Public Class FrmCashItemResponsible
         DgvNavigator.DataGridView = _CashItemForm.DgvResponsibles
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privilege.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
     End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then
@@ -181,16 +181,16 @@ Public Class FrmCashItemResponsible
     End Sub
     Private Sub QbxResponsible_Enter(sender As Object, e As EventArgs) Handles QbxResponsible.Enter
         TmrQueriedBox.Stop()
-        BtnView.Visible = QbxResponsible.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.PersonWrite
-        BtnNew.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonWrite
-        BtnFilter.Visible = Locator.GetInstance(Of Session).User.Privilege.PersonAccess
+        BtnView.Visible = QbxResponsible.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
+        BtnNew.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonWrite
+        BtnFilter.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonAccess
     End Sub
     Private Sub QbxResponsible_Leave(sender As Object, e As EventArgs) Handles QbxResponsible.Leave
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
     Private Sub QbxResponsible_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxResponsible.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnView.Visible = QbxResponsible.IsFreezed And Locator.GetInstance(Of Session).User.Privilege.PersonWrite
+        If Not _Loading Then BtnView.Visible = QbxResponsible.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Responsible As Person

@@ -156,9 +156,15 @@ CREATE TABLE userprivilege (
     creation DATE NOT NULL,
     granteduserid INT NOT NULL,
     routineid INT NOT NULL,
-    privilegeid INT NOT NULL,
+    privilegelevelid INT NOT NULL,
     userid INT NOT NULL,
 	PRIMARY KEY(id),
     FOREIGN KEY (granteduserid) REFERENCES user(id) ON DELETE CASCADE,
     FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
 );
+
+INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 0, 1);
+INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 1, 1);
+INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 2, 1);
+
+

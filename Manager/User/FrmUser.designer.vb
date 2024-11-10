@@ -95,7 +95,7 @@ Partial Class FrmUser
         Me.TsTitle.Location = New System.Drawing.Point(0, 25)
         Me.TsTitle.Name = "TsTitle"
         Me.TsTitle.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsTitle.Size = New System.Drawing.Size(721, 25)
+        Me.TsTitle.Size = New System.Drawing.Size(459, 25)
         Me.TsTitle.TabIndex = 1
         Me.TsTitle.Text = "ToolStrip1"
         '
@@ -161,7 +161,7 @@ Partial Class FrmUser
         Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsNavigation.Size = New System.Drawing.Size(721, 25)
+        Me.TsNavigation.Size = New System.Drawing.Size(459, 25)
         Me.TsNavigation.TabIndex = 0
         Me.TsNavigation.Text = "ToolStrip2"
         '
@@ -284,16 +284,16 @@ Partial Class FrmUser
         Me.PnButtons.Controls.Add(Me.BtnSave)
         Me.PnButtons.Controls.Add(Me.BtnClose)
         Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PnButtons.Location = New System.Drawing.Point(0, 327)
+        Me.PnButtons.Location = New System.Drawing.Point(0, 147)
         Me.PnButtons.Name = "PnButtons"
-        Me.PnButtons.Size = New System.Drawing.Size(721, 44)
+        Me.PnButtons.Size = New System.Drawing.Size(459, 44)
         Me.PnButtons.TabIndex = 3
         '
         'BtnSave
         '
         Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnSave.Enabled = False
-        Me.BtnSave.Location = New System.Drawing.Point(510, 7)
+        Me.BtnSave.Location = New System.Drawing.Point(248, 7)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(95, 30)
         Me.BtnSave.TabIndex = 0
@@ -304,7 +304,7 @@ Partial Class FrmUser
         '
         Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnClose.Location = New System.Drawing.Point(611, 7)
+        Me.BtnClose.Location = New System.Drawing.Point(349, 7)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(95, 30)
         Me.BtnClose.TabIndex = 1
@@ -351,7 +351,7 @@ Partial Class FrmUser
         Me.TcUser.Multiline = True
         Me.TcUser.Name = "TcUser"
         Me.TcUser.SelectedIndex = 0
-        Me.TcUser.Size = New System.Drawing.Size(721, 277)
+        Me.TcUser.Size = New System.Drawing.Size(459, 97)
         Me.TcUser.TabIndex = 2
         '
         'TabMain
@@ -364,7 +364,7 @@ Partial Class FrmUser
         Me.TabMain.Location = New System.Drawing.Point(4, 26)
         Me.TabMain.Name = "TabMain"
         Me.TabMain.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabMain.Size = New System.Drawing.Size(713, 247)
+        Me.TabMain.Size = New System.Drawing.Size(451, 67)
         Me.TabMain.TabIndex = 9
         Me.TabMain.Text = "Identificação"
         Me.TabMain.UseVisualStyleBackColor = True
@@ -456,10 +456,10 @@ Partial Class FrmUser
         'TabPrivilege
         '
         Me.TabPrivilege.Controls.Add(Me.FlpPrivilege)
-        Me.TabPrivilege.Location = New System.Drawing.Point(4, 26)
+        Me.TabPrivilege.Location = New System.Drawing.Point(4, 22)
         Me.TabPrivilege.Name = "TabPrivilege"
         Me.TabPrivilege.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPrivilege.Size = New System.Drawing.Size(713, 247)
+        Me.TabPrivilege.Size = New System.Drawing.Size(713, 251)
         Me.TabPrivilege.TabIndex = 8
         Me.TabPrivilege.Text = "Permissões"
         Me.TabPrivilege.UseVisualStyleBackColor = True
@@ -470,7 +470,7 @@ Partial Class FrmUser
         Me.FlpPrivilege.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FlpPrivilege.Location = New System.Drawing.Point(3, 3)
         Me.FlpPrivilege.Name = "FlpPrivilege"
-        Me.FlpPrivilege.Size = New System.Drawing.Size(707, 241)
+        Me.FlpPrivilege.Size = New System.Drawing.Size(707, 245)
         Me.FlpPrivilege.TabIndex = 0
         '
         'TabEmail
@@ -601,7 +601,7 @@ Partial Class FrmUser
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(721, 371)
+        Me.ClientSize = New System.Drawing.Size(459, 191)
         Me.Controls.Add(Me.TcUser)
         Me.Controls.Add(Me.TsTitle)
         Me.Controls.Add(Me.TsNavigation)

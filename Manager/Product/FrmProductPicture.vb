@@ -9,6 +9,7 @@ Public Class FrmProductPicture
     Private _ProductPicture As ProductPicture
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -26,11 +27,12 @@ Public Class FrmProductPicture
         _Product = Product
         _ProductPicture = ProductPicture
         _ProductForm = ProductForm
+        _User = Locator.GetInstance(Of Session).User
         LoadForm()
         DgvNavigator.DataGridView = _ProductForm.DgvPicture
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
+        BtnLog.Visible = _User.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then

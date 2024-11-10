@@ -53,7 +53,8 @@ Public Class FrmLogin
                             DbPassword = Reader.GetString(Reader.GetOrdinal("password"))
                             If TypedPassword = DbPassword Then
                                 Try
-                                    Session.User = New User().Load(Reader.GetInt64(Reader.GetOrdinal("id")), False)
+                                    Dim UserId As Long = Reader.GetInt64(Reader.GetOrdinal("id"))
+                                    Session.User = New User().Load(UserId, False)
                                     Session.Token = Guid.NewGuid.ToString.ToUpper()
                                     If Session.User.Status = SimpleStatus.Active Then
                                         If Not Session.User.RequestPassword Then

@@ -6,10 +6,10 @@ Public Class FrmPersons
     Private _Filter As PersonFilter
     Public Sub New()
         InitializeComponent()
-        Utility.EnableControlDoubleBuffer(DgvData, True)
-        Utility.EnableControlDoubleBuffer(DgvAddress, True)
-        Utility.EnableControlDoubleBuffer(DgvCompressor, True)
-        Utility.EnableControlDoubleBuffer(DgvContact, True)
+        EnableControlDoubleBuffer(DgvData, True)
+        EnableControlDoubleBuffer(DgvAddress, True)
+        EnableControlDoubleBuffer(DgvCompressor, True)
+        EnableControlDoubleBuffer(DgvContact, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer1.SplitterDistance = 250
         SplitContainer2.Panel1Collapsed = True
@@ -18,10 +18,10 @@ Public Class FrmPersons
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter
         LoadDetails()
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonWrite
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonWrite
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonDelete
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralExportGrid
+        BtnInclude.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.Person)
+        BtnEdit.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.Person)
+        BtnDelete.Visible = Locator.GetInstance(Of Session).User.CanDelete(Routine.Person)
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.CanExportGrid)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvPersonLayout.Load()
@@ -236,6 +236,6 @@ Public Class FrmPersons
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Pessoas", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.CanExportGrid))
     End Sub
 End Class

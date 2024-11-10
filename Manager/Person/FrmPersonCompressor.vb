@@ -31,7 +31,7 @@ Public Class FrmPersonCompressor
         DgvNavigator.DataGridView = _PersonForm.DgvCompressor
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = _User.CanAccess(Routine.Log)
+        BtnLog.Visible = _User.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvPartWorkedHourLayout.Load()
@@ -278,7 +278,7 @@ Public Class FrmPersonCompressor
             DgvPartElapsedDay.Select()
             Return False
 
-        ElseIf Not _PersonCompressor.PartsWorkedHour.Any(Function(x) x.PartBind = CompressorPartBind.AirFilter) Then
+        ElseIf Not _PersonCompressor.PartsWorkedHour.Any(Function(x) x.PartBind = CompressorPartBindType.AirFilter) Then
             TcPersonCompressor.SelectedTab = TabMaintenance
             TcMaintenance.SelectedTab = TabPartWorkedHour
             EprValidation.SetError(TsPartWorkedHour, "Pelo menos um item precisa estar vinculado com filtro de ar.")
@@ -288,21 +288,21 @@ Public Class FrmPersonCompressor
             Return False
 
 
-        ElseIf Not _PersonCompressor.PartsWorkedHour.Any(Function(x) x.PartBind = CompressorPartBind.OilFilter) Then
+        ElseIf Not _PersonCompressor.PartsWorkedHour.Any(Function(x) x.PartBind = CompressorPartBindType.OilFilter) Then
             TcPersonCompressor.SelectedTab = TabMaintenance
             TcMaintenance.SelectedTab = TabPartWorkedHour
             EprValidation.SetError(TsPartWorkedHour, "Pelo menos um item precisa estar vinculado com filtro de óleo.")
             EprValidation.SetIconAlignment(TsPartWorkedHour, ErrorIconAlignment.MiddleLeft)
             EprValidation.SetIconPadding(TsPartWorkedHour, -90)
             DgvPartWorkedHour.Select()
-        ElseIf Not _PersonCompressor.PartsWorkedHour.Any(Function(x) x.PartBind = CompressorPartBind.Separator) Then
+        ElseIf Not _PersonCompressor.PartsWorkedHour.Any(Function(x) x.PartBind = CompressorPartBindType.Separator) Then
             TcPersonCompressor.SelectedTab = TabMaintenance
             TcMaintenance.SelectedTab = TabPartWorkedHour
             EprValidation.SetError(TsPartWorkedHour, "Pelo menos um item precisa estar vinculado com separador.")
             EprValidation.SetIconAlignment(TsPartWorkedHour, ErrorIconAlignment.MiddleLeft)
             EprValidation.SetIconPadding(TsPartWorkedHour, -90)
             DgvPartWorkedHour.Select()
-        ElseIf Not _PersonCompressor.PartsWorkedHour.Any(Function(x) x.PartBind = CompressorPartBind.oil) Then
+        ElseIf Not _PersonCompressor.PartsWorkedHour.Any(Function(x) x.PartBind = CompressorPartBindType.oil) Then
             TcPersonCompressor.SelectedTab = TabMaintenance
             TcMaintenance.SelectedTab = TabPartWorkedHour
             EprValidation.SetError(TsPartWorkedHour, "Pelo menos um item precisa estar vinculado com óleo")

@@ -1,6 +1,7 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Utility
 Public Class FrmPersonRegistrationForm
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -13,6 +14,12 @@ Public Class FrmPersonRegistrationForm
         End If
         MyBase.DefWndProc(m)
     End Sub
+
+    Public Sub New()
+        InitializeComponent()
+        _User = Locator.GetInstance(Of Session).User
+    End Sub
+
     Private Sub FrmPersonReportRegistrationForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         QbxPerson.Select()
     End Sub
@@ -30,7 +37,7 @@ Public Class FrmPersonRegistrationForm
             BtnGenerate.Enabled = False
             Result = PersonReport.ProcessRegistrationForm(QbxPerson.FreezedPrimaryKey, CbxShowAddresses.Checked, CbxShowContacts.Checked, CbxShowCompressors.Checked)
             DialogResult = DialogResult.OK
-            FrmMain.OpenTab(New FrmReport(Result), GetEnumDescription(Routine.PersonRegistrationForm))
+            FrmMain.OpenTab(New FrmReport(Result), GetEnumDescription(Routine.PersonRegistrationFormReport))
         Catch ex As Exception
             CMessageBox.Show("ERRO PS013", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally
@@ -39,12 +46,12 @@ Public Class FrmPersonRegistrationForm
     End Sub
     Private Sub QbxPerson_Enter(sender As Object, e As EventArgs) Handles QbxPerson.Enter
         TmrQueriedBox.Stop()
-        BtnViewPerson.Visible = QbxPerson.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
-        BtnNewPerson.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonWrite
-        BtnFilterPerson.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonAccess
+        BtnViewPerson.Visible = QbxPerson.IsFreezed And _User.CanWrite(Routine.Person)
+        BtnNewPerson.Visible = _User.CanWrite(Routine.Person)
+        BtnFilterPerson.Visible = _User.CanAccess(Routine.Person)
     End Sub
     Private Sub QbxPerson_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxPerson.FreezedPrimaryKeyChanged
-        BtnViewPerson.Visible = QbxPerson.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
+        BtnViewPerson.Visible = QbxPerson.IsFreezed And _User.CanWrite(Routine.Person)
     End Sub
     Private Sub QbxPerson_Leave(sender As Object, e As EventArgs) Handles QbxPerson.Leave
         TmrQueriedBox.Stop()

@@ -6,6 +6,7 @@ Public Class FrmCashItemResponsible
     Private _CashItemResponsible As CashItemResponsible
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -23,11 +24,12 @@ Public Class FrmCashItemResponsible
         _CashItem = CashItem
         _CashItemResponsible = CashItemResponsible
         _CashItemForm = CashItemForm
+        _User = Locator.GetInstance(Of Session).User
         LoadForm()
         DgvNavigator.DataGridView = _CashItemForm.DgvResponsibles
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then
@@ -181,16 +183,16 @@ Public Class FrmCashItemResponsible
     End Sub
     Private Sub QbxResponsible_Enter(sender As Object, e As EventArgs) Handles QbxResponsible.Enter
         TmrQueriedBox.Stop()
-        BtnView.Visible = QbxResponsible.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
-        BtnNew.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonWrite
-        BtnFilter.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonAccess
+        BtnView.Visible = QbxResponsible.IsFreezed And _User.CanWrite(Routine.Person)
+        BtnNew.Visible = _User.CanWrite(Routine.Person)
+        BtnFilter.Visible = _User.CanAccess(Routine.Person)
     End Sub
     Private Sub QbxResponsible_Leave(sender As Object, e As EventArgs) Handles QbxResponsible.Leave
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
     Private Sub QbxResponsible_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxResponsible.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnView.Visible = QbxResponsible.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
+        If Not _Loading Then BtnView.Visible = QbxResponsible.IsFreezed And _User.CanWrite(Routine.Person)
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Responsible As Person

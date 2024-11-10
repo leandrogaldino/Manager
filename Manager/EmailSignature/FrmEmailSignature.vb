@@ -11,6 +11,7 @@ Public Class FrmEmailSignature
     Private _Filter As EmailSignatureFilter
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -30,17 +31,19 @@ Public Class FrmEmailSignature
         MyBase.OnResize(e)
     End Sub
     Public Sub New(EmailSignature As EmailSignature, EmailSignaturesForm As FrmEmailSignatures)
+        InitializeComponent()
         _EmailSignature = EmailSignature
         _EmailSignaturesForm = EmailSignaturesForm
         _EmailSignaturesGrid = _EmailSignaturesForm.DgvData
         _Filter = CType(_EmailSignaturesForm.PgFilter.SelectedObject, EmailSignatureFilter)
-        InitializeComponent()
+        _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
     End Sub
     Public Sub New(EmailSignature As EmailSignature)
-        _EmailSignature = EmailSignature
         InitializeComponent()
+        _EmailSignature = EmailSignature
+        _User = Locator.GetInstance(Of Session).User
         TsNavigation.Visible = False
         TsNavigation.Enabled = False
         LblName.Top -= TsNavigation.Height
@@ -57,7 +60,7 @@ Public Class FrmEmailSignature
         DgvNavigator.DataGridView = _EmailSignaturesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
+        BtnLog.Visible = _User.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub LoadData()
         _Loading = True

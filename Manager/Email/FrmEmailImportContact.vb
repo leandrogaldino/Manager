@@ -1,8 +1,13 @@
 ﻿Imports ControlLibrary
 
 Public Class FrmEmailImportContact
+    Private _User As User
+    Public Sub New()
+        InitializeComponent()
+        _User = Locator.GetInstance(Of Session).User
+    End Sub
     Private Sub QbxPerson_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxPerson.FreezedPrimaryKeyChanged
-        BtnView.Visible = QbxPerson.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
+        BtnView.Visible = QbxPerson.IsFreezed And _User.CanWrite(Routine.Person)
         BtnImport.Enabled = QbxPerson.IsFreezed
         DgvEmail.Columns.Clear()
         FillDataGridView(New Person().Load(QbxPerson.FreezedPrimaryKey, False))
@@ -15,9 +20,9 @@ Public Class FrmEmailImportContact
     End Sub
     Private Sub QbxPerson_Enter(sender As Object, e As EventArgs) Handles QbxPerson.Enter
         TmrQueriedBox.Stop()
-        BtnView.Visible = QbxPerson.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
-        BtnNew.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonWrite
-        BtnFilter.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonAccess
+        BtnView.Visible = QbxPerson.IsFreezed And _User.CanWrite(Routine.Person)
+        BtnNew.Visible = _User.CanWrite(Routine.Person)
+        BtnFilter.Visible = _User.CanAccess(Routine.Person)
     End Sub
     Private Sub QbxPerson_Leave(sender As Object, e As EventArgs) Handles QbxPerson.Leave
         TmrQueriedBox.Stop()

@@ -27,7 +27,7 @@ Public Class FrmProductCode
         DgvNavigator.DataGridView = _ProductForm.DgvCode
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then

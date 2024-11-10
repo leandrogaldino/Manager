@@ -8,6 +8,7 @@ Public Class FrmProductPriceTable
     Private _Filter As ProductPriceTableFilter
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -27,17 +28,19 @@ Public Class FrmProductPriceTable
         MyBase.OnResize(e)
     End Sub
     Public Sub New(PriceTable As ProductPriceTable, PriceTablesForm As FrmProductPriceTables)
+        InitializeComponent()
         _PriceTable = PriceTable
         _PriceTablesForm = PriceTablesForm
         _PriceTablesGrid = _PriceTablesForm.DgvData
         _Filter = CType(_PriceTablesForm.PgFilter.SelectedObject, ProductPriceTableFilter)
-        InitializeComponent()
+        _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
     End Sub
     Public Sub New(PriceTable As ProductPriceTable)
-        _PriceTable = PriceTable
         InitializeComponent()
+        _PriceTable = PriceTable
+        _User = Locator.GetInstance(Of Session).User
         Height -= TsNavigation.Height
         LblName.Top -= TsNavigation.Height
         TxtName.Top -= TsNavigation.Height
@@ -53,7 +56,7 @@ Public Class FrmProductPriceTable
         DgvNavigator.DataGridView = _PriceTablesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
+        BtnLog.Visible = _User.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -61,7 +64,7 @@ Public Class FrmProductPriceTable
         BtnStatusValue.Text = GetEnumDescription(_PriceTable.Status)
         LblCreationValue.Text = _PriceTable.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _PriceTable.Name
-        BtnDelete.Enabled = _PriceTable.ID > 0 And Locator.GetInstance(Of Session).User.Privileges.ProductPriceTableDelete
+        BtnDelete.Enabled = _PriceTable.ID > 0 And _User.CanDelete(Routine.ProductPriceTable)
         Text = "Tabela de Preço"
         If _PriceTable.LockInfo.IsLocked And Not _PriceTable.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _PriceTable.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_PriceTable.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
@@ -209,7 +212,7 @@ Public Class FrmProductPriceTable
                     _PriceTable.Lock()
                     LblIDValue.Text = _PriceTable.ID
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privileges.ProductPriceTableDelete
+                    BtnDelete.Enabled = _User.CanDelete(Routine.ProductPriceTable)
                     If _PriceTablesForm IsNot Nothing Then
                         _Filter.Filter()
                         _PriceTablesForm.DgvPriceTableLayout.Load()

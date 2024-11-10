@@ -8,7 +8,7 @@ Public Class Person
     Inherits ModelBase
     Private _IsSaved As Boolean
     Public Property Status As SimpleStatus = SimpleStatus.Active
-    Public Property Entity As PersonEntity = PersonEntity.Legal
+    Public Property Entity As PersonEntityType = PersonEntityType.Legal
     Public Property IsCustomer As Boolean
     Public Property IsProvider As Boolean
     Public Property IsEmployee As Boolean
@@ -31,7 +31,7 @@ Public Class Person
         _ID = 0
         _Creation = Today
         Status = SimpleStatus.Active
-        Entity = PersonEntity.Legal
+        Entity = PersonEntityType.Legal
         IsCustomer = False
         IsProvider = False
         IsEmployee = False

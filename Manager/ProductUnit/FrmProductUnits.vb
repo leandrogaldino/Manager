@@ -4,20 +4,22 @@ Imports MySql.Data.MySqlClient
 Public Class FrmProductUnits
     Private _Unit As New ProductUnit
     Private _Filter As ProductUnitFilter
+    Private _User As User
     Public Sub New()
         InitializeComponent()
-        Utility.EnableControlDoubleBuffer(DgvData, True)
+        EnableControlDoubleBuffer(DgvData, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer1.SplitterDistance = 250
         SplitContainer2.Panel1Collapsed = True
         SplitContainer2.SplitterDistance = 800
         _Filter = New ProductUnitFilter(DgvData, PgFilter)
         _Filter.Filter()
+        _User = Locator.GetInstance(Of Session).User
         PgFilter.SelectedObject = _Filter
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductUnitWrite
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductUnitWrite
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductUnitDelete
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralExportGrid
+        BtnInclude.Visible = _User.CanWrite(Routine.ProductUnit)
+        BtnEdit.Visible = _User.CanWrite(Routine.ProductUnit)
+        BtnDelete.Visible = _User.CanDelete(Routine.ProductUnit)
+        BtnExport.Visible = _User.CanAccess(Routine.CanExportGrid)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvUnitsLayout.Load()
@@ -181,6 +183,6 @@ Public Class FrmProductUnits
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Unidades de Medida", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.CanExportGrid))
     End Sub
 End Class

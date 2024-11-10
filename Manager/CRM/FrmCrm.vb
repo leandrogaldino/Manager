@@ -9,7 +9,6 @@ Public Class FrmCrm
     Private _ClickedLinks As New List(Of HtmlElement)()
     Private _Deleting As Boolean
     Private _Loading As Boolean
-
     Private _User As User
 
     <DebuggerStepThrough>
@@ -69,14 +68,14 @@ Public Class FrmCrm
         DgvNavigator.DataGridView = _CrmsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = _User.CanAccess(Routine.Log)
+        BtnLog.Visible = _User.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub LoadData()
         _Loading = True
         LblIDValue.Text = _Crm.ID
         If _Crm.ID > 0 Then
             If _Crm.Status <> CrmStatus.Pending Then
-                If _User.CanAccess(Routine.CrmChangeToPending) Then
+                If _User.CanAccess(Routine.CrmCanChangeStatusToPending) Then
                     BtnStatusValue.Visible = True
                     LblStatusValue.Visible = False
                 Else
@@ -94,7 +93,7 @@ Public Class FrmCrm
         End If
         LblStatusValue.Text = GetEnumDescription(_Crm.Status)
         BtnStatusValue.Text = GetEnumDescription(_Crm.Status)
-        BtnPending.Visible = _Crm.Status <> CrmStatus.Pending And _User.CanAccess(Routine.CrmChangeToPending)
+        BtnPending.Visible = _Crm.Status <> CrmStatus.Pending And _User.CanAccess(Routine.CrmCanChangeStatusToPending)
         BtnFinish.Visible = _Crm.Status <> CrmStatus.Finished
         BtnLost.Visible = _Crm.Status <> CrmStatus.Lost
         BtnDelete.Enabled = _Crm.ID > 0 And _User.CanDelete(Routine.Crm)
@@ -111,10 +110,10 @@ Public Class FrmCrm
         End If
         BtnSave.Enabled = False
         If _Crm.ID > 0 Then
-            FlpCustomer.Visible = _User.CanAccess(Routine.CrmChangeCustomer)
-            QbxCustomer.ReadOnly = Not _User.CanAccess(Routine.CrmChangeCustomer)
-            QbxResponsible.ReadOnly = Not _User.CanAccess(Routine.CrmChangeResponsible)
-            TxtSubject.ReadOnly = Not _User.CanAccess(Routine.CrmChangeSubject)
+            FlpCustomer.Visible = _User.CanAccess(Routine.CrmCanChangeCustomer)
+            QbxCustomer.ReadOnly = Not _User.CanAccess(Routine.CrmCanChangeCustomer)
+            QbxResponsible.ReadOnly = Not _User.CanAccess(Routine.CrmCanChangeResponsible)
+            TxtSubject.ReadOnly = Not _User.CanAccess(Routine.CrmCanChangeSubject)
         Else
             FlpCustomer.Visible = True
             QbxCustomer.ReadOnly = False
@@ -216,11 +215,11 @@ Public Class FrmCrm
                     _Crm.SetStatus(status)
                     BtnStatusValue.Text = GetEnumDescription(_Crm.Status)
                     LblStatusValue.Text = GetEnumDescription(_Crm.Status)
-                    BtnPending.Visible = _Crm.Status <> CrmStatus.Pending And _User.CanAccess(Routine.CrmChangeToPending)
+                    BtnPending.Visible = _Crm.Status <> CrmStatus.Pending And _User.CanAccess(Routine.CrmCanChangeStatusToPending)
                     BtnFinish.Visible = _Crm.Status <> CrmStatus.Finished
                     BtnLost.Visible = _Crm.Status <> CrmStatus.Lost
                     If _Crm.Status <> CrmStatus.Pending Then
-                        If _User.CanAccess(Routine.CrmChangeToPending) Then
+                        If _User.CanAccess(Routine.CrmCanChangeStatusToPending) Then
                             BtnStatusValue.Visible = True
                             LblStatusValue.Visible = False
                         Else
@@ -399,7 +398,7 @@ Public Class FrmCrm
         For Each Treatment As CrmTreatment In _Crm.Treatments.Where(Function(x) x.ID = 0)
             Treatment.Responsible = Responsible
         Next Treatment
-        WebTreatments.Navigate(_Crm.GetHtml(TxtFilterTreatment.Text))
+        If Not _Loading Then WebTreatments.Navigate(_Crm.GetHtml(TxtFilterTreatment.Text))
     End Sub
     Private Sub BtnIncludeTreatment_Click(sender As Object, e As EventArgs) Handles BtnIncludeTreatment.Click
         Dim Form As New FrmCrmTreatment(_Crm, New CrmTreatment(), Me)

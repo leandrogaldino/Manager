@@ -60,7 +60,7 @@ Public Class FrmCashFlow
         DgvNavigator.DataGridView = _CashFlowsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = _User.CanAccess(Routine.Log)
+        BtnLog.Visible = _User.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -222,7 +222,7 @@ Public Class FrmCashFlow
                     LblIDValue.Text = _CashFlow.ID
                     FillDataGridView()
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privileges.CashFlowDelete
+                    BtnDelete.Enabled = _User.CanDelete(Routine.CashFlow)
                     If _CashFlowsForm IsNot Nothing Then
                         _Filter.Filter()
                         _CashFlowsForm.DgvCashFlowLayout.Load()

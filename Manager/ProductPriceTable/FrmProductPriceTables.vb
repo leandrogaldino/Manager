@@ -4,20 +4,22 @@ Imports MySql.Data.MySqlClient
 Public Class FrmProductPriceTables
     Private _PriceTable As New ProductPriceTable
     Private _Filter As ProductPriceTableFilter
+    Private _User As User
     Public Sub New()
         InitializeComponent()
-        Utility.EnableControlDoubleBuffer(DgvData, True)
+        EnableControlDoubleBuffer(DgvData, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer1.SplitterDistance = 250
         SplitContainer2.Panel1Collapsed = True
         SplitContainer2.SplitterDistance = 800
         _Filter = New ProductPriceTableFilter(DgvData, PgFilter)
         _Filter.Filter()
+        _User = Locator.GetInstance(Of Session).User
         PgFilter.SelectedObject = _Filter
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductPriceTableWrite
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductPriceTableWrite
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductPriceTableDelete
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralExportGrid
+        BtnInclude.Visible = _User.CanWrite(Routine.ProductPriceTable)
+        BtnEdit.Visible = _User.CanWrite(Routine.ProductPriceTable)
+        BtnDelete.Visible = _User.CanDelete(Routine.ProductPriceTable)
+        BtnExport.Visible = _User.CanAccess(Routine.CanExportGrid)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvPriceTableLayout.Load()
@@ -181,6 +183,6 @@ Public Class FrmProductPriceTables
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Tabelas de Preço", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.CanExportGrid))
     End Sub
 End Class

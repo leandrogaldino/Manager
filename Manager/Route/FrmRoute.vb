@@ -8,6 +8,7 @@ Public Class FrmRoute
     Private _Filter As RouteFilter
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -27,17 +28,19 @@ Public Class FrmRoute
         MyBase.OnResize(e)
     End Sub
     Public Sub New(Route As Route, RoutesForm As FrmRoutes)
+        InitializeComponent()
         _Route = Route
         _RoutesForm = RoutesForm
         _RoutesGrid = _RoutesForm.DgvData
         _Filter = CType(_RoutesForm.PgFilter.SelectedObject, RouteFilter)
-        InitializeComponent()
+        _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
     End Sub
     Public Sub New(Route As Route)
-        _Route = Route
         InitializeComponent()
+        _Route = Route
+        _User = Locator.GetInstance(Of Session).User
         Height -= TsNavigation.Height
         LblName.Top -= TsNavigation.Height
         TxtName.Top -= TsNavigation.Height
@@ -53,7 +56,7 @@ Public Class FrmRoute
         DgvNavigator.DataGridView = _RoutesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
+        BtnLog.Visible = _User.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -61,7 +64,7 @@ Public Class FrmRoute
         BtnStatusValue.Text = GetEnumDescription(_Route.Status)
         LblCreationValue.Text = _Route.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _Route.Name
-        BtnDelete.Enabled = _Route.ID > 0 And Locator.GetInstance(Of Session).User.Privileges.RouteDelete
+        BtnDelete.Enabled = _Route.ID > 0 And _User.CanDelete(Routine.Route)
         Text = "Rota"
         If _Route.LockInfo.IsLocked And Not _Route.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Route.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_Route.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
@@ -210,7 +213,7 @@ Public Class FrmRoute
                     _Route.Lock()
                     LblIDValue.Text = _Route.ID
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privileges.RouteDelete
+                    BtnDelete.Enabled = _User.CanDelete(Routine.Route)
                     If _RoutesForm IsNot Nothing Then
                         _Filter.Filter()
                         _RoutesForm.DgvVisitScheduleLayout.Load()

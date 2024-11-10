@@ -64,7 +64,7 @@ Public Class FrmCity
         Utility.EnableControlDoubleBuffer(DgvRoute, True)
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = _User.CanAccess(Routine.Log)
+        BtnLog.Visible = _User.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub LoadData()
         _Loading = True

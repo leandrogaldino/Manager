@@ -282,9 +282,9 @@ Public Class FrmEvaluation
         DgvNavigator.DataGridView = _EvaluationsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = _User.CanAccess(Routine.Log)
-        BtnStatusValue.Visible = _User.CanAccess(Routine.EvaluationApproveOrReject)
-        LblStatusValue.Visible = Not _User.CanAccess(Routine.EvaluationApproveOrReject)
+        BtnLog.Visible = _User.CanAccess(Routine.CanAccessLog)
+        BtnStatusValue.Visible = _User.CanAccess(Routine.EvaluationCanApproveOrReject)
+        LblStatusValue.Visible = Not _User.CanAccess(Routine.EvaluationCanApproveOrReject)
         LblDocumentPage.Text = Nothing
         TxtEvaluationNumber.ReadOnly = _Evaluation.EvaluationCreationType <> EvaluationCreationType.Manual
         Tip.SetToolTip(LblAverageWorkLoad, "Carga Média de Trabalho")
@@ -754,7 +754,7 @@ Public Class FrmEvaluation
         If _Evaluation.LockInfo.IsLocked And _Evaluation.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_Evaluation.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
             Success = False
-        ElseIf _Evaluation.Status = EvaluationStatus.Approved AndAlso Not _User.CanAccess(Routine.EvaluationApproveOrReject) Then
+        ElseIf _Evaluation.Status = EvaluationStatus.Approved AndAlso Not _User.CanAccess(Routine.EvaluationCanApproveOrReject) Then
             CMessageBox.Show("Essa avaliação não pode ser alterada pois já foi aprovada.", CMessageBoxType.Information)
             Success = False
         Else
@@ -777,7 +777,7 @@ Public Class FrmEvaluation
                     '    If Photo.Photo.CurrentFile Is Nothing Then _Evaluation.Photos.Remove(Photo)
                     'Next Photo
 
-                    If _Evaluation.ID = 0 AndAlso _User.CanAccess(Routine.EvaluationApproveOrReject) Then
+                    If _Evaluation.ID = 0 AndAlso _User.CanAccess(Routine.EvaluationCanApproveOrReject) Then
                         _Evaluation.SaveChanges()
                         BtnApprove.PerformClick()
                     Else
@@ -1352,6 +1352,4 @@ Public Class FrmEvaluation
             BtnEditTechnician.PerformClick()
         End If
     End Sub
-
-
 End Class

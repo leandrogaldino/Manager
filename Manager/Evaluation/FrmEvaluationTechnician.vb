@@ -6,6 +6,7 @@ Public Class FrmEvaluationTechnician
     Private _EvaluationTechnician As EvaluationTechnician
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -23,11 +24,12 @@ Public Class FrmEvaluationTechnician
         _Evaluation = Evaluation
         _EvaluationTechnician = EvaluationTechnician
         _EvaluationForm = EvaluationForm
+        _User = Locator.GetInstance(Of Session).User
         LoadForm()
         DgvNavigator.DataGridView = _EvaluationForm.DgvTechnician
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
+        BtnLog.Visible = _User.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then
@@ -157,16 +159,16 @@ Public Class FrmEvaluationTechnician
     End Sub
     Private Sub QbxTechnician_Enter(sender As Object, e As EventArgs)
         TmrQueriedBox.Stop()
-        BtnViewTechnician.Visible = QbxTechnician.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
-        BtnNewTechnician.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonWrite
-        BtnFilterTechnician.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonAccess
+        BtnViewTechnician.Visible = QbxTechnician.IsFreezed And _User.CanWrite(Routine.Person)
+        BtnNewTechnician.Visible = _User.CanWrite(Routine.Person)
+        BtnFilterTechnician.Visible = _User.CanAccess(Routine.Person)
     End Sub
     Private Sub QbxTechnician_Leave(sender As Object, e As EventArgs)
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
     Private Sub QbxTechnician_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs)
-        If Not _Loading Then BtnViewTechnician.Visible = QbxTechnician.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
+        If Not _Loading Then BtnViewTechnician.Visible = QbxTechnician.IsFreezed And _User.CanWrite(Routine.Person)
     End Sub
     Private Sub BtnNewTechnician_Click(sender As Object, e As EventArgs)
         Dim Technician As Person

@@ -21,7 +21,7 @@ Public Class FrmEvaluationManagement
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter
         LoadDetails()
-        BtnExport.Visible = Session.User.Privileges.SeveralExportGrid
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.CanExportGrid)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvEvaluationManagementLayout.Load()
@@ -198,7 +198,7 @@ Public Class FrmEvaluationManagement
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Gerenciamento de Avaliações", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.CanExportGrid))
     End Sub
     Private Sub DgvData_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvData.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvData.HitTest(e.X, e.Y)
@@ -343,7 +343,7 @@ Public Class FrmEvaluationManagement
         End If
     End Sub
     Private Sub DgvData_MouseUp(sender As Object, e As MouseEventArgs) Handles DgvData.MouseUp
-        If _ShowCms And Locator.GetInstance(Of Session).User.CanAccess(Routine.EvaluationApproveOrReject) Then
+        If _ShowCms And Locator.GetInstance(Of Session).User.CanAccess(Routine.EvaluationCanApproveOrReject) Then
             CmsAutoEvaluation.Show(DgvData.PointToScreen(_CmsPoint))
             _ShowCms = False
         End If

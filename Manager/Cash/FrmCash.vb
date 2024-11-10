@@ -48,14 +48,14 @@ Public Class FrmCash
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         DgvCashItemsLayout.Load()
-        BtnLog.Visible = _User.CanAccess(Routine.Log)
+        BtnLog.Visible = _User.CanAccess(Routine.CanAccessLog)
         LblDocumentPage.Text = Nothing
     End Sub
     Private Sub LoadData()
         _Loading = True
         If _Cash.ID > 0 Then
             If _Cash.Status = CashStatus.Closed Then
-                If _User.CanAccess(Routine.CashReopen) Then
+                If _User.CanAccess(Routine.CashCanReopen) Then
                     BtnStatusValue.Visible = True
                     LblStatusValue.Visible = False
                 Else
@@ -91,7 +91,7 @@ Public Class FrmCash
         LblIDValue.Text = _Cash.ID
         BtnStatusValue.Text = GetEnumDescription(_Cash.Status)
         LblStatusValue.Text = GetEnumDescription(_Cash.Status)
-        BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And _User.CanAccess(Routine.CashReopen)
+        BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And _User.CanAccess(Routine.CashCanReopen)
         BtnCloseCash.Visible = _Cash.Status <> CashStatus.Closed
         LblCreationDateValue.Text = _Cash.Creation.ToString("dd/MM/yyyy")
         TxtNote.Text = _Cash.Note
@@ -502,7 +502,7 @@ Public Class FrmCash
         Try
             Cursor = Cursors.WaitCursor
             Result = CashReport.ProcessCashSheet({_Cash}.ToList)
-            FrmMain.OpenTab(New FrmReport(Result), GetEnumDescription(Routine.CashSheet))
+            FrmMain.OpenTab(New FrmReport(Result), GetEnumDescription(Routine.CashSheetReport))
             CMessageBox.Show("O Relátório foi gerado na tela inicial.", CMessageBoxType.Information)
         Catch ex As Exception
             CMessageBox.Show("ERRO CS010", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -521,9 +521,9 @@ Public Class FrmCash
                         BtnStatusValue.Text = GetEnumDescription(_Cash.Status)
                         LblStatusValue.Text = GetEnumDescription(_Cash.Status)
                         BtnCloseCash.Visible = _Cash.Status <> CashStatus.Closed
-                        BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And _User.CanAccess(Routine.CashReopen)
+                        BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And _User.CanAccess(Routine.CashCanReopen)
                         If _Cash.Status = CashStatus.Closed Then
-                            If _User.CanAccess(Routine.CashReopen) Then
+                            If _User.CanAccess(Routine.CashCanReopen) Then
                                 BtnStatusValue.Visible = True
                                 LblStatusValue.Visible = False
                             Else
@@ -564,7 +564,7 @@ Public Class FrmCash
             BtnStatusValue.Text = GetEnumDescription(_Cash.Status)
             LblStatusValue.Text = GetEnumDescription(_Cash.Status)
             BtnCloseCash.Visible = _Cash.Status <> CashStatus.Closed
-            BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And _User.CanAccess(Routine.CashReopen)
+            BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And _User.CanAccess(Routine.CashCanReopen)
             If _CashesForm IsNot Nothing Then
                 _Filter.Filter()
                 _CashesForm.DgvCashesLayout.Load()

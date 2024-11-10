@@ -208,8 +208,7 @@ Partial Class UcEvaluationPhotos
         '
         'UcEvaluationPhotos
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
         Me.Controls.Add(Me.PnContainer)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))

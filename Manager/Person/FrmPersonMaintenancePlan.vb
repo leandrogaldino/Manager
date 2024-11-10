@@ -2,6 +2,7 @@
 Imports ControlLibrary.Utility
 Public Class FrmPersonMaintenancePlan
     Private _Person As Person
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -13,6 +14,10 @@ Public Class FrmPersonMaintenancePlan
             If Opacity <> 1.0 Then Opacity = 1.0
         End If
         MyBase.DefWndProc(m)
+    End Sub
+    Public Sub New()
+        InitializeComponent()
+        _User = Locator.GetInstance(Of Session).User
     End Sub
     Private Sub Form_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         QbxPerson.Select()
@@ -26,7 +31,7 @@ Public Class FrmPersonMaintenancePlan
             BtnGenerate.Enabled = False
             Result = PersonReport.ProcessMaintenancePlan(DgvCompressor, _Person, CbxShowTechnicalAdvice.Checked, CbxShowMDHT.Checked)
             DialogResult = DialogResult.OK
-            FrmMain.OpenTab(New FrmReport(Result), GetEnumDescription(Routine.PersonMaintenancePlan))
+            FrmMain.OpenTab(New FrmReport(Result), GetEnumDescription(Routine.PersonMaintenancePlanReport))
         Catch ex As Exception
             CMessageBox.Show("ERRO PS012", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             BtnGenerate.Enabled = True
@@ -36,9 +41,9 @@ Public Class FrmPersonMaintenancePlan
     End Sub
     Private Sub QbxPerson_Enter(sender As Object, e As EventArgs) Handles QbxPerson.Enter
         TmrQueriedBox.Stop()
-        BtnViewPerson.Visible = QbxPerson.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.PersonWrite
-        BtnNewPerson.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonWrite
-        BtnFilterPerson.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonAccess
+        BtnViewPerson.Visible = QbxPerson.IsFreezed And _User.CanWrite(Routine.Person)
+        BtnNewPerson.Visible = _User.CanWrite(Routine.Person)
+        BtnFilterPerson.Visible = _User.CanAccess(Routine.Person)
     End Sub
     Private Sub QbxPerson_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxPerson.FreezedPrimaryKeyChanged
         Dim XColumn As DataGridViewCheckBoxColumn
@@ -91,7 +96,7 @@ Public Class FrmPersonMaintenancePlan
             CMessageBox.Show("ERRO PS011", "Ocorreu ao selecionar a pessoa.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally
             If QbxPerson.IsFreezed Then
-                If Locator.GetInstance(Of Session).User.Privileges.PersonWrite Then
+                If _User.CanWrite(Routine.Person) Then
                     BtnViewPerson.Visible = True
                 Else
                     BtnViewPerson.Visible = False

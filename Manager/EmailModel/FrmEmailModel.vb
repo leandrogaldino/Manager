@@ -1,6 +1,5 @@
 ﻿Imports ControlLibrary
 Imports MySql.Data.MySqlClient
-Imports System.IO
 Imports ControlLibrary.Utility
 Imports System.Text
 Public Class FrmEmailModel
@@ -10,7 +9,7 @@ Public Class FrmEmailModel
     Private _Filter As EmailModelFilter
     Private _Deleting As Boolean
     Private _Loading As Boolean
-
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -30,17 +29,19 @@ Public Class FrmEmailModel
         MyBase.OnResize(e)
     End Sub
     Public Sub New(EmailModel As EmailModel, EmailModelsForm As FrmEmailModels)
+        InitializeComponent()
         _EmailModel = EmailModel
         _EmailModelsForm = EmailModelsForm
         _EmailModelsGrid = _EmailModelsForm.DgvData
         _Filter = CType(_EmailModelsForm.PgFilter.SelectedObject, EmailModelFilter)
-        InitializeComponent()
+        _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
     End Sub
     Public Sub New(EmailModel As EmailModel)
-        _EmailModel = EmailModel
         InitializeComponent()
+        _EmailModel = EmailModel
+        _User = Locator.GetInstance(Of Session).User
         TsNavigation.Visible = False
         TsNavigation.Enabled = False
         MinimumSize = Nothing
@@ -61,7 +62,7 @@ Public Class FrmEmailModel
         DgvNavigator.DataGridView = _EmailModelsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
+        BtnLog.Visible = _User.CanAccess(Routine.CanAccessLog)
         TsBody.Renderer = New CustomToolstripRender
         TxtFont.Text = TxtBody.Font.Name
         Sb.AppendLine("#sdl#: é substituido por bom dia, boa tarde ou boa noite.")

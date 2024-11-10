@@ -1,0 +1,19 @@
+[] A permissão de exportar as grades e imagens do painel de avaliação não está configurado. 
+
+[] No FrmUser, ocultar o botão de importar predefinição, caso não esteja na aba de permissões.
+
+[] Recriar a Predefinição de permissões.
+
+[] A permissão de criar avaliação automática não está configurada.
+
+[] As permissões de Email do usuário não estão configuradas.
+
+[] Colocar as permissões em ordem alfabética.
+
+[] A permissão de importar avaliação não está configurada.
+
+[] As Permissões BiState ainda não estão sendo salvas.
+
+[] Terminar a rotina de agendamento.
+
+[] Quanto altera algum filtro do CRM o layout do DataGridView altera também.

@@ -22,7 +22,7 @@ Public Class FrmEvaluations
         BtnInclude.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.Evaluation)
         BtnEdit.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.Evaluation)
         BtnDelete.Visible = Locator.GetInstance(Of Session).User.CanDelete(Routine.Evaluation)
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.CanExportGrid)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvEvaluationLayout.Load()
@@ -224,7 +224,7 @@ Public Class FrmEvaluations
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Avaliações", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.CanExportGrid))
     End Sub
     Private Sub BtnApprove_Click(sender As Object, e As EventArgs) Handles BtnApprove.Click
         Try
@@ -278,7 +278,7 @@ Public Class FrmEvaluations
         End If
     End Sub
     Private Sub DgvData_MouseUp(sender As Object, e As MouseEventArgs) Handles DgvData.MouseUp
-        If _ShowApproval And Locator.GetInstance(Of Session).User.CanAccess(Routine.EvaluationApproveOrReject) Then
+        If _ShowApproval And Locator.GetInstance(Of Session).User.CanAccess(Routine.EvaluationCanApproveOrReject) Then
             BtnApprove.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> GetEnumDescription(EvaluationStatus.Approved)
             BtnReject.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> GetEnumDescription(EvaluationStatus.Rejected)
             BtnDisapprove.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> GetEnumDescription(EvaluationStatus.Disapproved)

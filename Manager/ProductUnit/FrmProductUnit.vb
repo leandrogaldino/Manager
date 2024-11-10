@@ -8,6 +8,7 @@ Public Class FrmProductUnit
     Private _Filter As ProductUnitFilter
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -27,17 +28,19 @@ Public Class FrmProductUnit
         MyBase.OnResize(e)
     End Sub
     Public Sub New(Unit As ProductUnit, UnitsForm As FrmProductUnits)
+        InitializeComponent()
         _Unit = Unit
         _UnitsForm = UnitsForm
         _UnitsGrid = _UnitsForm.DgvData
         _Filter = CType(_UnitsForm.PgFilter.SelectedObject, ProductUnitFilter)
-        InitializeComponent()
+        _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
     End Sub
     Public Sub New(Unit As ProductUnit)
-        _Unit = Unit
         InitializeComponent()
+        _Unit = Unit
+        _User = Locator.GetInstance(Of Session).User
         Height -= TsNavigation.Height
         LblName.Top -= TsNavigation.Height
         TxtName.Top -= TsNavigation.Height
@@ -53,7 +56,7 @@ Public Class FrmProductUnit
         DgvNavigator.DataGridView = _UnitsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
+        BtnLog.Visible = _User.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -62,7 +65,7 @@ Public Class FrmProductUnit
         LblCreationValue.Text = _Unit.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _Unit.Name
         TxtShortName.Text = _Unit.ShortName
-        BtnDelete.Enabled = _Unit.ID > 0 And Locator.GetInstance(Of Session).User.Privileges.ProductUnitDelete
+        BtnDelete.Enabled = _Unit.ID > 0 And _User.CanDelete(Routine.ProductUnit)
         Text = "Unidade de Medida"
         If _Unit.LockInfo.IsLocked And Not _Unit.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Unit.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_Unit.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
@@ -219,7 +222,7 @@ Public Class FrmProductUnit
                     _Unit.Lock()
                     LblIDValue.Text = _Unit.ID
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privileges.ProductUnitDelete
+                    BtnDelete.Enabled = _User.CanDelete(Routine.ProductUnit)
                     If _UnitsForm IsNot Nothing Then
                         _Filter.Filter()
                         _UnitsForm.DgvUnitsLayout.Load()

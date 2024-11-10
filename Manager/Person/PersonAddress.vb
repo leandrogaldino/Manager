@@ -33,7 +33,7 @@ Public Class PersonAddress
     Public Property City As New City
     Public Property CityDocument As String
     Public Property StateDocument As String
-    Public Property ContributionType As PersonContribution = PersonContribution.TaxPayer
+    Public Property ContributionType As PersonContributionType = PersonContributionType.TaxPayer
     Public Property Carrier As New Person
     Public ReadOnly User As User = Locator.GetInstance(Of Session).User
 End Class

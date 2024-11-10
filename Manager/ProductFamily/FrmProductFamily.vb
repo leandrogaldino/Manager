@@ -8,6 +8,7 @@ Public Class FrmProductFamily
     Private _Filter As ProductFamilyFilter
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -27,17 +28,19 @@ Public Class FrmProductFamily
         MyBase.OnResize(e)
     End Sub
     Public Sub New(ProductFamily As ProductFamily, ProductFamiliesForm As FrmProductFamilies)
+        InitializeComponent()
         _ProductFamily = ProductFamily
         _ProductFamiliesForm = ProductFamiliesForm
         _ProductFamiliesGrid = _ProductFamiliesForm.DgvData
         _Filter = CType(_ProductFamiliesForm.PgFilter.SelectedObject, ProductFamilyFilter)
-        InitializeComponent()
+        _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
     End Sub
     Public Sub New(ProductFamily As ProductFamily)
-        _ProductFamily = ProductFamily
         InitializeComponent()
+        _ProductFamily = ProductFamily
+        _User = Locator.GetInstance(Of Session).User
         Height -= TsNavigation.Height
         LblName.Top -= TsNavigation.Height
         TxtName.Top -= TsNavigation.Height
@@ -53,7 +56,7 @@ Public Class FrmProductFamily
         DgvNavigator.DataGridView = _ProductFamiliesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
+        BtnLog.Visible = _User.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -61,7 +64,7 @@ Public Class FrmProductFamily
         BtnStatusValue.Text = GetEnumDescription(_ProductFamily.Status)
         LblCreationValue.Text = _ProductFamily.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _ProductFamily.Name
-        BtnDelete.Enabled = _ProductFamily.ID > 0 And Locator.GetInstance(Of Session).User.Privileges.ProductFamilyDelete
+        BtnDelete.Enabled = _ProductFamily.ID > 0 And _User.CanDelete(Routine.ProductFamily)
         Text = "Família de Produto"
         If _ProductFamily.LockInfo.IsLocked And Not _ProductFamily.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _ProductFamily.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_ProductFamily.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
@@ -210,7 +213,7 @@ Public Class FrmProductFamily
                     _ProductFamily.Lock()
                     LblIDValue.Text = _ProductFamily.ID
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privileges.ProductFamilyDelete
+                    BtnDelete.Enabled = _User.CanDelete(Routine.ProductFamily)
                     If _ProductFamiliesForm IsNot Nothing Then
                         _Filter.Filter()
                         _ProductFamiliesForm.DgvProductFamilyLayout.Load()

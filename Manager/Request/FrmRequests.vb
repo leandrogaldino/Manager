@@ -4,13 +4,15 @@ Imports MySql.Data.MySqlClient
 Public Class FrmRequests
     Private _Request As New Request
     Private _Filter As RequestFilter
+    Private _User As User
     Public Sub New()
         InitializeComponent()
-        Utility.EnableControlDoubleBuffer(DgvData, True)
-        Utility.EnableControlDoubleBuffer(DgvItem, True)
+        EnableControlDoubleBuffer(DgvData, True)
+        EnableControlDoubleBuffer(DgvItem, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Filter = New RequestFilter(DgvData, PgFilter)
+        _User = Locator.GetInstance(Of Session).User
         If _Filter.Filter() = True Then
             LblStatus.Text = "Filtro Ativo"
             LblStatus.ForeColor = Color.DarkRed
@@ -22,10 +24,10 @@ Public Class FrmRequests
         End If
         PgFilter.SelectedObject = _Filter
         LoadDetails()
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privileges.RequestWrite
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privileges.RequestWrite
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privileges.RequestDelete
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralExportGrid
+        BtnInclude.Visible = _User.CanWrite(Routine.Request)
+        BtnEdit.Visible = _User.CanWrite(Routine.Request)
+        BtnDelete.Visible = _User.CanDelete(Routine.Request)
+        BtnExport.Visible = _User.CanAccess(Routine.CanExportGrid)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvRequestLayout.Load()
@@ -240,6 +242,6 @@ Public Class FrmRequests
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Requisições", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.CanExportGrid))
     End Sub
 End Class

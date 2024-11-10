@@ -151,13 +151,11 @@ INSERT INTO log VALUES (NULL, 22, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT
 END$$
 DELIMITER ;
 
-
 CREATE TABLE userprivilege (
 	id INT NOT NULL AUTO_INCREMENT,
     creation DATE NOT NULL,
     granteduserid INT NOT NULL,
     routineid INT NOT NULL,
-    privilegetypeid INT NOT NULL,
     privilegeid INT NOT NULL,
     userid INT NOT NULL,
 	PRIMARY KEY(id),

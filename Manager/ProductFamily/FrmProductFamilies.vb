@@ -4,6 +4,7 @@ Imports MySql.Data.MySqlClient
 Public Class FrmProductFamilies
     Private _ProductsFamily As New ProductFamily
     Private _Filter As ProductFamilyFilter
+    Private _User As User
     Public Sub New()
         InitializeComponent()
         Utility.EnableControlDoubleBuffer(DgvData, True)
@@ -13,12 +14,12 @@ Public Class FrmProductFamilies
         SplitContainer2.SplitterDistance = 800
         _Filter = New ProductFamilyFilter(DgvData, PgFilter)
         _Filter.Filter()
+        _User = Locator.GetInstance(Of Session).User
         PgFilter.SelectedObject = _Filter
-
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductFamilyWrite
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductFamilyWrite
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductFamilyDelete
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralExportGrid
+        BtnInclude.Visible = _User.CanWrite(Routine.ProductFamily)
+        BtnEdit.Visible = _User.CanWrite(Routine.ProductFamily)
+        BtnDelete.Visible = _User.CanDelete(Routine.ProductFamily)
+        BtnExport.Visible = _User.CanAccess(Routine.CanExportGrid)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvProductFamilyLayout.Load()
@@ -182,6 +183,6 @@ Public Class FrmProductFamilies
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Famílias de Produto", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.CanExportGrid))
     End Sub
 End Class

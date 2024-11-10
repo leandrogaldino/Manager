@@ -4,6 +4,7 @@ Imports MySql.Data.MySqlClient
 Public Class FrmRoutes
     Private _Route As New Route
     Private _Filter As RouteFilter
+    Private _User As User
     Public Sub New()
         InitializeComponent()
         Utility.EnableControlDoubleBuffer(DgvData, True)
@@ -13,11 +14,12 @@ Public Class FrmRoutes
         SplitContainer2.SplitterDistance = 800
         _Filter = New RouteFilter(DgvData, PgFilter)
         _Filter.Filter()
+        _User = Locator.GetInstance(Of Session).User
         PgFilter.SelectedObject = _Filter
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.Privileges.RouteWrite
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.Privileges.RouteWrite
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.Privileges.RouteDelete
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralExportGrid
+        BtnInclude.Visible = _User.CanWrite(Routine.Route)
+        BtnEdit.Visible = _User.CanWrite(Routine.Route)
+        BtnDelete.Visible = _User.CanDelete(Routine.Route)
+        BtnExport.Visible = _User.CanAccess(Routine.CanExportGrid)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvVisitScheduleLayout.Load()
@@ -181,6 +183,6 @@ Public Class FrmRoutes
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Rotas", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.CanExportGrid))
     End Sub
 End Class

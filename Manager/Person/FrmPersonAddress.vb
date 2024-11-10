@@ -26,12 +26,12 @@ Public Class FrmPersonAddress
         _PersonAddress = Address
         _PersonForm = PersonForm
         _User = Locator.GetInstance(Of Session).User
-        CbxContributionType.DataSource = {GetEnumDescription(PersonContribution.TaxPayer), GetEnumDescription(PersonContribution.NonTaxPayer), GetEnumDescription(PersonContribution.TaxFree)}
+        CbxContributionType.DataSource = {GetEnumDescription(PersonContributionType.TaxPayer), GetEnumDescription(PersonContributionType.NonTaxPayer), GetEnumDescription(PersonContributionType.TaxFree)}
         LoadForm()
         DgvNavigator.DataGridView = _PersonForm.DgvAddress
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = _User.CanAccess(Routine.Log)
+        BtnLog.Visible = _User.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then
@@ -229,7 +229,7 @@ Public Class FrmPersonAddress
             EprValidation.SetIconAlignment(LblCity, ErrorIconAlignment.MiddleRight)
             QbxCity.Select()
             Return False
-        ElseIf CbxContributionType.Text = GetEnumDescription(PersonContribution.TaxPayer) And String.IsNullOrWhiteSpace(TxtStateDocument.Text) Then
+        ElseIf CbxContributionType.Text = GetEnumDescription(PersonContributionType.TaxPayer) And String.IsNullOrWhiteSpace(TxtStateDocument.Text) Then
             EprValidation.SetError(LblStateDocument, "Campo obrigatório para Contribuintes de ICMS.")
             EprValidation.SetIconAlignment(LblStateDocument, ErrorIconAlignment.MiddleRight)
             TxtStateDocument.Select()
@@ -265,7 +265,7 @@ Public Class FrmPersonAddress
                 _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).City = New City().Load(QbxCity.FreezedPrimaryKey, False)
                 _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).CityDocument = TxtCityDocument.Text
                 _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).StateDocument = TxtStateDocument.Text
-                _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).ContributionType = GetEnumValue(Of PersonContribution)(CbxContributionType.Text)
+                _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).ContributionType = GetEnumValue(Of PersonContributionType)(CbxContributionType.Text)
                 _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).Carrier = New Person().Load(QbxCarrier.FreezedPrimaryKey, False)
             Else
                 _PersonAddress = New PersonAddress()
@@ -280,7 +280,7 @@ Public Class FrmPersonAddress
                 _PersonAddress.City = New City().Load(QbxCity.FreezedPrimaryKey, False)
                 _PersonAddress.CityDocument = TxtCityDocument.Text
                 _PersonAddress.StateDocument = TxtStateDocument.Text
-                _PersonAddress.ContributionType = GetEnumValue(Of PersonContribution)(CbxContributionType.Text)
+                _PersonAddress.ContributionType = GetEnumValue(Of PersonContributionType)(CbxContributionType.Text)
                 _PersonAddress.Carrier = New Person().Load(QbxCarrier.FreezedPrimaryKey, False)
                 _PersonAddress.IsSaved = True
                 _Person.Addresses.Add(_PersonAddress)

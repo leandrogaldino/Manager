@@ -23,7 +23,7 @@ Public Class FrmCashes
         BtnInclude.Visible = _User.CanWrite(Routine.Cash)
         BtnEdit.Visible = _User.CanWrite(Routine.Cash)
         BtnDelete.Visible = _User.CanDelete(Routine.Cash)
-        BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
+        BtnExport.Visible = _User.CanAccess(Routine.CanExportGrid)
     End Sub
     Private Sub FrmCashes_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvCashesLayout.Load()
@@ -238,7 +238,7 @@ Public Class FrmCashes
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Caixas", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.CanExportGrid))
     End Sub
     Private Sub DgvData_MouseDown(sender As Object, e As MouseEventArgs) Handles DgvData.MouseDown
         Dim Click As DataGridView.HitTestInfo = DgvData.HitTest(e.X, e.Y)
@@ -250,7 +250,7 @@ Public Class FrmCashes
     End Sub
     Private Sub DgvData_MouseUp(sender As Object, e As MouseEventArgs) Handles DgvData.MouseUp
         If _ShowApproval Then
-            BtnOpenCash.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> GetEnumDescription(CashStatus.Opened) And Locator.GetInstance(Of Session).User.Privileges.CashReopen
+            BtnOpenCash.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> GetEnumDescription(CashStatus.Opened) And _User.CanAccess(Routine.CashCanReopen)
             BtnCloseCash.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> GetEnumDescription(CashStatus.Closed)
             CmsSetStatus.Show(DgvData.PointToScreen(_CmsPoint))
             _ShowApproval = False
@@ -262,7 +262,7 @@ Public Class FrmCashes
             _Cash = New Cash().Load(DgvData.SelectedRows(0).Cells("id").Value, False)
             _Cash.SetStatus(CashStatus.Opened)
             BtnCloseCash.Visible = _Cash.Status <> CashStatus.Closed
-            BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And Locator.GetInstance(Of Session).User.Privileges.CashReopen
+            BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And _User.CanAccess(Routine.CashCanReopen)
             _Filter.Filter()
             DgvCashesLayout.Load()
         Catch ex As Exception
@@ -278,7 +278,7 @@ Public Class FrmCashes
                 _Cash = New Cash().Load(DgvData.SelectedRows(0).Cells("id").Value, False)
                 _Cash.SetStatus(CashStatus.Closed)
                 BtnCloseCash.Visible = _Cash.Status <> CashStatus.Closed
-                BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And Locator.GetInstance(Of Session).User.Privileges.CashReopen
+                BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And _User.CanAccess(Routine.CashCanReopen)
                 _Filter.Filter()
                 DgvCashesLayout.Load()
             Catch ex As Exception

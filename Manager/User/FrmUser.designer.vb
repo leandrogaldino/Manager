@@ -24,8 +24,6 @@ Partial Class FrmUser
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmUser))
-        Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
         Me.TsTitle = New System.Windows.Forms.ToolStrip()
         Me.LblID = New System.Windows.Forms.ToolStripLabel()
         Me.LblIDValue = New System.Windows.Forms.ToolStripLabel()
@@ -59,8 +57,7 @@ Partial Class FrmUser
         Me.BtnNew = New ControlLibrary.NoFocusCueButton()
         Me.QbxPerson = New ControlLibrary.QueriedBox()
         Me.TabPrivilege = New System.Windows.Forms.TabPage()
-        Me.TvwPrivilege = New System.Windows.Forms.TreeView()
-        Me.LblDescription = New System.Windows.Forms.Label()
+        Me.FlpPrivilege = New System.Windows.Forms.FlowLayoutPanel()
         Me.TabEmail = New System.Windows.Forms.TabPage()
         Me.DgvEmail = New System.Windows.Forms.DataGridView()
         Me.TsEmail = New System.Windows.Forms.ToolStrip()
@@ -98,7 +95,7 @@ Partial Class FrmUser
         Me.TsTitle.Location = New System.Drawing.Point(0, 25)
         Me.TsTitle.Name = "TsTitle"
         Me.TsTitle.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsTitle.Size = New System.Drawing.Size(462, 25)
+        Me.TsTitle.Size = New System.Drawing.Size(721, 25)
         Me.TsTitle.TabIndex = 1
         Me.TsTitle.Text = "ToolStrip1"
         '
@@ -164,7 +161,7 @@ Partial Class FrmUser
         Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsNavigation.Size = New System.Drawing.Size(462, 25)
+        Me.TsNavigation.Size = New System.Drawing.Size(721, 25)
         Me.TsNavigation.TabIndex = 0
         Me.TsNavigation.Text = "ToolStrip2"
         '
@@ -287,16 +284,16 @@ Partial Class FrmUser
         Me.PnButtons.Controls.Add(Me.BtnSave)
         Me.PnButtons.Controls.Add(Me.BtnClose)
         Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PnButtons.Location = New System.Drawing.Point(0, 147)
+        Me.PnButtons.Location = New System.Drawing.Point(0, 327)
         Me.PnButtons.Name = "PnButtons"
-        Me.PnButtons.Size = New System.Drawing.Size(462, 44)
+        Me.PnButtons.Size = New System.Drawing.Size(721, 44)
         Me.PnButtons.TabIndex = 3
         '
         'BtnSave
         '
         Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnSave.Enabled = False
-        Me.BtnSave.Location = New System.Drawing.Point(251, 7)
+        Me.BtnSave.Location = New System.Drawing.Point(510, 7)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(95, 30)
         Me.BtnSave.TabIndex = 0
@@ -307,7 +304,7 @@ Partial Class FrmUser
         '
         Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnClose.Location = New System.Drawing.Point(352, 7)
+        Me.BtnClose.Location = New System.Drawing.Point(611, 7)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(95, 30)
         Me.BtnClose.TabIndex = 1
@@ -354,7 +351,7 @@ Partial Class FrmUser
         Me.TcUser.Multiline = True
         Me.TcUser.Name = "TcUser"
         Me.TcUser.SelectedIndex = 0
-        Me.TcUser.Size = New System.Drawing.Size(462, 97)
+        Me.TcUser.Size = New System.Drawing.Size(721, 277)
         Me.TcUser.TabIndex = 2
         '
         'TabMain
@@ -367,7 +364,7 @@ Partial Class FrmUser
         Me.TabMain.Location = New System.Drawing.Point(4, 26)
         Me.TabMain.Name = "TabMain"
         Me.TabMain.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabMain.Size = New System.Drawing.Size(454, 67)
+        Me.TabMain.Size = New System.Drawing.Size(713, 247)
         Me.TabMain.TabIndex = 9
         Me.TabMain.Text = "Identificação"
         Me.TabMain.UseVisualStyleBackColor = True
@@ -435,11 +432,6 @@ Partial Class FrmUser
         '
         Me.QbxPerson.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxPerson.CharactersToQuery = 1
-        Condition1.FieldName = "isemployee"
-        Condition1.Operator = "="
-        Condition1.TableNameOrAlias = "person"
-        Condition1.Value = "@isemployee"
-        Me.QbxPerson.Conditions.Add(Condition1)
         Me.QbxPerson.DebugOnTextChanged = False
         Me.QbxPerson.DisplayFieldAlias = "Nome"
         Me.QbxPerson.DisplayFieldName = "name"
@@ -455,9 +447,6 @@ Partial Class FrmUser
         Me.QbxPerson.MainTableAlias = Nothing
         Me.QbxPerson.MainTableName = "person"
         Me.QbxPerson.Name = "QbxPerson"
-        Parameter1.ParameterName = "@isemployee"
-        Parameter1.ParameterValue = "1"
-        Me.QbxPerson.Parameters.Add(Parameter1)
         Me.QbxPerson.Prefix = Nothing
         Me.QbxPerson.ShowStartOnFreeze = True
         Me.QbxPerson.Size = New System.Drawing.Size(329, 23)
@@ -466,48 +455,32 @@ Partial Class FrmUser
         '
         'TabPrivilege
         '
-        Me.TabPrivilege.Controls.Add(Me.TvwPrivilege)
-        Me.TabPrivilege.Controls.Add(Me.LblDescription)
-        Me.TabPrivilege.Location = New System.Drawing.Point(4, 22)
+        Me.TabPrivilege.Controls.Add(Me.FlpPrivilege)
+        Me.TabPrivilege.Location = New System.Drawing.Point(4, 26)
         Me.TabPrivilege.Name = "TabPrivilege"
         Me.TabPrivilege.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPrivilege.Size = New System.Drawing.Size(454, 71)
+        Me.TabPrivilege.Size = New System.Drawing.Size(713, 247)
         Me.TabPrivilege.TabIndex = 8
         Me.TabPrivilege.Text = "Permissões"
         Me.TabPrivilege.UseVisualStyleBackColor = True
         '
-        'TvwPrivilege
+        'FlpPrivilege
         '
-        Me.TvwPrivilege.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TvwPrivilege.CheckBoxes = True
-        Me.TvwPrivilege.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TvwPrivilege.HideSelection = False
-        Me.TvwPrivilege.Location = New System.Drawing.Point(3, 3)
-        Me.TvwPrivilege.Name = "TvwPrivilege"
-        Me.TvwPrivilege.PathSeparator = ">"
-        Me.TvwPrivilege.Size = New System.Drawing.Size(448, 0)
-        Me.TvwPrivilege.TabIndex = 0
-        '
-        'LblDescription
-        '
-        Me.LblDescription.BackColor = System.Drawing.Color.White
-        Me.LblDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.LblDescription.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.LblDescription.ForeColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
-        Me.LblDescription.Location = New System.Drawing.Point(3, -12)
-        Me.LblDescription.Name = "LblDescription"
-        Me.LblDescription.Size = New System.Drawing.Size(448, 80)
-        Me.LblDescription.TabIndex = 1
-        Me.LblDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.FlpPrivilege.AutoScroll = True
+        Me.FlpPrivilege.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.FlpPrivilege.Location = New System.Drawing.Point(3, 3)
+        Me.FlpPrivilege.Name = "FlpPrivilege"
+        Me.FlpPrivilege.Size = New System.Drawing.Size(707, 241)
+        Me.FlpPrivilege.TabIndex = 0
         '
         'TabEmail
         '
         Me.TabEmail.Controls.Add(Me.DgvEmail)
         Me.TabEmail.Controls.Add(Me.TsEmail)
-        Me.TabEmail.Location = New System.Drawing.Point(4, 26)
+        Me.TabEmail.Location = New System.Drawing.Point(4, 22)
         Me.TabEmail.Name = "TabEmail"
         Me.TabEmail.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabEmail.Size = New System.Drawing.Size(454, 67)
+        Me.TabEmail.Size = New System.Drawing.Size(713, 251)
         Me.TabEmail.TabIndex = 11
         Me.TabEmail.Text = "E-Mails"
         Me.TabEmail.UseVisualStyleBackColor = True
@@ -530,7 +503,7 @@ Partial Class FrmUser
         Me.DgvEmail.RowHeadersVisible = False
         Me.DgvEmail.RowTemplate.Height = 26
         Me.DgvEmail.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvEmail.Size = New System.Drawing.Size(448, 36)
+        Me.DgvEmail.Size = New System.Drawing.Size(707, 220)
         Me.DgvEmail.TabIndex = 3
         '
         'TsEmail
@@ -542,7 +515,7 @@ Partial Class FrmUser
         Me.TsEmail.Location = New System.Drawing.Point(3, 3)
         Me.TsEmail.Name = "TsEmail"
         Me.TsEmail.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsEmail.Size = New System.Drawing.Size(448, 25)
+        Me.TsEmail.Size = New System.Drawing.Size(707, 25)
         Me.TsEmail.TabIndex = 2
         Me.TsEmail.Text = "ToolStrip2"
         '
@@ -598,7 +571,7 @@ Partial Class FrmUser
         Me.TabNote.Location = New System.Drawing.Point(4, 22)
         Me.TabNote.Name = "TabNote"
         Me.TabNote.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabNote.Size = New System.Drawing.Size(454, 71)
+        Me.TabNote.Size = New System.Drawing.Size(713, 251)
         Me.TabNote.TabIndex = 10
         Me.TabNote.Text = "Observação"
         Me.TabNote.UseVisualStyleBackColor = True
@@ -610,7 +583,7 @@ Partial Class FrmUser
         Me.TxtNote.Location = New System.Drawing.Point(3, 3)
         Me.TxtNote.MaxLength = 1000000
         Me.TxtNote.Name = "TxtNote"
-        Me.TxtNote.Size = New System.Drawing.Size(448, 65)
+        Me.TxtNote.Size = New System.Drawing.Size(707, 245)
         Me.TxtNote.TabIndex = 1
         Me.TxtNote.Text = ""
         '
@@ -628,7 +601,7 @@ Partial Class FrmUser
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(462, 191)
+        Me.ClientSize = New System.Drawing.Size(721, 371)
         Me.Controls.Add(Me.TcUser)
         Me.Controls.Add(Me.TsTitle)
         Me.Controls.Add(Me.TsNavigation)
@@ -690,8 +663,6 @@ Partial Class FrmUser
     Friend WithEvents TcUser As TabControl
     Friend WithEvents TabPrivilege As TabPage
     Friend WithEvents TabMain As TabPage
-    Friend WithEvents TvwPrivilege As TreeView
-    Friend WithEvents LblDescription As Label
     Friend WithEvents TabNote As TabPage
     Friend WithEvents TxtNote As RichTextBox
     Friend WithEvents BtnImportPrivilege As ToolStripButton
@@ -710,4 +681,5 @@ Partial Class FrmUser
     Friend WithEvents ToolStripLabel2 As ToolStripLabel
     Friend WithEvents TxtFilterEmail As ToolStripTextBox
     Friend WithEvents DgvEmailLayout As DataGridViewLayout
+    Friend WithEvents FlpPrivilege As FlowLayoutPanel
 End Class

@@ -9,6 +9,7 @@ Public Class FrmPerson
     Private _CompressorsShadow As New OrdenedList(Of PersonCompressor)
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -28,17 +29,19 @@ Public Class FrmPerson
         MyBase.OnResize(e)
     End Sub
     Public Sub New(Person As Person, PersonsForm As FrmPersons)
+        InitializeComponent()
         _Person = Person
         _PersonsForm = PersonsForm
         _PersonsGrid = _PersonsForm.DgvData
         _Filter = CType(_PersonsForm.PgFilter.SelectedObject, PersonFilter)
-        InitializeComponent()
+        _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
     End Sub
     Public Sub New(Person As Person)
-        _Person = Person
         InitializeComponent()
+        _Person = Person
+        _User = Locator.GetInstance(Of Session).User
         TsNavigation.Visible = False
         TsNavigation.Enabled = False
         LblStatus.Visible = False
@@ -61,7 +64,7 @@ Public Class FrmPerson
         DgvNavigator.DataGridView = _PersonsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
+        BtnLog.Visible = _User.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -69,8 +72,8 @@ Public Class FrmPerson
         LblIDValue.Text = _Person.ID
         BtnStatusValue.Text = GetEnumDescription(_Person.Status)
         LblCreationValue.Text = _Person.Creation.ToString("dd/MM/yyyy")
-        RbtIsNaturalEntity.Checked = _Person.Entity = PersonEntity.Natural
-        RbtIsLegalEntity.Checked = _Person.Entity = PersonEntity.Legal
+        RbtIsNaturalEntity.Checked = _Person.Entity = PersonEntityType.Natural
+        RbtIsLegalEntity.Checked = _Person.Entity = PersonEntityType.Legal
         CbxIsCustomer.Checked = _Person.IsCustomer
         CbxIsProvider.Checked = _Person.IsProvider
         CbxIsEmployee.Checked = _Person.IsEmployee
@@ -87,7 +90,7 @@ Public Class FrmPerson
         If _Person.Addresses IsNot Nothing Then _Person.Addresses.FillDataGridView(DgvAddress)
         If _Person.Contacts IsNot Nothing Then _Person.Contacts.FillDataGridView(DgvContact)
         If _Person.Compressors IsNot Nothing Then _Person.Compressors.FillDataGridView(DgvCompressor)
-        BtnDelete.Enabled = _Person.ID < 0 And Locator.GetInstance(Of Session).User.Privileges.PersonDelete
+        BtnDelete.Enabled = _Person.ID < 0 And _User.CanDelete(Routine.Person)
         _CompressorsShadow.Clear()
         For Each Compressor As PersonCompressor In _Person.Compressors
             _CompressorsShadow.Add(Compressor.Clone)
@@ -441,12 +444,12 @@ Public Class FrmPerson
             End Select
         ElseIf e.ColumnIndex = Dgv.Columns("ContributionType").Index Then
             Select Case e.Value
-                Case Is = PersonContribution.TaxPayer
-                    e.Value = GetEnumDescription(PersonContribution.TaxPayer)
-                Case Is = PersonContribution.NonTaxPayer
-                    e.Value = GetEnumDescription(PersonContribution.NonTaxPayer)
-                Case Is = PersonContribution.TaxFree
-                    e.Value = GetEnumDescription(PersonContribution.TaxFree)
+                Case Is = PersonContributionType.TaxPayer
+                    e.Value = GetEnumDescription(PersonContributionType.TaxPayer)
+                Case Is = PersonContributionType.NonTaxPayer
+                    e.Value = GetEnumDescription(PersonContributionType.NonTaxPayer)
+                Case Is = PersonContributionType.TaxFree
+                    e.Value = GetEnumDescription(PersonContributionType.TaxFree)
             End Select
         End If
     End Sub
@@ -475,7 +478,7 @@ Public Class FrmPerson
             TcPerson.SelectedTab = TabMain
             TxtDocument.Select()
             Return False
-        ElseIf _Person.ID > 0 AndAlso (Not Locator.GetInstance(Of Session).User.Privileges.PersonChangeDocument And _Person.Document <> TxtDocument.Text) Then
+        ElseIf _Person.ID > 0 AndAlso (Not _User.CanAccess(Routine.PersonCanChangeDocument) And _Person.Document <> TxtDocument.Text) Then
             EprValidation.SetError(LblDocument, String.Format("Você não tem permissão para alterar o {0} de uma pessoa que já foi salva.", If(RbtIsLegalEntity.Checked, "CNPJ", "CPF")))
             EprValidation.SetIconAlignment(LblDocument, ErrorIconAlignment.MiddleRight)
             TcPerson.SelectedTab = TabMain
@@ -535,7 +538,7 @@ Public Class FrmPerson
                 Try
                     Cursor = Cursors.WaitCursor
                     _Person.Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
-                    _Person.Entity = If(RbtIsLegalEntity.Checked, PersonEntity.Legal, PersonEntity.Natural)
+                    _Person.Entity = If(RbtIsLegalEntity.Checked, PersonEntityType.Legal, PersonEntityType.Natural)
                     _Person.IsCustomer = CbxIsCustomer.Checked
                     _Person.IsProvider = CbxIsProvider.Checked
                     _Person.IsEmployee = CbxIsEmployee.Checked
@@ -557,7 +560,7 @@ Public Class FrmPerson
                         _CompressorsShadow.Add(Compressor.Clone)
                     Next
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privileges.PersonDelete
+                    BtnDelete.Enabled = _User.CanDelete(Routine.Person)
                     If _PersonsForm IsNot Nothing Then
                         _Filter.Filter()
                         _PersonsForm.DgvPersonLayout.Load()

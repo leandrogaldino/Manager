@@ -5,6 +5,14 @@ Public Class FrmMain
     Private _User As User
     Public Sub New()
         InitializeComponent()
+        _User = Locator.GetInstance(Of Session).User
+        LblCompany.Text = Locator.GetInstance(Of Session).Setting.Company.ShortName
+        LblVersion.Text = Locator.GetInstance(Of Session).ManagerVersion
+        BtnUser.Text = _User.Username
+        BtnEmail.Visible = _User.CanAccess(Routine.EmailModel) Or _User.CanAccess(Routine.EmailSignature) Or _User.CanAccess(Routine.EmailSent)
+        BtnEmailModel.Visible = _User.CanAccess(Routine.EmailModel)
+        BtnEmailSign.Visible = _User.CanAccess(Routine.EmailSignature)
+        BtnEmailSent.Visible = _User.CanAccess(Routine.EmailSent)
         CreateEvaluationButton()
         CreateRequestButton()
         CreateCashButton()
@@ -13,10 +21,6 @@ Public Class FrmMain
         CreatePersonButton()
         CreateProductButton()
         CreateUserButton()
-        _User = Locator.GetInstance(Of Session).User
-        LblCompany.Text = Locator.GetInstance(Of Session).Setting.Company.ShortName
-        LblVersion.Text = Locator.GetInstance(Of Session).ManagerVersion
-        BtnUser.Text = _User.Username
     End Sub
     Private Sub CreateFirstSeparator()
 
@@ -47,9 +51,9 @@ Public Class FrmMain
     End Sub
     Private Sub CreateRequestButton()
         If _User.CanAccess(Routine.Request) Then
-            If _User.CanAccess(Routine.RequestPendingItems) Then
+            If _User.CanAccess(Routine.RequestPendingItemsReport) Then
                 TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripSplitButton("Requisição", "Requisição de Peças", My.Resources.Request, AddressOf RequestClick))
-                If _User.CanAccess(Routine.RequestPendingItems) Then
+                If _User.CanAccess(Routine.RequestPendingItemsReport) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Requisição").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Relatório", Nothing, My.Resources.Report, Nothing, True))
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Requisição").DropDownItems.OfType(Of ToolStripMenuItem).Single(Function(y) y.Text = "Relatório").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Peças Pendentes", Nothing, Nothing, AddressOf RequestPendingPartClick))
                 End If
@@ -58,18 +62,24 @@ Public Class FrmMain
             End If
         End If
     End Sub
+
+
     Private Sub CreateCashButton()
         If _User.CanAccess(Routine.Cash) Then
-            If _User.CanAccess(Routine.CashExpensesPerResponsible) Or _User.CanAccess(Routine.CashFlow) Then
+            If _User.CanAccess(Routine.CashExpensesPerResponsibleReport) Or _User.CanAccess(Routine.CashFlow) Then
                 TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripSplitButton("Caixa", "Fechamento de Caixa", My.Resources.Cash, AddressOf CashClick))
                 If _User.CanAccess(Routine.CashFlow) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Caixa").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Fluxo de Caixa", "Cadastro de Fluxo de Caixa", My.Resources.CashFlow, AddressOf CashFlowClick))
                 End If
-                If _User.CanAccess(Routine.CashExpensesPerResponsible) Then
+                If _User.CanAccess(Routine.CashExpensesPerResponsibleReport) Or _User.CanAccess(Routine.CashFlow) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Caixa").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Relatório", Nothing, My.Resources.Report, Nothing, True))
+                End If
+                If _User.CanAccess(Routine.CashExpensesPerResponsibleReport) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Caixa").DropDownItems.OfType(Of ToolStripMenuItem).Single(Function(y) y.Text = "Relatório").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Despesas Por Responsável", Nothing, Nothing, AddressOf CashExpensesPerResponsibleClick))
                 End If
-                TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Caixa").DropDownItems.OfType(Of ToolStripMenuItem).Single(Function(y) y.Text = "Relatório").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Folhas de Caixa", Nothing, Nothing, AddressOf CashExpensesPerResponsibleClick2))
+                If _User.CanAccess(Routine.CashSheetReport) Then
+                    TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Caixa").DropDownItems.OfType(Of ToolStripMenuItem).Single(Function(y) y.Text = "Relatório").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Folhas de Caixa", Nothing, Nothing, AddressOf CashSheetClick))
+                End If
             Else
                 TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripButton("Caixa", "Fechamento de Caixa", My.Resources.Cash, AddressOf CashClick))
             End If
@@ -80,8 +90,8 @@ Public Class FrmMain
             If _User.CanAccess(Routine.Compressor) Or
                 _User.CanAccess(Routine.City) Or
                 _User.CanAccess(Routine.Route) Or
-                _User.CanAccess(Routine.PersonRegistrationForm) Or
-                _User.CanAccess(Routine.PersonMaintenancePlan) Then
+                _User.CanAccess(Routine.PersonRegistrationFormReport) Or
+                _User.CanAccess(Routine.PersonMaintenancePlanReport) Then
                 TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripSplitButton("Pessoa", "Cadastro de Pessoas", My.Resources.Person, AddressOf PersonClick))
                 If _User.CanAccess(Routine.Compressor) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Pessoa").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Compressor", "Cadastro de Compressores", My.Resources.Compressor, AddressOf CompressorClick))
@@ -92,12 +102,12 @@ Public Class FrmMain
                 If _User.CanAccess(Routine.Route) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Pessoa").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Rota", "Cadastro de Rotas", My.Resources.Route, AddressOf RouteClick))
                 End If
-                If _User.CanAccess(Routine.PersonRegistrationForm) Or _User.CanAccess(Routine.PersonMaintenancePlan) Then
+                If _User.CanAccess(Routine.PersonRegistrationFormReport) Or _User.CanAccess(Routine.PersonMaintenancePlanReport) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Pessoa").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Relatório", Nothing, My.Resources.Report, Nothing, True))
-                    If _User.CanAccess(Routine.PersonRegistrationForm) Then
+                    If _User.CanAccess(Routine.PersonRegistrationFormReport) Then
                         TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Pessoa").DropDownItems.OfType(Of ToolStripMenuItem).Single(Function(y) y.Text = "Relatório").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Ficha Cadastral", Nothing, Nothing, AddressOf PersonRegistrationFormClick))
                     End If
-                    If _User.CanAccess(Routine.PersonMaintenancePlan) Then
+                    If _User.CanAccess(Routine.PersonMaintenancePlanReport) Then
                         TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Pessoa").DropDownItems.OfType(Of ToolStripMenuItem).Single(Function(y) y.Text = "Relatório").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Plano de Manutenção", Nothing, Nothing, AddressOf PersonMaintenancePlanClick))
                     End If
                 End If
@@ -303,7 +313,7 @@ Public Class FrmMain
             FormResponsible.ShowDialog()
         End Using
     End Sub
-    Private Sub CashExpensesPerResponsibleClick2()
+    Private Sub CashSheetClick()
         Using FormSheet As New FrmCashSheet()
             FormSheet.ShowDialog()
         End Using

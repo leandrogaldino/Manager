@@ -25,7 +25,7 @@ Public Class PersonCompressorPart
         End Get
     End Property
     Public Property Status As SimpleStatus = SimpleStatus.Active
-    Public Property PartBind As CompressorPartBind = CompressorPartBind.None
+    Public Property PartBind As CompressorPartBindType = CompressorPartBindType.None
     Public ReadOnly Property PartType As CompressorPartType
         Get
             Return _PartType
@@ -52,7 +52,7 @@ Public Class PersonCompressorPart
     Public Property Capacity As Integer
     Public ReadOnly Property PartBinded As Boolean
         Get
-            Return PartBind <> CompressorPartBind.None
+            Return PartBind <> CompressorPartBindType.None
         End Get
     End Property
     Public ReadOnly User As User = Locator.GetInstance(Of Session).User

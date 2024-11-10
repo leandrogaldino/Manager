@@ -20,6 +20,11 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ManagerLaucher", "ManagerLa
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ManagerCore", "ManagerCore\ManagerCore.vbproj", "{1F654C34-02FF-4AA4-9D4D-F2084FD32BE3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{1FC6353D-C092-450B-BA27-DF28A384F2EC}"
+	ProjectSection(SolutionItems) = preProject
+		ToDo.txt = ToDo.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

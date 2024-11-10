@@ -17,7 +17,7 @@ Public Class FrmEmailSignatures
         BtnInclude.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.City)
         BtnEdit.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.City)
         BtnDelete.Visible = Locator.GetInstance(Of Session).User.CanDelete(Routine.City)
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.CanExportGrid)
     End Sub
     Private Sub Frm(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvEmailSignaturesLayout.Load()
@@ -169,6 +169,6 @@ Public Class FrmEmailSignatures
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Assinaturas de E-Mail", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.CanExportGrid))
     End Sub
 End Class

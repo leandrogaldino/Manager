@@ -6,6 +6,7 @@ Public Class FrmPersonCompressorPartWorkedHour
     Private _PartWorkedHour As PersonCompressorPart
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -23,12 +24,13 @@ Public Class FrmPersonCompressorPartWorkedHour
         _PersonCompressor = PersonCompressor
         _PartWorkedHour = PersonCompressorPart
         _PersonCompressorForm = PersonCompressorForm
-        CbxPartBind.Items.AddRange(Utility.GetEnumDescriptions(GetType(CompressorPartBind)).Where(Function(x) x <> "COALESCENTE").ToArray)
+        _User = Locator.GetInstance(Of Session).User
+        CbxPartBind.Items.AddRange(Utility.GetEnumDescriptions(Of CompressorPartBindType).Where(Function(x) x <> "COALESCENTE").ToArray)
         LoadForm()
         DgvNavigator.DataGridView = _PersonCompressorForm.DgvPartWorkedHour
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
+        BtnLog.Visible = _User.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub LoadForm()
         _Loading = True
@@ -183,7 +185,7 @@ Public Class FrmPersonCompressorPartWorkedHour
         If IsValidFields() Then
             If _PartWorkedHour.IsSaved Then
                 _PersonCompressor.PartsWorkedHour.Single(Function(x) x.Order = _PartWorkedHour.Order).Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
-                _PersonCompressor.PartsWorkedHour.Single(Function(x) x.Order = _PartWorkedHour.Order).PartBind = GetEnumValue(Of CompressorPartBind)(CbxPartBind.Text)
+                _PersonCompressor.PartsWorkedHour.Single(Function(x) x.Order = _PartWorkedHour.Order).PartBind = GetEnumValue(Of CompressorPartBindType)(CbxPartBind.Text)
                 If QbxItem.IsFreezed Then
                     _PersonCompressor.PartsWorkedHour.Single(Function(x) x.Order = _PartWorkedHour.Order).ItemName = Nothing
                     _PersonCompressor.PartsWorkedHour.Single(Function(x) x.Order = _PartWorkedHour.Order).Product = New Lazy(Of Product)(Function() New Product().Load(QbxItem.FreezedPrimaryKey, False))
@@ -196,7 +198,7 @@ Public Class FrmPersonCompressorPartWorkedHour
             Else
                 _PartWorkedHour = New PersonCompressorPart(CompressorPartType.WorkedHour)
                 _PartWorkedHour.Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
-                _PartWorkedHour.PartBind = GetEnumValue(Of CompressorPartBind)(CbxPartBind.Text)
+                _PartWorkedHour.PartBind = GetEnumValue(Of CompressorPartBindType)(CbxPartBind.Text)
                 If QbxItem.IsFreezed Then
                     _PartWorkedHour.ItemName = Nothing
                     _PartWorkedHour.Product = New Lazy(Of Product)(Function() New Product().Load(QbxItem.FreezedPrimaryKey, False))
@@ -238,16 +240,16 @@ Public Class FrmPersonCompressorPartWorkedHour
     End Sub
     Private Sub QbxItem_Enter(sender As Object, e As EventArgs) Handles QbxItem.Enter
         TmrQueriedBox.Stop()
-        BtnView.Visible = QbxItem.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.ProductWrite
-        BtnNew.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductWrite
-        BtnFilter.Visible = Locator.GetInstance(Of Session).User.Privileges.ProductAccess
+        BtnView.Visible = QbxItem.IsFreezed And _User.CanWrite(Routine.Product)
+        BtnNew.Visible = _User.CanWrite(Routine.Product)
+        BtnFilter.Visible = _User.CanAccess(Routine.Product)
     End Sub
     Private Sub QbxItem_Leave(sender As Object, e As EventArgs) Handles QbxItem.Leave
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
     Private Sub QbxItem_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxItem.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnView.Visible = QbxItem.IsFreezed And Locator.GetInstance(Of Session).User.Privileges.ProductWrite
+        If Not _Loading Then BtnView.Visible = QbxItem.IsFreezed And _User.CanWrite(Routine.Product)
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Product As Product

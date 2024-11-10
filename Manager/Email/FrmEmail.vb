@@ -6,11 +6,13 @@ Imports ControlLibrary.Utility
 Public Class FrmEmail
     Private _Attachments As New List(Of Attachment)
     Private _EmailModel As New EmailModel
+    Private _User As User
     Public Sub New(Attachments As List(Of ReportResult.ReportAttachment))
         InitializeComponent()
         Dim DefaultEmail As UserEmail
         Dim Sb As New StringBuilder
         Dim Signatures As List(Of EmailSignature)
+        _User = Locator.GetInstance(Of Session).User
         Attachments.ForEach(Sub(x) _Attachments.Add(New Attachment(x.AttachmentPath) With {.Name = x.AttachmentAlias}))
         QbxFrom.Conditions.Add(New QueriedBox.Condition With {.FieldName = "ofuserid", .[Operator] = "=", .TableNameOrAlias = "useremail", .Value = "@userid"})
         QbxFrom.Parameters.Add(New QueriedBox.Parameter With {.ParameterName = "@userid", .ParameterValue = Locator.GetInstance(Of Session).User.ID})
@@ -138,7 +140,7 @@ Public Class FrmEmail
     End Sub
     Private Sub TxtTo_Enter(sender As Object, e As EventArgs) Handles TxtTo.Enter
         TmrTo.Stop()
-        BtnImportTo.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonAccess
+        BtnImportTo.Visible = _User.CanAccess(Routine.Person)
     End Sub
     Private Sub TxtTo_Leave(sender As Object, e As EventArgs) Handles TxtTo.Leave
         Dim Emails As List(Of String)
@@ -154,7 +156,7 @@ Public Class FrmEmail
     End Sub
     Private Sub TxtCc_Enter(sender As Object, e As EventArgs) Handles TxtCc.Enter
         TmrCc.Stop()
-        BtnImportCc.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonAccess
+        BtnImportCc.Visible = _User.CanAccess(Routine.Person)
     End Sub
     Private Sub TxtCc_Leave(sender As Object, e As EventArgs) Handles TxtCc.Leave
         Dim Emails As List(Of String)
@@ -170,7 +172,7 @@ Public Class FrmEmail
     End Sub
     Private Sub TxtBcc_Enter(sender As Object, e As EventArgs) Handles TxtBcc.Enter
         TmrBcc.Stop()
-        BtnImportBcc.Visible = Locator.GetInstance(Of Session).User.Privileges.PersonAccess
+        BtnImportBcc.Visible = _User.CanAccess(Routine.Person)
     End Sub
     Private Sub TxtBcc_Leave(sender As Object, e As EventArgs) Handles TxtBcc.Leave
         Dim Emails As List(Of String)

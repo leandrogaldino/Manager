@@ -45,14 +45,13 @@ Partial Class UcEvaluationCardDetail
         Me.DgvCardDetail.Size = New System.Drawing.Size(1000, 493)
         Me.DgvCardDetail.TabIndex = 1
         '
-        'UcCardDetail
+        'UcEvaluationCardDetail
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.Controls.Add(Me.DgvCardDetail)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "UcCardDetail"
+        Me.Name = "UcEvaluationCardDetail"
         Me.Size = New System.Drawing.Size(1000, 493)
         CType(Me.DgvCardDetail, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

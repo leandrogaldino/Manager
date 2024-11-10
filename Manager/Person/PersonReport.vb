@@ -432,7 +432,7 @@ Public Class PersonReport
         WsReport.Rows(Row).Height = 5
         Row += 1
         WsReport.Rows(Row).Height = 10
-        WsReport.Range(Row, 1, Row, 1).Value = If(Person.Entity = PersonEntity.Legal, "CNPJ", "CPF")
+        WsReport.Range(Row, 1, Row, 1).Value = If(Person.Entity = PersonEntityType.Legal, "CNPJ", "CPF")
         WsReport.Range(Row, 1, Row, 1).Style.Font.FontSize = 8
         WsReport.Range(Row, 1, Row, 1).Style.Font.Bold = True
         WsReport.Range(Row, 9, Row, 10).Merge().Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center

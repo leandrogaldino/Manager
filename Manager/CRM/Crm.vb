@@ -10,8 +10,10 @@ Imports MySql.Data.MySqlClient
 ''' </summary>
 Public Class Crm
     Inherits ModelBase
-    Private Shared _LastHtml As String
+    'Private Shared _LastHtml As String
     Private _IsSaved As Boolean
+    Private _Session As Session
+
     Public Property Status As CrmStatus = CrmStatus.Pending
     Public Property Customer As New Person
     Public Property Responsible As Person = Locator.GetInstance(Of Session).User.Person.Value
@@ -21,14 +23,14 @@ Public Class Crm
         _Routine = Routine.Crm
     End Sub
     Public Sub Clear()
-        Dim Session = Locator.GetInstance(Of Session)
+        _Session = Locator.GetInstance(Of Session)
         Unlock()
         _IsSaved = False
         _ID = 0
         _Creation = Today
         Status = CrmStatus.Pending
         Customer = New Person
-        Responsible = Session.User.Person.Value
+        Responsible = _Session.User.Person.Value
         Subject = Nothing
         Treatments = New OrdenedList(Of CrmTreatment)
     End Sub
@@ -281,10 +283,10 @@ Public Class Crm
                     End If
                 Next Row
                 Filename = Path.Combine(ApplicationPaths.ManagerTempDirectory, $"{Session.Token}.html")
-                If _LastHtml <> Doc.DocumentNode.OuterHtml Then
-                    _LastHtml = Doc.DocumentNode.OuterHtml
-                    File.WriteAllText(Filename, Doc.DocumentNode.OuterHtml)
-                End If
+                'If _LastHtml <> Doc.DocumentNode.OuterHtml Then
+                '_LastHtml = Doc.DocumentNode.OuterHtml
+                File.WriteAllText(Filename, Doc.DocumentNode.OuterHtml)
+                'End If
                 Return Filename
             End Using
         End Using
@@ -384,11 +386,11 @@ Public Class Crm
                 BodyNode.PrependChild(DivSeparator)
             End If
         Next Treatment
-        Filename = Path.Combine(ApplicationPaths.ManagerTempDirectory, $"{Session.Token}.html")
-        If _LastHtml <> Doc.DocumentNode.OuterHtml Then
-            _LastHtml = Doc.DocumentNode.OuterHtml
-            File.WriteAllText(Filename, Doc.DocumentNode.OuterHtml)
-        End If
+        Filename = Path.Combine(ApplicationPaths.ManagerTempDirectory, Util.GetFilename(".html"))
+        'If _LastHtml <> Doc.DocumentNode.OuterHtml Then
+        '_LastHtml = Doc.DocumentNode.OuterHtml
+        File.WriteAllText(Filename, Doc.DocumentNode.OuterHtml)
+        'End If
         Return Filename
     End Function
     Private Shared Function PrepareString(Text As String) As String

@@ -10,6 +10,7 @@ Public Class FrmRequest
     Private _Filter As RequestFilter
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _User As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -29,17 +30,19 @@ Public Class FrmRequest
         MyBase.OnResize(e)
     End Sub
     Public Sub New(Request As Request, RequestsForm As FrmRequests)
+        InitializeComponent()
         _Request = Request
         _RequestsForm = RequestsForm
         _RequestsGrid = _RequestsForm.DgvData
         _Filter = CType(_RequestsForm.PgFilter.SelectedObject, RequestFilter)
-        InitializeComponent()
+        _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
     End Sub
     Public Sub New(Request As Request)
-        _Request = Request
         InitializeComponent()
+        _Request = Request
+        _User = Locator.GetInstance(Of Session).User
         TsNavigation.Visible = False
         TsNavigation.Enabled = False
         LblStatus.Visible = False
@@ -58,7 +61,7 @@ Public Class FrmRequest
         DgvNavigator.DataGridView = _RequestsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
+        BtnLog.Visible = _User.CanAccess(Routine.CanAccessLog)
         LblDocumentPage.Text = Nothing
     End Sub
     Private Sub LoadData()
@@ -89,7 +92,7 @@ Public Class FrmRequest
         End If
         TxtFilterItem.Clear()
         If _Request.Items IsNot Nothing Then _Request.Items.FillDataGridView(DgvItem)
-        BtnDelete.Enabled = _Request.ID > 0 And Locator.GetInstance(Of Session).User.Privileges.RequestDelete
+        BtnDelete.Enabled = _Request.ID > 0 And _User.CanDelete(Routine.Request)
         Text = "Requisição"
         If _Request.LockInfo.IsLocked And Not _Request.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Request.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_Request.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
@@ -320,7 +323,7 @@ Public Class FrmRequest
                     LblIDValue.Text = _Request.ID
                     _Request.Items.FillDataGridView(DgvItem)
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = Locator.GetInstance(Of Session).User.Privileges.RequestDelete
+                    BtnDelete.Enabled = _User.CanDelete(Routine.Request)
                     If _RequestsForm IsNot Nothing Then
                         _Filter.Filter()
                         _RequestsForm.DgvRequestLayout.Load()

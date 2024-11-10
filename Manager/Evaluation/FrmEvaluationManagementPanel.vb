@@ -17,7 +17,7 @@ Public Class FrmEvaluationManagementPanel
     Private _TotalDetail As New UcEvaluationCardDetail
     Private Sub FrmEvaluationManagementPanel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim Session = Locator.GetInstance(Of Session)
-        CbxInformation.Items.AddRange(GetEnumDescriptions(GetType(EvaluationPanelInformation)).ToArray)
+        CbxInformation.Items.AddRange(GetEnumDescriptions(Of EvaluationPanelInformation).ToArray)
         CbxInformation.SelectedIndex = 0
         CcoInDay.DropDownControl = _InDayDetail
         CcoInDay.HostControl = LblInDayValue

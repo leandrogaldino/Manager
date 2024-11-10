@@ -75,13 +75,13 @@ Public Class FrmCashItem
         _CashItem = CashItem
         _CashItemShadow = CashItem.Clone()
         _CashForm = CashForm
-        _CategoryList = GetEnumDescriptions(GetType(CashItemCategory)).ToList()
+        _CategoryList = GetEnumDescriptions(Of CashItemCategory).ToList()
         _CategoryList.Sort()
         LoadForm()
         DgvNavigator.DataGridView = _CashForm.DgvCashItem
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub Frm(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvResponsiblesLayout.Load()

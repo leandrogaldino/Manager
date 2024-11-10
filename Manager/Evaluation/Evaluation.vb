@@ -110,10 +110,10 @@ Public Class Evaluation
         Evaluation.EvaluationDate = Data("date")
         Evaluation.EndTime = TimeSpan.ParseExact(Data("end_time"), "hh\:mm", Nothing)
         Evaluation.Horimeter = Data("horimeter")
-        Dim AirFilter As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.AirFilter).ToList
-        Dim OilFilter As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.OilFilter).ToList
-        Dim Separator As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.Separator).ToList
-        Dim Oil As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBind.Oil).ToList
+        Dim AirFilter As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBindType.AirFilter).ToList
+        Dim OilFilter As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBindType.OilFilter).ToList
+        Dim Separator As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBindType.Separator).ToList
+        Dim Oil As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBindType.Oil).ToList
 
         Evaluation.PartsWorkedHour.ToList.ForEach(Sub(x)
                                                       x.IsSaved = True

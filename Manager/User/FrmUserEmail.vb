@@ -9,6 +9,7 @@ Public Class FrmUserEmail
     Private _UserEmail As UserEmail
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _GrantedUser As User
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -26,11 +27,12 @@ Public Class FrmUserEmail
         _User = User
         _UserEmail = Email
         _UserForm = UserForm
+        _GrantedUser = Locator.GetInstance(Of Session).User
         LoadForm()
         DgvNavigator.DataGridView = _UserForm.DgvEmail
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.Privileges.SeveralLogAccess
+        BtnLog.Visible = _GrantedUser.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then

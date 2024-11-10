@@ -654,6 +654,53 @@
     <Compile Include="Email\FrmEmailImportEmailModel.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Helper\Attibute\BiStatePrivilegeAttribute.vb" />
+    <Compile Include="Helper\Attibute\TriStatePrivilegeAttribute.vb" />
+    <Compile Include="Helper\Flags\CashItemCategory.vb" />
+    <Compile Include="Helper\Flags\CashStatus.vb" />
+    <Compile Include="Helper\Flags\CloudSyncStatus.vb" />
+    <Compile Include="Helper\Flags\CompressorPartBindType.vb" />
+    <Compile Include="Helper\Flags\CompressorPartType.vb" />
+    <Compile Include="Helper\Flags\CrmStatus.vb" />
+    <Compile Include="Helper\Flags\CrmTreatmentContactType.vb" />
+    <Compile Include="Helper\Flags\EvaluationCreationType.vb" />
+    <Compile Include="Helper\Flags\EvaluationPanelInformation.vb" />
+    <Compile Include="Helper\Flags\EvaluationStatus.vb" />
+    <Compile Include="Helper\Flags\EvaluationType.vb" />
+    <Compile Include="Helper\Flags\MySqlError.vb" />
+    <Compile Include="Helper\Flags\PersonContributionType.vb" />
+    <Compile Include="Helper\Flags\PersonEntityType.vb" />
+    <Compile Include="Helper\Flags\PrivilegeLevel.vb" />
+    <Compile Include="Helper\Flags\RequestStatus.vb" />
+    <Compile Include="Helper\Flags\Routine.vb" />
+    <Compile Include="Helper\Flags\SimpleStatus.vb" />
+    <Compile Include="Helper\Flags\VisitScheduleStatus.vb" />
+    <Compile Include="Helper\Flags\VisitScheduleType.vb" />
+    <Compile Include="User\Control\UcBiStatePrivilegeItem.Designer.vb">
+      <DependentUpon>UcBiStatePrivilegeItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="User\Control\UcBiStatePrivilegeItem.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User\Control\UcBiStatePrivilegeTitle.Designer.vb">
+      <DependentUpon>UcBiStatePrivilegeTitle.vb</DependentUpon>
+    </Compile>
+    <Compile Include="User\Control\UcBiStatePrivilegeTitle.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User\Control\UcTriStatePrivilegeTitle.Designer.vb">
+      <DependentUpon>UcTriStatePrivilegeTitle.vb</DependentUpon>
+    </Compile>
+    <Compile Include="User\Control\UcTriStatePrivilegeTitle.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User\Control\UcTristatePrivilegeItem.Designer.vb">
+      <DependentUpon>UcTristatePrivilegeItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="User\Control\UcTristatePrivilegeItem.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User\UserPrivilege.vb" />
     <Compile Include="VisitSchedule\FrmVisitSchedule.Designer.vb">
       <DependentUpon>FrmVisitSchedule.vb</DependentUpon>
     </Compile>
@@ -748,7 +795,7 @@
     <Compile Include="Helper\LockRegistryInfo.vb" />
     <Compile Include="Helper\ModelBase.vb" />
     <Compile Include="Helper\ReportResult.vb" />
-    <Compile Include="Helper\RichTextBoxSingleSelection.vb">
+    <Compile Include="Helper\Controls\RichTextBoxSingleSelection.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Helper\Session.vb" />
@@ -878,11 +925,11 @@
     <Compile Include="FiltrerConverter\UpperNoAccentConverter.vb" />
     <Compile Include="FiltrerConverter\YesNoConverter.vb" />
     <Compile Include="Helper\Util.vb" />
-    <Compile Include="Helper\DataGridViewLayout.vb">
+    <Compile Include="Helper\Controls\DataGridViewLayout.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Helper\ExportGrid.vb" />
-    <Compile Include="Helper\Flags.vb" />
+    <Compile Include="Helper\Flags\CashItemType.vb" />
     <Compile Include="Main\FrmLog.designer.vb">
       <DependentUpon>FrmLog.vb</DependentUpon>
     </Compile>
@@ -1175,7 +1222,6 @@
     <Compile Include="User\User.vb" />
     <Compile Include="User\UserEmail.vb" />
     <Compile Include="User\UserFilter.vb" />
-    <Compile Include="User\UserPrivilege.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CashFlow\FrmCashFlowAuthorized.resx">
@@ -1305,7 +1351,7 @@
     <EmbeddedResource Include="Evaluation\Control\UcEvaluationCardDetail.resx">
       <DependentUpon>UcEvaluationCardDetail.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Helper\DataGridViewLayout.resx">
+    <EmbeddedResource Include="Helper\Controls\DataGridViewLayout.resx">
       <DependentUpon>DataGridViewLayout.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -1444,6 +1490,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Evaluation\Control\UcEvaluationSourcePart.resx">
       <DependentUpon>UcEvaluationSourcePart.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User\Control\UcBiStatePrivilegeItem.resx">
+      <DependentUpon>UcBiStatePrivilegeItem.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User\Control\UcBiStatePrivilegeTitle.resx">
+      <DependentUpon>UcBiStatePrivilegeTitle.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User\Control\UcTristatePrivilegeItem.resx">
+      <DependentUpon>UcTristatePrivilegeItem.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User\Control\UcTriStatePrivilegeTitle.resx">
+      <DependentUpon>UcTriStatePrivilegeTitle.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="User\FrmUser.resx">
       <DependentUpon>FrmUser.vb</DependentUpon>

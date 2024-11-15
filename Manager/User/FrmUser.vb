@@ -1,5 +1,4 @@
-﻿Imports CefSharp.DevTools.Autofill
-Imports ControlLibrary
+﻿Imports ControlLibrary
 Imports ControlLibrary.Utility
 Imports MySql.Data.MySqlClient
 Public Class FrmUser
@@ -64,7 +63,7 @@ Public Class FrmUser
         TxtNote.Text = _User.Note
         TxtFilterEmail.Clear()
         TxtFilterPrivileges.Clear()
-        FlpPrivilege.SuspendLayout()
+        SuspendLayout()
         FlpPrivilege.Controls.Clear()
 
         If _User.Emails IsNot Nothing Then _User.Emails.FillDataGridView(DgvEmail)
@@ -93,7 +92,7 @@ Public Class FrmUser
             AddHandler PrivilegeItem.ChechedChanged, AddressOf PrivilegeItemCheckedChange
             FlpPrivilege.Controls.Add(PrivilegeItem)
         Next BiStatePrivilege
-        FlpPrivilege.ResumeLayout()
+        ResumeLayout()
 
 
         Text = "Usuário"

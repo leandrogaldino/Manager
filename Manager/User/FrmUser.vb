@@ -1,5 +1,4 @@
-﻿Imports CefSharp.DevTools.Autofill
-Imports ControlLibrary
+﻿Imports ControlLibrary
 Imports ControlLibrary.Utility
 Imports MySql.Data.MySqlClient
 Public Class FrmUser
@@ -74,9 +73,7 @@ Public Class FrmUser
         FlpPrivilege.Controls.AddRange(Controls.ToArray())
     End Sub
     Private Sub UpdatePrivileges()
-
         TabPrivilege.Visible = False
-
         Dim ControlIndex As Integer = 1
         Dim TriStatePrivileges As List(Of Routine) = GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(TriStatePrivilege), True).Any()).OrderBy(Function(x) GetEnumDescription(x)).ToList
         For Each TriStatePrivilege In TriStatePrivileges
@@ -95,9 +92,7 @@ Public Class FrmUser
             PrivilegeItem.Granted = Privileges.Any(Function(p) p.Level = PrivilegeLevel.Access)
             ControlIndex += 1
         Next
-
         TabPrivilege.Visible = True
-
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -112,6 +107,8 @@ Public Class FrmUser
         TxtFilterPrivileges.Clear()
         If _User.Emails IsNot Nothing Then _User.Emails.FillDataGridView(DgvEmail)
         BtnDelete.Enabled = _User.ID > 0 And _User.CanDelete(Routine.User)
+        If _User.Emails IsNot Nothing Then _User.Emails.FillDataGridView(DgvEmail)
+        BtnDelete.Enabled = _User.ID > 0 And _User.CanDelete(Routine.User)
         UpdatePrivileges()
         Text = "Usuário"
         If _User.LockInfo.IsLocked And Not _User.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _User.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
@@ -119,7 +116,6 @@ Public Class FrmUser
             Text &= " - SOMENTE LEITURA"
         End If
         BtnSave.Enabled = False
-
         TxtUsername.Select()
         _Loading = False
     End Sub

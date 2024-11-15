@@ -9,6 +9,7 @@ Public Class UcTristatePrivilegeItem
             LblPrivilege.Text = GetEnumDescription(value)
         End Set
     End Property
+
     Public Property CanAccess As Boolean
         Get
             Return CbxAccess.Checked

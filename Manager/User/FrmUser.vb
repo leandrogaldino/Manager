@@ -63,10 +63,17 @@ Public Class FrmUser
         QbxPerson.Freeze(_User.Person.Value.ID)
         TxtNote.Text = _User.Note
         TxtFilterEmail.Clear()
+        TxtFilterPrivileges.Clear()
+        FlpPrivilege.SuspendLayout()
+        FlpPrivilege.Controls.Clear()
+
         If _User.Emails IsNot Nothing Then _User.Emails.FillDataGridView(DgvEmail)
         BtnDelete.Enabled = _User.ID > 0 And _User.CanDelete(Routine.User)
         FlpPrivilege.Controls.Add(New UcTriStatePrivilegeTitle())
-        Dim TriStatePrivileges As List(Of Routine) = GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(TriStatePrivilege), True).Any()).ToList()
+        Dim TriStatePrivileges As List(Of Routine) = GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(TriStatePrivilege), True).Any()).OrderBy(Function(x) GetEnumDescription(x)).ToList
+
+
+
         For Each TriStatePrivilege In TriStatePrivileges
             Dim Privileges As List(Of UserPrivilege) = _User.Privileges.Where(Function(x) x.Routine = TriStatePrivilege).ToList()
             Dim CanAccess As Boolean = Privileges.Any(Function(p) p.Level = PrivilegeLevel.Access)
@@ -78,7 +85,7 @@ Public Class FrmUser
         Next TriStatePrivilege
         FlpPrivilege.Controls.Add(New UcBiStatePrivilegeTitle())
 
-        Dim BiStatePrivileges As List(Of Routine) = GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(BiStatePrivilege), True).Any()).ToList()
+        Dim BiStatePrivileges As List(Of Routine) = GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(BiStatePrivilege), True).Any()).OrderBy(Function(x) GetEnumDescription(x)).ToList
         For Each BiStatePrivilege In BiStatePrivileges
             Dim Privileges As List(Of UserPrivilege) = _User.Privileges.Where(Function(x) x.Routine = BiStatePrivilege).ToList()
             Dim Granted As Boolean = Privileges.Any(Function(p) p.Level = PrivilegeLevel.Access)
@@ -86,6 +93,8 @@ Public Class FrmUser
             AddHandler PrivilegeItem.ChechedChanged, AddressOf PrivilegeItemCheckedChange
             FlpPrivilege.Controls.Add(PrivilegeItem)
         Next BiStatePrivilege
+        FlpPrivilege.ResumeLayout()
+
 
         Text = "Usuário"
         If _User.LockInfo.IsLocked And Not _User.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _User.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
@@ -93,6 +102,7 @@ Public Class FrmUser
             Text &= " - SOMENTE LEITURA"
         End If
         BtnSave.Enabled = False
+
         TxtUsername.Select()
         _Loading = False
     End Sub
@@ -329,6 +339,30 @@ Public Class FrmUser
                         End If
                     Next
 
+
+
+
+
+                    ' Percorre todos os controles do tipo UcTristatePrivilegeItem dentro do FlowLayoutPanel
+                    For Each PrivilegeControl In FlpPrivilege.Controls.OfType(Of UcBiStatePrivilegeItem)
+                        ' Obtém a rotina atual
+                        Dim routine = PrivilegeControl.Routine
+                        ' Verifica e atualiza o privilégio de "Access"
+                        Dim accessPrivilege = _User.Privileges.FirstOrDefault(Function(p) p.Routine = routine AndAlso p.Level = PrivilegeLevel.Access)
+                        If PrivilegeControl.Granted Then
+                            ' Adiciona o privilégio se estiver marcado e ainda não existir
+                            If accessPrivilege Is Nothing Then
+                                _User.Privileges.Add(New UserPrivilege With {.Routine = routine, .Level = PrivilegeLevel.Access})
+                            End If
+                        Else
+                            ' Remove o privilégio se não estiver marcado e já existir
+                            If accessPrivilege IsNot Nothing Then
+                                _User.Privileges.Remove(accessPrivilege)
+                            End If
+                        End If
+
+
+                    Next
 
                     'For Each PrivilegeControl In FlpPrivilege.Controls.OfType(Of UcTristatePrivilegeItem)
 
@@ -579,7 +613,7 @@ Public Class FrmUser
             e.Handled = True
         End If
     End Sub
-    Private Sub TxtFilter_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterEmail.TextChanged
+    Private Sub TxtFilterEmail_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterEmail.TextChanged
         FilterEmail()
     End Sub
     Private Sub FilterEmail()
@@ -615,5 +649,49 @@ Public Class FrmUser
             BtnEditEmail.Enabled = True
             BtnDeleteEmail.Enabled = True
         End If
+    End Sub
+
+    Private Sub TxtFilterPrivileges_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterPrivileges.TextChanged
+        Dim Filter As String = TxtFilterPrivileges.Text
+        FlpPrivilege.SuspendLayout()
+        If Not String.IsNullOrEmpty(Filter) Then
+            For Each PrivilegeControl In FlpPrivilege.Controls.OfType(Of UcTristatePrivilegeItem)
+                If Not GetEnumDescription(PrivilegeControl.Routine).ToUpper.Contains(Filter.ToUpper) Then
+                    PrivilegeControl.Visible = False
+                Else
+                    PrivilegeControl.Visible = True
+                End If
+            Next PrivilegeControl
+
+            For Each PrivilegeControl In FlpPrivilege.Controls.OfType(Of UcBiStatePrivilegeItem)
+                If Not GetEnumDescription(PrivilegeControl.Routine).ToUpper.Contains(Filter.ToUpper) Then
+                    PrivilegeControl.Visible = False
+                Else
+                    PrivilegeControl.Visible = True
+                End If
+            Next PrivilegeControl
+        Else
+            For Each PrivilegeControl In FlpPrivilege.Controls.OfType(Of UcTristatePrivilegeItem)
+                PrivilegeControl.Visible = True
+            Next PrivilegeControl
+            For Each PrivilegeControl In FlpPrivilege.Controls.OfType(Of UcBiStatePrivilegeItem)
+                PrivilegeControl.Visible = True
+            Next PrivilegeControl
+        End If
+
+        If FlpPrivilege.Controls.OfType(Of UcTristatePrivilegeItem).Cast(Of UcTristatePrivilegeItem).Any(Function(x) x.Visible) Then
+            FlpPrivilege.Controls.OfType(Of UcTriStatePrivilegeTitle).First.Visible = True
+        Else
+            FlpPrivilege.Controls.OfType(Of UcTriStatePrivilegeTitle).First.Visible = False
+        End If
+
+
+        If FlpPrivilege.Controls.OfType(Of UcBiStatePrivilegeItem).Cast(Of UcBiStatePrivilegeItem).Any(Function(x) x.Visible) Then
+            FlpPrivilege.Controls.OfType(Of UcBiStatePrivilegeTitle).First.Visible = True
+        Else
+            FlpPrivilege.Controls.OfType(Of UcBiStatePrivilegeTitle).First.Visible = False
+        End If
+
+        FlpPrivilege.ResumeLayout()
     End Sub
 End Class

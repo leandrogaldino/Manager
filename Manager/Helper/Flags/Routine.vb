@@ -16,11 +16,11 @@ Public Enum Routine
     PersonCompressor = 203
     PersonCompressorPartWorkedHour = 204
     PersonCompressorPartElapsedDay = 205
-    <Description("Permite alterar o documento da Pessoa")> <BiStatePrivilege>
+    <Description("Alterar o documento da Pessoa")> <BiStatePrivilege>
     PersonCanChangeDocument = 206
-    <Description("Permite gerar o relatório de ficha cadastral da pessoa")> <BiStatePrivilege>
+    <Description("Gerar o relatório de ficha cadastral da pessoa")> <BiStatePrivilege>
     PersonRegistrationFormReport = 207
-    <Description("Permite gerar o relatório de plano de manutenção")> <BiStatePrivilege>
+    <Description("Gerar o relatório de plano de manutenção")> <BiStatePrivilege>
     PersonMaintenancePlanReport = 208
     <Description("Cidade")> <TriStatePrivilege>
     City = 3
@@ -59,24 +59,24 @@ Public Enum Routine
     EvaluationManagementPartElapsedDay = 1303
     <Description("Painel de Compressores")> <TriStatePrivilege>
     EvaluationManagementPanel = 1304
-    <Description("Permite exportar grades do painel de compressores")> <BiStatePrivilege>
+    <Description("Exportar grades do painel de compressores")> <BiStatePrivilege>
     EvaluationCanExportManagementPanel = 1305
     EvaluationPart = 1306
     EvaluationTechnician = 1307
     EvaluationPhoto = 1308
-    <Description("Permite aprovar e rejeitar uma avaliação")> <BiStatePrivilege>
+    <Description("Aprovar e rejeitar uma avaliação")> <BiStatePrivilege>
     EvaluationCanApproveOrReject = 1309
-    <Description("Permite criar avaliações autómaticas")> <BiStatePrivilege>
+    <Description("Criar avaliações autómaticas")> <BiStatePrivilege>
     EvaluationCreateAutomaticRecord = 1310
-    <Description("Permite importar avaliações da núvem")> <BiStatePrivilege>
+    <Description("Importar avaliações da núvem")> <BiStatePrivilege>
     EvaluationImport = 1311
     UserPrivilegePreset = 14
     <Description("Requisição")> <TriStatePrivilege>
     Request = 15
     RequestItem = 1501
-    <Description("Permite gerar o relatório de folha de requisição de itens")> <BiStatePrivilege>
+    <Description("Gerar o relatório de folha de requisição de itens")> <BiStatePrivilege>
     RequestSheetReport = 1502
-    <Description("Permite gerar o relatório de itens pendentes da requisição de itens")> <BiStatePrivilege>
+    <Description("Gerar o relatório de itens pendentes da requisição de itens")> <BiStatePrivilege>
     RequestPendingItemsReport = 1503
     <Description("Modelo de E-mail")> <TriStatePrivilege>
     EmailModel = 16
@@ -85,31 +85,31 @@ Public Enum Routine
     <Description("Fluxo de Caixa")> <TriStatePrivilege>
     CashFlow = 19
     CashFlowAuthorized = 1901
-    <Description("Permite gerar o relatório de folha de caixa")> <BiStatePrivilege>
+    <Description("Gerar o relatório de folha de caixa")> <BiStatePrivilege>
     CashSheetReport = 1902
-    <Description("Permite gerar o relatório de despesas por responsável do caixa")> <BiStatePrivilege>
+    <Description("Gerar o relatório de despesas por responsável do caixa")> <BiStatePrivilege>
     CashExpensesPerResponsibleReport = 1903
-    <Description("Permite reabrir um caixa")> <BiStatePrivilege>
+    <Description("Reabrir um caixa")> <BiStatePrivilege>
     CashCanReopen = 1904
     <Description("Assinatura de E-Mail")> <TriStatePrivilege>
     EmailSignature = 20
     <Description("CRM")> <TriStatePrivilege>
     Crm = 21
     CrmTreatment = 2101
-    <Description("Permite alterar o status do CRM para pendente")> <BiStatePrivilege>
+    <Description("Alterar o status do CRM para pendente")> <BiStatePrivilege>
     CrmCanChangeStatusToPending = 2102
-    <Description("Permite alterar o cliente do CRM")> <BiStatePrivilege>
+    <Description("Alterar o cliente do CRM")> <BiStatePrivilege>
     CrmCanChangeCustomer = 2103
-    <Description("Permite alterar o responsavel do CRM")> <BiStatePrivilege>
+    <Description("Alterar o responsavel do CRM")> <BiStatePrivilege>
     CrmCanChangeResponsible = 2104
-    <Description("Permite alterar o assunto do CRM")> <BiStatePrivilege>
+    <Description("Alterar o assunto do CRM")> <BiStatePrivilege>
     CrmCanChangeSubject = 2105
-    <Description("Permite alterar o assunto do CRM")> <BiStatePrivilege>
+    <Description("Alterar o assunto do CRM")> <BiStatePrivilege>
     CrmCanEditTreatment = 2106
     <Description("Agendamento de Visita")> <TriStatePrivilege>
     VisitSchedule = 22
-    <Description("Permite exportar as grades")> <BiStatePrivilege>
+    <Description("Exportar as grades")> <BiStatePrivilege>
     CanExportGrid = 9901
-    <Description("Permite acessar o histórico")> <BiStatePrivilege>
+    <Description("Acessar o histórico")> <BiStatePrivilege>
     CanAccessLog = 9902
 End Enum

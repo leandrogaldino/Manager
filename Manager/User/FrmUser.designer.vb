@@ -58,6 +58,10 @@ Partial Class FrmUser
         Me.QbxPerson = New ControlLibrary.QueriedBox()
         Me.TabPrivilege = New System.Windows.Forms.TabPage()
         Me.FlpPrivilege = New System.Windows.Forms.FlowLayoutPanel()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.TxtFilterPrivileges = New System.Windows.Forms.TextBox()
         Me.TabEmail = New System.Windows.Forms.TabPage()
         Me.DgvEmail = New System.Windows.Forms.DataGridView()
         Me.TsEmail = New System.Windows.Forms.ToolStrip()
@@ -78,6 +82,8 @@ Partial Class FrmUser
         Me.TabMain.SuspendLayout()
         Me.FlpManufacturer.SuspendLayout()
         Me.TabPrivilege.SuspendLayout()
+        Me.TableLayoutPanel1.SuspendLayout()
+        Me.Panel1.SuspendLayout()
         Me.TabEmail.SuspendLayout()
         CType(Me.DgvEmail, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsEmail.SuspendLayout()
@@ -456,10 +462,11 @@ Partial Class FrmUser
         'TabPrivilege
         '
         Me.TabPrivilege.Controls.Add(Me.FlpPrivilege)
+        Me.TabPrivilege.Controls.Add(Me.TableLayoutPanel1)
         Me.TabPrivilege.Location = New System.Drawing.Point(4, 22)
         Me.TabPrivilege.Name = "TabPrivilege"
         Me.TabPrivilege.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPrivilege.Size = New System.Drawing.Size(713, 251)
+        Me.TabPrivilege.Size = New System.Drawing.Size(779, 257)
         Me.TabPrivilege.TabIndex = 8
         Me.TabPrivilege.Text = "Permissões"
         Me.TabPrivilege.UseVisualStyleBackColor = True
@@ -468,10 +475,51 @@ Partial Class FrmUser
         '
         Me.FlpPrivilege.AutoScroll = True
         Me.FlpPrivilege.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.FlpPrivilege.Location = New System.Drawing.Point(3, 3)
+        Me.FlpPrivilege.Location = New System.Drawing.Point(3, 38)
         Me.FlpPrivilege.Name = "FlpPrivilege"
-        Me.FlpPrivilege.Size = New System.Drawing.Size(707, 245)
+        Me.FlpPrivilege.Size = New System.Drawing.Size(773, 216)
         Me.FlpPrivilege.TabIndex = 0
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.ColumnCount = 1
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.Panel1, 0, 0)
+        Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 1
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(773, 35)
+        Me.TableLayoutPanel1.TabIndex = 1
+        '
+        'Panel1
+        '
+        Me.Panel1.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Panel1.Controls.Add(Me.Label1)
+        Me.Panel1.Controls.Add(Me.TxtFilterPrivileges)
+        Me.Panel1.Location = New System.Drawing.Point(233, 3)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(306, 29)
+        Me.Panel1.TabIndex = 0
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(3, 6)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(42, 17)
+        Me.Label1.TabIndex = 1
+        Me.Label1.Text = "Filtrar"
+        '
+        'TxtFilterPrivileges
+        '
+        Me.TxtFilterPrivileges.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.TxtFilterPrivileges.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtFilterPrivileges.Location = New System.Drawing.Point(51, 3)
+        Me.TxtFilterPrivileges.Name = "TxtFilterPrivileges"
+        Me.TxtFilterPrivileges.Size = New System.Drawing.Size(252, 23)
+        Me.TxtFilterPrivileges.TabIndex = 0
         '
         'TabEmail
         '
@@ -480,7 +528,7 @@ Partial Class FrmUser
         Me.TabEmail.Location = New System.Drawing.Point(4, 22)
         Me.TabEmail.Name = "TabEmail"
         Me.TabEmail.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabEmail.Size = New System.Drawing.Size(713, 251)
+        Me.TabEmail.Size = New System.Drawing.Size(779, 257)
         Me.TabEmail.TabIndex = 11
         Me.TabEmail.Text = "E-Mails"
         Me.TabEmail.UseVisualStyleBackColor = True
@@ -503,7 +551,7 @@ Partial Class FrmUser
         Me.DgvEmail.RowHeadersVisible = False
         Me.DgvEmail.RowTemplate.Height = 26
         Me.DgvEmail.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvEmail.Size = New System.Drawing.Size(707, 220)
+        Me.DgvEmail.Size = New System.Drawing.Size(773, 226)
         Me.DgvEmail.TabIndex = 3
         '
         'TsEmail
@@ -515,7 +563,7 @@ Partial Class FrmUser
         Me.TsEmail.Location = New System.Drawing.Point(3, 3)
         Me.TsEmail.Name = "TsEmail"
         Me.TsEmail.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsEmail.Size = New System.Drawing.Size(707, 25)
+        Me.TsEmail.Size = New System.Drawing.Size(773, 25)
         Me.TsEmail.TabIndex = 2
         Me.TsEmail.Text = "ToolStrip2"
         '
@@ -571,7 +619,7 @@ Partial Class FrmUser
         Me.TabNote.Location = New System.Drawing.Point(4, 22)
         Me.TabNote.Name = "TabNote"
         Me.TabNote.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabNote.Size = New System.Drawing.Size(713, 251)
+        Me.TabNote.Size = New System.Drawing.Size(779, 257)
         Me.TabNote.TabIndex = 10
         Me.TabNote.Text = "Observação"
         Me.TabNote.UseVisualStyleBackColor = True
@@ -583,7 +631,7 @@ Partial Class FrmUser
         Me.TxtNote.Location = New System.Drawing.Point(3, 3)
         Me.TxtNote.MaxLength = 1000000
         Me.TxtNote.Name = "TxtNote"
-        Me.TxtNote.Size = New System.Drawing.Size(707, 245)
+        Me.TxtNote.Size = New System.Drawing.Size(773, 251)
         Me.TxtNote.TabIndex = 1
         Me.TxtNote.Text = ""
         '
@@ -626,6 +674,9 @@ Partial Class FrmUser
         Me.TabMain.PerformLayout()
         Me.FlpManufacturer.ResumeLayout(False)
         Me.TabPrivilege.ResumeLayout(False)
+        Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
         Me.TabEmail.ResumeLayout(False)
         Me.TabEmail.PerformLayout()
         CType(Me.DgvEmail, System.ComponentModel.ISupportInitialize).EndInit()
@@ -682,4 +733,8 @@ Partial Class FrmUser
     Friend WithEvents TxtFilterEmail As ToolStripTextBox
     Friend WithEvents DgvEmailLayout As DataGridViewLayout
     Friend WithEvents FlpPrivilege As FlowLayoutPanel
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Label1 As Label
+    Friend WithEvents TxtFilterPrivileges As TextBox
 End Class

@@ -47,7 +47,7 @@ Partial Class UcBiStatePrivilegeItem
         Me.TlpContainer.Name = "TlpContainer"
         Me.TlpContainer.RowCount = 1
         Me.TlpContainer.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TlpContainer.Size = New System.Drawing.Size(470, 30)
+        Me.TlpContainer.Size = New System.Drawing.Size(470, 45)
         Me.TlpContainer.TabIndex = 2
         '
         'PnPrivilege
@@ -59,7 +59,7 @@ Partial Class UcBiStatePrivilegeItem
         Me.PnPrivilege.Margin = New System.Windows.Forms.Padding(0)
         Me.PnPrivilege.Name = "PnPrivilege"
         Me.PnPrivilege.Padding = New System.Windows.Forms.Padding(1, 0, 1, 1)
-        Me.PnPrivilege.Size = New System.Drawing.Size(381, 30)
+        Me.PnPrivilege.Size = New System.Drawing.Size(381, 45)
         Me.PnPrivilege.TabIndex = 11
         '
         'LblPrivilege
@@ -69,7 +69,7 @@ Partial Class UcBiStatePrivilegeItem
         Me.LblPrivilege.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblPrivilege.Location = New System.Drawing.Point(1, 0)
         Me.LblPrivilege.Name = "LblPrivilege"
-        Me.LblPrivilege.Size = New System.Drawing.Size(379, 29)
+        Me.LblPrivilege.Size = New System.Drawing.Size(379, 44)
         Me.LblPrivilege.TabIndex = 1
         Me.LblPrivilege.Text = "Privilege"
         Me.LblPrivilege.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -83,7 +83,7 @@ Partial Class UcBiStatePrivilegeItem
         Me.PnGrant.Margin = New System.Windows.Forms.Padding(0)
         Me.PnGrant.Name = "PnGrant"
         Me.PnGrant.Padding = New System.Windows.Forms.Padding(0, 0, 1, 1)
-        Me.PnGrant.Size = New System.Drawing.Size(89, 30)
+        Me.PnGrant.Size = New System.Drawing.Size(89, 45)
         Me.PnGrant.TabIndex = 12
         '
         'CbxGrant
@@ -101,7 +101,7 @@ Partial Class UcBiStatePrivilegeItem
         Me.CbxGrant.Location = New System.Drawing.Point(0, 0)
         Me.CbxGrant.Margin = New System.Windows.Forms.Padding(0)
         Me.CbxGrant.Name = "CbxGrant"
-        Me.CbxGrant.Size = New System.Drawing.Size(88, 29)
+        Me.CbxGrant.Size = New System.Drawing.Size(88, 44)
         Me.CbxGrant.TabIndex = 11
         Me.CbxGrant.TextAlign = System.Drawing.ContentAlignment.TopCenter
         Me.CbxGrant.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage
@@ -114,7 +114,7 @@ Partial Class UcBiStatePrivilegeItem
         Me.Controls.Add(Me.TlpContainer)
         Me.Margin = New System.Windows.Forms.Padding(0)
         Me.Name = "UcBiStatePrivilegeItem"
-        Me.Size = New System.Drawing.Size(470, 30)
+        Me.Size = New System.Drawing.Size(470, 45)
         Me.TlpContainer.ResumeLayout(False)
         Me.PnPrivilege.ResumeLayout(False)
         Me.PnGrant.ResumeLayout(False)

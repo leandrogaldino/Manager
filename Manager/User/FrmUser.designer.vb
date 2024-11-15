@@ -462,10 +462,10 @@ Partial Class FrmUser
         '
         Me.TabPrivilege.Controls.Add(Me.FlpPrivilege)
         Me.TabPrivilege.Controls.Add(Me.TlpFilter)
-        Me.TabPrivilege.Location = New System.Drawing.Point(4, 26)
+        Me.TabPrivilege.Location = New System.Drawing.Point(4, 22)
         Me.TabPrivilege.Name = "TabPrivilege"
         Me.TabPrivilege.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPrivilege.Size = New System.Drawing.Size(451, 67)
+        Me.TabPrivilege.Size = New System.Drawing.Size(451, 71)
         Me.TabPrivilege.TabIndex = 8
         Me.TabPrivilege.Text = "Permissões"
         Me.TabPrivilege.UseVisualStyleBackColor = True
@@ -476,7 +476,7 @@ Partial Class FrmUser
         Me.FlpPrivilege.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FlpPrivilege.Location = New System.Drawing.Point(3, 38)
         Me.FlpPrivilege.Name = "FlpPrivilege"
-        Me.FlpPrivilege.Size = New System.Drawing.Size(445, 26)
+        Me.FlpPrivilege.Size = New System.Drawing.Size(445, 30)
         Me.FlpPrivilege.TabIndex = 0
         '
         'TlpFilter
@@ -721,9 +721,9 @@ Partial Class FrmUser
     Friend WithEvents BtnDeleteEmail As ToolStripButton
     Friend WithEvents TxtFilterEmail As ToolStripTextBox
     Friend WithEvents DgvEmailLayout As DataGridViewLayout
-    Friend WithEvents FlpPrivilege As FlowLayoutPanel
     Friend WithEvents TlpFilter As TableLayoutPanel
     Friend WithEvents PnFilter As Panel
     Friend WithEvents LblFilter As Label
     Friend WithEvents TxtFilterPrivileges As TextBox
+    Friend WithEvents FlpPrivilege As FlowLayoutPanel
 End Class

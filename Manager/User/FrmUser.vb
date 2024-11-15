@@ -35,8 +35,8 @@ Public Class FrmUser
         _Filter = CType(_UsersForm.PgFilter.SelectedObject, UserFilter)
         _LoggedUser = Locator.GetInstance(Of Session).User
         InitializeComponent()
-        LoadData()
         LoadForm()
+        LoadData()
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvEmailLayout.Load()
@@ -52,12 +52,54 @@ Public Class FrmUser
         BtnRequestPassword.Visible = _LoggedUser.CanAccess(Routine.UserCanResetPassword)
         BtnRequestPassword.ToolTipText = String.Format("Resetar Senha ({0})", Locator.GetInstance(Of Session).Setting.General.User.DefaultPassword)
         BtnLog.Visible = _LoggedUser.CanAccess(Routine.CanAccessLog)
+        BtnImportPrivilege.Visible = False
+        InitializePrivileges()
+    End Sub
+
+    Private Sub InitializePrivileges()
+        Dim Controls As New List(Of Control) From {New UcTriStatePrivilegeTitle()}
+        Dim TriStatePrivileges As List(Of Routine) = GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(TriStatePrivilege), True).Any()).OrderBy(Function(x) GetEnumDescription(x)).ToList
+        For Each TriStatePrivilege In TriStatePrivileges
+            Dim PrivilegeItem = New UcTristatePrivilegeItem() With {.Routine = TriStatePrivilege}
+            AddHandler PrivilegeItem.ChechedChanged, AddressOf PrivilegeItemCheckedChange
+            Controls.Add(PrivilegeItem)
+        Next
+        Controls.Add(New UcBiStatePrivilegeTitle())
+        Dim BiStatePrivileges As List(Of Routine) = GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(BiStatePrivilege), True).Any()).OrderBy(Function(x) GetEnumDescription(x)).ToList
+        For Each BiStatePrivilege In BiStatePrivileges
+            Dim PrivilegeItem = New UcBiStatePrivilegeItem() With {.Routine = BiStatePrivilege}
+            AddHandler PrivilegeItem.ChechedChanged, AddressOf PrivilegeItemCheckedChange
+            Controls.Add(PrivilegeItem)
+        Next
+        FlpPrivilege.Controls.AddRange(Controls.ToArray())
+    End Sub
+    Private Sub UpdatePrivileges()
+
+        TabPrivilege.Visible = False
+
+        Dim ControlIndex As Integer = 1
+        Dim TriStatePrivileges As List(Of Routine) = GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(TriStatePrivilege), True).Any()).OrderBy(Function(x) GetEnumDescription(x)).ToList
+        For Each TriStatePrivilege In TriStatePrivileges
+            Dim PrivilegeItem = CType(FlpPrivilege.Controls(ControlIndex), UcTristatePrivilegeItem)
+            Dim Privileges As List(Of UserPrivilege) = _User.Privileges.Where(Function(x) x.Routine = TriStatePrivilege).ToList()
+            PrivilegeItem.CanAccess = Privileges.Any(Function(p) p.Level = PrivilegeLevel.Access)
+            PrivilegeItem.CanWrite = Privileges.Any(Function(p) p.Level = PrivilegeLevel.Write)
+            PrivilegeItem.CanDelete = Privileges.Any(Function(p) p.Level = PrivilegeLevel.Delete)
+            ControlIndex += 1
+        Next
+        ControlIndex += 1
+        Dim BiStatePrivileges As List(Of Routine) = GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(BiStatePrivilege), True).Any()).OrderBy(Function(x) GetEnumDescription(x)).ToList
+        For Each BiStatePrivilege In BiStatePrivileges
+            Dim PrivilegeItem = CType(FlpPrivilege.Controls(ControlIndex), UcBiStatePrivilegeItem)
+            Dim Privileges As List(Of UserPrivilege) = _User.Privileges.Where(Function(x) x.Routine = BiStatePrivilege).ToList()
+            PrivilegeItem.Granted = Privileges.Any(Function(p) p.Level = PrivilegeLevel.Access)
+            ControlIndex += 1
+        Next
+
+        TabPrivilege.Visible = True
+
     End Sub
     Private Sub LoadData()
-        FlpPrivilege.Visible = False
-        SuspendLayout()
-        FlpPrivilege.SuspendLayout()
-
         _Loading = True
         LblIDValue.Text = _User.ID
         BtnStatusValue.Text = GetEnumDescription(_User.Status)
@@ -68,43 +110,9 @@ Public Class FrmUser
         TxtNote.Text = _User.Note
         TxtFilterEmail.Clear()
         TxtFilterPrivileges.Clear()
-
-
-
-        FlpPrivilege.Controls.Clear()
-
         If _User.Emails IsNot Nothing Then _User.Emails.FillDataGridView(DgvEmail)
         BtnDelete.Enabled = _User.ID > 0 And _User.CanDelete(Routine.User)
-        FlpPrivilege.Controls.Add(New UcTriStatePrivilegeTitle())
-        Dim TriStatePrivileges As List(Of Routine) = GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(TriStatePrivilege), True).Any()).OrderBy(Function(x) GetEnumDescription(x)).ToList
-
-
-
-        For Each TriStatePrivilege In TriStatePrivileges
-            Dim Privileges As List(Of UserPrivilege) = _User.Privileges.Where(Function(x) x.Routine = TriStatePrivilege).ToList()
-            Dim CanAccess As Boolean = Privileges.Any(Function(p) p.Level = PrivilegeLevel.Access)
-            Dim CanWrite As Boolean = Privileges.Any(Function(p) p.Level = PrivilegeLevel.Write)
-            Dim CanDelete As Boolean = Privileges.Any(Function(p) p.Level = PrivilegeLevel.Delete)
-            Dim PrivilegeItem = New UcTristatePrivilegeItem(TriStatePrivilege, CanAccess, CanWrite, CanDelete)
-            AddHandler PrivilegeItem.ChechedChanged, AddressOf PrivilegeItemCheckedChange
-            FlpPrivilege.Controls.Add(PrivilegeItem)
-        Next TriStatePrivilege
-        FlpPrivilege.Controls.Add(New UcBiStatePrivilegeTitle())
-
-        Dim BiStatePrivileges As List(Of Routine) = GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(BiStatePrivilege), True).Any()).OrderBy(Function(x) GetEnumDescription(x)).ToList
-        For Each BiStatePrivilege In BiStatePrivileges
-            Dim Privileges As List(Of UserPrivilege) = _User.Privileges.Where(Function(x) x.Routine = BiStatePrivilege).ToList()
-            Dim Granted As Boolean = Privileges.Any(Function(p) p.Level = PrivilegeLevel.Access)
-            Dim PrivilegeItem = New UcBiStatePrivilegeItem(BiStatePrivilege, Granted)
-            AddHandler PrivilegeItem.ChechedChanged, AddressOf PrivilegeItemCheckedChange
-            FlpPrivilege.Controls.Add(PrivilegeItem)
-        Next BiStatePrivilege
-
-        FlpPrivilege.ResumeLayout()
-        ResumeLayout()
-        FlpPrivilege.Visible = True
-
-
+        UpdatePrivileges()
         Text = "Usuário"
         If _User.LockInfo.IsLocked And Not _User.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _User.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_User.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
@@ -163,15 +171,22 @@ Public Class FrmUser
             FormBorderStyle = FormBorderStyle.FixedSingle
             WindowState = FormWindowState.Normal
             MaximizeBox = False
+            BtnImportPrivilege.Visible = False
         ElseIf TcUser.SelectedTab Is TabPrivilege Then
+            FlpPrivilege.SuspendLayout()
+            SuspendLayout()
             Size = New Size(520, 550)
             FormBorderStyle = FormBorderStyle.FixedSingle
             WindowState = FormWindowState.Normal
             MaximizeBox = False
+            BtnImportPrivilege.Visible = True
+            FlpPrivilege.ResumeLayout(True)
+            ResumeLayout()
         Else
             FormBorderStyle = FormBorderStyle.Sizable
             WindowState = FormWindowState.Maximized
             MaximizeBox = True
+            BtnImportPrivilege.Visible = False
         End If
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click

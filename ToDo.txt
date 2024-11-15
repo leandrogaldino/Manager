@@ -1,8 +1,4 @@
-[X] As Permissões BiState ainda não estão sendo salvas.
-
 [] A permissão de exportar as grades e imagens do painel de avaliação não está configurado. 
-
-[] No FrmUser, ocultar o botão de importar predefinição, caso não esteja na aba de permissões.
 
 [] Recriar a Predefinição de permissões.
 
@@ -10,10 +6,20 @@
 
 [] As permissões de Email do usuário não estão configuradas.
 
-[X] Colocar as permissões em ordem alfabética.
-
 [] A permissão de importar avaliação não está configurada.
 
 [] Terminar a rotina de agendamento.
 
 [] Quanto altera algum filtro do CRM o layout do DataGridView altera também.
+
+[X] Criar rotina de sincronização de dados com a núvem.
+
+[X] As Permissões BiState ainda não estão sendo salvas.
+
+[X] Diminuir o Flickening na aba de privilegios da rotina de usuário, ao carregar um registro.
+
+[X] Colocar as permissões em ordem alfabética.
+
+[X] Criar rotina de importação de avaliações da núvem para o gerenciador.
+
+[X] No FrmUser, ocultar o botão de importar predefinição, caso não esteja na aba de permissões.

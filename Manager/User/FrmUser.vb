@@ -54,6 +54,10 @@ Public Class FrmUser
         BtnLog.Visible = _LoggedUser.CanAccess(Routine.CanAccessLog)
     End Sub
     Private Sub LoadData()
+        FlpPrivilege.Visible = False
+        SuspendLayout()
+        FlpPrivilege.SuspendLayout()
+
         _Loading = True
         LblIDValue.Text = _User.ID
         BtnStatusValue.Text = GetEnumDescription(_User.Status)
@@ -64,7 +68,9 @@ Public Class FrmUser
         TxtNote.Text = _User.Note
         TxtFilterEmail.Clear()
         TxtFilterPrivileges.Clear()
-        FlpPrivilege.SuspendLayout()
+
+
+
         FlpPrivilege.Controls.Clear()
 
         If _User.Emails IsNot Nothing Then _User.Emails.FillDataGridView(DgvEmail)
@@ -93,7 +99,10 @@ Public Class FrmUser
             AddHandler PrivilegeItem.ChechedChanged, AddressOf PrivilegeItemCheckedChange
             FlpPrivilege.Controls.Add(PrivilegeItem)
         Next BiStatePrivilege
+
         FlpPrivilege.ResumeLayout()
+        ResumeLayout()
+        FlpPrivilege.Visible = True
 
 
         Text = "Usuário"

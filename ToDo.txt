@@ -1,16 +1,18 @@
-[] A permissão de exportar as grades e imagens do painel de avaliação não está configurado. 
+[] Terminar a rotina de agendamento.
 
 [] Recriar a Predefinição de permissões.
 
-[] A permissão de criar avaliação automática não está configurada.
+[X] A permissão de exportar as grades e imagens do painel de avaliação não está configurado. 
 
-[] As permissões de Email do usuário não estão configuradas.
+[X] A permissão de criar avaliação automática não está configurada.
 
-[] A permissão de importar avaliação não está configurada.
+[X] A permissão de agendar uma visita a partir do gerenciamento de avaliações não está configurada.
 
-[] Terminar a rotina de agendamento.
+[X] As permissões de Email do usuário não estão configuradas.
 
-[] Quanto altera algum filtro do CRM o layout do DataGridView altera também.
+[X] A permissão de importar avaliação não está configurada.
+
+[X] Quanto altera algum filtro do CRM o layout do DataGridView altera também.
 
 [X] Criar rotina de sincronização de dados com a núvem.
 

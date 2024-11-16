@@ -489,344 +489,344 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="CashFlow\CashFlow.vb" />
-    <Compile Include="CashFlow\CashFlowAuthorized.vb" />
-    <Compile Include="CashFlow\CashFlowFilter.vb" />
-    <Compile Include="CashFlow\FrmCashFlowAuthorized.Designer.vb">
+    <Compile Include="Source\Routines\CashFlow\CashFlow.vb" />
+    <Compile Include="Source\Routines\CashFlow\CashFlowAuthorized.vb" />
+    <Compile Include="Source\Routines\CashFlow\CashFlowFilter.vb" />
+    <Compile Include="Source\Routines\CashFlow\FrmCashFlowAuthorized.Designer.vb">
       <DependentUpon>FrmCashFlowAuthorized.vb</DependentUpon>
     </Compile>
-    <Compile Include="CashFlow\FrmCashFlowAuthorized.vb">
+    <Compile Include="Source\Routines\CashFlow\FrmCashFlowAuthorized.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CashFlow\FrmCashFlows.Designer.vb">
+    <Compile Include="Source\Routines\CashFlow\FrmCashFlows.Designer.vb">
       <DependentUpon>FrmCashFlows.vb</DependentUpon>
     </Compile>
-    <Compile Include="CashFlow\FrmCashFlows.vb">
+    <Compile Include="Source\Routines\CashFlow\FrmCashFlows.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CashFlow\FrmChoseCashFlow.Designer.vb">
+    <Compile Include="Source\Routines\CashFlow\FrmChoseCashFlow.Designer.vb">
       <DependentUpon>FrmChoseCashFlow.vb</DependentUpon>
     </Compile>
-    <Compile Include="CashFlow\FrmChoseCashFlow.vb">
+    <Compile Include="Source\Routines\CashFlow\FrmChoseCashFlow.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cash\Cash.vb" />
-    <Compile Include="Cash\CashFilter.vb" />
-    <Compile Include="Cash\CashItem.vb" />
-    <Compile Include="Cash\CashItemResponsible.vb" />
-    <Compile Include="Cash\CashReport.vb" />
-    <Compile Include="Cash\FrmCash.designer.vb">
+    <Compile Include="Source\Routines\Cash\Cash.vb" />
+    <Compile Include="Source\Routines\Cash\CashFilter.vb" />
+    <Compile Include="Source\Routines\Cash\CashItem.vb" />
+    <Compile Include="Source\Routines\Cash\CashItemResponsible.vb" />
+    <Compile Include="Source\Routines\Cash\CashReport.vb" />
+    <Compile Include="Source\Routines\Cash\FrmCash.designer.vb">
       <DependentUpon>FrmCash.vb</DependentUpon>
     </Compile>
-    <Compile Include="Cash\FrmCash.vb">
+    <Compile Include="Source\Routines\Cash\FrmCash.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cash\FrmCashes.designer.vb">
+    <Compile Include="Source\Routines\Cash\FrmCashes.designer.vb">
       <DependentUpon>FrmCashes.vb</DependentUpon>
     </Compile>
-    <Compile Include="Cash\FrmCashes.vb">
+    <Compile Include="Source\Routines\Cash\FrmCashes.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CashFlow\FrmCashFlow.Designer.vb">
+    <Compile Include="Source\Routines\CashFlow\FrmCashFlow.Designer.vb">
       <DependentUpon>FrmCashFlow.vb</DependentUpon>
     </Compile>
-    <Compile Include="CashFlow\FrmCashFlow.vb">
+    <Compile Include="Source\Routines\CashFlow\FrmCashFlow.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cash\FrmCashItem.designer.vb">
+    <Compile Include="Source\Routines\Cash\FrmCashItem.designer.vb">
       <DependentUpon>FrmCashItem.vb</DependentUpon>
     </Compile>
-    <Compile Include="Cash\FrmCashItem.vb">
+    <Compile Include="Source\Routines\Cash\FrmCashItem.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cash\FrmCashItemResponsible.designer.vb">
+    <Compile Include="Source\Routines\Cash\FrmCashItemResponsible.designer.vb">
       <DependentUpon>FrmCashItemResponsible.vb</DependentUpon>
     </Compile>
-    <Compile Include="Cash\FrmCashItemResponsible.vb">
+    <Compile Include="Source\Routines\Cash\FrmCashItemResponsible.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cash\FrmCashExpensesPerResponsible.designer.vb">
+    <Compile Include="Source\Routines\Cash\FrmCashExpensesPerResponsible.designer.vb">
       <DependentUpon>FrmCashExpensesPerResponsible.vb</DependentUpon>
     </Compile>
-    <Compile Include="Cash\FrmCashExpensesPerResponsible.vb">
+    <Compile Include="Source\Routines\Cash\FrmCashExpensesPerResponsible.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cash\FrmCashSheet.Designer.vb">
+    <Compile Include="Source\Routines\Cash\FrmCashSheet.Designer.vb">
       <DependentUpon>FrmCashSheet.vb</DependentUpon>
     </Compile>
-    <Compile Include="Cash\FrmCashSheet.vb">
+    <Compile Include="Source\Routines\Cash\FrmCashSheet.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="City\City.vb" />
-    <Compile Include="City\CityFilter.vb" />
-    <Compile Include="City\CityRoute.vb" />
-    <Compile Include="City\FrmCities.designer.vb">
+    <Compile Include="Source\Routines\City\City.vb" />
+    <Compile Include="Source\Routines\City\CityFilter.vb" />
+    <Compile Include="Source\Routines\City\CityRoute.vb" />
+    <Compile Include="Source\Routines\City\FrmCities.designer.vb">
       <DependentUpon>FrmCities.vb</DependentUpon>
     </Compile>
-    <Compile Include="City\FrmCities.vb">
+    <Compile Include="Source\Routines\City\FrmCities.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="City\FrmCity.designer.vb">
+    <Compile Include="Source\Routines\City\FrmCity.designer.vb">
       <DependentUpon>FrmCity.vb</DependentUpon>
     </Compile>
-    <Compile Include="City\FrmCity.vb">
+    <Compile Include="Source\Routines\City\FrmCity.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="City\FrmCityRoute.Designer.vb">
+    <Compile Include="Source\Routines\City\FrmCityRoute.Designer.vb">
       <DependentUpon>FrmCityRoute.vb</DependentUpon>
     </Compile>
-    <Compile Include="City\FrmCityRoute.vb">
+    <Compile Include="Source\Routines\City\FrmCityRoute.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Compressor\CompressorPart.vb" />
-    <Compile Include="CRM\Crm.vb" />
-    <Compile Include="CRM\CrmFilter.vb" />
-    <Compile Include="CRM\CrmTreatment.vb" />
-    <Compile Include="CRM\FrmCrm.Designer.vb">
+    <Compile Include="Source\Routines\Compressor\CompressorPart.vb" />
+    <Compile Include="Source\Routines\CRM\Crm.vb" />
+    <Compile Include="Source\Routines\CRM\CrmFilter.vb" />
+    <Compile Include="Source\Routines\CRM\CrmTreatment.vb" />
+    <Compile Include="Source\Routines\CRM\FrmCrm.Designer.vb">
       <DependentUpon>FrmCrm.vb</DependentUpon>
     </Compile>
-    <Compile Include="CRM\FrmCrm.vb">
+    <Compile Include="Source\Routines\CRM\FrmCrm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CRM\FrmCrms.Designer.vb">
+    <Compile Include="Source\Routines\CRM\FrmCrms.Designer.vb">
       <DependentUpon>FrmCrms.vb</DependentUpon>
     </Compile>
-    <Compile Include="CRM\FrmCrms.vb">
+    <Compile Include="Source\Routines\CRM\FrmCrms.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CRM\FrmCrmTreatment.Designer.vb">
+    <Compile Include="Source\Routines\CRM\FrmCrmTreatment.Designer.vb">
       <DependentUpon>FrmCrmTreatment.vb</DependentUpon>
     </Compile>
-    <Compile Include="CRM\FrmCrmTreatment.vb">
+    <Compile Include="Source\Routines\CRM\FrmCrmTreatment.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EmailSent\EmailSentFilter.vb" />
-    <Compile Include="EmailSent\FrmEmailsSent.Designer.vb">
+    <Compile Include="Source\Routines\EmailSent\EmailSentFilter.vb" />
+    <Compile Include="Source\Routines\EmailSent\FrmEmailsSent.Designer.vb">
       <DependentUpon>FrmEmailsSent.vb</DependentUpon>
     </Compile>
-    <Compile Include="EmailSent\FrmEmailsSent.vb">
+    <Compile Include="Source\Routines\EmailSent\FrmEmailsSent.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EmailSignature\EmailSignature.vb" />
-    <Compile Include="EmailSignature\EmailSignatureFilter.vb" />
-    <Compile Include="EmailSignature\FrmEmailSignature.Designer.vb">
+    <Compile Include="Source\Routines\EmailSignature\EmailSignature.vb" />
+    <Compile Include="Source\Routines\EmailSignature\EmailSignatureFilter.vb" />
+    <Compile Include="Source\Routines\EmailSignature\FrmEmailSignature.Designer.vb">
       <DependentUpon>FrmEmailSignature.vb</DependentUpon>
     </Compile>
-    <Compile Include="EmailSignature\FrmEmailSignature.vb">
+    <Compile Include="Source\Routines\EmailSignature\FrmEmailSignature.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EmailSignature\FrmEmailSignatures.Designer.vb">
+    <Compile Include="Source\Routines\EmailSignature\FrmEmailSignatures.Designer.vb">
       <DependentUpon>FrmEmailSignatures.vb</DependentUpon>
     </Compile>
-    <Compile Include="EmailSignature\FrmEmailSignatures.vb">
+    <Compile Include="Source\Routines\EmailSignature\FrmEmailSignatures.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Email\Email.vb" />
-    <Compile Include="EmailModel\EmailModel.vb" />
-    <Compile Include="EmailModel\EmailModelFilter.vb" />
-    <Compile Include="Email\FrmEmail.Designer.vb">
+    <Compile Include="Source\Routines\Email\Email.vb" />
+    <Compile Include="Source\Routines\EmailModel\EmailModel.vb" />
+    <Compile Include="Source\Routines\EmailModel\EmailModelFilter.vb" />
+    <Compile Include="Source\Routines\Email\FrmEmail.Designer.vb">
       <DependentUpon>FrmEmail.vb</DependentUpon>
     </Compile>
-    <Compile Include="Email\FrmEmail.vb">
+    <Compile Include="Source\Routines\Email\FrmEmail.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Email\FrmEmailImportContact.Designer.vb">
+    <Compile Include="Source\Routines\Email\FrmEmailImportContact.Designer.vb">
       <DependentUpon>FrmEmailImportContact.vb</DependentUpon>
     </Compile>
-    <Compile Include="Email\FrmEmailImportContact.vb">
+    <Compile Include="Source\Routines\Email\FrmEmailImportContact.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EmailModel\FrmEmailModel.Designer.vb">
+    <Compile Include="Source\Routines\EmailModel\FrmEmailModel.Designer.vb">
       <DependentUpon>FrmEmailModel.vb</DependentUpon>
     </Compile>
-    <Compile Include="EmailModel\FrmEmailModel.vb">
+    <Compile Include="Source\Routines\EmailModel\FrmEmailModel.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EmailModel\FrmEmailModels.Designer.vb">
+    <Compile Include="Source\Routines\EmailModel\FrmEmailModels.Designer.vb">
       <DependentUpon>FrmEmailModels.vb</DependentUpon>
     </Compile>
-    <Compile Include="EmailModel\FrmEmailModels.vb">
+    <Compile Include="Source\Routines\EmailModel\FrmEmailModels.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Email\FrmEmailImportEmailModel.Designer.vb">
+    <Compile Include="Source\Routines\Email\FrmEmailImportEmailModel.Designer.vb">
       <DependentUpon>FrmEmailImportEmailModel.vb</DependentUpon>
     </Compile>
-    <Compile Include="Email\FrmEmailImportEmailModel.vb">
+    <Compile Include="Source\Routines\Email\FrmEmailImportEmailModel.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Helper\Attibute\BiStatePrivilegeAttribute.vb" />
-    <Compile Include="Helper\Attibute\TriStatePrivilegeAttribute.vb" />
-    <Compile Include="Helper\Flags\CashItemCategory.vb" />
-    <Compile Include="Helper\Flags\CashStatus.vb" />
-    <Compile Include="Helper\Flags\CloudSyncStatus.vb" />
-    <Compile Include="Helper\Flags\CompressorPartBindType.vb" />
-    <Compile Include="Helper\Flags\CompressorPartType.vb" />
-    <Compile Include="Helper\Flags\CrmStatus.vb" />
-    <Compile Include="Helper\Flags\CrmTreatmentContactType.vb" />
-    <Compile Include="Helper\Flags\EvaluationCreationType.vb" />
-    <Compile Include="Helper\Flags\EvaluationPanelInformation.vb" />
-    <Compile Include="Helper\Flags\EvaluationStatus.vb" />
-    <Compile Include="Helper\Flags\EvaluationType.vb" />
-    <Compile Include="Helper\Flags\MySqlError.vb" />
-    <Compile Include="Helper\Flags\PersonContributionType.vb" />
-    <Compile Include="Helper\Flags\PersonEntityType.vb" />
-    <Compile Include="Helper\Flags\PrivilegeLevel.vb" />
-    <Compile Include="Helper\Flags\RequestStatus.vb" />
-    <Compile Include="Helper\Flags\Routine.vb" />
-    <Compile Include="Helper\Flags\SimpleStatus.vb" />
-    <Compile Include="Helper\Flags\VisitScheduleStatus.vb" />
-    <Compile Include="Helper\Flags\VisitScheduleType.vb" />
-    <Compile Include="User\Control\UcBiStatePrivilegeItem.Designer.vb">
+    <Compile Include="Source\Helper\Attibutes\BiStatePrivilegeAttribute.vb" />
+    <Compile Include="Source\Helper\Attibutes\TriStatePrivilegeAttribute.vb" />
+    <Compile Include="Source\Helper\Flags\CashItemCategory.vb" />
+    <Compile Include="Source\Helper\Flags\CashStatus.vb" />
+    <Compile Include="Source\Helper\Flags\CloudSyncStatus.vb" />
+    <Compile Include="Source\Helper\Flags\CompressorPartBindType.vb" />
+    <Compile Include="Source\Helper\Flags\CompressorPartType.vb" />
+    <Compile Include="Source\Helper\Flags\CrmStatus.vb" />
+    <Compile Include="Source\Helper\Flags\CrmTreatmentContactType.vb" />
+    <Compile Include="Source\Helper\Flags\EvaluationCreationType.vb" />
+    <Compile Include="Source\Helper\Flags\EvaluationPanelInformation.vb" />
+    <Compile Include="Source\Helper\Flags\EvaluationStatus.vb" />
+    <Compile Include="Source\Helper\Flags\EvaluationType.vb" />
+    <Compile Include="Source\Helper\Flags\MySqlError.vb" />
+    <Compile Include="Source\Helper\Flags\PersonContributionType.vb" />
+    <Compile Include="Source\Helper\Flags\PersonEntityType.vb" />
+    <Compile Include="Source\Helper\Flags\PrivilegeLevel.vb" />
+    <Compile Include="Source\Helper\Flags\RequestStatus.vb" />
+    <Compile Include="Source\Helper\Flags\Routine.vb" />
+    <Compile Include="Source\Helper\Flags\SimpleStatus.vb" />
+    <Compile Include="Source\Helper\Flags\VisitScheduleStatus.vb" />
+    <Compile Include="Source\Helper\Flags\VisitScheduleType.vb" />
+    <Compile Include="Source\Routines\User\Control\UcBiStatePrivilegeItem.Designer.vb">
       <DependentUpon>UcBiStatePrivilegeItem.vb</DependentUpon>
     </Compile>
-    <Compile Include="User\Control\UcBiStatePrivilegeItem.vb">
+    <Compile Include="Source\Routines\User\Control\UcBiStatePrivilegeItem.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="User\Control\UcBiStatePrivilegeTitle.Designer.vb">
+    <Compile Include="Source\Routines\User\Control\UcBiStatePrivilegeTitle.Designer.vb">
       <DependentUpon>UcBiStatePrivilegeTitle.vb</DependentUpon>
     </Compile>
-    <Compile Include="User\Control\UcBiStatePrivilegeTitle.vb">
+    <Compile Include="Source\Routines\User\Control\UcBiStatePrivilegeTitle.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="User\Control\UcTriStatePrivilegeTitle.Designer.vb">
+    <Compile Include="Source\Routines\User\Control\UcTriStatePrivilegeTitle.Designer.vb">
       <DependentUpon>UcTriStatePrivilegeTitle.vb</DependentUpon>
     </Compile>
-    <Compile Include="User\Control\UcTriStatePrivilegeTitle.vb">
+    <Compile Include="Source\Routines\User\Control\UcTriStatePrivilegeTitle.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="User\Control\UcTristatePrivilegeItem.Designer.vb">
+    <Compile Include="Source\Routines\User\Control\UcTristatePrivilegeItem.Designer.vb">
       <DependentUpon>UcTristatePrivilegeItem.vb</DependentUpon>
     </Compile>
-    <Compile Include="User\Control\UcTristatePrivilegeItem.vb">
+    <Compile Include="Source\Routines\User\Control\UcTristatePrivilegeItem.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="User\UserPrivilege.vb" />
-    <Compile Include="VisitSchedule\FrmVisitSchedule.Designer.vb">
+    <Compile Include="Source\Routines\User\UserPrivilege.vb" />
+    <Compile Include="Source\Routines\VisitSchedule\FrmVisitSchedule.Designer.vb">
       <DependentUpon>FrmVisitSchedule.vb</DependentUpon>
     </Compile>
-    <Compile Include="VisitSchedule\FrmVisitSchedule.vb">
+    <Compile Include="Source\Routines\VisitSchedule\FrmVisitSchedule.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VisitSchedule\FrmVisitSchedules.Designer.vb">
+    <Compile Include="Source\Routines\VisitSchedule\FrmVisitSchedules.Designer.vb">
       <DependentUpon>FrmVisitSchedules.vb</DependentUpon>
     </Compile>
-    <Compile Include="VisitSchedule\FrmVisitSchedules.vb">
+    <Compile Include="Source\Routines\VisitSchedule\FrmVisitSchedules.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VisitSchedule\VisitSchedule.vb" />
-    <Compile Include="Evaluation\Control\UcEvaluationPhotos.Designer.vb">
+    <Compile Include="Source\Routines\VisitSchedule\VisitSchedule.vb" />
+    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationPhotos.Designer.vb">
       <DependentUpon>UcEvaluationPhotos.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\Control\UcEvaluationPhotos.vb">
+    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationPhotos.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Evaluation\Control\UcEvaluationSoldLost.Designer.vb">
+    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationSoldLost.Designer.vb">
       <DependentUpon>UcEvaluationSoldLost.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\Control\UcEvaluationSoldLost.vb">
+    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationSoldLost.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Evaluation\Control\UcEvaluationSourceHeader.Designer.vb">
+    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationSourceHeader.Designer.vb">
       <DependentUpon>UcEvaluationSourceHeader.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\Control\UcEvaluationSourceHeader.vb">
+    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationSourceHeader.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Evaluation\EvaluationPart.vb" />
-    <Compile Include="Evaluation\EvaluationPhoto.vb" />
-    <Compile Include="Evaluation\EvaluationTechnician.vb" />
-    <Compile Include="Evaluation\FrmEvaluationImport.Designer.vb">
+    <Compile Include="Source\Routines\Evaluation\EvaluationPart.vb" />
+    <Compile Include="Source\Routines\Evaluation\EvaluationPhoto.vb" />
+    <Compile Include="Source\Routines\Evaluation\EvaluationTechnician.vb" />
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationImport.Designer.vb">
       <DependentUpon>FrmEvaluationImport.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluationImport.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationImport.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluationManagementPanel.Designer.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationManagementPanel.Designer.vb">
       <DependentUpon>FrmEvaluationManagementPanel.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluationManagementPanel.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationManagementPanel.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluationManagementPanelExport.Designer.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationManagementPanelExport.Designer.vb">
       <DependentUpon>FrmEvaluationManagementPanelExport.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluationManagementPanelExport.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationManagementPanelExport.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluationPart.Designer.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationPart.Designer.vb">
       <DependentUpon>FrmEvaluationPart.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluationPart.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationPart.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluationRejectReason.Designer.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationRejectReason.Designer.vb">
       <DependentUpon>FrmEvaluationRejectReason.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluationRejectReason.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationRejectReason.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluationSource.Designer.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationSource.Designer.vb">
       <DependentUpon>FrmEvaluationSource.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluationSource.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationSource.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluationTechnician.Designer.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationTechnician.Designer.vb">
       <DependentUpon>FrmEvaluationTechnician.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluationTechnician.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationTechnician.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Evaluation\Control\UcEvaluationCardDetail.Designer.vb">
+    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationCardDetail.Designer.vb">
       <DependentUpon>UcEvaluationCardDetail.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\Control\UcEvaluationCardDetail.vb">
+    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationCardDetail.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="FilterExpandable\CrmStatusExpandable.vb" />
-    <Compile Include="FiltrerConverter\CrmResponsibleConverter.vb" />
-    <Compile Include="Helper\DirectoryManager.vb" />
-    <Compile Include="Helper\FileManager.vb" />
-    <Compile Include="FilterExpandable\EvaluationStatusExpandable.vb" />
-    <Compile Include="FilterExpandable\RequestStatusExpandable.vb" />
-    <Compile Include="FiltrerConverter\CashStatusConverter.vb" />
-    <Compile Include="FiltrerConverter\EvaluationTypeConverter.vb" />
-    <Compile Include="FiltrerConverter\RouteConverter.vb" />
-    <Compile Include="Helper\LockRegistryInfo.vb" />
-    <Compile Include="Helper\ModelBase.vb" />
-    <Compile Include="Helper\ReportResult.vb" />
-    <Compile Include="Helper\Controls\RichTextBoxSingleSelection.vb">
+    <Compile Include="Source\Helper\FilterExpandable\CrmStatusExpandable.vb" />
+    <Compile Include="Source\Helper\FiltrerConverter\CrmResponsibleConverter.vb" />
+    <Compile Include="Source\Helper\DirectoryManager.vb" />
+    <Compile Include="Source\Helper\FileManager.vb" />
+    <Compile Include="Source\Helper\FilterExpandable\EvaluationStatusExpandable.vb" />
+    <Compile Include="Source\Helper\FilterExpandable\RequestStatusExpandable.vb" />
+    <Compile Include="Source\Helper\FiltrerConverter\CashStatusConverter.vb" />
+    <Compile Include="Source\Helper\FiltrerConverter\EvaluationTypeConverter.vb" />
+    <Compile Include="Source\Helper\FiltrerConverter\RouteConverter.vb" />
+    <Compile Include="Source\Helper\LockRegistryInfo.vb" />
+    <Compile Include="Source\Helper\ModelBase.vb" />
+    <Compile Include="Source\Helper\ReportResult.vb" />
+    <Compile Include="Source\Helper\Controls\RichTextBoxSingleSelection.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Helper\Session.vb" />
-    <Compile Include="Helper\Setup\SetupApp.vb" />
-    <Compile Include="Helper\Setup\SetupCMessageBox.vb" />
-    <Compile Include="Helper\Setup\SetupLocator.vb" />
-    <Compile Include="Helper\Setup\SetupSettings.vb" />
-    <Compile Include="Helper\Setup\SetupQueriedBox.vb" />
-    <Compile Include="Helper\ToolStripItemFactory.vb" />
-    <Compile Include="Main\FrmHtmlPreview.Designer.vb">
+    <Compile Include="Source\Helper\Session.vb" />
+    <Compile Include="Source\Helper\Setup\SetupApp.vb" />
+    <Compile Include="Source\Helper\Setup\SetupCMessageBox.vb" />
+    <Compile Include="Source\Helper\Setup\SetupLocator.vb" />
+    <Compile Include="Source\Helper\Setup\SetupSettings.vb" />
+    <Compile Include="Source\Helper\Setup\SetupQueriedBox.vb" />
+    <Compile Include="Source\Helper\ToolStripItemFactory.vb" />
+    <Compile Include="Source\Main\FrmHtmlPreview.Designer.vb">
       <DependentUpon>FrmHtmlPreview.vb</DependentUpon>
     </Compile>
-    <Compile Include="Main\FrmHtmlPreview.vb">
+    <Compile Include="Source\Main\FrmHtmlPreview.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\FrmLoader.Designer.vb">
+    <Compile Include="Source\Main\FrmLoader.Designer.vb">
       <DependentUpon>FrmLoader.vb</DependentUpon>
     </Compile>
-    <Compile Include="Main\FrmLoader.vb">
+    <Compile Include="Source\Main\FrmLoader.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\FrmReport.Designer.vb">
+    <Compile Include="Source\Main\FrmReport.Designer.vb">
       <DependentUpon>FrmReport.vb</DependentUpon>
     </Compile>
-    <Compile Include="Main\FrmReport.vb">
+    <Compile Include="Source\Main\FrmReport.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\FrmUpdateNotes.Designer.vb">
+    <Compile Include="Source\Main\FrmUpdateNotes.Designer.vb">
       <DependentUpon>FrmUpdateNotes.vb</DependentUpon>
     </Compile>
-    <Compile Include="Main\FrmUpdateNotes.vb">
+    <Compile Include="Source\Main\FrmUpdateNotes.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
@@ -834,124 +834,124 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Person\FrmPersonMaintenancePlan.Designer.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonMaintenancePlan.Designer.vb">
       <DependentUpon>FrmPersonMaintenancePlan.vb</DependentUpon>
     </Compile>
-    <Compile Include="Person\FrmPersonMaintenancePlan.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonMaintenancePlan.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Person\PersonCompressorPart.vb" />
-    <Compile Include="Person\PersonReport.vb" />
-    <Compile Include="Request\FrmRequest.Designer.vb">
+    <Compile Include="Source\Routines\Person\PersonCompressorPart.vb" />
+    <Compile Include="Source\Routines\Person\PersonReport.vb" />
+    <Compile Include="Source\Routines\Request\FrmRequest.Designer.vb">
       <DependentUpon>FrmRequest.vb</DependentUpon>
     </Compile>
-    <Compile Include="Request\FrmRequest.vb">
+    <Compile Include="Source\Routines\Request\FrmRequest.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Compressor\FrmCompressorPartElapsedDay.Designer.vb">
+    <Compile Include="Source\Routines\Compressor\FrmCompressorPartElapsedDay.Designer.vb">
       <DependentUpon>FrmCompressorPartElapsedDay.vb</DependentUpon>
     </Compile>
-    <Compile Include="Compressor\FrmCompressorPartElapsedDay.vb">
+    <Compile Include="Source\Routines\Compressor\FrmCompressorPartElapsedDay.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Compressor\FrmCompressorPartWorkedHour.Designer.vb">
+    <Compile Include="Source\Routines\Compressor\FrmCompressorPartWorkedHour.Designer.vb">
       <DependentUpon>FrmCompressorPartWorkedHour.vb</DependentUpon>
     </Compile>
-    <Compile Include="Compressor\FrmCompressorPartWorkedHour.vb">
+    <Compile Include="Source\Routines\Compressor\FrmCompressorPartWorkedHour.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Compressor\Compressor.vb" />
-    <Compile Include="Compressor\CompressorFilter.vb" />
-    <Compile Include="Compressor\FrmCompressor.designer.vb">
+    <Compile Include="Source\Routines\Compressor\Compressor.vb" />
+    <Compile Include="Source\Routines\Compressor\CompressorFilter.vb" />
+    <Compile Include="Source\Routines\Compressor\FrmCompressor.designer.vb">
       <DependentUpon>FrmCompressor.vb</DependentUpon>
     </Compile>
-    <Compile Include="Compressor\FrmCompressor.vb">
+    <Compile Include="Source\Routines\Compressor\FrmCompressor.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Compressor\FrmCompressors.designer.vb">
+    <Compile Include="Source\Routines\Compressor\FrmCompressors.designer.vb">
       <DependentUpon>FrmCompressors.vb</DependentUpon>
     </Compile>
-    <Compile Include="Compressor\FrmCompressors.vb">
+    <Compile Include="Source\Routines\Compressor\FrmCompressors.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Evaluation\Evaluation.vb" />
-    <Compile Include="Evaluation\EvaluationFilter.vb" />
-    <Compile Include="Evaluation\EvaluationManagementFilter.vb" />
-    <Compile Include="Evaluation\FrmEvaluation.Designer.vb">
+    <Compile Include="Source\Routines\Evaluation\Evaluation.vb" />
+    <Compile Include="Source\Routines\Evaluation\EvaluationFilter.vb" />
+    <Compile Include="Source\Routines\Evaluation\EvaluationManagementFilter.vb" />
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluation.Designer.vb">
       <DependentUpon>FrmEvaluation.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluation.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluation.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluationManagement.Designer.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationManagement.Designer.vb">
       <DependentUpon>FrmEvaluationManagement.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluationManagement.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationManagement.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluations.Designer.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluations.Designer.vb">
       <DependentUpon>FrmEvaluations.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\FrmEvaluations.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluations.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FilterExpandable\CashItemExpandable.vb" />
-    <Compile Include="FilterExpandable\DateExpandable.vb" />
-    <Compile Include="FilterExpandable\DecimalExpandable.vb" />
-    <Compile Include="FilterExpandable\IntegerExpandable.vb" />
-    <Compile Include="FilterExpandable\PersonAddressExpandable.vb" />
-    <Compile Include="FilterExpandable\PersonCategoryExpandable.vb" />
-    <Compile Include="FilterExpandable\PersonCompressorExpandable.vb" />
-    <Compile Include="FilterExpandable\PersonContactExpandable.vb" />
-    <Compile Include="FilterExpandable\PersonExpandable.vb" />
-    <Compile Include="FilterQueriedBox\CityQueriedBoxFilter.vb" />
-    <Compile Include="FilterQueriedBox\CompressorQueriedBoxFilter.vb" />
-    <Compile Include="FilterQueriedBox\PersonCarrierQueriedBoxFilter.vb" />
-    <Compile Include="FilterQueriedBox\PersonCustomerQueriedBoxFilter.vb" />
-    <Compile Include="FilterQueriedBox\PersonEmployeeQueriedBoxFilter.vb" />
-    <Compile Include="FilterQueriedBox\PersonProviderQueriedBoxFilter.vb" />
-    <Compile Include="FilterQueriedBox\PersonTechnicianQueriedBoxFilter.vb" />
-    <Compile Include="FilterQueriedBox\ProductFamilyQueriedBoxFilter.vb" />
-    <Compile Include="FilterQueriedBox\ProductGroupQueriedBoxFilter.vb" />
-    <Compile Include="FilterQueriedBox\ProductPriceTableQueriedBoxFilter.vb" />
-    <Compile Include="FilterQueriedBox\ProductQueriedBoxFilter.vb" />
-    <Compile Include="FilterQueriedBox\RouteQueriedBoxFilter.vb" />
-    <Compile Include="FiltrerConverter\DecimalConverter.vb" />
-    <Compile Include="FiltrerConverter\PersonEntityConverter.vb" />
-    <Compile Include="FiltrerConverter\ProductFamilyConverter.vb" />
-    <Compile Include="FiltrerConverter\ProductGroupConverter.vb" />
-    <Compile Include="FiltrerConverter\StateConverter.vb" />
-    <Compile Include="FiltrerConverter\SimpleStatusConverter.vb" />
-    <Compile Include="FiltrerConverter\UpperNoAccentConverter.vb" />
-    <Compile Include="FiltrerConverter\YesNoConverter.vb" />
-    <Compile Include="Helper\Util.vb" />
-    <Compile Include="Helper\Controls\DataGridViewLayout.vb">
+    <Compile Include="Source\Helper\FilterExpandable\CashItemExpandable.vb" />
+    <Compile Include="Source\Helper\FilterExpandable\DateExpandable.vb" />
+    <Compile Include="Source\Helper\FilterExpandable\DecimalExpandable.vb" />
+    <Compile Include="Source\Helper\FilterExpandable\IntegerExpandable.vb" />
+    <Compile Include="Source\Helper\FilterExpandable\PersonAddressExpandable.vb" />
+    <Compile Include="Source\Helper\FilterExpandable\PersonCategoryExpandable.vb" />
+    <Compile Include="Source\Helper\FilterExpandable\PersonCompressorExpandable.vb" />
+    <Compile Include="Source\Helper\FilterExpandable\PersonContactExpandable.vb" />
+    <Compile Include="Source\Helper\FilterExpandable\PersonExpandable.vb" />
+    <Compile Include="Source\Helper\FilterQueriedBox\CityQueriedBoxFilter.vb" />
+    <Compile Include="Source\Helper\FilterQueriedBox\CompressorQueriedBoxFilter.vb" />
+    <Compile Include="Source\Helper\FilterQueriedBox\PersonCarrierQueriedBoxFilter.vb" />
+    <Compile Include="Source\Helper\FilterQueriedBox\PersonCustomerQueriedBoxFilter.vb" />
+    <Compile Include="Source\Helper\FilterQueriedBox\PersonEmployeeQueriedBoxFilter.vb" />
+    <Compile Include="Source\Helper\FilterQueriedBox\PersonProviderQueriedBoxFilter.vb" />
+    <Compile Include="Source\Helper\FilterQueriedBox\PersonTechnicianQueriedBoxFilter.vb" />
+    <Compile Include="Source\Helper\FilterQueriedBox\ProductFamilyQueriedBoxFilter.vb" />
+    <Compile Include="Source\Helper\FilterQueriedBox\ProductGroupQueriedBoxFilter.vb" />
+    <Compile Include="Source\Helper\FilterQueriedBox\ProductPriceTableQueriedBoxFilter.vb" />
+    <Compile Include="Source\Helper\FilterQueriedBox\ProductQueriedBoxFilter.vb" />
+    <Compile Include="Source\Helper\FilterQueriedBox\RouteQueriedBoxFilter.vb" />
+    <Compile Include="Source\Helper\FiltrerConverter\DecimalConverter.vb" />
+    <Compile Include="Source\Helper\FiltrerConverter\PersonEntityConverter.vb" />
+    <Compile Include="Source\Helper\FiltrerConverter\ProductFamilyConverter.vb" />
+    <Compile Include="Source\Helper\FiltrerConverter\ProductGroupConverter.vb" />
+    <Compile Include="Source\Helper\FiltrerConverter\StateConverter.vb" />
+    <Compile Include="Source\Helper\FiltrerConverter\SimpleStatusConverter.vb" />
+    <Compile Include="Source\Helper\FiltrerConverter\UpperNoAccentConverter.vb" />
+    <Compile Include="Source\Helper\FiltrerConverter\YesNoConverter.vb" />
+    <Compile Include="Source\Helper\Util.vb" />
+    <Compile Include="Source\Helper\Controls\DataGridViewLayout.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Helper\ExportGrid.vb" />
-    <Compile Include="Helper\Flags\CashItemType.vb" />
-    <Compile Include="Main\FrmLog.designer.vb">
+    <Compile Include="Source\Helper\ExportGrid.vb" />
+    <Compile Include="Source\Helper\Flags\CashItemType.vb" />
+    <Compile Include="Source\Main\FrmLog.designer.vb">
       <DependentUpon>FrmLog.vb</DependentUpon>
     </Compile>
-    <Compile Include="Main\FrmLog.vb">
+    <Compile Include="Source\Main\FrmLog.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\FrmFilter.designer.vb">
+    <Compile Include="Source\Main\FrmFilter.designer.vb">
       <DependentUpon>FrmFilter.vb</DependentUpon>
     </Compile>
-    <Compile Include="Main\FrmFilter.vb">
+    <Compile Include="Source\Main\FrmFilter.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\FrmLogin.designer.vb">
+    <Compile Include="Source\Main\FrmLogin.designer.vb">
       <DependentUpon>FrmLogin.vb</DependentUpon>
     </Compile>
-    <Compile Include="Main\FrmLogin.vb">
+    <Compile Include="Source\Main\FrmLogin.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\FrmMain.designer.vb">
+    <Compile Include="Source\Main\FrmMain.designer.vb">
       <DependentUpon>FrmMain.vb</DependentUpon>
     </Compile>
-    <Compile Include="Main\FrmMain.vb">
+    <Compile Include="Source\Main\FrmMain.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -965,425 +965,425 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Person\FrmPerson.designer.vb">
+    <Compile Include="Source\Routines\Person\FrmPerson.designer.vb">
       <DependentUpon>FrmPerson.vb</DependentUpon>
     </Compile>
-    <Compile Include="Person\FrmPerson.vb">
+    <Compile Include="Source\Routines\Person\FrmPerson.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Person\FrmPersonAddress.designer.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonAddress.designer.vb">
       <DependentUpon>FrmPersonAddress.vb</DependentUpon>
     </Compile>
-    <Compile Include="Person\FrmPersonAddress.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonAddress.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Person\FrmPersonAddressGetZipCode.Designer.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonAddressGetZipCode.Designer.vb">
       <DependentUpon>FrmPersonAddressGetZipCode.vb</DependentUpon>
     </Compile>
-    <Compile Include="Person\FrmPersonAddressGetZipCode.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonAddressGetZipCode.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Person\FrmPersonCompressor.designer.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonCompressor.designer.vb">
       <DependentUpon>FrmPersonCompressor.vb</DependentUpon>
     </Compile>
-    <Compile Include="Person\FrmPersonCompressor.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonCompressor.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Person\FrmPersonCompressorPartElapsedDay.Designer.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonCompressorPartElapsedDay.Designer.vb">
       <DependentUpon>FrmPersonCompressorPartElapsedDay.vb</DependentUpon>
     </Compile>
-    <Compile Include="Person\FrmPersonCompressorPartElapsedDay.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonCompressorPartElapsedDay.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Person\FrmPersonCompressorImport.Designer.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonCompressorImport.Designer.vb">
       <DependentUpon>FrmPersonCompressorImport.vb</DependentUpon>
     </Compile>
-    <Compile Include="Person\FrmPersonCompressorImport.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonCompressorImport.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Person\FrmPersonCompressorPartWorkedHour.Designer.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonCompressorPartWorkedHour.Designer.vb">
       <DependentUpon>FrmPersonCompressorPartWorkedHour.vb</DependentUpon>
     </Compile>
-    <Compile Include="Person\FrmPersonCompressorPartWorkedHour.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonCompressorPartWorkedHour.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Person\FrmPersonContact.designer.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonContact.designer.vb">
       <DependentUpon>FrmPersonContact.vb</DependentUpon>
     </Compile>
-    <Compile Include="Person\FrmPersonContact.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonContact.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Person\FrmPersonGetDocument.designer.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonGetDocument.designer.vb">
       <DependentUpon>FrmPersonGetDocument.vb</DependentUpon>
     </Compile>
-    <Compile Include="Person\FrmPersonGetDocument.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonGetDocument.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Person\FrmPersonRegistrationForm.designer.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonRegistrationForm.designer.vb">
       <DependentUpon>FrmPersonRegistrationForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Person\FrmPersonRegistrationForm.vb">
+    <Compile Include="Source\Routines\Person\FrmPersonRegistrationForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Person\FrmPersons.designer.vb">
+    <Compile Include="Source\Routines\Person\FrmPersons.designer.vb">
       <DependentUpon>FrmPersons.vb</DependentUpon>
     </Compile>
-    <Compile Include="Person\FrmPersons.vb">
+    <Compile Include="Source\Routines\Person\FrmPersons.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Person\Person.vb" />
-    <Compile Include="Person\PersonAddress.vb" />
-    <Compile Include="Person\PersonCompressor.vb" />
-    <Compile Include="Person\PersonContact.vb" />
-    <Compile Include="Person\PersonFilter.vb" />
-    <Compile Include="ProductFamily\FrmProductFamilies.designer.vb">
+    <Compile Include="Source\Routines\Person\Person.vb" />
+    <Compile Include="Source\Routines\Person\PersonAddress.vb" />
+    <Compile Include="Source\Routines\Person\PersonCompressor.vb" />
+    <Compile Include="Source\Routines\Person\PersonContact.vb" />
+    <Compile Include="Source\Routines\Person\PersonFilter.vb" />
+    <Compile Include="Source\Routines\ProductFamily\FrmProductFamilies.designer.vb">
       <DependentUpon>FrmProductFamilies.vb</DependentUpon>
     </Compile>
-    <Compile Include="ProductFamily\FrmProductFamilies.vb">
+    <Compile Include="Source\Routines\ProductFamily\FrmProductFamilies.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProductFamily\FrmProductFamily.designer.vb">
+    <Compile Include="Source\Routines\ProductFamily\FrmProductFamily.designer.vb">
       <DependentUpon>FrmProductFamily.vb</DependentUpon>
     </Compile>
-    <Compile Include="ProductFamily\FrmProductFamily.vb">
+    <Compile Include="Source\Routines\ProductFamily\FrmProductFamily.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProductFamily\ProductFamily.vb" />
-    <Compile Include="ProductFamily\ProductFamilyFilter.vb" />
-    <Compile Include="ProductGroup\FrmProductGroup.designer.vb">
+    <Compile Include="Source\Routines\ProductFamily\ProductFamily.vb" />
+    <Compile Include="Source\Routines\ProductFamily\ProductFamilyFilter.vb" />
+    <Compile Include="Source\Routines\ProductGroup\FrmProductGroup.designer.vb">
       <DependentUpon>FrmProductGroup.vb</DependentUpon>
     </Compile>
-    <Compile Include="ProductGroup\FrmProductGroup.vb">
+    <Compile Include="Source\Routines\ProductGroup\FrmProductGroup.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProductGroup\FrmProductGroups.designer.vb">
+    <Compile Include="Source\Routines\ProductGroup\FrmProductGroups.designer.vb">
       <DependentUpon>FrmProductGroups.vb</DependentUpon>
     </Compile>
-    <Compile Include="ProductGroup\FrmProductGroups.vb">
+    <Compile Include="Source\Routines\ProductGroup\FrmProductGroups.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProductGroup\ProductGroup.vb" />
-    <Compile Include="ProductGroup\ProductGroupFilter.vb" />
-    <Compile Include="ProductPriceTable\FrmProductPriceTable.designer.vb">
+    <Compile Include="Source\Routines\ProductGroup\ProductGroup.vb" />
+    <Compile Include="Source\Routines\ProductGroup\ProductGroupFilter.vb" />
+    <Compile Include="Source\Routines\ProductPriceTable\FrmProductPriceTable.designer.vb">
       <DependentUpon>FrmProductPriceTable.vb</DependentUpon>
     </Compile>
-    <Compile Include="ProductPriceTable\FrmProductPriceTable.vb">
+    <Compile Include="Source\Routines\ProductPriceTable\FrmProductPriceTable.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProductPriceTable\FrmProductPriceTables.designer.vb">
+    <Compile Include="Source\Routines\ProductPriceTable\FrmProductPriceTables.designer.vb">
       <DependentUpon>FrmProductPriceTables.vb</DependentUpon>
     </Compile>
-    <Compile Include="ProductPriceTable\FrmProductPriceTables.vb">
+    <Compile Include="Source\Routines\ProductPriceTable\FrmProductPriceTables.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProductPriceTable\ProductPriceTable.vb" />
-    <Compile Include="ProductPriceTable\ProductPriceTableFilter.vb" />
-    <Compile Include="ProductUnit\FrmProductUnit.designer.vb">
+    <Compile Include="Source\Routines\ProductPriceTable\ProductPriceTable.vb" />
+    <Compile Include="Source\Routines\ProductPriceTable\ProductPriceTableFilter.vb" />
+    <Compile Include="Source\Routines\ProductUnit\FrmProductUnit.designer.vb">
       <DependentUpon>FrmProductUnit.vb</DependentUpon>
     </Compile>
-    <Compile Include="ProductUnit\FrmProductUnit.vb">
+    <Compile Include="Source\Routines\ProductUnit\FrmProductUnit.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProductUnit\FrmProductUnits.designer.vb">
+    <Compile Include="Source\Routines\ProductUnit\FrmProductUnits.designer.vb">
       <DependentUpon>FrmProductUnits.vb</DependentUpon>
     </Compile>
-    <Compile Include="ProductUnit\FrmProductUnits.vb">
+    <Compile Include="Source\Routines\ProductUnit\FrmProductUnits.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProductUnit\ProductUnit.vb" />
-    <Compile Include="ProductUnit\ProductUnitFilter.vb" />
-    <Compile Include="Product\FrmProductCode.Designer.vb">
+    <Compile Include="Source\Routines\ProductUnit\ProductUnit.vb" />
+    <Compile Include="Source\Routines\ProductUnit\ProductUnitFilter.vb" />
+    <Compile Include="Source\Routines\Product\FrmProductCode.Designer.vb">
       <DependentUpon>FrmProductCode.vb</DependentUpon>
     </Compile>
-    <Compile Include="Product\FrmProductCode.vb">
+    <Compile Include="Source\Routines\Product\FrmProductCode.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Product\FrmProduct.Designer.vb">
+    <Compile Include="Source\Routines\Product\FrmProduct.Designer.vb">
       <DependentUpon>FrmProduct.vb</DependentUpon>
     </Compile>
-    <Compile Include="Product\FrmProduct.vb">
+    <Compile Include="Source\Routines\Product\FrmProduct.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Product\FrmProductPicture.Designer.vb">
+    <Compile Include="Source\Routines\Product\FrmProductPicture.Designer.vb">
       <DependentUpon>FrmProductPicture.vb</DependentUpon>
     </Compile>
-    <Compile Include="Product\FrmProductPicture.vb">
+    <Compile Include="Source\Routines\Product\FrmProductPicture.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Product\FrmProductPrice.Designer.vb">
+    <Compile Include="Source\Routines\Product\FrmProductPrice.Designer.vb">
       <DependentUpon>FrmProductPrice.vb</DependentUpon>
     </Compile>
-    <Compile Include="Product\FrmProductPrice.vb">
+    <Compile Include="Source\Routines\Product\FrmProductPrice.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Product\FrmProductProviderCode.Designer.vb">
+    <Compile Include="Source\Routines\Product\FrmProductProviderCode.Designer.vb">
       <DependentUpon>FrmProductProviderCode.vb</DependentUpon>
     </Compile>
-    <Compile Include="Product\FrmProductProviderCode.vb">
+    <Compile Include="Source\Routines\Product\FrmProductProviderCode.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Product\FrmProducts.Designer.vb">
+    <Compile Include="Source\Routines\Product\FrmProducts.Designer.vb">
       <DependentUpon>FrmProducts.vb</DependentUpon>
     </Compile>
-    <Compile Include="Product\FrmProducts.vb">
+    <Compile Include="Source\Routines\Product\FrmProducts.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Product\Product.vb" />
-    <Compile Include="Product\ProductFilter.vb" />
-    <Compile Include="Product\ProductCode.vb" />
-    <Compile Include="Product\ProductPicture.vb" />
-    <Compile Include="Product\ProductPrice.vb" />
-    <Compile Include="Product\ProductProviderCode.vb" />
-    <Compile Include="Request\FrmRequestItem.Designer.vb">
+    <Compile Include="Source\Routines\Product\Product.vb" />
+    <Compile Include="Source\Routines\Product\ProductFilter.vb" />
+    <Compile Include="Source\Routines\Product\ProductCode.vb" />
+    <Compile Include="Source\Routines\Product\ProductPicture.vb" />
+    <Compile Include="Source\Routines\Product\ProductPrice.vb" />
+    <Compile Include="Source\Routines\Product\ProductProviderCode.vb" />
+    <Compile Include="Source\Routines\Request\FrmRequestItem.Designer.vb">
       <DependentUpon>FrmRequestItem.vb</DependentUpon>
     </Compile>
-    <Compile Include="Request\FrmRequestItem.vb">
+    <Compile Include="Source\Routines\Request\FrmRequestItem.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Request\FrmRequestPendingItems.Designer.vb">
+    <Compile Include="Source\Routines\Request\FrmRequestPendingItems.Designer.vb">
       <DependentUpon>FrmRequestPendingItems.vb</DependentUpon>
     </Compile>
-    <Compile Include="Request\FrmRequestPendingItems.vb">
+    <Compile Include="Source\Routines\Request\FrmRequestPendingItems.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Request\FrmRequests.Designer.vb">
+    <Compile Include="Source\Routines\Request\FrmRequests.Designer.vb">
       <DependentUpon>FrmRequests.vb</DependentUpon>
     </Compile>
-    <Compile Include="Request\FrmRequests.vb">
+    <Compile Include="Source\Routines\Request\FrmRequests.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Request\FrmRequestSheet.Designer.vb">
+    <Compile Include="Source\Routines\Request\FrmRequestSheet.Designer.vb">
       <DependentUpon>FrmRequestSheet.vb</DependentUpon>
     </Compile>
-    <Compile Include="Request\FrmRequestSheet.vb">
+    <Compile Include="Source\Routines\Request\FrmRequestSheet.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Request\Request.vb" />
-    <Compile Include="Request\RequestFilter.vb" />
-    <Compile Include="Request\RequestItem.vb" />
-    <Compile Include="Request\RequestReport.vb" />
-    <Compile Include="Route\FrmRoute.designer.vb">
+    <Compile Include="Source\Routines\Request\Request.vb" />
+    <Compile Include="Source\Routines\Request\RequestFilter.vb" />
+    <Compile Include="Source\Routines\Request\RequestItem.vb" />
+    <Compile Include="Source\Routines\Request\RequestReport.vb" />
+    <Compile Include="Source\Routines\Route\FrmRoute.designer.vb">
       <DependentUpon>FrmRoute.vb</DependentUpon>
     </Compile>
-    <Compile Include="Route\FrmRoute.vb">
+    <Compile Include="Source\Routines\Route\FrmRoute.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Route\FrmRoutes.designer.vb">
+    <Compile Include="Source\Routines\Route\FrmRoutes.designer.vb">
       <DependentUpon>FrmRoutes.vb</DependentUpon>
     </Compile>
-    <Compile Include="Route\FrmRoutes.vb">
+    <Compile Include="Source\Routines\Route\FrmRoutes.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Route\Route.vb" />
-    <Compile Include="Route\RouteFilter.vb" />
-    <Compile Include="State\State.vb" />
-    <Compile Include="FrmTest.Designer.vb">
+    <Compile Include="Source\Routines\Route\Route.vb" />
+    <Compile Include="Source\Routines\Route\RouteFilter.vb" />
+    <Compile Include="Source\Routines\State\State.vb" />
+    <Compile Include="Misc\FrmTest.Designer.vb">
       <DependentUpon>FrmTest.vb</DependentUpon>
     </Compile>
-    <Compile Include="FrmTest.vb">
+    <Compile Include="Misc\FrmTest.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Evaluation\Control\UcEvaluationSourcePart.Designer.vb">
+    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationSourcePart.Designer.vb">
       <DependentUpon>UcEvaluationSourcePart.vb</DependentUpon>
     </Compile>
-    <Compile Include="Evaluation\Control\UcEvaluationSourcePart.vb">
+    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationSourcePart.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="User\FrmUser.designer.vb">
+    <Compile Include="Source\Routines\User\FrmUser.designer.vb">
       <DependentUpon>FrmUser.vb</DependentUpon>
     </Compile>
-    <Compile Include="User\FrmUser.vb">
+    <Compile Include="Source\Routines\User\FrmUser.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="User\FrmUserEmail.Designer.vb">
+    <Compile Include="Source\Routines\User\FrmUserEmail.Designer.vb">
       <DependentUpon>FrmUserEmail.vb</DependentUpon>
     </Compile>
-    <Compile Include="User\FrmUserEmail.vb">
+    <Compile Include="Source\Routines\User\FrmUserEmail.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="User\FrmUserImportPrivilege.Designer.vb">
+    <Compile Include="Source\Routines\User\FrmUserImportPrivilege.Designer.vb">
       <DependentUpon>FrmUserImportPrivilege.vb</DependentUpon>
     </Compile>
-    <Compile Include="User\FrmUserImportPrivilege.vb">
+    <Compile Include="Source\Routines\User\FrmUserImportPrivilege.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="User\FrmUserChangePassword.Designer.vb">
+    <Compile Include="Source\Routines\User\FrmUserChangePassword.Designer.vb">
       <DependentUpon>FrmUserChangePassword.vb</DependentUpon>
     </Compile>
-    <Compile Include="User\FrmUserChangePassword.vb">
+    <Compile Include="Source\Routines\User\FrmUserChangePassword.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="User\FrmUsers.designer.vb">
+    <Compile Include="Source\Routines\User\FrmUsers.designer.vb">
       <DependentUpon>FrmUsers.vb</DependentUpon>
     </Compile>
-    <Compile Include="User\FrmUsers.vb">
+    <Compile Include="Source\Routines\User\FrmUsers.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="User\User.vb" />
-    <Compile Include="User\UserEmail.vb" />
-    <Compile Include="User\UserFilter.vb" />
+    <Compile Include="Source\Routines\User\User.vb" />
+    <Compile Include="Source\Routines\User\UserEmail.vb" />
+    <Compile Include="Source\Routines\User\UserFilter.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CashFlow\FrmCashFlowAuthorized.resx">
+    <EmbeddedResource Include="Source\Routines\CashFlow\FrmCashFlowAuthorized.resx">
       <DependentUpon>FrmCashFlowAuthorized.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CashFlow\FrmCashFlows.resx">
+    <EmbeddedResource Include="Source\Routines\CashFlow\FrmCashFlows.resx">
       <DependentUpon>FrmCashFlows.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CashFlow\FrmChoseCashFlow.resx">
+    <EmbeddedResource Include="Source\Routines\CashFlow\FrmChoseCashFlow.resx">
       <DependentUpon>FrmChoseCashFlow.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cash\FrmCash.resx">
+    <EmbeddedResource Include="Source\Routines\Cash\FrmCash.resx">
       <DependentUpon>FrmCash.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cash\FrmCashes.resx">
+    <EmbeddedResource Include="Source\Routines\Cash\FrmCashes.resx">
       <DependentUpon>FrmCashes.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CashFlow\FrmCashFlow.resx">
+    <EmbeddedResource Include="Source\Routines\CashFlow\FrmCashFlow.resx">
       <DependentUpon>FrmCashFlow.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cash\FrmCashItem.resx">
+    <EmbeddedResource Include="Source\Routines\Cash\FrmCashItem.resx">
       <DependentUpon>FrmCashItem.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cash\FrmCashItemResponsible.resx">
+    <EmbeddedResource Include="Source\Routines\Cash\FrmCashItemResponsible.resx">
       <DependentUpon>FrmCashItemResponsible.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cash\FrmCashExpensesPerResponsible.resx">
+    <EmbeddedResource Include="Source\Routines\Cash\FrmCashExpensesPerResponsible.resx">
       <DependentUpon>FrmCashExpensesPerResponsible.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cash\FrmCashSheet.resx">
+    <EmbeddedResource Include="Source\Routines\Cash\FrmCashSheet.resx">
       <DependentUpon>FrmCashSheet.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="City\FrmCities.resx">
+    <EmbeddedResource Include="Source\Routines\City\FrmCities.resx">
       <DependentUpon>FrmCities.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="City\FrmCity.resx">
+    <EmbeddedResource Include="Source\Routines\City\FrmCity.resx">
       <DependentUpon>FrmCity.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="City\FrmCityRoute.resx">
+    <EmbeddedResource Include="Source\Routines\City\FrmCityRoute.resx">
       <DependentUpon>FrmCityRoute.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Compressor\FrmCompressorPartElapsedDay.resx">
+    <EmbeddedResource Include="Source\Routines\Compressor\FrmCompressorPartElapsedDay.resx">
       <DependentUpon>FrmCompressorPartElapsedDay.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Compressor\FrmCompressorPartWorkedHour.resx">
+    <EmbeddedResource Include="Source\Routines\Compressor\FrmCompressorPartWorkedHour.resx">
       <DependentUpon>FrmCompressorPartWorkedHour.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Compressor\FrmCompressor.resx">
+    <EmbeddedResource Include="Source\Routines\Compressor\FrmCompressor.resx">
       <DependentUpon>FrmCompressor.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Compressor\FrmCompressors.resx">
+    <EmbeddedResource Include="Source\Routines\Compressor\FrmCompressors.resx">
       <DependentUpon>FrmCompressors.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CRM\FrmCrm.resx">
+    <EmbeddedResource Include="Source\Routines\CRM\FrmCrm.resx">
       <DependentUpon>FrmCrm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CRM\FrmCrms.resx">
+    <EmbeddedResource Include="Source\Routines\CRM\FrmCrms.resx">
       <DependentUpon>FrmCrms.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CRM\FrmCrmTreatment.resx">
+    <EmbeddedResource Include="Source\Routines\CRM\FrmCrmTreatment.resx">
       <DependentUpon>FrmCrmTreatment.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EmailSent\FrmEmailsSent.resx">
+    <EmbeddedResource Include="Source\Routines\EmailSent\FrmEmailsSent.resx">
       <DependentUpon>FrmEmailsSent.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EmailSignature\FrmEmailSignature.resx">
+    <EmbeddedResource Include="Source\Routines\EmailSignature\FrmEmailSignature.resx">
       <DependentUpon>FrmEmailSignature.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EmailSignature\FrmEmailSignatures.resx">
+    <EmbeddedResource Include="Source\Routines\EmailSignature\FrmEmailSignatures.resx">
       <DependentUpon>FrmEmailSignatures.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Email\FrmEmail.resx">
+    <EmbeddedResource Include="Source\Routines\Email\FrmEmail.resx">
       <DependentUpon>FrmEmail.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Email\FrmEmailImportContact.resx">
+    <EmbeddedResource Include="Source\Routines\Email\FrmEmailImportContact.resx">
       <DependentUpon>FrmEmailImportContact.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EmailModel\FrmEmailModel.resx">
+    <EmbeddedResource Include="Source\Routines\EmailModel\FrmEmailModel.resx">
       <DependentUpon>FrmEmailModel.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EmailModel\FrmEmailModels.resx">
+    <EmbeddedResource Include="Source\Routines\EmailModel\FrmEmailModels.resx">
       <DependentUpon>FrmEmailModels.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Email\FrmEmailImportEmailModel.resx">
+    <EmbeddedResource Include="Source\Routines\Email\FrmEmailImportEmailModel.resx">
       <DependentUpon>FrmEmailImportEmailModel.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\Control\UcEvaluationPhotos.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\Control\UcEvaluationPhotos.resx">
       <DependentUpon>UcEvaluationPhotos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\Control\UcEvaluationSoldLost.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\Control\UcEvaluationSoldLost.resx">
       <DependentUpon>UcEvaluationSoldLost.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\Control\UcEvaluationSourceHeader.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\Control\UcEvaluationSourceHeader.resx">
       <DependentUpon>UcEvaluationSourceHeader.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\FrmEvaluation.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluation.resx">
       <DependentUpon>FrmEvaluation.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\FrmEvaluationImport.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationImport.resx">
       <DependentUpon>FrmEvaluationImport.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\FrmEvaluationManagement.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationManagement.resx">
       <DependentUpon>FrmEvaluationManagement.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\FrmEvaluationManagementPanel.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationManagementPanel.resx">
       <DependentUpon>FrmEvaluationManagementPanel.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\FrmEvaluationManagementPanelExport.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationManagementPanelExport.resx">
       <DependentUpon>FrmEvaluationManagementPanelExport.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\FrmEvaluationPart.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationPart.resx">
       <DependentUpon>FrmEvaluationPart.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\FrmEvaluationRejectReason.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationRejectReason.resx">
       <DependentUpon>FrmEvaluationRejectReason.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\FrmEvaluations.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluations.resx">
       <DependentUpon>FrmEvaluations.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\FrmEvaluationSource.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationSource.resx">
       <DependentUpon>FrmEvaluationSource.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\FrmEvaluationTechnician.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationTechnician.resx">
       <DependentUpon>FrmEvaluationTechnician.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\Control\UcEvaluationCardDetail.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\Control\UcEvaluationCardDetail.resx">
       <DependentUpon>UcEvaluationCardDetail.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Helper\Controls\DataGridViewLayout.resx">
+    <EmbeddedResource Include="Source\Helper\Controls\DataGridViewLayout.resx">
       <DependentUpon>DataGridViewLayout.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\FrmHtmlPreview.resx">
+    <EmbeddedResource Include="Source\Main\FrmHtmlPreview.resx">
       <DependentUpon>FrmHtmlPreview.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\FrmLoader.resx">
+    <EmbeddedResource Include="Source\Main\FrmLoader.resx">
       <DependentUpon>FrmLoader.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\FrmLog.resx">
+    <EmbeddedResource Include="Source\Main\FrmLog.resx">
       <DependentUpon>FrmLog.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\FrmFilter.resx">
+    <EmbeddedResource Include="Source\Main\FrmFilter.resx">
       <DependentUpon>FrmFilter.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\FrmLogin.resx">
+    <EmbeddedResource Include="Source\Main\FrmLogin.resx">
       <DependentUpon>FrmLogin.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\FrmMain.resx">
+    <EmbeddedResource Include="Source\Main\FrmMain.resx">
       <DependentUpon>FrmMain.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\FrmReport.resx">
+    <EmbeddedResource Include="Source\Main\FrmReport.resx">
       <DependentUpon>FrmReport.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\FrmUpdateNotes.resx">
+    <EmbeddedResource Include="Source\Main\FrmUpdateNotes.resx">
       <DependentUpon>FrmUpdateNotes.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Person\FrmPersonMaintenancePlan.resx">
+    <EmbeddedResource Include="Source\Routines\Person\FrmPersonMaintenancePlan.resx">
       <DependentUpon>FrmPersonMaintenancePlan.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Request\FrmRequest.resx">
+    <EmbeddedResource Include="Source\Routines\Request\FrmRequest.resx">
       <DependentUpon>FrmRequest.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -1392,133 +1392,133 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Person\FrmPerson.resx">
+    <EmbeddedResource Include="Source\Routines\Person\FrmPerson.resx">
       <DependentUpon>FrmPerson.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Person\FrmPersonAddress.resx">
+    <EmbeddedResource Include="Source\Routines\Person\FrmPersonAddress.resx">
       <DependentUpon>FrmPersonAddress.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Person\FrmPersonAddressGetZipCode.resx">
+    <EmbeddedResource Include="Source\Routines\Person\FrmPersonAddressGetZipCode.resx">
       <DependentUpon>FrmPersonAddressGetZipCode.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Person\FrmPersonCompressor.resx">
+    <EmbeddedResource Include="Source\Routines\Person\FrmPersonCompressor.resx">
       <DependentUpon>FrmPersonCompressor.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Person\FrmPersonCompressorPartElapsedDay.resx">
+    <EmbeddedResource Include="Source\Routines\Person\FrmPersonCompressorPartElapsedDay.resx">
       <DependentUpon>FrmPersonCompressorPartElapsedDay.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Person\FrmPersonCompressorImport.resx">
+    <EmbeddedResource Include="Source\Routines\Person\FrmPersonCompressorImport.resx">
       <DependentUpon>FrmPersonCompressorImport.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Person\FrmPersonCompressorPartWorkedHour.resx">
+    <EmbeddedResource Include="Source\Routines\Person\FrmPersonCompressorPartWorkedHour.resx">
       <DependentUpon>FrmPersonCompressorPartWorkedHour.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Person\FrmPersonContact.resx">
+    <EmbeddedResource Include="Source\Routines\Person\FrmPersonContact.resx">
       <DependentUpon>FrmPersonContact.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Person\FrmPersonGetDocument.resx">
+    <EmbeddedResource Include="Source\Routines\Person\FrmPersonGetDocument.resx">
       <DependentUpon>FrmPersonGetDocument.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Person\FrmPersonRegistrationForm.resx">
+    <EmbeddedResource Include="Source\Routines\Person\FrmPersonRegistrationForm.resx">
       <DependentUpon>FrmPersonRegistrationForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Person\FrmPersons.resx">
+    <EmbeddedResource Include="Source\Routines\Person\FrmPersons.resx">
       <DependentUpon>FrmPersons.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProductFamily\FrmProductFamilies.resx">
+    <EmbeddedResource Include="Source\Routines\ProductFamily\FrmProductFamilies.resx">
       <DependentUpon>FrmProductFamilies.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProductFamily\FrmProductFamily.resx">
+    <EmbeddedResource Include="Source\Routines\ProductFamily\FrmProductFamily.resx">
       <DependentUpon>FrmProductFamily.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProductGroup\FrmProductGroup.resx">
+    <EmbeddedResource Include="Source\Routines\ProductGroup\FrmProductGroup.resx">
       <DependentUpon>FrmProductGroup.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProductGroup\FrmProductGroups.resx">
+    <EmbeddedResource Include="Source\Routines\ProductGroup\FrmProductGroups.resx">
       <DependentUpon>FrmProductGroups.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProductPriceTable\FrmProductPriceTable.resx">
+    <EmbeddedResource Include="Source\Routines\ProductPriceTable\FrmProductPriceTable.resx">
       <DependentUpon>FrmProductPriceTable.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProductPriceTable\FrmProductPriceTables.resx">
+    <EmbeddedResource Include="Source\Routines\ProductPriceTable\FrmProductPriceTables.resx">
       <DependentUpon>FrmProductPriceTables.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProductUnit\FrmProductUnit.resx">
+    <EmbeddedResource Include="Source\Routines\ProductUnit\FrmProductUnit.resx">
       <DependentUpon>FrmProductUnit.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProductUnit\FrmProductUnits.resx">
+    <EmbeddedResource Include="Source\Routines\ProductUnit\FrmProductUnits.resx">
       <DependentUpon>FrmProductUnits.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Product\FrmProductCode.resx">
+    <EmbeddedResource Include="Source\Routines\Product\FrmProductCode.resx">
       <DependentUpon>FrmProductCode.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Product\FrmProduct.resx">
+    <EmbeddedResource Include="Source\Routines\Product\FrmProduct.resx">
       <DependentUpon>FrmProduct.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Product\FrmProductPicture.resx">
+    <EmbeddedResource Include="Source\Routines\Product\FrmProductPicture.resx">
       <DependentUpon>FrmProductPicture.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Product\FrmProductPrice.resx">
+    <EmbeddedResource Include="Source\Routines\Product\FrmProductPrice.resx">
       <DependentUpon>FrmProductPrice.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Product\FrmProductProviderCode.resx">
+    <EmbeddedResource Include="Source\Routines\Product\FrmProductProviderCode.resx">
       <DependentUpon>FrmProductProviderCode.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Product\FrmProducts.resx">
+    <EmbeddedResource Include="Source\Routines\Product\FrmProducts.resx">
       <DependentUpon>FrmProducts.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Request\FrmRequestItem.resx">
+    <EmbeddedResource Include="Source\Routines\Request\FrmRequestItem.resx">
       <DependentUpon>FrmRequestItem.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Request\FrmRequestPendingItems.resx">
+    <EmbeddedResource Include="Source\Routines\Request\FrmRequestPendingItems.resx">
       <DependentUpon>FrmRequestPendingItems.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Request\FrmRequests.resx">
+    <EmbeddedResource Include="Source\Routines\Request\FrmRequests.resx">
       <DependentUpon>FrmRequests.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Request\FrmRequestSheet.resx">
+    <EmbeddedResource Include="Source\Routines\Request\FrmRequestSheet.resx">
       <DependentUpon>FrmRequestSheet.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Route\FrmRoute.resx">
+    <EmbeddedResource Include="Source\Routines\Route\FrmRoute.resx">
       <DependentUpon>FrmRoute.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Route\FrmRoutes.resx">
+    <EmbeddedResource Include="Source\Routines\Route\FrmRoutes.resx">
       <DependentUpon>FrmRoutes.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmTest.resx">
+    <EmbeddedResource Include="Misc\FrmTest.resx">
       <DependentUpon>FrmTest.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Evaluation\Control\UcEvaluationSourcePart.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\Control\UcEvaluationSourcePart.resx">
       <DependentUpon>UcEvaluationSourcePart.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="User\Control\UcBiStatePrivilegeItem.resx">
+    <EmbeddedResource Include="Source\Routines\User\Control\UcBiStatePrivilegeItem.resx">
       <DependentUpon>UcBiStatePrivilegeItem.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="User\Control\UcBiStatePrivilegeTitle.resx">
+    <EmbeddedResource Include="Source\Routines\User\Control\UcBiStatePrivilegeTitle.resx">
       <DependentUpon>UcBiStatePrivilegeTitle.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="User\Control\UcTristatePrivilegeItem.resx">
+    <EmbeddedResource Include="Source\Routines\User\Control\UcTristatePrivilegeItem.resx">
       <DependentUpon>UcTristatePrivilegeItem.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="User\Control\UcTriStatePrivilegeTitle.resx">
+    <EmbeddedResource Include="Source\Routines\User\Control\UcTriStatePrivilegeTitle.resx">
       <DependentUpon>UcTriStatePrivilegeTitle.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="User\FrmUser.resx">
+    <EmbeddedResource Include="Source\Routines\User\FrmUser.resx">
       <DependentUpon>FrmUser.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="User\FrmUserEmail.resx">
+    <EmbeddedResource Include="Source\Routines\User\FrmUserEmail.resx">
       <DependentUpon>FrmUserEmail.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="User\FrmUserImportPrivilege.resx">
+    <EmbeddedResource Include="Source\Routines\User\FrmUserImportPrivilege.resx">
       <DependentUpon>FrmUserImportPrivilege.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="User\FrmUserChangePassword.resx">
+    <EmbeddedResource Include="Source\Routines\User\FrmUserChangePassword.resx">
       <DependentUpon>FrmUserChangePassword.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="User\FrmUsers.resx">
+    <EmbeddedResource Include="Source\Routines\User\FrmUsers.resx">
       <DependentUpon>FrmUsers.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VisitSchedule\FrmVisitSchedule.resx">
+    <EmbeddedResource Include="Source\Routines\VisitSchedule\FrmVisitSchedule.resx">
       <DependentUpon>FrmVisitSchedule.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -1632,7 +1632,7 @@
     <Content Include="Resources\SQL\EvaluationPhotoUpdate .sql" />
     <Content Include="Resources\SQL\UserPersonShortNameSelect.sql" />
     <Content Include="Resources\XML\CrmGrid.xml" />
-    <None Include="Docs\.UpdateNotes">
+    <None Include="Source\Docs\.UpdateNotes">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="Resources\Icon\icon.ico" />

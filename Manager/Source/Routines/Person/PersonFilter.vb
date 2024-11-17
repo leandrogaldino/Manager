@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports ControlLibrary
-Imports ControlLibrary.Utility
 Imports MySql.Data.MySqlClient
 ''' <summary>
 ''' Representa o filtro das pessoas.
@@ -102,7 +101,7 @@ Public Class PersonFilter
             Con.Open()
             Using Cmd As New MySqlCommand(My.Resources.PersonFilter, Con)
                 If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
-                If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
+                If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = EnumHelper.GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
                 If Document <> Nothing Then Cmd.Parameters.AddWithValue("@document", Document) : Filtering = True Else Cmd.Parameters.AddWithValue("@document", "%")
                 If Name <> Nothing Then Cmd.Parameters.AddWithValue("@name", Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@name", "%")
                 If Note <> Nothing Then Cmd.Parameters.AddWithValue("@note", Note) : Filtering = True Else Cmd.Parameters.AddWithValue("@note", "%")

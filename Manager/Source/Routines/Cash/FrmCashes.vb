@@ -1,6 +1,7 @@
 ﻿Imports ControlLibrary
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
-Imports ControlLibrary.Utility
+
 Public Class FrmCashes
     Private _Cash As New Cash
     Private _Filter As CashFilter
@@ -10,8 +11,8 @@ Public Class FrmCashes
     Private _User As User
     Public Sub New(Flow As CashFlow)
         InitializeComponent()
-        EnableControlDoubleBuffer(DgvData, True)
-        EnableControlDoubleBuffer(DgvCashItem, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvData, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvCashItem, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Flow = Flow
@@ -36,9 +37,9 @@ Public Class FrmCashes
         Dim Dgv As DataGridView = sender
         If e.ColumnIndex = Dgv.Columns("Tipo").Index Then
             Select Case e.Value
-                Case Is = GetEnumDescription(CashItemType.Expense)
+                Case Is = EnumHelper.GetEnumDescription(CashItemType.Expense)
                     e.CellStyle.ForeColor = Color.DarkRed
-                Case Is = GetEnumDescription(CashItemType.Income)
+                Case Is = EnumHelper.GetEnumDescription(CashItemType.Income)
                     e.CellStyle.ForeColor = Color.DarkGreen
             End Select
         ElseIf e.ColumnIndex = Dgv.Columns("Valor").Index Then
@@ -57,7 +58,7 @@ Public Class FrmCashes
                 Cursor = Cursors.WaitCursor
                 _Cash = New Cash().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
                 Form = New FrmCash(_Cash, Me)
-                _Cash.CashItems.FillDataGridView(Form.DgvCashItem)
+                Form.DgvCashItem.Fill(_Cash.CashItems)
                 Form.ShowDialog()
             Catch ex As Exception
                 CMessageBox.Show("ERRO CS005", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -87,7 +88,7 @@ Public Class FrmCashes
                         End Try
                     End If
                 Else
-                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", GetTitleCase(_Cash.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _Cash.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                 End If
             Catch ex As Exception
                 CMessageBox.Show("ERRO CS007", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -165,9 +166,9 @@ Public Class FrmCashes
             e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
         ElseIf e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
-                Case Is = GetEnumDescription(CashStatus.Opened)
+                Case Is = EnumHelper.GetEnumDescription(CashStatus.Opened)
                     e.CellStyle.ForeColor = Color.DarkBlue
-                Case Is = GetEnumDescription(CashStatus.Closed)
+                Case Is = EnumHelper.GetEnumDescription(CashStatus.Closed)
                     e.CellStyle.ForeColor = Color.DarkGreen
             End Select
         End If
@@ -238,7 +239,7 @@ Public Class FrmCashes
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Caixas", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
     Private Sub DgvData_MouseDown(sender As Object, e As MouseEventArgs) Handles DgvData.MouseDown
         Dim Click As DataGridView.HitTestInfo = DgvData.HitTest(e.X, e.Y)
@@ -250,8 +251,8 @@ Public Class FrmCashes
     End Sub
     Private Sub DgvData_MouseUp(sender As Object, e As MouseEventArgs) Handles DgvData.MouseUp
         If _ShowApproval Then
-            BtnOpenCash.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> GetEnumDescription(CashStatus.Opened) And _User.CanAccess(Routine.CashReopen)
-            BtnCloseCash.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> GetEnumDescription(CashStatus.Closed)
+            BtnOpenCash.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> EnumHelper.GetEnumDescription(CashStatus.Opened) And _User.CanAccess(Routine.CashReopen)
+            BtnCloseCash.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> EnumHelper.GetEnumDescription(CashStatus.Closed)
             CmsSetStatus.Show(DgvData.PointToScreen(_CmsPoint))
             _ShowApproval = False
         End If

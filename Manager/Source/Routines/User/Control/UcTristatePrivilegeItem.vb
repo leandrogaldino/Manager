@@ -1,12 +1,12 @@
-﻿Imports ControlLibrary.Utility
+﻿Imports ControlLibrary
 Public Class UcTristatePrivilegeItem
     Public Event ChechedChanged As EventHandler
     Public Property Routine As Routine
         Get
-            Return GetEnumValue(Of Routine)(LblPrivilege.Text)
+            Return EnumHelper.GetEnumValue(Of Routine)(LblPrivilege.Text)
         End Get
         Set(value As Routine)
-            LblPrivilege.Text = GetEnumDescription(value)
+            LblPrivilege.Text = EnumHelper.GetEnumDescription(value)
         End Set
     End Property
 
@@ -50,7 +50,7 @@ Public Class UcTristatePrivilegeItem
         Me.CanAccess = CanAccess
         Me.CanWrite = CanWrite
         Me.CanDelete = CanDelete
-        LblPrivilege.Text = GetEnumDescription(Routine)
+        LblPrivilege.Text = EnumHelper.GetEnumDescription(Routine)
         CbxAccess.Checked = CanAccess
         CbxWrite.Checked = CanWrite
         CbxDelete.Checked = CanDelete

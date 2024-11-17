@@ -1,5 +1,4 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
 Imports Syncfusion.Pdf
 Imports Syncfusion.Pdf.Graphics
 Imports ManagerCore
@@ -14,9 +13,9 @@ Public Class FrmEvaluationManagement
     Public Sub New()
         InitializeComponent()
         _Filter = New EvaluationManagementFilter(DgvData, PgFilter)
-        EnableControlDoubleBuffer(DgvData, True)
-        EnableControlDoubleBuffer(DgvPartWorkedHour, True)
-        EnableControlDoubleBuffer(DgvPartElapsedDay, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvData, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvPartWorkedHour, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvPartElapsedDay, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Filter.Filter()
@@ -198,7 +197,7 @@ Public Class FrmEvaluationManagement
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Gerenciamento de Avaliações", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
     Private Sub DgvData_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvData.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvData.HitTest(e.X, e.Y)

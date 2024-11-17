@@ -1,30 +1,28 @@
 ﻿Imports MySql.Data.MySqlClient
 Imports ControlLibrary
-Imports System.Reflection
 ''' <summary>
 ''' Representa um fluxo de caixa.
 ''' </summary>
 Public Class CashFlow
-    Inherits ModelBase
-    Private _IsSaved As Boolean
+    Inherits ParentModel
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
-    Public Property Authorized As New OrdenedList(Of CashFlowAuthorized)
+    Public Property Authorizeds As New List(Of CashFlowAuthorized)
     Public Sub New()
-        _Routine = Routine.CashFlow
+        SetRoutine(Routine.CashFlow)
     End Sub
     Public Sub Clear()
         Unlock()
-        _IsSaved = False
-        _ID = 0
-        _Creation = Today
+        SetIsSaved(False)
+        SetID(0)
+        SetCreation(Today)
         Status = SimpleStatus.Active
         Name = Nothing
     End Sub
 
-    Public Function GetAuthorized(Transaction As MySqlTransaction) As OrdenedList(Of CashFlowAuthorized)
+    Public Function GetAuthorized(Transaction As MySqlTransaction) As List(Of CashFlowAuthorized)
         Dim TableResult As DataTable
-        Dim AuthorizedList As OrdenedList(Of CashFlowAuthorized)
+        Dim AuthorizedList As List(Of CashFlowAuthorized)
         Dim FlowAuthorized As CashFlowAuthorized
         Using CmdAuthorized As New MySqlCommand(My.Resources.CashFlowAuthorizedSelect, Transaction.Connection)
             CmdAuthorized.Transaction = Transaction
@@ -32,13 +30,13 @@ Public Class CashFlow
             Using Adp As New MySqlDataAdapter(CmdAuthorized)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                AuthorizedList = New OrdenedList(Of CashFlowAuthorized)
+                AuthorizedList = New List(Of CashFlowAuthorized)
                 For Each Row As DataRow In TableResult.Rows
                     FlowAuthorized = New CashFlowAuthorized()
-                    FlowAuthorized.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(FlowAuthorized, Row.Item("id"))
-                    FlowAuthorized.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(FlowAuthorized, Row.Item("creation"))
+                    FlowAuthorized.SetID(Row.Item("id"))
+                    FlowAuthorized.SetCreation(Row.Item("creation"))
+                    FlowAuthorized.SetIsSaved(True)
                     FlowAuthorized.Authorized = New Person().Load(Row.Item("authorizedid"), False)
-                    FlowAuthorized.IsSaved = True
                     AuthorizedList.Add(FlowAuthorized)
                 Next Row
             End Using
@@ -62,14 +60,14 @@ Public Class CashFlow
                         Clear()
                     ElseIf TableResult.Rows.Count = 1 Then
                         Clear()
-                        _ID = TableResult.Rows(0).Item("id")
-                        _Creation = TableResult.Rows(0).Item("creation")
+                        SetID(TableResult.Rows(0).Item("id"))
+                        SetCreation(TableResult.Rows(0).Item("creation"))
+                        SetIsSaved(True)
                         Status = TableResult.Rows(0).Item("statusid")
                         Name = TableResult.Rows(0).Item("name").ToString
-                        Authorized = GetAuthorized(Tra)
+                        Authorizeds = GetAuthorized(Tra)
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
-                        _IsSaved = True
                     Else
                         Throw New Exception("Registro não encontrado.")
                     End If
@@ -80,13 +78,13 @@ Public Class CashFlow
         Return Me
     End Function
     Public Sub SaveChanges()
-        If Not _IsSaved Then
+        If Not IsSaved Then
             Insert()
         Else
             Update()
         End If
-        _IsSaved = True
-        Authorized.ToList().ForEach(Sub(x) x.IsSaved = True)
+        SetIsSaved(True)
+        Authorizeds.ToList().ForEach(Sub(x) x.SetIsSaved(True))
     End Sub
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)
@@ -111,9 +109,9 @@ Public Class CashFlow
                     Cmd.Parameters.AddWithValue("@name", Name)
                     Cmd.Parameters.AddWithValue("@userid", User.ID)
                     Cmd.ExecuteNonQuery()
-                    _ID = Cmd.LastInsertedId
+                    SetID(Cmd.LastInsertedId)
                 End Using
-                For Each FlowAuthorized As CashFlowAuthorized In Me.Authorized
+                For Each FlowAuthorized As CashFlowAuthorized In Me.Authorizeds
                     Using Cmd As New MySqlCommand(My.Resources.CashFlowAuthorizedInsert, Con)
                         Cmd.Transaction = Tra
                         Cmd.Parameters.AddWithValue("@cashflowid", ID)
@@ -121,7 +119,7 @@ Public Class CashFlow
                         Cmd.Parameters.AddWithValue("@authorizedid", If(FlowAuthorized.Authorized.ID = 0, DBNull.Value, FlowAuthorized.Authorized.ID))
                         Cmd.Parameters.AddWithValue("@userid", FlowAuthorized.User.ID)
                         Cmd.ExecuteNonQuery()
-                        FlowAuthorized.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(FlowAuthorized, Cmd.LastInsertedId)
+                        FlowAuthorized.SetID(Cmd.LastInsertedId)
                     End Using
                 Next FlowAuthorized
                 Tra.Commit()
@@ -142,8 +140,8 @@ Public Class CashFlow
                     Cmd.Parameters.AddWithValue("@userid", User.ID)
                     Cmd.ExecuteNonQuery()
                 End Using
-                For Each FlowAuhorized As CashFlowAuthorized In Shadow.Authorized
-                    If Not Authorized.Any(Function(x) x.ID = FlowAuhorized.ID And x.ID > 0) Then
+                For Each FlowAuhorized As CashFlowAuthorized In Shadow.Authorizeds
+                    If Not Authorizeds.Any(Function(x) x.ID = FlowAuhorized.ID And x.ID > 0) Then
                         Using CmdCompressorPart As New MySqlCommand(My.Resources.CashFlowAuthorizedDelete, Con)
                             CmdCompressorPart.Transaction = Tra
                             CmdCompressorPart.Parameters.AddWithValue("@id", FlowAuhorized.ID)
@@ -151,7 +149,7 @@ Public Class CashFlow
                         End Using
                     End If
                 Next FlowAuhorized
-                For Each FlowAuhorized As CashFlowAuthorized In Authorized
+                For Each FlowAuhorized As CashFlowAuthorized In Authorizeds
                     If FlowAuhorized.ID = 0 Then
                         Using Cmd As New MySqlCommand(My.Resources.CashFlowAuthorizedInsert, Con)
                             Cmd.Transaction = Tra
@@ -160,7 +158,7 @@ Public Class CashFlow
                             Cmd.Parameters.AddWithValue("@authorizedid", If(FlowAuhorized.Authorized.ID = 0, DBNull.Value, FlowAuhorized.Authorized.ID))
                             Cmd.Parameters.AddWithValue("@userid", FlowAuhorized.User.ID)
                             Cmd.ExecuteNonQuery()
-                            FlowAuhorized.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(FlowAuhorized, Cmd.LastInsertedId)
+                            FlowAuhorized.SetID(Cmd.LastInsertedId)
                         End Using
                     Else
                         Using Cmd As New MySqlCommand(My.Resources.CashFlowAuthorizedUpdate, Con)

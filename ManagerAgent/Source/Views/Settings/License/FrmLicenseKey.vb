@@ -16,7 +16,7 @@ Public Class FrmLicenseKey
         If LicenseResult.Success Then
             DialogResult = DialogResult.OK
         Else
-            CMessageBox.Show(Utility.GetEnumDescription(LicenseResult.Flag), CMessageBoxType.Warning)
+            CMessageBox.Show(EnumHelper.GetEnumDescription(LicenseResult.Flag), CMessageBoxType.Warning)
         End If
     End Sub
     Private Sub OnViewModelPropertyChanged(sender As Object, e As PropertyChangedEventArgs)

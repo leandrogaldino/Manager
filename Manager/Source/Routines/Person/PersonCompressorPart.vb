@@ -1,29 +1,10 @@
-﻿Imports ControlLibrary
-''' <summary>
+﻿''' <summary>
 ''' Representa uma peça de um compressor da pessoa.
 ''' </summary>
 Public Class PersonCompressorPart
-    Public IsSaved As Boolean
-    Private _Order As Long
-    Private _ID As Long
-    Private _Creation As Date = Today
+    Inherits ChildModel
     Private _ProductID As Long
     Private _PartType As CompressorPartType
-    Public ReadOnly Property Order As Long
-        Get
-            Return _Order
-        End Get
-    End Property
-    Public ReadOnly Property ID As Long
-        Get
-            Return _ID
-        End Get
-    End Property
-    Public ReadOnly Property Creation As Date
-        Get
-            Return _Creation
-        End Get
-    End Property
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property PartBind As CompressorPartBindType = CompressorPartBindType.None
     Public ReadOnly Property PartType As CompressorPartType
@@ -55,10 +36,10 @@ Public Class PersonCompressorPart
             Return PartBind <> CompressorPartBindType.None
         End Get
     End Property
-    Public ReadOnly User As User = Locator.GetInstance(Of Session).User
     Public Overrides Function ToString() As String
         Return ItemName & Product.Value.Name
     End Function
+    'TODO: parttype precisa ser substituido pela routine
     Public Sub New(PartType As CompressorPartType)
         _PartType = PartType
     End Sub

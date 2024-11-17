@@ -1,4 +1,5 @@
 ﻿Imports ControlLibrary
+Imports ControlLibrary.Extensions
 
 Public Class FrmEmailImportContact
     Private _User As User
@@ -56,7 +57,7 @@ Public Class FrmEmailImportContact
     Private Sub FillDataGridView(Person As Person)
         Dim XColumn As DataGridViewCheckBoxColumn
         Person.Contacts.Where(Function(x) String.IsNullOrEmpty(x.Email)).ToList.ForEach(Sub(y) Person.Contacts.Remove(y))
-        Person.Contacts.FillDataGridView(DgvEmail)
+        DgvEmail.Fill(Person.Contacts)
         For Each Column As DataGridViewColumn In DgvEmail.Columns
             Column.ReadOnly = True
         Next Column

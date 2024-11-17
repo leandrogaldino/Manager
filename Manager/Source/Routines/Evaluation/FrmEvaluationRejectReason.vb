@@ -1,7 +1,7 @@
-﻿Imports ControlLibrary.Utility
+﻿Imports ControlLibrary.Extensions
 Public Class FrmEvaluationRejectReason
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
-        TxtReason.Text = RemoveAccents(TxtReason.Text)
+        TxtReason.Text = TxtReason.Text.ToUnaccented()
         If IsValidFields() Then
             DialogResult = DialogResult.OK
         End If

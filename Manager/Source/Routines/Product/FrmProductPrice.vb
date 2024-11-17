@@ -1,4 +1,5 @@
 ﻿Imports ControlLibrary
+Imports ControlLibrary.Extensions
 Public Class FrmProductPrice
     Private _ProductForm As FrmProduct
     Private _Product As Product
@@ -42,7 +43,7 @@ Public Class FrmProductPrice
     Private Sub AfterDataGridViewRowMove()
         If _ProductForm.DgvPrice.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _ProductPrice = _Product.Prices.Single(Function(x) x.Order = _ProductForm.DgvPrice.SelectedRows(0).Cells("Order").Value)
+            _ProductPrice = _Product.Prices.Single(Function(x) x.Guid = _ProductForm.DgvPrice.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -84,9 +85,9 @@ Public Class FrmProductPrice
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _ProductForm.DgvPrice.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _ProductPrice = _Product.Prices.Single(Function(x) x.Order = _ProductForm.DgvPrice.SelectedRows(0).Cells("Order").Value)
+                _ProductPrice = _Product.Prices.Single(Function(x) x.Guid = _ProductForm.DgvPrice.SelectedRows(0).Cells("Guid").Value)
                 _Product.Prices.Remove(_ProductPrice)
-                _Product.Prices.FillDataGridView(_ProductForm.DgvPrice)
+                _ProductForm.DgvPrice.Fill(_Product.Prices)
                 _ProductForm.DgvPriceLayout.Load()
                 _Deleting = True
                 Dispose()
@@ -108,12 +109,12 @@ Public Class FrmProductPrice
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = _ProductPrice.Order
+        LblOrderValue.Text = If(_ProductPrice.IsSaved, _ProductForm.DgvPrice.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _ProductPrice.Creation
         QbxPriceTable.Unfreeze()
         QbxPriceTable.Freeze(_ProductPrice.PriceTable.ID)
         DbxPrice.Text = _ProductPrice.Price
-        If _ProductPrice.Order = 0 Then
+        If Not _ProductPrice.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
         Else
@@ -152,28 +153,29 @@ Public Class FrmProductPrice
         Dim Row As DataGridViewRow
         If IsValidFields() Then
             If _ProductPrice.IsSaved Then
-                _Product.Prices.Single(Function(x) x.Order = _ProductPrice.Order).PriceTable = New ProductPriceTable().Load(QbxPriceTable.FreezedPrimaryKey, False)
-                _Product.Prices.Single(Function(x) x.Order = _ProductPrice.Order).Price = DbxPrice.DecimalValue
+                _Product.Prices.Single(Function(x) x.Guid = _ProductPrice.Guid).PriceTable = New ProductPriceTable().Load(QbxPriceTable.FreezedPrimaryKey, False)
+                _Product.Prices.Single(Function(x) x.Guid = _ProductPrice.Guid).Price = DbxPrice.DecimalValue
             Else
-                _ProductPrice = New ProductPrice()
-                _ProductPrice.PriceTable = New ProductPriceTable().Load(QbxPriceTable.FreezedPrimaryKey, False)
-                _ProductPrice.Price = DbxPrice.DecimalValue
-                _ProductPrice.IsSaved = True
+                _ProductPrice = New ProductPrice With {
+                    .PriceTable = New ProductPriceTable().Load(QbxPriceTable.FreezedPrimaryKey, False),
+                    .Price = DbxPrice.DecimalValue
+                }
+                _ProductPrice.SetIsSaved(True)
                 _Product.Prices.Add(_ProductPrice)
             End If
-            _Product.Prices.FillDataGridView(_ProductForm.DgvPrice)
-            LblOrderValue.Text = _ProductPrice.Order
+            _ProductForm.DgvPrice.Fill(_Product.Prices)
             _ProductForm.DgvPriceLayout.Load()
             BtnSave.Enabled = False
-            If _ProductPrice.Order = 0 Then
+            If Not _ProductPrice.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _ProductForm.DgvPrice.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Order").Value = _ProductPrice.Order)
+            Row = _ProductForm.DgvPrice.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ProductPrice.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+            LblOrderValue.Text = _ProductForm.DgvPrice.SelectedRows(0).Cells("Order").Value
             _ProductForm.EprValidation.Clear()
             _ProductForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()

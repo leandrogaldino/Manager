@@ -1,18 +1,12 @@
 ﻿Imports ControlLibrary
-Imports Manager.Util
 Imports MySql.Data.MySqlClient
 ''' <summary>
 ''' Representa um Estado.
 ''' </summary>
 Public Class State
-    Private _ID As Long
+    Inherits ParentModel
     Private _Name As String = String.Empty
     Private _ShortName As String
-    Public ReadOnly Property ID As Long
-        Get
-            Return _ID
-        End Get
-    End Property
     Public ReadOnly Property Name As String
         Get
             Return _Name
@@ -24,7 +18,7 @@ Public Class State
         End Get
     End Property
     Public Sub Clear()
-        _ID = 0
+        SetID(0)
         _Name = Nothing
         _ShortName = Nothing
     End Sub
@@ -43,7 +37,7 @@ Public Class State
                     Clear()
                 ElseIf TableResult.Rows.Count = 1 Then
                     Clear()
-                    _ID = TableResult.Rows(0).Item("id")
+                    SetID(TableResult.Rows(0).Item("id"))
                     _Name = TableResult.Rows(0).Item("name")
                     _ShortName = TableResult.Rows(0).Item("shortname")
                 Else

@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports System.Reflection
 Imports ChinhDo.Transactions
 Imports ControlLibrary
 Imports ManagerCore
@@ -8,26 +7,25 @@ Imports MySql.Data.MySqlClient
 ''' Representa uma requisição.
 ''' </summary>
 Public Class Request
-    Inherits ModelBase
-    Private _IsSaved As Boolean
+    Inherits ParentModel
     Public Property Status As RequestStatus = RequestStatus.Pending
     Public Property Destination As String
     Public Property Responsible As String
-    Public Property Items As New OrdenedList(Of RequestItem)
+    Public Property Items As New List(Of RequestItem)
     Public Property Note As String
     Public Property Document As New FileManager(ApplicationPaths.RequestDocumentDirectory)
     Public Sub New()
-        _Routine = Routine.Request
+        SetRoutine(Routine.Request)
     End Sub
     Public Sub Clear()
         Unlock()
-        _IsSaved = False
-        _ID = 0
-        _Creation = Today
+        SetIsSaved(False)
+        SetID(0)
+        SetCreation(Today)
         Status = RequestStatus.Pending
         Destination = Nothing
         Responsible = Nothing
-        Items = New OrdenedList(Of RequestItem)
+        Items = New List(Of RequestItem)
         Note = Nothing
         Document = New FileManager(ApplicationPaths.RequestDocumentDirectory)
     End Sub
@@ -48,8 +46,8 @@ Public Class Request
                         Clear()
                     ElseIf TableResult.Rows.Count = 1 Then
                         Clear()
-                        _ID = TableResult.Rows(0).Item("id")
-                        _Creation = TableResult.Rows(0).Item("creation")
+                        SetID(TableResult.Rows(0).Item("id"))
+                        SetCreation(TableResult.Rows(0).Item("creation"))
                         Status = TableResult.Rows(0).Item("statusid")
                         Destination = TableResult.Rows(0).Item("destination")
                         Responsible = TableResult.Rows(0).Item("responsible").ToString
@@ -64,26 +62,27 @@ Public Class Request
                                 TableResult = New DataTable
                                 Adp.Fill(TableResult)
                                 For Each Row As DataRow In TableResult.Rows
-                                    Item = New RequestItem
-                                    Item.Status = Row.Item("statusid")
-                                    Item.ItemName = Row.Item("itemname").ToString
-                                    Item.Product = New Product().Load(Row.Item("productid"), False)
-                                    Item.Taked = Row.Item("taked")
-                                    Item.Returned = Row.Item("returned")
-                                    Item.Applied = Row.Item("applied")
-                                    Item.Lossed = Row.Item("lossed")
-                                    Item.LossReason = Row.Item("lossreason")
-                                    Item.IsSaved = True
-                                    Item.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Item, Row.Item("id"))
-                                    Item.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Item, Row.Item("creation"))
+                                    Item = New RequestItem With {
+                                        .Status = Row.Item("statusid"),
+                                        .ItemName = Row.Item("itemname").ToString,
+                                        .Product = New Product().Load(Row.Item("productid"), False),
+                                        .Taked = Row.Item("taked"),
+                                        .Returned = Row.Item("returned"),
+                                        .Applied = Row.Item("applied"),
+                                        .Lossed = Row.Item("lossed"),
+                                        .LossReason = Row.Item("lossreason")
+                                    }
+                                    Item.SetIsSaved(True)
+                                    Item.SetID(Row.Item("id"))
+                                    Item.SetCreation(Row.Item("creation"))
                                     Items.Add(Item)
                                 Next Row
                             End Using
-                        End Using
+                    End Using
                         LockInfo = GetLockInfo(Tra)
-                            If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
-                            _IsSaved = True
-                        Else
+                        If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
+                        SetIsSaved(True)
+                    Else
                             Throw New Exception("Registro não encontrado.")
                     End If
                 End Using
@@ -93,13 +92,13 @@ Public Class Request
         Return Me
     End Function
     Public Sub SaveChanges()
-        If Not _IsSaved Then
+        If Not IsSaved Then
             Insert()
         Else
             Update()
         End If
-        _IsSaved = True
-        Items.ToList().ForEach(Sub(x) x.IsSaved = True)
+        SetIsSaved(True)
+        Items.ToList().ForEach(Sub(x) x.SetIsSaved(True))
     End Sub
     Public Sub Delete()
         Dim FileManager As New TxFileManager(ApplicationPaths.ManagerTempDirectory)
@@ -129,7 +128,7 @@ Public Class Request
                     CmdRequest.Parameters.AddWithValue("@documentname", If(String.IsNullOrEmpty(Document.CurrentFile), DBNull.Value, Path.GetFileName(Document.CurrentFile)))
                     CmdRequest.Parameters.AddWithValue("@userid", User.ID)
                     CmdRequest.ExecuteNonQuery()
-                    _ID = CmdRequest.LastInsertedId
+                    SetID(CmdRequest.LastInsertedId)
                 End Using
                 For Each Item As RequestItem In Items
                     Using CmdItem As New MySqlCommand(My.Resources.RequestItemInsert, Con)
@@ -145,7 +144,7 @@ Public Class Request
                         CmdItem.Parameters.AddWithValue("@lossreason", Item.LossReason)
                         CmdItem.Parameters.AddWithValue("@userid", Item.User.ID)
                         CmdItem.ExecuteNonQuery()
-                        Item.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Item, CmdItem.LastInsertedId)
+                        Item.SetID(CmdItem.LastInsertedId)
                     End Using
                 Next Item
             End Using
@@ -191,7 +190,7 @@ Public Class Request
                             CmdItem.Parameters.AddWithValue("@lossreason", Item.LossReason)
                             CmdItem.Parameters.AddWithValue("@userid", Item.User.ID)
                             CmdItem.ExecuteNonQuery()
-                            Item.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Item, CmdItem.LastInsertedId)
+                            Item.SetID(CmdItem.LastInsertedId)
                         End Using
                     Else
                         Using CmdItem As New MySqlCommand(My.Resources.RequestItemUpdate, Con)

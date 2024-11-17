@@ -9,6 +9,7 @@ Public Enum Routine
     UserEmail = 101
     <Description("Permite Resetar Senha")> <BiStatePrivilege>
     UserResetPassword = 102
+    UserPrivilege = 103
     <Description("Pessoa")> <TriStatePrivilege>
     Person = 2
     PersonAddress = 201
@@ -70,7 +71,7 @@ Public Enum Routine
     EvaluationCreateAutomaticRecord = 1310
     <Description("Importar avaliações da núvem")> <BiStatePrivilege>
     EvaluationImport = 1311
-    UserPrivilegePreset = 14
+    PrivilegePreset = 14
     <Description("Requisição")> <TriStatePrivilege>
     Request = 15
     RequestItem = 1501

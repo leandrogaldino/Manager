@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
-Imports ControlLibrary.Utility
+Imports ControlLibrary
+
 Public Class CashStatusConverter
     Inherits StringConverter
     Public Overrides Function GetStandardValuesSupported(ByVal context As ITypeDescriptorContext) As Boolean
@@ -11,8 +12,8 @@ Public Class CashStatusConverter
     Public Overrides Function GetStandardValues(ByVal context As ITypeDescriptorContext) As StandardValuesCollection
         Dim List As New List(Of String) From {
             "",
-            GetEnumDescription(CashStatus.Opened),
-            GetEnumDescription(CashStatus.Closed)
+            EnumHelper.GetEnumDescription(CashStatus.Opened),
+            EnumHelper.GetEnumDescription(CashStatus.Closed)
         }
         Return New StandardValuesCollection(List)
     End Function

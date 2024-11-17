@@ -7,7 +7,7 @@ Public Class FrmFilter
     Private Const _CloseButton As Long = 20
     Public Sub New(Filter As Object, QueriedTextBox As QueriedBox)
         InitializeComponent()
-        Utility.EnableControlDoubleBuffer(DgvData, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvData, True)
         _Filter = Filter
         _QueriedTextBox = QueriedTextBox
         _Filter.DataGridView = DgvData

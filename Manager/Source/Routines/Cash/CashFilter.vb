@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports MySql.Data.MySqlClient
-Imports ControlLibrary.Utility
 Imports ControlLibrary
 ''' <summary>
 ''' Representa o filtro dos caixas.
@@ -59,7 +58,7 @@ Public Class CashFilter
             Using Cmd As New MySqlCommand(My.Resources.CashFilter, Con)
                 Cmd.Parameters.AddWithValue("@cashflowid", CashFlow.ID)
                 If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
-                If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = GetEnumDescription(CashStatus.Opened), CInt(CashStatus.Opened), CInt(CashStatus.Closed))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
+                If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = EnumHelper.GetEnumDescription(CashStatus.Opened), CInt(CashStatus.Opened), CInt(CashStatus.Closed))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
                 If Note <> Nothing Then Cmd.Parameters.AddWithValue("@note", Note) : Filtering = True Else Cmd.Parameters.AddWithValue("@note", "%")
                 If Creation.InitialDate <> Nothing Then Cmd.Parameters.AddWithValue("@creationi", Creation.InitialDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@creationi", "0000-01-01")
                 If Creation.FinalDate <> Nothing Then Cmd.Parameters.AddWithValue("@creationf", Creation.FinalDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@creationf", "9999-12-31")

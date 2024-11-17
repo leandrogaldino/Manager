@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports ControlLibrary
-Imports ControlLibrary.Utility
 Imports MySql.Data.MySqlClient
 ''' <summary>
 ''' Representa o filtro dos usuários.
@@ -42,7 +41,7 @@ Public Class UserFilter
             Con.Open()
             Using Cmd As New MySqlCommand(My.Resources.UserFilter, Con)
                 If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
-                If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
+                If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = EnumHelper.GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
                 Using Adp As New MySqlDataAdapter(Cmd)
                     Adp.Fill(Table)
                     DataGridView.DataSource = Nothing

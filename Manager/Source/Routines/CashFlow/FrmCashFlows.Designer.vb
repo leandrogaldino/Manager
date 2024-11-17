@@ -362,7 +362,7 @@ Partial Class FrmCashFlows
         'DgvCashFlowLayout
         '
         Me.DgvCashFlowLayout.DataGridView = Me.DgvData
-        Me.DgvCashFlowLayout.Routine = Routine.Route
+        Me.DgvCashFlowLayout.Routine = Manager.Routine.CashFlow
         '
         'FrmCashFlows
         '

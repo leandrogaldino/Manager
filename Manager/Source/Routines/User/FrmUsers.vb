@@ -1,12 +1,12 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Public Class FrmUsers
     Private _User As New User
     Private _Filter As UserFilter
     Public Sub New()
         InitializeComponent()
-        Utility.EnableControlDoubleBuffer(DgvData, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvData, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer1.SplitterDistance = 250
         SplitContainer2.Panel1Collapsed = True
@@ -65,7 +65,7 @@ Public Class FrmUsers
                         End Try
                     End If
                 Else
-                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", GetTitleCase(_User.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _User.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                 End If
             Catch ex As Exception
                 CMessageBox.Show("ERRO US009", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -128,9 +128,9 @@ Public Class FrmUsers
         Dim Dgv As DataGridView = sender
         If e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
-                Case Is = GetEnumDescription(SimpleStatus.Active)
+                Case Is = EnumHelper.GetEnumDescription(SimpleStatus.Active)
                     e.CellStyle.ForeColor = Color.DarkBlue
-                Case Is = GetEnumDescription(SimpleStatus.Inactive)
+                Case Is = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
                     e.CellStyle.ForeColor = Color.DarkRed
             End Select
         End If
@@ -181,6 +181,6 @@ Public Class FrmUsers
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Usuários", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
 End Class

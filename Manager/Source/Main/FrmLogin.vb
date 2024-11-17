@@ -1,8 +1,7 @@
-﻿Imports System.IO
+﻿Imports ManagerCore
 Imports ControlLibrary
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
-Imports ControlLibrary.Utility
-Imports ManagerCore
 Imports System.Reflection
 Public Class FrmLogin
 
@@ -27,7 +26,7 @@ Public Class FrmLogin
     End Sub
     Private Sub TxtUser_Leave(sender As Object, e As EventArgs) Handles TxtUsername.Leave
         If TxtUsername.Text <> Nothing Then
-            TxtUsername.Text = RemoveAccents(TxtUsername.Text)
+            TxtUsername.Text = TxtUsername.Text.ToUnaccented()
         End If
     End Sub
     Private Sub BtnLogin_Click(sender As Object, e As EventArgs) Handles BtnLogin.Click
@@ -77,10 +76,10 @@ Public Class FrmLogin
                                                             If Session.LicenseResult.Success Then
                                                                 FrmMain.Show()
                                                             Else
-                                                                CMessageBox.Show(GetEnumDescription(Session.LicenseResult.Flag), CMessageBoxType.Warning)
+                                                                CMessageBox.Show(EnumHelper.GetEnumDescription(Session.LicenseResult.Flag), CMessageBoxType.Warning)
                                                             End If
                                                         Case Else
-                                                            CMessageBox.Show(GetEnumDescription(Session.LicenseResult.Flag), CMessageBoxType.Warning)
+                                                            CMessageBox.Show(EnumHelper.GetEnumDescription(Session.LicenseResult.Flag), CMessageBoxType.Warning)
                                                     End Select
                                                 End If
                                             Catch ex As Exception
@@ -149,7 +148,7 @@ Public Class FrmLogin
         End If
     End Sub
     Private Sub TxtUsername_Leave(sender As Object, e As EventArgs) Handles TxtUsername.Leave
-        TxtUsername.Text = RemoveAccents(TxtUsername.Text)
+        TxtUsername.Text = TxtUsername.Text.ToUnaccented()
     End Sub
     Private Sub TxtPassword_TextChanged(sender As Object, e As EventArgs) Handles TxtPassword.TextChanged
         If TxtUsername.Text <> Nothing And TxtPassword.Text <> Nothing Then

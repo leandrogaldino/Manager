@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Routine Id="EvaluationPart" Version="1">
+	<SortedColumn>-1</SortedColumn>
+	<SortDirection>0</SortDirection>
+	<Column Index="0" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>0</DisplayIndex>
+		<Name>Ordem</Name>
+		<Width>ColumnHeader</Width>
+	</Column>
+	<Column Index="1">
+		<Visible>True</Visible>
+		<DisplayIndex>1</DisplayIndex>
+		<Name>Código</Name>
+		<Width>AllCells</Width>
+	</Column>
+	<Column Index="2">
+		<Visible>True</Visible>
+		<DisplayIndex>2</DisplayIndex>
+		<Name>Peça</Name>
+		<Width>Fill</Width>
+	</Column>
+	<Column Index="3">
+		<Visible>True</Visible>
+		<DisplayIndex>3</DisplayIndex>
+		<Name>Cap. Atual</Name>
+		<Width>ColumnHeader</Width>
+	</Column>
+	<Column Index="4">
+		<Visible>True</Visible>
+		<DisplayIndex>4</DisplayIndex>
+		<Name>Vendido</Name>
+		<Width>ColumnHeader</Width>
+	</Column>
+	<Column Index="5">
+		<Visible>True</Visible>
+		<DisplayIndex>5</DisplayIndex>
+		<Name>Perdido</Name>
+		<Width>ColumnHeader</Width>
+	</Column>
+	<Column Index="6" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>6</DisplayIndex>
+		<Name>Guid</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="7" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>7</DisplayIndex>
+		<Name>ID</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="8" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>8</DisplayIndex>
+		<Name>Criação</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="9" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>9</DisplayIndex>
+		<Name>Rotina</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="10" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>10</DisplayIndex>
+		<Name>Salvo</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="11" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>11</DisplayIndex>
+		<Name>Usuário</Name>
+		<Width>100</Width>
+	</Column>
+</Routine>

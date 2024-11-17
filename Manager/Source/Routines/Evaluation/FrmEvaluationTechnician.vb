@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-
+Imports ControlLibrary.Extensions
 Public Class FrmEvaluationTechnician
     Private _EvaluationForm As FrmEvaluation
     Private _Evaluation As Evaluation
@@ -43,7 +43,7 @@ Public Class FrmEvaluationTechnician
     Private Sub AfterDataGridViewRowMove()
         If _EvaluationForm.DgvTechnician.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _EvaluationTechnician = _Evaluation.Technicians.Single(Function(x) x.Order = _EvaluationForm.DgvTechnician.SelectedRows(0).Cells("Order").Value)
+            _EvaluationTechnician = _Evaluation.Technicians.Single(Function(x) x.Guid = _EvaluationForm.DgvTechnician.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -86,11 +86,11 @@ Public Class FrmEvaluationTechnician
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = _EvaluationTechnician.Order
+        LblOrderValue.Text = If(_EvaluationTechnician.IsSaved, _EvaluationForm.DgvTechnician.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _EvaluationTechnician.Creation
         QbxTechnician.Unfreeze()
         QbxTechnician.Freeze(_EvaluationTechnician.Technician.ID)
-        If _EvaluationTechnician.Order = 0 Then
+        If Not _EvaluationTechnician.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
         Else
@@ -124,25 +124,26 @@ Public Class FrmEvaluationTechnician
         Dim Row As DataGridViewRow
         If IsValidFields() Then
             If _EvaluationTechnician.IsSaved Then
-                _Evaluation.Technicians.Single(Function(x) x.Order = _EvaluationTechnician.Order).Technician = New Person().Load(QbxTechnician.FreezedPrimaryKey, False)
+                _Evaluation.Technicians.Single(Function(x) x.Guid = _EvaluationTechnician.Guid).Technician = New Person().Load(QbxTechnician.FreezedPrimaryKey, False)
             Else
-                _EvaluationTechnician = New EvaluationTechnician()
-                _EvaluationTechnician.Technician = New Person().Load(QbxTechnician.FreezedPrimaryKey, False)
-                _EvaluationTechnician.IsSaved = True
+                _EvaluationTechnician = New EvaluationTechnician With {
+                    .Technician = New Person().Load(QbxTechnician.FreezedPrimaryKey, False)
+                }
+                _EvaluationTechnician.SetIsSaved(True)
                 _Evaluation.Technicians.Add(_EvaluationTechnician)
             End If
             _EvaluationForm.FillDataGridViewTechnician()
-            LblOrderValue.Text = _EvaluationTechnician.Order
             BtnSave.Enabled = False
-            If _EvaluationTechnician.Order = 0 Then
+            If Not _EvaluationTechnician.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _EvaluationForm.DgvTechnician.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Order").Value = _EvaluationTechnician.Order)
+            Row = _EvaluationForm.DgvTechnician.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _EvaluationTechnician.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+            LblOrderValue.Text = _EvaluationForm.DgvTechnician.SelectedRows(0).Cells("Order").Value
             _EvaluationForm.EprValidation.Clear()
             _EvaluationForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()
@@ -214,9 +215,9 @@ Public Class FrmEvaluationTechnician
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _EvaluationForm.DgvTechnician.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _EvaluationTechnician = _Evaluation.Technicians.Single(Function(x) x.Order = _EvaluationForm.DgvTechnician.SelectedRows(0).Cells("Order").Value)
+                _EvaluationTechnician = _Evaluation.Technicians.Single(Function(x) x.Guid = _EvaluationForm.DgvTechnician.SelectedRows(0).Cells("Guid").Value)
                 _EvaluationForm.FillDataGridViewTechnician()
-                _Evaluation.Technicians.FillDataGridView(_EvaluationForm.DgvTechnician)
+                _EvaluationForm.DgvTechnician.Fill(_Evaluation.Technicians)
                 _Deleting = True
                 Dispose()
                 _EvaluationForm.BtnSave.Enabled = True

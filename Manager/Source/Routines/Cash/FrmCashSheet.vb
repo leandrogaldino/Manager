@@ -1,5 +1,4 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
 Imports MySql.Data.MySqlClient
 
 Public Class FrmCashSheet
@@ -89,7 +88,7 @@ Public Class FrmCashSheet
                     Result = CashReport.ProcessCashSheet(cs)
                     If Result IsNot Nothing Then
                         DialogResult = DialogResult.OK
-                        FrmMain.OpenTab(New FrmReport(Result), GetEnumDescription(Routine.CashItemResponsible))
+                        FrmMain.OpenTab(New FrmReport(Result), EnumHelper.GetEnumDescription(Routine.CashItemResponsible))
                     Else
                         CMessageBox.Show("Não existem despesas lançadas nesse período.", CMessageBoxType.Information)
                     End If

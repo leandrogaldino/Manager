@@ -1,5 +1,4 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
 Public Class FrmPersonRegistrationForm
     Private _User As User
     <DebuggerStepThrough>
@@ -37,7 +36,7 @@ Public Class FrmPersonRegistrationForm
             BtnGenerate.Enabled = False
             Result = PersonReport.ProcessRegistrationForm(QbxPerson.FreezedPrimaryKey, CbxShowAddresses.Checked, CbxShowContacts.Checked, CbxShowCompressors.Checked)
             DialogResult = DialogResult.OK
-            FrmMain.OpenTab(New FrmReport(Result), GetEnumDescription(Routine.PersonRegistrationFormReport))
+            FrmMain.OpenTab(New FrmReport(Result), EnumHelper.GetEnumDescription(Routine.PersonRegistrationFormReport))
         Catch ex As Exception
             CMessageBox.Show("ERRO PS013", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally

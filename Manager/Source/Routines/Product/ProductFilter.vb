@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports ControlLibrary
-Imports ControlLibrary.Utility
 Imports MySql.Data.MySqlClient
 ''' <summary>
 ''' Representa o filtro dos produtos.
@@ -66,7 +65,7 @@ Public Class ProductFilter
             Con.Open()
             Using Cmd As New MySqlCommand(My.Resources.ProductFilter, Con)
                 If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
-                If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
+                If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = EnumHelper.GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
                 If Name <> Nothing Then Cmd.Parameters.AddWithValue("@name", Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@name", "%")
                 If Code <> Nothing Then Cmd.Parameters.AddWithValue("@code", Code) : Filtering = True Else Cmd.Parameters.AddWithValue("@code", "%")
                 If Location <> Nothing Then Cmd.Parameters.AddWithValue("@location", Location) : Filtering = True Else Cmd.Parameters.AddWithValue("@location", "%")

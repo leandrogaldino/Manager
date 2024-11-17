@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Imports ManagerCore
 Imports MySql.Data.MySqlClient
 Public Class FrmEvaluation
@@ -179,8 +179,8 @@ Public Class FrmEvaluation
             End Select
         Else
             Dim Img As Image = Button.BackgroundImage
-            Dim Colors As List(Of Color) = Utility.GetImageColors(Img)
-            Img = Utility.GetRecoloredImage(Img, Color.Gray)
+            Dim Colors As List(Of Color) = ImageHelper.GetImageColors(Img)
+            Img = ImageHelper.GetRecoloredImage(Img, Color.Gray)
             Button.BackgroundImage = Img
         End If
     End Sub
@@ -277,8 +277,8 @@ Public Class FrmEvaluation
         BtnStatusValue.Visible = False
     End Sub
     Private Sub LoadForm()
-        Utility.EnableControlDoubleBuffer(DgvPartWorkedHour, True)
-        Utility.EnableControlDoubleBuffer(DgvPartElapsedDay, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvPartWorkedHour, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvPartElapsedDay, True)
         DgvNavigator.DataGridView = _EvaluationsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
@@ -294,9 +294,9 @@ Public Class FrmEvaluation
         _Loading = True
         TcEvaluation.SelectedTab = TabMain
         LblIDValue.Text = _Evaluation.ID
-        BtnStatusValue.Text = GetEnumDescription(_Evaluation.Status)
+        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
         BtnStatusValue.ToolTipText = If(String.IsNullOrEmpty(_Evaluation.RejectReason), Nothing, "MOTIVO DA REJEIÇÃO" & vbNewLine & _Evaluation.RejectReason)
-        LblStatusValue.Text = GetEnumDescription(_Evaluation.Status)
+        LblStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
         LblStatusValue.ToolTipText = If(String.IsNullOrEmpty(_Evaluation.RejectReason), Nothing, "MOTIVO DA REJEIÇÃO" & vbNewLine & _Evaluation.RejectReason)
         LblCreationValue.Text = _Evaluation.Creation.ToString("dd/MM/yyyy")
         BtnApprove.Visible = _Evaluation.Status <> EvaluationStatus.Approved
@@ -325,22 +325,24 @@ Public Class FrmEvaluation
         TxtTechnicalAdvice.Text = _Evaluation.TechnicalAdvice
         FillDataGridViewTechnician()
         If _Evaluation.EvaluationCreationType = EvaluationCreationType.Imported Or (_Evaluation.EvaluationCreationType = EvaluationCreationType.Manual And _Evaluation.ID > 0) Then
-            For Each p As EvaluationPart In _Evaluation.PartsWorkedHour.Reverse()
+            For Each p As EvaluationPart In _Evaluation.PartsWorkedHour.ToArray.Reverse()
                 If Not p.IsSaved Then
                     _Evaluation.PartsWorkedHour.Remove(p)
                 End If
             Next p
-            For Each p As EvaluationPart In _Evaluation.PartsElapsedDay.Reverse()
+            For Each p As EvaluationPart In _Evaluation.PartsElapsedDay.ToArray.Reverse()
                 If Not p.IsSaved Then
                     _Evaluation.PartsElapsedDay.Remove(p)
                 End If
             Next p
-            FillDataGridViewPart(DgvPartWorkedHour, _Evaluation.PartsWorkedHour)
+            DgvPartWorkedHour.Fill(_Evaluation.PartsWorkedHour)
+            'FillDataGridViewPart(DgvPartWorkedHour, _Evaluation.PartsWorkedHour)
             If DgvPartWorkedHour.Rows.Count > 0 Then
                 DgvPartWorkedHour.Rows(0).Selected = True
                 DgvPartWorkedHour.FirstDisplayedScrollingRowIndex = 0
             End If
-            FillDataGridViewPart(DgvPartElapsedDay, _Evaluation.PartsElapsedDay)
+            DgvPartElapsedDay.Fill(_Evaluation.PartsElapsedDay)
+            'FillDataGridViewPart(DgvPartElapsedDay, _Evaluation.PartsElapsedDay)
             If DgvPartElapsedDay.Rows.Count > 0 Then
                 DgvPartElapsedDay.Rows(0).Selected = True
                 DgvPartElapsedDay.FirstDisplayedScrollingRowIndex = 0
@@ -384,48 +386,48 @@ Public Class FrmEvaluation
         BtnDelete.Enabled = _Evaluation.ID > 0 And _User.CanDelete(Routine.Evaluation)
         Text = "Avaliação de Compressor"
         If _Evaluation.LockInfo.IsLocked And Not _Evaluation.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Evaluation.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_Evaluation.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _Evaluation.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
         End If
         BtnSave.Enabled = False
         TxtEvaluationNumber.Select()
         _Loading = False
     End Sub
-    Public Sub FillDataGridViewPart(Dgv As DataGridView, Parts As OrdenedList(Of EvaluationPart))
-        Dim View As DataView
-        Dim FirstDisplayedRowIndex As Integer
-        Dim SelectedRowIndex As Integer
-        Dim CurrentCellIndex As Integer = -1
-        If Dgv.SelectedRows.Count = 1 Then
-            FirstDisplayedRowIndex = Dgv.FirstDisplayedScrollingRowIndex
-            SelectedRowIndex = Dgv.SelectedRows(0).Index
-            If Dgv.CurrentCell IsNot Nothing Then CurrentCellIndex = Dgv.CurrentCell.ColumnIndex
-        End If
-        Parts.FillDataGridView(Dgv)
-        View = New DataView(Dgv.DataSource, Nothing, "Part Asc", DataViewRowState.CurrentRows)
-        Dgv.DataSource = View
-        If Dgv.SelectedRows.Count = 1 And Dgv.Rows.Count - 1 >= SelectedRowIndex Then
-            Dgv.Rows(SelectedRowIndex).Selected = True
-            Dgv.FirstDisplayedScrollingRowIndex = FirstDisplayedRowIndex
-            If Dgv.CurrentCell IsNot Nothing AndAlso CurrentCellIndex >= 0 And Calculated Then
-                Dgv.CurrentCell = Dgv.Rows(SelectedRowIndex).Cells(CurrentCellIndex)
-            End If
-        End If
-        Dgv.Columns(0).Visible = False
-        Dgv.Columns(1).Visible = False
-        Dgv.Columns(2).Visible = False
-        Dgv.Columns(3).HeaderText = "Código"
-        Dgv.Columns(3).Width = 100
-        Dgv.Columns(4).HeaderText = "Item"
-        Dgv.Columns(4).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-        Dgv.Columns(5).HeaderText = "Cap. Atual"
-        Dgv.Columns(5).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-        Dgv.Columns(5).Width = 105
-        Dgv.Columns(6).HeaderText = "Vendido"
-        Dgv.Columns(6).Width = 70
-        Dgv.Columns(7).HeaderText = "Perdido"
-        Dgv.Columns(7).Width = 70
-    End Sub
+    'Public Sub FillDataGridViewPart(Dgv As DataGridView, Parts As List(Of EvaluationPart))
+    '    Dim View As DataView
+    '    Dim FirstDisplayedRowIndex As Integer
+    '    Dim SelectedRowIndex As Integer
+    '    Dim CurrentCellIndex As Integer = -1
+    '    If Dgv.SelectedRows.Count = 1 Then
+    '        FirstDisplayedRowIndex = Dgv.FirstDisplayedScrollingRowIndex
+    '        SelectedRowIndex = Dgv.SelectedRows(0).Index
+    '        If Dgv.CurrentCell IsNot Nothing Then CurrentCellIndex = Dgv.CurrentCell.ColumnIndex
+    '    End If
+    '    Dgv.Fill(Parts)
+    '    View = New DataView(Dgv.DataSource, Nothing, "Part Asc", DataViewRowState.CurrentRows)
+    '    Dgv.DataSource = View
+    '    If Dgv.SelectedRows.Count = 1 And Dgv.Rows.Count - 1 >= SelectedRowIndex Then
+    '        Dgv.Rows(SelectedRowIndex).Selected = True
+    '        Dgv.FirstDisplayedScrollingRowIndex = FirstDisplayedRowIndex
+    '        If Dgv.CurrentCell IsNot Nothing AndAlso CurrentCellIndex >= 0 And Calculated Then
+    '            Dgv.CurrentCell = Dgv.Rows(SelectedRowIndex).Cells(CurrentCellIndex)
+    '        End If
+    '    End If
+    '    Dgv.Columns(0).Visible = False
+    '    Dgv.Columns(1).Visible = False
+    '    Dgv.Columns(2).Visible = False
+    '    Dgv.Columns(3).HeaderText = "Código"
+    '    Dgv.Columns(3).Width = 100
+    '    Dgv.Columns(4).HeaderText = "Item"
+    '    Dgv.Columns(4).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+    '    Dgv.Columns(5).HeaderText = "Cap. Atual"
+    '    Dgv.Columns(5).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+    '    Dgv.Columns(5).Width = 105
+    '    Dgv.Columns(6).HeaderText = "Vendido"
+    '    Dgv.Columns(6).Width = 70
+    '    Dgv.Columns(7).HeaderText = "Perdido"
+    '    Dgv.Columns(7).Width = 70
+    'End Sub
     Public Sub FillDataGridViewTechnician()
         Dim View As DataView
         Dim FirstDisplayedRowIndex As Integer
@@ -436,7 +438,7 @@ Public Class FrmEvaluation
             SelectedRowIndex = DgvTechnician.SelectedRows(0).Index
             If DgvTechnician.CurrentCell IsNot Nothing Then CurrentCellIndex = DgvTechnician.CurrentCell.ColumnIndex
         End If
-        _Evaluation.Technicians.FillDataGridView(DgvTechnician)
+        DgvTechnician.Fill(_Evaluation.Technicians)
         View = New DataView(DgvTechnician.DataSource, Nothing, "Technician Asc", DataViewRowState.CurrentRows)
         DgvTechnician.DataSource = View
         If DgvTechnician.SelectedRows.Count = 1 And DgvTechnician.Rows.Count - 1 >= SelectedRowIndex Then
@@ -505,7 +507,7 @@ Public Class FrmEvaluation
                         _Deleting = True
                         Dispose()
                     Else
-                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_Evaluation.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Evaluation.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                     End If
                 End If
             Catch ex As MySqlException
@@ -521,10 +523,10 @@ Public Class FrmEvaluation
     End Sub
     Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
         EprValidation.Clear()
-        If BtnStatusValue.Text = GetEnumDescription(EvaluationStatus.Approved) Then
+        If BtnStatusValue.Text = EnumHelper.GetEnumDescription(EvaluationStatus.Approved) Then
             BtnStatusValue.ForeColor = Color.DarkBlue
             LblStatusValue.ForeColor = Color.DarkBlue
-        ElseIf BtnStatusValue.Text = GetEnumDescription(EvaluationStatus.Rejected) Then
+        ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(EvaluationStatus.Rejected) Then
             BtnStatusValue.ForeColor = Color.DarkRed
             LblStatusValue.ForeColor = Color.DarkRed
         Else
@@ -739,20 +741,14 @@ Public Class FrmEvaluation
         Dim Row As DataGridViewRow
         'Dim DocumentPath As String = String.Empty
         Dim Success As Boolean
-
-
         ' Dim CurrentDocument As String = _Evaluation.Document.CurrentFile
         'Dim OriginalDocument As String = _Evaluation.Document.OriginalFile
-
-
-
-
-        QbxCustomer.Text = RemoveAccents(QbxCustomer.Text.Trim)
-        TxtResponsible.Text = RemoveAccents(TxtResponsible.Text.Trim)
-        QbxCompressor.Text = RemoveAccents(QbxCompressor.Text.Trim)
-        TxtTechnicalAdvice.Text = RemoveAccents(TxtTechnicalAdvice.Text.ToUpper)
+        QbxCustomer.Text = QbxCustomer.Text.Trim.ToUnaccented()
+        TxtResponsible.Text = TxtResponsible.Text.Trim.ToUnaccented()
+        QbxCompressor.Text = QbxCompressor.Text.Trim.ToUnaccented()
+        TxtTechnicalAdvice.Text = TxtTechnicalAdvice.Text.ToUpper.ToUnaccented()
         If _Evaluation.LockInfo.IsLocked And _Evaluation.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_Evaluation.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Evaluation.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Success = False
         ElseIf _Evaluation.Status = EvaluationStatus.Approved AndAlso Not _User.CanAccess(Routine.EvaluationApproveOrReject) Then
             CMessageBox.Show("Essa avaliação não pode ser alterada pois já foi aprovada.", CMessageBoxType.Information)
@@ -786,16 +782,18 @@ Public Class FrmEvaluation
                     _Evaluation.Lock()
                     LblIDValue.Text = _Evaluation.ID
                     FillDataGridViewTechnician()
-                    FillDataGridViewPart(DgvPartWorkedHour, _Evaluation.PartsWorkedHour)
-                    FillDataGridViewPart(DgvPartElapsedDay, _Evaluation.PartsElapsedDay)
+                    DgvPartWorkedHour.Fill(_Evaluation.PartsWorkedHour)
+                    DgvPartElapsedDay.Fill(_Evaluation.PartsElapsedDay)
+                    'FillDataGridViewPart(DgvPartWorkedHour, _Evaluation.PartsWorkedHour)
+                    'FillDataGridViewPart(DgvPartElapsedDay, _Evaluation.PartsElapsedDay)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Evaluation)
                     If _Evaluation.Status = EvaluationStatus.Rejected Then
                         If CMessageBox.Show("Deseja alterar o status da avaliação para REVISADO?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                             _Evaluation.SetStatus(EvaluationStatus.Reviewed)
-                            BtnStatusValue.Text = GetEnumDescription(_Evaluation.Status)
+                            BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
                             BtnStatusValue.ToolTipText = If(String.IsNullOrEmpty(_Evaluation.RejectReason), Nothing, "MOTIVO:" & vbNewLine & _Evaluation.RejectReason)
-                            LblStatusValue.Text = GetEnumDescription(_Evaluation.Status)
+                            LblStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
                             LblStatusValue.ToolTipText = If(String.IsNullOrEmpty(_Evaluation.RejectReason), Nothing, "MOTIVO:" & vbNewLine & _Evaluation.RejectReason)
                             BtnApprove.Visible = _Evaluation.Status <> EvaluationStatus.Approved
                             BtnReject.Visible = _Evaluation.Status <> EvaluationStatus.Rejected
@@ -1030,9 +1028,9 @@ Public Class FrmEvaluation
             Try
                 Cursor = Cursors.WaitCursor
                 _Evaluation.SetStatus(EvaluationStatus.Approved)
-                BtnStatusValue.Text = GetEnumDescription(_Evaluation.Status)
+                BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
                 BtnStatusValue.ToolTipText = If(String.IsNullOrEmpty(_Evaluation.RejectReason), Nothing, "MOTIVO:" & vbNewLine & _Evaluation.RejectReason)
-                LblStatusValue.Text = GetEnumDescription(_Evaluation.Status)
+                LblStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
                 LblStatusValue.ToolTipText = If(String.IsNullOrEmpty(_Evaluation.RejectReason), Nothing, "MOTIVO:" & vbNewLine & _Evaluation.RejectReason)
                 BtnApprove.Visible = _Evaluation.Status <> EvaluationStatus.Approved
                 BtnReject.Visible = _Evaluation.Status <> EvaluationStatus.Rejected
@@ -1061,9 +1059,9 @@ Public Class FrmEvaluation
                     Try
                         Cursor = Cursors.WaitCursor
                         _Evaluation.SetStatus(EvaluationStatus.Rejected, FormReject.TxtReason.Text)
-                        BtnStatusValue.Text = GetEnumDescription(_Evaluation.Status)
+                        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
                         BtnStatusValue.ToolTipText = If(String.IsNullOrEmpty(_Evaluation.RejectReason), Nothing, "MOTIVO:" & vbNewLine & _Evaluation.RejectReason)
-                        LblStatusValue.Text = GetEnumDescription(_Evaluation.Status)
+                        LblStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
                         LblStatusValue.ToolTipText = If(String.IsNullOrEmpty(_Evaluation.RejectReason), Nothing, "MOTIVO:" & vbNewLine & _Evaluation.RejectReason)
                         BtnApprove.Visible = _Evaluation.Status <> EvaluationStatus.Approved
                         BtnReject.Visible = _Evaluation.Status <> EvaluationStatus.Rejected
@@ -1091,9 +1089,9 @@ Public Class FrmEvaluation
         Try
             Cursor = Cursors.WaitCursor
             _Evaluation.SetStatus(EvaluationStatus.Disapproved)
-            BtnStatusValue.Text = GetEnumDescription(_Evaluation.Status)
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
             BtnStatusValue.ToolTipText = If(String.IsNullOrEmpty(_Evaluation.RejectReason), Nothing, "MOTIVO:" & vbNewLine & _Evaluation.RejectReason)
-            LblStatusValue.Text = GetEnumDescription(_Evaluation.Status)
+            LblStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
             LblStatusValue.ToolTipText = If(String.IsNullOrEmpty(_Evaluation.RejectReason), Nothing, "MOTIVO:" & vbNewLine & _Evaluation.RejectReason)
             BtnApprove.Visible = _Evaluation.Status <> EvaluationStatus.Approved
             BtnReject.Visible = _Evaluation.Status <> EvaluationStatus.Rejected
@@ -1142,12 +1140,12 @@ Public Class FrmEvaluation
                 _Evaluation.Compressor = Customer.Compressors.Single(Function(x) x.ID = QbxCompressor.FreezedPrimaryKey)
                 PreviousEvaluationID = Evaluation.GetPreviousEvaluationID(_Evaluation.Compressor, CDate(DbxEvaluationDate.Text), _Evaluation.ID)
                 PreviousEvaluation = New Evaluation().Load(PreviousEvaluationID, False)
-                For Each CurrentPart As EvaluationPart In _Evaluation.PartsWorkedHour.Reverse
+                For Each CurrentPart As EvaluationPart In _Evaluation.PartsWorkedHour.ToArray.Reverse
                     If CurrentPart.Part.Status = SimpleStatus.Inactive Then
                         _Evaluation.PartsWorkedHour.Remove(CurrentPart)
                     End If
                 Next CurrentPart
-                For Each CurrentPart As EvaluationPart In _Evaluation.PartsElapsedDay.Reverse
+                For Each CurrentPart As EvaluationPart In _Evaluation.PartsElapsedDay.ToArray.Reverse
                     If CurrentPart.Part.Status = SimpleStatus.Inactive Then
                         _Evaluation.PartsElapsedDay.Remove(CurrentPart)
                     End If
@@ -1199,8 +1197,10 @@ Public Class FrmEvaluation
                     Next CurrentPart
                     If Not CbxManualAverageWorkLoad.Checked Then DbxAverageWorkLoad.Text = GetCMT()
                 End If
-                FillDataGridViewPart(DgvPartWorkedHour, _Evaluation.PartsWorkedHour)
-                FillDataGridViewPart(DgvPartElapsedDay, _Evaluation.PartsElapsedDay)
+                DgvPartWorkedHour.Fill(_Evaluation.PartsWorkedHour)
+                DgvPartElapsedDay.Fill(_Evaluation.PartsElapsedDay)
+                'FillDataGridViewPart(DgvPartWorkedHour, _Evaluation.PartsWorkedHour)
+                'FillDataGridViewPart(DgvPartElapsedDay, _Evaluation.PartsElapsedDay)
                 TcEvaluation.SelectedTab = TabMain
                 Calculated = True
                 BtnCalculate.Text = "Recalcular"
@@ -1291,17 +1291,26 @@ Public Class FrmEvaluation
     Private Sub EditEvaluationPart(PartType As CompressorPartType)
         Dim Result As DialogResult
         Dim Part As EvaluationPart
+        Dim RowIndex As Long
         If PartType = CompressorPartType.ElapsedDay Then
             Part = _Evaluation.PartsElapsedDay.Single(Function(x) x.Part.ID = DgvPartElapsedDay.SelectedRows(0).Cells("Part").Value.ID)
+            RowIndex = DgvPartElapsedDay.SelectedRows(0).Index
             Using Frm As New FrmEvaluationPart(Part)
                 Result = Frm.ShowDialog()
-                FillDataGridViewPart(DgvPartElapsedDay, _Evaluation.PartsElapsedDay)
+                'FillDataGridViewPart(DgvPartElapsedDay, _Evaluation.PartsElapsedDay)
+                DgvPartElapsedDay.Fill(_Evaluation.PartsElapsedDay)
+
+                DgvPartElapsedDayNavigator.EnsureVisibleRow(RowIndex)
+
             End Using
         Else
             Part = _Evaluation.PartsWorkedHour.Single(Function(x) x.Part.ID = DgvPartWorkedHour.SelectedRows(0).Cells("Part").Value.ID)
+            RowIndex = DgvPartWorkedHour.SelectedRows(0).Index
             Using Frm As New FrmEvaluationPart(Part)
                 Result = Frm.ShowDialog()
-                FillDataGridViewPart(DgvPartWorkedHour, _Evaluation.PartsWorkedHour)
+                DgvPartWorkedHour.Fill(_Evaluation.PartsWorkedHour)
+                'FillDataGridViewPart(DgvPartWorkedHour, _Evaluation.PartsWorkedHour)
+                DgvPartWorkedHourNavigator.EnsureVisibleRow(RowIndex)
             End Using
         End If
         If _Evaluation.PartsWorkedHour.Any(Function(x) x.Sold) Or _Evaluation.PartsElapsedDay.Any(Function(x) x.Sold) Then
@@ -1330,7 +1339,7 @@ Public Class FrmEvaluation
         Dim Form As FrmEvaluationTechnician
         Dim Technician As EvaluationTechnician
         If DgvTechnician.SelectedRows.Count = 1 Then
-            Technician = _Evaluation.Technicians.Single(Function(x) x.Order = DgvTechnician.SelectedRows(0).Cells("Order").Value)
+            Technician = _Evaluation.Technicians.Single(Function(x) x.Guid = DgvTechnician.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmEvaluationTechnician(_Evaluation, Technician, Me)
             Form.ShowDialog()
         End If
@@ -1339,7 +1348,7 @@ Public Class FrmEvaluation
         Dim Technician As EvaluationTechnician
         If DgvTechnician.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Technician = _Evaluation.Technicians.Single(Function(x) x.Order = DgvTechnician.SelectedRows(0).Cells("Order").Value)
+                Technician = _Evaluation.Technicians.Single(Function(x) x.Guid = DgvTechnician.SelectedRows(0).Cells("Guid").Value)
                 _Evaluation.Technicians.Remove(Technician)
                 FillDataGridViewTechnician()
                 BtnSave.Enabled = True
@@ -1351,5 +1360,11 @@ Public Class FrmEvaluation
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
             BtnEditTechnician.PerformClick()
         End If
+    End Sub
+
+    Private Sub FrmEvaluation_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        DgvlTechnicianLayout.Load()
+        DgvlPartElapsedDayLayout.Load()
+        DgvlPartWorkedHourLayout.Load()
     End Sub
 End Class

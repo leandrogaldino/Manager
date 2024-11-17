@@ -1,6 +1,6 @@
 ﻿Imports System.IO
-Imports System.Reflection
 Imports ControlLibrary
+Imports ControlLibrary.Extensions
 Imports HtmlAgilityPack
 Imports ManagerCore
 Imports MySql.Data.MySqlClient
@@ -9,30 +9,27 @@ Imports MySql.Data.MySqlClient
 ''' Representa um CRM.
 ''' </summary>
 Public Class Crm
-    Inherits ModelBase
-    'Private Shared _LastHtml As String
-    Private _IsSaved As Boolean
+    Inherits ParentModel
     Private _Session As Session
-
     Public Property Status As CrmStatus = CrmStatus.Pending
     Public Property Customer As New Person
     Public Property Responsible As Person = Locator.GetInstance(Of Session).User.Person.Value
     Public Property Subject As String
-    Public Property Treatments As New OrdenedList(Of CrmTreatment)
+    Public Property Treatments As New List(Of CrmTreatment)
     Public Sub New()
-        _Routine = Routine.Crm
+        SetRoutine(Routine.Crm)
     End Sub
     Public Sub Clear()
         _Session = Locator.GetInstance(Of Session)
         Unlock()
-        _IsSaved = False
-        _ID = 0
-        _Creation = Today
+        SetIsSaved(False)
+        SetID(0)
+        SetCreation(Today)
         Status = CrmStatus.Pending
         Customer = New Person
         Responsible = _Session.User.Person.Value
         Subject = Nothing
-        Treatments = New OrdenedList(Of CrmTreatment)
+        Treatments = New List(Of CrmTreatment)
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As Crm
         Dim Session = Locator.GetInstance(Of Session)
@@ -51,8 +48,9 @@ Public Class Crm
                         Clear()
                     ElseIf TableResult.Rows.Count = 1 Then
                         Clear()
-                        _ID = TableResult.Rows(0).Item("id")
-                        _Creation = TableResult.Rows(0).Item("creation")
+                        SetID(TableResult.Rows(0).Item("id"))
+                        SetCreation(TableResult.Rows(0).Item("creation"))
+                        SetIsSaved(True)
                         Status = TableResult.Rows(0).Item("statusid")
                         Customer = New Person().Load(TableResult.Rows(0).Item("customerid"), False)
                         Responsible = New Person().Load(TableResult.Rows(0).Item("responsibleid"), False)
@@ -60,7 +58,6 @@ Public Class Crm
                         Treatments = GetTreatments(Tra)
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
-                        _IsSaved = True
                     Else
                         Throw New Exception("Registro não encontrado.")
                     End If
@@ -71,13 +68,13 @@ Public Class Crm
         Return Me
     End Function
     Public Sub SaveChanges()
-        If Not _IsSaved Then
+        If Not IsSaved Then
             Insert()
         Else
             Update()
         End If
-        _IsSaved = True
-        Treatments.ToList().ForEach(Sub(x) x.IsSaved = True)
+        SetIsSaved(True)
+        Treatments.ToList().ForEach(Sub(x) x.SetIsSaved(True))
     End Sub
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)
@@ -104,7 +101,7 @@ Public Class Crm
                     CmdCrm.Parameters.AddWithValue("@subject", Subject)
                     CmdCrm.Parameters.AddWithValue("@userid", User.ID)
                     CmdCrm.ExecuteNonQuery()
-                    _ID = CmdCrm.LastInsertedId
+                    SetID(CmdCrm.LastInsertedId)
                 End Using
                 For Each Treatment As CrmTreatment In Treatments
                     Using CmdTreatment As New MySqlCommand(My.Resources.CrmTreatmentInsert, Con)
@@ -118,7 +115,7 @@ Public Class Crm
                         CmdTreatment.Parameters.AddWithValue("@summary", Treatment.Summary)
                         CmdTreatment.Parameters.AddWithValue("@userid", Treatment.User.ID)
                         CmdTreatment.ExecuteNonQuery()
-                        Treatment.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Treatment, CmdTreatment.LastInsertedId)
+                        Treatment.SetID(CmdTreatment.LastInsertedId)
                     End Using
                 Next Treatment
                 Tra.Commit()
@@ -163,7 +160,7 @@ Public Class Crm
                             CmdTreatment.Parameters.AddWithValue("@summary", Treatment.Summary)
                             CmdTreatment.Parameters.AddWithValue("@userid", Treatment.User.ID)
                             CmdTreatment.ExecuteNonQuery()
-                            Treatment.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Treatment, CmdTreatment.LastInsertedId)
+                            Treatment.SetID(CmdTreatment.LastInsertedId)
                         End Using
                     Else
                         Using CmdAddress As New MySqlCommand(My.Resources.CrmTreatmentUpdate, Con)
@@ -183,9 +180,9 @@ Public Class Crm
             End Using
         End Using
     End Sub
-    Private Function GetTreatments(Transaction As MySqlTransaction) As OrdenedList(Of CrmTreatment)
+    Private Function GetTreatments(Transaction As MySqlTransaction) As List(Of CrmTreatment)
         Dim TableResult As DataTable
-        Dim Treatments As OrdenedList(Of CrmTreatment)
+        Dim Treatments As List(Of CrmTreatment)
         Dim Treatment As CrmTreatment
         Using CmdTreatment As New MySqlCommand(My.Resources.CrmTreatmentSelect, Transaction.Connection)
             CmdTreatment.Transaction = Transaction
@@ -193,17 +190,18 @@ Public Class Crm
             Using Adp As New MySqlDataAdapter(CmdTreatment)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                Treatments = New OrdenedList(Of CrmTreatment)
+                Treatments = New List(Of CrmTreatment)
                 For Each Row As DataRow In TableResult.Rows
-                    Treatment = New CrmTreatment()
-                    Treatment.Responsible = New Person().Load(Row.Item("responsibleid"), False)
-                    Treatment.Contact = Row.Item("contact")
-                    Treatment.NextContact = Row.Item("nextcontact")
-                    Treatment.ContactType = Row.Item("contacttypeid")
-                    Treatment.Summary = Row.Item("summary").ToString
-                    Treatment.IsSaved = True
-                    Treatment.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Treatment, Row.Item("id"))
-                    Treatment.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Treatment, Row.Item("creation"))
+                    Treatment = New CrmTreatment With {
+                        .Responsible = New Person().Load(Row.Item("responsibleid"), False),
+                        .Contact = Row.Item("contact"),
+                        .NextContact = Row.Item("nextcontact"),
+                        .ContactType = Row.Item("contacttypeid"),
+                        .Summary = Row.Item("summary").ToString
+                    }
+                    Treatment.SetID(Row.Item("id"))
+                    Treatment.SetCreation(Row.Item("creation"))
+                    Treatment.SetIsSaved(True)
                     Treatments.Add(Treatment)
                 Next Row
             End Using
@@ -266,7 +264,7 @@ Public Class Crm
                     DivCardHeader.AppendChild(DivContactInfo)
                     PResponsible = Doc.CreateElement("p")
                     PResponsible.SetAttributeValue("class", "colorwhite")
-                    PResponsible.InnerHtml = $"<span class='title'>Responsável:</span> {Utility.GetTitleCase(PrepareString(Row.Item("responsible").ToString))}"
+                    PResponsible.InnerHtml = $"<span class='title'>Responsável:</span> {PrepareString(Row.Item("responsible").ToString).ToTitle()}"
                     DivCardHeader.AppendChild(PResponsible)
                     DivCard.AppendChild(DivCardHeader)
                     PSummary = Doc.CreateElement("p")
@@ -340,19 +338,19 @@ Public Class Crm
             LinkEdit = Doc.CreateElement("a")
             LinkEdit.Attributes.Add("href", "#")
             LinkEdit.Attributes.Add("class", "no-decoration")
-            LinkEdit.Attributes.Add("treatmentorder", Treatment.Order)
+            LinkEdit.Attributes.Add("guid", Treatment.Guid)
             LinkEdit.Attributes.Add("eventtype", "edit")
             ImgEdit = Doc.CreateElement("img")
-            ImgEdit.SetAttributeValue("src", $"data:image/png;base64,{ImageToBase64(Utility.GetRecoloredImage(My.Resources.EditSmall, Color.White))}")
+            ImgEdit.SetAttributeValue("src", $"data:image/png;base64,{ImageToBase64(ImageHelper.GetRecoloredImage(My.Resources.EditSmall, Color.White))}")
             ImgEdit.Attributes.Add("class", "edit-button")
             DivContactInfo.AppendChild(LinkEdit)
             LinkDelete = Doc.CreateElement("a")
             LinkDelete.Attributes.Add("href", "#")
             LinkDelete.Attributes.Add("class", "no-decoration")
-            LinkDelete.Attributes.Add("treatmentorder", Treatment.Order)
+            LinkDelete.Attributes.Add("guid", Treatment.Guid)
             LinkDelete.Attributes.Add("eventtype", "delete")
             ImgDelete = Doc.CreateElement("img")
-            ImgDelete.SetAttributeValue("src", $"data:image/png;base64,{ImageToBase64(Utility.GetRecoloredImage(My.Resources.DeleteSmall2, Color.White))}")
+            ImgDelete.SetAttributeValue("src", $"data:image/png;base64,{ImageToBase64(ImageHelper.GetRecoloredImage(My.Resources.DeleteSmall2, Color.White))}")
             ImgDelete.Attributes.Add("class", "delete-button")
             LinkDelete.AppendChild(ImgDelete)
             If Treatment.ID = 0 Then
@@ -369,7 +367,7 @@ Public Class Crm
             If Treatment.Responsible.ID > 0 Then
                 PResponsible = Doc.CreateElement("p")
                 PResponsible.SetAttributeValue("class", "colorwhite")
-                PResponsible.InnerHtml = $"<span class='title'>Responsável:</span> {Utility.GetTitleCase(PrepareString(Treatment.Responsible.Name))}"
+                PResponsible.InnerHtml = $"<span class='title'>Responsável:</span> {PrepareString(Treatment.Responsible.Name).ToTitle()}"
                 DivCardHeader.AppendChild(PResponsible)
             End If
             DivCard.AppendChild(DivCardHeader)

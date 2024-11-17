@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Public Class FrmPersonMaintenancePlan
     Private _Person As Person
     Private _User As User
@@ -31,7 +31,7 @@ Public Class FrmPersonMaintenancePlan
             BtnGenerate.Enabled = False
             Result = PersonReport.ProcessMaintenancePlan(DgvCompressor, _Person, CbxShowTechnicalAdvice.Checked, CbxShowMDHT.Checked)
             DialogResult = DialogResult.OK
-            FrmMain.OpenTab(New FrmReport(Result), GetEnumDescription(Routine.PersonMaintenancePlanReport))
+            FrmMain.OpenTab(New FrmReport(Result), EnumHelper.GetEnumDescription(Routine.PersonMaintenancePlanReport))
         Catch ex As Exception
             CMessageBox.Show("ERRO PS012", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             BtnGenerate.Enabled = True
@@ -51,7 +51,7 @@ Public Class FrmPersonMaintenancePlan
             Cursor = Cursors.WaitCursor
             _Person = New Person().Load(QbxPerson.FreezedPrimaryKey, False)
             DgvCompressor.Columns.Clear()
-            _Person.Compressors.FillDataGridView(DgvCompressor)
+            DgvCompressor.Fill(_Person.Compressors)
             DgvCompressor.Columns("Order").Visible = False
             DgvCompressor.Columns("ID").Visible = False
             DgvCompressor.Columns("Creation").Visible = False

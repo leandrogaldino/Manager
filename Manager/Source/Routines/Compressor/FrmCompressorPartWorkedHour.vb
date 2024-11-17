@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Public Class FrmCompressorPartWorkedHour
     Private _CompressorForm As FrmCompressor
     Private _Compressor As Compressor
@@ -33,8 +33,8 @@ Public Class FrmCompressorPartWorkedHour
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = _PartWorkedHour.Order
-        BtnStatusValue.Text = GetEnumDescription(_PartWorkedHour.Status)
+        LblOrderValue.Text = If(_PartWorkedHour.IsSaved, _CompressorForm.DgvCompressorPartWorkedHour.SelectedRows(0).Cells("Order").Value, 0)
+        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_PartWorkedHour.Status)
         LblCreationValue.Text = _PartWorkedHour.Creation
         QbxItem.Unfreeze()
         If _PartWorkedHour.ItemName = Nothing And _PartWorkedHour.Product.ID > 0 Then
@@ -45,7 +45,7 @@ Public Class FrmCompressorPartWorkedHour
             QbxItem.QueryEnabled = True
         End If
         DbxQuantity.Text = _PartWorkedHour.Quantity
-        If _PartWorkedHour.Order = 0 Then
+        If Not _PartWorkedHour.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
         Else
@@ -68,7 +68,7 @@ Public Class FrmCompressorPartWorkedHour
     Private Sub AfterDataGridViewRowMove()
         If _CompressorForm.DgvCompressorPartWorkedHour.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _PartWorkedHour = _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Order = _CompressorForm.DgvCompressorPartWorkedHour.SelectedRows(0).Cells("Order").Value)
+            _PartWorkedHour = _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Guid = _CompressorForm.DgvCompressorPartWorkedHour.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -103,13 +103,13 @@ Public Class FrmCompressorPartWorkedHour
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
-        If BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive)
+        If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
             If _PartWorkedHour.Status = SimpleStatus.Active Then
                 CMessageBox.Show("O registro foi marcado para ser inativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
-        ElseIf BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active)
+        ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active)
             If _PartWorkedHour.Status = SimpleStatus.Inactive Then
                 CMessageBox.Show("O registro foi marcado para ser ativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
@@ -118,7 +118,7 @@ Public Class FrmCompressorPartWorkedHour
     End Sub
     Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
         EprValidation.Clear()
-        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
+        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
     Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles DbxQuantity.TextChanged, QbxItem.TextChanged
         EprValidation.Clear()
@@ -167,23 +167,24 @@ Public Class FrmCompressorPartWorkedHour
         Dim Row As DataGridViewRow
         If Not QbxItem.IsFreezed Then
             QbxItem.QueryEnabled = False
-            QbxItem.Text = RemoveAccents(QbxItem.Text.Trim)
+            QbxItem.Text = QbxItem.Text.Trim.ToUnaccented()
             QbxItem.QueryEnabled = True
         End If
         If IsValidFields() Then
             If _PartWorkedHour.IsSaved Then
-                _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Order = _PartWorkedHour.Order).Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Guid = _PartWorkedHour.Guid).Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
                 If QbxItem.IsFreezed Then
-                    _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Order = _PartWorkedHour.Order).ItemName = Nothing
-                    _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Order = _PartWorkedHour.Order).Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
+                    _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Guid = _PartWorkedHour.Guid).ItemName = Nothing
+                    _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Guid = _PartWorkedHour.Guid).Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
                 Else
-                    _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Order = _PartWorkedHour.Order).ItemName = QbxItem.Text
-                    _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Order = _PartWorkedHour.Order).Product = New Product
+                    _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Guid = _PartWorkedHour.Guid).ItemName = QbxItem.Text
+                    _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Guid = _PartWorkedHour.Guid).Product = New Product
                 End If
-                _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Order = _PartWorkedHour.Order).Quantity = DbxQuantity.Text
+                _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Guid = _PartWorkedHour.Guid).Quantity = DbxQuantity.Text
             Else
-                _PartWorkedHour = New CompressorPart(CompressorPartType.WorkedHour)
-                _PartWorkedHour.Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                _PartWorkedHour = New CompressorPart(CompressorPartType.WorkedHour) With {
+                    .Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                }
                 If QbxItem.IsFreezed Then
                     _PartWorkedHour.ItemName = Nothing
                     _PartWorkedHour.Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
@@ -193,22 +194,22 @@ Public Class FrmCompressorPartWorkedHour
                 End If
                 _PartWorkedHour.Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
                 _PartWorkedHour.Quantity = DbxQuantity.Text
-                _PartWorkedHour.IsSaved = True
+                _PartWorkedHour.SetIsSaved(True)
                 _Compressor.PartsWorkedHour.Value.Add(_PartWorkedHour)
             End If
-            _Compressor.PartsWorkedHour.Value.FillDataGridView(_CompressorForm.DgvCompressorPartWorkedHour)
-            LblOrderValue.Text = _PartWorkedHour.Order
+            _CompressorForm.DgvCompressorPartWorkedHour.Fill(_Compressor.PartsWorkedHour.Value)
             _CompressorForm.DgvCompressorPartWorkedHourLayout.Load()
             BtnSave.Enabled = False
-            If _PartWorkedHour.Order = 0 Then
+            If Not _PartWorkedHour.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _CompressorForm.DgvCompressorPartWorkedHour.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Order").Value = _PartWorkedHour.Order)
+            Row = _CompressorForm.DgvCompressorPartWorkedHour.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _PartWorkedHour.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+            LblOrderValue.Text = _CompressorForm.DgvCompressorPartWorkedHour.SelectedRows(0).Cells("Order").Value
             _CompressorForm.EprValidation.Clear()
             _CompressorForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()
@@ -273,9 +274,9 @@ Public Class FrmCompressorPartWorkedHour
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _CompressorForm.DgvCompressorPartWorkedHour.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _PartWorkedHour = _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Order = _CompressorForm.DgvCompressorPartWorkedHour.SelectedRows(0).Cells("Order").Value)
+                _PartWorkedHour = _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Guid = _CompressorForm.DgvCompressorPartWorkedHour.SelectedRows(0).Cells("Guid").Value)
                 _Compressor.PartsWorkedHour.Value.Remove(_PartWorkedHour)
-                _Compressor.PartsWorkedHour.Value.FillDataGridView(_CompressorForm.DgvCompressorPartWorkedHour)
+                _CompressorForm.DgvCompressorPartWorkedHour.Fill(_Compressor.PartsWorkedHour.Value)
                 _CompressorForm.DgvCompressorPartWorkedHourLayout.Load()
                 _Deleting = True
                 Dispose()

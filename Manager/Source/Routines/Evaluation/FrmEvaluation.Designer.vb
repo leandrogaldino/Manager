@@ -145,6 +145,11 @@ Partial Class FrmEvaluation
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.Tip = New System.Windows.Forms.ToolTip(Me.components)
         Me.TmrResize = New System.Windows.Forms.Timer(Me.components)
+        Me.DgvPartWorkedHourNavigator = New ControlLibrary.DataGridViewNavigator()
+        Me.DgvlTechnicianLayout = New Manager.DataGridViewLayout()
+        Me.DgvlPartWorkedHourLayout = New Manager.DataGridViewLayout()
+        Me.DgvlPartElapsedDayLayout = New Manager.DataGridViewLayout()
+        Me.DgvPartElapsedDayNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.PnBottom.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -1084,10 +1089,10 @@ Partial Class FrmEvaluation
         Me.TabDocument.AutoScroll = True
         Me.TabDocument.Controls.Add(Me.PdfDocumentViewer)
         Me.TabDocument.Controls.Add(Me.TsDocument)
-        Me.TabDocument.Location = New System.Drawing.Point(4, 26)
+        Me.TabDocument.Location = New System.Drawing.Point(4, 22)
         Me.TabDocument.Name = "TabDocument"
         Me.TabDocument.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabDocument.Size = New System.Drawing.Size(1032, 387)
+        Me.TabDocument.Size = New System.Drawing.Size(1032, 391)
         Me.TabDocument.TabIndex = 7
         Me.TabDocument.Text = "Documento"
         Me.TabDocument.UseVisualStyleBackColor = True
@@ -1117,7 +1122,7 @@ Partial Class FrmEvaluation
         Me.PdfDocumentViewer.ScrollDisplacementValue = 0
         Me.PdfDocumentViewer.ShowHorizontalScrollBar = True
         Me.PdfDocumentViewer.ShowVerticalScrollBar = True
-        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1026, 356)
+        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1026, 360)
         Me.PdfDocumentViewer.SpaceBetweenPages = 8
         Me.PdfDocumentViewer.TabIndex = 1
         TextSearchSettings1.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -1210,10 +1215,10 @@ Partial Class FrmEvaluation
         'TabPhoto
         '
         Me.TabPhoto.Controls.Add(Me.PnPhoto)
-        Me.TabPhoto.Location = New System.Drawing.Point(4, 26)
+        Me.TabPhoto.Location = New System.Drawing.Point(4, 22)
         Me.TabPhoto.Name = "TabPhoto"
         Me.TabPhoto.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPhoto.Size = New System.Drawing.Size(1032, 387)
+        Me.TabPhoto.Size = New System.Drawing.Size(1032, 391)
         Me.TabPhoto.TabIndex = 8
         Me.TabPhoto.Text = "Fotos"
         Me.TabPhoto.UseVisualStyleBackColor = True
@@ -1227,7 +1232,7 @@ Partial Class FrmEvaluation
         Me.PnPhoto.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PnPhoto.Location = New System.Drawing.Point(3, 3)
         Me.PnPhoto.Name = "PnPhoto"
-        Me.PnPhoto.Size = New System.Drawing.Size(1026, 381)
+        Me.PnPhoto.Size = New System.Drawing.Size(1026, 385)
         Me.PnPhoto.TabIndex = 17
         '
         'PbxPhoto
@@ -1236,7 +1241,7 @@ Partial Class FrmEvaluation
         Me.PbxPhoto.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PbxPhoto.Location = New System.Drawing.Point(0, 28)
         Me.PbxPhoto.Name = "PbxPhoto"
-        Me.PbxPhoto.Size = New System.Drawing.Size(1024, 328)
+        Me.PbxPhoto.Size = New System.Drawing.Size(1024, 332)
         Me.PbxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PbxPhoto.TabIndex = 11
         Me.PbxPhoto.TabStop = False
@@ -1379,7 +1384,7 @@ Partial Class FrmEvaluation
         Me.LblPhotoCount.BackColor = System.Drawing.Color.White
         Me.LblPhotoCount.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.LblPhotoCount.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblPhotoCount.Location = New System.Drawing.Point(0, 356)
+        Me.LblPhotoCount.Location = New System.Drawing.Point(0, 360)
         Me.LblPhotoCount.Name = "LblPhotoCount"
         Me.LblPhotoCount.Size = New System.Drawing.Size(1024, 23)
         Me.LblPhotoCount.TabIndex = 14
@@ -1467,6 +1472,39 @@ Partial Class FrmEvaluation
         'TmrResize
         '
         Me.TmrResize.Interval = 10
+        '
+        'DgvPartWorkedHourNavigator
+        '
+        Me.DgvPartWorkedHourNavigator.CancelNextMove = False
+        Me.DgvPartWorkedHourNavigator.DataGridView = Me.DgvPartWorkedHour
+        Me.DgvPartWorkedHourNavigator.FirstButton = Nothing
+        Me.DgvPartWorkedHourNavigator.LastButton = Nothing
+        Me.DgvPartWorkedHourNavigator.NextButton = Nothing
+        Me.DgvPartWorkedHourNavigator.PreviousButton = Nothing
+        '
+        'DgvlTechnicianLayout
+        '
+        Me.DgvlTechnicianLayout.DataGridView = Me.DgvTechnician
+        Me.DgvlTechnicianLayout.Routine = Manager.Routine.EvaluationTechnician
+        '
+        'DgvlPartWorkedHourLayout
+        '
+        Me.DgvlPartWorkedHourLayout.DataGridView = Me.DgvPartWorkedHour
+        Me.DgvlPartWorkedHourLayout.Routine = Manager.Routine.EvaluationPart
+        '
+        'DgvlPartElapsedDayLayout
+        '
+        Me.DgvlPartElapsedDayLayout.DataGridView = Me.DgvPartElapsedDay
+        Me.DgvlPartElapsedDayLayout.Routine = Manager.Routine.EvaluationPart
+        '
+        'DgvPartElapsedDayNavigator
+        '
+        Me.DgvPartElapsedDayNavigator.CancelNextMove = False
+        Me.DgvPartElapsedDayNavigator.DataGridView = Me.DgvPartElapsedDay
+        Me.DgvPartElapsedDayNavigator.FirstButton = Nothing
+        Me.DgvPartElapsedDayNavigator.LastButton = Nothing
+        Me.DgvPartElapsedDayNavigator.NextButton = Nothing
+        Me.DgvPartElapsedDayNavigator.PreviousButton = Nothing
         '
         'FrmEvaluation
         '
@@ -1619,4 +1657,9 @@ Partial Class FrmEvaluation
     Private WithEvents LblPhotoCount As Label
     Private WithEvents PnSignature As Panel
     Private WithEvents PbxSignature As PictureBox
+    Friend WithEvents DgvlTechnicianLayout As DataGridViewLayout
+    Friend WithEvents DgvlPartWorkedHourLayout As DataGridViewLayout
+    Friend WithEvents DgvlPartElapsedDayLayout As DataGridViewLayout
+    Friend WithEvents DgvPartWorkedHourNavigator As ControlLibrary.DataGridViewNavigator
+    Friend WithEvents DgvPartElapsedDayNavigator As ControlLibrary.DataGridViewNavigator
 End Class

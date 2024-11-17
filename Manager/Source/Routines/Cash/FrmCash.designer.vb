@@ -245,10 +245,10 @@ Partial Class FrmCash
         '
         Me.TabDocument.Controls.Add(Me.PdfDocumentViewer)
         Me.TabDocument.Controls.Add(Me.TsDocument)
-        Me.TabDocument.Location = New System.Drawing.Point(4, 26)
+        Me.TabDocument.Location = New System.Drawing.Point(4, 22)
         Me.TabDocument.Name = "TabDocument"
         Me.TabDocument.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabDocument.Size = New System.Drawing.Size(606, 196)
+        Me.TabDocument.Size = New System.Drawing.Size(606, 200)
         Me.TabDocument.TabIndex = 2
         Me.TabDocument.Text = "Documento"
         Me.TabDocument.UseVisualStyleBackColor = True
@@ -278,7 +278,7 @@ Partial Class FrmCash
         Me.PdfDocumentViewer.ScrollDisplacementValue = 0
         Me.PdfDocumentViewer.ShowHorizontalScrollBar = True
         Me.PdfDocumentViewer.ShowVerticalScrollBar = True
-        Me.PdfDocumentViewer.Size = New System.Drawing.Size(600, 165)
+        Me.PdfDocumentViewer.Size = New System.Drawing.Size(600, 169)
         Me.PdfDocumentViewer.SpaceBetweenPages = 8
         Me.PdfDocumentViewer.TabIndex = 3
         TextSearchSettings1.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -691,7 +691,7 @@ Partial Class FrmCash
         'DgvCashItemsLayout
         '
         Me.DgvCashItemsLayout.DataGridView = Me.DgvCashItem
-        Me.DgvCashItemsLayout.Routine = Routine.CashItem
+        Me.DgvCashItemsLayout.Routine = Manager.Routine.CashItem
         '
         'FrmCash
         '

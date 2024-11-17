@@ -6,8 +6,7 @@ Imports System.IO
 Imports System.Text
 
 Public Class EmailModel
-    Inherits ModelBase
-    Private _IsSaved As Boolean
+    Inherits ParentModel
     Public Property Name As String
     Public Property Subject As String
     Public Property Body As String
@@ -56,13 +55,13 @@ Public Class EmailModel
         Return TempHtmlFile
     End Function
     Public Sub New()
-        _Routine = Routine.EmailModel
+        SetRoutine(Routine.EmailModel)
     End Sub
     Public Sub Clear()
         Unlock()
-        _IsSaved = False
-        _ID = 0
-        _Creation = Today
+        SetIsSaved(False)
+        SetID(0)
+        SetCreation(Today)
         Name = Nothing
         Subject = Nothing
         Body = Nothing
@@ -84,15 +83,15 @@ Public Class EmailModel
                         Clear()
                     ElseIf TableResult.Rows.Count = 1 Then
                         Clear()
-                        _ID = TableResult.Rows(0).Item("id")
-                        _Creation = TableResult.Rows(0).Item("creation")
+                        SetID(TableResult.Rows(0).Item("id"))
+                        SetCreation(TableResult.Rows(0).Item("creation"))
+                        SetIsSaved(True)
                         Name = TableResult.Rows(0).Item("name").ToString
                         Subject = TableResult.Rows(0).Item("subject").ToString
                         Body = TableResult.Rows(0).Item("body").ToString
                         Signature = New EmailSignature().Load(TableResult.Rows(0).Item("signatureid"), False)
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
-                        _IsSaved = True
                     Else
                         Throw New Exception("Registro não encontrado.")
                     End If
@@ -103,12 +102,12 @@ Public Class EmailModel
         Return Me
     End Function
     Public Sub SaveChanges()
-        If Not _IsSaved Then
+        If Not IsSaved Then
             Insert()
         Else
             Update()
         End If
-        _IsSaved = True
+        SetIsSaved(True)
     End Sub
     Public Sub Delete()
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
@@ -132,7 +131,7 @@ Public Class EmailModel
                 Cmd.Parameters.AddWithValue("@signatureid", If(Signature.ID = 0, DBNull.Value, Signature.ID))
                 Cmd.Parameters.AddWithValue("@userid", User.ID)
                 Cmd.ExecuteNonQuery()
-                _ID = Cmd.LastInsertedId
+                SetID(Cmd.LastInsertedId)
             End Using
         End Using
     End Sub

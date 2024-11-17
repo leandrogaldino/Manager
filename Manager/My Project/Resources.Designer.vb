@@ -168,6 +168,31 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;CashFlowAuthorized&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''    &lt;Column Index=&quot;0&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''        &lt;Visible&gt;False&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;ID&lt;/Name&gt;
+        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''    &lt;/Column&gt;
+        '''	&lt;Column Index=&quot;1&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Autorizado&lt;/Name&gt;
+        '''		&lt;Width&gt;100&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot; ButtonS [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property CashFlowAuthorizedGrid() As String
+            Get
+                Return ResourceManager.GetString("CashFlowAuthorizedGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO cashflowauthorized
         '''(
         '''	cashflowid,
@@ -246,6 +271,32 @@ Namespace My.Resources
         Friend ReadOnly Property CashFlowFilter() As String
             Get
                 Return ResourceManager.GetString("CashFlowFilter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;CashFlow&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''    &lt;Column Index=&quot;0&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;ID&lt;/Name&gt;
+        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''    &lt;/Column&gt;    
+        '''    &lt;Column Index=&quot;1&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;Criação&lt;/Name&gt;
+        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''    &lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot;&gt;
+        '''		&lt;Vis [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property CashFlowGrid() As String
+            Get
+                Return ResourceManager.GetString("CashFlowGrid", resourceCulture)
             End Get
         End Property
         
@@ -375,7 +426,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;CashItem&quot; Version=&quot;2&quot;&gt;
+        '''&lt;Routine Id=&quot;CashItem&quot; Version=&quot;3&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -383,14 +434,16 @@ Namespace My.Resources
         '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
         '''        &lt;Name&gt;Ordem&lt;/Name&gt;
         '''        &lt;Width&gt;100&lt;/Width&gt;
-        '''    &lt;/Column&gt;    
-        '''    &lt;Column Index=&quot;1&quot; ButtonState=&quot;Hidden&quot;&gt;
-        '''        &lt;Visible&gt;False&lt;/Visible&gt;
-        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''        &lt;Name&gt;ID&lt;/Name&gt;
-        '''        &lt;Width&gt;100&lt;/Width&gt;
         '''    &lt;/Column&gt;
-        '''    &lt;Co [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	&lt;Column Index=&quot;1&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Tipo&lt;/Name&gt;
+        '''		&lt;Width&gt;100&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayInd [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property CashItemGrid() As String
             Get
@@ -443,22 +496,22 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;CashItemResponsible&quot; Version=&quot;1&quot;&gt;
+        '''&lt;Routine Id=&quot;CashItemResponsible&quot; Version=&quot;2&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
-        '''    &lt;Column Index=&quot;0&quot;&gt;
-        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''    &lt;Column Index=&quot;0&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''        &lt;Visible&gt;False&lt;/Visible&gt;
         '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
         '''        &lt;Name&gt;Ordem&lt;/Name&gt;
         '''        &lt;Width&gt;60&lt;/Width&gt;
-        '''    &lt;/Column&gt;    
-        '''    &lt;Column Index=&quot;1&quot;&gt;
-        '''        &lt;Visible&gt;False&lt;/Visible&gt;
-        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''        &lt;Name&gt;ID&lt;/Name&gt;
-        '''        &lt;Width&gt;100&lt;/Width&gt;
         '''    &lt;/Column&gt;
-        '''    &lt;Column Index= [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	&lt;Column Index=&quot;1&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Responsável&lt;/Name&gt;
+        '''		&lt;Width&gt;255&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot; But [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property CashItemResponsibleGrid() As String
             Get
@@ -1022,7 +1075,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;CompressorPartElapsedDay&quot; Version=&quot;3&quot;&gt;
+        '''&lt;Routine Id=&quot;CompressorPartElapsedDay&quot; Version=&quot;4&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''	&lt;Column Index=&quot;0&quot;&gt;
@@ -1031,14 +1084,15 @@ Namespace My.Resources
         '''		&lt;Name&gt;Ordem&lt;/Name&gt;
         '''		&lt;Width&gt;70&lt;/Width&gt;
         '''	&lt;/Column&gt;
-        '''    &lt;Column Index=&quot;1&quot; ButtonState=&quot;Hidden&quot;&gt;
-        '''        &lt;Visible&gt;False&lt;/Visible&gt;
-        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''        &lt;Name&gt;ID&lt;/Name&gt;
-        '''        &lt;Width&gt;100&lt;/Width&gt;
-        '''    &lt;/Column&gt;
-        '''	&lt;Column Index=&quot;2&quot;&gt;
-        '''		&lt;Vi [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	&lt;Column Index=&quot;1&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Status&lt;/Name&gt;
+        '''		&lt;Width&gt;70&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''		&lt;Visible&gt;False&lt;/Visible&gt;
+        '''		&lt;Di [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property CompressorPartElapsedDayGrid() As String
             Get
@@ -1114,7 +1168,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;CompressorPartWorkedHour&quot; Version=&quot;3&quot;&gt;
+        '''&lt;Routine Id=&quot;CompressorPartWorkedHour&quot; Version=&quot;4&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''	&lt;Column Index=&quot;0&quot;&gt;
@@ -1123,14 +1177,15 @@ Namespace My.Resources
         '''		&lt;Name&gt;Ordem&lt;/Name&gt;
         '''		&lt;Width&gt;70&lt;/Width&gt;
         '''	&lt;/Column&gt;
-        '''    &lt;Column Index=&quot;1&quot; ButtonState=&quot;Hidden&quot;&gt;
-        '''        &lt;Visible&gt;False&lt;/Visible&gt;
-        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''        &lt;Name&gt;ID&lt;/Name&gt;
-        '''        &lt;Width&gt;100&lt;/Width&gt;
-        '''    &lt;/Column&gt;
-        '''	&lt;Column Index=&quot;2&quot;&gt;
-        '''		&lt;Vi [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	&lt;Column Index=&quot;1&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Status&lt;/Name&gt;
+        '''		&lt;Width&gt;70&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''		&lt;Visible&gt;False&lt;/Visible&gt;
+        '''		&lt;Di [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property CompressorPartWorkedHourGrid() As String
             Get
@@ -2248,32 +2303,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;EvaluationManagementPartElapsedDay&quot; Version=&quot;3&quot;&gt;
-        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
-        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
-        '''	&lt;Column Index=&quot;0&quot;&gt;
-        '''		&lt;Visible&gt;True&lt;/Visible&gt;
-        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
-        '''		&lt;Name&gt;Item&lt;/Name&gt;
-        '''		&lt;Width&gt;250&lt;/Width&gt;
-        '''	&lt;/Column&gt;
-        '''	&lt;Column Index=&quot;1&quot; ButtonState=&quot;Hidden&quot;&gt;
-        '''		&lt;Visible&gt;False&lt;/Visible&gt;
-        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''		&lt;Name&gt;Cap. Atual&lt;/Name&gt;
-        '''		&lt;Width&gt;100&lt;/Width&gt;
-        '''	&lt;/Column&gt;
-        '''	&lt;Column Index=&quot;2&quot;&gt;
-        '''		&lt;Visible&gt;True&lt;/ [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property EvaluationManagementPartElapsedDayGrid() As String
-            Get
-                Return ResourceManager.GetString("EvaluationManagementPartElapsedDayGrid", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''    IFNULL(personcompressorpart.itemname, product.name) AS item,
         '''	evaluationpart.currentcapacity,
@@ -2298,32 +2327,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;EvaluationManagementPartWorkedHour&quot; Version=&quot;3&quot;&gt;
-        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
-        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
-        '''	&lt;Column Index=&quot;0&quot;&gt;
-        '''		&lt;Visible&gt;True&lt;/Visible&gt;
-        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
-        '''		&lt;Name&gt;Item&lt;/Name&gt;
-        '''		&lt;Width&gt;250&lt;/Width&gt;
-        '''	&lt;/Column&gt;
-        '''	&lt;Column Index=&quot;1&quot; ButtonState=&quot;Hidden&quot;&gt;
-        '''		&lt;Visible&gt;False&lt;/Visible&gt;
-        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''		&lt;Name&gt;Cap. Atual&lt;/Name&gt;
-        '''		&lt;Width&gt;100&lt;/Width&gt;
-        '''	&lt;/Column&gt;
-        '''	&lt;Column Index=&quot;2&quot;&gt;
-        '''		&lt;Visible&gt;True&lt;/ [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property EvaluationManagementPartWorkedHourGrid() As String
-            Get
-                Return ResourceManager.GetString("EvaluationManagementPartWorkedHourGrid", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	evaluation.evaluationdate + INTERVAL((personcompressor.unitcapacity - evaluation.horimeter) / evaluation.averageworkload) DAY AS nextchange
         '''FROM evaluation
@@ -2343,6 +2346,33 @@ Namespace My.Resources
         Friend ReadOnly Property EvaluationPartDelete() As String
             Get
                 Return ResourceManager.GetString("EvaluationPartDelete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;EvaluationPart&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''	&lt;Column Index=&quot;1&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''		&lt;Visible&gt;False&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Ordem&lt;/Name&gt;
+        '''		&lt;Width&gt;100&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;0&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Código&lt;/Name&gt;
+        '''		&lt;Width&gt;120&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;1&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayInd [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property EvaluationPartGrid() As String
+            Get
+                Return ResourceManager.GetString("EvaluationPartGrid", resourceCulture)
             End Get
         End Property
         
@@ -5597,34 +5627,21 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO userprivilege
         '''(
-        '''	ofuserid,
-        '''	personaccess,
-        '''	personwrite,
-        '''	persondelete,
-        '''	personchangedocument,
-        '''	personregistration,
-        '''	personmaintenanceplan,
-        '''	cityaccess,
-        '''	citywrite,
-        '''	citydelete,
-        '''	compressoraccess,
-        '''	compressorwrite,
-        '''	compressordelete,
-        '''	routeaccess,
-        '''	routewrite,
-        '''	routedelete,
-        '''	crmaccess,
-        '''	crmwrite,
-        '''	crmdelete,
-        '''	crmtreatmentdelete,
-        '''	crmtreatmentedit,
-        '''	crmchangecustomer,
-        '''	crmchangeresponsible,
-        '''	crmchangesubject,
-        '''	crmchangetopendingstatus,
-        '''	productaccess,
-        '''	productwrite,
-        '''	p [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	creation,
+        '''	granteduserid,
+        '''	routineid,
+        '''	privilegelevelid,
+        '''	userid
+        ''')
+        '''VALUES
+        '''(
+        '''	@creation,
+        '''	@granteduserid,
+        '''	@routineid,
+        '''	@privilegelevelid,
+        '''	@userid
+        ''');
+        '''.
         '''</summary>
         Friend ReadOnly Property UserPrivilegeInsert() As String
             Get
@@ -5645,22 +5662,13 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	userprivilege.id,
-        '''	userprivilege.personaccess,
-        '''	userprivilege.personwrite,
-        '''	userprivilege.persondelete,
-        '''	userprivilege.personchangedocument,
-        '''	userprivilege.personregistration,
-        '''	userprivilege.personmaintenanceplan,
-        '''	userprivilege.cityaccess,
-        '''    userprivilege.citywrite,
-        '''	userprivilege.citydelete,
-        '''	userprivilege.compressoraccess,
-        '''	userprivilege.compressorwrite,
-        '''	userprivilege.compressordelete,
-        '''	userprivilege.routeaccess,
-        '''	userprivilege.routewrite,
-        '''	userprivilege.routedelete,	
-        '''	userpri [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	userprivilege.creation,
+        '''	userprivilege.granteduserid,
+        '''	userprivilege.routineid,
+        '''	userprivilege.privilegelevelid,
+        '''	userprivilege.userid
+        '''FROM userprivilege
+        '''WHERE userprivilege.granteduserid = @granteduserid;.
         '''</summary>
         Friend ReadOnly Property UserPrivilegeSelect() As String
             Get

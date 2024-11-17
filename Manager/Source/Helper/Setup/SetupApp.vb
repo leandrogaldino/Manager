@@ -32,8 +32,8 @@ Public Class SetupApp
         If Process.GetProcessesByName("Manager").Length = 1 Then
             CurrentDirectory = New DirectoryInfo(ApplicationPaths.ManagerTempDirectory)
             If CurrentDirectory.Exists Then
-                CurrentDirectory.GetFiles.ToList.ForEach(Sub(x) Utility.TryDeleteFile(x))
-                CurrentDirectory.GetDirectories.ToList.ForEach(Sub(x) Utility.TryDeleteDirectory(x))
+                CurrentDirectory.GetFiles.ToList.ForEach(Sub(x) FileHelper.TryDeleteFile(x))
+                CurrentDirectory.GetDirectories.ToList.ForEach(Sub(x) FileHelper.TryDeleteDirectory(x))
             End If
         End If
     End Sub

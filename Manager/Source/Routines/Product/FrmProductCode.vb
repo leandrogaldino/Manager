@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Public Class FrmProductCode
     Private _ProductForm As FrmProduct
     Private _Product As Product
@@ -41,7 +41,7 @@ Public Class FrmProductCode
     Private Sub AfterDataGridViewRowMove()
         If _ProductForm.DgvCode.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _ProductCode = _Product.Codes.Single(Function(x) x.Order = _ProductForm.DgvCode.SelectedRows(0).Cells("Order").Value)
+            _ProductCode = _Product.Codes.Single(Function(x) x.Guid = _ProductForm.DgvCode.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -83,9 +83,9 @@ Public Class FrmProductCode
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _ProductForm.DgvCode.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _ProductCode = _Product.Codes.Single(Function(x) x.Order = _ProductForm.DgvCode.SelectedRows(0).Cells("Order").Value)
+                _ProductCode = _Product.Codes.Single(Function(x) x.Guid = _ProductForm.DgvCode.SelectedRows(0).Cells("Guid").Value)
                 _Product.Codes.Remove(_ProductCode)
-                _Product.Codes.FillDataGridView(_ProductForm.DgvCode)
+                _ProductForm.DgvCode.Fill(_Product.Codes)
                 _ProductForm.DgvCodeLayout.Load()
                 _Deleting = True
                 Dispose()
@@ -107,11 +107,11 @@ Public Class FrmProductCode
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = _ProductCode.Order
+        LblOrderValue.Text = If(_ProductCode.IsSaved, _ProductForm.DgvCode.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _ProductCode.Creation
         CbxName.Text = _ProductCode.Name
         TxtCode.Text = _ProductCode.Code
-        If _ProductCode.Order = 0 Then
+        If Not _ProductCode.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
         Else
@@ -139,31 +139,32 @@ Public Class FrmProductCode
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
         CbxName.Text = CbxName.Text
-        TxtCode.Text = RemoveAccents(TxtCode.Text.Trim)
+        TxtCode.Text = TxtCode.Text.Trim.ToUnaccented()
         If IsValidFields() Then
             If _ProductCode.IsSaved Then
-                _Product.Codes.Single(Function(x) x.Order = _ProductCode.Order).Name = CbxName.Text
-                _Product.Codes.Single(Function(x) x.Order = _ProductCode.Order).Code = TxtCode.Text
+                _Product.Codes.Single(Function(x) x.Guid = _ProductCode.Guid).Name = CbxName.Text
+                _Product.Codes.Single(Function(x) x.Guid = _ProductCode.Guid).Code = TxtCode.Text
             Else
-                _ProductCode = New ProductCode()
-                _ProductCode.Name = CbxName.Text
-                _ProductCode.Code = TxtCode.Text
-                _ProductCode.IsSaved = True
+                _ProductCode = New ProductCode With {
+                    .Name = CbxName.Text,
+                    .Code = TxtCode.Text
+                }
+                _ProductCode.SetIsSaved(True)
                 _Product.Codes.Add(_ProductCode)
             End If
-            _Product.Codes.FillDataGridView(_ProductForm.DgvCode)
-            LblOrderValue.Text = _ProductCode.Order
+            _ProductForm.DgvCode.Fill(_Product.Codes)
             _ProductForm.DgvCodeLayout.Load()
             BtnSave.Enabled = False
-            If _ProductCode.Order = 0 Then
+            If Not _ProductCode.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _ProductForm.DgvCode.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Order").Value = _ProductCode.Order)
+            Row = _ProductForm.DgvCode.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ProductCode.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+            LblOrderValue.Text = _ProductForm.DgvCode.SelectedRows(0).Cells("Order").Value
             _ProductForm.EprValidation.Clear()
             _ProductForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()

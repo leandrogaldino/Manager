@@ -1,7 +1,7 @@
 ﻿Imports ControlLibrary
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Imports System.IO
-Imports ControlLibrary.Utility
 Imports ManagerCore
 Imports ChinhDo.Transactions
 Public Class FrmEmailSignature
@@ -78,7 +78,7 @@ Public Class FrmEmailSignature
         Text = "Assinatura de E-Mail"
         BtnDelete.Enabled = _EmailSignature.ID > 0
         If _EmailSignature.LockInfo.IsLocked And Not _EmailSignature.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _EmailSignature.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_EmailSignature.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _EmailSignature.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
         End If
         BtnSave.Enabled = False
@@ -141,7 +141,7 @@ Public Class FrmEmailSignature
                         _Deleting = True
                         Dispose()
                     Else
-                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_EmailSignature.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _EmailSignature.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                     End If
                 End If
             Catch ex As MySqlException
@@ -188,9 +188,9 @@ Public Class FrmEmailSignature
     End Function
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
-        TxtName.Text = RemoveAccents(TxtName.Text.Trim)
+        TxtName.Text = TxtName.Text.Trim.ToUnaccented()
         If _EmailSignature.LockInfo.IsLocked And _EmailSignature.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_EmailSignature.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _EmailSignature.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Return False
         Else
             If IsValidFields() Then

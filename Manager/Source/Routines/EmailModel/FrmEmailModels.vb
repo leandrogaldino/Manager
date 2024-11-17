@@ -1,14 +1,13 @@
 ﻿Imports ControlLibrary
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
-Imports ControlLibrary.Utility
-Imports System.IO
 
 Public Class FrmEmailModels
     Private _EmailModel As New EmailModel
     Private _Filter As EmailModelFilter
     Public Sub New()
         InitializeComponent()
-        Utility.EnableControlDoubleBuffer(DgvData, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvData, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer1.SplitterDistance = 250
         SplitContainer2.Panel1Collapsed = True
@@ -60,7 +59,7 @@ Public Class FrmEmailModels
                         End Try
                     End If
                 Else
-                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", GetTitleCase(_EmailModel.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _EmailModel.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                 End If
             Catch ex As Exception
                 CMessageBox.Show("ERRO EM008", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -164,6 +163,6 @@ Public Class FrmEmailModels
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Modelos de E-Mail", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
 End Class

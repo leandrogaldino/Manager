@@ -1,5 +1,5 @@
 ﻿Imports System.ComponentModel
-Imports ControlLibrary.Utility
+Imports ControlLibrary
 Public Class PersonCarrierQueriedBoxFilter
     Inherits PersonFilter
     <Browsable(False)>
@@ -7,7 +7,7 @@ Public Class PersonCarrierQueriedBoxFilter
     <Browsable(False)>
     Overrides Property Category As New PersonCategoryExpandable
     Public Overrides Function Filter() As Boolean
-        Status = GetEnumDescription(SimpleStatus.Active)
+        Status = EnumHelper.GetEnumDescription(SimpleStatus.Active)
         Category.IsCarrier = "Sim"
         Return MyBase.Filter()
     End Function

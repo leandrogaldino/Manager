@@ -1,6 +1,6 @@
 ﻿Imports ControlLibrary
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
-Imports ControlLibrary.Utility
 Imports System.Text
 Public Class FrmEmailModel
     Private _EmailModel As EmailModel
@@ -98,7 +98,7 @@ Public Class FrmEmailModel
         End If
         Text = "Modelo de E-mail"
         If _EmailModel.LockInfo.IsLocked And Not _EmailModel.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _EmailModel.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_EmailModel.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _EmailModel.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
         End If
         BtnSave.Enabled = False
@@ -159,7 +159,7 @@ Public Class FrmEmailModel
                         _Deleting = True
                         Dispose()
                     Else
-                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_EmailModel.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _EmailModel.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                     End If
                 End If
             Catch ex As MySqlException
@@ -214,9 +214,9 @@ Public Class FrmEmailModel
     End Function
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
-        TxtName.Text = RemoveAccents(TxtName.Text.Trim)
+        TxtName.Text = TxtName.Text.Trim.ToUnaccented()
         If _EmailModel.LockInfo.IsLocked And _EmailModel.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_EmailModel.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _EmailModel.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Return False
         Else
             If IsValidFields() Then
@@ -264,7 +264,7 @@ Public Class FrmEmailModel
     Private Sub TxtBody_SelectionChanged(sender As Object, e As EventArgs) Handles TxtBody.SelectionChanged
         If TxtBody.SelectionFont IsNot Nothing Then
             TxtFont.Text = TxtBody.SelectionFont.Name
-            BtnColor.Image = GetRecoloredImage(BtnColor.Image, TxtBody.SelectionColor)
+            BtnColor.Image = ImageHelper.GetRecoloredImage(BtnColor.Image, TxtBody.SelectionColor)
             TxtFont.ForeColor = TxtBody.SelectionColor
         End If
     End Sub
@@ -272,7 +272,7 @@ Public Class FrmEmailModel
         CdColor.Color = TxtBody.SelectionColor
         If CdColor.ShowDialog = DialogResult.OK Then
             TxtBody.SelectionColor = CdColor.Color
-            BtnColor.Image = GetRecoloredImage(BtnColor.Image, CdColor.Color)
+            BtnColor.Image = ImageHelper.GetRecoloredImage(BtnColor.Image, CdColor.Color)
         End If
     End Sub
     Private Sub TxtFont_Click(sender As Object, e As EventArgs) Handles TxtFont.Click

@@ -3,30 +3,12 @@
 ''' Representa uma atividade do CRM.
 ''' </summary>
 Public Class CrmTreatment
-    Public IsSaved As Boolean
-    Private _Order As Long
-    Private _ID As Long
-    Private _Creation As Date = Today
+    Inherits ChildModel
     Private _Responsible As New Person
     Private _Contact As Date = Today
     Private _NextContact As Date = Today
     Private _ContactType As CrmTreatmentContactType = CrmTreatmentContactType.Phone
     Private _Summary As String
-    Public ReadOnly Property Order As Long
-        Get
-            Return _Order
-        End Get
-    End Property
-    Public ReadOnly Property ID As Long
-        Get
-            Return _ID
-        End Get
-    End Property
-    Public ReadOnly Property Creation As Date
-        Get
-            Return _Creation
-        End Get
-    End Property
     Public Property Responsible As Person
         Get
             Return _Responsible
@@ -75,7 +57,6 @@ Public Class CrmTreatment
 
         End Set
     End Property
-    Public ReadOnly User As User = Locator.GetInstance(Of Session).User
     Private Function GetContactTypeImage(ContactType As CrmTreatmentContactType) As Image
         Select Case ContactType
             Case = CrmTreatmentContactType.Phone
@@ -88,4 +69,7 @@ Public Class CrmTreatment
                 Return Nothing
         End Select
     End Function
+    Public Sub New()
+        SetRoutine(Routine.CrmTreatment)
+    End Sub
 End Class

@@ -3,6 +3,7 @@ Imports System.Text
 Imports System.Xml
 Imports ControlLibrary
 Imports ManagerCore.RemoteDB
+
 Public Class LicenseService
     Private ReadOnly _Key As String
     Private ReadOnly _Database As RemoteDB
@@ -126,7 +127,7 @@ Public Class LicenseService
         End If
 
         ' Verifica se há conexão com a internet
-        If Not Utility.IsInternetAvailable Then
+        If Not InternetHelper.IsInternetAvailable Then
             Result.Flag = LicenseMessages.NetworkNotAvailable
             Return Result
         End If
@@ -163,7 +164,7 @@ Public Class LicenseService
 
         ' Atualiza o token da licença se necessário
         If String.IsNullOrEmpty(LicenseToken) AndAlso String.IsNullOrEmpty(LicenseToken) AndAlso String.IsNullOrEmpty(Result.License.LicenseToken) Then
-            Dim NewToken As String = Utility.GetRandomString(1, 256, Nothing, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-.:;,!?/'()*+=%#@$[]{}|")
+            Dim NewToken As String = TextHelper.GetRandomString(1, 256, Nothing, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-.:;,!?/'()*+=%#@$[]{}|")
             Result.License = Await UpdateLicenseToken(Result.License, NewToken)
             Await SaveLocalLicense(Result.License)
             Return Result

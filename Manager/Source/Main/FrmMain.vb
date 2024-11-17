@@ -1,5 +1,4 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
 Imports ManagerCore
 Public Class FrmMain
     Private _User As User
@@ -146,15 +145,15 @@ Public Class FrmMain
         End If
     End Sub
     Private Sub CrmClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.Crm)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmCrms, GetEnumDescription(Routine.Crm))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.Crm)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmCrms, EnumHelper.GetEnumDescription(Routine.Crm))
         Else
             SelectTab(Routine.Crm)
         End If
     End Sub
     Private Sub PersonClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.Person)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmPersons, GetEnumDescription(Routine.Person))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.Person)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmPersons, EnumHelper.GetEnumDescription(Routine.Person))
         Else
             SelectTab(Routine.Person)
         End If
@@ -170,101 +169,101 @@ Public Class FrmMain
         End Using
     End Sub
     Private Sub CompressorClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.Compressor)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmCompressors, GetEnumDescription(Routine.Compressor))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.Compressor)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmCompressors, EnumHelper.GetEnumDescription(Routine.Compressor))
         Else
             SelectTab(Routine.Compressor)
         End If
     End Sub
     Private Sub RouteClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.Route)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmRoutes, GetEnumDescription(Routine.Route))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.Route)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmRoutes, EnumHelper.GetEnumDescription(Routine.Route))
         Else
             SelectTab(Routine.Route)
         End If
     End Sub
     Private Sub CityClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.City)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmCities, GetEnumDescription(Routine.City))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.City)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmCities, EnumHelper.GetEnumDescription(Routine.City))
         Else
             SelectTab(Routine.City)
         End If
     End Sub
     Private Sub ProductUnitClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.ProductUnit)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmProductUnits, GetEnumDescription(Routine.ProductUnit))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.ProductUnit)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmProductUnits, EnumHelper.GetEnumDescription(Routine.ProductUnit))
         Else
             SelectTab(Routine.ProductUnit)
         End If
     End Sub
     Private Sub ProductPriceTableClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.ProductPriceTable)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmProductPriceTables, GetEnumDescription(Routine.ProductPriceTable))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.ProductPriceTable)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmProductPriceTables, EnumHelper.GetEnumDescription(Routine.ProductPriceTable))
         Else
             SelectTab(Routine.ProductPriceTable)
         End If
     End Sub
     Private Sub ProductFamilyClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.ProductFamily)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmProductFamilies, GetEnumDescription(Routine.ProductFamily))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.ProductFamily)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmProductFamilies, EnumHelper.GetEnumDescription(Routine.ProductFamily))
         Else
             SelectTab(Routine.ProductFamily)
         End If
     End Sub
     Private Sub ProductGroupClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.ProductGroup)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmProductGroups, GetEnumDescription(Routine.ProductGroup))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.ProductGroup)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmProductGroups, EnumHelper.GetEnumDescription(Routine.ProductGroup))
         Else
             SelectTab(Routine.ProductGroup)
         End If
     End Sub
     Private Sub ProductClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.Product)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmProducts, GetEnumDescription(Routine.Product))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.Product)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmProducts, EnumHelper.GetEnumDescription(Routine.Product))
         Else
             SelectTab(Routine.Product)
         End If
     End Sub
     Private Sub UserClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.User)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmUsers, GetEnumDescription(Routine.User))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.User)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmUsers, EnumHelper.GetEnumDescription(Routine.User))
         Else
             SelectTab(Routine.User)
         End If
     End Sub
 
     Private Sub EmailModelClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.EmailModel)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmEmailModels, GetEnumDescription(Routine.EmailModel))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.EmailModel)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmEmailModels, EnumHelper.GetEnumDescription(Routine.EmailModel))
         Else
             SelectTab(Routine.EmailModel)
         End If
     End Sub
     Private Sub EvaluationClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.Evaluation)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmEvaluations, GetEnumDescription(Routine.Evaluation))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.Evaluation)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmEvaluations, EnumHelper.GetEnumDescription(Routine.Evaluation))
         Else
             SelectTab(Routine.Evaluation)
         End If
     End Sub
 
     Private Sub EvaluationManagementPanelClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.EvaluationManagementPanel)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmEvaluationManagementPanel, GetEnumDescription(Routine.EvaluationManagementPanel))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.EvaluationManagementPanel)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmEvaluationManagementPanel, EnumHelper.GetEnumDescription(Routine.EvaluationManagementPanel))
         Else
             SelectTab(Routine.EvaluationManagementPanel)
         End If
     End Sub
     Private Sub EvaluationManagementClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.EvaluationManagement)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmEvaluationManagement, GetEnumDescription(Routine.EvaluationManagement))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.EvaluationManagement)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmEvaluationManagement, EnumHelper.GetEnumDescription(Routine.EvaluationManagement))
         Else
             SelectTab(Routine.EvaluationManagement)
         End If
     End Sub
     Private Sub RequestClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.Request)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmRequests, GetEnumDescription(Routine.Request))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.Request)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmRequests, EnumHelper.GetEnumDescription(Routine.Request))
         Else
             SelectTab(Routine.Request)
         End If
@@ -278,11 +277,11 @@ Public Class FrmMain
         Dim ShiftPressed As Boolean = Control.ModifierKeys = Keys.Shift
         Dim TabText As String
         Dim CashFlows As List(Of CashFlow)
-        CashFlows = CashFlow.GetCashFlows().Where(Function(x) x.Authorized.Any(Function(y) y.Authorized.ID = Locator.GetInstance(Of Session).User.Person.Value.ID)).ToList
+        CashFlows = CashFlow.GetCashFlows().Where(Function(x) x.Authorizeds.Any(Function(y) y.Authorized.ID = Locator.GetInstance(Of Session).User.Person.Value.ID)).ToList
         If CashFlows.Count = 0 Then
             CMessageBox.Show("Não há fluxo de caixa autorizado para seu usuário.", CMessageBoxType.Information)
         ElseIf CashFlows.Count = 1 Then
-            TabText = GetEnumDescription(Routine.Cash) & " - " & CashFlows(0).Name
+            TabText = EnumHelper.GetEnumDescription(Routine.Cash) & " - " & CashFlows(0).Name
             If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = TabText) Or ShiftPressed Then
                 OpenTab(New FrmCashes(CashFlows(0)), TabText)
             Else
@@ -291,7 +290,7 @@ Public Class FrmMain
         Else
             Using Form As New FrmChoseCashFlow(CashFlows)
                 If Form.ShowDialog = DialogResult.OK Then
-                    TabText = GetEnumDescription(Routine.Cash) & " - " & CashFlows.FirstOrDefault(Function(x) x.ID = Form.DgvCashFlow.SelectedRows(0).Cells("ID").Value).Name
+                    TabText = EnumHelper.GetEnumDescription(Routine.Cash) & " - " & CashFlows.FirstOrDefault(Function(x) x.ID = Form.DgvCashFlow.SelectedRows(0).Cells("ID").Value).Name
                     If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = TabText) Or ShiftPressed Then
                         OpenTab(New FrmCashes(CashFlows.FirstOrDefault(Function(x) x.ID = Form.DgvCashFlow.SelectedRows(0).Cells("ID").Value)), TabText)
                     Else
@@ -302,8 +301,8 @@ Public Class FrmMain
         End If
     End Sub
     Private Sub CashFlowClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.CashFlow)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmCashFlows, GetEnumDescription(Routine.CashFlow))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.CashFlow)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmCashFlows, EnumHelper.GetEnumDescription(Routine.CashFlow))
         Else
             SelectTab(Routine.CashFlow)
         End If
@@ -338,14 +337,14 @@ Public Class FrmMain
         Dim SelectedIndex As Integer
         Dim NextIndex As Integer
         Dim LastIndex As Integer
-        If TcWindows.TabPages.Cast(Of TabPage).Count(Function(x) x.Text = GetEnumDescription(Routine)) = 1 Then
-            TcWindows.SelectedTab = TcWindows.TabPages.Cast(Of TabPage).First(Function(x) x.Text = GetEnumDescription(Routine))
+        If TcWindows.TabPages.Cast(Of TabPage).Count(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine)) = 1 Then
+            TcWindows.SelectedTab = TcWindows.TabPages.Cast(Of TabPage).First(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine))
         Else
             SelectedIndex = TcWindows.SelectedTab.TabIndex
-            FirstIndex = TcWindows.TabPages.Cast(Of TabPage).First(Function(x) x.Text = GetEnumDescription(Routine)).TabIndex
-            LastIndex = TcWindows.TabPages.Cast(Of TabPage).Last(Function(x) x.Text = GetEnumDescription(Routine)).TabIndex
+            FirstIndex = TcWindows.TabPages.Cast(Of TabPage).First(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine)).TabIndex
+            LastIndex = TcWindows.TabPages.Cast(Of TabPage).Last(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine)).TabIndex
             If SelectedIndex < LastIndex Then
-                NextIndex = TcWindows.TabPages.Cast(Of TabPage).First(Function(x) x.Text = GetEnumDescription(Routine) And x.TabIndex > SelectedIndex).TabIndex
+                NextIndex = TcWindows.TabPages.Cast(Of TabPage).First(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine) And x.TabIndex > SelectedIndex).TabIndex
             Else
                 NextIndex = FirstIndex
             End If
@@ -424,7 +423,7 @@ Public Class FrmMain
                 Locator.GetInstance(Of Session).LicenseResult = Await Task.Run(Function() Locator.GetInstance(Of LicenseService).GetLocalLicense())
                 If Not Locator.GetInstance(Of Session).LicenseResult.Success Then
                     TimerAccess.Stop()
-                    CMessageBox.Show(GetEnumDescription(Locator.GetInstance(Of Session).LicenseResult.Flag), CMessageBoxType.Warning)
+                    CMessageBox.Show(EnumHelper.GetEnumDescription(Locator.GetInstance(Of Session).LicenseResult.Flag), CMessageBoxType.Warning)
                     CloseMe()
                 End If
             Catch ex As Exception
@@ -442,22 +441,22 @@ Public Class FrmMain
         FrmLogin.Show()
     End Sub
     Private Sub BtnEmailModel_Click(sender As Object, e As EventArgs) Handles BtnEmailModel.Click
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.EmailModel)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmEmailModels, GetEnumDescription(Routine.EmailModel))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.EmailModel)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmEmailModels, EnumHelper.GetEnumDescription(Routine.EmailModel))
         Else
             SelectTab(Routine.EmailModel)
         End If
     End Sub
     Private Sub BtnEmailSent_Click(sender As Object, e As EventArgs) Handles BtnEmailSent.Click
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.EmailSent)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmEmailsSent, GetEnumDescription(Routine.EmailSent))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.EmailSent)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmEmailsSent, EnumHelper.GetEnumDescription(Routine.EmailSent))
         Else
             SelectTab(Routine.EmailSent)
         End If
     End Sub
     Private Sub BtnEmailSign_Click(sender As Object, e As EventArgs) Handles BtnEmailSign.Click
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = GetEnumDescription(Routine.EmailSignature)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmEmailSignatures, GetEnumDescription(Routine.EmailSignature))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.EmailSignature)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmEmailSignatures, EnumHelper.GetEnumDescription(Routine.EmailSignature))
         Else
             SelectTab(Routine.EmailSignature)
         End If

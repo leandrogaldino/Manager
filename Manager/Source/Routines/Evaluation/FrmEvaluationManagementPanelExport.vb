@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+
 Public Class FrmEvaluationManagementPanelExport
     Private _Person As Person
     <DebuggerStepThrough>
@@ -50,7 +50,7 @@ Public Class FrmEvaluationManagementPanelExport
             BtnGenerate.Enabled = False
             Result = ExportGrid.Export(ExportList.ToArray)
             DialogResult = DialogResult.OK
-            FrmMain.OpenTab(New FrmReport(Result), GetEnumDescription(Routine.EvaluationExportManagementPanel))
+            FrmMain.OpenTab(New FrmReport(Result), EnumHelper.GetEnumDescription(Routine.EvaluationExportManagementPanel))
         Catch ex As Exception
             CMessageBox.Show("ERRO EV018", "Ocorreu um erro exportar.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally
@@ -59,7 +59,7 @@ Public Class FrmEvaluationManagementPanelExport
         End Try
     End Sub
     Private Sub CbxGreen_CheckedChanged(sender As Object, e As EventArgs) Handles CbxToOverdue.CheckedChanged, CbxOverdue.CheckedChanged, CbxToVisit.CheckedChanged, CbxNeverVisited.CheckedChanged, CbxInDay.CheckedChanged, CbxTotal.CheckedChanged, CbxUnitOverdue.CheckedChanged, CbxUnitOverdue.CheckedChanged
-        If GetAllControls(Me, True).OfType(Of CheckBox).All(Function(x) x.Checked = False) Then
+        If ControlHelper.GetAllControls(Me, True).OfType(Of CheckBox).All(Function(x) x.Checked = False) Then
             BtnGenerate.Enabled = False
         Else
             BtnGenerate.Enabled = True

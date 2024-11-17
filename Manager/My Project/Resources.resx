@@ -694,12 +694,6 @@
   <data name="EvaluationManagementGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\EvaluationManagementGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="EvaluationManagementPartElapsedDayGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML\EvaluationManagementPartElapsedDayGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="EvaluationManagementPartWorkedHourGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML\EvaluationManagementPartWorkedHourGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
   <data name="EvaluationHasPreviousEvaluationSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\EvaluationHasPreviousEvaluationSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -1116,5 +1110,14 @@
   </data>
   <data name="UserPrivilegeDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\UserPrivilegeDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="CashFlowGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XML\CashFlowGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="CashFlowAuthorizedGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XML\CashFlowAuthorizedGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="EvaluationPartGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XML\EvaluationPartGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

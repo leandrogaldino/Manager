@@ -4,18 +4,17 @@ Imports MySql.Data.MySqlClient
 ''' Representa uma rota.
 ''' </summary>
 Public Class Route
-    Inherits ModelBase
-    Private _IsSaved As Boolean
+    Inherits ParentModel
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
     Public Sub New()
-        _Routine = Routine.Route
+        SetRoutine(Routine.Route)
     End Sub
     Public Sub Clear()
         Unlock()
-        _IsSaved = False
-        _ID = 0
-        _Creation = Today
+        SetIsSaved(False)
+        SetID(0)
+        SetCreation(Today)
         Status = SimpleStatus.Active
         Name = Nothing
     End Sub
@@ -35,13 +34,13 @@ Public Class Route
                         Clear()
                     ElseIf TableResult.Rows.Count = 1 Then
                         Clear()
-                        _ID = TableResult.Rows(0).Item("id")
-                        _Creation = TableResult.Rows(0).Item("creation")
+                        SetID(TableResult.Rows(0).Item("id"))
+                        SetCreation(TableResult.Rows(0).Item("creation"))
+                        SetIsSaved(True)
                         Status = TableResult.Rows(0).Item("statusid")
                         Name = TableResult.Rows(0).Item("name").ToString
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
-                        _IsSaved = True
                     Else
                         Throw New Exception("Registro não encontrado.")
                     End If
@@ -52,12 +51,12 @@ Public Class Route
         Return Me
     End Function
     Public Sub SaveChanges()
-        If Not _IsSaved Then
+        If Not IsSaved Then
             Insert()
         Else
             Update()
         End If
-        _IsSaved = True
+        SetIsSaved(True)
     End Sub
     Public Sub Delete()
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
@@ -80,7 +79,7 @@ Public Class Route
                     CmdRouteInsert.Parameters.AddWithValue("@name", Name)
                     CmdRouteInsert.Parameters.AddWithValue("@userid", User.ID)
                     CmdRouteInsert.ExecuteNonQuery()
-                    _ID = CmdRouteInsert.LastInsertedId
+                    SetIsSaved(CmdRouteInsert.LastInsertedId)
                 End Using
                 Tra.Commit()
             End Using

@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Imports System.IO
 Public Class FrmCashItem
     Private _CashForm As FrmCash
@@ -75,7 +75,7 @@ Public Class FrmCashItem
         _CashItem = CashItem
         _CashItemShadow = CashItem.Clone()
         _CashForm = CashForm
-        _CategoryList = GetEnumDescriptions(Of CashItemCategory).ToList()
+        _CategoryList = EnumHelper.GetEnumDescriptions(Of CashItemCategory).ToList()
         _CategoryList.Sort()
         LoadForm()
         DgvNavigator.DataGridView = _CashForm.DgvCashItem
@@ -83,7 +83,7 @@ Public Class FrmCashItem
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.Log)
     End Sub
-    Private Sub Frm(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvResponsiblesLayout.Load()
         LoadSuggestions()
     End Sub
@@ -101,7 +101,7 @@ Public Class FrmCashItem
                 End If
             End If
             If Revert Then
-                For Each Responsible As CashItemResponsible In _CashItem.Responsibles.Reverse
+                For Each Responsible As CashItemResponsible In _CashItem.Responsibles.ToArray.Reverse
                     If Not _CashItemShadow.Responsibles.Any(Function(x) x.Responsible.ID = Responsible.Responsible.ID) Then
                         _CashItem.Responsibles.Remove(Responsible)
                     End If
@@ -117,7 +117,7 @@ Public Class FrmCashItem
     Private Sub AfterDataGridViewRowMove()
         If _CashForm.DgvCashItem.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _CashItem = _Cash.CashItems.Single(Function(x) x.Order = _CashForm.DgvCashItem.SelectedRows(0).Cells("Order").Value)
+            _CashItem = _Cash.CashItems.Single(Function(x) x.Guid = _CashForm.DgvCashItem.SelectedRows(0).Cells("Guid").Value)
             _CashItemShadow = _CashItem.Clone()
             LoadForm()
             Cursor = Cursors.Default
@@ -138,7 +138,7 @@ Public Class FrmCashItem
                     End If
                 End If
                 If Revert Then
-                    For Each Responsible As CashItemResponsible In _CashItem.Responsibles.Reverse
+                    For Each Responsible As CashItemResponsible In _CashItem.Responsibles.ToArray.Reverse
                         If Not _CashItemShadow.Responsibles.Any(Function(x) x.Responsible.ID = Responsible.Responsible.ID) Then
                             _CashItem.Responsibles.Remove(Responsible)
                         End If
@@ -169,23 +169,27 @@ Public Class FrmCashItem
         End If
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
-        Dim Responsibles As New OrdenedList(Of CashItemResponsible)
-        For Each Responsible As CashItemResponsible In _CashItem.Responsibles
-            Responsibles.Add(New CashItemResponsible With {.IsSaved = Responsible.IsSaved, .Responsible = New Person().Load(Responsible.Responsible.ID, False)})
-        Next Responsible
+        Dim ItemResponsible As CashItemResponsible
+        Dim Responsibles As New List(Of CashItemResponsible)
+        For Each ItemResponsible In _CashItem.Responsibles
+            ItemResponsible = New CashItemResponsible()
+            ItemResponsible.Responsible = New Person().Load(ItemResponsible.Responsible.ID, False)
+            ItemResponsible.SetIsSaved(True)
+            Responsibles.Add(ItemResponsible)
+        Next ItemResponsible
         If BtnSave.Enabled Then
             If CMessageBox.Show("Houve alterações que ainda não foram salvas. Deseja salvar antes de continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                 If Not PreSave() Then
-                    For Each Responsible As CashItemResponsible In _CashItem.Responsibles.Reverse
-                        If Not _CashItemShadow.Responsibles.Any(Function(x) x.Responsible.ID = Responsible.Responsible.ID) Then
-                            _CashItem.Responsibles.Remove(Responsible)
+                    For Each ItemResponsible In _CashItem.Responsibles.ToArray.Reverse
+                        If Not _CashItemShadow.Responsibles.Any(Function(x) x.Responsible.ID = ItemResponsible.Responsible.ID) Then
+                            _CashItem.Responsibles.Remove(ItemResponsible)
                         End If
-                    Next Responsible
-                    For Each Responsible As CashItemResponsible In _CashItemShadow.Responsibles
-                        If Not _CashItem.Responsibles.Any(Function(x) x.Responsible.ID = Responsible.Responsible.ID) Then
-                            _CashItem.Responsibles.Add(Responsible)
+                    Next ItemResponsible
+                    For Each ItemResponsible In _CashItemShadow.Responsibles
+                        If Not _CashItem.Responsibles.Any(Function(x) x.Responsible.ID = ItemResponsible.Responsible.ID) Then
+                            _CashItem.Responsibles.Add(ItemResponsible)
                         End If
-                    Next Responsible
+                    Next ItemResponsible
                 End If
             End If
         End If
@@ -196,9 +200,9 @@ Public Class FrmCashItem
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _CashForm.DgvCashItem.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _CashItem = _Cash.CashItems.Single(Function(x) x.Order = _CashForm.DgvCashItem.SelectedRows(0).Cells("Order").Value)
+                _CashItem = _Cash.CashItems.Single(Function(x) x.Guid = _CashForm.DgvCashItem.SelectedRows(0).Cells("Guid").Value)
                 _Cash.CashItems.Remove(_CashItem)
-                _Cash.CashItems.FillDataGridView(_CashForm.DgvCashItem)
+                _CashForm.DgvCashItem.Fill(_Cash.CashItems)
                 _CashForm.DgvCashItemsLayout.Load()
                 _CashForm.CalculateValues()
                 _Deleting = True
@@ -242,7 +246,7 @@ Public Class FrmCashItem
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = _CashItem.Order
+        LblOrderValue.Text = If(_CashItem.IsSaved, _CashForm.DgvCashItem.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _CashItem.Creation
         RbExpense.Checked = _CashItem.ItemType = CashItemType.Expense
         RbIncome.Checked = _CashItem.ItemType = CashItemType.Income
@@ -251,19 +255,19 @@ Public Class FrmCashItem
         Else
             CbxCategory.DataSource = _CategoryList.Where(Function(x) x = "REEMBOLSO").ToList
         End If
-        CbxCategory.SelectedIndex = CbxCategory.FindStringExact(GetEnumDescription(_CashItem.ItemCategory))
+        CbxCategory.SelectedIndex = CbxCategory.FindStringExact(EnumHelper.GetEnumDescription(_CashItem.ItemCategory))
         TxtDescription.Text = _CashItem.Description
         TxtDocumentNumber.Text = _CashItem.DocumentNumber
         DbxDocumentDate.Text = _CashItem.DocumentDate
         DbxValue.Text = _CashItem.Value
-        If _CashItem.Order = 0 Then
+        If Not _CashItem.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
         Else
             BtnSave.Text = "Alterar"
             BtnDelete.Enabled = True
         End If
-        _CashItem.Responsibles.FillDataGridView(DgvResponsibles)
+        DgvResponsibles.Fill(_CashItem.Responsibles)
         BtnSave.Enabled = False
         TxtDescription.Select()
         _Loading = False
@@ -306,42 +310,42 @@ Public Class FrmCashItem
 
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
-        TxtDescription.Text = RemoveAccents(TxtDescription.Text.Trim)
-        TxtDocumentNumber.Text = RemoveAccents(TxtDocumentNumber.Text.Trim)
+        TxtDescription.Text = TxtDescription.Text.Trim.ToUnaccented()
+        TxtDocumentNumber.Text = TxtDocumentNumber.Text.Trim.ToUnaccented()
         If IsValidFields() Then
             _Suggestions.Add(TxtDescription.Text)
             SaveSuggestions()
             If _CashItem.IsSaved Then
-                _Cash.CashItems.Single(Function(x) x.Order = _CashItem.Order).ItemType = If(RbExpense.Checked, CashItemType.Expense, CashItemType.Income)
-                _Cash.CashItems.Single(Function(x) x.Order = _CashItem.Order).ItemCategory = GetEnumValue(Of CashItemCategory)(CbxCategory.Text)
-                _Cash.CashItems.Single(Function(x) x.Order = _CashItem.Order).Description = TxtDescription.Text
-                _Cash.CashItems.Single(Function(x) x.Order = _CashItem.Order).DocumentDate = DbxDocumentDate.Text
-                _Cash.CashItems.Single(Function(x) x.Order = _CashItem.Order).DocumentNumber = TxtDocumentNumber.Text
-                _Cash.CashItems.Single(Function(x) x.Order = _CashItem.Order).Value = DbxValue.DecimalValue
+                _Cash.CashItems.Single(Function(x) x.Guid = _CashItem.Guid).ItemType = If(RbExpense.Checked, CashItemType.Expense, CashItemType.Income)
+                _Cash.CashItems.Single(Function(x) x.Guid = _CashItem.Guid).ItemCategory = EnumHelper.GetEnumValue(Of CashItemCategory)(CbxCategory.Text)
+                _Cash.CashItems.Single(Function(x) x.Guid = _CashItem.Guid).Description = TxtDescription.Text
+                _Cash.CashItems.Single(Function(x) x.Guid = _CashItem.Guid).DocumentDate = DbxDocumentDate.Text
+                _Cash.CashItems.Single(Function(x) x.Guid = _CashItem.Guid).DocumentNumber = TxtDocumentNumber.Text
+                _Cash.CashItems.Single(Function(x) x.Guid = _CashItem.Guid).Value = DbxValue.DecimalValue
             Else
                 _CashItem.ItemType = If(RbExpense.Checked, CashItemType.Expense, CashItemType.Income)
-                _CashItem.ItemCategory = GetEnumValue(Of CashItemCategory)(CbxCategory.Text)
+                _CashItem.ItemCategory = EnumHelper.GetEnumValue(Of CashItemCategory)(CbxCategory.Text)
                 _CashItem.Description = TxtDescription.Text
                 _CashItem.DocumentDate = DbxDocumentDate.Text
                 _CashItem.DocumentNumber = TxtDocumentNumber.Text
                 _CashItem.Value = DbxValue.DecimalValue
-                _CashItem.IsSaved = True
+                _CashItem.SetIsSaved(True)
                 _Cash.CashItems.Add(_CashItem)
             End If
-            _Cash.CashItems.FillDataGridView(_CashForm.DgvCashItem)
-            LblOrderValue.Text = _CashItem.Order
+            _CashForm.DgvCashItem.Fill(_Cash.CashItems)
             _CashForm.DgvCashItemsLayout.Load()
             BtnSave.Enabled = False
             BtnDelete.Enabled = True
-            If _CashItem.Order = 0 Then
+            If Not _CashItem.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _CashForm.DgvCashItem.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Order").Value = _CashItem.Order)
+            Row = _CashForm.DgvCashItem.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _CashItem.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+            LblOrderValue.Text = _CashForm.DgvCashItem.SelectedRows(0).Cells("Order").Value
             _CashForm.EprValidation.Clear()
             _CashForm.CalculateValues()
             _CashForm.BtnSave.Enabled = True
@@ -359,7 +363,7 @@ Public Class FrmCashItem
         Dim Form As FrmCashItemResponsible
         Dim Responsible As CashItemResponsible
         If DgvResponsibles.SelectedRows.Count = 1 Then
-            Responsible = _CashItem.Responsibles.Single(Function(X) X.Order = DgvResponsibles.SelectedRows(0).Cells("Order").Value)
+            Responsible = _CashItem.Responsibles.Single(Function(X) X.Guid = DgvResponsibles.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmCashItemResponsible(_CashItem, Responsible, Me)
             Form.ShowDialog()
         End If
@@ -368,9 +372,9 @@ Public Class FrmCashItem
         Dim Responsible As CashItemResponsible
         If DgvResponsibles.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Responsible = _CashItem.Responsibles.Single(Function(X) X.Order = DgvResponsibles.SelectedRows(0).Cells("Order").Value)
+                Responsible = _CashItem.Responsibles.Single(Function(X) X.Guid = DgvResponsibles.SelectedRows(0).Cells("Guid").Value)
                 _CashItem.Responsibles.Remove(Responsible)
-                _CashItem.Responsibles.FillDataGridView(DgvResponsibles)
+                DgvResponsibles.Fill(_CashItem.Responsibles)
                 BtnSave.Enabled = True
             End If
         End If

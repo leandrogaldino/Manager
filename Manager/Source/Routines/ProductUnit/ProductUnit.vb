@@ -4,18 +4,17 @@ Imports MySql.Data.MySqlClient
 ''' Representa uma unidade de medida de um produto.
 ''' </summary>
 Public Class ProductUnit
-    Inherits ModelBase
-    Private _IsSaved As Boolean
+    Inherits ParentModel
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
     Public Property ShortName As String
     Public Sub New()
-        _Routine = Routine.ProductUnit
+        SetRoutine(Routine.ProductUnit)
     End Sub
     Public Sub Clear()
-        _IsSaved = False
-        _ID = 0
-        _Creation = Today
+        SetIsSaved(False)
+        SetID(0)
+        SetCreation(Today)
         Status = SimpleStatus.Active
         Name = Nothing
         ShortName = Nothing
@@ -38,14 +37,14 @@ Public Class ProductUnit
                     ElseIf TableResult.Rows.Count = 1 Then
                         Clear()
                         Unlock(Tra)
-                        _ID = TableResult.Rows(0).Item("id")
-                        _Creation = TableResult.Rows(0).Item("creation")
+                        SetID(TableResult.Rows(0).Item("id"))
+                        SetCreation(TableResult.Rows(0).Item("creation"))
+                        SetIsSaved(True)
                         Status = TableResult.Rows(0).Item("statusid")
                         Name = TableResult.Rows(0).Item("name").ToString
                         ShortName = TableResult.Rows(0).Item("shortname").ToString
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
-                        _IsSaved = True
                     Else
                         Throw New Exception("Registro não encontrado.")
                     End If
@@ -68,14 +67,14 @@ Public Class ProductUnit
                 Clear()
             ElseIf TableResult.Rows.Count = 1 Then
                 Clear()
-                _ID = TableResult.Rows(0).Item("id")
-                _Creation = TableResult.Rows(0).Item("creation")
+                SetID(TableResult.Rows(0).Item("id"))
+                SetCreation(TableResult.Rows(0).Item("creation"))
+                SetIsSaved(True)
                 Status = TableResult.Rows(0).Item("statusid")
                 Name = TableResult.Rows(0).Item("name").ToString
                 ShortName = TableResult.Rows(0).Item("shortname").ToString
                 LockInfo = GetLockInfo(Transaction)
                 If LockMe And Not LockInfo.IsLocked Then Lock(Transaction)
-                _IsSaved = True
             Else
                 Throw New Exception("Registro não encontrado.")
             End If
@@ -83,12 +82,12 @@ Public Class ProductUnit
         Return Me
     End Function
     Public Sub SaveChanges()
-        If Not _IsSaved Then
+        If Not IsSaved Then
             Insert()
         Else
             Update()
         End If
-        _IsSaved = True
+        SetIsSaved(True)
     End Sub
     Public Sub Delete()
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
@@ -112,7 +111,7 @@ Public Class ProductUnit
                     CmdProductUnitInsert.Parameters.AddWithValue("@shortname", ShortName)
                     CmdProductUnitInsert.Parameters.AddWithValue("@userid", User.ID)
                     CmdProductUnitInsert.ExecuteNonQuery()
-                    _ID = CmdProductUnitInsert.LastInsertedId
+                    SetID(CmdProductUnitInsert.LastInsertedId)
                 End Using
                 Tra.Commit()
             End Using

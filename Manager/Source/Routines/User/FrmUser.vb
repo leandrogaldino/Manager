@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Public Class FrmUser
     Private _User As User
@@ -41,10 +41,10 @@ Public Class FrmUser
         DgvEmailLayout.Load()
     End Sub
     Private Sub LoadForm()
-        EnableControlDoubleBuffer(DgvEmail, True)
-        EnableControlDoubleBuffer(FlpPrivilege, True)
-        EnableControlDoubleBuffer(TcUser, True)
-        EnableControlDoubleBuffer(TabPrivilege, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvEmail, True)
+        ControlHelper.EnableControlDoubleBuffer(FlpPrivilege, True)
+        ControlHelper.EnableControlDoubleBuffer(TcUser, True)
+        ControlHelper.EnableControlDoubleBuffer(TabPrivilege, True)
         DgvNavigator.DataGridView = _UsersGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
@@ -57,14 +57,14 @@ Public Class FrmUser
 
     Private Sub InitializePrivileges()
         Dim Controls As New List(Of Control) From {New UcTriStatePrivilegeTitle()}
-        Dim TriStatePrivileges As List(Of Routine) = GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(TriStatePrivilege), True).Any()).OrderBy(Function(x) GetEnumDescription(x)).ToList
+        Dim TriStatePrivileges As List(Of Routine) = EnumHelper.GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(TriStatePrivilege), True).Any()).OrderBy(Function(x) EnumHelper.GetEnumDescription(x)).ToList
         For Each TriStatePrivilege In TriStatePrivileges
             Dim PrivilegeItem = New UcTristatePrivilegeItem() With {.Routine = TriStatePrivilege}
             AddHandler PrivilegeItem.ChechedChanged, AddressOf PrivilegeItemCheckedChange
             Controls.Add(PrivilegeItem)
         Next
         Controls.Add(New UcBiStatePrivilegeTitle())
-        Dim BiStatePrivileges As List(Of Routine) = GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(BiStatePrivilege), True).Any()).OrderBy(Function(x) GetEnumDescription(x)).ToList
+        Dim BiStatePrivileges As List(Of Routine) = EnumHelper.GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(BiStatePrivilege), True).Any()).OrderBy(Function(x) EnumHelper.GetEnumDescription(x)).ToList
         For Each BiStatePrivilege In BiStatePrivileges
             Dim PrivilegeItem = New UcBiStatePrivilegeItem() With {.Routine = BiStatePrivilege}
             AddHandler PrivilegeItem.ChechedChanged, AddressOf PrivilegeItemCheckedChange
@@ -75,20 +75,20 @@ Public Class FrmUser
     Private Sub UpdatePrivileges()
         TabPrivilege.Visible = False
         Dim ControlIndex As Integer = 1
-        Dim TriStatePrivileges As List(Of Routine) = GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(TriStatePrivilege), True).Any()).OrderBy(Function(x) GetEnumDescription(x)).ToList
+        Dim TriStatePrivileges As List(Of Routine) = EnumHelper.GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(TriStatePrivilege), True).Any()).OrderBy(Function(x) EnumHelper.GetEnumDescription(x)).ToList
         For Each TriStatePrivilege In TriStatePrivileges
             Dim PrivilegeItem = CType(FlpPrivilege.Controls(ControlIndex), UcTristatePrivilegeItem)
-            Dim Privileges As List(Of UserPrivilege) = _User.Privileges.Where(Function(x) x.Routine = TriStatePrivilege).ToList()
+            Dim Privileges As List(Of UserPrivilege) = _User.Privileges.Where(Function(x) x.PrivilegedRoutine = TriStatePrivilege).ToList()
             PrivilegeItem.CanAccess = Privileges.Any(Function(p) p.Level = PrivilegeLevel.Access)
             PrivilegeItem.CanWrite = Privileges.Any(Function(p) p.Level = PrivilegeLevel.Write)
             PrivilegeItem.CanDelete = Privileges.Any(Function(p) p.Level = PrivilegeLevel.Delete)
             ControlIndex += 1
         Next
         ControlIndex += 1
-        Dim BiStatePrivileges As List(Of Routine) = GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(BiStatePrivilege), True).Any()).OrderBy(Function(x) GetEnumDescription(x)).ToList
+        Dim BiStatePrivileges As List(Of Routine) = EnumHelper.GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(BiStatePrivilege), True).Any()).OrderBy(Function(x) EnumHelper.GetEnumDescription(x)).ToList
         For Each BiStatePrivilege In BiStatePrivileges
             Dim PrivilegeItem = CType(FlpPrivilege.Controls(ControlIndex), UcBiStatePrivilegeItem)
-            Dim Privileges As List(Of UserPrivilege) = _User.Privileges.Where(Function(x) x.Routine = BiStatePrivilege).ToList()
+            Dim Privileges As List(Of UserPrivilege) = _User.Privileges.Where(Function(x) x.PrivilegedRoutine = BiStatePrivilege).ToList()
             PrivilegeItem.Granted = Privileges.Any(Function(p) p.Level = PrivilegeLevel.Access)
             ControlIndex += 1
         Next
@@ -97,7 +97,7 @@ Public Class FrmUser
     Private Sub LoadData()
         _Loading = True
         LblIDValue.Text = _User.ID
-        BtnStatusValue.Text = GetEnumDescription(_User.Status)
+        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_User.Status)
         LblCreationValue.Text = _User.Creation.ToString("dd/MM/yyyy")
         TxtUsername.Text = _User.Username
         QbxPerson.Unfreeze()
@@ -105,14 +105,14 @@ Public Class FrmUser
         TxtNote.Text = _User.Note
         TxtFilterEmail.Clear()
         TxtFilterPrivileges.Clear()
-        If _User.Emails IsNot Nothing Then _User.Emails.FillDataGridView(DgvEmail)
+        If _User.Emails IsNot Nothing Then DgvEmail.Fill(_User.Emails)
         BtnDelete.Enabled = _User.ID > 0 And _User.CanDelete(Routine.User)
-        If _User.Emails IsNot Nothing Then _User.Emails.FillDataGridView(DgvEmail)
+        If _User.Emails IsNot Nothing Then DgvEmail.Fill(_User.Emails)
         BtnDelete.Enabled = _User.ID > 0 And _User.CanDelete(Routine.User)
         UpdatePrivileges()
         Text = "Usuário"
         If _User.LockInfo.IsLocked And Not _User.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _User.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_User.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _User.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
         End If
         BtnSave.Enabled = False
@@ -148,7 +148,7 @@ Public Class FrmUser
             End If
         End If
         If _UsersForm IsNot Nothing Then
-            _User.Emails.FillDataGridView(DgvEmail)
+            DgvEmail.Fill(_User.Emails)
         End If
         _Deleting = False
     End Sub
@@ -200,7 +200,7 @@ Public Class FrmUser
                         _Deleting = True
                         Dispose()
                     Else
-                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_User.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _User.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                     End If
                 End If
             Catch ex As MySqlException
@@ -219,13 +219,13 @@ Public Class FrmUser
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
-        If BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive)
+        If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
             If _User.Status = SimpleStatus.Active Then
                 CMessageBox.Show("O registro foi marcado para ser inativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
-        ElseIf BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active)
+        ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active)
             If _User.Status = SimpleStatus.Inactive Then
                 CMessageBox.Show("O registro foi marcado para ser ativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
@@ -234,7 +234,7 @@ Public Class FrmUser
     End Sub
     Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
         EprValidation.Clear()
-        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
+        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
     Private Sub PrivilegeItemCheckedChange(sender As Object, e As EventArgs)
         EprValidation.Clear()
@@ -299,16 +299,16 @@ Public Class FrmUser
     End Function
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
-        TxtUsername.Text = RemoveAccents(TxtUsername.Text.Trim)
-        TxtNote.Text = RemoveAccents(TxtNote.Text.ToUpper)
+        TxtUsername.Text = TxtUsername.Text.Trim.ToUnaccented()
+        TxtNote.Text = TxtNote.Text.ToUpper.ToUnaccented()
         If _User.LockInfo.IsLocked And _User.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_User.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _User.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Return False
         Else
             If IsValidFields() Then
                 Try
                     Cursor = Cursors.WaitCursor
-                    _User.Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                    _User.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
                     _User.Username = TxtUsername.Text
                     _User.Person = New Lazy(Of Person)(Function() New Person().Load(QbxPerson.FreezedPrimaryKey, False))
                     _User.Note = TxtNote.Text
@@ -317,11 +317,11 @@ Public Class FrmUser
                         ' Obtém a rotina atual
                         Dim routine = PrivilegeControl.Routine
                         ' Verifica e atualiza o privilégio de "Access"
-                        Dim accessPrivilege = _User.Privileges.FirstOrDefault(Function(p) p.Routine = routine AndAlso p.Level = PrivilegeLevel.Access)
+                        Dim accessPrivilege = _User.Privileges.FirstOrDefault(Function(p) p.PrivilegedRoutine = routine AndAlso p.Level = PrivilegeLevel.Access)
                         If PrivilegeControl.CanAccess Then
                             ' Adiciona o privilégio se estiver marcado e ainda não existir
                             If accessPrivilege Is Nothing Then
-                                _User.Privileges.Add(New UserPrivilege With {.Routine = routine, .Level = PrivilegeLevel.Access})
+                                _User.Privileges.Add(New UserPrivilege With {.PrivilegedRoutine = routine, .Level = PrivilegeLevel.Access})
                             End If
                         Else
                             ' Remove o privilégio se não estiver marcado e já existir
@@ -331,11 +331,11 @@ Public Class FrmUser
                         End If
 
                         ' Verifica e atualiza o privilégio de "Write"
-                        Dim writePrivilege = _User.Privileges.FirstOrDefault(Function(p) p.Routine = routine AndAlso p.Level = PrivilegeLevel.Write)
+                        Dim writePrivilege = _User.Privileges.FirstOrDefault(Function(p) p.PrivilegedRoutine = routine AndAlso p.Level = PrivilegeLevel.Write)
                         If PrivilegeControl.CanWrite Then
                             ' Adiciona o privilégio se estiver marcado e ainda não existir
                             If writePrivilege Is Nothing Then
-                                _User.Privileges.Add(New UserPrivilege With {.Routine = routine, .Level = PrivilegeLevel.Write})
+                                _User.Privileges.Add(New UserPrivilege With {.PrivilegedRoutine = routine, .Level = PrivilegeLevel.Write})
                             End If
                         Else
                             ' Remove o privilégio se não estiver marcado e já existir
@@ -345,11 +345,11 @@ Public Class FrmUser
                         End If
 
                         ' Verifica e atualiza o privilégio de "Delete"
-                        Dim deletePrivilege = _User.Privileges.FirstOrDefault(Function(p) p.Routine = routine AndAlso p.Level = PrivilegeLevel.Delete)
+                        Dim deletePrivilege = _User.Privileges.FirstOrDefault(Function(p) p.PrivilegedRoutine = routine AndAlso p.Level = PrivilegeLevel.Delete)
                         If PrivilegeControl.CanDelete Then
                             ' Adiciona o privilégio se estiver marcado e ainda não existir
                             If deletePrivilege Is Nothing Then
-                                _User.Privileges.Add(New UserPrivilege With {.Routine = routine, .Level = PrivilegeLevel.Delete})
+                                _User.Privileges.Add(New UserPrivilege With {.PrivilegedRoutine = routine, .Level = PrivilegeLevel.Delete})
                             End If
                         Else
                             ' Remove o privilégio se não estiver marcado e já existir
@@ -368,11 +368,11 @@ Public Class FrmUser
                         ' Obtém a rotina atual
                         Dim routine = PrivilegeControl.Routine
                         ' Verifica e atualiza o privilégio de "Access"
-                        Dim accessPrivilege = _User.Privileges.FirstOrDefault(Function(p) p.Routine = routine AndAlso p.Level = PrivilegeLevel.Access)
+                        Dim accessPrivilege = _User.Privileges.FirstOrDefault(Function(p) p.PrivilegedRoutine = routine AndAlso p.Level = PrivilegeLevel.Access)
                         If PrivilegeControl.Granted Then
                             ' Adiciona o privilégio se estiver marcado e ainda não existir
                             If accessPrivilege Is Nothing Then
-                                _User.Privileges.Add(New UserPrivilege With {.Routine = routine, .Level = PrivilegeLevel.Access})
+                                _User.Privileges.Add(New UserPrivilege With {.PrivilegedRoutine = routine, .Level = PrivilegeLevel.Access})
                             End If
                         Else
                             ' Remove o privilégio se não estiver marcado e já existir
@@ -412,7 +412,7 @@ Public Class FrmUser
                     _User.SaveChanges()
                     _User.Lock()
                     LblIDValue.Text = _User.ID
-                    _User.Emails.FillDataGridView(DgvEmail)
+                    DgvEmail.Fill(_User.Emails)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.User)
                     If _UsersForm IsNot Nothing Then
@@ -602,7 +602,7 @@ Public Class FrmUser
         Dim Email As UserEmail
         If DgvEmail.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            Email = _User.Emails.Single(Function(x) x.Order = DgvEmail.SelectedRows(0).Cells("Order").Value)
+            Email = _User.Emails.Single(Function(x) x.Guid = DgvEmail.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmUserEmail(_User, Email, Me)
             Form.ShowDialog()
             Cursor = Cursors.Default
@@ -612,9 +612,9 @@ Public Class FrmUser
         Dim Email As UserEmail
         If DgvEmail.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Email = _User.Emails.Single(Function(x) x.Order = DgvEmail.SelectedRows(0).Cells("Order").Value)
+                Email = _User.Emails.Single(Function(x) x.Guid = DgvEmail.SelectedRows(0).Cells("Guid").Value)
                 _User.Emails.Remove(Email)
-                _User.Emails.FillDataGridView(DgvEmail)
+                DgvEmail.Fill(_User.Emails)
                 BtnSave.Enabled = True
             End If
         End If
@@ -676,7 +676,7 @@ Public Class FrmUser
         FlpPrivilege.SuspendLayout()
         If Not String.IsNullOrEmpty(Filter) Then
             For Each PrivilegeControl In FlpPrivilege.Controls.OfType(Of UcTristatePrivilegeItem)
-                If Not GetEnumDescription(PrivilegeControl.Routine).ToUpper.Contains(Filter.ToUpper) Then
+                If Not EnumHelper.GetEnumDescription(PrivilegeControl.Routine).ToUpper.Contains(Filter.ToUpper) Then
                     PrivilegeControl.Visible = False
                 Else
                     PrivilegeControl.Visible = True
@@ -684,7 +684,7 @@ Public Class FrmUser
             Next PrivilegeControl
 
             For Each PrivilegeControl In FlpPrivilege.Controls.OfType(Of UcBiStatePrivilegeItem)
-                If Not GetEnumDescription(PrivilegeControl.Routine).ToUpper.Contains(Filter.ToUpper) Then
+                If Not EnumHelper.GetEnumDescription(PrivilegeControl.Routine).ToUpper.Contains(Filter.ToUpper) Then
                     PrivilegeControl.Visible = False
                 Else
                     PrivilegeControl.Visible = True

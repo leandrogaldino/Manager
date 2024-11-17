@@ -1,12 +1,10 @@
-﻿Imports System.Reflection
-Imports ControlLibrary
+﻿Imports ControlLibrary
 Imports MySql.Data.MySqlClient
 ''' <summary>
 ''' Representa uma pessoa.
 ''' </summary>
 Public Class Person
-    Inherits ModelBase
-    Private _IsSaved As Boolean
+    Inherits ParentModel
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Entity As PersonEntityType = PersonEntityType.Legal
     Public Property IsCustomer As Boolean
@@ -15,21 +13,21 @@ Public Class Person
     Public Property IsTechnician As Boolean
     Public Property IsCarrier As Boolean
     Public Property ControlMaintenance As Boolean
-    Public Property Addresses As New OrdenedList(Of PersonAddress)
-    Public Property Contacts As New OrdenedList(Of PersonContact)
-    Public Property Compressors As New OrdenedList(Of PersonCompressor)
+    Public Property Addresses As New List(Of PersonAddress)
+    Public Property Contacts As New List(Of PersonContact)
+    Public Property Compressors As New List(Of PersonCompressor)
     Public Property Document As String
     Public Property Name As String
     Public Property ShortName As String
     Public Property Note As String
     Public Sub New()
-        _Routine = Routine.Person
+        SetRoutine(Routine.Person)
     End Sub
     Public Sub Clear()
         Unlock()
-        _IsSaved = False
-        _ID = 0
-        _Creation = Today
+        SetIsSaved(False)
+        SetID(0)
+        SetCreation(Today)
         Status = SimpleStatus.Active
         Entity = PersonEntityType.Legal
         IsCustomer = False
@@ -38,9 +36,9 @@ Public Class Person
         IsTechnician = False
         IsCarrier = False
         ControlMaintenance = False
-        Addresses = New OrdenedList(Of PersonAddress)
-        Contacts = New OrdenedList(Of PersonContact)
-        Compressors = New OrdenedList(Of PersonCompressor)
+        Addresses = New List(Of PersonAddress)
+        Contacts = New List(Of PersonContact)
+        Compressors = New List(Of PersonCompressor)
         Document = Nothing
         Name = Nothing
         ShortName = Nothing
@@ -63,8 +61,9 @@ Public Class Person
                         Clear()
                     ElseIf TableResult.Rows.Count = 1 Then
                         Clear()
-                        _ID = TableResult.Rows(0).Item("id")
-                        _Creation = TableResult.Rows(0).Item("creation")
+                        SetID(TableResult.Rows(0).Item("id"))
+                        SetCreation(TableResult.Rows(0).Item("creation"))
+                        SetIsSaved(True)
                         Status = TableResult.Rows(0).Item("statusid")
                         Entity = TableResult.Rows(0).Item("entityid")
                         IsCustomer = TableResult.Rows(0).Item("iscustomer")
@@ -82,7 +81,6 @@ Public Class Person
                         Compressors = GetCompressors(Tra)
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
-                        _IsSaved = True
                     Else
                         Throw New Exception("Registro não encontrado.")
                     End If
@@ -109,8 +107,9 @@ Public Class Person
                         Clear()
                     ElseIf TableResult.Rows.Count = 1 Then
                         Clear()
-                        _ID = TableResult.Rows(0).Item("id")
-                        _Creation = TableResult.Rows(0).Item("creation")
+                        SetID(TableResult.Rows(0).Item("id"))
+                        SetCreation(TableResult.Rows(0).Item("creation"))
+                        SetIsSaved(True)
                         Status = TableResult.Rows(0).Item("statusid")
                         Entity = TableResult.Rows(0).Item("entityid")
                         IsCustomer = TableResult.Rows(0).Item("iscustomer")
@@ -128,7 +127,6 @@ Public Class Person
                         Compressors = GetCompressors(Tra)
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
-                        _IsSaved = True
                     Else
                         Throw New Exception("Registro não encontrado.")
                     End If
@@ -139,17 +137,17 @@ Public Class Person
         Return Me
     End Function
     Public Sub SaveChanges()
-        If Not _IsSaved Then
+        If Not IsSaved Then
             Insert()
         Else
             Update()
         End If
-        _IsSaved = True
-        Addresses.ToList().ForEach(Sub(x) x.IsSaved = True)
-        Contacts.ToList().ForEach(Sub(x) x.IsSaved = True)
-        Compressors.ToList().ForEach(Sub(x) x.IsSaved = True)
-        Compressors.ToList().ForEach(Sub(x) x.PartsWorkedHour.ToList().ForEach(Sub(y) y.IsSaved = True))
-        Compressors.ToList().ForEach(Sub(x) x.PartsElapsedDay.ToList().ForEach(Sub(y) y.IsSaved = True))
+        SetIsSaved(True)
+        Addresses.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        Contacts.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        Compressors.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        Compressors.ToList().ForEach(Sub(x) x.PartsWorkedHour.ToList().ForEach(Sub(y) y.SetIsSaved(True)))
+        Compressors.ToList().ForEach(Sub(x) x.PartsElapsedDay.ToList().ForEach(Sub(y) y.SetIsSaved(True)))
     End Sub
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)
@@ -184,7 +182,7 @@ Public Class Person
                     CmdPerson.Parameters.AddWithValue("@note", If(String.IsNullOrEmpty(Note), DBNull.Value, Note))
                     CmdPerson.Parameters.AddWithValue("@userid", User.ID)
                     CmdPerson.ExecuteNonQuery()
-                    _ID = CmdPerson.LastInsertedId
+                    SetID(CmdPerson.LastInsertedId)
                 End Using
                 For Each Address As PersonAddress In Addresses
                     Using CmdAddress As New MySqlCommand(My.Resources.PersonAddressInsert, Con)
@@ -206,7 +204,7 @@ Public Class Person
                         CmdAddress.Parameters.AddWithValue("@carrierid", If(Address.Carrier.ID = 0, DBNull.Value, Address.Carrier.ID))
                         CmdAddress.Parameters.AddWithValue("@userid", Address.User.ID)
                         CmdAddress.ExecuteNonQuery()
-                        Address.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Address, CmdAddress.LastInsertedId)
+                        Address.SetID(CmdAddress.LastInsertedId)
                     End Using
                 Next Address
                 For Each Contact As PersonContact In Contacts
@@ -221,7 +219,7 @@ Public Class Person
                         CmdContact.Parameters.AddWithValue("@email", If(String.IsNullOrEmpty(Contact.Email), DBNull.Value, Contact.Email))
                         CmdContact.Parameters.AddWithValue("@userid", Contact.User.ID)
                         CmdContact.ExecuteNonQuery()
-                        Contact.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Contact, CmdContact.LastInsertedId)
+                        Contact.SetID(CmdContact.LastInsertedId)
                     End Using
                 Next Contact
                 For Each PersonCompressor As PersonCompressor In Compressors
@@ -238,7 +236,7 @@ Public Class Person
                         CmdCompressor.Parameters.AddWithValue("@note", If(String.IsNullOrEmpty(PersonCompressor.Note), DBNull.Value, PersonCompressor.Note))
                         CmdCompressor.Parameters.AddWithValue("@userid", PersonCompressor.User.ID)
                         CmdCompressor.ExecuteNonQuery()
-                        PersonCompressor.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PersonCompressor, CmdCompressor.LastInsertedId)
+                        PersonCompressor.SetID(CmdCompressor.LastInsertedId)
                         For Each PartWorkedHour In PersonCompressor.PartsWorkedHour
                             Using CmdPartWorkedHour As New MySqlCommand(My.Resources.PersonCompressorPartInsert, Con)
                                 CmdPartWorkedHour.Transaction = Tra
@@ -253,7 +251,7 @@ Public Class Person
                                 CmdPartWorkedHour.Parameters.AddWithValue("@capacity", PartWorkedHour.Capacity)
                                 CmdPartWorkedHour.Parameters.AddWithValue("@userid", PartWorkedHour.User.ID)
                                 CmdPartWorkedHour.ExecuteNonQuery()
-                                PartWorkedHour.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartWorkedHour, CmdPartWorkedHour.LastInsertedId)
+                                PartWorkedHour.SetID(CmdPartWorkedHour.LastInsertedId)
                             End Using
                         Next PartWorkedHour
                         For Each PartElapsedDay In PersonCompressor.PartsElapsedDay
@@ -270,7 +268,7 @@ Public Class Person
                                 CmdPartElapsedDay.Parameters.AddWithValue("@capacity", PartElapsedDay.Capacity)
                                 CmdPartElapsedDay.Parameters.AddWithValue("@userid", PartElapsedDay.User.ID)
                                 CmdPartElapsedDay.ExecuteNonQuery()
-                                PartElapsedDay.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartElapsedDay, CmdPartElapsedDay.LastInsertedId)
+                                PartElapsedDay.SetID(CmdPartElapsedDay.LastInsertedId)
                             End Using
                         Next PartElapsedDay
                     End Using
@@ -334,7 +332,7 @@ Public Class Person
                             CmdAddress.Parameters.AddWithValue("@carrierid", If(Address.Carrier.ID = 0, DBNull.Value, Address.Carrier.ID))
                             CmdAddress.Parameters.AddWithValue("@userid", Address.User.ID)
                             CmdAddress.ExecuteNonQuery()
-                            Address.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Address, CmdAddress.LastInsertedId)
+                            Address.SetID(CmdAddress.LastInsertedId)
                         End Using
                     Else
                         Using CmdAddress As New MySqlCommand(My.Resources.PersonAddressUpdate, Con)
@@ -380,7 +378,7 @@ Public Class Person
                             CmdContact.Parameters.AddWithValue("@email", If(String.IsNullOrEmpty(Contact.Email), DBNull.Value, Contact.Email))
                             CmdContact.Parameters.AddWithValue("@userid", Contact.User.ID)
                             CmdContact.ExecuteNonQuery()
-                            Contact.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Contact, CmdContact.LastInsertedId)
+                            Contact.SetID(CmdContact.LastInsertedId)
                         End Using
                     Else
                         Using CmdContact As New MySqlCommand(My.Resources.PersonContactUpdate, Con)
@@ -440,7 +438,7 @@ Public Class Person
                             CmdCompressor.Parameters.AddWithValue("@note", If(String.IsNullOrEmpty(PersonCompressor.Note), DBNull.Value, PersonCompressor.Note))
                             CmdCompressor.Parameters.AddWithValue("@userid", PersonCompressor.User.ID)
                             CmdCompressor.ExecuteNonQuery()
-                            PersonCompressor.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PersonCompressor, CmdCompressor.LastInsertedId)
+                            PersonCompressor.SetID(CmdCompressor.LastInsertedId)
                             For Each PartWorkedHour In PersonCompressor.PartsWorkedHour
                                 Using CmdPartWorkedHour As New MySqlCommand(My.Resources.PersonCompressorPartInsert, Con)
                                     CmdPartWorkedHour.Transaction = Tra
@@ -455,7 +453,7 @@ Public Class Person
                                     CmdPartWorkedHour.Parameters.AddWithValue("@capacity", PartWorkedHour.Capacity)
                                     CmdPartWorkedHour.Parameters.AddWithValue("@userid", PartWorkedHour.User.ID)
                                     CmdPartWorkedHour.ExecuteNonQuery()
-                                    PartWorkedHour.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartWorkedHour, CmdPartWorkedHour.LastInsertedId)
+                                    PartWorkedHour.SetID(CmdPartWorkedHour.LastInsertedId)
                                 End Using
                             Next PartWorkedHour
                             For Each PartElapsedDay In PersonCompressor.PartsElapsedDay
@@ -472,7 +470,7 @@ Public Class Person
                                     CmdPartElapsedDay.Parameters.AddWithValue("@capacity", PartElapsedDay.Capacity)
                                     CmdPartElapsedDay.Parameters.AddWithValue("@userid", PartElapsedDay.User.ID)
                                     CmdPartElapsedDay.ExecuteNonQuery()
-                                    PartElapsedDay.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartElapsedDay, CmdPartElapsedDay.LastInsertedId)
+                                    PartElapsedDay.SetID(CmdPartElapsedDay.LastInsertedId)
                                 End Using
                             Next PartElapsedDay
                         End Using
@@ -504,7 +502,7 @@ Public Class Person
                                         CmdPartWorkedHour.Parameters.AddWithValue("@capacity", PartWorkedHour.Capacity)
                                         CmdPartWorkedHour.Parameters.AddWithValue("@userid", PartWorkedHour.User.ID)
                                         CmdPartWorkedHour.ExecuteNonQuery()
-                                        PartWorkedHour.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartWorkedHour, CmdPartWorkedHour.LastInsertedId)
+                                        PartWorkedHour.SetID(CmdPartWorkedHour.LastInsertedId)
                                     End Using
                                 Else
                                     Using CmdPartWorkedHour As New MySqlCommand(My.Resources.PersonCompressorPartUpdate, Con)
@@ -536,7 +534,7 @@ Public Class Person
                                         CmdPartElapsedDay.Parameters.AddWithValue("@capacity", PartElapsedDay.Capacity)
                                         CmdPartElapsedDay.Parameters.AddWithValue("@userid", PartElapsedDay.User.ID)
                                         CmdPartElapsedDay.ExecuteNonQuery()
-                                        PartElapsedDay.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartElapsedDay, CmdPartElapsedDay.LastInsertedId)
+                                        PartElapsedDay.SetID(CmdPartElapsedDay.LastInsertedId)
                                     End Using
                                 Else
                                     Using CmdPartElapsedDay As New MySqlCommand(My.Resources.PersonCompressorPartUpdate, Con)
@@ -560,9 +558,9 @@ Public Class Person
             End Using
         End Using
     End Sub
-    Private Function GetAddresses(Transaction As MySqlTransaction) As OrdenedList(Of PersonAddress)
+    Private Function GetAddresses(Transaction As MySqlTransaction) As List(Of PersonAddress)
         Dim TableResult As DataTable
-        Dim Addresses As OrdenedList(Of PersonAddress)
+        Dim Addresses As List(Of PersonAddress)
         Dim Address As PersonAddress
         Using CmdAddress As New MySqlCommand(My.Resources.PersonAddressSelect, Transaction.Connection)
             CmdAddress.Transaction = Transaction
@@ -570,34 +568,35 @@ Public Class Person
             Using Adp As New MySqlDataAdapter(CmdAddress)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                Addresses = New OrdenedList(Of PersonAddress)
+                Addresses = New List(Of PersonAddress)
                 For Each Row As DataRow In TableResult.Rows
-                    Address = New PersonAddress()
-                    Address.IsMainAddress = Row.Item("ismainaddress")
-                    Address.Status = Row.Item("statusid")
-                    Address.Name = Row.Item("name").ToString
-                    Address.ZipCode = Row.Item("zipcode").ToString
-                    Address.Street = Row.Item("street").ToString
-                    Address.Number = Row.Item("number").ToString
-                    Address.Complement = Row.Item("complement").ToString
-                    Address.District = Row.Item("district").ToString
-                    Address.City = New City().Load(Row.Item("cityid"), False)
-                    Address.CityDocument = Row.Item("citydocument").ToString
-                    Address.StateDocument = Row.Item("statedocument").ToString
-                    Address.ContributionType = Row.Item("contributiontypeid")
-                    Address.Carrier = If(Row.Item("carrierid") = ID, Me, New Person().Load(Row.Item("carrierid"), False))
-                    Address.IsSaved = True
-                    Address.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Address, Row.Item("id"))
-                    Address.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Address, Row.Item("creation"))
+                    Address = New PersonAddress With {
+                        .IsMainAddress = Row.Item("ismainaddress"),
+                        .Status = Row.Item("statusid"),
+                        .Name = Row.Item("name").ToString,
+                        .ZipCode = Row.Item("zipcode").ToString,
+                        .Street = Row.Item("street").ToString,
+                        .Number = Row.Item("number").ToString,
+                        .Complement = Row.Item("complement").ToString,
+                        .District = Row.Item("district").ToString,
+                        .City = New City().Load(Row.Item("cityid"), False),
+                        .CityDocument = Row.Item("citydocument").ToString,
+                        .StateDocument = Row.Item("statedocument").ToString,
+                        .ContributionType = Row.Item("contributiontypeid"),
+                        .Carrier = If(Row.Item("carrierid") = ID, Me, New Person().Load(Row.Item("carrierid"), False))
+                    }
+                    Address.SetIsSaved(True)
+                    Address.SetID(Row.Item("id"))
+                    Address.SetCreation(Row.Item("creation"))
                     Addresses.Add(Address)
                 Next Row
             End Using
         End Using
         Return Addresses
     End Function
-    Private Function GetContacts(Transaction As MySqlTransaction) As OrdenedList(Of PersonContact)
+    Private Function GetContacts(Transaction As MySqlTransaction) As List(Of PersonContact)
         Dim TableResult As DataTable
-        Dim Contacts As OrdenedList(Of PersonContact)
+        Dim Contacts As List(Of PersonContact)
         Dim Contact As PersonContact
         Using CmdContact As New MySqlCommand(My.Resources.PersonContactSelect, Transaction.Connection)
             CmdContact.Transaction = Transaction
@@ -605,26 +604,27 @@ Public Class Person
             Using Adp As New MySqlDataAdapter(CmdContact)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                Contacts = New OrdenedList(Of PersonContact)
+                Contacts = New List(Of PersonContact)
                 For Each Row As DataRow In TableResult.Rows
-                    Contact = New PersonContact
-                    Contact.IsMainContact = Row.Item("ismaincontact")
-                    Contact.Name = Row.Item("name").ToString
-                    Contact.JobTitle = Row.Item("jobtitle").ToString
-                    Contact.Phone = Row.Item("phone").ToString
-                    Contact.Email = Row.Item("email").ToString
-                    Contact.IsSaved = True
-                    Contact.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Contact, Row.Item("id"))
-                    Contact.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Contact, Row.Item("creation"))
+                    Contact = New PersonContact With {
+                        .IsMainContact = Row.Item("ismaincontact"),
+                        .Name = Row.Item("name").ToString,
+                        .JobTitle = Row.Item("jobtitle").ToString,
+                        .Phone = Row.Item("phone").ToString,
+                        .Email = Row.Item("email").ToString
+                    }
+                    Contact.SetIsSaved(True)
+                    Contact.SetID(Row.Item("id"))
+                    Contact.SetCreation(Row.Item("creation"))
                     Contacts.Add(Contact)
                 Next Row
             End Using
         End Using
         Return Contacts
     End Function
-    Private Function GetCompressors(Transaction As MySqlTransaction) As OrdenedList(Of PersonCompressor)
+    Private Function GetCompressors(Transaction As MySqlTransaction) As List(Of PersonCompressor)
         Dim TableResult As DataTable
-        Dim Compressors As OrdenedList(Of PersonCompressor)
+        Dim Compressors As List(Of PersonCompressor)
         Dim Compressor As PersonCompressor
         Using CmdCompressor As New MySqlCommand(My.Resources.PersonCompressorSelect, Transaction.Connection)
             CmdCompressor.Transaction = Transaction
@@ -632,19 +632,20 @@ Public Class Person
             Using Adp As New MySqlDataAdapter(CmdCompressor)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                Compressors = New OrdenedList(Of PersonCompressor)
+                Compressors = New List(Of PersonCompressor)
                 For Each Row As DataRow In TableResult.Rows
-                    Compressor = New PersonCompressor()
-                    Compressor.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Compressor, Row.Item("id"))
-                    Compressor.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Compressor, Row.Item("creation"))
-                    Compressor.Status = Row.Item("statusid")
+                    Compressor = New PersonCompressor With {
+                        .Status = Row.Item("statusid"),
+                        .SerialNumber = Row.Item("serialnumber").ToString,
+                        .Patrimony = Row.Item("patrimony").ToString,
+                        .Sector = Row.Item("sector").ToString,
+                        .UnitCapacity = Row.Item("unitcapacity"),
+                        .Note = Row.Item("note").ToString
+                    }
                     Compressor.Compressor = New Compressor().Load(Row.Item("compressorid"), False)
-                    Compressor.SerialNumber = Row.Item("serialnumber").ToString
-                    Compressor.Patrimony = Row.Item("patrimony").ToString
-                    Compressor.Sector = Row.Item("sector").ToString
-                    Compressor.UnitCapacity = Row.Item("unitcapacity")
-                    Compressor.Note = Row.Item("note").ToString
-                    Compressor.IsSaved = True
+                    Compressor.SetIsSaved(True)
+                    Compressor.SetID(Row.Item("id"))
+                    Compressor.SetCreation(Row.Item("creation"))
                     Compressor.PartsWorkedHour = GetCompressorPartsWorkedHour(Transaction, Compressor.ID)
                     Compressor.PartsElapsedDay = GetCompressorPartsElapsedDay(Transaction, Compressor.ID)
                     Compressors.Add(Compressor)
@@ -653,9 +654,9 @@ Public Class Person
         End Using
         Return Compressors
     End Function
-    Private Function GetCompressorPartsWorkedHour(Transaction As MySqlTransaction, PersonCompressorID As Long) As OrdenedList(Of PersonCompressorPart)
+    Private Function GetCompressorPartsWorkedHour(Transaction As MySqlTransaction, PersonCompressorID As Long) As List(Of PersonCompressorPart)
         Dim TableResult As DataTable
-        Dim PartsWorkedHour As OrdenedList(Of PersonCompressorPart)
+        Dim PartsWorkedHour As List(Of PersonCompressorPart)
         Dim PartWorkedHour As PersonCompressorPart
         Using CmdPartWorkedHour As New MySqlCommand(My.Resources.PersonCompressorPartSelect, Transaction.Connection)
             CmdPartWorkedHour.Transaction = Transaction
@@ -664,27 +665,28 @@ Public Class Person
             Using Adp As New MySqlDataAdapter(CmdPartWorkedHour)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                PartsWorkedHour = New OrdenedList(Of PersonCompressorPart)
+                PartsWorkedHour = New List(Of PersonCompressorPart)
                 For Each Row As DataRow In TableResult.Rows
-                    PartWorkedHour = New PersonCompressorPart(Row.Item("parttypeid"))
-                    PartWorkedHour.Status = Row.Item("statusid")
-                    PartWorkedHour.PartBind = Row.Item("partbindid")
-                    PartWorkedHour.ItemName = Row.Item("itemname").ToString
-                    PartWorkedHour.Product = New Lazy(Of Product)(Function() New Product().Load(Row.Item("productid"), False))
-                    PartWorkedHour.Quantity = Row.Item("quantity")
-                    PartWorkedHour.Capacity = Row.Item("capacity")
-                    PartWorkedHour.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartWorkedHour, Row.Item("id"))
-                    PartWorkedHour.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartWorkedHour, Row.Item("creation"))
-                    PartWorkedHour.IsSaved = True
+                    PartWorkedHour = New PersonCompressorPart(Row.Item("parttypeid")) With {
+                        .Status = Row.Item("statusid"),
+                        .PartBind = Row.Item("partbindid"),
+                        .ItemName = Row.Item("itemname").ToString,
+                        .Product = New Lazy(Of Product)(Function() New Product().Load(Row.Item("productid"), False)),
+                        .Quantity = Row.Item("quantity"),
+                        .Capacity = Row.Item("capacity")
+                    }
+                    PartWorkedHour.SetID(Row.Item("id"))
+                    PartWorkedHour.SetCreation(Row.Item("creation"))
+                    PartWorkedHour.SetIsSaved(True)
                     PartsWorkedHour.Add(PartWorkedHour)
                 Next Row
             End Using
         End Using
         Return PartsWorkedHour
     End Function
-    Private Function GetCompressorPartsElapsedDay(Transaction As MySqlTransaction, PersonCompressorID As Long) As OrdenedList(Of PersonCompressorPart)
+    Private Function GetCompressorPartsElapsedDay(Transaction As MySqlTransaction, PersonCompressorID As Long) As List(Of PersonCompressorPart)
         Dim TableResult As DataTable
-        Dim PartsElapsedDay As OrdenedList(Of PersonCompressorPart)
+        Dim PartsElapsedDay As List(Of PersonCompressorPart)
         Dim PartElapsedDay As PersonCompressorPart
         Using CmdPartElapsedDay As New MySqlCommand(My.Resources.PersonCompressorPartSelect, Transaction.Connection)
             CmdPartElapsedDay.Transaction = Transaction
@@ -693,18 +695,19 @@ Public Class Person
             Using Adp As New MySqlDataAdapter(CmdPartElapsedDay)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                PartsElapsedDay = New OrdenedList(Of PersonCompressorPart)
+                PartsElapsedDay = New List(Of PersonCompressorPart)
                 For Each Row As DataRow In TableResult.Rows
-                    PartElapsedDay = New PersonCompressorPart(Row.Item("parttypeid"))
-                    PartElapsedDay.Status = Row.Item("statusid")
-                    PartElapsedDay.PartBind = Row.Item("partbindid")
-                    PartElapsedDay.ItemName = Row.Item("itemname").ToString
-                    PartElapsedDay.Product = New Lazy(Of Product)(Function() New Product().Load(Row.Item("productid"), False))
-                    PartElapsedDay.Quantity = Row.Item("quantity")
-                    PartElapsedDay.Capacity = Row.Item("capacity")
-                    PartElapsedDay.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartElapsedDay, Row.Item("id"))
-                    PartElapsedDay.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartElapsedDay, Row.Item("creation"))
-                    PartElapsedDay.IsSaved = True
+                    PartElapsedDay = New PersonCompressorPart(Row.Item("parttypeid")) With {
+                        .Status = Row.Item("statusid"),
+                        .PartBind = Row.Item("partbindid"),
+                        .ItemName = Row.Item("itemname").ToString,
+                        .Product = New Lazy(Of Product)(Function() New Product().Load(Row.Item("productid"), False)),
+                        .Quantity = Row.Item("quantity"),
+                        .Capacity = Row.Item("capacity")
+                    }
+                    PartElapsedDay.SetID(Row.Item("id"))
+                    PartElapsedDay.SetCreation(Row.Item("creation"))
+                    PartElapsedDay.SetIsSaved(True)
                     PartsElapsedDay.Add(PartElapsedDay)
                 Next Row
             End Using

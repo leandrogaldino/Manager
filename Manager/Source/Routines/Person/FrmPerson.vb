@@ -1,12 +1,12 @@
 ﻿Imports ControlLibrary
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
-Imports ControlLibrary.Utility
 Public Class FrmPerson
     Private _Person As Person
     Private _PersonsForm As FrmPersons
     Private _PersonsGrid As DataGridView
     Private _Filter As PersonFilter
-    Private _CompressorsShadow As New OrdenedList(Of PersonCompressor)
+    Private _CompressorsShadow As New List(Of PersonCompressor)
     Private _Deleting As Boolean
     Private _Loading As Boolean
     Private _User As User
@@ -58,9 +58,9 @@ Public Class FrmPerson
         DgvContactLayout.Load()
     End Sub
     Private Sub LoadForm()
-        Utility.EnableControlDoubleBuffer(DgvCompressor, True)
-        Utility.EnableControlDoubleBuffer(DgvAddress, True)
-        Utility.EnableControlDoubleBuffer(DgvContact, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvCompressor, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvAddress, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvContact, True)
         DgvNavigator.DataGridView = _PersonsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
@@ -70,7 +70,7 @@ Public Class FrmPerson
         _Loading = True
         TcPerson.SelectedTab = TabMain
         LblIDValue.Text = _Person.ID
-        BtnStatusValue.Text = GetEnumDescription(_Person.Status)
+        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Person.Status)
         LblCreationValue.Text = _Person.Creation.ToString("dd/MM/yyyy")
         RbtIsNaturalEntity.Checked = _Person.Entity = PersonEntityType.Natural
         RbtIsLegalEntity.Checked = _Person.Entity = PersonEntityType.Legal
@@ -87,9 +87,9 @@ Public Class FrmPerson
         TxtFilterAddress.Clear()
         TxtFilterContact.Clear()
         TxtFilterCompressor.Clear()
-        If _Person.Addresses IsNot Nothing Then _Person.Addresses.FillDataGridView(DgvAddress)
-        If _Person.Contacts IsNot Nothing Then _Person.Contacts.FillDataGridView(DgvContact)
-        If _Person.Compressors IsNot Nothing Then _Person.Compressors.FillDataGridView(DgvCompressor)
+        If _Person.Addresses IsNot Nothing Then DgvAddress.Fill(_Person.Addresses)
+        If _Person.Contacts IsNot Nothing Then DgvContact.Fill(_Person.Contacts)
+        If _Person.Compressors IsNot Nothing Then DgvCompressor.Fill(_Person.Compressors)
         BtnDelete.Enabled = _Person.ID < 0 And _User.CanDelete(Routine.Person)
         _CompressorsShadow.Clear()
         For Each Compressor As PersonCompressor In _Person.Compressors
@@ -97,7 +97,7 @@ Public Class FrmPerson
         Next
         Text = "Pessoa"
         If _Person.LockInfo.IsLocked And Not _Person.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Person.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_Person.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _Person.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
         End If
         BtnSave.Enabled = False
@@ -134,9 +134,9 @@ Public Class FrmPerson
                 End If
             End If
             If _PersonsForm IsNot Nothing Then
-                _Person.Addresses.FillDataGridView(DgvAddress)
-                _Person.Contacts.FillDataGridView(DgvContact)
-                _Person.Compressors.FillDataGridView(DgvCompressor)
+                DgvAddress.Fill(_Person.Addresses)
+                DgvContact.Fill(_Person.Contacts)
+                DgvCompressor.Fill(_Person.Compressors)
             End If
             _Deleting = False
         End If
@@ -165,7 +165,7 @@ Public Class FrmPerson
                         _Deleting = True
                         Dispose()
                     Else
-                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_Person.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Person.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                     End If
                 End If
             Catch ex As MySqlException
@@ -184,13 +184,13 @@ Public Class FrmPerson
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
-        If BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive)
+        If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
             If _Person.Status = SimpleStatus.Active Then
                 CMessageBox.Show("O registro foi marcado para ser inativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
-        ElseIf BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active)
+        ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active)
             If _Person.Status = SimpleStatus.Inactive Then
                 CMessageBox.Show("O registro foi marcado para ser ativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
@@ -199,7 +199,7 @@ Public Class FrmPerson
     End Sub
     Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
         EprValidation.Clear()
-        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
+        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
     Private Sub Radio_CheckedChanged(sender As Object, e As EventArgs) Handles RbtIsLegalEntity.CheckedChanged, RbtIsNaturalEntity.CheckedChanged
         TxtDocument.Text = Nothing
@@ -230,7 +230,7 @@ Public Class FrmPerson
                                                         TxtShortName.TextChanged,
                                                         TxtNote.TextChanged
         EprValidation.Clear()
-        BtnDocument.Enabled = IsValidLegalEntityDocument(TxtDocument.Text)
+        BtnDocument.Enabled = BrazilianFormatHelper.IsValidLegalEntityDocument(TxtDocument.Text)
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
     Private Sub TxtNote_LinkClicked(sender As Object, e As LinkClickedEventArgs) Handles TxtNote.LinkClicked
@@ -252,17 +252,17 @@ Public Class FrmPerson
         End If
     End Sub
     Private Sub TxtDocument_Leave(sender As Object, e As EventArgs) Handles TxtDocument.Leave
-        TxtDocument.Text = GetFormatedDocument(TxtDocument.Text)
+        TxtDocument.Text = BrazilianFormatHelper.GetFormatedDocument(TxtDocument.Text)
     End Sub
     Private Sub BtnDocument_Click(sender As Object, e As EventArgs) Handles BtnDocument.Click
         Dim DataSearch As Consulta.CNPJ.Services.CNPJService
         Dim SearchResult As Consulta.CNPJ.Models.CNPJResult
         Dim Person As Person
         Dim FormGet As FrmPersonGetDocument
-        TxtDocument.Text = GetFormatedDocument(TxtDocument.Text)
+        TxtDocument.Text = BrazilianFormatHelper.GetFormatedDocument(TxtDocument.Text)
         Try
             Cursor = Cursors.WaitCursor
-            If IsInternetAvailable() Then
+            If InternetHelper.IsInternetAvailable() Then
                 DataSearch = New Consulta.CNPJ.Services.CNPJService
                 SearchResult = DataSearch.ConsultarCPNJ(TxtDocument.Text.Replace(".", Nothing).Replace("-", Nothing).Replace("/", Nothing))
                 If SearchResult IsNot Nothing Then
@@ -272,11 +272,11 @@ Public Class FrmPerson
                     Person.ShortName = SearchResult.Fantasia
                     Person.Contacts.Add(New PersonContact With {
                         .Name = Nothing,
-                        .Phone = GetFormatedPhoneNumber(SearchResult.Telefone),
+                        .Phone = BrazilianFormatHelper.GetFormatedPhoneNumber(SearchResult.Telefone),
                         .Email = SearchResult.Email,
-                        .IsMainContact = _Person.Contacts.Count = 0,
-                        .IsSaved = True
+                        .IsMainContact = _Person.Contacts.Count = 0
                     })
+                    Person.Contacts.Last.SetIsSaved(True)
                     Person.Addresses.Add(New PersonAddress() With {
                         .Name = "SEDE",
                         .ZipCode = SearchResult.Cep,
@@ -284,10 +284,10 @@ Public Class FrmPerson
                         .Number = SearchResult.Numero,
                         .Complement = SearchResult.Complemento,
                         .District = SearchResult.Bairro,
-                        .City = New City().Load(City.GetID(RemoveAccents(SearchResult.Municipio), SearchResult.Uf), False),
-                        .IsMainAddress = _Person.Addresses.Count = 0,
-                        .IsSaved = True
+                        .City = New City().Load(City.GetID(SearchResult.Municipio.ToUnaccented(), SearchResult.Uf), False),
+                        .IsMainAddress = _Person.Addresses.Count = 0
                     })
+                    Person.Addresses.Last.SetIsSaved(True)
                     FormGet = New FrmPersonGetDocument(Person, SearchResult)
                     If FormGet.ShowDialog() = DialogResult.OK Then
                         If FormGet.CbxImportIdentity.Checked Then
@@ -296,11 +296,11 @@ Public Class FrmPerson
                         End If
                         If FormGet.CbxImportContact.Checked Then
                             _Person.Contacts.Add(Person.Contacts(0))
-                            _Person.Contacts.FillDataGridView(DgvContact)
+                            DgvContact.Fill(_Person.Contacts)
                         End If
                         If FormGet.CbxImportAddress.Checked Then
                             _Person.Addresses.Add(Person.Addresses(0))
-                            _Person.Addresses.FillDataGridView(DgvAddress)
+                            DgvAddress.Fill(_Person.Addresses)
                         End If
                     End If
                 Else
@@ -327,7 +327,7 @@ Public Class FrmPerson
         Dim Address As PersonAddress
         If DgvAddress.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            Address = _Person.Addresses.Single(Function(x) x.Order = DgvAddress.SelectedRows(0).Cells("Order").Value)
+            Address = _Person.Addresses.Single(Function(x) x.Guid = DgvAddress.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmPersonAddress(_Person, Address, Me)
             Form.ShowDialog()
             Cursor = Cursors.Default
@@ -337,10 +337,10 @@ Public Class FrmPerson
         Dim Address As PersonAddress
         If DgvAddress.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Address = _Person.Addresses.Single(Function(x) x.Order = DgvAddress.SelectedRows(0).Cells("Order").Value)
+                Address = _Person.Addresses.Single(Function(x) x.Guid = DgvAddress.SelectedRows(0).Cells("Guid").Value)
                 If Not Address.IsMainAddress Then
                     _Person.Addresses.Remove(Address)
-                    _Person.Addresses.FillDataGridView(DgvAddress)
+                    DgvAddress.Fill(_Person.Addresses)
                     BtnSave.Enabled = True
                 Else
                     CMessageBox.Show("O endereço principal não pode ser excluido.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
@@ -357,7 +357,7 @@ Public Class FrmPerson
         Dim Contact As PersonContact
         If DgvContact.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            Contact = _Person.Contacts.Single(Function(x) x.Order = DgvContact.SelectedRows(0).Cells("Order").Value)
+            Contact = _Person.Contacts.Single(Function(x) x.Guid = DgvContact.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmPersonContact(_Person, Contact, Me)
             Form.ShowDialog()
             Cursor = Cursors.Default
@@ -367,10 +367,10 @@ Public Class FrmPerson
         Dim Contact As PersonContact
         If DgvContact.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Contact = _Person.Contacts.Single(Function(x) x.Order = DgvContact.SelectedRows(0).Cells("Order").Value)
+                Contact = _Person.Contacts.Single(Function(x) x.Guid = DgvContact.SelectedRows(0).Cells("Guid").Value)
                 If Not Contact.IsMainContact Then
                     _Person.Contacts.Remove(Contact)
-                    _Person.Contacts.FillDataGridView(DgvContact)
+                    DgvContact.Fill(_Person.Contacts)
                     BtnSave.Enabled = True
                 Else
                     CMessageBox.Show("O contato principal não pode ser excluido.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
@@ -387,7 +387,7 @@ Public Class FrmPerson
         Dim Compressor As PersonCompressor
         If DgvCompressor.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            Compressor = _Person.Compressors.Single(Function(x) x.Order = DgvCompressor.SelectedRows(0).Cells("Order").Value)
+            Compressor = _Person.Compressors.Single(Function(x) x.Guid = DgvCompressor.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmPersonCompressor(_Person, Compressor, Me)
             Form.ShowDialog()
             Cursor = Cursors.Default
@@ -397,9 +397,9 @@ Public Class FrmPerson
         Dim Compressor As PersonCompressor
         If DgvCompressor.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Compressor = _Person.Compressors.Single(Function(x) x.Order = DgvCompressor.SelectedRows(0).Cells("Order").Value)
+                Compressor = _Person.Compressors.Single(Function(x) x.Guid = DgvCompressor.SelectedRows(0).Cells("Guid").Value)
                 _Person.Compressors.Remove(Compressor)
-                _Person.Compressors.FillDataGridView(DgvCompressor)
+                DgvCompressor.Fill(_Person.Compressors)
                 BtnSave.Enabled = True
             End If
         End If
@@ -422,10 +422,10 @@ Public Class FrmPerson
         If e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
                 Case Is = SimpleStatus.Active
-                    e.Value = GetEnumDescription(SimpleStatus.Active)
+                    e.Value = EnumHelper.GetEnumDescription(SimpleStatus.Active)
                     e.CellStyle.ForeColor = Color.DarkBlue
                 Case Is = SimpleStatus.Inactive
-                    e.Value = GetEnumDescription(SimpleStatus.Inactive)
+                    e.Value = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
                     e.CellStyle.ForeColor = Color.DarkRed
             End Select
         End If
@@ -436,20 +436,20 @@ Public Class FrmPerson
         If e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
                 Case Is = SimpleStatus.Active
-                    e.Value = GetEnumDescription(SimpleStatus.Active)
+                    e.Value = EnumHelper.GetEnumDescription(SimpleStatus.Active)
                     e.CellStyle.ForeColor = Color.DarkBlue
                 Case Is = SimpleStatus.Inactive
-                    e.Value = GetEnumDescription(SimpleStatus.Inactive)
+                    e.Value = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
                     e.CellStyle.ForeColor = Color.DarkRed
             End Select
         ElseIf e.ColumnIndex = Dgv.Columns("ContributionType").Index Then
             Select Case e.Value
                 Case Is = PersonContributionType.TaxPayer
-                    e.Value = GetEnumDescription(PersonContributionType.TaxPayer)
+                    e.Value = EnumHelper.GetEnumDescription(PersonContributionType.TaxPayer)
                 Case Is = PersonContributionType.NonTaxPayer
-                    e.Value = GetEnumDescription(PersonContributionType.NonTaxPayer)
+                    e.Value = EnumHelper.GetEnumDescription(PersonContributionType.NonTaxPayer)
                 Case Is = PersonContributionType.TaxFree
-                    e.Value = GetEnumDescription(PersonContributionType.TaxFree)
+                    e.Value = EnumHelper.GetEnumDescription(PersonContributionType.TaxFree)
             End Select
         End If
     End Sub
@@ -484,13 +484,13 @@ Public Class FrmPerson
             TcPerson.SelectedTab = TabMain
             TxtDocument.Select()
             Return False
-        ElseIf RbtIsNaturalEntity.Checked And Not IsValidNaturalEntityDocument(TxtDocument.Text) Then
+        ElseIf RbtIsNaturalEntity.Checked And Not BrazilianFormatHelper.IsValidNaturalEntityDocument(TxtDocument.Text) Then
             EprValidation.SetError(LblDocument, "CPF inválido.")
             EprValidation.SetIconAlignment(LblDocument, ErrorIconAlignment.MiddleRight)
             TcPerson.SelectedTab = TabMain
             TxtDocument.Select()
             Return False
-        ElseIf RbtIsLegalEntity.Checked And Not IsValidLegalEntityDocument(TxtDocument.Text) Then
+        ElseIf RbtIsLegalEntity.Checked And Not BrazilianFormatHelper.IsValidLegalEntityDocument(TxtDocument.Text) Then
             EprValidation.SetError(LblDocument, "CNPJ inválido.")
             EprValidation.SetIconAlignment(LblDocument, ErrorIconAlignment.MiddleRight)
             TcPerson.SelectedTab = TabMain
@@ -527,17 +527,17 @@ Public Class FrmPerson
     End Function
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
-        TxtName.Text = RemoveAccents(TxtName.Text.Trim)
-        TxtShortName.Text = RemoveAccents(TxtShortName.Text.Trim)
-        TxtNote.Text = RemoveAccents(TxtNote.Text.ToUpper)
+        TxtName.Text = TxtName.Text.Trim.ToUnaccented()
+        TxtShortName.Text = TxtShortName.Text.Trim.ToUnaccented()
+        TxtNote.Text = TxtNote.Text.ToUpper.ToUnaccented()
         If _Person.LockInfo.IsLocked And _Person.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_Person.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Person.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Return False
         Else
             If IsValidFields() Then
                 Try
                     Cursor = Cursors.WaitCursor
-                    _Person.Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                    _Person.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
                     _Person.Entity = If(RbtIsLegalEntity.Checked, PersonEntityType.Legal, PersonEntityType.Natural)
                     _Person.IsCustomer = CbxIsCustomer.Checked
                     _Person.IsProvider = CbxIsProvider.Checked
@@ -552,9 +552,9 @@ Public Class FrmPerson
                     _Person.SaveChanges()
                     _Person.Lock()
                     LblIDValue.Text = _Person.ID
-                    _Person.Addresses.FillDataGridView(DgvAddress)
-                    _Person.Contacts.FillDataGridView(DgvContact)
-                    _Person.Compressors.FillDataGridView(DgvCompressor)
+                    DgvAddress.Fill(_Person.Addresses)
+                    DgvContact.Fill(_Person.Contacts)
+                    DgvCompressor.Fill(_Person.Compressors)
                     _CompressorsShadow.Clear()
                     For Each Compressor As PersonCompressor In _Person.Compressors
                         _CompressorsShadow.Add(Compressor.Clone)
@@ -583,7 +583,7 @@ Public Class FrmPerson
                                 _Person.Compressors.Add(Compressor.Clone)
                             End If
                         Next
-                        _Person.Compressors.FillDataGridView(DgvCompressor)
+                        DgvCompressor.Fill(_Person.Compressors)
                     ElseIf ex.Message.Contains("evaluationpart_personcompressorpart") Then
                         CMessageBox.Show("Existe avaliação para um ou mais itens excluídos. Todos os itens excluídos serão restaurados.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                         For Each Compressor As PersonCompressor In _CompressorsShadow
@@ -598,7 +598,7 @@ Public Class FrmPerson
                                 End If
                             Next PartElapsedDay
                         Next
-                        _Person.Compressors.FillDataGridView(DgvCompressor)
+                        DgvCompressor.Fill(_Person.Compressors)
                     Else
                         CMessageBox.Show("ERRO PS004", "Ocorreu um erro salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                     End If
@@ -724,7 +724,7 @@ Public Class FrmPerson
         If BtnDocument.Enabled Then
             BtnDocument.BackgroundImage = My.Resources.Magnifier
         Else
-            BtnDocument.BackgroundImage = Utility.GetRecoloredImage(My.Resources.Magnifier, Color.Gray)
+            BtnDocument.BackgroundImage = ImageHelper.GetRecoloredImage(My.Resources.Magnifier, Color.Gray)
         End If
     End Sub
     Private Sub TxtFilterAddress_Enter(sender As Object, e As EventArgs) Handles TxtFilterAddress.Enter

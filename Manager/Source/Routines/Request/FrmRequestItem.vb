@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Public Class FrmRequestItem
     Private _RequestForm As FrmRequest
     Private _Request As Request
@@ -34,8 +34,8 @@ Public Class FrmRequestItem
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = _RequestItem.Order
-        LblStatusValue.Text = GetEnumDescription(_RequestItem.Status)
+        LblOrderValue.Text = If(_RequestItem.IsSaved, _RequestForm.DgvItem.SelectedRows(0).Cells("Order").Value, 0)
+        LblStatusValue.Text = EnumHelper.GetEnumDescription(_RequestItem.Status)
         LblCreationValue.Text = _RequestItem.Creation
         QbxItem.Unfreeze()
         If _RequestItem.ItemName = Nothing And _RequestItem.Product.ID > 0 Then
@@ -51,7 +51,7 @@ Public Class FrmRequestItem
         DbxPending.Text = _RequestItem.Pending
         DbxLossed.Text = _RequestItem.Lossed
         TxtLostReason.Text = _RequestItem.LossReason
-        If _RequestItem.Order = 0 Then
+        If Not _RequestItem.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
         Else
@@ -74,7 +74,7 @@ Public Class FrmRequestItem
     Private Sub AfterDataGridViewRowMove()
         If _RequestForm.DgvItem.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _RequestItem = _Request.Items.Single(Function(x) x.Order = _RequestForm.DgvItem.SelectedRows(0).Cells("Order").Value)
+            _RequestItem = _Request.Items.Single(Function(x) x.Guid = _RequestForm.DgvItem.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -181,31 +181,30 @@ Public Class FrmRequestItem
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
         Dim TargetItems As List(Of RequestItem)
-        Dim Msg As String
         If Not QbxItem.IsFreezed Then
             QbxItem.QueryEnabled = False
-            QbxItem.Text = RemoveAccents(QbxItem.Text.Trim)
+            QbxItem.Text = QbxItem.Text.Trim.ToUnaccented()
             QbxItem.QueryEnabled = True
         End If
-        TxtLostReason.Text = RemoveAccents(TxtLostReason.Text)
+        TxtLostReason.Text = TxtLostReason.Text.ToUnaccented()
         If IsValidFields() Then
             If _RequestItem.IsSaved Then
-                _Request.Items.Single(Function(x) x.Order = _RequestItem.Order).Status = GetEnumValue(Of RequestStatus)(LblStatusValue.Text)
+                _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).Status = EnumHelper.GetEnumValue(Of RequestStatus)(LblStatusValue.Text)
                 If QbxItem.IsFreezed Then
-                    _Request.Items.Single(Function(x) x.Order = _RequestItem.Order).ItemName = Nothing
-                    _Request.Items.Single(Function(x) x.Order = _RequestItem.Order).Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
+                    _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).ItemName = Nothing
+                    _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
                 Else
-                    _Request.Items.Single(Function(x) x.Order = _RequestItem.Order).ItemName = QbxItem.Text
-                    _Request.Items.Single(Function(x) x.Order = _RequestItem.Order).Product = New Product
+                    _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).ItemName = QbxItem.Text
+                    _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).Product = New Product
                 End If
-                _Request.Items.Single(Function(x) x.Order = _RequestItem.Order).Taked = DbxTaked.Text
-                _Request.Items.Single(Function(x) x.Order = _RequestItem.Order).Returned = DbxReturned.Text
-                _Request.Items.Single(Function(x) x.Order = _RequestItem.Order).Applied = DbxApplied.Text
-                _Request.Items.Single(Function(x) x.Order = _RequestItem.Order).Lossed = DbxLossed.Text
-                _Request.Items.Single(Function(x) x.Order = _RequestItem.Order).LossReason = TxtLostReason.Text
+                _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).Taked = DbxTaked.Text
+                _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).Returned = DbxReturned.Text
+                _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).Applied = DbxApplied.Text
+                _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).Lossed = DbxLossed.Text
+                _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).LossReason = TxtLostReason.Text
             Else
                 _RequestItem = New RequestItem()
-                _RequestItem.Status = GetEnumValue(Of RequestStatus)(LblStatusValue.Text)
+                _RequestItem.Status = EnumHelper.GetEnumValue(Of RequestStatus)(LblStatusValue.Text)
                 If QbxItem.IsFreezed Then
                     _RequestItem.ItemName = Nothing
                     _RequestItem.Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
@@ -220,31 +219,26 @@ Public Class FrmRequestItem
                 _RequestItem.LossReason = TxtLostReason.Text
                 TargetItems = _Request.Items.Where(Function(x) x.Equals(_RequestItem)).ToList
                 If TargetItems IsNot Nothing AndAlso TargetItems.Count > 0 Then
-                    If TargetItems.Count = 1 Then
-                        Msg = $"Esse item já está na posição {TargetItems(0).Order} dessa requisição, deseja incluir novamente?"
-                    Else
-                        Msg = $"Esse item já está nas posições {String.Join(", ", TargetItems.Select(Function(x) x.Order))} dessa requisição, deseja incluir novamente?"
-                    End If
-                    If CMessageBox.Show(Msg, CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.No Then
+                    If CMessageBox.Show("Esse item já foi incluido na requisição, deseja incluir novamente?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.No Then
                         Return False
                     End If
                 End If
-                _RequestItem.IsSaved = True
+                _RequestItem.SetIsSaved(True)
                 _Request.Items.Add(_RequestItem)
             End If
-            _Request.Items.FillDataGridView(_RequestForm.DgvItem)
-            LblOrderValue.Text = _RequestItem.Order
+            _RequestForm.DgvItem.Fill(_Request.Items)
             _RequestForm.DgvItemLayout.Load()
             BtnSave.Enabled = False
-            If _RequestItem.Order = 0 Then
+            If Not _RequestItem.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _RequestForm.DgvItem.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Order").Value = _RequestItem.Order)
+            Row = _RequestForm.DgvItem.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _RequestItem.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+            LblOrderValue.Text = _RequestForm.DgvItem.SelectedRows(0).Cells("Order").Value
             _RequestForm.EprValidation.Clear()
             _RequestForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()
@@ -309,9 +303,9 @@ Public Class FrmRequestItem
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _RequestForm.DgvItem.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _RequestItem = _Request.Items.Single(Function(x) x.Order = _RequestForm.DgvItem.SelectedRows(0).Cells("Order").Value)
+                _RequestItem = _Request.Items.Single(Function(x) x.Guid = _RequestForm.DgvItem.SelectedRows(0).Cells("Guid").Value)
                 _Request.Items.Remove(_RequestItem)
-                _Request.Items.FillDataGridView(_RequestForm.DgvItem)
+                _RequestForm.DgvItem.Fill(_Request.Items)
                 _RequestForm.DgvItemLayout.Load()
                 _Deleting = True
                 Dispose()
@@ -323,22 +317,22 @@ Public Class FrmRequestItem
         If DbxPending.DecimalValue = 0 Then
             DbxPending.BackColor = Color.LightGreen
             DbxPending.ForeColor = Color.DarkGreen
-            LblStatusValue.Text = GetEnumDescription(RequestStatus.Concluded)
+            LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Concluded)
         ElseIf DbxPending.DecimalValue < DbxTaked.DecimalValue Then
             DbxPending.BackColor = Color.Wheat
             DbxPending.ForeColor = Color.Chocolate
-            LblStatusValue.Text = GetEnumDescription(RequestStatus.Partial)
+            LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Partial)
         Else
             DbxPending.BackColor = Color.LightCoral
             DbxPending.ForeColor = Color.DarkRed
-            LblStatusValue.Text = GetEnumDescription(RequestStatus.Pending)
+            LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Pending)
         End If
         EprValidation.Clear()
     End Sub
     Private Sub LblStatusValue_TextChanged(sender As Object, e As EventArgs) Handles LblStatusValue.TextChanged
-        If LblStatusValue.Text = GetEnumDescription(RequestStatus.Pending) Then
+        If LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Pending) Then
             LblStatusValue.ForeColor = Color.DarkRed
-        ElseIf LblStatusValue.Text = GetEnumDescription(RequestStatus.Partial) Then
+        ElseIf LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Partial) Then
             LblStatusValue.ForeColor = Color.Chocolate
         Else
             LblStatusValue.ForeColor = Color.DarkGreen

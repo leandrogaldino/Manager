@@ -1,17 +1,14 @@
 ﻿Imports System.IO
-Imports System.Reflection
 Imports ChinhDo.Transactions
 Imports ControlLibrary
-Imports DocumentFormat.OpenXml.Office2016.Drawing.Charts
 Imports ManagerCore
 Imports MySql.Data.MySqlClient
 
 Public Class Evaluation
-    Inherits ModelBase
+    Inherits ParentModel
     Private _Compressor As New PersonCompressor
     Private _Status As EvaluationStatus = EvaluationStatus.Disapproved
     Private _RejectReason As String
-    Private _IsSaved As Boolean
     Public ReadOnly Property Status As EvaluationStatus
         Get
             Return _Status
@@ -23,7 +20,7 @@ Public Class Evaluation
     Public Property StartTime As New TimeSpan(0, 0, 0)
     Public Property EndTime As New TimeSpan(0, 0, 0)
     Public Property EvaluationNumber As String
-    Public Property Technicians As New OrdenedList(Of EvaluationTechnician)
+    Public Property Technicians As New List(Of EvaluationTechnician)
     Public Property Customer As New Person
     Public Property Responsible As String
     Public Property Compressor As PersonCompressor
@@ -53,7 +50,7 @@ Public Class Evaluation
                             PartsWorkedHour.Add(New EvaluationPart(CompressorPartType.WorkedHour) With {.Part = p})
                         End If
                     Next p
-                    For Each p In PartsWorkedHour.Reverse
+                    For Each p In PartsWorkedHour.ToArray.Reverse
                         If p.Part.Status = SimpleStatus.Inactive Then
                             PartsWorkedHour.Remove(p)
                         End If
@@ -68,7 +65,7 @@ Public Class Evaluation
                             PartsElapsedDay.Add(New EvaluationPart(CompressorPartType.ElapsedDay) With {.Part = p})
                         End If
                     Next p
-                    For Each p In PartsElapsedDay.Reverse
+                    For Each p In PartsElapsedDay.ToArray.Reverse
                         If p.Part.Status = SimpleStatus.Inactive Then
                             PartsElapsedDay.Remove(p)
                         End If
@@ -81,21 +78,20 @@ Public Class Evaluation
     Public Property Horimeter As Integer
     Public Property ManualAverageWorkLoad As Boolean
     Public Property AverageWorkLoad As Decimal = 5.71
-    Public Property PartsWorkedHour As New OrdenedList(Of EvaluationPart)
-    Public Property PartsElapsedDay As New OrdenedList(Of EvaluationPart)
+    Public Property PartsWorkedHour As New List(Of EvaluationPart)
+    Public Property PartsElapsedDay As New List(Of EvaluationPart)
     Public Property TechnicalAdvice As String
     Public Property Document As New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
     Public Property Signature As New FileManager(ApplicationPaths.EvaluationSignatureDirectory)
-    Public Property Photos As New OrdenedList(Of EvaluationPhoto)
+    Public Property Photos As New List(Of EvaluationPhoto)
     Public ReadOnly Property RejectReason As String
         Get
             Return _RejectReason
         End Get
     End Property
     Public Sub New()
-        _Routine = Routine.Evaluation
+        SetRoutine(Routine.Evaluation)
     End Sub
-
 
     Public Shared Function FromCloud(Data As Dictionary(Of String, Object), Signature As String, Photos As List(Of String)) As Evaluation
         Dim Evaluation As New Evaluation
@@ -116,32 +112,32 @@ Public Class Evaluation
         Dim Oil As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBindType.Oil).ToList
 
         Evaluation.PartsWorkedHour.ToList.ForEach(Sub(x)
-                                                      x.IsSaved = True
+                                                      x.SetIsSaved(True)
                                                   End Sub)
 
         AirFilter.ForEach(Sub(x)
                               x.CurrentCapacity = Data("parts")("air_filter")
                               x.Sold = False
                               x.Lost = False
-                              x.IsSaved = True
+                              x.SetIsSaved(True)
                           End Sub)
         OilFilter.ForEach(Sub(x)
                               x.CurrentCapacity = Data("parts")("oil_filter")
                               x.Sold = False
                               x.Lost = False
-                              x.IsSaved = True
+                              x.SetIsSaved(True)
                           End Sub)
         Separator.ForEach(Sub(x)
                               x.CurrentCapacity = Data("parts")("separator")
                               x.Sold = False
                               x.Lost = False
-                              x.IsSaved = True
+                              x.SetIsSaved(True)
                           End Sub)
         Oil.ForEach(Sub(x)
                         x.CurrentCapacity = Data("parts")("oil")
                         x.Sold = False
                         x.Lost = False
-                        x.IsSaved = True
+                        x.SetIsSaved(True)
                     End Sub)
         For Each CoalescentData In Data("parts")("coalescents")
             Coalescent = Evaluation.PartsElapsedDay.Where(Function(y) y.Part.PartBinded).FirstOrDefault(Function(x) x.Part.ID = CoalescentData("coalescent_id"))
@@ -149,32 +145,29 @@ Public Class Evaluation
                 Coalescent.CurrentCapacity = DateDiff(DateInterval.Day, Today, CDate(CoalescentData("next_change")))
                 Coalescent.Sold = False
                 Coalescent.Lost = False
-                Coalescent.IsSaved = True
+                Coalescent.SetIsSaved(True)
             End If
         Next CoalescentData
         Evaluation.Responsible = Data("responsible")
         Evaluation.StartTime = TimeSpan.ParseExact(Data("start_time"), "hh\:mm", Nothing)
         For Each TechnicianData In Data("technicians")
             EvaluationTechnician = New EvaluationTechnician With {
-                .Technician = New Person().Load(TechnicianData("person_id"), False),
-                .IsSaved = True
+                .Technician = New Person().Load(TechnicianData("person_id"), False)
             }
+            EvaluationTechnician.SetIsSaved(True)
             Evaluation.Technicians.Add(EvaluationTechnician)
         Next TechnicianData
         Evaluation.Signature.SetCurrentFile(Signature)
         For Each p In Photos
-            Dim Photo As New EvaluationPhoto
-            Photo.Photo = New FileManager(ApplicationPaths.EvaluationPhotoDirectory)
-            Photo.IsSaved = True
+            Dim Photo As New EvaluationPhoto With {
+                .Photo = New FileManager(ApplicationPaths.EvaluationPhotoDirectory)
+            }
+            Photo.SetIsSaved(True)
             Photo.Photo.SetCurrentFile(p)
             Evaluation.Photos.Add(Photo)
         Next p
         Return Evaluation
     End Function
-
-
-
-
 
     Public Shared Function CountEvaluation(PersonCompressorID As Long, StatusFilter As List(Of EvaluationStatus), Optional IgnoreEvaluation As Long = 0) As Long
         Dim Session = Locator.GetInstance(Of Session)
@@ -192,28 +185,28 @@ Public Class Evaluation
     End Function
     Public Sub Clear()
         Unlock()
-        _IsSaved = False
-        _ID = 0
-        _Creation = Today
+        SetIsSaved(False)
+        SetID(0)
+        SetCreation(Today)
         _Status = EvaluationStatus.Disapproved
         EvaluationType = EvaluationType.Gathering
         EvaluationDate = Today
         StartTime = New TimeSpan(0, 0, 0)
         EndTime = New TimeSpan(0, 0, 0)
         EvaluationNumber = Nothing
-        Technicians = New OrdenedList(Of EvaluationTechnician)
+        Technicians = New List(Of EvaluationTechnician)
         Customer = New Person
         Responsible = Nothing
         Compressor = New PersonCompressor
         Horimeter = 0
         ManualAverageWorkLoad = False
         AverageWorkLoad = 0
-        PartsWorkedHour = New OrdenedList(Of EvaluationPart)
-        PartsElapsedDay = New OrdenedList(Of EvaluationPart)
+        PartsWorkedHour = New List(Of EvaluationPart)
+        PartsElapsedDay = New List(Of EvaluationPart)
         TechnicalAdvice = Nothing
         Document = New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
         Signature = New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
-        Photos = New OrdenedList(Of EvaluationPhoto)
+        Photos = New List(Of EvaluationPhoto)
         _RejectReason = Nothing
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As Evaluation
@@ -233,8 +226,9 @@ Public Class Evaluation
                         Clear()
                     ElseIf TableResult.Rows.Count = 1 Then
                         Clear()
-                        _ID = TableResult.Rows(0).Item("id")
-                        _Creation = TableResult.Rows(0).Item("creation")
+                        SetID(TableResult.Rows(0).Item("id"))
+                        SetCreation(TableResult.Rows(0).Item("creation"))
+                        SetIsSaved(True)
                         _Status = TableResult.Rows(0).Item("statusid")
                         EvaluationType = TableResult.Rows(0).Item("evaluationtypeid")
                         EvaluationDate = TableResult.Rows(0).Item("evaluationdate")
@@ -260,7 +254,6 @@ Public Class Evaluation
                         FillParts(Tra)
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
-                        _IsSaved = True
                     Else
                         Throw New Exception("Registro não encontrado.")
                     End If
@@ -270,10 +263,10 @@ Public Class Evaluation
         End Using
         Return Me
     End Function
-    Private Function GetPhotos(Transaction As MySqlTransaction) As OrdenedList(Of EvaluationPhoto)
+    Private Function GetPhotos(Transaction As MySqlTransaction) As List(Of EvaluationPhoto)
         Dim TableResult As DataTable
         Dim Photo As EvaluationPhoto
-        Dim Photos As New OrdenedList(Of EvaluationPhoto)
+        Dim Photos As New List(Of EvaluationPhoto)
         Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoSelect, Transaction.Connection)
             Cmd.Transaction = Transaction
             Cmd.Parameters.AddWithValue("@evaluationid", ID)
@@ -283,19 +276,19 @@ Public Class Evaluation
                 For Each Row As DataRow In TableResult.Rows
                     Photo = New EvaluationPhoto
                     Photo.Photo.SetCurrentFile((Path.Combine(ApplicationPaths.EvaluationPhotoDirectory, Row.Item("photoname").ToString)), True)
-                    Photo.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Photo, Row.Item("id"))
-                    Photo.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Photo, Row.Item("creation"))
-                    Photo.IsSaved = True
+                    Photo.SetID(Row.Item("id"))
+                    Photo.SetCreation(Row.Item("creation"))
+                    Photo.SetIsSaved(True)
                     Photos.Add(Photo)
                 Next Row
             End Using
         End Using
         Return Photos
     End Function
-    Private Function GetTechnicians(Transaction As MySqlTransaction) As OrdenedList(Of EvaluationTechnician)
+    Private Function GetTechnicians(Transaction As MySqlTransaction) As List(Of EvaluationTechnician)
         Dim TableResult As DataTable
         Dim Technician As EvaluationTechnician
-        Dim Technicians As New OrdenedList(Of EvaluationTechnician)
+        Dim Technicians As New List(Of EvaluationTechnician)
         Using Cmd As New MySqlCommand(My.Resources.EvaluationTechnicianSelect, Transaction.Connection)
             Cmd.Transaction = Transaction
             Cmd.Parameters.AddWithValue("@evaluationid", ID)
@@ -303,11 +296,12 @@ Public Class Evaluation
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
                 For Each Row As DataRow In TableResult.Rows
-                    Technician = New EvaluationTechnician
-                    Technician.Technician = New Person().Load(Row.Item("technicianid"), False)
-                    Technician.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Technician, Row.Item("id"))
-                    Technician.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Technician, Row.Item("creation"))
-                    Technician.IsSaved = True
+                    Technician = New EvaluationTechnician With {
+                        .Technician = New Person().Load(Row.Item("technicianid"), False)
+                    }
+                    Technician.SetID(Row.Item("id"))
+                    Technician.SetCreation(Row.Item("creation"))
+                    Technician.SetIsSaved(True)
                     Technicians.Add(Technician)
                 Next Row
             End Using
@@ -327,21 +321,22 @@ Public Class Evaluation
                 Adp.Fill(TableResult)
                 For Each Row As DataRow In TableResult.Rows
                     If PartsWorkedHour.Any(Function(x) x.Part.ID = Row.Item("personcompressorpartid")) Then
-                        PartsWorkedHour.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).IsSaved = True
+                        PartsWorkedHour.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).SetID(Row.Item("id"))
+                        PartsWorkedHour.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).SetCreation(Row.Item("creation"))
+                        PartsWorkedHour.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).SetIsSaved(True)
                         PartsWorkedHour.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).CurrentCapacity = Row.Item("currentcapacity")
                         PartsWorkedHour.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).Sold = Row.Item("sold")
                         PartsWorkedHour.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).Lost = Row.Item("lost")
-                        PartsWorkedHour.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartsWorkedHour.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")), Row.Item("id"))
-                        PartsWorkedHour.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartsWorkedHour.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")), Row.Item("creation"))
                     Else
-                        Part = New EvaluationPart(CompressorPartType.WorkedHour)
-                        Part.Part = Compressor.PartsWorkedHour.Single(Function(x) x.ID = Row.Item("personcompressorpartid"))
-                        Part.IsSaved = True
-                        Part.CurrentCapacity = Row.Item("currentcapacity")
-                        Part.Sold = Row.Item("sold")
-                        Part.Lost = Row.Item("lost")
-                        Part.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Part, Row.Item("id"))
-                        Part.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Part, Row.Item("creation"))
+                        Part = New EvaluationPart(CompressorPartType.WorkedHour) With {
+                            .Part = Compressor.PartsWorkedHour.Single(Function(x) x.ID = Row.Item("personcompressorpartid")),
+                            .CurrentCapacity = Row.Item("currentcapacity"),
+                            .Sold = Row.Item("sold"),
+                            .Lost = Row.Item("lost")
+                        }
+                        Part.SetID(Row.Item("id"))
+                        Part.SetCreation(Row.Item("creation"))
+                        Part.SetIsSaved(True)
                         PartsWorkedHour.Add(Part)
                     End If
                 Next Row
@@ -356,21 +351,22 @@ Public Class Evaluation
                 Adp.Fill(TableResult)
                 For Each Row As DataRow In TableResult.Rows
                     If PartsElapsedDay.Any(Function(x) x.Part.ID = Row.Item("personcompressorpartid")) Then
-                        PartsElapsedDay.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).IsSaved = True
+                        PartsElapsedDay.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).SetIsSaved(True)
+                        PartsElapsedDay.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).SetID(Row.Item("id"))
+                        PartsElapsedDay.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).SetCreation(Row.Item("creation"))
                         PartsElapsedDay.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).CurrentCapacity = Row.Item("currentcapacity")
                         PartsElapsedDay.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).Sold = Row.Item("sold")
                         PartsElapsedDay.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).Lost = Row.Item("lost")
-                        PartsElapsedDay.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartsElapsedDay.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")), Row.Item("id"))
-                        PartsElapsedDay.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartsElapsedDay.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")), Row.Item("creation"))
                     Else
-                        Part = New EvaluationPart(CompressorPartType.ElapsedDay)
-                        Part.Part = Compressor.PartsElapsedDay.Single(Function(x) x.ID = Row.Item("personcompressorpartid"))
-                        Part.IsSaved = True
-                        Part.CurrentCapacity = Row.Item("currentcapacity")
-                        Part.Sold = Row.Item("sold")
-                        Part.Lost = Row.Item("lost")
-                        Part.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Part, Row.Item("id"))
-                        Part.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Part, Row.Item("creation"))
+                        Part = New EvaluationPart(CompressorPartType.ElapsedDay) With {
+                            .Part = Compressor.PartsElapsedDay.Single(Function(x) x.ID = Row.Item("personcompressorpartid")),
+                            .CurrentCapacity = Row.Item("currentcapacity"),
+                            .Sold = Row.Item("sold"),
+                            .Lost = Row.Item("lost")
+                        }
+                        Part.SetIsSaved(True)
+                        Part.SetID(Row.Item("id"))
+                        Part.SetCreation(Row.Item("creation"))
                         PartsElapsedDay.Add(Part)
                     End If
                 Next Row
@@ -378,16 +374,16 @@ Public Class Evaluation
         End Using
     End Sub
     Public Sub SaveChanges()
-        If Not _IsSaved Then
+        If Not IsSaved Then
             Insert()
         Else
             Update()
         End If
-        _IsSaved = True
-        Technicians.ToList().ForEach(Sub(x) x.IsSaved = True)
-        PartsWorkedHour.ToList().ForEach(Sub(x) x.IsSaved = True)
-        PartsElapsedDay.ToList().ForEach(Sub(x) x.IsSaved = True)
-        Photos.ToList().ForEach(Sub(x) x.IsSaved = True)
+        SetIsSaved(True)
+        Technicians.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        PartsWorkedHour.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        PartsElapsedDay.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        Photos.ToList().ForEach(Sub(x) x.SetIsSaved(True))
     End Sub
     Public Sub Delete()
         Dim Shadow As Evaluation = New Evaluation().Load(ID, False)
@@ -446,7 +442,7 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@rejectreason", If(String.IsNullOrEmpty(RejectReason), DBNull.Value, RejectReason))
                     CmdEvaluation.Parameters.AddWithValue("@userid", User.ID)
                     CmdEvaluation.ExecuteNonQuery()
-                    _ID = CmdEvaluation.LastInsertedId
+                    SetID(CmdEvaluation.LastInsertedId)
                 End Using
                 For Each Technician As EvaluationTechnician In Technicians
                     Using CmdTechnician As New MySqlCommand(My.Resources.EvaluationTechnicianInsert, Con)
@@ -455,7 +451,7 @@ Public Class Evaluation
                         CmdTechnician.Parameters.AddWithValue("@technicianid", Technician.Technician.ID)
                         CmdTechnician.Parameters.AddWithValue("@userid", Technician.User.ID)
                         CmdTechnician.ExecuteNonQuery()
-                        Technician.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Technician, CmdTechnician.LastInsertedId)
+                        Technician.SetID(CmdTechnician.LastInsertedId)
                     End Using
                 Next Technician
                 For Each PartWorkedHour As EvaluationPart In PartsWorkedHour
@@ -469,7 +465,7 @@ Public Class Evaluation
                         CmdPartWorkedHour.Parameters.AddWithValue("@lost", PartWorkedHour.Lost)
                         CmdPartWorkedHour.Parameters.AddWithValue("@userid", PartWorkedHour.User.ID)
                         CmdPartWorkedHour.ExecuteNonQuery()
-                        PartWorkedHour.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartWorkedHour, CmdPartWorkedHour.LastInsertedId)
+                        PartWorkedHour.SetID(CmdPartWorkedHour.LastInsertedId)
                     End Using
                 Next PartWorkedHour
                 For Each PartElapsedDay As EvaluationPart In PartsElapsedDay
@@ -483,7 +479,7 @@ Public Class Evaluation
                         CmdPartElapsedDay.Parameters.AddWithValue("@lost", PartElapsedDay.Lost)
                         CmdPartElapsedDay.Parameters.AddWithValue("@userid", PartElapsedDay.User.ID)
                         CmdPartElapsedDay.ExecuteNonQuery()
-                        PartElapsedDay.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartElapsedDay, CmdPartElapsedDay.LastInsertedId)
+                        PartElapsedDay.SetID(CmdPartElapsedDay.LastInsertedId)
                     End Using
                 Next PartElapsedDay
                 For Each Photo As EvaluationPhoto In Photos
@@ -493,7 +489,7 @@ Public Class Evaluation
                         CmdPhoto.Parameters.AddWithValue("@photoname", Path.GetFileName(Photo.Photo.CurrentFile))
                         CmdPhoto.Parameters.AddWithValue("@userid", Photo.User.ID)
                         CmdPhoto.ExecuteNonQuery()
-                        Photo.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Photo, CmdPhoto.LastInsertedId)
+                        Photo.SetID(CmdPhoto.LastInsertedId)
                     End Using
                 Next Photo
             End Using
@@ -546,7 +542,7 @@ Public Class Evaluation
                             Cmd.Parameters.AddWithValue("@technicianid", Technician.Technician.ID)
                             Cmd.Parameters.AddWithValue("@userid", Technician.User.ID)
                             Cmd.ExecuteNonQuery()
-                            Technician.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Technician, Cmd.LastInsertedId)
+                            Technician.SetID(Cmd.LastInsertedId)
                         End Using
                     Else
                         Using Cmd As New MySqlCommand(My.Resources.EvaluationTechnicianUpdate, Con)
@@ -574,7 +570,7 @@ Public Class Evaluation
                             CmdPartWorkedHour.Parameters.AddWithValue("@lost", PartWorkedHour.Lost)
                             CmdPartWorkedHour.Parameters.AddWithValue("@userid", PartWorkedHour.User.ID)
                             CmdPartWorkedHour.ExecuteNonQuery()
-                            PartWorkedHour.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartWorkedHour, CmdPartWorkedHour.LastInsertedId)
+                            PartWorkedHour.SetID(CmdPartWorkedHour.LastInsertedId)
                         End Using
                     Next PartWorkedHour
                     For Each ShadowPartElapsedDay As EvaluationPart In Shadow.PartsElapsedDay.Where(Function(x) x.ID <> 0)
@@ -594,7 +590,7 @@ Public Class Evaluation
                             CmdPartElapsedDay.Parameters.AddWithValue("@lost", PartElapsedDay.Lost)
                             CmdPartElapsedDay.Parameters.AddWithValue("@userid", PartElapsedDay.User.ID)
                             CmdPartElapsedDay.ExecuteNonQuery()
-                            PartElapsedDay.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartElapsedDay, CmdPartElapsedDay.LastInsertedId)
+                            PartElapsedDay.SetID(CmdPartElapsedDay.LastInsertedId)
                         End Using
                     Next PartElapsedDay
                 Else
@@ -618,11 +614,11 @@ Public Class Evaluation
                                 CmdPartWorkedHour.Parameters.AddWithValue("@lost", PartWorkedHour.Lost)
                                 CmdPartWorkedHour.Parameters.AddWithValue("@userid", PartWorkedHour.User.ID)
                                 CmdPartWorkedHour.ExecuteNonQuery()
-                                PartWorkedHour.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartWorkedHour, CmdPartWorkedHour.LastInsertedId)
+                                PartWorkedHour.SetID(CmdPartWorkedHour.LastInsertedId)
                             End Using
                         Else
                             Using CmdPartWorkedHour As New MySqlCommand(My.Resources.EvaluationPartUpdate, Con)
-                                CmdPartWorkedHour.Parameters.AddWithValue("@id", Shadow.PartsWorkedHour.First(Function(x) x.Order = PartWorkedHour.Order).ID)
+                                CmdPartWorkedHour.Parameters.AddWithValue("@id", Shadow.PartsWorkedHour.First(Function(x) x.Guid = PartWorkedHour.Guid).ID)
                                 CmdPartWorkedHour.Parameters.AddWithValue("@currentcapacity", PartWorkedHour.CurrentCapacity)
                                 CmdPartWorkedHour.Parameters.AddWithValue("@sold", PartWorkedHour.Sold)
                                 CmdPartWorkedHour.Parameters.AddWithValue("@lost", PartWorkedHour.Lost)
@@ -651,11 +647,11 @@ Public Class Evaluation
                                 CmdPartElapsedDay.Parameters.AddWithValue("@lost", PartElapsedDay.Lost)
                                 CmdPartElapsedDay.Parameters.AddWithValue("@userid", PartElapsedDay.User.ID)
                                 CmdPartElapsedDay.ExecuteNonQuery()
-                                PartElapsedDay.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartElapsedDay, CmdPartElapsedDay.LastInsertedId)
+                                PartElapsedDay.SetID(CmdPartElapsedDay.LastInsertedId)
                             End Using
                         Else
                             Using CmdPartElapsedDay As New MySqlCommand(My.Resources.EvaluationPartUpdate, Con)
-                                CmdPartElapsedDay.Parameters.AddWithValue("@id", Shadow.PartsElapsedDay.First(Function(x) x.Order = PartElapsedDay.Order).ID)
+                                CmdPartElapsedDay.Parameters.AddWithValue("@id", Shadow.PartsElapsedDay.First(Function(x) x.Guid = PartElapsedDay.Guid).ID)
                                 CmdPartElapsedDay.Parameters.AddWithValue("@currentcapacity", PartElapsedDay.CurrentCapacity)
                                 CmdPartElapsedDay.Parameters.AddWithValue("@sold", PartElapsedDay.Sold)
                                 CmdPartElapsedDay.Parameters.AddWithValue("@lost", PartElapsedDay.Lost)
@@ -673,15 +669,12 @@ Public Class Evaluation
                         End Using
                     End If
                 Next Photo
-
                 For Each Photo As EvaluationPhoto In Photos.Where(Function(x) x.Photo.CurrentFile Is Nothing)
                     Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoDelete, Con)
                         Cmd.Parameters.AddWithValue("@id", Photo.ID)
                         Cmd.ExecuteNonQuery()
                     End Using
                 Next
-
-
                 For Each Photo As EvaluationPhoto In Photos.Where(Function(x) x.Photo.CurrentFile IsNot Nothing)
                     If Photo.ID = 0 Then
                         Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoInsert, Con)
@@ -690,7 +683,7 @@ Public Class Evaluation
                             Cmd.Parameters.AddWithValue("@photoname", Path.GetFileName(Photo.Photo.CurrentFile))
                             Cmd.Parameters.AddWithValue("@userid", Photo.User.ID)
                             Cmd.ExecuteNonQuery()
-                            Photo.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Photo, Cmd.LastInsertedId)
+                            Photo.SetID(Cmd.LastInsertedId)
                         End Using
                     Else
                         Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoUpdate, Con)
@@ -906,7 +899,7 @@ Public Class Evaluation
         Dim IsUnique As Boolean
         Dim Session = Locator.GetInstance(Of Session)
         Do Until IsUnique
-            EvaluationNumber = Utility.GetRandomString(1, 8, Nothing, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+            EvaluationNumber = TextHelper.GetRandomString(1, 8, Nothing, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
             If CreationType = EvaluationCreationType.Automatic Then
                 EvaluationNumber = $"A-{EvaluationNumber}"
             ElseIf CreationType = EvaluationCreationType.Imported Then

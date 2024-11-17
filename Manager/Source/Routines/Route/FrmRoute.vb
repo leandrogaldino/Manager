@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Public Class FrmRoute
     Private _Route As Route
@@ -61,13 +61,13 @@ Public Class FrmRoute
     Private Sub LoadData()
         _Loading = True
         LblIDValue.Text = _Route.ID
-        BtnStatusValue.Text = GetEnumDescription(_Route.Status)
+        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Route.Status)
         LblCreationValue.Text = _Route.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _Route.Name
         BtnDelete.Enabled = _Route.ID > 0 And _User.CanDelete(Routine.Route)
         Text = "Rota"
         If _Route.LockInfo.IsLocked And Not _Route.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Route.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_Route.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _Route.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
         End If
         BtnSave.Enabled = False
@@ -130,7 +130,7 @@ Public Class FrmRoute
                         _Deleting = True
                         Dispose()
                     Else
-                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_Route.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Route.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                     End If
                 End If
             Catch ex As MySqlException
@@ -149,13 +149,13 @@ Public Class FrmRoute
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
-        If BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive)
+        If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
             If _Route.Status = SimpleStatus.Active Then
                 CMessageBox.Show("O registro foi marcado para ser inativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
-        ElseIf BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active)
+        ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active)
             If _Route.Status = SimpleStatus.Inactive Then
                 CMessageBox.Show("O registro foi marcado para ser ativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
@@ -164,7 +164,7 @@ Public Class FrmRoute
     End Sub
     Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
         EprValidation.Clear()
-        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
+        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
     Private Sub TxtName_TextChanged(sender As Object, e As EventArgs) Handles TxtName.TextChanged
         EprValidation.Clear()
@@ -199,13 +199,13 @@ Public Class FrmRoute
     End Function
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
-        TxtName.Text = RemoveAccents(TxtName.Text.Trim)
+        TxtName.Text = TxtName.Text.Trim.ToUnaccented()
         If _Route.LockInfo.IsLocked And _Route.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_Route.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Route.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Return False
         Else
             If IsValidFields() Then
-                _Route.Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                _Route.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
                 _Route.Name = TxtName.Text
                 Try
                     Cursor = Cursors.WaitCursor

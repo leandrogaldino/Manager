@@ -1,14 +1,14 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Public Class FrmCompressors
     Private _Compressor As New Compressor
     Private _Filter As CompressorFilter
     Public Sub New()
         InitializeComponent()
-        Utility.EnableControlDoubleBuffer(DgvData, True)
-        Utility.EnableControlDoubleBuffer(DgvPartWorkedHour, True)
-        Utility.EnableControlDoubleBuffer(DgvPartElapsedDay, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvData, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvPartWorkedHour, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvPartElapsedDay, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Filter = New CompressorFilter(DgvData, PgFilter)
@@ -37,8 +37,8 @@ Public Class FrmCompressors
                 Cursor = Cursors.WaitCursor
                 _Compressor = New Compressor().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
                 CompressorForm = New FrmCompressor(_Compressor, Me)
-                _Compressor.PartsWorkedHour.Value.FillDataGridView(CompressorForm.DgvCompressorPartWorkedHour)
-                _Compressor.PartsElapsedDay.Value.FillDataGridView(CompressorForm.DgvCompressorPartElapsedDay)
+                CompressorForm.DgvCompressorPartWorkedHour.Fill(_Compressor.PartsWorkedHour.Value)
+                CompressorForm.DgvCompressorPartElapsedDay.Fill(_Compressor.PartsElapsedDay.Value)
                 CompressorForm.ShowDialog()
             Catch ex As Exception
                 CMessageBox.Show("ERRO CP004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -68,7 +68,7 @@ Public Class FrmCompressors
                         End Try
                     End If
                 Else
-                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", GetTitleCase(_Compressor.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _Compressor.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                 End If
             Catch ex As Exception
                 CMessageBox.Show("ERRO CP006", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -133,9 +133,9 @@ Public Class FrmCompressors
         Dim Dgv As DataGridView = sender
         If e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
-                Case Is = GetEnumDescription(SimpleStatus.Active)
+                Case Is = EnumHelper.GetEnumDescription(SimpleStatus.Active)
                     e.CellStyle.ForeColor = Color.DarkBlue
-                Case Is = GetEnumDescription(SimpleStatus.Inactive)
+                Case Is = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
                     e.CellStyle.ForeColor = Color.DarkRed
             End Select
         End If
@@ -206,6 +206,6 @@ Public Class FrmCompressors
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Compressores", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
 End Class

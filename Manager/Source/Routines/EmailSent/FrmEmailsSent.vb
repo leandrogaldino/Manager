@@ -1,11 +1,10 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
 Public Class FrmEmailsSent
     Private _Filter As EmailSentFilter
     Private _User As User
     Public Sub New()
         InitializeComponent()
-        EnableControlDoubleBuffer(DgvData, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvData, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer1.SplitterDistance = 250
         SplitContainer2.Panel1Collapsed = True
@@ -90,6 +89,6 @@ Public Class FrmEmailsSent
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "E-Mails Enviados", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
 End Class

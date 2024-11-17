@@ -60,10 +60,10 @@ Partial Class FrmCashItem
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.RbIncome = New System.Windows.Forms.RadioButton()
         Me.RbExpense = New System.Windows.Forms.RadioButton()
-        Me.DgvResponsiblesLayout = New Manager.DataGridViewLayout()
         Me.CbxCategory = New System.Windows.Forms.ComboBox()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.DgvResponsiblesLayout = New Manager.DataGridViewLayout()
         Me.TsMain.SuspendLayout()
         Me.TsData.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -310,6 +310,7 @@ Partial Class FrmCashItem
         Me.DgvResponsibles.AllowUserToDeleteRows = False
         Me.DgvResponsibles.AllowUserToOrderColumns = True
         Me.DgvResponsibles.AllowUserToResizeRows = False
+        Me.DgvResponsibles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DgvResponsibles.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.DgvResponsibles.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.DgvResponsibles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -455,11 +456,6 @@ Partial Class FrmCashItem
         Me.RbExpense.Text = "Despesa"
         Me.RbExpense.UseVisualStyleBackColor = True
         '
-        'DgvResponsiblesLayout
-        '
-        Me.DgvResponsiblesLayout.DataGridView = Me.DgvResponsibles
-        Me.DgvResponsiblesLayout.Routine = Routine.CashItemResponsible
-        '
         'CbxCategory
         '
         Me.CbxCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
@@ -490,6 +486,11 @@ Partial Class FrmCashItem
         Me.Label1.Size = New System.Drawing.Size(75, 17)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Categoria"
+        '
+        'DgvResponsiblesLayout
+        '
+        Me.DgvResponsiblesLayout.DataGridView = Me.DgvResponsibles
+        Me.DgvResponsiblesLayout.Routine = Manager.Routine.CashItemResponsible
         '
         'FrmCashItem
         '

@@ -1,7 +1,7 @@
 ﻿Imports ControlLibrary
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Imports System.IO
-Imports ControlLibrary.Utility
 Imports ManagerCore
 Public Class FrmRequest
     Private _Request As Request
@@ -57,7 +57,7 @@ Public Class FrmRequest
         DgvItemLayout.Load()
     End Sub
     Private Sub LoadForm()
-        Utility.EnableControlDoubleBuffer(DgvItem, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvItem, True)
         DgvNavigator.DataGridView = _RequestsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
@@ -68,7 +68,7 @@ Public Class FrmRequest
         _Loading = True
         TcRequest.SelectedTab = TabMain
         LblIDValue.Text = _Request.ID
-        LblStatusValue.Text = GetEnumDescription(_Request.Status)
+        LblStatusValue.Text = EnumHelper.GetEnumDescription(_Request.Status)
         LblCreationValue.Text = _Request.Creation.ToString("dd/MM/yyyy")
         TxtDestination.Text = _Request.Destination
         TxtResponsible.Text = _Request.Responsible
@@ -91,11 +91,11 @@ Public Class FrmRequest
             BtnZoomOut.Enabled = False
         End If
         TxtFilterItem.Clear()
-        If _Request.Items IsNot Nothing Then _Request.Items.FillDataGridView(DgvItem)
+        If _Request.Items IsNot Nothing Then DgvItem.Fill(_Request.Items)
         BtnDelete.Enabled = _Request.ID > 0 And _User.CanDelete(Routine.Request)
         Text = "Requisição"
         If _Request.LockInfo.IsLocked And Not _Request.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Request.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_Request.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _Request.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
         End If
         BtnSave.Enabled = False
@@ -132,7 +132,7 @@ Public Class FrmRequest
                 End If
             End If
             If _RequestsForm IsNot Nothing Then
-                _Request.Items.FillDataGridView(DgvItem)
+                DgvItem.Fill(_Request.Items)
             End If
             _Deleting = False
         End If
@@ -161,7 +161,7 @@ Public Class FrmRequest
                         _Deleting = True
                         Dispose()
                     Else
-                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_Request.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Request.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                     End If
                 End If
             Catch ex As MySqlException
@@ -211,7 +211,7 @@ Public Class FrmRequest
         Dim Form As FrmRequestItem
         Dim Item As RequestItem
         If DgvItem.SelectedRows.Count = 1 Then
-            Item = _Request.Items.Single(Function(x) x.Order = DgvItem.SelectedRows(0).Cells("Order").Value)
+            Item = _Request.Items.Single(Function(x) x.Guid = DgvItem.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmRequestItem(_Request, Item, Me)
             Form.ShowDialog()
         End If
@@ -220,9 +220,9 @@ Public Class FrmRequest
         Dim Item As RequestItem
         If DgvItem.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Item = _Request.Items.Single(Function(x) x.Order = DgvItem.SelectedRows(0).Cells("Order").Value)
+                Item = _Request.Items.Single(Function(x) x.Guid = DgvItem.SelectedRows(0).Cells("Guid").Value)
                 _Request.Items.Remove(Item)
-                _Request.Items.FillDataGridView(DgvItem)
+                DgvItem.Fill(_Request.Items)
                 BtnSave.Enabled = True
             End If
         End If
@@ -245,13 +245,13 @@ Public Class FrmRequest
         If e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
                 Case Is = RequestStatus.Pending
-                    e.Value = GetEnumDescription(RequestStatus.Pending)
+                    e.Value = EnumHelper.GetEnumDescription(RequestStatus.Pending)
                     e.CellStyle.ForeColor = Color.DarkRed
                 Case Is = RequestStatus.Partial
-                    e.Value = GetEnumDescription(RequestStatus.Partial)
+                    e.Value = EnumHelper.GetEnumDescription(RequestStatus.Partial)
                     e.CellStyle.ForeColor = Color.Chocolate
                 Case Is = RequestStatus.Concluded
-                    e.Value = GetEnumDescription(RequestStatus.Concluded)
+                    e.Value = EnumHelper.GetEnumDescription(RequestStatus.Concluded)
                     e.CellStyle.ForeColor = Color.DarkGreen
             End Select
         ElseIf e.ColumnIndex = Dgv.Columns("Taked").Index Then
@@ -304,24 +304,24 @@ Public Class FrmRequest
         Dim Success As Boolean
         Dim CurrentFile As String = _Request.Document.CurrentFile
         Dim OriginalFile As String = _Request.Document.OriginalFile
-        TxtDestination.Text = RemoveAccents(TxtDestination.Text.Trim)
-        TxtResponsible.Text = RemoveAccents(TxtResponsible.Text.Trim)
-        TxtNote.Text = RemoveAccents(TxtNote.Text.ToUpper)
+        TxtDestination.Text = TxtDestination.Text.Trim.ToUnaccented()
+        TxtResponsible.Text = TxtResponsible.Text.Trim.ToUnaccented()
+        TxtNote.Text = TxtNote.Text.ToUpper.ToUnaccented()
         If _Request.LockInfo.IsLocked And _Request.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_Request.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Request.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Success = False
         Else
             If IsValidFields() Then
                 Try
                     Cursor = Cursors.WaitCursor
-                    _Request.Status = GetEnumValue(Of RequestStatus)(LblStatusValue.Text)
+                    _Request.Status = EnumHelper.GetEnumValue(Of RequestStatus)(LblStatusValue.Text)
                     _Request.Destination = TxtDestination.Text
                     _Request.Responsible = TxtResponsible.Text
                     _Request.Note = TxtNote.Text
                     _Request.SaveChanges()
                     _Request.Lock()
                     LblIDValue.Text = _Request.ID
-                    _Request.Items.FillDataGridView(DgvItem)
+                    DgvItem.Fill(_Request.Items)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Request)
                     If _RequestsForm IsNot Nothing Then
@@ -419,17 +419,17 @@ Public Class FrmRequest
     End Sub
     Private Sub DgvItemLayout_Loaded(sender As Object, e As EventArgs) Handles DgvItemLayout.Loaded
         If _Request.Items.All(Function(x) x.Status = RequestStatus.Pending) Then
-            LblStatusValue.Text = GetEnumDescription(RequestStatus.Pending)
+            LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Pending)
         ElseIf _Request.Items.All(Function(x) x.Status = RequestStatus.Concluded) Then
-            LblStatusValue.Text = GetEnumDescription(RequestStatus.Concluded)
+            LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Concluded)
         Else
-            LblStatusValue.Text = GetEnumDescription(RequestStatus.Partial)
+            LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Partial)
         End If
     End Sub
     Private Sub LblStatusValue_TextChanged(sender As Object, e As EventArgs) Handles LblStatusValue.TextChanged
-        If LblStatusValue.Text = GetEnumDescription(RequestStatus.Pending) Then
+        If LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Pending) Then
             LblStatusValue.ForeColor = Color.DarkRed
-        ElseIf LblStatusValue.Text = GetEnumDescription(RequestStatus.Partial) Then
+        ElseIf LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Partial) Then
             LblStatusValue.ForeColor = Color.Chocolate
         Else
             LblStatusValue.ForeColor = Color.DarkGreen
@@ -468,11 +468,11 @@ Public Class FrmRequest
     End Sub
     Private Sub DgvItem_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvItem.DataSourceChanged
         If _Request.Items.All(Function(x) x.Status = RequestStatus.Pending) Then
-            LblStatusValue.Text = GetEnumDescription(RequestStatus.Pending)
+            LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Pending)
         ElseIf _Request.Items.All(Function(x) x.Status = RequestStatus.Concluded) Then
-            LblStatusValue.Text = GetEnumDescription(RequestStatus.Concluded)
+            LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Concluded)
         Else
-            LblStatusValue.Text = GetEnumDescription(RequestStatus.Partial)
+            LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Partial)
         End If
         FilterRequestItem()
     End Sub

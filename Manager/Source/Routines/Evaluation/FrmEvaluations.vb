@@ -1,6 +1,6 @@
 ﻿Imports ControlLibrary
 Imports MySql.Data.MySqlClient
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 
 Public Class FrmEvaluations
     Private _Evaluation As New Evaluation
@@ -10,9 +10,9 @@ Public Class FrmEvaluations
     Private _User As User
     Public Sub New()
         InitializeComponent()
-        EnableControlDoubleBuffer(DgvData, True)
-        EnableControlDoubleBuffer(DgvPartWorkedHour, True)
-        EnableControlDoubleBuffer(DgvPartElapsedDay, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvData, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvPartWorkedHour, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvPartElapsedDay, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Filter = New EvaluationFilter(DgvData, PgFilter)
@@ -74,7 +74,7 @@ Public Class FrmEvaluations
                         End Try
                     End If
                 Else
-                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", GetTitleCase(_Evaluation.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _Evaluation.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                 End If
             Catch ex As Exception
                 CMessageBox.Show("ERRO EV008", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -139,9 +139,9 @@ Public Class FrmEvaluations
         Dim Dgv As DataGridView = sender
         If e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
-                Case Is = GetEnumDescription(EvaluationStatus.Approved)
+                Case Is = EnumHelper.GetEnumDescription(EvaluationStatus.Approved)
                     e.CellStyle.ForeColor = Color.DarkBlue
-                Case Is = GetEnumDescription(EvaluationStatus.Rejected)
+                Case Is = EnumHelper.GetEnumDescription(EvaluationStatus.Rejected)
                     e.CellStyle.ForeColor = Color.DarkRed
                 Case Else
                     e.CellStyle.ForeColor = Color.Chocolate
@@ -227,7 +227,7 @@ Public Class FrmEvaluations
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Avaliações", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
     Private Sub BtnApprove_Click(sender As Object, e As EventArgs) Handles BtnApprove.Click
         Try
@@ -282,9 +282,9 @@ Public Class FrmEvaluations
     End Sub
     Private Sub DgvData_MouseUp(sender As Object, e As MouseEventArgs) Handles DgvData.MouseUp
         If _ShowApproval And _User.CanAccess(Routine.EvaluationApproveOrReject) Then
-            BtnApprove.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> GetEnumDescription(EvaluationStatus.Approved)
-            BtnReject.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> GetEnumDescription(EvaluationStatus.Rejected)
-            BtnDisapprove.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> GetEnumDescription(EvaluationStatus.Disapproved)
+            BtnApprove.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> EnumHelper.GetEnumDescription(EvaluationStatus.Approved)
+            BtnReject.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> EnumHelper.GetEnumDescription(EvaluationStatus.Rejected)
+            BtnDisapprove.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> EnumHelper.GetEnumDescription(EvaluationStatus.Disapproved)
             CmsSetStatus.Show(DgvData.PointToScreen(_CmsPoint))
             _ShowApproval = False
         End If

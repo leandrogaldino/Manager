@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Public Class FrmProductPriceTable
     Private _PriceTable As ProductPriceTable
@@ -61,13 +61,13 @@ Public Class FrmProductPriceTable
     Private Sub LoadData()
         _Loading = True
         LblIDValue.Text = _PriceTable.ID
-        BtnStatusValue.Text = GetEnumDescription(_PriceTable.Status)
+        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_PriceTable.Status)
         LblCreationValue.Text = _PriceTable.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _PriceTable.Name
         BtnDelete.Enabled = _PriceTable.ID > 0 And _User.CanDelete(Routine.ProductPriceTable)
         Text = "Tabela de Preço"
         If _PriceTable.LockInfo.IsLocked And Not _PriceTable.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _PriceTable.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_PriceTable.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _PriceTable.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
         End If
         BtnSave.Enabled = False
@@ -130,7 +130,7 @@ Public Class FrmProductPriceTable
                         _Deleting = True
                         Dispose()
                     Else
-                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_PriceTable.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _PriceTable.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                     End If
                 End If
             Catch ex As MySqlException
@@ -149,13 +149,13 @@ Public Class FrmProductPriceTable
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
-        If BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive)
-            If _PriceTable.Status = GetEnumDescription(SimpleStatus.Active) Then
+        If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
+            If _PriceTable.Status = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
                 CMessageBox.Show("O registro foi marcado para ser inativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
-        ElseIf BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active)
+        ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active)
             If _PriceTable.Status = SimpleStatus.Inactive Then
                 CMessageBox.Show("O registro foi marcado para ser ativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
@@ -164,7 +164,7 @@ Public Class FrmProductPriceTable
     End Sub
     Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
         EprValidation.Clear()
-        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
+        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
     Private Sub TxtName_TextChanged(sender As Object, e As EventArgs) Handles TxtName.TextChanged
         EprValidation.Clear()
@@ -199,13 +199,13 @@ Public Class FrmProductPriceTable
     End Function
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
-        TxtName.Text = RemoveAccents(TxtName.Text.Trim)
+        TxtName.Text = TxtName.Text.Trim.ToUnaccented()
         If _PriceTable.LockInfo.IsLocked And _PriceTable.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_PriceTable.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _PriceTable.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Return False
         Else
             If IsValidFields() Then
-                _PriceTable.Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                _PriceTable.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
                 _PriceTable.Name = TxtName.Text
                 Try
                     _PriceTable.SaveChanges()

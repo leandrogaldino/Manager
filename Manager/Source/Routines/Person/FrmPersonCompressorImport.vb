@@ -1,9 +1,10 @@
-﻿Public Class FrmPersonCompressorImport
+﻿Imports ControlLibrary.Extensions
+Public Class FrmPersonCompressorImport
     Public Sub New(Compressor As Compressor, PersonCompressor As PersonCompressor)
         InitializeComponent()
         Dim XColumn As DataGridViewCheckBoxColumn
         Compressor.PartsWorkedHour.Value.Where(Function(x) x.Status = SimpleStatus.Inactive).ToList.ForEach(Sub(y) Compressor.PartsWorkedHour.Value.Remove(y))
-        Compressor.PartsWorkedHour.Value.FillDataGridView(DgvPartWorkedHour)
+        DgvPartWorkedHour.Fill(Compressor.PartsWorkedHour.Value)
         For Each Column As DataGridViewColumn In DgvPartWorkedHour.Columns
             Column.ReadOnly = True
         Next Column
@@ -31,7 +32,7 @@
         DgvPartWorkedHour.Columns("ItemNameOrProduct").HeaderText = "Item"
         DgvPartWorkedHour.Columns("ItemNameOrProduct").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         Compressor.PartsElapsedDay.Value.Where(Function(x) x.Status = SimpleStatus.Inactive).ToList.ForEach(Sub(y) Compressor.PartsElapsedDay.Value.Remove(y))
-        Compressor.PartsElapsedDay.Value.FillDataGridView(DgvPartElapsedDay)
+        DgvPartElapsedDay.Fill(Compressor.PartsElapsedDay.Value)
         For Each Column As DataGridViewColumn In DgvPartElapsedDay.Columns
             Column.ReadOnly = True
         Next Column

@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports MySql.Data.MySqlClient
-Imports ControlLibrary.Utility
 Imports ControlLibrary
 ''' <summary>
 ''' Representa o filtro dos fluxos de caixa.
@@ -47,7 +46,7 @@ Public Class CashFlowFilter
             Con.Open()
             Using Cmd As New MySqlCommand(My.Resources.CashFlowFilter, Con)
                 If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
-                If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
+                If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = EnumHelper.GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
                 If Name <> Nothing Then Cmd.Parameters.AddWithValue("@name", Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@name", "%")
                 Using Adp As New MySqlDataAdapter(Cmd)
                     Adp.Fill(Table)

@@ -1,6 +1,6 @@
 ﻿Imports ControlLibrary
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
-Imports ControlLibrary.Utility
 Imports System.IO
 Imports ManagerCore
 
@@ -43,7 +43,7 @@ Public Class FrmCash
         LoadForm()
     End Sub
     Private Sub LoadForm()
-        Utility.EnableControlDoubleBuffer(DgvCashItem, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvCashItem, True)
         DgvNavigator.DataGridView = _CashesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
@@ -89,18 +89,18 @@ Public Class FrmCash
         End If
         TcCash.SelectedTab = TabMain
         LblIDValue.Text = _Cash.ID
-        BtnStatusValue.Text = GetEnumDescription(_Cash.Status)
-        LblStatusValue.Text = GetEnumDescription(_Cash.Status)
+        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Cash.Status)
+        LblStatusValue.Text = EnumHelper.GetEnumDescription(_Cash.Status)
         BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And _User.CanAccess(Routine.CashReopen)
         BtnCloseCash.Visible = _Cash.Status <> CashStatus.Closed
         LblCreationDateValue.Text = _Cash.Creation.ToString("dd/MM/yyyy")
         TxtNote.Text = _Cash.Note
-        _Cash.CashItems.FillDataGridView(DgvCashItem)
+        DgvCashItem.Fill(_Cash.CashItems)
         CalculateValues()
         BtnDelete.Enabled = _Cash.ID > 0 And _User.CanDelete(Routine.Cash)
         Text = "Caixa"
         If _Cash.LockInfo.IsLocked And Not _Cash.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Cash.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_Cash.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _Cash.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
         End If
         BtnSave.Enabled = False
@@ -134,7 +134,7 @@ Public Class FrmCash
                 End If
             End If
             If _CashesForm IsNot Nothing Then
-                _Cash.CashItems.FillDataGridView(DgvCashItem)
+                DgvCashItem.Fill(_Cash.CashItems)
             End If
             _Deleting = False
         End If
@@ -163,7 +163,7 @@ Public Class FrmCash
                         _Deleting = True
                         Dispose()
                     Else
-                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_Cash.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Cash.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                     End If
                 End If
             Catch ex As MySqlException
@@ -179,10 +179,10 @@ Public Class FrmCash
     End Sub
     Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
         EprValidation.Clear()
-        If BtnStatusValue.Text = GetEnumDescription(CashStatus.Opened) Then
+        If BtnStatusValue.Text = EnumHelper.GetEnumDescription(CashStatus.Opened) Then
             BtnStatusValue.ForeColor = Color.DarkBlue
             LblStatusValue.ForeColor = Color.DarkBlue
-        ElseIf BtnStatusValue.Text = GetEnumDescription(CashStatus.Closed) Then
+        ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(CashStatus.Closed) Then
             BtnStatusValue.ForeColor = Color.DarkGreen
             LblStatusValue.ForeColor = Color.DarkGreen
         End If
@@ -217,7 +217,7 @@ Public Class FrmCash
         Dim Form As FrmCashItem
         Dim CashItem As CashItem
         If DgvCashItem.SelectedRows.Count = 1 Then
-            CashItem = _Cash.CashItems.Single(Function(x) x.Order = DgvCashItem.SelectedRows(0).Cells("Order").Value)
+            CashItem = _Cash.CashItems.Single(Function(x) x.Guid = DgvCashItem.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmCashItem(_Cash, CashItem, Me)
             Form.ShowDialog()
         End If
@@ -226,9 +226,9 @@ Public Class FrmCash
         Dim CashItem As CashItem
         If DgvCashItem.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                CashItem = _Cash.CashItems.Single(Function(x) x.Order = DgvCashItem.SelectedRows(0).Cells("Order").Value)
+                CashItem = _Cash.CashItems.Single(Function(x) x.Guid = DgvCashItem.SelectedRows(0).Cells("Guid").Value)
                 _Cash.CashItems.Remove(CashItem)
-                _Cash.CashItems.FillDataGridView(DgvCashItem)
+                DgvCashItem.Fill(_Cash.CashItems)
                 BtnSave.Enabled = True
             End If
         End If
@@ -241,28 +241,28 @@ Public Class FrmCash
         If e.ColumnIndex = Dgv.Columns("ItemType").Index Then
             Select Case e.Value
                 Case Is = CashItemType.Expense
-                    e.Value = GetEnumDescription(CashItemType.Expense)
+                    e.Value = EnumHelper.GetEnumDescription(CashItemType.Expense)
                     e.CellStyle.ForeColor = Color.DarkRed
                 Case Is = CashItemType.Income
-                    e.Value = GetEnumDescription(CashItemType.Income)
+                    e.Value = EnumHelper.GetEnumDescription(CashItemType.Income)
                     e.CellStyle.ForeColor = Color.DarkGreen
             End Select
         ElseIf e.ColumnIndex = Dgv.Columns("ItemCategory").Index Then
             Select Case e.Value
                 Case Is = CashItemCategory.Supermarket
-                    e.Value = GetEnumDescription(CashItemCategory.Supermarket)
+                    e.Value = EnumHelper.GetEnumDescription(CashItemCategory.Supermarket)
                 Case Is = CashItemCategory.Food
-                    e.Value = GetEnumDescription(CashItemCategory.Food)
+                    e.Value = EnumHelper.GetEnumDescription(CashItemCategory.Food)
                 Case Is = CashItemCategory.Fuel
-                    e.Value = GetEnumDescription(CashItemCategory.Fuel)
+                    e.Value = EnumHelper.GetEnumDescription(CashItemCategory.Fuel)
                 Case Is = CashItemCategory.Accommodation
-                    e.Value = GetEnumDescription(CashItemCategory.Accommodation)
+                    e.Value = EnumHelper.GetEnumDescription(CashItemCategory.Accommodation)
                 Case Is = CashItemCategory.AdministrativeExpense
-                    e.Value = GetEnumDescription(CashItemCategory.AdministrativeExpense)
+                    e.Value = EnumHelper.GetEnumDescription(CashItemCategory.AdministrativeExpense)
                 Case Is = CashItemCategory.OperationalExpense
-                    e.Value = GetEnumDescription(CashItemCategory.OperationalExpense)
+                    e.Value = EnumHelper.GetEnumDescription(CashItemCategory.OperationalExpense)
                 Case Is = CashItemCategory.Refund
-                    e.Value = GetEnumDescription(CashItemCategory.Refund)
+                    e.Value = EnumHelper.GetEnumDescription(CashItemCategory.Refund)
             End Select
         ElseIf e.ColumnIndex = Dgv.Columns("Value").Index Then
             e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -298,9 +298,9 @@ Public Class FrmCash
         Dim Success As Boolean
         Dim CurrentFile As String = _Cash.Document.CurrentFile
         Dim OriginalFile As String = _Cash.Document.OriginalFile
-        TxtNote.Text = RemoveAccents(TxtNote.Text.ToUpper)
+        TxtNote.Text = TxtNote.Text.ToUpper.ToUnaccented()
         If _Cash.LockInfo.IsLocked And _Cash.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_Cash.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Cash.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Success = False
         ElseIf _Cash.Status = CashStatus.Closed Then
             CMessageBox.Show("Esse caixa não pode ser alterado pois já está fechado.", CMessageBoxType.Information)
@@ -314,7 +314,7 @@ Public Class FrmCash
                     _Cash.Lock()
                     LblIDValue.Text = _Cash.ID
                     LblCreationDateValue.Text = _Cash.Creation.ToString("dd/MM/yyyy")
-                    _Cash.CashItems.FillDataGridView(DgvCashItem)
+                    DgvCashItem.Fill(_Cash.CashItems)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Cash)
                     If _CashesForm IsNot Nothing Then
@@ -502,7 +502,7 @@ Public Class FrmCash
         Try
             Cursor = Cursors.WaitCursor
             Result = CashReport.ProcessCashSheet({_Cash}.ToList)
-            FrmMain.OpenTab(New FrmReport(Result), GetEnumDescription(Routine.CashSheetReport))
+            FrmMain.OpenTab(New FrmReport(Result), EnumHelper.GetEnumDescription(Routine.CashSheetReport))
             CMessageBox.Show("O Relátório foi gerado na tela inicial.", CMessageBoxType.Information)
         Catch ex As Exception
             CMessageBox.Show("ERRO CS010", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -518,8 +518,8 @@ Public Class FrmCash
                     Try
                         Cursor = Cursors.WaitCursor
                         _Cash.SetStatus(CashStatus.Closed)
-                        BtnStatusValue.Text = GetEnumDescription(_Cash.Status)
-                        LblStatusValue.Text = GetEnumDescription(_Cash.Status)
+                        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Cash.Status)
+                        LblStatusValue.Text = EnumHelper.GetEnumDescription(_Cash.Status)
                         BtnCloseCash.Visible = _Cash.Status <> CashStatus.Closed
                         BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And _User.CanAccess(Routine.CashReopen)
                         If _Cash.Status = CashStatus.Closed Then
@@ -561,8 +561,8 @@ Public Class FrmCash
         Try
             Cursor = Cursors.WaitCursor
             _Cash.SetStatus(CashStatus.Opened)
-            BtnStatusValue.Text = GetEnumDescription(_Cash.Status)
-            LblStatusValue.Text = GetEnumDescription(_Cash.Status)
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Cash.Status)
+            LblStatusValue.Text = EnumHelper.GetEnumDescription(_Cash.Status)
             BtnCloseCash.Visible = _Cash.Status <> CashStatus.Closed
             BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And _User.CanAccess(Routine.CashReopen)
             If _CashesForm IsNot Nothing Then

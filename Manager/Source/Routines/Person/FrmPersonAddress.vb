@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Imports ViaCep
 Public Class FrmPersonAddress
     Private _PersonForm As FrmPerson
@@ -26,7 +26,7 @@ Public Class FrmPersonAddress
         _PersonAddress = Address
         _PersonForm = PersonForm
         _User = Locator.GetInstance(Of Session).User
-        CbxContributionType.DataSource = {GetEnumDescription(PersonContributionType.TaxPayer), GetEnumDescription(PersonContributionType.NonTaxPayer), GetEnumDescription(PersonContributionType.TaxFree)}
+        CbxContributionType.DataSource = {EnumHelper.GetEnumDescription(PersonContributionType.TaxPayer), EnumHelper.GetEnumDescription(PersonContributionType.NonTaxPayer), EnumHelper.GetEnumDescription(PersonContributionType.TaxFree)}
         LoadForm()
         DgvNavigator.DataGridView = _PersonForm.DgvAddress
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
@@ -45,7 +45,7 @@ Public Class FrmPersonAddress
     Private Sub AfterDataGridViewRowMove()
         If _PersonForm.DgvAddress.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _PersonAddress = _Person.Addresses.Single(Function(x) x.Order = _PersonForm.DgvAddress.SelectedRows(0).Cells("Order").Value)
+            _PersonAddress = _Person.Addresses.Single(Function(x) x.Guid = _PersonForm.DgvAddress.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -87,9 +87,9 @@ Public Class FrmPersonAddress
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _PersonForm.DgvAddress.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _PersonAddress = _Person.Addresses.Single(Function(x) x.Order = _PersonForm.DgvAddress.SelectedRows(0).Cells("Order").Value)
+                _PersonAddress = _Person.Addresses.Single(Function(x) x.Guid = _PersonForm.DgvAddress.SelectedRows(0).Cells("Guid").Value)
                 _Person.Addresses.Remove(_PersonAddress)
-                _Person.Addresses.FillDataGridView(_PersonForm.DgvAddress)
+                _PersonForm.DgvAddress.Fill(_Person.Addresses)
                 _PersonForm.DgvAddressLayout.Load()
                 _Deleting = True
                 Dispose()
@@ -102,18 +102,18 @@ Public Class FrmPersonAddress
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
-        If BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active) Then
+        If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
             If CbxIsMainAddress.Checked Then
                 CMessageBox.Show("O endereço principal não pode inativado.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
             Else
-                BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive)
+                BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
                 If _PersonAddress.Status = SimpleStatus.Active Then
                     CMessageBox.Show("O registro foi marcado para ser inativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
                 End If
                 BtnSave.Enabled = True
             End If
-        ElseIf BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active)
+        ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active)
             If _PersonAddress.Status = SimpleStatus.Inactive Then
                 CMessageBox.Show("O registro foi marcado para ser ativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
@@ -122,8 +122,8 @@ Public Class FrmPersonAddress
     End Sub
     Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
         EprValidation.Clear()
-        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
-        CbxIsMainAddress.Enabled = BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active)
+        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
+        CbxIsMainAddress.Enabled = BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active)
     End Sub
     Private Sub CbxIsMainAddress_CheckedChanged(sender As Object, e As EventArgs) Handles CbxIsMainAddress.CheckedChanged
         EprValidation.Clear()
@@ -140,7 +140,7 @@ Public Class FrmPersonAddress
                                                                          TxtStateDocument.TextChanged,
                                                                          QbxCarrier.TextChanged
         EprValidation.Clear()
-        BtnZipCode.Enabled = IsValidZipCode(TxtZipCode.Text)
+        BtnZipCode.Enabled = BrazilianFormatHelper.IsValidZipCode(TxtZipCode.Text)
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
     Private Sub CbxContributionType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxContributionType.SelectedIndexChanged
@@ -152,8 +152,8 @@ Public Class FrmPersonAddress
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = _PersonAddress.Order
-        BtnStatusValue.Text = GetEnumDescription(_PersonAddress.Status)
+        LblOrderValue.Text = If(_PersonAddress.IsSaved, _PersonForm.DgvAddress.SelectedRows(0).Cells("Order").Value, 0)
+        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_PersonAddress.Status)
         LblCreationValue.Text = _PersonAddress.Creation
         TxtName.Text = _PersonAddress.Name
         CbxIsMainAddress.Checked = _PersonAddress.IsMainAddress
@@ -166,7 +166,7 @@ Public Class FrmPersonAddress
         QbxCity.Freeze(_PersonAddress.City.ID)
         TxtCityDocument.Text = _PersonAddress.CityDocument
         TxtStateDocument.Text = _PersonAddress.StateDocument
-        CbxContributionType.Text = GetEnumDescription(_PersonAddress.ContributionType)
+        CbxContributionType.Text = EnumHelper.GetEnumDescription(_PersonAddress.ContributionType)
         QbxCarrier.Unfreeze()
         QbxCarrier.Freeze(_PersonAddress.Carrier.ID)
         If _Person.Addresses.Count = 0 Then
@@ -177,7 +177,7 @@ Public Class FrmPersonAddress
         Else
             CbxIsMainAddress.Enabled = _PersonAddress.Status = SimpleStatus.Active
         End If
-        If _PersonAddress.Order = 0 Then
+        If Not _PersonAddress.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
         Else
@@ -199,7 +199,7 @@ Public Class FrmPersonAddress
             EprValidation.SetIconAlignment(LblZipCode, ErrorIconAlignment.MiddleRight)
             TxtZipCode.Select()
             Return False
-        ElseIf Not IsValidZipCode(TxtZipCode.Text) Then
+        ElseIf Not BrazilianFormatHelper.IsValidZipCode(TxtZipCode.Text) Then
             EprValidation.SetError(LblZipCode, "CEP inválido.")
             EprValidation.SetIconAlignment(LblZipCode, ErrorIconAlignment.MiddleRight)
             TxtZipCode.Select()
@@ -229,7 +229,7 @@ Public Class FrmPersonAddress
             EprValidation.SetIconAlignment(LblCity, ErrorIconAlignment.MiddleRight)
             QbxCity.Select()
             Return False
-        ElseIf CbxContributionType.Text = GetEnumDescription(PersonContributionType.TaxPayer) And String.IsNullOrWhiteSpace(TxtStateDocument.Text) Then
+        ElseIf CbxContributionType.Text = EnumHelper.GetEnumDescription(PersonContributionType.TaxPayer) And String.IsNullOrWhiteSpace(TxtStateDocument.Text) Then
             EprValidation.SetError(LblStateDocument, "Campo obrigatório para Contribuintes de ICMS.")
             EprValidation.SetIconAlignment(LblStateDocument, ErrorIconAlignment.MiddleRight)
             TxtStateDocument.Select()
@@ -244,70 +244,71 @@ Public Class FrmPersonAddress
     End Function
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
-        TxtName.Text = RemoveAccents(TxtName.Text.Trim)
-        TxtZipCode.Text = RemoveAccents(TxtZipCode.Text.Trim)
-        TxtStreet.Text = RemoveAccents(TxtStreet.Text.Trim)
-        TxtNumber.Text = RemoveAccents(TxtNumber.Text.Trim)
-        TxtComplement.Text = RemoveAccents(TxtComplement.Text.Trim)
-        TxtDistrict.Text = RemoveAccents(TxtDistrict.Text.Trim)
-        TxtStateDocument.Text = RemoveAccents(TxtStateDocument.Text.Trim)
-        TxtCityDocument.Text = RemoveAccents(TxtCityDocument.Text.Trim)
+        TxtName.Text = TxtName.Text.Trim.ToUnaccented()
+        TxtZipCode.Text = TxtZipCode.Text.Trim.ToUnaccented()
+        TxtStreet.Text = TxtStreet.Text.Trim.ToUnaccented()
+        TxtNumber.Text = TxtNumber.Text.Trim.ToUnaccented()
+        TxtComplement.Text = TxtComplement.Text.Trim.ToUnaccented()
+        TxtDistrict.Text = TxtDistrict.Text.Trim.ToUnaccented()
+        TxtStateDocument.Text = TxtStateDocument.Text.Trim.ToUnaccented()
+        TxtCityDocument.Text = TxtCityDocument.Text.Trim.ToUnaccented()
         If IsValidFields() Then
             If _PersonAddress.IsSaved Then
-                _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).IsMainAddress = CbxIsMainAddress.Checked
-                _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
-                _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).Name = TxtName.Text
-                _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).ZipCode = TxtZipCode.Text
-                _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).Street = TxtStreet.Text
-                _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).Number = TxtNumber.Text
-                _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).Complement = TxtComplement.Text
-                _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).District = TxtDistrict.Text
-                _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).City = New City().Load(QbxCity.FreezedPrimaryKey, False)
-                _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).CityDocument = TxtCityDocument.Text
-                _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).StateDocument = TxtStateDocument.Text
-                _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).ContributionType = GetEnumValue(Of PersonContributionType)(CbxContributionType.Text)
-                _Person.Addresses.Single(Function(x) x.Order = _PersonAddress.Order).Carrier = New Person().Load(QbxCarrier.FreezedPrimaryKey, False)
+                _Person.Addresses.Single(Function(x) x.Guid = _PersonAddress.Guid).IsMainAddress = CbxIsMainAddress.Checked
+                _Person.Addresses.Single(Function(x) x.Guid = _PersonAddress.Guid).Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                _Person.Addresses.Single(Function(x) x.Guid = _PersonAddress.Guid).Name = TxtName.Text
+                _Person.Addresses.Single(Function(x) x.Guid = _PersonAddress.Guid).ZipCode = TxtZipCode.Text
+                _Person.Addresses.Single(Function(x) x.Guid = _PersonAddress.Guid).Street = TxtStreet.Text
+                _Person.Addresses.Single(Function(x) x.Guid = _PersonAddress.Guid).Number = TxtNumber.Text
+                _Person.Addresses.Single(Function(x) x.Guid = _PersonAddress.Guid).Complement = TxtComplement.Text
+                _Person.Addresses.Single(Function(x) x.Guid = _PersonAddress.Guid).District = TxtDistrict.Text
+                _Person.Addresses.Single(Function(x) x.Guid = _PersonAddress.Guid).City = New City().Load(QbxCity.FreezedPrimaryKey, False)
+                _Person.Addresses.Single(Function(x) x.Guid = _PersonAddress.Guid).CityDocument = TxtCityDocument.Text
+                _Person.Addresses.Single(Function(x) x.Guid = _PersonAddress.Guid).StateDocument = TxtStateDocument.Text
+                _Person.Addresses.Single(Function(x) x.Guid = _PersonAddress.Guid).ContributionType = EnumHelper.GetEnumValue(Of PersonContributionType)(CbxContributionType.Text)
+                _Person.Addresses.Single(Function(x) x.Guid = _PersonAddress.Guid).Carrier = New Person().Load(QbxCarrier.FreezedPrimaryKey, False)
             Else
-                _PersonAddress = New PersonAddress()
-                _PersonAddress.IsMainAddress = CbxIsMainAddress.Checked
-                _PersonAddress.Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
-                _PersonAddress.Name = TxtName.Text
-                _PersonAddress.ZipCode = TxtZipCode.Text
-                _PersonAddress.Street = TxtStreet.Text
-                _PersonAddress.Number = TxtNumber.Text
-                _PersonAddress.Complement = TxtComplement.Text
-                _PersonAddress.District = TxtDistrict.Text
-                _PersonAddress.City = New City().Load(QbxCity.FreezedPrimaryKey, False)
-                _PersonAddress.CityDocument = TxtCityDocument.Text
-                _PersonAddress.StateDocument = TxtStateDocument.Text
-                _PersonAddress.ContributionType = GetEnumValue(Of PersonContributionType)(CbxContributionType.Text)
-                _PersonAddress.Carrier = New Person().Load(QbxCarrier.FreezedPrimaryKey, False)
-                _PersonAddress.IsSaved = True
+                _PersonAddress = New PersonAddress With {
+                    .IsMainAddress = CbxIsMainAddress.Checked,
+                    .Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text),
+                    .Name = TxtName.Text,
+                    .ZipCode = TxtZipCode.Text,
+                    .Street = TxtStreet.Text,
+                    .Number = TxtNumber.Text,
+                    .Complement = TxtComplement.Text,
+                    .District = TxtDistrict.Text,
+                    .City = New City().Load(QbxCity.FreezedPrimaryKey, False),
+                    .CityDocument = TxtCityDocument.Text,
+                    .StateDocument = TxtStateDocument.Text,
+                    .ContributionType = EnumHelper.GetEnumValue(Of PersonContributionType)(CbxContributionType.Text),
+                    .Carrier = New Person().Load(QbxCarrier.FreezedPrimaryKey, False)
+                }
+                _PersonAddress.SetIsSaved(True)
                 _Person.Addresses.Add(_PersonAddress)
             End If
             If CbxIsMainAddress.Checked Then
                 CbxIsMainAddress.Enabled = False
                 For Each Address As PersonAddress In _Person.Addresses
-                    If Address.Order <> _PersonAddress.Order Then
+                    If Address.Guid <> _PersonAddress.Guid Then
                         Address.IsMainAddress = False
                     End If
                 Next Address
             Else
                 CbxIsMainAddress.Enabled = _PersonAddress.Status = SimpleStatus.Active
             End If
-            _Person.Addresses.FillDataGridView(_PersonForm.DgvAddress)
-            LblOrderValue.Text = _PersonAddress.Order
+            _PersonForm.DgvAddress.Fill(_Person.Addresses)
             _PersonForm.DgvAddressLayout.Load()
             BtnSave.Enabled = False
-            If _PersonAddress.Order = 0 Then
+            If Not _PersonAddress.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _PersonForm.DgvAddress.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Order").Value = _PersonAddress.Order)
+            Row = _PersonForm.DgvAddress.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _PersonAddress.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+            LblOrderValue.Text = _PersonForm.DgvAddress.SelectedRows(0).Cells("Order").Value
             _PersonForm.EprValidation.Clear()
             _PersonForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()
@@ -415,15 +416,15 @@ Public Class FrmPersonAddress
     End Sub
     Private Sub TxtZipCode_Leave(sender As Object, e As EventArgs) Handles TxtZipCode.Leave
         EprValidation.Clear()
-        If IsValidZipCode(TxtZipCode.Text) Then TxtZipCode.Text = GetFormatedZipCode(TxtZipCode.Text)
+        If BrazilianFormatHelper.IsValidZipCode(TxtZipCode.Text) Then TxtZipCode.Text = BrazilianFormatHelper.GetFormatedZipCode(TxtZipCode.Text)
     End Sub
     Private Sub BtnZipCode_Click(sender As Object, e As EventArgs) Handles BtnZipCode.Click
         Dim PersonAddress As PersonAddress
         Dim FormGet As FrmPersonAddressGetZipCode
-        TxtZipCode.Text = GetFormatedZipCode(TxtZipCode.Text)
+        TxtZipCode.Text = BrazilianFormatHelper.GetFormatedZipCode(TxtZipCode.Text)
         Try
             Cursor = Cursors.WaitCursor
-            If IsInternetAvailable() Then
+            If InternetHelper.IsInternetAvailable() Then
                 Dim Client = New ViaCepClient()
                 Dim Result = Client.Search(TxtZipCode.Text.Trim)
 
@@ -434,10 +435,10 @@ Public Class FrmPersonAddress
                             .ZipCode = Result.ZipCode,
                             .Street = Result.Street,
                             .District = Result.Neighborhood,
-                            .City = New City().Load(City.GetID(RemoveAccents(Result.City), Result.StateInitials), False),
-                            .IsMainAddress = _Person.Addresses.Count = 0,
-                            .IsSaved = True
+                            .City = New City().Load(City.GetID(Result.City.ToUnaccented(), Result.StateInitials), False),
+                            .IsMainAddress = _Person.Addresses.Count = 0
                         }
+                    PersonAddress.SetIsSaved(True)
                     FormGet = New FrmPersonAddressGetZipCode(PersonAddress, Result)
                     If FormGet.ShowDialog() = DialogResult.OK Then
                         TxtName.Text = FormGet.TxtAddressName.Text
@@ -455,7 +456,7 @@ Public Class FrmPersonAddress
                     End If
                 Else
                     CMessageBox.Show("A busca não retornou dados, verifique o número digitado e tente novamente.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
-                    End If
+                End If
 
             Else
                 CMessageBox.Show("Por favor, verifique se há conexão com a internet e tente novamente..", CMessageBoxType.Warning)
@@ -470,7 +471,7 @@ Public Class FrmPersonAddress
         If BtnZipCode.Enabled Then
             BtnZipCode.BackgroundImage = My.Resources.Magnifier
         Else
-            BtnZipCode.BackgroundImage = Utility.GetRecoloredImage(My.Resources.Magnifier, Color.Gray)
+            BtnZipCode.BackgroundImage = ImageHelper.GetRecoloredImage(My.Resources.Magnifier, Color.Gray)
         End If
     End Sub
 End Class

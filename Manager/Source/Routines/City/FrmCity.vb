@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Public Class FrmCity
     Private _City As City
@@ -28,11 +28,11 @@ Public Class FrmCity
         MyBase.OnResize(e)
     End Sub
     Public Sub New(City As City, CitiesForm As FrmCities)
+        InitializeComponent()
         _City = City
         _CitiesForm = CitiesForm
         _CitiesGrid = _CitiesForm.DgvData
         _Filter = CType(_CitiesForm.PgFilter.SelectedObject, CityFilter)
-        InitializeComponent()
         LoadData()
         LoadForm()
     End Sub
@@ -61,7 +61,7 @@ Public Class FrmCity
     End Sub
     Private Sub LoadForm()
         DgvNavigator.DataGridView = _CitiesGrid
-        Utility.EnableControlDoubleBuffer(DgvRoute, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvRoute, True)
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = _User.CanAccess(Routine.Log)
@@ -69,17 +69,17 @@ Public Class FrmCity
     Private Sub LoadData()
         _Loading = True
         LblIDValue.Text = _City.ID
-        BtnStatusValue.Text = GetEnumDescription(_City.Status)
+        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_City.Status)
         LblCreationValue.Text = _City.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _City.Name
         TxtBIGSCode.Text = _City.BIGSCode
         CbxStateName.Text = _City.State.Name
         CbxStateShortName.Text = _City.State.ShortName
-        FillDataGridView()
+        DgvRoute.Fill(_City.Routes.Value)
         Text = "Cidade"
         BtnDelete.Enabled = _City.ID > 0 And _User.CanDelete(Routine.City)
         If _City.LockInfo.IsLocked And Not _City.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _City.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_City.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _City.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
         End If
         BtnSave.Enabled = False
@@ -116,7 +116,7 @@ Public Class FrmCity
                 End If
             End If
             If _CitiesForm IsNot Nothing Then
-                FillDataGridView()
+                DgvRoute.Fill(_City.Routes.Value)
             End If
             _Deleting = False
         End If
@@ -145,7 +145,7 @@ Public Class FrmCity
                         _Deleting = True
                         Dispose()
                     Else
-                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_City.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _City.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                     End If
                 End If
             Catch ex As MySqlException
@@ -164,13 +164,13 @@ Public Class FrmCity
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
-        If BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive)
+        If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
             If _City.Status = SimpleStatus.Active Then
                 CMessageBox.Show("O registro foi marcado para ser inativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
-        ElseIf BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active)
+        ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active)
             If _City.Status = SimpleStatus.Inactive Then
                 CMessageBox.Show("O registro foi marcado para ser ativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
@@ -179,7 +179,7 @@ Public Class FrmCity
     End Sub
     Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
         EprValidation.Clear()
-        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
+        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
     Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtName.TextChanged, TxtBIGSCode.TextChanged
         EprValidation.Clear()
@@ -230,13 +230,13 @@ Public Class FrmCity
     End Function
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
-        TxtName.Text = RemoveAccents(TxtName.Text.Trim)
+        TxtName.Text = TxtName.Text.Trim.ToUnaccented()
         If _City.LockInfo.IsLocked And _City.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_City.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _City.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Return False
         Else
             If IsValidFields() Then
-                _City.Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                _City.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
                 _City.Name = TxtName.Text
                 _City.BIGSCode = TxtBIGSCode.Text
                 _City.State = New State().Load(CbxStateName.SelectedIndex + 1)
@@ -245,7 +245,7 @@ Public Class FrmCity
                     _City.SaveChanges()
                     _City.Lock()
                     LblIDValue.Text = _City.ID
-                    FillDataGridView()
+                    DgvRoute.Fill(_City.Routes.Value)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.City)
                     If _CitiesForm IsNot Nothing Then
@@ -282,7 +282,7 @@ Public Class FrmCity
         Dim Form As FrmCityRoute
         Dim Route As CityRoute
         If DgvRoute.SelectedRows.Count = 1 Then
-            Route = _City.Routes.Value.Single(Function(x) x.Order = DgvRoute.SelectedRows(0).Cells("Order").Value)
+            Route = _City.Routes.Value.Single(Function(x) x.Guid = DgvRoute.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmCityRoute(_City, Route, Me)
             Form.ShowDialog()
         End If
@@ -291,9 +291,9 @@ Public Class FrmCity
         Dim Route As CityRoute
         If DgvRoute.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Route = _City.Routes.Value.Single(Function(x) x.Order = DgvRoute.SelectedRows(0).Cells("Order").Value)
+                Route = _City.Routes.Value.Single(Function(x) x.Guid = DgvRoute.SelectedRows(0).Cells("Guid").Value)
                 _City.Routes.Value.Remove(Route)
-                FillDataGridView()
+                DgvRoute.Fill(_City.Routes.Value)
                 BtnSave.Enabled = True
             End If
         End If
@@ -346,16 +346,14 @@ Public Class FrmCity
     Private Sub TxtFilterRoute_Leave(sender As Object, e As EventArgs) Handles TxtFilterRoute.Leave
         EprInformation.Clear()
     End Sub
-    Public Sub FillDataGridView()
-        _City.Routes.Value.FillDataGridView(DgvRoute)
-        DgvRoute.Columns.Cast(Of DataGridViewColumn).Where(Function(x) x.Name <> "Route").ToList.ForEach(Sub(y) y.Visible = False)
-        DgvRoute.Columns.Cast(Of DataGridViewColumn).Single(Function(x) x.Name = "Route").HeaderText = "Rota"
-        DgvRoute.Columns.Cast(Of DataGridViewColumn).Single(Function(x) x.Name = "Route").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-    End Sub
     Private Sub DgvRoute_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvRoute.DataSourceChanged
         FilterRoute()
     End Sub
     Private Sub FrmCity_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         _City.Unlock()
+    End Sub
+
+    Private Sub FrmCity_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        DgvRouteLayout.Load()
     End Sub
 End Class

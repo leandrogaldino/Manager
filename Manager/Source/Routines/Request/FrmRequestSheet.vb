@@ -1,5 +1,4 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
 Public Class FrmRequestSheet
     Private _Request As Request
     Private _ShowAlert As Boolean
@@ -28,7 +27,7 @@ Public Class FrmRequestSheet
             BtnGenerate.Enabled = False
             Result = RequestReport.ProcessRequestSheet(_Request, CbxShowCode.Checked, CbxShowReturned.Checked, CbxShowApplied.Checked, CbxShowLossed.Checked, CbxShowPending.Checked)
             DialogResult = DialogResult.OK
-            FrmMain.OpenTab(New FrmReport(Result), GetEnumDescription(Routine.RequestSheetReport))
+            FrmMain.OpenTab(New FrmReport(Result), EnumHelper.GetEnumDescription(Routine.RequestSheetReport))
             CMessageBox.Show("O Relátório foi gerado na tela inicial.", CMessageBoxType.Information)
         Catch ex As Exception
             CMessageBox.Show("ERRO RQ010", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

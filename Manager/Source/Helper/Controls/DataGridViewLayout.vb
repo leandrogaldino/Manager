@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
 Imports System.Xml
+Imports ControlLibrary
 Public Class DataGridViewLayout
     Inherits Component
     Public Event Loaded(sender As Object, e As EventArgs)
@@ -100,7 +101,22 @@ Public Class DataGridViewLayout
                 DataGridView.Columns(Index).Visible = Node("Visible").InnerText
                 DataGridView.Columns(Index).DisplayIndex = Node("DisplayIndex").InnerText
                 DataGridView.Columns(Index).HeaderText = Node("Name").InnerText
-                DataGridView.Columns(Index).Width = Node("Width").InnerText
+                If IsNumeric(Node("Width").InnerText) Then
+                    DataGridView.Columns(Index).Width = Node("Width").InnerText
+                Else
+                    If Node("Width").InnerText = "Fill" Then
+                        DataGridView.Columns(Index).Width = 0
+                        DataGridView.Columns(Index).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                    ElseIf Node("Width").InnerText = "ColumnHeader" Then
+                        DataGridView.Columns(Index).Width = 0
+                        DataGridView.Columns(Index).AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader
+                    ElseIf Node("Width").InnerText = "AllCells" Then
+                        DataGridView.Columns(Index).Width = 0
+                        DataGridView.Columns(Index).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                    Else
+                        DataGridView.Columns(Index).Width = 100
+                    End If
+                End If
             Next Node
             SortedColumn = Layout.SelectSingleNode(String.Format("/Routine[@Id='{0}']/SortedColumn", Routine)).InnerText
             SortDirection = Layout.SelectSingleNode(String.Format("/Routine[@Id='{0}']/SortDirection", Routine)).InnerText
@@ -147,11 +163,12 @@ Public Class DataGridViewLayout
                 Index = i
                 If Layout.SelectSingleNode(String.Format("/Routine[@Id='{0}']/Column[@Index='{1}']/Visible", Routine, DataGridView.Columns.Cast(Of DataGridViewColumn).First(Function(x) x.DisplayIndex = Index).Index)) IsNot Nothing Then
                     If Not Layout.SelectSingleNode(String.Format("/Routine[@Id='{0}']/Column[@Index='{1}']", Routine, DataGridView.Columns.Cast(Of DataGridViewColumn).First(Function(x) x.DisplayIndex = Index).Index)).Attributes.Cast(Of XmlAttribute).Any(Function(x) x.Name = "ButtonState") Then
-                        Button = New ToolStripMenuItem
-                        Button.CheckOnClick = True
-                        Button.Text = DataGridView.Columns.Cast(Of DataGridViewColumn).First(Function(x) x.DisplayIndex = Index).HeaderText
-                        Button.Tag = DataGridView.Columns.Cast(Of DataGridViewColumn).First(Function(x) x.DisplayIndex = Index).Index
-                        Button.Checked = Layout.SelectSingleNode(String.Format("/Routine[@Id='{0}']/Column[@Index='{1}']/Visible", Routine, DataGridView.Columns.Cast(Of DataGridViewColumn).First(Function(x) x.DisplayIndex = Index).Index)).InnerText
+                        Button = New ToolStripMenuItem With {
+                            .CheckOnClick = True,
+                            .Text = DataGridView.Columns.Cast(Of DataGridViewColumn).First(Function(x) x.DisplayIndex = Index).HeaderText,
+                            .Tag = DataGridView.Columns.Cast(Of DataGridViewColumn).First(Function(x) x.DisplayIndex = Index).Index,
+                            .Checked = Layout.SelectSingleNode(String.Format("/Routine[@Id='{0}']/Column[@Index='{1}']/Visible", Routine, DataGridView.Columns.Cast(Of DataGridViewColumn).First(Function(x) x.DisplayIndex = Index).Index)).InnerText
+                        }
                         AddHandler Button.CheckedChanged, AddressOf BtnColumn_CheckedChanged
                         _CmsColumns.Items.Add(Button)
                     End If
@@ -187,8 +204,9 @@ Public Class DataGridViewLayout
         If Not Directory.Exists(XmlDirectory) Then
             Directory.CreateDirectory(XmlDirectory)
         End If
-        For Each r In [Enum].GetValues(GetType(Routine))
+        For Each r In EnumHelper.GetEnumItems(Of Routine)
             If Not String.IsNullOrEmpty(My.Resources.ResourceManager.GetString(r.ToString & "Grid")) Then
+
                 If Not File.Exists(XmlDirectory & "\" & r.ToString & ".xml") Then
                     File.WriteAllText(XmlDirectory & "\" & r.ToString & ".xml", My.Resources.ResourceManager.GetString(r.ToString & "Grid"))
                 Else

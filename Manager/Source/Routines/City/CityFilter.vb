@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports MySql.Data.MySqlClient
-Imports ControlLibrary.Utility
 Imports ControlLibrary
 ''' <summary>
 ''' Representa o filtro de cidades.
@@ -58,7 +57,7 @@ Public Class CityFilter
             Con.Open()
             Using Cmd As New MySqlCommand(My.Resources.CityFilter, Con)
                 If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
-                If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
+                If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = EnumHelper.GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
                 If Name <> Nothing Then Cmd.Parameters.AddWithValue("@name", Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@name", "%")
                 If BIGSCode <> Nothing Then Cmd.Parameters.AddWithValue("@bigscode", BIGSCode) : Filtering = True Else Cmd.Parameters.AddWithValue("@bigscode", "%")
                 If State <> Nothing Then Cmd.Parameters.AddWithValue("@state", State) : Filtering = True Else Cmd.Parameters.AddWithValue("@state", "%")

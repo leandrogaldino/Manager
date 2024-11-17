@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Public Class FrmPersonGetDocument
     Private _Person As Person
     Private _Search As Consulta.CNPJ.Models.CNPJResult
@@ -103,12 +103,12 @@ Public Class FrmPersonGetDocument
                 EprValidation.SetIconAlignment(LblContactName, ErrorIconAlignment.MiddleRight)
                 TxtContactName.Select()
                 Return False
-            ElseIf Not String.IsNullOrWhiteSpace(TxtPhone.Text) And Utility.GetWhichPhoneFormat(TxtPhone.Text) = Utility.PhoneFormat.InvalidPhone Then
+            ElseIf Not String.IsNullOrWhiteSpace(TxtPhone.Text) And BrazilianFormatHelper.GetWhichPhoneFormat(TxtPhone.Text) = PhoneFormat.InvalidPhone Then
                 EprValidation.SetError(LblPhone, String.Format("Telefone inválido.{0}1) Verifique se o DDD foi informado;{0}2) Verifique se há algum caractere que não seja número, parentesis ou traço;{0}3)Verifique se o telefone tem entre 10 e 11 digitos.", vbNewLine))
                 EprValidation.SetIconAlignment(LblPhone, ErrorIconAlignment.MiddleRight)
                 TxtPhone.Select()
                 Return False
-            ElseIf Not String.IsNullOrWhiteSpace(TxtEmail.Text) And Not IsValidEmail(TxtEmail.Text) Then
+            ElseIf Not String.IsNullOrWhiteSpace(TxtEmail.Text) And Not BrazilianFormatHelper.IsValidEmail(TxtEmail.Text) Then
                 EprValidation.SetError(LblEmail, "E-Mail inválido.")
                 EprValidation.SetIconAlignment(LblEmail, ErrorIconAlignment.MiddleRight)
                 TxtEmail.Select()
@@ -126,7 +126,7 @@ Public Class FrmPersonGetDocument
                 EprValidation.SetIconAlignment(LblZipCode, ErrorIconAlignment.MiddleRight)
                 TxtZipCode.Select()
                 Return False
-            ElseIf Not IsValidZipCode(TxtZipCode.Text) Then
+            ElseIf Not BrazilianFormatHelper.IsValidZipCode(TxtZipCode.Text) Then
                 EprValidation.SetError(LblZipCode, "CEP inválido.")
                 EprValidation.SetIconAlignment(LblZipCode, ErrorIconAlignment.MiddleRight)
                 TxtZipCode.Select()
@@ -156,17 +156,17 @@ Public Class FrmPersonGetDocument
         Return True
     End Function
     Private Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
-        TxtName.Text = RemoveAccents(TxtName.Text.Trim)
-        TxtShortName.Text = RemoveAccents(TxtShortName.Text.Trim)
-        TxtContactName.Text = RemoveAccents(TxtContactName.Text.Trim)
-        TxtPhone.Text = RemoveAccents(TxtPhone.Text.Trim)
-        TxtEmail.Text = RemoveAccents(TxtEmail.Text.Trim)
-        TxtAddressName.Text = RemoveAccents(TxtAddressName.Text.Trim)
-        TxtZipCode.Text = RemoveAccents(TxtZipCode.Text.Trim)
-        TxtStreet.Text = RemoveAccents(TxtStreet.Text.Trim)
-        TxtNumber.Text = RemoveAccents(TxtNumber.Text.Trim)
-        TxtComplement.Text = RemoveAccents(TxtComplement.Text.Trim)
-        TxtDistrict.Text = RemoveAccents(TxtDistrict.Text.Trim)
+        TxtName.Text = TxtName.Text.Trim.ToUnaccented()
+        TxtShortName.Text = TxtShortName.Text.Trim.ToUnaccented()
+        TxtContactName.Text = TxtContactName.Text.Trim.ToUnaccented()
+        TxtPhone.Text = TxtPhone.Text.Trim.ToUnaccented()
+        TxtEmail.Text = TxtEmail.Text.Trim.ToUnaccented()
+        TxtAddressName.Text = TxtAddressName.Text.Trim.ToUnaccented()
+        TxtZipCode.Text = TxtZipCode.Text.Trim.ToUnaccented()
+        TxtStreet.Text = TxtStreet.Text.Trim.ToUnaccented()
+        TxtNumber.Text = TxtNumber.Text.Trim.ToUnaccented()
+        TxtComplement.Text = TxtComplement.Text.Trim.ToUnaccented()
+        TxtDistrict.Text = TxtDistrict.Text.Trim.ToUnaccented()
         If IsValidFields() Then
             _Person.Document = TxtDocument.Text
             _Person.Name = TxtName.Text
@@ -243,6 +243,6 @@ Public Class FrmPersonGetDocument
         EprValidation.Clear()
     End Sub
     Private Sub TxtPhone_Leave(sender As Object, e As EventArgs) Handles TxtPhone.Leave
-        TxtPhone.Text = Utility.GetFormatedPhoneNumber(TxtPhone.Text)
+        TxtPhone.Text = BrazilianFormatHelper.GetFormatedPhoneNumber(TxtPhone.Text)
     End Sub
 End Class

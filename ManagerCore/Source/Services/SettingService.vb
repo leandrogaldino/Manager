@@ -144,7 +144,7 @@ Public Class SettingService
         XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Clean").InnerText = Model.LastExecution.Clean.ToString("yyyy-MM-dd HH:mm:ss")
         XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Release").InnerText = Model.LastExecution.Release.ToString("yyyy-MM-dd HH:mm:ss")
         XmlDoc.SelectSingleNode("Setting/LastExecutionDates/CloudSync").InnerText = Model.LastExecution.CloudSync.ToString("yyyy-MM-dd HH:mm:ss")
-        XmlStr = Utility.GetStringFromXML(XmlDoc)
+        XmlStr = XmlDoc.OuterXml()
         XmlStr = Cryptography.Encrypt(XmlStr, _Key)
         File.WriteAllText(ApplicationPaths.SettingFile, XmlStr)
         Return Model

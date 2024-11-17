@@ -1,6 +1,6 @@
 ﻿Imports System.Net.Mail
 Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Imports ManagerCore
 
 Public Class FrmUserEmail
@@ -46,7 +46,7 @@ Public Class FrmUserEmail
     Private Sub AfterDataGridViewRowMove()
         If _UserForm.DgvEmail.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _UserEmail = _User.Emails.Single(Function(x) x.Order = _UserForm.DgvEmail.SelectedRows(0).Cells("Order").Value)
+            _UserEmail = _User.Emails.Single(Function(x) x.Guid = _UserForm.DgvEmail.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -88,9 +88,9 @@ Public Class FrmUserEmail
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _UserForm.DgvEmail.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _UserEmail = _User.Emails.Single(Function(x) x.Order = _UserForm.DgvEmail.SelectedRows(0).Cells("Order").Value)
+                _UserEmail = _User.Emails.Single(Function(x) x.Guid = _UserForm.DgvEmail.SelectedRows(0).Cells("Guid").Value)
                 _User.Emails.Remove(_UserEmail)
-                _User.Emails.FillDataGridView(_UserForm.DgvEmail)
+                _UserForm.DgvEmail.Fill(_User.Emails)
                 _UserForm.DgvEmailLayout.Load()
                 _Deleting = True
                 Dispose()
@@ -104,12 +104,13 @@ Public Class FrmUserEmail
     End Sub
     Private Sub BtnTest_Click(sender As Object, e As EventArgs) Handles BtnTest.Click
         Dim Model As New EmailModel
-        Dim UserEmail As New UserEmail
-        UserEmail.EnableSSL = CbxEnableSSL.Checked
-        UserEmail.Email = TxtEmail.Text.Trim
-        UserEmail.SmtpServer = TxtSmtpServer.Text.Trim
-        UserEmail.Port = DbxPort.Text
-        UserEmail.Password = Cryptography.Encrypt(TxtPassword.Text, Locator.GetInstance(Of CryptoKeyService).ReadCryptoKey())
+        Dim UserEmail As New UserEmail With {
+            .EnableSSL = CbxEnableSSL.Checked,
+            .Email = TxtEmail.Text.Trim,
+            .SmtpServer = TxtSmtpServer.Text.Trim,
+            .Port = DbxPort.Text,
+            .Password = Cryptography.Encrypt(TxtPassword.Text, Locator.GetInstance(Of CryptoKeyService).ReadCryptoKey())
+        }
         Model.Subject = "Gerenciador - Teste"
         Model.Body = "{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1046{\fonttbl{\f0\fnil\fcharset0 Century Gothic;}{\f1\fnil\fcharset0 Calibri;}}{\*\generator Riched20 10.0.19041}\viewkind4\uc1 \pard\sa200\sl276\slmult1\b\f0\fs24\lang22 E-Mail de teste enviado pelo Gerenciador.\b0\f1\fs22\par}"
         Try
@@ -139,7 +140,7 @@ Public Class FrmUserEmail
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = _UserEmail.Order
+        LblOrderValue.Text = If(_UserEmail.IsSaved, _UserForm.DgvEmail.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _UserEmail.Creation
         CbxIsMainEmail.Checked = _UserEmail.IsMainEmail
         CbxEnableSSL.Checked = _UserEmail.EnableSSL
@@ -147,7 +148,7 @@ Public Class FrmUserEmail
         TxtSmtpServer.Text = _UserEmail.SmtpServer
         DbxPort.Text = _UserEmail.Port
         TxtPassword.Text = Cryptography.Decrypt(_UserEmail.Password, Locator.GetInstance(Of CryptoKeyService).ReadCryptoKey())
-        If _UserEmail.Order = 0 Then
+        If Not _UserEmail.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
         Else
@@ -164,7 +165,7 @@ Public Class FrmUserEmail
             EprValidation.SetIconAlignment(LblEmail, ErrorIconAlignment.MiddleRight)
             TxtEmail.Select()
             Return False
-        ElseIf Not IsValidEmail(TxtEmail.Text) Then
+        ElseIf Not BrazilianFormatHelper.IsValidEmail(TxtEmail.Text) Then
             EprValidation.SetError(LblEmail, "E-Mail inválido.")
             EprValidation.SetIconAlignment(LblEmail, ErrorIconAlignment.MiddleRight)
             TxtEmail.Select()
@@ -183,43 +184,44 @@ Public Class FrmUserEmail
         TxtSmtpServer.Text = TxtSmtpServer.Text.Trim
         If IsValidFields() Then
             If _UserEmail.IsSaved Then
-                _User.Emails.Single(Function(x) x.Order = _UserEmail.Order).IsMainEmail = CbxIsMainEmail.Checked
-                _User.Emails.Single(Function(x) x.Order = _UserEmail.Order).EnableSSL = CbxEnableSSL.Checked
-                _User.Emails.Single(Function(x) x.Order = _UserEmail.Order).Email = TxtEmail.Text
-                _User.Emails.Single(Function(x) x.Order = _UserEmail.Order).SmtpServer = TxtSmtpServer.Text
-                _User.Emails.Single(Function(x) x.Order = _UserEmail.Order).Port = DbxPort.Text
-                _User.Emails.Single(Function(x) x.Order = _UserEmail.Order).Password = Cryptography.Encrypt(TxtPassword.Text, Locator.GetInstance(Of CryptoKeyService).ReadCryptoKey())
+                _User.Emails.Single(Function(x) x.Guid = _UserEmail.Guid).IsMainEmail = CbxIsMainEmail.Checked
+                _User.Emails.Single(Function(x) x.Guid = _UserEmail.Guid).EnableSSL = CbxEnableSSL.Checked
+                _User.Emails.Single(Function(x) x.Guid = _UserEmail.Guid).Email = TxtEmail.Text
+                _User.Emails.Single(Function(x) x.Guid = _UserEmail.Guid).SmtpServer = TxtSmtpServer.Text
+                _User.Emails.Single(Function(x) x.Guid = _UserEmail.Guid).Port = DbxPort.Text
+                _User.Emails.Single(Function(x) x.Guid = _UserEmail.Guid).Password = Cryptography.Encrypt(TxtPassword.Text, Locator.GetInstance(Of CryptoKeyService).ReadCryptoKey())
             Else
-                _UserEmail = New UserEmail()
-                _UserEmail.IsMainEmail = CbxIsMainEmail.Checked
-                _UserEmail.EnableSSL = CbxEnableSSL.Checked
-                _UserEmail.Email = TxtEmail.Text
-                _UserEmail.SmtpServer = TxtSmtpServer.Text
-                _UserEmail.Port = DbxPort.Text
-                _UserEmail.Password = Cryptography.Encrypt(TxtPassword.Text, Locator.GetInstance(Of CryptoKeyService).ReadCryptoKey())
-                _UserEmail.IsSaved = True
+                _UserEmail = New UserEmail With {
+                    .IsMainEmail = CbxIsMainEmail.Checked,
+                    .EnableSSL = CbxEnableSSL.Checked,
+                    .Email = TxtEmail.Text,
+                    .SmtpServer = TxtSmtpServer.Text,
+                    .Port = DbxPort.Text,
+                    .Password = Cryptography.Encrypt(TxtPassword.Text, Locator.GetInstance(Of CryptoKeyService).ReadCryptoKey())
+                }
+                _UserEmail.SetIsSaved(True)
                 _User.Emails.Add(_UserEmail)
             End If
             If CbxIsMainEmail.Checked Then
                 For Each Email As UserEmail In _User.Emails
-                    If Email.Order <> _UserEmail.Order Then
+                    If Email.Guid <> _UserEmail.Guid Then
                         Email.IsMainEmail = False
                     End If
                 Next Email
             End If
-            _User.Emails.FillDataGridView(_UserForm.DgvEmail)
-            LblOrderValue.Text = _UserEmail.Order
+            _UserForm.DgvEmail.Fill(_User.Emails)
             _UserForm.DgvEmailLayout.Load()
             BtnSave.Enabled = False
-            If _UserEmail.Order = 0 Then
+            If Not _UserEmail.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _UserForm.DgvEmail.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Order").Value = _UserEmail.Order)
+            Row = _UserForm.DgvEmail.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _UserEmail.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+            LblOrderValue.Text = _UserForm.DgvEmail.SelectedRows(0).Cells("Order").Value
             _UserForm.EprValidation.Clear()
             _UserForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()

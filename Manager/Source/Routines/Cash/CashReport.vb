@@ -1,9 +1,10 @@
-﻿Imports Syncfusion.ExcelToPdfConverter
+﻿Imports ControlLibrary
+Imports ControlLibrary.Extensions
+Imports Syncfusion.ExcelToPdfConverter
 Imports System.IO
 Imports MySql.Data.MySqlClient
 Imports ManagerCore
 Imports ClosedXML.Excel
-Imports ControlLibrary
 
 Public Class CashReport
     Public Shared Function ProcessCashSheet(Cashes As List(Of Cash))
@@ -222,8 +223,8 @@ Public Class CashReport
         WbMain.SaveAs(Result.FilePath & ".xlsx")
         Converter = New ExcelToPdfConverter(Result.FilePath & ".xlsx")
         Converter.Convert().Save(Result.FilePath & ".pdf")
-        Result.ReportName = "Caixa " & ControlLibrary.Utility.GetTitleCase(Cashes.First.CashFlow.Name)
-        Result.Attachments.Insert(0, New ReportResult.ReportAttachment(Result.FilePath & ".pdf", "Caixa " & ControlLibrary.Utility.GetTitleCase(Cashes.First.CashFlow.Name) & ".pdf"))
+        Result.ReportName = "Caixa " & Cashes.First.CashFlow.Name.ToTitle()
+        Result.Attachments.Insert(0, New ReportResult.ReportAttachment(Result.FilePath & ".pdf", "Caixa " & Cashes.First.CashFlow.Name.ToTitle() & ".pdf"))
         Return Result
     End Function
     Public Shared Function ProcessExpensesPerResponsible(CashFlowID As Long, InitialDate As Date, FinalDate As Date, ResponsibleShortName As Boolean) As ReportResult

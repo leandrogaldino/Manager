@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 
 Public Class FrmCompressor
@@ -29,18 +29,18 @@ Public Class FrmCompressor
         MyBase.OnResize(e)
     End Sub
     Public Sub New(Compressor As Compressor, CompressorsForm As FrmCompressors)
+        InitializeComponent()
         _Compressor = Compressor
         _CompressorsForm = CompressorsForm
         _CompressorsGrid = _CompressorsForm.DgvData
         _Filter = CType(_CompressorsForm.PgFilter.SelectedObject, CompressorFilter)
         _User = Locator.GetInstance(Of Session).User
-        InitializeComponent()
         LoadData()
         LoadForm()
     End Sub
     Public Sub New(Compressor As Compressor)
-        _Compressor = Compressor
         InitializeComponent()
+        _Compressor = Compressor
         TsNavigation.Visible = False
         TsNavigation.Enabled = False
         LblStatus.Visible = False
@@ -56,8 +56,8 @@ Public Class FrmCompressor
         DgvCompressorPartElapsedDayLayout.Load()
     End Sub
     Private Sub LoadForm()
-        Utility.EnableControlDoubleBuffer(DgvCompressorPartWorkedHour, True)
-        Utility.EnableControlDoubleBuffer(DgvCompressorPartElapsedDay, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvCompressorPartWorkedHour, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvCompressorPartElapsedDay, True)
         DgvNavigator.DataGridView = _CompressorsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
@@ -66,19 +66,19 @@ Public Class FrmCompressor
     Private Sub LoadData()
         _Loading = True
         LblIDValue.Text = _Compressor.ID
-        BtnStatusValue.Text = GetEnumDescription(_Compressor.Status)
+        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Compressor.Status)
         LblCreationValue.Text = _Compressor.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _Compressor.Name
         QbxManufacturer.Unfreeze()
         QbxManufacturer.Freeze(_Compressor.Manufacturer.Value.ID)
         TxtFilterPartWorkedHour.Clear()
-        If _Compressor.PartsWorkedHour IsNot Nothing Then _Compressor.PartsWorkedHour.Value.FillDataGridView(DgvCompressorPartWorkedHour)
+        If _Compressor.PartsWorkedHour IsNot Nothing Then DgvCompressorPartWorkedHour.Fill(_Compressor.PartsWorkedHour.Value)
         TxtFilterPartWorkedHour.Clear()
-        If _Compressor.PartsElapsedDay IsNot Nothing Then _Compressor.PartsElapsedDay.Value.FillDataGridView(DgvCompressorPartElapsedDay)
+        If _Compressor.PartsElapsedDay IsNot Nothing Then DgvCompressorPartElapsedDay.Fill(_Compressor.PartsElapsedDay.Value)
         BtnDelete.Enabled = _Compressor.ID > 0 And _User.CanDelete(Routine.Compressor)
         Text = "Compressor"
         If _Compressor.LockInfo.IsLocked And Not _Compressor.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Compressor.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_Compressor.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _Compressor.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
         End If
         BtnSave.Enabled = False
@@ -112,8 +112,8 @@ Public Class FrmCompressor
             End If
         End If
         If _CompressorsForm IsNot Nothing Then
-            _Compressor.PartsWorkedHour.Value.FillDataGridView(DgvCompressorPartWorkedHour)
-            _Compressor.PartsElapsedDay.Value.FillDataGridView(DgvCompressorPartElapsedDay)
+            DgvCompressorPartWorkedHour.Fill(_Compressor.PartsWorkedHour.Value)
+            DgvCompressorPartElapsedDay.Fill(_Compressor.PartsElapsedDay.Value)
         End If
         _Deleting = False
     End Sub
@@ -141,7 +141,7 @@ Public Class FrmCompressor
                         _Deleting = True
                         Dispose()
                     Else
-                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_Compressor.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Compressor.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                     End If
                 End If
             Catch ex As MySqlException
@@ -160,13 +160,13 @@ Public Class FrmCompressor
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
-        If BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive)
+        If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
             If _Compressor.Status = SimpleStatus.Active Then
                 CMessageBox.Show("O registro foi marcado para ser inativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
-        ElseIf BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active)
+        ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active)
             If _Compressor.Status = SimpleStatus.Inactive Then
                 CMessageBox.Show("O registro foi marcado para ser ativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
@@ -175,7 +175,7 @@ Public Class FrmCompressor
     End Sub
     Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
         EprValidation.Clear()
-        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
+        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
     Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles TxtName.TextChanged, QbxManufacturer.TextChanged
         EprValidation.Clear()
@@ -223,13 +223,13 @@ Public Class FrmCompressor
     End Function
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
-        TxtName.Text = RemoveAccents(TxtName.Text.Trim)
+        TxtName.Text = TxtName.Text.Trim.ToUnaccented()
         If _Compressor.LockInfo.IsLocked And _Compressor.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_Compressor.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Compressor.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Return False
         Else
             If IsValidFields() Then
-                _Compressor.Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                _Compressor.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
                 _Compressor.Name = TxtName.Text
                 _Compressor.Manufacturer = New Lazy(Of Person)(Function() New Person().Load(QbxManufacturer.FreezedPrimaryKey, False))
                 Try
@@ -237,8 +237,8 @@ Public Class FrmCompressor
                     _Compressor.SaveChanges()
                     _Compressor.Lock()
                     LblIDValue.Text = _Compressor.ID
-                    _Compressor.PartsWorkedHour.Value.FillDataGridView(DgvCompressorPartWorkedHour)
-                    _Compressor.PartsElapsedDay.Value.FillDataGridView(DgvCompressorPartElapsedDay)
+                    DgvCompressorPartWorkedHour.Fill(_Compressor.PartsWorkedHour.Value)
+                    DgvCompressorPartElapsedDay.Fill(_Compressor.PartsElapsedDay.Value)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Compressor)
                     If _CompressorsForm IsNot Nothing Then
@@ -332,7 +332,7 @@ Public Class FrmCompressor
         Dim Form As FrmCompressorPartWorkedHour
         Dim PartWorkedHour As CompressorPart
         If DgvCompressorPartWorkedHour.SelectedRows.Count = 1 Then
-            PartWorkedHour = _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Order = DgvCompressorPartWorkedHour.SelectedRows(0).Cells("Order").Value)
+            PartWorkedHour = _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Guid = DgvCompressorPartWorkedHour.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmCompressorPartWorkedHour(_Compressor, PartWorkedHour, Me)
             Form.ShowDialog()
         End If
@@ -341,9 +341,9 @@ Public Class FrmCompressor
         Dim PartWorkedHour As CompressorPart
         If DgvCompressorPartWorkedHour.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                PartWorkedHour = _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Order = DgvCompressorPartWorkedHour.SelectedRows(0).Cells("Order").Value)
+                PartWorkedHour = _Compressor.PartsWorkedHour.Value.Single(Function(x) x.Guid = DgvCompressorPartWorkedHour.SelectedRows(0).Cells("Guid").Value)
                 _Compressor.PartsWorkedHour.Value.Remove(PartWorkedHour)
-                _Compressor.PartsWorkedHour.Value.FillDataGridView(DgvCompressorPartWorkedHour)
+                DgvCompressorPartWorkedHour.Fill(_Compressor.PartsWorkedHour.Value)
                 BtnSave.Enabled = True
             End If
         End If
@@ -354,10 +354,10 @@ Public Class FrmCompressor
         If e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
                 Case Is = SimpleStatus.Active
-                    e.Value = GetEnumDescription(SimpleStatus.Active)
+                    e.Value = EnumHelper.GetEnumDescription(SimpleStatus.Active)
                     e.CellStyle.ForeColor = Color.DarkBlue
                 Case Is = SimpleStatus.Inactive
-                    e.Value = GetEnumDescription(SimpleStatus.Inactive)
+                    e.Value = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
                     e.CellStyle.ForeColor = Color.DarkRed
             End Select
         ElseIf e.ColumnIndex = Dgv.Columns("Quantity").Index Then
@@ -417,7 +417,7 @@ Public Class FrmCompressor
         Dim Form As FrmCompressorPartElapsedDay
         Dim PartElapsedDay As CompressorPart
         If DgvCompressorPartElapsedDay.SelectedRows.Count = 1 Then
-            PartElapsedDay = _Compressor.PartsElapsedDay.Value.Single(Function(x) x.Order = DgvCompressorPartElapsedDay.SelectedRows(0).Cells("Order").Value)
+            PartElapsedDay = _Compressor.PartsElapsedDay.Value.Single(Function(x) x.Guid = DgvCompressorPartElapsedDay.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmCompressorPartElapsedDay(_Compressor, PartElapsedDay, Me)
             Form.ShowDialog()
         End If
@@ -426,9 +426,9 @@ Public Class FrmCompressor
         Dim PartElapsedDay As CompressorPart
         If DgvCompressorPartElapsedDay.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                PartElapsedDay = _Compressor.PartsElapsedDay.Value.Single(Function(x) x.Order = DgvCompressorPartElapsedDay.SelectedRows(0).Cells("Order").Value)
+                PartElapsedDay = _Compressor.PartsElapsedDay.Value.Single(Function(x) x.Guid = DgvCompressorPartElapsedDay.SelectedRows(0).Cells("Guid").Value)
                 _Compressor.PartsElapsedDay.Value.Remove(PartElapsedDay)
-                _Compressor.PartsElapsedDay.Value.FillDataGridView(DgvCompressorPartElapsedDay)
+                DgvCompressorPartElapsedDay.Fill(_Compressor.PartsElapsedDay.Value)
                 BtnSave.Enabled = True
             End If
         End If
@@ -439,10 +439,10 @@ Public Class FrmCompressor
         If e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
                 Case Is = SimpleStatus.Active
-                    e.Value = GetEnumDescription(SimpleStatus.Active)
+                    e.Value = EnumHelper.GetEnumDescription(SimpleStatus.Active)
                     e.CellStyle.ForeColor = Color.DarkBlue
                 Case Is = SimpleStatus.Inactive
-                    e.Value = GetEnumDescription(SimpleStatus.Inactive)
+                    e.Value = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
                     e.CellStyle.ForeColor = Color.DarkRed
             End Select
         ElseIf e.ColumnIndex = Dgv.Columns("Quantity").Index Then

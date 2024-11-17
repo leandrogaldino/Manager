@@ -1,32 +1,30 @@
-﻿Imports System.Reflection
-Imports ControlLibrary
+﻿Imports ControlLibrary
 Imports MySql.Data.MySqlClient
 ''' <summary>
 ''' Representa um compressor.
 ''' </summary>
 Public Class Compressor
-    Inherits ModelBase
-    Private _IsSaved As Boolean
+    Inherits ParentModel
     Private _ManufacturerID As Long
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
     Public Property Manufacturer As New Lazy(Of Person)(Function() New Person().Load(_ManufacturerID, False))
-    Public Property PartsWorkedHour As New Lazy(Of OrdenedList(Of CompressorPart))(Function() GetPartsWorkedHour())
-    Public Property PartsElapsedDay As New Lazy(Of OrdenedList(Of CompressorPart))(Function() GetPartsElapsedDay())
+    Public Property PartsWorkedHour As New Lazy(Of List(Of CompressorPart))(Function() GetPartsWorkedHour())
+    Public Property PartsElapsedDay As New Lazy(Of List(Of CompressorPart))(Function() GetPartsElapsedDay())
     Public Sub New()
-        _Routine = Routine.Compressor
+        SetRoutine(Routine.Compressor)
     End Sub
     Public Sub Clear()
         Unlock()
-        _IsSaved = False
-        _ID = 0
-        _Creation = Today
+        SetIsSaved(False)
+        SetID(0)
+        SetCreation(Today)
         _ManufacturerID = 0
         Status = SimpleStatus.Active
         Name = Nothing
         Manufacturer = New Lazy(Of Person)(Function() New Person().Load(_ManufacturerID, False))
-        PartsWorkedHour = New Lazy(Of OrdenedList(Of CompressorPart))(Function() GetPartsWorkedHour())
-        PartsElapsedDay = New Lazy(Of OrdenedList(Of CompressorPart))(Function() GetPartsElapsedDay())
+        PartsWorkedHour = New Lazy(Of List(Of CompressorPart))(Function() GetPartsWorkedHour())
+        PartsElapsedDay = New Lazy(Of List(Of CompressorPart))(Function() GetPartsElapsedDay())
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As Compressor
         Dim Session = Locator.GetInstance(Of Session)
@@ -45,14 +43,14 @@ Public Class Compressor
                         Clear()
                     ElseIf TableResult.Rows.Count = 1 Then
                         Clear()
-                        _ID = TableResult.Rows(0).Item("id")
-                        _Creation = TableResult.Rows(0).Item("creation")
+                        SetID(TableResult.Rows(0).Item("id"))
+                        SetCreation(TableResult.Rows(0).Item("creation"))
+                        SetIsSaved(True)
                         Status = TableResult.Rows(0).Item("statusid")
                         Name = TableResult.Rows(0).Item("name").ToString
                         _ManufacturerID = TableResult.Rows(0).Item("manufacturerid")
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
-                        _IsSaved = True
                     ElseIf TableResult.Rows.Count > 1 Then
                         Throw New Exception("Registro não encontrado.")
                     End If
@@ -63,14 +61,14 @@ Public Class Compressor
         Return Me
     End Function
     Public Sub SaveChanges()
-        If Not _IsSaved Then
+        If Not IsSaved Then
             Insert()
         Else
             Update()
         End If
-        _IsSaved = True
-        PartsWorkedHour.Value.ToList().ForEach(Sub(x) x.IsSaved = True)
-        PartsElapsedDay.Value.ToList().ForEach(Sub(x) x.IsSaved = True)
+        SetIsSaved(True)
+        PartsWorkedHour.Value.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        PartsElapsedDay.Value.ToList().ForEach(Sub(x) x.SetIsSaved(True))
     End Sub
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)
@@ -96,7 +94,7 @@ Public Class Compressor
                     CmdCompressor.Parameters.AddWithValue("@name", Name)
                     CmdCompressor.Parameters.AddWithValue("@userid", User.ID)
                     CmdCompressor.ExecuteNonQuery()
-                    _ID = CmdCompressor.LastInsertedId
+                    SetID(CmdCompressor.LastInsertedId)
                 End Using
                 For Each PartWorkedHour As CompressorPart In PartsWorkedHour.Value
                     Using CmdPartWorkedHour As New MySqlCommand(My.Resources.CompressorPartInsert, Con)
@@ -110,7 +108,7 @@ Public Class Compressor
                         CmdPartWorkedHour.Parameters.AddWithValue("@quantity", PartWorkedHour.Quantity)
                         CmdPartWorkedHour.Parameters.AddWithValue("@userid", PartWorkedHour.User.ID)
                         CmdPartWorkedHour.ExecuteNonQuery()
-                        PartWorkedHour.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartWorkedHour, CmdPartWorkedHour.LastInsertedId)
+                        PartWorkedHour.SetID(CmdPartWorkedHour.LastInsertedId)
                     End Using
                 Next PartWorkedHour
                 For Each PartElapsedDay As CompressorPart In PartsElapsedDay.Value
@@ -125,7 +123,7 @@ Public Class Compressor
                         CmdPartElapsedDay.Parameters.AddWithValue("@quantity", PartElapsedDay.Quantity)
                         CmdPartElapsedDay.Parameters.AddWithValue("@userid", PartElapsedDay.User.ID)
                         CmdPartElapsedDay.ExecuteNonQuery()
-                        PartElapsedDay.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartElapsedDay, CmdPartElapsedDay.LastInsertedId)
+                        PartElapsedDay.SetID(CmdPartElapsedDay.LastInsertedId)
                     End Using
                 Next PartElapsedDay
                 Tra.Commit()
@@ -169,7 +167,7 @@ Public Class Compressor
                             CmdPartWorkedHour.Parameters.AddWithValue("@quantity", PartWorkedHour.Quantity)
                             CmdPartWorkedHour.Parameters.AddWithValue("@userid", PartWorkedHour.User.ID)
                             CmdPartWorkedHour.ExecuteNonQuery()
-                            PartWorkedHour.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartWorkedHour, CmdPartWorkedHour.LastInsertedId)
+                            PartWorkedHour.SetID(CmdPartWorkedHour.LastInsertedId)
                         End Using
                     Else
                         Using CmdPartWorkedHour As New MySqlCommand(My.Resources.CompressorPartUpdate, Con)
@@ -206,7 +204,7 @@ Public Class Compressor
                             CmdPartElapsedDay.Parameters.AddWithValue("@quantity", PartElapsedDay.Quantity)
                             CmdPartElapsedDay.Parameters.AddWithValue("@userid", PartElapsedDay.User.ID)
                             CmdPartElapsedDay.ExecuteNonQuery()
-                            PartElapsedDay.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartElapsedDay, CmdPartElapsedDay.LastInsertedId)
+                            PartElapsedDay.SetID(CmdPartElapsedDay.LastInsertedId)
                         End Using
                     Else
                         Using CmdPartElapsedDay As New MySqlCommand(My.Resources.CompressorPartUpdate, Con)
@@ -228,10 +226,10 @@ Public Class Compressor
     Public Overrides Function ToString() As String
         Return If(Name, String.Empty)
     End Function
-    Private Function GetPartsWorkedHour() As OrdenedList(Of CompressorPart)
+    Private Function GetPartsWorkedHour() As List(Of CompressorPart)
         Dim Session = Locator.GetInstance(Of Session)
         Dim TableResult As DataTable
-        Dim PartsWorkedHour As OrdenedList(Of CompressorPart)
+        Dim PartsWorkedHour As List(Of CompressorPart)
         Dim PartWorkedHour As CompressorPart
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
@@ -241,16 +239,17 @@ Public Class Compressor
                 Using Adp As New MySqlDataAdapter(CmdPartWorkedHour)
                     TableResult = New DataTable
                     Adp.Fill(TableResult)
-                    PartsWorkedHour = New OrdenedList(Of CompressorPart)
+                    PartsWorkedHour = New List(Of CompressorPart)
                     For Each Row As DataRow In TableResult.Rows
-                        PartWorkedHour = New CompressorPart(Row.Item("parttypeid"))
-                        PartWorkedHour.Status = Row.Item("statusid")
-                        PartWorkedHour.ItemName = Row.Item("itemname").ToString
-                        PartWorkedHour.Product = New Product().Load(Row.Item("productid"), False)
-                        PartWorkedHour.Quantity = Row.Item("quantity")
-                        PartWorkedHour.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartWorkedHour, Row.Item("id"))
-                        PartWorkedHour.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartWorkedHour, Row.Item("creation"))
-                        PartWorkedHour.IsSaved = True
+                        PartWorkedHour = New CompressorPart(Row.Item("parttypeid")) With {
+                            .Status = Row.Item("statusid"),
+                            .ItemName = Row.Item("itemname").ToString,
+                            .Product = New Product().Load(Row.Item("productid"), False),
+                            .Quantity = Row.Item("quantity")
+                        }
+                        PartWorkedHour.SetID(Row.Item("id"))
+                        PartWorkedHour.SetCreation(Row.Item("creation"))
+                        PartWorkedHour.SetIsSaved(True)
                         PartsWorkedHour.Add(PartWorkedHour)
                     Next Row
                 End Using
@@ -258,10 +257,10 @@ Public Class Compressor
         End Using
         Return PartsWorkedHour
     End Function
-    Private Function GetPartsElapsedDay() As OrdenedList(Of CompressorPart)
+    Private Function GetPartsElapsedDay() As List(Of CompressorPart)
         Dim Session = Locator.GetInstance(Of Session)
         Dim TableResult As DataTable
-        Dim PartsElapsedDay As OrdenedList(Of CompressorPart)
+        Dim PartsElapsedDay As List(Of CompressorPart)
         Dim PartElapsedDay As CompressorPart
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
@@ -271,16 +270,17 @@ Public Class Compressor
                 Using Adp As New MySqlDataAdapter(CmdPartElapsedDay)
                     TableResult = New DataTable
                     Adp.Fill(TableResult)
-                    PartsElapsedDay = New OrdenedList(Of CompressorPart)
+                    PartsElapsedDay = New List(Of CompressorPart)
                     For Each Row As DataRow In TableResult.Rows
-                        PartElapsedDay = New CompressorPart(Row.Item("parttypeid"))
-                        PartElapsedDay.Status = Row.Item("statusid")
-                        PartElapsedDay.ItemName = Row.Item("itemname").ToString
-                        PartElapsedDay.Product = New Product().Load(Row.Item("productid"), False)
-                        PartElapsedDay.Quantity = Row.Item("quantity")
-                        PartElapsedDay.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartElapsedDay, Row.Item("id"))
-                        PartElapsedDay.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(PartElapsedDay, Row.Item("creation"))
-                        PartElapsedDay.IsSaved = True
+                        PartElapsedDay = New CompressorPart(Row.Item("parttypeid")) With {
+                            .Status = Row.Item("statusid"),
+                            .ItemName = Row.Item("itemname").ToString,
+                            .Product = New Product().Load(Row.Item("productid"), False),
+                            .Quantity = Row.Item("quantity")
+                        }
+                        PartElapsedDay.SetID(Row.Item("id"))
+                        PartElapsedDay.SetCreation(Row.Item("creation"))
+                        PartElapsedDay.SetIsSaved(True)
                         PartsElapsedDay.Add(PartElapsedDay)
                     Next Row
                 End Using

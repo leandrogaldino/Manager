@@ -1,27 +1,8 @@
-﻿Imports ControlLibrary
-''' <summary>
+﻿''' <summary>
 ''' Representa um endereço de uma pessoa.
 ''' </summary>
 Public Class PersonAddress
-    Public IsSaved As Boolean
-    Private _Order As Long
-    Private _ID As Long
-    Private _Creation As Date = Today
-    Public ReadOnly Property Order As Long
-        Get
-            Return _Order
-        End Get
-    End Property
-    Public ReadOnly Property ID As Long
-        Get
-            Return _ID
-        End Get
-    End Property
-    Public ReadOnly Property Creation As Date
-        Get
-            Return _Creation
-        End Get
-    End Property
+    Inherits ChildModel
     Public Property IsMainAddress As Boolean
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
@@ -35,5 +16,7 @@ Public Class PersonAddress
     Public Property StateDocument As String
     Public Property ContributionType As PersonContributionType = PersonContributionType.TaxPayer
     Public Property Carrier As New Person
-    Public ReadOnly User As User = Locator.GetInstance(Of Session).User
+    Public Sub New()
+        SetRoutine(Routine.PersonAddress)
+    End Sub
 End Class

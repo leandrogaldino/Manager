@@ -2,8 +2,7 @@
 Imports MySql.Data.MySqlClient
 
 Public Class VisitSchedule
-    Inherits ModelBase
-    Private _IsSaved As Boolean
+    Inherits ParentModel
     Public Property Status As VisitScheduleStatus
     Public Property VisitType As VisitScheduleType
     Public Property Customer As New Person
@@ -12,16 +11,15 @@ Public Class VisitSchedule
     Public Property GeneratedEvaluation As Lazy(Of Evaluation)
 
     Public Sub New()
-        _Routine = Routine.VisitSchedule
-        _Creation = Today
+        SetRoutine(Routine.VisitSchedule)
         Status = VisitScheduleStatus.Pending
         VisitType = VisitScheduleType.Gathering
     End Sub
     Public Sub Clear()
         Unlock()
-        _IsSaved = False
-        _ID = 0
-        _Creation = Today
+        SetIsSaved(False)
+        SetID(0)
+        SetCreation(Today)
         Status = VisitScheduleStatus.Pending
         Customer = New Person()
         Compressor = New PersonCompressor()
@@ -40,8 +38,9 @@ Public Class VisitSchedule
                         If Reader.HasRows Then
                             Reader.Read()
                             Clear()
-                            _ID = Reader.GetInt64("id")
-                            _Creation = Reader.GetDateTime("creation")
+                            SetID(Reader.GetInt64("id"))
+                            SetCreation(Reader.GetDateTime("creation"))
+                            SetIsSaved(True)
                             Status = CType(Reader.GetInt32("statusid"), VisitScheduleStatus)
                             Customer = New Person().Load(Reader.GetInt64("customerid"), False)
                             Compressor = Customer.Compressors.SingleOrDefault(Function(x) x.ID = Reader.GetInt64("compressorid"))
@@ -49,7 +48,6 @@ Public Class VisitSchedule
                             GeneratedEvaluation = New Lazy(Of Evaluation)(Function() New Evaluation().Load(1, False))
                             LockInfo = GetLockInfo(Tra)
                             If LockMe AndAlso Not LockInfo.IsLocked Then Lock(Tra)
-                            _IsSaved = True
                         Else
                             Clear()
                             Throw New Exception("Registro não encontrado.")
@@ -63,12 +61,12 @@ Public Class VisitSchedule
     End Function
 
     Public Sub SaveChanges()
-        If Not _IsSaved Then
+        If Not IsSaved Then
             Insert()
         Else
             Update()
         End If
-        _IsSaved = True
+        SetIsSaved(True)
     End Sub
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)
@@ -97,7 +95,7 @@ Public Class VisitSchedule
                     Cmd.Parameters.AddWithValue("@evaluationid", If(GeneratedEvaluation.Value.ID <= 0, DBNull.Value, GeneratedEvaluation.Value.ID))
                     Cmd.Parameters.AddWithValue("@userid", User.ID)
                     Cmd.ExecuteNonQuery()
-                    _ID = Cmd.LastInsertedId
+                    SetID(Cmd.LastInsertedId)
                 End Using
                 Tra.Commit()
             End Using

@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Public Class FrmPersonCompressor
     Private _PersonForm As FrmPerson
     Private _Person As Person
@@ -51,7 +51,7 @@ Public Class FrmPersonCompressor
                 End If
             End If
             If Revert Then
-                For Each PersonCompressorPart As PersonCompressorPart In _PersonCompressor.PartsWorkedHour.Reverse
+                For Each PersonCompressorPart As PersonCompressorPart In _PersonCompressor.PartsWorkedHour.ToArray.Reverse
                     If Not _PersonCompressorShadow.PartsWorkedHour.Any(Function(x) x.Equals(PersonCompressorPart)) Then
                         _PersonCompressor.PartsWorkedHour.Remove(PersonCompressorPart)
                     End If
@@ -61,7 +61,7 @@ Public Class FrmPersonCompressor
                         _PersonCompressor.PartsWorkedHour.Add(ShadowPersonCompressorPart)
                     End If
                 Next ShadowPersonCompressorPart
-                For Each PersonCompressorPart As PersonCompressorPart In _PersonCompressor.PartsElapsedDay.Reverse
+                For Each PersonCompressorPart As PersonCompressorPart In _PersonCompressor.PartsElapsedDay.ToArray.Reverse
                     If Not _PersonCompressorShadow.PartsElapsedDay.Any(Function(x) x.Equals(PersonCompressorPart)) Then
                         _PersonCompressor.PartsElapsedDay.Remove(PersonCompressorPart)
                     End If
@@ -77,7 +77,7 @@ Public Class FrmPersonCompressor
     Private Sub AfterDataGridViewRowMove()
         If _PersonForm.DgvCompressor.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _PersonCompressor = _Person.Compressors.Single(Function(x) x.Order = _PersonForm.DgvCompressor.SelectedRows(0).Cells("Order").Value)
+            _PersonCompressor = _Person.Compressors.Single(Function(x) x.Guid = _PersonForm.DgvCompressor.SelectedRows(0).Cells("Guid").Value)
             _PersonCompressorShadow = _PersonCompressor.Clone()
             LoadForm()
             Cursor = Cursors.Default
@@ -98,7 +98,7 @@ Public Class FrmPersonCompressor
                     End If
                 End If
                 If Revert Then
-                    For Each PersonCompressorPart As PersonCompressorPart In _PersonCompressor.PartsWorkedHour.Reverse
+                    For Each PersonCompressorPart As PersonCompressorPart In _PersonCompressor.PartsWorkedHour.ToArray.Reverse
                         If Not _PersonCompressorShadow.PartsWorkedHour.Any(Function(x) x.Equals(PersonCompressorPart)) Then
                             _PersonCompressor.PartsWorkedHour.Remove(PersonCompressorPart)
                         End If
@@ -108,7 +108,7 @@ Public Class FrmPersonCompressor
                             _PersonCompressor.PartsWorkedHour.Add(ShadowPersonCompressorPart)
                         End If
                     Next ShadowPersonCompressorPart
-                    For Each PersonCompressorPart As PersonCompressorPart In _PersonCompressor.PartsElapsedDay.Reverse
+                    For Each PersonCompressorPart As PersonCompressorPart In _PersonCompressor.PartsElapsedDay.ToArray.Reverse
                         If Not _PersonCompressorShadow.PartsElapsedDay.Any(Function(x) x.Equals(PersonCompressorPart)) Then
                             _PersonCompressor.PartsElapsedDay.Remove(PersonCompressorPart)
                         End If
@@ -142,7 +142,7 @@ Public Class FrmPersonCompressor
         If BtnSave.Enabled Then
             If CMessageBox.Show("Houve alterações que ainda não foram salvas. Deseja salvar antes de continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                 If Not PreSave() Then
-                    For Each PersonCompressorPart As PersonCompressorPart In _PersonCompressor.PartsWorkedHour.Reverse
+                    For Each PersonCompressorPart As PersonCompressorPart In _PersonCompressor.PartsWorkedHour.ToArray.Reverse
                         If Not _PersonCompressorShadow.PartsWorkedHour.Any(Function(x) x.Equals(PersonCompressorPart)) Then
                             _PersonCompressor.PartsWorkedHour.Remove(PersonCompressorPart)
                         End If
@@ -161,9 +161,9 @@ Public Class FrmPersonCompressor
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _PersonForm.DgvCompressor.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _PersonCompressor = _Person.Compressors.Single(Function(x) x.Order = _PersonForm.DgvCompressor.SelectedRows(0).Cells("Order").Value)
+                _PersonCompressor = _Person.Compressors.Single(Function(x) x.Guid = _PersonForm.DgvCompressor.SelectedRows(0).Cells("Guid").Value)
                 _Person.Compressors.Remove(_PersonCompressor)
-                _Person.Compressors.FillDataGridView(_PersonForm.DgvCompressor)
+                _PersonForm.DgvCompressor.Fill(_Person.Compressors)
                 _PersonForm.DgvCompressorLayout.Load()
                 _Deleting = True
                 Dispose()
@@ -188,13 +188,13 @@ Public Class FrmPersonCompressor
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
-        If BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive)
+        If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
             If _PersonCompressor.Status = SimpleStatus.Active Then
                 CMessageBox.Show("O registro foi marcado para ser inativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
-        ElseIf BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active)
+        ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active)
             If _PersonCompressor.Status = SimpleStatus.Inactive Then
                 CMessageBox.Show("O registro foi marcado para ser ativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
@@ -203,7 +203,7 @@ Public Class FrmPersonCompressor
     End Sub
     Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
         EprValidation.Clear()
-        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
+        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
     Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles QbxCompressor.TextChanged, TxtSerialNumber.TextChanged, TxtPatrimony.TextChanged, TxtSector.TextChanged, DbxUnitCapacity.TextChanged, TxtNote.TextChanged
         EprValidation.Clear()
@@ -219,8 +219,8 @@ Public Class FrmPersonCompressor
         _Loading = True
         TcPersonCompressor.SelectedTab = TabMain
         TcMaintenance.SelectedTab = TabPartWorkedHour
-        LblOrderValue.Text = _PersonCompressor.Order
-        BtnStatusValue.Text = GetEnumDescription(_PersonCompressor.Status)
+        LblOrderValue.Text = If(_PersonCompressor.IsSaved, _PersonForm.DgvCompressor.SelectedRows(0).Cells("Order").Value, 0)
+        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_PersonCompressor.Status)
         LblCreationValue.Text = _PersonCompressor.Creation
         QbxCompressor.Unfreeze()
         QbxCompressor.Freeze(_PersonCompressor.Compressor.ID)
@@ -229,15 +229,15 @@ Public Class FrmPersonCompressor
         TxtSector.Text = _PersonCompressor.Sector
         DbxUnitCapacity.Text = _PersonCompressor.UnitCapacity
         TxtNote.Text = _PersonCompressor.Note
-        If _PersonCompressor.Order = 0 Then
+        If Not _PersonCompressor.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
         Else
             BtnSave.Text = "Alterar"
             BtnDelete.Enabled = True
         End If
-        _PersonCompressor.PartsWorkedHour.FillDataGridView(DgvPartWorkedHour)
-        _PersonCompressor.PartsElapsedDay.FillDataGridView(DgvPartElapsedDay)
+        DgvPartWorkedHour.Fill(_PersonCompressor.PartsWorkedHour)
+        DgvPartElapsedDay.Fill(_PersonCompressor.PartsElapsedDay)
         BtnSave.Enabled = False
         QbxCompressor.Select()
         _Loading = False
@@ -277,7 +277,6 @@ Public Class FrmPersonCompressor
             EprValidation.SetIconPadding(TsPartElapsedDay, -90)
             DgvPartElapsedDay.Select()
             Return False
-
         ElseIf Not _PersonCompressor.PartsWorkedHour.Any(Function(x) x.PartBind = CompressorPartBindType.AirFilter) Then
             TcPersonCompressor.SelectedTab = TabMaintenance
             TcMaintenance.SelectedTab = TabPartWorkedHour
@@ -286,8 +285,6 @@ Public Class FrmPersonCompressor
             EprValidation.SetIconPadding(TsPartWorkedHour, -90)
             DgvPartWorkedHour.Select()
             Return False
-
-
         ElseIf Not _PersonCompressor.PartsWorkedHour.Any(Function(x) x.PartBind = CompressorPartBindType.OilFilter) Then
             TcPersonCompressor.SelectedTab = TabMaintenance
             TcMaintenance.SelectedTab = TabPartWorkedHour
@@ -302,7 +299,7 @@ Public Class FrmPersonCompressor
             EprValidation.SetIconAlignment(TsPartWorkedHour, ErrorIconAlignment.MiddleLeft)
             EprValidation.SetIconPadding(TsPartWorkedHour, -90)
             DgvPartWorkedHour.Select()
-        ElseIf Not _PersonCompressor.PartsWorkedHour.Any(Function(x) x.PartBind = CompressorPartBindType.oil) Then
+        ElseIf Not _PersonCompressor.PartsWorkedHour.Any(Function(x) x.PartBind = CompressorPartBindType.Oil) Then
             TcPersonCompressor.SelectedTab = TabMaintenance
             TcMaintenance.SelectedTab = TabPartWorkedHour
             EprValidation.SetError(TsPartWorkedHour, "Pelo menos um item precisa estar vinculado com óleo")
@@ -314,43 +311,43 @@ Public Class FrmPersonCompressor
     End Function
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
-        TxtSector.Text = RemoveAccents(TxtSector.Text.Trim)
-        TxtSerialNumber.Text = RemoveAccents(TxtSerialNumber.Text.Trim)
-        TxtPatrimony.Text = RemoveAccents(TxtPatrimony.Text.Trim)
-        TxtNote.Text = RemoveAccents(TxtNote.Text.ToUpper)
+        TxtSector.Text = TxtSector.Text.Trim.ToUnaccented()
+        TxtSerialNumber.Text = TxtSerialNumber.Text.Trim.ToUnaccented()
+        TxtPatrimony.Text = TxtPatrimony.Text.Trim.ToUnaccented()
+        TxtNote.Text = TxtNote.Text.ToUpper.ToUnaccented()
         If IsValidFields() Then
             If _PersonCompressor.IsSaved Then
-                _Person.Compressors.Single(Function(x) x.Order = _PersonCompressor.Order).Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
-                _Person.Compressors.Single(Function(x) x.Order = _PersonCompressor.Order).Compressor = New Compressor().Load(QbxCompressor.FreezedPrimaryKey, False)
-                _Person.Compressors.Single(Function(x) x.Order = _PersonCompressor.Order).SerialNumber = TxtSerialNumber.Text
-                _Person.Compressors.Single(Function(x) x.Order = _PersonCompressor.Order).Patrimony = TxtPatrimony.Text
-                _Person.Compressors.Single(Function(x) x.Order = _PersonCompressor.Order).Sector = TxtSector.Text
-                _Person.Compressors.Single(Function(x) x.Order = _PersonCompressor.Order).UnitCapacity = DbxUnitCapacity.Text
-                _Person.Compressors.Single(Function(x) x.Order = _PersonCompressor.Order).Note = TxtNote.Text
+                _Person.Compressors.Single(Function(x) x.Guid = _PersonCompressor.Guid).Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                _Person.Compressors.Single(Function(x) x.Guid = _PersonCompressor.Guid).Compressor = New Compressor().Load(QbxCompressor.FreezedPrimaryKey, False)
+                _Person.Compressors.Single(Function(x) x.Guid = _PersonCompressor.Guid).SerialNumber = TxtSerialNumber.Text
+                _Person.Compressors.Single(Function(x) x.Guid = _PersonCompressor.Guid).Patrimony = TxtPatrimony.Text
+                _Person.Compressors.Single(Function(x) x.Guid = _PersonCompressor.Guid).Sector = TxtSector.Text
+                _Person.Compressors.Single(Function(x) x.Guid = _PersonCompressor.Guid).UnitCapacity = DbxUnitCapacity.Text
+                _Person.Compressors.Single(Function(x) x.Guid = _PersonCompressor.Guid).Note = TxtNote.Text
             Else
-                _PersonCompressor.Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                _PersonCompressor.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
                 _PersonCompressor.Compressor = New Compressor().Load(QbxCompressor.FreezedPrimaryKey, False)
                 _PersonCompressor.SerialNumber = TxtSerialNumber.Text
                 _PersonCompressor.Patrimony = TxtPatrimony.Text
                 _PersonCompressor.Sector = TxtSector.Text
                 _PersonCompressor.UnitCapacity = DbxUnitCapacity.Text
                 _PersonCompressor.Note = TxtNote.Text
-                _PersonCompressor.IsSaved = True
+                _PersonCompressor.SetIsSaved(True)
                 _Person.Compressors.Add(_PersonCompressor)
             End If
-            _Person.Compressors.FillDataGridView(_PersonForm.DgvCompressor)
-            LblOrderValue.Text = _PersonCompressor.Order
+            _PersonForm.DgvCompressor.Fill(_Person.Compressors)
             _PersonForm.DgvCompressorLayout.Load()
             BtnSave.Enabled = False
-            If _PersonCompressor.Order = 0 Then
+            If Not _PersonCompressor.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _PersonForm.DgvCompressor.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Order").Value = _PersonCompressor.Order)
+            Row = _PersonForm.DgvCompressor.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _PersonCompressor.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+            LblOrderValue.Text = _PersonForm.DgvCompressor.SelectedRows(0).Cells("Order").Value
             _PersonForm.EprValidation.Clear()
             _PersonForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()
@@ -412,7 +409,7 @@ Public Class FrmPersonCompressor
         Dim Form As FrmPersonCompressorPartWorkedHour
         Dim PersonCompressorPartWorkedHour As PersonCompressorPart
         If DgvPartWorkedHour.SelectedRows.Count = 1 Then
-            PersonCompressorPartWorkedHour = _PersonCompressor.PartsWorkedHour.Single(Function(X) X.Order = DgvPartWorkedHour.SelectedRows(0).Cells("Order").Value)
+            PersonCompressorPartWorkedHour = _PersonCompressor.PartsWorkedHour.Single(Function(X) X.Guid = DgvPartWorkedHour.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmPersonCompressorPartWorkedHour(_PersonCompressor, PersonCompressorPartWorkedHour, Me)
             Form.ShowDialog()
         End If
@@ -421,9 +418,9 @@ Public Class FrmPersonCompressor
         Dim PartWorkedHour As PersonCompressorPart
         If DgvPartWorkedHour.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                PartWorkedHour = _PersonCompressor.PartsWorkedHour.Single(Function(X) X.Order = DgvPartWorkedHour.SelectedRows(0).Cells("Order").Value)
+                PartWorkedHour = _PersonCompressor.PartsWorkedHour.Single(Function(X) X.Guid = DgvPartWorkedHour.SelectedRows(0).Cells("Guid").Value)
                 _PersonCompressor.PartsWorkedHour.Remove(PartWorkedHour)
-                _PersonCompressor.PartsWorkedHour.FillDataGridView(DgvPartWorkedHour)
+                DgvPartWorkedHour.Fill(_PersonCompressor.PartsWorkedHour)
                 BtnSave.Enabled = True
             End If
         End If
@@ -436,7 +433,7 @@ Public Class FrmPersonCompressor
         Dim Form As FrmPersonCompressorPartElapsedDay
         Dim PartElapsedDay As PersonCompressorPart
         If DgvPartElapsedDay.SelectedRows.Count = 1 Then
-            PartElapsedDay = _PersonCompressor.PartsElapsedDay.Single(Function(X) X.Order = DgvPartElapsedDay.SelectedRows(0).Cells("Order").Value)
+            PartElapsedDay = _PersonCompressor.PartsElapsedDay.Single(Function(X) X.Guid = DgvPartElapsedDay.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmPersonCompressorPartElapsedDay(_PersonCompressor, PartElapsedDay, Me)
             Form.ShowDialog()
         End If
@@ -445,9 +442,9 @@ Public Class FrmPersonCompressor
         Dim PartElapsedDay As PersonCompressorPart
         If DgvPartElapsedDay.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                PartElapsedDay = _PersonCompressor.PartsElapsedDay.Single(Function(X) X.Order = DgvPartElapsedDay.SelectedRows(0).Cells("Order").Value)
+                PartElapsedDay = _PersonCompressor.PartsElapsedDay.Single(Function(X) X.Guid = DgvPartElapsedDay.SelectedRows(0).Cells("Guid").Value)
                 _PersonCompressor.PartsElapsedDay.Remove(PartElapsedDay)
-                _PersonCompressor.PartsElapsedDay.FillDataGridView(DgvPartElapsedDay)
+                DgvPartElapsedDay.Fill(_PersonCompressor.PartsElapsedDay)
                 BtnSave.Enabled = True
             End If
         End If
@@ -458,10 +455,10 @@ Public Class FrmPersonCompressor
         If e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
                 Case Is = SimpleStatus.Active
-                    e.Value = GetEnumDescription(SimpleStatus.Active)
+                    e.Value = EnumHelper.GetEnumDescription(SimpleStatus.Active)
                     e.CellStyle.ForeColor = Color.DarkBlue
                 Case Is = SimpleStatus.Inactive
-                    e.Value = GetEnumDescription(SimpleStatus.Inactive)
+                    e.Value = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
                     e.CellStyle.ForeColor = Color.DarkRed
             End Select
         ElseIf e.ColumnIndex = Dgv.Columns("Quantity").Index Then
@@ -560,19 +557,21 @@ Public Class FrmPersonCompressor
             Cursor = Cursors.WaitCursor
             For Each Row As DataGridViewRow In Form.DgvPartWorkedHour.Rows
                 If Row.Cells("X").Value = True Then
-                    _PersonCompressor.PartsWorkedHour.Add(New PersonCompressorPart(CompressorPartType.WorkedHour) With {.IsSaved = True, .Status = SimpleStatus.Active, .ItemName = Row.Cells("ItemName").Value, .Product = New Lazy(Of Product)(Function() Row.Cells("Product").Value), .Quantity = Row.Cells("Quantity").Value})
+                    _PersonCompressor.PartsWorkedHour.Add(New PersonCompressorPart(CompressorPartType.WorkedHour) With {.Status = SimpleStatus.Active, .ItemName = Row.Cells("ItemName").Value, .Product = New Lazy(Of Product)(Function() Row.Cells("Product").Value), .Quantity = Row.Cells("Quantity").Value})
+                    _PersonCompressor.PartsWorkedHour.Last.SetIsSaved(True)
                     BtnSave.Enabled = True
                 End If
             Next Row
             For Each Row As DataGridViewRow In Form.DgvPartElapsedDay.Rows
                 If Row.Cells("X").Value = True Then
-                    _PersonCompressor.PartsElapsedDay.Add(New PersonCompressorPart(CompressorPartType.ElapsedDay) With {.IsSaved = True, .Status = SimpleStatus.Active, .ItemName = Row.Cells("ItemName").Value, .Product = New Lazy(Of Product)(Function() Row.Cells("Product").Value), .Quantity = Row.Cells("Quantity").Value})
+                    _PersonCompressor.PartsElapsedDay.Add(New PersonCompressorPart(CompressorPartType.ElapsedDay) With {.Status = SimpleStatus.Active, .ItemName = Row.Cells("ItemName").Value, .Product = New Lazy(Of Product)(Function() Row.Cells("Product").Value), .Quantity = Row.Cells("Quantity").Value})
+                    _PersonCompressor.PartsElapsedDay.Last.SetIsSaved(True)
                     BtnSave.Enabled = True
                 End If
             Next Row
         End If
-        _PersonCompressor.PartsWorkedHour.FillDataGridView(DgvPartWorkedHour)
-        _PersonCompressor.PartsElapsedDay.FillDataGridView(DgvPartElapsedDay)
+        DgvPartWorkedHour.Fill(_PersonCompressor.PartsWorkedHour)
+        DgvPartElapsedDay.Fill(_PersonCompressor.PartsElapsedDay)
         EprValidation.Clear()
         Cursor = Cursors.Default
     End Sub

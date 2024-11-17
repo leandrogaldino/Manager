@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Public Class FrmRequests
     Private _Request As New Request
@@ -7,8 +7,8 @@ Public Class FrmRequests
     Private _User As User
     Public Sub New()
         InitializeComponent()
-        EnableControlDoubleBuffer(DgvData, True)
-        EnableControlDoubleBuffer(DgvItem, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvData, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvItem, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Filter = New RequestFilter(DgvData, PgFilter)
@@ -46,7 +46,7 @@ Public Class FrmRequests
                 Cursor = Cursors.WaitCursor
                 _Request = New Request().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
                 RequestForm = New FrmRequest(_Request, Me)
-                _Request.Items.FillDataGridView(RequestForm.DgvItem)
+                RequestForm.DgvItem.Fill(_Request.Items)
                 RequestForm.ShowDialog()
             Catch ex As Exception
                 CMessageBox.Show("ERRO RQ006", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -80,7 +80,7 @@ Public Class FrmRequests
                         End Try
                     End If
                 Else
-                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", GetTitleCase(_Request.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _Request.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                 End If
             Catch ex As Exception
                 CMessageBox.Show("ERRO RQ008", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -153,11 +153,11 @@ Public Class FrmRequests
         Dim Dgv As DataGridView = sender
         If e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
-                Case Is = GetEnumDescription(RequestStatus.Pending)
+                Case Is = EnumHelper.GetEnumDescription(RequestStatus.Pending)
                     e.CellStyle.ForeColor = Color.DarkRed
-                Case Is = GetEnumDescription(RequestStatus.Partial)
+                Case Is = EnumHelper.GetEnumDescription(RequestStatus.Partial)
                     e.CellStyle.ForeColor = Color.Chocolate
-                Case Is = GetEnumDescription(RequestStatus.Concluded)
+                Case Is = EnumHelper.GetEnumDescription(RequestStatus.Concluded)
                     e.CellStyle.ForeColor = Color.DarkGreen
             End Select
         End If
@@ -220,11 +220,11 @@ Public Class FrmRequests
         Dim Dgv As DataGridView = sender
         If e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
-                Case Is = GetEnumDescription(RequestStatus.Pending)
+                Case Is = EnumHelper.GetEnumDescription(RequestStatus.Pending)
                     e.CellStyle.ForeColor = Color.DarkRed
-                Case Is = GetEnumDescription(RequestStatus.Partial)
+                Case Is = EnumHelper.GetEnumDescription(RequestStatus.Partial)
                     e.CellStyle.ForeColor = Color.Chocolate
-                Case Is = GetEnumDescription(RequestStatus.Concluded)
+                Case Is = EnumHelper.GetEnumDescription(RequestStatus.Concluded)
                     e.CellStyle.ForeColor = Color.DarkGreen
             End Select
         End If
@@ -242,6 +242,6 @@ Public Class FrmRequests
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Requisições", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
 End Class

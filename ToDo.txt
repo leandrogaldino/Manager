@@ -1,3 +1,9 @@
+[] Fazer o alinhamento do conteúdo do Grid das peças da avaliação.
+
+[] Continuar Refazendo os XMLs dos Grids dos filhos (continuar do evaluationtechnician).
+
+[] Resolver os TODO's do Projeto.
+
 [] Terminar a rotina de agendamento.
 
 [] Recriar a Predefinição de permissões.

@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Public Class FrmProducts
     Private _Product As New Product
@@ -7,10 +7,10 @@ Public Class FrmProducts
     Private _User As User
     Public Sub New()
         InitializeComponent()
-        EnableControlDoubleBuffer(DgvData, True)
-        EnableControlDoubleBuffer(DgvProviderCode, True)
-        EnableControlDoubleBuffer(DgvCode, True)
-        EnableControlDoubleBuffer(DgvPrice, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvData, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvProviderCode, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvCode, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvPrice, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Filter = New ProductFilter(DgvData, PgFilter)
@@ -39,15 +39,15 @@ Public Class FrmProducts
             Try
                 Cursor = Cursors.WaitCursor
                 _Product = New Product().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
-                For Each p In _Product.Pictures.Reverse
+                For Each p In _Product.Pictures.ToArray.Reverse
                     If Not IO.File.Exists(p.Picture.OriginalFile) Then
                         _Product.Pictures.Remove(p)
                     End If
                 Next p
                 ProductForm = New FrmProduct(_Product, Me)
-                _Product.ProviderCodes.FillDataGridView(ProductForm.DgvProviderCode)
-                _Product.Codes.FillDataGridView(ProductForm.DgvCode)
-                _Product.Prices.FillDataGridView(ProductForm.DgvPrice)
+                ProductForm.DgvProviderCode.Fill(_Product.ProviderCodes)
+                ProductForm.DgvCode.Fill(_Product.Codes)
+                ProductForm.DgvPrice.Fill(_Product.Prices)
                 ProductForm.ShowDialog()
             Catch ex As Exception
                 CMessageBox.Show("ERRO PD004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -77,7 +77,7 @@ Public Class FrmProducts
                         End Try
                     End If
                 Else
-                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", GetTitleCase(_Product.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _Product.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                 End If
             Catch ex As Exception
                 CMessageBox.Show("ERRO PD006", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -142,9 +142,9 @@ Public Class FrmProducts
         Dim Dgv As DataGridView = sender
         If e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
-                Case Is = GetEnumDescription(SimpleStatus.Active)
+                Case Is = EnumHelper.GetEnumDescription(SimpleStatus.Active)
                     e.CellStyle.ForeColor = Color.DarkBlue
-                Case Is = GetEnumDescription(SimpleStatus.Inactive)
+                Case Is = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
                     e.CellStyle.ForeColor = Color.DarkRed
             End Select
         ElseIf e.ColumnIndex = Dgv.Columns("Qtd. Min.").Index Then
@@ -230,6 +230,6 @@ Public Class FrmProducts
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Produtos", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(FormReport, EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
 End Class

@@ -4,18 +4,17 @@ Imports MySql.Data.MySqlClient
 ''' Representa uma tabela de preços.
 ''' </summary>
 Public Class ProductPriceTable
-    Inherits ModelBase
-    Private _IsSaved As Boolean
+    Inherits ParentModel
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
     Public Sub New()
-        _Routine = Routine.ProductPriceTable
+        SetRoutine(Routine.ProductPriceTable)
     End Sub
     Public Sub Clear()
         Unlock()
-        _IsSaved = False
-        _ID = 0
-        _Creation = Today
+        SetIsSaved(False)
+        SetID(0)
+        SetCreation(Today)
         Status = SimpleStatus.Active
         Name = Nothing
     End Sub
@@ -35,13 +34,13 @@ Public Class ProductPriceTable
                         Clear()
                     ElseIf TableResult.Rows.Count = 1 Then
                         Clear()
-                        _ID = TableResult.Rows(0).Item("id")
-                        _Creation = TableResult.Rows(0).Item("creation")
+                        SetID(TableResult.Rows(0).Item("id"))
+                        SetCreation(TableResult.Rows(0).Item("creation"))
+                        SetIsSaved(True)
                         Status = TableResult.Rows(0).Item("statusid")
                         Name = TableResult.Rows(0).Item("name").ToString
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
-                        _IsSaved = True
                     Else
                         Throw New Exception("Registro não encontrado.")
                     End If
@@ -52,12 +51,12 @@ Public Class ProductPriceTable
         Return Me
     End Function
     Public Sub SaveChanges()
-        If Not _IsSaved Then
+        If Not IsSaved Then
             Insert()
         Else
             Update()
         End If
-        _IsSaved = True
+        SetIsSaved(True)
     End Sub
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)
@@ -82,7 +81,7 @@ Public Class ProductPriceTable
                     CmdProductPriceTableInsert.Parameters.AddWithValue("@name", Name)
                     CmdProductPriceTableInsert.Parameters.AddWithValue("@userid", User.ID)
                     CmdProductPriceTableInsert.ExecuteNonQuery()
-                    _ID = CmdProductPriceTableInsert.LastInsertedId
+                    SetID(CmdProductPriceTableInsert.LastInsertedId)
                 End Using
                 Tra.Commit()
             End Using

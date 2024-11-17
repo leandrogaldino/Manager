@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Public Class FrmProductProviderCode
     Private _ProductForm As FrmProduct
     Private _Product As Product
@@ -43,7 +43,7 @@ Public Class FrmProductProviderCode
     Private Sub AfterDataGridViewRowMove()
         If _ProductForm.DgvProviderCode.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _ProductProviderCode = _Product.ProviderCodes.Single(Function(x) x.Order = _ProductForm.DgvProviderCode.SelectedRows(0).Cells("Order").Value)
+            _ProductProviderCode = _Product.ProviderCodes.Single(Function(x) x.Guid = _ProductForm.DgvProviderCode.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -85,9 +85,9 @@ Public Class FrmProductProviderCode
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _ProductForm.DgvProviderCode.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _ProductProviderCode = _Product.ProviderCodes.Single(Function(x) x.Order = _ProductForm.DgvProviderCode.SelectedRows(0).Cells("Order").Value)
+                _ProductProviderCode = _Product.ProviderCodes.Single(Function(x) x.Guid = _ProductForm.DgvProviderCode.SelectedRows(0).Cells("Guid").Value)
                 _Product.ProviderCodes.Remove(_ProductProviderCode)
-                _Product.ProviderCodes.FillDataGridView(_ProductForm.DgvProviderCode)
+                _ProductForm.DgvProviderCode.Fill(_Product.ProviderCodes)
                 _ProductForm.DgvProviderCodeLayout.Load()
                 _Deleting = True
                 Dispose()
@@ -113,7 +113,7 @@ Public Class FrmProductProviderCode
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = _ProductProviderCode.Order
+        LblOrderValue.Text = If(_ProductProviderCode.IsSaved, _ProductForm.DgvProviderCode.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _ProductProviderCode.Creation
         CbxIsMainProvider.Checked = _ProductProviderCode.IsMainProvider
         TxtCode.Text = _ProductProviderCode.Code
@@ -127,7 +127,7 @@ Public Class FrmProductProviderCode
         Else
             CbxIsMainProvider.Enabled = True
         End If
-        If _ProductProviderCode.Order = 0 Then
+        If Not _ProductProviderCode.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
         Else
@@ -170,40 +170,41 @@ Public Class FrmProductProviderCode
     End Function
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
-        TxtCode.Text = RemoveAccents(TxtCode.Text.Trim)
+        TxtCode.Text = TxtCode.Text.Trim.ToUnaccented()
         If IsValidFields() Then
             If _ProductProviderCode.IsSaved Then
-                _Product.ProviderCodes.Single(Function(x) x.Order = _ProductProviderCode.Order).IsMainProvider = CbxIsMainProvider.Checked
-                _Product.ProviderCodes.Single(Function(x) x.Order = _ProductProviderCode.Order).Code = TxtCode.Text
-                _Product.ProviderCodes.Single(Function(x) x.Order = _ProductProviderCode.Order).Provider = New Person().Load(QbxProvider.FreezedPrimaryKey, False)
+                _Product.ProviderCodes.Single(Function(x) x.Guid = _ProductProviderCode.Guid).IsMainProvider = CbxIsMainProvider.Checked
+                _Product.ProviderCodes.Single(Function(x) x.Guid = _ProductProviderCode.Guid).Code = TxtCode.Text
+                _Product.ProviderCodes.Single(Function(x) x.Guid = _ProductProviderCode.Guid).Provider = New Person().Load(QbxProvider.FreezedPrimaryKey, False)
             Else
-                _ProductProviderCode = New ProductProviderCode()
-                _ProductProviderCode.IsMainProvider = CbxIsMainProvider.Checked
-                _ProductProviderCode.Code = TxtCode.Text
-                _ProductProviderCode.Provider = New Person().Load(QbxProvider.FreezedPrimaryKey, False)
-                _ProductProviderCode.IsSaved = True
+                _ProductProviderCode = New ProductProviderCode With {
+                    .IsMainProvider = CbxIsMainProvider.Checked,
+                    .Code = TxtCode.Text,
+                    .Provider = New Person().Load(QbxProvider.FreezedPrimaryKey, False)
+                }
+                _ProductProviderCode.SetIsSaved(True)
                 _Product.ProviderCodes.Add(_ProductProviderCode)
             End If
             If CbxIsMainProvider.Checked Then
                 For Each Code As ProductProviderCode In _Product.ProviderCodes
-                    If Code.Order <> _ProductProviderCode.Order Then
+                    If Code.Guid <> _ProductProviderCode.Guid Then
                         Code.IsMainProvider = False
                     End If
                 Next Code
             End If
-            _Product.ProviderCodes.FillDataGridView(_ProductForm.DgvProviderCode)
-            LblOrderValue.Text = _ProductProviderCode.Order
+            _ProductForm.DgvProviderCode.Fill(_Product.ProviderCodes)
             _ProductForm.DgvProviderCodeLayout.Load()
             BtnSave.Enabled = False
-            If _ProductProviderCode.Order = 0 Then
+            If Not _ProductProviderCode.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _ProductForm.DgvProviderCode.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Order").Value = _ProductProviderCode.Order)
+            Row = _ProductForm.DgvProviderCode.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ProductProviderCode.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+            LblOrderValue.Text = _ProductForm.DgvProviderCode.SelectedRows(0).Cells("Order").Value
             _ProductForm.EprValidation.Clear()
             _ProductForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()

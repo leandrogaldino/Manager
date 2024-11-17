@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports System.Reflection
 Imports ChinhDo.Transactions
 Imports ControlLibrary
 Imports MySql.Data.MySqlClient
@@ -8,26 +7,25 @@ Imports ManagerCore
 ''' Representa um fechamento de caixa.
 ''' </summary>
 Public Class Cash
-    Inherits ModelBase
-    Private _IsSaved As Boolean
+    Inherits ParentModel
     Public Property Status As CashStatus = CashStatus.Opened
     Public Property CashFlow As New CashFlow
     Public Property Note As String
     Public Property Document As New FileManager(ApplicationPaths.CashDocumentDirectory)
-    Public Property CashItems As New OrdenedList(Of CashItem)
+    Public Property CashItems As New List(Of CashItem)
     Public Sub New()
-        _Routine = Routine.Cash
+        SetRoutine(Routine.Cash)
     End Sub
     Public Sub Clear()
         Unlock()
-        _IsSaved = False
-        _ID = 0
-        _Creation = Today
+        SetIsSaved(False)
+        SetID(0)
+        SetCreation(Today)
         Status = CashStatus.Opened
         CashFlow = New CashFlow
         Note = Nothing
         Document = New FileManager(ApplicationPaths.CashDocumentDirectory())
-        CashItems = New OrdenedList(Of CashItem)
+        CashItems = New List(Of CashItem)
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As Cash
         Dim Session = Locator.GetInstance(Of Session)
@@ -46,8 +44,8 @@ Public Class Cash
                         Clear()
                     ElseIf TableResult.Rows.Count = 1 Then
                         Clear()
-                        _ID = TableResult.Rows(0).Item("id")
-                        _Creation = TableResult.Rows(0).Item("creation")
+                        SetID(TableResult.Rows(0).Item("id"))
+                        SetCreation(TableResult.Rows(0).Item("creation"))
                         Status = TableResult.Rows(0).Item("statusid")
                         CashFlow = New CashFlow().Load(TableResult.Rows(0).Item("cashflowid"), False)
                         Note = TableResult.Rows(0).Item("note").ToString
@@ -57,7 +55,7 @@ Public Class Cash
                         CashItems = GetCashItems(Tra)
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
-                        _IsSaved = True
+                        SetIsSaved(True)
                     Else
                         Throw New Exception("Registro não encontrado.")
                     End If
@@ -68,14 +66,14 @@ Public Class Cash
         Return Me
     End Function
     Public Sub SaveChanges()
-        If Not _IsSaved Then
+        If Not IsSaved Then
             Insert()
         Else
             Update()
         End If
-        _IsSaved = True
-        CashItems.ToList().ForEach(Sub(x) x.IsSaved = True)
-        CashItems.ToList().ForEach(Sub(x) x.Responsibles.ToList().ForEach(Sub(y) y.IsSaved = True))
+        SetIsSaved(True)
+        CashItems.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        CashItems.ToList().ForEach(Sub(x) x.Responsibles.ToList().ForEach(Sub(y) y.SetIsSaved(True)))
     End Sub
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)
@@ -106,7 +104,7 @@ Public Class Cash
                     CmdCash.Parameters.AddWithValue("@documentname", If(String.IsNullOrEmpty(Document.CurrentFile), DBNull.Value, Path.GetFileName(Document.CurrentFile)))
                     CmdCash.Parameters.AddWithValue("@userid", User.ID)
                     CmdCash.ExecuteNonQuery()
-                    _ID = CmdCash.LastInsertedId
+                    SetID(CmdCash.LastInsertedId)
                 End Using
                 For Each CashItem As CashItem In CashItems
                     Using CmdCashItem As New MySqlCommand(My.Resources.CashItemInsert, Con)
@@ -120,7 +118,7 @@ Public Class Cash
                         CmdCashItem.Parameters.AddWithValue("@value", CashItem.Value)
                         CmdCashItem.Parameters.AddWithValue("@userid", CashItem.User.ID)
                         CmdCashItem.ExecuteNonQuery()
-                        CashItem.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(CashItem, CmdCashItem.LastInsertedId)
+                        CashItem.SetID(CmdCashItem.LastInsertedId)
                         For Each Responsible As CashItemResponsible In CashItem.Responsibles
                             Using CmdCashItemResponsible As New MySqlCommand(My.Resources.CashItemResponsibleInsert, Con)
                                 CmdCashItemResponsible.Parameters.AddWithValue("@cashitemid", CashItem.ID)
@@ -128,7 +126,7 @@ Public Class Cash
                                 CmdCashItemResponsible.Parameters.AddWithValue("@responsibleid", Responsible.Responsible.ID)
                                 CmdCashItemResponsible.Parameters.AddWithValue("@userid", Responsible.User.ID)
                                 CmdCashItemResponsible.ExecuteNonQuery()
-                                Responsible.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Responsible, CmdCashItemResponsible.LastInsertedId)
+                                Responsible.SetID(CmdCashItemResponsible.LastInsertedId)
                             End Using
                         Next Responsible
                     End Using
@@ -182,7 +180,7 @@ Public Class Cash
                             CmdCashItem.Parameters.AddWithValue("@value", Item.Value)
                             CmdCashItem.Parameters.AddWithValue("@userid", Item.User.ID)
                             CmdCashItem.ExecuteNonQuery()
-                            Item.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Item, CmdCashItem.LastInsertedId)
+                            Item.SetID(CmdCashItem.LastInsertedId)
                             For Each Responsible As CashItemResponsible In Item.Responsibles
                                 Using CmdCashItemResponsible As New MySqlCommand(My.Resources.CashItemResponsibleInsert, Con)
                                     CmdCashItemResponsible.Parameters.AddWithValue("@cashitemid", Item.ID)
@@ -190,7 +188,7 @@ Public Class Cash
                                     CmdCashItemResponsible.Parameters.AddWithValue("@responsibleid", Responsible.Responsible.ID)
                                     CmdCashItemResponsible.Parameters.AddWithValue("@userid", Responsible.User.ID)
                                     CmdCashItemResponsible.ExecuteNonQuery()
-                                    Responsible.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Responsible, CmdCashItemResponsible.LastInsertedId)
+                                    Responsible.SetID(CmdCashItemResponsible.LastInsertedId)
                                 End Using
                             Next Responsible
                         End Using
@@ -213,7 +211,7 @@ Public Class Cash
                                         CmdCashItemResponsible.Parameters.AddWithValue("@responsibleid", Responsible.Responsible.ID)
                                         CmdCashItemResponsible.Parameters.AddWithValue("@userid", Responsible.User.ID)
                                         CmdCashItemResponsible.ExecuteNonQuery()
-                                        Responsible.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Responsible, CmdCashItemResponsible.LastInsertedId)
+                                        Responsible.SetID(CmdCashItemResponsible.LastInsertedId)
                                     End Using
                                 Else
                                     Using CmdCashItemResponsible As New MySqlCommand(My.Resources.CashItemResponsibleUpdate, Con)
@@ -232,9 +230,9 @@ Public Class Cash
             Transaction.Complete()
         End Using
     End Sub
-    Public Function GetCashItems(Transaction As MySqlTransaction) As OrdenedList(Of CashItem)
+    Public Function GetCashItems(Transaction As MySqlTransaction) As List(Of CashItem)
         Dim TableResult As DataTable
-        Dim CashItems As OrdenedList(Of CashItem)
+        Dim CashItems As List(Of CashItem)
         Dim CashItem As CashItem
         Using CmdCashItem As New MySqlCommand(My.Resources.CashItemSelect, Transaction.Connection)
             CmdCashItem.Transaction = Transaction
@@ -242,18 +240,19 @@ Public Class Cash
             Using Adp As New MySqlDataAdapter(CmdCashItem)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                CashItems = New OrdenedList(Of CashItem)
+                CashItems = New List(Of CashItem)
                 For Each Row As DataRow In TableResult.Rows
-                    CashItem = New CashItem()
-                    CashItem.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(CashItem, Row.Item("id"))
-                    CashItem.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(CashItem, Row.Item("creation"))
-                    CashItem.ItemType = Row.Item("itemtypeid")
-                    CashItem.ItemCategory = Row.Item("itemcategoryid")
-                    CashItem.Description = Row.Item("description").ToString
-                    CashItem.DocumentNumber = Row.Item("documentnumber").ToString
-                    CashItem.DocumentDate = Row.Item("documentdate")
-                    CashItem.Value = Row.Item("value")
-                    CashItem.IsSaved = True
+                    CashItem = New CashItem With {
+                        .ItemType = Row.Item("itemtypeid"),
+                        .ItemCategory = Row.Item("itemcategoryid"),
+                        .Description = Row.Item("description").ToString,
+                        .DocumentNumber = Row.Item("documentnumber").ToString,
+                        .DocumentDate = Row.Item("documentdate"),
+                        .Value = Row.Item("value")
+                    }
+                    CashItem.SetID(Row.Item("id"))
+                    CashItem.SetCreation(Row.Item("creation"))
+                    CashItem.SetIsSaved(True)
                     CashItem.Responsibles = GetResponsibles(Transaction, CashItem.ID)
                     CashItems.Add(CashItem)
                 Next Row
@@ -261,9 +260,9 @@ Public Class Cash
         End Using
         Return CashItems
     End Function
-    Public Shared Function GetResponsibles(Transaction As MySqlTransaction, CashItemID As Long) As OrdenedList(Of CashItemResponsible)
+    Public Shared Function GetResponsibles(Transaction As MySqlTransaction, CashItemID As Long) As List(Of CashItemResponsible)
         Dim TableResult As DataTable
-        Dim Responsibles As OrdenedList(Of CashItemResponsible)
+        Dim Responsibles As List(Of CashItemResponsible)
         Dim Responsible As CashItemResponsible
         Using CmdResponsibles As New MySqlCommand(My.Resources.CashItemResponsibleSelect, Transaction.Connection)
             CmdResponsibles.Transaction = Transaction
@@ -271,13 +270,14 @@ Public Class Cash
             Using Adp As New MySqlDataAdapter(CmdResponsibles)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                Responsibles = New OrdenedList(Of CashItemResponsible)
+                Responsibles = New List(Of CashItemResponsible)
                 For Each Row As DataRow In TableResult.Rows
-                    Responsible = New CashItemResponsible()
-                    Responsible.Responsible = New Person().Load(Row.Item("responsibleid"), False)
-                    Responsible.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Responsible, Row.Item("id"))
-                    Responsible.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Responsible, Row.Item("creation"))
-                    Responsible.IsSaved = True
+                    Responsible = New CashItemResponsible With {
+                        .Responsible = New Person().Load(Row.Item("responsibleid"), False)
+                    }
+                    Responsible.SetID(Row.Item("id"))
+                    Responsible.SetCreation(Row.Item("creation"))
+                    Responsible.SetIsSaved(True)
                     Responsibles.Add(Responsible)
                 Next Row
             End Using

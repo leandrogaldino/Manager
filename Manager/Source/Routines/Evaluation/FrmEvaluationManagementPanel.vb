@@ -4,7 +4,6 @@ Imports System.IO
 Imports System.Drawing.Imaging
 Imports System.Windows.Forms.DataVisualization.Charting
 Imports System.Globalization
-Imports ControlLibrary.Utility
 Imports ManagerCore
 
 Public Class FrmEvaluationManagementPanel
@@ -22,7 +21,7 @@ Public Class FrmEvaluationManagementPanel
         InitializeComponent()
         _Session = Locator.GetInstance(Of Session)
         _User = _Session.User
-        CbxInformation.Items.AddRange(GetEnumDescriptions(Of EvaluationPanelInformation).ToArray)
+        CbxInformation.Items.AddRange(EnumHelper.GetEnumDescriptions(Of EvaluationPanelInformation).ToArray)
         CbxInformation.SelectedIndex = 0
         CcoInDay.DropDownControl = _InDayDetail
         CcoInDay.HostControl = LblInDayValue
@@ -557,7 +556,7 @@ Public Class FrmEvaluationManagementPanel
             Chart.Series("Gathering").Points.Clear()
             Chart.Series("Execution").Points.Clear()
             Chart.Titles.Clear()
-            Chart.Titles.Add(New Title(GetEnumDescription(EvaluationPanelInformation.Productivity), Docking.Top, New Font("Century Ghotic", 12, FontStyle.Bold), Color.FromArgb(40, 40, 40)))
+            Chart.Titles.Add(New Title(EnumHelper.GetEnumDescription(EvaluationPanelInformation.Productivity), Docking.Top, New Font("Century Ghotic", 12, FontStyle.Bold), Color.FromArgb(40, 40, 40)))
         End If
     End Sub
     Private Sub FillChartVisits()
@@ -599,7 +598,7 @@ Public Class FrmEvaluationManagementPanel
         Else
             Chart.Series("Visit").Points.Clear()
             Chart.Titles.Clear()
-            Chart.Titles.Add(New Title(GetEnumDescription(EvaluationPanelInformation.Visits), Docking.Top, New Font("Century Ghotic", 12, FontStyle.Bold), Color.FromArgb(40, 40, 40)))
+            Chart.Titles.Add(New Title(EnumHelper.GetEnumDescription(EvaluationPanelInformation.Visits), Docking.Top, New Font("Century Ghotic", 12, FontStyle.Bold), Color.FromArgb(40, 40, 40)))
         End If
     End Sub
     Private Sub CbxMonth_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxMonth.SelectedIndexChanged

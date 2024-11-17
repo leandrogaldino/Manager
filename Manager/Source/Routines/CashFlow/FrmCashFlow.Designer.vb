@@ -52,6 +52,7 @@ Partial Class FrmCashFlow
         Me.BtnEditAuthorized = New System.Windows.Forms.ToolStripButton()
         Me.BtnDeleteAuthorized = New System.Windows.Forms.ToolStripButton()
         Me.LblAuthorized = New System.Windows.Forms.Label()
+        Me.DgvAuthorizedLayout = New Manager.DataGridViewLayout()
         Me.Panel1.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -288,6 +289,7 @@ Partial Class FrmCashFlow
         Me.DgvAuthorized.AllowUserToDeleteRows = False
         Me.DgvAuthorized.AllowUserToOrderColumns = True
         Me.DgvAuthorized.AllowUserToResizeRows = False
+        Me.DgvAuthorized.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DgvAuthorized.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.DgvAuthorized.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.DgvAuthorized.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -358,6 +360,11 @@ Partial Class FrmCashFlow
         Me.LblAuthorized.TabIndex = 14
         Me.LblAuthorized.Text = "Usuários Autorizados"
         '
+        'DgvAuthorizedLayout
+        '
+        Me.DgvAuthorizedLayout.DataGridView = Me.DgvAuthorized
+        Me.DgvAuthorizedLayout.Routine = Manager.Routine.CashFlowAuthorized
+        '
         'FrmCashFlow
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
@@ -423,4 +430,5 @@ Partial Class FrmCashFlow
     Friend WithEvents BtnEditAuthorized As ToolStripButton
     Friend WithEvents BtnDeleteAuthorized As ToolStripButton
     Friend WithEvents LblAuthorized As Label
+    Friend WithEvents DgvAuthorizedLayout As DataGridViewLayout
 End Class

@@ -1,4 +1,5 @@
 ﻿Imports ControlLibrary
+Imports ControlLibrary.Extensions
 Public Class FrmCashFlowAuthorized
     Private _CashFlowForm As FrmCashFlow
     Private _CashFlow As CashFlow
@@ -40,7 +41,7 @@ Public Class FrmCashFlowAuthorized
     Private Sub AfterDataGridViewRowMove()
         If _CashFlowForm.DgvAuthorized.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _CashFlowAuthorized = _CashFlow.Authorized.Single(Function(x) x.Order = _CashFlowForm.DgvAuthorized.SelectedRows(0).Cells("Order").Value)
+            _CashFlowAuthorized = _CashFlow.Authorizeds.Single(Function(x) x.Guid = _CashFlowForm.DgvAuthorized.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -84,11 +85,11 @@ Public Class FrmCashFlowAuthorized
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = _CashFlowAuthorized.Order
+        LblOrderValue.Text = If(_CashFlowAuthorized.IsSaved, _CashFlowForm.DgvAuthorized.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _CashFlowAuthorized.Creation
         QbxAuthorized.Unfreeze()
         QbxAuthorized.Freeze(_CashFlowAuthorized.Authorized.ID)
-        If _CashFlowAuthorized.Order = 0 Then
+        If Not _CashFlowAuthorized.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
         Else
@@ -110,7 +111,7 @@ Public Class FrmCashFlowAuthorized
             EprValidation.SetIconAlignment(LblAuthorized, ErrorIconAlignment.MiddleRight)
             QbxAuthorized.Select()
             Return False
-        ElseIf _CashFlow.Authorized.Any(Function(x) x.Authorized.ID = QbxAuthorized.FreezedPrimaryKey) Then
+        ElseIf _CashFlow.Authorizeds.Any(Function(x) x.Authorized.ID = QbxAuthorized.FreezedPrimaryKey) Then
             EprValidation.SetError(LblAuthorized, "Esse usuário já está nesse fluxo de caixa.")
             EprValidation.SetIconAlignment(LblAuthorized, ErrorIconAlignment.MiddleRight)
             QbxAuthorized.Select()
@@ -122,25 +123,26 @@ Public Class FrmCashFlowAuthorized
         Dim Row As DataGridViewRow
         If IsValidFields() Then
             If _CashFlowAuthorized.IsSaved Then
-                _CashFlow.Authorized.Single(Function(x) x.Order = _CashFlowAuthorized.Order).Authorized = New Person().Load(QbxAuthorized.FreezedPrimaryKey, False)
+                _CashFlow.Authorizeds.Single(Function(x) x.Guid = _CashFlowAuthorized.Guid).Authorized = New Person().Load(QbxAuthorized.FreezedPrimaryKey, False)
             Else
-                _CashFlowAuthorized = New CashFlowAuthorized()
-                _CashFlowAuthorized.Authorized = New Person().Load(QbxAuthorized.FreezedPrimaryKey, False)
-                _CashFlowAuthorized.IsSaved = True
-                _CashFlow.Authorized.Add(_CashFlowAuthorized)
+                _CashFlowAuthorized = New CashFlowAuthorized With {
+                    .Authorized = New Person().Load(QbxAuthorized.FreezedPrimaryKey, False)
+                }
+                _CashFlowAuthorized.SetIsSaved(True)
+                _CashFlow.Authorizeds.Add(_CashFlowAuthorized)
             End If
-            _CashFlowForm.FillDataGridView()
-            LblOrderValue.Text = _CashFlowAuthorized.Order
+            _CashFlowForm.DgvAuthorized.Fill(_CashFlow.Authorizeds)
             BtnSave.Enabled = False
-            If _CashFlowAuthorized.Order = 0 Then
+            If Not _CashFlowAuthorized.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _CashFlowForm.DgvAuthorized.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Order").Value = _CashFlowAuthorized.Order)
+            Row = _CashFlowForm.DgvAuthorized.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _CashFlowAuthorized.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+            LblOrderValue.Text = _CashFlowForm.DgvAuthorized.SelectedRows(0).Cells("Order").Value
             _CashFlowForm.EprValidation.Clear()
             _CashFlowForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()
@@ -162,9 +164,9 @@ Public Class FrmCashFlowAuthorized
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _CashFlowForm.DgvAuthorized.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _CashFlowAuthorized = _CashFlow.Authorized.Single(Function(x) x.Order = _CashFlowForm.DgvAuthorized.SelectedRows(0).Cells("Order").Value)
-                _CashFlow.Authorized.Remove(_CashFlowAuthorized)
-                _CashFlowForm.FillDataGridView()
+                _CashFlowAuthorized = _CashFlow.Authorizeds.Single(Function(x) x.Guid = _CashFlowForm.DgvAuthorized.SelectedRows(0).Cells("Guid").Value)
+                _CashFlow.Authorizeds.Remove(_CashFlowAuthorized)
+                _CashFlowForm.DgvAuthorized.Fill(_CashFlow.Authorizeds)
                 _Deleting = True
                 Dispose()
                 _CashFlowForm.BtnSave.Enabled = True

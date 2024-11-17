@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports System.Reflection
 Imports ChinhDo.Transactions
 Imports ControlLibrary
 Imports ManagerCore
@@ -8,15 +7,14 @@ Imports MySql.Data.MySqlClient
 ''' Representa um produto.
 ''' </summary>
 Public Class Product
-    Inherits ModelBase
-    Private _IsSaved As Boolean
+    Inherits ParentModel
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
     Public Property InternalName As String
-    Public Property Pictures As New OrdenedList(Of ProductPicture)
-    Public Property ProviderCodes As New OrdenedList(Of ProductProviderCode)
-    Public Property Codes As New OrdenedList(Of ProductCode)
-    Public Property Prices As New OrdenedList(Of ProductPrice)
+    Public Property Pictures As New List(Of ProductPicture)
+    Public Property ProviderCodes As New List(Of ProductProviderCode)
+    Public Property Codes As New List(Of ProductCode)
+    Public Property Prices As New List(Of ProductPrice)
     Public Property Location As String
     Public Property Family As New ProductFamily
     Public Property Group As New ProductGroup
@@ -27,20 +25,20 @@ Public Class Product
     Public Property NetWeight As Decimal
     Public Property Note As String
     Public Sub New()
-        _Routine = Routine.Product
+        SetRoutine(Routine.Product)
     End Sub
     Public Sub Clear()
         Unlock()
-        _IsSaved = False
-        _ID = 0
-        _Creation = Today
+        SetIsSaved(False)
+        SetID(0)
+        SetCreation(Today)
         Status = SimpleStatus.Active
         Name = Nothing
         InternalName = Nothing
-        Pictures = New OrdenedList(Of ProductPicture)
-        ProviderCodes = New OrdenedList(Of ProductProviderCode)
-        Codes = New OrdenedList(Of ProductCode)
-        Prices = New OrdenedList(Of ProductPrice)
+        Pictures = New List(Of ProductPicture)
+        ProviderCodes = New List(Of ProductProviderCode)
+        Codes = New List(Of ProductCode)
+        Prices = New List(Of ProductPrice)
         Location = Nothing
         MinimumQuantity = 0
         MaximumQuantity = 0
@@ -67,8 +65,9 @@ Public Class Product
                         Clear()
                     ElseIf TableResult.Rows.Count = 1 Then
                         Clear()
-                        _ID = TableResult.Rows(0).Item("id")
-                        _Creation = TableResult.Rows(0).Item("creation")
+                        SetID(TableResult.Rows(0).Item("id"))
+                        SetCreation(TableResult.Rows(0).Item("creation"))
+                        SetIsSaved(True)
                         Status = TableResult.Rows(0).Item("statusid")
                         Name = TableResult.Rows(0).Item("name").ToString
                         InternalName = TableResult.Rows(0).Item("internalname").ToString
@@ -87,7 +86,6 @@ Public Class Product
                         Note = TableResult.Rows(0).Item("note").ToString
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
-                        _IsSaved = True
                     Else
                         Throw New Exception("Registro não encontrado.")
                     End If
@@ -98,16 +96,16 @@ Public Class Product
         Return Me
     End Function
     Public Sub SaveChanges()
-        If Not _IsSaved Then
+        If Not IsSaved Then
             Insert()
         Else
             Update()
         End If
-        _IsSaved = True
-        Pictures.ToList().ForEach(Sub(x) x.IsSaved = True)
-        ProviderCodes.ToList().ForEach(Sub(x) x.IsSaved = True)
-        Codes.ToList().ForEach(Sub(x) x.IsSaved = True)
-        Prices.ToList().ForEach(Sub(x) x.IsSaved = True)
+        SetIsSaved(True)
+        Pictures.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        ProviderCodes.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        Codes.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        Prices.ToList().ForEach(Sub(x) x.SetIsSaved(True))
     End Sub
     Public Sub Delete()
         Dim FileManager As New TxFileManager(ApplicationPaths.ManagerTempDirectory)
@@ -146,7 +144,7 @@ Public Class Product
                     CmdProduct.Parameters.AddWithValue("@note", If(String.IsNullOrEmpty(Note), DBNull.Value, Note))
                     CmdProduct.Parameters.AddWithValue("@userid", User.ID)
                     CmdProduct.ExecuteNonQuery()
-                    _ID = CmdProduct.LastInsertedId
+                    SetID(CmdProduct.LastInsertedId)
                 End Using
                 For Each Picture As ProductPicture In Pictures
                     Using CmdPicture As New MySqlCommand(My.Resources.ProductPictureInsert, Con)
@@ -156,7 +154,7 @@ Public Class Product
                         CmdPicture.Parameters.AddWithValue("@caption", Picture.Caption)
                         CmdPicture.Parameters.AddWithValue("@userid", Picture.User.ID)
                         CmdPicture.ExecuteNonQuery()
-                        Picture.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Picture, CmdPicture.LastInsertedId)
+                        Picture.SetID(CmdPicture.LastInsertedId)
                     End Using
                 Next Picture
                 For Each ProviderCode As ProductProviderCode In ProviderCodes
@@ -168,7 +166,7 @@ Public Class Product
                         CmdProviderCode.Parameters.AddWithValue("@providerid", ProviderCode.Provider.ID)
                         CmdProviderCode.Parameters.AddWithValue("@userid", ProviderCode.User.ID)
                         CmdProviderCode.ExecuteNonQuery()
-                        ProviderCode.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(ProviderCode, CmdProviderCode.LastInsertedId)
+                        ProviderCode.SetID(CmdProviderCode.LastInsertedId)
                     End Using
                 Next ProviderCode
                 For Each Code As ProductCode In Codes
@@ -179,7 +177,7 @@ Public Class Product
                         CmdCode.Parameters.AddWithValue("@code", Code.Code)
                         CmdCode.Parameters.AddWithValue("@userid", Code.User.ID)
                         CmdCode.ExecuteNonQuery()
-                        Code.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Code, CmdCode.LastInsertedId)
+                        Code.SetID(CmdCode.LastInsertedId)
                     End Using
                 Next Code
                 For Each Price As ProductPrice In Prices
@@ -190,7 +188,7 @@ Public Class Product
                         CmdCode.Parameters.AddWithValue("@price", Price.Price)
                         CmdCode.Parameters.AddWithValue("@userid", Price.User.ID)
                         CmdCode.ExecuteNonQuery()
-                        Price.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Price, CmdCode.LastInsertedId)
+                        Price.SetID(CmdCode.LastInsertedId)
                     End Using
                 Next Price
             End Using
@@ -243,7 +241,7 @@ Public Class Product
                             CmdPicture.Parameters.AddWithValue("@caption", Picture.Caption)
                             CmdPicture.Parameters.AddWithValue("@userid", Picture.User.ID)
                             CmdPicture.ExecuteNonQuery()
-                            Picture.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Picture, CmdPicture.LastInsertedId)
+                            Picture.SetID(CmdPicture.LastInsertedId)
                         End Using
                     Else
                         Using CmdPicture As New MySqlCommand(My.Resources.ProductPictureUpdate, Con)
@@ -273,7 +271,7 @@ Public Class Product
                             CmdProviderCode.Parameters.AddWithValue("@providerid", ProviderCode.Provider.ID)
                             CmdProviderCode.Parameters.AddWithValue("@userid", ProviderCode.User.ID)
                             CmdProviderCode.ExecuteNonQuery()
-                            ProviderCode.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(ProviderCode, CmdProviderCode.LastInsertedId)
+                            ProviderCode.SetID(CmdProviderCode.LastInsertedId)
                         End Using
                     Else
                         Using CmdProviderCode As New MySqlCommand(My.Resources.ProductProviderCodeUpdate, Con)
@@ -303,7 +301,7 @@ Public Class Product
                             CmdCode.Parameters.AddWithValue("@code", Code.Code)
                             CmdCode.Parameters.AddWithValue("@userid", Code.User.ID)
                             CmdCode.ExecuteNonQuery()
-                            Code.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Code, CmdCode.LastInsertedId)
+                            Code.SetID(CmdCode.LastInsertedId)
                         End Using
                     Else
                         Using CmdCode As New MySqlCommand(My.Resources.ProductCodeUpdate, Con)
@@ -332,7 +330,7 @@ Public Class Product
                             CmdPrice.Parameters.AddWithValue("@price", Price.Price)
                             CmdPrice.Parameters.AddWithValue("@userid", Price.User.ID)
                             CmdPrice.ExecuteNonQuery()
-                            Price.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Price, CmdPrice.LastInsertedId)
+                            Price.SetID(CmdPrice.LastInsertedId)
                         End Using
                     Else
                         Using CmdPrice As New MySqlCommand(My.Resources.ProductPriceUpdate, Con)
@@ -351,9 +349,9 @@ Public Class Product
             Transaction.Complete()
         End Using
     End Sub
-    Private Function GetPictures(Transaction As MySqlTransaction) As OrdenedList(Of ProductPicture)
+    Private Function GetPictures(Transaction As MySqlTransaction) As List(Of ProductPicture)
         Dim TableResult As DataTable
-        Dim Pictures As OrdenedList(Of ProductPicture)
+        Dim Pictures As List(Of ProductPicture)
         Dim Picture As ProductPicture
         Using CmdPicture As New MySqlCommand(My.Resources.ProductPictureSelect, Transaction.Connection)
             CmdPicture.Transaction = Transaction
@@ -361,25 +359,26 @@ Public Class Product
             Using Adp As New MySqlDataAdapter(CmdPicture)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                Pictures = New OrdenedList(Of ProductPicture)
+                Pictures = New List(Of ProductPicture)
                 For Each Row As DataRow In TableResult.Rows
-                    Picture = New ProductPicture
+                    Picture = New ProductPicture With {
+                        .Caption = Row.Item("caption").ToString
+                    }
                     If Row.Item("picturename").ToString IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("picturename")) Then
                         Picture.Picture.SetCurrentFile(Path.Combine(ApplicationPaths.ProductPictureDirectory, Row.Item("picturename").ToString), True)
                     End If
-                    Picture.Caption = Row.Item("caption").ToString
-                    Picture.IsSaved = True
-                    Picture.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Picture, Row.Item("id"))
-                    Picture.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Picture, Row.Item("creation"))
+                    Picture.SetIsSaved(True)
+                    Picture.SetID(Row.Item("id"))
+                    Picture.SetCreation(Row.Item("creation"))
                     Pictures.Add(Picture)
                 Next Row
             End Using
         End Using
         Return Pictures
     End Function
-    Private Function GetProviderCodes(Transaction As MySqlTransaction) As OrdenedList(Of ProductProviderCode)
+    Private Function GetProviderCodes(Transaction As MySqlTransaction) As List(Of ProductProviderCode)
         Dim TableResult As DataTable
-        Dim ProviderCodes As OrdenedList(Of ProductProviderCode)
+        Dim ProviderCodes As List(Of ProductProviderCode)
         Dim ProviderCode As ProductProviderCode
         Using CmdProviderCode As New MySqlCommand(My.Resources.ProductProviderCodeSelect, Transaction.Connection)
             CmdProviderCode.Transaction = Transaction
@@ -387,24 +386,25 @@ Public Class Product
             Using Adp As New MySqlDataAdapter(CmdProviderCode)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                ProviderCodes = New OrdenedList(Of ProductProviderCode)
+                ProviderCodes = New List(Of ProductProviderCode)
                 For Each Row As DataRow In TableResult.Rows
-                    ProviderCode = New ProductProviderCode
-                    ProviderCode.IsMainProvider = Row.Item("ismainprovider")
-                    ProviderCode.Code = Row.Item("code").ToString
-                    ProviderCode.Provider = New Person().Load(Row.Item("providerid"), False)
-                    ProviderCode.IsSaved = True
-                    ProviderCode.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(ProviderCode, Row.Item("id"))
-                    ProviderCode.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(ProviderCode, Row.Item("creation"))
+                    ProviderCode = New ProductProviderCode With {
+                        .IsMainProvider = Row.Item("ismainprovider"),
+                        .Code = Row.Item("code").ToString,
+                        .Provider = New Person().Load(Row.Item("providerid"), False)
+                    }
+                    ProviderCode.SetIsSaved(True)
+                    ProviderCode.SetID(Row.Item("id"))
+                    ProviderCode.SetCreation(Row.Item("creation"))
                     ProviderCodes.Add(ProviderCode)
                 Next Row
             End Using
         End Using
         Return ProviderCodes
     End Function
-    Private Function GetCodes(Transaction As MySqlTransaction) As OrdenedList(Of ProductCode)
+    Private Function GetCodes(Transaction As MySqlTransaction) As List(Of ProductCode)
         Dim TableResult As DataTable
-        Dim Codes As OrdenedList(Of ProductCode)
+        Dim Codes As List(Of ProductCode)
         Dim Code As ProductCode
         Using CmdCode As New MySqlCommand(My.Resources.ProductCodeSelect, Transaction.Connection)
             CmdCode.Transaction = Transaction
@@ -412,23 +412,23 @@ Public Class Product
             Using Adp As New MySqlDataAdapter(CmdCode)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                Codes = New OrdenedList(Of ProductCode)
+                Codes = New List(Of ProductCode)
                 For Each Row As DataRow In TableResult.Rows
                     Code = New ProductCode
                     Code.Name = Row.Item("name").ToString
                     Code.Code = Row.Item("code").ToString
-                    Code.IsSaved = True
-                    Code.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Code, Row.Item("id"))
-                    Code.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Code, Row.Item("creation"))
+                    Code.SetIsSaved(True)
+                    Code.SetID(Row.Item("id"))
+                    Code.SetCreation(Row.Item("creation"))
                     Codes.Add(Code)
                 Next Row
             End Using
         End Using
         Return Codes
     End Function
-    Private Function GetPrices(Transaction As MySqlTransaction) As OrdenedList(Of ProductPrice)
+    Private Function GetPrices(Transaction As MySqlTransaction) As List(Of ProductPrice)
         Dim TableResult As DataTable
-        Dim ProductPrices As OrdenedList(Of ProductPrice)
+        Dim ProductPrices As List(Of ProductPrice)
         Dim ProductPrice As ProductPrice
         Using CmdPrice As New MySqlCommand(My.Resources.ProductPriceSelect, Transaction.Connection)
             CmdPrice.Transaction = Transaction
@@ -436,14 +436,15 @@ Public Class Product
             Using Adp As New MySqlDataAdapter(CmdPrice)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                ProductPrices = New OrdenedList(Of ProductPrice)
+                ProductPrices = New List(Of ProductPrice)
                 For Each Row As DataRow In TableResult.Rows
-                    ProductPrice = New ProductPrice
-                    ProductPrice.PriceTable = New ProductPriceTable().Load(Row.Item("pricetableid"), False)
-                    ProductPrice.Price = Row.Item("price")
-                    ProductPrice.IsSaved = True
-                    ProductPrice.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(ProductPrice, Row.Item("id"))
-                    ProductPrice.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(ProductPrice, Row.Item("creation"))
+                    ProductPrice = New ProductPrice With {
+                        .PriceTable = New ProductPriceTable().Load(Row.Item("pricetableid"), False),
+                        .Price = Row.Item("price")
+                    }
+                    ProductPrice.SetIsSaved(True)
+                    ProductPrice.SetID(Row.Item("id"))
+                    ProductPrice.SetCreation(Row.Item("creation"))
                     ProductPrices.Add(ProductPrice)
                 Next Row
             End Using

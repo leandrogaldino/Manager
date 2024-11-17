@@ -1,8 +1,6 @@
 ﻿Imports ManagerCore
 Imports ControlLibrary
 Imports System.IO
-Imports ControlLibrary.Utility
-Imports System.Threading
 
 Public Class FrmEvaluationImport
     Private _EvaluationData As Dictionary(Of String, Object) = Nothing
@@ -27,8 +25,8 @@ Public Class FrmEvaluationImport
         _Storage = Locator.GetInstance(Of Storage)
         _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
         Dim Condition As New List(Of RemoteDB.Condition) From {
-New RemoteDB.WhereEqualToCondition("info.imported", False)
-}
+            New RemoteDB.WhereEqualToCondition("info.imported", False)
+        }
         _RemoteDB.StartListening("evaluations", Condition)
         AddHandler _RemoteDB.OnFirestoreChanged, Async Sub(Args)
                                                      If DgvEvaluations.Created Then
@@ -40,9 +38,9 @@ New RemoteDB.WhereEqualToCondition("info.imported", False)
 
 
     Private Sub FrmEvaluationImport_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
-        EnableControlDoubleBuffer(DgvEvaluations, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvEvaluations, True)
         SyncTimer.Stop()
-        If Not IsInternetAvailable() Then
+        If Not InternetHelper.IsInternetAvailable() Then
             CMessageBox.Show("Não foi possível estabelecer uma conexão com a internet. Verifique sua conexão para realizar importações.", CMessageBoxType.Warning)
             DialogResult = DialogResult.Cancel
         End If
@@ -65,7 +63,7 @@ New RemoteDB.WhereEqualToCondition("info.imported", False)
         If Docs IsNot Nothing AndAlso Docs.Count > 0 Then
             For Each doc In Docs
 
-                Dim Status As String = If(String.IsNullOrEmpty(doc("info")("importing_by")), GetEnumDescription(CloudSyncStatus.NotImported), GetEnumDescription(CloudSyncStatus.Importing))
+                Dim Status As String = If(String.IsNullOrEmpty(doc("info")("importing_by")), EnumHelper.GetEnumDescription(CloudSyncStatus.NotImported), EnumHelper.GetEnumDescription(CloudSyncStatus.Importing))
                 Dim CustomerName As String = doc("customer")("customer_name")
                 Dim CompressorName As String = $"{doc("compressor")("compressor_name")}"
                 Dim SerialNumber As String = If(String.IsNullOrEmpty(doc("compressor")("serial_number")), String.Empty, $"NS: {doc("compressor")("serial_number")}")
@@ -76,9 +74,9 @@ New RemoteDB.WhereEqualToCondition("info.imported", False)
 
 
                 If IsDate(doc("info")("importing_date")) AndAlso Now < CDate(doc("info")("importing_date")).AddMinutes(10) Then
-                    Status = GetEnumDescription(CloudSyncStatus.Importing)
+                    Status = EnumHelper.GetEnumDescription(CloudSyncStatus.Importing)
                 Else
-                    Status = GetEnumDescription(CloudSyncStatus.NotImported)
+                    Status = EnumHelper.GetEnumDescription(CloudSyncStatus.NotImported)
                 End If
 
 
@@ -122,7 +120,7 @@ New RemoteDB.WhereEqualToCondition("info.imported", False)
     Private Async Function RefreshSync() As Task
         For Each Row As DataGridViewRow In DgvEvaluations.Rows
             If Row.DataGridView.Columns.Contains("Status") Then
-                If Row.Cells("Status").Value = GetEnumDescription(CloudSyncStatus.Importing) Then
+                If Row.Cells("Status").Value = EnumHelper.GetEnumDescription(CloudSyncStatus.Importing) Then
                     Dim Data As Dictionary(Of String, Object) = DirectCast(Row.Tag, Dictionary(Of String, Object))
                     If IsDate(Data("info")("importing_date")) AndAlso Now > CDate(Data("info")("importing_date")).AddMinutes(1.5) Then
                         Data("info")("importing_date") = String.Empty
@@ -153,7 +151,7 @@ New RemoteDB.WhereEqualToCondition("info.imported", False)
         Dim SelectedRow As DataGridViewRow
         Dim SignatureData As Byte()
         Dim PhotoData As Byte()
-        If Await IsInternetAvailableAsync() Then
+        If Await InternetHelper.IsInternetAvailableAsync() Then
             Try
                 If DgvEvaluations.InvokeRequired Then
                     SelectedRow = DgvEvaluations.Invoke(Function() DgvEvaluations.SelectedRows(0))
@@ -161,7 +159,7 @@ New RemoteDB.WhereEqualToCondition("info.imported", False)
                     SelectedRow = DgvEvaluations.SelectedRows(0)
                 End If
                 _EvaluationData = SelectedRow.Tag
-                If Not SelectedRow.Cells("Status").Value = GetEnumDescription(CloudSyncStatus.Importing) Then
+                If Not SelectedRow.Cells("Status").Value = EnumHelper.GetEnumDescription(CloudSyncStatus.Importing) Then
 
 
 
@@ -228,7 +226,7 @@ New RemoteDB.WhereEqualToCondition("info.imported", False)
                     Cursor = Cursors.Default
                 End If
             Catch ex As Exception
-                If Not IsInternetAvailable() Then
+                If Not InternetHelper.IsInternetAvailable() Then
                     CMessageBox.Show("É necessário estar conectado à internet para importar avaliações.", CMessageBoxType.Warning)
                 Else
                     CMessageBox.Show("ERRO EV023", "Ocorreu um erro ao importar a avaliação.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

@@ -1,5 +1,4 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
 Imports ManagerCore
 Imports System.ComponentModel
 Imports System.IO
@@ -32,14 +31,14 @@ Public Class FrmRegisterSettings
         EprValidation.Clear()
     End Sub
     Private Sub TxtDocument_Leave(sender As Object, e As EventArgs) Handles TxtDocument.Leave
-        TxtDocument.Text = GetFormatedDocument(TxtDocument.Text)
+        TxtDocument.Text = BrazilianFormatHelper.GetFormatedDocument(TxtDocument.Text)
     End Sub
     Private Sub TxtZipCode_Leave(sender As Object, e As EventArgs) Handles TxtZipCode.Leave
-        TxtZipCode.Text = GetFormatedZipCode(TxtZipCode.Text)
+        TxtZipCode.Text = BrazilianFormatHelper.GetFormatedZipCode(TxtZipCode.Text)
     End Sub
     Private Sub TxtPhone_Leave(sender As Object, e As EventArgs) Handles TxtPhone1.Leave, TxtCellPhone.Leave, TxtPhone2.Leave
         Dim Txt As TextBox = CType(sender, TextBox)
-        Txt.Text = GetFormatedPhoneNumber(Txt.Text)
+        Txt.Text = BrazilianFormatHelper.GetFormatedPhoneNumber(Txt.Text)
     End Sub
     Private Sub BtnIncludeLogo_Click(sender As Object, e As EventArgs) Handles BtnIncludeLogo.Click
         Dim Filename As String
@@ -57,13 +56,13 @@ Public Class FrmRegisterSettings
         BtnSave.Enabled = True
     End Sub
     Private Function IsValidFields() As Boolean
-        Dim b As Boolean = IsValidLegalEntityDocument(TxtDocument.Text)
-        If Not IsValidNaturalEntityDocument(TxtDocument.Text) And Not IsValidLegalEntityDocument(TxtDocument.Text) Then
+        Dim b As Boolean = BrazilianFormatHelper.IsValidLegalEntityDocument(TxtDocument.Text)
+        If Not BrazilianFormatHelper.IsValidNaturalEntityDocument(TxtDocument.Text) And Not BrazilianFormatHelper.IsValidLegalEntityDocument(TxtDocument.Text) Then
             EprValidation.SetError(LblDocument, "Documento inválido.")
             EprValidation.SetIconAlignment(LblDocument, ErrorIconAlignment.MiddleRight)
             TxtDocument.Select()
             Return False
-        ElseIf Not String.IsNullOrEmpty(TxtZipCode.Text) And Not IsValidZipCode(TxtZipCode.Text) Then
+        ElseIf Not String.IsNullOrEmpty(TxtZipCode.Text) And Not BrazilianFormatHelper.IsValidZipCode(TxtZipCode.Text) Then
             EprValidation.SetError(LblZipCode, "CEP inválido.")
             EprValidation.SetIconAlignment(LblZipCode, ErrorIconAlignment.MiddleRight)
             TxtZipCode.Select()

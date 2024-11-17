@@ -3,26 +3,8 @@
 ''' Representa uma peça de um compressor.
 ''' </summary>
 Public Class CompressorPart
-    Public IsSaved As Boolean
-    Private _Order As Long
-    Private _ID As Long
-    Private _Creation As Date = Today
+    Inherits ChildModel
     Private _PartType As CompressorPartType
-    Public ReadOnly Property Order As Long
-        Get
-            Return _Order
-        End Get
-    End Property
-    Public ReadOnly Property ID As Long
-        Get
-            Return _ID
-        End Get
-    End Property
-    Public ReadOnly Property Creation As Date
-        Get
-            Return _Creation
-        End Get
-    End Property
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public ReadOnly Property PartType As CompressorPartType
         Get
@@ -52,8 +34,12 @@ Public Class CompressorPart
             Return Product.ID > 0
         End Get
     End Property
-    Public ReadOnly User As User = Locator.GetInstance(Of Session).User
     Public Sub New(PartType As CompressorPartType)
         _PartType = PartType
+        If _PartType = CompressorPartType.ElapsedDay Then
+            SetRoutine(Routine.CompressorPartElapsedDay)
+        Else
+            SetRoutine(Routine.CompressorPartWorkedHour)
+        End If
     End Sub
 End Class

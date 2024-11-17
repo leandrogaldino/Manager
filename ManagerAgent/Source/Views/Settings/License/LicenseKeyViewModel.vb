@@ -92,7 +92,7 @@ Public Class LicenseKeyViewModel
         _Key = $"{_KeyPartA}{_KeyPartB}{_KeyPartC}{_KeyPartD}{_KeyPartE}"
     End Sub
     Public Async Function ValidateLicenseAsync() As Task
-        If Not String.IsNullOrEmpty(_Key) AndAlso Await Utility.IsInternetAvailableAsync() Then
+        If Not String.IsNullOrEmpty(_Key) AndAlso Await InternetHelper.IsInternetAvailableAsync() Then
             IsValidKey = Await _LicenseService.IsValidLicenseKey(_Key)
         Else
             IsValidKey = False

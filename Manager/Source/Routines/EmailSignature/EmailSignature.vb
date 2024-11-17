@@ -4,8 +4,7 @@ Imports MySql.Data.MySqlClient
 Imports System.IO
 Imports ControlLibrary
 Public Class EmailSignature
-    Inherits ModelBase
-    Private _IsSaved As Boolean
+    Inherits ParentModel
     Private _Signature As String
     Public Property Name As String
     Public Property Directory As New DirectoryManager(ApplicationPaths.EmailSignatureDirectory)
@@ -26,14 +25,14 @@ Public Class EmailSignature
         End Get
     End Property
     Public Sub New()
-        _Routine = Routine.EmailSignature
+        SetRoutine(Routine.EmailSignature)
     End Sub
     Public Sub Clear()
         Unlock()
-        _IsSaved = False
+        SetIsSaved(False)
+        SetID(0)
+        SetCreation(Today)
         _Signature = Nothing
-        _ID = 0
-        _Creation = Today
         Name = Nothing
         Directory = New DirectoryManager(ApplicationPaths.EmailSignatureDirectory)
     End Sub
@@ -52,15 +51,15 @@ Public Class EmailSignature
                         Clear()
                     ElseIf TableResult.Rows.Count = 1 Then
                         Clear()
-                        _ID = TableResult.Rows(0).Item("id")
-                        _Creation = TableResult.Rows(0).Item("creation")
+                        SetID(TableResult.Rows(0).Item("id"))
+                        SetCreation(TableResult.Rows(0).Item("creation"))
+                        SetIsSaved(True)
                         Name = TableResult.Rows(0).Item("name").ToString
                         If TableResult.Rows(0).Item("directoryname") IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("directoryname")) Then
                             Directory.SetCurrentDirectory(Path.Combine(ApplicationPaths.EmailSignatureDirectory, TableResult.Rows(0).Item("directoryname").ToString), True)
                         End If
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
-                        _IsSaved = True
                     Else
                         Throw New Exception("Registro não encontrado.")
                     End If
@@ -71,12 +70,12 @@ Public Class EmailSignature
         Return Me
     End Function
     Public Sub SaveChanges()
-        If Not _IsSaved Then
+        If Not IsSaved Then
             Insert()
         Else
             Update()
         End If
-        _IsSaved = True
+        SetIsSaved(True)
     End Sub
     Public Sub Delete()
         Dim DirectoryManager As New TxFileManager(ApplicationPaths.ManagerTempDirectory)
@@ -105,7 +104,7 @@ Public Class EmailSignature
                     CmdEmailSignature.Parameters.AddWithValue("@directoryname", If(String.IsNullOrEmpty(Directory.CurrentDirectory), DBNull.Value, Path.GetFileName(Directory.CurrentDirectory)))
                     CmdEmailSignature.Parameters.AddWithValue("@userid", User.ID)
                     CmdEmailSignature.ExecuteNonQuery()
-                    _ID = CmdEmailSignature.LastInsertedId
+                    SetID(CmdEmailSignature.LastInsertedId)
                 End Using
             End Using
             Directory.Execute()

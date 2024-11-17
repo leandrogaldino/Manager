@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Public Class FrmPersonContact
     Private _PersonForm As FrmPerson
     Private _Person As Person
@@ -42,7 +42,7 @@ Public Class FrmPersonContact
     Private Sub AfterDataGridViewRowMove()
         If _PersonForm.DgvContact.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _PersonContact = _Person.Contacts.Single(Function(x) x.Order = _PersonForm.DgvContact.SelectedRows(0).Cells("Order").Value)
+            _PersonContact = _Person.Contacts.Single(Function(x) x.Guid = _PersonForm.DgvContact.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -84,10 +84,10 @@ Public Class FrmPersonContact
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _PersonForm.DgvContact.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _PersonContact = _Person.Contacts.Single(Function(x) x.Order = _PersonForm.DgvContact.SelectedRows(0).Cells("Order").Value)
+                _PersonContact = _Person.Contacts.Single(Function(x) x.Guid = _PersonForm.DgvContact.SelectedRows(0).Cells("Guid").Value)
                 If Not _PersonContact.IsMainContact Then
                     _Person.Contacts.Remove(_PersonContact)
-                    _Person.Contacts.FillDataGridView(_PersonForm.DgvContact)
+                    _PersonForm.DgvContact.Fill(_Person.Contacts)
                     _PersonForm.DgvContactLayout.Load()
                     _Deleting = True
                     Dispose()
@@ -118,7 +118,7 @@ Public Class FrmPersonContact
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = _PersonContact.Order
+        LblOrderValue.Text = If(_PersonContact.IsSaved, _PersonForm.DgvContact.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _PersonContact.Creation
         CbxIsMainContact.Checked = _PersonContact.IsMainContact
         TxtName.Text = _PersonContact.Name
@@ -128,7 +128,7 @@ Public Class FrmPersonContact
         If _Person.Contacts.Count = 0 Then
             CbxIsMainContact.Checked = True
         End If
-        If _PersonContact.Order = 0 Then
+        If Not _PersonContact.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
         Else
@@ -150,12 +150,12 @@ Public Class FrmPersonContact
             EprValidation.SetIconAlignment(LblName, ErrorIconAlignment.MiddleRight)
             TxtName.Select()
             Return False
-        ElseIf Not String.IsNullOrWhiteSpace(TxtPhone.Text) And Utility.GetWhichPhoneFormat(TxtPhone.Text) = Utility.PhoneFormat.InvalidPhone Then
+        ElseIf Not String.IsNullOrWhiteSpace(TxtPhone.Text) And BrazilianFormatHelper.GetWhichPhoneFormat(TxtPhone.Text) = PhoneFormat.InvalidPhone Then
             EprValidation.SetError(LblPhone, String.Format("Telefone inválido.{0}1) Verifique se o DDD foi informado;{0}2) Verifique se há algum caractere que não seja número, parênteses ou traço;{0}3)Verifique se o telefone tem entre 10 e 11 digitos.", vbNewLine))
             EprValidation.SetIconAlignment(LblPhone, ErrorIconAlignment.MiddleRight)
             TxtPhone.Select()
             Return False
-        ElseIf Not String.IsNullOrWhiteSpace(TxtEmail.Text) And Not IsValidEmail(TxtEmail.Text) Then
+        ElseIf Not String.IsNullOrWhiteSpace(TxtEmail.Text) And Not BrazilianFormatHelper.IsValidEmail(TxtEmail.Text) Then
             EprValidation.SetError(LblEmail, "E-Mail inválido.")
             EprValidation.SetIconAlignment(LblEmail, ErrorIconAlignment.MiddleRight)
             TxtEmail.Select()
@@ -165,52 +165,52 @@ Public Class FrmPersonContact
     End Function
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
-        TxtName.Text = RemoveAccents(TxtName.Text.Trim)
-        TxtJobTitle.Text = RemoveAccents(TxtJobTitle.Text.Trim)
-        TxtPhone.Text = RemoveAccents(TxtPhone.Text.Trim)
-        TxtEmail.Text = RemoveAccents(TxtEmail.Text.Trim)
+        TxtName.Text = TxtName.Text.Trim.ToUnaccented()
+        TxtJobTitle.Text = TxtJobTitle.Text.Trim.ToUnaccented()
+        TxtPhone.Text = TxtPhone.Text.Trim.ToUnaccented()
+        TxtEmail.Text = TxtEmail.Text.Trim.ToUnaccented()
         If IsValidFields() Then
             If _PersonContact.IsSaved Then
-                _Person.Contacts.Single(Function(x) x.Order = _PersonContact.Order).IsMainContact = CbxIsMainContact.Checked
-                _Person.Contacts.Single(Function(x) x.Order = _PersonContact.Order).Name = TxtName.Text
-                _Person.Contacts.Single(Function(x) x.Order = _PersonContact.Order).JobTitle = TxtJobTitle.Text
-                _Person.Contacts.Single(Function(x) x.Order = _PersonContact.Order).Phone = TxtPhone.Text
-                _Person.Contacts.Single(Function(x) x.Order = _PersonContact.Order).Email = TxtEmail.Text
+                _Person.Contacts.Single(Function(x) x.Guid = _PersonContact.Guid).IsMainContact = CbxIsMainContact.Checked
+                _Person.Contacts.Single(Function(x) x.Guid = _PersonContact.Guid).Name = TxtName.Text
+                _Person.Contacts.Single(Function(x) x.Guid = _PersonContact.Guid).JobTitle = TxtJobTitle.Text
+                _Person.Contacts.Single(Function(x) x.Guid = _PersonContact.Guid).Phone = TxtPhone.Text
+                _Person.Contacts.Single(Function(x) x.Guid = _PersonContact.Guid).Email = TxtEmail.Text
             Else
-                _PersonContact = New PersonContact()
-                _PersonContact.IsMainContact = CbxIsMainContact.Checked
-                _PersonContact.Name = TxtName.Text
-                _PersonContact.JobTitle = TxtJobTitle.Text
-                _PersonContact.Phone = TxtPhone.Text
-                _PersonContact.Email = TxtEmail.Text
-                _PersonContact.IsSaved = True
+                _PersonContact = New PersonContact With {
+                    .IsMainContact = CbxIsMainContact.Checked,
+                    .Name = TxtName.Text,
+                    .JobTitle = TxtJobTitle.Text,
+                    .Phone = TxtPhone.Text,
+                    .Email = TxtEmail.Text
+                }
+                _PersonContact.SetIsSaved(True)
                 _Person.Contacts.Add(_PersonContact)
             End If
 
             If CbxIsMainContact.Checked Then
                 CbxIsMainContact.Enabled = False
-                For Each Contacts As PersonContact In _Person.Contacts
-                    If Contacts.Order <> _PersonContact.Order Then
-                        Contacts.IsMainContact = False
+                For Each Contact As PersonContact In _Person.Contacts
+                    If Contact.Guid <> _PersonContact.Guid Then
+                        Contact.IsMainContact = False
                     End If
-                Next Contacts
+                Next Contact
             Else
                 CbxIsMainContact.Enabled = True
             End If
-
-            _Person.Contacts.FillDataGridView(_PersonForm.DgvContact)
-            LblOrderValue.Text = _PersonContact.Order
+            _PersonForm.DgvContact.Fill(_Person.Contacts)
             _PersonForm.DgvContactLayout.Load()
             BtnSave.Enabled = False
-            If _PersonContact.Order = 0 Then
+            If Not _PersonContact.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _PersonForm.DgvContact.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Order").Value = _PersonContact.Order)
+            Row = _PersonForm.DgvContact.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _PersonContact.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+            LblOrderValue.Text = _PersonForm.DgvContact.SelectedRows(0).Cells("Order").Value
             _PersonForm.EprValidation.Clear()
             _PersonForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()
@@ -220,6 +220,6 @@ Public Class FrmPersonContact
         End If
     End Function
     Private Sub TxtPhone_Leave(sender As Object, e As EventArgs) Handles TxtPhone.Leave
-        TxtPhone.Text = GetFormatedPhoneNumber(TxtPhone.Text)
+        TxtPhone.Text = BrazilianFormatHelper.GetFormatedPhoneNumber(TxtPhone.Text)
     End Sub
 End Class

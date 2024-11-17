@@ -2,7 +2,6 @@
 Imports System.Net.Mail
 Imports System.Text
 Imports ControlLibrary
-Imports ControlLibrary.Utility
 Public Class FrmEmail
     Private _Attachments As New List(Of Attachment)
     Private _EmailModel As New EmailModel
@@ -25,7 +24,7 @@ Public Class FrmEmail
         CbxSignature.DataSource = Signatures
         CbxSignature.DisplayMember = "Name"
         CbxSignature.ValueMember = "ID"
-        TsBody.Renderer = New CustomToolstripRender
+        TsBody.Renderer = New CustomToolStripRender
         TxtFont.Text = TxtBody.Font.Name
         Sb.AppendLine("#sdl#: é substituido por bom dia, boa tarde ou boa noite.")
         Sb.AppendLine("#sdn#: é substituido por Bom dia, Boa tarde ou Boa noite.")
@@ -64,21 +63,21 @@ Public Class FrmEmail
         Dim InvalidBcc As New List(Of String)
         If Not String.IsNullOrEmpty(TxtTo.Text) Then
             TxtTo.Text.Split(";").ToList.ForEach(Sub(x)
-                                                     If Not IsValidEmail(x.Trim) Then
+                                                     If Not BrazilianFormatHelper.IsValidEmail(x.Trim) Then
                                                          InvalidTo.Add(x.Trim)
                                                      End If
                                                  End Sub)
         End If
         If Not String.IsNullOrEmpty(TxtCc.Text) Then
             TxtCc.Text.Split(";").ToList.ForEach(Sub(x)
-                                                     If Not IsValidEmail(x.Trim) Then
+                                                     If Not BrazilianFormatHelper.IsValidEmail(x.Trim) Then
                                                          InvalidCc.Add(x.Trim)
                                                      End If
                                                  End Sub)
         End If
         If Not String.IsNullOrEmpty(TxtBcc.Text) Then
             TxtBcc.Text.Split(";").ToList.ForEach(Sub(x)
-                                                      If Not IsValidEmail(x.Trim) Then
+                                                      If Not BrazilianFormatHelper.IsValidEmail(x.Trim) Then
                                                           InvalidBcc.Add(x.Trim)
                                                       End If
                                                   End Sub)
@@ -238,14 +237,14 @@ Public Class FrmEmail
     End Sub
     Private Sub TxtBody_SelectionChanged(sender As Object, e As EventArgs) Handles TxtBody.SelectionChanged
         TxtFont.Text = TxtBody.SelectionFont.Name
-        BtnColor.Image = GetRecoloredImage(BtnColor.Image, TxtBody.SelectionColor)
+        BtnColor.Image = ImageHelper.GetRecoloredImage(BtnColor.Image, TxtBody.SelectionColor)
         TxtFont.ForeColor = TxtBody.SelectionColor
     End Sub
     Private Sub BtnColor_Click(sender As Object, e As EventArgs) Handles BtnColor.Click
         CdColor.Color = TxtBody.SelectionColor
         If CdColor.ShowDialog = DialogResult.OK Then
             TxtBody.SelectionColor = CdColor.Color
-            BtnColor.Image = GetRecoloredImage(BtnColor.Image, CdColor.Color)
+            BtnColor.Image = ImageHelper.GetRecoloredImage(BtnColor.Image, CdColor.Color)
         End If
     End Sub
     Private Sub TxtFont_Click(sender As Object, e As EventArgs) Handles TxtFont.Click

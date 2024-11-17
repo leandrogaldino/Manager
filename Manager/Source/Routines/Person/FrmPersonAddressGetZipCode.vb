@@ -1,6 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
-
+Imports ControlLibrary.Extensions
 Public Class FrmPersonAddressGetZipCode
     Private _PersonAddress As PersonAddress
     Private _User As User
@@ -28,11 +27,11 @@ Public Class FrmPersonAddressGetZipCode
         _PersonAddress = PersonAddress
         _User = Locator.GetInstance(Of Session).User
         TxtAddressName.Text = _PersonAddress.Name
-        TxtZipCode.Text = GetFormatedZipCode(_PersonAddress.ZipCode)
+        TxtZipCode.Text = BrazilianFormatHelper.GetFormatedZipCode(_PersonAddress.ZipCode)
         TxtStreet.Text = _PersonAddress.Street
         TxtDistrict.Text = _PersonAddress.District
         If _PersonAddress.City.ID = 0 Or (_PersonAddress.City.ID > 0 And _PersonAddress.City.Status = SimpleStatus.Inactive) Then
-            QbxCity.Text = RemoveAccents(AddressFinder.City.ToUpper.Trim)
+            QbxCity.Text = AddressFinder.City.ToUpper.Trim.ToUnaccented()
         Else
             QbxCity.Unfreeze()
             QbxCity.Freeze(_PersonAddress.City.ID)
@@ -49,10 +48,10 @@ Public Class FrmPersonAddressGetZipCode
         Return True
     End Function
     Private Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
-        TxtAddressName.Text = RemoveAccents(TxtAddressName.Text.Trim)
-        TxtZipCode.Text = RemoveAccents(TxtZipCode.Text.Trim)
-        TxtStreet.Text = RemoveAccents(TxtStreet.Text.Trim)
-        TxtDistrict.Text = RemoveAccents(TxtDistrict.Text.Trim)
+        TxtAddressName.Text = TxtAddressName.Text.Trim.ToUnaccented()
+        TxtZipCode.Text = TxtZipCode.Text.Trim.ToUnaccented()
+        TxtStreet.Text = TxtStreet.Text.Trim.ToUnaccented()
+        TxtDistrict.Text = TxtDistrict.Text.Trim.ToUnaccented()
         If IsValidFields() Then
             DialogResult = DialogResult.OK
         End If

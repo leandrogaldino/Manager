@@ -1,5 +1,5 @@
 ﻿Imports System.ComponentModel
-Imports ControlLibrary.Utility
+Imports ControlLibrary
 Public Class SimpleStatusConverter
     Inherits StringConverter
     Public Overrides Function GetStandardValuesSupported(ByVal context As ITypeDescriptorContext) As Boolean
@@ -11,8 +11,8 @@ Public Class SimpleStatusConverter
     Public Overrides Function GetStandardValues(ByVal context As ITypeDescriptorContext) As StandardValuesCollection
         Dim List As New List(Of String) From {
             "",
-            GetEnumDescription(SimpleStatus.Active),
-            GetEnumDescription(SimpleStatus.Inactive)
+            EnumHelper.GetEnumDescription(SimpleStatus.Active),
+            EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
         }
         Return New StandardValuesCollection(List)
     End Function

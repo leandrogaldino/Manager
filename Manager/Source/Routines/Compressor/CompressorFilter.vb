@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports ControlLibrary
-Imports ControlLibrary.Utility
 Imports MySql.Data.MySqlClient
 ''' <summary>
 ''' Representa o filtro dos compressores.
@@ -49,7 +48,7 @@ Public Class CompressorFilter
             Con.Open()
             Using Cmd As New MySqlCommand(My.Resources.CompressorFilter, Con)
                 If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
-                If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
+                If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = EnumHelper.GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
                 If Name <> Nothing Then Cmd.Parameters.AddWithValue("@name", Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@name", "%")
                 If Manufacturer.ID <> Nothing Then Cmd.Parameters.AddWithValue("@manufacturerid", Manufacturer.ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@manufacturerid", "%")
                 If Manufacturer.Document <> Nothing Then Cmd.Parameters.AddWithValue("@manufacturerdocument", Manufacturer.Document) : Filtering = True Else Cmd.Parameters.AddWithValue("@manufacturerdocument", "%")

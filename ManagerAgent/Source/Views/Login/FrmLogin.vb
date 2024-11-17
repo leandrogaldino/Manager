@@ -31,7 +31,7 @@ Public Class FrmLogin
             Case LicenseMessages.BadPassword
                 CMessageBox.Show("Usuário e/ou senha incorretos. Por favor, verifique suas credenciais e tente novamente.", CMessageBoxType.Warning)
             Case LicenseMessages.ExpiredProductKey, LicenseMessages.InvalidProductKey, LicenseMessages.MissingProductKey
-                CMessageBox.Show(Utility.GetEnumDescription(Result), CMessageBoxType.Warning)
+                CMessageBox.Show(EnumHelper.GetEnumDescription(Result), CMessageBoxType.Warning)
                 Using Frm As New FrmLicenseKey
                     If Frm.ShowDialog() = DialogResult.OK AndAlso _ViewModel.IsValidCredentials() Then
                         DialogResult = DialogResult.OK

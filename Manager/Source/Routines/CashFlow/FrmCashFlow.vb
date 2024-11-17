@@ -1,7 +1,6 @@
 ﻿Imports ControlLibrary
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
-Imports ControlLibrary.Utility
-Imports DocumentFormat.OpenXml.Bibliography
 
 Public Class FrmCashFlow
     Private _CashFlow As CashFlow
@@ -65,14 +64,14 @@ Public Class FrmCashFlow
     Private Sub LoadData()
         _Loading = True
         LblIDValue.Text = _CashFlow.ID
-        BtnStatusValue.Text = GetEnumDescription(_CashFlow.Status)
+        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_CashFlow.Status)
         LblCreationValue.Text = _CashFlow.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _CashFlow.Name
-        FillDataGridView()
+        DgvAuthorized.Fill(_CashFlow.Authorizeds)
         Text = "Rota"
         BtnDelete.Enabled = _CashFlow.ID > 0 And _User.CanDelete(Routine.CashFlow)
         If _CashFlow.LockInfo.IsLocked And Not _CashFlow.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _CashFlow.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_CashFlow.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _CashFlow.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
         End If
         BtnSave.Enabled = False
@@ -109,7 +108,7 @@ Public Class FrmCashFlow
                 End If
             End If
             If _CashFlowsForm IsNot Nothing Then
-                FillDataGridView()
+                DgvAuthorized.Fill(_CashFlow.Authorizeds)
             End If
             _Deleting = False
         End If
@@ -138,7 +137,7 @@ Public Class FrmCashFlow
                         _Deleting = True
                         Dispose()
                     Else
-                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_CashFlow.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _CashFlow.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                     End If
                 End If
             Catch ex As MySqlException
@@ -157,13 +156,13 @@ Public Class FrmCashFlow
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
-        If BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive)
+        If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
             If _CashFlow.Status = SimpleStatus.Active Then
                 CMessageBox.Show("O registro foi marcado para ser inativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
-        ElseIf BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active)
+        ElseIf BtnStatusValue.Text = enumhelper.GetEnumDescription(SimpleStatus.Inactive) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active)
             If _CashFlow.Status = SimpleStatus.Inactive Then
                 CMessageBox.Show("O registro foi marcado para ser ativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
@@ -172,7 +171,7 @@ Public Class FrmCashFlow
     End Sub
     Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
         EprValidation.Clear()
-        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
+        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
     Private Sub TxtName_TextChanged(sender As Object, e As EventArgs) Handles TxtName.TextChanged
         EprValidation.Clear()
@@ -207,20 +206,20 @@ Public Class FrmCashFlow
     End Function
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
-        TxtName.Text = RemoveAccents(TxtName.Text.Trim)
+        TxtName.Text = TxtName.Text.Trim.ToUnaccented()
         If _CashFlow.LockInfo.IsLocked And _CashFlow.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_CashFlow.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _CashFlow.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Return False
         Else
             If IsValidFields() Then
-                _CashFlow.Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                _CashFlow.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
                 _CashFlow.Name = TxtName.Text
                 Try
                     Cursor = Cursors.WaitCursor
                     _CashFlow.SaveChanges()
                     _CashFlow.Lock()
                     LblIDValue.Text = _CashFlow.ID
-                    FillDataGridView()
+                    DgvAuthorized.Fill(_CashFlow.Authorizeds)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.CashFlow)
                     If _CashFlowsForm IsNot Nothing Then
@@ -262,7 +261,7 @@ Public Class FrmCashFlow
         Dim Form As FrmCashFlowAuthorized
         Dim Authorized As CashFlowAuthorized
         If DgvAuthorized.SelectedRows.Count = 1 Then
-            Authorized = _CashFlow.Authorized.Single(Function(x) x.Order = DgvAuthorized.SelectedRows(0).Cells("Order").Value)
+            Authorized = _CashFlow.Authorizeds.Single(Function(x) x.Guid = DgvAuthorized.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmCashFlowAuthorized(_CashFlow, Authorized, Me)
             Form.ShowDialog()
         End If
@@ -271,9 +270,9 @@ Public Class FrmCashFlow
         Dim Authorized As CashFlowAuthorized
         If DgvAuthorized.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Authorized = _CashFlow.Authorized.Single(Function(x) x.Order = DgvAuthorized.SelectedRows(0).Cells("Order").Value)
-                _CashFlow.Authorized.Remove(Authorized)
-                FillDataGridView()
+                Authorized = _CashFlow.Authorizeds.Single(Function(x) x.Guid = DgvAuthorized.SelectedRows(0).Cells("Guid").Value)
+                _CashFlow.Authorizeds.Remove(Authorized)
+                DgvAuthorized.Fill(_CashFlow.Authorizeds)
                 BtnSave.Enabled = True
             End If
         End If
@@ -293,10 +292,8 @@ Public Class FrmCashFlow
             BtnDeleteAuthorized.Enabled = True
         End If
     End Sub
-    Public Sub FillDataGridView()
-        _CashFlow.Authorized.FillDataGridView(DgvAuthorized)
-        DgvAuthorized.Columns.Cast(Of DataGridViewColumn).Where(Function(x) x.Name <> "Authorized").ToList.ForEach(Sub(y) y.Visible = False)
-        DgvAuthorized.Columns.Cast(Of DataGridViewColumn).Single(Function(x) x.Name = "Authorized").HeaderText = "Usuário Autorizado"
-        DgvAuthorized.Columns.Cast(Of DataGridViewColumn).Single(Function(x) x.Name = "Authorized").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+
+    Private Sub FrmCashFlow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        DgvAuthorizedLayout.Load()
     End Sub
 End Class

@@ -1,4 +1,5 @@
 ﻿Imports ControlLibrary
+Imports ControlLibrary.Extensions
 Public Class FrmCityRoute
     Private _CityForm As FrmCity
     Private _City As City
@@ -42,7 +43,7 @@ Public Class FrmCityRoute
     Private Sub AfterDataGridViewRowMove()
         If _CityForm.DgvRoute.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _CityRoute = _City.Routes.Value.Single(Function(x) x.Order = _CityForm.DgvRoute.SelectedRows(0).Cells("Order").Value)
+            _CityRoute = _City.Routes.Value.Single(Function(x) x.Guid = _CityForm.DgvRoute.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -86,11 +87,11 @@ Public Class FrmCityRoute
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = _CityRoute.Order
+        LblOrderValue.Text = If(_CityRoute.IsSaved, _CityForm.DgvRoute.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _CityRoute.Creation
         QbxRoute.Unfreeze()
         QbxRoute.Freeze(_CityRoute.Route.ID)
-        If _CityRoute.Order = 0 Then
+        If Not _CityRoute.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
         Else
@@ -124,25 +125,26 @@ Public Class FrmCityRoute
         Dim Row As DataGridViewRow
         If IsValidFields() Then
             If _CityRoute.IsSaved Then
-                _City.Routes.Value.Single(Function(x) x.Order = _CityRoute.Order).Route = New Route().Load(QbxRoute.FreezedPrimaryKey, False)
+                _City.Routes.Value.Single(Function(x) x.Guid = _CityRoute.Guid).Route = New Route().Load(QbxRoute.FreezedPrimaryKey, False)
             Else
-                _CityRoute = New CityRoute()
-                _CityRoute.Route = New Route().Load(QbxRoute.FreezedPrimaryKey, False)
-                _CityRoute.IsSaved = True
+                _CityRoute = New CityRoute With {
+                    .Route = New Route().Load(QbxRoute.FreezedPrimaryKey, False)
+                }
+                _CityRoute.SetIsSaved(True)
                 _City.Routes.Value.Add(_CityRoute)
             End If
-            _CityForm.FillDataGridView()
-            LblOrderValue.Text = _CityRoute.Order
+            _CityForm.DgvRoute.Fill(_City.Routes.Value)
             BtnSave.Enabled = False
-            If _CityRoute.Order = 0 Then
+            If Not _CityRoute.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _CityForm.DgvRoute.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Order").Value = _CityRoute.Order)
+            Row = _CityForm.DgvRoute.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _CityRoute.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+            LblOrderValue.Text = _CityForm.DgvRoute.SelectedRows(0).Cells("Order").Value
             _CityForm.EprValidation.Clear()
             _CityForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()
@@ -207,9 +209,9 @@ Public Class FrmCityRoute
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _CityForm.DgvRoute.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _CityRoute = _City.Routes.Value.Single(Function(x) x.Order = _CityForm.DgvRoute.SelectedRows(0).Cells("Order").Value)
+                _CityRoute = _City.Routes.Value.Single(Function(x) x.Guid = _CityForm.DgvRoute.SelectedRows(0).Cells("Guid").Value)
                 _City.Routes.Value.Remove(_CityRoute)
-                _CityForm.FillDataGridView()
+                _CityForm.DgvRoute.Fill(_City.Routes.Value)
                 _Deleting = True
                 Dispose()
                 _CityForm.BtnSave.Enabled = True

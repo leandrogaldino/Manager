@@ -25,7 +25,7 @@ Public Class FrmMain
         _StackTaskService = Locator.GetInstance(Of TaskStackService)
         _AppService = Locator.GetInstance(Of AppService)
         _StateWarnings = New ObservableCollection(Of String)
-        Utility.EnableControlDoubleBuffer(DgvEvents, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvEvents, True)
         TsTitle.Renderer = New CustomToolstripRender()
     End Sub
 
@@ -144,7 +144,7 @@ Public Class FrmMain
         Dim Tasks As List(Of TaskBase) = _StackTaskService.GetTaskStack().ToList()
         Tasks = Tasks.Where(Function(x) x.NextRun <> Nothing).OrderBy(Function(Task) Task.NextRun).ToList()
         For Each Task In Tasks
-            Dim RowIndex As Integer = DgvTasks.Rows.Add(Utility.GetEnumDescription(Task.Name))
+            Dim RowIndex As Integer = DgvTasks.Rows.Add(EnumHelper.GetEnumDescription(Task.Name))
             DgvTasks.Rows(RowIndex).DefaultCellStyle.BackColor = Color.Gray
             DgvTasks.Rows(RowIndex).DefaultCellStyle.ForeColor = Color.White
             DgvTasks.Rows(RowIndex).DefaultCellStyle.Font = New Font(DgvTasks.Font, FontStyle.Bold)
@@ -196,7 +196,7 @@ Public Class FrmMain
         End If
         _StateWarnings.Clear()
         If Not _SessionModel.ManagerLicenseResult.Success Then
-            _StateWarnings.Add($"{Constants.SubItemSymbol} {Utility.GetEnumDescription(_SessionModel.ManagerLicenseResult.Flag)}")
+            _StateWarnings.Add($"{Constants.SubItemSymbol} {EnumHelper.GetEnumDescription(_SessionModel.ManagerLicenseResult.Flag)}")
         End If
         ManagerCloudPending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SubItemSymbol} {x}"))
         ManagerDatabasePending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SubItemSymbol} {x}"))

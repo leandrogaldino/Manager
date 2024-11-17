@@ -14,7 +14,7 @@ Public Class FrmSuportSettings
         CbxEnableSSL.Text = If(CbxEnableSSL.Checked, "Sim", "Não")
     End Sub
     Private Function IsValidFields() As Boolean
-        If Not Utility.IsValidEmail(TxtSupportEmail.Text) Then
+        If Not BrazilianFormatHelper.IsValidEmail(TxtSupportEmail.Text) Then
             EprValidation.SetError(LblEmail, "E-Mail inválido")
             EprValidation.SetIconAlignment(LblEmail, ErrorIconAlignment.MiddleRight)
             TxtSupportEmail.Select()

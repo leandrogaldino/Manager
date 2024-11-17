@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Public Class FrmProduct
     Private _Product As Product
@@ -59,10 +59,10 @@ Public Class FrmProduct
         DgvPictureLayout.Load()
     End Sub
     Private Sub LoadForm()
-        Utility.EnableControlDoubleBuffer(DgvProviderCode, True)
-        Utility.EnableControlDoubleBuffer(DgvCode, True)
-        Utility.EnableControlDoubleBuffer(DgvPrice, True)
-        Utility.EnableControlDoubleBuffer(DgvPicture, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvProviderCode, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvCode, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvPrice, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvPicture, True)
         DgvNavigator.DataGridView = _ProductsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
@@ -72,7 +72,7 @@ Public Class FrmProduct
         _Loading = True
         TcProduct.SelectedTab = TabMain
         LblIDValue.Text = _Product.ID
-        BtnStatusValue.Text = GetEnumDescription(_Product.Status)
+        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Product.Status)
         LblCreationValue.Text = _Product.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _Product.Name
         TxtInternalName.Text = _Product.InternalName
@@ -91,14 +91,14 @@ Public Class FrmProduct
         TxtFilterProviderCode.Clear()
         TxtFilterCode.Clear()
         TxtFilterPrice.Clear()
-        If _Product.ProviderCodes IsNot Nothing Then _Product.ProviderCodes.FillDataGridView(DgvProviderCode)
-        If _Product.Codes IsNot Nothing Then _Product.Codes.FillDataGridView(DgvCode)
-        If _Product.Prices IsNot Nothing Then _Product.Prices.FillDataGridView(DgvPrice)
-        If _Product.Pictures IsNot Nothing Then _Product.Pictures.FillDataGridView(DgvPicture)
+        If _Product.ProviderCodes IsNot Nothing Then DgvProviderCode.Fill(_Product.ProviderCodes)
+        If _Product.Codes IsNot Nothing Then DgvCode.Fill(_Product.Codes)
+        If _Product.Prices IsNot Nothing Then DgvPrice.Fill(_Product.Prices)
+        If _Product.Pictures IsNot Nothing Then DgvPicture.Fill(_Product.Pictures)
         BtnDelete.Enabled = _Product.ID > 0 And _User.CanDelete(Routine.Product)
         Text = "Produto"
         If _Product.LockInfo.IsLocked And Not _Product.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Product.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", GetTitleCase(_Product.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _Product.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
         End If
         BtnSave.Enabled = False
@@ -118,7 +118,7 @@ Public Class FrmProduct
         Try
             Cursor = Cursors.WaitCursor
             _Product.Load(_ProductsGrid.SelectedRows(0).Cells("id").Value, True)
-            For Each p In _Product.Pictures.Reverse
+            For Each p In _Product.Pictures.ToArray.Reverse
                 If Not IO.File.Exists(p.Picture.OriginalFile) Then
                     _Product.Pictures.Remove(p)
                 End If
@@ -140,10 +140,10 @@ Public Class FrmProduct
                 End If
             End If
             If _ProductsForm IsNot Nothing Then
-                _Product.ProviderCodes.FillDataGridView(DgvProviderCode)
-                _Product.Codes.FillDataGridView(DgvCode)
-                _Product.Prices.FillDataGridView(DgvPrice)
-                _Product.Pictures.FillDataGridView(DgvPicture)
+                DgvProviderCode.Fill(_Product.ProviderCodes)
+                DgvCode.Fill(_Product.Codes)
+                DgvPrice.Fill(_Product.Prices)
+                DgvPicture.Fill(_Product.Pictures)
             End If
             _Deleting = False
         End If
@@ -172,7 +172,7 @@ Public Class FrmProduct
                         _Deleting = True
                         Dispose()
                     Else
-                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_Product.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Product.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                     End If
                 End If
             Catch ex As MySqlException
@@ -191,13 +191,13 @@ Public Class FrmProduct
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
-        If BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive)
+        If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
             If _Product.Status = SimpleStatus.Active Then
                 CMessageBox.Show("O registro foi marcado para ser inativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
-        ElseIf BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active)
+        ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active)
             If _Product.Status = SimpleStatus.Inactive Then
                 CMessageBox.Show("O registro foi marcado para ser ativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
@@ -206,7 +206,7 @@ Public Class FrmProduct
     End Sub
     Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
         EprValidation.Clear()
-        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
+        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
 
     Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtName.TextChanged,
@@ -253,7 +253,7 @@ Public Class FrmProduct
         Dim Form As FrmProductProviderCode
         Dim ProviderCode As ProductProviderCode
         If DgvProviderCode.SelectedRows.Count = 1 Then
-            ProviderCode = _Product.ProviderCodes.Single(Function(x) x.Order = DgvProviderCode.SelectedRows(0).Cells("Order").Value)
+            ProviderCode = _Product.ProviderCodes.Single(Function(x) x.Guid = DgvProviderCode.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmProductProviderCode(_Product, ProviderCode, Me)
             Form.ShowDialog()
         End If
@@ -262,9 +262,9 @@ Public Class FrmProduct
         Dim ProviderCode As ProductProviderCode
         If DgvProviderCode.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                ProviderCode = _Product.ProviderCodes.Single(Function(x) x.Order = DgvProviderCode.SelectedRows(0).Cells("Order").Value)
+                ProviderCode = _Product.ProviderCodes.Single(Function(x) x.Guid = DgvProviderCode.SelectedRows(0).Cells("Guid").Value)
                 _Product.ProviderCodes.Remove(ProviderCode)
-                _Product.ProviderCodes.FillDataGridView(DgvProviderCode)
+                DgvProviderCode.Fill(_Product.ProviderCodes)
                 BtnSave.Enabled = True
             End If
         End If
@@ -277,7 +277,7 @@ Public Class FrmProduct
         Dim Form As FrmProductCode
         Dim Code As ProductCode
         If DgvCode.SelectedRows.Count = 1 Then
-            Code = _Product.Codes.Single(Function(x) x.Order = DgvCode.SelectedRows(0).Cells("Order").Value)
+            Code = _Product.Codes.Single(Function(x) x.Guid = DgvCode.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmProductCode(_Product, Code, Me)
             Form.ShowDialog()
         End If
@@ -286,9 +286,9 @@ Public Class FrmProduct
         Dim Code As ProductCode
         If DgvCode.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Code = _Product.Codes.Single(Function(x) x.Order = DgvCode.SelectedRows(0).Cells("Order").Value)
+                Code = _Product.Codes.Single(Function(x) x.Guid = DgvCode.SelectedRows(0).Cells("Guid").Value)
                 _Product.Codes.Remove(Code)
-                _Product.Codes.FillDataGridView(DgvCode)
+                DgvCode.Fill(_Product.Codes)
                 BtnSave.Enabled = True
             End If
         End If
@@ -301,7 +301,7 @@ Public Class FrmProduct
         Dim Form As FrmProductPrice
         Dim Price As ProductPrice
         If DgvPrice.SelectedRows.Count = 1 Then
-            Price = _Product.Prices.Single(Function(x) x.Order = DgvPrice.SelectedRows(0).Cells("Order").Value)
+            Price = _Product.Prices.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmProductPrice(_Product, Price, Me)
             Form.ShowDialog()
         End If
@@ -310,9 +310,9 @@ Public Class FrmProduct
         Dim Price As ProductPrice
         If DgvPrice.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Price = _Product.Prices.Single(Function(x) x.Order = DgvPrice.SelectedRows(0).Cells("Order").Value)
+                Price = _Product.Prices.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
                 _Product.Prices.Remove(Price)
-                _Product.Prices.FillDataGridView(DgvPrice)
+                DgvPrice.Fill(_Product.Prices)
                 BtnSave.Enabled = True
             End If
         End If
@@ -436,18 +436,18 @@ Public Class FrmProduct
         Dim Row As DataGridViewRow
         Dim DocumentPath As String = String.Empty
         Dim Success As Boolean
-        TxtName.Text = RemoveAccents(TxtName.Text.Trim)
-        TxtInternalName.Text = RemoveAccents(TxtInternalName.Text.Trim)
-        TxtLocation.Text = RemoveAccents(TxtLocation.Text.Trim)
-        TxtNote.Text = RemoveAccents(TxtNote.Text.ToUpper)
+        TxtName.Text = TxtName.Text.Trim.ToUnaccented()
+        TxtInternalName.Text = TxtInternalName.Text.Trim.ToUnaccented()
+        TxtLocation.Text = TxtLocation.Text.Trim.ToUnaccented()
+        TxtNote.Text = TxtNote.Text.ToUpper.ToUnaccented()
         If _Product.LockInfo.IsLocked And _Product.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", GetTitleCase(_Product.LockInfo.LockedBy.Value.Username)), CMessageBoxType.Information)
+            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Product.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Success = False
         Else
             If IsValidFields() Then
                 Try
                     Cursor = Cursors.WaitCursor
-                    _Product.Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                    _Product.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
                     _Product.Name = TxtName.Text
                     _Product.InternalName = TxtInternalName.Text
                     _Product.Family = New ProductFamily().Load(QbxFamily.FreezedPrimaryKey, False)
@@ -462,10 +462,10 @@ Public Class FrmProduct
                     _Product.SaveChanges()
                     _Product.Lock()
                     LblIDValue.Text = _Product.ID
-                    _Product.ProviderCodes.FillDataGridView(DgvProviderCode)
-                    _Product.Codes.FillDataGridView(DgvCode)
-                    _Product.Prices.FillDataGridView(DgvPrice)
-                    _Product.Pictures.FillDataGridView(DgvPicture)
+                    DgvProviderCode.Fill(_Product.ProviderCodes)
+                    DgvCode.Fill(_Product.Codes)
+                    DgvPrice.Fill(_Product.Prices)
+                    DgvPicture.Fill(_Product.Pictures)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Product)
                     If _ProductsForm IsNot Nothing Then
@@ -670,7 +670,7 @@ Public Class FrmProduct
         Dim Form As FrmProductPicture
         Dim Picture As ProductPicture
         If DgvPicture.SelectedRows.Count = 1 Then
-            Picture = _Product.Pictures.Single(Function(x) x.Order = DgvPicture.SelectedRows(0).Cells("Order").Value)
+            Picture = _Product.Pictures.Single(Function(x) x.Guid = DgvPicture.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmProductPicture(_Product, Picture, Me)
             Form.ShowDialog()
         End If
@@ -679,9 +679,9 @@ Public Class FrmProduct
         Dim Picture As ProductPicture
         If DgvPicture.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Picture = _Product.Pictures.Single(Function(x) x.Order = DgvPicture.SelectedRows(0).Cells("Order").Value)
+                Picture = _Product.Pictures.Single(Function(x) x.Guid = DgvPicture.SelectedRows(0).Cells("Guid").Value)
                 _Product.Pictures.Remove(Picture)
-                _Product.Pictures.FillDataGridView(DgvPicture)
+                DgvPicture.Fill(_Product.Pictures)
                 BtnSave.Enabled = True
             End If
         End If

@@ -1,5 +1,5 @@
 ﻿Imports System.ComponentModel
-Imports ControlLibrary.Utility
+Imports ControlLibrary
 Public Class PersonCustomerQueriedBoxFilter
     Inherits PersonFilter
     Private _Maintenance As String
@@ -13,7 +13,7 @@ Public Class PersonCustomerQueriedBoxFilter
         _Maintenance = ControlMaintenance
     End Sub
     Public Overrides Function Filter() As Boolean
-        Status = GetEnumDescription(SimpleStatus.Active)
+        Status = EnumHelper.GetEnumDescription(SimpleStatus.Active)
         Category.IsCustomer = "Sim"
         If Not String.IsNullOrEmpty(_Maintenance) Then
             ControlMaintenance = _Maintenance

@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Public Class FrmPersonCompressorPartElapsedDay
     Private _PersonCompressorForm As FrmPersonCompressor
     Private _PersonCompressor As PersonCompressor
@@ -25,7 +25,7 @@ Public Class FrmPersonCompressorPartElapsedDay
         _PersonCompressor = PersonCompressor
         _PartElapsedDay = PartElapsedDay
         _PersonCompressorForm = PersonCompressorForm
-        CbxPartBind.Items.AddRange(Utility.GetEnumDescriptions(Of CompressorPartBindType).Where(Function(x) x = "COALESCENTE" Or x = "NENHUM").ToArray)
+        CbxPartBind.Items.AddRange(EnumHelper.GetEnumDescriptions(Of CompressorPartBindType).Where(Function(x) x = "COALESCENTE" Or x = "NENHUM").ToArray)
         LoadForm()
         DgvNavigator.DataGridView = _PersonCompressorForm.DgvPartElapsedDay
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
@@ -34,10 +34,10 @@ Public Class FrmPersonCompressorPartElapsedDay
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = _PartElapsedDay.Order
-        BtnStatusValue.Text = GetEnumDescription(_PartElapsedDay.Status)
+        LblOrderValue.Text = If(_PartElapsedDay.IsSaved, _PersonCompressorForm.DgvPartElapsedDay.SelectedRows(0).Cells("Order").Value, 0)
+        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_PartElapsedDay.Status)
         LblCreationValue.Text = _PartElapsedDay.Creation
-        CbxPartBind.Text = GetEnumDescription(_PartElapsedDay.PartBind)
+        CbxPartBind.Text = EnumHelper.GetEnumDescription(_PartElapsedDay.PartBind)
         QbxItem.Unfreeze()
         If _PartElapsedDay.ItemName = Nothing And _PartElapsedDay.Product.Value.ID > 0 Then
             QbxItem.Freeze(_PartElapsedDay.Product.Value.ID)
@@ -48,7 +48,7 @@ Public Class FrmPersonCompressorPartElapsedDay
         End If
         DbxQuantity.Text = _PartElapsedDay.Quantity
         DbxCapacity.Text = _PartElapsedDay.Capacity
-        If _PartElapsedDay.Order = 0 Then
+        If Not _PartElapsedDay.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
         Else
@@ -71,7 +71,7 @@ Public Class FrmPersonCompressorPartElapsedDay
     Private Sub AfterDataGridViewRowMove()
         If _PersonCompressorForm.DgvPartElapsedDay.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _PartElapsedDay = _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Order = _PersonCompressorForm.DgvPartElapsedDay.SelectedRows(0).Cells("Order").Value)
+            _PartElapsedDay = _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PersonCompressorForm.DgvPartElapsedDay.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -106,13 +106,13 @@ Public Class FrmPersonCompressorPartElapsedDay
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
-        If BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive)
+        If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
             If _PartElapsedDay.Status = SimpleStatus.Active Then
                 CMessageBox.Show("O registro foi marcado para ser inativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
-        ElseIf BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Inactive) Then
-            BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active)
+        ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive) Then
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active)
             If _PartElapsedDay.Status = SimpleStatus.Inactive Then
                 CMessageBox.Show("O registro foi marcado para ser ativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
@@ -122,7 +122,7 @@ Public Class FrmPersonCompressorPartElapsedDay
 
     Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
         EprValidation.Clear()
-        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
+        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
     Private Sub CbxPartBind_TextChanged(sender As Object, e As EventArgs) Handles CbxPartBind.SelectedIndexChanged
         EprValidation.Clear()
@@ -181,26 +181,26 @@ Public Class FrmPersonCompressorPartElapsedDay
         Dim Row As DataGridViewRow
         If Not QbxItem.IsFreezed Then
             QbxItem.QueryEnabled = False
-            QbxItem.Text = RemoveAccents(QbxItem.Text.Trim)
+            QbxItem.Text = QbxItem.Text.Trim.ToUnaccented()
             QbxItem.QueryEnabled = True
         End If
         If IsValidFields() Then
             If _PartElapsedDay.IsSaved Then
-                _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Order = _PartElapsedDay.Order).Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
-                _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Order = _PartElapsedDay.Order).PartBind = GetEnumValue(Of CompressorPartBindType)(CbxPartBind.Text)
+                _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PartElapsedDay.Guid).PartBind = EnumHelper.GetEnumValue(Of CompressorPartBindType)(CbxPartBind.Text)
                 If QbxItem.IsFreezed Then
-                    _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Order = _PartElapsedDay.Order).ItemName = Nothing
-                    _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Order = _PartElapsedDay.Order).Product = New Lazy(Of Product)(Function() New Product().Load(QbxItem.FreezedPrimaryKey, False))
+                    _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PartElapsedDay.Guid).ItemName = Nothing
+                    _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Product = New Lazy(Of Product)(Function() New Product().Load(QbxItem.FreezedPrimaryKey, False))
                 Else
-                    _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Order = _PartElapsedDay.Order).ItemName = QbxItem.Text
-                    _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Order = _PartElapsedDay.Order).Product = New Lazy(Of Product)()
+                    _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PartElapsedDay.Guid).ItemName = QbxItem.Text
+                    _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Product = New Lazy(Of Product)()
                 End If
-                _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Order = _PartElapsedDay.Order).Quantity = DbxQuantity.Text
-                _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Order = _PartElapsedDay.Order).Capacity = DbxCapacity.Text
+                _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Quantity = DbxQuantity.Text
+                _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Capacity = DbxCapacity.Text
             Else
                 _PartElapsedDay = New PersonCompressorPart(CompressorPartType.ElapsedDay)
-                _PartElapsedDay.Status = GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
-                _PartElapsedDay.PartBind = GetEnumValue(Of CompressorPartBindType)(CbxPartBind.Text)
+                _PartElapsedDay.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                _PartElapsedDay.PartBind = EnumHelper.GetEnumValue(Of CompressorPartBindType)(CbxPartBind.Text)
                 If QbxItem.IsFreezed Then
                     _PartElapsedDay.ItemName = Nothing
                     _PartElapsedDay.Product = New Lazy(Of Product)(Function() New Product().Load(QbxItem.FreezedPrimaryKey, False))
@@ -210,22 +210,22 @@ Public Class FrmPersonCompressorPartElapsedDay
                 End If
                 _PartElapsedDay.Quantity = DbxQuantity.Text
                 _PartElapsedDay.Capacity = DbxCapacity.Text
-                _PartElapsedDay.IsSaved = True
+                _PartElapsedDay.SetIsSaved(True)
                 _PersonCompressor.PartsElapsedDay.Add(_PartElapsedDay)
             End If
-            _PersonCompressor.PartsElapsedDay.FillDataGridView(_PersonCompressorForm.DgvPartElapsedDay)
-            LblOrderValue.Text = _PartElapsedDay.Order
+            _PersonCompressorForm.DgvPartElapsedDay.Fill(_PersonCompressor.PartsElapsedDay)
             _PersonCompressorForm.DgvPartElapsedDayLayout.Load()
             BtnSave.Enabled = False
-            If _PartElapsedDay.Order = 0 Then
+            If Not _PartElapsedDay.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _PersonCompressorForm.DgvPartElapsedDay.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Order").Value = _PartElapsedDay.Order)
+            Row = _PersonCompressorForm.DgvPartElapsedDay.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _PartElapsedDay.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+            LblOrderValue.Text = _PersonCompressorForm.DgvPartElapsedDay.SelectedRows(0).Cells("Order").Value
             _PersonCompressorForm.EprValidation.Clear()
             _PersonCompressorForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()
@@ -290,9 +290,9 @@ Public Class FrmPersonCompressorPartElapsedDay
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _PersonCompressorForm.DgvPartElapsedDay.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _PartElapsedDay = _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Order = _PersonCompressorForm.DgvPartElapsedDay.SelectedRows(0).Cells("Order").Value)
+                _PartElapsedDay = _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PersonCompressorForm.DgvPartElapsedDay.SelectedRows(0).Cells("Guid").Value)
                 _PersonCompressor.PartsElapsedDay.Remove(_PartElapsedDay)
-                _PersonCompressor.PartsElapsedDay.FillDataGridView(_PersonCompressorForm.DgvPartElapsedDay)
+                _PersonCompressorForm.DgvPartElapsedDay.Fill(_PersonCompressor.PartsElapsedDay)
                 _PersonCompressorForm.DgvPartElapsedDayLayout.Load()
                 _Deleting = True
                 Dispose()

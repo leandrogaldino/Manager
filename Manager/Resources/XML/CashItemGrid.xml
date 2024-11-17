@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Routine Id="CashItem" Version="2">
+<Routine Id="CashItem" Version="3">
 	<SortedColumn>-1</SortedColumn>
 	<SortDirection>0</SortDirection>
     <Column Index="0">
@@ -7,53 +7,77 @@
         <DisplayIndex>0</DisplayIndex>
         <Name>Ordem</Name>
         <Width>100</Width>
-    </Column>    
-    <Column Index="1" ButtonState="Hidden">
-        <Visible>False</Visible>
-        <DisplayIndex>1</DisplayIndex>
-        <Name>ID</Name>
-        <Width>100</Width>
     </Column>
-    <Column Index="2">
-        <Visible>True</Visible>
-        <DisplayIndex>2</DisplayIndex>
-        <Name>Criação</Name>
-        <Width>100</Width>
-    </Column>
-    <Column Index="3">
-        <Visible>True</Visible>
-        <DisplayIndex>3</DisplayIndex>
-        <Name>Tipo</Name>
-        <Width>100</Width>
-    </Column>
-	<Column Index="4">
+	<Column Index="1">
 		<Visible>True</Visible>
-		<DisplayIndex>4</DisplayIndex>
+		<DisplayIndex>1</DisplayIndex>
+		<Name>Tipo</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="2">
+		<Visible>True</Visible>
+		<DisplayIndex>2</DisplayIndex>
 		<Name>Categoria</Name>
 		<Width>100</Width>
 	</Column>
-    <Column Index="5">
-        <Visible>True</Visible>
-        <DisplayIndex>5</DisplayIndex>
-        <Name>Descrição</Name>
-        <Width>300</Width>
-    </Column>
-    <Column Index="6">
-        <Visible>True</Visible>
-        <DisplayIndex>6</DisplayIndex>
-        <Name>Data Doc.</Name>
-        <Width>110</Width>
-    </Column>
-    <Column Index="7">
-        <Visible>True</Visible>
-        <DisplayIndex>7</DisplayIndex>
-        <Name>Número Doc.</Name>
-        <Width>125</Width>
-    </Column>
-	<Column Index="8">
+	<Column Index="3">
 		<Visible>True</Visible>
-		<DisplayIndex>8</DisplayIndex>
+		<DisplayIndex>3</DisplayIndex>
+		<Name>Descrição</Name>
+		<Width>300</Width>
+	</Column>
+	<Column Index="4">
+		<Visible>True</Visible>
+		<DisplayIndex>4</DisplayIndex>
+		<Name>Data Doc.</Name>
+		<Width>110</Width>
+	</Column>
+	<Column Index="5">
+		<Visible>True</Visible>
+		<DisplayIndex>5</DisplayIndex>
+		<Name>Número Doc.</Name>
+		<Width>125</Width>
+	</Column>
+	<Column Index="6">
+		<Visible>True</Visible>
+		<DisplayIndex>6</DisplayIndex>
 		<Name>Valor</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="7" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>7</DisplayIndex>
+		<Name>Guid</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="8" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>8</DisplayIndex>
+		<Name>ID</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="9">
+		<Visible>True</Visible>
+		<DisplayIndex>9</DisplayIndex>
+		<Name>Criação</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="10" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>10</DisplayIndex>
+		<Name>Rotina</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="11" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>11</DisplayIndex>
+		<Name>Salvo</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="12" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>12</DisplayIndex>
+		<Name>Usuário</Name>
 		<Width>100</Width>
 	</Column>
 </Routine>

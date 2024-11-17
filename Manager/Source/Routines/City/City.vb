@@ -1,28 +1,26 @@
-﻿Imports System.Reflection
-Imports ControlLibrary
+﻿Imports ControlLibrary
 Imports MySql.Data.MySqlClient
 ''' <summary>
 ''' Representa uma cidade.
 ''' </summary>
 Public Class City
-    Inherits ModelBase
-    Private _IsSaved As Boolean
+    Inherits ParentModel
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
     Public Property BIGSCode As String
     Public Property State As New State
-    Public Property Routes As New Lazy(Of OrdenedList(Of CityRoute))(Function() GetRoutes())
+    Public Property Routes As New Lazy(Of List(Of CityRoute))(Function() GetRoutes())
     Public Sub New()
-        _Routine = Routine.City
+        SetRoutine(Routine.City)
     End Sub
     Public Sub Clear()
         Unlock()
-        _IsSaved = False
-        _ID = 0
-        _Creation = Today
+        SetIsSaved(False)
+        SetID(0)
+        SetCreation(Today)
         Status = SimpleStatus.Active
         Name = Nothing
-        Routes = New Lazy(Of OrdenedList(Of CityRoute))(Function() GetRoutes())
+        Routes = New Lazy(Of List(Of CityRoute))(Function() GetRoutes())
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As City
         Dim Session = Locator.GetInstance(Of Session)
@@ -42,15 +40,15 @@ Public Class City
                         Clear()
                     ElseIf TableResult.Rows.Count = 1 Then
                         Clear()
-                        _ID = TableResult.Rows(0).Item("id")
-                        _Creation = TableResult.Rows(0).Item("creation")
+                        SetID(TableResult.Rows(0).Item("id"))
+                        SetCreation(TableResult.Rows(0).Item("creation"))
+                        SetIsSaved(True)
                         Status = TableResult.Rows(0).Item("statusid")
                         Name = TableResult.Rows(0).Item("name").ToString
                         BIGSCode = TableResult.Rows(0).Item("bigscode").ToString
                         State = New State().Load(TableResult.Rows(0).Item("stateid"))
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
-                        _IsSaved = True
                     Else
                         Throw New Exception("Registro não encontrado.")
                     End If
@@ -84,13 +82,13 @@ Public Class City
         Return ReturnedID
     End Function
     Public Sub SaveChanges()
-        If Not _IsSaved Then
+        If Not IsSaved Then
             Insert()
         Else
             Update()
         End If
-        _IsSaved = True
-        Routes.Value.ToList().ForEach(Sub(x) x.IsSaved = True)
+        SetIsSaved(True)
+        Routes.Value.ToList().ForEach(Sub(x) x.SetIsSaved(True))
     End Sub
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)
@@ -117,7 +115,7 @@ Public Class City
                     CmdCity.Parameters.AddWithValue("@stateid", If(State.ID = 0, DBNull.Value, State.ID))
                     CmdCity.Parameters.AddWithValue("@userid", User.ID)
                     CmdCity.ExecuteNonQuery()
-                    _ID = CmdCity.LastInsertedId
+                    SetID(CmdCity.LastInsertedId)
                 End Using
                 For Each Route In Routes.Value
                     Using CmdRoute As New MySqlCommand(My.Resources.CityRouteInsert, Con)
@@ -127,7 +125,7 @@ Public Class City
                         CmdRoute.Parameters.AddWithValue("@routeid", Route.Route.ID)
                         CmdRoute.Parameters.AddWithValue("@userid", Route.User.ID)
                         CmdRoute.ExecuteNonQuery()
-                        Route.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Route, CmdRoute.LastInsertedId)
+                        Route.SetID(CmdRoute.LastInsertedId)
                     End Using
                 Next Route
                 Tra.Commit()
@@ -168,7 +166,7 @@ Public Class City
                             CmdRoute.Parameters.AddWithValue("@routeid", Route.Route.ID)
                             CmdRoute.Parameters.AddWithValue("@userid", Route.User.ID)
                             CmdRoute.ExecuteNonQuery()
-                            Route.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Route, CmdRoute.LastInsertedId)
+                            Route.SetID(CmdRoute.LastInsertedId)
                         End Using
                     Else
                         Using CmdRoute As New MySqlCommand(My.Resources.CityRouteUpdate, Con)
@@ -183,10 +181,10 @@ Public Class City
             End Using
         End Using
     End Sub
-    Private Function GetRoutes() As OrdenedList(Of CityRoute)
+    Private Function GetRoutes() As List(Of CityRoute)
         Dim Session = Locator.GetInstance(Of Session)
         Dim TableResult As DataTable
-        Dim Routes As OrdenedList(Of CityRoute)
+        Dim Routes As List(Of CityRoute)
         Dim Route As CityRoute
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
@@ -195,13 +193,13 @@ Public Class City
                 Using Adp As New MySqlDataAdapter(CmdCityRoute)
                     TableResult = New DataTable
                     Adp.Fill(TableResult)
-                    Routes = New OrdenedList(Of CityRoute)
+                    Routes = New List(Of CityRoute)
                     For Each Row As DataRow In TableResult.Rows
                         Route = New CityRoute()
                         Route.Route = New Route().Load(Row.Item("routeid"), False)
-                        Route.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Route, Row.Item("id"))
-                        Route.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Route, Row.Item("creation"))
-                        Route.IsSaved = True
+                        Route.SetID(Row.Item("id"))
+                        Route.SetCreation(Row.Item("creation"))
+                        Route.SetIsSaved(True)
                         Routes.Add(Route)
                     Next Row
                 End Using

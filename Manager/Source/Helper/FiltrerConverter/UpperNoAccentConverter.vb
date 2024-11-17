@@ -1,5 +1,5 @@
 ﻿Imports System.ComponentModel
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Public Class UpperNoAccentConverter
     Inherits TypeConverter
     Public Overrides Function CanConvertFrom(ByVal context As ITypeDescriptorContext, ByVal sourceType As Type) As Boolean
@@ -8,7 +8,7 @@ Public Class UpperNoAccentConverter
     Public Overrides Function ConvertFrom(context As ITypeDescriptorContext, culture As Globalization.CultureInfo, value As Object) As Object
         If TypeOf value Is String Then
             Dim s As String = CStr(value)
-            Return RemoveAccents(s.ToUpper)
+            Return s.ToUpper.ToUnaccented()
         End If
         Return MyBase.ConvertFrom(context, culture, value)
     End Function

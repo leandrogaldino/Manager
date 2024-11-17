@@ -1,18 +1,22 @@
-﻿Imports System.Reflection
-Imports System.Web.ModelBinding
-Imports ControlLibrary
+﻿Imports ControlLibrary
 Imports ManagerCore
 Imports MySql.Data.MySqlClient
 ''' <summary>
 ''' Representa um usuário.
 ''' </summary>
 Public Class User
-    Inherits ModelBase
-    Private _IsSaved As Boolean
-    Private _UserID As Long = If(Locator.GetInstance(Of Session).User IsNot Nothing, Locator.GetInstance(Of Session).User.ID, 0)
+    Inherits ParentModel
+    Private _UserID As Long
     Private _PersonID As Long
-    Private _Password As String = Locator.GetInstance(Of Session).Setting.General.User.DefaultPassword
-    Public ReadOnly RequestPassword As Boolean
+    Private _Password As String
+    Private _RequestPassword As Boolean
+    Public ReadOnly Property RequestPassword As Boolean
+        Get
+            Return _RequestPassword
+        End Get
+    End Property
+
+
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Username As String = String.Empty
     Public ReadOnly Property Password As String
@@ -22,31 +26,28 @@ Public Class User
     End Property
     Public Property Person As New Lazy(Of Person)(Function() New Person().Load(_PersonID, False))
     Public Property Note As String
-    Public Property Privileges As New OrdenedList(Of UserPrivilege)
+    Public Property Privileges As New List(Of UserPrivilege)
 
-    Public Property Emails As New OrdenedList(Of UserEmail)
+    Public Property Emails As New List(Of UserEmail)
     Public Shadows User As New Lazy(Of User)(Function() New User().Load(_UserID, False))
     Public Sub New()
-        _Routine = Routine.User
+        SetRoutine(Routine.User)
+        _UserID = If(Locator.GetInstance(Of Session).User IsNot Nothing, Locator.GetInstance(Of Session).User.ID, 0)
+        _Password = Locator.GetInstance(Of Session).Setting.General.User.DefaultPassword
     End Sub
 
 
 
     Public Function CanAccess(Routine As Routine) As Boolean
-        Return Privileges.Any(Function(x) x.Routine.Equals(Routine) And x.Level.Equals(PrivilegeLevel.Access))
+        Return Privileges.Any(Function(x) x.PrivilegedRoutine.Equals(Routine) And x.Level.Equals(PrivilegeLevel.Access))
     End Function
     Public Function CanWrite(Routine As Routine) As Boolean
-        Return Privileges.Any(Function(x) x.Routine.Equals(Routine) And x.Level.Equals(PrivilegeLevel.Write))
+        Return Privileges.Any(Function(x) x.PrivilegedRoutine.Equals(Routine) And x.Level.Equals(PrivilegeLevel.Write))
     End Function
 
     Public Function CanDelete(Routine As Routine) As Boolean
-        Return Privileges.Any(Function(x) x.Routine.Equals(Routine) And x.Level.Equals(PrivilegeLevel.Delete))
+        Return Privileges.Any(Function(x) x.PrivilegedRoutine.Equals(Routine) And x.Level.Equals(PrivilegeLevel.Delete))
     End Function
-
-
-
-
-
 
     Public Sub ResetPassword()
         Dim Session = Locator.GetInstance(Of Session)
@@ -58,7 +59,7 @@ Public Class User
                 Cmd.Parameters.AddWithValue("@password", Cryptography.Encrypt(Session.Setting.General.User.DefaultPassword, CryptoKey.ReadCryptoKey()))
                 Cmd.Parameters.AddWithValue("@requestnewpassword", True)
                 Cmd.ExecuteNonQuery()
-                Me.GetType.GetField("RequestPassword", BindingFlags.Instance Or BindingFlags.Public).SetValue(Me, True)
+                _RequestPassword = True
             End Using
         End Using
     End Sub
@@ -72,22 +73,22 @@ Public Class User
                 Cmd.Parameters.AddWithValue("@password", Cryptography.Encrypt(NewPassword, CryptoKey.ReadCryptoKey()))
                 Cmd.Parameters.AddWithValue("@requestnewpassword", False)
                 Cmd.ExecuteNonQuery()
-                Me.GetType.GetField("RequestPassword", BindingFlags.Instance Or BindingFlags.Public).SetValue(Me, False)
+                _RequestPassword = False
             End Using
         End Using
     End Sub
     Public Sub Clear()
         Unlock()
-        _IsSaved = False
-        _ID = 0
+        SetIsSaved(False)
+        SetID(0)
         _UserID = 0
         Status = SimpleStatus.Active
         Username = Nothing
         _Password = Nothing
         Person = New Lazy(Of Person)(Function() New Person().Load(_PersonID, False))
-        Privileges = New OrdenedList(Of UserPrivilege)
-        Emails = New OrdenedList(Of UserEmail)
-        Me.GetType.GetField("RequestPassword", BindingFlags.Instance Or BindingFlags.Public).SetValue(Me, False)
+        Privileges = New List(Of UserPrivilege)
+        Emails = New List(Of UserEmail)
+        _RequestPassword = False
         User = New Lazy(Of User)(Function() New User().Load(_UserID, False))
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As User
@@ -106,20 +107,20 @@ Public Class User
                             Clear()
                         ElseIf TableResult.Rows.Count = 1 Then
                             Clear()
-                            _ID = TableResult.Rows(0).Item("id")
-                            _UserID = _ID
+                            SetID(TableResult.Rows(0).Item("id"))
+                            SetCreation(TableResult.Rows(0).Item("creation"))
+                            SetIsSaved(True)
+                            _UserID = ID
                             _PersonID = TableResult.Rows(0).Item("personid")
-                            _Creation = TableResult.Rows(0).Item("creation")
+                            _Password = TableResult.Rows(0).Item("password").ToString
+                            _RequestPassword = CBool(TableResult.Rows(0).Item("requestnewpassword"))
                             Status = TableResult.Rows(0).Item("statusid")
                             Username = TableResult.Rows(0).Item("username").ToString
-                            _Password = TableResult.Rows(0).Item("password").ToString
                             Note = TableResult.Rows(0).Item("note").ToString
-                            Me.GetType.GetField("RequestPassword", BindingFlags.Instance Or BindingFlags.Public).SetValue(Me, CBool(TableResult.Rows(0).Item("requestnewpassword")))
                             Privileges = GetUserPrivileges(Tra)
                             Emails = GetEmails(Tra)
                             LockInfo = GetLockInfo(Tra)
                             If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
-                            _IsSaved = True
                         Else
                             Throw New Exception("Registro não encontrado.")
                         End If
@@ -131,13 +132,13 @@ Public Class User
         Return Me
     End Function
     Public Sub SaveChanges()
-        If Not _IsSaved Then
+        If Not IsSaved Then
             Insert()
         Else
             Update()
         End If
-        _IsSaved = True
-        Emails.ToList().ForEach(Sub(x) x.IsSaved = True)
+        SetIsSaved(True)
+        Emails.ToList().ForEach(Sub(x) x.SetIsSaved(True))
     End Sub
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)
@@ -168,7 +169,7 @@ Public Class User
                     Cmd.Parameters.AddWithValue("@requestnewpassword", True)
                     Cmd.Parameters.AddWithValue("@userid", Session.User.ID)
                     Cmd.ExecuteNonQuery()
-                    _ID = Cmd.LastInsertedId
+                    SetID(Cmd.LastInsertedId)
                 End Using
                 For Each Email As UserEmail In Emails
                     Using Cmd As New MySqlCommand(My.Resources.UserEmailInsert, Con)
@@ -184,7 +185,7 @@ Public Class User
                         Cmd.Parameters.AddWithValue("@ofuserid", ID)
                         Cmd.Parameters.AddWithValue("@userid", Session.User.ID)
                         Cmd.ExecuteNonQuery()
-                        Email.GetType.GetField("_ID", BindingFlags.Instance Or BindingFlags.NonPublic).SetValue(Email, Cmd.LastInsertedId)
+                        Email.SetID(Cmd.LastInsertedId)
                     End Using
                 Next Email
 
@@ -193,11 +194,11 @@ Public Class User
                         Cmd.Transaction = Tra
                         Cmd.Parameters.AddWithValue("@granteduserid", ID)
                         Cmd.Parameters.AddWithValue("@creation", Privilege.Creation)
-                        Cmd.Parameters.AddWithValue("@routineid", CInt(Privilege.Routine))
+                        Cmd.Parameters.AddWithValue("@routineid", CInt(Privilege.PrivilegedRoutine))
                         Cmd.Parameters.AddWithValue("@privilegelevelid", CInt(Privilege.Level))
                         Cmd.Parameters.AddWithValue("@userid", Session.User.ID)
                         Cmd.ExecuteNonQuery()
-                        Privilege.GetType.GetField("_ID", BindingFlags.Instance Or BindingFlags.NonPublic).SetValue(Privilege, Cmd.LastInsertedId)
+                        Privilege.SetID(Cmd.LastInsertedId)
                     End Using
                 Next Privilege
                 Tra.Commit()
@@ -245,7 +246,7 @@ Public Class User
                             Cmd.Parameters.AddWithValue("@enablessl", Email.EnableSSL)
                             Cmd.Parameters.AddWithValue("@userid", Session.User.ID)
                             Cmd.ExecuteNonQuery()
-                            Email.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Email, Cmd.LastInsertedId)
+                            Email.SetID(Cmd.LastInsertedId)
                         End Using
                     Else
                         Using Cmd As New MySqlCommand(My.Resources.UserEmailUpdate, Con)
@@ -262,9 +263,6 @@ Public Class User
                         End Using
                     End If
                 Next Email
-
-
-
                 For Each Privilege As UserPrivilege In Shadow.Privileges
                     If Not Privileges.Any(Function(x) x.ID = Privilege.ID And x.ID > 0) Then
                         Using Cmd As New MySqlCommand(My.Resources.UserPrivilegeDelete, Con)
@@ -280,25 +278,21 @@ Public Class User
                             Cmd.Parameters.AddWithValue("@granteduserid", ID)
                             Cmd.Parameters.AddWithValue("@creation", Privilege.Creation)
                             Cmd.Parameters.AddWithValue("@id", Privilege.ID)
-                            Cmd.Parameters.AddWithValue("@routineid", CInt(Privilege.Routine))
+                            Cmd.Parameters.AddWithValue("@routineid", CInt(Privilege.PrivilegedRoutine))
                             Cmd.Parameters.AddWithValue("@privilegelevelid", CInt(Privilege.Level))
                             Cmd.Parameters.AddWithValue("@userid", Session.User.ID)
                             Cmd.ExecuteNonQuery()
-                            Privilege.[GetType].GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Privilege, Cmd.LastInsertedId)
+                            Privilege.SetID(Cmd.LastInsertedId)
                         End Using
                     End If
                 Next Privilege
-
-
-
-
                 Tra.Commit()
             End Using
         End Using
     End Sub
-    Private Function GetEmails(Transaction As MySqlTransaction) As OrdenedList(Of UserEmail)
+    Private Function GetEmails(Transaction As MySqlTransaction) As List(Of UserEmail)
         Dim TableResult As DataTable
-        Dim Emails As OrdenedList(Of UserEmail)
+        Dim Emails As List(Of UserEmail)
         Dim Email As UserEmail
         Using CmdEmail As New MySqlCommand(My.Resources.UserEmailSelect, Transaction.Connection)
             CmdEmail.Transaction = Transaction
@@ -306,18 +300,19 @@ Public Class User
             Using Adp As New MySqlDataAdapter(CmdEmail)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                Emails = New OrdenedList(Of UserEmail)
+                Emails = New List(Of UserEmail)
                 For Each Row As DataRow In TableResult.Rows
-                    Email = New UserEmail
-                    Email.IsMainEmail = Row.Item("ismainemail")
-                    Email.SmtpServer = Row.Item("host").ToString
-                    Email.Port = Row.Item("port")
-                    Email.Email = Row.Item("email").ToString
-                    Email.EnableSSL = Row.Item("enablessl").ToString
-                    Email.Password = Row.Item("password").ToString
-                    Email.IsSaved = True
-                    Email.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Email, Row.Item("id"))
-                    Email.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Email, Row.Item("creation"))
+                    Email = New UserEmail With {
+                        .IsMainEmail = Row.Item("ismainemail"),
+                        .SmtpServer = Row.Item("host").ToString,
+                        .Port = Row.Item("port"),
+                        .Email = Row.Item("email").ToString,
+                        .EnableSSL = Row.Item("enablessl").ToString,
+                        .Password = Row.Item("password").ToString
+                    }
+                    Email.SetIsSaved(True)
+                    Email.SetID(Row.Item("id"))
+                    Email.SetCreation(Row.Item("creation"))
                     Emails.Add(Email)
                 Next Row
             End Using
@@ -325,21 +320,21 @@ Public Class User
         Return Emails
     End Function
 
-    Private Function GetUserPrivileges(Transaction As MySqlTransaction) As OrdenedList(Of UserPrivilege)
+    Private Function GetUserPrivileges(Transaction As MySqlTransaction) As List(Of UserPrivilege)
         Dim Privilege As UserPrivilege
-        Dim Privileges As New OrdenedList(Of UserPrivilege)
+        Dim Privileges As New List(Of UserPrivilege)
         Using Cmd As New MySqlCommand(My.Resources.UserPrivilegeSelect, Transaction.Connection)
             Cmd.Transaction = Transaction
             Cmd.Parameters.AddWithValue("@granteduserid", ID)
             Using Reader As MySqlDataReader = Cmd.ExecuteReader()
                 While Reader.Read()
                     Privilege = New UserPrivilege With {
-                        .IsSaved = True,
-                        .Routine = Reader.GetInt32("routineid"),
+                        .PrivilegedRoutine = Reader.GetInt32("routineid"),
                         .Level = Reader.GetInt32("privilegelevelid")
                     }
-                    Privilege.GetType.GetField("_ID", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Privilege, Reader.GetInt32("id"))
-                    Privilege.GetType.GetField("_Creation", BindingFlags.NonPublic Or BindingFlags.Instance).SetValue(Privilege, Reader.GetDateTime("creation"))
+                    Privilege.SetIsSaved(True)
+                    Privilege.SetID(Reader.GetInt32("id"))
+                    Privilege.SetCreation(Reader.GetDateTime("creation"))
                     Privileges.Add(Privilege)
                 End While
             End Using

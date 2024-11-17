@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 Imports ControlLibrary
-Imports ControlLibrary.Utility
+Imports ControlLibrary.Extensions
 Imports ManagerCore
 
 Public Class FrmProductPicture
@@ -46,7 +46,7 @@ Public Class FrmProductPicture
     Private Sub AfterDataGridViewRowMove()
         If _ProductForm.DgvPicture.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _ProductPicture = _Product.Pictures.Single(Function(x) x.Order = _ProductForm.DgvPicture.SelectedRows(0).Cells("Order").Value)
+            _ProductPicture = _Product.Pictures.Single(Function(x) x.Guid = _ProductForm.DgvPicture.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -88,9 +88,9 @@ Public Class FrmProductPicture
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _ProductForm.DgvPicture.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _ProductPicture = _Product.Pictures.Single(Function(x) x.Order = _ProductForm.DgvPicture.SelectedRows(0).Cells("Order").Value)
+                _ProductPicture = _Product.Pictures.Single(Function(x) x.Guid = _ProductForm.DgvPicture.SelectedRows(0).Cells("Guid").Value)
                 _Product.Pictures.Remove(_ProductPicture)
-                _Product.Pictures.FillDataGridView(_ProductForm.DgvPicture)
+                _ProductForm.DgvPicture.Fill(_Product.Pictures)
                 _ProductForm.DgvPictureLayout.Load()
                 _Deleting = True
                 _ProductForm.BtnSave.Enabled = True
@@ -112,7 +112,7 @@ Public Class FrmProductPicture
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = _ProductPicture.Order
+        LblOrderValue.Text = If(_ProductPicture.IsSaved, _ProductForm.DgvPicture.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _ProductPicture.Creation
         If Not String.IsNullOrEmpty(_ProductPicture.Picture.CurrentFile) AndAlso File.Exists(_ProductPicture.Picture.CurrentFile) Then
             PbxPicture.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_ProductPicture.Picture.CurrentFile)))
@@ -125,7 +125,7 @@ Public Class FrmProductPicture
         End If
         _ProductPicture.Caption = If(_ProductPicture.IsSaved, _ProductPicture.Caption, "FOTO " & _Product.Pictures.Count + 1)
         TxtCaption.Text = _ProductPicture.Caption
-        If _ProductPicture.Order = 0 Then
+        If Not _ProductPicture.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
         Else
@@ -152,28 +152,30 @@ Public Class FrmProductPicture
     End Function
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
-        TxtCaption.Text = RemoveAccents(TxtCaption.Text.Trim)
+        TxtCaption.Text = TxtCaption.Text.Trim.ToUnaccented()
         If IsValidFields() Then
             If _ProductPicture.IsSaved Then
-                _Product.Pictures.Single(Function(x) x.Order = _ProductPicture.Order).Caption = TxtCaption.Text
+                _Product.Pictures.Single(Function(x) x.Guid = _ProductPicture.Guid).Caption = TxtCaption.Text
             Else
-                _ProductPicture.Caption = TxtCaption.Text
-                _ProductPicture.IsSaved = True
+                _ProductPicture = New ProductPicture With {
+                    .Caption = TxtCaption.Text
+                }
+                _ProductPicture.SetIsSaved(True)
                 _Product.Pictures.Add(_ProductPicture)
             End If
-            _Product.Pictures.FillDataGridView(_ProductForm.DgvPicture)
-            LblOrderValue.Text = _ProductPicture.Order
+            _ProductForm.DgvPicture.Fill(_Product.Pictures)
             _ProductForm.DgvPictureLayout.Load()
             BtnSave.Enabled = False
-            If _ProductPicture.Order = 0 Then
+            If Not _ProductPicture.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _ProductForm.DgvPicture.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Order").Value = _ProductPicture.Order)
+            Row = _ProductForm.DgvPicture.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ProductPicture.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+            LblOrderValue.Text = _ProductForm.DgvPicture.SelectedRows(0).Cells("Order").Value
             _ProductForm.EprValidation.Clear()
             _ProductForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()

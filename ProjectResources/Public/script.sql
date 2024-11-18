@@ -155,7 +155,6 @@ DROP TABLE userprivilege;
 
 DROP TABLE userprivilegepreset;
 
-/CRIAR AS TRIGGERS
 CREATE TABLE userprivilege (
 	id INT NOT NULL AUTO_INCREMENT,
     creation DATE NOT NULL,

@@ -1,6 +1,6 @@
 [X] Fazer o alinhamento do conteúdo do Grid das peças da avaliação.
 
-[] Continuar Refazendo os XMLs dos Grids dos filhos (continuar do product).
+[X] Reestruturar os XMLs dos Grids dos filhos.
 
 [X] Resolver os TODO's do Projeto.
 

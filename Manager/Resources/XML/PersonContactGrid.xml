@@ -8,7 +8,7 @@
         <Name>Ordem</Name>
         <Width>70</Width>
     </Column>      
-    <Column Index="1">
+    <Column Index="1" CellAlignment="MiddleCenter" HeaderAlignment="MiddleCenter">
         <Visible>True</Visible>
         <DisplayIndex>1</DisplayIndex>
         <Name>Principal</Name>

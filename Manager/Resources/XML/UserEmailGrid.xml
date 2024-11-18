@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Routine Id="UserEmail" Version="1">
+<Routine Id="UserEmail" Version="2">
 	<SortedColumn>-1</SortedColumn>
 	<SortDirection>0</SortDirection>
 	<Column Index="0">
@@ -8,52 +8,76 @@
 		<Name>Ordem</Name>
 		<Width>70</Width>
 	</Column>
-	<Column Index="1" ButtonState="Hidden">
-		<Visible>False</Visible>
+		<Column Index="1" CellAlignment="MiddleCenter" HeaderAlignment="MiddleCenter">
+		<Visible>True</Visible>
 		<DisplayIndex>1</DisplayIndex>
-		<Name>ID</Name>
-		<Width>100</Width>
+		<Name>Principal</Name>
+		<Width>75</Width>
 	</Column>
-	<Column Index="2">
+	<Column Index="2" CellAlignment="MiddleCenter" HeaderAlignment="MiddleCenter">
 		<Visible>True</Visible>
 		<DisplayIndex>2</DisplayIndex>
-		<Name>Criação</Name>
-		<Width>100</Width>
+		<Name>SSL</Name>
+		<Width>75</Width>
 	</Column>
 	<Column Index="3">
 		<Visible>True</Visible>
 		<DisplayIndex>3</DisplayIndex>
-		<Name>Principal</Name>
-		<Width>75</Width>
+		<Name>E-Mail</Name>
+		<Width>400</Width>
 	</Column>
 	<Column Index="4">
 		<Visible>True</Visible>
 		<DisplayIndex>4</DisplayIndex>
-		<Name>SSL</Name>
-		<Width>75</Width>
-	</Column>
-	<Column Index="5">
-		<Visible>True</Visible>
-		<DisplayIndex>5</DisplayIndex>
-		<Name>E-Mail</Name>
-		<Width>400</Width>
-	</Column>
-	<Column Index="6">
-		<Visible>True</Visible>
-		<DisplayIndex>6</DisplayIndex>
 		<Name>Servidor SMTP</Name>
 		<Width>300</Width>
 	</Column>
-	<Column Index="7">
+	<Column Index="5" CellAlignment="MiddleCenter" HeaderAlignment="MiddleCenter">
 		<Visible>True</Visible>
-		<DisplayIndex>7</DisplayIndex>
+		<DisplayIndex>5</DisplayIndex>
 		<Name>Porta</Name>
 		<Width>75</Width>
+	</Column>
+	<Column Index="6" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>6</DisplayIndex>
+		<Name>Senha</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="7" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>7</DisplayIndex>
+		<Name>Guid</Name>
+		<Width>100</Width>
 	</Column>
 	<Column Index="8" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>8</DisplayIndex>
-		<Name>Senha</Name>
+		<Name>ID</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="9">
+		<Visible>True</Visible>
+		<DisplayIndex>9</DisplayIndex>
+		<Name>Criação</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="10" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>10</DisplayIndex>
+		<Name>Rotina</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="11" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>11</DisplayIndex>
+		<Name>Salvo</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="12" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>12</DisplayIndex>
+		<Name>Usuário</Name>
 		<Width>100</Width>
 	</Column>
 </Routine>

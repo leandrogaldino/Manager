@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Routine Id="RequestItem" Version="5">
+<Routine Id="RequestItem" Version="6">
 	<SortedColumn>-1</SortedColumn>
 	<SortDirection>0</SortDirection>
     <Column Index="0">
@@ -7,83 +7,107 @@
         <DisplayIndex>0</DisplayIndex>
         <Name>Ordem</Name>
         <Width>70</Width>
-    </Column>    
-    <Column Index="1" ButtonState="Hidden">
-        <Visible>False</Visible>
+    </Column>        
+    <Column Index="1">
+        <Visible>True</Visible>
         <DisplayIndex>1</DisplayIndex>
-        <Name>ID</Name>
+        <Name>Status</Name>
         <Width>100</Width>
     </Column>
 	<Column Index="2">
 		<Visible>True</Visible>
 		<DisplayIndex>2</DisplayIndex>
-		<Name>Criação</Name>
-		<Width>100</Width>
-	</Column>
-    <Column Index="3">
-        <Visible>True</Visible>
-        <DisplayIndex>3</DisplayIndex>
-        <Name>Status</Name>
-        <Width>100</Width>
-    </Column>
-	<Column Index="4">
-		<Visible>True</Visible>
-		<DisplayIndex>4</DisplayIndex>
 		<Name>Código</Name>
 		<Width>100</Width>
 	</Column>
-    <Column Index="5" ButtonState="Hidden">
+    <Column Index="3" ButtonState="Hidden">
         <Visible>False</Visible>
-        <DisplayIndex>5</DisplayIndex>
+        <DisplayIndex>3</DisplayIndex>
         <Name>Nome do Item</Name>
         <Width>100</Width>
     </Column>
-    <Column Index="6" ButtonState="Hidden">
+    <Column Index="4" ButtonState="Hidden">
         <Visible>False</Visible>
-        <DisplayIndex>6</DisplayIndex>
+        <DisplayIndex>4</DisplayIndex>
         <Name>Nome do Produto</Name>
         <Width>100</Width>
     </Column>
-    <Column Index="7">
+    <Column Index="5">
         <Visible>True</Visible>
-        <DisplayIndex>7</DisplayIndex>
+        <DisplayIndex>5</DisplayIndex>
         <Name>Item</Name>
         <Width>250</Width>
     </Column>
-    <Column Index="8">
+    <Column Index="6">
         <Visible>True</Visible>
-        <DisplayIndex>8</DisplayIndex>
+        <DisplayIndex>6</DisplayIndex>
         <Name>Retirado</Name>
         <Width>120</Width>
     </Column>
+	<Column Index="7">
+		<Visible>True</Visible>
+		<DisplayIndex>7</DisplayIndex>
+		<Name>Devolvido</Name>
+		<Width>120</Width>
+	</Column>
+	<Column Index="8">
+		<Visible>True</Visible>
+		<DisplayIndex>8</DisplayIndex>
+		<Name>Aplicado</Name>
+		<Width>120</Width>
+	</Column>
 	<Column Index="9">
 		<Visible>True</Visible>
 		<DisplayIndex>9</DisplayIndex>
-		<Name>Devolvido</Name>
+		<Name>Perdido</Name>
 		<Width>120</Width>
 	</Column>
 	<Column Index="10">
 		<Visible>True</Visible>
 		<DisplayIndex>10</DisplayIndex>
-		<Name>Aplicado</Name>
+		<Name>A Acertar</Name>
 		<Width>120</Width>
 	</Column>
 	<Column Index="11">
 		<Visible>True</Visible>
 		<DisplayIndex>11</DisplayIndex>
-		<Name>Perdido</Name>
-		<Width>120</Width>
-	</Column>
-	<Column Index="12">
-		<Visible>True</Visible>
-		<DisplayIndex>12</DisplayIndex>
-		<Name>A Acertar</Name>
-		<Width>120</Width>
-	</Column>
-	<Column Index="13">
-		<Visible>True</Visible>
-		<DisplayIndex>13</DisplayIndex>
 		<Name>Motivo da Perda</Name>
 		<Width>350</Width>
+	</Column>
+	<Column Index="12" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>12</DisplayIndex>
+		<Name>Guid</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="13" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>13</DisplayIndex>
+		<Name>ID</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="14">
+		<Visible>True</Visible>
+		<DisplayIndex>14</DisplayIndex>
+		<Name>Criação</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="15" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>15</DisplayIndex>
+		<Name>Rotina</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="16" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>16</DisplayIndex>
+		<Name>Salvo</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="17" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>17</DisplayIndex>
+		<Name>Usuário</Name>
+		<Width>100</Width>
 	</Column>
 </Routine>

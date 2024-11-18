@@ -39,8 +39,12 @@ Public Class PersonCompressorPart
     Public Overrides Function ToString() As String
         Return ItemName & Product.Value.Name
     End Function
-    'TODO: parttype precisa ser substituido pela routine
     Public Sub New(PartType As CompressorPartType)
         _PartType = PartType
+        If _PartType = CompressorPartType.ElapsedDay Then
+            SetRoutine(Routine.PersonCompressorPartElapsedDay)
+        Else
+            SetRoutine(Routine.PersonCompressorPartWorkedHour)
+        End If
     End Sub
 End Class

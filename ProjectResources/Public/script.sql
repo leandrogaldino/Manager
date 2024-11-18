@@ -151,6 +151,9 @@ INSERT INTO log VALUES (NULL, 22, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT
 END$$
 DELIMITER ;
 
+DROP TABLE userprivilege;
+
+DROP TABLE userprivilegepreset;
 
 /CRIAR AS TRIGGERS
 CREATE TABLE userprivilege (

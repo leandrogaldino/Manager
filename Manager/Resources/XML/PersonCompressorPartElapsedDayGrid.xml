@@ -1,83 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Routine Id="PersonCompressorPartElapsedDay" Version="4">
+<Routine Id="PersonCompressorPartElapsedDay" Version="5">
 	<SortedColumn>-1</SortedColumn>
 	<SortDirection>0</SortDirection>
-    <Column Index="0">
-        <Visible>True</Visible>
-        <DisplayIndex>0</DisplayIndex>
-        <Name>Ordem</Name>
-        <Width>60</Width>
-    </Column>    
-    <Column Index="1" ButtonState="Hidden">
-        <Visible>False</Visible>
-        <DisplayIndex>1</DisplayIndex>
-        <Name>ID</Name>
-        <Width>100</Width>
-    </Column>
-    <Column Index="2">
-        <Visible>True</Visible>
-        <DisplayIndex>2</DisplayIndex>
-        <Name>Criação</Name>
-        <Width>100</Width>
-    </Column>
-	<Column Index="3">
+	<Column Index="0">
 		<Visible>True</Visible>
-		<DisplayIndex>3</DisplayIndex>
+		<DisplayIndex>0</DisplayIndex>
+		<Name>Ordem</Name>
+		<Width>60</Width>
+	</Column>
+	<Column Index="1">
+		<Visible>True</Visible>
+		<DisplayIndex>1</DisplayIndex>
 		<Name>Status</Name>
 		<Width>70</Width>
 	</Column>
-	<Column Index="4" ButtonState="Hidden">
+	<Column Index="2" ButtonState="Hidden">
 		<Visible>False</Visible>
-		<DisplayIndex>4</DisplayIndex>
+		<DisplayIndex>2</DisplayIndex>
 		<Name>Vínculo</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="3" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>3</DisplayIndex>
+		<Name>Tipo Peça</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="4">
+		<Visible>True</Visible>
+		<DisplayIndex>4</DisplayIndex>
+		<Name>Código</Name>
 		<Width>100</Width>
 	</Column>
 	<Column Index="5" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>5</DisplayIndex>
-		<Name>Tipo Peça</Name>
-		<Width>100</Width>
-	</Column>
-	<Column Index="6">
-		<Visible>True</Visible>
-		<DisplayIndex>6</DisplayIndex>
-		<Name>Código</Name>
-		<Width>100</Width>
-	</Column>
-	<Column Index="7" ButtonState="Hidden">
-		<Visible>False</Visible>
-		<DisplayIndex>7</DisplayIndex>
 		<Name>Nome</Name>
 		<Width>120</Width>
 	</Column>
-	<Column Index="8" ButtonState="Hidden">
+	<Column Index="6" ButtonState="Hidden">
 		<Visible>False</Visible>
-		<DisplayIndex>8</DisplayIndex>
+		<DisplayIndex>6</DisplayIndex>
 		<Name>Produto</Name>
 		<Width>200</Width>
+	</Column>
+	<Column Index="7">
+		<Visible>True</Visible>
+		<DisplayIndex>7</DisplayIndex>
+		<Name>Item</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="8">
+		<Visible>True</Visible>
+		<DisplayIndex>8</DisplayIndex>
+		<Name>Qtd.</Name>
+		<Width>100</Width>
 	</Column>
 	<Column Index="9">
 		<Visible>True</Visible>
 		<DisplayIndex>9</DisplayIndex>
-		<Name>Item</Name>
+		<Name>Cap.</Name>
 		<Width>100</Width>
 	</Column>
 	<Column Index="10">
 		<Visible>True</Visible>
 		<DisplayIndex>10</DisplayIndex>
-		<Name>Qtd.</Name>
+		<Name>Peça Vinculada</Name>
 		<Width>100</Width>
 	</Column>
-    <Column Index="11">
-        <Visible>True</Visible>
-        <DisplayIndex>11</DisplayIndex>
-        <Name>Cap.</Name>
-        <Width>100</Width>
-    </Column>
-	<Column Index="12">
-		<Visible>True</Visible>
+	<Column Index="11" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>11</DisplayIndex>
+		<Name>Guid</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="12" ButtonState="Hidden">
+		<Visible>False</Visible>
 		<DisplayIndex>12</DisplayIndex>
-		<Name>Peça Vinculada</Name>
+		<Name>ID</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="13">
+		<Visible>True</Visible>
+		<DisplayIndex>13</DisplayIndex>
+		<Name>Criação</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="14" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>14</DisplayIndex>
+		<Name>Rotina</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="15" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>15</DisplayIndex>
+		<Name>Salvo</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="16" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>16</DisplayIndex>
+		<Name>Usuário</Name>
 		<Width>100</Width>
 	</Column>
 </Routine>

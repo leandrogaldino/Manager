@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.Xml
 Imports ControlLibrary
+Imports Org.BouncyCastle.Bcpg
 Public Class DataGridViewLayout
     Inherits Component
     Public Event Loaded(sender As Object, e As EventArgs)
@@ -104,19 +105,20 @@ Public Class DataGridViewLayout
                 If IsNumeric(Node("Width").InnerText) Then
                     DataGridView.Columns(Index).Width = Node("Width").InnerText
                 Else
-                    If Node("Width").InnerText = "Fill" Then
-                        DataGridView.Columns(Index).Width = 0
-                        DataGridView.Columns(Index).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-                    ElseIf Node("Width").InnerText = "ColumnHeader" Then
-                        DataGridView.Columns(Index).Width = 0
-                        DataGridView.Columns(Index).AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader
-                    ElseIf Node("Width").InnerText = "AllCells" Then
-                        DataGridView.Columns(Index).Width = 0
-                        DataGridView.Columns(Index).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-                    Else
-                        DataGridView.Columns(Index).Width = 100
-                    End If
+                    DataGridView.Columns(Index).Width = 0
+                    DataGridView.Columns(Index).AutoSizeMode = DirectCast([Enum].Parse(GetType(DataGridViewAutoSizeColumnMode), Node("Width").InnerText), DataGridViewAutoSizeColumnMode)
                 End If
+                For Each Attr As XmlAttribute In Node.Attributes
+                    If Attr.Name = "CellAlignment" Then
+                        DataGridView.Columns(Index).DefaultCellStyle.Alignment = DirectCast([Enum].Parse(GetType(DataGridViewContentAlignment), Attr.Value), DataGridViewContentAlignment)
+                    End If
+                    If Attr.Name = "HeaderAlignment" Then
+                        DataGridView.Columns(Index).HeaderCell.Style.Alignment = DirectCast([Enum].Parse(GetType(DataGridViewContentAlignment), Attr.Value), DataGridViewContentAlignment)
+                    End If
+                    If Attr.Name = "Format" Then
+                        DataGridView.Columns(Index).DefaultCellStyle.Format = Attr.Value
+                    End If
+                Next Attr
             Next Node
             SortedColumn = Layout.SelectSingleNode(String.Format("/Routine[@Id='{0}']/SortedColumn", Routine)).InnerText
             SortDirection = Layout.SelectSingleNode(String.Format("/Routine[@Id='{0}']/SortDirection", Routine)).InnerText
@@ -144,6 +146,8 @@ Public Class DataGridViewLayout
                         Else
                             DataGridView.FirstDisplayedScrollingRowIndex = 0
                         End If
+                    Else
+                        DataGridView.FirstDisplayedScrollingRowIndex = 0
                     End If
                 End If
             End If

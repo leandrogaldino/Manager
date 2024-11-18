@@ -20,23 +20,23 @@
 		<Name>Peça</Name>
 		<Width>Fill</Width>
 	</Column>
-	<Column Index="3">
+	<Column Index="3" CellAlignment="MiddleCenter" HeaderAlignment="MiddleCenter" Format="N0">
 		<Visible>True</Visible>
 		<DisplayIndex>3</DisplayIndex>
 		<Name>Cap. Atual</Name>
-		<Width>ColumnHeader</Width>
+		<Width>105</Width>
 	</Column>
 	<Column Index="4">
 		<Visible>True</Visible>
 		<DisplayIndex>4</DisplayIndex>
 		<Name>Vendido</Name>
-		<Width>ColumnHeader</Width>
+		<Width>70</Width>
 	</Column>
 	<Column Index="5">
 		<Visible>True</Visible>
 		<DisplayIndex>5</DisplayIndex>
 		<Name>Perdido</Name>
-		<Width>ColumnHeader</Width>
+		<Width>70</Width>
 	</Column>
 	<Column Index="6" ButtonState="Hidden">
 		<Visible>False</Visible>

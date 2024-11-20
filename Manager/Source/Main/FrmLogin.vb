@@ -45,7 +45,7 @@ Public Class FrmLogin
                 Using Com As New MySqlCommand(My.Resources.UserLoginSelect, Con)
                     Com.Parameters.AddWithValue("@username", TxtUsername.Text)
                     Con.Open()
-                    Using Reader As MySqlDataReader = Com.ExecuteReader
+                    Using Reader As MySqlDataReader = Com.ExecuteReader()
                         If Reader.HasRows Then
                             Reader.Read()
                             TypedPassword = Cryptography.Encrypt(TxtPassword.Text, CryptoKey.ReadCryptoKey)

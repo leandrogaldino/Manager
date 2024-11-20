@@ -435,8 +435,8 @@ Partial Class FrmEvaluationManagement
         Me.LblView.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
         Me.LblView.Font = New System.Drawing.Font("Century Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblView.Name = "LblView"
-        Me.LblView.Size = New System.Drawing.Size(149, 22)
-        Me.LblView.Text = "Detalhes do Compressor"
+        Me.LblView.Size = New System.Drawing.Size(57, 22)
+        Me.LblView.Text = "Detalhes"
         '
         'DgvData
         '
@@ -472,7 +472,7 @@ Partial Class FrmEvaluationManagement
         '
         Me.CmsAutoEvaluation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnAutoEvaluation, Me.BtnVisitSchedule})
         Me.CmsAutoEvaluation.Name = "CmsApproval"
-        Me.CmsAutoEvaluation.Size = New System.Drawing.Size(207, 70)
+        Me.CmsAutoEvaluation.Size = New System.Drawing.Size(207, 48)
         '
         'BtnAutoEvaluation
         '

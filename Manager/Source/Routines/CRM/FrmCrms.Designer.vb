@@ -31,10 +31,10 @@ Partial Class FrmCrms
         Me.BtnFilter = New System.Windows.Forms.ToolStripButton()
         Me.BtnDetails = New System.Windows.Forms.ToolStripButton()
         Me.BtnClose = New System.Windows.Forms.ToolStripButton()
+        Me.BtnExport = New System.Windows.Forms.ToolStripButton()
         Me.LblInfo = New System.Windows.Forms.ToolStripStatusLabel()
         Me.LblStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.LblCounter = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.BtnExport = New System.Windows.Forms.ToolStripButton()
         Me.SsInformation = New System.Windows.Forms.StatusStrip()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.PgFilter = New System.Windows.Forms.PropertyGrid()
@@ -54,13 +54,13 @@ Partial Class FrmCrms
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.DgvCrmLayout = New Manager.DataGridViewLayout()
         Me.TsMenu.SuspendLayout()
+        Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
         Me.TsFilterTop.SuspendLayout()
         Me.TsFilterBot.SuspendLayout()
-        Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer2.Panel1.SuspendLayout()
         Me.SplitContainer2.Panel2.SuspendLayout()
@@ -103,25 +103,6 @@ Partial Class FrmCrms
         Me.BtnEdit.Name = "BtnEdit"
         Me.BtnEdit.Size = New System.Drawing.Size(81, 36)
         Me.BtnEdit.Text = "Editar"
-        '
-        'LblInfo
-        '
-        Me.LblInfo.Name = "LblInfo"
-        Me.LblInfo.Size = New System.Drawing.Size(0, 17)
-        '
-        'LblStatus
-        '
-        Me.LblStatus.Name = "LblStatus"
-        Me.LblStatus.Size = New System.Drawing.Size(36, 17)
-        Me.LblStatus.Text = "       "
-        '
-        'LblCounter
-        '
-        Me.LblCounter.Name = "LblCounter"
-        Me.LblCounter.Size = New System.Drawing.Size(1038, 17)
-        Me.LblCounter.Spring = True
-        Me.LblCounter.Text = "       "
-        Me.LblCounter.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'BtnDelete
         '
@@ -190,6 +171,25 @@ Partial Class FrmCrms
         Me.BtnExport.Size = New System.Drawing.Size(97, 36)
         Me.BtnExport.Text = "Exportar"
         '
+        'LblInfo
+        '
+        Me.LblInfo.Name = "LblInfo"
+        Me.LblInfo.Size = New System.Drawing.Size(0, 17)
+        '
+        'LblStatus
+        '
+        Me.LblStatus.Name = "LblStatus"
+        Me.LblStatus.Size = New System.Drawing.Size(36, 17)
+        Me.LblStatus.Text = "       "
+        '
+        'LblCounter
+        '
+        Me.LblCounter.Name = "LblCounter"
+        Me.LblCounter.Size = New System.Drawing.Size(1038, 17)
+        Me.LblCounter.Spring = True
+        Me.LblCounter.Text = "       "
+        Me.LblCounter.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
         'SsInformation
         '
         Me.SsInformation.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -219,7 +219,7 @@ Partial Class FrmCrms
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.SplitContainer2)
-        Me.SplitContainer1.Size = New System.Drawing.Size(1089, 461)
+        Me.SplitContainer1.Size = New System.Drawing.Size(1089, 439)
         Me.SplitContainer1.SplitterDistance = 261
         Me.SplitContainer1.TabIndex = 3
         '
@@ -230,7 +230,7 @@ Partial Class FrmCrms
         Me.PgFilter.Location = New System.Drawing.Point(0, 25)
         Me.PgFilter.Name = "PgFilter"
         Me.PgFilter.PropertySort = System.Windows.Forms.PropertySort.NoSort
-        Me.PgFilter.Size = New System.Drawing.Size(259, 409)
+        Me.PgFilter.Size = New System.Drawing.Size(259, 387)
         Me.PgFilter.TabIndex = 1
         Me.PgFilter.ToolbarVisible = False
         '
@@ -269,7 +269,7 @@ Partial Class FrmCrms
         Me.TsFilterBot.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.TsFilterBot.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.TsFilterBot.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnClean})
-        Me.TsFilterBot.Location = New System.Drawing.Point(0, 434)
+        Me.TsFilterBot.Location = New System.Drawing.Point(0, 412)
         Me.TsFilterBot.Name = "TsFilterBot"
         Me.TsFilterBot.Size = New System.Drawing.Size(259, 25)
         Me.TsFilterBot.TabIndex = 2
@@ -303,7 +303,7 @@ Partial Class FrmCrms
         Me.SplitContainer2.Panel2.Controls.Add(Me.DgvData)
         Me.SplitContainer2.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.SplitContainer2.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.SplitContainer2.Size = New System.Drawing.Size(824, 461)
+        Me.SplitContainer2.Size = New System.Drawing.Size(824, 439)
         Me.SplitContainer2.SplitterDistance = 272
         Me.SplitContainer2.TabIndex = 0
         '
@@ -314,7 +314,7 @@ Partial Class FrmCrms
         Me.TcDetail.Location = New System.Drawing.Point(0, 25)
         Me.TcDetail.Name = "TcDetail"
         Me.TcDetail.SelectedIndex = 0
-        Me.TcDetail.Size = New System.Drawing.Size(270, 434)
+        Me.TcDetail.Size = New System.Drawing.Size(270, 412)
         Me.TcDetail.TabIndex = 1
         '
         'TabTreatment
@@ -322,7 +322,7 @@ Partial Class FrmCrms
         Me.TabTreatment.Controls.Add(Me.WebTreatments)
         Me.TabTreatment.Location = New System.Drawing.Point(4, 26)
         Me.TabTreatment.Name = "TabTreatment"
-        Me.TabTreatment.Size = New System.Drawing.Size(262, 404)
+        Me.TabTreatment.Size = New System.Drawing.Size(262, 382)
         Me.TabTreatment.TabIndex = 2
         Me.TabTreatment.Text = "Atendimentos"
         Me.TabTreatment.UseVisualStyleBackColor = True
@@ -334,7 +334,7 @@ Partial Class FrmCrms
         Me.WebTreatments.Location = New System.Drawing.Point(0, 0)
         Me.WebTreatments.MinimumSize = New System.Drawing.Size(20, 20)
         Me.WebTreatments.Name = "WebTreatments"
-        Me.WebTreatments.Size = New System.Drawing.Size(262, 404)
+        Me.WebTreatments.Size = New System.Drawing.Size(262, 382)
         Me.WebTreatments.TabIndex = 2
         '
         'TsDetails
@@ -363,8 +363,8 @@ Partial Class FrmCrms
         Me.LblView.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
         Me.LblView.Font = New System.Drawing.Font("Century Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblView.Name = "LblView"
-        Me.LblView.Size = New System.Drawing.Size(106, 22)
-        Me.LblView.Text = "Detalhes do CRM"
+        Me.LblView.Size = New System.Drawing.Size(57, 22)
+        Me.LblView.Text = "Detalhes"
         '
         'DgvData
         '
@@ -384,16 +384,13 @@ Partial Class FrmCrms
         Me.DgvData.RowHeadersVisible = False
         Me.DgvData.RowTemplate.Height = 26
         Me.DgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvData.Size = New System.Drawing.Size(546, 459)
+        Me.DgvData.Size = New System.Drawing.Size(546, 437)
         Me.DgvData.TabIndex = 0
-        '
-        'TmrLoadDetails
-        '
         '
         'DgvCrmLayout
         '
         Me.DgvCrmLayout.DataGridView = Me.DgvData
-        Me.DgvCrmLayout.Routine = Routine.Crm
+        Me.DgvCrmLayout.Routine = Manager.Routine.Crm
         '
         'FrmCrms
         '

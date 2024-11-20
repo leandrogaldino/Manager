@@ -171,4 +171,24 @@ INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 0, 1);
 INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 1, 1);
 INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 2, 1);
 
+CREATE TABLE privilegepreset (
+	id INT NOT NULL AUTO_INCREMENT,
+    creation DATE NOT NULL,
+    statusid INT NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    userid INT NOT NULL,
+	PRIMARY KEY(id),
+    FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
+);
 
+CREATE TABLE privilegepresetprivilege (
+	id INT NOT NULL AUTO_INCREMENT,
+    creation DATE NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    routineid INT NOT NULL,
+    privilegelevelid INT NOT NULL,
+    userid INT NOT NULL,
+	PRIMARY KEY(id),
+    FOREIGN KEY (granteduserid) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
+);

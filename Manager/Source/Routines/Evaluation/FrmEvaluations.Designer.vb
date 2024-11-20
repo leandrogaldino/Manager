@@ -32,6 +32,7 @@ Partial Class FrmEvaluations
         Me.BtnDetails = New System.Windows.Forms.ToolStripButton()
         Me.BtnClose = New System.Windows.Forms.ToolStripButton()
         Me.BtnExport = New System.Windows.Forms.ToolStripButton()
+        Me.BtnImport = New System.Windows.Forms.ToolStripButton()
         Me.SsInformation = New System.Windows.Forms.StatusStrip()
         Me.LblInfo = New System.Windows.Forms.ToolStripStatusLabel()
         Me.LblStatus = New System.Windows.Forms.ToolStripStatusLabel()
@@ -59,7 +60,6 @@ Partial Class FrmEvaluations
         Me.BtnDisapprove = New System.Windows.Forms.ToolStripMenuItem()
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.DgvEvaluationLayout = New Manager.DataGridViewLayout()
-        Me.BtnImport = New System.Windows.Forms.ToolStripButton()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -182,6 +182,16 @@ Partial Class FrmEvaluations
         Me.BtnExport.Name = "BtnExport"
         Me.BtnExport.Size = New System.Drawing.Size(97, 36)
         Me.BtnExport.Text = "Exportar"
+        '
+        'BtnImport
+        '
+        Me.BtnImport.AutoToolTip = False
+        Me.BtnImport.Image = Global.Manager.My.Resources.Resources.Import
+        Me.BtnImport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnImport.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnImport.Name = "BtnImport"
+        Me.BtnImport.Size = New System.Drawing.Size(100, 36)
+        Me.BtnImport.Text = "Importar"
         '
         'SsInformation
         '
@@ -433,8 +443,8 @@ Partial Class FrmEvaluations
         Me.LblView.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
         Me.LblView.Font = New System.Drawing.Font("Century Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblView.Name = "LblView"
-        Me.LblView.Size = New System.Drawing.Size(141, 22)
-        Me.LblView.Text = "Detalhes da Avaliação"
+        Me.LblView.Size = New System.Drawing.Size(57, 22)
+        Me.LblView.Text = "Detalhes"
         '
         'DgvData
         '
@@ -491,16 +501,6 @@ Partial Class FrmEvaluations
         '
         Me.DgvEvaluationLayout.DataGridView = Me.DgvData
         Me.DgvEvaluationLayout.Routine = Manager.Routine.Evaluation
-        '
-        'BtnImport
-        '
-        Me.BtnImport.AutoToolTip = False
-        Me.BtnImport.Image = Global.Manager.My.Resources.Resources.Import
-        Me.BtnImport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.BtnImport.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnImport.Name = "BtnImport"
-        Me.BtnImport.Size = New System.Drawing.Size(100, 36)
-        Me.BtnImport.Text = "Importar"
         '
         'FrmEvaluations
         '

@@ -355,8 +355,8 @@ Partial Class FrmCashes
         Me.LblView.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
         Me.LblView.Font = New System.Drawing.Font("Century Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblView.Name = "LblView"
-        Me.LblView.Size = New System.Drawing.Size(114, 22)
-        Me.LblView.Text = "Detalhes do Caixa"
+        Me.LblView.Size = New System.Drawing.Size(57, 22)
+        Me.LblView.Text = "Detalhes"
         '
         'DgvData
         '
@@ -385,26 +385,26 @@ Partial Class FrmCashes
         'DgvCashesLayout
         '
         Me.DgvCashesLayout.DataGridView = Me.DgvData
-        Me.DgvCashesLayout.Routine = Routine.Cash
+        Me.DgvCashesLayout.Routine = Manager.Routine.Cash
         '
         'CmsSetStatus
         '
         Me.CmsSetStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnOpenCash, Me.BtnCloseCash})
         Me.CmsSetStatus.Name = "CmsApproval"
-        Me.CmsSetStatus.Size = New System.Drawing.Size(181, 70)
+        Me.CmsSetStatus.Size = New System.Drawing.Size(142, 48)
         '
         'BtnOpenCash
         '
         Me.BtnOpenCash.Image = Global.Manager.My.Resources.Resources.OpenCash
         Me.BtnOpenCash.Name = "BtnOpenCash"
-        Me.BtnOpenCash.Size = New System.Drawing.Size(180, 22)
+        Me.BtnOpenCash.Size = New System.Drawing.Size(141, 22)
         Me.BtnOpenCash.Text = "Abrir Caixa"
         '
         'BtnCloseCash
         '
         Me.BtnCloseCash.Image = Global.Manager.My.Resources.Resources.CloseCash
         Me.BtnCloseCash.Name = "BtnCloseCash"
-        Me.BtnCloseCash.Size = New System.Drawing.Size(180, 22)
+        Me.BtnCloseCash.Size = New System.Drawing.Size(141, 22)
         Me.BtnCloseCash.Text = "Fechar Caixa"
         '
         'FrmCashes

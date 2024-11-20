@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class FrmCompressors
+Partial Class FrmPrivilegePresets
     Inherits System.Windows.Forms.Form
 
     'Descartar substituições de formulário para limpar a lista de componentes.
@@ -22,7 +22,6 @@ Partial Class FrmCompressors
     'Não o modifique usando o editor de códigos.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Me.TsMenu = New System.Windows.Forms.ToolStrip()
         Me.BtnInclude = New System.Windows.Forms.ToolStripButton()
         Me.BtnEdit = New System.Windows.Forms.ToolStripButton()
@@ -45,17 +44,11 @@ Partial Class FrmCompressors
         Me.BtnClean = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
-        Me.SplitContainer3 = New System.Windows.Forms.SplitContainer()
-        Me.DgvPartWorkedHour = New System.Windows.Forms.DataGridView()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.DgvPartElapsedDay = New System.Windows.Forms.DataGridView()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.TsDetails = New System.Windows.Forms.ToolStrip()
         Me.BtnCloseDetails = New System.Windows.Forms.ToolStripButton()
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
-        Me.DgvCompressorLayout = New Manager.DataGridViewLayout()
-        Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
+        Me.DgvlPrivilegePresetLayout = New Manager.DataGridViewLayout()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -68,12 +61,6 @@ Partial Class FrmCompressors
         Me.SplitContainer2.Panel1.SuspendLayout()
         Me.SplitContainer2.Panel2.SuspendLayout()
         Me.SplitContainer2.SuspendLayout()
-        CType(Me.SplitContainer3, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitContainer3.Panel1.SuspendLayout()
-        Me.SplitContainer3.Panel2.SuspendLayout()
-        Me.SplitContainer3.SuspendLayout()
-        CType(Me.DgvPartWorkedHour, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DgvPartElapsedDay, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsDetails.SuspendLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -154,6 +141,7 @@ Partial Class FrmCompressors
         Me.BtnDetails.Name = "BtnDetails"
         Me.BtnDetails.Size = New System.Drawing.Size(100, 36)
         Me.BtnDetails.Text = "Detalhes"
+        Me.BtnDetails.Visible = False
         '
         'BtnClose
         '
@@ -309,7 +297,6 @@ Partial Class FrmCompressors
         '
         'SplitContainer2.Panel1
         '
-        Me.SplitContainer2.Panel1.Controls.Add(Me.SplitContainer3)
         Me.SplitContainer2.Panel1.Controls.Add(Me.TsDetails)
         Me.SplitContainer2.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         '
@@ -321,94 +308,6 @@ Partial Class FrmCompressors
         Me.SplitContainer2.Size = New System.Drawing.Size(824, 439)
         Me.SplitContainer2.SplitterDistance = 272
         Me.SplitContainer2.TabIndex = 0
-        '
-        'SplitContainer3
-        '
-        Me.SplitContainer3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer3.Location = New System.Drawing.Point(0, 25)
-        Me.SplitContainer3.Name = "SplitContainer3"
-        Me.SplitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal
-        '
-        'SplitContainer3.Panel1
-        '
-        Me.SplitContainer3.Panel1.Controls.Add(Me.DgvPartWorkedHour)
-        Me.SplitContainer3.Panel1.Controls.Add(Me.Label1)
-        Me.SplitContainer3.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        '
-        'SplitContainer3.Panel2
-        '
-        Me.SplitContainer3.Panel2.Controls.Add(Me.DgvPartElapsedDay)
-        Me.SplitContainer3.Panel2.Controls.Add(Me.Label2)
-        Me.SplitContainer3.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.SplitContainer3.Size = New System.Drawing.Size(270, 412)
-        Me.SplitContainer3.SplitterDistance = 206
-        Me.SplitContainer3.TabIndex = 3
-        '
-        'DgvPartWorkedHour
-        '
-        Me.DgvPartWorkedHour.AllowUserToAddRows = False
-        Me.DgvPartWorkedHour.AllowUserToDeleteRows = False
-        Me.DgvPartWorkedHour.AllowUserToOrderColumns = True
-        Me.DgvPartWorkedHour.AllowUserToResizeRows = False
-        Me.DgvPartWorkedHour.BackgroundColor = System.Drawing.Color.White
-        Me.DgvPartWorkedHour.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.DgvPartWorkedHour.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvPartWorkedHour.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvPartWorkedHour.Location = New System.Drawing.Point(0, 26)
-        Me.DgvPartWorkedHour.MultiSelect = False
-        Me.DgvPartWorkedHour.Name = "DgvPartWorkedHour"
-        Me.DgvPartWorkedHour.ReadOnly = True
-        Me.DgvPartWorkedHour.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvPartWorkedHour.RowHeadersVisible = False
-        Me.DgvPartWorkedHour.RowTemplate.Height = 26
-        Me.DgvPartWorkedHour.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPartWorkedHour.Size = New System.Drawing.Size(270, 180)
-        Me.DgvPartWorkedHour.TabIndex = 2
-        '
-        'Label1
-        '
-        Me.Label1.BackColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer))
-        Me.Label1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(0, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(270, 26)
-        Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Controla Hora Trabalhada"
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'DgvPartElapsedDay
-        '
-        Me.DgvPartElapsedDay.AllowUserToAddRows = False
-        Me.DgvPartElapsedDay.AllowUserToDeleteRows = False
-        Me.DgvPartElapsedDay.AllowUserToOrderColumns = True
-        Me.DgvPartElapsedDay.AllowUserToResizeRows = False
-        Me.DgvPartElapsedDay.BackgroundColor = System.Drawing.Color.White
-        Me.DgvPartElapsedDay.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.DgvPartElapsedDay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvPartElapsedDay.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvPartElapsedDay.Location = New System.Drawing.Point(0, 26)
-        Me.DgvPartElapsedDay.MultiSelect = False
-        Me.DgvPartElapsedDay.Name = "DgvPartElapsedDay"
-        Me.DgvPartElapsedDay.ReadOnly = True
-        Me.DgvPartElapsedDay.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvPartElapsedDay.RowHeadersVisible = False
-        Me.DgvPartElapsedDay.RowTemplate.Height = 26
-        Me.DgvPartElapsedDay.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPartElapsedDay.Size = New System.Drawing.Size(270, 176)
-        Me.DgvPartElapsedDay.TabIndex = 3
-        '
-        'Label2
-        '
-        Me.Label2.BackColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer))
-        Me.Label2.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(0, 0)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(270, 26)
-        Me.Label2.TabIndex = 1
-        Me.Label2.Text = "Controla Dia Corrido"
-        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'TsDetails
         '
@@ -460,16 +359,12 @@ Partial Class FrmCompressors
         Me.DgvData.Size = New System.Drawing.Size(546, 437)
         Me.DgvData.TabIndex = 0
         '
-        'DgvCompressorLayout
+        'DgvlPrivilegePresetLayout
         '
-        Me.DgvCompressorLayout.DataGridView = Me.DgvData
-        Me.DgvCompressorLayout.Routine = Manager.Routine.Compressor
+        Me.DgvlPrivilegePresetLayout.DataGridView = Me.DgvData
+        Me.DgvlPrivilegePresetLayout.Routine = Manager.Routine.PrivilegePreset
         '
-        'TmrLoadDetails
-        '
-        Me.TmrLoadDetails.Interval = 300
-        '
-        'FrmCompressors
+        'FrmPrivilegePresets
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -481,7 +376,7 @@ Partial Class FrmCompressors
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "FrmCompressors"
+        Me.Name = "FrmPrivilegePresets"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.TsMenu.ResumeLayout(False)
@@ -502,12 +397,6 @@ Partial Class FrmCompressors
         Me.SplitContainer2.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer2.ResumeLayout(False)
-        Me.SplitContainer3.Panel1.ResumeLayout(False)
-        Me.SplitContainer3.Panel2.ResumeLayout(False)
-        CType(Me.SplitContainer3, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainer3.ResumeLayout(False)
-        CType(Me.DgvPartWorkedHour, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DgvPartElapsedDay, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsDetails.ResumeLayout(False)
         Me.TsDetails.PerformLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).EndInit()
@@ -524,6 +413,7 @@ Partial Class FrmCompressors
     Friend WithEvents BtnClose As ToolStripButton
     Friend WithEvents BtnFilter As ToolStripButton
     Friend WithEvents SsInformation As StatusStrip
+    Friend WithEvents LblInfo As ToolStripStatusLabel
     Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents PgFilter As PropertyGrid
     Friend WithEvents TsFilterTop As ToolStrip
@@ -535,18 +425,12 @@ Partial Class FrmCompressors
     Friend WithEvents LblView As ToolStripLabel
     Friend WithEvents DgvData As DataGridView
     Friend WithEvents TsFilterBot As ToolStrip
+    Friend WithEvents FffffToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents BtnClean As ToolStripButton
     Friend WithEvents LblStatus As ToolStripStatusLabel
-    Friend WithEvents LblInfo As ToolStripStatusLabel
     Friend WithEvents LblCounter As ToolStripStatusLabel
     Friend WithEvents BtnDetails As ToolStripButton
     Friend WithEvents ToolStripButton1 As ToolStripButton
-    Friend WithEvents DgvCompressorLayout As DataGridViewLayout
-    Friend WithEvents SplitContainer3 As SplitContainer
-    Friend WithEvents DgvPartWorkedHour As DataGridView
-    Friend WithEvents Label1 As Label
-    Friend WithEvents DgvPartElapsedDay As DataGridView
-    Friend WithEvents Label2 As Label
-    Friend WithEvents TmrLoadDetails As Timer
+    Friend WithEvents DgvlPrivilegePresetLayout As DataGridViewLayout
     Friend WithEvents BtnExport As ToolStripButton
 End Class

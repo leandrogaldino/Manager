@@ -449,8 +449,8 @@ Partial Class FrmProducts
         Me.LblView.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
         Me.LblView.Font = New System.Drawing.Font("Century Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblView.Name = "LblView"
-        Me.LblView.Size = New System.Drawing.Size(124, 22)
-        Me.LblView.Text = "Detalhes do Produto"
+        Me.LblView.Size = New System.Drawing.Size(57, 22)
+        Me.LblView.Text = "Detalhes"
         '
         'DgvData
         '
@@ -479,7 +479,7 @@ Partial Class FrmProducts
         'DgvProductLayout
         '
         Me.DgvProductLayout.DataGridView = Me.DgvData
-        Me.DgvProductLayout.Routine = Routine.Product
+        Me.DgvProductLayout.Routine = Manager.Routine.Product
         '
         'FrmProducts
         '

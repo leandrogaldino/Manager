@@ -1120,4 +1120,25 @@
   <data name="EvaluationPartGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\EvaluationPartGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="PrivilegePresetDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\PrivilegePresetDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="PrivilegePresetInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\PrivilegePresetInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="PrivilegePresetPrivilegeDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\PrivilegePresetPrivilegeDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="PrivilegePresetPrivilegeInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\PrivilegePresetPrivilegeInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="PrivilegePresetPrivilegeSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\PrivilegePresetPrivilegeSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="PrivilegePresetSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\PrivilegePresetSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="PrivilegePresetUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\PrivilegePresetUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

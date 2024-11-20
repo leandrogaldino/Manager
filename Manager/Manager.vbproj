@@ -684,30 +684,44 @@
     <Compile Include="Source\Helper\Flags\SimpleStatus.vb" />
     <Compile Include="Source\Helper\Flags\VisitScheduleStatus.vb" />
     <Compile Include="Source\Helper\Flags\VisitScheduleType.vb" />
-    <Compile Include="Source\Routines\User\Control\UcBiStatePrivilegeItem.Designer.vb">
+    <Compile Include="Source\Routines\PrivilegePreset\FrmPrivilegePreset.Designer.vb">
+      <DependentUpon>FrmPrivilegePreset.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\PrivilegePreset\FrmPrivilegePreset.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\PrivilegePreset\FrmPrivilegePresets.Designer.vb">
+      <DependentUpon>FrmPrivilegePresets.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\PrivilegePreset\FrmPrivilegePresets.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\PrivilegePreset\PrivilegePreset.vb" />
+    <Compile Include="Source\Controls\UcBiStatePrivilegeItem.Designer.vb">
       <DependentUpon>UcBiStatePrivilegeItem.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Routines\User\Control\UcBiStatePrivilegeItem.vb">
+    <Compile Include="Source\Controls\UcBiStatePrivilegeItem.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Source\Routines\User\Control\UcBiStatePrivilegeTitle.Designer.vb">
+    <Compile Include="Source\Controls\UcBiStatePrivilegeTitle.Designer.vb">
       <DependentUpon>UcBiStatePrivilegeTitle.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Routines\User\Control\UcBiStatePrivilegeTitle.vb">
+    <Compile Include="Source\Controls\UcBiStatePrivilegeTitle.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Source\Routines\User\Control\UcTriStatePrivilegeTitle.Designer.vb">
+    <Compile Include="Source\Controls\UcTriStatePrivilegeTitle.Designer.vb">
       <DependentUpon>UcTriStatePrivilegeTitle.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Routines\User\Control\UcTriStatePrivilegeTitle.vb">
+    <Compile Include="Source\Controls\UcTriStatePrivilegeTitle.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Source\Routines\User\Control\UcTristatePrivilegeItem.Designer.vb">
+    <Compile Include="Source\Controls\UcTristatePrivilegeItem.Designer.vb">
       <DependentUpon>UcTristatePrivilegeItem.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Routines\User\Control\UcTristatePrivilegeItem.vb">
+    <Compile Include="Source\Controls\UcTristatePrivilegeItem.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Source\Routines\PrivilegePreset\PrivilegePresetFilter.vb" />
     <Compile Include="Source\Routines\User\UserPrivilege.vb" />
     <Compile Include="Source\Routines\VisitSchedule\FrmVisitSchedule.Designer.vb">
       <DependentUpon>FrmVisitSchedule.vb</DependentUpon>
@@ -722,22 +736,22 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Routines\VisitSchedule\VisitSchedule.vb" />
-    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationPhotos.Designer.vb">
+    <Compile Include="Source\Controls\UcEvaluationPhotos.Designer.vb">
       <DependentUpon>UcEvaluationPhotos.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationPhotos.vb">
+    <Compile Include="Source\Controls\UcEvaluationPhotos.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationSoldLost.Designer.vb">
+    <Compile Include="Source\Controls\UcEvaluationSoldLost.Designer.vb">
       <DependentUpon>UcEvaluationSoldLost.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationSoldLost.vb">
+    <Compile Include="Source\Controls\UcEvaluationSoldLost.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationSourceHeader.Designer.vb">
+    <Compile Include="Source\Controls\UcEvaluationSourceHeader.Designer.vb">
       <DependentUpon>UcEvaluationSourceHeader.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationSourceHeader.vb">
+    <Compile Include="Source\Controls\UcEvaluationSourceHeader.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Routines\Evaluation\EvaluationPart.vb" />
@@ -785,10 +799,10 @@
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationTechnician.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationCardDetail.Designer.vb">
+    <Compile Include="Source\Controls\UcEvaluationCardDetail.Designer.vb">
       <DependentUpon>UcEvaluationCardDetail.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationCardDetail.vb">
+    <Compile Include="Source\Controls\UcEvaluationCardDetail.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Helper\FilterExpandable\CrmStatusExpandable.vb" />
@@ -803,7 +817,7 @@
     <Compile Include="Source\Helper\LockRegistryInfo.vb" />
     <Compile Include="Source\Helper\ModelBases\ParentModel.vb" />
     <Compile Include="Source\Helper\ReportResult.vb" />
-    <Compile Include="Source\Helper\Controls\RichTextBoxSingleSelection.vb">
+    <Compile Include="Source\Controls\RichTextBoxSingleSelection.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Source\Helper\Session.vb" />
@@ -928,7 +942,7 @@
     <Compile Include="Source\Helper\FiltrerConverter\UpperNoAccentConverter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\YesNoConverter.vb" />
     <Compile Include="Source\Helper\Util.vb" />
-    <Compile Include="Source\Helper\Controls\DataGridViewLayout.vb">
+    <Compile Include="Source\Controls\DataGridViewLayout.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Source\Helper\ExportGrid.vb" />
@@ -1186,10 +1200,10 @@
     <Compile Include="Misc\FrmTest.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationSourcePart.Designer.vb">
+    <Compile Include="Source\Controls\UcEvaluationSourcePart.Designer.vb">
       <DependentUpon>UcEvaluationSourcePart.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Routines\Evaluation\Control\UcEvaluationSourcePart.vb">
+    <Compile Include="Source\Controls\UcEvaluationSourcePart.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Routines\User\FrmUser.designer.vb">
@@ -1311,13 +1325,13 @@
     <EmbeddedResource Include="Source\Routines\Email\FrmEmailImportEmailModel.resx">
       <DependentUpon>FrmEmailImportEmailModel.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Evaluation\Control\UcEvaluationPhotos.resx">
+    <EmbeddedResource Include="Source\Controls\UcEvaluationPhotos.resx">
       <DependentUpon>UcEvaluationPhotos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Evaluation\Control\UcEvaluationSoldLost.resx">
+    <EmbeddedResource Include="Source\Controls\UcEvaluationSoldLost.resx">
       <DependentUpon>UcEvaluationSoldLost.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Evaluation\Control\UcEvaluationSourceHeader.resx">
+    <EmbeddedResource Include="Source\Controls\UcEvaluationSourceHeader.resx">
       <DependentUpon>UcEvaluationSourceHeader.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluation.resx">
@@ -1351,10 +1365,10 @@
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationTechnician.resx">
       <DependentUpon>FrmEvaluationTechnician.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Evaluation\Control\UcEvaluationCardDetail.resx">
+    <EmbeddedResource Include="Source\Controls\UcEvaluationCardDetail.resx">
       <DependentUpon>UcEvaluationCardDetail.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Helper\Controls\DataGridViewLayout.resx">
+    <EmbeddedResource Include="Source\Controls\DataGridViewLayout.resx">
       <DependentUpon>DataGridViewLayout.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -1385,6 +1399,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Person\FrmPersonMaintenancePlan.resx">
       <DependentUpon>FrmPersonMaintenancePlan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\PrivilegePreset\FrmPrivilegePreset.resx">
+      <DependentUpon>FrmPrivilegePreset.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\PrivilegePreset\FrmPrivilegePresets.resx">
+      <DependentUpon>FrmPrivilegePresets.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Request\FrmRequest.resx">
       <DependentUpon>FrmRequest.vb</DependentUpon>
@@ -1491,19 +1511,19 @@
     <EmbeddedResource Include="Misc\FrmTest.resx">
       <DependentUpon>FrmTest.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Evaluation\Control\UcEvaluationSourcePart.resx">
+    <EmbeddedResource Include="Source\Controls\UcEvaluationSourcePart.resx">
       <DependentUpon>UcEvaluationSourcePart.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\User\Control\UcBiStatePrivilegeItem.resx">
+    <EmbeddedResource Include="Source\Controls\UcBiStatePrivilegeItem.resx">
       <DependentUpon>UcBiStatePrivilegeItem.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\User\Control\UcBiStatePrivilegeTitle.resx">
+    <EmbeddedResource Include="Source\Controls\UcBiStatePrivilegeTitle.resx">
       <DependentUpon>UcBiStatePrivilegeTitle.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\User\Control\UcTristatePrivilegeItem.resx">
+    <EmbeddedResource Include="Source\Controls\UcTristatePrivilegeItem.resx">
       <DependentUpon>UcTristatePrivilegeItem.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\User\Control\UcTriStatePrivilegeTitle.resx">
+    <EmbeddedResource Include="Source\Controls\UcTriStatePrivilegeTitle.resx">
       <DependentUpon>UcTriStatePrivilegeTitle.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\User\FrmUser.resx">
@@ -1523,6 +1543,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\VisitSchedule\FrmVisitSchedule.resx">
       <DependentUpon>FrmVisitSchedule.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\VisitSchedule\FrmVisitSchedules.resx">
+      <DependentUpon>FrmVisitSchedules.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -1612,7 +1635,14 @@
     <Content Include="Resources\SQL\CashFlowAuthorizedInsert.sql" />
     <Content Include="Resources\SQL\CashFlowAuthorizedSelect.sql" />
     <Content Include="Resources\SQL\CashFlowAuthorizedUpdate.sql" />
+    <Content Include="Resources\SQL\PrivilegePresetDelete.sql" />
+    <Content Include="Resources\SQL\PrivilegePresetInsert.sql" />
+    <Content Include="Resources\SQL\PrivilegePresetSelect.sql" />
+    <Content Include="Resources\SQL\PrivilegePresetUpdate.sql" />
+    <Content Include="Resources\SQL\PrivilegePresetPrivilegeDelete.sql" />
     <Content Include="Resources\SQL\UserPrivilegeDelete.sql" />
+    <Content Include="Resources\SQL\PrivilegePresetPrivilegeInsert.sql" />
+    <Content Include="Resources\SQL\PrivilegePresetPrivilegeSelect.sql" />
     <Content Include="Resources\SQL\VisitScheduleDelete .sql" />
     <Content Include="Resources\SQL\VisitScheduleFilter.sql" />
     <Content Include="Resources\SQL\VisitScheduleInsert.sql" />
@@ -1950,9 +1980,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Source\Routines\PrivilegePreset\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\packages\Google.Api.CommonProtos.2.16.0\build\Google.Api.CommonProtos.targets" Condition="Exists('..\packages\Google.Api.CommonProtos.2.16.0\build\Google.Api.CommonProtos.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

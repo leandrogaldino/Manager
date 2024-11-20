@@ -395,9 +395,9 @@ Partial Class FrmPersons
         'TpgCompressor
         '
         Me.TpgCompressor.Controls.Add(Me.DgvCompressor)
-        Me.TpgCompressor.Location = New System.Drawing.Point(4, 26)
+        Me.TpgCompressor.Location = New System.Drawing.Point(4, 22)
         Me.TpgCompressor.Name = "TpgCompressor"
-        Me.TpgCompressor.Size = New System.Drawing.Size(262, 382)
+        Me.TpgCompressor.Size = New System.Drawing.Size(262, 386)
         Me.TpgCompressor.TabIndex = 2
         Me.TpgCompressor.Text = "Compressores"
         Me.TpgCompressor.UseVisualStyleBackColor = True
@@ -420,7 +420,7 @@ Partial Class FrmPersons
         Me.DgvCompressor.RowHeadersVisible = False
         Me.DgvCompressor.RowTemplate.Height = 26
         Me.DgvCompressor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvCompressor.Size = New System.Drawing.Size(262, 382)
+        Me.DgvCompressor.Size = New System.Drawing.Size(262, 386)
         Me.DgvCompressor.TabIndex = 9
         '
         'TsDetails
@@ -449,8 +449,8 @@ Partial Class FrmPersons
         Me.LblView.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
         Me.LblView.Font = New System.Drawing.Font("Century Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblView.Name = "LblView"
-        Me.LblView.Size = New System.Drawing.Size(120, 22)
-        Me.LblView.Text = "Detalhes da Pessoa"
+        Me.LblView.Size = New System.Drawing.Size(57, 22)
+        Me.LblView.Text = "Detalhes"
         '
         'DgvData
         '
@@ -479,7 +479,7 @@ Partial Class FrmPersons
         'DgvPersonLayout
         '
         Me.DgvPersonLayout.DataGridView = Me.DgvData
-        Me.DgvPersonLayout.Routine = Routine.Person
+        Me.DgvPersonLayout.Routine = Manager.Routine.Person
         '
         'FrmPersons
         '

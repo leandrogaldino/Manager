@@ -1,10 +1,13 @@
 ﻿Imports System.ComponentModel
 Imports ControlLibrary
 Imports MySql.Data.MySqlClient
+
+'TODO: CONCLUIR ESSA CLASSE
+
 ''' <summary>
-''' Representa o filtro dos usuários.
+''' Representa o filtro de predefinição de permissões.
 ''' </summary>
-Public Class UserFilter
+Public Class PrivilegePresetFilter
     <Browsable(False)>
     Public Property DataGridView As DataGridView
     <Browsable(False)>
@@ -17,7 +20,11 @@ Public Class UserFilter
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(SimpleStatusConverter))>
     Public Overridable Property Status As String
-
+    <DisplayName("Nome")>
+    <NotifyParentProperty(True)>
+    <RefreshProperties(RefreshProperties.All)>
+    <TypeConverter(GetType(UpperNoAccentConverter))>
+    Public Property Name As String
     Public Sub New(Dgv As DataGridView, Pg As PropertyGrid)
         DataGridView = Dgv
         PropertyGrid = Pg

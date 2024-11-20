@@ -107,8 +107,6 @@ Public Class FrmUser
         TxtFilterPrivileges.Clear()
         If _User.Emails IsNot Nothing Then DgvEmail.Fill(_User.Emails)
         BtnDelete.Enabled = _User.ID > 0 And _User.CanDelete(Routine.User)
-        If _User.Emails IsNot Nothing Then DgvEmail.Fill(_User.Emails)
-        BtnDelete.Enabled = _User.ID > 0 And _User.CanDelete(Routine.User)
         UpdatePrivileges()
         Text = "Usuário"
         If _User.LockInfo.IsLocked And Not _User.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _User.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
@@ -260,9 +258,6 @@ Public Class FrmUser
         ElseIf e.KeyCode = Keys.F And e.Control Then
             BtnClose.PerformClick()
         End If
-    End Sub
-    Private Sub TlpPrivileges_CellPaint(sender As Object, e As TableLayoutCellPaintEventArgs)
-        e.Graphics.DrawRectangle(New Pen(Color.Gray), e.CellBounds)
     End Sub
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
         If _User.ID = Locator.GetInstance(Of Session).User.ID Then

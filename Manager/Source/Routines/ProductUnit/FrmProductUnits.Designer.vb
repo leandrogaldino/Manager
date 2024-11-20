@@ -30,6 +30,7 @@ Partial Class FrmProductUnits
         Me.BtnFilter = New System.Windows.Forms.ToolStripButton()
         Me.BtnDetails = New System.Windows.Forms.ToolStripButton()
         Me.BtnClose = New System.Windows.Forms.ToolStripButton()
+        Me.BtnExport = New System.Windows.Forms.ToolStripButton()
         Me.SsInformation = New System.Windows.Forms.StatusStrip()
         Me.LblInfo = New System.Windows.Forms.ToolStripStatusLabel()
         Me.LblStatus = New System.Windows.Forms.ToolStripStatusLabel()
@@ -48,7 +49,6 @@ Partial Class FrmProductUnits
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.DgvUnitsLayout = New Manager.DataGridViewLayout()
-        Me.BtnExport = New System.Windows.Forms.ToolStripButton()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -155,6 +155,16 @@ Partial Class FrmProductUnits
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(36, 36)
         Me.BtnClose.Text = "Fechar"
+        '
+        'BtnExport
+        '
+        Me.BtnExport.AutoToolTip = False
+        Me.BtnExport.Image = Global.Manager.My.Resources.Resources.Export
+        Me.BtnExport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnExport.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnExport.Name = "BtnExport"
+        Me.BtnExport.Size = New System.Drawing.Size(97, 36)
+        Me.BtnExport.Text = "Exportar"
         '
         'SsInformation
         '
@@ -325,8 +335,8 @@ Partial Class FrmProductUnits
         Me.LblView.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
         Me.LblView.Font = New System.Drawing.Font("Century Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblView.Name = "LblView"
-        Me.LblView.Size = New System.Drawing.Size(129, 22)
-        Me.LblView.Text = "Detalhes da Unidade"
+        Me.LblView.Size = New System.Drawing.Size(57, 22)
+        Me.LblView.Text = "Detalhes"
         '
         'DgvData
         '
@@ -352,17 +362,7 @@ Partial Class FrmProductUnits
         'DgvUnitsLayout
         '
         Me.DgvUnitsLayout.DataGridView = Me.DgvData
-        Me.DgvUnitsLayout.Routine = Routine.ProductUnit
-        '
-        'BtnExport
-        '
-        Me.BtnExport.AutoToolTip = False
-        Me.BtnExport.Image = Global.Manager.My.Resources.Resources.Export
-        Me.BtnExport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.BtnExport.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnExport.Name = "BtnExport"
-        Me.BtnExport.Size = New System.Drawing.Size(97, 36)
-        Me.BtnExport.Text = "Exportar"
+        Me.DgvUnitsLayout.Routine = Manager.Routine.ProductUnit
         '
         'FrmProductUnits
         '

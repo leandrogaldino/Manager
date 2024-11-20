@@ -3635,7 +3635,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;Person&quot; Version=&quot;1&quot;&gt;
+        '''&lt;Routine Id=&quot;PrivilegePreset&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -3650,8 +3650,7 @@ Namespace My.Resources
         '''        &lt;Name&gt;Criação&lt;/Name&gt;
         '''        &lt;Width&gt;100&lt;/Width&gt;
         '''    &lt;/Column&gt;
-        '''    &lt;Column Index=&quot;2&quot;&gt;
-        '''      [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''    &lt;Column Index=&quot;2 [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PersonGrid() As String
             Get
@@ -3799,8 +3798,8 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM route
-        '''WHERE route.id = @id;.
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM privilegepreset
+        '''WHERE privilegepreset.id = @id;.
         '''</summary>
         Friend ReadOnly Property PrivilegePresetDelete() As String
             Get
@@ -3809,7 +3808,54 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO route
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
+        '''	privilegepreset.id AS &apos;ID&apos;,
+        '''    privilegepreset.creation AS &apos;Criação&apos;,
+        '''    CASE 
+        '''		WHEN privilegepreset.statusid = 0 THEN &quot;ATIVO&quot;
+        '''        WHEN privilegepreset.statusid = 1 THEN &quot;INATIVO&quot;
+        '''	END AS &apos;Status&apos;,
+        '''    privilegepreset.name AS &apos;Nome&apos;
+        '''FROM privilegepreset
+        '''WHERE
+        '''	IFNULL(privilegepreset.id, &apos;&apos;) LIKE @id AND
+        '''    IFNULL(privilegepreset.statusid, &apos;&apos;) LIKE @statusid
+        '''GROUP BY privilegepreset.id;.
+        '''</summary>
+        Friend ReadOnly Property PrivilegePresetFilter() As String
+            Get
+                Return ResourceManager.GetString("PrivilegePresetFilter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;Person&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''    &lt;Column Index=&quot;0&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;ID&lt;/Name&gt;
+        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''    &lt;/Column&gt;    
+        '''    &lt;Column Index=&quot;1&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;Criação&lt;/Name&gt;
+        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''    &lt;/Column&gt;
+        '''    &lt;Column Index=&quot;2&quot;&gt;
+        '''      [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property PrivilegePresetGrid() As String
+            Get
+                Return ResourceManager.GetString("PrivilegePresetGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO privilegepreset
         '''(
         '''    creation,
         '''    statusid,
@@ -3831,8 +3877,8 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM userprivilege
-        '''WHERE userprivilege.id = @id;.
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM privilegepresetprivilege
+        '''WHERE privilegepresetprivilege.id = @id;.
         '''</summary>
         Friend ReadOnly Property PrivilegePresetPrivilegeDelete() As String
             Get
@@ -3841,10 +3887,10 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO userprivilege
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO privilegepresetprivilege
         '''(
         '''	creation,
-        '''	granteduserid,
+        '''	privilegepresetid,
         '''	routineid,
         '''	privilegelevelid,
         '''	userid
@@ -3852,7 +3898,7 @@ Namespace My.Resources
         '''VALUES
         '''(
         '''	@creation,
-        '''	@granteduserid,
+        '''	@privilegepresetid,
         '''	@routineid,
         '''	@privilegelevelid,
         '''	@userid
@@ -3867,14 +3913,14 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	userprivilege.id,
-        '''	userprivilege.creation,
-        '''	userprivilege.granteduserid,
-        '''	userprivilege.routineid,
-        '''	userprivilege.privilegelevelid,
-        '''	userprivilege.userid
-        '''FROM userprivilege
-        '''WHERE userprivilege.granteduserid = @granteduserid;.
+        '''	privilegepresetprivilege.id,
+        '''	privilegepresetprivilege.creation,
+        '''	privilegepresetprivilege.privilegepresetid,
+        '''	privilegepresetprivilege.routineid,
+        '''	privilegepresetprivilege.privilegelevelid,
+        '''	privilegepresetprivilege.userid
+        '''FROM privilegepresetprivilege
+        '''WHERE privilegepresetprivilege.privilegepresetid = @privilegepresetid;.
         '''</summary>
         Friend ReadOnly Property PrivilegePresetPrivilegeSelect() As String
             Get
@@ -3884,12 +3930,12 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	route.id,
-        '''	route.creation,
-        '''    route.statusid,
-        '''	route.name
-        '''FROM route
-        '''WHERE route.id = @id;.
+        '''	privilegepreset.id,
+        '''	privilegepreset.creation,
+        '''    privilegepreset.statusid,
+        '''	privilegepreset.name
+        '''FROM privilegepreset
+        '''WHERE privilegepreset.id = @id;.
         '''</summary>
         Friend ReadOnly Property PrivilegePresetSelect() As String
             Get
@@ -3898,11 +3944,11 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE route SET
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE privilegepreset SET
         '''    statusid =  @statusid,
         '''    name = @name,
         '''    userid = @userid
-        '''WHERE route.id = @id;.
+        '''WHERE privilegepreset.id = @id;.
         '''</summary>
         Friend ReadOnly Property PrivilegePresetUpdate() As String
             Get

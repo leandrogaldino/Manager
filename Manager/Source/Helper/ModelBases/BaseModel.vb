@@ -27,7 +27,7 @@ Public MustInherit Class BaseModel
             Return _Routine
         End Get
     End Property
-    Public ReadOnly Property IsSaved As Long
+    Public ReadOnly Property IsSaved As Boolean
         Get
             Return _IsSaved
         End Get

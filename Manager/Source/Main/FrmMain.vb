@@ -61,8 +61,6 @@ Public Class FrmMain
             End If
         End If
     End Sub
-
-
     Private Sub CreateCashButton()
         If _User.CanAccess(Routine.Cash) Then
             If _User.CanAccess(Routine.CashExpensesPerResponsibleReport) Or _User.CanAccess(Routine.CashFlow) Then
@@ -141,7 +139,14 @@ Public Class FrmMain
     End Sub
     Private Sub CreateUserButton()
         If _User.CanAccess(Routine.User) Then
-            TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripButton("Usuário", "Cadastro de Usuários", My.Resources.User, AddressOf UserClick))
+            If _User.CanAccess(Routine.PrivilegePreset) Then
+                TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripSplitButton("Usuário", "Cadastro de Usuários", My.Resources.User, AddressOf UserClick))
+                If _User.CanAccess(Routine.PrivilegePreset) Then
+                    TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Usuário").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Predefinição de Permissões", "Cadastro de Predefinições de Permissões do Usuário", My.Resources.UserPrivilegePreset, AddressOf PrivilegePresetClick))
+                End If
+            Else
+                TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripButton("Usuário", "Cadastro de Usuários", My.Resources.User, AddressOf UserClick))
+            End If
         End If
     End Sub
     Private Sub CrmClick()
@@ -231,7 +236,13 @@ Public Class FrmMain
             SelectTab(Routine.User)
         End If
     End Sub
-
+    Private Sub PrivilegePresetClick()
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.PrivilegePreset)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmPrivilegePresets, EnumHelper.GetEnumDescription(Routine.PrivilegePreset))
+        Else
+            SelectTab(Routine.PrivilegePreset)
+        End If
+    End Sub
     Private Sub EmailModelClick()
         If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.EmailModel)) Or Control.ModifierKeys = Keys.Shift Then
             OpenTab(New FrmEmailModels, EnumHelper.GetEnumDescription(Routine.EmailModel))

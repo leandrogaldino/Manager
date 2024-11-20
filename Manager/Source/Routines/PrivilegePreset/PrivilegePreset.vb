@@ -9,6 +9,7 @@ Public Class PrivilegePreset
     Public Property Privileges As New List(Of UserPrivilege)
     Public Sub New()
         SetRoutine(Routine.PrivilegePreset)
+        _User = Locator.GetInstance(Of Session).User
     End Sub
 
 
@@ -82,10 +83,10 @@ Public Class PrivilegePreset
                     Cmd.Parameters.AddWithValue("@name", Name)
                     Cmd.Parameters.AddWithValue("@userid", User.ID)
                     Cmd.ExecuteNonQuery()
-                    SetIsSaved(Cmd.LastInsertedId)
+                    SetID(Cmd.LastInsertedId)
                 End Using
                 For Each Privilege As UserPrivilege In Privileges
-                    Using Cmd As New MySqlCommand(My.Resources.UserPrivilegeInsert, Con)
+                    Using Cmd As New MySqlCommand(My.Resources.PrivilegePresetPrivilegeInsert, Con)
                         Cmd.Transaction = Tra
                         Cmd.Parameters.AddWithValue("@privilegepresetid", ID)
                         Cmd.Parameters.AddWithValue("@creation", Privilege.Creation)
@@ -117,7 +118,7 @@ Public Class PrivilegePreset
                 End Using
                 For Each Privilege As UserPrivilege In Shadow.Privileges
                     If Not Privileges.Any(Function(x) x.ID = Privilege.ID And x.ID > 0) Then
-                        Using Cmd As New MySqlCommand(My.Resources.UserPrivilegeDelete, Con)
+                        Using Cmd As New MySqlCommand(My.Resources.PrivilegePresetPrivilegeDelete, Con)
                             Cmd.Transaction = Tra
                             Cmd.Parameters.AddWithValue("@id", Privilege.ID)
                             Cmd.ExecuteNonQuery()
@@ -126,7 +127,7 @@ Public Class PrivilegePreset
                 Next Privilege
                 For Each Privilege As UserPrivilege In Privileges
                     If Privilege.ID = 0 Then
-                        Using Cmd As New MySqlCommand(My.Resources.UserPrivilegeInsert, Con)
+                        Using Cmd As New MySqlCommand(My.Resources.PrivilegePresetPrivilegeInsert, Con)
                             Cmd.Transaction = Tra
                             Cmd.Parameters.AddWithValue("@privilegepresetid", ID)
                             Cmd.Parameters.AddWithValue("@creation", Privilege.Creation)

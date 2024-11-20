@@ -2,48 +2,48 @@
 <Routine Id="Person" Version="1">
 	<SortedColumn>-1</SortedColumn>
 	<SortDirection>0</SortDirection>
-    <Column Index="0">
-        <Visible>True</Visible>
-        <DisplayIndex>0</DisplayIndex>
-        <Name>ID</Name>
-        <Width>100</Width>
-    </Column>    
-    <Column Index="1">
-        <Visible>True</Visible>
-        <DisplayIndex>1</DisplayIndex>
-        <Name>Criação</Name>
-        <Width>100</Width>
-    </Column>
-    <Column Index="2">
-        <Visible>True</Visible>
-        <DisplayIndex>2</DisplayIndex>
-        <Name>Status</Name>
-        <Width>100</Width>
-    </Column>
-    <Column Index="3">
-        <Visible>True</Visible>
-        <DisplayIndex>3</DisplayIndex>
-        <Name>Entidade</Name>
-        <Width>130</Width>
-    </Column>
-    <Column Index="4">
-        <Visible>True</Visible>
-        <DisplayIndex>4</DisplayIndex>
-        <Name>CPF/CNPJ</Name>
-        <Width>130</Width>
-    </Column>
-    <Column Index="5">
-        <Visible>True</Visible>
-        <DisplayIndex>5</DisplayIndex>
-        <Name>Nome</Name>
-        <Width>350</Width>
-    </Column>
-    <Column Index="6">
-        <Visible>True</Visible>
-        <DisplayIndex>6</DisplayIndex>
-        <Name>Nome Curto</Name>
-        <Width>300</Width>
-    </Column>
+	<Column Index="0">
+		<Visible>True</Visible>
+		<DisplayIndex>0</DisplayIndex>
+		<Name>ID</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="1">
+		<Visible>True</Visible>
+		<DisplayIndex>1</DisplayIndex>
+		<Name>Criação</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="2">
+		<Visible>True</Visible>
+		<DisplayIndex>2</DisplayIndex>
+		<Name>Status</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="3">
+		<Visible>True</Visible>
+		<DisplayIndex>3</DisplayIndex>
+		<Name>Entidade</Name>
+		<Width>130</Width>
+	</Column>
+	<Column Index="4">
+		<Visible>True</Visible>
+		<DisplayIndex>4</DisplayIndex>
+		<Name>CPF/CNPJ</Name>
+		<Width>130</Width>
+	</Column>
+	<Column Index="5">
+		<Visible>True</Visible>
+		<DisplayIndex>5</DisplayIndex>
+		<Name>Nome</Name>
+		<Width>350</Width>
+	</Column>
+	<Column Index="6">
+		<Visible>True</Visible>
+		<DisplayIndex>6</DisplayIndex>
+		<Name>Nome Curto</Name>
+		<Width>300</Width>
+	</Column>
 	<Column Index="7">
 		<Visible>True</Visible>
 		<DisplayIndex>7</DisplayIndex>

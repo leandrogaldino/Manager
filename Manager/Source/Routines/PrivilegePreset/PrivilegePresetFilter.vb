@@ -2,8 +2,6 @@
 Imports ControlLibrary
 Imports MySql.Data.MySqlClient
 
-'TODO: CONCLUIR ESSA CLASSE
-
 ''' <summary>
 ''' Representa o filtro de predefinição de permissões.
 ''' </summary>
@@ -45,9 +43,10 @@ Public Class PrivilegePresetFilter
         End If
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
-            Using Cmd As New MySqlCommand(My.Resources.UserFilter, Con)
+            Using Cmd As New MySqlCommand(My.Resources.PrivilegePresetFilter, Con)
                 If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
                 If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = EnumHelper.GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
+                If Name <> Nothing Then Cmd.Parameters.AddWithValue("@name", Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@name", "%")
                 Using Adp As New MySqlDataAdapter(Cmd)
                     Adp.Fill(Table)
                     DataGridView.DataSource = Nothing
@@ -78,6 +77,6 @@ Public Class PrivilegePresetFilter
     Public Sub Clean()
         ID = Nothing
         Status = Nothing
-
+        Name = Nothing
     End Sub
 End Class

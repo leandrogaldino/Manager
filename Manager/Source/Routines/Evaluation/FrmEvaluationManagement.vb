@@ -119,7 +119,6 @@ Public Class FrmEvaluationManagement
     End Sub
     Private Sub PgFilter_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles PgFilter.PropertyValueChanged
         If _Filter.Filter() = True Then
-            DgvEvaluationManagementLayout.Load()
             LblStatus.Text = "Filtro Ativo"
             LblStatus.ForeColor = Color.DarkRed
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Bold)
@@ -128,6 +127,7 @@ Public Class FrmEvaluationManagement
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
+        DgvEvaluationManagementLayout.Load()
     End Sub
     Private Sub LoadDetails()
         If BtnDetails.Checked Then

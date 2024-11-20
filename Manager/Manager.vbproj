@@ -1640,6 +1640,7 @@
     <Content Include="Resources\SQL\PrivilegePresetSelect.sql" />
     <Content Include="Resources\SQL\PrivilegePresetUpdate.sql" />
     <Content Include="Resources\SQL\PrivilegePresetPrivilegeDelete.sql" />
+    <Content Include="Resources\SQL\PrivilegePresetFilter.sql" />
     <Content Include="Resources\SQL\UserPrivilegeDelete.sql" />
     <Content Include="Resources\SQL\PrivilegePresetPrivilegeInsert.sql" />
     <Content Include="Resources\SQL\PrivilegePresetPrivilegeSelect.sql" />
@@ -1934,6 +1935,7 @@
     <Content Include="Resources\XML\MaintenancePlan.xml" />
     <Content Include="Resources\XML\EmailModelGrid.xml" />
     <Content Include="Resources\XML\EmailSentGrid.xml" />
+    <Content Include="Resources\XML\PrivilegePresetGrid.xml" />
     <Content Include="Resources\XML\RequestItemGrid.xml" />
     <Content Include="Resources\XML\RequestGrid.xml" />
     <Content Include="Resources\XML\EvaluationGrid.xml" />

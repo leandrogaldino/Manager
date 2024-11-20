@@ -103,7 +103,7 @@ Public Class FrmRequests
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
-        SplitContainer1.Panel1Collapsed = If(BtnFilter.Checked, False, True)
+        SplitContainer1.Panel1Collapsed = Not BtnFilter.Checked
         SplitContainer1.SplitterDistance = 350
     End Sub
     Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
@@ -178,7 +178,6 @@ Public Class FrmRequests
     End Sub
     Private Sub PgFilter_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles PgFilter.PropertyValueChanged
         If _Filter.Filter() = True Then
-            DgvRequestLayout.Load()
             LblStatus.Text = "Filtro Ativo"
             LblStatus.ForeColor = Color.DarkRed
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Bold)
@@ -187,6 +186,7 @@ Public Class FrmRequests
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
+        DgvRequestLayout.Load()
     End Sub
     Private Sub LoadDetails()
         If BtnDetails.Checked Then

@@ -54,11 +54,11 @@ Public Enum Routine
     CompressorPartElapsedDay = 1202
     <Description("Avaliação de Compressor")> <TriStatePrivilege>
     Evaluation = 13
-    <Description("Gerenciamento de Avaliações")> <TriStatePrivilege>
+    <Description("Gerenciamento de Avaliações")> <BiStatePrivilege>
     EvaluationManagement = 1301
     EvaluationManagementPartWorkedHour = 1302
     EvaluationManagementPartElapsedDay = 1303
-    <Description("Painel de Compressores")> <TriStatePrivilege>
+    <Description("Painel de Compressores")> <BiStatePrivilege>
     EvaluationManagementPanel = 1304
     <Description("Exportar imagem do painel de compressores")> <BiStatePrivilege>
     EvaluationExportManagementPanel = 1305

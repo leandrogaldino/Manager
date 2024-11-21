@@ -5,6 +5,7 @@ Imports MySql.Data.MySqlClient
 ''' </summary>
 Public Class Person
     Inherits ParentModel
+    Private _Shadow As Person
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Entity As PersonEntityType = PersonEntityType.Legal
     Public Property IsCustomer As Boolean
@@ -88,6 +89,7 @@ Public Class Person
                 Tra.Commit()
             End Using
         End Using
+        _Shadow = Clone()
         Return Me
     End Function
     Public Function Load(Document As String, LockMe As Boolean) As Person
@@ -134,6 +136,7 @@ Public Class Person
                 Tra.Commit()
             End Using
         End Using
+        _Shadow = Clone()
         Return Me
     End Function
     Public Sub SaveChanges()
@@ -279,7 +282,6 @@ Public Class Person
     End Sub
     Private Sub Update()
         Dim Session = Locator.GetInstance(Of Session)
-        Dim Shadow As Person = New Person().Load(ID, False)
         Dim Compressor As PersonCompressor
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
@@ -302,7 +304,7 @@ Public Class Person
                     CmdPerson.Parameters.AddWithValue("@userid", User.ID)
                     CmdPerson.ExecuteNonQuery()
                 End Using
-                For Each Address As PersonAddress In Shadow.Addresses
+                For Each Address As PersonAddress In _Shadow.Addresses
                     If Not Addresses.Any(Function(x) x.ID = Address.ID And x.ID > 0) Then
                         Using CmdAddress As New MySqlCommand(My.Resources.PersonAddressDelete, Con)
                             CmdAddress.Transaction = Tra
@@ -356,7 +358,7 @@ Public Class Person
                         End Using
                     End If
                 Next Address
-                For Each Contact As PersonContact In Shadow.Contacts
+                For Each Contact As PersonContact In _Shadow.Contacts
                     If Not Contacts.Any(Function(x) x.ID = Contact.ID And x.ID > 0) Then
                         Using CmdContact As New MySqlCommand(My.Resources.PersonContactDelete, Con)
                             CmdContact.Transaction = Tra
@@ -394,7 +396,7 @@ Public Class Person
                         End Using
                     End If
                 Next Contact
-                For Each ShadowCompressor As PersonCompressor In Shadow.Compressors
+                For Each ShadowCompressor As PersonCompressor In _Shadow.Compressors
                     If Not Compressors.Any(Function(x) x.ID = ShadowCompressor.ID And x.ID > 0) Then
                         Using CmdCashItem As New MySqlCommand(My.Resources.PersonCompressorDelete, Con)
                             CmdCashItem.Transaction = Tra

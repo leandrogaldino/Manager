@@ -8,6 +8,7 @@ Imports MySql.Data.MySqlClient
 ''' </summary>
 Public Class Product
     Inherits ParentModel
+    Private _Shadow As Product
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
     Public Property InternalName As String
@@ -93,6 +94,7 @@ Public Class Product
                 Tra.Commit()
             End Using
         End Using
+        _Shadow = Clone()
         Return Me
     End Function
     Public Sub SaveChanges()
@@ -199,7 +201,6 @@ Public Class Product
         End Using
     End Sub
     Private Sub Update()
-        Dim Shadow As Product = New Product().Load(ID, False)
         Dim FileManager As New TxFileManager(ApplicationPaths.ManagerTempDirectory)
         Using Transaction As New Transactions.TransactionScope()
             Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
@@ -221,7 +222,7 @@ Public Class Product
                     CmdProduct.Parameters.AddWithValue("@userid", User.ID)
                     CmdProduct.ExecuteNonQuery()
                 End Using
-                For Each Picture As ProductPicture In Shadow.Pictures
+                For Each Picture As ProductPicture In _Shadow.Pictures
                     If Not Pictures.Any(Function(x) x.ID = Picture.ID And x.ID > 0) Then
                         Using CmdPicture As New MySqlCommand(My.Resources.ProductPictureDelete, Con)
                             CmdPicture.Parameters.AddWithValue("@id", Picture.ID)
@@ -253,7 +254,7 @@ Public Class Product
                         End Using
                     End If
                 Next Picture
-                For Each ProviderCode As ProductProviderCode In Shadow.ProviderCodes
+                For Each ProviderCode As ProductProviderCode In _Shadow.ProviderCodes
                     If Not ProviderCodes.Any(Function(x) x.ID = ProviderCode.ID And x.ID > 0) Then
                         Using CmdProdiderCode As New MySqlCommand(My.Resources.ProductProviderCodeDelete, Con)
                             CmdProdiderCode.Parameters.AddWithValue("@id", ProviderCode.ID)
@@ -284,7 +285,7 @@ Public Class Product
                         End Using
                     End If
                 Next ProviderCode
-                For Each Code As ProductCode In Shadow.Codes
+                For Each Code As ProductCode In _Shadow.Codes
                     If Not Codes.Any(Function(x) x.ID = Code.ID And x.ID > 0) Then
                         Using CmdCode As New MySqlCommand(My.Resources.ProductCodeDelete, Con)
                             CmdCode.Parameters.AddWithValue("@id", Code.ID)
@@ -313,7 +314,7 @@ Public Class Product
                         End Using
                     End If
                 Next Code
-                For Each Price As ProductPrice In Shadow.Prices
+                For Each Price As ProductPrice In _Shadow.Prices
                     If Not Prices.Any(Function(x) x.ID = Price.ID And x.ID > 0) Then
                         Using CmdPrice As New MySqlCommand(My.Resources.ProductPriceDelete, Con)
                             CmdPrice.Parameters.AddWithValue("@id", Price.ID)

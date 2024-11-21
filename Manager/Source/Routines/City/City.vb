@@ -5,6 +5,7 @@ Imports MySql.Data.MySqlClient
 ''' </summary>
 Public Class City
     Inherits ParentModel
+    Private _Shadow As City
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
     Public Property BIGSCode As String
@@ -56,6 +57,7 @@ Public Class City
                 Tra.Commit()
             End Using
         End Using
+        _Shadow = Clone()
         Return Me
     End Function
     Public Shared Function GetID(CityName As String, State As String) As Long

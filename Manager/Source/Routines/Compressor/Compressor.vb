@@ -6,6 +6,7 @@ Imports MySql.Data.MySqlClient
 Public Class Compressor
     Inherits ParentModel
     Private _ManufacturerID As Long
+    Private _Shadow As Compressor
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
     Public Property Manufacturer As New Lazy(Of Person)(Function() New Person().Load(_ManufacturerID, False))
@@ -58,6 +59,7 @@ Public Class Compressor
                 Tra.Commit()
             End Using
         End Using
+        _Shadow = Clone()
         Return Me
     End Function
     Public Sub SaveChanges()
@@ -132,7 +134,6 @@ Public Class Compressor
     End Sub
     Private Sub Update()
         Dim Session = Locator.GetInstance(Of Session)
-        Dim Shadow As Compressor = New Compressor().Load(ID, False)
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
@@ -145,7 +146,7 @@ Public Class Compressor
                     CmdCompressor.Parameters.AddWithValue("@userid", User.ID)
                     CmdCompressor.ExecuteNonQuery()
                 End Using
-                For Each PardWorkedHour As CompressorPart In Shadow.PartsWorkedHour.Value
+                For Each PardWorkedHour As CompressorPart In _Shadow.PartsWorkedHour.Value
                     If Not PartsWorkedHour.Value.Any(Function(x) x.ID = PardWorkedHour.ID And x.ID > 0) Then
                         Using CmdCompressorPart As New MySqlCommand(My.Resources.CompressorPartDelete, Con)
                             CmdCompressorPart.Transaction = Tra
@@ -182,7 +183,7 @@ Public Class Compressor
                         End Using
                     End If
                 Next PartWorkedHour
-                For Each PartElapsedDay As CompressorPart In Shadow.PartsElapsedDay.Value
+                For Each PartElapsedDay As CompressorPart In _Shadow.PartsElapsedDay.Value
                     If Not PartsElapsedDay.Value.Any(Function(x) x.ID = PartElapsedDay.ID And x.ID > 0) Then
                         Using CmdPartElapsedDay As New MySqlCommand(My.Resources.CompressorPartDelete, Con)
                             CmdPartElapsedDay.Transaction = Tra

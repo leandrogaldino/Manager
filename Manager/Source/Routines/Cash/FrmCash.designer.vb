@@ -245,10 +245,10 @@ Partial Class FrmCash
         '
         Me.TabDocument.Controls.Add(Me.PdfDocumentViewer)
         Me.TabDocument.Controls.Add(Me.TsDocument)
-        Me.TabDocument.Location = New System.Drawing.Point(4, 22)
+        Me.TabDocument.Location = New System.Drawing.Point(4, 26)
         Me.TabDocument.Name = "TabDocument"
         Me.TabDocument.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabDocument.Size = New System.Drawing.Size(606, 200)
+        Me.TabDocument.Size = New System.Drawing.Size(606, 196)
         Me.TabDocument.TabIndex = 2
         Me.TabDocument.Text = "Documento"
         Me.TabDocument.UseVisualStyleBackColor = True
@@ -278,7 +278,7 @@ Partial Class FrmCash
         Me.PdfDocumentViewer.ScrollDisplacementValue = 0
         Me.PdfDocumentViewer.ShowHorizontalScrollBar = True
         Me.PdfDocumentViewer.ShowVerticalScrollBar = True
-        Me.PdfDocumentViewer.Size = New System.Drawing.Size(600, 169)
+        Me.PdfDocumentViewer.Size = New System.Drawing.Size(600, 165)
         Me.PdfDocumentViewer.SpaceBetweenPages = 8
         Me.PdfDocumentViewer.TabIndex = 3
         TextSearchSettings1.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -371,10 +371,10 @@ Partial Class FrmCash
         'TabNote
         '
         Me.TabNote.Controls.Add(Me.TxtNote)
-        Me.TabNote.Location = New System.Drawing.Point(4, 22)
+        Me.TabNote.Location = New System.Drawing.Point(4, 26)
         Me.TabNote.Name = "TabNote"
         Me.TabNote.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabNote.Size = New System.Drawing.Size(606, 200)
+        Me.TabNote.Size = New System.Drawing.Size(606, 196)
         Me.TabNote.TabIndex = 1
         Me.TabNote.Text = "Observação"
         Me.TabNote.UseVisualStyleBackColor = True
@@ -386,7 +386,7 @@ Partial Class FrmCash
         Me.TxtNote.Location = New System.Drawing.Point(3, 3)
         Me.TxtNote.MaxLength = 1000000
         Me.TxtNote.Name = "TxtNote"
-        Me.TxtNote.Size = New System.Drawing.Size(600, 194)
+        Me.TxtNote.Size = New System.Drawing.Size(600, 190)
         Me.TxtNote.TabIndex = 3
         Me.TxtNote.Text = ""
         '

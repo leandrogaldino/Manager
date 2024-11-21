@@ -157,6 +157,7 @@ Partial Class FrmFilter
         Me.DgvData.AllowUserToOrderColumns = True
         Me.DgvData.AllowUserToResizeRows = False
         Me.DgvData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+        Me.DgvData.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.DgvData.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.DgvData.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.DgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize

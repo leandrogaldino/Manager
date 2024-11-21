@@ -73,6 +73,7 @@ Public Enum Routine
     EvaluationImport = 1311
     <Description("Predefinição de Permissões")> <TriStatePrivilege>
     PrivilegePreset = 14
+    PrivilegePresetPrivilege = 1401
     <Description("Requisição")> <TriStatePrivilege>
     Request = 15
     RequestItem = 1501
@@ -106,7 +107,7 @@ Public Enum Routine
     CrmChangeResponsible = 2104
     <Description("Alterar o assunto do CRM")> <BiStatePrivilege>
     CrmChangeSubject = 2105
-    <Description("Alterar o assunto do CRM")> <BiStatePrivilege>
+    <Description("Editar um atendimento do CRM")> <BiStatePrivilege>
     CrmEditTreatment = 2106
     <Description("Agendamento de Visita")> <TriStatePrivilege>
     VisitSchedule = 22

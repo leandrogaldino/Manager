@@ -38,6 +38,20 @@ Public Class FrmPrivilegePreset
         LoadForm()
         LoadData()
     End Sub
+    Public Sub New(PrivilegePreset As PrivilegePreset)
+        InitializeComponent()
+        _PrivilegePreset = PrivilegePreset
+        _LoggedUser = Locator.GetInstance(Of Session).User
+        TsNavigation.Visible = False
+        TsNavigation.Enabled = False
+        LblStatus.Visible = False
+        BtnStatusValue.Visible = False
+        BtnStatusValue.Enabled = False
+        TcPrivilegePreset.Height -= TsNavigation.Height
+        Height -= TsNavigation.Height
+        LoadForm()
+        LoadData()
+    End Sub
     Private Sub LoadForm()
         ControlHelper.EnableControlDoubleBuffer(FlpPrivilege, True)
         ControlHelper.EnableControlDoubleBuffer(TcPrivilegePreset, True)

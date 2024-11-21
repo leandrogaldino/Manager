@@ -442,22 +442,22 @@ Public Class FrmUser
             End Try
         End If
     End Sub
-    Private Sub TvwPrivilege_AfterSelect(sender As Object, e As TreeViewEventArgs)
-        'LblDescription.Text = e.Node.Tag.ToString
-    End Sub
-    Private Sub TvwPrivilege_AfterCheck(sender As Object, e As TreeViewEventArgs)
-        'If e.Node.Parent IsNot Nothing Then
-        '    If e.Node.Checked Then
-        '        e.Node.Parent.Checked = True
-        '    End If
-        'End If
-        'If e.Node.Checked = False Then
-        '    For Each n As TreeNode In e.Node.Nodes
-        '        n.Checked = False
-        '    Next n
-        'End If
-        'If Not _Loading Then BtnSave.Enabled = True
-    End Sub
+    'Private Sub TvwPrivilege_AfterSelect(sender As Object, e As TreeViewEventArgs)
+    'LblDescription.Text = e.Node.Tag.ToString
+    'End Sub
+    'Private Sub TvwPrivilege_AfterCheck(sender As Object, e As TreeViewEventArgs)
+    'If e.Node.Parent IsNot Nothing Then
+    '    If e.Node.Checked Then
+    '        e.Node.Parent.Checked = True
+    '    End If
+    'End If
+    'If e.Node.Checked = False Then
+    '    For Each n As TreeNode In e.Node.Nodes
+    '        n.Checked = False
+    '    Next n
+    'End If
+    'If Not _Loading Then BtnSave.Enabled = True
+    'End Sub
     'Private Sub BtnImportPrivilege_Click(sender As Object, e As EventArgs) Handles BtnImportPrivilege.Click
     '    Dim FormImport As FrmUserImportPrivilege
     '    Dim Preset As UserPrivilegePreset
@@ -561,8 +561,9 @@ Public Class FrmUser
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Person As Person
         Dim Form As FrmPerson
-        Person = New Person
-        Person.IsEmployee = True
+        Person = New Person With {
+            .IsEmployee = True
+        }
         Form = New FrmPerson(Person)
         Form.CbxIsEmployee.Enabled = False
         Form.ShowDialog()
@@ -581,8 +582,9 @@ Public Class FrmUser
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
         Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New PersonEmployeeQueriedBoxFilter(), QbxPerson)
-        FilterForm.Text = "Filtro de Funcionários"
+        FilterForm = New FrmFilter(New PersonEmployeeQueriedBoxFilter(), QbxPerson) With {
+            .Text = "Filtro de Funcionários"
+        }
         FilterForm.ShowDialog()
         QbxPerson.Select()
     End Sub
@@ -708,5 +710,24 @@ Public Class FrmUser
         End If
 
         FlpPrivilege.ResumeLayout()
+    End Sub
+
+    Private Sub BtnImportPrivilege_Click(sender As Object, e As EventArgs) Handles BtnImportPrivilege.Click
+        Dim Preset As PrivilegePreset
+        Dim UserPrivilege As UserPrivilege
+        Using Frm As New FrmUserImportPrivilege()
+            Frm.ShowDialog()
+            Preset = New PrivilegePreset().Load(Frm.QbxPreset.FreezedPrimaryKey, False)
+            _User.Privileges.Clear()
+
+            For Each Privilege In Preset.Privileges
+                UserPrivilege = New UserPrivilege With {
+                    .PrivilegedRoutine = Privilege.PrivilegedRoutine,
+                    .Level = Privilege.Level
+                }
+                _User.Privileges.Add(UserPrivilege)
+            Next Privilege
+            UpdatePrivileges()
+        End Using
     End Sub
 End Class

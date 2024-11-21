@@ -6,6 +6,7 @@ Imports MySql.Data.MySqlClient
 
 Public Class Evaluation
     Inherits ParentModel
+    Private _Shadow As Evaluation
     Private _Compressor As New PersonCompressor
     Private _Status As EvaluationStatus = EvaluationStatus.Disapproved
     Private _RejectReason As String
@@ -261,6 +262,7 @@ Public Class Evaluation
                 Tra.Commit()
             End Using
         End Using
+        _Shadow = Clone()
         Return Me
     End Function
     Private Function GetPhotos(Transaction As MySqlTransaction) As List(Of EvaluationPhoto)
@@ -386,7 +388,6 @@ Public Class Evaluation
         Photos.ToList().ForEach(Sub(x) x.SetIsSaved(True))
     End Sub
     Public Sub Delete()
-        Dim Shadow As Evaluation = New Evaluation().Load(ID, False)
         Dim Session = Locator.GetInstance(Of Session)
         Dim FileManager As New TxFileManager(ApplicationPaths.ManagerTempDirectory)
         Using Transaction As New Transactions.TransactionScope()
@@ -398,7 +399,7 @@ Public Class Evaluation
                     If File.Exists(Document.OriginalFile) Then FileManager.Delete(Document.OriginalFile)
                     If File.Exists(Signature.OriginalFile) Then FileManager.Delete(Signature.OriginalFile)
 
-                    For Each ShadowPhoto In Shadow.Photos
+                    For Each ShadowPhoto In _Shadow.Photos
                         If File.Exists(ShadowPhoto.Photo.OriginalFile) Then
                             FileManager.Delete(ShadowPhoto.Photo.OriginalFile)
                         End If
@@ -501,7 +502,6 @@ Public Class Evaluation
     End Sub
     Private Sub Update()
         Dim Session = Locator.GetInstance(Of Session)
-        Dim Shadow As Evaluation = New Evaluation().Load(ID, False)
         Using Transaction As New Transactions.TransactionScope()
             Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
                 Con.Open()
@@ -526,7 +526,7 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@userid", User.ID)
                     CmdEvaluation.ExecuteNonQuery()
                 End Using
-                For Each Technician As EvaluationTechnician In Shadow.Technicians
+                For Each Technician As EvaluationTechnician In _Shadow.Technicians
                     If Not Technicians.Any(Function(x) x.ID = Technician.ID And x.ID > 0) Then
                         Using Cmd As New MySqlCommand(My.Resources.EvaluationTechnicianDelete, Con)
                             Cmd.Parameters.AddWithValue("@id", Technician.ID)
@@ -552,8 +552,8 @@ Public Class Evaluation
                         End Using
                     End If
                 Next Technician
-                If Compressor.ID <> Shadow.Compressor.ID Then
-                    For Each ShadowPartWorkedHour As EvaluationPart In Shadow.PartsWorkedHour.Where(Function(x) x.ID <> 0)
+                If Compressor.ID <> _Shadow.Compressor.ID Then
+                    For Each ShadowPartWorkedHour As EvaluationPart In _Shadow.PartsWorkedHour.Where(Function(x) x.ID <> 0)
                         Using CmdPartWorkedHour As New MySqlCommand(My.Resources.EvaluationPartDelete, Con)
                             CmdPartWorkedHour.Parameters.AddWithValue("@id", ShadowPartWorkedHour.ID)
                             CmdPartWorkedHour.ExecuteNonQuery()
@@ -573,7 +573,7 @@ Public Class Evaluation
                             PartWorkedHour.SetID(CmdPartWorkedHour.LastInsertedId)
                         End Using
                     Next PartWorkedHour
-                    For Each ShadowPartElapsedDay As EvaluationPart In Shadow.PartsElapsedDay.Where(Function(x) x.ID <> 0)
+                    For Each ShadowPartElapsedDay As EvaluationPart In _Shadow.PartsElapsedDay.Where(Function(x) x.ID <> 0)
                         Using CmdPartElapsedDay As New MySqlCommand(My.Resources.EvaluationPartDelete, Con)
                             CmdPartElapsedDay.Parameters.AddWithValue("@id", ShadowPartElapsedDay.ID)
                             CmdPartElapsedDay.ExecuteNonQuery()
@@ -594,7 +594,7 @@ Public Class Evaluation
                         End Using
                     Next PartElapsedDay
                 Else
-                    For Each PartWorkedHour As EvaluationPart In Shadow.PartsWorkedHour
+                    For Each PartWorkedHour As EvaluationPart In _Shadow.PartsWorkedHour
                         If Not PartsWorkedHour.Any(Function(x) x.ID = PartWorkedHour.ID And x.ID > 0) Then
                             Using CmdPartWorkedHour As New MySqlCommand(My.Resources.EvaluationPartDelete, Con)
                                 CmdPartWorkedHour.Parameters.AddWithValue("@id", PartWorkedHour.ID)
@@ -618,7 +618,7 @@ Public Class Evaluation
                             End Using
                         Else
                             Using CmdPartWorkedHour As New MySqlCommand(My.Resources.EvaluationPartUpdate, Con)
-                                CmdPartWorkedHour.Parameters.AddWithValue("@id", Shadow.PartsWorkedHour.First(Function(x) x.Guid = PartWorkedHour.Guid).ID)
+                                CmdPartWorkedHour.Parameters.AddWithValue("@id", _Shadow.PartsWorkedHour.First(Function(x) x.Guid = PartWorkedHour.Guid).ID)
                                 CmdPartWorkedHour.Parameters.AddWithValue("@currentcapacity", PartWorkedHour.CurrentCapacity)
                                 CmdPartWorkedHour.Parameters.AddWithValue("@sold", PartWorkedHour.Sold)
                                 CmdPartWorkedHour.Parameters.AddWithValue("@lost", PartWorkedHour.Lost)
@@ -627,7 +627,7 @@ Public Class Evaluation
                             End Using
                         End If
                     Next PartWorkedHour
-                    For Each PartElapsedDay As EvaluationPart In Shadow.PartsElapsedDay
+                    For Each PartElapsedDay As EvaluationPart In _Shadow.PartsElapsedDay
                         If Not PartsElapsedDay.Any(Function(x) x.ID = PartElapsedDay.ID And x.ID > 0) Then
                             Using CmdPartElapsedDay As New MySqlCommand(My.Resources.EvaluationPartDelete, Con)
                                 CmdPartElapsedDay.Parameters.AddWithValue("@id", PartElapsedDay.ID)
@@ -651,7 +651,7 @@ Public Class Evaluation
                             End Using
                         Else
                             Using CmdPartElapsedDay As New MySqlCommand(My.Resources.EvaluationPartUpdate, Con)
-                                CmdPartElapsedDay.Parameters.AddWithValue("@id", Shadow.PartsElapsedDay.First(Function(x) x.Guid = PartElapsedDay.Guid).ID)
+                                CmdPartElapsedDay.Parameters.AddWithValue("@id", _Shadow.PartsElapsedDay.First(Function(x) x.Guid = PartElapsedDay.Guid).ID)
                                 CmdPartElapsedDay.Parameters.AddWithValue("@currentcapacity", PartElapsedDay.CurrentCapacity)
                                 CmdPartElapsedDay.Parameters.AddWithValue("@sold", PartElapsedDay.Sold)
                                 CmdPartElapsedDay.Parameters.AddWithValue("@lost", PartElapsedDay.Lost)
@@ -661,7 +661,7 @@ Public Class Evaluation
                         End If
                     Next PartElapsedDay
                 End If
-                For Each Photo As EvaluationPhoto In Shadow.Photos
+                For Each Photo As EvaluationPhoto In _Shadow.Photos
                     If Not Photos.Any(Function(x) x.ID = Photo.ID And x.ID > 0) Then
                         Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoDelete, Con)
                             Cmd.Parameters.AddWithValue("@id", Photo.ID)

@@ -132,7 +132,8 @@ Public Class FrmEvaluationTechnician
                 _EvaluationTechnician.SetIsSaved(True)
                 _Evaluation.Technicians.Add(_EvaluationTechnician)
             End If
-            _EvaluationForm.FillDataGridViewTechnician()
+            '_EvaluationForm.FillDataGridViewTechnician()
+            _EvaluationForm.DgvTechnician.Fill(_Evaluation.Technicians)
             BtnSave.Enabled = False
             If Not _EvaluationTechnician.IsSaved Then
                 BtnSave.Text = "Incluir"
@@ -216,7 +217,7 @@ Public Class FrmEvaluationTechnician
         If _EvaluationForm.DgvTechnician.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                 _EvaluationTechnician = _Evaluation.Technicians.Single(Function(x) x.Guid = _EvaluationForm.DgvTechnician.SelectedRows(0).Cells("Guid").Value)
-                _EvaluationForm.FillDataGridViewTechnician()
+                '_EvaluationForm.FillDataGridViewTechnician()
                 _EvaluationForm.DgvTechnician.Fill(_Evaluation.Technicians)
                 _Deleting = True
                 Dispose()

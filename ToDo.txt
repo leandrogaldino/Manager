@@ -1,8 +1,12 @@
-[] Mudar o clone de todos os updates para um campo privado, igual o PrivilegePreset.
-
-[] Implementar a predefinição de permissões no usuário.
-
 [] Terminar a rotina de agendamento.
+
+[X] Implementar a predefinição de permissões no usuário.
+
+[X] O Grid de rotas dentro do FrmCity não está configurado.
+
+[X] Criar nova avaliação está lançando exceção.
+
+[X] Mudar o clone de todos os updates para um campo privado, igual o PrivilegePreset.
 
 [X] Fazer o alinhamento do conteúdo do Grid das peças da avaliação.
 

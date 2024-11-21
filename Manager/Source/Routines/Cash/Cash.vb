@@ -8,6 +8,7 @@ Imports ManagerCore
 ''' </summary>
 Public Class Cash
     Inherits ParentModel
+    Private _Shadow As Cash
     Public Property Status As CashStatus = CashStatus.Opened
     Public Property CashFlow As New CashFlow
     Public Property Note As String
@@ -63,6 +64,7 @@ Public Class Cash
                 Tra.Commit()
             End Using
         End Using
+        _Shadow = Clone()
         Return Me
     End Function
     Public Sub SaveChanges()
@@ -138,7 +140,6 @@ Public Class Cash
     End Sub
     Private Sub Update()
         Dim Session = Locator.GetInstance(Of Session)
-        Dim Shadow As Cash = New Cash().Load(ID, False)
         Dim CashItem As CashItem
         Using Transaction As New Transactions.TransactionScope()
             Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
@@ -150,7 +151,7 @@ Public Class Cash
                     CmdCash.Parameters.AddWithValue("@userid", User.ID)
                     CmdCash.ExecuteNonQuery()
                 End Using
-                For Each ShadowCashItem As CashItem In Shadow.CashItems
+                For Each ShadowCashItem As CashItem In _Shadow.CashItems
                     If Not CashItems.Any(Function(x) x.ID = ShadowCashItem.ID And x.ID > 0) Then
                         Using CmdCashItem As New MySqlCommand(My.Resources.CashItemDelete, Con)
                             CmdCashItem.Parameters.AddWithValue("@id", ShadowCashItem.ID)

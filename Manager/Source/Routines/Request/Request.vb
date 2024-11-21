@@ -8,6 +8,7 @@ Imports MySql.Data.MySqlClient
 ''' </summary>
 Public Class Request
     Inherits ParentModel
+    Private _Shadow As Request
     Public Property Status As RequestStatus = RequestStatus.Pending
     Public Property Destination As String
     Public Property Responsible As String
@@ -78,17 +79,18 @@ Public Class Request
                                     Items.Add(Item)
                                 Next Row
                             End Using
-                    End Using
+                        End Using
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
                         SetIsSaved(True)
                     Else
-                            Throw New Exception("Registro não encontrado.")
+                        Throw New Exception("Registro não encontrado.")
                     End If
                 End Using
                 Tra.Commit()
             End Using
         End Using
+        _Shadow = Clone()
         Return Me
     End Function
     Public Sub SaveChanges()
@@ -153,7 +155,6 @@ Public Class Request
         End Using
     End Sub
     Private Sub Update()
-        Dim Shadow As Request = New Request().Load(ID, False)
         Using Transaction As New Transactions.TransactionScope()
             Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
                 Con.Open()
@@ -167,7 +168,7 @@ Public Class Request
                     CmdRequest.Parameters.AddWithValue("@userid", User.ID)
                     CmdRequest.ExecuteNonQuery()
                 End Using
-                For Each Item As RequestItem In Shadow.Items
+                For Each Item As RequestItem In _Shadow.Items
                     If Not Items.Any(Function(x) x.ID = Item.ID And x.ID > 0) Then
                         Using CmdItem As New MySqlCommand(My.Resources.RequestItemDelete, Con)
                             CmdItem.Parameters.AddWithValue("@id", Item.ID)

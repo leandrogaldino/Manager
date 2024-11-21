@@ -33,6 +33,7 @@ Public Class FrmCity
         _CitiesForm = CitiesForm
         _CitiesGrid = _CitiesForm.DgvData
         _Filter = CType(_CitiesForm.PgFilter.SelectedObject, CityFilter)
+        _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
     End Sub
@@ -354,6 +355,6 @@ Public Class FrmCity
     End Sub
 
     Private Sub FrmCity_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvRouteLayout.Load()
+        DgvlRouteLayout.Load()
     End Sub
 End Class

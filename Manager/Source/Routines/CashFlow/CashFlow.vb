@@ -5,6 +5,7 @@ Imports ControlLibrary
 ''' </summary>
 Public Class CashFlow
     Inherits ParentModel
+    Private _Shadow As CashFlow
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
     Public Property Authorizeds As New List(Of CashFlowAuthorized)
@@ -75,6 +76,7 @@ Public Class CashFlow
                 Tra.Commit()
             End Using
         End Using
+        _Shadow = Clone()
         Return Me
     End Function
     Public Sub SaveChanges()
@@ -128,7 +130,6 @@ Public Class CashFlow
     End Sub
     Private Sub Update()
         Dim Session = Locator.GetInstance(Of Session)
-        Dim Shadow As CashFlow = New CashFlow().Load(ID, False)
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
@@ -140,7 +141,7 @@ Public Class CashFlow
                     Cmd.Parameters.AddWithValue("@userid", User.ID)
                     Cmd.ExecuteNonQuery()
                 End Using
-                For Each FlowAuhorized As CashFlowAuthorized In Shadow.Authorizeds
+                For Each FlowAuhorized As CashFlowAuthorized In _Shadow.Authorizeds
                     If Not Authorizeds.Any(Function(x) x.ID = FlowAuhorized.ID And x.ID > 0) Then
                         Using CmdCompressorPart As New MySqlCommand(My.Resources.CashFlowAuthorizedDelete, Con)
                             CmdCompressorPart.Transaction = Tra

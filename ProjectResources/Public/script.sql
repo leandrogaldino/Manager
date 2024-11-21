@@ -193,6 +193,22 @@ CREATE TABLE privilegepreset (
     FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
 );
 
+DELIMITER $$
+USE `manager`$$
+CREATE TRIGGER `privilegepresetinsert` AFTER INSERT ON `privilegepreset` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 14, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END$$
+
+CREATE TRIGGER `privilegepresetupdate` AFTER UPDATE ON `privilegepreset` FOR EACH ROW BEGIN
+IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 14, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'PENDENTE' WHEN OLD.statusid = 1 THEN 'INICIADA' WHEN OLD.statusid = 2 THEN 'FINALIZADA' WHEN OLD.statusid = 3 THEN 'CANCELADA'END, CASE WHEN NEW.statusid = 0 THEN 'PENDENTE' WHEN NEW.statusid = 1 THEN 'INICIADA' WHEN NEW.statusid = 2 THEN 'FINALIZADA' WHEN NEW.statusid = 3 THEN 'CANCELADA' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.name <> NEW.name THEN INSERT INTO log VALUES (NULL, 14, NEW.id, 'Nome', OLD.name, NEW.name, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+END$$
+
+CREATE TRIGGER `privilegepresetdelete` AFTER DELETE ON `privilegepreset` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 14, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
+END$$
+DELIMITER ;
+
 CREATE TABLE privilegepresetprivilege (
 	id INT NOT NULL AUTO_INCREMENT,
     privilegepresetid INT NOT NULL,

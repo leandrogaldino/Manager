@@ -77,14 +77,15 @@ Partial Class FrmUserImportPrivilege
         Me.QbxPreset.CharactersToQuery = 1
         Condition1.FieldName = "statusid"
         Condition1.Operator = "="
-        Condition1.TableNameOrAlias = "userprivilegepreset"
+        Condition1.TableNameOrAlias = "privilegepreset"
         Condition1.Value = "@statusid"
         Me.QbxPreset.Conditions.Add(Condition1)
+        Me.QbxPreset.DebugOnTextChanged = False
         Me.QbxPreset.DisplayFieldAlias = "Nome"
         Me.QbxPreset.DisplayFieldName = "name"
         Me.QbxPreset.DisplayMainFieldName = "id"
         Me.QbxPreset.DisplayTableAlias = Nothing
-        Me.QbxPreset.DisplayTableName = "userprivilegepreset"
+        Me.QbxPreset.DisplayTableName = "privilegepreset"
         Me.QbxPreset.Distinct = False
         Me.QbxPreset.DropDownAutoStretchRight = False
         Me.QbxPreset.GridHeaderBackColor = System.Drawing.SystemColors.Window
@@ -92,7 +93,7 @@ Partial Class FrmUserImportPrivilege
         Me.QbxPreset.Location = New System.Drawing.Point(12, 29)
         Me.QbxPreset.MainReturnFieldName = "id"
         Me.QbxPreset.MainTableAlias = Nothing
-        Me.QbxPreset.MainTableName = "userprivilegepreset"
+        Me.QbxPreset.MainTableName = "privilegepreset"
         Me.QbxPreset.Name = "QbxPreset"
         Parameter1.ParameterName = "@statusid"
         Parameter1.ParameterValue = "0"

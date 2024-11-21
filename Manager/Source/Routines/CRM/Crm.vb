@@ -11,6 +11,7 @@ Imports MySql.Data.MySqlClient
 Public Class Crm
     Inherits ParentModel
     Private _Session As Session
+    Private _Shadow As Crm
     Public Property Status As CrmStatus = CrmStatus.Pending
     Public Property Customer As New Person
     Public Property Responsible As Person = Locator.GetInstance(Of Session).User.Person.Value
@@ -65,6 +66,7 @@ Public Class Crm
                 Tra.Commit()
             End Using
         End Using
+        _Shadow = Clone()
         Return Me
     End Function
     Public Sub SaveChanges()
@@ -124,7 +126,6 @@ Public Class Crm
     End Sub
     Private Sub Update()
         Dim Session = Locator.GetInstance(Of Session)
-        Dim Shadow As Crm = New Crm().Load(ID, False)
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
@@ -138,7 +139,7 @@ Public Class Crm
                     CmdCrm.Parameters.AddWithValue("@userid", User.ID)
                     CmdCrm.ExecuteNonQuery()
                 End Using
-                For Each Treatment As CrmTreatment In Shadow.Treatments
+                For Each Treatment As CrmTreatment In _Shadow.Treatments
                     If Not Treatments.Any(Function(x) x.ID = Treatment.ID And x.ID > 0) Then
                         Using CmdTreatment As New MySqlCommand(My.Resources.CrmTreatmentDelete, Con)
                             CmdTreatment.Transaction = Tra

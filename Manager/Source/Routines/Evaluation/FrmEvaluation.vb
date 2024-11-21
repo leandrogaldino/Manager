@@ -13,6 +13,7 @@ Public Class FrmEvaluation
     Private _Calculated As Boolean
     Private _TargetSize As Size
     Private _SelectedPhoto As EvaluationPhoto
+    Private _Resizer As FluidResizer
     Private _User As User
     Private Property SelectedPhoto As EvaluationPhoto
         Get
@@ -191,47 +192,45 @@ Public Class FrmEvaluation
         End Get
         Set(value As Boolean)
             _Calculated = value
-
             If Calculated Then
                 _TargetSize = New Size(1050, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
             Else
                 _TargetSize = New Size(433, 550 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
             End If
-
-            If _Loading Then
-                Me.Size = _TargetSize
-            Else
-                ' Inicia o timer para redimensionar o formulário de forma suave
-                TmrResize.Start()
+            If _Resizer IsNot Nothing Then
+                If _Loading Then
+                    Size = _TargetSize
+                Else
+                    _Resizer.SetSize(_TargetSize)
+                End If
             End If
-
         End Set
     End Property
 
-    Private Sub TmrResize_Tick(sender As Object, e As EventArgs) Handles TmrResize.Tick
-        ' Define os incrementos em largura e altura
-        Dim stepWidth As Integer = Math.Max(1, Math.Abs(_TargetSize.Width - Me.Width) / 5) ' Incrementa no mínimo 1 pixel
-        Dim stepHeight As Integer = Math.Max(1, Math.Abs(_TargetSize.Height - Me.Height) / 5)
+    'Private Sub TmrResize_Tick(sender As Object, e As EventArgs) Handles TmrResize.Tick
+    '    ' Define os incrementos em largura e altura
+    '    Dim stepWidth As Integer = Math.Max(1, Math.Abs(_TargetSize.Width - Me.Width) / 5) ' Incrementa no mínimo 1 pixel
+    '    Dim stepHeight As Integer = Math.Max(1, Math.Abs(_TargetSize.Height - Me.Height) / 5)
 
-        ' Aumenta ou diminui a largura gradualmente
-        If Me.Width < _TargetSize.Width Then
-            Me.Width = Math.Min(Me.Width + stepWidth, _TargetSize.Width)
-        ElseIf Me.Width > _TargetSize.Width Then
-            Me.Width = Math.Max(Me.Width - stepWidth, _TargetSize.Width)
-        End If
+    '    ' Aumenta ou diminui a largura gradualmente
+    '    If Me.Width < _TargetSize.Width Then
+    '        Me.Width = Math.Min(Me.Width + stepWidth, _TargetSize.Width)
+    '    ElseIf Me.Width > _TargetSize.Width Then
+    '        Me.Width = Math.Max(Me.Width - stepWidth, _TargetSize.Width)
+    '    End If
 
-        ' Aumenta ou diminui a altura gradualmente
-        If Me.Height < _TargetSize.Height Then
-            Me.Height = Math.Min(Me.Height + stepHeight, _TargetSize.Height)
-        ElseIf Me.Height > _TargetSize.Height Then
-            Me.Height = Math.Max(Me.Height - stepHeight, _TargetSize.Height)
-        End If
+    '    ' Aumenta ou diminui a altura gradualmente
+    '    If Me.Height < _TargetSize.Height Then
+    '        Me.Height = Math.Min(Me.Height + stepHeight, _TargetSize.Height)
+    '    ElseIf Me.Height > _TargetSize.Height Then
+    '        Me.Height = Math.Max(Me.Height - stepHeight, _TargetSize.Height)
+    '    End If
 
-        ' Verifica se o formulário já alcançou o tamanho desejado
-        If Me.Width = _TargetSize.Width AndAlso Me.Height = _TargetSize.Height Then
-            TmrResize.Stop() ' Para o timer ao alcançar o tamanho final
-        End If
-    End Sub
+    '    ' Verifica se o formulário já alcançou o tamanho desejado
+    '    If Me.Width = _TargetSize.Width AndAlso Me.Height = _TargetSize.Height Then
+    '        TmrResize.Stop() ' Para o timer ao alcançar o tamanho final
+    '    End If
+    'End Sub
 
 
     <DebuggerStepThrough>
@@ -258,6 +257,7 @@ Public Class FrmEvaluation
         _EvaluationsForm = EvaluationsForm
         _EvaluationsGrid = _EvaluationsForm.DgvData
         _Filter = CType(_EvaluationsForm.PgFilter.SelectedObject, EvaluationFilter)
+        _Resizer = New FluidResizer(Me)
         _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
@@ -266,6 +266,7 @@ Public Class FrmEvaluation
         InitializeComponent()
         _Evaluation = Evaluation
         _User = Locator.GetInstance(Of Session).User
+        _Resizer = New FluidResizer(Me)
         TsNavigation.Visible = False
         TsNavigation.Enabled = False
         TcEvaluation.Height -= TsNavigation.Height
@@ -323,7 +324,8 @@ Public Class FrmEvaluation
         CbxManualAverageWorkLoad.Checked = _Evaluation.ManualAverageWorkLoad
         DbxAverageWorkLoad.Text = _Evaluation.AverageWorkLoad
         TxtTechnicalAdvice.Text = _Evaluation.TechnicalAdvice
-        FillDataGridViewTechnician()
+        'FillDataGridViewTechnician()
+        DgvTechnician.Fill(_Evaluation.Technicians)
         If _Evaluation.EvaluationCreationType = EvaluationCreationType.Imported Or (_Evaluation.EvaluationCreationType = EvaluationCreationType.Manual And _Evaluation.ID > 0) Then
             For Each p As EvaluationPart In _Evaluation.PartsWorkedHour.ToArray.Reverse()
                 If Not p.IsSaved Then
@@ -335,13 +337,13 @@ Public Class FrmEvaluation
                     _Evaluation.PartsElapsedDay.Remove(p)
                 End If
             Next p
-            DgvPartWorkedHour.Fill(_Evaluation.PartsWorkedHour)
+            '   DgvPartWorkedHour.Fill(_Evaluation.PartsWorkedHour)
             'FillDataGridViewPart(DgvPartWorkedHour, _Evaluation.PartsWorkedHour)
             If DgvPartWorkedHour.Rows.Count > 0 Then
                 DgvPartWorkedHour.Rows(0).Selected = True
                 DgvPartWorkedHour.FirstDisplayedScrollingRowIndex = 0
             End If
-            DgvPartElapsedDay.Fill(_Evaluation.PartsElapsedDay)
+            '   DgvPartElapsedDay.Fill(_Evaluation.PartsElapsedDay)
             'FillDataGridViewPart(DgvPartElapsedDay, _Evaluation.PartsElapsedDay)
             If DgvPartElapsedDay.Rows.Count > 0 Then
                 DgvPartElapsedDay.Rows(0).Selected = True
@@ -353,6 +355,11 @@ Public Class FrmEvaluation
             Decalculate()
             BtnCalculate.Text = "Calcular"
         End If
+        DgvPartWorkedHour.Fill(_Evaluation.PartsWorkedHour)
+        DgvPartElapsedDay.Fill(_Evaluation.PartsElapsedDay)
+        DgvlPartElapsedDayLayout.Load()
+        DgvlPartWorkedHourLayout.Load()
+
         If Not String.IsNullOrEmpty(_Evaluation.Document.CurrentFile) AndAlso File.Exists(_Evaluation.Document.CurrentFile) Then
             PdfDocumentViewer.Load(New MemoryStream(File.ReadAllBytes(_Evaluation.Document.CurrentFile)))
             LblDocumentPage.Text = "Página " & PdfDocumentViewer.CurrentPageIndex & " de " & PdfDocumentViewer.PageCount
@@ -428,29 +435,29 @@ Public Class FrmEvaluation
     '    Dgv.Columns(7).HeaderText = "Perdido"
     '    Dgv.Columns(7).Width = 70
     'End Sub
-    Public Sub FillDataGridViewTechnician()
-        Dim View As DataView
-        Dim FirstDisplayedRowIndex As Integer
-        Dim SelectedRowIndex As Integer
-        Dim CurrentCellIndex As Integer = -1
-        If DgvTechnician.SelectedRows.Count = 1 Then
-            FirstDisplayedRowIndex = DgvTechnician.FirstDisplayedScrollingRowIndex
-            SelectedRowIndex = DgvTechnician.SelectedRows(0).Index
-            If DgvTechnician.CurrentCell IsNot Nothing Then CurrentCellIndex = DgvTechnician.CurrentCell.ColumnIndex
-        End If
-        DgvTechnician.Fill(_Evaluation.Technicians)
-        View = New DataView(DgvTechnician.DataSource, Nothing, "Technician Asc", DataViewRowState.CurrentRows)
-        DgvTechnician.DataSource = View
-        If DgvTechnician.SelectedRows.Count = 1 And DgvTechnician.Rows.Count - 1 >= SelectedRowIndex Then
-            DgvTechnician.Rows(SelectedRowIndex).Selected = True
-            DgvTechnician.FirstDisplayedScrollingRowIndex = FirstDisplayedRowIndex
-            If DgvTechnician.CurrentCell IsNot Nothing AndAlso CurrentCellIndex >= 0 And Calculated Then
-                DgvTechnician.CurrentCell = DgvTechnician.Rows(SelectedRowIndex).Cells(CurrentCellIndex)
-            End If
-        End If
-        DgvTechnician.Columns.Cast(Of DataGridViewColumn).Where(Function(x) x.Name <> "Technician").ToList.ForEach(Sub(y) y.Visible = False)
-        DgvTechnician.Columns("Technician").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-    End Sub
+    'Public Sub FillDataGridViewTechnician()
+    '    Dim View As DataView
+    '    Dim FirstDisplayedRowIndex As Integer
+    '    Dim SelectedRowIndex As Integer
+    '    Dim CurrentCellIndex As Integer = -1
+    '    If DgvTechnician.SelectedRows.Count = 1 Then
+    '        FirstDisplayedRowIndex = DgvTechnician.FirstDisplayedScrollingRowIndex
+    '        SelectedRowIndex = DgvTechnician.SelectedRows(0).Index
+    '        If DgvTechnician.CurrentCell IsNot Nothing Then CurrentCellIndex = DgvTechnician.CurrentCell.ColumnIndex
+    '    End If
+    '    DgvTechnician.Fill(_Evaluation.Technicians)
+    '    View = New DataView(DgvTechnician.DataSource, Nothing, "Technician Asc", DataViewRowState.CurrentRows)
+    '    DgvTechnician.DataSource = View
+    '    If DgvTechnician.SelectedRows.Count = 1 And DgvTechnician.Rows.Count - 1 >= SelectedRowIndex Then
+    '        DgvTechnician.Rows(SelectedRowIndex).Selected = True
+    '        DgvTechnician.FirstDisplayedScrollingRowIndex = FirstDisplayedRowIndex
+    '        If DgvTechnician.CurrentCell IsNot Nothing AndAlso CurrentCellIndex >= 0 And Calculated Then
+    '            DgvTechnician.CurrentCell = DgvTechnician.Rows(SelectedRowIndex).Cells(CurrentCellIndex)
+    '        End If
+    '    End If
+    '    DgvTechnician.Columns.Cast(Of DataGridViewColumn).Where(Function(x) x.Name <> "Technician").ToList.ForEach(Sub(y) y.Visible = False)
+    '    DgvTechnician.Columns("Technician").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+    'End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then
             If CMessageBox.Show("Houve alterações que ainda não foram salvas. Deseja salvar antes de continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
@@ -781,9 +788,12 @@ Public Class FrmEvaluation
                     End If
                     _Evaluation.Lock()
                     LblIDValue.Text = _Evaluation.ID
-                    FillDataGridViewTechnician()
+                    'FillDataGridViewTechnician()
+                    DgvTechnician.Fill(_Evaluation.Technicians)
                     DgvPartWorkedHour.Fill(_Evaluation.PartsWorkedHour)
                     DgvPartElapsedDay.Fill(_Evaluation.PartsElapsedDay)
+                    DgvlPartElapsedDayLayout.Load()
+                    DgvlPartWorkedHourLayout.Load()
                     'FillDataGridViewPart(DgvPartWorkedHour, _Evaluation.PartsWorkedHour)
                     'FillDataGridViewPart(DgvPartElapsedDay, _Evaluation.PartsElapsedDay)
                     BtnSave.Enabled = False
@@ -875,9 +885,10 @@ Public Class FrmEvaluation
     Private Sub BtnNewCustomer_Click(sender As Object, e As EventArgs) Handles BtnNewCustomer.Click
         Dim Customer As Person
         Dim Form As FrmPerson
-        Customer = New Person
-        Customer.IsCustomer = True
-        Customer.ControlMaintenance = True
+        Customer = New Person With {
+            .IsCustomer = True,
+            .ControlMaintenance = True
+        }
         Form = New FrmPerson(Customer)
         Form.CbxIsCustomer.Enabled = False
         Form.CbxMaintenance.Enabled = False
@@ -907,8 +918,9 @@ Public Class FrmEvaluation
     End Sub
     Private Sub BtnFilterCustomer_Click(sender As Object, e As EventArgs) Handles BtnFilterCustomer.Click
         Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New PersonCustomerQueriedBoxFilter("Sim"), QbxCustomer)
-        FilterForm.Text = "Filtro de Clientes"
+        FilterForm = New FrmFilter(New PersonCustomerQueriedBoxFilter("Sim"), QbxCustomer) With {
+            .Text = "Filtro de Clientes"
+        }
         FilterForm.ShowDialog()
         QbxCustomer.Select()
     End Sub
@@ -1199,6 +1211,8 @@ Public Class FrmEvaluation
                 End If
                 DgvPartWorkedHour.Fill(_Evaluation.PartsWorkedHour)
                 DgvPartElapsedDay.Fill(_Evaluation.PartsElapsedDay)
+                DgvlPartElapsedDayLayout.Load()
+                DgvlPartWorkedHourLayout.Load()
                 'FillDataGridViewPart(DgvPartWorkedHour, _Evaluation.PartsWorkedHour)
                 'FillDataGridViewPart(DgvPartElapsedDay, _Evaluation.PartsElapsedDay)
                 TcEvaluation.SelectedTab = TabMain
@@ -1299,7 +1313,7 @@ Public Class FrmEvaluation
                 Result = Frm.ShowDialog()
                 'FillDataGridViewPart(DgvPartElapsedDay, _Evaluation.PartsElapsedDay)
                 DgvPartElapsedDay.Fill(_Evaluation.PartsElapsedDay)
-
+                DgvlPartElapsedDayLayout.Load()
                 DgvPartElapsedDayNavigator.EnsureVisibleRow(RowIndex)
 
             End Using
@@ -1309,6 +1323,7 @@ Public Class FrmEvaluation
             Using Frm As New FrmEvaluationPart(Part)
                 Result = Frm.ShowDialog()
                 DgvPartWorkedHour.Fill(_Evaluation.PartsWorkedHour)
+                DgvlPartWorkedHourLayout.Load()
                 'FillDataGridViewPart(DgvPartWorkedHour, _Evaluation.PartsWorkedHour)
                 DgvPartWorkedHourNavigator.EnsureVisibleRow(RowIndex)
             End Using
@@ -1350,7 +1365,8 @@ Public Class FrmEvaluation
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                 Technician = _Evaluation.Technicians.Single(Function(x) x.Guid = DgvTechnician.SelectedRows(0).Cells("Guid").Value)
                 _Evaluation.Technicians.Remove(Technician)
-                FillDataGridViewTechnician()
+                'FillDataGridViewTechnician()
+                DgvTechnician.Fill(_Evaluation.Technicians)
                 BtnSave.Enabled = True
             End If
         End If

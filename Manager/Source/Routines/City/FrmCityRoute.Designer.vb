@@ -45,11 +45,11 @@ Partial Class FrmCityRoute
         Me.LblCreation = New System.Windows.Forms.ToolStripLabel()
         Me.LblCreationValue = New System.Windows.Forms.ToolStripLabel()
         Me.FlpProduct = New System.Windows.Forms.FlowLayoutPanel()
-        Me.QbxRoute = New ControlLibrary.QueriedBox()
-        Me.LblRoute = New System.Windows.Forms.Label()
         Me.BtnFilter = New ControlLibrary.NoFocusCueButton()
         Me.BtnView = New ControlLibrary.NoFocusCueButton()
         Me.BtnNew = New ControlLibrary.NoFocusCueButton()
+        Me.QbxRoute = New ControlLibrary.QueriedBox()
+        Me.LblRoute = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -249,46 +249,6 @@ Partial Class FrmCityRoute
         Me.FlpProduct.Size = New System.Drawing.Size(69, 21)
         Me.FlpProduct.TabIndex = 6
         '
-        'QbxRoute
-        '
-        Me.QbxRoute.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.QbxRoute.CharactersToQuery = 1
-        Condition1.FieldName = "statusid"
-        Condition1.Operator = "="
-        Condition1.TableNameOrAlias = "route"
-        Condition1.Value = "@statusid"
-        Me.QbxRoute.Conditions.Add(Condition1)
-        Me.QbxRoute.DisplayFieldAlias = "Rota"
-        Me.QbxRoute.DisplayFieldName = "name"
-        Me.QbxRoute.DisplayMainFieldName = "id"
-        Me.QbxRoute.DisplayTableAlias = Nothing
-        Me.QbxRoute.DisplayTableName = "route"
-        Me.QbxRoute.Distinct = False
-        Me.QbxRoute.DropDownAutoStretchRight = False
-        Me.QbxRoute.DropDownStretchRight = 97
-        Me.QbxRoute.GridHeaderBackColor = System.Drawing.SystemColors.Window
-        Me.QbxRoute.IfNull = Nothing
-        Me.QbxRoute.Location = New System.Drawing.Point(12, 75)
-        Me.QbxRoute.MainReturnFieldName = "id"
-        Me.QbxRoute.MainTableAlias = Nothing
-        Me.QbxRoute.MainTableName = "route"
-        Me.QbxRoute.Name = "QbxRoute"
-        Parameter1.ParameterName = "@statusid"
-        Parameter1.ParameterValue = "0"
-        Me.QbxRoute.Parameters.Add(Parameter1)
-        Me.QbxRoute.Prefix = Nothing
-        Me.QbxRoute.Size = New System.Drawing.Size(360, 23)
-        Me.QbxRoute.TabIndex = 5
-        '
-        'LblRoute
-        '
-        Me.LblRoute.AutoSize = True
-        Me.LblRoute.Location = New System.Drawing.Point(9, 55)
-        Me.LblRoute.Name = "LblRoute"
-        Me.LblRoute.Size = New System.Drawing.Size(37, 17)
-        Me.LblRoute.TabIndex = 4
-        Me.LblRoute.Text = "Item"
-        '
         'BtnFilter
         '
         Me.BtnFilter.BackColor = System.Drawing.Color.Transparent
@@ -336,6 +296,48 @@ Partial Class FrmCityRoute
         Me.BtnNew.TooltipText = ""
         Me.BtnNew.UseVisualStyleBackColor = False
         Me.BtnNew.Visible = False
+        '
+        'QbxRoute
+        '
+        Me.QbxRoute.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.QbxRoute.CharactersToQuery = 1
+        Condition1.FieldName = "statusid"
+        Condition1.Operator = "="
+        Condition1.TableNameOrAlias = "route"
+        Condition1.Value = "@statusid"
+        Me.QbxRoute.Conditions.Add(Condition1)
+        Me.QbxRoute.DebugOnTextChanged = False
+        Me.QbxRoute.DisplayFieldAlias = "Rota"
+        Me.QbxRoute.DisplayFieldName = "name"
+        Me.QbxRoute.DisplayMainFieldName = "id"
+        Me.QbxRoute.DisplayTableAlias = Nothing
+        Me.QbxRoute.DisplayTableName = "route"
+        Me.QbxRoute.Distinct = False
+        Me.QbxRoute.DropDownAutoStretchRight = False
+        Me.QbxRoute.DropDownStretchRight = 97
+        Me.QbxRoute.GridHeaderBackColor = System.Drawing.SystemColors.Window
+        Me.QbxRoute.IfNull = Nothing
+        Me.QbxRoute.Location = New System.Drawing.Point(12, 75)
+        Me.QbxRoute.MainReturnFieldName = "id"
+        Me.QbxRoute.MainTableAlias = Nothing
+        Me.QbxRoute.MainTableName = "route"
+        Me.QbxRoute.Name = "QbxRoute"
+        Parameter1.ParameterName = "@statusid"
+        Parameter1.ParameterValue = "0"
+        Me.QbxRoute.Parameters.Add(Parameter1)
+        Me.QbxRoute.Prefix = Nothing
+        Me.QbxRoute.Size = New System.Drawing.Size(360, 23)
+        Me.QbxRoute.Suffix = Nothing
+        Me.QbxRoute.TabIndex = 5
+        '
+        'LblRoute
+        '
+        Me.LblRoute.AutoSize = True
+        Me.LblRoute.Location = New System.Drawing.Point(9, 55)
+        Me.LblRoute.Name = "LblRoute"
+        Me.LblRoute.Size = New System.Drawing.Size(39, 17)
+        Me.LblRoute.TabIndex = 4
+        Me.LblRoute.Text = "Rota"
         '
         'FrmCityRoute
         '

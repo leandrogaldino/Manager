@@ -841,6 +841,33 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;CityRoute&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''	&lt;Column Index=&quot;0&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Ordem&lt;/Name&gt;
+        '''		&lt;Width&gt;70&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;1&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Rota&lt;/Name&gt;
+        '''		&lt;Width&gt;100&lt;/Width&gt;
+        '''	&lt;/Column&gt;	
+        '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''		&lt;Visible&gt;False&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;2&lt;/D [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property CityRouteGrid() As String
+            Get
+                Return ResourceManager.GetString("CityRouteGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO cityroute
         '''(
         '''    cityid,
@@ -3635,22 +3662,25 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;PrivilegePreset&quot; Version=&quot;1&quot;&gt;
+        '''&lt;Routine Id=&quot;Person&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
-        '''    &lt;Column Index=&quot;0&quot;&gt;
-        '''        &lt;Visible&gt;True&lt;/Visible&gt;
-        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
-        '''        &lt;Name&gt;ID&lt;/Name&gt;
-        '''        &lt;Width&gt;100&lt;/Width&gt;
-        '''    &lt;/Column&gt;    
-        '''    &lt;Column Index=&quot;1&quot;&gt;
-        '''        &lt;Visible&gt;True&lt;/Visible&gt;
-        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''        &lt;Name&gt;Criação&lt;/Name&gt;
-        '''        &lt;Width&gt;100&lt;/Width&gt;
-        '''    &lt;/Column&gt;
-        '''    &lt;Column Index=&quot;2 [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	&lt;Column Index=&quot;0&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;ID&lt;/Name&gt;
+        '''		&lt;Width&gt;100&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;1&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Criação&lt;/Name&gt;
+        '''		&lt;Width&gt;100&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;2&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Sta [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PersonGrid() As String
             Get
@@ -3819,7 +3849,8 @@ Namespace My.Resources
         '''FROM privilegepreset
         '''WHERE
         '''	IFNULL(privilegepreset.id, &apos;&apos;) LIKE @id AND
-        '''    IFNULL(privilegepreset.statusid, &apos;&apos;) LIKE @statusid
+        '''    IFNULL(privilegepreset.statusid, &apos;&apos;) LIKE @statusid AND
+        '''    IFNULL(privilegepreset.name, &apos;&apos;) LIKE CONCAT(&apos;%&apos;, @name, &apos;%&apos;) 
         '''GROUP BY privilegepreset.id;.
         '''</summary>
         Friend ReadOnly Property PrivilegePresetFilter() As String
@@ -3830,7 +3861,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;Person&quot; Version=&quot;1&quot;&gt;
+        '''&lt;Routine Id=&quot;PrivilegePreset&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -3845,8 +3876,7 @@ Namespace My.Resources
         '''        &lt;Name&gt;Criação&lt;/Name&gt;
         '''        &lt;Width&gt;100&lt;/Width&gt;
         '''    &lt;/Column&gt;
-        '''    &lt;Column Index=&quot;2&quot;&gt;
-        '''      [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''    &lt;Column Index=&quot;2 [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PrivilegePresetGrid() As String
             Get
@@ -3892,6 +3922,7 @@ Namespace My.Resources
         '''	creation,
         '''	privilegepresetid,
         '''	routineid,
+        '''	routinename,
         '''	privilegelevelid,
         '''	userid
         ''')
@@ -3900,6 +3931,7 @@ Namespace My.Resources
         '''	@creation,
         '''	@privilegepresetid,
         '''	@routineid,
+        '''	@routinename,
         '''	@privilegelevelid,
         '''	@userid
         ''');
@@ -3917,6 +3949,7 @@ Namespace My.Resources
         '''	privilegepresetprivilege.creation,
         '''	privilegepresetprivilege.privilegepresetid,
         '''	privilegepresetprivilege.routineid,
+        '''	privilegepresetprivilege.routinename,
         '''	privilegepresetprivilege.privilegelevelid,
         '''	privilegepresetprivilege.userid
         '''FROM privilegepresetprivilege
@@ -5781,6 +5814,7 @@ Namespace My.Resources
         '''	creation,
         '''	granteduserid,
         '''	routineid,
+        '''	routinename,
         '''	privilegelevelid,
         '''	userid
         ''')
@@ -5789,6 +5823,7 @@ Namespace My.Resources
         '''	@creation,
         '''	@granteduserid,
         '''	@routineid,
+        '''	@routinename,
         '''	@privilegelevelid,
         '''	@userid
         ''');
@@ -5816,6 +5851,7 @@ Namespace My.Resources
         '''	userprivilege.creation,
         '''	userprivilege.granteduserid,
         '''	userprivilege.routineid,
+        '''	userprivilege.routinename,
         '''	userprivilege.privilegelevelid,
         '''	userprivilege.userid
         '''FROM userprivilege

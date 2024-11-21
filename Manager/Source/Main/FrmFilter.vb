@@ -13,7 +13,6 @@ Public Class FrmFilter
         _Filter.DataGridView = DgvData
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter
-        DgvData.Columns.Cast(Of DataGridViewColumn).Where(Function(x) x.HeaderText = "Status").ToList.ForEach(Sub(y) y.Visible = False)
         DgvData.Select()
     End Sub
     <DebuggerStepThrough>
@@ -51,7 +50,7 @@ Public Class FrmFilter
         Dispose()
     End Sub
     Private Sub DgvData_SelectionChanged(sender As Object, e As EventArgs) Handles DgvData.SelectionChanged
-        BtnImport.Enabled = If(DgvData.SelectedRows.Count = 1, True, False)
+        BtnImport.Enabled = DgvData.SelectedRows.Count = 1
     End Sub
     Private Sub DgvData_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvData.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvData.HitTest(e.X, e.Y)
@@ -65,6 +64,7 @@ Public Class FrmFilter
             LblCounter.ForeColor = Color.DimGray
             LblCounter.Font = New Font(LblCounter.Font, FontStyle.Bold)
         End If
+        DgvData.Columns.Cast(Of DataGridViewColumn).Where(Function(x) x.HeaderText = "Status").ToList.ForEach(Sub(y) y.Visible = False)
     End Sub
     Private Sub PgFilter_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles PgFilter.PropertyValueChanged
         _Filter.Filter()

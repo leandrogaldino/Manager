@@ -10,6 +10,7 @@ Public Class User
     Private _PersonID As Long
     Private _Password As String
     Private _RequestPassword As Boolean
+    Private _Shadow As User
     Public ReadOnly Property RequestPassword As Boolean
         Get
             Return _RequestPassword
@@ -129,6 +130,7 @@ Public Class User
                 Tra.Commit()
             End Using
         End Using
+        _Shadow = Clone()
         Return Me
     End Function
     Public Sub SaveChanges()
@@ -188,7 +190,6 @@ Public Class User
                         Email.SetID(Cmd.LastInsertedId)
                     End Using
                 Next Email
-
                 For Each Privilege As UserPrivilege In Privileges
                     Using Cmd As New MySqlCommand(My.Resources.UserPrivilegeInsert, Con)
                         Cmd.Transaction = Tra
@@ -208,8 +209,6 @@ Public Class User
     End Sub
     Private Sub Update()
         Dim Session = Locator.GetInstance(Of Session)
-        'Dim Shadow As User = New User().Load(ID, False)
-        Dim Shadow As User = New User().Load(ID, False)
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
@@ -223,7 +222,7 @@ Public Class User
                     Cmd.Parameters.AddWithValue("@userid", Session.User.ID)
                     Cmd.ExecuteNonQuery()
                 End Using
-                For Each Email As UserEmail In Shadow.Emails
+                For Each Email As UserEmail In _Shadow.Emails
                     If Not Emails.Any(Function(x) x.ID = Email.ID And x.ID > 0) Then
                         Using Cmd As New MySqlCommand(My.Resources.UserEmailDelete, Con)
                             Cmd.Transaction = Tra
@@ -264,7 +263,7 @@ Public Class User
                         End Using
                     End If
                 Next Email
-                For Each Privilege As UserPrivilege In Shadow.Privileges
+                For Each Privilege As UserPrivilege In _Shadow.Privileges
                     If Not Privileges.Any(Function(x) x.ID = Privilege.ID And x.ID > 0) Then
                         Using Cmd As New MySqlCommand(My.Resources.UserPrivilegeDelete, Con)
                             Cmd.Parameters.AddWithValue("@id", Privilege.ID)

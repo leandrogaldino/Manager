@@ -24,6 +24,7 @@ Public Class FrmPersonContact
         _Person = Person
         _PersonContact = Contact
         _PersonForm = PersonForm
+        _User = Locator.GetInstance(Of Session).User
         LoadForm()
         DgvNavigator.DataGridView = _PersonForm.DgvContact
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)

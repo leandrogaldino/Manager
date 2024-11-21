@@ -1964,7 +1964,6 @@
     <Content Include="Resources\XML\ProductUnitGrid.xml" />
     <Content Include="Resources\XML\RouteGrid.xml" />
     <Content Include="Resources\XML\UserEmailGrid.xml" />
-    <Content Include="Resources\XML\UserPrivilegePresetGrid.xml" />
     <Content Include="Resources\XML\UserGrid.xml" />
   </ItemGroup>
   <ItemGroup>

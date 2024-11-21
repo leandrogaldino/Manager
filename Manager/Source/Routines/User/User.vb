@@ -195,6 +195,7 @@ Public Class User
                         Cmd.Parameters.AddWithValue("@granteduserid", ID)
                         Cmd.Parameters.AddWithValue("@creation", Privilege.Creation)
                         Cmd.Parameters.AddWithValue("@routineid", CInt(Privilege.PrivilegedRoutine))
+                        Cmd.Parameters.AddWithValue("@routinename", Privilege.RoutineName)
                         Cmd.Parameters.AddWithValue("@privilegelevelid", CInt(Privilege.Level))
                         Cmd.Parameters.AddWithValue("@userid", Session.User.ID)
                         Cmd.ExecuteNonQuery()
@@ -279,6 +280,7 @@ Public Class User
                             Cmd.Parameters.AddWithValue("@creation", Privilege.Creation)
                             Cmd.Parameters.AddWithValue("@id", Privilege.ID)
                             Cmd.Parameters.AddWithValue("@routineid", CInt(Privilege.PrivilegedRoutine))
+                            Cmd.Parameters.AddWithValue("@routinename", Privilege.RoutineName)
                             Cmd.Parameters.AddWithValue("@privilegelevelid", CInt(Privilege.Level))
                             Cmd.Parameters.AddWithValue("@userid", Session.User.ID)
                             Cmd.ExecuteNonQuery()
@@ -303,12 +305,12 @@ Public Class User
                 Emails = New List(Of UserEmail)
                 For Each Row As DataRow In TableResult.Rows
                     Email = New UserEmail With {
-                        .IsMainEmail = Row.Item("ismainemail"),
-                        .SmtpServer = Row.Item("host").ToString,
-                        .Port = Row.Item("port"),
-                        .Email = Row.Item("email").ToString,
-                        .EnableSSL = Row.Item("enablessl").ToString,
-                        .Password = Row.Item("password").ToString
+                        .IsMainEmail = Convert.ToBoolean(Row.Item("ismainemail")),
+                        .SmtpServer = Convert.ToString(Row.Item("host")),
+                        .Port = Convert.ToInt32(Row.Item("port")),
+                        .Email = Convert.ToString(Row.Item("email")),
+                        .EnableSSL = Convert.ToBoolean(Row.Item("enablessl")),
+                        .Password = Convert.ToString(Row.Item("password"))
                     }
                     Email.SetIsSaved(True)
                     Email.SetID(Row.Item("id"))
@@ -319,24 +321,27 @@ Public Class User
         End Using
         Return Emails
     End Function
-
     Private Function GetUserPrivileges(Transaction As MySqlTransaction) As List(Of UserPrivilege)
         Dim Privilege As UserPrivilege
-        Dim Privileges As New List(Of UserPrivilege)
+        Dim Privileges As List(Of UserPrivilege)
+        Dim TableResult As DataTable
         Using Cmd As New MySqlCommand(My.Resources.UserPrivilegeSelect, Transaction.Connection)
             Cmd.Transaction = Transaction
             Cmd.Parameters.AddWithValue("@granteduserid", ID)
-            Using Reader As MySqlDataReader = Cmd.ExecuteReader()
-                While Reader.Read()
+            Using Adp As New MySqlDataAdapter(Cmd)
+                TableResult = New DataTable
+                Adp.Fill(TableResult)
+                Privileges = New List(Of UserPrivilege)
+                For Each Row As DataRow In TableResult.Rows
                     Privilege = New UserPrivilege With {
-                        .PrivilegedRoutine = Reader.GetInt32("routineid"),
-                        .Level = Reader.GetInt32("privilegelevelid")
+                        .PrivilegedRoutine = Convert.ToInt32(Row.Item("routineid")),
+                        .Level = Convert.ToInt32(Row.Item("privilegelevelid"))
                     }
                     Privilege.SetIsSaved(True)
-                    Privilege.SetID(Reader.GetInt32("id"))
-                    Privilege.SetCreation(Reader.GetDateTime("creation"))
+                    Privilege.SetID(Row.Item("id"))
+                    Privilege.SetCreation(Row.Item("creation"))
                     Privileges.Add(Privilege)
-                End While
+                Next Row
             End Using
         End Using
         Return Privileges

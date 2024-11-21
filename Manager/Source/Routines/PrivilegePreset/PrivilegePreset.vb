@@ -3,6 +3,7 @@ Imports MySql.Data.MySqlClient
 
 Public Class PrivilegePreset
     Inherits ParentModel
+    Private _Shadow As PrivilegePreset
     Private _User As User
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
@@ -30,30 +31,43 @@ Public Class PrivilegePreset
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
+                Dim Table As New DataTable()
+
+                ' Preencher o DataTable com os dados
                 Using Cmd As New MySqlCommand(My.Resources.PrivilegePresetSelect, Con)
                     Cmd.Transaction = Tra
                     Cmd.Parameters.AddWithValue("@id", Identity)
-                    Using Reader As MySqlDataReader = Cmd.ExecuteReader()
-                        If Reader.HasRows Then
-                            Reader.Read()
-                            SetID(Reader.GetInt64("id"))
-                            SetCreation(Reader.GetDateTime("creation"))
-                            SetIsSaved(True)
-                            Status = Reader.GetInt32("statusid")
-                            Name = Reader.GetString("name")
-                            Privileges = GetPrivileges(Tra)
-                            LockInfo = GetLockInfo(Tra)
-                            If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
-                        Else
-                            Throw New Exception("Registro não encontrado.")
-                        End If
+                    Using Adapter As New MySqlDataAdapter(Cmd)
+                        Adapter.Fill(Table)
                     End Using
                 End Using
+
+                ' Verificar se há registros
+                If Table.Rows.Count > 0 Then
+                    Dim row As DataRow = Table.Rows(0)
+                    SetID(Convert.ToInt64(row("id")))
+                    SetCreation(Convert.ToDateTime(row("creation")))
+                    SetIsSaved(True)
+                    Status = Convert.ToInt32(row("statusid"))
+                    Name = Convert.ToString(row("name"))
+
+                    ' Carregar privilégios e informações de bloqueio
+                    Privileges = GetPrivileges(Tra)
+                    LockInfo = GetLockInfo(Tra)
+
+                    ' Bloquear se necessário
+                    If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
+                Else
+                    Throw New Exception("Registro não encontrado.")
+                End If
+
                 Tra.Commit()
             End Using
         End Using
+        _Shadow = Clone()
         Return Me
     End Function
+
     Public Sub SaveChanges()
         If Not IsSaved Then
             Insert()
@@ -91,6 +105,7 @@ Public Class PrivilegePreset
                         Cmd.Parameters.AddWithValue("@privilegepresetid", ID)
                         Cmd.Parameters.AddWithValue("@creation", Privilege.Creation)
                         Cmd.Parameters.AddWithValue("@routineid", CInt(Privilege.PrivilegedRoutine))
+                        Cmd.Parameters.AddWithValue("@routinename", Privilege.RoutineName)
                         Cmd.Parameters.AddWithValue("@privilegelevelid", CInt(Privilege.Level))
                         Cmd.Parameters.AddWithValue("@userid", _User.ID)
                         Cmd.ExecuteNonQuery()
@@ -102,9 +117,6 @@ Public Class PrivilegePreset
         End Using
     End Sub
     Private Sub Update()
-        'TODO: SE O CLONE DER CERTO, ALTERAR OS OUTROS PARA CLONE EM VEZ DE CARREGAR DO BANCO
-        Dim Shadow As PrivilegePreset = Clone()
-
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
@@ -116,7 +128,7 @@ Public Class PrivilegePreset
                     Cmd.Parameters.AddWithValue("@userid", User.ID)
                     Cmd.ExecuteNonQuery()
                 End Using
-                For Each Privilege As UserPrivilege In Shadow.Privileges
+                For Each Privilege As UserPrivilege In _Shadow.Privileges
                     If Not Privileges.Any(Function(x) x.ID = Privilege.ID And x.ID > 0) Then
                         Using Cmd As New MySqlCommand(My.Resources.PrivilegePresetPrivilegeDelete, Con)
                             Cmd.Transaction = Tra
@@ -133,6 +145,7 @@ Public Class PrivilegePreset
                             Cmd.Parameters.AddWithValue("@creation", Privilege.Creation)
                             Cmd.Parameters.AddWithValue("@id", Privilege.ID)
                             Cmd.Parameters.AddWithValue("@routineid", CInt(Privilege.PrivilegedRoutine))
+                            Cmd.Parameters.AddWithValue("@routinename", Privilege.RoutineName)
                             Cmd.Parameters.AddWithValue("@privilegelevelid", CInt(Privilege.Level))
                             Cmd.Parameters.AddWithValue("@userid", _User.ID)
                             Cmd.ExecuteNonQuery()
@@ -145,26 +158,33 @@ Public Class PrivilegePreset
         End Using
     End Sub
     Private Function GetPrivileges(Transaction As MySqlTransaction) As List(Of UserPrivilege)
-        Dim Privilege As UserPrivilege
         Dim Privileges As New List(Of UserPrivilege)
+        Dim dt As New DataTable()
+
+        ' Preencher o DataTable com os dados
         Using Cmd As New MySqlCommand(My.Resources.PrivilegePresetPrivilegeSelect, Transaction.Connection)
             Cmd.Transaction = Transaction
-            Cmd.Parameters.AddWithValue("@id", ID)
-            Using Reader As MySqlDataReader = Cmd.ExecuteReader()
-                While Reader.Read()
-                    Privilege = New UserPrivilege With {
-                        .PrivilegedRoutine = Reader.GetInt32("routineid"),
-                        .Level = Reader.GetInt32("privilegelevelid")
-                    }
-                    Privilege.SetIsSaved(True)
-                    Privilege.SetID(Reader.GetInt32("id"))
-                    Privilege.SetCreation(Reader.GetDateTime("creation"))
-                    Privileges.Add(Privilege)
-                End While
+            Cmd.Parameters.AddWithValue("@privilegepresetid", ID)
+            Using Adapter As New MySqlDataAdapter(Cmd)
+                Adapter.Fill(dt)
             End Using
         End Using
+
+        ' Processar os dados do DataTable
+        For Each row As DataRow In dt.Rows
+            Dim Privilege As New UserPrivilege With {
+                .PrivilegedRoutine = Convert.ToInt32(row("routineid")),
+                .Level = Convert.ToInt32(row("privilegelevelid"))
+            }
+            Privilege.SetIsSaved(True)
+            Privilege.SetID(Convert.ToInt32(row("id")))
+            Privilege.SetCreation(Convert.ToDateTime(row("creation")))
+            Privileges.Add(Privilege)
+        Next
+
         Return Privileges
     End Function
+
     Public Overrides Function ToString() As String
         Return If(Name, String.Empty)
     End Function

@@ -3,6 +3,7 @@ SELECT
 	privilegepresetprivilege.creation,
 	privilegepresetprivilege.privilegepresetid,
 	privilegepresetprivilege.routineid,
+	privilegepresetprivilege.routinename,
 	privilegepresetprivilege.privilegelevelid,
 	privilegepresetprivilege.userid
 FROM privilegepresetprivilege

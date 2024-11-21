@@ -37,6 +37,7 @@ Partial Class FrmPrivilegePreset
         Me.BtnPrevious = New System.Windows.Forms.ToolStripButton()
         Me.BtnNext = New System.Windows.Forms.ToolStripButton()
         Me.BtnLast = New System.Windows.Forms.ToolStripButton()
+        Me.BtnLog = New System.Windows.Forms.ToolStripButton()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.PnButtons = New System.Windows.Forms.Panel()
@@ -52,7 +53,6 @@ Partial Class FrmPrivilegePreset
         Me.TxtName = New System.Windows.Forms.TextBox()
         Me.LblName = New System.Windows.Forms.Label()
         Me.TcPrivilegePreset = New System.Windows.Forms.TabControl()
-        Me.BtnLog = New System.Windows.Forms.ToolStripButton()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -210,6 +210,17 @@ Partial Class FrmPrivilegePreset
         Me.BtnLast.Size = New System.Drawing.Size(23, 22)
         Me.BtnLast.Text = "Último Usuário"
         '
+        'BtnLog
+        '
+        Me.BtnLog.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.BtnLog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnLog.Image = Global.Manager.My.Resources.Resources.Log
+        Me.BtnLog.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnLog.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnLog.Name = "BtnLog"
+        Me.BtnLog.Size = New System.Drawing.Size(23, 22)
+        Me.BtnLog.Text = "Histórico"
+        '
         'EprValidation
         '
         Me.EprValidation.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink
@@ -260,10 +271,10 @@ Partial Class FrmPrivilegePreset
         '
         Me.TabPrivilege.Controls.Add(Me.FlpPrivilege)
         Me.TabPrivilege.Controls.Add(Me.TlpFilter)
-        Me.TabPrivilege.Location = New System.Drawing.Point(4, 22)
+        Me.TabPrivilege.Location = New System.Drawing.Point(4, 26)
         Me.TabPrivilege.Name = "TabPrivilege"
         Me.TabPrivilege.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPrivilege.Size = New System.Drawing.Size(451, 71)
+        Me.TabPrivilege.Size = New System.Drawing.Size(451, 67)
         Me.TabPrivilege.TabIndex = 8
         Me.TabPrivilege.Text = "Permissões"
         Me.TabPrivilege.UseVisualStyleBackColor = True
@@ -274,7 +285,7 @@ Partial Class FrmPrivilegePreset
         Me.FlpPrivilege.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FlpPrivilege.Location = New System.Drawing.Point(3, 38)
         Me.FlpPrivilege.Name = "FlpPrivilege"
-        Me.FlpPrivilege.Size = New System.Drawing.Size(445, 30)
+        Me.FlpPrivilege.Size = New System.Drawing.Size(445, 26)
         Me.FlpPrivilege.TabIndex = 2
         '
         'TlpFilter
@@ -361,17 +372,6 @@ Partial Class FrmPrivilegePreset
         Me.TcPrivilegePreset.SelectedIndex = 0
         Me.TcPrivilegePreset.Size = New System.Drawing.Size(459, 97)
         Me.TcPrivilegePreset.TabIndex = 2
-        '
-        'BtnLog
-        '
-        Me.BtnLog.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.BtnLog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnLog.Image = Global.Manager.My.Resources.Resources.Log
-        Me.BtnLog.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.BtnLog.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnLog.Name = "BtnLog"
-        Me.BtnLog.Size = New System.Drawing.Size(23, 22)
-        Me.BtnLog.Text = "Histórico"
         '
         'FrmPrivilegePreset
         '

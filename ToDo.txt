@@ -1,12 +1,16 @@
+[] Mudar o clone de todos os updates para um campo privado, igual o PrivilegePreset.
+
+[] Implementar a predefinição de permissões no usuário.
+
+[] Terminar a rotina de agendamento.
+
 [X] Fazer o alinhamento do conteúdo do Grid das peças da avaliação.
 
 [X] Reestruturar os XMLs dos Grids dos filhos.
 
 [X] Resolver os TODO's do Projeto.
 
-[] Terminar a rotina de agendamento.
-
-[] Recriar a Predefinição de permissões.
+[X] Recriar a Predefinição de permissões.
 
 [X] A permissão de exportar as grades e imagens do painel de avaliação não está configurado. 
 

@@ -160,6 +160,7 @@ CREATE TABLE userprivilege (
     creation DATE NOT NULL,
     granteduserid INT NOT NULL,
     routineid INT NOT NULL,
+    routinename VARCHAR(50) NOT NULL,
     privilegelevelid INT NOT NULL,
     userid INT NOT NULL,
 	PRIMARY KEY(id),
@@ -167,15 +168,26 @@ CREATE TABLE userprivilege (
     FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
 );
 
-INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 0, 1);
-INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 1, 1);
-INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 2, 1);
+DELIMITER $$
+USE `manager`$$
+CREATE TRIGGER `userprivilegeinsert` AFTER INSERT ON `userprivilege` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 1, NEW.granteduserid, CONCAT('Permissão: ', NEW.routinename), CASE WHEN NEW.privilegelevelid = 0 THEN 'Acesso Negado' WHEN NEW.privilegelevelid = 1 THEN 'Escrita Negada' WHEN NEW.privilegelevelid = 2 THEN 'Deleção Negada' END, CASE WHEN NEW.privilegelevelid = 0 THEN 'Acesso Permitido' WHEN NEW.privilegelevelid = 1 THEN 'Escrita Permitida' WHEN NEW.privilegelevelid = 2 THEN 'Deleção Permitida' END ,NOW(), CONCAT(NEW.userid, ' - ', (SELECT username FROM user WHERE id = NEW.userid)));
+END$$
+
+CREATE TRIGGER `userprivilegedelete` AFTER DELETE ON `userprivilege` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 1, OLD.granteduserid, CONCAT('Permissão: ', OLD.routinename), CASE WHEN OLD.privilegelevelid = 0 THEN 'Acesso Permitido' WHEN OLD.privilegelevelid = 1 THEN 'Escrita Permitida' WHEN OLD.privilegelevelid = 2 THEN 'Deleção Permitida' END, CASE WHEN OLD.privilegelevelid = 0 THEN 'Acesso Negado' WHEN OLD.privilegelevelid = 1 THEN 'Escrita Negada' WHEN OLD.privilegelevelid = 2 THEN 'Deleção Negada' END ,NOW(), CONCAT(OLD.userid, ' - ', (SELECT username FROM user WHERE id = OLD.userid)));
+END$$
+DELIMITER ;
+
+INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 0, 1);
+INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 1, 1);
+INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 2, 1);
 
 CREATE TABLE privilegepreset (
 	id INT NOT NULL AUTO_INCREMENT,
     creation DATE NOT NULL,
     statusid INT NOT NULL,
-    name VARCHAR(100) NOT NULL,
+    name VARCHAR(100) UNIQUE NOT NULL,
     userid INT NOT NULL,
 	PRIMARY KEY(id),
     FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
@@ -183,12 +195,24 @@ CREATE TABLE privilegepreset (
 
 CREATE TABLE privilegepresetprivilege (
 	id INT NOT NULL AUTO_INCREMENT,
+    privilegepresetid INT NOT NULL,
     creation DATE NOT NULL,
-    name VARCHAR(100) NOT NULL,
     routineid INT NOT NULL,
+	routinename VARCHAR(50) NOT NULL,
     privilegelevelid INT NOT NULL,
     userid INT NOT NULL,
 	PRIMARY KEY(id),
-    FOREIGN KEY (granteduserid) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (privilegepresetid) REFERENCES privilegepreset(id) ON DELETE CASCADE,
     FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
 );
+
+DELIMITER $$
+USE `manager`$$
+CREATE TRIGGER `privilegepresetprivilegeinsert` AFTER INSERT ON `privilegepresetprivilege` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 14, NEW.privilegepresetid, CONCAT('Permissão: ', NEW.routinename), CASE WHEN NEW.privilegelevelid = 0 THEN 'Acesso Negado' WHEN NEW.privilegelevelid = 1 THEN 'Escrita Negada' WHEN NEW.privilegelevelid = 2 THEN 'Deleção Negada' END, CASE WHEN NEW.privilegelevelid = 0 THEN 'Acesso Permitido' WHEN NEW.privilegelevelid = 1 THEN 'Escrita Permitida' WHEN NEW.privilegelevelid = 2 THEN 'Deleção Permitida' END ,NOW(), CONCAT(NEW.userid, ' - ', (SELECT username FROM user WHERE id = NEW.userid)));
+END$$
+
+CREATE TRIGGER `privilegepresetprivilegedelete` AFTER DELETE ON `privilegepresetprivilege` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 14, OLD.privilegepresetid, CONCAT('Permissão: ', OLD.routinename), CASE WHEN OLD.privilegelevelid = 0 THEN 'Acesso Permitido' WHEN OLD.privilegelevelid = 1 THEN 'Escrita Permitida' WHEN OLD.privilegelevelid = 2 THEN 'Deleção Permitida' END, CASE WHEN OLD.privilegelevelid = 0 THEN 'Acesso Negado' WHEN OLD.privilegelevelid = 1 THEN 'Escrita Negada' WHEN OLD.privilegelevelid = 2 THEN 'Deleção Negada' END ,NOW(), CONCAT(OLD.userid, ' - ', (SELECT username FROM user WHERE id = OLD.userid)));
+END$$
+DELIMITER ;

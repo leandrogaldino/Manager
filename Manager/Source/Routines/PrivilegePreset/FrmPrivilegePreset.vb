@@ -234,22 +234,26 @@ Public Class FrmPrivilegePreset
         End If
     End Sub
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
-        If _PrivilegePreset.ID = Locator.GetInstance(Of Session).User.ID Then
-            If CMessageBox.Show("Você está alterando seu próprio usuário, para que isso seja feito com segurança você será deslogado do sistema após a operação. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Save()
-                FrmMain.Dispose()
-                FrmLogin.Show()
-            End If
-        Else
-            Save()
-        End If
+        Save()
     End Sub
     Private Function IsValidFields() As Boolean
+        Dim Privileges As Integer
+        Privileges = FlpPrivilege.Controls.OfType(Of UcBiStatePrivilegeItem).ToList.Where(Function(x) x.Granted).Count
+        Privileges += FlpPrivilege.Controls.OfType(Of UcTristatePrivilegeItem).ToList.Where(Function(x) x.CanAccess).Count
+
+
         If String.IsNullOrWhiteSpace(TxtName.Text) Then
             TcPrivilegePreset.SelectedTab = TabMain
             EprValidation.SetError(LblName, "Campo obrigatório.")
             EprValidation.SetIconAlignment(LblName, ErrorIconAlignment.MiddleRight)
             TxtName.Select()
+            Return False
+        ElseIf Privileges = 0 Then
+            UpdatePrivileges()
+            TcPrivilegePreset.SelectedTab = TabPrivilege
+            EprValidation.SetError(PnFilter, "A predefinição precisa ter pelo menos uma permissão.")
+            EprValidation.SetIconAlignment(PnFilter, ErrorIconAlignment.MiddleRight)
+            FlpPrivilege.Select()
             Return False
         End If
         Return True

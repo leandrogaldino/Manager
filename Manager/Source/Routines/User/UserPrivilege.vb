@@ -1,4 +1,6 @@
-﻿Public Class UserPrivilege
+﻿Imports ControlLibrary
+
+Public Class UserPrivilege
     Inherits ChildModel
     Private _PrivilegedRoutine As Routine
     Public Property PrivilegedRoutine As Routine
@@ -11,6 +13,11 @@
                 Throw New ArgumentException($"O valor '{value}' não possui os atributos BiStatePrivilege ou TriStatePrivilege.")
             End If
         End Set
+    End Property
+    Public ReadOnly Property RoutineName As String
+        Get
+            Return EnumHelper.GetEnumDescription(PrivilegedRoutine)
+        End Get
     End Property
     Public Property Level As PrivilegeLevel
     Public ReadOnly Property IsBiStatePrivilege As Boolean

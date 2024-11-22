@@ -716,18 +716,19 @@ Public Class FrmUser
         Dim Preset As PrivilegePreset
         Dim UserPrivilege As UserPrivilege
         Using Frm As New FrmUserImportPrivilege()
-            Frm.ShowDialog()
-            Preset = New PrivilegePreset().Load(Frm.QbxPreset.FreezedPrimaryKey, False)
-            _User.Privileges.Clear()
+            If Frm.ShowDialog() = DialogResult.OK Then
+                Preset = New PrivilegePreset().Load(Frm.QbxPreset.FreezedPrimaryKey, False)
+                _User.Privileges.Clear()
 
-            For Each Privilege In Preset.Privileges
-                UserPrivilege = New UserPrivilege With {
-                    .PrivilegedRoutine = Privilege.PrivilegedRoutine,
-                    .Level = Privilege.Level
-                }
-                _User.Privileges.Add(UserPrivilege)
-            Next Privilege
-            UpdatePrivileges()
+                For Each Privilege In Preset.Privileges
+                    UserPrivilege = New UserPrivilege With {
+                        .PrivilegedRoutine = Privilege.PrivilegedRoutine,
+                        .Level = Privilege.Level
+                    }
+                    _User.Privileges.Add(UserPrivilege)
+                Next Privilege
+                UpdatePrivileges()
+            End If
         End Using
     End Sub
 End Class

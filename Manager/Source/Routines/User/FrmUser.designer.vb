@@ -42,7 +42,6 @@ Partial Class FrmUser
         Me.BtnRequestPassword = New System.Windows.Forms.ToolStripButton()
         Me.BtnImportPrivilege = New System.Windows.Forms.ToolStripButton()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.PnButtons = New System.Windows.Forms.Panel()
         Me.BtnSave = New System.Windows.Forms.Button()
         Me.BtnClose = New System.Windows.Forms.Button()
@@ -52,10 +51,6 @@ Partial Class FrmUser
         Me.TcUser = New System.Windows.Forms.TabControl()
         Me.TabMain = New System.Windows.Forms.TabPage()
         Me.FlpManufacturer = New System.Windows.Forms.FlowLayoutPanel()
-        Me.BtnFilter = New ControlLibrary.NoFocusCueButton()
-        Me.BtnView = New ControlLibrary.NoFocusCueButton()
-        Me.BtnNew = New ControlLibrary.NoFocusCueButton()
-        Me.QbxPerson = New ControlLibrary.QueriedBox()
         Me.TabPrivilege = New System.Windows.Forms.TabPage()
         Me.FlpPrivilege = New System.Windows.Forms.FlowLayoutPanel()
         Me.TlpFilter = New System.Windows.Forms.TableLayoutPanel()
@@ -73,6 +68,11 @@ Partial Class FrmUser
         Me.TxtNote = New System.Windows.Forms.RichTextBox()
         Me.TmrQueriedBox = New System.Windows.Forms.Timer(Me.components)
         Me.DgvEmailLayout = New Manager.DataGridViewLayout()
+        Me.BtnFilter = New ControlLibrary.NoFocusCueButton()
+        Me.BtnView = New ControlLibrary.NoFocusCueButton()
+        Me.BtnNew = New ControlLibrary.NoFocusCueButton()
+        Me.QbxPerson = New ControlLibrary.QueriedBox()
+        Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -275,14 +275,6 @@ Partial Class FrmUser
         Me.EprValidation.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink
         Me.EprValidation.ContainerControl = Me
         '
-        'DgvNavigator
-        '
-        Me.DgvNavigator.CancelNextMove = False
-        Me.DgvNavigator.FirstButton = Me.BtnFirst
-        Me.DgvNavigator.LastButton = Me.BtnLast
-        Me.DgvNavigator.NextButton = Me.BtnNext
-        Me.DgvNavigator.PreviousButton = Me.BtnPrevious
-        '
         'PnButtons
         '
         Me.PnButtons.BackColor = System.Drawing.Color.White
@@ -384,79 +376,6 @@ Partial Class FrmUser
         Me.FlpManufacturer.Name = "FlpManufacturer"
         Me.FlpManufacturer.Size = New System.Drawing.Size(69, 21)
         Me.FlpManufacturer.TabIndex = 4
-        '
-        'BtnFilter
-        '
-        Me.BtnFilter.BackColor = System.Drawing.Color.Transparent
-        Me.BtnFilter.BackgroundImage = Global.Manager.My.Resources.Resources.Magnifier
-        Me.BtnFilter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnFilter.FlatAppearance.BorderSize = 0
-        Me.BtnFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnFilter.Location = New System.Drawing.Point(49, 3)
-        Me.BtnFilter.Name = "BtnFilter"
-        Me.BtnFilter.Size = New System.Drawing.Size(17, 17)
-        Me.BtnFilter.TabIndex = 2
-        Me.BtnFilter.TabStop = False
-        Me.BtnFilter.TooltipText = ""
-        Me.BtnFilter.UseVisualStyleBackColor = False
-        Me.BtnFilter.Visible = False
-        '
-        'BtnView
-        '
-        Me.BtnView.BackColor = System.Drawing.Color.Transparent
-        Me.BtnView.BackgroundImage = Global.Manager.My.Resources.Resources.View
-        Me.BtnView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnView.FlatAppearance.BorderSize = 0
-        Me.BtnView.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnView.Location = New System.Drawing.Point(26, 3)
-        Me.BtnView.Name = "BtnView"
-        Me.BtnView.Size = New System.Drawing.Size(17, 17)
-        Me.BtnView.TabIndex = 1
-        Me.BtnView.TabStop = False
-        Me.BtnView.TooltipText = ""
-        Me.BtnView.UseVisualStyleBackColor = False
-        Me.BtnView.Visible = False
-        '
-        'BtnNew
-        '
-        Me.BtnNew.BackColor = System.Drawing.Color.Transparent
-        Me.BtnNew.BackgroundImage = Global.Manager.My.Resources.Resources.IncludeSmall
-        Me.BtnNew.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnNew.FlatAppearance.BorderSize = 0
-        Me.BtnNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnNew.Location = New System.Drawing.Point(3, 3)
-        Me.BtnNew.Name = "BtnNew"
-        Me.BtnNew.Size = New System.Drawing.Size(17, 17)
-        Me.BtnNew.TabIndex = 0
-        Me.BtnNew.TabStop = False
-        Me.BtnNew.TooltipText = ""
-        Me.BtnNew.UseVisualStyleBackColor = False
-        Me.BtnNew.Visible = False
-        '
-        'QbxPerson
-        '
-        Me.QbxPerson.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.QbxPerson.CharactersToQuery = 1
-        Me.QbxPerson.DebugOnTextChanged = False
-        Me.QbxPerson.DisplayFieldAlias = "Nome"
-        Me.QbxPerson.DisplayFieldName = "name"
-        Me.QbxPerson.DisplayMainFieldName = "id"
-        Me.QbxPerson.DisplayTableAlias = Nothing
-        Me.QbxPerson.DisplayTableName = "person"
-        Me.QbxPerson.Distinct = False
-        Me.QbxPerson.DropDownAutoStretchRight = False
-        Me.QbxPerson.GridHeaderBackColor = System.Drawing.SystemColors.Window
-        Me.QbxPerson.IfNull = Nothing
-        Me.QbxPerson.Location = New System.Drawing.Point(115, 33)
-        Me.QbxPerson.MainReturnFieldName = "id"
-        Me.QbxPerson.MainTableAlias = Nothing
-        Me.QbxPerson.MainTableName = "person"
-        Me.QbxPerson.Name = "QbxPerson"
-        Me.QbxPerson.Prefix = Nothing
-        Me.QbxPerson.ShowStartOnFreeze = True
-        Me.QbxPerson.Size = New System.Drawing.Size(329, 23)
-        Me.QbxPerson.Suffix = Nothing
-        Me.QbxPerson.TabIndex = 3
         '
         'TabPrivilege
         '
@@ -634,6 +553,87 @@ Partial Class FrmUser
         '
         Me.DgvEmailLayout.DataGridView = Me.DgvEmail
         Me.DgvEmailLayout.Routine = Manager.Routine.UserEmail
+        '
+        'BtnFilter
+        '
+        Me.BtnFilter.BackColor = System.Drawing.Color.Transparent
+        Me.BtnFilter.BackgroundImage = Global.Manager.My.Resources.Resources.Magnifier
+        Me.BtnFilter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnFilter.FlatAppearance.BorderSize = 0
+        Me.BtnFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnFilter.Location = New System.Drawing.Point(49, 3)
+        Me.BtnFilter.Name = "BtnFilter"
+        Me.BtnFilter.Size = New System.Drawing.Size(17, 17)
+        Me.BtnFilter.TabIndex = 2
+        Me.BtnFilter.TabStop = False
+        Me.BtnFilter.TooltipText = ""
+        Me.BtnFilter.UseVisualStyleBackColor = False
+        Me.BtnFilter.Visible = False
+        '
+        'BtnView
+        '
+        Me.BtnView.BackColor = System.Drawing.Color.Transparent
+        Me.BtnView.BackgroundImage = Global.Manager.My.Resources.Resources.View
+        Me.BtnView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnView.FlatAppearance.BorderSize = 0
+        Me.BtnView.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnView.Location = New System.Drawing.Point(26, 3)
+        Me.BtnView.Name = "BtnView"
+        Me.BtnView.Size = New System.Drawing.Size(17, 17)
+        Me.BtnView.TabIndex = 1
+        Me.BtnView.TabStop = False
+        Me.BtnView.TooltipText = ""
+        Me.BtnView.UseVisualStyleBackColor = False
+        Me.BtnView.Visible = False
+        '
+        'BtnNew
+        '
+        Me.BtnNew.BackColor = System.Drawing.Color.Transparent
+        Me.BtnNew.BackgroundImage = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnNew.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnNew.FlatAppearance.BorderSize = 0
+        Me.BtnNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnNew.Location = New System.Drawing.Point(3, 3)
+        Me.BtnNew.Name = "BtnNew"
+        Me.BtnNew.Size = New System.Drawing.Size(17, 17)
+        Me.BtnNew.TabIndex = 0
+        Me.BtnNew.TabStop = False
+        Me.BtnNew.TooltipText = ""
+        Me.BtnNew.UseVisualStyleBackColor = False
+        Me.BtnNew.Visible = False
+        '
+        'QbxPerson
+        '
+        Me.QbxPerson.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.QbxPerson.CharactersToQuery = 1
+        Me.QbxPerson.DebugOnTextChanged = False
+        Me.QbxPerson.DisplayFieldAlias = "Nome"
+        Me.QbxPerson.DisplayFieldName = "name"
+        Me.QbxPerson.DisplayMainFieldName = "id"
+        Me.QbxPerson.DisplayTableAlias = Nothing
+        Me.QbxPerson.DisplayTableName = "person"
+        Me.QbxPerson.Distinct = False
+        Me.QbxPerson.DropDownAutoStretchRight = False
+        Me.QbxPerson.GridHeaderBackColor = System.Drawing.SystemColors.Window
+        Me.QbxPerson.IfNull = Nothing
+        Me.QbxPerson.Location = New System.Drawing.Point(115, 33)
+        Me.QbxPerson.MainReturnFieldName = "id"
+        Me.QbxPerson.MainTableAlias = Nothing
+        Me.QbxPerson.MainTableName = "person"
+        Me.QbxPerson.Name = "QbxPerson"
+        Me.QbxPerson.Prefix = Nothing
+        Me.QbxPerson.ShowStartOnFreeze = True
+        Me.QbxPerson.Size = New System.Drawing.Size(329, 23)
+        Me.QbxPerson.Suffix = Nothing
+        Me.QbxPerson.TabIndex = 3
+        '
+        'DgvNavigator
+        '
+        Me.DgvNavigator.CancelNextMove = False
+        Me.DgvNavigator.FirstButton = Me.BtnFirst
+        Me.DgvNavigator.LastButton = Me.BtnLast
+        Me.DgvNavigator.NextButton = Me.BtnNext
+        Me.DgvNavigator.PreviousButton = Me.BtnPrevious
         '
         'FrmUser
         '

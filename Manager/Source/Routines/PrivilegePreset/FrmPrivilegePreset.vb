@@ -75,7 +75,7 @@ Public Class FrmPrivilegePreset
         Dim BiStatePrivileges As List(Of Routine) = EnumHelper.GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(BiStatePrivilege), True).Any()).OrderBy(Function(x) EnumHelper.GetEnumDescription(x)).ToList
         For Each BiStatePrivilege In BiStatePrivileges
             Dim PrivilegeItem = New UcBiStatePrivilegeItem() With {.Routine = BiStatePrivilege}
-            AddHandler PrivilegeItem.ChechedChanged, AddressOf PrivilegeItemCheckedChange
+            AddHandler PrivilegeItem.CheckedChanged, AddressOf PrivilegeItemCheckedChange
             Controls.Add(PrivilegeItem)
         Next
         FlpPrivilege.Controls.AddRange(Controls.ToArray())

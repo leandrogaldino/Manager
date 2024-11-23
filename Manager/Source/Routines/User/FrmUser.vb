@@ -1,6 +1,8 @@
-﻿Imports ControlLibrary
+﻿Imports System.Reflection
+Imports ControlLibrary
 Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
+Imports Org.BouncyCastle.Bcpg
 Public Class FrmUser
     Private _User As User
     Private _UsersForm As FrmUsers
@@ -67,7 +69,7 @@ Public Class FrmUser
         Dim BiStatePrivileges As List(Of Routine) = EnumHelper.GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(BiStatePrivilege), True).Any()).OrderBy(Function(x) EnumHelper.GetEnumDescription(x)).ToList
         For Each BiStatePrivilege In BiStatePrivileges
             Dim PrivilegeItem = New UcBiStatePrivilegeItem() With {.Routine = BiStatePrivilege}
-            AddHandler PrivilegeItem.ChechedChanged, AddressOf PrivilegeItemCheckedChange
+            AddHandler PrivilegeItem.CheckedChanged, AddressOf PrivilegeItemCheckedChange
             Controls.Add(PrivilegeItem)
         Next
         FlpPrivilege.Controls.AddRange(Controls.ToArray())
@@ -235,6 +237,66 @@ Public Class FrmUser
         BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
     Private Sub PrivilegeItemCheckedChange(sender As Object, e As EventArgs)
+        Dim IsTriState As Boolean = sender.GetType().Equals(GetType(UcTristatePrivilegeItem))
+        Dim Routine = sender.Routine
+        Dim AccessPrivilege As UserPrivilege = _User.Privileges.FirstOrDefault(Function(p) p.PrivilegedRoutine = Routine AndAlso p.Level = PrivilegeLevel.Access)
+        If (IsTriState AndAlso sender.CanAccess) OrElse (Not IsTriState AndAlso sender.Granted) Then
+            ' Adiciona o privilégio se estiver marcado e ainda não existir
+            If AccessPrivilege Is Nothing Then
+                _User.Privileges.Add(New UserPrivilege With {.PrivilegedRoutine = Routine, .Level = PrivilegeLevel.Access})
+                AccessPrivilege = _User.Privileges.FirstOrDefault(Function(p) p.PrivilegedRoutine = Routine AndAlso p.Level = PrivilegeLevel.Access)
+                Dim Attr = AttributeHelper.GetAttribute(Of RoutineDependencyAttribute)(AccessPrivilege.PrivilegedRoutine.GetType(), AccessPrivilege.PrivilegedRoutine.ToString)
+                If Attr IsNot Nothing Then
+                    FlpPrivilege.Controls.OfType(Of UcTristatePrivilegeItem).FirstOrDefault(Function(x) x.Routine = Attr.Dependency).CanAccess = True
+                End If
+            End If
+        Else
+            ' Remove o privilégio se não estiver marcado e já existir
+            If AccessPrivilege IsNot Nothing Then
+                _User.Privileges.Remove(AccessPrivilege)
+                Dim Dependents = EnumHelper.GetEnumItems(Of Routine)(Function(field)
+                                                                         Dim attribute = CType(field.GetCustomAttribute(GetType(RoutineDependencyAttribute)), RoutineDependencyAttribute)
+                                                                         Return attribute IsNot Nothing AndAlso attribute.Dependency = AccessPrivilege.PrivilegedRoutine
+                                                                     End Function)
+                For Each Dependent In Dependents
+                    Dim TriStateControl = FlpPrivilege.Controls.OfType(Of UcTristatePrivilegeItem).FirstOrDefault(Function(x) x.Routine = Dependent)
+                    If TriStateControl IsNot Nothing Then
+                        TriStateControl.CanAccess = False
+                    End If
+                    Dim BiStateControl = FlpPrivilege.Controls.OfType(Of UcBiStatePrivilegeItem).FirstOrDefault(Function(x) x.Routine = Dependent)
+                    If BiStateControl IsNot Nothing Then
+                        BiStateControl.Granted = False
+                    End If
+                Next
+            End If
+        End If
+        If IsTriState Then
+            Dim WritePrivilege As UserPrivilege = _User.Privileges.FirstOrDefault(Function(p) p.PrivilegedRoutine = Routine AndAlso p.Level = PrivilegeLevel.Write)
+            If sender.CanWrite Then
+                ' Adiciona o privilégio se estiver marcado e ainda não existir
+                If WritePrivilege Is Nothing Then
+                    _User.Privileges.Add(New UserPrivilege With {.PrivilegedRoutine = Routine, .Level = PrivilegeLevel.Write})
+                End If
+            Else
+                ' Remove o privilégio se não estiver marcado e já existir
+                If WritePrivilege IsNot Nothing Then
+                    _User.Privileges.Remove(WritePrivilege)
+                End If
+            End If
+            ' Verifica e atualiza o privilégio de "Delete"
+            Dim DeletePrivilege As UserPrivilege = _User.Privileges.FirstOrDefault(Function(p) p.PrivilegedRoutine = Routine AndAlso p.Level = PrivilegeLevel.Delete)
+            If sender.CanDelete Then
+                ' Adiciona o privilégio se estiver marcado e ainda não existir
+                If DeletePrivilege Is Nothing Then
+                    _User.Privileges.Add(New UserPrivilege With {.PrivilegedRoutine = Routine, .Level = PrivilegeLevel.Delete})
+                End If
+            Else
+                ' Remove o privilégio se não estiver marcado e já existir
+                If DeletePrivilege IsNot Nothing Then
+                    _User.Privileges.Remove(DeletePrivilege)
+                End If
+            End If
+        End If
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub

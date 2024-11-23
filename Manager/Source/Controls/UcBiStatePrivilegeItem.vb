@@ -1,12 +1,16 @@
 ﻿Imports ControlLibrary
 Public Class UcBiStatePrivilegeItem
-    Public Event ChechedChanged As EventHandler
+    Public Event CheckedChanged As EventHandler
     Public Property Routine As Routine
         Get
             Return EnumHelper.GetEnumValue(Of Routine)(LblPrivilege.Text)
         End Get
         Set(value As Routine)
             LblPrivilege.Text = EnumHelper.GetEnumDescription(value)
+            Dim Dependency = AttributeHelper.GetAttribute(Of RoutineDependencyAttribute)(value.GetType, value.ToString)
+            If Dependency IsNot Nothing Then
+                CbxTip.SetToolTip(CbxGrant, $"{CbxTip.GetToolTip(CbxGrant)} - Dependente de {EnumHelper.GetEnumDescription(Dependency.Dependency)}")
+            End If
         End Set
     End Property
     Public Property Granted As Boolean
@@ -37,6 +41,6 @@ Public Class UcBiStatePrivilegeItem
         OnCheckedChanged()
     End Sub
     Private Sub OnCheckedChanged()
-        RaiseEvent ChechedChanged(Me, EventArgs.Empty)
+        RaiseEvent CheckedChanged(Me, EventArgs.Empty)
     End Sub
 End Class

@@ -7,6 +7,12 @@ Public Class UcTristatePrivilegeItem
         End Get
         Set(value As Routine)
             LblPrivilege.Text = EnumHelper.GetEnumDescription(value)
+            Dim Dependency = AttributeHelper.GetAttribute(Of RoutineDependencyAttribute)(value.GetType, value.ToString)
+            If Dependency IsNot Nothing Then
+                CbxTip.SetToolTip(CbxAccess, $"{CbxTip.GetToolTip(CbxAccess)} - Dependente de {EnumHelper.GetEnumDescription(Dependency.Dependency)}")
+                CbxTip.SetToolTip(CbxWrite, $"{CbxTip.GetToolTip(CbxWrite)} - Dependente de {EnumHelper.GetEnumDescription(Dependency.Dependency)}")
+                CbxTip.SetToolTip(CbxDelete, $"{CbxTip.GetToolTip(CbxDelete)} - Dependente de {EnumHelper.GetEnumDescription(Dependency.Dependency)}")
+            End If
         End Set
     End Property
 

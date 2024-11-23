@@ -251,7 +251,6 @@ Public Class FrmEvaluationManagement
                         .Horimeter = SelectedEvaluation.Horimeter + ((Today - SelectedEvaluation.EvaluationDate).Days * SelectedEvaluation.AverageWorkLoad),
                         .EvaluationType = EvaluationType.Execution,
                         .Responsible = SelectedEvaluation.Responsible,
-                        .User = _User,
                         .TechnicalAdvice = SelectedEvaluation.TechnicalAdvice
                     }
                     NewEvaluation.Document.SetCurrentFile(GetAutomaticPDF)

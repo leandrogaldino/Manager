@@ -1,19 +1,20 @@
 ﻿Imports System.ComponentModel
-Imports MySql.Data.MySqlClient
 Imports ControlLibrary
+Imports DocumentFormat.OpenXml.Office2010.Excel
+Imports ManagerCore
+Imports MySql.Data.MySqlClient
+
 
 ''' <summary>
 ''' Representa o filtro de avaliações de compressores.
 ''' </summary>
 Public Class VisitScheduleFilter
+    Private _RemoteDb As RemoteDB
     <Browsable(False)>
     Public Property DataGridView As DataGridView
     <Browsable(False)>
     Public Property PropertyGrid As PropertyGrid
-    <NotifyParentProperty(True)>
-    <RefreshProperties(RefreshProperties.All)>
-    <TypeConverter(GetType(UpperNoAccentConverter))>
-    Public Property ID As String
+
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(ExpandableObjectConverter))>
@@ -44,9 +45,34 @@ Public Class VisitScheduleFilter
         DataGridView = Dgv
         PropertyGrid = Pg
         Pg.SelectedObject = Me
+        _RemoteDb = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
     End Sub
     Public Sub New()
     End Sub
+    Public Overridable Function Filter() As Boolean
+        Dim Filtering As Boolean
+        Dim Conditions As New List(Of RemoteDB.Condition)
+
+        If Status.Pending = "Sim" Or Status.Pending = Nothing Then Conditions.Add(New RemoteDB.WhereEqualToCondition("status_id", Convert.ToInt32(Status.Pending))) : Filtering = True
+        If Status.Started = "Sim" Or Status.Started = Nothing Then Conditions.Add(New RemoteDB.WhereEqualToCondition("status_id", Convert.ToInt32(Status.Started))) : Filtering = True
+        If Status.Finished = "Sim" Or Status.Finished = Nothing Then Conditions.Add(New RemoteDB.WhereEqualToCondition("status_id", Convert.ToInt32(Status.Finished))) : Filtering = True
+        If Status.Canceled = "Sim" Or Status.Canceled = Nothing Then Conditions.Add(New RemoteDB.WhereEqualToCondition("status_id", Convert.ToInt32(Status.Canceled))) : Filtering = True
+        If VisitType <> Nothing Then Conditions.Add(New RemoteDB.WhereEqualToCondition("visit_type_id", Convert.ToInt32(VisitType))) : Filtering = True
+        If Instructions <> Nothing Then Conditions.Add(New RemoteDB.WhereInCondition("instructions", Instructions.Split(" "c)))
+
+
+
+
+
+        _RemoteDb.StartListening("schedule")
+
+
+
+
+
+
+    End Function
+
     Public Overridable Function Filter() As Boolean
         Dim Table As New DataTable
         Dim Filtering As Boolean
@@ -62,7 +88,7 @@ Public Class VisitScheduleFilter
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
             Using Cmd As New MySqlCommand(My.Resources.VisitScheduleFilter, Con)
-                If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
+                If Id <> Nothing Then Cmd.Parameters.AddWithValue("@id", Id) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
                 If Status.Finished = "Sim" Or Status.Finished = Nothing Then StatusList.Add(CInt(VisitScheduleStatus.Finished))
                 If Status.Pending = "Sim" Or Status.Pending = Nothing Then StatusList.Add(CInt(VisitScheduleStatus.Pending))
                 If Status.Started = "Sim" Or Status.Started = Nothing Then StatusList.Add(CInt(VisitScheduleStatus.Started))
@@ -108,6 +134,7 @@ Public Class VisitScheduleFilter
         End If
         Return Filtering
     End Function
+
     Public Sub Clean()
         ID = Nothing
         Status = New VisitScheduleStatusExpandable

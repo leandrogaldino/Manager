@@ -32,7 +32,7 @@ Public MustInherit Class BaseModel
             Return _IsSaved
         End Get
     End Property
-    Public Property User As User = Locator.GetInstance(Of Session).User
+    Public ReadOnly Property User As User = Locator.GetInstance(Of Session).User
     Public Sub SetID(ID As Long)
         _ID = ID
     End Sub

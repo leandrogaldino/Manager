@@ -23,7 +23,7 @@ Public Class FrmVisitSchedules
         BtnExport.Visible = _LoggedUser.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvlVisitScheduleLayout.Load()
+        'DgvlVisitScheduleLayout.Load()
     End Sub
     Private Sub Form_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         AddHandler Parent.FindForm.Resize, AddressOf FrmMain_ResizeEnd
@@ -37,7 +37,7 @@ Public Class FrmVisitSchedules
         If DgvData.SelectedRows.Count = 1 Then
             Try
                 Cursor = Cursors.WaitCursor
-                _VisitSchedule = New VisitSchedule().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
+                _VisitSchedule =  New VisitSchedule().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
                 VisitScheduleForm = New FrmVisitSchedule(_VisitSchedule, Me)
                 VisitScheduleForm.ShowDialog()
             Catch ex As Exception
@@ -131,12 +131,18 @@ Public Class FrmVisitSchedules
         Dim Dgv As DataGridView = sender
         If e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
-                Case Is = EnumHelper.GetEnumDescription(VisitScheduleStatus.Pending)
+                Case Is = Convert.ToInt32(VisitScheduleStatus.Pending)
+                    e.Value = EnumHelper.GetEnumDescription(VisitScheduleStatus.Pending)
                     e.CellStyle.ForeColor = Color.DarkBlue
-                Case Is = EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled)
+                Case Is = Convert.ToInt32(VisitScheduleStatus.Canceled)
+                    e.Value = EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled)
                     e.CellStyle.ForeColor = Color.DarkRed
-                Case Else
+                Case Is = Convert.ToInt32(VisitScheduleStatus.Started)
+                    e.Value = EnumHelper.GetEnumDescription(VisitScheduleStatus.Started)
                     e.CellStyle.ForeColor = Color.Chocolate
+                Case Is = Convert.ToInt32(VisitScheduleStatus.Finished)
+                    e.Value = EnumHelper.GetEnumDescription(VisitScheduleStatus.Finished)
+                    e.CellStyle.ForeColor = Color.DarkGreen
             End Select
         End If
     End Sub

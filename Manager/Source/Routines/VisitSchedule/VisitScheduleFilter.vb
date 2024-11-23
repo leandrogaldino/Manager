@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports ControlLibrary
+Imports DocumentFormat.OpenXml.Drawing
 Imports DocumentFormat.OpenXml.Office2010.Excel
 Imports ManagerCore
 Imports MySql.Data.MySqlClient
@@ -52,68 +53,183 @@ Public Class VisitScheduleFilter
     Public Overridable Function Filter() As Boolean
         Dim Filtering As Boolean
         Dim Conditions As New List(Of RemoteDB.Condition)
-
-        If Status.Pending = "Sim" Or Status.Pending = Nothing Then Conditions.Add(New RemoteDB.WhereEqualToCondition("status_id", Convert.ToInt32(Status.Pending))) : Filtering = True
-        If Status.Started = "Sim" Or Status.Started = Nothing Then Conditions.Add(New RemoteDB.WhereEqualToCondition("status_id", Convert.ToInt32(Status.Started))) : Filtering = True
-        If Status.Finished = "Sim" Or Status.Finished = Nothing Then Conditions.Add(New RemoteDB.WhereEqualToCondition("status_id", Convert.ToInt32(Status.Finished))) : Filtering = True
-        If Status.Canceled = "Sim" Or Status.Canceled = Nothing Then Conditions.Add(New RemoteDB.WhereEqualToCondition("status_id", Convert.ToInt32(Status.Canceled))) : Filtering = True
-        If VisitType <> Nothing Then Conditions.Add(New RemoteDB.WhereEqualToCondition("visit_type_id", Convert.ToInt32(VisitType))) : Filtering = True
-        If Instructions <> Nothing Then Conditions.Add(New RemoteDB.WhereInCondition("instructions", Instructions.Split(" "c)))
-
-
-
-
-
-        _RemoteDb.StartListening("schedule")
-
-
-
-
-
-
-    End Function
-
-    Public Overridable Function Filter() As Boolean
-        Dim Table As New DataTable
-        Dim Filtering As Boolean
+        Dim FilteredItems As List(Of Integer)
         Dim SelectedRow As Long = 0
         Dim FirstRow As Long = 0
-        Dim StatusList As New List(Of String)
-        If DataGridView IsNot Nothing Then
-            If DataGridView.SelectedRows.Count = 1 Then
-                SelectedRow = DataGridView.SelectedRows(0).Index
-            End If
-            FirstRow = DataGridView.FirstDisplayedScrollingRowIndex
+        FilteredItems = New List(Of Integer)
+        If Status.Pending = "Sim" Then
+            FilteredItems.Add(Convert.ToInt32(VisitScheduleStatus.Pending))
+            Filtering = True
         End If
-        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
-            Con.Open()
-            Using Cmd As New MySqlCommand(My.Resources.VisitScheduleFilter, Con)
-                If Id <> Nothing Then Cmd.Parameters.AddWithValue("@id", Id) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
-                If Status.Finished = "Sim" Or Status.Finished = Nothing Then StatusList.Add(CInt(VisitScheduleStatus.Finished))
-                If Status.Pending = "Sim" Or Status.Pending = Nothing Then StatusList.Add(CInt(VisitScheduleStatus.Pending))
-                If Status.Started = "Sim" Or Status.Started = Nothing Then StatusList.Add(CInt(VisitScheduleStatus.Started))
-                If Status.Canceled = "Sim" Or Status.Canceled = Nothing Then StatusList.Add(CInt(VisitScheduleStatus.Canceled))
-                If VisitType <> Nothing Then Cmd.Parameters.AddWithValue("@visittypeid", CInt(VisitType)) : Filtering = True Else Cmd.Parameters.AddWithValue("@visittypeid", "%")
-                Cmd.Parameters.AddWithValue("@statusid", String.Join(",", StatusList)) : Filtering = True
-                If Instructions <> Nothing Then Cmd.Parameters.AddWithValue("@instructions", Instructions) : Filtering = True Else Cmd.Parameters.AddWithValue("@instructions", "%")
-                If Customer.ID <> Nothing Then Cmd.Parameters.AddWithValue("@customerid", Customer.ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@customerid", "%")
-                If Customer.Document <> Nothing Then Cmd.Parameters.AddWithValue("@customerdocument", Customer.Document) : Filtering = True Else Cmd.Parameters.AddWithValue("@customerdocument", "%")
-                If Customer.Name <> Nothing Then Cmd.Parameters.AddWithValue("@customername", Customer.Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@customername", "%")
-                If Compressor.Name <> Nothing Then Cmd.Parameters.AddWithValue("@compressorname", Compressor.Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@compressorname", "%")
-                If Compressor.SerialNumber <> Nothing Then Cmd.Parameters.AddWithValue("@serialnumber", Compressor.SerialNumber) : Filtering = True Else Cmd.Parameters.AddWithValue("@serialnumber", "%")
-                If Compressor.Patrimony <> Nothing Then Cmd.Parameters.AddWithValue("@patrimony", Compressor.Patrimony) : Filtering = True Else Cmd.Parameters.AddWithValue("@patrimony", "%")
-                If Compressor.Sector <> Nothing Then Cmd.Parameters.AddWithValue("@sector", Compressor.Sector) : Filtering = True Else Cmd.Parameters.AddWithValue("@sector", "%")
-                If Creation.InitialDate <> Nothing Then Cmd.Parameters.AddWithValue("@creationi", Creation.InitialDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@creationi", "0001-01-01")
-                If Creation.FinalDate <> Nothing Then Cmd.Parameters.AddWithValue("@creationf", Creation.FinalDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@creationf", "9999-12-31")
-                If VisitDate.InitialDate <> Nothing Then Cmd.Parameters.AddWithValue("@visitdatei", VisitDate.InitialDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@visitdatei", "0001-01-01")
-                If VisitDate.FinalDate <> Nothing Then Cmd.Parameters.AddWithValue("@visitdatef", VisitDate.FinalDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@visitdatef", "9999-12-31")
-                Using Adp As New MySqlDataAdapter(Cmd)
-                    Adp.Fill(Table)
-                    DataGridView.DataSource = Nothing
-                    DataGridView.DataSource = Table
+        If Status.Started = "Sim" Then
+            FilteredItems.Add(Convert.ToInt32(VisitScheduleStatus.Started))
+            Filtering = True
+        End If
+        If Status.Finished = "Sim" Then
+            FilteredItems.Add(Convert.ToInt32(VisitScheduleStatus.Finished))
+            Filtering = True
+        End If
+        If Status.Canceled = "Sim" Then
+            FilteredItems.Add(Convert.ToInt32(VisitScheduleStatus.Canceled))
+            Filtering = True
+        End If
+
+        Conditions.Add(New RemoteDB.WhereInCondition("status_id", FilteredItems))
+
+
+        If VisitType <> Nothing Then
+            Conditions.Add(New RemoteDB.WhereEqualToCondition("visit_type_id", Convert.ToInt32(EnumHelper.GetEnumValue(Of VisitScheduleType)(VisitType.ToUpper()))))
+            Filtering = True
+        End If
+        If Instructions <> Nothing Then
+            Conditions.Add(New RemoteDB.WhereInCondition("instructions", Instructions.Split(" "c)))
+        End If
+
+        FilteredItems = New List(Of Integer)
+
+        If Customer.ID <> Nothing Then
+            FilteredItems.Add(Convert.ToInt32(Customer.ID))
+            Filtering = True
+        End If
+        If Customer.Name <> Nothing Then
+            Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+                Con.Open()
+                Using Cmd As New MySqlCommand("select id from person where name like @name or shortname like @shortname and iscustomer = 1;", Con)
+                    Cmd.Parameters.AddWithValue("@name", Customer.Name)
+                    Cmd.Parameters.AddWithValue("@shortname", Customer.Name)
+                    Using Reader As MySqlDataReader = Cmd.ExecuteReader()
+                        While Reader.Read()
+                            FilteredItems.Add(Reader.GetInt32("id"))
+                        End While
+                        Filtering = True
+                    End Using
                 End Using
             End Using
-        End Using
+        End If
+        If Customer.Document <> Nothing Then
+            Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+                Con.Open()
+                Using Cmd As New MySqlCommand("select id from person where document like @document iscustomer = 1;", Con)
+                    Cmd.Parameters.AddWithValue("@document", Customer.Document)
+                    Using Reader As MySqlDataReader = Cmd.ExecuteReader()
+                        While Reader.Read()
+                            FilteredItems.Add(Reader.GetInt32("id"))
+                        End While
+                        Filtering = True
+                    End Using
+                End Using
+            End Using
+        End If
+        If FilteredItems.Count > 0 Then
+            FilteredItems = FilteredItems.Distinct()
+            Conditions.Add(New RemoteDB.WhereInCondition("customer_id", FilteredItems))
+        End If
+
+
+        FilteredItems = New List(Of Integer)
+
+
+
+        If Compressor.Name <> Nothing Then
+            Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+                Con.Open()
+                Using Cmd As New MySqlCommand("select personcompressor.id from personcompressor left join compressor on compressor.id = personcompressor.compressorid where compressor.name like @name;", Con)
+                    Cmd.Parameters.AddWithValue("@name", Compressor.Name)
+                    Dim Results As New List(Of Integer)()
+                    Using Reader As MySqlDataReader = Cmd.ExecuteReader()
+                        While Reader.Read()
+                            FilteredItems.Add(Reader.GetInt32("id"))
+                        End While
+                        Filtering = True
+                    End Using
+                End Using
+            End Using
+        End If
+        If Compressor.Sector <> Nothing Then
+            Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+                Con.Open()
+                Using Cmd As New MySqlCommand("select personcompressor.id from personcompressor where personcompressor.sector like @sector;", Con)
+                    Cmd.Parameters.AddWithValue("@sector", Compressor.Sector)
+                    Using Reader As MySqlDataReader = Cmd.ExecuteReader()
+                        While Reader.Read()
+                            FilteredItems.Add(Reader.GetInt32("id"))
+                        End While
+                        Filtering = True
+                    End Using
+                End Using
+            End Using
+        End If
+        If Compressor.SerialNumber <> Nothing Then
+            Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+                Con.Open()
+                Using Cmd As New MySqlCommand("select personcompressor.id from personcompressor where personcompressor.serialnumber like @serialnumber;", Con)
+                    Cmd.Parameters.AddWithValue("@serialnumber", Compressor.SerialNumber)
+                    Using Reader As MySqlDataReader = Cmd.ExecuteReader()
+                        While Reader.Read()
+                            FilteredItems.Add(Reader.GetInt32("id"))
+                        End While
+                        Filtering = True
+                    End Using
+                End Using
+            End Using
+        End If
+        If Compressor.Patrimony <> Nothing Then
+            Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+                Con.Open()
+                Using Cmd As New MySqlCommand("select personcompressor.id from personcompressor where personcompressor.patrimony like @patrimony;", Con)
+                    Cmd.Parameters.AddWithValue("@patrimony", Compressor.Patrimony)
+                    Using Reader As MySqlDataReader = Cmd.ExecuteReader()
+                        While Reader.Read()
+                            FilteredItems.Add(Reader.GetInt32("id"))
+                        End While
+                        Filtering = True
+                    End Using
+                End Using
+            End Using
+        End If
+        If FilteredItems.Count > 0 Then
+            FilteredItems = FilteredItems.Distinct()
+            Conditions.Add(New RemoteDB.WhereInCondition("compressor_id", FilteredItems))
+        End If
+
+        FilteredItems = New List(Of Integer)
+
+
+        If Creation.InitialDate <> Nothing Then
+            Conditions.Add(New RemoteDB.WhereGreaterThanCondition("creation_date", Creation.InitialDate))
+        End If
+        If Creation.FinalDate <> Nothing Then
+            Conditions.Add(New RemoteDB.WhereLessThanOrEqualToCondition("creation_date", Creation.FinalDate))
+        End If
+
+
+        If VisitDate.InitialDate <> Nothing Then
+            Conditions.Add(New RemoteDB.WhereGreaterThanCondition("visit_date", VisitDate.InitialDate))
+        End If
+        If VisitDate.FinalDate <> Nothing Then
+            Conditions.Add(New RemoteDB.WhereLessThanOrEqualToCondition("visit_date", VisitDate.FinalDate))
+        End If
+
+
+
+        _RemoteDb.StartListening("schedule", Conditions)
+
+        AddHandler _RemoteDb.OnFirestoreChanged,
+            Sub(Args)
+                Dim Visits As New List(Of VisitSchedule)
+                Dim Visit As VisitSchedule
+                For Each Document In Args.Documents
+                    Visit = New VisitSchedule()
+                    Visit.FromCloud(Document)
+                    Visits.Add(Visit)
+                Next Document
+                If DataGridView.InvokeRequired Then
+                    DataGridView.Invoke(Sub() DataGridView.DataSource = Visits)
+                Else
+                    DataGridView.DataSource = Visits
+                End If
+            End Sub
+
         If DataGridView.Rows.Count > 0 Then
             If SelectedRow < DataGridView.Rows.Count Then
                 DataGridView.Rows(SelectedRow).Selected = True
@@ -132,11 +248,15 @@ Public Class VisitScheduleFilter
                 End If
             End If
         End If
+
+
+
         Return Filtering
     End Function
 
+
+
     Public Sub Clean()
-        ID = Nothing
         Status = New VisitScheduleStatusExpandable
         VisitType = Nothing
         Instructions = Nothing

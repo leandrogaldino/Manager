@@ -4,6 +4,8 @@
 /*No caixa reicol comercio no mes 08/2023 tem um registro da di napoli que está sem responsavel, colocar reicol*/
 /*No caixa reicol comercio no mes 08/2023 tem um registro da di napoli que está sem responsavel, colocar reicol*/
 /*No caixa aberto no mes 03/2024 tem um registro do almoço leandro que está sem responsavel, colocar leandro*/
+/*Deletar UserPrivilege e UserPriuvilegePreset, PrivilegePreset  e PrivilegePresetPrivilege
+
 
 CREATE TABLE `config` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -157,6 +159,8 @@ DROP TABLE userprivilege;
 
 DROP TABLE userprivilegepreset;
 
+DROP TABLE privilegepreset;
+
 CREATE TABLE userprivilege (
 	id INT NOT NULL AUTO_INCREMENT,
     creation DATE NOT NULL,
@@ -189,8 +193,9 @@ CREATE TABLE privilegepreset (
 	id INT NOT NULL AUTO_INCREMENT,
     creation DATE NOT NULL,
     statusid INT NOT NULL,
-    name LONGTEXT UNIQUE NOT NULL,
+    name VARCHAR(1000) NOT NULL,
     userid INT NOT NULL,
+	UNIQUE KEY (name(255)),
 	PRIMARY KEY(id),
     FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
 );

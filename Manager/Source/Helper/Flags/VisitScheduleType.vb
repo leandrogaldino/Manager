@@ -8,4 +8,5 @@ Public Enum VisitScheduleType
     <Description("PREVENTIVA")> Preventive = 1
     <Description("CHAMADO")> Called = 2
     <Description("CONTRATO")> Contract = 3
+    <Description("NENHUM")> None = 4
 End Enum

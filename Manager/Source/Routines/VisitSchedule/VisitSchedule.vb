@@ -1,8 +1,12 @@
 ﻿Imports ControlLibrary
+Imports ManagerCore
 Imports MySql.Data.MySqlClient
 
 Public Class VisitSchedule
     Inherits ParentModel
+
+    Private _RemoteDB As RemoteDB
+
     Public Property Status As VisitScheduleStatus
     Public Property VisitType As VisitScheduleType
     Public Property VisitDate As Date
@@ -14,7 +18,8 @@ Public Class VisitSchedule
     Public Sub New()
         SetRoutine(Routine.VisitSchedule)
         Status = VisitScheduleStatus.Pending
-        VisitType = VisitScheduleType.Gathering
+        VisitType = VisitScheduleType.None
+        _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
     End Sub
     Public Sub Clear()
         Unlock()
@@ -46,12 +51,31 @@ Public Class VisitSchedule
                             SetCreation(Convert.ToDateTime(Table.Rows(0).Item("creation")))
                             SetIsSaved(True)
                             Status = CType(Convert.ToInt32(Table.Rows(0).Item("statusid")), VisitScheduleStatus)
+                            VisitType = CType(Convert.ToInt32(Table.Rows(0).Item("visittypeid")), VisitScheduleType)
                             VisitDate = Convert.ToDateTime(Table.Rows(0).Item("visitdate"))
                             Customer = New Person().Load(Convert.ToInt64(Table.Rows(0).Item("customerid")), False)
-                            Compressor = Customer.Compressors.SingleOrDefault(Function(x) x.ID = Table.Rows(0).Item("compressorid"))
+                            Compressor = Customer.Compressors.SingleOrDefault(Function(x) x.ID = Table.Rows(0).Item("personcompressorid"))
                             Instructions = Convert.ToString(Table.Rows(0).Item("instructions"))
                             If Table.Rows(0).Item("evaluationid") IsNot DBNull.Value Then
                                 Evaluation = New Lazy(Of Evaluation)(Function() New Evaluation().Load(Convert.ToInt64(Table.Rows(0).Item("evaluationid")), True))
+                            End If
+
+
+                            Dim Conditions As New List(Of RemoteDB.Condition) From {
+                                New RemoteDB.WhereEqualToCondition("id", Identity)
+                            }
+                            Dim Result = ManagerCore.Util.AsyncLock(Function() _RemoteDB.ExecuteGet("schedule", Conditions))
+
+                            If Result.Count = 1 Then
+
+
+                                Dim RemoteVisit = Result(0)
+
+                                If Status <> CInt(RemoteVisit("status_id")) Then
+
+                                    Status = CInt(RemoteVisit("status_id"))
+                                End If
+
                             End If
                             LockInfo = GetLockInfo(Tra)
                             If LockMe AndAlso Not LockInfo.IsLocked Then Lock(Tra)
@@ -64,6 +88,10 @@ Public Class VisitSchedule
                 Tra.Commit()
             End Using
         End Using
+
+
+
+
         Return Me
     End Function
 
@@ -96,9 +124,9 @@ Public Class VisitSchedule
                     Cmd.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     Cmd.Parameters.AddWithValue("@statusid", CInt(Status))
                     Cmd.Parameters.AddWithValue("@visitdate", VisitDate.ToString("yyyy-MM-dd"))
-                    Cmd.Parameters.AddWithValue("@visitetypeid", CInt(VisitType))
+                    Cmd.Parameters.AddWithValue("@visittypeid", CInt(VisitType))
                     Cmd.Parameters.AddWithValue("@customerid", Customer.ID)
-                    Cmd.Parameters.AddWithValue("@compressorid", Compressor.ID)
+                    Cmd.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
                     Cmd.Parameters.AddWithValue("@instructions", If(String.IsNullOrEmpty(Instructions), DBNull.Value, Instructions))
                     Cmd.Parameters.AddWithValue("@evaluationid", DBNull.Value)
                     Cmd.Parameters.AddWithValue("@userid", User.ID)
@@ -108,6 +136,19 @@ Public Class VisitSchedule
                 Tra.Commit()
             End Using
         End Using
+
+        Dim Data As New Dictionary(Of String, Object) From {
+            {"id", ID},
+            {"status_id", CInt(Status)},
+            {"visit_type_id", CInt(VisitType)},
+            {"customer_id", Customer.ID},
+            {"compressor_id", Compressor.ID},
+            {"visit_date", VisitDate.ToString("yyyy-MM-dd")},
+            {"instructions", Instructions}
+        }
+
+        ManagerCore.Util.AsyncLock(Sub() _RemoteDB.ExecutePut("schedule", Data))
+
     End Sub
     Private Sub Update()
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
@@ -118,13 +159,26 @@ Public Class VisitSchedule
                 Cmd.Parameters.AddWithValue("@visitdate", VisitDate.ToString("yyyy-MM-dd"))
                 Cmd.Parameters.AddWithValue("@visittypeid", CInt(VisitType))
                 Cmd.Parameters.AddWithValue("@customerid", Customer.ID)
-                Cmd.Parameters.AddWithValue("@compressorid", Compressor.ID)
+                Cmd.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
                 Cmd.Parameters.AddWithValue("@instructions", If(String.IsNullOrEmpty(Instructions), DBNull.Value, Instructions))
                 Cmd.Parameters.AddWithValue("@evaluationid", If(Not Evaluation.IsValueCreated OrElse Evaluation.Value.ID = 0, DBNull.Value, Evaluation.Value.ID))
                 Cmd.Parameters.AddWithValue("@userid", User.ID)
                 Cmd.ExecuteNonQuery()
             End Using
         End Using
+
+        Dim Data As New Dictionary(Of String, Object) From {
+            {"id", ID},
+            {"status_id", CInt(Status)},
+            {"visit_type_id", CInt(VisitType)},
+            {"customer_id", Customer.ID},
+            {"compressor_id", Compressor.ID},
+            {"visit_date", VisitDate.ToString("yyyy-MM-dd")},
+            {"instructions", Instructions}
+        }
+
+        ManagerCore.Util.AsyncLock(Sub() _RemoteDB.ExecutePut("schedule", Data))
+
     End Sub
     Public Overrides Function ToString() As String
         Return $"{Customer.Name}: {Compressor.Compressor.Name}{If(Not String.IsNullOrEmpty(Compressor.SerialNumber), $" {Compressor.SerialNumber}", {String.Empty})}"

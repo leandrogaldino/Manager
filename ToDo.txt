@@ -1,4 +1,4 @@
-[] Fazer o XMLGrid do VisitSchedule
+[X] Fazer o XMLGrid do VisitSchedule
 
 [] Terminar de configurar FrmVisitSchedule (Nao aparecer os dois statis, Tabindex, tamanho do dropdown dos QueriedBoxes)
 

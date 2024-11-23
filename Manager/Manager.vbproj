@@ -1672,6 +1672,7 @@
     <Content Include="Resources\SQL\UserPersonShortNameSelect.sql" />
     <Content Include="Resources\XML\CashFlowAuthorizedGrid.xml" />
     <Content Include="Resources\XML\CashFlowGrid.xml" />
+    <Content Include="Resources\XML\VisitScheduleGrid.xml" />
     <Content Include="Resources\XML\CityRouteGrid.xml" />
     <Content Include="Resources\XML\CrmGrid.xml" />
     <None Include="Source\Docs\.UpdateNotes">

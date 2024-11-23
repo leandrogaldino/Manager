@@ -2,7 +2,6 @@
 Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Imports Syncfusion.Windows.Forms
-
 Public Class FrmVisitSchedule
     Private _VisitSchedule As VisitSchedule
     Private _VisitSchedulesForm As FrmVisitSchedules
@@ -67,27 +66,20 @@ Public Class FrmVisitSchedule
         DgvNavigator.DataGridView = _VisitSchedulesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
+        BtnEvaluation.Visible = _LoggedUser.CanWrite(Routine.Evaluation)
+        BtnEvaluation.Enabled = _VisitSchedule.Evaluation IsNot Nothing
         BtnLog.Visible = _LoggedUser.CanAccess(Routine.Log)
     End Sub
     Private Sub LoadData()
         _Loading = True
         LblIDValue.Text = _VisitSchedule.ID
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_VisitSchedule.Status)
-
-
         LblCreationValue.Text = _VisitSchedule.Creation.ToString("dd/MM/yyyy")
-
-
         RbtGathering.Checked = _VisitSchedule.VisitType = VisitScheduleType.Gathering
         RbtPreventive.Checked = _VisitSchedule.VisitType = VisitScheduleType.Preventive
         RbtCalled.Checked = _VisitSchedule.VisitType = VisitScheduleType.Called
         RbtContract.Checked = _VisitSchedule.VisitType = VisitScheduleType.Contract
-
-
-
-
-
-
+        DbxEvaluationDate.Text = _VisitSchedule.VisitDate
         QbxCompressor.Conditions.Clear()
         QbxCompressor.Parameters.Clear()
         QbxCompressor.Conditions.Add(New QueriedBox.Condition With {.TableNameOrAlias = "personcompressor", .FieldName = "statusid", .[Operator] = "=", .Value = "@statusid"})
@@ -98,9 +90,7 @@ Public Class FrmVisitSchedule
         QbxCustomer.Freeze(_VisitSchedule.Customer.ID)
         QbxCompressor.Unfreeze()
         QbxCompressor.Freeze(_VisitSchedule.Compressor.ID)
-
         TxtInstructions.Text = _VisitSchedule.Instructions
-
         BtnDelete.Enabled = _VisitSchedule.ID > 0 And _LoggedUser.CanDelete(Routine.VisitSchedule)
         Text = "Agendamento de Visita"
         If _VisitSchedule.LockInfo.IsLocked And Not _VisitSchedule.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _VisitSchedule.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
@@ -108,7 +98,7 @@ Public Class FrmVisitSchedule
             Text &= " - SOMENTE LEITURA"
         End If
         BtnSave.Enabled = False
-        QbxCustomer.Select()
+        DbxEvaluationDate.Select()
         _Loading = False
     End Sub
     Private Sub BeforeDataGridViewRowMove()
@@ -188,24 +178,30 @@ Public Class FrmVisitSchedule
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Pending) Then
             BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled)
-            If _VisitSchedule.Status = SimpleStatus.Active Then
+            If _VisitSchedule.Status = VisitScheduleStatus.Pending Then
                 CMessageBox.Show("O registro foi marcado para ser cancelado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
         ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled) Then
             BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Pending)
-            If _VisitSchedule.Status = SimpleStatus.Inactive Then
-                CMessageBox.Show("O registro foi marcado para ser cancelado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
+            If _VisitSchedule.Status = VisitScheduleStatus.Canceled Then
+                CMessageBox.Show("O registro foi marcado para pendente, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
         End If
         BtnSave.Enabled = True
     End Sub
     Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
         EprValidation.Clear()
-        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
-
+        Dim NewColor As Color = Color.Chocolate
+        If BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Pending) Then
+            NewColor = Color.DarkBlue
+        ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled) Then
+            NewColor = Color.DarkRed
+        End If
+        BtnStatusValue.ForeColor = NewColor
         LblStatusValue.Text = BtnStatusValue.Text
         LblStatusValue.ForeColor = BtnStatusValue.ForeColor
-
+        BtnStatusValue.Visible = (BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Pending) Or (BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled)))
+        LblStatusValue.Visible = (BtnStatusValue.Text <> EnumHelper.GetEnumDescription(VisitScheduleStatus.Pending) And (BtnStatusValue.Text <> EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled)))
     End Sub
     Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtInstructions.TextChanged, QbxCustomer.TextChanged, QbxCompressor.TextChanged
         EprValidation.Clear()
@@ -236,9 +232,20 @@ Public Class FrmVisitSchedule
     Private Function IsValidFields() As Boolean
         Dim AnyChecked As Boolean = RbtGathering.Checked Or RbtPreventive.Checked Or RbtCalled.Checked Or RbtContract.Checked
         If Not AnyChecked Then
-            EprValidation.SetError(RbtContract, "Marque qual é o tipo da visita.")
-            EprValidation.SetIconAlignment(RbtContract, ErrorIconAlignment.MiddleRight)
-            RbtGathering.Select()
+            EprValidation.SetError(LblVisitType, "Marque qual é o tipo da visita.")
+            EprValidation.SetIconAlignment(LblVisitType, ErrorIconAlignment.MiddleRight)
+            Return False
+
+        ElseIf Not IsDate(DbxEvaluationDate.Text) Then
+            EprValidation.SetError(LblEvaluationDate, "Data inválida")
+            EprValidation.SetIconAlignment(LblEvaluationDate, ErrorIconAlignment.MiddleRight)
+            DbxEvaluationDate.Select()
+            Return False
+
+        ElseIf IsDate(DbxEvaluationDate.Text) AndAlso CDate(DbxEvaluationDate.Text) < Today Then
+            EprValidation.SetError(LblEvaluationDate, "A data da visita precisa ser maior que hoje.")
+            EprValidation.SetIconAlignment(LblEvaluationDate, ErrorIconAlignment.MiddleRight)
+            DbxEvaluationDate.Select()
             Return False
         ElseIf String.IsNullOrWhiteSpace(QbxCustomer.Text) Then
             EprValidation.SetError(LblCustomer, "Campo obrigatório.")
@@ -271,9 +278,14 @@ Public Class FrmVisitSchedule
             Return False
         Else
             If IsValidFields() Then
+
+
                 _VisitSchedule.Status = EnumHelper.GetEnumValue(Of VisitScheduleStatus)(BtnStatusValue.Text)
+                _VisitSchedule.VisitType = EnumHelper.GetEnumValue(Of VisitScheduleType)(Controls.OfType(Of RadioButton)().FirstOrDefault(Function(r) r.Checked).Text.ToUpper())
+                _VisitSchedule.VisitDate = DbxEvaluationDate.Text
                 _VisitSchedule.Customer = New Person().Load(QbxCustomer.FreezedPrimaryKey, False)
                 _VisitSchedule.Compressor = _VisitSchedule.Customer.Compressors.Single(Function(x) x.ID = QbxCompressor.FreezedPrimaryKey)
+                _VisitSchedule.Instructions = TxtInstructions.Text
                 Try
                     Cursor = Cursors.WaitCursor
                     _VisitSchedule.SaveChanges()

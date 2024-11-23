@@ -5929,7 +5929,20 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a .
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''    visitschedule.id,
+        '''    visitschedule.creation As &apos;Criação&apos;,
+        '''    CASE 
+        '''		WHEN visitschedule.statusid = 0 THEN &quot;PENDENTE&quot;
+        '''        WHEN visitschedule.statusid = 1 THEN &quot;INICIADA&quot;
+        '''        WHEN visitschedule.statusid = 2 THEN &quot;FINALIZADA&quot;
+        '''        WHEN visitschedule.statusid = 3 THEN &quot;CANCELADA&quot;
+        '''	END AS &apos;Status&apos;,
+        '''    visitschedule.visitdate As &apos;Data Visita&apos;,
+        '''    CASE
+        '''        WHEN visitschedule.visittypeid = 0 THEN &quot;LEVANTAMENTO&quot;
+        '''        WHEN visitschedule.visittypeid = 1 THEN &quot;PREVENTIVA&quot;
+        '''  [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property VisitScheduleFilter() As String
             Get
@@ -5938,10 +5951,37 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;VisitSchedule&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''    &lt;Column Index=&quot;0&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;ID&lt;/Name&gt;
+        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''    &lt;/Column&gt;    
+        '''    &lt;Column Index=&quot;1&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;Criação&lt;/Name&gt;
+        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''    &lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot;&gt;
+        '''	 [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property VisitScheduleGrid() As String
+            Get
+                Return ResourceManager.GetString("VisitScheduleGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO visitschedule
         '''(
         '''    creation,
         '''    statusid,
+        '''    visitdate,
         '''    visitetypeid,
         '''    customerid,
         '''    compressorid,
@@ -5953,6 +5993,7 @@ Namespace My.Resources
         '''(
         '''    @creation,
         '''    @statusid,
+        '''    @visitdate,
         '''    @visitetypeid,
         '''    @customerid,
         '''    @compressorid,
@@ -5972,6 +6013,7 @@ Namespace My.Resources
         '''	visitschedule.id,
         '''	visitschedule.creation,
         '''    visitschedule.statusid,
+        '''	visitschedule.visitdate,
         '''	visitschedule.visitetypeid,
         '''	visitschedule.customerid,
         '''	visitschedule.compressorid,
@@ -5989,6 +6031,7 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE visitschedule SET
         '''    statusid =  @statusid,
+        '''    visitdate = @visitdate,
         '''    visitetypeid = @visitetypeid,
         '''    customerid = @customerid,
         '''    compressorid = @compressorid,

@@ -3,9 +3,9 @@ SELECT
 	visitschedule.creation,
     visitschedule.statusid,
 	visitschedule.visitdate,
-	visitschedule.visitetypeid,
+	visitschedule.visittypeid,
 	visitschedule.customerid,
-	visitschedule.compressorid,
+	visitschedule.personcompressorid,
 	visitschedule.instructions,
 	visitschedule.evaluationid
 FROM visitschedule

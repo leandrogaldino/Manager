@@ -118,6 +118,7 @@ CREATE TABLE visitschedule (
 	id INT NOT NULL AUTO_INCREMENT,
     creation DATE NOT NULL,
     statusid INT NOT NULL,
+    visitdate DATE NOT NULL,
 	visitetypeid INT NOT NULL,
     customerid INT NOT NULL,
     personcompressorid INT NOT NULL,
@@ -140,6 +141,7 @@ END$$
 
 CREATE TRIGGER `visitscheduleupdate` AFTER UPDATE ON `visitschedule` FOR EACH ROW BEGIN
 IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'PENDENTE' WHEN OLD.statusid = 1 THEN 'INICIADA' WHEN OLD.statusid = 2 THEN 'FINALIZADA' WHEN OLD.statusid = 3 THEN 'CANCELADA'END, CASE WHEN NEW.statusid = 0 THEN 'PENDENTE' WHEN NEW.statusid = 1 THEN 'INICIADA' WHEN NEW.statusid = 2 THEN 'FINALIZADA' WHEN NEW.statusid = 3 THEN 'CANCELADA' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.visitdate <> NEW.visitdate THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Data da Visita', OLD.visitdate, NEW.visitdate, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.visitetypeid <> NEW.visitetypeid THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Tipo de Visita', CASE WHEN OLD.visitetypeid = 0 THEN 'LEVANTAMENTO' WHEN OLD.visitetypeid = 1 THEN 'PREVENTIVA' WHEN OLD.visitetypeid = 2 THEN 'CHAMADO' WHEN OLD.visitetypeid = 3 THEN 'CONTRATO'END, CASE WHEN NEW.visitetypeid = 0 THEN 'LEVANTAMENTO' WHEN NEW.visitetypeid = 1 THEN 'PREVENTIVA' WHEN NEW.visitetypeid = 2 THEN 'CHAMADO' WHEN NEW.visitetypeid = 3 THEN 'CONTRATO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.customerid <> NEW.customerid THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Cliente', CONCAT(OLD.customerid, ' - ', (SELECT person.name FROM person WHERE person.id = OLD.customerid)), CONCAT(NEW.customerid, ' - ', (SELECT person.name FROM person WHERE person.id = NEW.customerid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.personcompressorid <> NEW.personcompressorid THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Compressor', CONCAT(OLD.personcompressorid, ' - ', (SELECT compressor.name FROM personcompressor LEFT JOIN compressor ON compressor.id = personcompressor.compressorid WHERE personcompressor.id = OLD.personcompressorid)), CONCAT(NEW.personcompressorid, ' - ', (SELECT compressor.name FROM personcompressor LEFT JOIN compressor ON compressor.id = personcompressor.compressorid WHERE personcompressor.id = NEW.personcompressorid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
@@ -187,7 +189,7 @@ CREATE TABLE privilegepreset (
 	id INT NOT NULL AUTO_INCREMENT,
     creation DATE NOT NULL,
     statusid INT NOT NULL,
-    name VARCHAR(100) UNIQUE NOT NULL,
+    name LONGTEXT UNIQUE NOT NULL,
     userid INT NOT NULL,
 	PRIMARY KEY(id),
     FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
@@ -214,7 +216,7 @@ CREATE TABLE privilegepresetprivilege (
     privilegepresetid INT NOT NULL,
     creation DATE NOT NULL,
     routineid INT NOT NULL,
-	routinename VARCHAR(50) NOT NULL,
+	routinename LONGTEXT NOT NULL,
     privilegelevelid INT NOT NULL,
     userid INT NOT NULL,
 	PRIMARY KEY(id),

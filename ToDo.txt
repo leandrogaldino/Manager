@@ -1,5 +1,7 @@
 [] Terminar a rotina de agendamento.
 
+[] Corrigir o código dos erros das últimas rotinas.
+
 [X] Implementar a predefinição de permissões no usuário.
 
 [X] O Grid de rotas dentro do FrmCity não está configurado.

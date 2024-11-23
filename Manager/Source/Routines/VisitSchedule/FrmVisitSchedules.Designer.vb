@@ -48,7 +48,7 @@ Partial Class FrmVisitSchedules
         Me.BtnCloseDetails = New System.Windows.Forms.ToolStripButton()
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
-        Me.DgvRoutesLayout = New Manager.DataGridViewLayout()
+        Me.DgvlVisitScheduleLayout = New Manager.DataGridViewLayout()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -359,10 +359,10 @@ Partial Class FrmVisitSchedules
         Me.DgvData.Size = New System.Drawing.Size(546, 437)
         Me.DgvData.TabIndex = 0
         '
-        'DgvRoutesLayout
+        'DgvlVisitScheduleLayout
         '
-        Me.DgvRoutesLayout.DataGridView = Me.DgvData
-        Me.DgvRoutesLayout.Routine = Manager.Routine.Route
+        Me.DgvlVisitScheduleLayout.DataGridView = Me.DgvData
+        Me.DgvlVisitScheduleLayout.Routine = Manager.Routine.VisitSchedule
         '
         'FrmVisitSchedules
         '
@@ -431,6 +431,6 @@ Partial Class FrmVisitSchedules
     Friend WithEvents LblCounter As ToolStripStatusLabel
     Friend WithEvents BtnDetails As ToolStripButton
     Friend WithEvents ToolStripButton1 As ToolStripButton
-    Friend WithEvents DgvRoutesLayout As DataGridViewLayout
+    Friend WithEvents DgvlVisitScheduleLayout As DataGridViewLayout
     Friend WithEvents BtnExport As ToolStripButton
 End Class

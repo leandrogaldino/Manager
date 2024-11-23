@@ -2,6 +2,7 @@ SELECT
 	visitschedule.id,
 	visitschedule.creation,
     visitschedule.statusid,
+	visitschedule.visitdate,
 	visitschedule.visitetypeid,
 	visitschedule.customerid,
 	visitschedule.compressorid,

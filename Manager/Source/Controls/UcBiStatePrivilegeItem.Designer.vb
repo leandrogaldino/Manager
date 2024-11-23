@@ -94,7 +94,7 @@ Partial Class UcBiStatePrivilegeItem
         Me.CbxGrant.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CbxGrant.FlatAppearance.BorderSize = 0
         Me.CbxGrant.FlatAppearance.CheckedBackColor = System.Drawing.Color.Gainsboro
-        Me.CbxGrant.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray
+        Me.CbxGrant.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver
         Me.CbxGrant.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gainsboro
         Me.CbxGrant.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.CbxGrant.Image = Global.Manager.My.Resources.Resources.Reject

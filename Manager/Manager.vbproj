@@ -494,6 +494,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Source\Helper\FilterExpandable\VisitScheduleStatusExpandable.vb" />
     <Compile Include="Source\Helper\FilterQueriedBox\PrivilegePresetQueriedBoxFilter.vb" />
     <Compile Include="Source\Helper\ModelBases\BaseModel.vb" />
     <Compile Include="Source\Helper\ModelBases\CloneableModel.vb" />
@@ -1240,6 +1241,7 @@
     <Compile Include="Source\Routines\User\User.vb" />
     <Compile Include="Source\Routines\User\UserEmail.vb" />
     <Compile Include="Source\Routines\User\UserFilter.vb" />
+    <Compile Include="Source\Routines\VisitSchedule\VisitScheduleFilter.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Source\Routines\CashFlow\FrmCashFlowAuthorized.resx">

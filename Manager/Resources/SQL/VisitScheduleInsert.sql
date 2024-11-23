@@ -2,6 +2,7 @@ INSERT INTO visitschedule
 (
     creation,
     statusid,
+    visitdate,
     visitetypeid,
     customerid,
     compressorid,
@@ -13,6 +14,7 @@ VALUES
 (
     @creation,
     @statusid,
+    @visitdate,
     @visitetypeid,
     @customerid,
     @compressorid,

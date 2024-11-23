@@ -22,7 +22,7 @@ Public Class FrmRoutes
         BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvVisitScheduleLayout.Load()
+        DgvlRouteLayout.Load()
     End Sub
     Private Sub Form_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         AddHandler Parent.FindForm.Resize, AddressOf FrmMain_ResizeEnd
@@ -56,7 +56,7 @@ Public Class FrmRoutes
                         Try
                             _Route.Delete()
                             _Filter.Filter()
-                            DgvVisitScheduleLayout.Load()
+                            DgvlRouteLayout.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
@@ -78,7 +78,7 @@ Public Class FrmRoutes
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        DgvVisitScheduleLayout.Load()
+        DgvlRouteLayout.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -107,7 +107,7 @@ Public Class FrmRoutes
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        DgvVisitScheduleLayout.Load()
+        DgvlRouteLayout.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -156,7 +156,7 @@ Public Class FrmRoutes
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        DgvVisitScheduleLayout.Load()
+        DgvlRouteLayout.Load()
     End Sub
     Private Sub DgvData_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvData.KeyDown
         If e.KeyCode = Keys.Enter Then

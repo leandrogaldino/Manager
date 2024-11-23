@@ -308,11 +308,11 @@ Public Class FrmUser
                     _User.Person = New Lazy(Of Person)(Function() New Person().Load(QbxPerson.FreezedPrimaryKey, False))
                     _User.Note = TxtNote.Text
                     ' Percorre todos os controles do tipo UcTristatePrivilegeItem dentro do FlowLayoutPanel
-                    For Each PrivilegeControl In FlpPrivilege.Controls.OfType(Of UcTristatePrivilegeItem)
+                    For Each PrivilegeControl In FlpPrivilege.Controls.OfType(Of UcTristatePrivilegeItem).Reverse()
                         ' Obtém a rotina atual
                         Dim routine = PrivilegeControl.Routine
                         ' Verifica e atualiza o privilégio de "Access"
-                        Dim accessPrivilege = _User.Privileges.FirstOrDefault(Function(p) p.PrivilegedRoutine = routine AndAlso p.Level = PrivilegeLevel.Access)
+                        Dim accessPrivilege As UserPrivilege = _User.Privileges.FirstOrDefault(Function(p) p.PrivilegedRoutine = routine AndAlso p.Level = PrivilegeLevel.Access)
                         If PrivilegeControl.CanAccess Then
                             ' Adiciona o privilégio se estiver marcado e ainda não existir
                             If accessPrivilege Is Nothing Then
@@ -326,7 +326,7 @@ Public Class FrmUser
                         End If
 
                         ' Verifica e atualiza o privilégio de "Write"
-                        Dim writePrivilege = _User.Privileges.FirstOrDefault(Function(p) p.PrivilegedRoutine = routine AndAlso p.Level = PrivilegeLevel.Write)
+                        Dim writePrivilege As UserPrivilege = _User.Privileges.FirstOrDefault(Function(p) p.PrivilegedRoutine = routine AndAlso p.Level = PrivilegeLevel.Write)
                         If PrivilegeControl.CanWrite Then
                             ' Adiciona o privilégio se estiver marcado e ainda não existir
                             If writePrivilege Is Nothing Then
@@ -340,7 +340,7 @@ Public Class FrmUser
                         End If
 
                         ' Verifica e atualiza o privilégio de "Delete"
-                        Dim deletePrivilege = _User.Privileges.FirstOrDefault(Function(p) p.PrivilegedRoutine = routine AndAlso p.Level = PrivilegeLevel.Delete)
+                        Dim deletePrivilege As UserPrivilege = _User.Privileges.FirstOrDefault(Function(p) p.PrivilegedRoutine = routine AndAlso p.Level = PrivilegeLevel.Delete)
                         If PrivilegeControl.CanDelete Then
                             ' Adiciona o privilégio se estiver marcado e ainda não existir
                             If deletePrivilege Is Nothing Then
@@ -363,7 +363,7 @@ Public Class FrmUser
                         ' Obtém a rotina atual
                         Dim routine = PrivilegeControl.Routine
                         ' Verifica e atualiza o privilégio de "Access"
-                        Dim accessPrivilege = _User.Privileges.FirstOrDefault(Function(p) p.PrivilegedRoutine = routine AndAlso p.Level = PrivilegeLevel.Access)
+                        Dim accessPrivilege As UserPrivilege = _User.Privileges.FirstOrDefault(Function(p) p.PrivilegedRoutine = routine AndAlso p.Level = PrivilegeLevel.Access)
                         If PrivilegeControl.Granted Then
                             ' Adiciona o privilégio se estiver marcado e ainda não existir
                             If accessPrivilege Is Nothing Then

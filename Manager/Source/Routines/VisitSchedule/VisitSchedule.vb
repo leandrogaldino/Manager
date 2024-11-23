@@ -5,10 +5,11 @@ Public Class VisitSchedule
     Inherits ParentModel
     Public Property Status As VisitScheduleStatus
     Public Property VisitType As VisitScheduleType
+    Public Property VisitDate As Date
     Public Property Customer As New Person
     Public Property Compressor As New PersonCompressor
     Public Property Instructions As String
-    Public Property GeneratedEvaluation As Lazy(Of Evaluation)
+    Public Property Evaluation As Lazy(Of Evaluation)
 
     Public Sub New()
         SetRoutine(Routine.VisitSchedule)
@@ -21,31 +22,37 @@ Public Class VisitSchedule
         SetID(0)
         SetCreation(Today)
         Status = VisitScheduleStatus.Pending
+        VisitDate = Today
         Customer = New Person()
         Compressor = New PersonCompressor()
         Instructions = Nothing
-        GeneratedEvaluation = New Lazy(Of Evaluation)
+        Evaluation = New Lazy(Of Evaluation)
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As VisitSchedule
         Dim Session = Locator.GetInstance(Of Session)
+        Dim Table As DataTable
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
                 Using Cmd As New MySqlCommand(My.Resources.VisitScheduleSelect, Con)
                     Cmd.Transaction = Tra
                     Cmd.Parameters.AddWithValue("@id", Identity)
-                    Using Reader As MySqlDataReader = Cmd.ExecuteReader()
-                        If Reader.HasRows Then
-                            Reader.Read()
+                    Using Adp As New MySqlDataAdapter(Cmd)
+                        Table = New DataTable()
+                        Adp.Fill(Table)
+                        If Table.Rows.Count = 1 Then
                             Clear()
-                            SetID(Reader.GetInt64("id"))
-                            SetCreation(Reader.GetDateTime("creation"))
+                            SetID(Convert.ToInt64(Table.Rows(0).Item("id")))
+                            SetCreation(Convert.ToDateTime(Table.Rows(0).Item("creation")))
                             SetIsSaved(True)
-                            Status = CType(Reader.GetInt32("statusid"), VisitScheduleStatus)
-                            Customer = New Person().Load(Reader.GetInt64("customerid"), False)
-                            Compressor = Customer.Compressors.SingleOrDefault(Function(x) x.ID = Reader.GetInt64("compressorid"))
-                            Instructions = Reader("instructions").ToString()
-                            GeneratedEvaluation = New Lazy(Of Evaluation)(Function() New Evaluation().Load(1, False))
+                            Status = CType(Convert.ToInt32(Table.Rows(0).Item("statusid")), VisitScheduleStatus)
+                            VisitDate = Convert.ToDateTime(Table.Rows(0).Item("visitdate"))
+                            Customer = New Person().Load(Convert.ToInt64(Table.Rows(0).Item("customerid")), False)
+                            Compressor = Customer.Compressors.SingleOrDefault(Function(x) x.ID = Table.Rows(0).Item("compressorid"))
+                            Instructions = Convert.ToString(Table.Rows(0).Item("instructions"))
+                            If Table.Rows(0).Item("evaluationid") IsNot DBNull.Value Then
+                                Evaluation = New Lazy(Of Evaluation)(Function() New Evaluation().Load(Convert.ToInt64(Table.Rows(0).Item("evaluationid")), True))
+                            End If
                             LockInfo = GetLockInfo(Tra)
                             If LockMe AndAlso Not LockInfo.IsLocked Then Lock(Tra)
                         Else
@@ -88,11 +95,12 @@ Public Class VisitSchedule
                     Cmd.Transaction = Tra
                     Cmd.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     Cmd.Parameters.AddWithValue("@statusid", CInt(Status))
+                    Cmd.Parameters.AddWithValue("@visitdate", VisitDate.ToString("yyyy-MM-dd"))
                     Cmd.Parameters.AddWithValue("@visitetypeid", CInt(VisitType))
                     Cmd.Parameters.AddWithValue("@customerid", Customer.ID)
                     Cmd.Parameters.AddWithValue("@compressorid", Compressor.ID)
                     Cmd.Parameters.AddWithValue("@instructions", If(String.IsNullOrEmpty(Instructions), DBNull.Value, Instructions))
-                    Cmd.Parameters.AddWithValue("@evaluationid", If(GeneratedEvaluation.Value.ID <= 0, DBNull.Value, GeneratedEvaluation.Value.ID))
+                    Cmd.Parameters.AddWithValue("@evaluationid", DBNull.Value)
                     Cmd.Parameters.AddWithValue("@userid", User.ID)
                     Cmd.ExecuteNonQuery()
                     SetID(Cmd.LastInsertedId)
@@ -107,11 +115,12 @@ Public Class VisitSchedule
             Using Cmd As New MySqlCommand(My.Resources.VisitScheduleUpdate, Con)
                 Cmd.Parameters.AddWithValue("@id", ID)
                 Cmd.Parameters.AddWithValue("@statusid", CInt(Status))
+                Cmd.Parameters.AddWithValue("@visitdate", VisitDate.ToString("yyyy-MM-dd"))
                 Cmd.Parameters.AddWithValue("@visittypeid", CInt(VisitType))
                 Cmd.Parameters.AddWithValue("@customerid", Customer.ID)
                 Cmd.Parameters.AddWithValue("@compressorid", Compressor.ID)
                 Cmd.Parameters.AddWithValue("@instructions", If(String.IsNullOrEmpty(Instructions), DBNull.Value, Instructions))
-                Cmd.Parameters.AddWithValue("@evaluationid", If(GeneratedEvaluation.Value.ID <= 0, DBNull.Value, GeneratedEvaluation.Value.ID))
+                Cmd.Parameters.AddWithValue("@evaluationid", If(Not Evaluation.IsValueCreated OrElse Evaluation.Value.ID = 0, DBNull.Value, Evaluation.Value.ID))
                 Cmd.Parameters.AddWithValue("@userid", User.ID)
                 Cmd.ExecuteNonQuery()
             End Using

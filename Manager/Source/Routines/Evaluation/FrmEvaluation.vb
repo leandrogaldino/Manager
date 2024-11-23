@@ -584,8 +584,6 @@ Public Class FrmEvaluation
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
         Save()
     End Sub
-
-
     Private Sub TcEvaluation_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcEvaluation.SelectedIndexChanged
         If TcEvaluation.SelectedTab Is TabMain Then
             If Calculated Then

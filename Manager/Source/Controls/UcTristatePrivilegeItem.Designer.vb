@@ -80,7 +80,7 @@ Partial Class UcTristatePrivilegeItem
         Me.CbxDelete.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CbxDelete.FlatAppearance.BorderSize = 0
         Me.CbxDelete.FlatAppearance.CheckedBackColor = System.Drawing.Color.Gainsboro
-        Me.CbxDelete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray
+        Me.CbxDelete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver
         Me.CbxDelete.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gainsboro
         Me.CbxDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.CbxDelete.Image = Global.Manager.My.Resources.Resources.Reject
@@ -114,7 +114,7 @@ Partial Class UcTristatePrivilegeItem
         Me.CbxWrite.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CbxWrite.FlatAppearance.BorderSize = 0
         Me.CbxWrite.FlatAppearance.CheckedBackColor = System.Drawing.Color.Gainsboro
-        Me.CbxWrite.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray
+        Me.CbxWrite.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver
         Me.CbxWrite.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gainsboro
         Me.CbxWrite.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.CbxWrite.Image = Global.Manager.My.Resources.Resources.Reject
@@ -172,7 +172,7 @@ Partial Class UcTristatePrivilegeItem
         Me.CbxAccess.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CbxAccess.FlatAppearance.BorderSize = 0
         Me.CbxAccess.FlatAppearance.CheckedBackColor = System.Drawing.Color.Gainsboro
-        Me.CbxAccess.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGray
+        Me.CbxAccess.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver
         Me.CbxAccess.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gainsboro
         Me.CbxAccess.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.CbxAccess.Image = Global.Manager.My.Resources.Resources.Reject

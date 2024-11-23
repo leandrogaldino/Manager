@@ -47,4 +47,19 @@ Public Class UserPrivilege
     Public Sub New()
         SetRoutine(Routine.UserPrivilege)
     End Sub
+
+    Public Overrides Function ToString() As String
+        Return $"{EnumHelper.GetEnumDescription(PrivilegedRoutine)} - {EnumHelper.GetEnumDescription(Level)}"
+    End Function
+
+    Public Overrides Function Equals(obj As Object) As Boolean
+        Dim other = TryCast(obj, UserPrivilege)
+        Return other IsNot Nothing AndAlso
+               Me.PrivilegedRoutine = other.PrivilegedRoutine AndAlso
+               Me.Level = other.Level
+    End Function
+
+    Public Overrides Function GetHashCode() As Integer
+        Return HashCode.Combine(PrivilegedRoutine, Level)
+    End Function
 End Class

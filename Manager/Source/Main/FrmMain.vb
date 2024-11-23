@@ -22,7 +22,6 @@ Public Class FrmMain
         CreateUserButton()
     End Sub
     Private Sub CreateFirstSeparator()
-
         If (_User.CanAccess(Routine.Evaluation) Or _User.CanAccess(Routine.Request) Or _User.CanAccess(Routine.Cash) And
             (_User.CanAccess(Routine.Person) Or _User.CanAccess(Routine.Product) Or _User.CanAccess(Routine.User))) Then
             TsRoutine.Items.Add(New ToolStripSeparator With {.Margin = New Padding(0, 0, 5, 0)})
@@ -35,13 +34,16 @@ Public Class FrmMain
     End Sub
     Private Sub CreateEvaluationButton()
         If _User.CanAccess(Routine.Evaluation) Then
-            If _User.CanAccess(Routine.EvaluationManagement) Or _User.CanAccess(Routine.EvaluationManagementPanel) Then
+            If _User.CanAccess(Routine.EvaluationManagement) Or _User.CanAccess(Routine.EvaluationManagementPanel) Or _User.CanAccess(Routine.VisitSchedule) Then
                 TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripSplitButton("Avaliação", "Cadastro de Avaliações de Compressor", My.Resources.Evaluation, AddressOf EvaluationClick))
                 If _User.CanAccess(Routine.EvaluationManagement) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Avaliação").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Gerenciamento", "Gerenciamento", My.Resources.EvaluationManagement, AddressOf EvaluationManagementClick))
                 End If
                 If _User.CanAccess(Routine.EvaluationManagementPanel) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Avaliação").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Painel", "Painel", My.Resources.Chart, AddressOf EvaluationManagementPanelClick))
+                End If
+                If _User.CanAccess(Routine.VisitSchedule) Then
+                    TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Avaliação").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Agenda de Visita", "Agenda de Visita", My.Resources.VisitSchedule, AddressOf VisitScheduleClick))
                 End If
             Else
                 TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripButton("Avaliação", "Cadastro de Avaliações de Compressor", My.Resources.Evaluation, AddressOf EvaluationClick))
@@ -272,6 +274,15 @@ Public Class FrmMain
             SelectTab(Routine.EvaluationManagement)
         End If
     End Sub
+
+    Private Sub VisitScheduleClick()
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.VisitSchedule)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmVisitSchedules, EnumHelper.GetEnumDescription(Routine.VisitSchedule))
+        Else
+            SelectTab(Routine.VisitSchedule)
+        End If
+    End Sub
+
     Private Sub RequestClick()
         If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.Request)) Or Control.ModifierKeys = Keys.Shift Then
             OpenTab(New FrmRequests, EnumHelper.GetEnumDescription(Routine.Request))

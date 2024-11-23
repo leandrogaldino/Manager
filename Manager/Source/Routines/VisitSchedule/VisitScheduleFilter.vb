@@ -20,7 +20,7 @@ Public Class VisitScheduleFilter
     Public Overridable Property Status As New VisitScheduleStatusExpandable
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
-    <TypeConverter(GetType(EvaluationTypeConverter))>
+    <TypeConverter(GetType(VisitScheduleTypeConverter))>
     <DisplayName("Tipo")>
     Public Overridable Property VisitType As String
     <NotifyParentProperty(True)>
@@ -61,7 +61,7 @@ Public Class VisitScheduleFilter
         End If
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
-            Using Cmd As New MySqlCommand(My.Resources.EvaluationFilter, Con)
+            Using Cmd As New MySqlCommand(My.Resources.VisitScheduleFilter, Con)
                 If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
                 If Status.Finished = "Sim" Or Status.Finished = Nothing Then StatusList.Add(CInt(VisitScheduleStatus.Finished))
                 If Status.Pending = "Sim" Or Status.Pending = Nothing Then StatusList.Add(CInt(VisitScheduleStatus.Pending))

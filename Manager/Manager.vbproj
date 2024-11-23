@@ -497,6 +497,7 @@
     <Compile Include="Source\Helper\Attibutes\RoutineDependencyAttribute.vb" />
     <Compile Include="Source\Helper\FilterExpandable\VisitScheduleStatusExpandable.vb" />
     <Compile Include="Source\Helper\FilterQueriedBox\PrivilegePresetQueriedBoxFilter.vb" />
+    <Compile Include="Source\Helper\FiltrerConverter\VisitScheduleTypeConverter.vb" />
     <Compile Include="Source\Helper\ModelBases\BaseModel.vb" />
     <Compile Include="Source\Helper\ModelBases\CloneableModel.vb" />
     <Compile Include="Source\Helper\ModelBases\ChildModel.vb" />

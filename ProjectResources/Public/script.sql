@@ -125,15 +125,14 @@ CREATE TABLE visitschedule (
     customerid INT NOT NULL,
     personcompressorid INT NOT NULL,
     instructions LONGTEXT,
-    evaluationid INT DEFAULT NULL,
-    userid INT NOT NULL,
+    evaluationid INT NOT NULL DEFAULT 0,
+    lastupdate DATETIME NOT NULL,
+    userid INT NOT NULL,    
     PRIMARY KEY(id),
     FOREIGN KEY (customerid) REFERENCES person (id) ON DELETE RESTRICT,
     FOREIGN KEY (personcompressorid) REFERENCES personcompressor (id) ON DELETE RESTRICT,
-    FOREIGN KEY (userid) REFERENCES user (id) ON DELETE RESTRICT,
-	FOREIGN KEY (evaluationid) REFERENCES evaluation (id) ON DELETE SET NULL
+    FOREIGN KEY (userid) REFERENCES user (id) ON DELETE RESTRICT
 );
-
 
 DELIMITER $$
 USE `manager`$$
@@ -155,6 +154,7 @@ INSERT INTO log VALUES (NULL, 22, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT
 END$$
 DELIMITER ;
 
+
 DROP TABLE userprivilege;
 
 DROP TABLE userprivilegepreset;
@@ -166,7 +166,7 @@ CREATE TABLE userprivilege (
     creation DATE NOT NULL,
     granteduserid INT NOT NULL,
     routineid INT NOT NULL,
-    routinename VARCHAR(50) NOT NULL,
+    routinename TEXT NOT NULL,
     privilegelevelid INT NOT NULL,
     userid INT NOT NULL,
 	PRIMARY KEY(id),
@@ -193,9 +193,8 @@ CREATE TABLE privilegepreset (
 	id INT NOT NULL AUTO_INCREMENT,
     creation DATE NOT NULL,
     statusid INT NOT NULL,
-    name VARCHAR(1000) NOT NULL,
+    name VARCHAR(255) UNIQUE NOT NULL,
     userid INT NOT NULL,
-	UNIQUE KEY (name(255)),
 	PRIMARY KEY(id),
     FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
 );

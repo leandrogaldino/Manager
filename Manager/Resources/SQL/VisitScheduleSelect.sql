@@ -7,6 +7,8 @@ SELECT
 	visitschedule.customerid,
 	visitschedule.personcompressorid,
 	visitschedule.instructions,
-	visitschedule.evaluationid
+	visitschedule.evaluationid,
+	visitschedule.synchronized,
+	visitschedule.lastupdate
 FROM visitschedule
 WHERE visitschedule.id = @id;

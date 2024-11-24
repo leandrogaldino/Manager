@@ -1,6 +1,11 @@
 [X] Fazer o XMLGrid do VisitSchedule
 
 [] Terminar de configurar FrmVisitSchedule (Nao aparecer os dois statis, Tabindex, tamanho do dropdown dos QueriedBoxes)
+	salva os dados da visita localmente com um campo LastUpdate, e DocumentID
+	o agente vai trabalhar para sincronizar os dados guardando sempre a ultima atualização no mysql, e verificando depois que tem lastupdate maior.
+	o agente vai olhar para os documentos do firestore no campo lastupdate maiores que o guardado no mysql, quando encontrar salva as alterações no banco mysql.
+	o agente também vai olhar para os registros próprios onde o lastupdate é maior que o gardado no mysql, quando encontrar envia as alterações pra nuvem 
+
 
 [] Corrigir o código dos erros das últimas rotinas.
 

@@ -131,17 +131,13 @@ Public Class FrmVisitSchedules
         Dim Dgv As DataGridView = sender
         If e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
-                Case Is = Convert.ToInt32(VisitScheduleStatus.Pending)
-                    e.Value = EnumHelper.GetEnumDescription(VisitScheduleStatus.Pending)
+                Case Is = EnumHelper.GetEnumDescription(VisitScheduleStatus.Pending)
                     e.CellStyle.ForeColor = Color.DarkBlue
-                Case Is = Convert.ToInt32(VisitScheduleStatus.Canceled)
-                    e.Value = EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled)
+                Case Is = EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled)
                     e.CellStyle.ForeColor = Color.DarkRed
-                Case Is = Convert.ToInt32(VisitScheduleStatus.Started)
-                    e.Value = EnumHelper.GetEnumDescription(VisitScheduleStatus.Started)
+                Case Is = EnumHelper.GetEnumDescription(VisitScheduleStatus.Started)
                     e.CellStyle.ForeColor = Color.Chocolate
-                Case Is = Convert.ToInt32(VisitScheduleStatus.Finished)
-                    e.Value = EnumHelper.GetEnumDescription(VisitScheduleStatus.Finished)
+                Case Is = EnumHelper.GetEnumDescription(VisitScheduleStatus.Finished)
                     e.CellStyle.ForeColor = Color.DarkGreen
             End Select
         End If

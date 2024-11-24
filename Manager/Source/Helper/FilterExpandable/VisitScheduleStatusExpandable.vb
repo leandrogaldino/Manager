@@ -24,8 +24,8 @@ Public Class VisitScheduleStatusExpandable
     Public Sub New()
         Pending = "Sim"
         Started = "Sim"
-        Finished = "Sim"
-        Canceled = "Sim"
+        Finished = "Não"
+        Canceled = "Não"
     End Sub
     Public Overrides Function ToString() As String
         Dim StausList As New List(Of String)

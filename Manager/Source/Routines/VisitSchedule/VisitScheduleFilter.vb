@@ -1,36 +1,39 @@
 ﻿Imports System.ComponentModel
-Imports ControlLibrary
-Imports ManagerCore
 Imports MySql.Data.MySqlClient
-
+Imports ControlLibrary
 
 ''' <summary>
-''' Representa o filtro de avaliações de compressores.
+''' Representa o filtro de agendamento de visitas.
 ''' </summary>
 Public Class VisitScheduleFilter
-    Private _RemoteDb As RemoteDB
     <Browsable(False)>
     Public Property DataGridView As DataGridView
     <Browsable(False)>
     Public Property PropertyGrid As PropertyGrid
-
+    <NotifyParentProperty(True)>
+    <RefreshProperties(RefreshProperties.All)>
+    <TypeConverter(GetType(UpperNoAccentConverter))>
+    Public Property ID As String
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(ExpandableObjectConverter))>
     Public Overridable Property Status As New VisitScheduleStatusExpandable
-
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(VisitScheduleTypeConverter))>
     <DisplayName("Tipo")>
     Public Overridable Property VisitType As String
-
-    <DisplayName("ID do Cliente")>
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
-    <TypeConverter(GetType(IntegerConverter))>
-    Public Property CustomerID As String
-
+    <TypeConverter(GetType(UpperNoAccentConverter))>
+    <DisplayName("Instruções")>
+    Public Property Instructions As String
+    <DisplayName("Cliente")>
+    <TypeConverter(GetType(ExpandableObjectConverter))>
+    Public Property Customer As New PersonExpandable
+    <DisplayName("Compressor")>
+    <TypeConverter(GetType(ExpandableObjectConverter))>
+    Public Property Compressor As New PersonCompressorExpandable
     <DisplayName("Criação")>
     <TypeConverter(GetType(ExpandableObjectConverter))>
     Public Property Creation As New DateExpandable
@@ -41,134 +44,50 @@ Public Class VisitScheduleFilter
         DataGridView = Dgv
         PropertyGrid = Pg
         Pg.SelectedObject = Me
-        VisitDate.InitialDate = Today.AddMonths(-2)
-        VisitDate.FinalDate = Today.AddMonths(1)
-        _RemoteDb = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
-        AddHandler _RemoteDb.OnFirestoreChanged,
-            Sub(Args)
-                Dim Visits As New List(Of VisitSchedule)
-                Dim Visit As VisitSchedule
-                For Each Document In Args.Documents
-                    Visit = New VisitSchedule()
-                    Visit.FromCloud(Document)
-                    Visits.Add(Visit)
-                Next Document
-                If DataGridView.InvokeRequired Then
-                    DataGridView.Invoke(Sub() DataGridView.DataSource = Visits)
-                Else
-                    DataGridView.DataSource = Visits
-                End If
-            End Sub
     End Sub
     Public Sub New()
     End Sub
     Public Overridable Function Filter() As Boolean
+        Dim Table As New DataTable
         Dim Filtering As Boolean
-        Dim DateConditions As New List(Of RemoteDB.Condition)
-        Dim Conditions As New List(Of RemoteDB.Condition)
         Dim SelectedRow As Long = 0
         Dim FirstRow As Long = 0
-
-
-
-
-
-        If Creation.InitialDate <> Nothing Then
-            'Dim utcDate As DateTime = Creation.InitialDate.ToUniversalTime()
-            'Dim epochTime As Long = CType((utcDate - New DateTime(1970, 1, 1)).TotalSeconds, Long)
-            DateConditions.Add(New RemoteDB.WhereGreaterThanOrEqualToCondition("creation_date", Creation.InitialDate.ToString("yyyy-MM-dd")))
-        Else
-            DateConditions.Add(New RemoteDB.WhereGreaterThanOrEqualToCondition("creation_date", "0001-01-01"))
+        Dim StatusList As New List(Of String)
+        If DataGridView IsNot Nothing Then
+            If DataGridView.SelectedRows.Count = 1 Then
+                SelectedRow = DataGridView.SelectedRows(0).Index
+            End If
+            FirstRow = DataGridView.FirstDisplayedScrollingRowIndex
         End If
-
-        If Creation.FinalDate <> Nothing Then
-            DateConditions.Add(New RemoteDB.WhereLessThanOrEqualToCondition("creation_date", Creation.FinalDate.ToString("yyyy-MM-dd")))
-        Else
-            DateConditions.Add(New RemoteDB.WhereLessThanOrEqualToCondition("creation_date", "9999-12-31"))
-        End If
-
-
-        If VisitDate.InitialDate <> Nothing Then
-            DateConditions.Add(New RemoteDB.WhereGreaterThanOrEqualToCondition("visit_date", VisitDate.InitialDate.ToString("yyyy-MM-dd")))
-        Else
-            DateConditions.Add(New RemoteDB.WhereGreaterThanOrEqualToCondition("visit_date", "0001-01-01"))
-        End If
-        If VisitDate.FinalDate <> Nothing Then
-            DateConditions.Add(New RemoteDB.WhereLessThanOrEqualToCondition("visit_date", VisitDate.FinalDate.ToString("yyyy-MM-dd")))
-        Else
-            DateConditions.Add(New RemoteDB.WhereLessThanOrEqualToCondition("visit_date", "9999-12-31"))
-        End If
-
-
-
-
-
-        If Status.Pending = "Sim" Then
-            Conditions = New List(Of RemoteDB.Condition)(DateConditions) From {
-                New RemoteDB.WhereEqualToCondition("status_id", Convert.ToInt32(VisitScheduleStatus.Pending))
-            }
-            _RemoteDb.StartListening("schedule", Conditions)
-            Filtering = True
-        End If
-
-        Conditions = New List(Of RemoteDB.Condition)
-
-
-
-
-
-        If Status.Started = "Sim" Then
-            Conditions = New List(Of RemoteDB.Condition)(DateConditions) From {
-                New RemoteDB.WhereEqualToCondition("status_id", Convert.ToInt32(VisitScheduleStatus.Started))
-            }
-            _RemoteDb.StartListening("schedule", Conditions)
-            Filtering = True
-        End If
-
-        Conditions = New List(Of RemoteDB.Condition)
-
-        If Status.Finished = "Sim" Then
-            Conditions = New List(Of RemoteDB.Condition)(DateConditions) From {
-                New RemoteDB.WhereEqualToCondition("status_id", Convert.ToInt32(VisitScheduleStatus.Finished))
-            }
-            _RemoteDb.StartListening("schedule", Conditions)
-            Filtering = True
-        End If
-
-        Conditions = New List(Of RemoteDB.Condition)
-
-
-        If Status.Canceled = "Sim" Then
-            Conditions = New List(Of RemoteDB.Condition)(DateConditions) From {
-                New RemoteDB.WhereEqualToCondition("status_id", Convert.ToInt32(VisitScheduleStatus.Canceled))
-            }
-            _RemoteDb.StartListening("schedule", Conditions)
-            Filtering = True
-        End If
-
-
-
-        If VisitType <> Nothing Then
-            DateConditions.Add(New RemoteDB.WhereEqualToCondition("visit_type_id", Convert.ToInt32(EnumHelper.GetEnumValue(Of VisitScheduleType)(VisitType.ToUpper()))))
-            Filtering = True
-        End If
-
-
-
-        If CustomerID <> Nothing Then
-            DateConditions.Add(New RemoteDB.WhereEqualToCondition("customer_id", If(IsNumeric(CustomerID), CInt(CustomerID), 0)))
-            Filtering = True
-        End If
-
-
-
-
-
-
-
-
-
-
+        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Con.Open()
+            Using Cmd As New MySqlCommand(My.Resources.VisitScheduleFilter, Con)
+                If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
+                If Status.Finished = "Sim" Or Status.Finished = Nothing Then StatusList.Add(CInt(VisitScheduleStatus.Finished))
+                If Status.Pending = "Sim" Or Status.Pending = Nothing Then StatusList.Add(CInt(VisitScheduleStatus.Pending))
+                If Status.Started = "Sim" Or Status.Started = Nothing Then StatusList.Add(CInt(VisitScheduleStatus.Started))
+                If Status.Canceled = "Sim" Or Status.Canceled = Nothing Then StatusList.Add(CInt(VisitScheduleStatus.Canceled))
+                If VisitType <> Nothing Then Cmd.Parameters.AddWithValue("@visittypeid", EnumHelper.GetEnumValue(Of VisitScheduleType)(VisitType.ToUpper())) : Filtering = True Else Cmd.Parameters.AddWithValue("@visittypeid", "%")
+                Cmd.Parameters.AddWithValue("@statusid", String.Join(",", StatusList)) : Filtering = True
+                If Instructions <> Nothing Then Cmd.Parameters.AddWithValue("@instructions", Instructions) : Filtering = True Else Cmd.Parameters.AddWithValue("@instructions", "%")
+                If Customer.ID <> Nothing Then Cmd.Parameters.AddWithValue("@customerid", Customer.ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@customerid", "%")
+                If Customer.Document <> Nothing Then Cmd.Parameters.AddWithValue("@customerdocument", Customer.Document) : Filtering = True Else Cmd.Parameters.AddWithValue("@customerdocument", "%")
+                If Customer.Name <> Nothing Then Cmd.Parameters.AddWithValue("@customername", Customer.Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@customername", "%")
+                If Compressor.Name <> Nothing Then Cmd.Parameters.AddWithValue("@compressorname", Compressor.Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@compressorname", "%")
+                If Compressor.SerialNumber <> Nothing Then Cmd.Parameters.AddWithValue("@serialnumber", Compressor.SerialNumber) : Filtering = True Else Cmd.Parameters.AddWithValue("@serialnumber", "%")
+                If Compressor.Patrimony <> Nothing Then Cmd.Parameters.AddWithValue("@patrimony", Compressor.Patrimony) : Filtering = True Else Cmd.Parameters.AddWithValue("@patrimony", "%")
+                If Compressor.Sector <> Nothing Then Cmd.Parameters.AddWithValue("@sector", Compressor.Sector) : Filtering = True Else Cmd.Parameters.AddWithValue("@sector", "%")
+                If Creation.InitialDate <> Nothing Then Cmd.Parameters.AddWithValue("@creationi", Creation.InitialDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@creationi", "0001-01-01")
+                If Creation.FinalDate <> Nothing Then Cmd.Parameters.AddWithValue("@creationf", Creation.FinalDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@creationf", "9999-12-31")
+                If VisitDate.InitialDate <> Nothing Then Cmd.Parameters.AddWithValue("@visitdatei", VisitDate.InitialDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@visitdatei", "0001-01-01")
+                If VisitDate.FinalDate <> Nothing Then Cmd.Parameters.AddWithValue("@visitdatef", VisitDate.FinalDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@visitdatef", "9999-12-31")
+                Using Adp As New MySqlDataAdapter(Cmd)
+                    Adp.Fill(Table)
+                    DataGridView.DataSource = Nothing
+                    DataGridView.DataSource = Table
+                End Using
+            End Using
+        End Using
         If DataGridView.Rows.Count > 0 Then
             If SelectedRow < DataGridView.Rows.Count Then
                 DataGridView.Rows(SelectedRow).Selected = True
@@ -187,22 +106,16 @@ Public Class VisitScheduleFilter
                 End If
             End If
         End If
-
-
-
         Return Filtering
     End Function
-
-
-
     Public Sub Clean()
-        CustomerID = Nothing
+        ID = Nothing
         Status = New VisitScheduleStatusExpandable
         VisitType = Nothing
+        Instructions = Nothing
+        Customer = New PersonExpandable
+        Compressor = New PersonCompressorExpandable
         Creation = New DateExpandable
-        VisitDate = New DateExpandable With {
-            .InitialDate = Today.AddMonths(-2),
-            .FinalDate = Today.AddMonths(1)
-        }
+        VisitDate = New DateExpandable
     End Sub
 End Class

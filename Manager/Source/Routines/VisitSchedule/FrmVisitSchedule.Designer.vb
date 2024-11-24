@@ -65,23 +65,24 @@ Partial Class FrmVisitSchedule
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TxtInstructions = New System.Windows.Forms.TextBox()
         Me.LblInstructions = New System.Windows.Forms.Label()
-        Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.RbtGathering = New System.Windows.Forms.RadioButton()
         Me.RbtPreventive = New System.Windows.Forms.RadioButton()
         Me.RbtCalled = New System.Windows.Forms.RadioButton()
         Me.RbtContract = New System.Windows.Forms.RadioButton()
-        Me.QbxCustomer = New ControlLibrary.QueriedBox()
         Me.FlpCustomer = New System.Windows.Forms.FlowLayoutPanel()
+        Me.LblCustomer = New System.Windows.Forms.Label()
+        Me.LblCompressor = New System.Windows.Forms.Label()
+        Me.TmrCustomer = New System.Windows.Forms.Timer(Me.components)
+        Me.LblEvaluationDate = New System.Windows.Forms.Label()
+        Me.LblVisitType = New System.Windows.Forms.Label()
+        Me.DbxEvaluationDate = New ControlLibrary.DateBox()
+        Me.QbxCustomer = New ControlLibrary.QueriedBox()
         Me.BtnFilterCustomer = New ControlLibrary.NoFocusCueButton()
         Me.BtnViewCustomer = New ControlLibrary.NoFocusCueButton()
         Me.BtnNewCustomer = New ControlLibrary.NoFocusCueButton()
-        Me.LblCustomer = New System.Windows.Forms.Label()
-        Me.LblCompressor = New System.Windows.Forms.Label()
         Me.QbxCompressor = New ControlLibrary.QueriedBox()
-        Me.TmrCustomer = New System.Windows.Forms.Timer(Me.components)
-        Me.LblEvaluationDate = New System.Windows.Forms.Label()
-        Me.DbxEvaluationDate = New ControlLibrary.DateBox()
-        Me.LblVisitType = New System.Windows.Forms.Label()
+        Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
+        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.Panel1.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -200,7 +201,7 @@ Partial Class FrmVisitSchedule
         Me.TsNavigation.BackColor = System.Drawing.Color.White
         Me.TsNavigation.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsNavigation.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsNavigation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnDelete, Me.BtnFirst, Me.BtnPrevious, Me.BtnNext, Me.BtnLast, Me.BtnEvaluation})
+        Me.TsNavigation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnDelete, Me.BtnFirst, Me.BtnPrevious, Me.BtnNext, Me.BtnLast, Me.BtnEvaluation, Me.ToolStripButton1})
         Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -303,14 +304,6 @@ Partial Class FrmVisitSchedule
         Me.LblInstructions.TabIndex = 14
         Me.LblInstructions.Text = "Instruções"
         '
-        'DgvNavigator
-        '
-        Me.DgvNavigator.CancelNextMove = False
-        Me.DgvNavigator.FirstButton = Me.BtnFirst
-        Me.DgvNavigator.LastButton = Me.BtnLast
-        Me.DgvNavigator.NextButton = Me.BtnNext
-        Me.DgvNavigator.PreviousButton = Me.BtnPrevious
-        '
         'RbtGathering
         '
         Me.RbtGathering.Appearance = System.Windows.Forms.Appearance.Button
@@ -382,6 +375,66 @@ Partial Class FrmVisitSchedule
         Me.RbtContract.Text = "Contrato"
         Me.RbtContract.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.RbtContract.UseVisualStyleBackColor = True
+        '
+        'FlpCustomer
+        '
+        Me.FlpCustomer.Controls.Add(Me.BtnFilterCustomer)
+        Me.FlpCustomer.Controls.Add(Me.BtnViewCustomer)
+        Me.FlpCustomer.Controls.Add(Me.BtnNewCustomer)
+        Me.FlpCustomer.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
+        Me.FlpCustomer.Location = New System.Drawing.Point(235, 102)
+        Me.FlpCustomer.Name = "FlpCustomer"
+        Me.FlpCustomer.Size = New System.Drawing.Size(69, 21)
+        Me.FlpCustomer.TabIndex = 11
+        '
+        'LblCustomer
+        '
+        Me.LblCustomer.AutoSize = True
+        Me.LblCustomer.Location = New System.Drawing.Point(9, 102)
+        Me.LblCustomer.Name = "LblCustomer"
+        Me.LblCustomer.Size = New System.Drawing.Size(54, 17)
+        Me.LblCustomer.TabIndex = 9
+        Me.LblCustomer.Text = "Cliente"
+        '
+        'LblCompressor
+        '
+        Me.LblCompressor.AutoSize = True
+        Me.LblCompressor.Location = New System.Drawing.Point(308, 103)
+        Me.LblCompressor.Name = "LblCompressor"
+        Me.LblCompressor.Size = New System.Drawing.Size(85, 17)
+        Me.LblCompressor.TabIndex = 12
+        Me.LblCompressor.Text = "Compressor"
+        '
+        'TmrCustomer
+        '
+        Me.TmrCustomer.Enabled = True
+        Me.TmrCustomer.Interval = 300
+        '
+        'LblEvaluationDate
+        '
+        Me.LblEvaluationDate.AutoSize = True
+        Me.LblEvaluationDate.Location = New System.Drawing.Point(492, 50)
+        Me.LblEvaluationDate.Name = "LblEvaluationDate"
+        Me.LblEvaluationDate.Size = New System.Drawing.Size(65, 17)
+        Me.LblEvaluationDate.TabIndex = 7
+        Me.LblEvaluationDate.Text = "Dt. Visita"
+        '
+        'LblVisitType
+        '
+        Me.LblVisitType.AutoSize = True
+        Me.LblVisitType.Location = New System.Drawing.Point(9, 50)
+        Me.LblVisitType.Name = "LblVisitType"
+        Me.LblVisitType.Size = New System.Drawing.Size(93, 17)
+        Me.LblVisitType.TabIndex = 2
+        Me.LblVisitType.Text = "Tipo de Visita"
+        '
+        'DbxEvaluationDate
+        '
+        Me.DbxEvaluationDate.ButtonImage = CType(resources.GetObject("DbxEvaluationDate.ButtonImage"), System.Drawing.Image)
+        Me.DbxEvaluationDate.Location = New System.Drawing.Point(497, 68)
+        Me.DbxEvaluationDate.Name = "DbxEvaluationDate"
+        Me.DbxEvaluationDate.Size = New System.Drawing.Size(109, 23)
+        Me.DbxEvaluationDate.TabIndex = 8
         '
         'QbxCustomer
         '
@@ -500,17 +553,6 @@ Partial Class FrmVisitSchedule
         Me.QbxCustomer.Suffix = Nothing
         Me.QbxCustomer.TabIndex = 10
         '
-        'FlpCustomer
-        '
-        Me.FlpCustomer.Controls.Add(Me.BtnFilterCustomer)
-        Me.FlpCustomer.Controls.Add(Me.BtnViewCustomer)
-        Me.FlpCustomer.Controls.Add(Me.BtnNewCustomer)
-        Me.FlpCustomer.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-        Me.FlpCustomer.Location = New System.Drawing.Point(235, 102)
-        Me.FlpCustomer.Name = "FlpCustomer"
-        Me.FlpCustomer.Size = New System.Drawing.Size(69, 21)
-        Me.FlpCustomer.TabIndex = 11
-        '
         'BtnFilterCustomer
         '
         Me.BtnFilterCustomer.BackColor = System.Drawing.Color.Transparent
@@ -558,24 +600,6 @@ Partial Class FrmVisitSchedule
         Me.BtnNewCustomer.TooltipText = ""
         Me.BtnNewCustomer.UseVisualStyleBackColor = False
         Me.BtnNewCustomer.Visible = False
-        '
-        'LblCustomer
-        '
-        Me.LblCustomer.AutoSize = True
-        Me.LblCustomer.Location = New System.Drawing.Point(9, 102)
-        Me.LblCustomer.Name = "LblCustomer"
-        Me.LblCustomer.Size = New System.Drawing.Size(54, 17)
-        Me.LblCustomer.TabIndex = 9
-        Me.LblCustomer.Text = "Cliente"
-        '
-        'LblCompressor
-        '
-        Me.LblCompressor.AutoSize = True
-        Me.LblCompressor.Location = New System.Drawing.Point(308, 103)
-        Me.LblCompressor.Name = "LblCompressor"
-        Me.LblCompressor.Size = New System.Drawing.Size(85, 17)
-        Me.LblCompressor.TabIndex = 12
-        Me.LblCompressor.Text = "Compressor"
         '
         'QbxCompressor
         '
@@ -651,36 +675,22 @@ Partial Class FrmVisitSchedule
         Me.QbxCompressor.Suffix = Nothing
         Me.QbxCompressor.TabIndex = 13
         '
-        'TmrCustomer
+        'DgvNavigator
         '
-        Me.TmrCustomer.Enabled = True
-        Me.TmrCustomer.Interval = 300
+        Me.DgvNavigator.CancelNextMove = False
+        Me.DgvNavigator.FirstButton = Me.BtnFirst
+        Me.DgvNavigator.LastButton = Me.BtnLast
+        Me.DgvNavigator.NextButton = Me.BtnNext
+        Me.DgvNavigator.PreviousButton = Me.BtnPrevious
         '
-        'LblEvaluationDate
+        'ToolStripButton1
         '
-        Me.LblEvaluationDate.AutoSize = True
-        Me.LblEvaluationDate.Location = New System.Drawing.Point(492, 50)
-        Me.LblEvaluationDate.Name = "LblEvaluationDate"
-        Me.LblEvaluationDate.Size = New System.Drawing.Size(65, 17)
-        Me.LblEvaluationDate.TabIndex = 7
-        Me.LblEvaluationDate.Text = "Dt. Visita"
-        '
-        'DbxEvaluationDate
-        '
-        Me.DbxEvaluationDate.ButtonImage = CType(resources.GetObject("DbxEvaluationDate.ButtonImage"), System.Drawing.Image)
-        Me.DbxEvaluationDate.Location = New System.Drawing.Point(497, 68)
-        Me.DbxEvaluationDate.Name = "DbxEvaluationDate"
-        Me.DbxEvaluationDate.Size = New System.Drawing.Size(109, 23)
-        Me.DbxEvaluationDate.TabIndex = 8
-        '
-        'LblVisitType
-        '
-        Me.LblVisitType.AutoSize = True
-        Me.LblVisitType.Location = New System.Drawing.Point(9, 50)
-        Me.LblVisitType.Name = "LblVisitType"
-        Me.LblVisitType.Size = New System.Drawing.Size(93, 17)
-        Me.LblVisitType.TabIndex = 2
-        Me.LblVisitType.Text = "Tipo de Visita"
+        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripButton1.Image = CType(resources.GetObject("ToolStripButton1.Image"), System.Drawing.Image)
+        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton1.Name = "ToolStripButton1"
+        Me.ToolStripButton1.Size = New System.Drawing.Size(80, 22)
+        Me.ToolStripButton1.Text = "Sincronizar"
         '
         'FrmVisitSchedule
         '
@@ -763,4 +773,5 @@ Partial Class FrmVisitSchedule
     Friend WithEvents LblEvaluationDate As Label
     Friend WithEvents DbxEvaluationDate As ControlLibrary.DateBox
     Friend WithEvents LblVisitType As Label
+    Friend WithEvents ToolStripButton1 As ToolStripButton
 End Class

@@ -8,6 +8,8 @@ INSERT INTO visitschedule
     personcompressorid,
     instructions,
     evaluationid,
+    synchronized,
+    lastupdate,
     userid
 )
 VALUES
@@ -20,5 +22,7 @@ VALUES
     @personcompressorid,
     @instructions,
     @evaluationid,
+    @synchronized,
+    @lastupdate,
     @userid
 );

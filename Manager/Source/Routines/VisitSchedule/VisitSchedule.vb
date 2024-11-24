@@ -1,42 +1,40 @@
 ﻿Imports ControlLibrary
+Imports ControlLibrary.Extensions
 Imports ManagerCore
 Imports MySql.Data.MySqlClient
 
 Public Class VisitSchedule
     Inherits ParentModel
     Private _RemoteDB As RemoteDB
-    Private _ID As String
     Private _Evaluation As Lazy(Of Evaluation)
-
-
-    Public Overloads ReadOnly Property ID As String
-        Get
-            Return _ID
-        End Get
-    End Property
-    Public Property Status As VisitScheduleStatus
-    Public Property VisitType As VisitScheduleType
-    Public Property VisitDate As Date
+    Private _Synchronized As Boolean
+    Public Property Status As VisitScheduleStatus = VisitScheduleStatus.Pending
+    Public Property VisitType As VisitScheduleType = VisitType = VisitScheduleType.None
+    Public Property VisitDate As Date = Today
     Public Property Customer As New Person
     Public Property Compressor As New PersonCompressor
     Public Property Instructions As String
+    Public Property LastUpdate As Date = Date.MinValue
     Public ReadOnly Property Evaluation As Lazy(Of Evaluation)
         Get
             Return _Evaluation
         End Get
     End Property
+    Public ReadOnly Property Synchronized As Boolean
+        Get
+            Return _Synchronized
+        End Get
+    End Property
 
     Public Sub New()
-        SetRoutine(Routine.VisitSchedule)
-        Status = VisitScheduleStatus.Pending
-        VisitType = VisitScheduleType.None
         _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
-        VisitDate = Today
+        SetRoutine(Routine.VisitSchedule)
     End Sub
 
-    Public Overloads Sub SetID(ID As String)
-        _ID = ID
+    Public Sub SetSynchronized(Synchronized As Boolean)
+        _Synchronized = Synchronized
     End Sub
+
     Public Sub SetEvaluation(EvaluationID As Long)
         If EvaluationID > 0 Then
             _Evaluation = New Lazy(Of Evaluation)(Function() New Evaluation().Load(EvaluationID, True))
@@ -45,65 +43,60 @@ Public Class VisitSchedule
         End If
     End Sub
 
-    Public Sub FromCloud(Data As Dictionary(Of String, Object))
-        Customer = New Person().Load(Convert.ToInt64(Data("customer_id")), False)
-        Compressor = Customer.Compressors.SingleOrDefault(Function(x) x.ID = Convert.ToInt64(Data("compressor_id")))
-        Instructions = Convert.ToString(Data("instructions"))
-        Status = Convert.ToInt32(Data("status_id"))
-        VisitType = Convert.ToInt32(Data("visit_type_id"))
-        VisitDate = Convert.ToDateTime(Data("visit_date"))
-        SetID(Convert.ToString(Data("document_id")))
-        SetCreation(Convert.ToDateTime(Data("creation_date")))
-        SetIsSaved(True)
-        If Convert.ToInt32(Data("evaluation_id")) > 0 Then
-            SetEvaluation(Convert.ToInt64(Data("evaluation_id")))
-        End If
-    End Sub
-
-    Public Function ToCloud() As Dictionary(Of String, Object)
-        Dim Data As New Dictionary(Of String, Object) From {
-            {"document_id", ID},
-            {"creation_date", Creation.ToString("yyyy-MM-dd")},
-            {"status_id", Convert.ToInt32(Status)},
-            {"visit_type_id", Convert.ToInt32(VisitType)},
-            {"visit_date", VisitDate.ToString("yyyy-MM-dd")},
-            {"customer_id", Customer.ID},
-            {"compressor_id", Compressor.ID},
-            {"instructions", Instructions},
-            {"evaluation_id", If(Evaluation IsNot Nothing AndAlso Evaluation.Value IsNot Nothing, Evaluation.Value.ID, 0)}
-        }
-        Return Data
-    End Function
     Public Sub Clear()
         Unlock()
         SetIsSaved(False)
         SetID(0)
         SetCreation(Today)
         SetEvaluation(0)
+        SetSynchronized(False)
         Status = VisitScheduleStatus.Pending
         VisitDate = Today
         Customer = New Person()
         Compressor = New PersonCompressor()
         Instructions = Nothing
+        LastUpdate = Date.MinValue
     End Sub
-    Public Function Load(Identity As String, LockMe As Boolean) As VisitSchedule
-        Dim Conditions As New List(Of RemoteDB.Condition) From {
-            New RemoteDB.WhereEqualToCondition("document_id", Identity)
-        }
-        Dim Result As List(Of Dictionary(Of String, Object)) = ManagerCore.Util.AsyncLock(Function() _RemoteDB.ExecuteGet("schedule", Conditions))
-        If Result.Count = 1 Then
-            Dim RemoteVisit As Dictionary(Of String, Object) = Result(0)
-            Clear()
-            FromCloud(RemoteVisit)
-            LockInfo = GetLockInfo()
-            If LockMe AndAlso Not LockInfo.IsLocked Then Lock()
-        Else
-            Clear()
-            Throw New Exception("Registro não encontrado.")
-        End If
+    Public Function Load(Identity As Long, LockMe As Boolean) As VisitSchedule
+        Dim TableResult As DataTable
+        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Con.Open()
+            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
+                Using Cmd As New MySqlCommand(My.Resources.VisitScheduleSelect, Con)
+                    Cmd.Transaction = Tra
+                    Cmd.Parameters.AddWithValue("@id", Identity)
+                    Using Adp As New MySqlDataAdapter(Cmd)
+                        TableResult = New DataTable
+                        Adp.Fill(TableResult)
+                    End Using
+                    If TableResult.Rows.Count = 0 Then
+                        Clear()
+                    ElseIf TableResult.Rows.Count = 1 Then
+                        Clear()
+                        SetID(Convert.ToInt64(TableResult.Rows(0).Item("id")))
+                        SetCreation(Convert.ToDateTime(TableResult.Rows(0).Item("creation")))
+                        SetSynchronized(Convert.ToBoolean(TableResult.Rows(0).Item("synchronized")))
+                        SetIsSaved(True)
+                        SetEvaluation(Convert.ToInt64(TableResult.Rows(0).Item("evaluationid")))
+                        Status = Convert.ToInt32(TableResult.Rows(0).Item("statusid"))
+                        VisitDate = Convert.ToDateTime(TableResult.Rows(0).Item("visitdate"))
+                        VisitType = Convert.ToInt32(TableResult.Rows(0).Item("visittypeid"))
+                        Customer = New Person().Load(Convert.ToInt64(TableResult.Rows(0).Item("customerid")), False)
+                        Compressor = Customer.Compressors.SingleOrDefault(Function(x) x.ID = Convert.ToInt64(TableResult.Rows(0).Item("personcompressorid")))
+                        Instructions = Convert.ToString(TableResult.Rows(0).Item("instructions"))
+                        LastUpdate = Convert.ToDateTime(TableResult.Rows(0).Item("lastupdate"))
+                        LockInfo = GetLockInfo(Tra)
+                        If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
+                    Else
+                        Throw New Exception("Registro não encontrado.")
+                    End If
+                End Using
+                Tra.Commit()
+            End Using
+        End Using
+        Synchronize()
         Return Me
     End Function
-
     Public Sub SaveChanges()
         If Not IsSaved Then
             Insert()
@@ -113,8 +106,7 @@ Public Class VisitSchedule
         SetIsSaved(True)
     End Sub
     Public Sub Delete()
-        Dim Session = Locator.GetInstance(Of Session)
-        Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
+        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
             Using Cmd As New MySqlCommand(My.Resources.VisitScheduleDelete, Con)
                 Cmd.Parameters.AddWithValue("@id", ID)
@@ -124,16 +116,123 @@ Public Class VisitSchedule
         End Using
     End Sub
     Private Sub Insert()
-        Dim TempID As String = $"{Now.Ticks}{Guid.NewGuid()}"
-        Dim Data As Dictionary(Of String, Object) = ToCloud()
-        Data("document_id") = TempID
-        ManagerCore.Util.AsyncLock(Function() _RemoteDB.ExecutePut("schedule", Data, Data("document_id")))
-        SetID(TempID)
+        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Con.Open()
+            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
+                Using Cmd As New MySqlCommand(My.Resources.VisitScheduleInsert, Con)
+                    Cmd.Transaction = Tra
+                    Cmd.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
+                    Cmd.Parameters.AddWithValue("@statusid", Convert.ToInt32(Status))
+                    Cmd.Parameters.AddWithValue("@visitdate", VisitDate.ToString("yyyy-MM-dd"))
+                    Cmd.Parameters.AddWithValue("@visittypeid", Convert.ToInt32(VisitType))
+                    Cmd.Parameters.AddWithValue("@customerid", Customer.ID)
+                    Cmd.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
+                    Cmd.Parameters.AddWithValue("@instructions", If(String.IsNullOrEmpty(Instructions), DBNull.Value, Instructions))
+                    Cmd.Parameters.AddWithValue("@evaluationid", 0)
+                    Cmd.Parameters.AddWithValue("@synchronized", Synchronized)
+                    Cmd.Parameters.AddWithValue("@lastupdate", Now)
+                    Cmd.Parameters.AddWithValue("@userid", User.ID)
+                    Cmd.ExecuteNonQuery()
+                    SetID(Cmd.LastInsertedId)
+                End Using
+                Tra.Commit()
+            End Using
+        End Using
     End Sub
     Private Sub Update()
-        Dim Data As Dictionary(Of String, Object) = ToCloud()
-        ManagerCore.Util.AsyncLock(Function() _RemoteDB.ExecutePut("schedule", Data, Data("document_id")))
+        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Con.Open()
+            Using Cmd As New MySqlCommand(My.Resources.VisitScheduleUpdate, Con)
+                Cmd.Parameters.AddWithValue("@id", ID)
+                Cmd.Parameters.AddWithValue("@statusid", CInt(Status))
+                Cmd.Parameters.AddWithValue("@visitdate", VisitDate.ToString("yyyy-MM-dd"))
+                Cmd.Parameters.AddWithValue("@visittypeid", Convert.ToInt32(VisitType))
+                Cmd.Parameters.AddWithValue("@customerid", Customer.ID)
+                Cmd.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
+                Cmd.Parameters.AddWithValue("@instructions", If(String.IsNullOrEmpty(Instructions), DBNull.Value, Instructions))
+                Cmd.Parameters.AddWithValue("@evaluationid", If(Evaluation IsNot Nothing AndAlso Evaluation.Value IsNot Nothing, Evaluation.Value.ID, 0))
+                Cmd.Parameters.AddWithValue("@synchronized", Synchronized)
+                Cmd.Parameters.AddWithValue("@lastupdate", Now.ToString("yyyy-MM-dd HH:mm:ss"))
+                Cmd.Parameters.AddWithValue("@userid", User.ID)
+                Cmd.ExecuteNonQuery()
+            End Using
+        End Using
     End Sub
+
+    Public Sub Synchronize()
+        Debug.Print(Synchronized)
+        Dim Data As Dictionary(Of String, Object)
+        If ID > 0 Then
+            'Leio a nuvem e vejo se o id ja esta salvo
+            Dim Condition As New List(Of RemoteDB.Condition) From {New RemoteDB.WhereEqualToCondition("id", ID)}
+            Dim DataList = ManagerCore.Util.AsyncLock(Function() _RemoteDB.ExecuteGet("schedule", Condition))
+            'se sim
+            If DataList.Count = 1 Then
+                Data = DataList(0)
+                'se lastupdate da nuvem é maior que aqui entao sincronizo de la pra ca
+                If Convert.ToInt64(Data("last_update") > DateTimeHelper.MillisecondsFromDate(LastUpdate)) Then
+
+                    FromCloud(Data)
+                    SetSynchronized(True)
+                    SaveChanges()
+
+                End If
+
+                'se lastupdate da nuvem é menor que aqui entao sinzroniza de ca pra la
+                If Convert.ToInt64(Data("last_update") < DateTimeHelper.MillisecondsFromDate(LastUpdate)) Then
+
+                    Data = ToCloud()
+                    ManagerCore.Util.AsyncLock(Sub() _RemoteDB.ExecutePut("schedule", Data, Data("id")))
+                    SetSynchronized(True)
+                    SaveChanges()
+
+                End If
+
+            End If
+
+            'sincroniza de ca pra la
+            If DataList.Count = 0 Then
+                Data = ToCloud()
+                ManagerCore.Util.AsyncLock(Sub() _RemoteDB.ExecutePut("schedule", Data, Data("id")))
+                SetSynchronized(True)
+                SaveChanges()
+            End If
+
+        Else
+            Throw New Exception("Tentativa de sincronização de um registro não salvo.")
+        End If
+    End Sub
+    Public Sub FromCloud(Data As Dictionary(Of String, Object))
+        Customer = New Person().Load(Convert.ToInt64(Data("customer_id")), False)
+        Compressor = Customer.Compressors.SingleOrDefault(Function(x) x.ID = Convert.ToInt64(Data("compressor_id")))
+        Instructions = Convert.ToString(Data("instructions"))
+        Status = Convert.ToInt32(Data("status_id"))
+        VisitType = Convert.ToInt32(Data("visit_type_id"))
+        VisitDate = DateTimeHelper.DateFromMilliseconds(Convert.ToInt64(Data("visit_date")))
+        LastUpdate = DateTimeHelper.DateFromMilliseconds(Convert.ToInt64(Data("last_update")))
+        SetSynchronized(True)
+        SetID(Convert.ToString(Data("id")))
+        SetCreation(DateTimeHelper.DateFromMilliseconds(Convert.ToInt64(Data("creation_date"))))
+        SetIsSaved(True)
+        If Convert.ToInt32(Data("evaluation_id")) > 0 Then
+            SetEvaluation(Convert.ToInt64(Data("evaluation_id")))
+        End If
+    End Sub
+    Public Function ToCloud() As Dictionary(Of String, Object)
+        Dim Data As New Dictionary(Of String, Object) From {
+            {"id", ID},
+            {"creation_date", DateTimeHelper.MillisecondsFromDate(Creation)},
+            {"status_id", Convert.ToInt32(Status)},
+            {"visit_type_id", Convert.ToInt32(VisitType)},
+            {"visit_date", DateTimeHelper.MillisecondsFromDate(VisitDate)},
+            {"customer_id", Customer.ID},
+            {"compressor_id", Compressor.ID},
+            {"instructions", Instructions},
+            {"evaluation_id", If(Evaluation IsNot Nothing AndAlso Evaluation.Value IsNot Nothing, Evaluation.Value.ID, 0)},
+            {"last_update", DateTimeHelper.MillisecondsFromDate(LastUpdate)}
+        }
+        Return Data
+    End Function
     Public Overrides Function ToString() As String
         Return $"{Customer.Name}: {Compressor.Compressor.Name}{If(Not String.IsNullOrEmpty(Compressor.SerialNumber), $" {Compressor.SerialNumber}", {String.Empty})}"
     End Function

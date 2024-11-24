@@ -16,7 +16,8 @@ SELECT
     END AS 'Tipo',
     customer.shortname AS 'Cliente',    
     CONCAT(compressor.name, IF(personcompressor.serialnumber IS NOT NULL AND personcompressor.serialnumber <> '', CONCAT(' NS: ', personcompressor.serialnumber), '')) AS 'Compressor',
-    REPLACE(visitschedule.instructions, '\n', ' ') AS 'Instruções'
+    REPLACE(visitschedule.instructions, '\n', ' ') AS 'Instruções',
+    visitschedule.synchronized AS 'Sincronizado'
 FROM visitschedule
 LEFT JOIN personcompressor ON personcompressor.id = visitschedule.personcompressorid
 LEFT JOIN compressor ON compressor.id = personcompressor.compressorid

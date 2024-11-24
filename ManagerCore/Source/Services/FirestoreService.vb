@@ -3,7 +3,10 @@ Imports Google.Cloud.Firestore
 Public Class FirestoreService
     Inherits RemoteDB
 
-    Private _Listener As FirestoreChangeListener
+    Private _Listeners As New Dictionary(Of String, FirestoreChangeListener)
+
+
+
     Private _Database As FirestoreDb
 
     Public Sub New()
@@ -29,15 +32,29 @@ Public Class FirestoreService
         End If
     End Function
 
+
+
+
+
+
     Public Overrides Sub StartListening(Collection As String, Optional Args As List(Of Condition) = Nothing)
         Dim Query As Query = _Database.Collection(Collection)
         If Args IsNot Nothing Then Query = ProcessArgs(Query, Args)
-        _Listener = Query.Listen(Sub(Snapshot As QuerySnapshot)
-                                     HandleSnapshotAsync(Collection, Snapshot)
-                                 End Sub)
+
+        ' Gera uma chave única para o listener
+        Dim ListenerKey As String = GenerateListenerKey(Collection, Args)
+
+        ' Se já existe um listener para esta chave, para o anterior
+        If _Listeners.ContainsKey(ListenerKey) Then
+            StopListening(ListenerKey)
+        End If
+
+        ' Adiciona o novo listener ao dicionário
+        Dim Listener As FirestoreChangeListener = Query.Listen(Sub(Snapshot As QuerySnapshot)
+                                                                   HandleSnapshotAsync(Collection, Snapshot)
+                                                               End Sub)
+        _Listeners(ListenerKey) = Listener
     End Sub
-
-
 
     Private Sub HandleSnapshotAsync(Collection As String, Snapshot As QuerySnapshot)
         Dim EventArgs As New FirestoreChangeEventArgs() With {
@@ -47,9 +64,71 @@ Public Class FirestoreService
         RaiseOnFirestoreChanged(EventArgs)
     End Sub
 
-    Public Overrides Sub StopListening()
-        _Listener?.StopAsync()
+    Public Overrides Sub StopListening(Optional ListenerKey As String = Nothing)
+        If ListenerKey Is Nothing Then
+            ' Para todos os listeners se nenhuma chave for fornecida
+            For Each Listener In _Listeners.Values
+                Listener.StopAsync()
+            Next
+            _Listeners.Clear()
+        ElseIf _Listeners.ContainsKey(ListenerKey) Then
+            ' Para um listener específico
+            _Listeners(ListenerKey).StopAsync()
+            _Listeners.Remove(ListenerKey)
+        End If
     End Sub
+
+    ' Gera uma chave única para cada listener com base na coleção e argumentos
+    Private Function GenerateListenerKey(Collection As String, Args As List(Of Condition)) As String
+        If Args Is Nothing Then Return Collection
+        Dim ConditionsString As String = String.Join("_", Args.Select(Function(arg) DescribeCondition(arg)))
+        Return $"{Collection}_{ConditionsString}"
+    End Function
+
+    ' Converte uma Condition em uma descrição única para a chave
+    Private Function DescribeCondition(condition As Condition) As String
+        Select Case True
+            Case TypeOf condition Is WhereEqualToCondition
+                Dim c = DirectCast(condition, WhereEqualToCondition)
+                Return $"WhereEqualTo-{c.Field}-{c.Value}"
+            Case TypeOf condition Is WhereNotEqualToCondition
+                Dim c = DirectCast(condition, WhereNotEqualToCondition)
+                Return $"WhereNotEqualTo-{c.Field}-{c.Value}"
+            Case TypeOf condition Is WhereGreaterThanCondition
+                Dim c = DirectCast(condition, WhereGreaterThanCondition)
+                Return $"WhereGreaterThan-{c.Field}-{c.Value}"
+            Case TypeOf condition Is WhereGreaterThanOrEqualToCondition
+                Dim c = DirectCast(condition, WhereGreaterThanOrEqualToCondition)
+                Return $"WhereGreaterThanOrEqualTo-{c.Field}-{c.Value}"
+            Case TypeOf condition Is WhereLessThanCondition
+                Dim c = DirectCast(condition, WhereLessThanCondition)
+                Return $"WhereLessThan-{c.Field}-{c.Value}"
+            Case TypeOf condition Is WhereLessThanOrEqualToCondition
+                Dim c = DirectCast(condition, WhereLessThanOrEqualToCondition)
+                Return $"WhereLessThanOrEqualTo-{c.Field}-{c.Value}"
+            Case TypeOf condition Is WhereInCondition
+                Dim c = DirectCast(condition, WhereInCondition)
+                Return $"WhereIn-{c.Field}-[{String.Join(",", c.Values.Cast(Of Object)())}]"
+            Case TypeOf condition Is WhereNotInCondition
+                Dim c = DirectCast(condition, WhereNotInCondition)
+                Return $"WhereNotIn-{c.Field}-[{String.Join(",", c.Values.Cast(Of Object)())}]"
+            Case TypeOf condition Is OrderByCondition
+                Dim c = DirectCast(condition, OrderByCondition)
+                Return $"OrderBy-{c.Field}-{c.Ascending}"
+            Case TypeOf condition Is LimitCondition
+                Dim c = DirectCast(condition, LimitCondition)
+                Return $"Limit-{c.Limit}"
+            Case Else
+                Return "UnknownCondition"
+        End Select
+    End Function
+
+
+
+
+
+
+
     Public Class FirestoreChangeEventArgs
         Public Property CollectionName As String
         Public Property Documents As List(Of Dictionary(Of String, Object))
@@ -60,7 +139,9 @@ Public Class FirestoreService
         Dim Snapshot = Await QueryRef.GetSnapshotAsync()
         Dim Result As New List(Of Dictionary(Of String, Object))()
         For Each Doc As DocumentSnapshot In Snapshot.Documents
-            Result.Add(Doc.ToDictionary())
+            Dim DocData As Dictionary(Of String, Object) = Doc.ToDictionary()
+            DocData("document_id") = Doc.Id
+            Result.Add(DocData)
         Next Doc
         Return Result
     End Function

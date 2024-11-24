@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports ControlLibrary
 Public Class PersonExpandable
     Private _Document As String
     <NotifyParentProperty(True)>
@@ -14,21 +15,7 @@ Public Class PersonExpandable
             Return _Document
         End Get
         Set(value As String)
-            Dim Str As String = String.Empty
-            If value <> Nothing Then
-                Str = value.Replace(".", "").Replace("-", "").Replace("/", "").Replace(" ", "")
-                If IsNumeric(Str) Then
-                    If Str.Length = 14 Then
-                        Str = Str.Substring(0, 2) & "." & Str.Substring(2, 3) & "." & Str.Substring(5, 3) & "/" & Str.Substring(8, 4) & "-" & Str.Substring(12, 2)
-                        _Document = Str
-                    ElseIf Str.Length = 11 Then
-                        Str = Str.Substring(0, 3) & "." & Str.Substring(3, 3) & "." & Str.Substring(6, 3) & "-" & Str.Substring(9, 2)
-                        _Document = Str
-                    Else
-                        _Document = value
-                    End If
-                End If
-            End If
+            _Document = BrazilianFormatHelper.GetFormatedDocument(value)
         End Set
     End Property
     <DisplayName("Nome/Nome Curto")>

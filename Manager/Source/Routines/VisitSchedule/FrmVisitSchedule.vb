@@ -68,7 +68,6 @@ Public Class FrmVisitSchedule
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnEvaluation.Visible = _LoggedUser.CanWrite(Routine.Evaluation)
         BtnEvaluation.Enabled = _VisitSchedule.Evaluation IsNot Nothing
-        BtnLog.Visible = _LoggedUser.CanAccess(Routine.Log)
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -91,7 +90,7 @@ Public Class FrmVisitSchedule
         QbxCompressor.Unfreeze()
         QbxCompressor.Freeze(_VisitSchedule.Compressor.ID)
         TxtInstructions.Text = _VisitSchedule.Instructions
-        BtnDelete.Enabled = _VisitSchedule.ID > 0 And _LoggedUser.CanDelete(Routine.VisitSchedule)
+        BtnDelete.Enabled = Not String.IsNullOrEmpty(_VisitSchedule.ID) > 0 And _LoggedUser.CanDelete(Routine.VisitSchedule)
         Text = "Agendamento de Visita"
         If _VisitSchedule.LockInfo.IsLocked And Not _VisitSchedule.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _VisitSchedule.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _VisitSchedule.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
@@ -171,10 +170,6 @@ Public Class FrmVisitSchedule
             End Try
         End If
     End Sub
-    Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.VisitSchedule, _VisitSchedule.ID)
-        Frm.ShowDialog()
-    End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Pending) Then
             BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled)
@@ -203,7 +198,7 @@ Public Class FrmVisitSchedule
         BtnStatusValue.Visible = (BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Pending) Or (BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled)))
         LblStatusValue.Visible = (BtnStatusValue.Text <> EnumHelper.GetEnumDescription(VisitScheduleStatus.Pending) And (BtnStatusValue.Text <> EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled)))
     End Sub
-    Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtInstructions.TextChanged, QbxCustomer.TextChanged, QbxCompressor.TextChanged
+    Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtInstructions.TextChanged, QbxCustomer.TextChanged, QbxCompressor.TextChanged, DbxEvaluationDate.TextChanged
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub

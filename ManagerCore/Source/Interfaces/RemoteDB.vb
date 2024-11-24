@@ -11,7 +11,8 @@ Public MustInherit Class RemoteDB
     MustOverride Async Function ExecuteDelete(Collection As String, Optional Args As List(Of Condition) = Nothing) As Task(Of Integer)
     MustOverride Async Function ExecutePut(Collection As String, Data As Dictionary(Of String, Object), Optional DocumentID As String = Nothing) As Task(Of DateTime)
     MustOverride Sub StartListening(Collection As String, Optional Args As List(Of Condition) = Nothing)
-    MustOverride Sub StopListening()
+    MustOverride Sub StopListening(Optional ListenerKey As String = Nothing)
+
     MustInherit Class Condition : End Class
     MustInherit Class FieldValueCondition
         Inherits Condition

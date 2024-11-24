@@ -1,5 +1,4 @@
-﻿Imports System.Runtime.InteropServices
-Imports ControlLibrary
+﻿Imports ControlLibrary
 Imports ManagerCore
 Imports MySql.Data.MySqlClient
 
@@ -32,6 +31,7 @@ Public Class VisitSchedule
         Status = VisitScheduleStatus.Pending
         VisitType = VisitScheduleType.None
         _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
+        VisitDate = Today
     End Sub
 
     Public Overloads Sub SetID(ID As String)
@@ -52,7 +52,7 @@ Public Class VisitSchedule
         Status = Convert.ToInt32(Data("status_id"))
         VisitType = Convert.ToInt32(Data("visit_type_id"))
         VisitDate = Convert.ToDateTime(Data("visit_date"))
-        SetID(Convert.ToString(Data("id")))
+        SetID(Convert.ToString(Data("document_id")))
         SetCreation(Convert.ToDateTime(Data("creation_date")))
         SetIsSaved(True)
         If Convert.ToInt32(Data("evaluation_id")) > 0 Then
@@ -62,7 +62,7 @@ Public Class VisitSchedule
 
     Public Function ToCloud() As Dictionary(Of String, Object)
         Dim Data As New Dictionary(Of String, Object) From {
-            {"id", ID},
+            {"document_id", ID},
             {"creation_date", Creation.ToString("yyyy-MM-dd")},
             {"status_id", Convert.ToInt32(Status)},
             {"visit_type_id", Convert.ToInt32(VisitType)},
@@ -70,7 +70,7 @@ Public Class VisitSchedule
             {"customer_id", Customer.ID},
             {"compressor_id", Compressor.ID},
             {"instructions", Instructions},
-            {"evaluation", If(Evaluation IsNot Nothing AndAlso Evaluation.Value IsNot Nothing, Evaluation.Value.ID, 0)}
+            {"evaluation_id", If(Evaluation IsNot Nothing AndAlso Evaluation.Value IsNot Nothing, Evaluation.Value.ID, 0)}
         }
         Return Data
     End Function
@@ -86,9 +86,9 @@ Public Class VisitSchedule
         Compressor = New PersonCompressor()
         Instructions = Nothing
     End Sub
-    Public Function Load(Identity As Long, LockMe As Boolean) As VisitSchedule
+    Public Function Load(Identity As String, LockMe As Boolean) As VisitSchedule
         Dim Conditions As New List(Of RemoteDB.Condition) From {
-            New RemoteDB.WhereEqualToCondition("id", Identity)
+            New RemoteDB.WhereEqualToCondition("document_id", Identity)
         }
         Dim Result As List(Of Dictionary(Of String, Object)) = ManagerCore.Util.AsyncLock(Function() _RemoteDB.ExecuteGet("schedule", Conditions))
         If Result.Count = 1 Then
@@ -126,13 +126,13 @@ Public Class VisitSchedule
     Private Sub Insert()
         Dim TempID As String = $"{Now.Ticks}{Guid.NewGuid()}"
         Dim Data As Dictionary(Of String, Object) = ToCloud()
-        Data("id") = TempID
-        ManagerCore.Util.AsyncLock(Function() _RemoteDB.ExecutePut("schedule", Data))
+        Data("document_id") = TempID
+        ManagerCore.Util.AsyncLock(Function() _RemoteDB.ExecutePut("schedule", Data, Data("document_id")))
         SetID(TempID)
     End Sub
     Private Sub Update()
         Dim Data As Dictionary(Of String, Object) = ToCloud()
-        ManagerCore.Util.AsyncLock(Function() _RemoteDB.ExecutePut("schedule", Data, Data("id)")))
+        ManagerCore.Util.AsyncLock(Function() _RemoteDB.ExecutePut("schedule", Data, Data("document_id")))
     End Sub
     Public Overrides Function ToString() As String
         Return $"{Customer.Name}: {Compressor.Compressor.Name}{If(Not String.IsNullOrEmpty(Compressor.SerialNumber), $" {Compressor.SerialNumber}", {String.Empty})}"

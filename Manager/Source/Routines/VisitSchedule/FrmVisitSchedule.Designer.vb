@@ -61,7 +61,6 @@ Partial Class FrmVisitSchedule
         Me.BtnPrevious = New System.Windows.Forms.ToolStripButton()
         Me.BtnNext = New System.Windows.Forms.ToolStripButton()
         Me.BtnLast = New System.Windows.Forms.ToolStripButton()
-        Me.BtnLog = New System.Windows.Forms.ToolStripButton()
         Me.BtnEvaluation = New System.Windows.Forms.ToolStripButton()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TxtInstructions = New System.Windows.Forms.TextBox()
@@ -201,7 +200,7 @@ Partial Class FrmVisitSchedule
         Me.TsNavigation.BackColor = System.Drawing.Color.White
         Me.TsNavigation.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsNavigation.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsNavigation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnDelete, Me.BtnFirst, Me.BtnPrevious, Me.BtnNext, Me.BtnLast, Me.BtnLog, Me.BtnEvaluation})
+        Me.TsNavigation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnDelete, Me.BtnFirst, Me.BtnPrevious, Me.BtnNext, Me.BtnLast, Me.BtnEvaluation})
         Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -268,16 +267,6 @@ Partial Class FrmVisitSchedule
         Me.BtnLast.Name = "BtnLast"
         Me.BtnLast.Size = New System.Drawing.Size(23, 22)
         Me.BtnLast.Text = "Última Rota"
-        '
-        'BtnLog
-        '
-        Me.BtnLog.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.BtnLog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnLog.Image = Global.Manager.My.Resources.Resources.Log
-        Me.BtnLog.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnLog.Name = "BtnLog"
-        Me.BtnLog.Size = New System.Drawing.Size(23, 22)
-        Me.BtnLog.Text = "Histórico"
         '
         'BtnEvaluation
         '
@@ -752,7 +741,6 @@ Partial Class FrmVisitSchedule
     Friend WithEvents BtnPrevious As ToolStripButton
     Friend WithEvents BtnNext As ToolStripButton
     Friend WithEvents BtnLast As ToolStripButton
-    Friend WithEvents BtnLog As ToolStripButton
     Friend WithEvents EprValidation As ErrorProvider
     Friend WithEvents DgvNavigator As ControlLibrary.DataGridViewNavigator
     Friend WithEvents TxtInstructions As TextBox

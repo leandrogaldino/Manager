@@ -6050,24 +6050,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE visitschedule SET
-        '''    statusid =  @statusid,
-        '''    visitdate = @visitdate,
-        '''    visittypeid = @visittypeid,
-        '''    customerid = @customerid,
-        '''    personcompressorid = @personcompressorid,
-        '''    instructions = @instructions,
-        '''    evaluationid = @evaluationid,
-        '''    lastupdate = @lastupdate
-        '''WHERE visitschedule.id = @id;.
-        '''</summary>
-        Friend ReadOnly Property VisitScheduleUpdateStatus() As String
-            Get
-                Return ResourceManager.GetString("VisitScheduleUpdateStatus", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property ZoomIn() As System.Drawing.Bitmap

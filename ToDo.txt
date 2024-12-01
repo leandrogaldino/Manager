@@ -1,13 +1,23 @@
-[X] Fazer o XMLGrid do VisitSchedule
+[] No banco Mysql será guardado a data last check.
 
-[] Terminar de configurar FrmVisitSchedule (Nao aparecer os dois statis, Tabindex, tamanho do dropdown dos QueriedBoxes)
-	salva os dados da visita localmente com um campo LastUpdate, e DocumentID
-	o agente vai trabalhar para sincronizar os dados guardando sempre a ultima atualização no mysql, e verificando depois que tem lastupdate maior.
-	o agente vai olhar para os documentos do firestore no campo lastupdate maiores que o guardado no mysql, quando encontrar salva as alterações no banco mysql.
-	o agente também vai olhar para os registros próprios onde o lastupdate é maior que o gardado no mysql, quando encontrar envia as alterações pra nuvem 
+[] A cada intervalo de tempo, sera buscado todos os registros no firestore, e todos os registros no mysql
+	que possuam o campo last update maior que a last check.
 
+[] Tudo que for maior que last check será sincronizado: Necessário para cada um desses registros, que caso o mesmo
+	registro esteja presente no mysql e na nuvem, deve-se implementar uma rotina onde prevalece o registro da núvem,
+	mas tambem salva o do mysql novamente com um outro ID mas com status de nome: "Sobrescrito".
+
+[] Ao final, atualizar last check.
 
 [] Corrigir o código dos erros das últimas rotinas.
+
+[X] Não aparecer os dois status no FrmVisitSchedule.
+
+[X] Configurar Tabindex do FrmVisitSchedule.
+
+[X] Configurar tamanho do dropdown dos QueriedBoxes do FrmVisitSchedule.
+
+[X] Fazer o XMLGrid do VisitSchedule
 
 [X] Implementar a predefinição de permissões no usuário.
 

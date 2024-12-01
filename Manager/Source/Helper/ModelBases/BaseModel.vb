@@ -56,6 +56,6 @@ Public MustInherit Class BaseModel
 
     Public Overloads Function Equals(other As BaseModel) As Boolean Implements IEquatable(Of BaseModel).Equals
         If other Is Nothing Then Return False
-        Return Me.GetType() = other.GetType() ' Pode ser modificado para comparar campos comuns
+        Return Me.GetType() = other.GetType()
     End Function
 End Class

@@ -62,6 +62,7 @@ Partial Class FrmVisitSchedule
         Me.BtnNext = New System.Windows.Forms.ToolStripButton()
         Me.BtnLast = New System.Windows.Forms.ToolStripButton()
         Me.BtnEvaluation = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TxtInstructions = New System.Windows.Forms.TextBox()
         Me.LblInstructions = New System.Windows.Forms.Label()
@@ -70,6 +71,9 @@ Partial Class FrmVisitSchedule
         Me.RbtCalled = New System.Windows.Forms.RadioButton()
         Me.RbtContract = New System.Windows.Forms.RadioButton()
         Me.FlpCustomer = New System.Windows.Forms.FlowLayoutPanel()
+        Me.BtnFilterCustomer = New ControlLibrary.NoFocusCueButton()
+        Me.BtnViewCustomer = New ControlLibrary.NoFocusCueButton()
+        Me.BtnNewCustomer = New ControlLibrary.NoFocusCueButton()
         Me.LblCustomer = New System.Windows.Forms.Label()
         Me.LblCompressor = New System.Windows.Forms.Label()
         Me.TmrCustomer = New System.Windows.Forms.Timer(Me.components)
@@ -77,12 +81,8 @@ Partial Class FrmVisitSchedule
         Me.LblVisitType = New System.Windows.Forms.Label()
         Me.DbxEvaluationDate = New ControlLibrary.DateBox()
         Me.QbxCustomer = New ControlLibrary.QueriedBox()
-        Me.BtnFilterCustomer = New ControlLibrary.NoFocusCueButton()
-        Me.BtnViewCustomer = New ControlLibrary.NoFocusCueButton()
-        Me.BtnNewCustomer = New ControlLibrary.NoFocusCueButton()
         Me.QbxCompressor = New ControlLibrary.QueriedBox()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
-        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.Panel1.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -279,6 +279,15 @@ Partial Class FrmVisitSchedule
         Me.BtnEvaluation.Size = New System.Drawing.Size(23, 22)
         Me.BtnEvaluation.Text = "Avaliação"
         '
+        'ToolStripButton1
+        '
+        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripButton1.Image = CType(resources.GetObject("ToolStripButton1.Image"), System.Drawing.Image)
+        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton1.Name = "ToolStripButton1"
+        Me.ToolStripButton1.Size = New System.Drawing.Size(80, 22)
+        Me.ToolStripButton1.Text = "Sincronizar"
+        '
         'EprValidation
         '
         Me.EprValidation.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink
@@ -386,6 +395,54 @@ Partial Class FrmVisitSchedule
         Me.FlpCustomer.Name = "FlpCustomer"
         Me.FlpCustomer.Size = New System.Drawing.Size(69, 21)
         Me.FlpCustomer.TabIndex = 11
+        '
+        'BtnFilterCustomer
+        '
+        Me.BtnFilterCustomer.BackColor = System.Drawing.Color.Transparent
+        Me.BtnFilterCustomer.BackgroundImage = Global.Manager.My.Resources.Resources.Magnifier
+        Me.BtnFilterCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnFilterCustomer.FlatAppearance.BorderSize = 0
+        Me.BtnFilterCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnFilterCustomer.Location = New System.Drawing.Point(49, 3)
+        Me.BtnFilterCustomer.Name = "BtnFilterCustomer"
+        Me.BtnFilterCustomer.Size = New System.Drawing.Size(17, 17)
+        Me.BtnFilterCustomer.TabIndex = 2
+        Me.BtnFilterCustomer.TabStop = False
+        Me.BtnFilterCustomer.TooltipText = ""
+        Me.BtnFilterCustomer.UseVisualStyleBackColor = False
+        Me.BtnFilterCustomer.Visible = False
+        '
+        'BtnViewCustomer
+        '
+        Me.BtnViewCustomer.BackColor = System.Drawing.Color.Transparent
+        Me.BtnViewCustomer.BackgroundImage = Global.Manager.My.Resources.Resources.View
+        Me.BtnViewCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnViewCustomer.FlatAppearance.BorderSize = 0
+        Me.BtnViewCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnViewCustomer.Location = New System.Drawing.Point(26, 3)
+        Me.BtnViewCustomer.Name = "BtnViewCustomer"
+        Me.BtnViewCustomer.Size = New System.Drawing.Size(17, 17)
+        Me.BtnViewCustomer.TabIndex = 1
+        Me.BtnViewCustomer.TabStop = False
+        Me.BtnViewCustomer.TooltipText = ""
+        Me.BtnViewCustomer.UseVisualStyleBackColor = False
+        Me.BtnViewCustomer.Visible = False
+        '
+        'BtnNewCustomer
+        '
+        Me.BtnNewCustomer.BackColor = System.Drawing.Color.Transparent
+        Me.BtnNewCustomer.BackgroundImage = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnNewCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnNewCustomer.FlatAppearance.BorderSize = 0
+        Me.BtnNewCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnNewCustomer.Location = New System.Drawing.Point(3, 3)
+        Me.BtnNewCustomer.Name = "BtnNewCustomer"
+        Me.BtnNewCustomer.Size = New System.Drawing.Size(17, 17)
+        Me.BtnNewCustomer.TabIndex = 0
+        Me.BtnNewCustomer.TabStop = False
+        Me.BtnNewCustomer.TooltipText = ""
+        Me.BtnNewCustomer.UseVisualStyleBackColor = False
+        Me.BtnNewCustomer.Visible = False
         '
         'LblCustomer
         '
@@ -553,54 +610,6 @@ Partial Class FrmVisitSchedule
         Me.QbxCustomer.Suffix = Nothing
         Me.QbxCustomer.TabIndex = 10
         '
-        'BtnFilterCustomer
-        '
-        Me.BtnFilterCustomer.BackColor = System.Drawing.Color.Transparent
-        Me.BtnFilterCustomer.BackgroundImage = Global.Manager.My.Resources.Resources.Magnifier
-        Me.BtnFilterCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnFilterCustomer.FlatAppearance.BorderSize = 0
-        Me.BtnFilterCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnFilterCustomer.Location = New System.Drawing.Point(49, 3)
-        Me.BtnFilterCustomer.Name = "BtnFilterCustomer"
-        Me.BtnFilterCustomer.Size = New System.Drawing.Size(17, 17)
-        Me.BtnFilterCustomer.TabIndex = 2
-        Me.BtnFilterCustomer.TabStop = False
-        Me.BtnFilterCustomer.TooltipText = ""
-        Me.BtnFilterCustomer.UseVisualStyleBackColor = False
-        Me.BtnFilterCustomer.Visible = False
-        '
-        'BtnViewCustomer
-        '
-        Me.BtnViewCustomer.BackColor = System.Drawing.Color.Transparent
-        Me.BtnViewCustomer.BackgroundImage = Global.Manager.My.Resources.Resources.View
-        Me.BtnViewCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnViewCustomer.FlatAppearance.BorderSize = 0
-        Me.BtnViewCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnViewCustomer.Location = New System.Drawing.Point(26, 3)
-        Me.BtnViewCustomer.Name = "BtnViewCustomer"
-        Me.BtnViewCustomer.Size = New System.Drawing.Size(17, 17)
-        Me.BtnViewCustomer.TabIndex = 1
-        Me.BtnViewCustomer.TabStop = False
-        Me.BtnViewCustomer.TooltipText = ""
-        Me.BtnViewCustomer.UseVisualStyleBackColor = False
-        Me.BtnViewCustomer.Visible = False
-        '
-        'BtnNewCustomer
-        '
-        Me.BtnNewCustomer.BackColor = System.Drawing.Color.Transparent
-        Me.BtnNewCustomer.BackgroundImage = Global.Manager.My.Resources.Resources.IncludeSmall
-        Me.BtnNewCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnNewCustomer.FlatAppearance.BorderSize = 0
-        Me.BtnNewCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnNewCustomer.Location = New System.Drawing.Point(3, 3)
-        Me.BtnNewCustomer.Name = "BtnNewCustomer"
-        Me.BtnNewCustomer.Size = New System.Drawing.Size(17, 17)
-        Me.BtnNewCustomer.TabIndex = 0
-        Me.BtnNewCustomer.TabStop = False
-        Me.BtnNewCustomer.TooltipText = ""
-        Me.BtnNewCustomer.UseVisualStyleBackColor = False
-        Me.BtnNewCustomer.Visible = False
-        '
         'QbxCompressor
         '
         Me.QbxCompressor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
@@ -682,15 +691,6 @@ Partial Class FrmVisitSchedule
         Me.DgvNavigator.LastButton = Me.BtnLast
         Me.DgvNavigator.NextButton = Me.BtnNext
         Me.DgvNavigator.PreviousButton = Me.BtnPrevious
-        '
-        'ToolStripButton1
-        '
-        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.ToolStripButton1.Image = CType(resources.GetObject("ToolStripButton1.Image"), System.Drawing.Image)
-        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton1.Name = "ToolStripButton1"
-        Me.ToolStripButton1.Size = New System.Drawing.Size(80, 22)
-        Me.ToolStripButton1.Text = "Sincronizar"
         '
         'FrmVisitSchedule
         '

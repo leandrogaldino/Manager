@@ -23,7 +23,7 @@ Public Class FrmVisitSchedules
         BtnExport.Visible = _LoggedUser.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'DgvlVisitScheduleLayout.Load()
+        DgvlVisitScheduleLayout.Load()
     End Sub
     Private Sub Form_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         AddHandler Parent.FindForm.Resize, AddressOf FrmMain_ResizeEnd

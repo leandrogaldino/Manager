@@ -1654,6 +1654,7 @@
     <Content Include="Resources\SQL\VisitScheduleFilter.sql" />
     <Content Include="Resources\SQL\VisitScheduleInsert.sql" />
     <Content Include="Resources\SQL\VisitScheduleSelect.sql" />
+    <Content Include="Resources\SQL\VisitScheduleUpdateStatus.sql" />
     <Content Include="Resources\SQL\VisitScheduleUpdate.sql" />
     <Content Include="Resources\SQL\CrmDetailSelect.sql" />
     <Content Include="Resources\SQL\CrmSetStatus.sql" />

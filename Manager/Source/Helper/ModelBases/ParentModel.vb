@@ -60,15 +60,38 @@ Public MustInherit Class ParentModel
         Return New LockRegistryInfo
     End Function
     Public Sub Lock()
-        Dim Time As String = Now.ToString("yyyy-MM-dd HH:mm:ss")
-        Using Con As New MySqlConnection(_Session.Setting.Database.GetConnectionString())
-            Con.Open()
-            Using Cmd As New MySqlCommand(My.Resources.LockedRegistryInsert, Con)
+        If Not Debugger.IsAttached Then
+            Dim Time As String = Now.ToString("yyyy-MM-dd HH:mm:ss")
+            Using Con As New MySqlConnection(_Session.Setting.Database.GetConnectionString())
+                Con.Open()
+                Using Cmd As New MySqlCommand(My.Resources.LockedRegistryInsert, Con)
+                    Cmd.Parameters.AddWithValue("@session", _Session.Token)
+                    Cmd.Parameters.AddWithValue("@locktime", Time)
+                    Cmd.Parameters.AddWithValue("@routineid", CInt(Routine))
+                    Cmd.Parameters.AddWithValue("@registryid", ID)
+                    Cmd.Parameters.AddWithValue("@userid", _Session.User.ID)
+                    Cmd.ExecuteNonQuery()
+                    LockInfo.IsLocked = True
+                    LockInfo.SessionToken = _Session.Token
+                    LockInfo.LockTime = Time
+                    LockInfo.Routine = Routine
+                    LockInfo.RegistryID = ID
+                    LockInfo.LockedBy = New Lazy(Of User)(Function() Locator.GetInstance(Of Session).User)
+                End Using
+            End Using
+        End If
+    End Sub
+    Public Sub Lock(Transaction As MySqlTransaction)
+        If Not Debugger.IsAttached Then
+            Dim Time As String = Now.ToString("yyyy-MM-dd HH:mm:ss")
+            Using Cmd As New MySqlCommand(My.Resources.LockedRegistryInsert, Transaction.Connection)
+                Cmd.Transaction = Transaction
                 Cmd.Parameters.AddWithValue("@session", _Session.Token)
                 Cmd.Parameters.AddWithValue("@locktime", Time)
                 Cmd.Parameters.AddWithValue("@routineid", CInt(Routine))
                 Cmd.Parameters.AddWithValue("@registryid", ID)
                 Cmd.Parameters.AddWithValue("@userid", _Session.User.ID)
+                Cmd.Transaction = Transaction
                 Cmd.ExecuteNonQuery()
                 LockInfo.IsLocked = True
                 LockInfo.SessionToken = _Session.Token
@@ -77,50 +100,13 @@ Public MustInherit Class ParentModel
                 LockInfo.RegistryID = ID
                 LockInfo.LockedBy = New Lazy(Of User)(Function() Locator.GetInstance(Of Session).User)
             End Using
-        End Using
-    End Sub
-    Public Sub Lock(Transaction As MySqlTransaction)
-        Dim Time As String = Now.ToString("yyyy-MM-dd HH:mm:ss")
-        Using Cmd As New MySqlCommand(My.Resources.LockedRegistryInsert, Transaction.Connection)
-            Cmd.Transaction = Transaction
-            Cmd.Parameters.AddWithValue("@session", _Session.Token)
-            Cmd.Parameters.AddWithValue("@locktime", Time)
-            Cmd.Parameters.AddWithValue("@routineid", CInt(Routine))
-            Cmd.Parameters.AddWithValue("@registryid", ID)
-            Cmd.Parameters.AddWithValue("@userid", _Session.User.ID)
-            Cmd.Transaction = Transaction
-            Cmd.ExecuteNonQuery()
-            LockInfo.IsLocked = True
-            LockInfo.SessionToken = _Session.Token
-            LockInfo.LockTime = Time
-            LockInfo.Routine = Routine
-            LockInfo.RegistryID = ID
-            LockInfo.LockedBy = New Lazy(Of User)(Function() Locator.GetInstance(Of Session).User)
-        End Using
-    End Sub
-    Public Sub Unlock(Transaction As MySqlTransaction)
-        If _Session.User IsNot Nothing Then
-            Using Cmd As New MySqlCommand(My.Resources.LockedRegistryDelete, Transaction.Connection)
-                Cmd.Transaction = Transaction
-                Cmd.Parameters.AddWithValue("@session", _Session.Token)
-                Cmd.Parameters.AddWithValue("@routineid", CInt(Routine))
-                Cmd.Parameters.AddWithValue("@registryid", ID)
-                Cmd.Parameters.AddWithValue("@userid", _Session.User.ID)
-                Cmd.ExecuteNonQuery()
-                LockInfo.IsLocked = False
-                LockInfo.SessionToken = Nothing
-                LockInfo.LockTime = Nothing
-                LockInfo.Routine = Nothing
-                LockInfo.RegistryID = 0
-                LockInfo.LockedBy = New Lazy(Of User)(Function() New User())
-            End Using
         End If
     End Sub
-    Public Sub Unlock()
-        If _Session.User IsNot Nothing Then
-            Using Con As New MySqlConnection(_Session.Setting.Database.GetConnectionString())
-                Con.Open()
-                Using Cmd As New MySqlCommand(My.Resources.LockedRegistryDelete, Con)
+    Public Sub Unlock(Transaction As MySqlTransaction)
+        If Not Debugger.IsAttached Then
+            If _Session.User IsNot Nothing Then
+                Using Cmd As New MySqlCommand(My.Resources.LockedRegistryDelete, Transaction.Connection)
+                    Cmd.Transaction = Transaction
                     Cmd.Parameters.AddWithValue("@session", _Session.Token)
                     Cmd.Parameters.AddWithValue("@routineid", CInt(Routine))
                     Cmd.Parameters.AddWithValue("@registryid", ID)
@@ -133,7 +119,29 @@ Public MustInherit Class ParentModel
                     LockInfo.RegistryID = 0
                     LockInfo.LockedBy = New Lazy(Of User)(Function() New User())
                 End Using
-            End Using
+            End If
+        End If
+    End Sub
+    Public Sub Unlock()
+        If Not Debugger.IsAttached Then
+            If _Session.User IsNot Nothing Then
+                Using Con As New MySqlConnection(_Session.Setting.Database.GetConnectionString())
+                    Con.Open()
+                    Using Cmd As New MySqlCommand(My.Resources.LockedRegistryDelete, Con)
+                        Cmd.Parameters.AddWithValue("@session", _Session.Token)
+                        Cmd.Parameters.AddWithValue("@routineid", CInt(Routine))
+                        Cmd.Parameters.AddWithValue("@registryid", ID)
+                        Cmd.Parameters.AddWithValue("@userid", _Session.User.ID)
+                        Cmd.ExecuteNonQuery()
+                        LockInfo.IsLocked = False
+                        LockInfo.SessionToken = Nothing
+                        LockInfo.LockTime = Nothing
+                        LockInfo.Routine = Nothing
+                        LockInfo.RegistryID = 0
+                        LockInfo.LockedBy = New Lazy(Of User)(Function() New User())
+                    End Using
+                End Using
+            End If
         End If
     End Sub
     Private Async Sub Timer_Elapsed(sender As Object, e As EventArgs) Handles Timer.Elapsed

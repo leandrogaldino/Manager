@@ -5982,11 +5982,12 @@ Namespace My.Resources
         '''    creation,
         '''    statusid,
         '''    visitdate,
-        '''    visitetypeid,
+        '''    visittypeid,
         '''    customerid,
-        '''    compressorid,
+        '''    personcompressorid,
         '''    instructions,
         '''    evaluationid,
+        '''    lastupdate,
         '''    userid
         ''')
         '''VALUES
@@ -5994,11 +5995,12 @@ Namespace My.Resources
         '''    @creation,
         '''    @statusid,
         '''    @visitdate,
-        '''    @visitetypeid,
+        '''    @visittypeid,
         '''    @customerid,
-        '''    @compressorid,
+        '''    @personcompressorid,
         '''    @instructions,
         '''    @evaluationid,
+        '''    @lastupdate,
         '''    @userid
         ''');.
         '''</summary>
@@ -6014,11 +6016,12 @@ Namespace My.Resources
         '''	visitschedule.creation,
         '''    visitschedule.statusid,
         '''	visitschedule.visitdate,
-        '''	visitschedule.visitetypeid,
+        '''	visitschedule.visittypeid,
         '''	visitschedule.customerid,
-        '''	visitschedule.compressorid,
+        '''	visitschedule.personcompressorid,
         '''	visitschedule.instructions,
-        '''	visitschedule.evaluationid
+        '''	visitschedule.evaluationid,
+        '''	visitschedule.lastupdate
         '''FROM visitschedule
         '''WHERE visitschedule.id = @id;.
         '''</summary>
@@ -6032,16 +6035,35 @@ Namespace My.Resources
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE visitschedule SET
         '''    statusid =  @statusid,
         '''    visitdate = @visitdate,
-        '''    visitetypeid = @visitetypeid,
+        '''    visittypeid = @visittypeid,
         '''    customerid = @customerid,
-        '''    compressorid = @compressorid,
+        '''    personcompressorid = @personcompressorid,
         '''    instructions = @instructions,
-        '''    evaluationid = @evaluationid
+        '''    evaluationid = @evaluationid,
+        '''    lastupdate = @lastupdate
         '''WHERE visitschedule.id = @id;.
         '''</summary>
         Friend ReadOnly Property VisitScheduleUpdate() As String
             Get
                 Return ResourceManager.GetString("VisitScheduleUpdate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE visitschedule SET
+        '''    statusid =  @statusid,
+        '''    visitdate = @visitdate,
+        '''    visittypeid = @visittypeid,
+        '''    customerid = @customerid,
+        '''    personcompressorid = @personcompressorid,
+        '''    instructions = @instructions,
+        '''    evaluationid = @evaluationid,
+        '''    lastupdate = @lastupdate
+        '''WHERE visitschedule.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property VisitScheduleUpdateStatus() As String
+            Get
+                Return ResourceManager.GetString("VisitScheduleUpdateStatus", resourceCulture)
             End Get
         End Property
         

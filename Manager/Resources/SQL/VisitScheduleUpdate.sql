@@ -6,6 +6,5 @@ UPDATE visitschedule SET
     personcompressorid = @personcompressorid,
     instructions = @instructions,
     evaluationid = @evaluationid,
-    synchronized = @synchronized,
-    lastupdate = @    @lastupdate
+    lastupdate = @lastupdate
 WHERE visitschedule.id = @id;

@@ -1,7 +1,6 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
-Imports Syncfusion.Windows.Forms
 Public Class FrmVisitSchedule
     Private _VisitSchedule As VisitSchedule
     Private _VisitSchedulesForm As FrmVisitSchedules
@@ -94,8 +93,13 @@ Public Class FrmVisitSchedule
         Text = "Agendamento de Visita"
         If _VisitSchedule.LockInfo.IsLocked And Not _VisitSchedule.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _VisitSchedule.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _VisitSchedule.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
-            Text &= " - SOMENTE LEITURA"
+            Text = "Agendamento de Visita - SOMENTE LEITURA"
         End If
+
+        If _VisitSchedule.Status = VisitScheduleStatus.Started Or _VisitSchedule.Status = VisitScheduleStatus.Finished Then
+            Text = "Agendamento de Visita - SOMENTE LEITURA"
+        End If
+
         BtnSave.Enabled = False
         DbxEvaluationDate.Select()
         _Loading = False
@@ -267,49 +271,174 @@ Public Class FrmVisitSchedule
     End Function
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
-        TxtInstructions.Text = TxtInstructions.Text.Trim.ToUnaccented()
-        If _VisitSchedule.LockInfo.IsLocked And _VisitSchedule.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _VisitSchedule.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
+        Dim CloudStatus As VisitScheduleStatus
+
+        Try
+            Cursor = Cursors.WaitCursor
+            CloudStatus = _VisitSchedule.GetCloudStatus()
+        Catch ex As Exception
+            CMessageBox.Show("ERRO RT003", "Ocorreu um erro ao salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Return False
-        Else
-            If IsValidFields() Then
+        Finally
+            Cursor = Cursors.Default
+        End Try
 
+        TxtInstructions.Text = TxtInstructions.Text.Trim().ToUnaccented()
 
-                _VisitSchedule.Status = EnumHelper.GetEnumValue(Of VisitScheduleStatus)(BtnStatusValue.Text)
-                _VisitSchedule.VisitType = EnumHelper.GetEnumValue(Of VisitScheduleType)(Controls.OfType(Of RadioButton)().FirstOrDefault(Function(r) r.Checked).Text.ToUpper())
-                _VisitSchedule.VisitDate = DbxEvaluationDate.Text
-                _VisitSchedule.Customer = New Person().Load(QbxCustomer.FreezedPrimaryKey, False)
-                _VisitSchedule.Compressor = _VisitSchedule.Customer.Compressors.Single(Function(x) x.ID = QbxCompressor.FreezedPrimaryKey)
-                _VisitSchedule.Instructions = TxtInstructions.Text
-                Try
-                    Cursor = Cursors.WaitCursor
-                    _VisitSchedule.SaveChanges()
-                    _VisitSchedule.Lock()
-                    LblIDValue.Text = _VisitSchedule.ID
-                    BtnSave.Enabled = False
-                    BtnDelete.Enabled = _LoggedUser.CanDelete(Routine.Route)
-                    If _VisitSchedulesForm IsNot Nothing Then
-                        _Filter.Filter()
-                        _VisitSchedulesForm.DgvlVisitScheduleLayout.Load()
-                        Row = _VisitSchedulesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
-                        If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-                        DgvNavigator.RefreshButtons()
-                    End If
-                    Return True
-                Catch ex As MySqlException
-                    CMessageBox.Show("ERRO RT003", "Ocorreu um erro salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
-                    Return False
-                Finally
-                    Cursor = Cursors.Default
-                End Try
-            Else
-                Return False
-            End If
+        ' Verificar se está bloqueado por outro usuário
+        If _VisitSchedule.LockInfo.IsLocked AndAlso _VisitSchedule.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
+            CMessageBox.Show($"Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {_VisitSchedule.LockInfo.LockedBy.Value.Username.ToTitle()}.", CMessageBoxType.Information)
+            Return False
         End If
+
+        ' Verificar o status local
+        If _VisitSchedule.Status = VisitScheduleStatus.Started Then
+            CMessageBox.Show("Não foi possível salvar, esse agendamento já foi iniciado.", CMessageBoxType.Information)
+            Return False
+        ElseIf _VisitSchedule.Status = VisitScheduleStatus.Finished Then
+            CMessageBox.Show("Não foi possível salvar, esse agendamento já foi finalizado.", CMessageBoxType.Information)
+            Return False
+        End If
+
+        ' Verificar status na nuvem
+        If (CloudStatus = VisitScheduleStatus.Started AndAlso _VisitSchedule.Status <> VisitScheduleStatus.Started) OrElse (CloudStatus = VisitScheduleStatus.Finished AndAlso _VisitSchedule.Status <> VisitScheduleStatus.Finished) Then
+            CMessageBox.Show($"Não foi possível salvar, esse agendamento já foi {EnumHelper.GetEnumDescription(CloudStatus).ToLower()}. Serão carregados os dados da núvem.", CMessageBoxType.Information)
+
+            _VisitSchedule.GetFromCloud()
+
+            LoadData()
+
+            If _VisitSchedulesForm IsNot Nothing Then
+                _Filter.Filter()
+                _VisitSchedulesForm.DgvlVisitScheduleLayout.Load()
+                Row = _VisitSchedulesGrid.Rows.Cast(Of DataGridViewRow)().FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
+                If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+                DgvNavigator.RefreshButtons()
+            End If
+            Return False
+        End If
+
+        ' Validar campos antes de salvar
+        If Not IsValidFields() Then Return False
+
+        ' Atualizar as propriedades do agendamento
+        _VisitSchedule.Status = EnumHelper.GetEnumValue(Of VisitScheduleStatus)(BtnStatusValue.Text)
+        _VisitSchedule.VisitType = EnumHelper.GetEnumValue(Of VisitScheduleType)(Controls.OfType(Of RadioButton)().FirstOrDefault(Function(r) r.Checked).Text.ToUpper())
+        _VisitSchedule.VisitDate = DbxEvaluationDate.Text
+        _VisitSchedule.Customer = New Person().Load(QbxCustomer.FreezedPrimaryKey, False)
+        _VisitSchedule.Compressor = _VisitSchedule.Customer.Compressors.Single(Function(x) x.ID = QbxCompressor.FreezedPrimaryKey)
+        _VisitSchedule.Instructions = TxtInstructions.Text
+
+        ' Salvar alterações
+        Try
+            Cursor = Cursors.WaitCursor
+            _VisitSchedule.SaveChanges()
+            _VisitSchedule.Lock()
+            If _VisitSchedule.Status = VisitScheduleStatus.Canceled Then
+                _VisitSchedule.DeleteFromCloud()
+            ElseIf _VisitSchedule.Status = VisitScheduleStatus.Pending Then
+                _VisitSchedule.SendToCloud()
+            End If
+            LblIDValue.Text = _VisitSchedule.ID
+            BtnSave.Enabled = False
+            BtnDelete.Enabled = _LoggedUser.CanDelete(Routine.Route)
+
+            If _VisitSchedulesForm IsNot Nothing Then
+                _Filter.Filter()
+                _VisitSchedulesForm.DgvlVisitScheduleLayout.Load()
+                Row = _VisitSchedulesGrid.Rows.Cast(Of DataGridViewRow)().FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
+                If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+                DgvNavigator.RefreshButtons()
+            End If
+            Return True
+        Catch ex As Exception
+            CMessageBox.Show("ERRO RT003", "Ocorreu um erro ao salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+            Return False
+        Finally
+            Cursor = Cursors.Default
+        End Try
     End Function
 
-    Private Sub TmrCustomer_Tick(sender As Object, e As EventArgs) Handles TmrCustomer.Tick
+    'Private Function Save() As Boolean
+    '    Dim Row As DataGridViewRow
+    '    Cursor = Cursors.WaitCursor
+    '    Dim CloudStatus As VisitScheduleStatus = _VisitSchedule.GetCloudStatus()
+    '    Cursor = Cursors.Default
+    '    TxtInstructions.Text = TxtInstructions.Text.Trim.ToUnaccented()
+    '    If _VisitSchedule.LockInfo.IsLocked And _VisitSchedule.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
+    '        CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _VisitSchedule.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
+    '        Return False
+    '    ElseIf _VisitSchedule.Status = VisitScheduleStatus.Started Then
+    '        CMessageBox.Show(String.Format("Não foi possível salvar, esse agendamento já foi iniciado."), CMessageBoxType.Information)
+    '        Return False
+    '    ElseIf _VisitSchedule.Status = VisitScheduleStatus.Finished Then
+    '        CMessageBox.Show(String.Format("Não foi possível salvar, esse agendamento já foi finalizado."), CMessageBoxType.Information)
+    '        Return False
+    '    ElseIf CloudStatus = VisitScheduleStatus.Started And _VisitSchedule.Status <> VisitScheduleStatus.Started Then
+    '        CMessageBox.Show(String.Format("Não foi possível salvar, esse agendamento já foi iniciado."), CMessageBoxType.Information)
+    '        _VisitSchedule.UpdateStatus(CloudStatus)
+    '        LoadData()
+    '        If _VisitSchedulesForm IsNot Nothing Then
+    '            _Filter.Filter()
+    '            _VisitSchedulesForm.DgvlVisitScheduleLayout.Load()
+    '            Row = _VisitSchedulesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
+    '            If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+    '            DgvNavigator.RefreshButtons()
+    '        End If
+    '        Return False
+    '    ElseIf CloudStatus = VisitScheduleStatus.Finished And _VisitSchedule.Status <> VisitScheduleStatus.Finished Then
+    '        CMessageBox.Show(String.Format("Não foi possível salvar, esse agendamento já foi finalizado."), CMessageBoxType.Information)
+    '        _VisitSchedule.UpdateStatus(CloudStatus)
+    '        LoadData()
+    '        If _VisitSchedulesForm IsNot Nothing Then
+    '            _Filter.Filter()
+    '            _VisitSchedulesForm.DgvlVisitScheduleLayout.Load()
+    '            Row = _VisitSchedulesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
+    '            If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+    '            DgvNavigator.RefreshButtons()
+    '        End If
+    '        Return False
+    '    Else
+    '        If IsValidFields() Then
 
+    '            _VisitSchedule.Status = EnumHelper.GetEnumValue(Of VisitScheduleStatus)(BtnStatusValue.Text)
+    '            _VisitSchedule.VisitType = EnumHelper.GetEnumValue(Of VisitScheduleType)(Controls.OfType(Of RadioButton)().FirstOrDefault(Function(r) r.Checked).Text.ToUpper())
+    '            _VisitSchedule.VisitDate = DbxEvaluationDate.Text
+    '            _VisitSchedule.Customer = New Person().Load(QbxCustomer.FreezedPrimaryKey, False)
+    '            _VisitSchedule.Compressor = _VisitSchedule.Customer.Compressors.Single(Function(x) x.ID = QbxCompressor.FreezedPrimaryKey)
+    '            _VisitSchedule.Instructions = TxtInstructions.Text
+    '            Try
+    '                Cursor = Cursors.WaitCursor
+    '                _VisitSchedule.SaveChanges()
+    '                _VisitSchedule.Lock()
+    '                LblIDValue.Text = _VisitSchedule.ID
+    '                BtnSave.Enabled = False
+    '                BtnDelete.Enabled = _LoggedUser.CanDelete(Routine.Route)
+    '                If _VisitSchedulesForm IsNot Nothing Then
+    '                    _Filter.Filter()
+    '                    _VisitSchedulesForm.DgvlVisitScheduleLayout.Load()
+    '                    Row = _VisitSchedulesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
+    '                    If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+    '                    DgvNavigator.RefreshButtons()
+    '                End If
+    '                Return True
+    '            Catch ex As MySqlException
+    '                CMessageBox.Show("ERRO RT003", "Ocorreu um erro salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+    '                Return False
+    '            Finally
+    '                Cursor = Cursors.Default
+    '            End Try
+    '        Else
+    '            Return False
+    '        End If
+    '    End If
+    'End Function
+
+    Private Sub TmrCustomer_Tick(sender As Object, e As EventArgs) Handles TmrCustomer.Tick
+        BtnViewCustomer.Visible = False
+        BtnNewCustomer.Visible = False
+        BtnFilterCustomer.Visible = False
+        TmrCustomer.Stop()
     End Sub
     Private Sub QbxCustomer_Enter(sender As Object, e As EventArgs) Handles QbxCustomer.Enter
         TmrCustomer.Stop()
@@ -387,9 +516,5 @@ Public Class FrmVisitSchedule
         Using Frm As New FrmEvaluation(_VisitSchedule.Evaluation.Value)
             Frm.ShowDialog()
         End Using
-    End Sub
-
-    Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
-        _VisitSchedule.Synchronize()
     End Sub
 End Class

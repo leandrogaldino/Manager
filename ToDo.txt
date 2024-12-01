@@ -7,6 +7,9 @@
 	registro esteja presente no mysql e na nuvem, deve-se implementar uma rotina onde prevalece o registro da núvem,
 	mas tambem salva o do mysql novamente com um outro ID mas com status de nome: "Sobrescrito".
 
+[] Caso haja um last update valido apenas do lado do mysql, precisa verificar se o status na núvel está iniciado ou finalizado,
+   se sim, deve apenas trazer o status da núvem pro mysql. e tambem fazer o Sobrescrito.
+
 [] Ao final, atualizar last check.
 
 [] Corrigir o código dos erros das últimas rotinas.

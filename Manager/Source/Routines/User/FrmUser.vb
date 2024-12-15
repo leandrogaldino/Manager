@@ -415,11 +415,6 @@ Public Class FrmUser
                             End If
                         End If
                     Next
-
-
-
-
-
                     ' Percorre todos os controles do tipo UcTristatePrivilegeItem dentro do FlowLayoutPanel
                     For Each PrivilegeControl In FlpPrivilege.Controls.OfType(Of UcBiStatePrivilegeItem)
                         ' Obtém a rotina atual
@@ -437,35 +432,7 @@ Public Class FrmUser
                                 _User.Privileges.Remove(accessPrivilege)
                             End If
                         End If
-
-
                     Next
-
-                    'For Each PrivilegeControl In FlpPrivilege.Controls.OfType(Of UcTristatePrivilegeItem)
-
-                    '    'PrivilegeControl tem uma propriedade chamada Routine do tipo enum Routine
-                    '    'PrivilegeControl tem uma propriedade chamada CanAccess que especifica se o usuario pode acessar nessa rotina
-                    '    'PrivilegeControl tem uma propriedade chamada CanWrite que especifica se o usuario pode escrever nessa rotina
-                    '    'PrivilegeControl tem uma propriedade chamada CanDelete que especifica se o usuario pode deletar nessa rotina
-
-
-
-                    '    '_User tem uma propriedade chamada Privileges do tipo List(Of UserPrivilege)
-
-                    '    'UserPrivilege tem a propriedade Routine do tipo enum Routine
-                    '    'UserPrivilege tem a propriedade Level do tipo Enum PrivilegeLevel (0 Access, 1 Write, 2 Delete)
-
-                    '    'preciso olhar para cada item de _user.privileges se ele estiver na lista mas nao tiver marcado no privilegecontrol preciso exclui-lo da lista,
-                    '    'caso esteja marcado no privilegecontrol mas nao tiver na lista, precisa adicionalo
-
-
-                    'Next PrivilegeControl
-
-
-
-
-
-
                     _User.SaveChanges()
                     _User.Lock()
                     LblIDValue.Text = _User.ID
@@ -504,103 +471,6 @@ Public Class FrmUser
             End Try
         End If
     End Sub
-    'Private Sub TvwPrivilege_AfterSelect(sender As Object, e As TreeViewEventArgs)
-    'LblDescription.Text = e.Node.Tag.ToString
-    'End Sub
-    'Private Sub TvwPrivilege_AfterCheck(sender As Object, e As TreeViewEventArgs)
-    'If e.Node.Parent IsNot Nothing Then
-    '    If e.Node.Checked Then
-    '        e.Node.Parent.Checked = True
-    '    End If
-    'End If
-    'If e.Node.Checked = False Then
-    '    For Each n As TreeNode In e.Node.Nodes
-    '        n.Checked = False
-    '    Next n
-    'End If
-    'If Not _Loading Then BtnSave.Enabled = True
-    'End Sub
-    'Private Sub BtnImportPrivilege_Click(sender As Object, e As EventArgs) Handles BtnImportPrivilege.Click
-    '    Dim FormImport As FrmUserImportPrivilege
-    '    Dim Preset As UserPrivilegePreset
-    '    FormImport = New FrmUserImportPrivilege
-    '    If FormImport.ShowDialog = DialogResult.OK Then
-    '        If CMessageBox.Show("Importar uma predefinição fará com que todas as permissões fiquem idênticas a ela. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-    '            TcUser.SelectedTab = TabPrivilege
-    '            Preset = New UserPrivilegePreset().Load(FormImport.QbxPreset.FreezedPrimaryKey, False)
-    '            TvwPrivilege.Nodes.Clear()
-    '            User.FillTreeViewNodes(TvwPrivilege)
-    '            TvwPrivilege.Nodes.Find("PersonAccess", True)(0).Checked = Preset.Privilege.PersonAccess
-    '            TvwPrivilege.Nodes.Find("PersonWrite", True)(0).Checked = Preset.Privilege.PersonWrite
-    '            TvwPrivilege.Nodes.Find("PersonDelete", True)(0).Checked = Preset.Privilege.PersonDelete
-    '            TvwPrivilege.Nodes.Find("PersonChangeDocument", True)(0).Checked = Preset.Privilege.PersonChangeDocument
-    '            TvwPrivilege.Nodes.Find("PersonRegistration", True)(0).Checked = Preset.Privilege.PersonRegistration
-    '            TvwPrivilege.Nodes.Find("PersonMaintenancePlan", True)(0).Checked = Preset.Privilege.PersonMaintenancePlan
-    '            TvwPrivilege.Nodes.Find("CityAccess", True)(0).Checked = Preset.Privilege.CityAccess
-    '            TvwPrivilege.Nodes.Find("CityWrite", True)(0).Checked = Preset.Privilege.CityWrite
-    '            TvwPrivilege.Nodes.Find("CityDelete", True)(0).Checked = Preset.Privilege.CityDelete
-    '            TvwPrivilege.Nodes.Find("CompressorAccess", True)(0).Checked = Preset.Privilege.CompressorAccess
-    '            TvwPrivilege.Nodes.Find("CompressorWrite", True)(0).Checked = Preset.Privilege.CompressorWrite
-    '            TvwPrivilege.Nodes.Find("CompressorDelete", True)(0).Checked = Preset.Privilege.CompressorDelete
-    '            TvwPrivilege.Nodes.Find("RouteAccess", True)(0).Checked = Preset.Privilege.RouteAccess
-    '            TvwPrivilege.Nodes.Find("RouteWrite", True)(0).Checked = Preset.Privilege.RouteWrite
-    '            TvwPrivilege.Nodes.Find("RouteDelete", True)(0).Checked = Preset.Privilege.RouteDelete
-    '            TvwPrivilege.Nodes.Find("CrmAccess", True)(0).Checked = Preset.Privilege.CrmAccess
-    '            TvwPrivilege.Nodes.Find("CrmWrite", True)(0).Checked = Preset.Privilege.CrmWrite
-    '            TvwPrivilege.Nodes.Find("CrmDelete", True)(0).Checked = _User.Privilege.CrmDelete
-    '            TvwPrivilege.Nodes.Find("CrmTreatmentDelete", True)(0).Checked = _User.Privilege.CrmTreatmentDelete
-    '            TvwPrivilege.Nodes.Find("CrmTreatmentEdit", True)(0).Checked = _User.Privilege.CrmTreatmentEdit
-    '            TvwPrivilege.Nodes.Find("CrmChangeCustomer", True)(0).Checked = _User.Privilege.CrmChangeCustomer
-    '            TvwPrivilege.Nodes.Find("CrmChangeResponsible", True)(0).Checked = _User.Privilege.CrmChangeResponsible
-    '            TvwPrivilege.Nodes.Find("CrmChangeSubject", True)(0).Checked = _User.Privilege.CrmChangeSubject
-    '            TvwPrivilege.Nodes.Find("CrmChangeToPendingStatus", True)(0).Checked = _User.Privilege.CrmChangeToPendingStatus
-    '            TvwPrivilege.Nodes.Find("ProductAccess", True)(0).Checked = Preset.Privilege.ProductAccess
-    '            TvwPrivilege.Nodes.Find("ProductWrite", True)(0).Checked = Preset.Privilege.ProductWrite
-    '            TvwPrivilege.Nodes.Find("ProductDelete", True)(0).Checked = Preset.Privilege.ProductDelete
-    '            TvwPrivilege.Nodes.Find("ProductFamilyAccess", True)(0).Checked = Preset.Privilege.ProductFamilyAccess
-    '            TvwPrivilege.Nodes.Find("ProductFamilyWrite", True)(0).Checked = Preset.Privilege.ProductFamilyWrite
-    '            TvwPrivilege.Nodes.Find("ProductFamilyDelete", True)(0).Checked = Preset.Privilege.ProductFamilyDelete
-    '            TvwPrivilege.Nodes.Find("ProductGroupAccess", True)(0).Checked = Preset.Privilege.ProductGroupAccess
-    '            TvwPrivilege.Nodes.Find("ProductGroupWrite", True)(0).Checked = Preset.Privilege.ProductGroupWrite
-    '            TvwPrivilege.Nodes.Find("ProductGroupDelete", True)(0).Checked = Preset.Privilege.ProductGroupDelete
-    '            TvwPrivilege.Nodes.Find("ProductPriceTableAccess", True)(0).Checked = Preset.Privilege.ProductPriceTableAccess
-    '            TvwPrivilege.Nodes.Find("ProductPriceTableWrite", True)(0).Checked = Preset.Privilege.ProductPriceTableWrite
-    '            TvwPrivilege.Nodes.Find("ProductPriceTableDelete", True)(0).Checked = Preset.Privilege.ProductPriceTableDelete
-    '            TvwPrivilege.Nodes.Find("ProductUnitAccess", True)(0).Checked = Preset.Privilege.ProductUnitAccess
-    '            TvwPrivilege.Nodes.Find("ProductUnitWrite", True)(0).Checked = Preset.Privilege.ProductUnitWrite
-    '            TvwPrivilege.Nodes.Find("ProductUnitDelete", True)(0).Checked = Preset.Privilege.ProductUnitDelete
-    '            TvwPrivilege.Nodes.Find("EvaluationAccess", True)(0).Checked = Preset.Privilege.EvaluationAccess
-    '            TvwPrivilege.Nodes.Find("EvaluationWrite", True)(0).Checked = Preset.Privilege.EvaluationWrite
-    '            TvwPrivilege.Nodes.Find("EvaluationDelete", True)(0).Checked = Preset.Privilege.EvaluationDelete
-    '            TvwPrivilege.Nodes.Find("EvaluationManagementAccess", True)(0).Checked = Preset.Privilege.EvaluationManagementAccess
-    '            TvwPrivilege.Nodes.Find("EvaluationManagementPanelAccess", True)(0).Checked = Preset.Privilege.EvaluationManagementPanelAccess
-    '            TvwPrivilege.Nodes.Find("EvaluationApproveOrReject", True)(0).Checked = Preset.Privilege.EvaluationApproveOrReject
-    '            TvwPrivilege.Nodes.Find("CashAccess", True)(0).Checked = Preset.Privilege.CashAccess
-    '            TvwPrivilege.Nodes.Find("CashWrite", True)(0).Checked = Preset.Privilege.CashWrite
-    '            TvwPrivilege.Nodes.Find("CashDelete", True)(0).Checked = Preset.Privilege.CashDelete
-    '            TvwPrivilege.Nodes.Find("CashFlowAccess", True)(0).Checked = Preset.Privilege.CashFlowAccess
-    '            TvwPrivilege.Nodes.Find("CashFlowWrite", True)(0).Checked = Preset.Privilege.CashFlowWrite
-    '            TvwPrivilege.Nodes.Find("CashFlowDelete", True)(0).Checked = Preset.Privilege.CashFlowDelete
-    '            TvwPrivilege.Nodes.Find("CashExpensesPerResponsible", True)(0).Checked = Preset.Privilege.CashExpensesPerResponsible
-    '            TvwPrivilege.Nodes.Find("CashReopen", True)(0).Checked = Preset.Privilege.CashReopen
-    '            TvwPrivilege.Nodes.Find("RequestAccess", True)(0).Checked = Preset.Privilege.RequestAccess
-    '            TvwPrivilege.Nodes.Find("RequestWrite", True)(0).Checked = Preset.Privilege.RequestWrite
-    '            TvwPrivilege.Nodes.Find("RequestDelete", True)(0).Checked = Preset.Privilege.RequestDelete
-    '            TvwPrivilege.Nodes.Find("RequestPendingItems", True)(0).Checked = Preset.Privilege.RequestPendingItems
-    '            TvwPrivilege.Nodes.Find("RequestSheet", True)(0).Checked = Preset.Privilege.RequestSheet
-    '            TvwPrivilege.Nodes.Find("UserAccess", True)(0).Checked = Preset.Privilege.UserAccess
-    '            TvwPrivilege.Nodes.Find("UserWrite", True)(0).Checked = Preset.Privilege.UserWrite
-    '            TvwPrivilege.Nodes.Find("UserDelete", True)(0).Checked = Preset.Privilege.UserDelete
-    '            TvwPrivilege.Nodes.Find("UserResetPassword", True)(0).Checked = Preset.Privilege.UserResetPassword
-    '            TvwPrivilege.Nodes.Find("UserPrivilegePresetAccess", True)(0).Checked = Preset.Privilege.UserPrivilegePresetAccess
-    '            TvwPrivilege.Nodes.Find("UserPrivilegePresetWrite", True)(0).Checked = Preset.Privilege.UserPrivilegePresetWrite
-    '            TvwPrivilege.Nodes.Find("UserPrivilegePresetDelete", True)(0).Checked = Preset.Privilege.UserPrivilegePresetDelete
-    '            TvwPrivilege.Nodes.Find("SeveralExportGrid", True)(0).Checked = Preset.Privilege.SeveralExportGrid
-    '            TvwPrivilege.Nodes.Find("SeveralLogAccess", True)(0).Checked = Preset.Privilege.SeveralLogAccess
-    '        End If
-    '    End If
-    '    FormImport.Dispose()
-    'End Sub
     Private Sub TmrQueriedBox_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBox.Tick
         BtnView.Visible = False
         BtnNew.Visible = False

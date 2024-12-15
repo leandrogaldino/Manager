@@ -12,8 +12,6 @@ Public Class PrivilegePreset
         SetRoutine(Routine.PrivilegePreset)
         _User = Locator.GetInstance(Of Session).User
     End Sub
-
-
     Public Sub Clear()
         Unlock()
         SetIsSaved(False)
@@ -23,7 +21,6 @@ Public Class PrivilegePreset
         Name = Nothing
         Privileges = New List(Of UserPrivilege)
         _User = Locator.GetInstance(Of Session).User
-
         'TODO: SE ESSA LINHA FOR REALMENTE NECESSARIA ELA DEVE CONSTAR NOS OUTROS MODELOS
         If LockInfo.IsLocked Then Unlock()
     End Sub
@@ -32,8 +29,6 @@ Public Class PrivilegePreset
             Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
                 Dim Table As New DataTable()
-
-                ' Preencher o DataTable com os dados
                 Using Cmd As New MySqlCommand(My.Resources.PrivilegePresetSelect, Con)
                     Cmd.Transaction = Tra
                     Cmd.Parameters.AddWithValue("@id", Identity)
@@ -41,8 +36,6 @@ Public Class PrivilegePreset
                         Adapter.Fill(Table)
                     End Using
                 End Using
-
-                ' Verificar se há registros
                 If Table.Rows.Count > 0 Then
                     Dim row As DataRow = Table.Rows(0)
                     SetID(Convert.ToInt64(row("id")))
@@ -50,17 +43,12 @@ Public Class PrivilegePreset
                     SetIsSaved(True)
                     Status = Convert.ToInt32(row("statusid"))
                     Name = Convert.ToString(row("name"))
-
-                    ' Carregar privilégios e informações de bloqueio
                     Privileges = GetPrivileges(Tra)
                     LockInfo = GetLockInfo(Tra)
-
-                    ' Bloquear se necessário
                     If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
                 Else
                     Throw New Exception("Registro não encontrado.")
                 End If
-
                 Tra.Commit()
             End Using
         End Using
@@ -159,19 +147,15 @@ Public Class PrivilegePreset
     End Sub
     Private Function GetPrivileges(Transaction As MySqlTransaction) As List(Of UserPrivilege)
         Dim Privileges As New List(Of UserPrivilege)
-        Dim dt As New DataTable()
-
-        ' Preencher o DataTable com os dados
+        Dim Table As New DataTable()
         Using Cmd As New MySqlCommand(My.Resources.PrivilegePresetPrivilegeSelect, Transaction.Connection)
             Cmd.Transaction = Transaction
             Cmd.Parameters.AddWithValue("@privilegepresetid", ID)
             Using Adapter As New MySqlDataAdapter(Cmd)
-                Adapter.Fill(dt)
+                Adapter.Fill(Table)
             End Using
         End Using
-
-        ' Processar os dados do DataTable
-        For Each row As DataRow In dt.Rows
+        For Each row As DataRow In Table.Rows
             Dim Privilege As New UserPrivilege With {
                 .PrivilegedRoutine = Convert.ToInt32(row("routineid")),
                 .Level = Convert.ToInt32(row("privilegelevelid"))

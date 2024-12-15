@@ -119,7 +119,7 @@ Public Class FrmVisitSchedule
             _VisitSchedule.Load(_VisitSchedulesGrid.SelectedRows(0).Cells("id").Value, True)
             LoadData()
         Catch ex As Exception
-            CMessageBox.Show("ERRO RT001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+            CMessageBox.Show("ERRO VS001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally
             Cursor = Cursors.Default
         End Try
@@ -167,7 +167,7 @@ Public Class FrmVisitSchedule
                 If ex.Number = MysqlError.ForeignKey Then
                     CMessageBox.Show("Esse registro não pode ser excluído pois já foi referenciado em outras rotinas.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                 Else
-                    CMessageBox.Show("ERRO RT002", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                    CMessageBox.Show("ERRO VS002", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                 End If
             Finally
                 Cursor = Cursors.Default
@@ -234,13 +234,11 @@ Public Class FrmVisitSchedule
             EprValidation.SetError(LblVisitType, "Marque qual é o tipo da visita.")
             EprValidation.SetIconAlignment(LblVisitType, ErrorIconAlignment.MiddleRight)
             Return False
-
         ElseIf Not IsDate(DbxEvaluationDate.Text) Then
             EprValidation.SetError(LblEvaluationDate, "Data inválida")
             EprValidation.SetIconAlignment(LblEvaluationDate, ErrorIconAlignment.MiddleRight)
             DbxEvaluationDate.Select()
             Return False
-
         ElseIf IsDate(DbxEvaluationDate.Text) AndAlso CDate(DbxEvaluationDate.Text) < Today Then
             EprValidation.SetError(LblEvaluationDate, "A data da visita precisa ser maior que hoje.")
             EprValidation.SetIconAlignment(LblEvaluationDate, ErrorIconAlignment.MiddleRight)
@@ -272,16 +270,11 @@ Public Class FrmVisitSchedule
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
         Cursor = Cursors.WaitCursor
-
         TxtInstructions.Text = TxtInstructions.Text.Trim().ToUnaccented()
-
-        ' Verificar se está bloqueado por outro usuário
         If _VisitSchedule.LockInfo.IsLocked AndAlso _VisitSchedule.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show($"Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {_VisitSchedule.LockInfo.LockedBy.Value.Username.ToTitle()}.", CMessageBoxType.Information)
             Return False
         End If
-
-        ' Verificar o status local
         If _VisitSchedule.Status = VisitScheduleStatus.Started Then
             CMessageBox.Show("Não foi possível salvar, esse agendamento já foi iniciado.", CMessageBoxType.Information)
             Return False
@@ -289,22 +282,13 @@ Public Class FrmVisitSchedule
             CMessageBox.Show("Não foi possível salvar, esse agendamento já foi finalizado.", CMessageBoxType.Information)
             Return False
         End If
-
-
-
-
-        ' Validar campos antes de salvar
         If Not IsValidFields() Then Return False
-
-        ' Atualizar as propriedades do agendamento
         _VisitSchedule.Status = EnumHelper.GetEnumValue(Of VisitScheduleStatus)(BtnStatusValue.Text)
         _VisitSchedule.VisitType = EnumHelper.GetEnumValue(Of VisitScheduleType)(Controls.OfType(Of RadioButton)().FirstOrDefault(Function(r) r.Checked).Text.ToUpper())
         _VisitSchedule.VisitDate = DbxEvaluationDate.Text
         _VisitSchedule.Customer = New Person().Load(QbxCustomer.FreezedPrimaryKey, False)
         _VisitSchedule.Compressor = _VisitSchedule.Customer.Compressors.Single(Function(x) x.ID = QbxCompressor.FreezedPrimaryKey)
         _VisitSchedule.Instructions = TxtInstructions.Text
-
-        ' Salvar alterações
         Try
             Cursor = Cursors.WaitCursor
             _VisitSchedule.SaveChanges()
@@ -322,7 +306,7 @@ Public Class FrmVisitSchedule
             End If
             Return True
         Catch ex As Exception
-            CMessageBox.Show("ERRO RT003", "Ocorreu um erro ao salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+            CMessageBox.Show("ERRO VS003", "Ocorreu um erro ao salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Return False
         Finally
             Cursor = Cursors.Default

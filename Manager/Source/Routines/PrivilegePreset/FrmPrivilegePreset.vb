@@ -135,7 +135,7 @@ Public Class FrmPrivilegePreset
             _PrivilegePreset.Load(_PrivilegePresetsGrid.SelectedRows(0).Cells("id").Value, True)
             LoadData()
         Catch ex As Exception
-            CMessageBox.Show("ERRO US001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+            CMessageBox.Show("ERRO PPR001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally
             Cursor = Cursors.Default
         End Try
@@ -198,7 +198,7 @@ Public Class FrmPrivilegePreset
                 If ex.Number = MysqlError.ForeignKey Then
                     CMessageBox.Show("Esse registro não pode ser excluído pois já foi referenciado em outras rotinas.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                 Else
-                    CMessageBox.Show("ERRO US002", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                    CMessageBox.Show("ERRO PPR002", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                 End If
             Finally
                 Cursor = Cursors.Default
@@ -254,8 +254,6 @@ Public Class FrmPrivilegePreset
         Dim Privileges As Integer
         Privileges = FlpPrivilege.Controls.OfType(Of UcBiStatePrivilegeItem).ToList.Where(Function(x) x.Granted).Count
         Privileges += FlpPrivilege.Controls.OfType(Of UcTristatePrivilegeItem).ToList.Where(Function(x) x.CanAccess).Count
-
-
         If String.IsNullOrWhiteSpace(TxtName.Text) Then
             TcPrivilegePreset.SelectedTab = TabMain
             EprValidation.SetError(LblName, "Campo obrigatório.")
@@ -330,11 +328,6 @@ Public Class FrmPrivilegePreset
                             End If
                         End If
                     Next
-
-
-
-
-
                     ' Percorre todos os controles do tipo UcTristatePrivilegeItem dentro do FlowLayoutPanel
                     For Each PrivilegeControl In FlpPrivilege.Controls.OfType(Of UcBiStatePrivilegeItem)
                         ' Obtém a rotina atual
@@ -370,7 +363,7 @@ Public Class FrmPrivilegePreset
                     If ex.Number = MysqlError.UniqueKey Then
                         CMessageBox.Show("Já existe uma predefinição de permissões cadastrada com esse nome.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                     Else
-                        CMessageBox.Show("ERRO US003", "Ocorreu um erro salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                        CMessageBox.Show("ERRO PPR003", "Ocorreu um erro salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                     End If
                     Return False
                 Finally

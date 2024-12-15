@@ -8,5 +8,5 @@ Public Enum VisitScheduleStatus
     <Description("INICIADO")> Started = 1
     <Description("FINALIZADO")> Finished = 2
     <Description("CANCELADO")> Canceled = 3
-    <Description("NENHUM")> None = 4
+    <Description("SOBRESCRITO")> Overrided = 4
 End Enum

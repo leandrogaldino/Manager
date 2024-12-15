@@ -1,5 +1,7 @@
 ﻿Imports System.Runtime.Remoting
 Imports System.Text
+Imports ControlLibrary
+Imports ControlLibrary.QueriedBox
 Imports ManagerCore
 Imports ManagerCore.LocalDB
 Imports ManagerCore.RemoteDB
@@ -31,7 +33,7 @@ Public Class TaskCloudSync
 
     Public Overrides ReadOnly Property LastRun As Date
         Get
-            Return _SessionModel.ManagerSetting.LastExecution.CloudSync
+            Return _SessionModel.ManagerSetting.LastExecution.CloudDataSync
         End Get
     End Property
 
@@ -46,7 +48,7 @@ Public Class TaskCloudSync
         Dim Columns As List(Of String)
         Dim OrderBy As String
         Dim Where As String
-        Dim WhereArgs As Dictionary(Of String, Object)
+        Dim Args As Dictionary(Of String, Object)
         Dim Result As QueryResult
         Dim LastSyncDateDictionary As Dictionary(Of String, Object)
         Dim LastSyncDate As Date
@@ -56,14 +58,17 @@ Public Class TaskCloudSync
         Dim PerformedOperations As Integer
         Dim Response As New AsyncResponseModel
         Dim Exception As Exception = Nothing
-
         Try
+
+            'A PARTIR DAQUI SALVA DADOS DE VARIAS TABELAS NA NUVEM
+
+
             Await Task.Delay(Constants.WaitForStart)
             Await ConfigOperations()
             Columns = New List(Of String) From {"name", "value"}
             Where = "name LIKE @name"
-            WhereArgs = New Dictionary(Of String, Object) From {{"@name", "Cloud%"}}
-            Result = Await _LocalDB.ExecuteSelect("config", Columns, Where, WhereArgs)
+            Args = New Dictionary(Of String, Object) From {{"@name", "Cloud%"}}
+            Result = Await _LocalDB.ExecuteSelect("config", Columns, Where, Args)
             LastSyncDateDictionary = Result.Data.First(Function(x) x("name") = "CloudLastSyncDate")
             LastSyncDate = If(String.IsNullOrEmpty(LastSyncDateDictionary("value")), Nothing, LastSyncDateDictionary("value"))
             OperationCountDictionary = Result.Data.First(Function(x) x("name") = "CloudOperationCount")
@@ -75,40 +80,22 @@ Public Class TaskCloudSync
             Dim MaxOperation As Integer = If(String.IsNullOrEmpty(MaxOperationDictionary("value")), 0, MaxOperationDictionary("value"))
             Dim RemainingOperations As Integer = MaxOperation - OperationCount
             If RemainingOperations > 0 Then
-
-
-
-
-
                 LastSyncID = Await GetLastSyncID()
                 Columns = New List(Of String) From {"id", "routineid", "registryid", "fieldname", "oldvalue", "newvalue", "changedate"}
                 OrderBy = "id ASC"
                 Where = "id > @id AND routineid IN (@person, @personcompressor, @personcompressorpartelapsedday)"
-                WhereArgs = New Dictionary(Of String, Object) From {{"@id", LastSyncID}, {"@person", 2}, {"@personcompressor", 203}, {"@personcompressorpartelapsedday", 205}}
-                Result = Await _LocalDB.ExecuteSelect("log", Columns, Where, WhereArgs, OrderBy)
-
-
-
+                Args = New Dictionary(Of String, Object) From {{"@id", LastSyncID}, {"@person", 2}, {"@personcompressor", 203}, {"@personcompressorpartelapsedday", 205}}
+                Result = Await _LocalDB.ExecuteSelect("log", Columns, Where, Args, OrderBy)
                 TotalChanges = If(Result.Data.Count > RemainingOperations, RemainingOperations, Result.Data.Count)
-
-
                 If TotalChanges > 0 Then
-
-
                     Response.Text = $"Sincronização com a núvem {If(Not IsManual, "automática", "manual")} - Iniciando"
                     Response.Event.SetInitialEvent($"Sincronização com a núvem {If(Not IsManual, "automático", "manual")} - Iniciando")
                     Progress?.Report(Response)
-
-
                     PerformedOperations = 0
                     Response.Percent = CInt((PerformedOperations / TotalChanges) * 100)
                     Response.Text = $"Sincronização com a núvem - Enviando dados para a núvem {(Response.Percent)}%"
                     Response.Event.AddChildEvent("Enviando dados para a núvem")
-
-
-
                     For Each Change In Result.Data
-
                         Select Case Change("routineid")
                             Case 2 'Person
                                 Await FetchPerson(Change)
@@ -121,39 +108,153 @@ Public Class TaskCloudSync
                                 PerformedOperations += 1
                         End Select
                         LastSyncID = Change("id")
-
                         Response.Percent = CInt((PerformedOperations / TotalChanges) * 100)
                         Response.Text = $"Sincronização com a núvem - Enviando dados para a núvem {(Response.Percent)}%"
-
                         Progress?.Report(Response)
                         Await Task.Delay(Constants.WaitForLoop)
-
                         If PerformedOperations >= RemainingOperations Then
                             Exit For
                         End If
-
-
                     Next Change
-
                     Await SaveCloudConfig(LastSyncID, PerformedOperations + OperationCount)
-
-
-
-
-
-                    Await Task.Delay(Constants.WaitForFinish)
-                    Response.Text = $"Sincronização com a núvem - Concluída"
-                    Response.Event.SetFinalEvent($"Sincronização com a núvem concluída")
-                    If Progress IsNot Nothing Then Progress.Report(Response)
                 End If
+                Await Task.Delay(Constants.WaitForJob)
+
+
+
+
+                'A PARTIR DAQUI O FOCO MUDA E SINCRONIZA OS DADOS DE UMA TABELA ESPECIFICA COM A NUVEM
+
+
+                Columns = New List(Of String) From {"id", "creation", "statusid", "visitdate", "visittypeid", "customerid", "personcompressorid", "instructions", "evaluationid", "lastupdate", "userid"}
+                OrderBy = "id ASC"
+                Where = "lastupdate > @lastupdate AND parentid IS NULL"
+                Args = New Dictionary(Of String, Object) From {{"@lastupdate", _SessionModel.ManagerSetting.LastExecution.CloudVisitScheduleSync}}
+                Result = Await _LocalDB.ExecuteSelect("visitschedule", Columns, Where, Args, OrderBy)
+                Dim LocalResult As List(Of Dictionary(Of String, Object)) = Result.Data
+                Dim Conditions As New List(Of RemoteDB.Condition) From {New WhereGreaterThanCondition("lastupdate", DateTimeHelper.MillisecondsFromDate(_SessionModel.ManagerSetting.LastExecution.CloudVisitScheduleSync))}
+                Dim RemoteResult As List(Of Dictionary(Of String, Object)) = Await _RemoteDB.ExecuteGet("schedule", Conditions)
+                Dim LocalIds As New HashSet(Of String)(LocalResult.Select(Function(item) item("id").ToString()))
+                Dim CommonResult As List(Of Dictionary(Of String, Object)) = RemoteResult.Where(Function(item) LocalIds.Contains(item("id").ToString())).ToList()
+                Dim CommonIds As New HashSet(Of String)(CommonResult.Select(Function(item) item("id").ToString()))
+                Dim AllIds As List(Of String) = LocalResult.Select(Function(x) x("id").ToString).ToList()
+                AllIds.AddRange(RemoteResult.Select(Function(x) x("id").ToString).ToList())
+                AllIds = AllIds.Distinct().ToList()
+                TotalChanges = AllIds.Count
+                If LocalResult.Count + RemoteResult.Count + CommonResult.Count > 0 Then
+                    If Not Response.Event.IsInitialized Then
+                        Response.Text = $"Sincronização com a núvem {If(Not IsManual, "automática", "manual")} - Iniciando"
+                        Response.Event.SetInitialEvent($"Sincronização com a núvem {If(Not IsManual, "automático", "manual")} - Iniciando")
+                        Progress?.Report(Response)
+                        Await Task.Delay(Constants.WaitForJob)
+                    End If
+                    Response.Text = $"Sincronização com a núvem - Sincronizando Agendamento de Visitas"
+                    Response.Event.AddChildEvent($"Sincronizando Agendamento de Visitas")
+                    If Progress IsNot Nothing Then Progress.Report(Response)
+                    Await Task.Delay(Constants.WaitForJob)
+                    PerformedOperations = 0
+                    For Each Schedule In CommonResult
+                        Dim Values As New Dictionary(Of String, String) From {
+                            {"creation", "@creation"},
+                            {"statusid", "@statusid"},
+                            {"visitdate", "@visitdate"},
+                            {"visittypeid", "@visittypeid"},
+                            {"customerid", "@customerid"},
+                            {"personcompressorid", "@personcompressorid"},
+                            {"instructions", "@instructions"},
+                            {"evaluationid", "@evaluationid"},
+                            {"lastupdate", "@lastupdate"},
+                            {"userid", "@userid"},
+                            {"parentid", "@parentid"}
+                        }
+                        Args = New Dictionary(Of String, Object) From {
+                            {"@creation", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("creation")},
+                            {"@statusid", 4},
+                            {"@visitdate", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("visitdate")},
+                            {"@visittypeid", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("visittypeid")},
+                            {"@customerid", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("customerid")},
+                            {"@personcompressorid", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("personcompressorid")},
+                            {"@instructions", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("instructions")},
+                            {"@evaluationid", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("evaluationid")},
+                            {"@lastupdate", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("lastupdate")},
+                            {"@userid", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("userid")},
+                            {"@parentid", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("id")}
+                        }
+                        Await _LocalDB.ExecuteInsert("visitschedule", Values, Args)
+                        Values = New Dictionary(Of String, String) From {
+                            {"statusid", "@statusid"},
+                            {"visitdate", "@visitdate"},
+                            {"lastupdate", "@lastupdate"},
+                            {"id", "@id"}
+                        }
+                        Where = "id = @id"
+                        Args = New Dictionary(Of String, Object) From {
+                            {"@statusid", RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("statusid")},
+                            {"@visitdate", DateTimeHelper.DateFromMilliseconds(RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("visitdate"))},
+                            {"@lastupdate", DateTimeHelper.DateFromMilliseconds(Schedule("lastupdate"))},
+                            {"@id", RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("id")}
+                        }
+                        Await _LocalDB.ExecuteUpdate("visitschedule", Values, Where, Args)
+                        Response.Percent = CInt((PerformedOperations / TotalChanges) * 100)
+                        Response.Text = $"Sincronização com a núvem - Atualizando agendamentos - {(Response.Percent)}%"
+                        Response.Event.AddChildEvent($"Atualizando agendamentos")
+                        If Progress IsNot Nothing Then Progress.Report(Response)
+                        Await Task.Delay(Constants.WaitForLoop)
+                        PerformedOperations += 1
+                    Next Schedule
+                    LocalResult.RemoveAll(Function(item) item.ContainsKey("id") AndAlso CommonIds.Contains(item("id").ToString()))
+                    RemoteResult.RemoveAll(Function(item) item.ContainsKey("id") AndAlso CommonIds.Contains(item("id").ToString()))
+                    PerformedOperations = 0
+                    For Each Schedule In RemoteResult
+                        Dim Values As New Dictionary(Of String, String) From {
+                            {"statusid", "@statusid"},
+                            {"visitdate", "@visitdate"},
+                            {"lastupdate", "@lastupdate"},
+                            {"id", "@id"}
+                        }
+                        Where = "id = @id"
+                        Args = New Dictionary(Of String, Object) From {
+                            {"@statusid", Schedule("statusid")},
+                            {"@visitdate", DateTimeHelper.DateFromMilliseconds(Schedule("visitdate"))},
+                            {"@lastupdate", DateTimeHelper.DateFromMilliseconds(Schedule("lastupdate"))},
+                            {"@id", Schedule("id")}
+                        }
+                        Await _LocalDB.ExecuteUpdate("visitschedule", Values, Where, Args)
+                        PerformedOperations += 1
+                        Response.Percent = CInt((PerformedOperations / TotalChanges) * 100)
+                        Response.Text = $"Sincronização com a núvem - Atualizando agendamentos - {(Response.Percent)}%"
+                        Response.Event.AddChildEvent($"Atualizando agendamentos")
+                        If Progress IsNot Nothing Then Progress.Report(Response)
+                        Await Task.Delay(Constants.WaitForLoop)
+                    Next Schedule
+                    PerformedOperations = 0
+                    For Each Schedule In LocalResult
+                        Schedule("creation") = DateTimeHelper.MillisecondsFromDate(Schedule("creation"))
+                        Schedule("lastupdate") = DateTimeHelper.MillisecondsFromDate(Schedule("lastupdate"))
+                        Schedule("visitdate") = DateTimeHelper.MillisecondsFromDate(Schedule("visitdate"))
+                        Await _RemoteDB.ExecutePut("schedule", Schedule, Schedule("id"))
+                        PerformedOperations += 1
+                        Response.Percent = CInt((PerformedOperations / TotalChanges) * 100)
+                        Response.Text = $"Sincronização com a núvem - Enviando novos agendamentos para a núvem - {(Response.Percent)}%"
+                        Response.Event.AddChildEvent($"Enviando novos agendamentos para a núvem")
+                        If Progress IsNot Nothing Then Progress.Report(Response)
+                        Await Task.Delay(Constants.WaitForLoop)
+                    Next Schedule
+                End If
+            End If
+            If Response.Event.IsInitialized Then
+                Await Task.Delay(Constants.WaitForFinish)
+                Response.Text = $"Sincronização com a núvem - Concluída"
+                Response.Event.SetFinalEvent($"Sincronização com a núvem concluída")
+                If Progress IsNot Nothing Then Progress.Report(Response)
             End If
         Catch ex As Exception
             Exception = ex
         Finally
-            If Not IsManual Then _SessionModel.ManagerSetting.LastExecution.CloudSync = Now
-            If Not IsManual Then _SettingsService.Save(_SessionModel.ManagerSetting)
+            _SessionModel.ManagerSetting.LastExecution.CloudVisitScheduleSync = Now
+            If Not IsManual Then _SessionModel.ManagerSetting.LastExecution.CloudDataSync = Now
+            _SettingsService.Save(_SessionModel.ManagerSetting)
         End Try
-
         If Exception IsNot Nothing Then
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
@@ -166,7 +267,6 @@ Public Class TaskCloudSync
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         End If
-
     End Function
 
 
@@ -215,7 +315,7 @@ Public Class TaskCloudSync
                 MustMaintain = False
             End If
         End If
-        Dim Conditions As New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
+        Dim Conditions As New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
         If MustMaintain Then
             If CoalescentData IsNot Nothing Then
                 Dim DocumentName As String = RemoveSpecialCharacters($"ID: {CoalescentData("id")} - {CoalescentData("coalescentname")}")
@@ -243,7 +343,7 @@ Public Class TaskCloudSync
                 MustMaintain = False
             End If
         End If
-        Dim Conditions As New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
+        Dim Conditions As New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
         If MustMaintain Then
             If CompressorData IsNot Nothing Then
                 Dim DocumentName As String = RemoveSpecialCharacters($"ID: {CompressorData("id")} - {CompressorData("compressorname")}")
@@ -252,7 +352,7 @@ Public Class TaskCloudSync
         Else
             Await _RemoteDB.ExecuteDelete("compressors", Conditions)
             If Change("fieldname") = "Deleção" Then
-                Conditions = New List(Of Condition) From {New WhereEqualToCondition("personcompressorid", Change("registryid"))}
+                Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("personcompressorid", Change("registryid"))}
                 Await _RemoteDB.ExecuteDelete("coalescents", Conditions)
             End If
         End If
@@ -280,7 +380,7 @@ Public Class TaskCloudSync
             End If
         End If
 
-        Dim Conditions As New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
+        Dim Conditions As New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
 
         If MustMaintain Then
             If PersonData IsNot Nothing Then
@@ -293,11 +393,11 @@ Public Class TaskCloudSync
             If Change("fieldname") = "Deleção" Then
 
 
-                Conditions = New List(Of Condition) From {New WhereEqualToCondition("personid", Change("registryid"))}
+                Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("personid", Change("registryid"))}
                 Dim CompressorsData = Await _RemoteDB.ExecuteGet("compressors", Conditions)
                 For Each Compressor In CompressorsData
                     Await _RemoteDB.ExecuteDelete("compressors", Conditions)
-                    Conditions = New List(Of Condition) From {New WhereEqualToCondition("personcompressorid", Compressor("id"))}
+                    Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("personcompressorid", Compressor("id"))}
                     Await _RemoteDB.ExecuteDelete("coalescents", Conditions)
                 Next Compressor
 

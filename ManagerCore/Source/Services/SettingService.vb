@@ -73,7 +73,8 @@ Public Class SettingService
             Model.LastExecution.Backup = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Backup").InnerText)
             Model.LastExecution.Clean = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Clean").InnerText)
             Model.LastExecution.Release = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Release").InnerText)
-            Model.LastExecution.CloudSync = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/CloudSync").InnerText)
+            Model.LastExecution.CloudDataSync = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/CloudDataSync").InnerText)
+            Model.LastExecution.CloudVisitScheduleSync = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/CloudVisitScheduleSync").InnerText)
             Return Model
         Else
             Throw New Exception("Setting File Not Found, Run ManagerAgent to create.")
@@ -143,7 +144,8 @@ Public Class SettingService
         XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Backup").InnerText = Model.LastExecution.Backup.ToString("yyyy-MM-dd HH:mm:ss")
         XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Clean").InnerText = Model.LastExecution.Clean.ToString("yyyy-MM-dd HH:mm:ss")
         XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Release").InnerText = Model.LastExecution.Release.ToString("yyyy-MM-dd HH:mm:ss")
-        XmlDoc.SelectSingleNode("Setting/LastExecutionDates/CloudSync").InnerText = Model.LastExecution.CloudSync.ToString("yyyy-MM-dd HH:mm:ss")
+        XmlDoc.SelectSingleNode("Setting/LastExecutionDates/CloudDataSync").InnerText = Model.LastExecution.CloudDataSync.ToString("yyyy-MM-dd HH:mm:ss")
+        XmlDoc.SelectSingleNode("Setting/LastExecutionDates/CloudVisitScheduleSync").InnerText = Model.LastExecution.CloudVisitScheduleSync.ToString("yyyy-MM-dd HH:mm:ss")
         XmlStr = XmlDoc.OuterXml()
         XmlStr = Cryptography.Encrypt(XmlStr, _Key)
         File.WriteAllText(ApplicationPaths.SettingFile, XmlStr)

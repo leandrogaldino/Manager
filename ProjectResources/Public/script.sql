@@ -126,12 +126,14 @@ CREATE TABLE visitschedule (
     personcompressorid INT NOT NULL,
     instructions LONGTEXT,
     evaluationid INT NOT NULL DEFAULT 0,
+    parentid INT,
     lastupdate DATETIME NOT NULL,
     userid INT NOT NULL,    
     PRIMARY KEY(id),
     FOREIGN KEY (customerid) REFERENCES person (id) ON DELETE RESTRICT,
     FOREIGN KEY (personcompressorid) REFERENCES personcompressor (id) ON DELETE RESTRICT,
-    FOREIGN KEY (userid) REFERENCES user (id) ON DELETE RESTRICT
+    FOREIGN KEY (userid) REFERENCES user (id) ON DELETE RESTRICT,
+	FOREIGN KEY (parentid) REFERENCES visitschedule(id) ON DELETE CASCADE
 );
 
 DELIMITER $$

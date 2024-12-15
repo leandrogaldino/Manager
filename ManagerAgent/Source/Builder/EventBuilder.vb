@@ -5,6 +5,17 @@ Public Class EventBuilder
     Private _ChildEvents As List(Of EventChildModel)
     Private _FinalEvent As EventFinalModel
 
+    Public ReadOnly Property IsInitialized As Boolean
+        Get
+            Return _InitialEvent IsNot Nothing
+        End Get
+    End Property
+
+    Public ReadOnly Property IsFinished As Boolean
+        Get
+            Return _FinalEvent IsNot Nothing
+        End Get
+    End Property
 
     Public Sub SetInitialEvent(InitialEvent As String)
         _InitialEvent = New EventInitialModel(InitialEvent)
@@ -39,4 +50,5 @@ Public Class EventBuilder
     Public Function GetChildEvents() As List(Of EventChildModel)
         Return _ChildEvents
     End Function
+
 End Class

@@ -29,6 +29,7 @@ Public Class Request
         Items = New List(Of RequestItem)
         Note = Nothing
         Document = New FileManager(ApplicationPaths.RequestDocumentDirectory)
+        If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As Request
         Dim TableResult As DataTable

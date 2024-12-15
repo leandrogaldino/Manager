@@ -655,6 +655,7 @@ Partial Class FrmEvaluation
         Me.QbxCustomer.DropDownAutoStretchRight = False
         Me.QbxCustomer.GridHeaderBackColor = System.Drawing.SystemColors.Window
         Me.QbxCustomer.IfNull = Nothing
+        Me.QbxCustomer.Limit = 0
         Me.QbxCustomer.Location = New System.Drawing.Point(6, 123)
         Me.QbxCustomer.MainReturnFieldName = "id"
         Me.QbxCustomer.MainTableAlias = Nothing

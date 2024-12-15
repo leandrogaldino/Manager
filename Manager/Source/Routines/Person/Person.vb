@@ -44,6 +44,7 @@ Public Class Person
         Name = Nothing
         ShortName = Nothing
         Note = Nothing
+        If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As Person
         Dim Session = Locator.GetInstance(Of Session)

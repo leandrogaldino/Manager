@@ -49,6 +49,7 @@ Public Class Product
         GrossWeight = 0
         NetWeight = 0
         Note = Nothing
+        If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As Product
         Dim TableResult As DataTable

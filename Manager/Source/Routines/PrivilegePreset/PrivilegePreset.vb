@@ -21,7 +21,6 @@ Public Class PrivilegePreset
         Name = Nothing
         Privileges = New List(Of UserPrivilege)
         _User = Locator.GetInstance(Of Session).User
-        'TODO: SE ESSA LINHA FOR REALMENTE NECESSARIA ELA DEVE CONSTAR NOS OUTROS MODELOS
         If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As PrivilegePreset

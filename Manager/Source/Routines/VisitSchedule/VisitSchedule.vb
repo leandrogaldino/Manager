@@ -46,6 +46,7 @@ Public Class VisitSchedule
         Compressor = New PersonCompressor()
         Instructions = Nothing
         LastUpdate = Now
+        If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As VisitSchedule
         Dim TableResult As DataTable

@@ -17,6 +17,7 @@ Public Class Route
         SetCreation(Today)
         Status = SimpleStatus.Active
         Name = Nothing
+        If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As Route
         Dim TableResult As DataTable

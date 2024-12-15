@@ -31,6 +31,7 @@ Public Class Crm
         Responsible = _Session.User.Person.Value
         Subject = Nothing
         Treatments = New List(Of CrmTreatment)
+        If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As Crm
         Dim Session = Locator.GetInstance(Of Session)

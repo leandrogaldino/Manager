@@ -16,6 +16,7 @@ Public Class ProductGroup
         SetCreation(Today)
         Status = SimpleStatus.Active
         Name = Nothing
+        If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As ProductGroup
         Dim TableResult As DataTable

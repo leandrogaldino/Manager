@@ -19,6 +19,7 @@ Public Class CashFlow
         SetCreation(Today)
         Status = SimpleStatus.Active
         Name = Nothing
+        If LockInfo.IsLocked Then Unlock()
     End Sub
 
     Public Function GetAuthorized(Transaction As MySqlTransaction) As List(Of CashFlowAuthorized)

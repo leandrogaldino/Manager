@@ -1,1 +1,1 @@
-[] Corrigir o código dos erros das últimas rotinas.
+[] Fazer o ViewModel da Main do Agent.

@@ -21,6 +21,7 @@ Public Class State
         SetID(0)
         _Name = Nothing
         _ShortName = Nothing
+        If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long) As State
         Dim TableResult As DataTable

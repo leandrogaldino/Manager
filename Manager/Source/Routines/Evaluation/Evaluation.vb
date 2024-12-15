@@ -209,6 +209,7 @@ Public Class Evaluation
         Signature = New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
         Photos = New List(Of EvaluationPhoto)
         _RejectReason = Nothing
+        If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As Evaluation
         Dim Session = Locator.GetInstance(Of Session)

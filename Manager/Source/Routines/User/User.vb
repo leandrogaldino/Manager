@@ -91,6 +91,7 @@ Public Class User
         Emails = New List(Of UserEmail)
         _RequestPassword = False
         User = New Lazy(Of User)(Function() New User().Load(_UserID, False))
+        If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As User
         Dim Session = Locator.GetInstance(Of Session)

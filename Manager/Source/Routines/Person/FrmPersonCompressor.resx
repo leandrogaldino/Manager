@@ -136,10 +136,10 @@
   <data name="BtnEditCompressorPartWorkedHour.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACiSURBVDhPzdJNCoJAGMbxWeQNJPUodZA2ncPA7tTeXYew
-        ok1HEDxAUP9n8cIwOI668oHfZuB554NxC1Pgjh61FpYkQ4ef54JZyaEBZ3xhAwYks8cDN4RDdJ3JWNl2
-        tCEnaL1CNGE5HCLRlHghLIvW9SbRxHaWN1Yde+NlveYTY2U9mL7vZI4YKyd3tlyxuqy08Mu6TvLYfj7Q
-        kAYH7DAzzv0BOIBVczHrZmMAAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACkSURBVDhPzZLLCQJBEETfQTOQ1Q1FA9mLcShoTt73ZhB+
+        8GIIggEISsE0DE3PrJ+LD+oy01Xd0wx8xhTYAzdg5S+HGAMH4Jlp7YtKTFLAEnhkAXdfGNEAR2AXhOg5
+        VcxsHS2kS+etN+R4sw+RisyAc2CWdK6dFCl1li7fjv3nZm3zFBglLUzft8oiML7V2dj+Yha9M+s5g2Pn
+        XFPIBpgDI19Q4wU4gFVz02HHqgAAAABJRU5ErkJggg==
 </value>
   </data>
   <metadata name="TsPartElapsedDay.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -148,10 +148,10 @@
   <data name="BtnEditPartElapsedDay.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACiSURBVDhPzdJNCoJAGMbxWeQNJPUodZA2ncPA7tTeXYew
-        ok1HEDxAUP9n8cIwOI668oHfZuB554NxC1Pgjh61FpYkQ4ef54JZyaEBZ3xhAwYks8cDN4RDdJ3JWNl2
-        tCEnaL1CNGE5HCLRlHghLIvW9SbRxHaWN1Yde+NlveYTY2U9mL7vZI4YKyd3tlyxuqy08Mu6TvLYfj7Q
-        kAYH7DAzzv0BOIBVczHrZmMAAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACkSURBVDhPzZLLCQJBEETfQTOQ1Q1FA9mLcShoTt73ZhB+
+        8GIIggEISsE0DE3PrJ+LD+oy01Xd0wx8xhTYAzdg5S+HGAMH4Jlp7YtKTFLAEnhkAXdfGNEAR2AXhOg5
+        VcxsHS2kS+etN+R4sw+RisyAc2CWdK6dFCl1li7fjv3nZm3zFBglLUzft8oiML7V2dj+Yha9M+s5g2Pn
+        XFPIBpgDI19Q4wU4gFVz02HHqgAAAABJRU5ErkJggg==
 </value>
   </data>
   <metadata name="DgvNavigator.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">

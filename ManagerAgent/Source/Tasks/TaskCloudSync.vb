@@ -289,7 +289,6 @@ Public Class TaskCloudSync
         End If
     End Function
 
-
     Private Async Function GetLastSyncID() As Task(Of Integer)
         Dim Result As QueryResult = Await _LocalDB.ExecuteSelect("config", {"value"}.ToList, "name = @name", New Dictionary(Of String, Object) From {{"@name", "CloudLastSyncID"}})
         Dim LastSyncID As Integer = Result.Data(0)("value")
@@ -299,62 +298,38 @@ Public Class TaskCloudSync
         Dim Args As New Dictionary(Of String, Object) From {{"@id", Change("registryid")}, {"@parttypeid", 1}}
         Dim Result = Await _LocalDB.ExecuteRawQuery("SELECT pcp.id, pcp.personcompressorid, pcp.statusid, pcp.partbindid, IFNULL(pcp.itemname, p.name) coalescentname  FROM personcompressorpart pcp  LEFT JOIN product p ON pcp.productid = p.id WHERE pcp.parttypeid = @parttypeid AND pcp.id = @id LIMIT 1", Args)
         Dim CoalescentData As Dictionary(Of String, Object) = Nothing
-        Dim MustMaintain As Boolean
-        If Result.Data Is Nothing OrElse Result.Data.Count = 0 Then
-            MustMaintain = False
-        Else
+        Dim Conditions As List(Of RemoteDB.Condition)
+        If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             CoalescentData = Result.Data(0)
-            Dim StatusID = Convert.ToInt32(CoalescentData("statusid"))
+            CoalescentData("lastchange") = DateTimeHelper.MillisecondsFromDate(Convert.ToDateTime(Change("changedate")))
+            Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
+            Dim DocumentName As String = RemoveSpecialCharacters($"ID: {CoalescentData("id")} - {CoalescentData("coalescentname")}")
             Dim PartBindID = Convert.ToInt32(CoalescentData("partbindid"))
-            CoalescentData("lastchange") = Now.ToString("yyyy-MM-dd HH:mm:ss")
-            CoalescentData.Remove("statusid")
-            CoalescentData.Remove("partbindid")
-            If StatusID = 0 And PartBindID = 5 Then
-                MustMaintain = True
-            Else
-                MustMaintain = False
-            End If
+            If PartBindID <> 5 Then CoalescentData("statusid") = 1
+            Await _RemoteDB.ExecutePut("coalescents", CoalescentData, DocumentName)
         End If
-        Dim Conditions As New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
-        If MustMaintain Then
-            If CoalescentData IsNot Nothing Then
-                Dim DocumentName As String = RemoveSpecialCharacters($"ID: {CoalescentData("id")} - {CoalescentData("coalescentname")}")
-                Await _RemoteDB.ExecutePut("coalescents", CoalescentData, DocumentName)
-            End If
-        Else
+        If Change("fieldname") = "Deleção" Then
+            Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
             Await _RemoteDB.ExecuteDelete("coalescents", Conditions)
         End If
     End Function
     Private Async Function FetchPersonCompressor(Change As Dictionary(Of String, Object)) As Task
         Dim Args As New Dictionary(Of String, Object) From {{"@id", Change("registryid")}}
         Dim Result = Await _LocalDB.ExecuteRawQuery("SELECT pc.id, pc.statusid, pc.personid, pc.compressorid, c.name compressorname,  IFNULL(pc.serialnumber, '') serialnumber  FROM personcompressor pc LEFT JOIN compressor c ON pc.compressorid = c.id WHERE pc.id = @id LIMIT 1", Args)
-        Dim MustMaintain As Boolean
         Dim CompressorData As Dictionary(Of String, Object) = Nothing
-        If Result.Data Is Nothing OrElse Result.Data.Count = 0 Then
-            MustMaintain = False
-        Else
+        Dim Conditions As List(Of RemoteDB.Condition)
+        If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             CompressorData = Result.Data(0)
-            Dim StatusID = Convert.ToInt32(CompressorData("statusid"))
-            CompressorData("lastchange") = Now.ToString("yyyy-MM-dd HH:mm:ss")
-            CompressorData.Remove("statusid")
-            If StatusID = 0 Then
-                MustMaintain = True
-            Else
-                MustMaintain = False
-            End If
+            CompressorData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Convert.ToDateTime(Change("changedate")))
+            Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
+            Dim DocumentName As String = RemoveSpecialCharacters($"ID: {CompressorData("id")} - {CompressorData("compressorname")}")
+            Await _RemoteDB.ExecutePut("compressors", CompressorData, DocumentName)
         End If
-        Dim Conditions As New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
-        If MustMaintain Then
-            If CompressorData IsNot Nothing Then
-                Dim DocumentName As String = RemoveSpecialCharacters($"ID: {CompressorData("id")} - {CompressorData("compressorname")}")
-                Await _RemoteDB.ExecutePut("compressors", CompressorData, DocumentName)
-            End If
-        Else
+        If Change("fieldname") = "Deleção" Then
+            Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
             Await _RemoteDB.ExecuteDelete("compressors", Conditions)
-            If Change("fieldname") = "Deleção" Then
-                Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("personcompressorid", Change("registryid"))}
-                Await _RemoteDB.ExecuteDelete("coalescents", Conditions)
-            End If
+            Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("personcompressorid", Change("registryid"))}
+            Await _RemoteDB.ExecuteDelete("coalescents", Conditions)
         End If
     End Function
     Private Async Function FetchPerson(Change As Dictionary(Of String, Object)) As Task
@@ -362,48 +337,28 @@ Public Class TaskCloudSync
         Dim Where As String = "id = @id"
         Dim WhereArgs As New Dictionary(Of String, Object) From {{"@id", Change("registryid")}}
         Dim Result = Await _LocalDB.ExecuteSelect("person", Columns, Where, WhereArgs, Limit:=1)
-        Dim MustMaintain As Boolean
         Dim PersonData As Dictionary(Of String, Object) = Nothing
-        If Result.Data Is Nothing OrElse Result.Data.Count = 0 Then
-            MustMaintain = False
-        Else
+        Dim Conditions As List(Of RemoteDB.Condition)
+        If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             PersonData = Result.Data(0)
             Dim IsCustomer = Convert.ToBoolean(PersonData("iscustomer"))
             Dim IsTechnician = Convert.ToBoolean(PersonData("istechnician"))
-            Dim StatusID = Convert.ToInt32(PersonData("statusid"))
-            PersonData("lastchange") = Now.ToString("yyyy-MM-dd HH:mm:ss")
-            PersonData.Remove("statusid")
-            If StatusID = 0 And (IsCustomer Or IsTechnician) Then
-                MustMaintain = True
-            Else
-                MustMaintain = False
-            End If
+            PersonData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Convert.ToDateTime(Change("changedate")))
+            Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
+            Dim DocumentName As String = RemoveSpecialCharacters($"ID: {PersonData("id")} - {PersonData("shortname")}")
+            Await _RemoteDB.ExecutePut("persons", PersonData, DocumentName)
         End If
-
-        Dim Conditions As New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
-
-        If MustMaintain Then
-            If PersonData IsNot Nothing Then
-                Dim DocumentName As String = RemoveSpecialCharacters($"ID: {PersonData("id")} - {PersonData("shortname")}")
-                Await _RemoteDB.ExecutePut("persons", PersonData, DocumentName)
-            End If
-        Else
-
+        If Change("fieldname") = "Deleção" Then
+            Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
             Await _RemoteDB.ExecuteDelete("persons", Conditions)
-            If Change("fieldname") = "Deleção" Then
-
-
-                Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("personid", Change("registryid"))}
-                Dim CompressorsData = Await _RemoteDB.ExecuteGet("compressors", Conditions)
-                For Each Compressor In CompressorsData
-                    Await _RemoteDB.ExecuteDelete("compressors", Conditions)
-                    Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("personcompressorid", Compressor("id"))}
-                    Await _RemoteDB.ExecuteDelete("coalescents", Conditions)
-                Next Compressor
-
-            End If
+            Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("personid", Change("registryid"))}
+            Dim CompressorsData = Await _RemoteDB.ExecuteGet("compressors", Conditions)
+            For Each Compressor In CompressorsData
+                Await _RemoteDB.ExecuteDelete("compressors", Conditions)
+                Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("personcompressorid", Compressor("id"))}
+                Await _RemoteDB.ExecuteDelete("coalescents", Conditions)
+            Next Compressor
         End If
-
     End Function
 
     Private Function RemoveSpecialCharacters(input As String) As String

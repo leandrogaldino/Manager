@@ -25,6 +25,7 @@ Public Class FrmPersonCompressorPartElapsedDay
         _PersonCompressor = PersonCompressor
         _PartElapsedDay = PartElapsedDay
         _PersonCompressorForm = PersonCompressorForm
+        _User = Locator.GetInstance(Of Session).User
         CbxPartBind.Items.AddRange(EnumHelper.GetEnumDescriptions(Of CompressorPartBindType).Where(Function(x) x = "COALESCENTE" Or x = "NENHUM").ToArray)
         LoadForm()
         DgvNavigator.DataGridView = _PersonCompressorForm.DgvPartElapsedDay

@@ -123,7 +123,7 @@ Public Class TaskCloudSync
 
 
 
-                'A PARTIR DAQUI O FOCO MUDA E SINCRONIZA OS DADOS DE UMA TABELA ESPECIFICA COM A NUVEM
+                'A PARTIR DAQUI O FOCO MUDA E SINCRONIZA OS DADOS DE UMA TABELA VISIT SCHEDULE
 
 
                 Columns = New List(Of String) From {"id", "creation", "statusid", "visitdate", "visittypeid", "customerid", "personcompressorid", "instructions", "evaluationid", "lastupdate", "userid"}
@@ -269,10 +269,6 @@ Public Class TaskCloudSync
         End If
     End Function
 
-
-
-
-
     Private Async Function ConfigOperations() As Task
         Dim Result As QueryResult = Await _LocalDB.ExecuteSelect("config", {"value"}.ToList, "name = @name", New Dictionary(Of String, Object) From {{"@name", "CloudLastSyncDate"}})
         Dim LastSyncDate As Date = If(String.IsNullOrEmpty(Result.Data(0)("value")), Nothing, Result.Data(0)("value"))
@@ -297,15 +293,15 @@ Public Class TaskCloudSync
     Private Async Function FetchPersonCompressorCoalescent(Change As Dictionary(Of String, Object)) As Task
         Dim Args As New Dictionary(Of String, Object) From {{"@id", Change("registryid")}, {"@parttypeid", 1}}
         Dim Result = Await _LocalDB.ExecuteRawQuery("SELECT pcp.id, pcp.personcompressorid, pcp.statusid, pcp.partbindid, IFNULL(pcp.itemname, p.name) coalescentname  FROM personcompressorpart pcp  LEFT JOIN product p ON pcp.productid = p.id WHERE pcp.parttypeid = @parttypeid AND pcp.id = @id LIMIT 1", Args)
-        Dim CoalescentData As Dictionary(Of String, Object) = Nothing
+        Dim CoalescentData As Dictionary(Of String, Object)
         Dim Conditions As List(Of RemoteDB.Condition)
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             CoalescentData = Result.Data(0)
-            CoalescentData("lastchange") = DateTimeHelper.MillisecondsFromDate(Convert.ToDateTime(Change("changedate")))
-            Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
+            CoalescentData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Convert.ToDateTime(Change("changedate")))
             Dim DocumentName As String = RemoveSpecialCharacters($"ID: {CoalescentData("id")} - {CoalescentData("coalescentname")}")
             Dim PartBindID = Convert.ToInt32(CoalescentData("partbindid"))
             If PartBindID <> 5 Then CoalescentData("statusid") = 1
+            CoalescentData.Remove("partbindid")
             Await _RemoteDB.ExecutePut("coalescents", CoalescentData, DocumentName)
         End If
         If Change("fieldname") = "Deleção" Then
@@ -316,12 +312,11 @@ Public Class TaskCloudSync
     Private Async Function FetchPersonCompressor(Change As Dictionary(Of String, Object)) As Task
         Dim Args As New Dictionary(Of String, Object) From {{"@id", Change("registryid")}}
         Dim Result = Await _LocalDB.ExecuteRawQuery("SELECT pc.id, pc.statusid, pc.personid, pc.compressorid, c.name compressorname,  IFNULL(pc.serialnumber, '') serialnumber  FROM personcompressor pc LEFT JOIN compressor c ON pc.compressorid = c.id WHERE pc.id = @id LIMIT 1", Args)
-        Dim CompressorData As Dictionary(Of String, Object) = Nothing
+        Dim CompressorData As Dictionary(Of String, Object)
         Dim Conditions As List(Of RemoteDB.Condition)
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             CompressorData = Result.Data(0)
             CompressorData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Convert.ToDateTime(Change("changedate")))
-            Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
             Dim DocumentName As String = RemoveSpecialCharacters($"ID: {CompressorData("id")} - {CompressorData("compressorname")}")
             Await _RemoteDB.ExecutePut("compressors", CompressorData, DocumentName)
         End If
@@ -337,14 +332,13 @@ Public Class TaskCloudSync
         Dim Where As String = "id = @id"
         Dim WhereArgs As New Dictionary(Of String, Object) From {{"@id", Change("registryid")}}
         Dim Result = Await _LocalDB.ExecuteSelect("person", Columns, Where, WhereArgs, Limit:=1)
-        Dim PersonData As Dictionary(Of String, Object) = Nothing
+        Dim PersonData As Dictionary(Of String, Object)
         Dim Conditions As List(Of RemoteDB.Condition)
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             PersonData = Result.Data(0)
             Dim IsCustomer = Convert.ToBoolean(PersonData("iscustomer"))
             Dim IsTechnician = Convert.ToBoolean(PersonData("istechnician"))
             PersonData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Convert.ToDateTime(Change("changedate")))
-            Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
             Dim DocumentName As String = RemoveSpecialCharacters($"ID: {PersonData("id")} - {PersonData("shortname")}")
             Await _RemoteDB.ExecutePut("persons", PersonData, DocumentName)
         End If

@@ -121,10 +121,7 @@ Public Class TaskCloudSync
                 Await Task.Delay(Constants.WaitForJob)
 
 
-                'TODO: DEPOIS DE SALVAR UM DADO NA NUVEM, NAO PODE DELETAR, SE FOR PRA DELETAR ENTAO APENAS MUDA O STATUS
-                'VER TAMBEM SE DA PRA NAO SALVAR TODAS AS PESSOAS
-
-                'A PARTIR DAQUI O FOCO MUDA E SINCRONIZA OS DADOS DE UMA TABELA VISIT SCHEDULE
+                'A PARTIR DAQUI SINCRONIZA OS DADOS DA TABELA VISIT SCHEDULE
 
 
                 Columns = New List(Of String) From {"id", "creation", "statusid", "visitdate", "visittypeid", "customerid", "personcompressorid", "instructions", "evaluationid", "lastupdate", "userid"}
@@ -230,6 +227,7 @@ Public Class TaskCloudSync
                     Next Schedule
                     PerformedOperations = 0
                     For Each Schedule In LocalResult
+                        Schedule.Remove("userid")
                         Schedule("creation") = DateTimeHelper.MillisecondsFromDate(Schedule("creation"))
                         Schedule("lastupdate") = DateTimeHelper.MillisecondsFromDate(Schedule("lastupdate"))
                         Schedule("visitdate") = DateTimeHelper.MillisecondsFromDate(Schedule("visitdate"))

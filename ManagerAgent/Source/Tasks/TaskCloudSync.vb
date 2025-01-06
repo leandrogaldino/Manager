@@ -121,7 +121,8 @@ Public Class TaskCloudSync
                 Await Task.Delay(Constants.WaitForJob)
 
 
-
+                'TODO: DEPOIS DE SALVAR UM DADO NA NUVEM, NAO PODE DELETAR, SE FOR PRA DELETAR ENTAO APENAS MUDA O STATUS
+                'VER TAMBEM SE DA PRA NAO SALVAR TODAS AS PESSOAS
 
                 'A PARTIR DAQUI O FOCO MUDA E SINCRONIZA OS DADOS DE UMA TABELA VISIT SCHEDULE
 
@@ -306,7 +307,8 @@ Public Class TaskCloudSync
         End If
         If Change("fieldname") = "Deleção" Then
             Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
-            Await _RemoteDB.ExecuteDelete("coalescents", Conditions)
+            Dim Updates = New Dictionary(Of String, Object) From {{"statusid", 1}}
+            Await _RemoteDB.ExecuteUpdate("coalescents", Updates, Conditions)
         End If
     End Function
     Private Async Function FetchPersonCompressor(Change As Dictionary(Of String, Object)) As Task
@@ -322,9 +324,10 @@ Public Class TaskCloudSync
         End If
         If Change("fieldname") = "Deleção" Then
             Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
-            Await _RemoteDB.ExecuteDelete("compressors", Conditions)
+            Dim Updates = New Dictionary(Of String, Object) From {{"statusid", 1}}
+            Await _RemoteDB.ExecuteUpdate("compressors", Updates, Conditions)
             Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("personcompressorid", Change("registryid"))}
-            Await _RemoteDB.ExecuteDelete("coalescents", Conditions)
+            Await _RemoteDB.ExecuteUpdate("coalescents", Updates, Conditions)
         End If
     End Function
     Private Async Function FetchPerson(Change As Dictionary(Of String, Object)) As Task
@@ -344,13 +347,14 @@ Public Class TaskCloudSync
         End If
         If Change("fieldname") = "Deleção" Then
             Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
-            Await _RemoteDB.ExecuteDelete("persons", Conditions)
+            Dim Updates = New Dictionary(Of String, Object) From {{"statusid", 1}}
+            Await _RemoteDB.ExecuteUpdate("persons", Updates, Conditions)
             Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("personid", Change("registryid"))}
             Dim CompressorsData = Await _RemoteDB.ExecuteGet("compressors", Conditions)
             For Each Compressor In CompressorsData
-                Await _RemoteDB.ExecuteDelete("compressors", Conditions)
+                Await _RemoteDB.ExecuteUpdate("compressors", Updates, Conditions)
                 Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("personcompressorid", Compressor("id"))}
-                Await _RemoteDB.ExecuteDelete("coalescents", Conditions)
+                Await _RemoteDB.ExecuteUpdate("coalescents", Updates, Conditions)
             Next Compressor
         End If
     End Function

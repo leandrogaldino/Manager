@@ -140,6 +140,14 @@ Public Class Person
         _Shadow = Clone()
         Return Me
     End Function
+
+    Public Function getshadow() As Integer
+        Return _Shadow.Compressors.First.PartsElapsedDay.Count
+    End Function
+    Public Function getnormal() As Integer
+        Return Compressors.First.PartsElapsedDay.Count
+    End Function
+
     Public Sub SaveChanges()
         If Not IsSaved Then
             Insert()

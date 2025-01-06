@@ -326,8 +326,6 @@ Public Class TaskCloudSync
             Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
             Dim Updates = New Dictionary(Of String, Object) From {{"statusid", 1}}
             Await _RemoteDB.ExecuteUpdate("compressors", Updates, Conditions)
-            Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("personcompressorid", Change("registryid"))}
-            Await _RemoteDB.ExecuteUpdate("coalescents", Updates, Conditions)
         End If
     End Function
     Private Async Function FetchPerson(Change As Dictionary(Of String, Object)) As Task
@@ -349,13 +347,6 @@ Public Class TaskCloudSync
             Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("id", Change("registryid"))}
             Dim Updates = New Dictionary(Of String, Object) From {{"statusid", 1}}
             Await _RemoteDB.ExecuteUpdate("persons", Updates, Conditions)
-            Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("personid", Change("registryid"))}
-            Dim CompressorsData = Await _RemoteDB.ExecuteGet("compressors", Conditions)
-            For Each Compressor In CompressorsData
-                Await _RemoteDB.ExecuteUpdate("compressors", Updates, Conditions)
-                Conditions = New List(Of RemoteDB.Condition) From {New WhereEqualToCondition("personcompressorid", Compressor("id"))}
-                Await _RemoteDB.ExecuteUpdate("coalescents", Updates, Conditions)
-            Next Compressor
         End If
     End Function
 

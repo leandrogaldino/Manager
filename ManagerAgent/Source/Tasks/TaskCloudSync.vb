@@ -124,7 +124,7 @@ Public Class TaskCloudSync
                 'A PARTIR DAQUI SINCRONIZA OS DADOS DA TABELA VISIT SCHEDULE
 
 
-                Columns = New List(Of String) From {"id", "creation", "statusid", "visitdate", "visittypeid", "customerid", "personcompressorid", "instructions", "evaluationid", "lastupdate", "userid"}
+                Columns = New List(Of String) From {"id", "creation", "statusid", "visitdate", "visittypeid", "customerid", "personcompressorid", "instructions", "lastupdate", "userid"}
                 OrderBy = "id ASC"
                 Where = "lastupdate > @lastupdate AND parentid IS NULL"
                 Args = New Dictionary(Of String, Object) From {{"@lastupdate", _SessionModel.ManagerSetting.LastExecution.CloudVisitScheduleSync}}
@@ -160,7 +160,6 @@ Public Class TaskCloudSync
                             {"customerid", "@customerid"},
                             {"personcompressorid", "@personcompressorid"},
                             {"instructions", "@instructions"},
-                            {"evaluationid", "@evaluationid"},
                             {"lastupdate", "@lastupdate"},
                             {"userid", "@userid"},
                             {"parentid", "@parentid"}
@@ -173,7 +172,6 @@ Public Class TaskCloudSync
                             {"@customerid", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("customerid")},
                             {"@personcompressorid", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("personcompressorid")},
                             {"@instructions", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("instructions")},
-                            {"@evaluationid", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("evaluationid")},
                             {"@lastupdate", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("lastupdate")},
                             {"@userid", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("userid")},
                             {"@parentid", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("id")}

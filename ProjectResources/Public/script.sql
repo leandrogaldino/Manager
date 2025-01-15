@@ -125,7 +125,6 @@ CREATE TABLE visitschedule (
     customerid INT NOT NULL,
     personcompressorid INT NOT NULL,
     instructions LONGTEXT,
-    evaluationid INT NOT NULL DEFAULT 0,
     parentid INT,
     lastupdate DATETIME NOT NULL,
     userid INT NOT NULL,    

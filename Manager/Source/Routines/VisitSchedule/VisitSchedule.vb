@@ -15,31 +15,18 @@ Public Class VisitSchedule
     Public Property Compressor As New PersonCompressor
     Public Property Instructions As String
     Public Property LastUpdate As Date = Now
-    Public ReadOnly Property Evaluation As Lazy(Of Evaluation)
-        Get
-            Return _Evaluation
-        End Get
-    End Property
 
     Public Sub New()
         _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
         SetRoutine(Routine.VisitSchedule)
     End Sub
 
-    Public Sub SetEvaluation(EvaluationID As Long)
-        If EvaluationID > 0 Then
-            _Evaluation = New Lazy(Of Evaluation)(Function() New Evaluation().Load(EvaluationID, True))
-        Else
-            _Evaluation = New Lazy(Of Evaluation)
-        End If
-    End Sub
 
     Public Sub Clear()
         Unlock()
         SetIsSaved(False)
         SetID(0)
         SetCreation(Today)
-        SetEvaluation(0)
         Status = VisitScheduleStatus.Pending
         VisitDate = Today
         Customer = New Person()
@@ -67,7 +54,6 @@ Public Class VisitSchedule
                         SetID(Convert.ToInt64(TableResult.Rows(0).Item("id")))
                         SetCreation(Convert.ToDateTime(TableResult.Rows(0).Item("creation")))
                         SetIsSaved(True)
-                        SetEvaluation(Convert.ToInt64(TableResult.Rows(0).Item("evaluationid")))
                         Status = Convert.ToInt32(TableResult.Rows(0).Item("statusid"))
                         VisitDate = Convert.ToDateTime(TableResult.Rows(0).Item("visitdate"))
                         VisitType = Convert.ToInt32(TableResult.Rows(0).Item("visittypeid"))
@@ -118,7 +104,6 @@ Public Class VisitSchedule
                     Cmd.Parameters.AddWithValue("@customerid", Customer.ID)
                     Cmd.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
                     Cmd.Parameters.AddWithValue("@instructions", If(String.IsNullOrEmpty(Instructions), DBNull.Value, Instructions))
-                    Cmd.Parameters.AddWithValue("@evaluationid", 0)
                     Cmd.Parameters.AddWithValue("@lastupdate", LastUpdate)
                     Cmd.Parameters.AddWithValue("@userid", User.ID)
                     Cmd.ExecuteNonQuery()
@@ -139,7 +124,6 @@ Public Class VisitSchedule
                 Cmd.Parameters.AddWithValue("@customerid", Customer.ID)
                 Cmd.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
                 Cmd.Parameters.AddWithValue("@instructions", If(String.IsNullOrEmpty(Instructions), DBNull.Value, Instructions))
-                Cmd.Parameters.AddWithValue("@evaluationid", If(Evaluation IsNot Nothing AndAlso Evaluation.Value IsNot Nothing, Evaluation.Value.ID, 0))
                 Cmd.Parameters.AddWithValue("@lastupdate", LastUpdate)
                 Cmd.Parameters.AddWithValue("@userid", User.ID)
                 Cmd.ExecuteNonQuery()

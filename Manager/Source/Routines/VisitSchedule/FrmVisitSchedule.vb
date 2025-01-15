@@ -66,7 +66,6 @@ Public Class FrmVisitSchedule
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnEvaluation.Visible = _LoggedUser.CanWrite(Routine.Evaluation)
-        BtnEvaluation.Enabled = _VisitSchedule.Evaluation IsNot Nothing
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -389,11 +388,5 @@ Public Class FrmVisitSchedule
 
     Private Sub FrmRoute_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         _VisitSchedule.Unlock()
-    End Sub
-
-    Private Sub BtnEvaluation_Click(sender As Object, e As EventArgs) Handles BtnEvaluation.Click
-        Using Frm As New FrmEvaluation(_VisitSchedule.Evaluation.Value)
-            Frm.ShowDialog()
-        End Using
     End Sub
 End Class

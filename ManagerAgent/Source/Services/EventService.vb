@@ -11,6 +11,9 @@ Public Class EventService
         Dim Initial As EventInitialModel = Builder.GetInitialEvent()
         Dim Childs As List(Of EventChildModel) = Builder.GetChildEvents()
         Dim Final As EventFinalModel = Builder.GetFinalEvent()
+
+        If Data Is Nothing OrElse Data.Columns.Count = 0 Then Exit Sub
+
         If Initial IsNot Nothing AndAlso Not Initial.Processed Then
             WriteSingle(Initial, Data)
         End If
@@ -30,6 +33,9 @@ Public Class EventService
     End Sub
     Private Sub WriteSingle([Event] As EventModel, Data As DataTable)
         Dim NewRow As DataRow
+
+        If Data Is Nothing OrElse Data.Columns.Count = 0 Then Exit Sub
+
         NewRow = Data.NewRow()
         NewRow.Item("id") = [Event].ID
         NewRow.Item("parentid") = [Event].ParentID
@@ -45,7 +51,7 @@ Public Class EventService
     Public Async Function Save(Data As DataTable) As Task
         Dim Values As Dictionary(Of String, String)
         Dim Args As Dictionary(Of String, Object)
-        If Data Is Nothing Then Return
+        If Data Is Nothing OrElse Data.Columns.Count = 0 Then Exit Function
         If Data.Rows.Cast(Of DataRow).Any(Function(x) Not CBool(x("issaved"))) Then
             Try
                 Await _Database.BeginTransaction()
@@ -96,6 +102,9 @@ Public Class EventService
         Dim NewRow As DataRow
         Dim Columns As List(Of String)
         Dim Args As Dictionary(Of String, Object)
+
+
+
         Try
             Await _Database.BeginTransaction()
             Columns = New List(Of String) From {"id", "parentid", "eventtype", "time", "description"}

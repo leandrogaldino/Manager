@@ -126,7 +126,7 @@ Public Class TaskCloudSync
 
                 Columns = New List(Of String) From {"id", "creation", "statusid", "visitdate", "visittypeid", "customerid", "personcompressorid", "instructions", "lastupdate", "userid"}
                 OrderBy = "id ASC"
-                Where = "lastupdate > @lastupdate AND parentid IS NULL"
+                Where = "lastupdate > @lastupdate"
                 Args = New Dictionary(Of String, Object) From {{"@lastupdate", _SessionModel.ManagerSetting.LastExecution.CloudVisitScheduleSync}}
                 Result = Await _LocalDB.ExecuteSelect("visitschedule", Columns, Where, Args, OrderBy)
                 Dim LocalResult As List(Of Dictionary(Of String, Object)) = Result.Data
@@ -161,8 +161,7 @@ Public Class TaskCloudSync
                             {"personcompressorid", "@personcompressorid"},
                             {"instructions", "@instructions"},
                             {"lastupdate", "@lastupdate"},
-                            {"userid", "@userid"},
-                            {"parentid", "@parentid"}
+                            {"userid", "@userid"}
                         }
                         Args = New Dictionary(Of String, Object) From {
                             {"@creation", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("creation")},
@@ -173,8 +172,7 @@ Public Class TaskCloudSync
                             {"@personcompressorid", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("personcompressorid")},
                             {"@instructions", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("instructions")},
                             {"@lastupdate", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("lastupdate")},
-                            {"@userid", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("userid")},
-                            {"@parentid", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("id")}
+                            {"@userid", LocalResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("userid")}
                         }
                         Await _LocalDB.ExecuteInsert("visitschedule", Values, Args)
                         Values = New Dictionary(Of String, String) From {
@@ -309,7 +307,7 @@ Public Class TaskCloudSync
     End Function
     Private Async Function FetchPersonCompressor(Change As Dictionary(Of String, Object)) As Task
         Dim Args As New Dictionary(Of String, Object) From {{"@id", Change("registryid")}}
-        Dim Result = Await _LocalDB.ExecuteRawQuery("SELECT pc.id, pc.statusid, pc.personid, pc.compressorid, c.name compressorname,  IFNULL(pc.serialnumber, '') serialnumber  FROM personcompressor pc LEFT JOIN compressor c ON pc.compressorid = c.id WHERE pc.id = @id LIMIT 1", Args)
+        Dim Result = Await _LocalDB.ExecuteRawQuery("SELECT pc.id, pc.statusid, pc.personid, pc.compressorid, c.name compressorname,  IFNULL(pc.serialnumber, '') serialnumber, IFNULL(pc.sector, '') sector  FROM personcompressor pc LEFT JOIN compressor c ON pc.compressorid = c.id WHERE pc.id = @id LIMIT 1", Args)
         Dim CompressorData As Dictionary(Of String, Object)
         Dim Conditions As List(Of RemoteDB.Condition)
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then

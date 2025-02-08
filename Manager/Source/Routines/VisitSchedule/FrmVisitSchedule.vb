@@ -65,7 +65,6 @@ Public Class FrmVisitSchedule
         DgvNavigator.DataGridView = _VisitSchedulesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnEvaluation.Visible = _LoggedUser.CanWrite(Routine.Evaluation)
     End Sub
     Private Sub LoadData()
         _Loading = True

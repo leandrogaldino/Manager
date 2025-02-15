@@ -5,8 +5,6 @@
 ''' </summary>
 Public Enum VisitScheduleStatus
     <Description("PENDENTE")> Pending = 0
-    <Description("INICIADO")> Started = 1
-    <Description("FINALIZADO")> Finished = 2
-    <Description("CANCELADO")> Canceled = 3
-    <Description("SOBRESCRITO")> Overrided = 4
+    <Description("FINALIZADO")> Finished = 1
+    <Description("CANCELADO")> Canceled = 2
 End Enum

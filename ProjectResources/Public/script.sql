@@ -125,14 +125,12 @@ CREATE TABLE visitschedule (
     customerid INT NOT NULL,
     personcompressorid INT NOT NULL,
     instructions LONGTEXT,
-    parentid INT,
     lastupdate DATETIME NOT NULL,
     userid INT NOT NULL,    
     PRIMARY KEY(id),
     FOREIGN KEY (customerid) REFERENCES person (id) ON DELETE RESTRICT,
     FOREIGN KEY (personcompressorid) REFERENCES personcompressor (id) ON DELETE RESTRICT,
-    FOREIGN KEY (userid) REFERENCES user (id) ON DELETE RESTRICT,
-	FOREIGN KEY (parentid) REFERENCES visitschedule(id) ON DELETE CASCADE
+    FOREIGN KEY (userid) REFERENCES user (id) ON DELETE RESTRICT
 );
 
 DELIMITER $$
@@ -142,7 +140,7 @@ INSERT INTO log VALUES (NULL, 22, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT
 END$$
 
 CREATE TRIGGER `visitscheduleupdate` AFTER UPDATE ON `visitschedule` FOR EACH ROW BEGIN
-IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'PENDENTE' WHEN OLD.statusid = 1 THEN 'INICIADA' WHEN OLD.statusid = 2 THEN 'FINALIZADA' WHEN OLD.statusid = 3 THEN 'CANCELADA'END, CASE WHEN NEW.statusid = 0 THEN 'PENDENTE' WHEN NEW.statusid = 1 THEN 'INICIADA' WHEN NEW.statusid = 2 THEN 'FINALIZADA' WHEN NEW.statusid = 3 THEN 'CANCELADA' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'PENDENTE' WHEN OLD.statusid = 1 THEN 'FINALIZADA' WHEN OLD.statusid = 2 THEN 'CANCELADA' END, CASE WHEN NEW.statusid = 0 THEN 'PENDENTE' WHEN NEW.statusid = 1 THEN 'FINALIZADA' WHEN NEW.statusid = 2 THEN 'CANCELADA' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.visitdate <> NEW.visitdate THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Data da Visita', OLD.visitdate, NEW.visitdate, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.visittypeid <> NEW.visittypeid THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Tipo de Visita', CASE WHEN OLD.visittypeid = 0 THEN 'LEVANTAMENTO' WHEN OLD.visittypeid = 1 THEN 'PREVENTIVA' WHEN OLD.visittypeid = 2 THEN 'CHAMADO' WHEN OLD.visittypeid = 3 THEN 'CONTRATO'END, CASE WHEN NEW.visittypeid = 0 THEN 'LEVANTAMENTO' WHEN NEW.visittypeid = 1 THEN 'PREVENTIVA' WHEN NEW.visittypeid = 2 THEN 'CHAMADO' WHEN NEW.visittypeid = 3 THEN 'CONTRATO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.customerid <> NEW.customerid THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Cliente', CONCAT(OLD.customerid, ' - ', (SELECT person.name FROM person WHERE person.id = OLD.customerid)), CONCAT(NEW.customerid, ' - ', (SELECT person.name FROM person WHERE person.id = NEW.customerid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;

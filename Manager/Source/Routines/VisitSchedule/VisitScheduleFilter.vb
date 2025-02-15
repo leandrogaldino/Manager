@@ -65,7 +65,6 @@ Public Class VisitScheduleFilter
                 If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
                 If Status.Finished = "Sim" Or Status.Finished = Nothing Then StatusList.Add(CInt(VisitScheduleStatus.Finished))
                 If Status.Pending = "Sim" Or Status.Pending = Nothing Then StatusList.Add(CInt(VisitScheduleStatus.Pending))
-                If Status.Started = "Sim" Or Status.Started = Nothing Then StatusList.Add(CInt(VisitScheduleStatus.Started))
                 If Status.Canceled = "Sim" Or Status.Canceled = Nothing Then StatusList.Add(CInt(VisitScheduleStatus.Canceled))
                 If VisitType <> Nothing Then Cmd.Parameters.AddWithValue("@visittypeid", EnumHelper.GetEnumValue(Of VisitScheduleType)(VisitType.ToUpper())) : Filtering = True Else Cmd.Parameters.AddWithValue("@visittypeid", "%")
                 Cmd.Parameters.AddWithValue("@statusid", String.Join(",", StatusList)) : Filtering = True

@@ -135,8 +135,6 @@ Public Class FrmVisitSchedules
                     e.CellStyle.ForeColor = Color.DarkBlue
                 Case Is = EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled)
                     e.CellStyle.ForeColor = Color.DarkRed
-                Case Is = EnumHelper.GetEnumDescription(VisitScheduleStatus.Started)
-                    e.CellStyle.ForeColor = Color.Chocolate
                 Case Is = EnumHelper.GetEnumDescription(VisitScheduleStatus.Finished)
                     e.CellStyle.ForeColor = Color.DarkGreen
             End Select

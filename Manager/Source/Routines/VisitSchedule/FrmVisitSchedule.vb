@@ -94,7 +94,7 @@ Public Class FrmVisitSchedule
             Text = "Agendamento de Visita - SOMENTE LEITURA"
         End If
 
-        If _VisitSchedule.Status = VisitScheduleStatus.Started Or _VisitSchedule.Status = VisitScheduleStatus.Finished Then
+        If _VisitSchedule.Status = VisitScheduleStatus.Finished Then
             Text = "Agendamento de Visita - SOMENTE LEITURA"
         End If
 
@@ -273,10 +273,7 @@ Public Class FrmVisitSchedule
             CMessageBox.Show($"Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {_VisitSchedule.LockInfo.LockedBy.Value.Username.ToTitle()}.", CMessageBoxType.Information)
             Return False
         End If
-        If _VisitSchedule.Status = VisitScheduleStatus.Started Then
-            CMessageBox.Show("Não foi possível salvar, esse agendamento já foi iniciado.", CMessageBoxType.Information)
-            Return False
-        ElseIf _VisitSchedule.Status = VisitScheduleStatus.Finished Then
+        If _VisitSchedule.Status = VisitScheduleStatus.Finished Then
             CMessageBox.Show("Não foi possível salvar, esse agendamento já foi finalizado.", CMessageBoxType.Information)
             Return False
         End If

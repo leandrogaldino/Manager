@@ -86,8 +86,6 @@ Partial Class FrmEvaluation
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.QbxCustomer = New ControlLibrary.QueriedBox()
         Me.TxtEvaluationNumber = New System.Windows.Forms.TextBox()
-        Me.RbtExecution = New System.Windows.Forms.RadioButton()
-        Me.RbtGathering = New System.Windows.Forms.RadioButton()
         Me.LblEndTime = New System.Windows.Forms.Label()
         Me.LblStartTime = New System.Windows.Forms.Label()
         Me.TxtEndTime = New System.Windows.Forms.MaskedTextBox()
@@ -150,6 +148,8 @@ Partial Class FrmEvaluation
         Me.DgvlPartWorkedHourLayout = New Manager.DataGridViewLayout()
         Me.DgvlPartElapsedDayLayout = New Manager.DataGridViewLayout()
         Me.DgvPartElapsedDayNavigator = New ControlLibrary.DataGridViewNavigator()
+        Me.BtnNeedProposal = New ControlLibrary.NoFocusCueButton()
+        Me.BtnEvaluationType = New ControlLibrary.NoFocusCueButton()
         Me.PnBottom.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -596,10 +596,10 @@ Partial Class FrmEvaluation
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.BtnNeedProposal)
+        Me.GroupBox1.Controls.Add(Me.BtnEvaluationType)
         Me.GroupBox1.Controls.Add(Me.QbxCustomer)
         Me.GroupBox1.Controls.Add(Me.TxtEvaluationNumber)
-        Me.GroupBox1.Controls.Add(Me.RbtExecution)
-        Me.GroupBox1.Controls.Add(Me.RbtGathering)
         Me.GroupBox1.Controls.Add(Me.LblEndTime)
         Me.GroupBox1.Controls.Add(Me.LblStartTime)
         Me.GroupBox1.Controls.Add(Me.TxtEndTime)
@@ -751,29 +751,6 @@ Partial Class FrmEvaluation
         Me.TxtEvaluationNumber.Size = New System.Drawing.Size(105, 23)
         Me.TxtEvaluationNumber.TabIndex = 3
         Me.TxtEvaluationNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'RbtExecution
-        '
-        Me.RbtExecution.AutoSize = True
-        Me.RbtExecution.Location = New System.Drawing.Point(134, 21)
-        Me.RbtExecution.Name = "RbtExecution"
-        Me.RbtExecution.Size = New System.Drawing.Size(89, 21)
-        Me.RbtExecution.TabIndex = 1
-        Me.RbtExecution.TabStop = True
-        Me.RbtExecution.Text = "Execução"
-        Me.RbtExecution.UseVisualStyleBackColor = True
-        '
-        'RbtGathering
-        '
-        Me.RbtGathering.AutoSize = True
-        Me.RbtGathering.Checked = True
-        Me.RbtGathering.Location = New System.Drawing.Point(6, 22)
-        Me.RbtGathering.Name = "RbtGathering"
-        Me.RbtGathering.Size = New System.Drawing.Size(122, 21)
-        Me.RbtGathering.TabIndex = 0
-        Me.RbtGathering.TabStop = True
-        Me.RbtGathering.Text = "Levantamento"
-        Me.RbtGathering.UseVisualStyleBackColor = True
         '
         'LblEndTime
         '
@@ -1507,6 +1484,34 @@ Partial Class FrmEvaluation
         Me.DgvPartElapsedDayNavigator.NextButton = Nothing
         Me.DgvPartElapsedDayNavigator.PreviousButton = Nothing
         '
+        'BtnNeedProposal
+        '
+        Me.BtnNeedProposal.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.BtnNeedProposal.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnNeedProposal.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnNeedProposal.Location = New System.Drawing.Point(200, 22)
+        Me.BtnNeedProposal.Name = "BtnNeedProposal"
+        Me.BtnNeedProposal.Size = New System.Drawing.Size(188, 25)
+        Me.BtnNeedProposal.TabIndex = 28
+        Me.BtnNeedProposal.Text = "Proposta Necessária: N/A"
+        Me.BtnNeedProposal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.BtnNeedProposal.TooltipText = ""
+        Me.BtnNeedProposal.UseVisualStyleBackColor = True
+        '
+        'BtnEvaluationType
+        '
+        Me.BtnEvaluationType.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.BtnEvaluationType.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnEvaluationType.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnEvaluationType.Location = New System.Drawing.Point(6, 22)
+        Me.BtnEvaluationType.Name = "BtnEvaluationType"
+        Me.BtnEvaluationType.Size = New System.Drawing.Size(188, 25)
+        Me.BtnEvaluationType.TabIndex = 28
+        Me.BtnEvaluationType.Text = "Tipo: N/A"
+        Me.BtnEvaluationType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.BtnEvaluationType.TooltipText = ""
+        Me.BtnEvaluationType.UseVisualStyleBackColor = True
+        '
         'FrmEvaluation
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
@@ -1623,8 +1628,6 @@ Partial Class FrmEvaluation
     Friend WithEvents LblStartTime As Label
     Friend WithEvents TxtEndTime As MaskedTextBox
     Friend WithEvents TxtStartTime As MaskedTextBox
-    Friend WithEvents RbtExecution As RadioButton
-    Friend WithEvents RbtGathering As RadioButton
     Friend WithEvents GbxPartElapsedDay As GroupBox
     Friend WithEvents DgvPartElapsedDay As DataGridView
     Friend WithEvents GbxPartWorkedHour As GroupBox
@@ -1663,4 +1666,6 @@ Partial Class FrmEvaluation
     Friend WithEvents DgvlPartElapsedDayLayout As DataGridViewLayout
     Friend WithEvents DgvPartWorkedHourNavigator As ControlLibrary.DataGridViewNavigator
     Friend WithEvents DgvPartElapsedDayNavigator As ControlLibrary.DataGridViewNavigator
+    Friend WithEvents BtnNeedProposal As ControlLibrary.NoFocusCueButton
+    Friend WithEvents BtnEvaluationType As ControlLibrary.NoFocusCueButton
 End Class

@@ -15,6 +15,8 @@ Public Class FrmEvaluation
     Private _SelectedPhoto As EvaluationPhoto
     Private _Resizer As FluidResizer
     Private _User As User
+
+
     Private Property SelectedPhoto As EvaluationPhoto
         Get
             Return _SelectedPhoto
@@ -259,14 +261,22 @@ Public Class FrmEvaluation
         _Filter = CType(_EvaluationsForm.PgFilter.SelectedObject, EvaluationFilter)
         _Resizer = New FluidResizer(Me)
         _User = Locator.GetInstance(Of Session).User
+        _UcEvaluationType = New UcEvaluationType()
+        CcoEvaluationType.DropDownControl = _UcEvaluationType
+        _UcNeedProposal = New UcEvaluationNeedProposal()
+        CcoNeedProposal.DropDownControl = _UcNeedProposal
         LoadData()
         LoadForm()
     End Sub
     Public Sub New(Evaluation As Evaluation)
         InitializeComponent()
         _Evaluation = Evaluation
-        _User = Locator.GetInstance(Of Session).User
         _Resizer = New FluidResizer(Me)
+        _User = Locator.GetInstance(Of Session).User
+        _UcEvaluationType = New UcEvaluationType()
+        CcoEvaluationType.DropDownControl = _UcEvaluationType
+        _UcNeedProposal = New UcEvaluationNeedProposal()
+        CcoNeedProposal.DropDownControl = _UcNeedProposal
         TsNavigation.Visible = False
         TsNavigation.Enabled = False
         TcEvaluation.Height -= TsNavigation.Height
@@ -303,6 +313,9 @@ Public Class FrmEvaluation
         BtnApprove.Visible = _Evaluation.Status <> EvaluationStatus.Approved
         BtnReject.Visible = _Evaluation.Status <> EvaluationStatus.Rejected
         BtnDisapprove.Visible = _Evaluation.Status <> EvaluationStatus.Disapproved
+
+        _UcEvaluationType.IsExecution = 
+
         RbtGathering.Checked = _Evaluation.EvaluationType = EvaluationType.Gathering
         RbtExecution.Checked = _Evaluation.EvaluationType = EvaluationType.Execution
         DbxEvaluationDate.Text = _Evaluation.EvaluationDate
@@ -546,8 +559,6 @@ Public Class FrmEvaluation
                                                                          TxtEvaluationNumber.TextChanged,
                                                                          TxtEndTime.TextChanged,
                                                                          TxtStartTime.TextChanged,
-                                                                         RbtGathering.CheckedChanged,
-                                                                         RbtExecution.CheckedChanged,
                                                                          QbxCustomer.TextChanged,
                                                                          DbxAverageWorkLoad.TextChanged
         EprValidation.Clear()

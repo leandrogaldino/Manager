@@ -499,6 +499,7 @@
     <Compile Include="Source\Helper\FilterQueriedBox\PrivilegePresetQueriedBoxFilter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\IntegerConverter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\VisitScheduleTypeConverter.vb" />
+    <Compile Include="Source\Helper\Flags\EvaluationNeedProposal.vb" />
     <Compile Include="Source\Helper\ModelBases\BaseModel.vb" />
     <Compile Include="Source\Helper\ModelBases\CloneableModel.vb" />
     <Compile Include="Source\Helper\ModelBases\ChildModel.vb" />

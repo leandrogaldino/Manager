@@ -3,6 +3,7 @@ SELECT
 	evaluation.creation,
     evaluation.statusid,
 	evaluation.evaluationtypeid,
+	evaluation.needproposalid,
 	evaluation.evaluationdate,
 	evaluation.starttime,
 	evaluation.endtime,

@@ -1,6 +1,7 @@
 UPDATE evaluation SET
     statusid =  @statusid,
     evaluationtypeid = @evaluationtypeid,
+    needproposalid = @needproposalid,
     evaluationdate = @evaluationdate,
     starttime = @starttime,
     endtime = @endtime,

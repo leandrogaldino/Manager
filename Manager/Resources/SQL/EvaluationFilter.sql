@@ -11,6 +11,10 @@ SELECT
         WHEN evaluation.evaluationtypeid = 0 THEN "LEVANTAMENTO"
         WHEN evaluation.evaluationtypeid = 1 THEN "EXECUCAO"
     END AS 'Tipo',
+    CASE
+        WHEN evaluation.needproposalid = 0 THEN "SIM"
+        WHEN evaluation.needproposalid = 1 THEN "NÃO"
+    END AS 'Proposta Necessária',
     evaluation.evaluationdate AS 'Data Avaliação',
     evaluation.evaluationnumber AS 'Nº Avaliação',
     customer.shortname AS 'Cliente',

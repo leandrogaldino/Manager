@@ -73,9 +73,9 @@ Public Class FrmEvaluationSource
         Next Part
 
         If ResultEvaluation.PartsWorkedHour.Any(Function(x) x.Sold) Or ResultEvaluation.PartsElapsedDay.Any(Function(x) x.Sold) Then
-            ResultEvaluation.EvaluationType = EvaluationType.Execution
+            ResultEvaluation.CallType = CallType.Contract
         Else
-            ResultEvaluation.EvaluationType = EvaluationType.Gathering
+            ResultEvaluation.CallType = CallType.Gathering
         End If
 
         DialogResult = DialogResult.OK

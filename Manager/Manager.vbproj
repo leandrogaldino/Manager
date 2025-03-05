@@ -494,16 +494,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\UcEvaluationNeedProposal.Designer.vb">
-      <DependentUpon>UcEvaluationNeedProposal.vb</DependentUpon>
+    <Compile Include="Source\Controls\UcConfirmation.Designer.vb">
+      <DependentUpon>UcConfirmation.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\UcEvaluationNeedProposal.vb">
+    <Compile Include="Source\Controls\UcConfirmation.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Source\Controls\UcEvaluationType.Designer.vb">
-      <DependentUpon>UcEvaluationType.vb</DependentUpon>
+    <Compile Include="Source\Controls\UcCallType.Designer.vb">
+      <DependentUpon>UcCallType.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\UcEvaluationType.vb">
+    <Compile Include="Source\Controls\UcCallType.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Helper\Attibutes\RoutineDependencyAttribute.vb" />
@@ -511,7 +511,7 @@
     <Compile Include="Source\Helper\FilterQueriedBox\PrivilegePresetQueriedBoxFilter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\IntegerConverter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\VisitScheduleTypeConverter.vb" />
-    <Compile Include="Source\Helper\Flags\EvaluationNeedProposal.vb" />
+    <Compile Include="Source\Helper\Flags\ConfirmationType.vb" />
     <Compile Include="Source\Helper\ModelBases\BaseModel.vb" />
     <Compile Include="Source\Helper\ModelBases\CloneableModel.vb" />
     <Compile Include="Source\Helper\ModelBases\ChildModel.vb" />
@@ -692,7 +692,7 @@
     <Compile Include="Source\Helper\Flags\EvaluationCreationType.vb" />
     <Compile Include="Source\Helper\Flags\EvaluationPanelInformation.vb" />
     <Compile Include="Source\Helper\Flags\EvaluationStatus.vb" />
-    <Compile Include="Source\Helper\Flags\EvaluationType.vb" />
+    <Compile Include="Source\Helper\Flags\CallType.vb" />
     <Compile Include="Source\Helper\Flags\MySqlError.vb" />
     <Compile Include="Source\Helper\Flags\PersonContributionType.vb" />
     <Compile Include="Source\Helper\Flags\PersonEntityType.vb" />
@@ -830,7 +830,7 @@
     <Compile Include="Source\Helper\FilterExpandable\EvaluationStatusExpandable.vb" />
     <Compile Include="Source\Helper\FilterExpandable\RequestStatusExpandable.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\CashStatusConverter.vb" />
-    <Compile Include="Source\Helper\FiltrerConverter\EvaluationTypeConverter.vb" />
+    <Compile Include="Source\Helper\FiltrerConverter\EvaluationCallTypeConverter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\RouteConverter.vb" />
     <Compile Include="Source\Helper\LockRegistryInfo.vb" />
     <Compile Include="Source\Helper\ModelBases\ParentModel.vb" />
@@ -1260,11 +1260,11 @@
     <Compile Include="Source\Routines\VisitSchedule\VisitScheduleFilter.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Source\Controls\UcEvaluationNeedProposal.resx">
-      <DependentUpon>UcEvaluationNeedProposal.vb</DependentUpon>
+    <EmbeddedResource Include="Source\Controls\UcConfirmation.resx">
+      <DependentUpon>UcConfirmation.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Controls\UcEvaluationType.resx">
-      <DependentUpon>UcEvaluationType.vb</DependentUpon>
+    <EmbeddedResource Include="Source\Controls\UcCallType.resx">
+      <DependentUpon>UcCallType.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\CashFlow\FrmCashFlowAuthorized.resx">
       <DependentUpon>FrmCashFlowAuthorized.vb</DependentUpon>

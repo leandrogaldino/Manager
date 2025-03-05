@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class UcEvaluationType
+Partial Class UcCallType
     Inherits System.Windows.Forms.UserControl
 
     'O UserControl substitui o descarte para limpar a lista de componentes.
@@ -23,7 +23,9 @@ Partial Class UcEvaluationType
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.RbtGathering = New System.Windows.Forms.RadioButton()
-        Me.RbtExecution = New System.Windows.Forms.RadioButton()
+        Me.RbtPreventive = New System.Windows.Forms.RadioButton()
+        Me.RbtCalled = New System.Windows.Forms.RadioButton()
+        Me.RbtContract = New System.Windows.Forms.RadioButton()
         Me.SuspendLayout()
         '
         'RbtGathering
@@ -38,34 +40,62 @@ Partial Class UcEvaluationType
         Me.RbtGathering.Text = "Levantamento"
         Me.RbtGathering.UseVisualStyleBackColor = True
         '
-        'RbtExecution
+        'RbtPreventive
         '
-        Me.RbtExecution.AutoSize = True
-        Me.RbtExecution.Location = New System.Drawing.Point(151, 3)
-        Me.RbtExecution.Name = "RbtExecution"
-        Me.RbtExecution.Padding = New System.Windows.Forms.Padding(10)
-        Me.RbtExecution.Size = New System.Drawing.Size(109, 41)
-        Me.RbtExecution.TabIndex = 0
-        Me.RbtExecution.TabStop = True
-        Me.RbtExecution.Text = "Execução"
-        Me.RbtExecution.UseVisualStyleBackColor = True
+        Me.RbtPreventive.AutoSize = True
+        Me.RbtPreventive.Location = New System.Drawing.Point(151, 3)
+        Me.RbtPreventive.Name = "RbtPreventive"
+        Me.RbtPreventive.Padding = New System.Windows.Forms.Padding(10)
+        Me.RbtPreventive.Size = New System.Drawing.Size(115, 41)
+        Me.RbtPreventive.TabIndex = 0
+        Me.RbtPreventive.TabStop = True
+        Me.RbtPreventive.Text = "Preventiva"
+        Me.RbtPreventive.UseVisualStyleBackColor = True
         '
-        'UcEvaluationType
+        'RbtCalled
+        '
+        Me.RbtCalled.AutoSize = True
+        Me.RbtCalled.Location = New System.Drawing.Point(3, 50)
+        Me.RbtCalled.Name = "RbtCalled"
+        Me.RbtCalled.Padding = New System.Windows.Forms.Padding(10)
+        Me.RbtCalled.Size = New System.Drawing.Size(114, 41)
+        Me.RbtCalled.TabIndex = 0
+        Me.RbtCalled.TabStop = True
+        Me.RbtCalled.Text = "Chamado"
+        Me.RbtCalled.UseVisualStyleBackColor = True
+        '
+        'RbtContract
+        '
+        Me.RbtContract.AutoSize = True
+        Me.RbtContract.Location = New System.Drawing.Point(151, 50)
+        Me.RbtContract.Name = "RbtContract"
+        Me.RbtContract.Padding = New System.Windows.Forms.Padding(10)
+        Me.RbtContract.Size = New System.Drawing.Size(106, 41)
+        Me.RbtContract.TabIndex = 0
+        Me.RbtContract.TabStop = True
+        Me.RbtContract.Text = "Contrato"
+        Me.RbtContract.UseVisualStyleBackColor = True
+        '
+        'UcCallType
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.Controls.Add(Me.RbtExecution)
+        Me.Controls.Add(Me.RbtContract)
+        Me.Controls.Add(Me.RbtCalled)
+        Me.Controls.Add(Me.RbtPreventive)
         Me.Controls.Add(Me.RbtGathering)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "UcEvaluationType"
-        Me.Size = New System.Drawing.Size(264, 47)
+        Me.Name = "UcCallType"
+        Me.Size = New System.Drawing.Size(270, 96)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
 
     Private WithEvents RbtGathering As RadioButton
-    Private WithEvents RbtExecution As RadioButton
+    Private WithEvents RbtPreventive As RadioButton
+    Private WithEvents RbtCalled As RadioButton
+    Private WithEvents RbtContract As RadioButton
 End Class

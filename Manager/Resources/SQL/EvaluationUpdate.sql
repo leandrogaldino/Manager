@@ -1,7 +1,8 @@
 UPDATE evaluation SET
     statusid =  @statusid,
-    evaluationtypeid = @evaluationtypeid,
+    calltypeid = @calltypeid,
     needproposalid = @needproposalid,
+    hasrepairid = @hasrepairid,
     evaluationdate = @evaluationdate,
     starttime = @starttime,
     endtime = @endtime,

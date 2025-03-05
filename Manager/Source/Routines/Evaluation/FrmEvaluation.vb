@@ -15,8 +15,9 @@ Public Class FrmEvaluation
     Private _SelectedPhoto As EvaluationPhoto
     Private _Resizer As FluidResizer
     Private _User As User
-    Private _UcEvaluationType As UcEvaluationType
-    Private _UcEvaluationNeedProposal As UcEvaluationNeedProposal
+    Private _UcCallType As UcCallType
+    Private _UcEvaluationNeedProposal As UcConfirmation
+    Private _UcHasRepair As UcConfirmation
 
     Private Property SelectedPhoto As EvaluationPhoto
         Get
@@ -290,22 +291,30 @@ Public Class FrmEvaluation
         LblDocumentPage.Text = Nothing
         TxtEvaluationNumber.ReadOnly = _Evaluation.EvaluationCreationType <> EvaluationCreationType.Manual
         Tip.SetToolTip(LblAverageWorkLoad, "Carga Média de Trabalho")
-        _UcEvaluationType = New UcEvaluationType()
-        CcoEvaluationType.DropDownControl = _UcEvaluationType
-        _UcEvaluationNeedProposal = New UcEvaluationNeedProposal()
+        _UcCallType = New UcCallType()
+        CcoCallType.DropDownControl = _UcCallType
+        _UcHasRepair = New UcConfirmation()
+        CcoHasRepair.DropDownControl = _UcHasRepair
+        _UcEvaluationNeedProposal = New UcConfirmation()
         CcoEvaluationNeedProposal.DropDownControl = _UcEvaluationNeedProposal
         RefreshPhotoControls()
-        AddHandler _UcEvaluationType.CheckedChanged, AddressOf EvaluationTypeChanged
+        AddHandler _UcCallType.CheckedChanged, AddressOf CallTypeChanged
+        AddHandler _UcHasRepair.CheckedChanged, AddressOf EvaluationHasRepairChanged
         AddHandler _UcEvaluationNeedProposal.CheckedChanged, AddressOf EvaluationNeedProposalChanged
     End Sub
 
-    Private Sub EvaluationTypeChanged()
-        BtnEvaluationType.Text = $"Tipo: { EnumHelper.GetEnumDescription(_UcEvaluationType.SelectedType).ToTitle}"
+    Private Sub CallTypeChanged()
+        BtnCallType.Text = $"Tipo: { EnumHelper.GetEnumDescription(_UcCallType.SelectedType).ToTitle}"
+        EprValidation.Clear()
+        If Not _Loading Then BtnSave.Enabled = True
+    End Sub
+    Private Sub EvaluationHasRepairChanged()
+        BtnHasRepair.Text = $"Reparo: {EnumHelper.GetEnumDescription(_UcHasRepair.SelectedAnswer).ToTitle}"
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
     Private Sub EvaluationNeedProposalChanged()
-        BtnNeedProposal.Text = $"Propósta Necessária: {EnumHelper.GetEnumDescription(_UcEvaluationNeedProposal.SelectedNeedProposal).ToTitle}"
+        BtnNeedProposal.Text = $"Propósta: {EnumHelper.GetEnumDescription(_UcEvaluationNeedProposal.SelectedAnswer).ToTitle}"
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
@@ -321,8 +330,18 @@ Public Class FrmEvaluation
         BtnApprove.Visible = _Evaluation.Status <> EvaluationStatus.Approved
         BtnReject.Visible = _Evaluation.Status <> EvaluationStatus.Rejected
         BtnDisapprove.Visible = _Evaluation.Status <> EvaluationStatus.Disapproved
-        _UcEvaluationType.SelectedType = _Evaluation.EvaluationType
-        _UcEvaluationNeedProposal.SelectedNeedProposal = _Evaluation.NeedProposal
+        _UcCallType.SelectedType = _Evaluation.CallType
+
+
+
+
+
+
+
+
+
+        _UcHasRepair.SelectedAnswer = _Evaluation.HasRepair
+        _UcEvaluationNeedProposal.SelectedAnswer = _Evaluation.NeedProposal
         DbxEvaluationDate.Text = _Evaluation.EvaluationDate
         TxtStartTime.Text = _Evaluation.StartTime.ToString("hh\:mm")
         TxtEndTime.Text = _Evaluation.EndTime.ToString("hh\:mm")
@@ -778,8 +797,20 @@ Public Class FrmEvaluation
             If IsValidFieldsToSave() Then
                 Try
                     Cursor = Cursors.WaitCursor
-                    _Evaluation.EvaluationType = _UcEvaluationType.SelectedType
-                    _Evaluation.NeedProposal = _UcEvaluationNeedProposal.SelectedNeedProposal
+                    _Evaluation.CallType = _UcCallType.SelectedType
+
+
+
+
+
+
+
+
+
+
+
+                    _Evaluation.HasRepair = _UcHasRepair.SelectedAnswer
+                    _Evaluation.NeedProposal = _UcEvaluationNeedProposal.SelectedAnswer
                     _Evaluation.EvaluationDate = DbxEvaluationDate.Text
                     _Evaluation.StartTime = TimeSpan.Parse(TxtStartTime.Text.Insert(2, ":"))
                     _Evaluation.EndTime = TimeSpan.Parse(TxtEndTime.Text.Insert(2, ":"))
@@ -1344,11 +1375,11 @@ Public Class FrmEvaluation
             End Using
         End If
         If _Evaluation.PartsWorkedHour.Any(Function(x) x.Sold) Or _Evaluation.PartsElapsedDay.Any(Function(x) x.Sold) Then
-            _UcEvaluationType.SelectedType = EvaluationType.Execution
+            _UcCallType.SelectedType = CallType.Contract
         Else
-            If _UcEvaluationType.SelectedType = EvaluationType.Execution Then
+            If _UcCallType.SelectedType = CallType.Contract Then
                 If CMessageBox.Show("Nenhuma das peças controladas foi vendida, deseja marcar o tipo da avaliação como levantamento?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                    _UcEvaluationType.SelectedType = EvaluationType.Gathering
+                    _UcCallType.SelectedType = CallType.Gathering
                 End If
             End If
         End If

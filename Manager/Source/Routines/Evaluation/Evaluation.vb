@@ -16,8 +16,9 @@ Public Class Evaluation
         End Get
     End Property
     Public Property EvaluationCreationType As EvaluationCreationType = EvaluationCreationType.Manual
-    Public Property EvaluationType As EvaluationType = EvaluationType.None
-    Public Property NeedProposal As EvaluationNeedProposal = EvaluationNeedProposal.None
+    Public Property CallType As CallType = CallType.None
+    Public Property NeedProposal As ConfirmationType = ConfirmationType.None
+    Public Property HasRepair As ConfirmationType = ConfirmationType.None
     Public Property EvaluationDate As Date = Today
     Public Property StartTime As New TimeSpan(0, 0, 0)
     Public Property EndTime As New TimeSpan(0, 0, 0)
@@ -101,8 +102,9 @@ Public Class Evaluation
         Dim Coalescent As EvaluationPart
         Evaluation.EvaluationNumber = GetEvaluationNumber(EvaluationCreationType.Imported)
         Evaluation.EvaluationCreationType = EvaluationCreationType.Imported
-        Evaluation.EvaluationType = EvaluationType.None
-        Evaluation.NeedProposal = If(Data("needproposal") = True, EvaluationNeedProposal.Yes, EvaluationNeedProposal.No)
+        Evaluation.CallType = CallType.None
+        Evaluation.NeedProposal = If(Data("needproposal") = True, ConfirmationType.Yes, ConfirmationType.No)
+        Evaluation.HasRepair = ConfirmationType.None
         Evaluation.TechnicalAdvice = Data("advice")
         Evaluation.Customer = New Person().Load(Data("customer")("person_id"), False)
         Evaluation.Compressor = Evaluation.Customer.Compressors.SingleOrDefault(Function(x) x.ID = Data("compressor")("compressor_id"))
@@ -192,8 +194,9 @@ Public Class Evaluation
         SetID(0)
         SetCreation(Today)
         _Status = EvaluationStatus.Disapproved
-        EvaluationType = EvaluationType.None
-        NeedProposal = EvaluationNeedProposal.None
+        CallType = CallType.None
+        NeedProposal = ConfirmationType.None
+        HasRepair = ConfirmationType.None
         EvaluationDate = Today
         StartTime = New TimeSpan(0, 0, 0)
         EndTime = New TimeSpan(0, 0, 0)
@@ -235,8 +238,9 @@ Public Class Evaluation
                         SetCreation(TableResult.Rows(0).Item("creation"))
                         SetIsSaved(True)
                         _Status = TableResult.Rows(0).Item("statusid")
-                        EvaluationType = TableResult.Rows(0).Item("evaluationtypeid")
+                        CallType = TableResult.Rows(0).Item("calltypeid")
                         NeedProposal = TableResult.Rows(0).Item("needproposalid")
+                        HasRepair = TableResult.Rows(0).Item("hasrepairid")
                         EvaluationDate = TableResult.Rows(0).Item("evaluationdate")
                         StartTime = TimeSpan.Parse(TableResult.Rows(0).Item("starttime"))
                         EndTime = TimeSpan.Parse(TableResult.Rows(0).Item("endtime"))
@@ -431,8 +435,9 @@ Public Class Evaluation
                 Using CmdEvaluation As New MySqlCommand(My.Resources.EvaluationInsert, Con)
                     CmdEvaluation.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     CmdEvaluation.Parameters.AddWithValue("@statusid", CInt(Status))
-                    CmdEvaluation.Parameters.AddWithValue("@evaluationtypeid", CInt(EvaluationType))
+                    CmdEvaluation.Parameters.AddWithValue("@calltypeid", CInt(CallType))
                     CmdEvaluation.Parameters.AddWithValue("@needproposalid", CInt(NeedProposal))
+                    CmdEvaluation.Parameters.AddWithValue("@hasrepairid", CInt(HasRepair))
                     CmdEvaluation.Parameters.AddWithValue("@evaluationdate", EvaluationDate.ToString("yyyy-MM-dd"))
                     CmdEvaluation.Parameters.AddWithValue("@starttime", StartTime.ToString("hh\:mm"))
                     CmdEvaluation.Parameters.AddWithValue("@endtime", EndTime.ToString("hh\:mm"))
@@ -514,8 +519,9 @@ Public Class Evaluation
                 Using CmdEvaluation As New MySqlCommand(My.Resources.EvaluationUpdate, Con)
                     CmdEvaluation.Parameters.AddWithValue("@id", ID)
                     CmdEvaluation.Parameters.AddWithValue("@statusid", CInt(Status))
-                    CmdEvaluation.Parameters.AddWithValue("@evaluationtypeid", CInt(EvaluationType))
+                    CmdEvaluation.Parameters.AddWithValue("@calltypeid", CInt(CallType))
                     CmdEvaluation.Parameters.AddWithValue("@needproposalid", CInt(NeedProposal))
+                    CmdEvaluation.Parameters.AddWithValue("@hasrepairid", CInt(HasRepair))
                     CmdEvaluation.Parameters.AddWithValue("@evaluationdate", EvaluationDate)
                     CmdEvaluation.Parameters.AddWithValue("@starttime", StartTime.ToString("hh\:mm"))
                     CmdEvaluation.Parameters.AddWithValue("@endtime", EndTime.ToString("hh\:mm"))

@@ -84,8 +84,9 @@ Partial Class FrmEvaluation
         Me.GbxPartWorkedHour = New System.Windows.Forms.GroupBox()
         Me.DgvPartWorkedHour = New System.Windows.Forms.DataGridView()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.BtnHasRepair = New ControlLibrary.NoFocusCueButton()
         Me.BtnNeedProposal = New ControlLibrary.NoFocusCueButton()
-        Me.BtnEvaluationType = New ControlLibrary.NoFocusCueButton()
+        Me.BtnCallType = New ControlLibrary.NoFocusCueButton()
         Me.QbxCustomer = New ControlLibrary.QueriedBox()
         Me.TxtEvaluationNumber = New System.Windows.Forms.TextBox()
         Me.LblEndTime = New System.Windows.Forms.Label()
@@ -150,8 +151,9 @@ Partial Class FrmEvaluation
         Me.DgvlPartWorkedHourLayout = New Manager.DataGridViewLayout()
         Me.DgvlPartElapsedDayLayout = New Manager.DataGridViewLayout()
         Me.DgvPartElapsedDayNavigator = New ControlLibrary.DataGridViewNavigator()
-        Me.CcoEvaluationType = New ControlLibrary.ControlContainer()
+        Me.CcoCallType = New ControlLibrary.ControlContainer()
         Me.CcoEvaluationNeedProposal = New ControlLibrary.ControlContainer()
+        Me.CcoHasRepair = New ControlLibrary.ControlContainer()
         Me.PnBottom.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -598,8 +600,9 @@ Partial Class FrmEvaluation
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.BtnHasRepair)
         Me.GroupBox1.Controls.Add(Me.BtnNeedProposal)
-        Me.GroupBox1.Controls.Add(Me.BtnEvaluationType)
+        Me.GroupBox1.Controls.Add(Me.BtnCallType)
         Me.GroupBox1.Controls.Add(Me.QbxCustomer)
         Me.GroupBox1.Controls.Add(Me.TxtEvaluationNumber)
         Me.GroupBox1.Controls.Add(Me.LblEndTime)
@@ -628,33 +631,50 @@ Partial Class FrmEvaluation
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Identificação"
         '
+        'BtnHasRepair
+        '
+        Me.BtnHasRepair.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnHasRepair.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.BtnHasRepair.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnHasRepair.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnHasRepair.Location = New System.Drawing.Point(165, 22)
+        Me.BtnHasRepair.Name = "BtnHasRepair"
+        Me.BtnHasRepair.Size = New System.Drawing.Size(106, 25)
+        Me.BtnHasRepair.TabIndex = 25
+        Me.BtnHasRepair.Text = "Reparo: N/A"
+        Me.BtnHasRepair.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.BtnHasRepair.TooltipText = "Informa se houve algum serviço no compressor"
+        Me.BtnHasRepair.UseVisualStyleBackColor = True
+        '
         'BtnNeedProposal
         '
+        Me.BtnNeedProposal.Cursor = System.Windows.Forms.Cursors.Hand
         Me.BtnNeedProposal.FlatAppearance.BorderColor = System.Drawing.Color.Silver
         Me.BtnNeedProposal.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BtnNeedProposal.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnNeedProposal.Location = New System.Drawing.Point(200, 22)
+        Me.BtnNeedProposal.Location = New System.Drawing.Point(277, 22)
         Me.BtnNeedProposal.Name = "BtnNeedProposal"
-        Me.BtnNeedProposal.Size = New System.Drawing.Size(188, 25)
+        Me.BtnNeedProposal.Size = New System.Drawing.Size(111, 25)
         Me.BtnNeedProposal.TabIndex = 1
-        Me.BtnNeedProposal.Text = "Proposta Necessária: N/A"
+        Me.BtnNeedProposal.Text = "Proposta: N/A"
         Me.BtnNeedProposal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnNeedProposal.TooltipText = ""
+        Me.BtnNeedProposal.TooltipText = "Informa se essa avaliação irá gerar uma proposta"
         Me.BtnNeedProposal.UseVisualStyleBackColor = True
         '
-        'BtnEvaluationType
+        'BtnCallType
         '
-        Me.BtnEvaluationType.FlatAppearance.BorderColor = System.Drawing.Color.Silver
-        Me.BtnEvaluationType.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnEvaluationType.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnEvaluationType.Location = New System.Drawing.Point(6, 22)
-        Me.BtnEvaluationType.Name = "BtnEvaluationType"
-        Me.BtnEvaluationType.Size = New System.Drawing.Size(188, 25)
-        Me.BtnEvaluationType.TabIndex = 0
-        Me.BtnEvaluationType.Text = "Tipo: N/A"
-        Me.BtnEvaluationType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnEvaluationType.TooltipText = ""
-        Me.BtnEvaluationType.UseVisualStyleBackColor = True
+        Me.BtnCallType.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnCallType.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.BtnCallType.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnCallType.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnCallType.Location = New System.Drawing.Point(6, 22)
+        Me.BtnCallType.Name = "BtnCallType"
+        Me.BtnCallType.Size = New System.Drawing.Size(153, 25)
+        Me.BtnCallType.TabIndex = 0
+        Me.BtnCallType.Text = "Tipo: N/A"
+        Me.BtnCallType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.BtnCallType.TooltipText = "Informa o tipo de avaliação"
+        Me.BtnCallType.UseVisualStyleBackColor = True
         '
         'QbxCustomer
         '
@@ -1514,12 +1534,12 @@ Partial Class FrmEvaluation
         Me.DgvPartElapsedDayNavigator.NextButton = Nothing
         Me.DgvPartElapsedDayNavigator.PreviousButton = Nothing
         '
-        'CcoEvaluationType
+        'CcoCallType
         '
-        Me.CcoEvaluationType.DropDownBorderColor = System.Drawing.SystemColors.HotTrack
-        Me.CcoEvaluationType.DropDownControl = Nothing
-        Me.CcoEvaluationType.DropDownEnabled = True
-        Me.CcoEvaluationType.HostControl = Me.BtnEvaluationType
+        Me.CcoCallType.DropDownBorderColor = System.Drawing.SystemColors.HotTrack
+        Me.CcoCallType.DropDownControl = Nothing
+        Me.CcoCallType.DropDownEnabled = True
+        Me.CcoCallType.HostControl = Me.BtnCallType
         '
         'CcoEvaluationNeedProposal
         '
@@ -1527,6 +1547,13 @@ Partial Class FrmEvaluation
         Me.CcoEvaluationNeedProposal.DropDownControl = Nothing
         Me.CcoEvaluationNeedProposal.DropDownEnabled = True
         Me.CcoEvaluationNeedProposal.HostControl = Me.BtnNeedProposal
+        '
+        'CcoHasRepair
+        '
+        Me.CcoHasRepair.DropDownBorderColor = System.Drawing.SystemColors.HotTrack
+        Me.CcoHasRepair.DropDownControl = Nothing
+        Me.CcoHasRepair.DropDownEnabled = True
+        Me.CcoHasRepair.HostControl = Me.BtnHasRepair
         '
         'FrmEvaluation
         '
@@ -1683,7 +1710,9 @@ Partial Class FrmEvaluation
     Friend WithEvents DgvPartWorkedHourNavigator As ControlLibrary.DataGridViewNavigator
     Friend WithEvents DgvPartElapsedDayNavigator As ControlLibrary.DataGridViewNavigator
     Friend WithEvents BtnNeedProposal As ControlLibrary.NoFocusCueButton
-    Friend WithEvents BtnEvaluationType As ControlLibrary.NoFocusCueButton
-    Friend WithEvents CcoEvaluationType As ControlLibrary.ControlContainer
+    Friend WithEvents BtnCallType As ControlLibrary.NoFocusCueButton
+    Friend WithEvents CcoCallType As ControlLibrary.ControlContainer
     Friend WithEvents CcoEvaluationNeedProposal As ControlLibrary.ControlContainer
+    Friend WithEvents BtnHasRepair As ControlLibrary.NoFocusCueButton
+    Friend WithEvents CcoHasRepair As ControlLibrary.ControlContainer
 End Class

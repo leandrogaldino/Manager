@@ -1,4 +1,5 @@
-[] A avaliação deve ter uma flag, informando se a avaliação irá gerar uma proposta.
+[] Corrigir o UcCallType
+[X] A avaliação deve ter uma flag, informando se a avaliação irá gerar uma proposta.
 [] Ao manipular envio e download agendamento e avaliação na núvem, não enviar status mas sim campo visible booleano.
 [] O tipo de avaliacao e tipo de visita devem ser compartilhados em um enum chamado CallTypes (Levantamento, Corretiva, Preventiva, Contrato, Nada).
 [] Fazer o ViewModel da Main do Agent.

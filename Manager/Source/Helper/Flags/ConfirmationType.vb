@@ -1,9 +1,9 @@
 ﻿Imports System.ComponentModel
 
 ''' <summary>
-''' Utilizado para sinalizar se a avaliação precisa de uma proposta.
+''' Utilizado para sinalizar uma resposta sim ou não.
 ''' </summary>
-Public Enum EvaluationNeedProposal
+Public Enum ConfirmationType
     <Description("SIM")> Yes = 0
     <Description("NÃO")> No = 1
     <Description("N/A")> None = 2

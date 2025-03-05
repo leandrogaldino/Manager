@@ -9,7 +9,7 @@ SELECT
 	),0) hours
 FROM person
 LEFT JOIN evaluationtechnician ON evaluationtechnician.technicianid = person.id
-LEFT JOIN evaluation ON evaluation.id = evaluationtechnician.evaluationid AND evaluation.statusid = 1 AND evaluation.evaluationtypeid = @evaluationtypeid AND MONTHNAME(evaluation.evaluationdate) = @month AND YEAR(evaluation.evaluationdate) = @year
+LEFT JOIN evaluation ON evaluation.id = evaluationtechnician.evaluationid AND evaluation.statusid = 1 AND evaluation.calltypeid = @calltypeid AND MONTHNAME(evaluation.evaluationdate) = @month AND YEAR(evaluation.evaluationdate) = @year
 WHERE
 	person.istechnician = 1
 GROUP BY person.id

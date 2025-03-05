@@ -463,7 +463,7 @@ Public Class FrmEvaluationManagementPanel
                 End Using
                 Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementPanelFillChartProductivityChartSelect, Con)
                     Cmd.Transaction = Tra
-                    Cmd.Parameters.AddWithValue("@evaluationtypeid", EvaluationType.Gathering)
+                    Cmd.Parameters.AddWithValue("@calltypeid", CallType.Gathering)
                     Cmd.Parameters.AddWithValue("@month", CbxMonth.Text)
                     Cmd.Parameters.AddWithValue("@year", CbxYear.Text)
                     Using Adp As New MySqlDataAdapter(Cmd)
@@ -472,7 +472,7 @@ Public Class FrmEvaluationManagementPanel
                 End Using
                 Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementPanelFillChartProductivityChartSelect, Con)
                     Cmd.Transaction = Tra
-                    Cmd.Parameters.AddWithValue("@evaluationtypeid", EvaluationType.Execution)
+                    Cmd.Parameters.AddWithValue("@calltypeid", CallType.Contract)
                     Cmd.Parameters.AddWithValue("@month", CbxMonth.Text)
                     Cmd.Parameters.AddWithValue("@year", CbxYear.Text)
                     Using Adp As New MySqlDataAdapter(Cmd)

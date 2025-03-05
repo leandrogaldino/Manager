@@ -11,6 +11,8 @@ Public Class UcEvaluationType
             _Switching = True
             If value = EvaluationType.Gathering Then RbtGathering.Checked = True
             If value = EvaluationType.Execution Then RbtExecution.Checked = True
+            _SelectedType = value
+            OnCheckedChanged()
             _Switching = False
         End Set
     End Property

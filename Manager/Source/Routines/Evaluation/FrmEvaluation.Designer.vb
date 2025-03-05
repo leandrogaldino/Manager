@@ -636,7 +636,7 @@ Partial Class FrmEvaluation
         Me.BtnNeedProposal.Location = New System.Drawing.Point(200, 22)
         Me.BtnNeedProposal.Name = "BtnNeedProposal"
         Me.BtnNeedProposal.Size = New System.Drawing.Size(188, 25)
-        Me.BtnNeedProposal.TabIndex = 28
+        Me.BtnNeedProposal.TabIndex = 1
         Me.BtnNeedProposal.Text = "Proposta Necessária: N/A"
         Me.BtnNeedProposal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.BtnNeedProposal.TooltipText = ""
@@ -650,7 +650,7 @@ Partial Class FrmEvaluation
         Me.BtnEvaluationType.Location = New System.Drawing.Point(6, 22)
         Me.BtnEvaluationType.Name = "BtnEvaluationType"
         Me.BtnEvaluationType.Size = New System.Drawing.Size(188, 25)
-        Me.BtnEvaluationType.TabIndex = 28
+        Me.BtnEvaluationType.TabIndex = 0
         Me.BtnEvaluationType.Text = "Tipo: N/A"
         Me.BtnEvaluationType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.BtnEvaluationType.TooltipText = ""

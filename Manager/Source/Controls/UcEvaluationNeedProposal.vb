@@ -10,6 +10,8 @@
             _Switching = True
             If value = EvaluationNeedProposal.Yes Then RbtYes.Checked = True
             If value = EvaluationNeedProposal.No Then RbtNo.Checked = True
+            _SelectedNeedProposal = value
+            OnCheckedChanged()
             _Switching = False
         End Set
     End Property

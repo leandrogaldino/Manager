@@ -494,6 +494,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Source\Controls\UcEvaluationNeedProposal.Designer.vb">
+      <DependentUpon>UcEvaluationNeedProposal.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Controls\UcEvaluationNeedProposal.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Source\Controls\UcEvaluationType.Designer.vb">
+      <DependentUpon>UcEvaluationType.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Controls\UcEvaluationType.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Source\Helper\Attibutes\RoutineDependencyAttribute.vb" />
     <Compile Include="Source\Helper\FilterExpandable\VisitScheduleStatusExpandable.vb" />
     <Compile Include="Source\Helper\FilterQueriedBox\PrivilegePresetQueriedBoxFilter.vb" />
@@ -1248,6 +1260,12 @@
     <Compile Include="Source\Routines\VisitSchedule\VisitScheduleFilter.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Source\Controls\UcEvaluationNeedProposal.resx">
+      <DependentUpon>UcEvaluationNeedProposal.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Controls\UcEvaluationType.resx">
+      <DependentUpon>UcEvaluationType.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\CashFlow\FrmCashFlowAuthorized.resx">
       <DependentUpon>FrmCashFlowAuthorized.vb</DependentUpon>
     </EmbeddedResource>

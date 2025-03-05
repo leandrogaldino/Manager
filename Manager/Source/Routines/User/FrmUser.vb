@@ -62,7 +62,7 @@ Public Class FrmUser
         Dim TriStatePrivileges As List(Of Routine) = EnumHelper.GetEnumItems(Of Routine)(Function(x) x.GetCustomAttributes(GetType(TriStatePrivilege), True).Any()).OrderBy(Function(x) EnumHelper.GetEnumDescription(x)).ToList
         For Each TriStatePrivilege In TriStatePrivileges
             Dim PrivilegeItem = New UcTristatePrivilegeItem() With {.Routine = TriStatePrivilege}
-            AddHandler PrivilegeItem.ChechedChanged, AddressOf PrivilegeItemCheckedChange
+            AddHandler PrivilegeItem.CheckedChanged, AddressOf PrivilegeItemCheckedChange
             Controls.Add(PrivilegeItem)
         Next
         Controls.Add(New UcBiStatePrivilegeTitle())

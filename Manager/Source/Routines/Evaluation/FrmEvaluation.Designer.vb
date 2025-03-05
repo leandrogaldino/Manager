@@ -84,6 +84,8 @@ Partial Class FrmEvaluation
         Me.GbxPartWorkedHour = New System.Windows.Forms.GroupBox()
         Me.DgvPartWorkedHour = New System.Windows.Forms.DataGridView()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.BtnNeedProposal = New ControlLibrary.NoFocusCueButton()
+        Me.BtnEvaluationType = New ControlLibrary.NoFocusCueButton()
         Me.QbxCustomer = New ControlLibrary.QueriedBox()
         Me.TxtEvaluationNumber = New System.Windows.Forms.TextBox()
         Me.LblEndTime = New System.Windows.Forms.Label()
@@ -148,8 +150,8 @@ Partial Class FrmEvaluation
         Me.DgvlPartWorkedHourLayout = New Manager.DataGridViewLayout()
         Me.DgvlPartElapsedDayLayout = New Manager.DataGridViewLayout()
         Me.DgvPartElapsedDayNavigator = New ControlLibrary.DataGridViewNavigator()
-        Me.BtnNeedProposal = New ControlLibrary.NoFocusCueButton()
-        Me.BtnEvaluationType = New ControlLibrary.NoFocusCueButton()
+        Me.CcoEvaluationType = New ControlLibrary.ControlContainer()
+        Me.CcoEvaluationNeedProposal = New ControlLibrary.ControlContainer()
         Me.PnBottom.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -625,6 +627,34 @@ Partial Class FrmEvaluation
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Identificação"
+        '
+        'BtnNeedProposal
+        '
+        Me.BtnNeedProposal.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.BtnNeedProposal.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnNeedProposal.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnNeedProposal.Location = New System.Drawing.Point(200, 22)
+        Me.BtnNeedProposal.Name = "BtnNeedProposal"
+        Me.BtnNeedProposal.Size = New System.Drawing.Size(188, 25)
+        Me.BtnNeedProposal.TabIndex = 28
+        Me.BtnNeedProposal.Text = "Proposta Necessária: N/A"
+        Me.BtnNeedProposal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.BtnNeedProposal.TooltipText = ""
+        Me.BtnNeedProposal.UseVisualStyleBackColor = True
+        '
+        'BtnEvaluationType
+        '
+        Me.BtnEvaluationType.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.BtnEvaluationType.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnEvaluationType.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnEvaluationType.Location = New System.Drawing.Point(6, 22)
+        Me.BtnEvaluationType.Name = "BtnEvaluationType"
+        Me.BtnEvaluationType.Size = New System.Drawing.Size(188, 25)
+        Me.BtnEvaluationType.TabIndex = 28
+        Me.BtnEvaluationType.Text = "Tipo: N/A"
+        Me.BtnEvaluationType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.BtnEvaluationType.TooltipText = ""
+        Me.BtnEvaluationType.UseVisualStyleBackColor = True
         '
         'QbxCustomer
         '
@@ -1484,33 +1514,19 @@ Partial Class FrmEvaluation
         Me.DgvPartElapsedDayNavigator.NextButton = Nothing
         Me.DgvPartElapsedDayNavigator.PreviousButton = Nothing
         '
-        'BtnNeedProposal
+        'CcoEvaluationType
         '
-        Me.BtnNeedProposal.FlatAppearance.BorderColor = System.Drawing.Color.Silver
-        Me.BtnNeedProposal.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnNeedProposal.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnNeedProposal.Location = New System.Drawing.Point(200, 22)
-        Me.BtnNeedProposal.Name = "BtnNeedProposal"
-        Me.BtnNeedProposal.Size = New System.Drawing.Size(188, 25)
-        Me.BtnNeedProposal.TabIndex = 28
-        Me.BtnNeedProposal.Text = "Proposta Necessária: N/A"
-        Me.BtnNeedProposal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnNeedProposal.TooltipText = ""
-        Me.BtnNeedProposal.UseVisualStyleBackColor = True
+        Me.CcoEvaluationType.DropDownBorderColor = System.Drawing.SystemColors.HotTrack
+        Me.CcoEvaluationType.DropDownControl = Nothing
+        Me.CcoEvaluationType.DropDownEnabled = True
+        Me.CcoEvaluationType.HostControl = Me.BtnEvaluationType
         '
-        'BtnEvaluationType
+        'CcoEvaluationNeedProposal
         '
-        Me.BtnEvaluationType.FlatAppearance.BorderColor = System.Drawing.Color.Silver
-        Me.BtnEvaluationType.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnEvaluationType.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnEvaluationType.Location = New System.Drawing.Point(6, 22)
-        Me.BtnEvaluationType.Name = "BtnEvaluationType"
-        Me.BtnEvaluationType.Size = New System.Drawing.Size(188, 25)
-        Me.BtnEvaluationType.TabIndex = 28
-        Me.BtnEvaluationType.Text = "Tipo: N/A"
-        Me.BtnEvaluationType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnEvaluationType.TooltipText = ""
-        Me.BtnEvaluationType.UseVisualStyleBackColor = True
+        Me.CcoEvaluationNeedProposal.DropDownBorderColor = System.Drawing.SystemColors.HotTrack
+        Me.CcoEvaluationNeedProposal.DropDownControl = Nothing
+        Me.CcoEvaluationNeedProposal.DropDownEnabled = True
+        Me.CcoEvaluationNeedProposal.HostControl = Me.BtnNeedProposal
         '
         'FrmEvaluation
         '
@@ -1668,4 +1684,6 @@ Partial Class FrmEvaluation
     Friend WithEvents DgvPartElapsedDayNavigator As ControlLibrary.DataGridViewNavigator
     Friend WithEvents BtnNeedProposal As ControlLibrary.NoFocusCueButton
     Friend WithEvents BtnEvaluationType As ControlLibrary.NoFocusCueButton
+    Friend WithEvents CcoEvaluationType As ControlLibrary.ControlContainer
+    Friend WithEvents CcoEvaluationNeedProposal As ControlLibrary.ControlContainer
 End Class

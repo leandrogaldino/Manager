@@ -261,10 +261,10 @@ Public Class FrmEvaluation
         _Filter = CType(_EvaluationsForm.PgFilter.SelectedObject, EvaluationFilter)
         _Resizer = New FluidResizer(Me)
         _User = Locator.GetInstance(Of Session).User
-        _UcEvaluationType = New UcEvaluationType()
-        CcoEvaluationType.DropDownControl = _UcEvaluationType
-        _UcNeedProposal = New UcEvaluationNeedProposal()
-        CcoNeedProposal.DropDownControl = _UcNeedProposal
+        '_UcEvaluationType = New UcEvaluationType()
+        'CcoEvaluationType.DropDownControl = _UcEvaluationType
+        '_UcNeedProposal = New UcEvaluationNeedProposal()
+        'CcoNeedProposal.DropDownControl = _UcNeedProposal
         LoadData()
         LoadForm()
     End Sub
@@ -273,10 +273,10 @@ Public Class FrmEvaluation
         _Evaluation = Evaluation
         _Resizer = New FluidResizer(Me)
         _User = Locator.GetInstance(Of Session).User
-        _UcEvaluationType = New UcEvaluationType()
-        CcoEvaluationType.DropDownControl = _UcEvaluationType
-        _UcNeedProposal = New UcEvaluationNeedProposal()
-        CcoNeedProposal.DropDownControl = _UcNeedProposal
+        '_UcEvaluationType = New UcEvaluationType()
+        'CcoEvaluationType.DropDownControl = _UcEvaluationType
+        '_UcNeedProposal = New UcEvaluationNeedProposal()
+        'CcoNeedProposal.DropDownControl = _UcNeedProposal
         TsNavigation.Visible = False
         TsNavigation.Enabled = False
         TcEvaluation.Height -= TsNavigation.Height
@@ -313,11 +313,8 @@ Public Class FrmEvaluation
         BtnApprove.Visible = _Evaluation.Status <> EvaluationStatus.Approved
         BtnReject.Visible = _Evaluation.Status <> EvaluationStatus.Rejected
         BtnDisapprove.Visible = _Evaluation.Status <> EvaluationStatus.Disapproved
-
-        _UcEvaluationType.IsExecution = 
-
-        RbtGathering.Checked = _Evaluation.EvaluationType = EvaluationType.Gathering
-        RbtExecution.Checked = _Evaluation.EvaluationType = EvaluationType.Execution
+        'RbtGathering.Checked = _Evaluation.EvaluationType = EvaluationType.Gathering
+        'RbtExecution.Checked = _Evaluation.EvaluationType = EvaluationType.Execution
         DbxEvaluationDate.Text = _Evaluation.EvaluationDate
         TxtStartTime.Text = _Evaluation.StartTime.ToString("hh\:mm")
         TxtEndTime.Text = _Evaluation.EndTime.ToString("hh\:mm")
@@ -773,7 +770,12 @@ Public Class FrmEvaluation
             If IsValidFieldsToSave() Then
                 Try
                     Cursor = Cursors.WaitCursor
-                    _Evaluation.EvaluationType = If(RbtGathering.Checked, EvaluationType.Gathering, EvaluationType.Execution)
+
+
+                    '_Evaluation.EvaluationType = If(RbtGathering.Checked, EvaluationType.Gathering, EvaluationType.Execution)
+
+
+
                     _Evaluation.EvaluationDate = DbxEvaluationDate.Text
                     _Evaluation.StartTime = TimeSpan.Parse(TxtStartTime.Text.Insert(2, ":"))
                     _Evaluation.EndTime = TimeSpan.Parse(TxtEndTime.Text.Insert(2, ":"))
@@ -1338,14 +1340,14 @@ Public Class FrmEvaluation
             End Using
         End If
         If _Evaluation.PartsWorkedHour.Any(Function(x) x.Sold) Or _Evaluation.PartsElapsedDay.Any(Function(x) x.Sold) Then
-            RbtExecution.Checked = True
+            'RbtExecution.Checked = True
         Else
-            If RbtExecution.Checked Then
-                If CMessageBox.Show("Nenhuma das peças controladas foi vendida, deseja marcar o tipo da avaliação como levantamento?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                    RbtGathering.Checked = True
-                End If
+            'If RbtExecution.Checked Then
+            If CMessageBox.Show("Nenhuma das peças controladas foi vendida, deseja marcar o tipo da avaliação como levantamento?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+                ' RbtGathering.Checked = True
             End If
-        End If
+            End If
+        ' End If
         If Not BtnSave.Enabled Then
             BtnSave.Enabled = Result = DialogResult.OK
         End If

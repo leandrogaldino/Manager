@@ -1,10 +1,10 @@
 ﻿Public Class UcEvaluationNeedProposal
     Public Event CheckedChanged As EventHandler
-    Private _SelectedType As EvaluationNeedProposal = EvaluationNeedProposal.None
+    Private _SelectedNeedProposal As EvaluationNeedProposal = EvaluationNeedProposal.None
     Private _Switching As Boolean
-    Public Property SelectedType As EvaluationNeedProposal
+    Public Property SelectedNeedProposal As EvaluationNeedProposal
         Get
-            Return _SelectedType
+            Return _SelectedNeedProposal
         End Get
         Set(value As EvaluationNeedProposal)
             _Switching = True
@@ -14,10 +14,10 @@
         End Set
     End Property
     Private Sub Rbt_CheckedChanged(sender As Object, e As EventArgs) Handles RbtYes.CheckedChanged, RbtNo.CheckedChanged
-        If Not _Switching Then Return
-        _SelectedType = EvaluationNeedProposal.None
-        If RbtYes.Checked Then _SelectedType = EvaluationNeedProposal.Yes
-        If RbtNo.Checked Then _SelectedType = EvaluationNeedProposal.No
+        If _Switching Then Return
+        _SelectedNeedProposal = EvaluationNeedProposal.None
+        If RbtYes.Checked Then _SelectedNeedProposal = EvaluationNeedProposal.Yes
+        If RbtNo.Checked Then _SelectedNeedProposal = EvaluationNeedProposal.No
         OnCheckedChanged()
     End Sub
     Private Sub OnCheckedChanged()

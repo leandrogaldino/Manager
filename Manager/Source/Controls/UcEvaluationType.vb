@@ -15,7 +15,7 @@ Public Class UcEvaluationType
         End Set
     End Property
     Private Sub Rbt_CheckedChanged(sender As Object, e As EventArgs) Handles RbtGathering.CheckedChanged, RbtExecution.CheckedChanged
-        If Not _Switching Then Return
+        If _Switching Then Return
         _SelectedType = EvaluationType.None
         If RbtGathering.Checked Then _SelectedType = EvaluationType.Gathering
         If RbtExecution.Checked Then _SelectedType = EvaluationType.Execution

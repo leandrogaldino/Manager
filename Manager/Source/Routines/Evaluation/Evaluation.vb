@@ -16,7 +16,8 @@ Public Class Evaluation
         End Get
     End Property
     Public Property EvaluationCreationType As EvaluationCreationType = EvaluationCreationType.Manual
-    Public Property EvaluationType As EvaluationType = EvaluationType.Gathering
+    Public Property EvaluationType As EvaluationType = EvaluationType.None
+    Public Property NeedProposal As EvaluationNeedProposal = EvaluationNeedProposal.None
     Public Property EvaluationDate As Date = Today
     Public Property StartTime As New TimeSpan(0, 0, 0)
     Public Property EndTime As New TimeSpan(0, 0, 0)
@@ -100,7 +101,8 @@ Public Class Evaluation
         Dim Coalescent As EvaluationPart
         Evaluation.EvaluationNumber = GetEvaluationNumber(EvaluationCreationType.Imported)
         Evaluation.EvaluationCreationType = EvaluationCreationType.Imported
-        Evaluation.EvaluationType = EvaluationType.Gathering
+        Evaluation.EvaluationType = EvaluationType.None
+        Evaluation.NeedProposal = If(Data("needproposal") = True, EvaluationNeedProposal.Yes, EvaluationNeedProposal.No)
         Evaluation.TechnicalAdvice = Data("advice")
         Evaluation.Customer = New Person().Load(Data("customer")("person_id"), False)
         Evaluation.Compressor = Evaluation.Customer.Compressors.SingleOrDefault(Function(x) x.ID = Data("compressor")("compressor_id"))
@@ -190,7 +192,8 @@ Public Class Evaluation
         SetID(0)
         SetCreation(Today)
         _Status = EvaluationStatus.Disapproved
-        EvaluationType = EvaluationType.Gathering
+        EvaluationType = EvaluationType.None
+        NeedProposal = EvaluationNeedProposal.None
         EvaluationDate = Today
         StartTime = New TimeSpan(0, 0, 0)
         EndTime = New TimeSpan(0, 0, 0)
@@ -233,6 +236,7 @@ Public Class Evaluation
                         SetIsSaved(True)
                         _Status = TableResult.Rows(0).Item("statusid")
                         EvaluationType = TableResult.Rows(0).Item("evaluationtypeid")
+                        NeedProposal = TableResult.Rows(0).Item("needproposalid")
                         EvaluationDate = TableResult.Rows(0).Item("evaluationdate")
                         StartTime = TimeSpan.Parse(TableResult.Rows(0).Item("starttime"))
                         EndTime = TimeSpan.Parse(TableResult.Rows(0).Item("endtime"))
@@ -428,6 +432,7 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     CmdEvaluation.Parameters.AddWithValue("@statusid", CInt(Status))
                     CmdEvaluation.Parameters.AddWithValue("@evaluationtypeid", CInt(EvaluationType))
+                    CmdEvaluation.Parameters.AddWithValue("@needproposalid", CInt(NeedProposal))
                     CmdEvaluation.Parameters.AddWithValue("@evaluationdate", EvaluationDate.ToString("yyyy-MM-dd"))
                     CmdEvaluation.Parameters.AddWithValue("@starttime", StartTime.ToString("hh\:mm"))
                     CmdEvaluation.Parameters.AddWithValue("@endtime", EndTime.ToString("hh\:mm"))
@@ -510,6 +515,7 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@id", ID)
                     CmdEvaluation.Parameters.AddWithValue("@statusid", CInt(Status))
                     CmdEvaluation.Parameters.AddWithValue("@evaluationtypeid", CInt(EvaluationType))
+                    CmdEvaluation.Parameters.AddWithValue("@needproposalid", CInt(NeedProposal))
                     CmdEvaluation.Parameters.AddWithValue("@evaluationdate", EvaluationDate)
                     CmdEvaluation.Parameters.AddWithValue("@starttime", StartTime.ToString("hh\:mm"))
                     CmdEvaluation.Parameters.AddWithValue("@endtime", EndTime.ToString("hh\:mm"))
@@ -917,5 +923,4 @@ Public Class Evaluation
         Loop
         Return EvaluationNumber
     End Function
-
 End Class

@@ -15,7 +15,8 @@ Public Class FrmEvaluation
     Private _SelectedPhoto As EvaluationPhoto
     Private _Resizer As FluidResizer
     Private _User As User
-
+    Private _UcEvaluationType As UcEvaluationType
+    Private _UcEvaluationNeedProposal As UcEvaluationNeedProposal
 
     Private Property SelectedPhoto As EvaluationPhoto
         Get
@@ -259,37 +260,27 @@ Public Class FrmEvaluation
         _EvaluationsForm = EvaluationsForm
         _EvaluationsGrid = _EvaluationsForm.DgvData
         _Filter = CType(_EvaluationsForm.PgFilter.SelectedObject, EvaluationFilter)
-        _Resizer = New FluidResizer(Me)
-        _User = Locator.GetInstance(Of Session).User
-        '_UcEvaluationType = New UcEvaluationType()
-        'CcoEvaluationType.DropDownControl = _UcEvaluationType
-        '_UcNeedProposal = New UcEvaluationNeedProposal()
-        'CcoNeedProposal.DropDownControl = _UcNeedProposal
-        LoadData()
         LoadForm()
+        LoadData()
     End Sub
     Public Sub New(Evaluation As Evaluation)
         InitializeComponent()
         _Evaluation = Evaluation
-        _Resizer = New FluidResizer(Me)
-        _User = Locator.GetInstance(Of Session).User
-        '_UcEvaluationType = New UcEvaluationType()
-        'CcoEvaluationType.DropDownControl = _UcEvaluationType
-        '_UcNeedProposal = New UcEvaluationNeedProposal()
-        'CcoNeedProposal.DropDownControl = _UcNeedProposal
         TsNavigation.Visible = False
         TsNavigation.Enabled = False
         TcEvaluation.Height -= TsNavigation.Height
         Height -= TsNavigation.Height
-        LoadData()
-        LoadForm()
         LblStatus.Visible = True
         LblStatusValue.Visible = True
         BtnStatusValue.Visible = False
+        LoadForm()
+        LoadData()
     End Sub
     Private Sub LoadForm()
         ControlHelper.EnableControlDoubleBuffer(DgvPartWorkedHour, True)
         ControlHelper.EnableControlDoubleBuffer(DgvPartElapsedDay, True)
+        _Resizer = New FluidResizer(Me)
+        _User = Locator.GetInstance(Of Session).User
         DgvNavigator.DataGridView = _EvaluationsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
@@ -299,7 +290,24 @@ Public Class FrmEvaluation
         LblDocumentPage.Text = Nothing
         TxtEvaluationNumber.ReadOnly = _Evaluation.EvaluationCreationType <> EvaluationCreationType.Manual
         Tip.SetToolTip(LblAverageWorkLoad, "Carga Média de Trabalho")
+        _UcEvaluationType = New UcEvaluationType()
+        CcoEvaluationType.DropDownControl = _UcEvaluationType
+        _UcEvaluationNeedProposal = New UcEvaluationNeedProposal()
+        CcoEvaluationNeedProposal.DropDownControl = _UcEvaluationNeedProposal
         RefreshPhotoControls()
+        AddHandler _UcEvaluationType.CheckedChanged, AddressOf EvaluationTypeChanged
+        AddHandler _UcEvaluationNeedProposal.CheckedChanged, AddressOf EvaluationNeedProposalChanged
+    End Sub
+
+    Private Sub EvaluationTypeChanged()
+        BtnEvaluationType.Text = $"Tipo: { EnumHelper.GetEnumDescription(_UcEvaluationType.SelectedType).ToTitle}"
+        EprValidation.Clear()
+        If Not _Loading Then BtnSave.Enabled = True
+    End Sub
+    Private Sub EvaluationNeedProposalChanged()
+        BtnNeedProposal.Text = $"Propósta Necessária: {EnumHelper.GetEnumDescription(_UcEvaluationNeedProposal.SelectedNeedProposal).ToTitle}"
+        EprValidation.Clear()
+        If Not _Loading Then BtnSave.Enabled = True
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -313,8 +321,8 @@ Public Class FrmEvaluation
         BtnApprove.Visible = _Evaluation.Status <> EvaluationStatus.Approved
         BtnReject.Visible = _Evaluation.Status <> EvaluationStatus.Rejected
         BtnDisapprove.Visible = _Evaluation.Status <> EvaluationStatus.Disapproved
-        'RbtGathering.Checked = _Evaluation.EvaluationType = EvaluationType.Gathering
-        'RbtExecution.Checked = _Evaluation.EvaluationType = EvaluationType.Execution
+        _UcEvaluationType.SelectedType = _Evaluation.EvaluationType
+        _UcEvaluationNeedProposal.SelectedNeedProposal = _Evaluation.NeedProposal
         DbxEvaluationDate.Text = _Evaluation.EvaluationDate
         TxtStartTime.Text = _Evaluation.StartTime.ToString("hh\:mm")
         TxtEndTime.Text = _Evaluation.EndTime.ToString("hh\:mm")
@@ -770,12 +778,8 @@ Public Class FrmEvaluation
             If IsValidFieldsToSave() Then
                 Try
                     Cursor = Cursors.WaitCursor
-
-
-                    '_Evaluation.EvaluationType = If(RbtGathering.Checked, EvaluationType.Gathering, EvaluationType.Execution)
-
-
-
+                    _Evaluation.EvaluationType = _UcEvaluationType.SelectedType
+                    _Evaluation.NeedProposal = _UcEvaluationNeedProposal.SelectedNeedProposal
                     _Evaluation.EvaluationDate = DbxEvaluationDate.Text
                     _Evaluation.StartTime = TimeSpan.Parse(TxtStartTime.Text.Insert(2, ":"))
                     _Evaluation.EndTime = TimeSpan.Parse(TxtEndTime.Text.Insert(2, ":"))
@@ -1340,14 +1344,14 @@ Public Class FrmEvaluation
             End Using
         End If
         If _Evaluation.PartsWorkedHour.Any(Function(x) x.Sold) Or _Evaluation.PartsElapsedDay.Any(Function(x) x.Sold) Then
-            'RbtExecution.Checked = True
+            _UcEvaluationType.SelectedType = EvaluationType.Execution
         Else
-            'If RbtExecution.Checked Then
-            If CMessageBox.Show("Nenhuma das peças controladas foi vendida, deseja marcar o tipo da avaliação como levantamento?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                ' RbtGathering.Checked = True
+            If _UcEvaluationType.SelectedType = EvaluationType.Execution Then
+                If CMessageBox.Show("Nenhuma das peças controladas foi vendida, deseja marcar o tipo da avaliação como levantamento?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+                    _UcEvaluationType.SelectedType = EvaluationType.Gathering
+                End If
             End If
-            End If
-        ' End If
+        End If
         If Not BtnSave.Enabled Then
             BtnSave.Enabled = Result = DialogResult.OK
         End If

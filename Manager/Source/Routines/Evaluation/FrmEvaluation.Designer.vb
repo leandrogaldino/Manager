@@ -457,7 +457,7 @@ Partial Class FrmEvaluation
         Me.GroupBox2.Location = New System.Drawing.Point(6, 259)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(395, 120)
-        Me.GroupBox2.TabIndex = 3
+        Me.GroupBox2.TabIndex = 1
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Técnicos"
         '
@@ -483,7 +483,7 @@ Partial Class FrmEvaluation
         Me.DgvTechnician.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.DgvTechnician.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DgvTechnician.Size = New System.Drawing.Size(389, 73)
-        Me.DgvTechnician.TabIndex = 0
+        Me.DgvTechnician.TabIndex = 1
         Me.DgvTechnician.TabStop = False
         '
         'TsTechnician
@@ -497,7 +497,7 @@ Partial Class FrmEvaluation
         Me.TsTechnician.Name = "TsTechnician"
         Me.TsTechnician.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.TsTechnician.Size = New System.Drawing.Size(389, 25)
-        Me.TsTechnician.TabIndex = 1
+        Me.TsTechnician.TabIndex = 0
         Me.TsTechnician.Text = "ToolStrip2"
         '
         'BtnIncludeTechnician
@@ -538,7 +538,7 @@ Partial Class FrmEvaluation
         Me.GbxPartElapsedDay.Location = New System.Drawing.Point(410, 259)
         Me.GbxPartElapsedDay.Name = "GbxPartElapsedDay"
         Me.GbxPartElapsedDay.Size = New System.Drawing.Size(608, 120)
-        Me.GbxPartElapsedDay.TabIndex = 2
+        Me.GbxPartElapsedDay.TabIndex = 3
         Me.GbxPartElapsedDay.TabStop = False
         Me.GbxPartElapsedDay.Text = "Controla Por Dia Corrido"
         '
@@ -571,7 +571,7 @@ Partial Class FrmEvaluation
         Me.GbxPartWorkedHour.Location = New System.Drawing.Point(410, 7)
         Me.GbxPartWorkedHour.Name = "GbxPartWorkedHour"
         Me.GbxPartWorkedHour.Size = New System.Drawing.Size(610, 249)
-        Me.GbxPartWorkedHour.TabIndex = 1
+        Me.GbxPartWorkedHour.TabIndex = 2
         Me.GbxPartWorkedHour.TabStop = False
         Me.GbxPartWorkedHour.Text = "Controla Por Hora Trabalhada"
         '
@@ -640,7 +640,7 @@ Partial Class FrmEvaluation
         Me.BtnHasRepair.Location = New System.Drawing.Point(165, 22)
         Me.BtnHasRepair.Name = "BtnHasRepair"
         Me.BtnHasRepair.Size = New System.Drawing.Size(106, 25)
-        Me.BtnHasRepair.TabIndex = 25
+        Me.BtnHasRepair.TabIndex = 1
         Me.BtnHasRepair.Text = "Reparo: N/A"
         Me.BtnHasRepair.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.BtnHasRepair.TooltipText = "Informa se houve algum serviço no compressor"
@@ -655,7 +655,7 @@ Partial Class FrmEvaluation
         Me.BtnNeedProposal.Location = New System.Drawing.Point(277, 22)
         Me.BtnNeedProposal.Name = "BtnNeedProposal"
         Me.BtnNeedProposal.Size = New System.Drawing.Size(111, 25)
-        Me.BtnNeedProposal.TabIndex = 1
+        Me.BtnNeedProposal.TabIndex = 2
         Me.BtnNeedProposal.Text = "Proposta: N/A"
         Me.BtnNeedProposal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.BtnNeedProposal.TooltipText = "Informa se essa avaliação irá gerar uma proposta"
@@ -790,7 +790,7 @@ Partial Class FrmEvaluation
         Me.QbxCustomer.Relations.Add(Relation3)
         Me.QbxCustomer.Size = New System.Drawing.Size(382, 23)
         Me.QbxCustomer.Suffix = Nothing
-        Me.QbxCustomer.TabIndex = 14
+        Me.QbxCustomer.TabIndex = 12
         '
         'TxtEvaluationNumber
         '
@@ -799,7 +799,7 @@ Partial Class FrmEvaluation
         Me.TxtEvaluationNumber.MaxLength = 10
         Me.TxtEvaluationNumber.Name = "TxtEvaluationNumber"
         Me.TxtEvaluationNumber.Size = New System.Drawing.Size(105, 23)
-        Me.TxtEvaluationNumber.TabIndex = 3
+        Me.TxtEvaluationNumber.TabIndex = 4
         Me.TxtEvaluationNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'LblEndTime
@@ -808,7 +808,7 @@ Partial Class FrmEvaluation
         Me.LblEndTime.Location = New System.Drawing.Point(310, 57)
         Me.LblEndTime.Name = "LblEndTime"
         Me.LblEndTime.Size = New System.Drawing.Size(30, 17)
-        Me.LblEndTime.TabIndex = 8
+        Me.LblEndTime.TabIndex = 9
         Me.LblEndTime.Text = "Fim"
         '
         'LblStartTime
@@ -817,7 +817,7 @@ Partial Class FrmEvaluation
         Me.LblStartTime.Location = New System.Drawing.Point(229, 57)
         Me.LblStartTime.Name = "LblStartTime"
         Me.LblStartTime.Size = New System.Drawing.Size(42, 17)
-        Me.LblStartTime.TabIndex = 6
+        Me.LblStartTime.TabIndex = 7
         Me.LblStartTime.Text = "Inicio"
         '
         'TxtEndTime
@@ -826,7 +826,7 @@ Partial Class FrmEvaluation
         Me.TxtEndTime.Mask = "00:00"
         Me.TxtEndTime.Name = "TxtEndTime"
         Me.TxtEndTime.Size = New System.Drawing.Size(75, 23)
-        Me.TxtEndTime.TabIndex = 9
+        Me.TxtEndTime.TabIndex = 10
         Me.TxtEndTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.TxtEndTime.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals
         Me.TxtEndTime.ValidatingType = GetType(Date)
@@ -838,7 +838,7 @@ Partial Class FrmEvaluation
         Me.TxtStartTime.Mask = "00:00"
         Me.TxtStartTime.Name = "TxtStartTime"
         Me.TxtStartTime.Size = New System.Drawing.Size(75, 23)
-        Me.TxtStartTime.TabIndex = 7
+        Me.TxtStartTime.TabIndex = 8
         Me.TxtStartTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.TxtStartTime.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals
         Me.TxtStartTime.ValidatingType = GetType(Date)
@@ -849,7 +849,7 @@ Partial Class FrmEvaluation
         Me.CbxManualAverageWorkLoad.Location = New System.Drawing.Point(373, 198)
         Me.CbxManualAverageWorkLoad.Name = "CbxManualAverageWorkLoad"
         Me.CbxManualAverageWorkLoad.Size = New System.Drawing.Size(15, 14)
-        Me.CbxManualAverageWorkLoad.TabIndex = 23
+        Me.CbxManualAverageWorkLoad.TabIndex = 22
         Me.CbxManualAverageWorkLoad.UseVisualStyleBackColor = True
         '
         'FlpCustomer
@@ -861,7 +861,7 @@ Partial Class FrmEvaluation
         Me.FlpCustomer.Location = New System.Drawing.Point(319, 102)
         Me.FlpCustomer.Name = "FlpCustomer"
         Me.FlpCustomer.Size = New System.Drawing.Size(69, 21)
-        Me.FlpCustomer.TabIndex = 15
+        Me.FlpCustomer.TabIndex = 13
         '
         'BtnFilterCustomer
         '
@@ -921,7 +921,7 @@ Partial Class FrmEvaluation
         Me.DbxAverageWorkLoad.Name = "DbxAverageWorkLoad"
         Me.DbxAverageWorkLoad.ReadOnly = True
         Me.DbxAverageWorkLoad.Size = New System.Drawing.Size(82, 23)
-        Me.DbxAverageWorkLoad.TabIndex = 24
+        Me.DbxAverageWorkLoad.TabIndex = 21
         Me.DbxAverageWorkLoad.Text = "0,00"
         Me.DbxAverageWorkLoad.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -934,7 +934,7 @@ Partial Class FrmEvaluation
         Me.DbxHorimeter.Location = New System.Drawing.Point(200, 215)
         Me.DbxHorimeter.Name = "DbxHorimeter"
         Me.DbxHorimeter.Size = New System.Drawing.Size(100, 23)
-        Me.DbxHorimeter.TabIndex = 21
+        Me.DbxHorimeter.TabIndex = 19
         Me.DbxHorimeter.Text = "0"
         Me.DbxHorimeter.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -944,7 +944,7 @@ Partial Class FrmEvaluation
         Me.LblEvaluationDate.Location = New System.Drawing.Point(114, 57)
         Me.LblEvaluationDate.Name = "LblEvaluationDate"
         Me.LblEvaluationDate.Size = New System.Drawing.Size(98, 17)
-        Me.LblEvaluationDate.TabIndex = 4
+        Me.LblEvaluationDate.TabIndex = 5
         Me.LblEvaluationDate.Text = "Dt. Avaliação"
         '
         'LblCustomer
@@ -953,7 +953,7 @@ Partial Class FrmEvaluation
         Me.LblCustomer.Location = New System.Drawing.Point(3, 103)
         Me.LblCustomer.Name = "LblCustomer"
         Me.LblCustomer.Size = New System.Drawing.Size(54, 17)
-        Me.LblCustomer.TabIndex = 13
+        Me.LblCustomer.TabIndex = 11
         Me.LblCustomer.Text = "Cliente"
         '
         'LblAverageWorkLoad
@@ -962,7 +962,7 @@ Partial Class FrmEvaluation
         Me.LblAverageWorkLoad.Location = New System.Drawing.Point(303, 195)
         Me.LblAverageWorkLoad.Name = "LblAverageWorkLoad"
         Me.LblAverageWorkLoad.Size = New System.Drawing.Size(35, 17)
-        Me.LblAverageWorkLoad.TabIndex = 22
+        Me.LblAverageWorkLoad.TabIndex = 20
         Me.LblAverageWorkLoad.Text = "CMT"
         Me.Tip.SetToolTip(Me.LblAverageWorkLoad, "Carga Média de Trabalho")
         '
@@ -972,7 +972,7 @@ Partial Class FrmEvaluation
         Me.LblEvaluationNumber.Location = New System.Drawing.Point(6, 57)
         Me.LblEvaluationNumber.Name = "LblEvaluationNumber"
         Me.LblEvaluationNumber.Size = New System.Drawing.Size(94, 17)
-        Me.LblEvaluationNumber.TabIndex = 2
+        Me.LblEvaluationNumber.TabIndex = 3
         Me.LblEvaluationNumber.Text = "Nº Avaliação"
         '
         'LblResponsible
@@ -981,7 +981,7 @@ Partial Class FrmEvaluation
         Me.LblResponsible.Location = New System.Drawing.Point(6, 195)
         Me.LblResponsible.Name = "LblResponsible"
         Me.LblResponsible.Size = New System.Drawing.Size(88, 17)
-        Me.LblResponsible.TabIndex = 18
+        Me.LblResponsible.TabIndex = 16
         Me.LblResponsible.Text = "Responsável"
         '
         'TxtResponsible
@@ -990,7 +990,7 @@ Partial Class FrmEvaluation
         Me.TxtResponsible.Location = New System.Drawing.Point(6, 215)
         Me.TxtResponsible.Name = "TxtResponsible"
         Me.TxtResponsible.Size = New System.Drawing.Size(188, 23)
-        Me.TxtResponsible.TabIndex = 19
+        Me.TxtResponsible.TabIndex = 17
         '
         'DbxEvaluationDate
         '
@@ -998,7 +998,7 @@ Partial Class FrmEvaluation
         Me.DbxEvaluationDate.Location = New System.Drawing.Point(117, 77)
         Me.DbxEvaluationDate.Name = "DbxEvaluationDate"
         Me.DbxEvaluationDate.Size = New System.Drawing.Size(109, 23)
-        Me.DbxEvaluationDate.TabIndex = 5
+        Me.DbxEvaluationDate.TabIndex = 6
         '
         'LblHorimeter
         '
@@ -1006,7 +1006,7 @@ Partial Class FrmEvaluation
         Me.LblHorimeter.Location = New System.Drawing.Point(197, 195)
         Me.LblHorimeter.Name = "LblHorimeter"
         Me.LblHorimeter.Size = New System.Drawing.Size(72, 17)
-        Me.LblHorimeter.TabIndex = 20
+        Me.LblHorimeter.TabIndex = 18
         Me.LblHorimeter.Text = "Horímetro"
         '
         'LblCompressor
@@ -1015,7 +1015,7 @@ Partial Class FrmEvaluation
         Me.LblCompressor.Location = New System.Drawing.Point(6, 149)
         Me.LblCompressor.Name = "LblCompressor"
         Me.LblCompressor.Size = New System.Drawing.Size(85, 17)
-        Me.LblCompressor.TabIndex = 16
+        Me.LblCompressor.TabIndex = 14
         Me.LblCompressor.Text = "Compressor"
         '
         'QbxCompressor
@@ -1088,7 +1088,7 @@ Partial Class FrmEvaluation
         Me.QbxCompressor.Relations.Add(Relation4)
         Me.QbxCompressor.Size = New System.Drawing.Size(382, 23)
         Me.QbxCompressor.Suffix = Nothing
-        Me.QbxCompressor.TabIndex = 17
+        Me.QbxCompressor.TabIndex = 15
         '
         'TabTechnicalAdvice
         '

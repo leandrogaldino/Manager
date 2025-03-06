@@ -6,5 +6,5 @@
 Public Enum ConfirmationType
     <Description("SIM")> Yes = 0
     <Description("NÃO")> No = 1
-    <Description("N/A")> None = 2
+    <Description("")> None = 2
 End Enum

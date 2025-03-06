@@ -20,7 +20,7 @@ SELECT
     CASE
         WHEN evaluation.hasrepairid = 0 THEN "SIM"
         WHEN evaluation.hasrepairid = 1 THEN "NÃO"
-    END AS 'Houve Serviço',
+    END AS 'Houve Reparo',
     evaluation.evaluationdate AS 'Data Avaliação',
     evaluation.evaluationnumber AS 'Nº Avaliação',
     customer.shortname AS 'Cliente',

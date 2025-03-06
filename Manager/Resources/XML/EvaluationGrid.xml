@@ -35,7 +35,7 @@
 	<Column Index="5">
 		<Visible>True</Visible>
 		<DisplayIndex>5</DisplayIndex>
-		<Name>Houve Serviço</Name>
+		<Name>Houve Reparo</Name>
 		<Width>100</Width>
 	</Column>
     <Column Index="6">

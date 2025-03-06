@@ -36,7 +36,6 @@ Partial Class UcCallType
         Me.RbtGathering.Padding = New System.Windows.Forms.Padding(10)
         Me.RbtGathering.Size = New System.Drawing.Size(142, 41)
         Me.RbtGathering.TabIndex = 0
-        Me.RbtGathering.TabStop = True
         Me.RbtGathering.Text = "Levantamento"
         Me.RbtGathering.UseVisualStyleBackColor = True
         '
@@ -48,7 +47,6 @@ Partial Class UcCallType
         Me.RbtPreventive.Padding = New System.Windows.Forms.Padding(10)
         Me.RbtPreventive.Size = New System.Drawing.Size(115, 41)
         Me.RbtPreventive.TabIndex = 0
-        Me.RbtPreventive.TabStop = True
         Me.RbtPreventive.Text = "Preventiva"
         Me.RbtPreventive.UseVisualStyleBackColor = True
         '
@@ -60,7 +58,6 @@ Partial Class UcCallType
         Me.RbtCalled.Padding = New System.Windows.Forms.Padding(10)
         Me.RbtCalled.Size = New System.Drawing.Size(114, 41)
         Me.RbtCalled.TabIndex = 0
-        Me.RbtCalled.TabStop = True
         Me.RbtCalled.Text = "Chamado"
         Me.RbtCalled.UseVisualStyleBackColor = True
         '
@@ -72,7 +69,6 @@ Partial Class UcCallType
         Me.RbtContract.Padding = New System.Windows.Forms.Padding(10)
         Me.RbtContract.Size = New System.Drawing.Size(106, 41)
         Me.RbtContract.TabIndex = 0
-        Me.RbtContract.TabStop = True
         Me.RbtContract.Text = "Contrato"
         Me.RbtContract.UseVisualStyleBackColor = True
         '

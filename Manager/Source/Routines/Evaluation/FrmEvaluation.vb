@@ -304,7 +304,7 @@ Public Class FrmEvaluation
     End Sub
 
     Private Sub CallTypeChanged()
-        BtnCallType.Text = $"Tipo: { EnumHelper.GetEnumDescription(_UcCallType.SelectedType).ToTitle}"
+        BtnCallType.Text = $"Tipo: { EnumHelper.GetEnumDescription(_UcCallType.SelectedCallType).ToTitle}"
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
@@ -314,7 +314,7 @@ Public Class FrmEvaluation
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
     Private Sub EvaluationNeedProposalChanged()
-        BtnNeedProposal.Text = $"Propósta: {EnumHelper.GetEnumDescription(_UcEvaluationNeedProposal.SelectedAnswer).ToTitle}"
+        BtnNeedProposal.Text = $"Proposta: {EnumHelper.GetEnumDescription(_UcEvaluationNeedProposal.SelectedAnswer).ToTitle}"
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
@@ -330,7 +330,7 @@ Public Class FrmEvaluation
         BtnApprove.Visible = _Evaluation.Status <> EvaluationStatus.Approved
         BtnReject.Visible = _Evaluation.Status <> EvaluationStatus.Rejected
         BtnDisapprove.Visible = _Evaluation.Status <> EvaluationStatus.Disapproved
-        _UcCallType.SelectedType = _Evaluation.CallType
+        _UcCallType.SelectedCallType = _Evaluation.CallType
 
 
 
@@ -639,7 +639,29 @@ Public Class FrmEvaluation
         End If
     End Sub
     Private Function IsValidFieldsToSave() As Boolean
-        If String.IsNullOrWhiteSpace(TxtEvaluationNumber.Text) Then
+        If _UcCallType.SelectedCallType = CallType.None Then
+            EprValidation.SetError(BtnCallType, "Campo obrigatório.")
+            EprValidation.SetIconAlignment(BtnCallType, ErrorIconAlignment.MiddleRight)
+            EprValidation.SetIconPadding(BtnCallType, -110)
+            TcEvaluation.SelectedTab = TabMain
+            BtnCallType.Select()
+            Return False
+        ElseIf _UcHasRepair.SelectedAnswer = ConfirmationType.None Then
+            EprValidation.SetError(BtnHasRepair, "Campo obrigatório.")
+            EprValidation.SetIconAlignment(BtnHasRepair, ErrorIconAlignment.MiddleRight)
+            EprValidation.SetIconPadding(BtnHasRepair, -40)
+            TcEvaluation.SelectedTab = TabMain
+            BtnCallType.Select()
+            Return False
+        ElseIf _UcEvaluationNeedProposal.SelectedAnswer = ConfirmationType.None Then
+            EprValidation.SetError(BtnNeedProposal, "Campo obrigatório.")
+            EprValidation.SetIconAlignment(BtnNeedProposal, ErrorIconAlignment.MiddleRight)
+            EprValidation.SetIconPadding(BtnNeedProposal, -40)
+            TcEvaluation.SelectedTab = TabMain
+            BtnCallType.Select()
+            Return False
+
+        ElseIf String.IsNullOrWhiteSpace(TxtEvaluationNumber.Text) Then
             EprValidation.SetError(LblEvaluationNumber, "Campo obrigatório.")
             EprValidation.SetIconAlignment(LblEvaluationNumber, ErrorIconAlignment.MiddleRight)
             TcEvaluation.SelectedTab = TabMain
@@ -797,7 +819,7 @@ Public Class FrmEvaluation
             If IsValidFieldsToSave() Then
                 Try
                     Cursor = Cursors.WaitCursor
-                    _Evaluation.CallType = _UcCallType.SelectedType
+                    _Evaluation.CallType = _UcCallType.SelectedCallType
 
 
 
@@ -1375,11 +1397,11 @@ Public Class FrmEvaluation
             End Using
         End If
         If _Evaluation.PartsWorkedHour.Any(Function(x) x.Sold) Or _Evaluation.PartsElapsedDay.Any(Function(x) x.Sold) Then
-            _UcCallType.SelectedType = CallType.Contract
+            _UcCallType.SelectedCallType = CallType.Contract
         Else
-            If _UcCallType.SelectedType = CallType.Contract Then
+            If _UcCallType.SelectedCallType = CallType.Contract Then
                 If CMessageBox.Show("Nenhuma das peças controladas foi vendida, deseja marcar o tipo da avaliação como levantamento?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                    _UcCallType.SelectedType = CallType.Gathering
+                    _UcCallType.SelectedCallType = CallType.Gathering
                 End If
             End If
         End If

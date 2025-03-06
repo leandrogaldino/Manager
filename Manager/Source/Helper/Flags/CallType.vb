@@ -8,5 +8,5 @@ Public Enum CallType
     <Description("PREVENTIVA")> Preventive = 1
     <Description("CHAMADO")> Called = 2
     <Description("CONTRATO")> Contract = 3
-    <Description("N/A")> None = 4
+    <Description("")> None = 4
 End Enum

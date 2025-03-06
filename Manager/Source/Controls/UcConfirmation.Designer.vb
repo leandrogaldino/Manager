@@ -34,7 +34,6 @@ Partial Class UcConfirmation
         Me.RbtYes.Padding = New System.Windows.Forms.Padding(10)
         Me.RbtYes.Size = New System.Drawing.Size(68, 41)
         Me.RbtYes.TabIndex = 0
-        Me.RbtYes.TabStop = True
         Me.RbtYes.Text = "Sim"
         Me.RbtYes.UseVisualStyleBackColor = True
         '
@@ -46,11 +45,10 @@ Partial Class UcConfirmation
         Me.RbtNo.Padding = New System.Windows.Forms.Padding(10)
         Me.RbtNo.Size = New System.Drawing.Size(74, 41)
         Me.RbtNo.TabIndex = 0
-        Me.RbtNo.TabStop = True
         Me.RbtNo.Text = "Não"
         Me.RbtNo.UseVisualStyleBackColor = True
         '
-        'EvaluationNeedProposal
+        'UcConfirmation
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -59,7 +57,7 @@ Partial Class UcConfirmation
         Me.Controls.Add(Me.RbtYes)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "EvaluationNeedProposal"
+        Me.Name = "UcConfirmation"
         Me.Size = New System.Drawing.Size(157, 47)
         Me.ResumeLayout(False)
         Me.PerformLayout()

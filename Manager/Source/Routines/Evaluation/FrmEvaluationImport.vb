@@ -6,26 +6,34 @@ Public Class FrmEvaluationImport
     Private _EvaluationData As Dictionary(Of String, Object) = Nothing
     Private _EvaluationsForm As Form
     Private _RemoteDB As RemoteDB
+    Private _LocalDB As LocalDB
     Private _Storage As Storage
     Private _Session As Session
 
     Public Sub New()
         InitializeComponent()
+        InitializeDatabases()
         InitializeDbListener()
     End Sub
 
     Public Sub New(EvaluationsForm As Form)
         InitializeComponent()
-        _EvaluationsForm = EvaluationsForm
+        InitializeDatabases()
         InitializeDbListener()
+        _EvaluationsForm = EvaluationsForm
     End Sub
 
-    Private Sub InitializeDbListener()
+
+    Private Sub InitializeDatabases()
         _Session = Locator.GetInstance(Of Session)
         _Storage = Locator.GetInstance(Of Storage)
         _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
+        _LocalDB = Locator.GetInstance(Of LocalDB)
+    End Sub
+
+    Private Sub InitializeDbListener()
         Dim Condition As New List(Of RemoteDB.Condition) From {
-            New RemoteDB.WhereEqualToCondition("info.imported", False)
+            New RemoteDB.WhereEqualToCondition("info.importedid", Nothing)
         }
         _RemoteDB.StartListening("evaluations", Condition)
         AddHandler _RemoteDB.OnFirestoreChanged, Async Sub(Args)
@@ -46,14 +54,13 @@ Public Class FrmEvaluationImport
         End If
     End Sub
 
-    Private Sub FillDgv(Docs As List(Of Dictionary(Of String, Object)))
+    Private Async Sub FillDgv(Docs As List(Of Dictionary(Of String, Object)))
         ' Defina as colunas do DataGridView se ainda não estiverem definidas
         If DgvEvaluations.Columns.Count = 0 Then
             DgvEvaluations.Columns.Add("Status", "Status")
             DgvEvaluations.Columns.Add("Data", "Data")
             DgvEvaluations.Columns.Add("Cliente", "Cliente")
             DgvEvaluations.Columns.Add("Compressor", "Compressor")
-            DgvEvaluations.Columns.Add("Técnico", "Técnico")
         End If
 
         ' Limpar as linhas existentes
@@ -62,18 +69,22 @@ Public Class FrmEvaluationImport
         ' Adicione os dados ao DataGridView
         If Docs IsNot Nothing AndAlso Docs.Count > 0 Then
             For Each doc In Docs
+                Dim Status As String = If(String.IsNullOrEmpty(doc("info")("importingby")), EnumHelper.GetEnumDescription(CloudSyncStatus.NotImported), EnumHelper.GetEnumDescription(CloudSyncStatus.Importing))
+                Dim Result As LocalDB.QueryResult = Await _LocalDB.ExecuteRawQuery("SELECT c.id, c.name, pc.serialnumber, pc.sector FROM compressor c LEFT JOIN personcompressor pc ON c.id = pc.compressorid WHERE pc.id = @id", New Dictionary(Of String, Object) From {{"@id", doc("personcompressorid")}})
+                Dim CompressorName As String = Result.Data(0)("name").ToString
+                Dim SerialNumber As String = $" {Result.Data(0)("serialnumber")}"
+                Dim Sector As String = $" {Result.Data(0)("sector")}"
+                doc("compressorid") = Result.Data(0)("id")
 
-                Dim Status As String = If(String.IsNullOrEmpty(doc("info")("importing_by")), EnumHelper.GetEnumDescription(CloudSyncStatus.NotImported), EnumHelper.GetEnumDescription(CloudSyncStatus.Importing))
-                Dim CustomerName As String = doc("customer")("customer_name")
-                Dim CompressorName As String = $"{doc("compressor")("compressor_name")}"
-                Dim SerialNumber As String = If(String.IsNullOrEmpty(doc("compressor")("serial_number")), String.Empty, $"NS: {doc("compressor")("serial_number")}")
-                Dim EvaluationDate As String = CDate(doc("date")).ToString("dd/MM/yyyy")
-                Dim TechniciansList As List(Of Dictionary(Of String, Object)) = DirectCast(DirectCast(doc("technicians"), IEnumerable(Of Object)).Select(Function(Item) DirectCast(Item, Dictionary(Of String, Object))).ToList(), List(Of Dictionary(Of String, Object)))
-                Dim Technicians As List(Of String) = TechniciansList.Select(Function(tech) If(tech.ContainsKey("person_name"), tech("person_name").ToString(), String.Empty)).ToList()
+                Result = Await _LocalDB.ExecuteRawQuery("SELECT p.id, p.shortname FROM person p LEFT JOIN personcompressor pc ON p.id = pc.personid WHERE pc.id = @id", New Dictionary(Of String, Object) From {{"@id", doc("personcompressorid")}})
+                Dim CustomerName As String = Result.Data(0)("shortname").ToString
+                doc("customerid") = Result.Data(0)("id")
+                Dim EvaluationDate As String = DateTimeHelper.DateFromMilliseconds(doc("creationdate")).ToString("dd/MM/yyyy")
+
                 Dim row As New DataGridViewRow()
 
 
-                If IsDate(doc("info")("importing_date")) AndAlso Now < CDate(doc("info")("importing_date")).AddMinutes(10) Then
+                If IsDate(doc("info")("importingdate")) AndAlso Now < CDate(doc("info")("importingdate")).AddMinutes(10) Then
                     Status = EnumHelper.GetEnumDescription(CloudSyncStatus.Importing)
                 Else
                     Status = EnumHelper.GetEnumDescription(CloudSyncStatus.NotImported)
@@ -84,8 +95,7 @@ Public Class FrmEvaluationImport
                 row.Cells(0).Value = Status
                 row.Cells(1).Value = EvaluationDate
                 row.Cells(2).Value = CustomerName
-                row.Cells(3).Value = $"{CompressorName}  {SerialNumber}"
-                row.Cells(4).Value = String.Join(", ", Technicians)
+                row.Cells(3).Value = $"{CompressorName}{SerialNumber}{Sector}"
                 row.Tag = doc
                 DgvEvaluations.Rows.Add(row)
             Next
@@ -94,7 +104,7 @@ Public Class FrmEvaluationImport
         DgvEvaluations.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
         DgvEvaluations.Columns(2).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         DgvEvaluations.Columns(3).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-        DgvEvaluations.Columns(4).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+
     End Sub
 
     Private Async Sub DgvEvaluations_CellMouseDoubleClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DgvEvaluations.CellMouseDoubleClick
@@ -103,8 +113,8 @@ Public Class FrmEvaluationImport
 
     Private Async Sub SyncTimer_Tick(sender As Object, e As EventArgs) Handles SyncTimer.Tick
         If _EvaluationData IsNot Nothing AndAlso _EvaluationData.Count > 0 Then
-            If IsDate(_EvaluationData("info")("importing_date")) AndAlso Now > CDate(_EvaluationData("info")("importing_date")).AddMinutes(1) Then
-                _EvaluationData("info")("importing_date") = Now.ToString("yyyy-MM-dd HH:mm:ss")
+            If IsDate(_EvaluationData("info")("importingdate")) AndAlso Now > CDate(_EvaluationData("info")("importingdate")).AddMinutes(1) Then
+                _EvaluationData("info")("importingdate") = Now.ToString("yyyy-MM-dd HH:mm:ss")
                 Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
             End If
         End If
@@ -122,9 +132,9 @@ Public Class FrmEvaluationImport
             If Row.DataGridView.Columns.Contains("Status") Then
                 If Row.Cells("Status").Value = EnumHelper.GetEnumDescription(CloudSyncStatus.Importing) Then
                     Dim Data As Dictionary(Of String, Object) = DirectCast(Row.Tag, Dictionary(Of String, Object))
-                    If IsDate(Data("info")("importing_date")) AndAlso Now > CDate(Data("info")("importing_date")).AddMinutes(1.5) Then
-                        Data("info")("importing_date") = String.Empty
-                        Data("info")("importing_by") = String.Empty
+                    If IsDate(Data("info")("importingdate")) AndAlso Now > CDate(Data("info")("importingdate")).AddMinutes(1.5) Then
+                        Data("info")("importingdate") = Nothing
+                        Data("info")("importingby") = Nothing
                         Await _RemoteDB.ExecutePut("evaluations", Data, Data("id"))
                     End If
                 End If
@@ -161,26 +171,23 @@ Public Class FrmEvaluationImport
                 _EvaluationData = SelectedRow.Tag
                 If Not SelectedRow.Cells("Status").Value = EnumHelper.GetEnumDescription(CloudSyncStatus.Importing) Then
 
-
-
-
-                    _EvaluationData("info")("importing_date") = Now.ToString("yyyy-MM-dd HH:mm:ss")
-                    _EvaluationData("info")("importing_by") = _Session.User.Username
+                    _EvaluationData("info")("importingdate") = Now.ToString("yyyy-MM-dd HH:mm:ss")
+                    _EvaluationData("info")("importingby") = _Session.User.Username
 
                     Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
 
                     SyncTimer.Start()
 
-                    SignatureData = Await _Storage.DownloadFile(_EvaluationData("signature_url"))
+                    SignatureData = Await _Storage.DownloadFile(_EvaluationData("signaturepath"))
 
                     TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, Util.GetFilename(".png"))
                     Using SignatureStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)
                         Await SignatureStream.WriteAsync(SignatureData, 0, SignatureData.Length)
                     End Using
                     TempSignature = TempPath
-                    For Each Photo As String In _EvaluationData("photo_urls")
+                    For Each Photo As Dictionary(Of String, Object) In _EvaluationData("photos")
 
-                        PhotoData = Await _Storage.DownloadFile(Photo)
+                        PhotoData = Await _Storage.DownloadFile(Photo("path"))
 
                         TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, Util.GetFilename(".jpg"))
                         Using PhotoStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)
@@ -202,27 +209,23 @@ Public Class FrmEvaluationImport
                     End If
 
                     If EvaluationSourceForm Is Nothing OrElse (EvaluationSourceForm IsNot Nothing AndAlso EvaluationSourceForm.ResultEvaluation.ID = 0) Then
-                        _EvaluationData("info")("importing_by") = String.Empty
-                        _EvaluationData("info")("importing_date") = String.Empty
-                        _EvaluationData("info")("imported_id") = 0
-                        _EvaluationData("info")("importing_by") = String.Empty
-                        _EvaluationData("info")("importing_date") = String.Empty
-
+                        _EvaluationData("info")("importingby") = Nothing
+                        _EvaluationData("info")("importingdate") = Nothing
+                        _EvaluationData("info")("importedid") = Nothing
+                        _EvaluationData("info")("importingby") = Nothing
+                        _EvaluationData("info")("importingdate") = Nothing
                         Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
-
                     Else
-                        _EvaluationData("info")("imported") = True
-                        _EvaluationData("info")("imported_by") = _Session.User.Username
-                        _EvaluationData("info")("imported_date") = Now.ToString("dd/MM/yyyy HH:mm:ss")
-                        _EvaluationData("info")("imported_id") = EvaluationSourceForm.ResultEvaluation.ID
-                        _EvaluationData("info")("importing_by") = String.Empty
-                        _EvaluationData("info")("importing_date") = String.Empty
-
+                        _EvaluationData("info")("importedby") = _Session.User.Username
+                        _EvaluationData("info")("importeddate") = Now.ToString("dd/MM/yyyy HH:mm:ss")
+                        _EvaluationData("info")("importedid") = EvaluationSourceForm.ResultEvaluation.ID
+                        _EvaluationData("info")("importingby") = Nothing
+                        _EvaluationData("info")("importingdate") = Nothing
                         Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
 
                     End If
                 Else
-                    CMessageBox.Show($"Essa avaliação esta sendo importada por {_EvaluationData("info")("importing_by")}", CMessageBoxType.Information)
+                    CMessageBox.Show($"Essa avaliação esta sendo importada por {_EvaluationData("info")("importingby")}", CMessageBoxType.Information)
                     Cursor = Cursors.Default
                 End If
             Catch ex As Exception

@@ -3,16 +3,15 @@ SELECT
     visitschedule.creation As 'Criação',
     CASE 
 		WHEN visitschedule.statusid = 0 THEN "PENDENTE"
-        WHEN visitschedule.statusid = 1 THEN "INICIADA"
-        WHEN visitschedule.statusid = 2 THEN "FINALIZADA"
-        WHEN visitschedule.statusid = 3 THEN "CANCELADA"
+        WHEN visitschedule.statusid = 1 THEN "FINALIZADA"
+        WHEN visitschedule.statusid = 2 THEN "CANCELADA"
 	END AS 'Status',
     visitschedule.visitdate As 'Data Visita',
     CASE
-        WHEN visitschedule.visittypeid = 0 THEN "LEVANTAMENTO"
-        WHEN visitschedule.visittypeid = 1 THEN "PREVENTIVA"
-        WHEN visitschedule.visittypeid = 2 THEN "CHAMADO"
-        WHEN visitschedule.visittypeid = 3 THEN "CONTRATO"
+        WHEN visitschedule.calltypeid = 0 THEN "LEVANTAMENTO"
+        WHEN visitschedule.calltypeid = 1 THEN "PREVENTIVA"
+        WHEN visitschedule.calltypeid = 2 THEN "CHAMADO"
+        WHEN visitschedule.calltypeid = 3 THEN "CONTRATO"
     END AS 'Tipo',
     customer.shortname AS 'Cliente',    
     CONCAT(compressor.name, IF(personcompressor.serialnumber IS NOT NULL AND personcompressor.serialnumber <> '', CONCAT(' NS: ', personcompressor.serialnumber), '')) AS 'Compressor',
@@ -24,7 +23,7 @@ LEFT JOIN person AS customer ON customer.id = visitschedule.customerid
 WHERE
     IFNULL(visitschedule.id, '') LIKE @id AND
     FIND_IN_SET(visitschedule.statusid, @statusid) AND
-    IFNULL(visitschedule.visittypeid, '') LIKE @visittypeid AND    
+    IFNULL(visitschedule.calltypeid, '') LIKE @calltypeid AND    
     IFNULL(visitschedule.instructions,'') LIKE CONCAT('%', @instructions, '%') AND  
     IFNULL(customer.id,'') LIKE @customerid AND
     IFNULL(customer.document,'') LIKE CONCAT('%', @customerdocument, '%') AND

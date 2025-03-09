@@ -1,7 +1,7 @@
 UPDATE visitschedule SET
     statusid =  @statusid,
     visitdate = @visitdate,
-    visittypeid = @visittypeid,
+    calltypeid = @calltypeid,
     customerid = @customerid,
     personcompressorid = @personcompressorid,
     instructions = @instructions,

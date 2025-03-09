@@ -1,20 +1,19 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Extensions
 Imports ManagerCore
 Imports MySql.Data.MySqlClient
-Imports Syncfusion.Pdf.Tables
 
 Public Class VisitSchedule
     Inherits ParentModel
     Private _RemoteDB As RemoteDB
     Private _Evaluation As Lazy(Of Evaluation)
     Public Property Status As VisitScheduleStatus = VisitScheduleStatus.Pending
-    Public Property VisitType As VisitScheduleType = VisitType = VisitScheduleType.None
+    Public Property CallType As CallType = CallType.None
     Public Property VisitDate As Date = Today
     Public Property Customer As New Person
     Public Property Compressor As New PersonCompressor
     Public Property Instructions As String
     Public Property LastUpdate As Date = Now
+
 
     Public Sub New()
         _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
@@ -56,7 +55,7 @@ Public Class VisitSchedule
                         SetIsSaved(True)
                         Status = Convert.ToInt32(TableResult.Rows(0).Item("statusid"))
                         VisitDate = Convert.ToDateTime(TableResult.Rows(0).Item("visitdate"))
-                        VisitType = Convert.ToInt32(TableResult.Rows(0).Item("visittypeid"))
+                        CallType = Convert.ToInt32(TableResult.Rows(0).Item("calltypeid"))
                         Customer = New Person().Load(Convert.ToInt64(TableResult.Rows(0).Item("customerid")), False)
                         Compressor = Customer.Compressors.SingleOrDefault(Function(x) x.ID = Convert.ToInt64(TableResult.Rows(0).Item("personcompressorid")))
                         Instructions = Convert.ToString(TableResult.Rows(0).Item("instructions"))
@@ -100,12 +99,13 @@ Public Class VisitSchedule
                     Cmd.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     Cmd.Parameters.AddWithValue("@statusid", Convert.ToInt32(Status))
                     Cmd.Parameters.AddWithValue("@visitdate", VisitDate.ToString("yyyy-MM-dd"))
-                    Cmd.Parameters.AddWithValue("@visittypeid", Convert.ToInt32(VisitType))
+                    Cmd.Parameters.AddWithValue("@calltypeid", Convert.ToInt32(CallType))
                     Cmd.Parameters.AddWithValue("@customerid", Customer.ID)
                     Cmd.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
                     Cmd.Parameters.AddWithValue("@instructions", If(String.IsNullOrEmpty(Instructions), DBNull.Value, Instructions))
                     Cmd.Parameters.AddWithValue("@lastupdate", LastUpdate)
                     Cmd.Parameters.AddWithValue("@userid", User.ID)
+                    Cmd.Parameters.AddWithValue("@evaluationid", DBNull.Value)
                     Cmd.ExecuteNonQuery()
                     SetID(Cmd.LastInsertedId)
                 End Using
@@ -120,12 +120,13 @@ Public Class VisitSchedule
                 Cmd.Parameters.AddWithValue("@id", ID)
                 Cmd.Parameters.AddWithValue("@statusid", CInt(Status))
                 Cmd.Parameters.AddWithValue("@visitdate", VisitDate.ToString("yyyy-MM-dd"))
-                Cmd.Parameters.AddWithValue("@visittypeid", Convert.ToInt32(VisitType))
+                Cmd.Parameters.AddWithValue("@calltypeid", Convert.ToInt32(CallType))
                 Cmd.Parameters.AddWithValue("@customerid", Customer.ID)
                 Cmd.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
                 Cmd.Parameters.AddWithValue("@instructions", If(String.IsNullOrEmpty(Instructions), DBNull.Value, Instructions))
                 Cmd.Parameters.AddWithValue("@lastupdate", LastUpdate)
                 Cmd.Parameters.AddWithValue("@userid", User.ID)
+                Cmd.Parameters.AddWithValue("@evaluationid", If(_Evaluation IsNot Nothing, _Evaluation.Value.ID, DBNull.Value))
                 Cmd.ExecuteNonQuery()
             End Using
         End Using

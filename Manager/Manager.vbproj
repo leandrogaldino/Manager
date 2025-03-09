@@ -701,7 +701,6 @@
     <Compile Include="Source\Helper\Flags\Routine.vb" />
     <Compile Include="Source\Helper\Flags\SimpleStatus.vb" />
     <Compile Include="Source\Helper\Flags\VisitScheduleStatus.vb" />
-    <Compile Include="Source\Helper\Flags\VisitScheduleType.vb" />
     <Compile Include="Source\Routines\PrivilegePreset\FrmPrivilegePreset.Designer.vb">
       <DependentUpon>FrmPrivilegePreset.vb</DependentUpon>
     </Compile>

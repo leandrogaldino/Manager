@@ -159,7 +159,7 @@ Public Class FirestoreService
     End Function
 
     Public Overrides Async Function ExecutePut(Collection As String, Data As Dictionary(Of String, Object), Optional DocumentID As String = Nothing) As Task(Of DateTime)
-        Dim DocRef As DocumentReference = If(Not String.IsNullOrEmpty(DocumentID), _Database.Collection(Collection).Document(DocumentID.Replace(".", Nothing).Replace("-", Nothing).Replace("/", Nothing)), _Database.Collection(Collection).Document())
+        Dim DocRef As DocumentReference = If(Not String.IsNullOrEmpty(DocumentID), _Database.Collection(Collection).Document(DocumentID), _Database.Collection(Collection).Document())
         Dim Result As WriteResult = Await DocRef.SetAsync(Data)
         Return Result.UpdateTime.ToDateTime
     End Function

@@ -71,10 +71,10 @@ Public Class FrmVisitSchedule
         LblIDValue.Text = _VisitSchedule.ID
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_VisitSchedule.Status)
         LblCreationValue.Text = _VisitSchedule.Creation.ToString("dd/MM/yyyy")
-        RbtGathering.Checked = _VisitSchedule.VisitType = VisitScheduleType.Gathering
-        RbtPreventive.Checked = _VisitSchedule.VisitType = VisitScheduleType.Preventive
-        RbtCalled.Checked = _VisitSchedule.VisitType = VisitScheduleType.Called
-        RbtContract.Checked = _VisitSchedule.VisitType = VisitScheduleType.Contract
+        RbtGathering.Checked = _VisitSchedule.CallType = CallType.Gathering
+        RbtPreventive.Checked = _VisitSchedule.CallType = CallType.Preventive
+        RbtCalled.Checked = _VisitSchedule.CallType = CallType.Called
+        RbtContract.Checked = _VisitSchedule.CallType = CallType.Contract
         DbxEvaluationDate.Text = _VisitSchedule.VisitDate
         QbxCompressor.Conditions.Clear()
         QbxCompressor.Parameters.Clear()
@@ -279,7 +279,7 @@ Public Class FrmVisitSchedule
         End If
         If Not IsValidFields() Then Return False
         _VisitSchedule.Status = EnumHelper.GetEnumValue(Of VisitScheduleStatus)(BtnStatusValue.Text)
-        _VisitSchedule.VisitType = EnumHelper.GetEnumValue(Of VisitScheduleType)(Controls.OfType(Of RadioButton)().FirstOrDefault(Function(r) r.Checked).Text.ToUpper())
+        _VisitSchedule.CallType = EnumHelper.GetEnumValue(Of CallType)(Controls.OfType(Of RadioButton)().FirstOrDefault(Function(r) r.Checked).Text.ToUpper())
         _VisitSchedule.VisitDate = DbxEvaluationDate.Text
         _VisitSchedule.Customer = New Person().Load(QbxCustomer.FreezedPrimaryKey, False)
         _VisitSchedule.Compressor = _VisitSchedule.Customer.Compressors.Single(Function(x) x.ID = QbxCompressor.FreezedPrimaryKey)

@@ -1,3 +1,4 @@
+[] As colunas do grid de tecnicos no FrmEvaluation não está configurada
 [] Mudar a tabela config para o xml
 [] Corrigir o UcCallType
 [] Se excluir uma schedule, e ela existir na nuvem, entao mudar o visible dela na nuvem pra false

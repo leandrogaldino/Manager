@@ -234,6 +234,9 @@ Public Class TaskCloudSync
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
             Response.Text = $"Sincronização com a núvem - Ocorreu um erro executar a sincronização - {Exception.Message}"
+
+            If Not Response.Event.IsInitialized Then Response.Event.SetInitialEvent($"Sincronização com a núvem {If(Not IsManual, "automático", "manual")} - Iniciando")
+
             Response.Event.AddChildEvent($"Ocorreu um erro executar a sincronização - {Exception.Message}")
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForJob)

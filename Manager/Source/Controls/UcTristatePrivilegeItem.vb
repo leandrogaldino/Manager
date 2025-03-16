@@ -1,6 +1,6 @@
 ﻿Imports ControlLibrary
 Public Class UcTristatePrivilegeItem
-    Public Event ChechedChanged As EventHandler
+    Public Event CheckedChanged As EventHandler
     Public Property Routine As Routine
         Get
             Return EnumHelper.GetEnumValue(Of Routine)(LblPrivilege.Text)
@@ -85,7 +85,7 @@ Public Class UcTristatePrivilegeItem
         OnCheckedChanged()
     End Sub
     Private Sub OnCheckedChanged()
-        RaiseEvent ChechedChanged(Me, EventArgs.Empty)
+        RaiseEvent CheckedChanged(Me, EventArgs.Empty)
     End Sub
 End Class
 

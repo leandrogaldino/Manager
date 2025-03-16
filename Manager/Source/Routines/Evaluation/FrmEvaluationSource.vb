@@ -1,6 +1,4 @@
-﻿Imports ControlLibrary
-
-Public Class FrmEvaluationSource
+﻿Public Class FrmEvaluationSource
 
     Public Property ResultEvaluation As Evaluation
     Public Sub New(EvaluationData As Dictionary(Of String, Object), Signature As String, Photos As List(Of String))
@@ -19,22 +17,22 @@ Public Class FrmEvaluationSource
 
 
         ImportedEvaluation = Evaluation.FromCloud(EvaluationData, Signature, Photos)
-            CalculatedEvaluation = Evaluation.FromCloud(EvaluationData, Signature, Photos)
-            CalculatedEvaluation.Calculate()
+        CalculatedEvaluation = Evaluation.FromCloud(EvaluationData, Signature, Photos)
+        CalculatedEvaluation.Calculate()
 
-            ResultEvaluation = CalculatedEvaluation
-            For Each p In CalculatedEvaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind)
-                PartTile = New UcEvaluationSourcePart(p.Part.ToString, ImportedEvaluation.PartsWorkedHour.First(Function(x) x.Part.ID = p.Part.ID).CurrentCapacity, p.CurrentCapacity)
-                PartTile.Tag = p
-                AddHandler PartTile.ValidateRequired, AddressOf Control_Click
-                FlpContainer.Controls.Add(PartTile)
-            Next p
-            For Each p In CalculatedEvaluation.PartsElapsedDay.Where(Function(x) x.Part.PartBind)
-                PartTile = New UcEvaluationSourcePart(p.Part.ToString, ImportedEvaluation.PartsElapsedDay.First(Function(x) x.Part.ID = p.Part.ID).CurrentCapacity, p.CurrentCapacity)
-                PartTile.Tag = p
-                AddHandler PartTile.ValidateRequired, AddressOf Control_Click
-                FlpContainer.Controls.Add(PartTile)
-            Next p
+        ResultEvaluation = CalculatedEvaluation
+        For Each p In CalculatedEvaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind)
+            PartTile = New UcEvaluationSourcePart(p.Part.ToString, ImportedEvaluation.PartsWorkedHour.First(Function(x) x.Part.ID = p.Part.ID).CurrentCapacity, p.CurrentCapacity)
+            PartTile.Tag = p
+            AddHandler PartTile.ValidateRequired, AddressOf Control_Click
+            FlpContainer.Controls.Add(PartTile)
+        Next p
+        For Each p In CalculatedEvaluation.PartsElapsedDay.Where(Function(x) x.Part.PartBind)
+            PartTile = New UcEvaluationSourcePart(p.Part.ToString, ImportedEvaluation.PartsElapsedDay.First(Function(x) x.Part.ID = p.Part.ID).CurrentCapacity, p.CurrentCapacity)
+            PartTile.Tag = p
+            AddHandler PartTile.ValidateRequired, AddressOf Control_Click
+            FlpContainer.Controls.Add(PartTile)
+        Next p
 
 
 
@@ -73,9 +71,9 @@ Public Class FrmEvaluationSource
         Next Part
 
         If ResultEvaluation.PartsWorkedHour.Any(Function(x) x.Sold) Or ResultEvaluation.PartsElapsedDay.Any(Function(x) x.Sold) Then
-            ResultEvaluation.EvaluationType = EvaluationType.Execution
+            ResultEvaluation.CallType = CallType.Contract
         Else
-            ResultEvaluation.EvaluationType = EvaluationType.Gathering
+            ResultEvaluation.CallType = CallType.Gathering
         End If
 
         DialogResult = DialogResult.OK

@@ -65,7 +65,8 @@ Public Class EmailModel
         Name = Nothing
         Subject = Nothing
         Body = Nothing
-        Signature = New EmailSignature
+        Signature = New EmailSignature()
+        If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As EmailModel
         Dim TableResult As DataTable

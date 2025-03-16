@@ -3,7 +3,7 @@ SELECT
 	visitschedule.creation,
     visitschedule.statusid,
 	visitschedule.visitdate,
-	visitschedule.visittypeid,
+	visitschedule.calltypeid,
 	visitschedule.customerid,
 	visitschedule.personcompressorid,
 	visitschedule.instructions,

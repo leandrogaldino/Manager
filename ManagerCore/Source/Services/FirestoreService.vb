@@ -163,6 +163,39 @@ Public Class FirestoreService
         Dim Result As WriteResult = Await DocRef.SetAsync(Data)
         Return Result.UpdateTime.ToDateTime
     End Function
+
+
+    Public Overrides Async Function ExecuteUpdate(Collection As String, FieldsToUpdate As Dictionary(Of String, Object), Args As List(Of Condition)) As Task(Of Integer)
+        If Args Is Nothing OrElse Args.Count = 0 Then
+            Throw New ArgumentException("As condições (Args) não podem ser nulas ou vazias.")
+        End If
+
+        Try
+            ' Cria a query com base nas condições fornecidas
+            Dim QueryRef As Query = _Database.Collection(Collection)
+            QueryRef = ProcessArgs(QueryRef, Args)
+
+            ' Busca os documentos que atendem às condições
+            Dim Snapshot As QuerySnapshot = Await QueryRef.GetSnapshotAsync()
+
+            Dim UpdatedCount As Integer = 0
+
+            ' Atualiza os campos para cada documento encontrado
+            For Each Doc As DocumentSnapshot In Snapshot.Documents
+                Await Doc.Reference.UpdateAsync(FieldsToUpdate)
+                UpdatedCount += 1
+            Next
+
+            ' Retorna a quantidade de documentos atualizados
+            Return UpdatedCount
+        Catch ex As Exception
+            ' Opcional: Logar ou tratar o erro
+            Throw New Exception($"Erro ao atualizar documentos: {ex.Message}")
+        End Try
+    End Function
+
+
+
     Private Function ProcessArgs(Query As Query, Args As List(Of Condition)) As Query
         For Each Arg In Args
             Select Case Arg.GetType

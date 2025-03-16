@@ -646,10 +646,10 @@ Partial Class FrmPersonCompressor
         '
         Me.TabPartElapsedDay.Controls.Add(Me.DgvPartElapsedDay)
         Me.TabPartElapsedDay.Controls.Add(Me.TsPartElapsedDay)
-        Me.TabPartElapsedDay.Location = New System.Drawing.Point(4, 22)
+        Me.TabPartElapsedDay.Location = New System.Drawing.Point(4, 26)
         Me.TabPartElapsedDay.Name = "TabPartElapsedDay"
         Me.TabPartElapsedDay.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPartElapsedDay.Size = New System.Drawing.Size(437, 70)
+        Me.TabPartElapsedDay.Size = New System.Drawing.Size(437, 66)
         Me.TabPartElapsedDay.TabIndex = 7
         Me.TabPartElapsedDay.Text = "Dia Corrido"
         Me.TabPartElapsedDay.UseVisualStyleBackColor = True
@@ -672,7 +672,7 @@ Partial Class FrmPersonCompressor
         Me.DgvPartElapsedDay.RowHeadersVisible = False
         Me.DgvPartElapsedDay.RowTemplate.Height = 26
         Me.DgvPartElapsedDay.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPartElapsedDay.Size = New System.Drawing.Size(431, 39)
+        Me.DgvPartElapsedDay.Size = New System.Drawing.Size(431, 35)
         Me.DgvPartElapsedDay.TabIndex = 5
         '
         'TsPartElapsedDay
@@ -757,12 +757,12 @@ Partial Class FrmPersonCompressor
         'DgvPartWorkedHourLayout
         '
         Me.DgvPartWorkedHourLayout.DataGridView = Me.DgvPartWorkedHour
-        Me.DgvPartWorkedHourLayout.Routine = Routine.PersonCompressorPartWorkedHour
+        Me.DgvPartWorkedHourLayout.Routine = Manager.Routine.PersonCompressorPartWorkedHour
         '
         'DgvPartElapsedDayLayout
         '
         Me.DgvPartElapsedDayLayout.DataGridView = Me.DgvPartElapsedDay
-        Me.DgvPartElapsedDayLayout.Routine = Routine.PersonCompressorPartElapsedDay
+        Me.DgvPartElapsedDayLayout.Routine = Manager.Routine.PersonCompressorPartElapsedDay
         '
         'EprInformation
         '

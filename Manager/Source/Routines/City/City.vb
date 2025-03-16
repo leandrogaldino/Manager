@@ -22,6 +22,7 @@ Public Class City
         Status = SimpleStatus.Active
         Name = Nothing
         Routes = New Lazy(Of List(Of CityRoute))(Function() GetRoutes())
+        If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As City
         Dim Session = Locator.GetInstance(Of Session)

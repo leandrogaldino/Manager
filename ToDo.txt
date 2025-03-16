@@ -1,60 +1,8 @@
-[] No banco Mysql será guardado a data last check.
-
-[] A cada intervalo de tempo, sera buscado todos os registros no firestore, e todos os registros no mysql
-	que possuam o campo last update maior que a last check.
-
-[] Tudo que for maior que last check será sincronizado: Necessário para cada um desses registros, que caso o mesmo
-	registro esteja presente no mysql e na nuvem, deve-se implementar uma rotina onde prevalece o registro da núvem,
-	mas tambem salva o do mysql novamente com um outro ID mas com status de nome: "Sobrescrito".
-
-[] Ao final, atualizar last check.
-
-[] Corrigir o código dos erros das últimas rotinas.
-
-[X] Não aparecer os dois status no FrmVisitSchedule.
-
-[X] Configurar Tabindex do FrmVisitSchedule.
-
-[X] Configurar tamanho do dropdown dos QueriedBoxes do FrmVisitSchedule.
-
-[X] Fazer o XMLGrid do VisitSchedule
-
-[X] Implementar a predefinição de permissões no usuário.
-
-[X] O Grid de rotas dentro do FrmCity não está configurado.
-
-[X] Criar nova avaliação está lançando exceção.
-
-[X] Mudar o clone de todos os updates para um campo privado, igual o PrivilegePreset.
-
-[X] Fazer o alinhamento do conteúdo do Grid das peças da avaliação.
-
-[X] Reestruturar os XMLs dos Grids dos filhos.
-
-[X] Resolver os TODO's do Projeto.
-
-[X] Recriar a Predefinição de permissões.
-
-[X] A permissão de exportar as grades e imagens do painel de avaliação não está configurado. 
-
-[X] A permissão de criar avaliação automática não está configurada.
-
-[X] A permissão de agendar uma visita a partir do gerenciamento de avaliações não está configurada.
-
-[X] As permissões de Email do usuário não estão configuradas.
-
-[X] A permissão de importar avaliação não está configurada.
-
-[X] Quanto altera algum filtro do CRM o layout do DataGridView altera também.
-
-[X] Criar rotina de sincronização de dados com a núvem.
-
-[X] As Permissões BiState ainda não estão sendo salvas.
-
-[X] Diminuir o Flickening na aba de privilegios da rotina de usuário, ao carregar um registro.
-
-[X] Colocar as permissões em ordem alfabética.
-
-[X] Criar rotina de importação de avaliações da núvem para o gerenciador.
-
-[X] No FrmUser, ocultar o botão de importar predefinição, caso não esteja na aba de permissões.
+[] As colunas do grid de tecnicos no FrmEvaluation não está configurada
+[] Mudar a tabela config para o xml
+[] Corrigir o UcCallType
+[] Se excluir uma schedule, e ela existir na nuvem, entao mudar o visible dela na nuvem pra false
+[X] A avaliação deve ter uma flag, informando se a avaliação irá gerar uma proposta.
+[] Ao manipular envio e download agendamento e avaliação na núvem, não enviar status mas sim campo visible booleano.
+[] O tipo de avaliacao e tipo de visita devem ser compartilhados em um enum chamado CallTypes (Levantamento, Corretiva, Preventiva, Contrato, Nada).
+[] Fazer o ViewModel da Main do Agent.

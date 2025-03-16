@@ -18,6 +18,7 @@ Public Class ProductUnit
         Status = SimpleStatus.Active
         Name = Nothing
         ShortName = Nothing
+        If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As ProductUnit
         Dim TableResult As DataTable

@@ -41,7 +41,7 @@ Public Class FrmVisitSchedules
                 VisitScheduleForm = New FrmVisitSchedule(_VisitSchedule, Me)
                 VisitScheduleForm.ShowDialog()
             Catch ex As Exception
-                CMessageBox.Show("ERRO RT004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                CMessageBox.Show("ERRO VS004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
                 Cursor = Cursors.Default
             End Try
@@ -63,7 +63,7 @@ Public Class FrmVisitSchedules
                             If ex.Number = 1451 Then
                                 CMessageBox.Show("Esse registro não pode ser excluído pois já foi referenciado em outras rotinas.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                             Else
-                                CMessageBox.Show("ERRO RT005", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                                CMessageBox.Show("ERRO VS005", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                             End If
                         End Try
                     End If
@@ -71,7 +71,7 @@ Public Class FrmVisitSchedules
                     CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _VisitSchedule.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                 End If
             Catch ex As Exception
-                CMessageBox.Show("ERRO RT006", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                CMessageBox.Show("ERRO VS006", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
                 Cursor = Cursors.Default
             End Try
@@ -135,8 +135,6 @@ Public Class FrmVisitSchedules
                     e.CellStyle.ForeColor = Color.DarkBlue
                 Case Is = EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled)
                     e.CellStyle.ForeColor = Color.DarkRed
-                Case Is = EnumHelper.GetEnumDescription(VisitScheduleStatus.Started)
-                    e.CellStyle.ForeColor = Color.Chocolate
                 Case Is = EnumHelper.GetEnumDescription(VisitScheduleStatus.Finished)
                     e.CellStyle.ForeColor = Color.DarkGreen
             End Select

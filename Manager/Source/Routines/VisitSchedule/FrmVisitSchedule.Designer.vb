@@ -61,7 +61,6 @@ Partial Class FrmVisitSchedule
         Me.BtnPrevious = New System.Windows.Forms.ToolStripButton()
         Me.BtnNext = New System.Windows.Forms.ToolStripButton()
         Me.BtnLast = New System.Windows.Forms.ToolStripButton()
-        Me.BtnEvaluation = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TxtInstructions = New System.Windows.Forms.TextBox()
@@ -201,7 +200,7 @@ Partial Class FrmVisitSchedule
         Me.TsNavigation.BackColor = System.Drawing.Color.White
         Me.TsNavigation.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsNavigation.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsNavigation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnDelete, Me.BtnFirst, Me.BtnPrevious, Me.BtnNext, Me.BtnLast, Me.BtnEvaluation, Me.ToolStripButton1})
+        Me.TsNavigation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnDelete, Me.BtnFirst, Me.BtnPrevious, Me.BtnNext, Me.BtnLast, Me.ToolStripButton1})
         Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -268,16 +267,6 @@ Partial Class FrmVisitSchedule
         Me.BtnLast.Name = "BtnLast"
         Me.BtnLast.Size = New System.Drawing.Size(23, 22)
         Me.BtnLast.Text = "Última Rota"
-        '
-        'BtnEvaluation
-        '
-        Me.BtnEvaluation.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.BtnEvaluation.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnEvaluation.Image = Global.Manager.My.Resources.Resources.EvaluationSmall
-        Me.BtnEvaluation.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnEvaluation.Name = "BtnEvaluation"
-        Me.BtnEvaluation.Size = New System.Drawing.Size(23, 22)
-        Me.BtnEvaluation.Text = "Avaliação"
         '
         'ToolStripButton1
         '
@@ -767,7 +756,6 @@ Partial Class FrmVisitSchedule
     Friend WithEvents LblCustomer As Label
     Friend WithEvents LblCompressor As Label
     Friend WithEvents QbxCompressor As ControlLibrary.QueriedBox
-    Friend WithEvents BtnEvaluation As ToolStripButton
     Friend WithEvents LblStatusValue As ToolStripLabel
     Friend WithEvents TmrCustomer As Timer
     Friend WithEvents LblEvaluationDate As Label

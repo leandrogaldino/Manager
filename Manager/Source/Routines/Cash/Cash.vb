@@ -27,6 +27,7 @@ Public Class Cash
         Note = Nothing
         Document = New FileManager(ApplicationPaths.CashDocumentDirectory())
         CashItems = New List(Of CashItem)
+        If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As Cash
         Dim Session = Locator.GetInstance(Of Session)

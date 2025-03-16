@@ -26,6 +26,7 @@ Public Class Compressor
         Manufacturer = New Lazy(Of Person)(Function() New Person().Load(_ManufacturerID, False))
         PartsWorkedHour = New Lazy(Of List(Of CompressorPart))(Function() GetPartsWorkedHour())
         PartsElapsedDay = New Lazy(Of List(Of CompressorPart))(Function() GetPartsElapsedDay())
+        If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As Compressor
         Dim Session = Locator.GetInstance(Of Session)

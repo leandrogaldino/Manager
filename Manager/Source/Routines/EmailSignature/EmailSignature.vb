@@ -35,6 +35,7 @@ Public Class EmailSignature
         _Signature = Nothing
         Name = Nothing
         Directory = New DirectoryManager(ApplicationPaths.EmailSignatureDirectory)
+        If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As EmailSignature
         Dim TableResult As New DataTable

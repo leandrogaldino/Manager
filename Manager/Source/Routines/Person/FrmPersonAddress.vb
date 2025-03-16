@@ -421,14 +421,12 @@ Public Class FrmPersonAddress
     Private Sub BtnZipCode_Click(sender As Object, e As EventArgs) Handles BtnZipCode.Click
         Dim PersonAddress As PersonAddress
         Dim FormGet As FrmPersonAddressGetZipCode
-        TxtZipCode.Text = BrazilianFormatHelper.GetFormatedZipCode(TxtZipCode.Text)
+        TxtZipCode.Text = BrazilianFormatHelper.GetFormatedZipCode(TxtZipCode.Text).Replace(".", Nothing).Replace("-", Nothing)
         Try
             Cursor = Cursors.WaitCursor
             If InternetHelper.IsInternetAvailable() Then
                 Dim Client = New ViaCepClient()
                 Dim Result = Client.Search(TxtZipCode.Text.Trim)
-
-
                 If Result IsNot Nothing Then
                     PersonAddress = New PersonAddress With {
                             .Name = Nothing,

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Routine Id="Evaluation" Version="8">
+<Routine Id="Evaluation" Version="10">
 	<SortedColumn>-1</SortedColumn>
 	<SortDirection>0</SortDirection>
     <Column Index="0">
@@ -26,57 +26,69 @@
 		<Name>Tipo</Name>
 		<Width>135</Width>
 	</Column>
-    <Column Index="4">
-        <Visible>True</Visible>
-        <DisplayIndex>4</DisplayIndex>
-        <Name>Data Avaliação</Name>
-        <Width>145</Width>
-    </Column>
-    <Column Index="5">
-        <Visible>True</Visible>
-        <DisplayIndex>5</DisplayIndex>
-        <Name>Nº Avaliação</Name>
-        <Width>130</Width>
-    </Column>
+	<Column Index="4">
+		<Visible>True</Visible>
+		<DisplayIndex>4</DisplayIndex>
+		<Name>Proposta Necessária</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="5">
+		<Visible>True</Visible>
+		<DisplayIndex>5</DisplayIndex>
+		<Name>Houve Reparo</Name>
+		<Width>100</Width>
+	</Column>
     <Column Index="6">
         <Visible>True</Visible>
         <DisplayIndex>6</DisplayIndex>
+        <Name>Data Avaliação</Name>
+        <Width>145</Width>
+    </Column>
+    <Column Index="7">
+        <Visible>True</Visible>
+        <DisplayIndex>7</DisplayIndex>
+        <Name>Nº Avaliação</Name>
+        <Width>130</Width>
+    </Column>
+    <Column Index="8">
+        <Visible>True</Visible>
+        <DisplayIndex>8</DisplayIndex>
         <Name>Cliente</Name>
         <Width>800</Width>
     </Column>
-	<Column Index="7">
+	<Column Index="9">
 		<Visible>False</Visible>
-		<DisplayIndex>7</DisplayIndex>
+		<DisplayIndex>9</DisplayIndex>
 		<Name>Responsável</Name>
 		<Width>200</Width>
 	</Column>
-	<Column Index="8">
+	<Column Index="10">
 		<Visible>True</Visible>
-		<DisplayIndex>8</DisplayIndex>
+		<DisplayIndex>10</DisplayIndex>
 		<Name>Compressor</Name>
 		<Width>150</Width>
 	</Column>
-	<Column Index="9">
+	<Column Index="11">
 		<Visible>True</Visible>
-		<DisplayIndex>9</DisplayIndex>
+		<DisplayIndex>11</DisplayIndex>
 		<Name>Horímetro</Name>
 		<Width>100</Width>
-	</Column>
-	<Column Index="10">
-		<Visible>False</Visible>
-		<DisplayIndex>10</DisplayIndex>
-		<Name>CMT</Name>
-		<Width>70</Width>
-	</Column>
-	<Column Index="11">
-		<Visible>False</Visible>
-		<DisplayIndex>11</DisplayIndex>
-		<Name>Tempo</Name>
-		<Width>70</Width>
 	</Column>
 	<Column Index="12">
 		<Visible>False</Visible>
 		<DisplayIndex>12</DisplayIndex>
+		<Name>CMT</Name>
+		<Width>70</Width>
+	</Column>
+	<Column Index="13">
+		<Visible>False</Visible>
+		<DisplayIndex>13</DisplayIndex>
+		<Name>Tempo</Name>
+		<Width>70</Width>
+	</Column>
+	<Column Index="14">
+		<Visible>False</Visible>
+		<DisplayIndex>14</DisplayIndex>
 		<Name>Parecer Técnico</Name>
 		<Width>300</Width>
 	</Column>

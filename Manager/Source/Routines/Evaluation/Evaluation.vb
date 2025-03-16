@@ -16,7 +16,9 @@ Public Class Evaluation
         End Get
     End Property
     Public Property EvaluationCreationType As EvaluationCreationType = EvaluationCreationType.Manual
-    Public Property EvaluationType As EvaluationType = EvaluationType.Gathering
+    Public Property CallType As CallType = CallType.None
+    Public Property NeedProposal As ConfirmationType = ConfirmationType.None
+    Public Property HasRepair As ConfirmationType = ConfirmationType.None
     Public Property EvaluationDate As Date = Today
     Public Property StartTime As New TimeSpan(0, 0, 0)
     Public Property EndTime As New TimeSpan(0, 0, 0)
@@ -100,12 +102,15 @@ Public Class Evaluation
         Dim Coalescent As EvaluationPart
         Evaluation.EvaluationNumber = GetEvaluationNumber(EvaluationCreationType.Imported)
         Evaluation.EvaluationCreationType = EvaluationCreationType.Imported
-        Evaluation.EvaluationType = EvaluationType.Gathering
+        Evaluation.CallType = CallType.None
+        Evaluation.NeedProposal = If(Data("needproposal") = True, ConfirmationType.Yes, ConfirmationType.No)
+        Evaluation.HasRepair = ConfirmationType.None
         Evaluation.TechnicalAdvice = Data("advice")
-        Evaluation.Customer = New Person().Load(Data("customer")("person_id"), False)
-        Evaluation.Compressor = Evaluation.Customer.Compressors.SingleOrDefault(Function(x) x.ID = Data("compressor")("compressor_id"))
-        Evaluation.EvaluationDate = Data("date")
-        Evaluation.EndTime = TimeSpan.ParseExact(Data("end_time"), "hh\:mm", Nothing)
+        Evaluation.Customer = New Person().Load(Data("customerid"), False)
+        Evaluation.Compressor = Evaluation.Customer.Compressors.SingleOrDefault(Function(x) x.ID = Data("personcompressorid"))
+        Evaluation.EvaluationDate = DateTimeHelper.DateFromMilliseconds(Data("creationdate"))
+        Evaluation.StartTime = TimeSpan.ParseExact(Data("starttime"), "hh\:mm", Nothing)
+        Evaluation.EndTime = TimeSpan.ParseExact(Data("endtime"), "hh\:mm", Nothing)
         Evaluation.Horimeter = Data("horimeter")
         Dim AirFilter As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBindType.AirFilter).ToList
         Dim OilFilter As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBindType.OilFilter).ToList
@@ -117,43 +122,43 @@ Public Class Evaluation
                                                   End Sub)
 
         AirFilter.ForEach(Sub(x)
-                              x.CurrentCapacity = Data("parts")("air_filter")
+                              x.CurrentCapacity = Data("airfilter")
                               x.Sold = False
                               x.Lost = False
                               x.SetIsSaved(True)
                           End Sub)
         OilFilter.ForEach(Sub(x)
-                              x.CurrentCapacity = Data("parts")("oil_filter")
+                              x.CurrentCapacity = Data("oilfilter")
                               x.Sold = False
                               x.Lost = False
                               x.SetIsSaved(True)
                           End Sub)
         Separator.ForEach(Sub(x)
-                              x.CurrentCapacity = Data("parts")("separator")
+                              x.CurrentCapacity = Data("separator")
                               x.Sold = False
                               x.Lost = False
                               x.SetIsSaved(True)
                           End Sub)
         Oil.ForEach(Sub(x)
-                        x.CurrentCapacity = Data("parts")("oil")
+                        x.CurrentCapacity = Data("oil")
                         x.Sold = False
                         x.Lost = False
                         x.SetIsSaved(True)
                     End Sub)
-        For Each CoalescentData In Data("parts")("coalescents")
-            Coalescent = Evaluation.PartsElapsedDay.Where(Function(y) y.Part.PartBinded).FirstOrDefault(Function(x) x.Part.ID = CoalescentData("coalescent_id"))
+        For Each CoalescentData As Dictionary(Of String, Object) In Data("coalescents")
+            Coalescent = Evaluation.PartsElapsedDay.Where(Function(y) y.Part.PartBinded).FirstOrDefault(Function(x) x.Part.ID = CoalescentData("coalescentid"))
             If Coalescent IsNot Nothing Then
-                Coalescent.CurrentCapacity = DateDiff(DateInterval.Day, Today, CDate(CoalescentData("next_change")))
+                Coalescent.CurrentCapacity = DateDiff(DateInterval.Day, Today, DateTimeHelper.DateFromMilliseconds((CoalescentData("nextchange"))))
                 Coalescent.Sold = False
                 Coalescent.Lost = False
-                Coalescent.SetIsSaved(True)
             End If
         Next CoalescentData
+        Evaluation.PartsElapsedDay.ForEach(Sub(x) x.SetIsSaved(True))
         Evaluation.Responsible = Data("responsible")
-        Evaluation.StartTime = TimeSpan.ParseExact(Data("start_time"), "hh\:mm", Nothing)
+        Evaluation.StartTime = TimeSpan.ParseExact(Data("starttime"), "hh\:mm", Nothing)
         For Each TechnicianData In Data("technicians")
             EvaluationTechnician = New EvaluationTechnician With {
-                .Technician = New Person().Load(TechnicianData("person_id"), False)
+                .Technician = New Person().Load(TechnicianData("personid"), False)
             }
             EvaluationTechnician.SetIsSaved(True)
             Evaluation.Technicians.Add(EvaluationTechnician)
@@ -190,7 +195,9 @@ Public Class Evaluation
         SetID(0)
         SetCreation(Today)
         _Status = EvaluationStatus.Disapproved
-        EvaluationType = EvaluationType.Gathering
+        CallType = CallType.None
+        NeedProposal = ConfirmationType.None
+        HasRepair = ConfirmationType.None
         EvaluationDate = Today
         StartTime = New TimeSpan(0, 0, 0)
         EndTime = New TimeSpan(0, 0, 0)
@@ -209,6 +216,7 @@ Public Class Evaluation
         Signature = New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
         Photos = New List(Of EvaluationPhoto)
         _RejectReason = Nothing
+        If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As Evaluation
         Dim Session = Locator.GetInstance(Of Session)
@@ -231,7 +239,9 @@ Public Class Evaluation
                         SetCreation(TableResult.Rows(0).Item("creation"))
                         SetIsSaved(True)
                         _Status = TableResult.Rows(0).Item("statusid")
-                        EvaluationType = TableResult.Rows(0).Item("evaluationtypeid")
+                        CallType = TableResult.Rows(0).Item("calltypeid")
+                        NeedProposal = TableResult.Rows(0).Item("needproposalid")
+                        HasRepair = TableResult.Rows(0).Item("hasrepairid")
                         EvaluationDate = TableResult.Rows(0).Item("evaluationdate")
                         StartTime = TimeSpan.Parse(TableResult.Rows(0).Item("starttime"))
                         EndTime = TimeSpan.Parse(TableResult.Rows(0).Item("endtime"))
@@ -426,7 +436,9 @@ Public Class Evaluation
                 Using CmdEvaluation As New MySqlCommand(My.Resources.EvaluationInsert, Con)
                     CmdEvaluation.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     CmdEvaluation.Parameters.AddWithValue("@statusid", CInt(Status))
-                    CmdEvaluation.Parameters.AddWithValue("@evaluationtypeid", CInt(EvaluationType))
+                    CmdEvaluation.Parameters.AddWithValue("@calltypeid", CInt(CallType))
+                    CmdEvaluation.Parameters.AddWithValue("@needproposalid", CInt(NeedProposal))
+                    CmdEvaluation.Parameters.AddWithValue("@hasrepairid", CInt(HasRepair))
                     CmdEvaluation.Parameters.AddWithValue("@evaluationdate", EvaluationDate.ToString("yyyy-MM-dd"))
                     CmdEvaluation.Parameters.AddWithValue("@starttime", StartTime.ToString("hh\:mm"))
                     CmdEvaluation.Parameters.AddWithValue("@endtime", EndTime.ToString("hh\:mm"))
@@ -508,7 +520,9 @@ Public Class Evaluation
                 Using CmdEvaluation As New MySqlCommand(My.Resources.EvaluationUpdate, Con)
                     CmdEvaluation.Parameters.AddWithValue("@id", ID)
                     CmdEvaluation.Parameters.AddWithValue("@statusid", CInt(Status))
-                    CmdEvaluation.Parameters.AddWithValue("@evaluationtypeid", CInt(EvaluationType))
+                    CmdEvaluation.Parameters.AddWithValue("@calltypeid", CInt(CallType))
+                    CmdEvaluation.Parameters.AddWithValue("@needproposalid", CInt(NeedProposal))
+                    CmdEvaluation.Parameters.AddWithValue("@hasrepairid", CInt(HasRepair))
                     CmdEvaluation.Parameters.AddWithValue("@evaluationdate", EvaluationDate)
                     CmdEvaluation.Parameters.AddWithValue("@starttime", StartTime.ToString("hh\:mm"))
                     CmdEvaluation.Parameters.AddWithValue("@endtime", EndTime.ToString("hh\:mm"))
@@ -916,5 +930,4 @@ Public Class Evaluation
         Loop
         Return EvaluationNumber
     End Function
-
 End Class

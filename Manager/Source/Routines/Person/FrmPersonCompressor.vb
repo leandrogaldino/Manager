@@ -292,6 +292,7 @@ Public Class FrmPersonCompressor
             EprValidation.SetIconAlignment(TsPartWorkedHour, ErrorIconAlignment.MiddleLeft)
             EprValidation.SetIconPadding(TsPartWorkedHour, -90)
             DgvPartWorkedHour.Select()
+            Return False
         ElseIf Not _PersonCompressor.PartsWorkedHour.Any(Function(x) x.PartBind = CompressorPartBindType.Separator) Then
             TcPersonCompressor.SelectedTab = TabMaintenance
             TcMaintenance.SelectedTab = TabPartWorkedHour
@@ -299,6 +300,7 @@ Public Class FrmPersonCompressor
             EprValidation.SetIconAlignment(TsPartWorkedHour, ErrorIconAlignment.MiddleLeft)
             EprValidation.SetIconPadding(TsPartWorkedHour, -90)
             DgvPartWorkedHour.Select()
+            Return False
         ElseIf Not _PersonCompressor.PartsWorkedHour.Any(Function(x) x.PartBind = CompressorPartBindType.Oil) Then
             TcPersonCompressor.SelectedTab = TabMaintenance
             TcMaintenance.SelectedTab = TabPartWorkedHour
@@ -306,6 +308,7 @@ Public Class FrmPersonCompressor
             EprValidation.SetIconAlignment(TsPartWorkedHour, ErrorIconAlignment.MiddleLeft)
             EprValidation.SetIconPadding(TsPartWorkedHour, -90)
             DgvPartWorkedHour.Select()
+            Return False
         End If
         Return True
     End Function

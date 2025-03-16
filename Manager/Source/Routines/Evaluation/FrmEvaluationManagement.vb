@@ -249,7 +249,7 @@ Public Class FrmEvaluationManagement
                         .EndTime = New TimeSpan(0, 2, 0),
                         .EvaluationDate = Today,
                         .Horimeter = SelectedEvaluation.Horimeter + ((Today - SelectedEvaluation.EvaluationDate).Days * SelectedEvaluation.AverageWorkLoad),
-                        .EvaluationType = EvaluationType.Execution,
+                        .CallType = CallType.Contract,
                         .Responsible = SelectedEvaluation.Responsible,
                         .TechnicalAdvice = SelectedEvaluation.TechnicalAdvice
                     }

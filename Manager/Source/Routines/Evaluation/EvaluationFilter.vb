@@ -20,9 +20,9 @@ Public Class EvaluationFilter
 
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
-    <TypeConverter(GetType(EvaluationTypeConverter))>
+    <TypeConverter(GetType(EvaluationCallTypeConverter))>
     <DisplayName("Tipo")>
-    Public Overridable Property EvaluationType As String
+    Public Overridable Property CallType As String
 
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
@@ -84,7 +84,7 @@ Public Class EvaluationFilter
                 If Status.Approved = "Sim" Or Status.Approved = Nothing Then StatusList.Add(CInt(EvaluationStatus.Approved))
                 If Status.Rejected = "Sim" Or Status.Rejected = Nothing Then StatusList.Add(CInt(EvaluationStatus.Rejected))
                 If Status.Reviewed = "Sim" Or Status.Reviewed = Nothing Then StatusList.Add(CInt(EvaluationStatus.Reviewed))
-                If EvaluationType <> Nothing Then Cmd.Parameters.AddWithValue("@evaluationtypeid", If(EvaluationType = "Levantamento", 0, 1)) : Filtering = True Else Cmd.Parameters.AddWithValue("@evaluationtypeid", "%")
+                If CallType <> Nothing Then Cmd.Parameters.AddWithValue("@calltypeid", CInt(EnumHelper.GetEnumValue(Of CallType)(CallType.ToUpper))) : Filtering = True Else Cmd.Parameters.AddWithValue("@calltypeid", "%")
                 Cmd.Parameters.AddWithValue("@statusid", String.Join(",", StatusList)) : Filtering = True
                 If EvaluationNumber <> Nothing Then Cmd.Parameters.AddWithValue("@evaluationnumber", EvaluationNumber) : Filtering = True Else Cmd.Parameters.AddWithValue("@evaluationnumber", "%")
                 If TechnicalAdvice <> Nothing Then Cmd.Parameters.AddWithValue("@technicaladvice", TechnicalAdvice) : Filtering = True Else Cmd.Parameters.AddWithValue("@technicaladvice", "%")
@@ -135,7 +135,7 @@ Public Class EvaluationFilter
     Public Sub Clean()
         ID = Nothing
         Status = New EvaluationStatusExpandable
-        EvaluationType = Nothing
+        CallType = Nothing
         EvaluationNumber = Nothing
         Technician = New PersonExpandable
         Customer = New PersonExpandable

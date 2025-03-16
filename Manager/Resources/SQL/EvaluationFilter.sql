@@ -8,9 +8,19 @@ SELECT
         WHEN evaluation.statusid = 3 THEN "REVISADA"
 	END AS 'Status',
     CASE
-        WHEN evaluation.evaluationtypeid = 0 THEN "LEVANTAMENTO"
-        WHEN evaluation.evaluationtypeid = 1 THEN "EXECUCAO"
+        WHEN evaluation.calltypeid = 0 THEN "LEVANTAMENTO"
+        WHEN evaluation.calltypeid = 1 THEN "PREVENTIVA"
+        WHEN evaluation.calltypeid = 2 THEN "CHAMADO"
+        WHEN evaluation.calltypeid = 3 THEN "CONTRATO"
     END AS 'Tipo',
+    CASE
+        WHEN evaluation.needproposalid = 0 THEN "SIM"
+        WHEN evaluation.needproposalid = 1 THEN "NÃO"
+    END AS 'Proposta Necessária',
+    CASE
+        WHEN evaluation.hasrepairid = 0 THEN "SIM"
+        WHEN evaluation.hasrepairid = 1 THEN "NÃO"
+    END AS 'Houve Reparo',
     evaluation.evaluationdate AS 'Data Avaliação',
     evaluation.evaluationnumber AS 'Nº Avaliação',
     customer.shortname AS 'Cliente',
@@ -29,7 +39,7 @@ LEFT JOIN person AS customer ON customer.id = evaluation.customerid
 WHERE
     IFNULL(evaluation.id, '') LIKE @id AND
     FIND_IN_SET(evaluation.statusid, @statusid) AND
-    IFNULL(evaluation.evaluationtypeid, '') LIKE @evaluationtypeid AND
+    IFNULL(evaluation.calltypeid, '') LIKE @calltypeid AND
     IFNULL(evaluation.evaluationnumber,'') LIKE CONCAT('%', @evaluationnumber, '%') AND
     IFNULL(evaluation.technicaladvice,'') LIKE CONCAT('%', @technicaladvice, '%') AND
     IFNULL(technician.id,'') LIKE @technicianid AND

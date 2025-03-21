@@ -2009,10 +2009,10 @@ Namespace My.Resources
         '''        WHEN evaluation.statusid = 3 THEN &quot;REVISADA&quot;
         '''	END AS &apos;Status&apos;,
         '''    CASE
-        '''        WHEN evaluation.evaluationtypeid = 0 THEN &quot;LEVANTAMENTO&quot;
-        '''        WHEN evaluation.evaluationtypeid = 1 THEN &quot;EXECUCAO&quot;
-        '''    END AS &apos;Tipo&apos;,
-        '''    evaluation.evaluationdate AS &apos;Data Aval [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''        WHEN evaluation.calltypeid = 0 THEN &quot;LEVANTAMENTO&quot;
+        '''        WHEN evaluation.calltypeid = 1 THEN &quot;PREVENTIVA&quot;
+        '''        WHEN evaluation.calltypeid = 2 THEN &quot;CHAMADO&quot;
+        '''        WHEN evalu [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationFilter() As String
             Get
@@ -2022,7 +2022,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;Evaluation&quot; Version=&quot;8&quot;&gt;
+        '''&lt;Routine Id=&quot;Evaluation&quot; Version=&quot;10&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -2038,7 +2038,7 @@ Namespace My.Resources
         '''        &lt;Width&gt;100&lt;/Width&gt;
         '''    &lt;/Column&gt;
         '''    &lt;Column Index=&quot;2&quot;&gt;
-        '''   [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''  [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationGrid() As String
             Get
@@ -2074,7 +2074,9 @@ Namespace My.Resources
         '''(
         '''	creation,
         '''    statusid,
-        '''	evaluationtypeid,
+        '''	calltypeid,
+        '''	needproposalid,
+        '''	hasrepairid,
         '''	evaluationdate,
         '''	starttime,
         '''	endtime,
@@ -2095,15 +2097,14 @@ Namespace My.Resources
         '''(
         '''	@creation,
         '''	@statusid,
-        '''	@evaluationtypeid,
+        '''	@calltypeid,
+        '''	@needproposalid,
+        '''	@hasrepairid,
         '''	@evaluationdate,
         '''	@starttime,
         '''	@endtime,
         '''	@evaluationnumber,
-        '''	@customerid,
-        '''	@responsible,
-        '''	@personcompressorid,
-        '''	@horimete [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	@custom [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationInsert() As String
             Get
@@ -2219,7 +2220,7 @@ Namespace My.Resources
         '''	),0) hours
         '''FROM person
         '''LEFT JOIN evaluationtechnician ON evaluationtechnician.technicianid = person.id
-        '''LEFT JOIN evaluation ON evaluation.id = evaluationtechnician.evaluationid AND evaluation.statusid = 1 AND evaluation.evaluationtypeid = @evaluationtypeid A [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''LEFT JOIN evaluation ON evaluation.id = evaluationtechnician.evaluationid AND evaluation.statusid = 1 AND evaluation.calltypeid = @calltypeid AND MONTHNAME [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationManagementPanelFillChartProductivityChartSelect() As String
             Get
@@ -2591,11 +2592,81 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM evaluationreplaceditem
+        '''WHERE evaluationreplaceditem.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property EvaluationReplacedItemDelete() As String
+            Get
+                Return ResourceManager.GetString("EvaluationReplacedItemDelete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO evaluationreplaceditem
+        '''(
+        '''	evaluationid,
+        '''	creation,
+        '''	itemname,
+        '''	productid,
+        '''	quantity,
+        '''	userid
+        ''')
+        '''VALUES
+        '''(
+        '''	@evaluationid,
+        '''	@creation,
+        '''	@itemname,
+        '''	@productid,
+        '''	@quantity,
+        '''	@userid
+        ''');
+        '''.
+        '''</summary>
+        Friend ReadOnly Property EvaluationReplacedItemInsert() As String
+            Get
+                Return ResourceManager.GetString("EvaluationReplacedItemInsert", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	evaluationreplaceditem.id,
+        '''	evaluationreplaceditem.creation,
+        '''	evaluationreplaceditem.itemname,
+        '''	IFNULL(evaluationreplaceditem.productid, 0) AS productid,
+        '''	evaluationreplaceditem.quantity
+        '''FROM evaluationreplaceditem
+        '''WHERE evaluationreplaceditem.evaluationid = @evaluationid;.
+        '''</summary>
+        Friend ReadOnly Property EvaluationReplacedItemSelect() As String
+            Get
+                Return ResourceManager.GetString("EvaluationReplacedItemSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluationreplaceditem SET
+        '''	itemname = @itemname,
+        '''	productid = @productid,
+        '''	quantity = @quantity,
+        '''	userid = @userid
+        '''WHERE evaluationreplaceditem.id = @id;
+        '''.
+        '''</summary>
+        Friend ReadOnly Property EvaluationReplacedItemUpdate() As String
+            Get
+                Return ResourceManager.GetString("EvaluationReplacedItemUpdate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	evaluation.id,
         '''	evaluation.creation,
         '''    evaluation.statusid,
-        '''	evaluation.evaluationtypeid,
+        '''	evaluation.calltypeid,
+        '''	evaluation.needproposalid,
+        '''	evaluation.hasrepairid,
         '''	evaluation.evaluationdate,
         '''	evaluation.starttime,
         '''	evaluation.endtime,
@@ -2608,9 +2679,7 @@ Namespace My.Resources
         '''	evaluation.averageworkload,
         '''	evaluation.technicaladvice,
         '''	evaluation.documentname,
-        '''	evaluation.signaturename,
-        '''	evaluation.rejectreason,
-        '''	evaluation.use [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	evaluation.signature [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationSelect() As String
             Get
@@ -2648,6 +2717,32 @@ Namespace My.Resources
         Friend ReadOnly Property EvaluationTechnicianDelete() As String
             Get
                 Return ResourceManager.GetString("EvaluationTechnicianDelete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;EvaluationTechnician&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''	&lt;Column Index=&quot;0&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''		&lt;Visible&gt;False&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Ordem&lt;/Name&gt;
+        '''		&lt;Width&gt;ColumnHeader&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;1&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Técnico&lt;/Name&gt;
+        '''		&lt;Width&gt;Fill&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''		 [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property EvaluationTechnicianGrid() As String
+            Get
+                Return ResourceManager.GetString("EvaluationTechnicianGrid", resourceCulture)
             End Get
         End Property
         
@@ -2702,7 +2797,9 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluation SET
         '''    statusid =  @statusid,
-        '''    evaluationtypeid = @evaluationtypeid,
+        '''    calltypeid = @calltypeid,
+        '''    needproposalid = @needproposalid,
+        '''    hasrepairid = @hasrepairid,
         '''    evaluationdate = @evaluationdate,
         '''    starttime = @starttime,
         '''    endtime = @endtime,
@@ -2712,9 +2809,7 @@ Namespace My.Resources
         '''    personcompressorid = @personcompressorid,
         '''    horimeter = @horimeter,
         '''    manualaverageworkload = @manualaverageworkload,
-        '''    averageworkload = @averageworkload,
-        '''    technicaladvice = @technicaladvice,
-        '''    doc [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''    averageworkload = @averag [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationUpdate() As String
             Get
@@ -5934,15 +6029,15 @@ Namespace My.Resources
         '''    visitschedule.creation As &apos;Criação&apos;,
         '''    CASE 
         '''		WHEN visitschedule.statusid = 0 THEN &quot;PENDENTE&quot;
-        '''        WHEN visitschedule.statusid = 1 THEN &quot;INICIADA&quot;
-        '''        WHEN visitschedule.statusid = 2 THEN &quot;FINALIZADA&quot;
-        '''        WHEN visitschedule.statusid = 3 THEN &quot;CANCELADA&quot;
+        '''        WHEN visitschedule.statusid = 1 THEN &quot;FINALIZADA&quot;
+        '''        WHEN visitschedule.statusid = 2 THEN &quot;CANCELADA&quot;
         '''	END AS &apos;Status&apos;,
         '''    visitschedule.visitdate As &apos;Data Visita&apos;,
         '''    CASE
-        '''        WHEN visitschedule.visittypeid = 0 THEN &quot;LEVANTAMENTO&quot;
-        '''        WHEN visitschedule.visittypeid = 1 THEN &quot;PREVENTIVA&quot;
-        '''  [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''        WHEN visitschedule.calltypeid = 0 THEN &quot;LEVANTAMENTO&quot;
+        '''        WHEN visitschedule.calltypeid = 1 THEN &quot;PREVENTIVA&quot;
+        '''        WHEN visitschedule.calltypeid = 2 THEN &quot;CHAMADO&quot;
+        '''   [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property VisitScheduleFilter() As String
             Get
@@ -5952,7 +6047,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;VisitSchedule&quot; Version=&quot;1&quot;&gt;
+        '''&lt;Routine Id=&quot;VisitSchedule&quot; Version=&quot;2&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -5982,7 +6077,7 @@ Namespace My.Resources
         '''    creation,
         '''    statusid,
         '''    visitdate,
-        '''    visittypeid,
+        '''    calltypeid,
         '''    customerid,
         '''    personcompressorid,
         '''    instructions,
@@ -5995,7 +6090,7 @@ Namespace My.Resources
         '''    @creation,
         '''    @statusid,
         '''    @visitdate,
-        '''    @visittypeid,
+        '''    @calltypeid,
         '''    @customerid,
         '''    @personcompressorid,
         '''    @instructions,
@@ -6016,7 +6111,7 @@ Namespace My.Resources
         '''	visitschedule.creation,
         '''    visitschedule.statusid,
         '''	visitschedule.visitdate,
-        '''	visitschedule.visittypeid,
+        '''	visitschedule.calltypeid,
         '''	visitschedule.customerid,
         '''	visitschedule.personcompressorid,
         '''	visitschedule.instructions,
@@ -6035,7 +6130,7 @@ Namespace My.Resources
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE visitschedule SET
         '''    statusid =  @statusid,
         '''    visitdate = @visitdate,
-        '''    visittypeid = @visittypeid,
+        '''    calltypeid = @calltypeid,
         '''    customerid = @customerid,
         '''    personcompressorid = @personcompressorid,
         '''    instructions = @instructions,

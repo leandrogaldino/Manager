@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Routine Id="EvaluationTechnician" Version="1">
+	<SortedColumn>-1</SortedColumn>
+	<SortDirection>0</SortDirection>
+	<Column Index="0" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>0</DisplayIndex>
+		<Name>Ordem</Name>
+		<Width>ColumnHeader</Width>
+	</Column>
+	<Column Index="1">
+		<Visible>True</Visible>
+		<DisplayIndex>1</DisplayIndex>
+		<Name>Técnico</Name>
+		<Width>Fill</Width>
+	</Column>
+	<Column Index="2" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>2</DisplayIndex>
+		<Name>Guid</Name>
+		<Width>ColumnHeader</Width>
+	</Column>
+	<Column Index="3" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>3</DisplayIndex>
+		<Name>ID</Name>
+		<Width>ColumnHeader</Width>
+	</Column>
+	<Column Index="4" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>4</DisplayIndex>
+		<Name>Criação</Name>
+		<Width>ColumnHeader</Width>
+	</Column>
+	<Column Index="5" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>5</DisplayIndex>
+		<Name>Rotina</Name>
+		<Width>ColumnHeader</Width>
+	</Column>
+	<Column Index="6" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>6</DisplayIndex>
+		<Name>Salvo</Name>
+		<Width>ColumnHeader</Width>
+	</Column>
+	<Column Index="7" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>7</DisplayIndex>
+		<Name>Usuário</Name>
+		<Width>ColumnHeader</Width>
+	</Column>	
+</Routine>

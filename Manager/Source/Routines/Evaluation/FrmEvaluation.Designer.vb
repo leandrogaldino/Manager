@@ -24,6 +24,14 @@ Partial Class FrmEvaluation
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmEvaluation))
+        Dim RichTextPart1 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart2 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart3 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart4 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart5 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart6 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart7 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart8 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
         Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
         Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
         Dim Condition3 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
@@ -73,7 +81,7 @@ Partial Class FrmEvaluation
         Me.TmrTechnician = New System.Windows.Forms.Timer(Me.components)
         Me.TcEvaluation = New System.Windows.Forms.TabControl()
         Me.TabMain = New System.Windows.Forms.TabPage()
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.GbxTechnicians = New System.Windows.Forms.GroupBox()
         Me.DgvTechnician = New System.Windows.Forms.DataGridView()
         Me.TsTechnician = New System.Windows.Forms.ToolStrip()
         Me.BtnIncludeTechnician = New System.Windows.Forms.ToolStripButton()
@@ -83,7 +91,8 @@ Partial Class FrmEvaluation
         Me.DgvPartElapsedDay = New System.Windows.Forms.DataGridView()
         Me.GbxPartWorkedHour = New System.Windows.Forms.GroupBox()
         Me.DgvPartWorkedHour = New System.Windows.Forms.DataGridView()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.GbxMain = New System.Windows.Forms.GroupBox()
+        Me.BtnAdditionalInfo = New ControlLibrary.RichTextButton()
         Me.BtnHasRepair = New ControlLibrary.NoFocusCueButton()
         Me.BtnNeedProposal = New ControlLibrary.NoFocusCueButton()
         Me.BtnCallType = New ControlLibrary.NoFocusCueButton()
@@ -111,7 +120,17 @@ Partial Class FrmEvaluation
         Me.LblCompressor = New System.Windows.Forms.Label()
         Me.QbxCompressor = New ControlLibrary.QueriedBox()
         Me.TabTechnicalAdvice = New System.Windows.Forms.TabPage()
+        Me.TlpAdvice = New System.Windows.Forms.TableLayoutPanel()
+        Me.GbxAdvice = New System.Windows.Forms.GroupBox()
         Me.TxtTechnicalAdvice = New System.Windows.Forms.RichTextBox()
+        Me.GbxReplacedItems = New System.Windows.Forms.GroupBox()
+        Me.DgvReplacedItems = New System.Windows.Forms.DataGridView()
+        Me.TsReplacedItem = New System.Windows.Forms.ToolStrip()
+        Me.BtnIncludeItem = New System.Windows.Forms.ToolStripButton()
+        Me.BtnEditItem = New System.Windows.Forms.ToolStripButton()
+        Me.BtnDeleteItem = New System.Windows.Forms.ToolStripButton()
+        Me.LblFilter = New System.Windows.Forms.ToolStripLabel()
+        Me.TxtFilterItem = New System.Windows.Forms.ToolStripTextBox()
         Me.TabDocument = New System.Windows.Forms.TabPage()
         Me.PdfDocumentViewer = New Syncfusion.Windows.Forms.PdfViewer.PdfDocumentView()
         Me.TsDocument = New System.Windows.Forms.ToolStrip()
@@ -154,22 +173,28 @@ Partial Class FrmEvaluation
         Me.CcoCallType = New ControlLibrary.ControlContainer()
         Me.CcoEvaluationNeedProposal = New ControlLibrary.ControlContainer()
         Me.CcoHasRepair = New ControlLibrary.ControlContainer()
+        Me.CcoAdditionalInfo = New ControlLibrary.ControlContainer()
         Me.PnBottom.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TcEvaluation.SuspendLayout()
         Me.TabMain.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
+        Me.GbxTechnicians.SuspendLayout()
         CType(Me.DgvTechnician, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsTechnician.SuspendLayout()
         Me.GbxPartElapsedDay.SuspendLayout()
         CType(Me.DgvPartElapsedDay, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GbxPartWorkedHour.SuspendLayout()
         CType(Me.DgvPartWorkedHour, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox1.SuspendLayout()
+        Me.GbxMain.SuspendLayout()
         Me.FlpCustomer.SuspendLayout()
         Me.TabTechnicalAdvice.SuspendLayout()
+        Me.TlpAdvice.SuspendLayout()
+        Me.GbxAdvice.SuspendLayout()
+        Me.GbxReplacedItems.SuspendLayout()
+        CType(Me.DgvReplacedItems, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TsReplacedItem.SuspendLayout()
         Me.TabDocument.SuspendLayout()
         Me.TsDocument.SuspendLayout()
         Me.TabPhoto.SuspendLayout()
@@ -190,7 +215,7 @@ Partial Class FrmEvaluation
         Me.PnBottom.Controls.Add(Me.BtnCalculate)
         Me.PnBottom.Controls.Add(Me.BtnSave)
         Me.PnBottom.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PnBottom.Location = New System.Drawing.Point(0, 467)
+        Me.PnBottom.Location = New System.Drawing.Point(0, 487)
         Me.PnBottom.Name = "PnBottom"
         Me.PnBottom.Size = New System.Drawing.Size(1040, 44)
         Me.PnBottom.TabIndex = 3
@@ -432,34 +457,34 @@ Partial Class FrmEvaluation
         Me.TcEvaluation.Multiline = True
         Me.TcEvaluation.Name = "TcEvaluation"
         Me.TcEvaluation.SelectedIndex = 0
-        Me.TcEvaluation.Size = New System.Drawing.Size(1040, 417)
+        Me.TcEvaluation.Size = New System.Drawing.Size(1040, 437)
         Me.TcEvaluation.TabIndex = 2
         '
         'TabMain
         '
         Me.TabMain.BackColor = System.Drawing.Color.White
-        Me.TabMain.Controls.Add(Me.GroupBox2)
+        Me.TabMain.Controls.Add(Me.GbxTechnicians)
         Me.TabMain.Controls.Add(Me.GbxPartElapsedDay)
         Me.TabMain.Controls.Add(Me.GbxPartWorkedHour)
-        Me.TabMain.Controls.Add(Me.GroupBox1)
+        Me.TabMain.Controls.Add(Me.GbxMain)
         Me.TabMain.Location = New System.Drawing.Point(4, 26)
         Me.TabMain.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabMain.Name = "TabMain"
         Me.TabMain.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabMain.Size = New System.Drawing.Size(1032, 387)
+        Me.TabMain.Size = New System.Drawing.Size(1032, 407)
         Me.TabMain.TabIndex = 0
         Me.TabMain.Text = "Leitura"
         '
-        'GroupBox2
+        'GbxTechnicians
         '
-        Me.GroupBox2.Controls.Add(Me.DgvTechnician)
-        Me.GroupBox2.Controls.Add(Me.TsTechnician)
-        Me.GroupBox2.Location = New System.Drawing.Point(6, 259)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(395, 120)
-        Me.GroupBox2.TabIndex = 1
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Técnicos"
+        Me.GbxTechnicians.Controls.Add(Me.DgvTechnician)
+        Me.GbxTechnicians.Controls.Add(Me.TsTechnician)
+        Me.GbxTechnicians.Location = New System.Drawing.Point(6, 282)
+        Me.GbxTechnicians.Name = "GbxTechnicians"
+        Me.GbxTechnicians.Size = New System.Drawing.Size(395, 120)
+        Me.GbxTechnicians.TabIndex = 1
+        Me.GbxTechnicians.TabStop = False
+        Me.GbxTechnicians.Text = "Técnicos"
         '
         'DgvTechnician
         '
@@ -535,9 +560,9 @@ Partial Class FrmEvaluation
         'GbxPartElapsedDay
         '
         Me.GbxPartElapsedDay.Controls.Add(Me.DgvPartElapsedDay)
-        Me.GbxPartElapsedDay.Location = New System.Drawing.Point(410, 259)
+        Me.GbxPartElapsedDay.Location = New System.Drawing.Point(410, 282)
         Me.GbxPartElapsedDay.Name = "GbxPartElapsedDay"
-        Me.GbxPartElapsedDay.Size = New System.Drawing.Size(608, 120)
+        Me.GbxPartElapsedDay.Size = New System.Drawing.Size(610, 120)
         Me.GbxPartElapsedDay.TabIndex = 3
         Me.GbxPartElapsedDay.TabStop = False
         Me.GbxPartElapsedDay.Text = "Controla Por Dia Corrido"
@@ -561,7 +586,7 @@ Partial Class FrmEvaluation
         Me.DgvPartElapsedDay.RowHeadersVisible = False
         Me.DgvPartElapsedDay.RowTemplate.Height = 26
         Me.DgvPartElapsedDay.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPartElapsedDay.Size = New System.Drawing.Size(602, 98)
+        Me.DgvPartElapsedDay.Size = New System.Drawing.Size(604, 98)
         Me.DgvPartElapsedDay.TabIndex = 0
         Me.DgvPartElapsedDay.TabStop = False
         '
@@ -570,7 +595,7 @@ Partial Class FrmEvaluation
         Me.GbxPartWorkedHour.Controls.Add(Me.DgvPartWorkedHour)
         Me.GbxPartWorkedHour.Location = New System.Drawing.Point(410, 7)
         Me.GbxPartWorkedHour.Name = "GbxPartWorkedHour"
-        Me.GbxPartWorkedHour.Size = New System.Drawing.Size(610, 249)
+        Me.GbxPartWorkedHour.Size = New System.Drawing.Size(610, 269)
         Me.GbxPartWorkedHour.TabIndex = 2
         Me.GbxPartWorkedHour.TabStop = False
         Me.GbxPartWorkedHour.Text = "Controla Por Hora Trabalhada"
@@ -594,42 +619,87 @@ Partial Class FrmEvaluation
         Me.DgvPartWorkedHour.RowHeadersVisible = False
         Me.DgvPartWorkedHour.RowTemplate.Height = 26
         Me.DgvPartWorkedHour.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPartWorkedHour.Size = New System.Drawing.Size(604, 227)
+        Me.DgvPartWorkedHour.Size = New System.Drawing.Size(604, 247)
         Me.DgvPartWorkedHour.TabIndex = 0
         Me.DgvPartWorkedHour.TabStop = False
         '
-        'GroupBox1
+        'GbxMain
         '
-        Me.GroupBox1.Controls.Add(Me.BtnHasRepair)
-        Me.GroupBox1.Controls.Add(Me.BtnNeedProposal)
-        Me.GroupBox1.Controls.Add(Me.BtnCallType)
-        Me.GroupBox1.Controls.Add(Me.QbxCustomer)
-        Me.GroupBox1.Controls.Add(Me.TxtEvaluationNumber)
-        Me.GroupBox1.Controls.Add(Me.LblEndTime)
-        Me.GroupBox1.Controls.Add(Me.LblStartTime)
-        Me.GroupBox1.Controls.Add(Me.TxtEndTime)
-        Me.GroupBox1.Controls.Add(Me.TxtStartTime)
-        Me.GroupBox1.Controls.Add(Me.CbxManualAverageWorkLoad)
-        Me.GroupBox1.Controls.Add(Me.FlpCustomer)
-        Me.GroupBox1.Controls.Add(Me.DbxAverageWorkLoad)
-        Me.GroupBox1.Controls.Add(Me.DbxHorimeter)
-        Me.GroupBox1.Controls.Add(Me.LblEvaluationDate)
-        Me.GroupBox1.Controls.Add(Me.LblCustomer)
-        Me.GroupBox1.Controls.Add(Me.LblAverageWorkLoad)
-        Me.GroupBox1.Controls.Add(Me.LblEvaluationNumber)
-        Me.GroupBox1.Controls.Add(Me.LblResponsible)
-        Me.GroupBox1.Controls.Add(Me.TxtResponsible)
-        Me.GroupBox1.Controls.Add(Me.DbxEvaluationDate)
-        Me.GroupBox1.Controls.Add(Me.LblHorimeter)
-        Me.GroupBox1.Controls.Add(Me.LblCompressor)
-        Me.GroupBox1.Controls.Add(Me.QbxCompressor)
-        Me.GroupBox1.Location = New System.Drawing.Point(6, 7)
-        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(3, 3, 6, 3)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(395, 249)
-        Me.GroupBox1.TabIndex = 0
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Identificação"
+        Me.GbxMain.Controls.Add(Me.BtnAdditionalInfo)
+        Me.GbxMain.Controls.Add(Me.BtnHasRepair)
+        Me.GbxMain.Controls.Add(Me.BtnNeedProposal)
+        Me.GbxMain.Controls.Add(Me.BtnCallType)
+        Me.GbxMain.Controls.Add(Me.QbxCustomer)
+        Me.GbxMain.Controls.Add(Me.TxtEvaluationNumber)
+        Me.GbxMain.Controls.Add(Me.LblEndTime)
+        Me.GbxMain.Controls.Add(Me.LblStartTime)
+        Me.GbxMain.Controls.Add(Me.TxtEndTime)
+        Me.GbxMain.Controls.Add(Me.TxtStartTime)
+        Me.GbxMain.Controls.Add(Me.CbxManualAverageWorkLoad)
+        Me.GbxMain.Controls.Add(Me.FlpCustomer)
+        Me.GbxMain.Controls.Add(Me.DbxAverageWorkLoad)
+        Me.GbxMain.Controls.Add(Me.DbxHorimeter)
+        Me.GbxMain.Controls.Add(Me.LblEvaluationDate)
+        Me.GbxMain.Controls.Add(Me.LblCustomer)
+        Me.GbxMain.Controls.Add(Me.LblAverageWorkLoad)
+        Me.GbxMain.Controls.Add(Me.LblEvaluationNumber)
+        Me.GbxMain.Controls.Add(Me.LblResponsible)
+        Me.GbxMain.Controls.Add(Me.TxtResponsible)
+        Me.GbxMain.Controls.Add(Me.DbxEvaluationDate)
+        Me.GbxMain.Controls.Add(Me.LblHorimeter)
+        Me.GbxMain.Controls.Add(Me.LblCompressor)
+        Me.GbxMain.Controls.Add(Me.QbxCompressor)
+        Me.GbxMain.Location = New System.Drawing.Point(6, 7)
+        Me.GbxMain.Margin = New System.Windows.Forms.Padding(3, 3, 6, 3)
+        Me.GbxMain.Name = "GbxMain"
+        Me.GbxMain.Size = New System.Drawing.Size(395, 269)
+        Me.GbxMain.TabIndex = 0
+        Me.GbxMain.TabStop = False
+        Me.GbxMain.Text = "Identificação"
+        '
+        'BtnAdditionalInfo
+        '
+        Me.BtnAdditionalInfo.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnAdditionalInfo.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.BtnAdditionalInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnAdditionalInfo.Location = New System.Drawing.Point(6, 53)
+        Me.BtnAdditionalInfo.Name = "BtnAdditionalInfo"
+        Me.BtnAdditionalInfo.Size = New System.Drawing.Size(382, 25)
+        Me.BtnAdditionalInfo.TabIndex = 23
+        RichTextPart1.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart1.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart1.Text = "Unidade:"
+        RichTextPart2.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart2.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart2.Text = " N/A"
+        RichTextPart3.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        RichTextPart3.Text = "    "
+        RichTextPart4.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart4.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
+        RichTextPart4.Text = "Temperatura:"
+        RichTextPart5.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart5.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart5.Text = "N/A"
+        RichTextPart6.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        RichTextPart6.Text = "    "
+        RichTextPart7.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart7.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
+        RichTextPart7.Text = "Pressão:"
+        RichTextPart8.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart8.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart8.Text = "N/A"
+        Me.BtnAdditionalInfo.TextParts.Add(RichTextPart1)
+        Me.BtnAdditionalInfo.TextParts.Add(RichTextPart2)
+        Me.BtnAdditionalInfo.TextParts.Add(RichTextPart3)
+        Me.BtnAdditionalInfo.TextParts.Add(RichTextPart4)
+        Me.BtnAdditionalInfo.TextParts.Add(RichTextPart5)
+        Me.BtnAdditionalInfo.TextParts.Add(RichTextPart6)
+        Me.BtnAdditionalInfo.TextParts.Add(RichTextPart7)
+        Me.BtnAdditionalInfo.TextParts.Add(RichTextPart8)
+        Me.BtnAdditionalInfo.TooltipText = ""
+        Me.BtnAdditionalInfo.UseVisualStyleBackColor = True
         '
         'BtnHasRepair
         '
@@ -706,7 +776,7 @@ Partial Class FrmEvaluation
         Me.QbxCustomer.GridHeaderBackColor = System.Drawing.SystemColors.Window
         Me.QbxCustomer.IfNull = Nothing
         Me.QbxCustomer.Limit = 0
-        Me.QbxCustomer.Location = New System.Drawing.Point(6, 123)
+        Me.QbxCustomer.Location = New System.Drawing.Point(6, 147)
         Me.QbxCustomer.MainReturnFieldName = "id"
         Me.QbxCustomer.MainTableAlias = Nothing
         Me.QbxCustomer.MainTableName = "person"
@@ -795,7 +865,7 @@ Partial Class FrmEvaluation
         'TxtEvaluationNumber
         '
         Me.TxtEvaluationNumber.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtEvaluationNumber.Location = New System.Drawing.Point(6, 77)
+        Me.TxtEvaluationNumber.Location = New System.Drawing.Point(6, 101)
         Me.TxtEvaluationNumber.MaxLength = 10
         Me.TxtEvaluationNumber.Name = "TxtEvaluationNumber"
         Me.TxtEvaluationNumber.Size = New System.Drawing.Size(105, 23)
@@ -805,7 +875,7 @@ Partial Class FrmEvaluation
         'LblEndTime
         '
         Me.LblEndTime.AutoSize = True
-        Me.LblEndTime.Location = New System.Drawing.Point(310, 57)
+        Me.LblEndTime.Location = New System.Drawing.Point(310, 81)
         Me.LblEndTime.Name = "LblEndTime"
         Me.LblEndTime.Size = New System.Drawing.Size(30, 17)
         Me.LblEndTime.TabIndex = 9
@@ -814,7 +884,7 @@ Partial Class FrmEvaluation
         'LblStartTime
         '
         Me.LblStartTime.AutoSize = True
-        Me.LblStartTime.Location = New System.Drawing.Point(229, 57)
+        Me.LblStartTime.Location = New System.Drawing.Point(229, 81)
         Me.LblStartTime.Name = "LblStartTime"
         Me.LblStartTime.Size = New System.Drawing.Size(42, 17)
         Me.LblStartTime.TabIndex = 7
@@ -822,7 +892,7 @@ Partial Class FrmEvaluation
         '
         'TxtEndTime
         '
-        Me.TxtEndTime.Location = New System.Drawing.Point(313, 77)
+        Me.TxtEndTime.Location = New System.Drawing.Point(313, 101)
         Me.TxtEndTime.Mask = "00:00"
         Me.TxtEndTime.Name = "TxtEndTime"
         Me.TxtEndTime.Size = New System.Drawing.Size(75, 23)
@@ -834,7 +904,7 @@ Partial Class FrmEvaluation
         'TxtStartTime
         '
         Me.TxtStartTime.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.IncludePrompt
-        Me.TxtStartTime.Location = New System.Drawing.Point(232, 77)
+        Me.TxtStartTime.Location = New System.Drawing.Point(232, 101)
         Me.TxtStartTime.Mask = "00:00"
         Me.TxtStartTime.Name = "TxtStartTime"
         Me.TxtStartTime.Size = New System.Drawing.Size(75, 23)
@@ -858,7 +928,7 @@ Partial Class FrmEvaluation
         Me.FlpCustomer.Controls.Add(Me.BtnViewCustomer)
         Me.FlpCustomer.Controls.Add(Me.BtnNewCustomer)
         Me.FlpCustomer.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-        Me.FlpCustomer.Location = New System.Drawing.Point(319, 102)
+        Me.FlpCustomer.Location = New System.Drawing.Point(319, 126)
         Me.FlpCustomer.Name = "FlpCustomer"
         Me.FlpCustomer.Size = New System.Drawing.Size(69, 21)
         Me.FlpCustomer.TabIndex = 13
@@ -917,7 +987,7 @@ Partial Class FrmEvaluation
         Me.DbxAverageWorkLoad.DecimalOnly = True
         Me.DbxAverageWorkLoad.DecimalPlaces = 2
         Me.DbxAverageWorkLoad.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxAverageWorkLoad.Location = New System.Drawing.Point(306, 215)
+        Me.DbxAverageWorkLoad.Location = New System.Drawing.Point(306, 239)
         Me.DbxAverageWorkLoad.Name = "DbxAverageWorkLoad"
         Me.DbxAverageWorkLoad.ReadOnly = True
         Me.DbxAverageWorkLoad.Size = New System.Drawing.Size(82, 23)
@@ -931,7 +1001,7 @@ Partial Class FrmEvaluation
         Me.DbxHorimeter.DecimalOnly = True
         Me.DbxHorimeter.DecimalPlaces = 0
         Me.DbxHorimeter.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxHorimeter.Location = New System.Drawing.Point(200, 215)
+        Me.DbxHorimeter.Location = New System.Drawing.Point(200, 239)
         Me.DbxHorimeter.Name = "DbxHorimeter"
         Me.DbxHorimeter.Size = New System.Drawing.Size(100, 23)
         Me.DbxHorimeter.TabIndex = 19
@@ -941,7 +1011,7 @@ Partial Class FrmEvaluation
         'LblEvaluationDate
         '
         Me.LblEvaluationDate.AutoSize = True
-        Me.LblEvaluationDate.Location = New System.Drawing.Point(114, 57)
+        Me.LblEvaluationDate.Location = New System.Drawing.Point(114, 81)
         Me.LblEvaluationDate.Name = "LblEvaluationDate"
         Me.LblEvaluationDate.Size = New System.Drawing.Size(98, 17)
         Me.LblEvaluationDate.TabIndex = 5
@@ -950,7 +1020,7 @@ Partial Class FrmEvaluation
         'LblCustomer
         '
         Me.LblCustomer.AutoSize = True
-        Me.LblCustomer.Location = New System.Drawing.Point(3, 103)
+        Me.LblCustomer.Location = New System.Drawing.Point(3, 127)
         Me.LblCustomer.Name = "LblCustomer"
         Me.LblCustomer.Size = New System.Drawing.Size(54, 17)
         Me.LblCustomer.TabIndex = 11
@@ -959,7 +1029,7 @@ Partial Class FrmEvaluation
         'LblAverageWorkLoad
         '
         Me.LblAverageWorkLoad.AutoSize = True
-        Me.LblAverageWorkLoad.Location = New System.Drawing.Point(303, 195)
+        Me.LblAverageWorkLoad.Location = New System.Drawing.Point(303, 219)
         Me.LblAverageWorkLoad.Name = "LblAverageWorkLoad"
         Me.LblAverageWorkLoad.Size = New System.Drawing.Size(35, 17)
         Me.LblAverageWorkLoad.TabIndex = 20
@@ -969,7 +1039,7 @@ Partial Class FrmEvaluation
         'LblEvaluationNumber
         '
         Me.LblEvaluationNumber.AutoSize = True
-        Me.LblEvaluationNumber.Location = New System.Drawing.Point(6, 57)
+        Me.LblEvaluationNumber.Location = New System.Drawing.Point(6, 81)
         Me.LblEvaluationNumber.Name = "LblEvaluationNumber"
         Me.LblEvaluationNumber.Size = New System.Drawing.Size(94, 17)
         Me.LblEvaluationNumber.TabIndex = 3
@@ -978,7 +1048,7 @@ Partial Class FrmEvaluation
         'LblResponsible
         '
         Me.LblResponsible.AutoSize = True
-        Me.LblResponsible.Location = New System.Drawing.Point(6, 195)
+        Me.LblResponsible.Location = New System.Drawing.Point(6, 219)
         Me.LblResponsible.Name = "LblResponsible"
         Me.LblResponsible.Size = New System.Drawing.Size(88, 17)
         Me.LblResponsible.TabIndex = 16
@@ -987,7 +1057,7 @@ Partial Class FrmEvaluation
         'TxtResponsible
         '
         Me.TxtResponsible.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtResponsible.Location = New System.Drawing.Point(6, 215)
+        Me.TxtResponsible.Location = New System.Drawing.Point(6, 238)
         Me.TxtResponsible.Name = "TxtResponsible"
         Me.TxtResponsible.Size = New System.Drawing.Size(188, 23)
         Me.TxtResponsible.TabIndex = 17
@@ -995,7 +1065,7 @@ Partial Class FrmEvaluation
         'DbxEvaluationDate
         '
         Me.DbxEvaluationDate.ButtonImage = CType(resources.GetObject("DbxEvaluationDate.ButtonImage"), System.Drawing.Image)
-        Me.DbxEvaluationDate.Location = New System.Drawing.Point(117, 77)
+        Me.DbxEvaluationDate.Location = New System.Drawing.Point(117, 101)
         Me.DbxEvaluationDate.Name = "DbxEvaluationDate"
         Me.DbxEvaluationDate.Size = New System.Drawing.Size(109, 23)
         Me.DbxEvaluationDate.TabIndex = 6
@@ -1003,7 +1073,7 @@ Partial Class FrmEvaluation
         'LblHorimeter
         '
         Me.LblHorimeter.AutoSize = True
-        Me.LblHorimeter.Location = New System.Drawing.Point(197, 195)
+        Me.LblHorimeter.Location = New System.Drawing.Point(197, 219)
         Me.LblHorimeter.Name = "LblHorimeter"
         Me.LblHorimeter.Size = New System.Drawing.Size(72, 17)
         Me.LblHorimeter.TabIndex = 18
@@ -1012,7 +1082,7 @@ Partial Class FrmEvaluation
         'LblCompressor
         '
         Me.LblCompressor.AutoSize = True
-        Me.LblCompressor.Location = New System.Drawing.Point(6, 149)
+        Me.LblCompressor.Location = New System.Drawing.Point(6, 173)
         Me.LblCompressor.Name = "LblCompressor"
         Me.LblCompressor.Size = New System.Drawing.Size(85, 17)
         Me.LblCompressor.TabIndex = 14
@@ -1038,7 +1108,7 @@ Partial Class FrmEvaluation
         Me.QbxCompressor.Enabled = False
         Me.QbxCompressor.GridHeaderBackColor = System.Drawing.SystemColors.Window
         Me.QbxCompressor.IfNull = Nothing
-        Me.QbxCompressor.Location = New System.Drawing.Point(6, 169)
+        Me.QbxCompressor.Location = New System.Drawing.Point(6, 193)
         Me.QbxCompressor.MainReturnFieldName = "id"
         Me.QbxCompressor.MainTableAlias = Nothing
         Me.QbxCompressor.MainTableName = "personcompressor"
@@ -1092,25 +1162,143 @@ Partial Class FrmEvaluation
         '
         'TabTechnicalAdvice
         '
-        Me.TabTechnicalAdvice.Controls.Add(Me.TxtTechnicalAdvice)
+        Me.TabTechnicalAdvice.BackColor = System.Drawing.Color.White
+        Me.TabTechnicalAdvice.Controls.Add(Me.TlpAdvice)
         Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 22)
         Me.TabTechnicalAdvice.Name = "TabTechnicalAdvice"
         Me.TabTechnicalAdvice.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1032, 391)
+        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1032, 411)
         Me.TabTechnicalAdvice.TabIndex = 6
         Me.TabTechnicalAdvice.Text = "Parecer Técnico"
-        Me.TabTechnicalAdvice.UseVisualStyleBackColor = True
+        '
+        'TlpAdvice
+        '
+        Me.TlpAdvice.ColumnCount = 1
+        Me.TlpAdvice.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TlpAdvice.Controls.Add(Me.GbxAdvice, 0, 0)
+        Me.TlpAdvice.Controls.Add(Me.GbxReplacedItems, 0, 1)
+        Me.TlpAdvice.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TlpAdvice.Location = New System.Drawing.Point(3, 3)
+        Me.TlpAdvice.Name = "TlpAdvice"
+        Me.TlpAdvice.RowCount = 2
+        Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TlpAdvice.Size = New System.Drawing.Size(1026, 405)
+        Me.TlpAdvice.TabIndex = 2
+        '
+        'GbxAdvice
+        '
+        Me.GbxAdvice.Controls.Add(Me.TxtTechnicalAdvice)
+        Me.GbxAdvice.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GbxAdvice.Location = New System.Drawing.Point(3, 3)
+        Me.GbxAdvice.Name = "GbxAdvice"
+        Me.GbxAdvice.Size = New System.Drawing.Size(1020, 196)
+        Me.GbxAdvice.TabIndex = 0
+        Me.GbxAdvice.TabStop = False
+        Me.GbxAdvice.Text = "Observação"
         '
         'TxtTechnicalAdvice
         '
         Me.TxtTechnicalAdvice.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TxtTechnicalAdvice.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TxtTechnicalAdvice.Location = New System.Drawing.Point(3, 3)
+        Me.TxtTechnicalAdvice.Location = New System.Drawing.Point(3, 19)
         Me.TxtTechnicalAdvice.MaxLength = 1000000
         Me.TxtTechnicalAdvice.Name = "TxtTechnicalAdvice"
-        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1026, 385)
+        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1014, 174)
         Me.TxtTechnicalAdvice.TabIndex = 1
         Me.TxtTechnicalAdvice.Text = ""
+        '
+        'GbxReplacedItems
+        '
+        Me.GbxReplacedItems.Controls.Add(Me.DgvReplacedItems)
+        Me.GbxReplacedItems.Controls.Add(Me.TsReplacedItem)
+        Me.GbxReplacedItems.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GbxReplacedItems.Location = New System.Drawing.Point(3, 205)
+        Me.GbxReplacedItems.Name = "GbxReplacedItems"
+        Me.GbxReplacedItems.Size = New System.Drawing.Size(1020, 197)
+        Me.GbxReplacedItems.TabIndex = 1
+        Me.GbxReplacedItems.TabStop = False
+        Me.GbxReplacedItems.Text = "Peças Substituidas"
+        '
+        'DgvReplacedItems
+        '
+        Me.DgvReplacedItems.AllowUserToAddRows = False
+        Me.DgvReplacedItems.AllowUserToDeleteRows = False
+        Me.DgvReplacedItems.AllowUserToResizeColumns = False
+        Me.DgvReplacedItems.AllowUserToResizeRows = False
+        Me.DgvReplacedItems.BackgroundColor = System.Drawing.Color.White
+        Me.DgvReplacedItems.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DgvReplacedItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvReplacedItems.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvReplacedItems.GridColor = System.Drawing.Color.Gainsboro
+        Me.DgvReplacedItems.Location = New System.Drawing.Point(3, 44)
+        Me.DgvReplacedItems.MultiSelect = False
+        Me.DgvReplacedItems.Name = "DgvReplacedItems"
+        Me.DgvReplacedItems.ReadOnly = True
+        Me.DgvReplacedItems.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvReplacedItems.RowHeadersVisible = False
+        Me.DgvReplacedItems.RowTemplate.Height = 26
+        Me.DgvReplacedItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvReplacedItems.Size = New System.Drawing.Size(1014, 150)
+        Me.DgvReplacedItems.TabIndex = 1
+        Me.DgvReplacedItems.TabStop = False
+        '
+        'TsReplacedItem
+        '
+        Me.TsReplacedItem.BackColor = System.Drawing.Color.Transparent
+        Me.TsReplacedItem.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TsReplacedItem.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.TsReplacedItem.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludeItem, Me.BtnEditItem, Me.BtnDeleteItem, Me.LblFilter, Me.TxtFilterItem})
+        Me.TsReplacedItem.Location = New System.Drawing.Point(3, 19)
+        Me.TsReplacedItem.Name = "TsReplacedItem"
+        Me.TsReplacedItem.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.TsReplacedItem.Size = New System.Drawing.Size(1014, 25)
+        Me.TsReplacedItem.TabIndex = 2
+        Me.TsReplacedItem.Text = "ToolStrip2"
+        '
+        'BtnIncludeItem
+        '
+        Me.BtnIncludeItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnIncludeItem.Image = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnIncludeItem.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnIncludeItem.Name = "BtnIncludeItem"
+        Me.BtnIncludeItem.Size = New System.Drawing.Size(23, 22)
+        Me.BtnIncludeItem.Text = "Incluir Item"
+        '
+        'BtnEditItem
+        '
+        Me.BtnEditItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnEditItem.Image = CType(resources.GetObject("BtnEditItem.Image"), System.Drawing.Image)
+        Me.BtnEditItem.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnEditItem.Name = "BtnEditItem"
+        Me.BtnEditItem.Size = New System.Drawing.Size(23, 22)
+        Me.BtnEditItem.Text = "Editar Item"
+        Me.BtnEditItem.ToolTipText = "Editar"
+        '
+        'BtnDeleteItem
+        '
+        Me.BtnDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnDeleteItem.Image = Global.Manager.My.Resources.Resources.DeleteSmall
+        Me.BtnDeleteItem.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnDeleteItem.Name = "BtnDeleteItem"
+        Me.BtnDeleteItem.Size = New System.Drawing.Size(23, 22)
+        Me.BtnDeleteItem.Text = "Excluir Item"
+        '
+        'LblFilter
+        '
+        Me.LblFilter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.LblFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.LblFilter.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
+        Me.LblFilter.Name = "LblFilter"
+        Me.LblFilter.Size = New System.Drawing.Size(46, 25)
+        Me.LblFilter.Text = "Filtrar:"
+        '
+        'TxtFilterItem
+        '
+        Me.TxtFilterItem.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtFilterItem.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.TxtFilterItem.Name = "TxtFilterItem"
+        Me.TxtFilterItem.Size = New System.Drawing.Size(200, 25)
         '
         'TabDocument
         '
@@ -1120,7 +1308,7 @@ Partial Class FrmEvaluation
         Me.TabDocument.Location = New System.Drawing.Point(4, 22)
         Me.TabDocument.Name = "TabDocument"
         Me.TabDocument.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabDocument.Size = New System.Drawing.Size(1032, 391)
+        Me.TabDocument.Size = New System.Drawing.Size(1032, 411)
         Me.TabDocument.TabIndex = 7
         Me.TabDocument.Text = "Documento"
         Me.TabDocument.UseVisualStyleBackColor = True
@@ -1150,7 +1338,7 @@ Partial Class FrmEvaluation
         Me.PdfDocumentViewer.ScrollDisplacementValue = 0
         Me.PdfDocumentViewer.ShowHorizontalScrollBar = True
         Me.PdfDocumentViewer.ShowVerticalScrollBar = True
-        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1026, 360)
+        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1026, 380)
         Me.PdfDocumentViewer.SpaceBetweenPages = 8
         Me.PdfDocumentViewer.TabIndex = 1
         TextSearchSettings1.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -1246,7 +1434,7 @@ Partial Class FrmEvaluation
         Me.TabPhoto.Location = New System.Drawing.Point(4, 22)
         Me.TabPhoto.Name = "TabPhoto"
         Me.TabPhoto.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPhoto.Size = New System.Drawing.Size(1032, 391)
+        Me.TabPhoto.Size = New System.Drawing.Size(1032, 411)
         Me.TabPhoto.TabIndex = 8
         Me.TabPhoto.Text = "Fotos"
         Me.TabPhoto.UseVisualStyleBackColor = True
@@ -1260,7 +1448,7 @@ Partial Class FrmEvaluation
         Me.PnPhoto.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PnPhoto.Location = New System.Drawing.Point(3, 3)
         Me.PnPhoto.Name = "PnPhoto"
-        Me.PnPhoto.Size = New System.Drawing.Size(1026, 385)
+        Me.PnPhoto.Size = New System.Drawing.Size(1026, 405)
         Me.PnPhoto.TabIndex = 17
         '
         'PbxPhoto
@@ -1269,7 +1457,7 @@ Partial Class FrmEvaluation
         Me.PbxPhoto.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PbxPhoto.Location = New System.Drawing.Point(0, 28)
         Me.PbxPhoto.Name = "PbxPhoto"
-        Me.PbxPhoto.Size = New System.Drawing.Size(1024, 332)
+        Me.PbxPhoto.Size = New System.Drawing.Size(1024, 352)
         Me.PbxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PbxPhoto.TabIndex = 11
         Me.PbxPhoto.TabStop = False
@@ -1412,7 +1600,7 @@ Partial Class FrmEvaluation
         Me.LblPhotoCount.BackColor = System.Drawing.Color.White
         Me.LblPhotoCount.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.LblPhotoCount.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblPhotoCount.Location = New System.Drawing.Point(0, 360)
+        Me.LblPhotoCount.Location = New System.Drawing.Point(0, 380)
         Me.LblPhotoCount.Name = "LblPhotoCount"
         Me.LblPhotoCount.Size = New System.Drawing.Size(1024, 23)
         Me.LblPhotoCount.TabIndex = 14
@@ -1425,7 +1613,7 @@ Partial Class FrmEvaluation
         Me.TabSignature.Location = New System.Drawing.Point(4, 22)
         Me.TabSignature.Name = "TabSignature"
         Me.TabSignature.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabSignature.Size = New System.Drawing.Size(1032, 391)
+        Me.TabSignature.Size = New System.Drawing.Size(1032, 411)
         Me.TabSignature.TabIndex = 9
         Me.TabSignature.Text = "Assinatura"
         Me.TabSignature.UseVisualStyleBackColor = True
@@ -1437,7 +1625,7 @@ Partial Class FrmEvaluation
         Me.PnSignature.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PnSignature.Location = New System.Drawing.Point(3, 3)
         Me.PnSignature.Name = "PnSignature"
-        Me.PnSignature.Size = New System.Drawing.Size(1026, 385)
+        Me.PnSignature.Size = New System.Drawing.Size(1026, 405)
         Me.PnSignature.TabIndex = 18
         '
         'PbxSignature
@@ -1446,7 +1634,7 @@ Partial Class FrmEvaluation
         Me.PbxSignature.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PbxSignature.Location = New System.Drawing.Point(0, 0)
         Me.PbxSignature.Name = "PbxSignature"
-        Me.PbxSignature.Size = New System.Drawing.Size(1024, 383)
+        Me.PbxSignature.Size = New System.Drawing.Size(1024, 403)
         Me.PbxSignature.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PbxSignature.TabIndex = 11
         Me.PbxSignature.TabStop = False
@@ -1555,11 +1743,18 @@ Partial Class FrmEvaluation
         Me.CcoHasRepair.DropDownEnabled = True
         Me.CcoHasRepair.HostControl = Me.BtnHasRepair
         '
+        'CcoAdditionalInfo
+        '
+        Me.CcoAdditionalInfo.DropDownBorderColor = System.Drawing.SystemColors.HotTrack
+        Me.CcoAdditionalInfo.DropDownControl = Nothing
+        Me.CcoAdditionalInfo.DropDownEnabled = True
+        Me.CcoAdditionalInfo.HostControl = Me.BtnAdditionalInfo
+        '
         'FrmEvaluation
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1040, 511)
+        Me.ClientSize = New System.Drawing.Size(1040, 531)
         Me.Controls.Add(Me.TcEvaluation)
         Me.Controls.Add(Me.PnBottom)
         Me.Controls.Add(Me.TsTitle)
@@ -1580,7 +1775,7 @@ Partial Class FrmEvaluation
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TcEvaluation.ResumeLayout(False)
         Me.TabMain.ResumeLayout(False)
-        Me.GroupBox2.ResumeLayout(False)
+        Me.GbxTechnicians.ResumeLayout(False)
         CType(Me.DgvTechnician, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsTechnician.ResumeLayout(False)
         Me.TsTechnician.PerformLayout()
@@ -1588,10 +1783,17 @@ Partial Class FrmEvaluation
         CType(Me.DgvPartElapsedDay, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GbxPartWorkedHour.ResumeLayout(False)
         CType(Me.DgvPartWorkedHour, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
+        Me.GbxMain.ResumeLayout(False)
+        Me.GbxMain.PerformLayout()
         Me.FlpCustomer.ResumeLayout(False)
         Me.TabTechnicalAdvice.ResumeLayout(False)
+        Me.TlpAdvice.ResumeLayout(False)
+        Me.GbxAdvice.ResumeLayout(False)
+        Me.GbxReplacedItems.ResumeLayout(False)
+        Me.GbxReplacedItems.PerformLayout()
+        CType(Me.DgvReplacedItems, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TsReplacedItem.ResumeLayout(False)
+        Me.TsReplacedItem.PerformLayout()
         Me.TabDocument.ResumeLayout(False)
         Me.TsDocument.ResumeLayout(False)
         Me.TsDocument.PerformLayout()
@@ -1637,7 +1839,7 @@ Partial Class FrmEvaluation
     Friend WithEvents LblCustomer As Label
     Friend WithEvents TabTechnicalAdvice As TabPage
     Friend WithEvents LblAverageWorkLoad As Label
-    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents GbxMain As GroupBox
     Friend WithEvents DbxHorimeter As ControlLibrary.DecimalBox
     Friend WithEvents LblHorimeter As Label
     Friend WithEvents TxtTechnicalAdvice As RichTextBox
@@ -1682,7 +1884,7 @@ Partial Class FrmEvaluation
     Friend WithEvents TxtEvaluationNumber As TextBox
     Friend WithEvents QbxCustomer As ControlLibrary.QueriedBox
     Friend WithEvents Tip As ToolTip
-    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents GbxTechnicians As GroupBox
     Friend WithEvents DgvTechnician As DataGridView
     Friend WithEvents TsTechnician As ToolStrip
     Friend WithEvents BtnIncludeTechnician As ToolStripButton
@@ -1715,4 +1917,16 @@ Partial Class FrmEvaluation
     Friend WithEvents CcoEvaluationNeedProposal As ControlLibrary.ControlContainer
     Friend WithEvents BtnHasRepair As ControlLibrary.NoFocusCueButton
     Friend WithEvents CcoHasRepair As ControlLibrary.ControlContainer
+    Friend WithEvents TlpAdvice As TableLayoutPanel
+    Friend WithEvents GbxAdvice As GroupBox
+    Friend WithEvents GbxReplacedItems As GroupBox
+    Friend WithEvents DgvReplacedItems As DataGridView
+    Friend WithEvents TsReplacedItem As ToolStrip
+    Friend WithEvents BtnIncludeItem As ToolStripButton
+    Friend WithEvents BtnEditItem As ToolStripButton
+    Friend WithEvents BtnDeleteItem As ToolStripButton
+    Friend WithEvents LblFilter As ToolStripLabel
+    Friend WithEvents TxtFilterItem As ToolStripTextBox
+    Friend WithEvents CcoAdditionalInfo As ControlLibrary.ControlContainer
+    Friend WithEvents BtnAdditionalInfo As ControlLibrary.RichTextButton
 End Class

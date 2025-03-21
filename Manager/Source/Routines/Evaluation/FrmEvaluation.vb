@@ -18,7 +18,7 @@ Public Class FrmEvaluation
     Private _UcCallType As UcCallType
     Private _UcEvaluationNeedProposal As UcConfirmation
     Private _UcHasRepair As UcConfirmation
-
+    Private _UcAditionalInfo As UcEvaluationAditionalInfo
     Private Property SelectedPhoto As EvaluationPhoto
         Get
             Return _SelectedPhoto
@@ -297,6 +297,11 @@ Public Class FrmEvaluation
         CcoHasRepair.DropDownControl = _UcHasRepair
         _UcEvaluationNeedProposal = New UcConfirmation()
         CcoEvaluationNeedProposal.DropDownControl = _UcEvaluationNeedProposal
+
+        _UcAditionalInfo = New UcEvaluationAditionalInfo()
+        CcoAdditionalInfo.DropDownControl = _UcAditionalInfo
+
+
         RefreshPhotoControls()
         AddHandler _UcCallType.CheckedChanged, AddressOf CallTypeChanged
         AddHandler _UcHasRepair.CheckedChanged, AddressOf EvaluationHasRepairChanged
@@ -1450,18 +1455,5 @@ Public Class FrmEvaluation
         DgvlTechnicianLayout.Load()
         DgvlPartElapsedDayLayout.Load()
         DgvlPartWorkedHourLayout.Load()
-    End Sub
-
-    Private Sub DgvTechnician_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvTechnician.DataSourceChanged
-        If DgvTechnician.Columns.Count > 0 Then
-            DgvTechnician.Columns(0).Visible = False
-            DgvTechnician.Columns(2).Visible = False
-            DgvTechnician.Columns(3).Visible = False
-            DgvTechnician.Columns(4).Visible = False
-            DgvTechnician.Columns(5).Visible = False
-            DgvTechnician.Columns(6).Visible = False
-            DgvTechnician.Columns(7).Visible = False
-            DgvTechnician.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-        End If
     End Sub
 End Class

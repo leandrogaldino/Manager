@@ -103,21 +103,6 @@ Public Class Request
         SetIsSaved(True)
         Items.ToList().ForEach(Sub(x) x.SetIsSaved(True))
     End Sub
-    Public Sub Delete()
-        Dim FileManager As New TxFileManager(ApplicationPaths.ManagerTempDirectory)
-        Using Transaction As New Transactions.TransactionScope()
-            Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
-                Con.Open()
-                Using CmdRequest As New MySqlCommand(My.Resources.RequestDelete, Con)
-                    CmdRequest.Parameters.AddWithValue("@id", ID)
-                    CmdRequest.ExecuteNonQuery()
-                    If File.Exists(Document.OriginalFile) Then FileManager.Delete(Document.OriginalFile)
-                End Using
-            End Using
-            Transaction.Complete()
-        End Using
-        Clear()
-    End Sub
     Private Sub Insert()
         Using Transaction As New Transactions.TransactionScope()
             Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
@@ -137,7 +122,7 @@ Public Class Request
                     Using CmdItem As New MySqlCommand(My.Resources.RequestItemInsert, Con)
                         CmdItem.Parameters.AddWithValue("@requestid", ID)
                         CmdItem.Parameters.AddWithValue("@creation", Item.Creation)
-                        CmdItem.Parameters.AddWithValue("@statusid", CInt(Status))
+                        CmdItem.Parameters.AddWithValue("@statusid", CInt(Item.Status))
                         CmdItem.Parameters.AddWithValue("@itemname", If(String.IsNullOrEmpty(Item.ItemName), DBNull.Value, Item.ItemName))
                         CmdItem.Parameters.AddWithValue("@productid", If(Item.Product.ID = 0, DBNull.Value, Item.Product.ID))
                         CmdItem.Parameters.AddWithValue("@taked", Item.Taked)
@@ -214,6 +199,21 @@ Public Class Request
             Document.Execute()
             Transaction.Complete()
         End Using
+    End Sub
+    Public Sub Delete()
+        Dim FileManager As New TxFileManager(ApplicationPaths.ManagerTempDirectory)
+        Using Transaction As New Transactions.TransactionScope()
+            Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+                Con.Open()
+                Using CmdRequest As New MySqlCommand(My.Resources.RequestDelete, Con)
+                    CmdRequest.Parameters.AddWithValue("@id", ID)
+                    CmdRequest.ExecuteNonQuery()
+                    If File.Exists(Document.OriginalFile) Then FileManager.Delete(Document.OriginalFile)
+                End Using
+            End Using
+            Transaction.Complete()
+        End Using
+        Clear()
     End Sub
     Public Shared Sub FillDataGridView(RequestID As Long, Dgv As DataGridView)
         Dim TableResult As New DataTable

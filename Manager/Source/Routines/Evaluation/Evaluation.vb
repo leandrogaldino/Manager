@@ -83,6 +83,7 @@ Public Class Evaluation
     Public Property AverageWorkLoad As Decimal = 5.71
     Public Property PartsWorkedHour As New List(Of EvaluationPart)
     Public Property PartsElapsedDay As New List(Of EvaluationPart)
+    Public Property ReplacedItems As New List(Of EvaluationReplacedItem)
     Public Property TechnicalAdvice As String
     Public Property Document As New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
     Public Property Signature As New FileManager(ApplicationPaths.EvaluationSignatureDirectory)
@@ -95,100 +96,6 @@ Public Class Evaluation
     Public Sub New()
         SetRoutine(Routine.Evaluation)
     End Sub
-
-    Public Shared Function FromCloud(Data As Dictionary(Of String, Object), Signature As String, Photos As List(Of String)) As Evaluation
-        Dim Evaluation As New Evaluation
-        Dim EvaluationTechnician As EvaluationTechnician
-        Dim Coalescent As EvaluationPart
-        Evaluation.EvaluationNumber = GetEvaluationNumber(EvaluationCreationType.Imported)
-        Evaluation.EvaluationCreationType = EvaluationCreationType.Imported
-        Evaluation.CallType = CallType.None
-        Evaluation.NeedProposal = If(Data("needproposal") = True, ConfirmationType.Yes, ConfirmationType.No)
-        Evaluation.HasRepair = ConfirmationType.None
-        Evaluation.TechnicalAdvice = Data("advice")
-        Evaluation.Customer = New Person().Load(Data("customerid"), False)
-        Evaluation.Compressor = Evaluation.Customer.Compressors.SingleOrDefault(Function(x) x.ID = Data("personcompressorid"))
-        Evaluation.EvaluationDate = DateTimeHelper.DateFromMilliseconds(Data("creationdate"))
-        Evaluation.StartTime = TimeSpan.ParseExact(Data("starttime"), "hh\:mm", Nothing)
-        Evaluation.EndTime = TimeSpan.ParseExact(Data("endtime"), "hh\:mm", Nothing)
-        Evaluation.Horimeter = Data("horimeter")
-        Dim AirFilter As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBindType.AirFilter).ToList
-        Dim OilFilter As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBindType.OilFilter).ToList
-        Dim Separator As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBindType.Separator).ToList
-        Dim Oil As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBindType.Oil).ToList
-
-        Evaluation.PartsWorkedHour.ToList.ForEach(Sub(x)
-                                                      x.SetIsSaved(True)
-                                                  End Sub)
-
-        AirFilter.ForEach(Sub(x)
-                              x.CurrentCapacity = Data("airfilter")
-                              x.Sold = False
-                              x.Lost = False
-                              x.SetIsSaved(True)
-                          End Sub)
-        OilFilter.ForEach(Sub(x)
-                              x.CurrentCapacity = Data("oilfilter")
-                              x.Sold = False
-                              x.Lost = False
-                              x.SetIsSaved(True)
-                          End Sub)
-        Separator.ForEach(Sub(x)
-                              x.CurrentCapacity = Data("separator")
-                              x.Sold = False
-                              x.Lost = False
-                              x.SetIsSaved(True)
-                          End Sub)
-        Oil.ForEach(Sub(x)
-                        x.CurrentCapacity = Data("oil")
-                        x.Sold = False
-                        x.Lost = False
-                        x.SetIsSaved(True)
-                    End Sub)
-        For Each CoalescentData As Dictionary(Of String, Object) In Data("coalescents")
-            Coalescent = Evaluation.PartsElapsedDay.Where(Function(y) y.Part.PartBinded).FirstOrDefault(Function(x) x.Part.ID = CoalescentData("coalescentid"))
-            If Coalescent IsNot Nothing Then
-                Coalescent.CurrentCapacity = DateDiff(DateInterval.Day, Today, DateTimeHelper.DateFromMilliseconds((CoalescentData("nextchange"))))
-                Coalescent.Sold = False
-                Coalescent.Lost = False
-            End If
-        Next CoalescentData
-        Evaluation.PartsElapsedDay.ForEach(Sub(x) x.SetIsSaved(True))
-        Evaluation.Responsible = Data("responsible")
-        Evaluation.StartTime = TimeSpan.ParseExact(Data("starttime"), "hh\:mm", Nothing)
-        For Each TechnicianData In Data("technicians")
-            EvaluationTechnician = New EvaluationTechnician With {
-                .Technician = New Person().Load(TechnicianData("personid"), False)
-            }
-            EvaluationTechnician.SetIsSaved(True)
-            Evaluation.Technicians.Add(EvaluationTechnician)
-        Next TechnicianData
-        Evaluation.Signature.SetCurrentFile(Signature)
-        For Each p In Photos
-            Dim Photo As New EvaluationPhoto With {
-                .Photo = New FileManager(ApplicationPaths.EvaluationPhotoDirectory)
-            }
-            Photo.SetIsSaved(True)
-            Photo.Photo.SetCurrentFile(p)
-            Evaluation.Photos.Add(Photo)
-        Next p
-        Return Evaluation
-    End Function
-
-    Public Shared Function CountEvaluation(PersonCompressorID As Long, StatusFilter As List(Of EvaluationStatus), Optional IgnoreEvaluation As Long = 0) As Long
-        Dim Session = Locator.GetInstance(Of Session)
-        Dim StatusIntList As New List(Of Integer)
-        StatusFilter.ForEach(Sub(x) StatusIntList.Add(CInt(x)))
-        Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
-            Using Cmd As New MySqlCommand(My.Resources.EvaluationCount, Con)
-                Cmd.Parameters.AddWithValue("@evaluationid", IgnoreEvaluation)
-                Cmd.Parameters.AddWithValue("@personcompressorid", PersonCompressorID)
-                Cmd.Parameters.AddWithValue("@statusid", String.Join(",", StatusIntList))
-                Con.Open()
-                Return Cmd.ExecuteScalar
-            End Using
-        End Using
-    End Function
     Public Sub Clear()
         Unlock()
         SetIsSaved(False)
@@ -211,6 +118,7 @@ Public Class Evaluation
         AverageWorkLoad = 0
         PartsWorkedHour = New List(Of EvaluationPart)
         PartsElapsedDay = New List(Of EvaluationPart)
+        ReplacedItems = New List(Of EvaluationReplacedItem)
         TechnicalAdvice = Nothing
         Document = New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
         Signature = New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
@@ -262,7 +170,8 @@ Public Class Evaluation
                         Photos = GetPhotos(Tra)
                         _RejectReason = TableResult.Rows(0).Item("rejectreason").ToString
                         Technicians = GetTechnicians(Tra)
-                        FillParts(Tra)
+                        GetParts(Tra)
+                        GetReplacedItems(Tra)
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
                     Else
@@ -320,8 +229,7 @@ Public Class Evaluation
         End Using
         Return Technicians
     End Function
-
-    Private Sub FillParts(Transaction As MySqlTransaction)
+    Private Sub GetParts(Transaction As MySqlTransaction)
         Dim TableResult As DataTable
         Dim Part As EvaluationPart
         Using CmdEvaluationPart As New MySqlCommand(My.Resources.EvaluationPartSelect, Transaction.Connection)
@@ -385,6 +293,29 @@ Public Class Evaluation
             End Using
         End Using
     End Sub
+    Private Sub GetReplacedItems(Transaction As MySqlTransaction)
+        Dim TableResult As DataTable
+        Dim Item As EvaluationReplacedItem
+        Using CmdEvaluationItem As New MySqlCommand(My.Resources.EvaluationReplacedItemSelect, Transaction.Connection)
+            CmdEvaluationItem.Transaction = Transaction
+            CmdEvaluationItem.Parameters.AddWithValue("@evaluationid", ID)
+            Using Adp As New MySqlDataAdapter(CmdEvaluationItem)
+                TableResult = New DataTable
+                Adp.Fill(TableResult)
+                For Each Row As DataRow In TableResult.Rows
+                    Item = New EvaluationReplacedItem With {
+                        .ItemName = Row.Item("itemname").ToString,
+                        .Product = New Product().Load(Row.Item("productid"), False),
+                        .Quantity = Row.Item("quantity")
+                    }
+                    Item.SetIsSaved(True)
+                    Item.SetID(Row.Item("id"))
+                    Item.SetCreation(Row.Item("creation"))
+                    ReplacedItems.Add(Item)
+                Next Row
+            End Using
+        End Using
+    End Sub
     Public Sub SaveChanges()
         If Not IsSaved Then
             Insert()
@@ -395,38 +326,8 @@ Public Class Evaluation
         Technicians.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         PartsWorkedHour.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         PartsElapsedDay.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        ReplacedItems.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         Photos.ToList().ForEach(Sub(x) x.SetIsSaved(True))
-    End Sub
-    Public Sub Delete()
-        Dim Session = Locator.GetInstance(Of Session)
-        Dim FileManager As New TxFileManager(ApplicationPaths.ManagerTempDirectory)
-        Using Transaction As New Transactions.TransactionScope()
-            Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
-                Con.Open()
-                Using CmdEvaluation As New MySqlCommand(My.Resources.EvaluationDelete, Con)
-                    CmdEvaluation.Parameters.AddWithValue("@id", ID)
-                    CmdEvaluation.ExecuteNonQuery()
-                    If File.Exists(Document.OriginalFile) Then FileManager.Delete(Document.OriginalFile)
-                    If File.Exists(Signature.OriginalFile) Then FileManager.Delete(Signature.OriginalFile)
-
-                    For Each ShadowPhoto In _Shadow.Photos
-                        If File.Exists(ShadowPhoto.Photo.OriginalFile) Then
-                            FileManager.Delete(ShadowPhoto.Photo.OriginalFile)
-                        End If
-                    Next ShadowPhoto
-
-
-                    Photos.ToList.ForEach(Sub(x)
-                                              If File.Exists(x.Photo.OriginalFile) Then
-                                                  FileManager.Delete(x.Photo.OriginalFile)
-                                              End If
-                                          End Sub)
-
-                End Using
-            End Using
-            Transaction.Complete()
-        End Using
-        Clear()
     End Sub
     Private Sub Insert()
         Dim Session = Locator.GetInstance(Of Session)
@@ -495,6 +396,19 @@ Public Class Evaluation
                         PartElapsedDay.SetID(CmdPartElapsedDay.LastInsertedId)
                     End Using
                 Next PartElapsedDay
+                For Each Item As EvaluationReplacedItem In ReplacedItems
+                    Using CmdItem As New MySqlCommand(My.Resources.EvaluationReplacedItemInsert, Con)
+                        CmdItem.Parameters.AddWithValue("@evaluationid", ID)
+                        CmdItem.Parameters.AddWithValue("@creation", Item.Creation)
+                        CmdItem.Parameters.AddWithValue("@statusid", CInt(Status))
+                        CmdItem.Parameters.AddWithValue("@itemname", If(String.IsNullOrEmpty(Item.ItemName), DBNull.Value, Item.ItemName))
+                        CmdItem.Parameters.AddWithValue("@productid", If(Item.Product.ID = 0, DBNull.Value, Item.Product.ID))
+                        CmdItem.Parameters.AddWithValue("@quantity", Item.Quantity)
+                        CmdItem.Parameters.AddWithValue("@userid", Item.User.ID)
+                        CmdItem.ExecuteNonQuery()
+                        Item.SetID(CmdItem.LastInsertedId)
+                    End Using
+                Next Item
                 For Each Photo As EvaluationPhoto In Photos
                     Using CmdPhoto As New MySqlCommand(My.Resources.EvaluationPhotoInsert, Con)
                         CmdPhoto.Parameters.AddWithValue("@creation", Photo.Creation)
@@ -675,6 +589,38 @@ Public Class Evaluation
                         End If
                     Next PartElapsedDay
                 End If
+                For Each Item As EvaluationReplacedItem In _Shadow.ReplacedItems
+                    If Not ReplacedItems.Any(Function(x) x.ID = Item.ID And x.ID > 0) Then
+                        Using CmdItem As New MySqlCommand(My.Resources.EvaluationReplacedItemDelete, Con)
+                            CmdItem.Parameters.AddWithValue("@id", Item.ID)
+                            CmdItem.ExecuteNonQuery()
+                        End Using
+                    End If
+                Next Item
+                For Each Item As EvaluationReplacedItem In ReplacedItems
+                    If Item.ID = 0 Then
+                        Using CmdItem As New MySqlCommand(My.Resources.EvaluationReplacedItemInsert, Con)
+                            CmdItem.Parameters.AddWithValue("@evaluationid", ID)
+                            CmdItem.Parameters.AddWithValue("@creation", Item.Creation)
+                            CmdItem.Parameters.AddWithValue("@statusid", CInt(Status))
+                            CmdItem.Parameters.AddWithValue("@itemname", If(String.IsNullOrEmpty(Item.ItemName), DBNull.Value, Item.ItemName))
+                            CmdItem.Parameters.AddWithValue("@productid", If(Item.Product.ID = 0, DBNull.Value, Item.Product.ID))
+                            CmdItem.Parameters.AddWithValue("@quantity", Item.Quantity)
+                            CmdItem.Parameters.AddWithValue("@userid", Item.User.ID)
+                            CmdItem.ExecuteNonQuery()
+                            Item.SetID(CmdItem.LastInsertedId)
+                        End Using
+                    Else
+                        Using CmdItem As New MySqlCommand(My.Resources.EvaluationReplacedItemUpdate, Con)
+                            CmdItem.Parameters.AddWithValue("@id", Item.ID)
+                            CmdItem.Parameters.AddWithValue("@itemname", If(String.IsNullOrEmpty(Item.ItemName), DBNull.Value, Item.ItemName))
+                            CmdItem.Parameters.AddWithValue("@productid", If(Item.Product.ID = 0, DBNull.Value, Item.Product.ID))
+                            CmdItem.Parameters.AddWithValue("@quantity", Item.Quantity)
+                            CmdItem.Parameters.AddWithValue("@userid", Item.User.ID)
+                            CmdItem.ExecuteNonQuery()
+                        End Using
+                    End If
+                Next Item
                 For Each Photo As EvaluationPhoto In _Shadow.Photos
                     If Not Photos.Any(Function(x) x.ID = Photo.ID And x.ID > 0) Then
                         Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoDelete, Con)
@@ -714,6 +660,248 @@ Public Class Evaluation
             Transaction.Complete()
         End Using
     End Sub
+
+    Public Shared Sub FillDataGridView(EvaluationID As Long, Dgv As DataGridView, PartType As CompressorPartType)
+        Dim Session = Locator.GetInstance(Of Session)
+        Dim TableResult As New DataTable
+        Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
+            Using Cmd As New MySqlCommand(My.Resources.EvaluationDetailSelect, Con)
+                Cmd.Parameters.AddWithValue("@evaluationid", EvaluationID)
+                Cmd.Parameters.AddWithValue("@parttypeid", CInt(PartType))
+                Using Adp As New MySqlDataAdapter(Cmd)
+                    Adp.Fill(TableResult)
+                    Dgv.AutoGenerateColumns = False
+                    Dgv.Columns.Clear()
+                    Dgv.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "Item", .HeaderText = "Item", .DataPropertyName = "Item", .CellTemplate = New DataGridViewTextBoxCell})
+                    Dgv.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "Cap. Atual", .HeaderText = "Cap. Atual", .DataPropertyName = "Cap. Atual", .CellTemplate = New DataGridViewTextBoxCell})
+                    Dgv.Columns.Add(New DataGridViewCheckBoxColumn With {.Name = "Vendido", .HeaderText = "Vendido", .DataPropertyName = "Vendido", .CellTemplate = New DataGridViewCheckBoxCell})
+                    Dgv.Columns.Add(New DataGridViewCheckBoxColumn With {.Name = "Perdido", .HeaderText = "Perdido", .DataPropertyName = "Perdido", .CellTemplate = New DataGridViewCheckBoxCell})
+                    Dgv.DataSource = TableResult
+                    Dgv.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                    Dgv.Columns(0).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Dgv.Columns(1).Width = 110
+                    Dgv.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Dgv.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Dgv.Columns(2).Width = 110
+                    Dgv.Columns(3).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Dgv.Columns(3).Width = 110
+                End Using
+            End Using
+        End Using
+    End Sub
+    Public Sub Delete()
+        Dim Session = Locator.GetInstance(Of Session)
+        Dim FileManager As New TxFileManager(ApplicationPaths.ManagerTempDirectory)
+        Using Transaction As New Transactions.TransactionScope()
+            Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
+                Con.Open()
+                Using CmdEvaluation As New MySqlCommand(My.Resources.EvaluationDelete, Con)
+                    CmdEvaluation.Parameters.AddWithValue("@id", ID)
+                    CmdEvaluation.ExecuteNonQuery()
+                    If File.Exists(Document.OriginalFile) Then FileManager.Delete(Document.OriginalFile)
+                    If File.Exists(Signature.OriginalFile) Then FileManager.Delete(Signature.OriginalFile)
+                    For Each ShadowPhoto In _Shadow.Photos
+                        If File.Exists(ShadowPhoto.Photo.OriginalFile) Then
+                            FileManager.Delete(ShadowPhoto.Photo.OriginalFile)
+                        End If
+                    Next ShadowPhoto
+                    Photos.ToList.ForEach(Sub(x)
+                                              If File.Exists(x.Photo.OriginalFile) Then
+                                                  FileManager.Delete(x.Photo.OriginalFile)
+                                              End If
+                                          End Sub)
+
+                End Using
+            End Using
+            Transaction.Complete()
+        End Using
+        Clear()
+    End Sub
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Public Shared Function FromCloud(Data As Dictionary(Of String, Object), Signature As String, Photos As List(Of String)) As Evaluation
+        Dim Evaluation As New Evaluation
+        Dim EvaluationTechnician As EvaluationTechnician
+        Dim Coalescent As EvaluationPart
+        Evaluation.EvaluationNumber = GetEvaluationNumber(EvaluationCreationType.Imported)
+        Evaluation.EvaluationCreationType = EvaluationCreationType.Imported
+        Evaluation.CallType = CallType.None
+        Evaluation.NeedProposal = If(Data("needproposal") = True, ConfirmationType.Yes, ConfirmationType.No)
+        Evaluation.HasRepair = ConfirmationType.None
+        Evaluation.TechnicalAdvice = Data("advice")
+        Evaluation.Customer = New Person().Load(Data("customerid"), False)
+        Evaluation.Compressor = Evaluation.Customer.Compressors.SingleOrDefault(Function(x) x.ID = Data("personcompressorid"))
+        Evaluation.EvaluationDate = DateTimeHelper.DateFromMilliseconds(Data("creationdate"))
+        Evaluation.StartTime = TimeSpan.ParseExact(Data("starttime"), "hh\:mm", Nothing)
+        Evaluation.EndTime = TimeSpan.ParseExact(Data("endtime"), "hh\:mm", Nothing)
+        Evaluation.Horimeter = Data("horimeter")
+        Dim AirFilter As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBindType.AirFilter).ToList
+        Dim OilFilter As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBindType.OilFilter).ToList
+        Dim Separator As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBindType.Separator).ToList
+        Dim Oil As List(Of EvaluationPart) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorPartBindType.Oil).ToList
+
+        Evaluation.PartsWorkedHour.ToList.ForEach(Sub(x)
+                                                      x.SetIsSaved(True)
+                                                  End Sub)
+
+        AirFilter.ForEach(Sub(x)
+                              x.CurrentCapacity = Data("airfilter")
+                              x.Sold = False
+                              x.Lost = False
+                              x.SetIsSaved(True)
+                          End Sub)
+        OilFilter.ForEach(Sub(x)
+                              x.CurrentCapacity = Data("oilfilter")
+                              x.Sold = False
+                              x.Lost = False
+                              x.SetIsSaved(True)
+                          End Sub)
+        Separator.ForEach(Sub(x)
+                              x.CurrentCapacity = Data("separator")
+                              x.Sold = False
+                              x.Lost = False
+                              x.SetIsSaved(True)
+                          End Sub)
+        Oil.ForEach(Sub(x)
+                        x.CurrentCapacity = Data("oil")
+                        x.Sold = False
+                        x.Lost = False
+                        x.SetIsSaved(True)
+                    End Sub)
+        For Each CoalescentData As Dictionary(Of String, Object) In Data("coalescents")
+            Coalescent = Evaluation.PartsElapsedDay.Where(Function(y) y.Part.PartBinded).FirstOrDefault(Function(x) x.Part.ID = CoalescentData("coalescentid"))
+            If Coalescent IsNot Nothing Then
+                Coalescent.CurrentCapacity = DateDiff(DateInterval.Day, Today, DateTimeHelper.DateFromMilliseconds((CoalescentData("nextchange"))))
+                Coalescent.Sold = False
+                Coalescent.Lost = False
+            End If
+        Next CoalescentData
+        Evaluation.PartsElapsedDay.ForEach(Sub(x) x.SetIsSaved(True))
+        Evaluation.Responsible = Data("responsible")
+        Evaluation.StartTime = TimeSpan.ParseExact(Data("starttime"), "hh\:mm", Nothing)
+        For Each TechnicianData In Data("technicians")
+            EvaluationTechnician = New EvaluationTechnician With {
+                .Technician = New Person().Load(TechnicianData("personid"), False)
+            }
+            EvaluationTechnician.SetIsSaved(True)
+            Evaluation.Technicians.Add(EvaluationTechnician)
+        Next TechnicianData
+        Evaluation.Signature.SetCurrentFile(Signature)
+        For Each p In Photos
+            Dim Photo As New EvaluationPhoto With {
+                .Photo = New FileManager(ApplicationPaths.EvaluationPhotoDirectory)
+            }
+            Photo.SetIsSaved(True)
+            Photo.Photo.SetCurrentFile(p)
+            Evaluation.Photos.Add(Photo)
+        Next p
+        Return Evaluation
+    End Function
+    Public Shared Function CountEvaluation(PersonCompressorID As Long, StatusFilter As List(Of EvaluationStatus), Optional IgnoreEvaluation As Long = 0) As Long
+        Dim Session = Locator.GetInstance(Of Session)
+        Dim StatusIntList As New List(Of Integer)
+        StatusFilter.ForEach(Sub(x) StatusIntList.Add(CInt(x)))
+        Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
+            Using Cmd As New MySqlCommand(My.Resources.EvaluationCount, Con)
+                Cmd.Parameters.AddWithValue("@evaluationid", IgnoreEvaluation)
+                Cmd.Parameters.AddWithValue("@personcompressorid", PersonCompressorID)
+                Cmd.Parameters.AddWithValue("@statusid", String.Join(",", StatusIntList))
+                Con.Open()
+                Return Cmd.ExecuteScalar
+            End Using
+        End Using
+    End Function
     Public Shared Function HasPreviousEvaluation(PersonCompressor As PersonCompressor, EvaluationDate As Date, EvaluationID As Long) As Boolean
         Dim Session = Locator.GetInstance(Of Session)
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
@@ -809,34 +997,6 @@ Public Class Evaluation
             End Using
         End Using
     End Sub
-    Public Shared Sub FillDataGridView(EvaluationID As Long, Dgv As DataGridView, PartType As CompressorPartType)
-        Dim Session = Locator.GetInstance(Of Session)
-        Dim TableResult As New DataTable
-        Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
-            Using Cmd As New MySqlCommand(My.Resources.EvaluationDetailSelect, Con)
-                Cmd.Parameters.AddWithValue("@evaluationid", EvaluationID)
-                Cmd.Parameters.AddWithValue("@parttypeid", CInt(PartType))
-                Using Adp As New MySqlDataAdapter(Cmd)
-                    Adp.Fill(TableResult)
-                    Dgv.AutoGenerateColumns = False
-                    Dgv.Columns.Clear()
-                    Dgv.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "Item", .HeaderText = "Item", .DataPropertyName = "Item", .CellTemplate = New DataGridViewTextBoxCell})
-                    Dgv.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "Cap. Atual", .HeaderText = "Cap. Atual", .DataPropertyName = "Cap. Atual", .CellTemplate = New DataGridViewTextBoxCell})
-                    Dgv.Columns.Add(New DataGridViewCheckBoxColumn With {.Name = "Vendido", .HeaderText = "Vendido", .DataPropertyName = "Vendido", .CellTemplate = New DataGridViewCheckBoxCell})
-                    Dgv.Columns.Add(New DataGridViewCheckBoxColumn With {.Name = "Perdido", .HeaderText = "Perdido", .DataPropertyName = "Perdido", .CellTemplate = New DataGridViewCheckBoxCell})
-                    Dgv.DataSource = TableResult
-                    Dgv.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-                    Dgv.Columns(0).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    Dgv.Columns(1).Width = 110
-                    Dgv.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    Dgv.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    Dgv.Columns(2).Width = 110
-                    Dgv.Columns(3).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    Dgv.Columns(3).Width = 110
-                End Using
-            End Using
-        End Using
-    End Sub
     Public Function Calculate() As Boolean
         Dim PreviousEvaluationID As Long
         Dim PreviousEvaluation As Evaluation
@@ -891,7 +1051,6 @@ Public Class Evaluation
             Return False
         End If
     End Function
-
     Private Function GetCMT() As Decimal
         Dim Value As Decimal
         Value = 5.71
@@ -907,7 +1066,6 @@ Public Class Evaluation
         End If
         Return Value
     End Function
-
     Public Shared Function GetEvaluationNumber(CreationType As EvaluationCreationType) As String
         Dim EvaluationNumber As String = String.Empty
         Dim IsUnique As Boolean

@@ -494,22 +494,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\UcConfirmation.Designer.vb">
-      <DependentUpon>UcConfirmation.vb</DependentUpon>
+    <Compile Include="Source\Controls\UcEvaluationCallTypeHasRepairNeedProposal.Designer.vb">
+      <DependentUpon>UcEvaluationCallTypeHasRepairNeedProposal.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\UcConfirmation.vb">
+    <Compile Include="Source\Controls\UcEvaluationCallTypeHasRepairNeedProposal.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Source\Controls\UcCallType.Designer.vb">
-      <DependentUpon>UcCallType.vb</DependentUpon>
+    <Compile Include="Source\Controls\UcEvaluationUnitTemperaturePressure.Designer.vb">
+      <DependentUpon>UcEvaluationUnitTemperaturePressure.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\UcCallType.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Source\Controls\UcEvaluationAditionalInfo.Designer.vb">
-      <DependentUpon>UcEvaluationAditionalInfo.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Controls\UcEvaluationAditionalInfo.vb">
+    <Compile Include="Source\Controls\UcEvaluationUnitTemperaturePressure.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Helper\Attibutes\RoutineDependencyAttribute.vb" />
@@ -1266,14 +1260,11 @@
     <Compile Include="Source\Routines\VisitSchedule\VisitScheduleFilter.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Source\Controls\UcConfirmation.resx">
-      <DependentUpon>UcConfirmation.vb</DependentUpon>
+    <EmbeddedResource Include="Source\Controls\UcEvaluationCallTypeHasRepairNeedProposal.resx">
+      <DependentUpon>UcEvaluationCallTypeHasRepairNeedProposal.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Controls\UcCallType.resx">
-      <DependentUpon>UcCallType.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Controls\UcEvaluationAditionalInfo.resx">
-      <DependentUpon>UcEvaluationAditionalInfo.vb</DependentUpon>
+    <EmbeddedResource Include="Source\Controls\UcEvaluationUnitTemperaturePressure.resx">
+      <DependentUpon>UcEvaluationUnitTemperaturePressure.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\CashFlow\FrmCashFlowAuthorized.resx">
       <DependentUpon>FrmCashFlowAuthorized.vb</DependentUpon>

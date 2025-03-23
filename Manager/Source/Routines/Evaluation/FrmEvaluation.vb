@@ -15,10 +15,10 @@ Public Class FrmEvaluation
     Private _SelectedPhoto As EvaluationPhoto
     Private _Resizer As FluidResizer
     Private _User As User
-    Private _UcCallType As UcCallType
+    Private _UcCallType As UcEvaluationCallTypeHasRepairNeedProposal
     Private _UcEvaluationNeedProposal As UcConfirmation
     Private _UcHasRepair As UcConfirmation
-    Private _UcAditionalInfo As UcEvaluationAditionalInfo
+    Private _UcAditionalInfo As UcEvaluationUnitTemperaturePressure
     Private Property SelectedPhoto As EvaluationPhoto
         Get
             Return _SelectedPhoto
@@ -291,14 +291,14 @@ Public Class FrmEvaluation
         LblDocumentPage.Text = Nothing
         TxtEvaluationNumber.ReadOnly = _Evaluation.EvaluationCreationType <> EvaluationCreationType.Manual
         Tip.SetToolTip(LblAverageWorkLoad, "Carga Média de Trabalho")
-        _UcCallType = New UcCallType()
+        _UcCallType = New UcEvaluationCallTypeHasRepairNeedProposal()
         CcoCallType.DropDownControl = _UcCallType
         _UcHasRepair = New UcConfirmation()
         CcoHasRepair.DropDownControl = _UcHasRepair
         _UcEvaluationNeedProposal = New UcConfirmation()
         CcoEvaluationNeedProposal.DropDownControl = _UcEvaluationNeedProposal
 
-        _UcAditionalInfo = New UcEvaluationAditionalInfo()
+        _UcAditionalInfo = New UcEvaluationUnitTemperaturePressure()
         CcoAdditionalInfo.DropDownControl = _UcAditionalInfo
 
 
@@ -306,6 +306,21 @@ Public Class FrmEvaluation
         AddHandler _UcCallType.CheckedChanged, AddressOf CallTypeChanged
         AddHandler _UcHasRepair.CheckedChanged, AddressOf EvaluationHasRepairChanged
         AddHandler _UcEvaluationNeedProposal.CheckedChanged, AddressOf EvaluationNeedProposalChanged
+
+        AddHandler _UcAditionalInfo.ValueChanged, AddressOf EvaluationInfoChanged
+
+    End Sub
+
+    Private Sub EvaluationInfoChanged(sender As Object, e As EventArgs)
+        Dim Unit As String = If(String.IsNullOrEmpty(_UcAditionalInfo.Unit), "N/A", $"{ _UcAditionalInfo.Unit}")
+        Dim Temperature As String = If(_UcAditionalInfo.Temperature <= 0, "N/A", $"{ _UcAditionalInfo.Temperature}ºC ")
+        Dim Pressure As String = If(_UcAditionalInfo.Pressure <= 0, "N/A", $"{ _UcAditionalInfo.Pressure}BAR ")
+
+        BtnAdditionalInfo.TextParts(1).Text = Unit
+        BtnAdditionalInfo.TextParts(4).Text = Temperature
+        BtnAdditionalInfo.TextParts(7).Text = Pressure
+        EprValidation.Clear()
+        If Not _Loading Then BtnSave.Enabled = True
     End Sub
 
     Private Sub CallTypeChanged()

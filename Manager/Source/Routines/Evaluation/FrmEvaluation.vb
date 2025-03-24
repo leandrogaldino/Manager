@@ -310,10 +310,10 @@ Public Class FrmEvaluation
     Private Sub CallTypeHasRepairNeedProposalChanged(sender As Object, e As EventArgs)
         Dim VisitType As String = If(String.IsNullOrEmpty(_UcCallTypeHasRepairNeedProposal.VisitType), "N/A", _UcCallTypeHasRepairNeedProposal.VisitType.ToTitle)
         Dim HasRepair As String = If(String.IsNullOrEmpty(_UcCallTypeHasRepairNeedProposal.HasRepair), "N/A", _UcCallTypeHasRepairNeedProposal.HasRepair.ToTitle)
-        Dim NeedProposal As String = If(String.IsNullOrEmpty(_UcCallTypeHasRepairNeedProposal.NeedProposal), "N/A", _UcCallTypeHasRepairNeedProposal.NeedProposal.ToTitle)
+        'Dim NeedProposal As String = If(String.IsNullOrEmpty(_UcCallTypeHasRepairNeedProposal.NeedProposal), "N/A", _UcCallTypeHasRepairNeedProposal.NeedProposal.ToTitle)'
         BtnCallTypeHasRepairNeedProposal.TextParts(1).Text = VisitType
         BtnCallTypeHasRepairNeedProposal.TextParts(4).Text = HasRepair
-        BtnCallTypeHasRepairNeedProposal.TextParts(7).Text = NeedProposal
+        'BtnCallTypeHasRepairNeedProposal.TextParts(7).Text = NeedProposal'
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
@@ -1426,9 +1426,4 @@ Public Class FrmEvaluation
         DgvlPartWorkedHourLayout.Load()
     End Sub
 
-    Private Sub CcoUnitTemperaturePressure_Closed(sender As Object) Handles CcoUnitTemperaturePressure.Closed, CcoCallTypeHasRepairNeedProposal.Closed
-        BtnUnitTemperaturePressure.Invalidate()
-        BtnUnitTemperaturePressure.Refresh()
-        BtnUnitTemperaturePressure.Update()
-    End Sub
 End Class

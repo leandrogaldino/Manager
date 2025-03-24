@@ -26,11 +26,13 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
         Me.CbxVisitType = New ControlLibrary.CentralizedComboBox()
         Me.LblCallType = New System.Windows.Forms.Label()
         Me.PnHasRepair = New System.Windows.Forms.Panel()
-        Me.CbxHasRepair = New ControlLibrary.CentralizedComboBox()
         Me.LblHasRepair = New System.Windows.Forms.Label()
         Me.PnNeedProposal = New System.Windows.Forms.Panel()
-        Me.CbxNeedProposal = New ControlLibrary.CentralizedComboBox()
         Me.LblNeedProposal = New System.Windows.Forms.Label()
+        Me.CheckBox4 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox3 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
         Me.PnVisitType.SuspendLayout()
         Me.PnHasRepair.SuspendLayout()
         Me.PnNeedProposal.SuspendLayout()
@@ -70,23 +72,14 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
         'PnHasRepair
         '
         Me.PnHasRepair.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PnHasRepair.Controls.Add(Me.CbxHasRepair)
+        Me.PnHasRepair.Controls.Add(Me.CheckBox1)
+        Me.PnHasRepair.Controls.Add(Me.CheckBox2)
         Me.PnHasRepair.Controls.Add(Me.LblHasRepair)
         Me.PnHasRepair.Location = New System.Drawing.Point(3, 48)
         Me.PnHasRepair.Name = "PnHasRepair"
+        Me.PnHasRepair.Padding = New System.Windows.Forms.Padding(0, 0, 4, 0)
         Me.PnHasRepair.Size = New System.Drawing.Size(374, 39)
         Me.PnHasRepair.TabIndex = 3
-        '
-        'CbxHasRepair
-        '
-        Me.CbxHasRepair.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.CbxHasRepair.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.CbxHasRepair.FormattingEnabled = True
-        Me.CbxHasRepair.Location = New System.Drawing.Point(221, 7)
-        Me.CbxHasRepair.Margin = New System.Windows.Forms.Padding(8)
-        Me.CbxHasRepair.Name = "CbxHasRepair"
-        Me.CbxHasRepair.Size = New System.Drawing.Size(143, 24)
-        Me.CbxHasRepair.TabIndex = 2
         '
         'LblHasRepair
         '
@@ -101,23 +94,14 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
         'PnNeedProposal
         '
         Me.PnNeedProposal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PnNeedProposal.Controls.Add(Me.CbxNeedProposal)
+        Me.PnNeedProposal.Controls.Add(Me.CheckBox3)
+        Me.PnNeedProposal.Controls.Add(Me.CheckBox4)
         Me.PnNeedProposal.Controls.Add(Me.LblNeedProposal)
         Me.PnNeedProposal.Location = New System.Drawing.Point(3, 93)
         Me.PnNeedProposal.Name = "PnNeedProposal"
+        Me.PnNeedProposal.Padding = New System.Windows.Forms.Padding(0, 0, 4, 0)
         Me.PnNeedProposal.Size = New System.Drawing.Size(374, 39)
         Me.PnNeedProposal.TabIndex = 6
-        '
-        'CbxNeedProposal
-        '
-        Me.CbxNeedProposal.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.CbxNeedProposal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.CbxNeedProposal.FormattingEnabled = True
-        Me.CbxNeedProposal.Location = New System.Drawing.Point(221, 7)
-        Me.CbxNeedProposal.Margin = New System.Windows.Forms.Padding(8)
-        Me.CbxNeedProposal.Name = "CbxNeedProposal"
-        Me.CbxNeedProposal.Size = New System.Drawing.Size(143, 24)
-        Me.CbxNeedProposal.TabIndex = 2
         '
         'LblNeedProposal
         '
@@ -128,6 +112,46 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
         Me.LblNeedProposal.TabIndex = 0
         Me.LblNeedProposal.Text = "Proposta Necessária:"
         Me.LblNeedProposal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'CheckBox4
+        '
+        Me.CheckBox4.Dock = System.Windows.Forms.DockStyle.Right
+        Me.CheckBox4.Location = New System.Drawing.Point(313, 0)
+        Me.CheckBox4.Name = "CheckBox4"
+        Me.CheckBox4.Size = New System.Drawing.Size(55, 37)
+        Me.CheckBox4.TabIndex = 2
+        Me.CheckBox4.Text = "Não"
+        Me.CheckBox4.UseVisualStyleBackColor = True
+        '
+        'CheckBox3
+        '
+        Me.CheckBox3.Dock = System.Windows.Forms.DockStyle.Right
+        Me.CheckBox3.Location = New System.Drawing.Point(264, 0)
+        Me.CheckBox3.Name = "CheckBox3"
+        Me.CheckBox3.Size = New System.Drawing.Size(49, 37)
+        Me.CheckBox3.TabIndex = 3
+        Me.CheckBox3.Text = "Sim"
+        Me.CheckBox3.UseVisualStyleBackColor = True
+        '
+        'CheckBox1
+        '
+        Me.CheckBox1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.CheckBox1.Location = New System.Drawing.Point(264, 0)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(49, 37)
+        Me.CheckBox1.TabIndex = 5
+        Me.CheckBox1.Text = "Sim"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
+        'CheckBox2
+        '
+        Me.CheckBox2.Dock = System.Windows.Forms.DockStyle.Right
+        Me.CheckBox2.Location = New System.Drawing.Point(313, 0)
+        Me.CheckBox2.Name = "CheckBox2"
+        Me.CheckBox2.Size = New System.Drawing.Size(55, 37)
+        Me.CheckBox2.TabIndex = 4
+        Me.CheckBox2.Text = "Não"
+        Me.CheckBox2.UseVisualStyleBackColor = True
         '
         'UcEvaluationCallTypeHasRepairNeedProposal
         '
@@ -155,6 +179,8 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
     Private WithEvents PnNeedProposal As Panel
     Private WithEvents LblNeedProposal As Label
     Private WithEvents CbxVisitType As ControlLibrary.CentralizedComboBox
-    Private WithEvents CbxHasRepair As ControlLibrary.CentralizedComboBox
-    Private WithEvents CbxNeedProposal As ControlLibrary.CentralizedComboBox
+    Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents CheckBox2 As CheckBox
+    Friend WithEvents CheckBox3 As CheckBox
+    Friend WithEvents CheckBox4 As CheckBox
 End Class

@@ -42,4 +42,15 @@ Public Class UcEvaluationCallTypeHasRepairNeedProposal
         If _ManualChanging Then Return
         OnValueChanged(sender)
     End Sub
+
+    Private Sub CbxHasRepairYes_CheckedChanged(sender As Object, e As EventArgs) Handles CbxNeedProposalYes.CheckedChanged, CbxNeedProposalNo.CheckedChanged, CbxHasRepairYes.CheckedChanged, CbxHasRepairNo.CheckedChanged
+        Dim Cbx As CheckBox = sender
+        If Cbx.Tag = "HasRepairYes" Then
+            If CbxHasRepairYes.Checked Then
+                CbxHasRepairNo.Checked = False
+            Else
+                CbxHasRepairNo.Checked = True
+            End If
+        End If
+    End Sub
 End Class

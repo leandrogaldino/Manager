@@ -3,6 +3,7 @@ Imports ControlLibrary
 Imports ControlLibrary.Extensions
 Imports ManagerCore
 Imports MySql.Data.MySqlClient
+Imports Org.BouncyCastle.Tls
 Public Class FrmEvaluation
     Private _Evaluation As Evaluation
     Private _EvaluationsForm As FrmEvaluations
@@ -15,10 +16,10 @@ Public Class FrmEvaluation
     Private _SelectedPhoto As EvaluationPhoto
     Private _Resizer As FluidResizer
     Private _User As User
-    Private _UcCallType As UcEvaluationCallTypeHasRepairNeedProposal
-    Private _UcEvaluationNeedProposal As UcConfirmation
-    Private _UcHasRepair As UcConfirmation
-    Private _UcAditionalInfo As UcEvaluationUnitTemperaturePressure
+
+    Private _UcUnitTemperaturePressure As UcEvaluationUnitTemperaturePressure
+    Private _UcCallTypeHasRepairNeedProposal As UcEvaluationCallTypeHasRepairNeedProposal
+
     Private Property SelectedPhoto As EvaluationPhoto
         Get
             Return _SelectedPhoto
@@ -291,53 +292,44 @@ Public Class FrmEvaluation
         LblDocumentPage.Text = Nothing
         TxtEvaluationNumber.ReadOnly = _Evaluation.EvaluationCreationType <> EvaluationCreationType.Manual
         Tip.SetToolTip(LblAverageWorkLoad, "Carga Média de Trabalho")
-        _UcCallType = New UcEvaluationCallTypeHasRepairNeedProposal()
-        CcoCallType.DropDownControl = _UcCallType
-        _UcHasRepair = New UcConfirmation()
-        CcoHasRepair.DropDownControl = _UcHasRepair
-        _UcEvaluationNeedProposal = New UcConfirmation()
-        CcoEvaluationNeedProposal.DropDownControl = _UcEvaluationNeedProposal
 
-        _UcAditionalInfo = New UcEvaluationUnitTemperaturePressure()
-        CcoAdditionalInfo.DropDownControl = _UcAditionalInfo
+        _UcCallTypeHasRepairNeedProposal = New UcEvaluationCallTypeHasRepairNeedProposal()
+        CcoCallTypeHasRepairNeedProposal.DropDownControl = _UcCallTypeHasRepairNeedProposal
+
+        _UcUnitTemperaturePressure = New UcEvaluationUnitTemperaturePressure()
+        CcoUnitTemperaturePressure.DropDownControl = _UcUnitTemperaturePressure
 
 
         RefreshPhotoControls()
-        AddHandler _UcCallType.CheckedChanged, AddressOf CallTypeChanged
-        AddHandler _UcHasRepair.CheckedChanged, AddressOf EvaluationHasRepairChanged
-        AddHandler _UcEvaluationNeedProposal.CheckedChanged, AddressOf EvaluationNeedProposalChanged
 
-        AddHandler _UcAditionalInfo.ValueChanged, AddressOf EvaluationInfoChanged
+        AddHandler _UcCallTypeHasRepairNeedProposal.ValueChanged, AddressOf CallTypeHasRepairNeedProposalChanged
+        AddHandler _UcUnitTemperaturePressure.ValueChanged, AddressOf UnitTemperaturePressureChanged
 
     End Sub
 
-    Private Sub EvaluationInfoChanged(sender As Object, e As EventArgs)
-        Dim Unit As String = If(String.IsNullOrEmpty(_UcAditionalInfo.Unit), "N/A", $"{ _UcAditionalInfo.Unit}")
-        Dim Temperature As String = If(_UcAditionalInfo.Temperature <= 0, "N/A", $"{ _UcAditionalInfo.Temperature}ºC ")
-        Dim Pressure As String = If(_UcAditionalInfo.Pressure <= 0, "N/A", $"{ _UcAditionalInfo.Pressure}BAR ")
-
-        BtnAdditionalInfo.TextParts(1).Text = Unit
-        BtnAdditionalInfo.TextParts(4).Text = Temperature
-        BtnAdditionalInfo.TextParts(7).Text = Pressure
+    Private Sub CallTypeHasRepairNeedProposalChanged(sender As Object, e As EventArgs)
+        Dim VisitType As String = If(String.IsNullOrEmpty(_UcCallTypeHasRepairNeedProposal.VisitType), "N/A", _UcCallTypeHasRepairNeedProposal.VisitType.ToTitle)
+        Dim HasRepair As String = If(String.IsNullOrEmpty(_UcCallTypeHasRepairNeedProposal.HasRepair), "N/A", _UcCallTypeHasRepairNeedProposal.HasRepair.ToTitle)
+        Dim NeedProposal As String = If(String.IsNullOrEmpty(_UcCallTypeHasRepairNeedProposal.NeedProposal), "N/A", _UcCallTypeHasRepairNeedProposal.NeedProposal.ToTitle)
+        BtnCallTypeHasRepairNeedProposal.TextParts(1).Text = VisitType
+        BtnCallTypeHasRepairNeedProposal.TextParts(4).Text = HasRepair
+        BtnCallTypeHasRepairNeedProposal.TextParts(7).Text = NeedProposal
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
 
-    Private Sub CallTypeChanged()
-        BtnCallType.Text = $"Tipo: { EnumHelper.GetEnumDescription(_UcCallType.SelectedCallType).ToTitle}"
+    Private Sub UnitTemperaturePressureChanged(sender As Object, e As EventArgs)
+        Dim Unit As String = If(String.IsNullOrEmpty(_UcUnitTemperaturePressure.Unit), "N/A", $"{ _UcUnitTemperaturePressure.Unit}")
+        Dim Temperature As String = If(_UcUnitTemperaturePressure.Temperature <= 0, "N/A", $"{ _UcUnitTemperaturePressure.Temperature}ºC ")
+        Dim Pressure As String = If(_UcUnitTemperaturePressure.Pressure <= 0, "N/A", $"{ _UcUnitTemperaturePressure.Pressure}BAR ")
+        BtnUnitTemperaturePressure.TextParts(1).Text = Unit
+        BtnUnitTemperaturePressure.TextParts(4).Text = Temperature
+        BtnUnitTemperaturePressure.TextParts(7).Text = Pressure
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
-    Private Sub EvaluationHasRepairChanged()
-        BtnHasRepair.Text = $"Reparo: {EnumHelper.GetEnumDescription(_UcHasRepair.SelectedAnswer).ToTitle}"
-        EprValidation.Clear()
-        If Not _Loading Then BtnSave.Enabled = True
-    End Sub
-    Private Sub EvaluationNeedProposalChanged()
-        BtnNeedProposal.Text = $"Proposta: {EnumHelper.GetEnumDescription(_UcEvaluationNeedProposal.SelectedAnswer).ToTitle}"
-        EprValidation.Clear()
-        If Not _Loading Then BtnSave.Enabled = True
-    End Sub
+
+
     Private Sub LoadData()
         _Loading = True
         TcEvaluation.SelectedTab = TabMain
@@ -350,18 +342,11 @@ Public Class FrmEvaluation
         BtnApprove.Visible = _Evaluation.Status <> EvaluationStatus.Approved
         BtnReject.Visible = _Evaluation.Status <> EvaluationStatus.Rejected
         BtnDisapprove.Visible = _Evaluation.Status <> EvaluationStatus.Disapproved
-        _UcCallType.SelectedCallType = _Evaluation.CallType
+
+        'AQUI
 
 
 
-
-
-
-
-
-
-        _UcHasRepair.SelectedAnswer = _Evaluation.HasRepair
-        _UcEvaluationNeedProposal.SelectedAnswer = _Evaluation.NeedProposal
         DbxEvaluationDate.Text = _Evaluation.EvaluationDate
         TxtStartTime.Text = _Evaluation.StartTime.ToString("hh\:mm")
         TxtEndTime.Text = _Evaluation.EndTime.ToString("hh\:mm")
@@ -659,29 +644,8 @@ Public Class FrmEvaluation
         End If
     End Sub
     Private Function IsValidFieldsToSave() As Boolean
-        If _UcCallType.SelectedCallType = CallType.None Then
-            EprValidation.SetError(BtnCallType, "Campo obrigatório.")
-            EprValidation.SetIconAlignment(BtnCallType, ErrorIconAlignment.MiddleRight)
-            EprValidation.SetIconPadding(BtnCallType, -110)
-            TcEvaluation.SelectedTab = TabMain
-            BtnCallType.Select()
-            Return False
-        ElseIf _UcHasRepair.SelectedAnswer = ConfirmationType.None Then
-            EprValidation.SetError(BtnHasRepair, "Campo obrigatório.")
-            EprValidation.SetIconAlignment(BtnHasRepair, ErrorIconAlignment.MiddleRight)
-            EprValidation.SetIconPadding(BtnHasRepair, -40)
-            TcEvaluation.SelectedTab = TabMain
-            BtnCallType.Select()
-            Return False
-        ElseIf _UcEvaluationNeedProposal.SelectedAnswer = ConfirmationType.None Then
-            EprValidation.SetError(BtnNeedProposal, "Campo obrigatório.")
-            EprValidation.SetIconAlignment(BtnNeedProposal, ErrorIconAlignment.MiddleRight)
-            EprValidation.SetIconPadding(BtnNeedProposal, -40)
-            TcEvaluation.SelectedTab = TabMain
-            BtnCallType.Select()
-            Return False
-
-        ElseIf String.IsNullOrWhiteSpace(TxtEvaluationNumber.Text) Then
+        'AQUI
+        If String.IsNullOrWhiteSpace(TxtEvaluationNumber.Text) Then
             EprValidation.SetError(LblEvaluationNumber, "Campo obrigatório.")
             EprValidation.SetIconAlignment(LblEvaluationNumber, ErrorIconAlignment.MiddleRight)
             TcEvaluation.SelectedTab = TabMain
@@ -839,20 +803,8 @@ Public Class FrmEvaluation
             If IsValidFieldsToSave() Then
                 Try
                     Cursor = Cursors.WaitCursor
-                    _Evaluation.CallType = _UcCallType.SelectedCallType
+                    'AQUI
 
-
-
-
-
-
-
-
-
-
-
-                    _Evaluation.HasRepair = _UcHasRepair.SelectedAnswer
-                    _Evaluation.NeedProposal = _UcEvaluationNeedProposal.SelectedAnswer
                     _Evaluation.EvaluationDate = DbxEvaluationDate.Text
                     _Evaluation.StartTime = TimeSpan.Parse(TxtStartTime.Text.Insert(2, ":"))
                     _Evaluation.EndTime = TimeSpan.Parse(TxtEndTime.Text.Insert(2, ":"))
@@ -1417,13 +1369,15 @@ Public Class FrmEvaluation
             End Using
         End If
         If _Evaluation.PartsWorkedHour.Any(Function(x) x.Sold) Or _Evaluation.PartsElapsedDay.Any(Function(x) x.Sold) Then
-            _UcCallType.SelectedCallType = CallType.Contract
+            'AQUI
+            '_UcCallType.SelectedCallType = CallType.Contract
         Else
-            If _UcCallType.SelectedCallType = CallType.Contract Then
-                If CMessageBox.Show("Nenhuma das peças controladas foi vendida, deseja marcar o tipo da avaliação como levantamento?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                    _UcCallType.SelectedCallType = CallType.Gathering
-                End If
-            End If
+            'AQUI
+            'If _UcCallType.SelectedCallType = CallType.Contract Then
+            '    If CMessageBox.Show("Nenhuma das peças controladas foi vendida, deseja marcar o tipo da avaliação como levantamento?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+            '        _UcCallType.SelectedCallType = CallType.Gathering
+            '    End If
+            'End If
         End If
         If Not BtnSave.Enabled Then
             BtnSave.Enabled = Result = DialogResult.OK
@@ -1470,5 +1424,11 @@ Public Class FrmEvaluation
         DgvlTechnicianLayout.Load()
         DgvlPartElapsedDayLayout.Load()
         DgvlPartWorkedHourLayout.Load()
+    End Sub
+
+    Private Sub CcoUnitTemperaturePressure_Closed(sender As Object) Handles CcoUnitTemperaturePressure.Closed, CcoCallTypeHasRepairNeedProposal.Closed
+        BtnUnitTemperaturePressure.Invalidate()
+        BtnUnitTemperaturePressure.Refresh()
+        BtnUnitTemperaturePressure.Update()
     End Sub
 End Class

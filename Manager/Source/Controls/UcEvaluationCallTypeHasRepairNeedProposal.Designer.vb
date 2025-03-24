@@ -49,11 +49,12 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
         'CbxVisitType
         '
         Me.CbxVisitType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.CbxVisitType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CbxVisitType.FormattingEnabled = True
-        Me.CbxVisitType.Location = New System.Drawing.Point(244, 6)
+        Me.CbxVisitType.Location = New System.Drawing.Point(222, 6)
         Me.CbxVisitType.Margin = New System.Windows.Forms.Padding(8)
         Me.CbxVisitType.Name = "CbxVisitType"
-        Me.CbxVisitType.Size = New System.Drawing.Size(121, 24)
+        Me.CbxVisitType.Size = New System.Drawing.Size(143, 24)
         Me.CbxVisitType.TabIndex = 2
         '
         'LblCallType
@@ -61,7 +62,7 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
         Me.LblCallType.Dock = System.Windows.Forms.DockStyle.Left
         Me.LblCallType.Location = New System.Drawing.Point(0, 0)
         Me.LblCallType.Name = "LblCallType"
-        Me.LblCallType.Size = New System.Drawing.Size(238, 37)
+        Me.LblCallType.Size = New System.Drawing.Size(211, 37)
         Me.LblCallType.TabIndex = 1
         Me.LblCallType.Text = "Tipo de Visita:"
         Me.LblCallType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -79,11 +80,12 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
         'CbxHasRepair
         '
         Me.CbxHasRepair.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.CbxHasRepair.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CbxHasRepair.FormattingEnabled = True
-        Me.CbxHasRepair.Location = New System.Drawing.Point(243, 7)
+        Me.CbxHasRepair.Location = New System.Drawing.Point(221, 7)
         Me.CbxHasRepair.Margin = New System.Windows.Forms.Padding(8)
         Me.CbxHasRepair.Name = "CbxHasRepair"
-        Me.CbxHasRepair.Size = New System.Drawing.Size(121, 24)
+        Me.CbxHasRepair.Size = New System.Drawing.Size(143, 24)
         Me.CbxHasRepair.TabIndex = 2
         '
         'LblHasRepair
@@ -91,7 +93,7 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
         Me.LblHasRepair.Dock = System.Windows.Forms.DockStyle.Left
         Me.LblHasRepair.Location = New System.Drawing.Point(0, 0)
         Me.LblHasRepair.Name = "LblHasRepair"
-        Me.LblHasRepair.Size = New System.Drawing.Size(238, 37)
+        Me.LblHasRepair.Size = New System.Drawing.Size(211, 37)
         Me.LblHasRepair.TabIndex = 0
         Me.LblHasRepair.Text = "Houve Reparo:"
         Me.LblHasRepair.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -109,11 +111,12 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
         'CbxNeedProposal
         '
         Me.CbxNeedProposal.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.CbxNeedProposal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CbxNeedProposal.FormattingEnabled = True
-        Me.CbxNeedProposal.Location = New System.Drawing.Point(243, 7)
+        Me.CbxNeedProposal.Location = New System.Drawing.Point(221, 7)
         Me.CbxNeedProposal.Margin = New System.Windows.Forms.Padding(8)
         Me.CbxNeedProposal.Name = "CbxNeedProposal"
-        Me.CbxNeedProposal.Size = New System.Drawing.Size(121, 24)
+        Me.CbxNeedProposal.Size = New System.Drawing.Size(143, 24)
         Me.CbxNeedProposal.TabIndex = 2
         '
         'LblNeedProposal
@@ -121,7 +124,7 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
         Me.LblNeedProposal.Dock = System.Windows.Forms.DockStyle.Left
         Me.LblNeedProposal.Location = New System.Drawing.Point(0, 0)
         Me.LblNeedProposal.Name = "LblNeedProposal"
-        Me.LblNeedProposal.Size = New System.Drawing.Size(238, 37)
+        Me.LblNeedProposal.Size = New System.Drawing.Size(211, 37)
         Me.LblNeedProposal.TabIndex = 0
         Me.LblNeedProposal.Text = "Proposta Necessária:"
         Me.LblNeedProposal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft

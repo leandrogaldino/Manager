@@ -41,13 +41,12 @@
             _ManualChanging = False
         End Set
     End Property
-
-    Private Sub OnValueChanged(s)
-        RaiseEvent ValueChanged(s, EventArgs.Empty)
-    End Sub
-
     Private Sub TxtUnit_DbxTemperature_DbxPressure_TextChanged(sender As Object, e As EventArgs) Handles TxtUnit.TextChanged, DbxTemperature.TextChanged, DbxPressure.TextChanged
         If _ManualChanging Then Return
         OnValueChanged(sender)
     End Sub
+    Private Sub OnValueChanged(s)
+        RaiseEvent ValueChanged(s, EventArgs.Empty)
+    End Sub
+
 End Class

@@ -32,6 +32,14 @@ Partial Class FrmEvaluation
         Dim RichTextPart6 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
         Dim RichTextPart7 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
         Dim RichTextPart8 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart9 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart10 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart11 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart12 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart13 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart14 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart15 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart16 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
         Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
         Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
         Dim Condition3 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
@@ -92,10 +100,8 @@ Partial Class FrmEvaluation
         Me.GbxPartWorkedHour = New System.Windows.Forms.GroupBox()
         Me.DgvPartWorkedHour = New System.Windows.Forms.DataGridView()
         Me.GbxMain = New System.Windows.Forms.GroupBox()
-        Me.BtnAdditionalInfo = New ControlLibrary.RichTextButton()
-        Me.BtnHasRepair = New ControlLibrary.NoFocusCueButton()
-        Me.BtnNeedProposal = New ControlLibrary.NoFocusCueButton()
-        Me.BtnCallType = New ControlLibrary.NoFocusCueButton()
+        Me.BtnCallTypeHasRepairNeedProposal = New ControlLibrary.RichTextButton()
+        Me.BtnUnitTemperaturePressure = New ControlLibrary.RichTextButton()
         Me.QbxCustomer = New ControlLibrary.QueriedBox()
         Me.TxtEvaluationNumber = New System.Windows.Forms.TextBox()
         Me.LblEndTime = New System.Windows.Forms.Label()
@@ -170,10 +176,8 @@ Partial Class FrmEvaluation
         Me.DgvlPartWorkedHourLayout = New Manager.DataGridViewLayout()
         Me.DgvlPartElapsedDayLayout = New Manager.DataGridViewLayout()
         Me.DgvPartElapsedDayNavigator = New ControlLibrary.DataGridViewNavigator()
-        Me.CcoCallType = New ControlLibrary.ControlContainer()
-        Me.CcoEvaluationNeedProposal = New ControlLibrary.ControlContainer()
-        Me.CcoHasRepair = New ControlLibrary.ControlContainer()
-        Me.CcoAdditionalInfo = New ControlLibrary.ControlContainer()
+        Me.CcoCallTypeHasRepairNeedProposal = New ControlLibrary.ControlContainer()
+        Me.CcoUnitTemperaturePressure = New ControlLibrary.ControlContainer()
         Me.PnBottom.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -625,10 +629,8 @@ Partial Class FrmEvaluation
         '
         'GbxMain
         '
-        Me.GbxMain.Controls.Add(Me.BtnAdditionalInfo)
-        Me.GbxMain.Controls.Add(Me.BtnHasRepair)
-        Me.GbxMain.Controls.Add(Me.BtnNeedProposal)
-        Me.GbxMain.Controls.Add(Me.BtnCallType)
+        Me.GbxMain.Controls.Add(Me.BtnCallTypeHasRepairNeedProposal)
+        Me.GbxMain.Controls.Add(Me.BtnUnitTemperaturePressure)
         Me.GbxMain.Controls.Add(Me.QbxCustomer)
         Me.GbxMain.Controls.Add(Me.TxtEvaluationNumber)
         Me.GbxMain.Controls.Add(Me.LblEndTime)
@@ -657,27 +659,27 @@ Partial Class FrmEvaluation
         Me.GbxMain.TabStop = False
         Me.GbxMain.Text = "Identificação"
         '
-        'BtnAdditionalInfo
+        'BtnCallTypeHasRepairNeedProposal
         '
-        Me.BtnAdditionalInfo.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.BtnAdditionalInfo.FlatAppearance.BorderColor = System.Drawing.Color.Silver
-        Me.BtnAdditionalInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnAdditionalInfo.Location = New System.Drawing.Point(6, 53)
-        Me.BtnAdditionalInfo.Name = "BtnAdditionalInfo"
-        Me.BtnAdditionalInfo.Size = New System.Drawing.Size(382, 25)
-        Me.BtnAdditionalInfo.TabIndex = 23
+        Me.BtnCallTypeHasRepairNeedProposal.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnCallTypeHasRepairNeedProposal.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.BtnCallTypeHasRepairNeedProposal.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnCallTypeHasRepairNeedProposal.Location = New System.Drawing.Point(6, 22)
+        Me.BtnCallTypeHasRepairNeedProposal.Name = "BtnCallTypeHasRepairNeedProposal"
+        Me.BtnCallTypeHasRepairNeedProposal.Size = New System.Drawing.Size(382, 25)
+        Me.BtnCallTypeHasRepairNeedProposal.TabIndex = 23
         RichTextPart1.Color = System.Drawing.SystemColors.WindowText
         RichTextPart1.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        RichTextPart1.Text = "Unidade:"
+        RichTextPart1.Text = "Tipo:"
         RichTextPart2.Color = System.Drawing.SystemColors.WindowText
         RichTextPart2.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        RichTextPart2.Text = " N/A"
+        RichTextPart2.Text = "N/A"
         RichTextPart3.Color = System.Drawing.SystemColors.WindowText
         RichTextPart3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
         RichTextPart3.Text = "    "
         RichTextPart4.Color = System.Drawing.SystemColors.WindowText
         RichTextPart4.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
-        RichTextPart4.Text = "Temperatura:"
+        RichTextPart4.Text = "Reparo:"
         RichTextPart5.Color = System.Drawing.SystemColors.WindowText
         RichTextPart5.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         RichTextPart5.Text = "N/A"
@@ -686,65 +688,64 @@ Partial Class FrmEvaluation
         RichTextPart6.Text = "    "
         RichTextPart7.Color = System.Drawing.SystemColors.WindowText
         RichTextPart7.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
-        RichTextPart7.Text = "Pressão:"
+        RichTextPart7.Text = "Proposta:"
         RichTextPart8.Color = System.Drawing.SystemColors.WindowText
         RichTextPart8.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         RichTextPart8.Text = "N/A"
-        Me.BtnAdditionalInfo.TextParts.Add(RichTextPart1)
-        Me.BtnAdditionalInfo.TextParts.Add(RichTextPart2)
-        Me.BtnAdditionalInfo.TextParts.Add(RichTextPart3)
-        Me.BtnAdditionalInfo.TextParts.Add(RichTextPart4)
-        Me.BtnAdditionalInfo.TextParts.Add(RichTextPart5)
-        Me.BtnAdditionalInfo.TextParts.Add(RichTextPart6)
-        Me.BtnAdditionalInfo.TextParts.Add(RichTextPart7)
-        Me.BtnAdditionalInfo.TextParts.Add(RichTextPart8)
-        Me.BtnAdditionalInfo.TooltipText = ""
-        Me.BtnAdditionalInfo.UseVisualStyleBackColor = True
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart1)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart2)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart3)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart4)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart5)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart6)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart7)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart8)
+        Me.BtnCallTypeHasRepairNeedProposal.TooltipText = ""
+        Me.BtnCallTypeHasRepairNeedProposal.UseVisualStyleBackColor = True
         '
-        'BtnHasRepair
+        'BtnUnitTemperaturePressure
         '
-        Me.BtnHasRepair.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.BtnHasRepair.FlatAppearance.BorderColor = System.Drawing.Color.Silver
-        Me.BtnHasRepair.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnHasRepair.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnHasRepair.Location = New System.Drawing.Point(165, 22)
-        Me.BtnHasRepair.Name = "BtnHasRepair"
-        Me.BtnHasRepair.Size = New System.Drawing.Size(106, 25)
-        Me.BtnHasRepair.TabIndex = 1
-        Me.BtnHasRepair.Text = "Reparo: N/A"
-        Me.BtnHasRepair.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnHasRepair.TooltipText = "Informa se houve algum serviço no compressor"
-        Me.BtnHasRepair.UseVisualStyleBackColor = True
-        '
-        'BtnNeedProposal
-        '
-        Me.BtnNeedProposal.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.BtnNeedProposal.FlatAppearance.BorderColor = System.Drawing.Color.Silver
-        Me.BtnNeedProposal.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnNeedProposal.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnNeedProposal.Location = New System.Drawing.Point(277, 22)
-        Me.BtnNeedProposal.Name = "BtnNeedProposal"
-        Me.BtnNeedProposal.Size = New System.Drawing.Size(111, 25)
-        Me.BtnNeedProposal.TabIndex = 2
-        Me.BtnNeedProposal.Text = "Proposta: N/A"
-        Me.BtnNeedProposal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnNeedProposal.TooltipText = "Informa se essa avaliação irá gerar uma proposta"
-        Me.BtnNeedProposal.UseVisualStyleBackColor = True
-        '
-        'BtnCallType
-        '
-        Me.BtnCallType.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.BtnCallType.FlatAppearance.BorderColor = System.Drawing.Color.Silver
-        Me.BtnCallType.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnCallType.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnCallType.Location = New System.Drawing.Point(6, 22)
-        Me.BtnCallType.Name = "BtnCallType"
-        Me.BtnCallType.Size = New System.Drawing.Size(153, 25)
-        Me.BtnCallType.TabIndex = 0
-        Me.BtnCallType.Text = "Tipo: N/A"
-        Me.BtnCallType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnCallType.TooltipText = "Informa o tipo de avaliação"
-        Me.BtnCallType.UseVisualStyleBackColor = True
+        Me.BtnUnitTemperaturePressure.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnUnitTemperaturePressure.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.BtnUnitTemperaturePressure.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnUnitTemperaturePressure.Location = New System.Drawing.Point(6, 53)
+        Me.BtnUnitTemperaturePressure.Name = "BtnUnitTemperaturePressure"
+        Me.BtnUnitTemperaturePressure.Size = New System.Drawing.Size(382, 25)
+        Me.BtnUnitTemperaturePressure.TabIndex = 23
+        RichTextPart9.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart9.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart9.Text = "Unidade:"
+        RichTextPart10.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart10.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart10.Text = "N/A"
+        RichTextPart11.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        RichTextPart11.Text = "    "
+        RichTextPart12.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart12.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
+        RichTextPart12.Text = "Temperatura:"
+        RichTextPart13.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart13.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart13.Text = "N/A"
+        RichTextPart14.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart14.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        RichTextPart14.Text = "    "
+        RichTextPart15.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart15.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
+        RichTextPart15.Text = "Pressão:"
+        RichTextPart16.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart16.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart16.Text = "N/A"
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart9)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart10)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart11)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart12)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart13)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart14)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart15)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart16)
+        Me.BtnUnitTemperaturePressure.TooltipText = ""
+        Me.BtnUnitTemperaturePressure.UseVisualStyleBackColor = True
         '
         'QbxCustomer
         '
@@ -1722,33 +1723,19 @@ Partial Class FrmEvaluation
         Me.DgvPartElapsedDayNavigator.NextButton = Nothing
         Me.DgvPartElapsedDayNavigator.PreviousButton = Nothing
         '
-        'CcoCallType
+        'CcoCallTypeHasRepairNeedProposal
         '
-        Me.CcoCallType.DropDownBorderColor = System.Drawing.SystemColors.HotTrack
-        Me.CcoCallType.DropDownControl = Nothing
-        Me.CcoCallType.DropDownEnabled = True
-        Me.CcoCallType.HostControl = Me.BtnCallType
+        Me.CcoCallTypeHasRepairNeedProposal.DropDownBorderColor = System.Drawing.SystemColors.HotTrack
+        Me.CcoCallTypeHasRepairNeedProposal.DropDownControl = Nothing
+        Me.CcoCallTypeHasRepairNeedProposal.DropDownEnabled = True
+        Me.CcoCallTypeHasRepairNeedProposal.HostControl = Me.BtnCallTypeHasRepairNeedProposal
         '
-        'CcoEvaluationNeedProposal
+        'CcoUnitTemperaturePressure
         '
-        Me.CcoEvaluationNeedProposal.DropDownBorderColor = System.Drawing.SystemColors.HotTrack
-        Me.CcoEvaluationNeedProposal.DropDownControl = Nothing
-        Me.CcoEvaluationNeedProposal.DropDownEnabled = True
-        Me.CcoEvaluationNeedProposal.HostControl = Me.BtnNeedProposal
-        '
-        'CcoHasRepair
-        '
-        Me.CcoHasRepair.DropDownBorderColor = System.Drawing.SystemColors.HotTrack
-        Me.CcoHasRepair.DropDownControl = Nothing
-        Me.CcoHasRepair.DropDownEnabled = True
-        Me.CcoHasRepair.HostControl = Me.BtnHasRepair
-        '
-        'CcoAdditionalInfo
-        '
-        Me.CcoAdditionalInfo.DropDownBorderColor = System.Drawing.SystemColors.HotTrack
-        Me.CcoAdditionalInfo.DropDownControl = Nothing
-        Me.CcoAdditionalInfo.DropDownEnabled = True
-        Me.CcoAdditionalInfo.HostControl = Me.BtnAdditionalInfo
+        Me.CcoUnitTemperaturePressure.DropDownBorderColor = System.Drawing.SystemColors.HotTrack
+        Me.CcoUnitTemperaturePressure.DropDownControl = Nothing
+        Me.CcoUnitTemperaturePressure.DropDownEnabled = True
+        Me.CcoUnitTemperaturePressure.HostControl = Me.BtnUnitTemperaturePressure
         '
         'FrmEvaluation
         '
@@ -1911,12 +1898,7 @@ Partial Class FrmEvaluation
     Friend WithEvents DgvlPartElapsedDayLayout As DataGridViewLayout
     Friend WithEvents DgvPartWorkedHourNavigator As ControlLibrary.DataGridViewNavigator
     Friend WithEvents DgvPartElapsedDayNavigator As ControlLibrary.DataGridViewNavigator
-    Friend WithEvents BtnNeedProposal As ControlLibrary.NoFocusCueButton
-    Friend WithEvents BtnCallType As ControlLibrary.NoFocusCueButton
-    Friend WithEvents CcoCallType As ControlLibrary.ControlContainer
-    Friend WithEvents CcoEvaluationNeedProposal As ControlLibrary.ControlContainer
-    Friend WithEvents BtnHasRepair As ControlLibrary.NoFocusCueButton
-    Friend WithEvents CcoHasRepair As ControlLibrary.ControlContainer
+    Friend WithEvents CcoCallTypeHasRepairNeedProposal As ControlLibrary.ControlContainer
     Friend WithEvents TlpAdvice As TableLayoutPanel
     Friend WithEvents GbxAdvice As GroupBox
     Friend WithEvents GbxReplacedItems As GroupBox
@@ -1927,6 +1909,7 @@ Partial Class FrmEvaluation
     Friend WithEvents BtnDeleteItem As ToolStripButton
     Friend WithEvents LblFilter As ToolStripLabel
     Friend WithEvents TxtFilterItem As ToolStripTextBox
-    Friend WithEvents CcoAdditionalInfo As ControlLibrary.ControlContainer
-    Friend WithEvents BtnAdditionalInfo As ControlLibrary.RichTextButton
+    Friend WithEvents CcoUnitTemperaturePressure As ControlLibrary.ControlContainer
+    Friend WithEvents BtnUnitTemperaturePressure As ControlLibrary.RichTextButton
+    Friend WithEvents BtnCallTypeHasRepairNeedProposal As ControlLibrary.RichTextButton
 End Class

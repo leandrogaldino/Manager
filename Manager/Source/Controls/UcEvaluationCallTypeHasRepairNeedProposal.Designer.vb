@@ -23,7 +23,7 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.PnVisitType = New System.Windows.Forms.Panel()
-        Me.CbxVisitType = New ControlLibrary.CentralizedComboBox()
+        Me.CbxCallType = New ControlLibrary.CentralizedComboBox()
         Me.LblCallType = New System.Windows.Forms.Label()
         Me.PnHasRepair = New System.Windows.Forms.Panel()
         Me.CbxHasRepairYes = New System.Windows.Forms.CheckBox()
@@ -41,23 +41,23 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
         'PnVisitType
         '
         Me.PnVisitType.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PnVisitType.Controls.Add(Me.CbxVisitType)
+        Me.PnVisitType.Controls.Add(Me.CbxCallType)
         Me.PnVisitType.Controls.Add(Me.LblCallType)
         Me.PnVisitType.Location = New System.Drawing.Point(3, 3)
         Me.PnVisitType.Name = "PnVisitType"
         Me.PnVisitType.Size = New System.Drawing.Size(374, 39)
         Me.PnVisitType.TabIndex = 0
         '
-        'CbxVisitType
+        'CbxCallType
         '
-        Me.CbxVisitType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.CbxVisitType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.CbxVisitType.FormattingEnabled = True
-        Me.CbxVisitType.Location = New System.Drawing.Point(222, 6)
-        Me.CbxVisitType.Margin = New System.Windows.Forms.Padding(8)
-        Me.CbxVisitType.Name = "CbxVisitType"
-        Me.CbxVisitType.Size = New System.Drawing.Size(143, 24)
-        Me.CbxVisitType.TabIndex = 2
+        Me.CbxCallType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.CbxCallType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CbxCallType.FormattingEnabled = True
+        Me.CbxCallType.Location = New System.Drawing.Point(222, 6)
+        Me.CbxCallType.Margin = New System.Windows.Forms.Padding(8)
+        Me.CbxCallType.Name = "CbxCallType"
+        Me.CbxCallType.Size = New System.Drawing.Size(143, 24)
+        Me.CbxCallType.TabIndex = 1
         '
         'LblCallType
         '
@@ -65,7 +65,7 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
         Me.LblCallType.Location = New System.Drawing.Point(0, 0)
         Me.LblCallType.Name = "LblCallType"
         Me.LblCallType.Size = New System.Drawing.Size(211, 37)
-        Me.LblCallType.TabIndex = 1
+        Me.LblCallType.TabIndex = 0
         Me.LblCallType.Text = "Tipo de Visita:"
         Me.LblCallType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -79,7 +79,7 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
         Me.PnHasRepair.Name = "PnHasRepair"
         Me.PnHasRepair.Padding = New System.Windows.Forms.Padding(0, 0, 4, 0)
         Me.PnHasRepair.Size = New System.Drawing.Size(374, 39)
-        Me.PnHasRepair.TabIndex = 3
+        Me.PnHasRepair.TabIndex = 1
         '
         'CbxHasRepairYes
         '
@@ -87,7 +87,7 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
         Me.CbxHasRepairYes.Location = New System.Drawing.Point(264, 0)
         Me.CbxHasRepairYes.Name = "CbxHasRepairYes"
         Me.CbxHasRepairYes.Size = New System.Drawing.Size(49, 37)
-        Me.CbxHasRepairYes.TabIndex = 5
+        Me.CbxHasRepairYes.TabIndex = 1
         Me.CbxHasRepairYes.Tag = "HasRepairYes"
         Me.CbxHasRepairYes.Text = "Sim"
         Me.CbxHasRepairYes.UseVisualStyleBackColor = True
@@ -98,7 +98,7 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
         Me.CbxHasRepairNo.Location = New System.Drawing.Point(313, 0)
         Me.CbxHasRepairNo.Name = "CbxHasRepairNo"
         Me.CbxHasRepairNo.Size = New System.Drawing.Size(55, 37)
-        Me.CbxHasRepairNo.TabIndex = 4
+        Me.CbxHasRepairNo.TabIndex = 2
         Me.CbxHasRepairNo.Tag = "HasRepairNo"
         Me.CbxHasRepairNo.Text = "Não"
         Me.CbxHasRepairNo.UseVisualStyleBackColor = True
@@ -123,7 +123,7 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
         Me.PnNeedProposal.Name = "PnNeedProposal"
         Me.PnNeedProposal.Padding = New System.Windows.Forms.Padding(0, 0, 4, 0)
         Me.PnNeedProposal.Size = New System.Drawing.Size(374, 39)
-        Me.PnNeedProposal.TabIndex = 6
+        Me.PnNeedProposal.TabIndex = 2
         '
         'CbxNeedProposalYes
         '
@@ -131,7 +131,7 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
         Me.CbxNeedProposalYes.Location = New System.Drawing.Point(264, 0)
         Me.CbxNeedProposalYes.Name = "CbxNeedProposalYes"
         Me.CbxNeedProposalYes.Size = New System.Drawing.Size(49, 37)
-        Me.CbxNeedProposalYes.TabIndex = 3
+        Me.CbxNeedProposalYes.TabIndex = 1
         Me.CbxNeedProposalYes.Tag = "NeedProposalYes"
         Me.CbxNeedProposalYes.Text = "Sim"
         Me.CbxNeedProposalYes.UseVisualStyleBackColor = True
@@ -182,7 +182,7 @@ Partial Class UcEvaluationCallTypeHasRepairNeedProposal
     Private WithEvents LblHasRepair As Label
     Private WithEvents PnNeedProposal As Panel
     Private WithEvents LblNeedProposal As Label
-    Private WithEvents CbxVisitType As ControlLibrary.CentralizedComboBox
+    Private WithEvents CbxCallType As ControlLibrary.CentralizedComboBox
     Friend WithEvents CbxHasRepairYes As CheckBox
     Friend WithEvents CbxHasRepairNo As CheckBox
     Friend WithEvents CbxNeedProposalYes As CheckBox

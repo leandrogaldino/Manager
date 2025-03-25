@@ -308,12 +308,12 @@ Public Class FrmEvaluation
     End Sub
 
     Private Sub CallTypeHasRepairNeedProposalChanged(sender As Object, e As EventArgs)
-        Dim VisitType As String = If(String.IsNullOrEmpty(_UcCallTypeHasRepairNeedProposal.VisitType), "N/A", _UcCallTypeHasRepairNeedProposal.VisitType.ToTitle)
-        Dim HasRepair As String = If(String.IsNullOrEmpty(_UcCallTypeHasRepairNeedProposal.HasRepair), "N/A", _UcCallTypeHasRepairNeedProposal.HasRepair.ToTitle)
-        'Dim NeedProposal As String = If(String.IsNullOrEmpty(_UcCallTypeHasRepairNeedProposal.NeedProposal), "N/A", _UcCallTypeHasRepairNeedProposal.NeedProposal.ToTitle)'
+        Dim VisitType As String = If(String.IsNullOrEmpty(EnumHelper.GetEnumDescription(_UcCallTypeHasRepairNeedProposal.CallType)), "N/A", EnumHelper.GetEnumDescription(_UcCallTypeHasRepairNeedProposal.CallType).ToTitle)
+        Dim HasRepair As String = If(String.IsNullOrEmpty(EnumHelper.GetEnumDescription(_UcCallTypeHasRepairNeedProposal.HasRepair)), "N/A", EnumHelper.GetEnumDescription(_UcCallTypeHasRepairNeedProposal.HasRepair).ToTitle)
+        Dim NeedProposal As String = If(String.IsNullOrEmpty(EnumHelper.GetEnumDescription(_UcCallTypeHasRepairNeedProposal.NeedProposal)), "N/A", EnumHelper.GetEnumDescription(_UcCallTypeHasRepairNeedProposal.NeedProposal).ToTitle)
         BtnCallTypeHasRepairNeedProposal.TextParts(1).Text = VisitType
         BtnCallTypeHasRepairNeedProposal.TextParts(4).Text = HasRepair
-        'BtnCallTypeHasRepairNeedProposal.TextParts(7).Text = NeedProposal'
+        BtnCallTypeHasRepairNeedProposal.TextParts(7).Text = NeedProposal
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
@@ -343,7 +343,10 @@ Public Class FrmEvaluation
         BtnReject.Visible = _Evaluation.Status <> EvaluationStatus.Rejected
         BtnDisapprove.Visible = _Evaluation.Status <> EvaluationStatus.Disapproved
 
-        'AQUI
+
+        _UcCallTypeHasRepairNeedProposal.CallType = _Evaluation.CallType
+        _UcCallTypeHasRepairNeedProposal.HasRepair = _Evaluation.HasRepair
+        _UcCallTypeHasRepairNeedProposal.NeedProposal = _Evaluation.NeedProposal
 
 
 
@@ -644,8 +647,55 @@ Public Class FrmEvaluation
         End If
     End Sub
     Private Function IsValidFieldsToSave() As Boolean
-        'AQUI
-        If String.IsNullOrWhiteSpace(TxtEvaluationNumber.Text) Then
+        If _UcCallTypeHasRepairNeedProposal.CallType = CallType.None Then
+            EprValidation.SetError(BtnCallTypeHasRepairNeedProposal, "Selecione um tipo de visita.")
+            EprValidation.SetIconAlignment(BtnCallTypeHasRepairNeedProposal, ErrorIconAlignment.MiddleRight)
+            EprValidation.SetIconPadding(BtnCallTypeHasRepairNeedProposal, -20)
+            TcEvaluation.SelectedTab = TabMain
+            BtnCallTypeHasRepairNeedProposal.Select()
+            Return False
+        ElseIf _UcCallTypeHasRepairNeedProposal.HasRepair = ConfirmationType.None Then
+            EprValidation.SetError(BtnCallTypeHasRepairNeedProposal, "Selecione se houve reparo nessa avaliação.")
+            EprValidation.SetIconAlignment(BtnCallTypeHasRepairNeedProposal, ErrorIconAlignment.MiddleRight)
+            EprValidation.SetIconPadding(BtnCallTypeHasRepairNeedProposal, -20)
+            TcEvaluation.SelectedTab = TabMain
+            BtnCallTypeHasRepairNeedProposal.Select()
+            Return False
+        ElseIf _UcCallTypeHasRepairNeedProposal.NeedProposal = ConfirmationType.None Then
+            EprValidation.SetError(BtnCallTypeHasRepairNeedProposal, "Selecione se será necessário fazer proposta para essa avaliação.")
+            EprValidation.SetIconAlignment(BtnCallTypeHasRepairNeedProposal, ErrorIconAlignment.MiddleRight)
+            EprValidation.SetIconPadding(BtnCallTypeHasRepairNeedProposal, -20)
+            TcEvaluation.SelectedTab = TabMain
+            BtnCallTypeHasRepairNeedProposal.Select()
+            Return False
+
+
+            obrigatorio?
+        ElseIf String.IsNullOrEmpty(_UcUnitTemperaturePressure.Unit) Then
+            EprValidation.SetError(BtnUnitTemperaturePressure, "Selecione um tipo de visita.")
+            EprValidation.SetIconAlignment(BtnUnitTemperaturePressure, ErrorIconAlignment.MiddleRight)
+            EprValidation.SetIconPadding(BtnUnitTemperaturePressure, -20)
+            TcEvaluation.SelectedTab = TabMain
+            BtnUnitTemperaturePressure.Select()
+            Return False
+        ElseIf _UcUnitTemperaturePressure.Temperature = 0 Then
+            EprValidation.SetError(BtnUnitTemperaturePressure, "Selecione se houve reparo nessa avaliação.")
+            EprValidation.SetIconAlignment(BtnUnitTemperaturePressure, ErrorIconAlignment.MiddleRight)
+            EprValidation.SetIconPadding(BtnUnitTemperaturePressure, -20)
+            TcEvaluation.SelectedTab = TabMain
+            BtnUnitTemperaturePressure.Select()
+            Return False
+        ElseIf _UcUnitTemperaturePressure.Pressure = 0 Then
+            EprValidation.SetError(BtnUnitTemperaturePressure, "Selecione se será necessário fazer proposta para essa avaliação.")
+            EprValidation.SetIconAlignment(BtnUnitTemperaturePressure, ErrorIconAlignment.MiddleRight)
+            EprValidation.SetIconPadding(BtnUnitTemperaturePressure, -20)
+            TcEvaluation.SelectedTab = TabMain
+            BtnUnitTemperaturePressure.Select()
+            Return False
+
+
+
+        ElseIf String.IsNullOrWhiteSpace(TxtEvaluationNumber.Text) Then
             EprValidation.SetError(LblEvaluationNumber, "Campo obrigatório.")
             EprValidation.SetIconAlignment(LblEvaluationNumber, ErrorIconAlignment.MiddleRight)
             TcEvaluation.SelectedTab = TabMain
@@ -803,7 +853,10 @@ Public Class FrmEvaluation
             If IsValidFieldsToSave() Then
                 Try
                     Cursor = Cursors.WaitCursor
-                    'AQUI
+
+                    _Evaluation.CallType = _UcCallTypeHasRepairNeedProposal.CallType
+                    _Evaluation.HasRepair = _UcCallTypeHasRepairNeedProposal.HasRepair
+                    _Evaluation.NeedProposal = _UcCallTypeHasRepairNeedProposal.NeedProposal
 
                     _Evaluation.EvaluationDate = DbxEvaluationDate.Text
                     _Evaluation.StartTime = TimeSpan.Parse(TxtStartTime.Text.Insert(2, ":"))

@@ -4,7 +4,8 @@ Public Class UcEvaluationCallTypeHasRepairNeedProposal
     Public Event ValueChanged As EventHandler
     Private _AutoChanging As Boolean
     Private _ManualChanging As Boolean
-    Private Sub UcEvaluationCallTypeHasRepairNeedProposal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Public Sub New()
+        InitializeComponent()
         CbxCallType.DataSource = EnumHelper.GetEnumDescriptions(Of CallType).OrderBy(Function(x) x).ToList()
     End Sub
     Public Property CallType As CallType
@@ -14,7 +15,7 @@ Public Class UcEvaluationCallTypeHasRepairNeedProposal
         Set(value As CallType)
             _AutoChanging = True
             If CallType <> value Then
-                CbxCallType.SelectedText = EnumHelper.GetEnumDescription(value)
+                CbxCallType.SelectedItem = EnumHelper.GetEnumDescription(value)
                 OnValueChanged(CbxCallType)
             End If
             _AutoChanging = False
@@ -45,7 +46,7 @@ Public Class UcEvaluationCallTypeHasRepairNeedProposal
         End Get
         Set(value As ConfirmationType)
             _AutoChanging = True
-            If HasRepair <> value Then
+            If NeedProposal <> value Then
                 If value = ConfirmationType.Yes Then CbxNeedProposalYes.Checked = True : CbxNeedProposalNo.Checked = False
                 If value = ConfirmationType.No Then CbxNeedProposalNo.Checked = True : CbxNeedProposalYes.Checked = False
                 If value = ConfirmationType.None Then CbxNeedProposalNo.Checked = False : CbxNeedProposalYes.Checked = False

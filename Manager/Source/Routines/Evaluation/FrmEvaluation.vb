@@ -316,6 +316,7 @@ Public Class FrmEvaluation
         BtnCallTypeHasRepairNeedProposal.TextParts(7).Text = NeedProposal
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
+        BtnCallTypeHasRepairNeedProposal.Invalidate()
     End Sub
 
     Private Sub UnitTemperaturePressureChanged(sender As Object, e As EventArgs)
@@ -327,6 +328,7 @@ Public Class FrmEvaluation
         BtnUnitTemperaturePressure.TextParts(7).Text = Pressure
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
+        BtnUnitTemperaturePressure.Invalidate()
     End Sub
 
 
@@ -668,33 +670,6 @@ Public Class FrmEvaluation
             TcEvaluation.SelectedTab = TabMain
             BtnCallTypeHasRepairNeedProposal.Select()
             Return False
-
-
-            obrigatorio?
-        ElseIf String.IsNullOrEmpty(_UcUnitTemperaturePressure.Unit) Then
-            EprValidation.SetError(BtnUnitTemperaturePressure, "Selecione um tipo de visita.")
-            EprValidation.SetIconAlignment(BtnUnitTemperaturePressure, ErrorIconAlignment.MiddleRight)
-            EprValidation.SetIconPadding(BtnUnitTemperaturePressure, -20)
-            TcEvaluation.SelectedTab = TabMain
-            BtnUnitTemperaturePressure.Select()
-            Return False
-        ElseIf _UcUnitTemperaturePressure.Temperature = 0 Then
-            EprValidation.SetError(BtnUnitTemperaturePressure, "Selecione se houve reparo nessa avaliação.")
-            EprValidation.SetIconAlignment(BtnUnitTemperaturePressure, ErrorIconAlignment.MiddleRight)
-            EprValidation.SetIconPadding(BtnUnitTemperaturePressure, -20)
-            TcEvaluation.SelectedTab = TabMain
-            BtnUnitTemperaturePressure.Select()
-            Return False
-        ElseIf _UcUnitTemperaturePressure.Pressure = 0 Then
-            EprValidation.SetError(BtnUnitTemperaturePressure, "Selecione se será necessário fazer proposta para essa avaliação.")
-            EprValidation.SetIconAlignment(BtnUnitTemperaturePressure, ErrorIconAlignment.MiddleRight)
-            EprValidation.SetIconPadding(BtnUnitTemperaturePressure, -20)
-            TcEvaluation.SelectedTab = TabMain
-            BtnUnitTemperaturePressure.Select()
-            Return False
-
-
-
         ElseIf String.IsNullOrWhiteSpace(TxtEvaluationNumber.Text) Then
             EprValidation.SetError(LblEvaluationNumber, "Campo obrigatório.")
             EprValidation.SetIconAlignment(LblEvaluationNumber, ErrorIconAlignment.MiddleRight)
@@ -1422,15 +1397,11 @@ Public Class FrmEvaluation
             End Using
         End If
         If _Evaluation.PartsWorkedHour.Any(Function(x) x.Sold) Or _Evaluation.PartsElapsedDay.Any(Function(x) x.Sold) Then
-            'AQUI
-            '_UcCallType.SelectedCallType = CallType.Contract
+            _UcCallTypeHasRepairNeedProposal.HasRepair = ConfirmationType.Yes
         Else
-            'AQUI
-            'If _UcCallType.SelectedCallType = CallType.Contract Then
-            '    If CMessageBox.Show("Nenhuma das peças controladas foi vendida, deseja marcar o tipo da avaliação como levantamento?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-            '        _UcCallType.SelectedCallType = CallType.Gathering
-            '    End If
-            'End If
+            If _UcCallTypeHasRepairNeedProposal.HasRepair = ConfirmationType.Yes Then
+                _UcCallTypeHasRepairNeedProposal.HasRepair = ConfirmationType.No
+            End If
         End If
         If Not BtnSave.Enabled Then
             BtnSave.Enabled = Result = DialogResult.OK

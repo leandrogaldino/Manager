@@ -117,81 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="TsTitle.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="TsMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="TsNavigation.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>103, 17</value>
-  </metadata>
   <metadata name="EprValidation.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>226, 17</value>
+    <value>109, 17</value>
   </metadata>
-  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>135</value>
+  <metadata name="TsData.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>232, 17</value>
   </metadata>
-  <metadata name="TsItem.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1009, 17</value>
-  </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="BtnEditItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACkSURBVDhPzZLLCQJBEETfQTOQ1Q1FA9mLcShoTt73ZhB+
-        8GIIggEISsE0DE3PrJ+LD+oy01Xd0wx8xhTYAzdg5S+HGAMH4Jlp7YtKTFLAEnhkAXdfGNEAR2AXhOg5
-        VcxsHS2kS+etN+R4sw+RisyAc2CWdK6dFCl1li7fjv3nZm3zFBglLUzft8oiML7V2dj+Yha9M+s5g2Pn
-        XFPIBpgDI19Q4wU4gFVz02HHqgAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="PdfViewerPrinterSettings1.PrintLocation" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
-        dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
-        d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAAAAAAAAAL
-</value>
-  </data>
-  <metadata name="TsDocument.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>350, 17</value>
+  <metadata name="TmrQueriedBox.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>321, 17</value>
   </metadata>
   <metadata name="DgvNavigator.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>470, 17</value>
+    <value>457, 17</value>
   </metadata>
-  <metadata name="OfdDocument.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>597, 17</value>
-  </metadata>
-  <metadata name="SfdDocument.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>726, 17</value>
-  </metadata>
-  <metadata name="TmrDocumentPage.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>852, 17</value>
-  </metadata>
-  <metadata name="DgvItemLayout.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 56</value>
-  </metadata>
-  <metadata name="EprInformation.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>151, 56</value>
-  </metadata>
-  <data name="EprInformation.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPxXADT4VQCA81QAwO1SAO3oUADt5E8AwOBNAIDdTAA0AAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPxXAGf+WADa/5hi//+OUv//gDz//3Mp//9oGf//Xwv/zUcA2sxG
-        AGcAAAAAAAAAAAAAAAAAAAAAAAAAAPxXAGf/XAb0/6Rz//+hb///lV7//4ZG//92Lv//Zxb//1oD/+xR
-        AP+6QAD0ukAAZwAAAAAAAAAAAAAAAPxXADT7VwDa/6Ny//+vhP//pHT//7uX///+/f///v3//51p//9b
-        Bf/rUQD/0kkA/6Y5ANqpOgA0AAAAAAAAAAD4VQCA/5dg//+hb///pHT//59t///RuP///v3///79///E
-        pf//WAD/6VAA/9BIAP+yPgD/ljQAgAAAAAAAAAAA81QAwP+OUv//lV7//5hh//+VXf//waH///79///+
-        /f//tY3/+lYA/+RPAP/MRwD/sz4A/4ItAMAAAAAAAAAAAO1SAO3/gDz//4VF//+JS///h0j//6t////+
-        /f///v3//5Ze//FTAP/aSwD/x0UA/7c/AP9wJwDtAAAAAAAAAADoUADt/3En//92Lv//eTP//3Yu//+A
-        Pf///v3///79//9mFf/lTwD/00kA/8FDAP+wPQD/XSAA7QAAAAAAAAAA5E8AwP9nF///Zxb//2ka//9n
-        Fv//YxH//4lL//+CP//pUAD/2EsA/8ZEAP+6QAD/njcA/0waAMAAAAAAAAAAAOBNAID/YAv//1gA//9a
-        A///WAD//4RC///+/f///v3//3Io/8lGAP+9QQD/sz4A/4AsAP89FQCAAAAAAAAAAADdTAA0yUYA2uxR
-        AP/qUQD/5lAA//95Mv///v3///79//95M/+/QgD/tD4A/5UzAP88FQDaLxAANAAAAAAAAAAAAAAAAMxG
-        AGe2PwD000kA/9BIAP/NRwD//2se//9oGf+5QAD/sj4A/5UzAP9BFwD0IAsAZwAAAAAAAAAAAAAAAAAA
-        AAAAAAAAukAAZ6Y5ANqyPgD/tD4A/7Y/AP+vPAD/njYA/4AsAP88FQDaIAsAZwAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAACpOgA0ljQAgIItAMBwJwDtXSAA7UwaAMA9FQCALxAANAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAA//8AAPAPAADgBwAAwAMAAIABAACAAQAAgAEAAIABAACAAQAAgAEAAIABAACAAQAAwAMAAOAH
-        AADwDwAA//8AAA==
-</value>
-  </data>
 </root>

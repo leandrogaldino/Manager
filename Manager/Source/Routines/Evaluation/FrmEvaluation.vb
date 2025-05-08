@@ -1450,4 +1450,30 @@ Public Class FrmEvaluation
         DgvlPartWorkedHourLayout.Load()
     End Sub
 
+
+
+    Private Sub BtnIncludeItem_Click(sender As Object, e As EventArgs) Handles BtnIncludeItem.Click
+        Dim Form As New FrmRequestItem(_Request, New RequestItem(), Me)
+        Form.ShowDialog()
+    End Sub
+    Private Sub BtnEditItem_Click(sender As Object, e As EventArgs) Handles BtnEditItem.Click
+        Dim Form As FrmRequestItem
+        Dim Item As RequestItem
+        If DgvItem.SelectedRows.Count = 1 Then
+            Item = _Request.Items.Single(Function(x) x.Guid = DgvItem.SelectedRows(0).Cells("Guid").Value)
+            Form = New FrmRequestItem(_Request, Item, Me)
+            Form.ShowDialog()
+        End If
+    End Sub
+    Private Sub BtnDeleteItem_Click(sender As Object, e As EventArgs) Handles BtnDeleteItem.Click
+        Dim Item As RequestItem
+        If DgvItem.SelectedRows.Count = 1 Then
+            If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+                Item = _Request.Items.Single(Function(x) x.Guid = DgvItem.SelectedRows(0).Cells("Guid").Value)
+                _Request.Items.Remove(Item)
+                DgvItem.Fill(_Request.Items)
+                BtnSave.Enabled = True
+            End If
+        End If
+    End Sub
 End Class

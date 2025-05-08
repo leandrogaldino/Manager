@@ -702,6 +702,12 @@
     <Compile Include="Source\Helper\Flags\SimpleStatus.vb" />
     <Compile Include="Source\Helper\Flags\VisitScheduleStatus.vb" />
     <Compile Include="Source\Routines\Evaluation\EvaluationReplacedItem.vb" />
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationReplacedItem.Designer.vb">
+      <DependentUpon>FrmEvaluationReplacedItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationReplacedItem.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Source\Routines\PrivilegePreset\FrmPrivilegePreset.Designer.vb">
       <DependentUpon>FrmPrivilegePreset.vb</DependentUpon>
     </Compile>
@@ -1380,6 +1386,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationRejectReason.resx">
       <DependentUpon>FrmEvaluationRejectReason.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationReplacedItem.resx">
+      <DependentUpon>FrmEvaluationReplacedItem.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluations.resx">
       <DependentUpon>FrmEvaluations.vb</DependentUpon>

@@ -644,7 +644,7 @@ Partial Class FrmRequest
         'DgvItemLayout
         '
         Me.DgvItemLayout.DataGridView = Me.DgvItem
-        Me.DgvItemLayout.Routine = Routine.RequestItem
+        Me.DgvItemLayout.Routine = Manager.Routine.RequestItem
         '
         'EprInformation
         '

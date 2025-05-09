@@ -1,9 +1,9 @@
 ﻿Imports ControlLibrary
-
+Imports ControlLibrary.Extensions
 Public Class FrmEvaluationReplacedItem
-    Private _RequestForm As FrmRequest
-    Private _Request As Request
-    Private _RequestItem As RequestItem
+    Private _EvaluationForm As FrmEvaluation
+    Private _Evaluation As Evaluation
+    Private _ReplacedItem As EvaluationReplacedItem
     Private _Deleting As Boolean
     Private _Loading As Boolean
     Private _User As User
@@ -19,39 +19,33 @@ Public Class FrmEvaluationReplacedItem
         End If
         MyBase.DefWndProc(m)
     End Sub
-    Public Sub New(Request As Request, RequestItem As RequestItem, RequestForm As FrmRequest)
+    Public Sub New(Evaluation As Evaluation, ReplacedItem As EvaluationReplacedItem, EvaluationForm As FrmEvaluation)
         InitializeComponent()
-        _Request = Request
-        _RequestItem = RequestItem
-        _RequestForm = RequestForm
+        _Evaluation = Evaluation
+        _ReplacedItem = ReplacedItem
+        _EvaluationForm = EvaluationForm
         _User = Locator.GetInstance(Of Session).User
         Height = 235
         LoadForm()
-        DgvNavigator.DataGridView = _RequestForm.DgvItem
+        DgvNavigator.DataGridView = _EvaluationForm.DgvReplacedItems
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = _User.CanAccess(Routine.Log)
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = If(_RequestItem.IsSaved, _RequestForm.DgvItem.SelectedRows(0).Cells("Order").Value, 0)
-        LblStatusValue.Text = EnumHelper.GetEnumDescription(_RequestItem.Status)
-        LblCreationValue.Text = _RequestItem.Creation
+        LblOrderValue.Text = If(_ReplacedItem.IsSaved, _EvaluationForm.DgvReplacedItems.SelectedRows(0).Cells("Order").Value, 0)
+        LblCreationValue.Text = _ReplacedItem.Creation
         QbxItem.Unfreeze()
-        If _RequestItem.ItemName = Nothing And _RequestItem.Product.ID > 0 Then
-            QbxItem.Freeze(_RequestItem.Product.ID)
-        ElseIf _RequestItem.ItemName <> Nothing And _RequestItem.Product.ID >= 0 Then
+        If _ReplacedItem.ItemName = Nothing And _ReplacedItem.Product.ID > 0 Then
+            QbxItem.Freeze(_ReplacedItem.Product.ID)
+        ElseIf _ReplacedItem.ItemName <> Nothing And _ReplacedItem.Product.ID >= 0 Then
             QbxItem.QueryEnabled = False
-            QbxItem.Text = _RequestItem.ItemName
+            QbxItem.Text = _ReplacedItem.ItemName
             QbxItem.QueryEnabled = True
         End If
-        DbxTaked.Text = _RequestItem.Taked
-        DbxReturned.Text = _RequestItem.Returned
-        DbxApplied.Text = _RequestItem.Applied
-        DbxPending.Text = _RequestItem.Pending
-        DbxLossed.Text = _RequestItem.Lossed
-        TxtLostReason.Text = _RequestItem.LossReason
-        If Not _RequestItem.IsSaved Then
+        DbxQuantity.Text = _ReplacedItem.Quantity
+        If Not _ReplacedItem.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
         Else
@@ -72,9 +66,9 @@ Public Class FrmEvaluationReplacedItem
         End If
     End Sub
     Private Sub AfterDataGridViewRowMove()
-        If _RequestForm.DgvItem.SelectedRows.Count = 1 Then
+        If _EvaluationForm.DgvReplacedItems.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _RequestItem = _Request.Items.Single(Function(x) x.Guid = _RequestForm.DgvItem.SelectedRows(0).Cells("Guid").Value)
+            _ReplacedItem = _Evaluation.ReplacedItems.Single(Function(x) x.Guid = _EvaluationForm.DgvReplacedItems.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -103,21 +97,14 @@ Public Class FrmEvaluationReplacedItem
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.RequestItem, _RequestItem.ID)
+        Dim Frm As New FrmLog(Routine.RequestItem, _ReplacedItem.ID)
         Frm.ShowDialog()
     End Sub
     Private Sub QbxItem_TextChanged(sender As Object, e As EventArgs) Handles QbxItem.TextChanged
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
-    Private Sub Dbx_TextChanged(sender As Object, e As EventArgs) Handles DbxTaked.TextChanged,
-                                                                          DbxReturned.TextChanged,
-                                                                          DbxApplied.TextChanged,
-                                                                          DbxLossed.TextChanged
-        DbxPending.Text = DbxTaked.DecimalValue - DbxReturned.DecimalValue - DbxApplied.DecimalValue - DbxLossed.DecimalValue
-        Height = If(DbxLossed.DecimalValue > 0, 310, 235)
-        TxtLostReason.Text = If(DbxLossed.DecimalValue > 0, TxtLostReason.Text, Nothing)
-
+    Private Sub Dbx_TextChanged(sender As Object, e As EventArgs) Handles DbxQuantity.TextChanged
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
@@ -130,117 +117,67 @@ Public Class FrmEvaluationReplacedItem
             EprValidation.SetIconAlignment(LblItem, ErrorIconAlignment.MiddleRight)
             QbxItem.Select()
             Return False
-        ElseIf DbxTaked.DecimalValue <= 0 Then
+        ElseIf DbxQuantity.DecimalValue <= 0 Then
             EprValidation.SetError(LblTaked, "A quantidade retirada deve ser maior que 0.")
             EprValidation.SetIconAlignment(LblTaked, ErrorIconAlignment.MiddleRight)
-            DbxTaked.Select()
+            DbxQuantity.Select()
             Return False
-        ElseIf DbxTaked.DecimalValue < (DbxReturned.DecimalValue + DbxApplied.DecimalValue + DbxLossed.DecimalValue) Then
-            EprValidation.SetError(LblTaked, "A quantidade retirada não pode ser menor que a soma das outras quantidades.")
-            EprValidation.SetIconAlignment(LblTaked, ErrorIconAlignment.MiddleRight)
-            DbxTaked.Select()
-            Return False
-        ElseIf DbxReturned.DecimalValue < 0 Then
-            EprValidation.SetError(LblReturned, "A quantidade devolvida não pode ser negativa.")
-            EprValidation.SetIconAlignment(LblReturned, ErrorIconAlignment.MiddleRight)
-            DbxReturned.Select()
-            Return False
-        ElseIf DbxReturned.DecimalValue > DbxTaked.DecimalValue Then
-            EprValidation.SetError(LblReturned, "A quantidade devolvida não pode ser maior que a quantidade retirada.")
-            EprValidation.SetIconAlignment(LblReturned, ErrorIconAlignment.MiddleRight)
-            DbxReturned.Select()
-            Return False
-        ElseIf DbxApplied.DecimalValue < 0 Then
-            EprValidation.SetError(LblApplied, "A quantidade aplicada não pode ser nagativa")
-            EprValidation.SetIconAlignment(LblApplied, ErrorIconAlignment.MiddleRight)
-            DbxApplied.Select()
-            Return False
-        ElseIf DbxApplied.DecimalValue > DbxTaked.DecimalValue Then
-            EprValidation.SetError(LblApplied, "A quantidade aplicada não pode ser maior que a quantidade retirada.")
-            EprValidation.SetIconAlignment(LblApplied, ErrorIconAlignment.MiddleRight)
-            DbxApplied.Select()
-            Return False
-        ElseIf DbxLossed.DecimalValue < 0 Then
-            EprValidation.SetError(LblLossed, "A quantidade perdida não pode ser nagativa")
-            EprValidation.SetIconAlignment(LblLossed, ErrorIconAlignment.MiddleRight)
-            DbxLossed.Select()
-            Return False
-        ElseIf DbxLossed.DecimalValue > DbxTaked.DecimalValue Then
-            EprValidation.SetError(LblLossed, "A quantidade perdida não pode ser maior que a quantidade retirada.")
-            EprValidation.SetIconAlignment(LblLossed, ErrorIconAlignment.MiddleRight)
-            DbxLossed.Select()
-            Return False
-        ElseIf DbxLossed.DecimalValue > 0 And String.IsNullOrEmpty(TxtLostReason.Text) Then
-            EprValidation.SetError(LblLossReason, "Informe o motivo da quantidade perdida.")
-            EprValidation.SetIconAlignment(LblLossReason, ErrorIconAlignment.MiddleRight)
-            TxtLostReason.Select()
-            Return False
+
         End If
         Return True
     End Function
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
-        Dim TargetItems As List(Of RequestItem)
+        Dim TargetItems As List(Of EvaluationReplacedItem)
         If Not QbxItem.IsFreezed Then
             QbxItem.QueryEnabled = False
             QbxItem.Text = QbxItem.Text.Trim.ToUnaccented()
             QbxItem.QueryEnabled = True
         End If
-        TxtLostReason.Text = TxtLostReason.Text.ToUnaccented()
         If IsValidFields() Then
-            If _RequestItem.IsSaved Then
-                _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).Status = EnumHelper.GetEnumValue(Of RequestStatus)(LblStatusValue.Text)
+            If _ReplacedItem.IsSaved Then
                 If QbxItem.IsFreezed Then
-                    _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).ItemName = Nothing
-                    _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
+                    _Evaluation.ReplacedItems.Single(Function(x) x.Guid = _ReplacedItem.Guid).ItemName = Nothing
+                    _Evaluation.ReplacedItems.Single(Function(x) x.Guid = _ReplacedItem.Guid).Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
                 Else
-                    _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).ItemName = QbxItem.Text
-                    _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).Product = New Product
+                    _Evaluation.ReplacedItems.Single(Function(x) x.Guid = _ReplacedItem.Guid).ItemName = QbxItem.Text
+                    _Evaluation.ReplacedItems.Single(Function(x) x.Guid = _ReplacedItem.Guid).Product = New Product
                 End If
-                _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).Taked = DbxTaked.Text
-                _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).Returned = DbxReturned.Text
-                _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).Applied = DbxApplied.Text
-                _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).Lossed = DbxLossed.Text
-                _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).LossReason = TxtLostReason.Text
+                _Evaluation.ReplacedItems.Single(Function(x) x.Guid = _ReplacedItem.Guid).Quantity = DbxQuantity.Text
             Else
-                _RequestItem = New RequestItem()
-                _RequestItem.Status = EnumHelper.GetEnumValue(Of RequestStatus)(LblStatusValue.Text)
+                _ReplacedItem = New EvaluationReplacedItem()
                 If QbxItem.IsFreezed Then
-                    _RequestItem.ItemName = Nothing
-                    _RequestItem.Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
+                    _ReplacedItem.ItemName = Nothing
+                    _ReplacedItem.Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
                 Else
-                    _RequestItem.ItemName = QbxItem.Text
-                    _RequestItem.Product = New Product
+                    _ReplacedItem.ItemName = QbxItem.Text
+                    _ReplacedItem.Product = New Product
                 End If
-                _RequestItem.Taked = DbxTaked.Text
-                _RequestItem.Returned = DbxReturned.Text
-                _RequestItem.Applied = DbxApplied.Text
-                _RequestItem.Lossed = DbxLossed.Text
-                _RequestItem.LossReason = TxtLostReason.Text
-                TargetItems = _Request.Items.Where(Function(x) x.Equals(_RequestItem)).ToList
+                _ReplacedItem.Quantity = DbxQuantity.Text
+                TargetItems = _Evaluation.ReplacedItems.Where(Function(x) x.Equals(_ReplacedItem)).ToList
                 If TargetItems IsNot Nothing AndAlso TargetItems.Count > 0 Then
                     If CMessageBox.Show("Esse item já foi incluido na requisição, deseja incluir novamente?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.No Then
                         Return False
                     End If
                 End If
-                _RequestItem.SetIsSaved(True)
-                _Request.Items.Add(_RequestItem)
+                _ReplacedItem.SetIsSaved(True)
+                _Evaluation.ReplacedItems.Add(_ReplacedItem)
             End If
-            _RequestForm.DgvItem.Fill(_Request.Items)
-            _RequestForm.DgvItemLayout.Load()
+            _EvaluationForm.DgvReplacedItems.Fill(_Evaluation.ReplacedItems)
+            ' _EvaluationForm.DgvReplacedItemsLayout.Load()
             BtnSave.Enabled = False
-            If Not _RequestItem.IsSaved Then
+            If Not _ReplacedItem.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _RequestForm.DgvItem.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _RequestItem.Guid)
+            Row = _EvaluationForm.DgvReplacedItems.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ReplacedItem.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _RequestForm.DgvItem.SelectedRows(0).Cells("Order").Value
-            _RequestForm.EprValidation.Clear()
-            _RequestForm.BtnSave.Enabled = True
+            LblOrderValue.Text = _EvaluationForm.DgvReplacedItems.SelectedRows(0).Cells("Order").Value
+            _EvaluationForm.EprValidation.Clear()
+            _EvaluationForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()
             Return True
         Else
@@ -297,45 +234,21 @@ Public Class FrmEvaluationReplacedItem
                 If Not PreSave() Then Exit Sub
             End If
         End If
-        _RequestItem = New RequestItem()
+        _ReplacedItem = New EvaluationReplacedItem()
         LoadForm()
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
-        If _RequestForm.DgvItem.SelectedRows.Count = 1 Then
+        If _EvaluationForm.DgvReplacedItems.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _RequestItem = _Request.Items.Single(Function(x) x.Guid = _RequestForm.DgvItem.SelectedRows(0).Cells("Guid").Value)
-                _Request.Items.Remove(_RequestItem)
-                _RequestForm.DgvItem.Fill(_Request.Items)
-                _RequestForm.DgvItemLayout.Load()
+                _ReplacedItem = _Evaluation.ReplacedItems.Single(Function(x) x.Guid = _EvaluationForm.DgvReplacedItems.SelectedRows(0).Cells("Guid").Value)
+                _Evaluation.ReplacedItems.Remove(_ReplacedItem)
+                _EvaluationForm.DgvReplacedItems.Fill(_Evaluation.ReplacedItems)
+                '_EvaluationForm.DgvReplacedItemsLayout.Load()
                 _Deleting = True
                 Dispose()
-                _RequestForm.BtnSave.Enabled = True
+                _EvaluationForm.BtnSave.Enabled = True
             End If
         End If
     End Sub
-    Private Sub DbxPending_TextChanged(sender As Object, e As EventArgs) Handles DbxPending.TextChanged
-        If DbxPending.DecimalValue = 0 Then
-            DbxPending.BackColor = Color.LightGreen
-            DbxPending.ForeColor = Color.DarkGreen
-            LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Concluded)
-        ElseIf DbxPending.DecimalValue < DbxTaked.DecimalValue Then
-            DbxPending.BackColor = Color.Wheat
-            DbxPending.ForeColor = Color.Chocolate
-            LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Partial)
-        Else
-            DbxPending.BackColor = Color.LightCoral
-            DbxPending.ForeColor = Color.DarkRed
-            LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Pending)
-        End If
-        EprValidation.Clear()
-    End Sub
-    Private Sub LblStatusValue_TextChanged(sender As Object, e As EventArgs) Handles LblStatusValue.TextChanged
-        If LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Pending) Then
-            LblStatusValue.ForeColor = Color.DarkRed
-        ElseIf LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Partial) Then
-            LblStatusValue.ForeColor = Color.Chocolate
-        Else
-            LblStatusValue.ForeColor = Color.DarkGreen
-        End If
-    End Sub
+
 End Class

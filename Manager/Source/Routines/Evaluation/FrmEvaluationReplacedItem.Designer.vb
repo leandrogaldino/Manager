@@ -23,12 +23,12 @@ Partial Class FrmEvaluationReplacedItem
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim Condition5 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim OtherField3 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim Parameter5 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Parameter6 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Relation3 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Condition6 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim OtherField1 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Relation1 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
         Me.TsMain = New System.Windows.Forms.ToolStrip()
@@ -45,8 +45,6 @@ Partial Class FrmEvaluationReplacedItem
         Me.TsData = New System.Windows.Forms.ToolStrip()
         Me.LblOrder = New System.Windows.Forms.ToolStripLabel()
         Me.LblOrderValue = New System.Windows.Forms.ToolStripLabel()
-        Me.LblStatus = New System.Windows.Forms.ToolStripLabel()
-        Me.LblStatusValue = New System.Windows.Forms.ToolStripLabel()
         Me.LblCreation = New System.Windows.Forms.ToolStripLabel()
         Me.LblCreationValue = New System.Windows.Forms.ToolStripLabel()
         Me.LblItem = New System.Windows.Forms.Label()
@@ -57,7 +55,7 @@ Partial Class FrmEvaluationReplacedItem
         Me.BtnNew = New ControlLibrary.NoFocusCueButton()
         Me.TmrQueriedBox = New System.Windows.Forms.Timer(Me.components)
         Me.QbxItem = New ControlLibrary.QueriedBox()
-        Me.DbxTaked = New ControlLibrary.DecimalBox()
+        Me.DbxQuantity = New ControlLibrary.DecimalBox()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.TsMain.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -204,7 +202,7 @@ Partial Class FrmEvaluationReplacedItem
         Me.TsData.BackColor = System.Drawing.Color.White
         Me.TsData.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsData.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsData.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblOrder, Me.LblOrderValue, Me.LblStatus, Me.LblStatusValue, Me.LblCreation, Me.LblCreationValue})
+        Me.TsData.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblOrder, Me.LblOrderValue, Me.LblCreation, Me.LblCreationValue})
         Me.TsData.Location = New System.Drawing.Point(0, 25)
         Me.TsData.Name = "TsData"
         Me.TsData.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -227,23 +225,6 @@ Partial Class FrmEvaluationReplacedItem
         Me.LblOrderValue.Name = "LblOrderValue"
         Me.LblOrderValue.Size = New System.Drawing.Size(32, 22)
         Me.LblOrderValue.Text = "      "
-        '
-        'LblStatus
-        '
-        Me.LblStatus.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblStatus.Margin = New System.Windows.Forms.Padding(10, 1, 0, 2)
-        Me.LblStatus.Name = "LblStatus"
-        Me.LblStatus.Size = New System.Drawing.Size(49, 22)
-        Me.LblStatus.Text = "Status:"
-        '
-        'LblStatusValue
-        '
-        Me.LblStatusValue.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.LblStatusValue.ForeColor = System.Drawing.Color.DarkBlue
-        Me.LblStatusValue.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.LblStatusValue.Name = "LblStatusValue"
-        Me.LblStatusValue.Size = New System.Drawing.Size(32, 22)
-        Me.LblStatusValue.Text = "      "
         '
         'LblCreation
         '
@@ -348,11 +329,11 @@ Partial Class FrmEvaluationReplacedItem
         '
         Me.QbxItem.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxItem.CharactersToQuery = 1
-        Condition5.FieldName = "statusid"
-        Condition5.Operator = "="
-        Condition5.TableNameOrAlias = "product"
-        Condition5.Value = "@statusid"
-        Me.QbxItem.Conditions.Add(Condition5)
+        Condition1.FieldName = "statusid"
+        Condition1.Operator = "="
+        Condition1.TableNameOrAlias = "product"
+        Condition1.Value = "@statusid"
+        Me.QbxItem.Conditions.Add(Condition1)
         Me.QbxItem.DebugOnTextChanged = True
         Me.QbxItem.DisplayFieldAlias = "Código"
         Me.QbxItem.DisplayFieldName = "code"
@@ -368,52 +349,52 @@ Partial Class FrmEvaluationReplacedItem
         Me.QbxItem.MainTableAlias = Nothing
         Me.QbxItem.MainTableName = "product"
         Me.QbxItem.Name = "QbxItem"
-        OtherField3.DisplayFieldAlias = "Produto"
-        OtherField3.DisplayFieldName = "name"
-        OtherField3.DisplayMainFieldName = "id"
-        OtherField3.DisplayTableAlias = ""
-        OtherField3.DisplayTableName = "product"
-        OtherField3.Freeze = True
-        OtherField3.IfNull = Nothing
-        OtherField3.Prefix = Nothing
-        OtherField3.Suffix = Nothing
-        Me.QbxItem.OtherFields.Add(OtherField3)
-        Parameter5.ParameterName = "@statusid"
-        Parameter5.ParameterValue = "0"
-        Parameter6.ParameterName = "@ismainprovider"
-        Parameter6.ParameterValue = "1"
-        Me.QbxItem.Parameters.Add(Parameter5)
-        Me.QbxItem.Parameters.Add(Parameter6)
+        OtherField1.DisplayFieldAlias = "Produto"
+        OtherField1.DisplayFieldName = "name"
+        OtherField1.DisplayMainFieldName = "id"
+        OtherField1.DisplayTableAlias = ""
+        OtherField1.DisplayTableName = "product"
+        OtherField1.Freeze = True
+        OtherField1.IfNull = Nothing
+        OtherField1.Prefix = Nothing
+        OtherField1.Suffix = Nothing
+        Me.QbxItem.OtherFields.Add(OtherField1)
+        Parameter1.ParameterName = "@statusid"
+        Parameter1.ParameterValue = "0"
+        Parameter2.ParameterName = "@ismainprovider"
+        Parameter2.ParameterValue = "1"
+        Me.QbxItem.Parameters.Add(Parameter1)
+        Me.QbxItem.Parameters.Add(Parameter2)
         Me.QbxItem.Prefix = Nothing
-        Condition6.FieldName = "ismainprovider"
-        Condition6.Operator = "="
-        Condition6.TableNameOrAlias = "productprovidercode"
-        Condition6.Value = "@ismainprovider"
-        Relation3.Conditions.Add(Condition6)
-        Relation3.Operator = "="
-        Relation3.RelateFieldName = "productid"
-        Relation3.RelateTableAlias = Nothing
-        Relation3.RelateTableName = "productprovidercode"
-        Relation3.RelationType = "LEFT"
-        Relation3.WithFieldName = "id"
-        Relation3.WithTableAlias = Nothing
-        Relation3.WithTableName = "product"
-        Me.QbxItem.Relations.Add(Relation3)
+        Condition2.FieldName = "ismainprovider"
+        Condition2.Operator = "="
+        Condition2.TableNameOrAlias = "productprovidercode"
+        Condition2.Value = "@ismainprovider"
+        Relation1.Conditions.Add(Condition2)
+        Relation1.Operator = "="
+        Relation1.RelateFieldName = "productid"
+        Relation1.RelateTableAlias = Nothing
+        Relation1.RelateTableName = "productprovidercode"
+        Relation1.RelationType = "LEFT"
+        Relation1.WithFieldName = "id"
+        Relation1.WithTableAlias = Nothing
+        Relation1.WithTableName = "product"
+        Me.QbxItem.Relations.Add(Relation1)
         Me.QbxItem.Size = New System.Drawing.Size(385, 23)
         Me.QbxItem.Suffix = " - "
         Me.QbxItem.TabIndex = 3
         '
-        'DbxTaked
+        'DbxQuantity
         '
-        Me.DbxTaked.DecimalOnly = True
-        Me.DbxTaked.DecimalPlaces = 2
-        Me.DbxTaked.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxTaked.Location = New System.Drawing.Point(403, 80)
-        Me.DbxTaked.Name = "DbxTaked"
-        Me.DbxTaked.Size = New System.Drawing.Size(104, 23)
-        Me.DbxTaked.TabIndex = 6
-        Me.DbxTaked.Text = "0,00"
-        Me.DbxTaked.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.DbxQuantity.DecimalOnly = True
+        Me.DbxQuantity.DecimalPlaces = 2
+        Me.DbxQuantity.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
+        Me.DbxQuantity.Location = New System.Drawing.Point(403, 80)
+        Me.DbxQuantity.Name = "DbxQuantity"
+        Me.DbxQuantity.Size = New System.Drawing.Size(104, 23)
+        Me.DbxQuantity.TabIndex = 6
+        Me.DbxQuantity.Text = "0,00"
+        Me.DbxQuantity.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'DgvNavigator
         '
@@ -431,7 +412,7 @@ Partial Class FrmEvaluationReplacedItem
         Me.Controls.Add(Me.FlpProduct)
         Me.Controls.Add(Me.QbxItem)
         Me.Controls.Add(Me.LblTaked)
-        Me.Controls.Add(Me.DbxTaked)
+        Me.Controls.Add(Me.DbxQuantity)
         Me.Controls.Add(Me.LblItem)
         Me.Controls.Add(Me.TsData)
         Me.Controls.Add(Me.TsMain)
@@ -475,9 +456,7 @@ Partial Class FrmEvaluationReplacedItem
     Friend WithEvents LblOrderValue As ToolStripLabel
     Friend WithEvents LblCreation As ToolStripLabel
     Friend WithEvents LblCreationValue As ToolStripLabel
-    Friend WithEvents LblStatus As ToolStripLabel
-    Friend WithEvents LblStatusValue As ToolStripLabel
-    Friend WithEvents DbxTaked As ControlLibrary.DecimalBox
+    Friend WithEvents DbxQuantity As ControlLibrary.DecimalBox
     Friend WithEvents LblItem As Label
     Friend WithEvents LblTaked As Label
     Friend WithEvents FlpProduct As FlowLayoutPanel

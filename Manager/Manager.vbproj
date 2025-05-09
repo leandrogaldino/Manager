@@ -746,6 +746,8 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Routines\PrivilegePreset\PrivilegePresetFilter.vb" />
+    <Compile Include="Source\Routines\Service\Service.vb" />
+    <Compile Include="Source\Routines\Service\ServiceComplement.vb" />
     <Compile Include="Source\Routines\User\UserPrivilege.vb" />
     <Compile Include="Source\Routines\VisitSchedule\FrmVisitSchedule.Designer.vb">
       <DependentUpon>FrmVisitSchedule.vb</DependentUpon>

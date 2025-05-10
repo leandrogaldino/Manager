@@ -3,7 +3,6 @@ Imports ControlLibrary
 Imports ControlLibrary.Extensions
 Imports ManagerCore
 Imports MySql.Data.MySqlClient
-Imports Org.BouncyCastle.Tls
 Public Class FrmEvaluation
     Private _Evaluation As Evaluation
     Private _EvaluationsForm As FrmEvaluations

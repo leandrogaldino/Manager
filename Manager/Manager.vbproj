@@ -1697,6 +1697,7 @@
     <None Include="Resources\Html\Loading.html" />
     <None Include="Resources\Image\EvaluationSmall.png" />
     <None Include="Resources\Image\VisitSchedule.png" />
+    <None Include="Resources\Image\Service.png" />
     <Content Include="Resources\SQL\CashFlowAuthorizedDelete.sql" />
     <Content Include="Resources\SQL\CashFlowAuthorizedInsert.sql" />
     <Content Include="Resources\SQL\CashFlowAuthorizedSelect.sql" />

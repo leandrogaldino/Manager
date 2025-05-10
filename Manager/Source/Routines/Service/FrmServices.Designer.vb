@@ -23,6 +23,7 @@ Partial Class FrmServices
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TsMenu = New System.Windows.Forms.ToolStrip()
         Me.BtnInclude = New System.Windows.Forms.ToolStripButton()
         Me.BtnEdit = New System.Windows.Forms.ToolStripButton()
@@ -371,9 +372,18 @@ Partial Class FrmServices
         Me.DgvComplement.AllowUserToDeleteRows = False
         Me.DgvComplement.AllowUserToResizeColumns = False
         Me.DgvComplement.AllowUserToResizeRows = False
+        Me.DgvComplement.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.DgvComplement.BackgroundColor = System.Drawing.Color.White
         Me.DgvComplement.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.DgvComplement.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DgvComplement.DefaultCellStyle = DataGridViewCellStyle1
         Me.DgvComplement.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DgvComplement.Location = New System.Drawing.Point(3, 3)
         Me.DgvComplement.MultiSelect = False

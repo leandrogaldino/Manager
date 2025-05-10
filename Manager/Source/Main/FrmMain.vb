@@ -135,7 +135,7 @@ Public Class FrmMain
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Produto").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Unidade de Medida", "Cadastro de Unidades de Medida de Produto", My.Resources.ProductUnit, AddressOf ProductUnitClick))
                 End If
                 If _User.CanAccess(Routine.Service) Then
-                    TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Produto").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Serviço", "Cadastro de Serviços Prestados", My.Resources.ProductUnit, AddressOf ServiceClick))
+                    TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Produto").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Serviço", "Cadastro de Serviços Prestados", My.Resources.Service, AddressOf ServiceClick))
                 End If
             Else
                 TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripButton("Produto", "Cadastro de Produtos", My.Resources.Product, AddressOf ProductClick))

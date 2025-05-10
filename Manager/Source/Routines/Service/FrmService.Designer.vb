@@ -266,10 +266,10 @@ Partial Class FrmService
         'TabNote
         '
         Me.TabNote.Controls.Add(Me.TxtNote)
-        Me.TabNote.Location = New System.Drawing.Point(4, 22)
+        Me.TabNote.Location = New System.Drawing.Point(4, 26)
         Me.TabNote.Name = "TabNote"
         Me.TabNote.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabNote.Size = New System.Drawing.Size(486, 66)
+        Me.TabNote.Size = New System.Drawing.Size(486, 62)
         Me.TabNote.TabIndex = 5
         Me.TabNote.Text = "Observação"
         Me.TabNote.UseVisualStyleBackColor = True
@@ -281,7 +281,7 @@ Partial Class FrmService
         Me.TxtNote.Location = New System.Drawing.Point(3, 3)
         Me.TxtNote.MaxLength = 1000000
         Me.TxtNote.Name = "TxtNote"
-        Me.TxtNote.Size = New System.Drawing.Size(480, 60)
+        Me.TxtNote.Size = New System.Drawing.Size(480, 56)
         Me.TxtNote.TabIndex = 0
         Me.TxtNote.Text = ""
         '
@@ -289,11 +289,11 @@ Partial Class FrmService
         '
         Me.TabPrice.Controls.Add(Me.DgvPrice)
         Me.TabPrice.Controls.Add(Me.TsPrice)
-        Me.TabPrice.Location = New System.Drawing.Point(4, 22)
+        Me.TabPrice.Location = New System.Drawing.Point(4, 26)
         Me.TabPrice.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabPrice.Name = "TabPrice"
         Me.TabPrice.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabPrice.Size = New System.Drawing.Size(486, 66)
+        Me.TabPrice.Size = New System.Drawing.Size(486, 62)
         Me.TabPrice.TabIndex = 1
         Me.TabPrice.Text = "Preços"
         Me.TabPrice.UseVisualStyleBackColor = True
@@ -316,7 +316,7 @@ Partial Class FrmService
         Me.DgvPrice.RowHeadersVisible = False
         Me.DgvPrice.RowTemplate.Height = 26
         Me.DgvPrice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPrice.Size = New System.Drawing.Size(480, 33)
+        Me.DgvPrice.Size = New System.Drawing.Size(480, 29)
         Me.DgvPrice.TabIndex = 1
         '
         'TsPrice

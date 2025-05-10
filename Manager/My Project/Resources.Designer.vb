@@ -5401,10 +5401,12 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	sellablepricetable.name AS &apos;Tabela&apos;,
-        '''	sellablepricetable.price AS &apos;Preço&apos;
-        '''FROM sellablepricetable
-        '''INNER JOIN sellablepricetable ON sellablepricetable.id = sellablepri.sellablepricetableid
-        '''WHERE sellableprice.productid = @productid;
+        '''	sellableprice.price AS &apos;Preço&apos;
+        '''FROM sellableprice
+        '''INNER JOIN sellablepricetable ON sellablepricetable.id = sellableprice.sellablepricetableid
+        '''WHERE 
+        '''	(@productid IS NULL OR (sellableprice.productid IS NOT NULL AND sellableprice.productid = @productid)) AND
+        '''    (@serviceid IS NULL OR (sellableprice.serviceid IS NOT NULL AND sellableprice.serviceid = @serviceid));
         '''.
         '''</summary>
         Friend ReadOnly Property SellablePriceDetailSelect() As String
@@ -5442,6 +5444,7 @@ Namespace My.Resources
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO sellableprice
         '''(
         '''	productid,
+        '''	serviceid,
         '''	creation,
         '''	sellablepricetableid,
         '''	price,
@@ -5450,6 +5453,7 @@ Namespace My.Resources
         '''VALUES
         '''(
         '''	@productid,
+        '''	@serviceid,
         '''	@creation,
         '''	@sellablepricetableid,
         '''	@price,
@@ -5470,7 +5474,10 @@ Namespace My.Resources
         '''	sellableprice.sellablepricetableid,
         '''	sellableprice.price
         '''FROM sellableprice
-        '''WHERE sellableprice.productid = @productid;.
+        '''WHERE 
+        '''(@productid IS NULL OR (sellableprice.productid IS NOT NULL AND sellableprice.productid = @productid))
+        '''    AND
+        '''    (@serviceid IS NULL OR (sellableprice.serviceid IS NOT NULL AND sellableprice.serviceid = @serviceid));.
         '''</summary>
         Friend ReadOnly Property SellablePriceSelect() As String
             Get
@@ -5609,6 +5616,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property Service() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Service", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM servicecomplement
         '''WHERE servicecomplement.id = @id;.
         '''</summary>
@@ -5658,7 +5675,7 @@ Namespace My.Resources
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	servicecomplement.id,
         '''	servicecomplement.creation,
-        '''	servicecomplement.complement,
+        '''	servicecomplement.complement
         '''FROM servicecomplement
         '''WHERE servicecomplement.serviceid = @serviceid;.
         '''</summary>
@@ -5722,7 +5739,6 @@ Namespace My.Resources
         '''    name,
         '''    servicecode,
         '''    note,
-        '''    lastupdate,
         '''    userid
         ''')
         '''VALUES
@@ -5732,7 +5748,6 @@ Namespace My.Resources
         '''    @name,
         '''    @servicecode,
         '''    @note,
-        '''    @lastupdate,
         '''    @userid
         ''');.
         '''</summary>
@@ -5749,8 +5764,7 @@ Namespace My.Resources
         '''    service.statusid,
         '''	service.name,
         '''	service.servicecode,
-        '''	service.note,
-        '''	service.lastupdate
+        '''	service.note
         '''FROM service
         '''WHERE service.id = @id;.
         '''</summary>
@@ -5765,8 +5779,7 @@ Namespace My.Resources
         '''    statusid =  @statusid,
         '''    name = @name,
         '''    servicecode = @servicecode,
-        '''    note = @note,
-        '''    lastupdate = @lastupdate
+        '''    note = @note
         '''WHERE service.id = @id;.
         '''</summary>
         Friend ReadOnly Property ServiceUpdate() As String

@@ -54,7 +54,7 @@ Partial Class FrmServiceComplement
         '
         Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnClose.Location = New System.Drawing.Point(494, 7)
+        Me.BtnClose.Location = New System.Drawing.Point(315, 7)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(95, 30)
         Me.BtnClose.TabIndex = 1
@@ -65,7 +65,7 @@ Partial Class FrmServiceComplement
         '
         Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnSave.Enabled = False
-        Me.BtnSave.Location = New System.Drawing.Point(393, 7)
+        Me.BtnSave.Location = New System.Drawing.Point(214, 7)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(95, 30)
         Me.BtnSave.TabIndex = 0
@@ -82,7 +82,7 @@ Partial Class FrmServiceComplement
         Me.TsMain.Location = New System.Drawing.Point(0, 0)
         Me.TsMain.Name = "TsMain"
         Me.TsMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsMain.Size = New System.Drawing.Size(601, 25)
+        Me.TsMain.Size = New System.Drawing.Size(422, 25)
         Me.TsMain.TabIndex = 0
         Me.TsMain.Text = "ToolStrip2"
         '
@@ -172,9 +172,9 @@ Partial Class FrmServiceComplement
         Me.Panel1.Controls.Add(Me.BtnSave)
         Me.Panel1.Controls.Add(Me.BtnClose)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 281)
+        Me.Panel1.Location = New System.Drawing.Point(0, 169)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(601, 44)
+        Me.Panel1.Size = New System.Drawing.Size(422, 44)
         Me.Panel1.TabIndex = 6
         '
         'EprValidation
@@ -200,7 +200,7 @@ Partial Class FrmServiceComplement
         Me.TsData.Location = New System.Drawing.Point(0, 25)
         Me.TsData.Name = "TsData"
         Me.TsData.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsData.Size = New System.Drawing.Size(601, 25)
+        Me.TsData.Size = New System.Drawing.Size(422, 25)
         Me.TsData.TabIndex = 1
         Me.TsData.Text = "ToolStrip1"
         '
@@ -250,18 +250,17 @@ Partial Class FrmServiceComplement
         '
         Me.TxtComplement.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.TxtComplement.Location = New System.Drawing.Point(12, 75)
-        Me.TxtComplement.MaxLength = 20
+        Me.TxtComplement.MaxLength = 255
         Me.TxtComplement.Multiline = True
         Me.TxtComplement.Name = "TxtComplement"
-        Me.TxtComplement.Size = New System.Drawing.Size(577, 197)
+        Me.TxtComplement.Size = New System.Drawing.Size(398, 92)
         Me.TxtComplement.TabIndex = 5
-        Me.TxtComplement.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'FrmServiceComplement
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(601, 325)
+        Me.ClientSize = New System.Drawing.Size(422, 213)
         Me.Controls.Add(Me.LblComplement)
         Me.Controls.Add(Me.TxtComplement)
         Me.Controls.Add(Me.TsData)

@@ -24,10 +24,10 @@ Public Class SellablePriceTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
-                Using CmdProductPriceTableSelect As New MySqlCommand(My.Resources.ProductPriceTableSelect, Con)
-                    CmdProductPriceTableSelect.Transaction = Tra
-                    CmdProductPriceTableSelect.Parameters.AddWithValue("@id", Identity)
-                    Using Adp As New MySqlDataAdapter(CmdProductPriceTableSelect)
+                Using CmdSellablePriceTableSelect As New MySqlCommand(My.Resources.SellablePriceTableSelect, Con)
+                    CmdSellablePriceTableSelect.Transaction = Tra
+                    CmdSellablePriceTableSelect.Parameters.AddWithValue("@id", Identity)
+                    Using Adp As New MySqlDataAdapter(CmdSellablePriceTableSelect)
                         TableResult = New DataTable
                         Adp.Fill(TableResult)
                     End Using
@@ -63,9 +63,9 @@ Public Class SellablePriceTable
         Dim Session = Locator.GetInstance(Of Session)
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
-            Using CmdProductPriceTableDelete As New MySqlCommand(My.Resources.ProductPriceTableDelete, Con)
-                CmdProductPriceTableDelete.Parameters.AddWithValue("@id", ID)
-                CmdProductPriceTableDelete.ExecuteNonQuery()
+            Using CmdSellablePriceTableDelete As New MySqlCommand(My.Resources.SellablePriceTableDelete, Con)
+                CmdSellablePriceTableDelete.Parameters.AddWithValue("@id", ID)
+                CmdSellablePriceTableDelete.ExecuteNonQuery()
                 Clear()
             End Using
         End Using
@@ -75,14 +75,14 @@ Public Class SellablePriceTable
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
-                Using CmdProductPriceTableInsert As New MySqlCommand(My.Resources.ProductPriceTableInsert, Con)
-                    CmdProductPriceTableInsert.Transaction = Tra
-                    CmdProductPriceTableInsert.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
-                    CmdProductPriceTableInsert.Parameters.AddWithValue("@statusid", CInt(Status))
-                    CmdProductPriceTableInsert.Parameters.AddWithValue("@name", Name)
-                    CmdProductPriceTableInsert.Parameters.AddWithValue("@userid", User.ID)
-                    CmdProductPriceTableInsert.ExecuteNonQuery()
-                    SetID(CmdProductPriceTableInsert.LastInsertedId)
+                Using CmdSellablePriceTableInsert As New MySqlCommand(My.Resources.SellablePriceTableInsert, Con)
+                    CmdSellablePriceTableInsert.Transaction = Tra
+                    CmdSellablePriceTableInsert.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
+                    CmdSellablePriceTableInsert.Parameters.AddWithValue("@statusid", CInt(Status))
+                    CmdSellablePriceTableInsert.Parameters.AddWithValue("@name", Name)
+                    CmdSellablePriceTableInsert.Parameters.AddWithValue("@userid", User.ID)
+                    CmdSellablePriceTableInsert.ExecuteNonQuery()
+                    SetID(CmdSellablePriceTableInsert.LastInsertedId)
                 End Using
                 Tra.Commit()
             End Using
@@ -92,12 +92,12 @@ Public Class SellablePriceTable
         Dim Session = Locator.GetInstance(Of Session)
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
-            Using CmdProductPriceTableUpdate As New MySqlCommand(My.Resources.ProductPriceTableUpdate, Con)
-                CmdProductPriceTableUpdate.Parameters.AddWithValue("@id", ID)
-                CmdProductPriceTableUpdate.Parameters.AddWithValue("@statusid", CInt(Status))
-                CmdProductPriceTableUpdate.Parameters.AddWithValue("@name", Name)
-                CmdProductPriceTableUpdate.Parameters.AddWithValue("@userid", User.ID)
-                CmdProductPriceTableUpdate.ExecuteNonQuery()
+            Using CmdSellablePriceTableUpdate As New MySqlCommand(My.Resources.SellablePriceTableUpdate, Con)
+                CmdSellablePriceTableUpdate.Parameters.AddWithValue("@id", ID)
+                CmdSellablePriceTableUpdate.Parameters.AddWithValue("@statusid", CInt(Status))
+                CmdSellablePriceTableUpdate.Parameters.AddWithValue("@name", Name)
+                CmdSellablePriceTableUpdate.Parameters.AddWithValue("@userid", User.ID)
+                CmdSellablePriceTableUpdate.ExecuteNonQuery()
             End Using
         End Using
     End Sub

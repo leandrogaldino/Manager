@@ -1,5 +1,5 @@
 UPDATE sellableprice SET
-    sellabletableid = @sellabletableid,
+    sellablepricetableid = @sellablepricetableid,
     price = @price,
     userid = @userid
 WHERE sellableprice.id = @id;

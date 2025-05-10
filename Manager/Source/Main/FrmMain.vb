@@ -129,10 +129,13 @@ Public Class FrmMain
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Produto").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Grupo de Produto", "Cadastro de Grupos de Produto", My.Resources.ProductGroup, AddressOf ProductGroupClick))
                 End If
                 If _User.CanAccess(Routine.SellablePriceTable) Then
-                    TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Produto").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Tabela de Preço", "Cadastro de Tabelas de Preço de Produto", My.Resources.ProductPriceTable, AddressOf ProductPriceTableClick))
+                    TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Produto").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Tabela de Preço", "Cadastro de Tabelas de Preço de Produto", My.Resources.SellablePriceTable, AddressOf ProductPriceTableClick))
                 End If
                 If _User.CanAccess(Routine.ProductUnit) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Produto").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Unidade de Medida", "Cadastro de Unidades de Medida de Produto", My.Resources.ProductUnit, AddressOf ProductUnitClick))
+                End If
+                If _User.CanAccess(Routine.Service) Then
+                    TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Produto").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Serviço", "Cadastro de Serviços Prestados", My.Resources.ProductUnit, AddressOf ServiceClick))
                 End If
             Else
                 TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripButton("Produto", "Cadastro de Produtos", My.Resources.Product, AddressOf ProductClick))
@@ -201,6 +204,13 @@ Public Class FrmMain
             OpenTab(New FrmProductUnits, EnumHelper.GetEnumDescription(Routine.ProductUnit))
         Else
             SelectTab(Routine.ProductUnit)
+        End If
+    End Sub
+    Private Sub ServiceClick()
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.Service)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmServices, EnumHelper.GetEnumDescription(Routine.Service))
+        Else
+            SelectTab(Routine.Service)
         End If
     End Sub
     Private Sub ProductPriceTableClick()
@@ -346,9 +356,10 @@ Public Class FrmMain
         Form.Location = New Point(0, 0)
         Form.Height = Height - 196
         Form.Width = Width - 24
-        Page = New TabPage
-        Page.Text = TabText
-        Page.AutoScroll = True
+        Page = New TabPage With {
+            .Text = TabText,
+            .AutoScroll = True
+        }
         Page.Controls.Add(Form)
         TcWindows.Controls.Add(Page)
         TcWindows.SelectTab(TcWindows.TabCount - 1)

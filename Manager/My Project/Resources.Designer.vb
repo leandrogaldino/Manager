@@ -4624,228 +4624,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM productprice
-        '''WHERE productprice.id = @id;.
-        '''</summary>
-        Friend ReadOnly Property ProductPriceDelete() As String
-            Get
-                Return ResourceManager.GetString("ProductPriceDelete", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	productpricetable.name AS &apos;Tabela&apos;,
-        '''	productprice.price AS &apos;Preço&apos;
-        '''FROM productprice
-        '''INNER JOIN productpricetable ON productpricetable.id = productprice.pricetableid
-        '''WHERE productprice.productid = @productid;
-        '''.
-        '''</summary>
-        Friend ReadOnly Property ProductPriceDetailSelect() As String
-            Get
-                Return ResourceManager.GetString("ProductPriceDetailSelect", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;ProductPrice&quot; Version=&quot;2&quot;&gt;
-        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
-        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
-        '''    &lt;Column Index=&quot;0&quot;&gt;
-        '''        &lt;Visible&gt;True&lt;/Visible&gt;
-        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
-        '''        &lt;Name&gt;Ordem&lt;/Name&gt;
-        '''        &lt;Width&gt;70&lt;/Width&gt;
-        '''    &lt;/Column&gt;    
-        '''        &lt;Column Index=&quot;1&quot;&gt;
-        '''        &lt;Visible&gt;True&lt;/Visible&gt;
-        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''        &lt;Name&gt;Tabela de Preço&lt;/Name&gt;
-        '''        &lt;Width&gt;150&lt;/Width&gt;
-        '''    &lt;/Column&gt;
-        '''    &lt;Colu [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property ProductPriceGrid() As String
-            Get
-                Return ResourceManager.GetString("ProductPriceGrid", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO productprice
-        '''(
-        '''	productid,
-        '''	creation,
-        '''	pricetableid,
-        '''	price,
-        '''	userid
-        ''')
-        '''VALUES
-        '''(
-        '''	@productid,
-        '''	@creation,
-        '''	@pricetableid,
-        '''	@price,
-        '''	@userid
-        ''');
-        '''.
-        '''</summary>
-        Friend ReadOnly Property ProductPriceInsert() As String
-            Get
-                Return ResourceManager.GetString("ProductPriceInsert", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	productprice.id,
-        '''	productprice.creation,
-        '''	productprice.pricetableid,
-        '''	productprice.price
-        '''FROM productprice
-        '''WHERE productprice.productid = @productid;.
-        '''</summary>
-        Friend ReadOnly Property ProductPriceSelect() As String
-            Get
-                Return ResourceManager.GetString("ProductPriceSelect", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property ProductPriceTable() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("ProductPriceTable", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM productpricetable
-        '''WHERE productpricetable.id = @id;.
-        '''</summary>
-        Friend ReadOnly Property ProductPriceTableDelete() As String
-            Get
-                Return ResourceManager.GetString("ProductPriceTableDelete", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
-        '''	productpricetable.id AS &apos;ID&apos;,
-        '''    productpricetable.creation AS &apos;Criação&apos;,
-        '''    CASE 
-        '''		WHEN productpricetable.statusid = 0 THEN &quot;ATIVO&quot;
-        '''        WHEN productpricetable.statusid = 1 THEN &quot;INATIVO&quot;
-        '''	END AS &apos;Status&apos;,
-        '''    productpricetable.name AS &apos;Nome&apos;
-        '''FROM productpricetable
-        '''WHERE
-        '''	IFNULL(productpricetable.id, &apos;&apos;) LIKE @id AND
-        '''    IFNULL(productpricetable.statusid, &apos;&apos;) LIKE @statusid AND
-        '''    IFNULL(productpricetable.name, &apos;&apos;) LIKE CONCAT(&apos;%&apos;, @name, &apos;%&apos;)
-        '''GROUP BY productpricetable.id
-        '''ORD [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property ProductPriceTableFilter() As String
-            Get
-                Return ResourceManager.GetString("ProductPriceTableFilter", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;ProductPriceTable&quot; Version=&quot;1&quot;&gt;
-        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
-        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
-        '''    &lt;Column Index=&quot;0&quot;&gt;
-        '''        &lt;Visible&gt;True&lt;/Visible&gt;
-        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
-        '''        &lt;Name&gt;ID&lt;/Name&gt;
-        '''        &lt;Width&gt;100&lt;/Width&gt;
-        '''    &lt;/Column&gt;    
-        '''    &lt;Column Index=&quot;1&quot;&gt;
-        '''        &lt;Visible&gt;True&lt;/Visible&gt;
-        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''        &lt;Name&gt;Criação&lt;/Name&gt;
-        '''        &lt;Width&gt;100&lt;/Width&gt;
-        '''    &lt;/Column&gt;
-        '''    &lt;Column Index= [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property ProductPriceTableGrid() As String
-            Get
-                Return ResourceManager.GetString("ProductPriceTableGrid", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO productpricetable
-        '''(
-        '''    creation,
-        '''    statusid,
-        '''    name,
-        '''    userid
-        ''')
-        '''VALUES
-        '''(
-        '''    @creation,
-        '''    @statusid,
-        '''    @name,
-        '''    @userid
-        ''');.
-        '''</summary>
-        Friend ReadOnly Property ProductPriceTableInsert() As String
-            Get
-                Return ResourceManager.GetString("ProductPriceTableInsert", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	productpricetable.id,
-        '''	productpricetable.creation,
-        '''    productpricetable.statusid,
-        '''	productpricetable.name
-        '''FROM productpricetable
-        '''WHERE productpricetable.id = @id;.
-        '''</summary>
-        Friend ReadOnly Property ProductPriceTableSelect() As String
-            Get
-                Return ResourceManager.GetString("ProductPriceTableSelect", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE productpricetable SET
-        '''    statusid =  @statusid,
-        '''    name = @name,
-        '''    userid = @userid
-        '''WHERE productpricetable.id = @id;.
-        '''</summary>
-        Friend ReadOnly Property ProductPriceTableUpdate() As String
-            Get
-                Return ResourceManager.GetString("ProductPriceTableUpdate", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE productprice SET
-        '''
-        '''    pricetableid = @pricetableid,
-        '''    price = @price,
-        '''    userid = @userid
-        '''WHERE productprice.id = @id;.
-        '''</summary>
-        Friend ReadOnly Property ProductPriceUpdate() As String
-            Get
-                Return ResourceManager.GetString("ProductPriceUpdate", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM productprovidercode
         '''WHERE productprovidercode.id = @id;.
         '''</summary>
@@ -5611,6 +5389,226 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM sellableprice
+        '''WHERE sellableprice.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property SellablePriceDelete() As String
+            Get
+                Return ResourceManager.GetString("SellablePriceDelete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	sellablepricetable.name AS &apos;Tabela&apos;,
+        '''	sellablepricetable.price AS &apos;Preço&apos;
+        '''FROM sellablepricetable
+        '''INNER JOIN sellablepricetable ON sellablepricetable.id = sellablepri.sellablepricetableid
+        '''WHERE sellableprice.productid = @productid;
+        '''.
+        '''</summary>
+        Friend ReadOnly Property SellablePriceDetailSelect() As String
+            Get
+                Return ResourceManager.GetString("SellablePriceDetailSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;SellablePrice&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''    &lt;Column Index=&quot;0&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;Ordem&lt;/Name&gt;
+        '''        &lt;Width&gt;70&lt;/Width&gt;
+        '''    &lt;/Column&gt;    
+        '''        &lt;Column Index=&quot;1&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;Tabela de Preço&lt;/Name&gt;
+        '''        &lt;Width&gt;150&lt;/Width&gt;
+        '''    &lt;/Column&gt;
+        '''    &lt;Col [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property SellablePriceGrid() As String
+            Get
+                Return ResourceManager.GetString("SellablePriceGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO sellableprice
+        '''(
+        '''	productid,
+        '''	creation,
+        '''	sellablepricetableid,
+        '''	price,
+        '''	userid
+        ''')
+        '''VALUES
+        '''(
+        '''	@productid,
+        '''	@creation,
+        '''	@sellablepricetableid,
+        '''	@price,
+        '''	@userid
+        ''');
+        '''.
+        '''</summary>
+        Friend ReadOnly Property SellablePriceInsert() As String
+            Get
+                Return ResourceManager.GetString("SellablePriceInsert", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	sellableprice.id,
+        '''	sellableprice.creation,
+        '''	sellableprice.sellablepricetableid,
+        '''	sellableprice.price
+        '''FROM sellableprice
+        '''WHERE sellableprice.productid = @productid;.
+        '''</summary>
+        Friend ReadOnly Property SellablePriceSelect() As String
+            Get
+                Return ResourceManager.GetString("SellablePriceSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property SellablePriceTable() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("SellablePriceTable", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM sellablepricetable
+        '''WHERE sellablepricetable.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property SellablePriceTableDelete() As String
+            Get
+                Return ResourceManager.GetString("SellablePriceTableDelete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
+        '''	sellablepricetable.id AS &apos;ID&apos;,
+        '''    sellablepricetable.creation AS &apos;Criação&apos;,
+        '''    CASE 
+        '''		WHEN sellablepricetable.statusid = 0 THEN &quot;ATIVO&quot;
+        '''        WHEN sellablepricetable.statusid = 1 THEN &quot;INATIVO&quot;
+        '''	END AS &apos;Status&apos;,
+        '''    sellablepricetable.name AS &apos;Nome&apos;
+        '''FROM sellablepricetable
+        '''WHERE
+        '''	IFNULL(sellablepricetable.id, &apos;&apos;) LIKE @id AND
+        '''    IFNULL(sellablepricetable.statusid, &apos;&apos;) LIKE @statusid AND
+        '''    IFNULL(sellablepricetable.name, &apos;&apos;) LIKE CONCAT(&apos;%&apos;, @name, &apos;%&apos;)
+        '''GROUP BY sellablepricetab [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property SellablePriceTableFilter() As String
+            Get
+                Return ResourceManager.GetString("SellablePriceTableFilter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;SellablePriceTable&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''    &lt;Column Index=&quot;0&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;ID&lt;/Name&gt;
+        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''    &lt;/Column&gt;    
+        '''    &lt;Column Index=&quot;1&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;Criação&lt;/Name&gt;
+        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''    &lt;/Column&gt;
+        '''    &lt;Column Index [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property SellablePriceTableGrid() As String
+            Get
+                Return ResourceManager.GetString("SellablePriceTableGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO sellablepriceTable
+        '''(
+        '''    creation,
+        '''    statusid,
+        '''    name,
+        '''    userid
+        ''')
+        '''VALUES
+        '''(
+        '''    @creation,
+        '''    @statusid,
+        '''    @name,
+        '''    @userid
+        ''');.
+        '''</summary>
+        Friend ReadOnly Property SellablePriceTableInsert() As String
+            Get
+                Return ResourceManager.GetString("SellablePriceTableInsert", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	sellablepricetable.id,
+        '''	sellablepricetable.creation,
+        '''    sellablepricetable.statusid,
+        '''	sellablepricetable.name
+        '''FROM sellablepricetable
+        '''WHERE sellablepricetable.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property SellablePriceTableSelect() As String
+            Get
+                Return ResourceManager.GetString("SellablePriceTableSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE sellablepricetable SET
+        '''    statusid =  @statusid,
+        '''    name = @name,
+        '''    userid = @userid
+        '''WHERE sellablepricetable.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property SellablePriceTableUpdate() As String
+            Get
+                Return ResourceManager.GetString("SellablePriceTableUpdate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE sellableprice SET
+        '''    sellablepricetableid = @sellablepricetableid,
+        '''    price = @price,
+        '''    userid = @userid
+        '''WHERE sellableprice.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property SellablePriceUpdate() As String
+            Get
+                Return ResourceManager.GetString("SellablePriceUpdate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM servicecomplement
         '''WHERE servicecomplement.id = @id;.
         '''</summary>
@@ -5694,21 +5692,21 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
-        '''	product.id AS &apos;ID&apos;,
-        '''    product.creation AS &apos;Criação&apos;,
+        '''	service.id AS &apos;ID&apos;,
+        '''    service.creation AS &apos;Criação&apos;,
         '''    CASE 
-        '''		WHEN product.statusid = 0 THEN &quot;ATIVO&quot;
-        '''        WHEN product.statusid = 1 THEN &quot;INATIVO&quot;
+        '''		WHEN service.statusid = 0 THEN &quot;ATIVO&quot;
+        '''        WHEN service.statusid = 1 THEN &quot;INATIVO&quot;
         '''	END AS &apos;Status&apos;,
-        '''    code.code AS &apos;Código&apos;,
-        '''    product.name AS &apos;Nome&apos;,
-        '''    product.internalname AS &apos;Nome Interno&apos;,
-        '''    productfamily.name AS &apos;Família&apos;,
-        '''    productgroup.name AS &apos;Grupo&apos;,
-        '''    product.location AS &apos;Localização&apos;,
-        '''    product.minimumquantity AS &apos;Qtd. Min.&apos;,
-        '''    product.maximumquantity AS &apos;Qtd. Max.&apos;,
-        '''    product.grossw [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''    service.name AS &apos;Nome&apos;,
+        '''    service.servicecode AS &apos;Código Serviço&apos;,  
+        '''    REPLACE(service.note, &apos;\n&apos;, &apos; &apos;) AS &apos;Observação&apos;
+        '''FROM service
+        '''WHERE
+        '''	IFNULL(service.id, &apos;&apos;) LIKE @id AND
+        '''    IFNULL(service.statusid, &apos;&apos;) LIKE @statusid AND
+        '''    IFNULL(service.name, &apos;&apos;) LIKE CONCAT(&apos;%&apos;, @name, &apos;%&apos;) AND
+        '''    IFNULL(servic [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property ServiceFilter() As String
             Get

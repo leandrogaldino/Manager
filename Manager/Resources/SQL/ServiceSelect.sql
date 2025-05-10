@@ -4,7 +4,6 @@ SELECT
     service.statusid,
 	service.name,
 	service.servicecode,
-	service.note,
-	service.lastupdate
+	service.note
 FROM service
 WHERE service.id = @id;

@@ -13,7 +13,7 @@ WHERE
 	IFNULL(service.id, '') LIKE @id AND
     IFNULL(service.statusid, '') LIKE @statusid AND
     IFNULL(service.name, '') LIKE CONCAT('%', @name, '%') AND
-    IFNULL(service.servicecode, '') LIKE CONCAT('%', @servicecode, '%')
+    IFNULL(service.servicecode, '') LIKE CONCAT('%', @servicecode, '%') AND
     IFNULL(service.note, '') LIKE CONCAT('%', @note, '%')
 GROUP BY service.id
 ORDER BY service.id;

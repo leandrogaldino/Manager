@@ -5,7 +5,6 @@ INSERT INTO service
     name,
     servicecode,
     note,
-    lastupdate,
     userid
 )
 VALUES
@@ -15,6 +14,5 @@ VALUES
     @name,
     @servicecode,
     @note,
-    @lastupdate,
     @userid
 );

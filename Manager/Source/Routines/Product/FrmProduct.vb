@@ -294,7 +294,7 @@ Public Class FrmProduct
         End If
     End Sub
     Private Sub BtnIncludePrice_Click(sender As Object, e As EventArgs) Handles BtnIncludePrice.Click
-        Dim Form As New FrmSellablePrice(_Product, New SellablePrice(), Me)
+        Dim Form As New FrmSellablePrice(_Product, New SellablePrice(), Me, Nothing)
         Form.ShowDialog()
     End Sub
     Private Sub BtnEditPrice_Click(sender As Object, e As EventArgs) Handles BtnEditPrice.Click
@@ -302,7 +302,7 @@ Public Class FrmProduct
         Dim Price As SellablePrice
         If DgvPrice.SelectedRows.Count = 1 Then
             Price = _Product.Prices.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmSellablePrice(_Product, Price, Me)
+            Form = New FrmSellablePrice(_Product, Price, Me, Nothing)
             Form.ShowDialog()
         End If
     End Sub

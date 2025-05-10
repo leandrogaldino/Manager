@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FrmService
     Inherits System.Windows.Forms.Form
 
     'Descartar substituições de formulário para limpar a lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -25,14 +25,12 @@ Partial Class FrmService
         Me.components = New System.ComponentModel.Container()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
-        Me.TsTitle = New System.Windows.Forms.ToolStrip()
         Me.LblID = New System.Windows.Forms.ToolStripLabel()
         Me.LblIDValue = New System.Windows.Forms.ToolStripLabel()
         Me.LblStatus = New System.Windows.Forms.ToolStripLabel()
         Me.BtnStatusValue = New System.Windows.Forms.ToolStripButton()
         Me.LblCreation = New System.Windows.Forms.ToolStripLabel()
         Me.LblCreationValue = New System.Windows.Forms.ToolStripLabel()
-        Me.TsNavigation = New System.Windows.Forms.ToolStrip()
         Me.BtnInclude = New System.Windows.Forms.ToolStripButton()
         Me.BtnDelete = New System.Windows.Forms.ToolStripButton()
         Me.BtnFirst = New System.Windows.Forms.ToolStripButton()
@@ -50,51 +48,68 @@ Partial Class FrmService
         Me.BtnIncludePrice = New System.Windows.Forms.ToolStripButton()
         Me.BtnEditPrice = New System.Windows.Forms.ToolStripButton()
         Me.BtnDeletePrice = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
+        Me.ToolStripLabel8 = New System.Windows.Forms.ToolStripLabel()
         Me.TxtFilterPrice = New System.Windows.Forms.ToolStripTextBox()
-        Me.TabDescription = New System.Windows.Forms.TabPage()
+        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
+        Me.TabComplement = New System.Windows.Forms.TabPage()
         Me.DgvComplement = New System.Windows.Forms.DataGridView()
-        Me.TsCode = New System.Windows.Forms.ToolStrip()
+        Me.TsComplement = New System.Windows.Forms.ToolStrip()
+        Me.BtnIncludeComplement = New System.Windows.Forms.ToolStripButton()
+        Me.BtnEditComplement = New System.Windows.Forms.ToolStripButton()
+        Me.BtnDeleteComplement = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripLabel9 = New System.Windows.Forms.ToolStripLabel()
+        Me.TxtFilterComplement = New System.Windows.Forms.ToolStripTextBox()
         Me.BtnIncludeCode = New System.Windows.Forms.ToolStripButton()
         Me.BtnEditCode = New System.Windows.Forms.ToolStripButton()
         Me.BtnDeleteCode = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel()
         Me.TxtFilterDescription = New System.Windows.Forms.ToolStripTextBox()
         Me.TabMain = New System.Windows.Forms.TabPage()
-        Me.Label5 = New System.Windows.Forms.Label()
+        Me.LblServiceCode = New System.Windows.Forms.Label()
         Me.TxtServiceCode = New System.Windows.Forms.TextBox()
         Me.TxtName = New System.Windows.Forms.TextBox()
         Me.LblName = New System.Windows.Forms.Label()
-        Me.TcProduct = New System.Windows.Forms.TabControl()
-        Me.TmrQueriedBoxFamily = New System.Windows.Forms.Timer(Me.components)
-        Me.TmrQueriedBoxGroup = New System.Windows.Forms.Timer(Me.components)
-        Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
-        Me.DgvProviderCodeLayout = New Manager.DataGridViewLayout()
-        Me.DgvCodeLayout = New Manager.DataGridViewLayout()
-        Me.DgvPriceLayout = New Manager.DataGridViewLayout()
-        Me.DgvPictureLayout = New Manager.DataGridViewLayout()
+        Me.TcService = New System.Windows.Forms.TabControl()
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.TsTitle.SuspendLayout()
-        Me.TsNavigation.SuspendLayout()
+        Me.TsNavigation = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton7 = New System.Windows.Forms.ToolStripButton()
+        Me.TsTitle = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripLabel3 = New System.Windows.Forms.ToolStripLabel()
+        Me.ToolStripLabel4 = New System.Windows.Forms.ToolStripLabel()
+        Me.ToolStripLabel5 = New System.Windows.Forms.ToolStripLabel()
+        Me.ToolStripButton8 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripLabel6 = New System.Windows.Forms.ToolStripLabel()
+        Me.ToolStripLabel7 = New System.Windows.Forms.ToolStripLabel()
+        Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
+        Me.DgvPriceLayout = New Manager.DataGridViewLayout()
+        Me.DgvComplementnLayout = New Manager.DataGridViewLayout()
         Me.PnButtons.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabNote.SuspendLayout()
         Me.TabPrice.SuspendLayout()
         CType(Me.DgvPrice, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsPrice.SuspendLayout()
-        Me.TabDescription.SuspendLayout()
+        Me.TabComplement.SuspendLayout()
         CType(Me.DgvComplement, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TsCode.SuspendLayout()
+        Me.TsComplement.SuspendLayout()
         Me.TabMain.SuspendLayout()
-        Me.TcProduct.SuspendLayout()
+        Me.TcService.SuspendLayout()
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TsNavigation.SuspendLayout()
+        Me.TsTitle.SuspendLayout()
         Me.SuspendLayout()
         '
         'BtnClose
         '
         Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnClose.Location = New System.Drawing.Point(376, 7)
+        Me.BtnClose.Location = New System.Drawing.Point(387, 7)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(95, 30)
         Me.BtnClose.TabIndex = 1
@@ -105,26 +120,12 @@ Partial Class FrmService
         '
         Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnSave.Enabled = False
-        Me.BtnSave.Location = New System.Drawing.Point(275, 7)
+        Me.BtnSave.Location = New System.Drawing.Point(286, 7)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(95, 30)
         Me.BtnSave.TabIndex = 0
         Me.BtnSave.Text = "Salvar"
         Me.BtnSave.UseVisualStyleBackColor = True
-        '
-        'TsTitle
-        '
-        Me.TsTitle.AutoSize = False
-        Me.TsTitle.BackColor = System.Drawing.Color.White
-        Me.TsTitle.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TsTitle.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsTitle.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblID, Me.LblIDValue, Me.LblStatus, Me.BtnStatusValue, Me.LblCreation, Me.LblCreationValue})
-        Me.TsTitle.Location = New System.Drawing.Point(0, 25)
-        Me.TsTitle.Name = "TsTitle"
-        Me.TsTitle.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsTitle.Size = New System.Drawing.Size(483, 25)
-        Me.TsTitle.TabIndex = 1
-        Me.TsTitle.Text = "ToolStrip1"
         '
         'LblID
         '
@@ -175,20 +176,6 @@ Partial Class FrmService
         Me.LblCreationValue.Name = "LblCreationValue"
         Me.LblCreationValue.Size = New System.Drawing.Size(32, 22)
         Me.LblCreationValue.Text = "      "
-        '
-        'TsNavigation
-        '
-        Me.TsNavigation.AutoSize = False
-        Me.TsNavigation.BackColor = System.Drawing.Color.White
-        Me.TsNavigation.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TsNavigation.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsNavigation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnDelete, Me.BtnFirst, Me.BtnPrevious, Me.BtnNext, Me.BtnLast, Me.BtnLog})
-        Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
-        Me.TsNavigation.Name = "TsNavigation"
-        Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsNavigation.Size = New System.Drawing.Size(483, 25)
-        Me.TsNavigation.TabIndex = 0
-        Me.TsNavigation.Text = "ToolStrip2"
         '
         'BtnInclude
         '
@@ -266,9 +253,9 @@ Partial Class FrmService
         Me.PnButtons.Controls.Add(Me.BtnSave)
         Me.PnButtons.Controls.Add(Me.BtnClose)
         Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PnButtons.Location = New System.Drawing.Point(0, 139)
+        Me.PnButtons.Location = New System.Drawing.Point(0, 142)
         Me.PnButtons.Name = "PnButtons"
-        Me.PnButtons.Size = New System.Drawing.Size(483, 44)
+        Me.PnButtons.Size = New System.Drawing.Size(494, 44)
         Me.PnButtons.TabIndex = 3
         '
         'EprValidation
@@ -282,7 +269,7 @@ Partial Class FrmService
         Me.TabNote.Location = New System.Drawing.Point(4, 22)
         Me.TabNote.Name = "TabNote"
         Me.TabNote.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabNote.Size = New System.Drawing.Size(475, 63)
+        Me.TabNote.Size = New System.Drawing.Size(486, 66)
         Me.TabNote.TabIndex = 5
         Me.TabNote.Text = "Observação"
         Me.TabNote.UseVisualStyleBackColor = True
@@ -294,7 +281,7 @@ Partial Class FrmService
         Me.TxtNote.Location = New System.Drawing.Point(3, 3)
         Me.TxtNote.MaxLength = 1000000
         Me.TxtNote.Name = "TxtNote"
-        Me.TxtNote.Size = New System.Drawing.Size(469, 57)
+        Me.TxtNote.Size = New System.Drawing.Size(480, 60)
         Me.TxtNote.TabIndex = 0
         Me.TxtNote.Text = ""
         '
@@ -306,7 +293,7 @@ Partial Class FrmService
         Me.TabPrice.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabPrice.Name = "TabPrice"
         Me.TabPrice.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabPrice.Size = New System.Drawing.Size(475, 63)
+        Me.TabPrice.Size = New System.Drawing.Size(486, 66)
         Me.TabPrice.TabIndex = 1
         Me.TabPrice.Text = "Preços"
         Me.TabPrice.UseVisualStyleBackColor = True
@@ -329,7 +316,7 @@ Partial Class FrmService
         Me.DgvPrice.RowHeadersVisible = False
         Me.DgvPrice.RowTemplate.Height = 26
         Me.DgvPrice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPrice.Size = New System.Drawing.Size(469, 30)
+        Me.DgvPrice.Size = New System.Drawing.Size(480, 33)
         Me.DgvPrice.TabIndex = 1
         '
         'TsPrice
@@ -337,12 +324,12 @@ Partial Class FrmService
         Me.TsPrice.BackColor = System.Drawing.Color.Transparent
         Me.TsPrice.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsPrice.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsPrice.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludePrice, Me.BtnEditPrice, Me.BtnDeletePrice, Me.ToolStripLabel1, Me.TxtFilterPrice})
+        Me.TsPrice.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludePrice, Me.BtnEditPrice, Me.BtnDeletePrice, Me.ToolStripLabel8, Me.TxtFilterPrice})
         Me.TsPrice.Location = New System.Drawing.Point(3, 4)
         Me.TsPrice.Name = "TsPrice"
         Me.TsPrice.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsPrice.Size = New System.Drawing.Size(469, 25)
-        Me.TsPrice.TabIndex = 0
+        Me.TsPrice.Size = New System.Drawing.Size(480, 25)
+        Me.TsPrice.TabIndex = 2
         Me.TsPrice.Text = "ToolStrip2"
         '
         'BtnIncludePrice
@@ -375,6 +362,22 @@ Partial Class FrmService
         Me.BtnDeletePrice.Size = New System.Drawing.Size(23, 22)
         Me.BtnDeletePrice.Text = "Excluir Preço"
         '
+        'ToolStripLabel8
+        '
+        Me.ToolStripLabel8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.ToolStripLabel8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripLabel8.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
+        Me.ToolStripLabel8.Name = "ToolStripLabel8"
+        Me.ToolStripLabel8.Size = New System.Drawing.Size(46, 25)
+        Me.ToolStripLabel8.Text = "Filtrar:"
+        '
+        'TxtFilterPrice
+        '
+        Me.TxtFilterPrice.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtFilterPrice.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.TxtFilterPrice.Name = "TxtFilterPrice"
+        Me.TxtFilterPrice.Size = New System.Drawing.Size(200, 25)
+        '
         'ToolStripLabel1
         '
         Me.ToolStripLabel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
@@ -384,24 +387,17 @@ Partial Class FrmService
         Me.ToolStripLabel1.Size = New System.Drawing.Size(46, 25)
         Me.ToolStripLabel1.Text = "Filtrar:"
         '
-        'TxtFilterPrice
+        'TabComplement
         '
-        Me.TxtFilterPrice.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtFilterPrice.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.TxtFilterPrice.Name = "TxtFilterPrice"
-        Me.TxtFilterPrice.Size = New System.Drawing.Size(200, 25)
-        '
-        'TabDescription
-        '
-        Me.TabDescription.Controls.Add(Me.DgvComplement)
-        Me.TabDescription.Controls.Add(Me.TsCode)
-        Me.TabDescription.Location = New System.Drawing.Point(4, 26)
-        Me.TabDescription.Name = "TabDescription"
-        Me.TabDescription.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabDescription.Size = New System.Drawing.Size(475, 59)
-        Me.TabDescription.TabIndex = 7
-        Me.TabDescription.Text = "Descrições"
-        Me.TabDescription.UseVisualStyleBackColor = True
+        Me.TabComplement.Controls.Add(Me.DgvComplement)
+        Me.TabComplement.Controls.Add(Me.TsComplement)
+        Me.TabComplement.Location = New System.Drawing.Point(4, 26)
+        Me.TabComplement.Name = "TabComplement"
+        Me.TabComplement.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabComplement.Size = New System.Drawing.Size(486, 62)
+        Me.TabComplement.TabIndex = 7
+        Me.TabComplement.Text = "Complementos"
+        Me.TabComplement.UseVisualStyleBackColor = True
         '
         'DgvComplement
         '
@@ -421,21 +417,67 @@ Partial Class FrmService
         Me.DgvComplement.RowHeadersVisible = False
         Me.DgvComplement.RowTemplate.Height = 26
         Me.DgvComplement.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvComplement.Size = New System.Drawing.Size(469, 28)
+        Me.DgvComplement.Size = New System.Drawing.Size(480, 31)
         Me.DgvComplement.TabIndex = 1
         '
-        'TsCode
+        'TsComplement
         '
-        Me.TsCode.BackColor = System.Drawing.Color.Transparent
-        Me.TsCode.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TsCode.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsCode.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludeCode, Me.BtnEditCode, Me.BtnDeleteCode, Me.ToolStripLabel2, Me.TxtFilterDescription})
-        Me.TsCode.Location = New System.Drawing.Point(3, 3)
-        Me.TsCode.Name = "TsCode"
-        Me.TsCode.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsCode.Size = New System.Drawing.Size(469, 25)
-        Me.TsCode.TabIndex = 0
-        Me.TsCode.Text = "ToolStrip2"
+        Me.TsComplement.BackColor = System.Drawing.Color.Transparent
+        Me.TsComplement.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TsComplement.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.TsComplement.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludeComplement, Me.BtnEditComplement, Me.BtnDeleteComplement, Me.ToolStripLabel9, Me.TxtFilterComplement})
+        Me.TsComplement.Location = New System.Drawing.Point(3, 3)
+        Me.TsComplement.Name = "TsComplement"
+        Me.TsComplement.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.TsComplement.Size = New System.Drawing.Size(480, 25)
+        Me.TsComplement.TabIndex = 2
+        Me.TsComplement.Text = "ToolStrip2"
+        '
+        'BtnIncludeComplement
+        '
+        Me.BtnIncludeComplement.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnIncludeComplement.Image = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnIncludeComplement.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnIncludeComplement.Name = "BtnIncludeComplement"
+        Me.BtnIncludeComplement.Size = New System.Drawing.Size(23, 22)
+        Me.BtnIncludeComplement.Text = "Incluir Complemento"
+        '
+        'BtnEditComplement
+        '
+        Me.BtnEditComplement.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnEditComplement.Enabled = False
+        Me.BtnEditComplement.Image = Global.Manager.My.Resources.Resources.EditSmall
+        Me.BtnEditComplement.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnEditComplement.Name = "BtnEditComplement"
+        Me.BtnEditComplement.Size = New System.Drawing.Size(23, 22)
+        Me.BtnEditComplement.Text = "Editar Complemento"
+        Me.BtnEditComplement.ToolTipText = "Editar"
+        '
+        'BtnDeleteComplement
+        '
+        Me.BtnDeleteComplement.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnDeleteComplement.Enabled = False
+        Me.BtnDeleteComplement.Image = Global.Manager.My.Resources.Resources.DeleteSmall
+        Me.BtnDeleteComplement.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnDeleteComplement.Name = "BtnDeleteComplement"
+        Me.BtnDeleteComplement.Size = New System.Drawing.Size(23, 22)
+        Me.BtnDeleteComplement.Text = "Excluir Complemento"
+        '
+        'ToolStripLabel9
+        '
+        Me.ToolStripLabel9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.ToolStripLabel9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripLabel9.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
+        Me.ToolStripLabel9.Name = "ToolStripLabel9"
+        Me.ToolStripLabel9.Size = New System.Drawing.Size(46, 25)
+        Me.ToolStripLabel9.Text = "Filtrar:"
+        '
+        'TxtFilterComplement
+        '
+        Me.TxtFilterComplement.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtFilterComplement.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.TxtFilterComplement.Name = "TxtFilterComplement"
+        Me.TxtFilterComplement.Size = New System.Drawing.Size(200, 25)
         '
         'BtnIncludeCode
         '
@@ -485,7 +527,7 @@ Partial Class FrmService
         '
         'TabMain
         '
-        Me.TabMain.Controls.Add(Me.Label5)
+        Me.TabMain.Controls.Add(Me.LblServiceCode)
         Me.TabMain.Controls.Add(Me.TxtServiceCode)
         Me.TabMain.Controls.Add(Me.TxtName)
         Me.TabMain.Controls.Add(Me.LblName)
@@ -493,33 +535,33 @@ Partial Class FrmService
         Me.TabMain.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabMain.Name = "TabMain"
         Me.TabMain.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabMain.Size = New System.Drawing.Size(475, 59)
+        Me.TabMain.Size = New System.Drawing.Size(486, 62)
         Me.TabMain.TabIndex = 0
         Me.TabMain.Text = "Identificação"
         Me.TabMain.UseVisualStyleBackColor = True
         '
-        'Label5
+        'LblServiceCode
         '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(347, 4)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(91, 17)
-        Me.Label5.TabIndex = 12
-        Me.Label5.Text = "Cod. Serviço"
+        Me.LblServiceCode.AutoSize = True
+        Me.LblServiceCode.Location = New System.Drawing.Point(349, 4)
+        Me.LblServiceCode.Name = "LblServiceCode"
+        Me.LblServiceCode.Size = New System.Drawing.Size(91, 17)
+        Me.LblServiceCode.TabIndex = 12
+        Me.LblServiceCode.Text = "Cod. Serviço"
         '
         'TxtServiceCode
         '
         Me.TxtServiceCode.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtServiceCode.Location = New System.Drawing.Point(350, 24)
+        Me.TxtServiceCode.Location = New System.Drawing.Point(352, 24)
         Me.TxtServiceCode.MaxLength = 20
         Me.TxtServiceCode.Name = "TxtServiceCode"
-        Me.TxtServiceCode.Size = New System.Drawing.Size(119, 23)
+        Me.TxtServiceCode.Size = New System.Drawing.Size(128, 23)
         Me.TxtServiceCode.TabIndex = 13
         '
         'TxtName
         '
         Me.TxtName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtName.Location = New System.Drawing.Point(9, 24)
+        Me.TxtName.Location = New System.Drawing.Point(11, 24)
         Me.TxtName.MaxLength = 255
         Me.TxtName.Name = "TxtName"
         Me.TxtName.Size = New System.Drawing.Size(335, 23)
@@ -528,36 +570,179 @@ Partial Class FrmService
         'LblName
         '
         Me.LblName.AutoSize = True
-        Me.LblName.Location = New System.Drawing.Point(6, 4)
+        Me.LblName.Location = New System.Drawing.Point(8, 4)
         Me.LblName.Name = "LblName"
         Me.LblName.Size = New System.Drawing.Size(48, 17)
         Me.LblName.TabIndex = 0
         Me.LblName.Text = "Nome"
         '
-        'TcProduct
+        'TcService
         '
-        Me.TcProduct.Controls.Add(Me.TabMain)
-        Me.TcProduct.Controls.Add(Me.TabDescription)
-        Me.TcProduct.Controls.Add(Me.TabPrice)
-        Me.TcProduct.Controls.Add(Me.TabNote)
-        Me.TcProduct.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TcProduct.Location = New System.Drawing.Point(0, 50)
-        Me.TcProduct.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TcProduct.Multiline = True
-        Me.TcProduct.Name = "TcProduct"
-        Me.TcProduct.SelectedIndex = 0
-        Me.TcProduct.Size = New System.Drawing.Size(483, 89)
-        Me.TcProduct.TabIndex = 2
+        Me.TcService.Controls.Add(Me.TabMain)
+        Me.TcService.Controls.Add(Me.TabComplement)
+        Me.TcService.Controls.Add(Me.TabPrice)
+        Me.TcService.Controls.Add(Me.TabNote)
+        Me.TcService.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TcService.Location = New System.Drawing.Point(0, 50)
+        Me.TcService.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TcService.Multiline = True
+        Me.TcService.Name = "TcService"
+        Me.TcService.SelectedIndex = 0
+        Me.TcService.Size = New System.Drawing.Size(494, 92)
+        Me.TcService.TabIndex = 2
         '
-        'TmrQueriedBoxFamily
+        'EprInformation
         '
-        Me.TmrQueriedBoxFamily.Enabled = True
-        Me.TmrQueriedBoxFamily.Interval = 300
+        Me.EprInformation.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink
+        Me.EprInformation.ContainerControl = Me
         '
-        'TmrQueriedBoxGroup
+        'TsNavigation
         '
-        Me.TmrQueriedBoxGroup.Enabled = True
-        Me.TmrQueriedBoxGroup.Interval = 300
+        Me.TsNavigation.AutoSize = False
+        Me.TsNavigation.BackColor = System.Drawing.Color.White
+        Me.TsNavigation.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TsNavigation.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.TsNavigation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripButton3, Me.ToolStripButton4, Me.ToolStripButton5, Me.ToolStripButton6, Me.ToolStripButton7})
+        Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
+        Me.TsNavigation.Name = "TsNavigation"
+        Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.TsNavigation.Size = New System.Drawing.Size(494, 25)
+        Me.TsNavigation.TabIndex = 4
+        Me.TsNavigation.Text = "ToolStrip2"
+        '
+        'ToolStripButton1
+        '
+        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton1.Image = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton1.Margin = New System.Windows.Forms.Padding(1, 1, 0, 2)
+        Me.ToolStripButton1.Name = "ToolStripButton1"
+        Me.ToolStripButton1.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton1.Text = "Incluir Produto"
+        '
+        'ToolStripButton2
+        '
+        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton2.Image = Global.Manager.My.Resources.Resources.DeleteSmall
+        Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton2.Margin = New System.Windows.Forms.Padding(0, 1, 10, 2)
+        Me.ToolStripButton2.Name = "ToolStripButton2"
+        Me.ToolStripButton2.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton2.Text = "Excluir Produto"
+        '
+        'ToolStripButton3
+        '
+        Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton3.Enabled = False
+        Me.ToolStripButton3.Image = Global.Manager.My.Resources.Resources.NavFirst
+        Me.ToolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton3.Name = "ToolStripButton3"
+        Me.ToolStripButton3.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton3.Text = "Primeiro Produto"
+        '
+        'ToolStripButton4
+        '
+        Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton4.Enabled = False
+        Me.ToolStripButton4.Image = Global.Manager.My.Resources.Resources.NavPrevious
+        Me.ToolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton4.Name = "ToolStripButton4"
+        Me.ToolStripButton4.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton4.Text = "Produto Anterior"
+        '
+        'ToolStripButton5
+        '
+        Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton5.Enabled = False
+        Me.ToolStripButton5.Image = Global.Manager.My.Resources.Resources.NavNext
+        Me.ToolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton5.Name = "ToolStripButton5"
+        Me.ToolStripButton5.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton5.Text = "Próximo Produto"
+        '
+        'ToolStripButton6
+        '
+        Me.ToolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton6.Enabled = False
+        Me.ToolStripButton6.Image = Global.Manager.My.Resources.Resources.NavLast
+        Me.ToolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton6.Name = "ToolStripButton6"
+        Me.ToolStripButton6.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton6.Text = "Último Produto"
+        '
+        'ToolStripButton7
+        '
+        Me.ToolStripButton7.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.ToolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton7.Image = Global.Manager.My.Resources.Resources.Log
+        Me.ToolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton7.Name = "ToolStripButton7"
+        Me.ToolStripButton7.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton7.Text = "Histórico"
+        '
+        'TsTitle
+        '
+        Me.TsTitle.AutoSize = False
+        Me.TsTitle.BackColor = System.Drawing.Color.White
+        Me.TsTitle.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TsTitle.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.TsTitle.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel3, Me.ToolStripLabel4, Me.ToolStripLabel5, Me.ToolStripButton8, Me.ToolStripLabel6, Me.ToolStripLabel7})
+        Me.TsTitle.Location = New System.Drawing.Point(0, 25)
+        Me.TsTitle.Name = "TsTitle"
+        Me.TsTitle.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.TsTitle.Size = New System.Drawing.Size(494, 25)
+        Me.TsTitle.TabIndex = 5
+        Me.TsTitle.Text = "ToolStrip1"
+        '
+        'ToolStripLabel3
+        '
+        Me.ToolStripLabel3.BackColor = System.Drawing.Color.White
+        Me.ToolStripLabel3.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ToolStripLabel3.Name = "ToolStripLabel3"
+        Me.ToolStripLabel3.Size = New System.Drawing.Size(24, 22)
+        Me.ToolStripLabel3.Text = "ID:"
+        '
+        'ToolStripLabel4
+        '
+        Me.ToolStripLabel4.BackColor = System.Drawing.Color.White
+        Me.ToolStripLabel4.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ToolStripLabel4.Name = "ToolStripLabel4"
+        Me.ToolStripLabel4.Size = New System.Drawing.Size(32, 22)
+        Me.ToolStripLabel4.Text = "      "
+        '
+        'ToolStripLabel5
+        '
+        Me.ToolStripLabel5.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ToolStripLabel5.Margin = New System.Windows.Forms.Padding(10, 1, 0, 2)
+        Me.ToolStripLabel5.Name = "ToolStripLabel5"
+        Me.ToolStripLabel5.Size = New System.Drawing.Size(49, 22)
+        Me.ToolStripLabel5.Text = "Status:"
+        '
+        'ToolStripButton8
+        '
+        Me.ToolStripButton8.AutoToolTip = False
+        Me.ToolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripButton8.ForeColor = System.Drawing.Color.DarkBlue
+        Me.ToolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton8.Name = "ToolStripButton8"
+        Me.ToolStripButton8.Size = New System.Drawing.Size(44, 22)
+        Me.ToolStripButton8.Text = "        "
+        '
+        'ToolStripLabel6
+        '
+        Me.ToolStripLabel6.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ToolStripLabel6.Margin = New System.Windows.Forms.Padding(10, 1, 0, 2)
+        Me.ToolStripLabel6.Name = "ToolStripLabel6"
+        Me.ToolStripLabel6.Size = New System.Drawing.Size(64, 22)
+        Me.ToolStripLabel6.Text = "Criação:"
+        '
+        'ToolStripLabel7
+        '
+        Me.ToolStripLabel7.BackColor = System.Drawing.Color.White
+        Me.ToolStripLabel7.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ToolStripLabel7.Name = "ToolStripLabel7"
+        Me.ToolStripLabel7.Size = New System.Drawing.Size(32, 22)
+        Me.ToolStripLabel7.Text = "      "
         '
         'DgvNavigator
         '
@@ -567,35 +752,22 @@ Partial Class FrmService
         Me.DgvNavigator.NextButton = Me.BtnNext
         Me.DgvNavigator.PreviousButton = Me.BtnPrevious
         '
-        'DgvProviderCodeLayout
-        '
-        Me.DgvProviderCodeLayout.Routine = Manager.Routine.ProductProviderCode
-        '
-        'DgvCodeLayout
-        '
-        Me.DgvCodeLayout.DataGridView = Me.DgvComplement
-        Me.DgvCodeLayout.Routine = Manager.Routine.ProductCode
-        '
         'DgvPriceLayout
         '
         Me.DgvPriceLayout.DataGridView = Me.DgvPrice
         Me.DgvPriceLayout.Routine = Manager.Routine.SellablePrice
         '
-        'DgvPictureLayout
+        'DgvComplementnLayout
         '
-        Me.DgvPictureLayout.Routine = Manager.Routine.ProductPicture
-        '
-        'EprInformation
-        '
-        Me.EprInformation.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink
-        Me.EprInformation.ContainerControl = Me
+        Me.DgvComplementnLayout.DataGridView = Me.DgvComplement
+        Me.DgvComplementnLayout.Routine = Manager.Routine.ServiceComplement
         '
         'FrmService
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(483, 183)
-        Me.Controls.Add(Me.TcProduct)
+        Me.ClientSize = New System.Drawing.Size(494, 186)
+        Me.Controls.Add(Me.TcService)
         Me.Controls.Add(Me.TsTitle)
         Me.Controls.Add(Me.TsNavigation)
         Me.Controls.Add(Me.PnButtons)
@@ -607,11 +779,7 @@ Partial Class FrmService
         Me.MinimizeBox = False
         Me.Name = "FrmService"
         Me.ShowIcon = False
-        Me.Text = "Produto"
-        Me.TsTitle.ResumeLayout(False)
-        Me.TsTitle.PerformLayout()
-        Me.TsNavigation.ResumeLayout(False)
-        Me.TsNavigation.PerformLayout()
+        Me.Text = "Serviço"
         Me.PnButtons.ResumeLayout(False)
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabNote.ResumeLayout(False)
@@ -620,28 +788,30 @@ Partial Class FrmService
         CType(Me.DgvPrice, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsPrice.ResumeLayout(False)
         Me.TsPrice.PerformLayout()
-        Me.TabDescription.ResumeLayout(False)
-        Me.TabDescription.PerformLayout()
+        Me.TabComplement.ResumeLayout(False)
+        Me.TabComplement.PerformLayout()
         CType(Me.DgvComplement, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TsCode.ResumeLayout(False)
-        Me.TsCode.PerformLayout()
+        Me.TsComplement.ResumeLayout(False)
+        Me.TsComplement.PerformLayout()
         Me.TabMain.ResumeLayout(False)
         Me.TabMain.PerformLayout()
-        Me.TcProduct.ResumeLayout(False)
+        Me.TcService.ResumeLayout(False)
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TsNavigation.ResumeLayout(False)
+        Me.TsNavigation.PerformLayout()
+        Me.TsTitle.ResumeLayout(False)
+        Me.TsTitle.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents BtnClose As Button
     Friend WithEvents BtnSave As Button
-    Friend WithEvents TsTitle As ToolStrip
     Friend WithEvents LblID As ToolStripLabel
     Friend WithEvents LblIDValue As ToolStripLabel
     Friend WithEvents LblStatus As ToolStripLabel
     Friend WithEvents BtnStatusValue As ToolStripButton
     Friend WithEvents LblCreation As ToolStripLabel
     Friend WithEvents LblCreationValue As ToolStripLabel
-    Friend WithEvents TsNavigation As ToolStrip
     Friend WithEvents BtnInclude As ToolStripButton
     Friend WithEvents BtnDelete As ToolStripButton
     Friend WithEvents BtnFirst As ToolStripButton
@@ -650,15 +820,13 @@ Partial Class FrmService
     Friend WithEvents BtnLast As ToolStripButton
     Friend WithEvents PnButtons As Panel
     Friend WithEvents EprValidation As ErrorProvider
-    Friend WithEvents DgvNavigator As ControlLibrary.DataGridViewNavigator
     Friend WithEvents BtnLog As ToolStripButton
-    Friend WithEvents TcProduct As TabControl
+    Friend WithEvents TcService As TabControl
     Friend WithEvents TabMain As TabPage
     Friend WithEvents TxtName As TextBox
     Friend WithEvents LblName As Label
-    Friend WithEvents TabDescription As TabPage
+    Friend WithEvents TabComplement As TabPage
     Friend WithEvents DgvComplement As DataGridView
-    Friend WithEvents TsCode As ToolStrip
     Friend WithEvents BtnIncludeCode As ToolStripButton
     Friend WithEvents BtnEditCode As ToolStripButton
     Friend WithEvents BtnDeleteCode As ToolStripButton
@@ -666,21 +834,40 @@ Partial Class FrmService
     Friend WithEvents TxtFilterDescription As ToolStripTextBox
     Friend WithEvents TabPrice As TabPage
     Friend WithEvents DgvPrice As DataGridView
+    Friend WithEvents ToolStripLabel1 As ToolStripLabel
+    Friend WithEvents TabNote As TabPage
+    Friend WithEvents TxtNote As RichTextBox
+    Friend WithEvents LblServiceCode As Label
+    Friend WithEvents TxtServiceCode As TextBox
+    Friend WithEvents EprInformation As ErrorProvider
+    Friend WithEvents TsNavigation As ToolStrip
+    Friend WithEvents ToolStripButton1 As ToolStripButton
+    Friend WithEvents ToolStripButton2 As ToolStripButton
+    Friend WithEvents ToolStripButton3 As ToolStripButton
+    Friend WithEvents ToolStripButton4 As ToolStripButton
+    Friend WithEvents ToolStripButton5 As ToolStripButton
+    Friend WithEvents ToolStripButton6 As ToolStripButton
+    Friend WithEvents ToolStripButton7 As ToolStripButton
+    Friend WithEvents TsTitle As ToolStrip
+    Friend WithEvents ToolStripLabel3 As ToolStripLabel
+    Friend WithEvents ToolStripLabel4 As ToolStripLabel
+    Friend WithEvents ToolStripLabel5 As ToolStripLabel
+    Friend WithEvents ToolStripButton8 As ToolStripButton
+    Friend WithEvents ToolStripLabel6 As ToolStripLabel
+    Friend WithEvents ToolStripLabel7 As ToolStripLabel
+    Friend WithEvents DgvNavigator As ControlLibrary.DataGridViewNavigator
+    Friend WithEvents DgvPriceLayout As DataGridViewLayout
+    Friend WithEvents DgvComplementnLayout As DataGridViewLayout
+    Friend WithEvents TsComplement As ToolStrip
+    Friend WithEvents BtnIncludeComplement As ToolStripButton
+    Friend WithEvents BtnEditComplement As ToolStripButton
+    Friend WithEvents BtnDeleteComplement As ToolStripButton
+    Friend WithEvents ToolStripLabel9 As ToolStripLabel
+    Friend WithEvents TxtFilterComplement As ToolStripTextBox
     Friend WithEvents TsPrice As ToolStrip
     Friend WithEvents BtnIncludePrice As ToolStripButton
     Friend WithEvents BtnEditPrice As ToolStripButton
     Friend WithEvents BtnDeletePrice As ToolStripButton
-    Friend WithEvents ToolStripLabel1 As ToolStripLabel
+    Friend WithEvents ToolStripLabel8 As ToolStripLabel
     Friend WithEvents TxtFilterPrice As ToolStripTextBox
-    Friend WithEvents TabNote As TabPage
-    Friend WithEvents TxtNote As RichTextBox
-    Friend WithEvents DgvProviderCodeLayout As DataGridViewLayout
-    Friend WithEvents DgvCodeLayout As DataGridViewLayout
-    Friend WithEvents DgvPriceLayout As DataGridViewLayout
-    Friend WithEvents Label5 As Label
-    Friend WithEvents TxtServiceCode As TextBox
-    Friend WithEvents TmrQueriedBoxFamily As Timer
-    Friend WithEvents TmrQueriedBoxGroup As Timer
-    Friend WithEvents DgvPictureLayout As DataGridViewLayout
-    Friend WithEvents EprInformation As ErrorProvider
 End Class

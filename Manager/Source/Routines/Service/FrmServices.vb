@@ -1,4 +1,5 @@
 ﻿Imports ControlLibrary
+Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 
 Public Class FrmServices
@@ -17,9 +18,9 @@ Public Class FrmServices
         _User = Locator.GetInstance(Of Session).User
         PgFilter.SelectedObject = _Filter
         LoadDetails()
-        BtnInclude.Visible = _User.CanWrite(Routine.Product)
-        BtnEdit.Visible = _User.CanWrite(Routine.Product)
-        BtnDelete.Visible = _User.CanDelete(Routine.Product)
+        BtnInclude.Visible = _User.CanWrite(Routine.Service)
+        BtnEdit.Visible = _User.CanWrite(Routine.Service)
+        BtnDelete.Visible = _User.CanDelete(Routine.Service)
         BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -39,8 +40,7 @@ Public Class FrmServices
                 Cursor = Cursors.WaitCursor
                 _Service = New Service().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
                 ServiceForm = New FrmService(_Service, Me)
-                ServiceForm.DgvProviderCode.Fill(_Service.ProviderCodes)
-                ServiceForm.DgvComplement.Fill(_Service.Codes)
+                ServiceForm.DgvComplement.Fill(_Service.Complements)
                 ServiceForm.DgvPrice.Fill(_Service.Prices)
                 ServiceForm.ShowDialog()
             Catch ex As Exception
@@ -60,7 +60,7 @@ Public Class FrmServices
                         Try
                             _Service.Delete()
                             _Filter.Filter()
-                            DgvProductLayout.Load()
+                            DgvServiceLayout.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
@@ -82,7 +82,7 @@ Public Class FrmServices
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        DgvProductLayout.Load()
+        DgvServiceLayout.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -111,7 +111,7 @@ Public Class FrmServices
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        DgvProductLayout.Load()
+        DgvServiceLayout.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -179,21 +179,19 @@ Public Class FrmServices
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        DgvProductLayout.Load()
+        DgvServiceLayout.Load()
     End Sub
     Private Sub LoadDetails()
         If BtnDetails.Checked Then
             If DgvData.SelectedRows.Count = 1 Then
                 Try
-                    Product.FillProviderCodeDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvProviderCode)
-                    Product.FillCodeDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvComplement)
-                    Product.FillPriceDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPrice)
+                    Service.FillComplementDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvComplement)
+                    Service.FillPriceDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPrice)
                 Catch ex As Exception
                     TmrLoadDetails.Stop()
                     CMessageBox.Show("ERRO PD007", "Ocorreu um erro ao consultar os dados do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                 End Try
             Else
-                DgvProviderCode.DataSource = Nothing
                 DgvComplement.DataSource = Nothing
                 DgvPrice.DataSource = Nothing
             End If

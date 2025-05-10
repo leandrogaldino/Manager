@@ -1,7 +1,7 @@
 SELECT
 	sellableprice.id,
 	sellableprice.creation,
-	sellableprice.pricetableid,
+	sellableprice.sellablepricetableid,
 	sellableprice.price
 FROM sellableprice
 WHERE sellableprice.productid = @productid;

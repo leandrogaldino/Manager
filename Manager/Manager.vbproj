@@ -515,6 +515,8 @@
     <Compile Include="Source\Helper\ModelBases\BaseModel.vb" />
     <Compile Include="Source\Helper\ModelBases\CloneableModel.vb" />
     <Compile Include="Source\Helper\ModelBases\ChildModel.vb" />
+    <Compile Include="Source\Helper\ModelBases\SellableModel.vb" />
+    <Compile Include="Source\Helper\ModelBases\SellablePriceModel.vb" />
     <Compile Include="Source\Routines\CashFlow\CashFlow.vb" />
     <Compile Include="Source\Routines\CashFlow\CashFlowAuthorized.vb" />
     <Compile Include="Source\Routines\CashFlow\CashFlowFilter.vb" />
@@ -746,10 +748,30 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Routines\PrivilegePreset\PrivilegePresetFilter.vb" />
+    <Compile Include="Source\Routines\Sellable\FrmSellablePriceTable.designer.vb">
+      <DependentUpon>FrmSellablePriceTable.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Sellable\FrmSellablePriceTable.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\Sellable\FrmSellablePriceTables.designer.vb">
+      <DependentUpon>FrmSellablePriceTables.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Sellable\FrmSellablePriceTables.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\Sellable\SellablePriceTable.vb" />
+    <Compile Include="Source\Routines\Sellable\SellablePriceTableFilter.vb" />
     <Compile Include="Source\Routines\Service\FrmService.Designer.vb">
       <DependentUpon>FrmService.vb</DependentUpon>
     </Compile>
     <Compile Include="Source\Routines\Service\FrmService.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\Service\FrmServiceComplement.Designer.vb">
+      <DependentUpon>FrmServiceComplement.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Service\FrmServiceComplement.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Routines\Service\FrmServices.Designer.vb">
@@ -1120,20 +1142,6 @@
     </Compile>
     <Compile Include="Source\Routines\ProductGroup\ProductGroup.vb" />
     <Compile Include="Source\Routines\ProductGroup\ProductGroupFilter.vb" />
-    <Compile Include="Source\Routines\ProductPriceTable\FrmProductPriceTable.designer.vb">
-      <DependentUpon>FrmProductPriceTable.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\ProductPriceTable\FrmProductPriceTable.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Routines\ProductPriceTable\FrmProductPriceTables.designer.vb">
-      <DependentUpon>FrmProductPriceTables.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\ProductPriceTable\FrmProductPriceTables.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Routines\ProductPriceTable\ProductPriceTable.vb" />
-    <Compile Include="Source\Routines\ProductPriceTable\ProductPriceTableFilter.vb" />
     <Compile Include="Source\Routines\ProductUnit\FrmProductUnit.designer.vb">
       <DependentUpon>FrmProductUnit.vb</DependentUpon>
     </Compile>
@@ -1166,10 +1174,10 @@
     <Compile Include="Source\Routines\Product\FrmProductPicture.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Product\FrmProductPrice.Designer.vb">
-      <DependentUpon>FrmProductPrice.vb</DependentUpon>
+    <Compile Include="Source\Routines\Sellable\FrmSellablePrice.Designer.vb">
+      <DependentUpon>FrmSellablePrice.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Routines\Product\FrmProductPrice.vb">
+    <Compile Include="Source\Routines\Sellable\FrmSellablePrice.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Routines\Product\FrmProductProviderCode.Designer.vb">
@@ -1188,7 +1196,7 @@
     <Compile Include="Source\Routines\Product\ProductFilter.vb" />
     <Compile Include="Source\Routines\Product\ProductCode.vb" />
     <Compile Include="Source\Routines\Product\ProductPicture.vb" />
-    <Compile Include="Source\Routines\Product\ProductPrice.vb" />
+    <Compile Include="Source\Routines\Sellable\SellablePrice.vb" />
     <Compile Include="Source\Routines\Product\ProductProviderCode.vb" />
     <Compile Include="Source\Routines\Request\FrmRequestItem.Designer.vb">
       <DependentUpon>FrmRequestItem.vb</DependentUpon>
@@ -1455,6 +1463,12 @@
     <EmbeddedResource Include="Source\Routines\PrivilegePreset\FrmPrivilegePresets.resx">
       <DependentUpon>FrmPrivilegePresets.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Sellable\FrmSellablePriceTable.resx">
+      <DependentUpon>FrmSellablePriceTable.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Sellable\FrmSellablePriceTables.resx">
+      <DependentUpon>FrmSellablePriceTables.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Request\FrmRequest.resx">
       <DependentUpon>FrmRequest.vb</DependentUpon>
     </EmbeddedResource>
@@ -1509,12 +1523,6 @@
     <EmbeddedResource Include="Source\Routines\ProductGroup\FrmProductGroups.resx">
       <DependentUpon>FrmProductGroups.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\ProductPriceTable\FrmProductPriceTable.resx">
-      <DependentUpon>FrmProductPriceTable.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\ProductPriceTable\FrmProductPriceTables.resx">
-      <DependentUpon>FrmProductPriceTables.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\ProductUnit\FrmProductUnit.resx">
       <DependentUpon>FrmProductUnit.vb</DependentUpon>
     </EmbeddedResource>
@@ -1530,8 +1538,8 @@
     <EmbeddedResource Include="Source\Routines\Product\FrmProductPicture.resx">
       <DependentUpon>FrmProductPicture.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Product\FrmProductPrice.resx">
-      <DependentUpon>FrmProductPrice.vb</DependentUpon>
+    <EmbeddedResource Include="Source\Routines\Sellable\FrmSellablePrice.resx">
+      <DependentUpon>FrmSellablePrice.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Product\FrmProductProviderCode.resx">
       <DependentUpon>FrmProductProviderCode.vb</DependentUpon>
@@ -1574,6 +1582,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Controls\UcTriStatePrivilegeTitle.resx">
       <DependentUpon>UcTriStatePrivilegeTitle.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Service\FrmService.resx">
+      <DependentUpon>FrmService.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Service\FrmServiceComplement.resx">
+      <DependentUpon>FrmServiceComplement.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Service\FrmServices.resx">
       <DependentUpon>FrmServices.vb</DependentUpon>
@@ -1788,7 +1802,7 @@
     <Content Include="Resources\Image\Product.png" />
     <Content Include="Resources\Image\ProductFamily.png" />
     <Content Include="Resources\Image\ProductGroup.png" />
-    <Content Include="Resources\Image\ProductPriceTable.png" />
+    <Content Include="Resources\Image\SellablePriceTable.png" />
     <Content Include="Resources\Image\ProductUnit.png" />
     <Content Include="Resources\Image\Refresh.png" />
     <Content Include="Resources\Image\Reject.png" />
@@ -1831,7 +1845,7 @@
     <Content Include="Resources\SQL\EvaluationCount.sql" />
     <Content Include="Resources\SQL\ProductCodeDetailSelect.sql" />
     <Content Include="Resources\SQL\ProductProviderCodeDetailSelect.sql" />
-    <Content Include="Resources\SQL\ProductPriceDetailSelect.sql" />
+    <Content Include="Resources\SQL\SellablePriceDetailSelect.sql" />
     <Content Include="Resources\SQL\PersonContactDetailSelect.sql" />
     <Content Include="Resources\SQL\PersonCompressorDetailSelect.sql" />
     <Content Include="Resources\SQL\PersonAddressDetailSelect.sql" />
@@ -1964,15 +1978,15 @@
     <Content Include="Resources\SQL\ProductPictureInsert.sql" />
     <Content Include="Resources\SQL\ProductPictureSelect.sql" />
     <Content Include="Resources\SQL\ProductPictureUpdate.sql" />
-    <Content Include="Resources\SQL\ProductPriceDelete.sql" />
-    <Content Include="Resources\SQL\ProductPriceInsert.sql" />
-    <Content Include="Resources\SQL\ProductPriceSelect.sql" />
-    <Content Include="Resources\SQL\ProductPriceTableDelete.sql" />
-    <Content Include="Resources\SQL\ProductPriceTableFilter.sql" />
-    <Content Include="Resources\SQL\ProductPriceTableInsert.sql" />
-    <Content Include="Resources\SQL\ProductPriceTableSelect.sql" />
-    <Content Include="Resources\SQL\ProductPriceTableUpdate.sql" />
-    <Content Include="Resources\SQL\ProductPriceUpdate.sql" />
+    <Content Include="Resources\SQL\SellablePriceDelete.sql" />
+    <Content Include="Resources\SQL\SellablePriceInsert.sql" />
+    <Content Include="Resources\SQL\SellablePriceSelect.sql" />
+    <Content Include="Resources\SQL\SellablePriceTableDelete.sql" />
+    <Content Include="Resources\SQL\SellablePriceTableFilter.sql" />
+    <Content Include="Resources\SQL\SellablePriceTableInsert.sql" />
+    <Content Include="Resources\SQL\SellablePriceTableSelect.sql" />
+    <Content Include="Resources\SQL\SellablePriceTableUpdate.sql" />
+    <Content Include="Resources\SQL\SellablePriceUpdate.sql" />
     <Content Include="Resources\SQL\ProductProviderCodeDelete.sql" />
     <Content Include="Resources\SQL\ProductProviderCodeInsert.sql" />
     <Content Include="Resources\SQL\ProductProviderCodeSelect.sql" />
@@ -2022,14 +2036,14 @@
     <Content Include="Resources\XML\PersonContactGrid.xml" />
     <Content Include="Resources\XML\EvaluationManagementGrid.xml" />
     <Content Include="Resources\XML\ProductPictureGrid.xml" />
-    <Content Include="Resources\XML\ProductPriceGrid.xml" />
+    <Content Include="Resources\XML\SellablePriceGrid.xml" />
     <Content Include="Resources\XML\ProductProviderCodeGrid.xml" />
     <Content Include="Resources\XML\ProductCodeGrid.xml" />
     <Content Include="Resources\XML\ProductGrid.xml" />
     <Content Include="Resources\XML\PersonGrid.xml" />
     <Content Include="Resources\XML\ProductFamilyGrid.xml" />
     <Content Include="Resources\XML\ProductGroupGrid.xml" />
-    <Content Include="Resources\XML\ProductPriceTableGrid.xml" />
+    <Content Include="Resources\XML\SellablePriceTableGrid.xml" />
     <Content Include="Resources\XML\ProductUnitGrid.xml" />
     <Content Include="Resources\XML\RouteGrid.xml" />
     <Content Include="Resources\XML\UserEmailGrid.xml" />

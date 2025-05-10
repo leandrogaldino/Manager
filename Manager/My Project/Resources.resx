@@ -433,38 +433,38 @@
   <data name="ProductPictureUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\ProductPictureUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="ProductPriceDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductPriceDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="SellablePriceDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\SellablePriceDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="ProductPriceInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductPriceInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="SellablePriceInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\SellablePriceInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="ProductPriceSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductPriceSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="SellablePriceSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\SellablePriceSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="ProductPriceTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Image\ProductPriceTable.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="SellablePriceTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Image\SellablePriceTable.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ProductPriceTableDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductPriceTableDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="SellablePriceTableDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\SellablePriceTableDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="ProductPriceTableFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductPriceTableFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="SellablePriceTableFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\SellablePriceTableFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="ProductPriceTableGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML\ProductPriceTableGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="SellablePriceTableGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XML\SellablePriceTableGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="ProductPriceTableInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductPriceTableInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="SellablePriceTableInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\SellablePriceTableInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="ProductPriceTableSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductPriceTableSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="SellablePriceTableSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\SellablePriceTableSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="ProductPriceTableUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductPriceTableUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="SellablePriceTableUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\SellablePriceTableUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="ProductPriceUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductPriceUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="SellablePriceUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\SellablePriceUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductProviderCodeDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\ProductProviderCodeDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -574,8 +574,8 @@
   <data name="ProductCodeGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\ProductCodeGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="ProductPriceGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML\ProductPriceGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="SellablePriceGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XML\SellablePriceGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="ProductProviderCodeGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\ProductProviderCodeGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
@@ -901,8 +901,8 @@
   <data name="ProductCodeDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\ProductCodeDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="ProductPriceDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductPriceDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="SellablePriceDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\SellablePriceDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductProviderCodeDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\ProductProviderCodeDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>

@@ -46,17 +46,15 @@ Public Class FrmService
         LblStatus.Visible = False
         BtnStatusValue.Visible = False
         BtnStatusValue.Enabled = False
-        TcProduct.Height -= TsNavigation.Height
+        TcService.Height -= TsNavigation.Height
         MinimumSize = Nothing
         Height -= TsNavigation.Height
         LoadData()
         LoadForm()
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvProviderCodeLayout.Load()
-        DgvCodeLayout.Load()
+        DgvComplementnLayout.Load()
         DgvPriceLayout.Load()
-        DgvPictureLayout.Load()
     End Sub
     Private Sub LoadForm()
         ControlHelper.EnableControlDoubleBuffer(DgvComplement, True)
@@ -68,7 +66,7 @@ Public Class FrmService
     End Sub
     Private Sub LoadData()
         _Loading = True
-        TcProduct.SelectedTab = TabMain
+        TcService.SelectedTab = TabMain
         LblIDValue.Text = _Service.ID
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Service.Status)
         LblCreationValue.Text = _Service.Creation.ToString("dd/MM/yyyy")
@@ -79,7 +77,7 @@ Public Class FrmService
         TxtFilterPrice.Clear()
         If _Service.Complements IsNot Nothing Then DgvComplement.Fill(_Service.Complements)
         If _Service.Prices IsNot Nothing Then DgvPrice.Fill(_Service.Prices)
-        BtnDelete.Enabled = _Service.ID > 0 And _User.CanDelete(Routine.Product)
+        BtnDelete.Enabled = _Service.ID > 0 And _User.CanDelete(Routine.Service)
         Text = "Serviço"
         If _Service.LockInfo.IsLocked And Not _Service.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Service.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _Service.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
@@ -164,7 +162,7 @@ Public Class FrmService
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.Product, _Service.ID)
+        Dim Frm As New FrmLog(Routine.Service, _Service.ID)
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
@@ -215,32 +213,32 @@ Public Class FrmService
         Save()
     End Sub
 
-    Private Sub BtnIncludeCode_Click(sender As Object, e As EventArgs) Handles BtnIncludeCode.Click
-        Dim Form As New FrmProductCode(_Service, New ProductCode, Me)
+    Private Sub BtnIncludeComplement_Click(sender As Object, e As EventArgs) Handles BtnIncludeComplement.Click
+        Dim Form As New FrmServiceComplement(_Service, New ServiceComplement, Me)
         Form.ShowDialog()
     End Sub
-    Private Sub BtnEditCode_Click(sender As Object, e As EventArgs) Handles BtnEditCode.Click
-        Dim Form As FrmProductCode
-        Dim Code As ProductCode
-        If DgvCode.SelectedRows.Count = 1 Then
-            Code = _Service.Codes.Single(Function(x) x.Guid = DgvCode.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmProductCode(_Service, Code, Me)
+    Private Sub BtnEditComplement_Click(sender As Object, e As EventArgs) Handles BtnEditComplement.Click
+        Dim Form As FrmServiceComplement
+        Dim Complement As ServiceComplement
+        If DgvComplement.SelectedRows.Count = 1 Then
+            Complement = _Service.Complements.Single(Function(x) x.Guid = DgvComplement.SelectedRows(0).Cells("Guid").Value)
+            Form = New FrmServiceComplement(_Service, Complement, Me)
             Form.ShowDialog()
         End If
     End Sub
-    Private Sub BtnDeleteCode_Click(sender As Object, e As EventArgs) Handles BtnDeleteCode.Click
-        Dim Code As ProductCode
-        If DgvCode.SelectedRows.Count = 1 Then
+    Private Sub BtnDeleteCode_Click(sender As Object, e As EventArgs) Handles BtnDeleteComplement.Click
+        Dim Complement As ServiceComplement
+        If DgvComplement.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Code = _Service.Codes.Single(Function(x) x.Guid = DgvCode.SelectedRows(0).Cells("Guid").Value)
-                _Service.Codes.Remove(Code)
-                DgvCode.Fill(_Service.Codes)
+                Complement = _Service.Complements.Single(Function(x) x.Guid = DgvComplement.SelectedRows(0).Cells("Guid").Value)
+                _Service.Complements.Remove(Complement)
+                DgvComplement.Fill(_Service.Complements)
                 BtnSave.Enabled = True
             End If
         End If
     End Sub
     Private Sub BtnIncludePrice_Click(sender As Object, e As EventArgs) Handles BtnIncludePrice.Click
-        Dim Form As New FrmProductPrice(_Service, New SellablePrice(), Me)
+        Dim Form As New FrmSellablePrice(_Service, New SellablePrice(), Nothing, Me)
         Form.ShowDialog()
     End Sub
     Private Sub BtnEditPrice_Click(sender As Object, e As EventArgs) Handles BtnEditPrice.Click
@@ -248,7 +246,7 @@ Public Class FrmService
         Dim Price As SellablePrice
         If DgvPrice.SelectedRows.Count = 1 Then
             Price = _Service.Prices.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmProductPrice(_Service, Price, Me)
+            Form = New FrmSellablePrice(_Service, Price, Nothing, Me)
             Form.ShowDialog()
         End If
     End Sub
@@ -263,9 +261,9 @@ Public Class FrmService
             End If
         End If
     End Sub
-    Private Sub TcPerson_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcProduct.SelectedIndexChanged
-        If TcProduct.SelectedTab Is TabMain Then
-            Size = New Size(504, 379)
+    Private Sub TcPerson_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcService.SelectedIndexChanged
+        If TcService.SelectedTab Is TabMain Then
+            Size = New Size(510, 225)
             FormBorderStyle = FormBorderStyle.FixedSingle
             WindowState = FormWindowState.Normal
             MaximizeBox = False
@@ -283,97 +281,33 @@ Public Class FrmService
             e.CellStyle.Format = "N2"
         End If
     End Sub
-    Private Sub DgvPicture_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvPicture.CellFormatting
-        Dim Dgv As DataGridView = sender
-        Dgv.Rows(e.RowIndex).Height = 60
-        If e.ColumnIndex = Dgv.Columns("Picture").Index Then
-            CType(Dgv.Columns(e.ColumnIndex), DataGridViewImageColumn).ImageLayout = DataGridViewImageCellLayout.Zoom
-        End If
-    End Sub
-    Private Sub DgvProviderCode_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvProviderCode.MouseDoubleClick
-        Dim ClickPlace As DataGridView.HitTestInfo = DgvProviderCode.HitTest(e.X, e.Y)
-        If ClickPlace.Type = DataGridViewHitTestType.Cell Then
-            BtnEditProviderCode.PerformClick()
-        End If
-    End Sub
-    Private Sub DgvCode_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvCode.MouseDoubleClick
-        Dim ClickPlace As DataGridView.HitTestInfo = DgvCode.HitTest(e.X, e.Y)
-        If ClickPlace.Type = DataGridViewHitTestType.Cell Then
-            BtnEditCode.PerformClick()
-        End If
-    End Sub
+
     Private Sub DgvPrice_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvPrice.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvPrice.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
             BtnEditPrice.PerformClick()
         End If
     End Sub
-    Private Sub DgvPicture_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvPicture.MouseDoubleClick
-        Dim ClickPlace As DataGridView.HitTestInfo = DgvPicture.HitTest(e.X, e.Y)
+    Private Sub DgvComplement_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvComplement.MouseDoubleClick
+        Dim ClickPlace As DataGridView.HitTestInfo = DgvComplement.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
-            BtnEditPicture.PerformClick()
+            BtnEditComplement.PerformClick()
         End If
     End Sub
+
+
     Private Function IsValidFields() As Boolean
         If String.IsNullOrWhiteSpace(TxtName.Text) Then
             EprValidation.SetError(LblName, "Campo obrigatório.")
             EprValidation.SetIconAlignment(LblName, ErrorIconAlignment.MiddleRight)
-            TcProduct.SelectedTab = TabMain
+            TcService.SelectedTab = TabMain
             TxtName.Select()
             Return False
-        ElseIf String.IsNullOrWhiteSpace(TxtInternalName.Text) Then
-            EprValidation.SetError(LblInternalName, "Campo obrigatório.")
-            EprValidation.SetIconAlignment(LblInternalName, ErrorIconAlignment.MiddleRight)
-            TcProduct.SelectedTab = TabMain
-            TxtInternalName.Select()
-            Return False
-        ElseIf String.IsNullOrWhiteSpace(QbxFamily.Text) Then
-            EprValidation.SetError(LblFamily, "Campo obrigatório.")
-            EprValidation.SetIconAlignment(LblFamily, ErrorIconAlignment.MiddleRight)
-            TcProduct.SelectedTab = TabMain
-            QbxFamily.Select()
-            Return False
-        ElseIf Not QbxFamily.IsFreezed Then
-            EprValidation.SetError(LblFamily, "Família do produto não encontrada.")
-            EprValidation.SetIconAlignment(LblFamily, ErrorIconAlignment.MiddleRight)
-            TcProduct.SelectedTab = TabMain
-            QbxFamily.Select()
-            Return False
-        ElseIf String.IsNullOrWhiteSpace(QbxGroup.Text) Then
-            EprValidation.SetError(LblGroup, "Campo obrigatório.")
-            EprValidation.SetIconAlignment(LblGroup, ErrorIconAlignment.MiddleRight)
-            TcProduct.SelectedTab = TabMain
-            QbxGroup.Select()
-            Return False
-        ElseIf Not QbxGroup.IsFreezed Then
-            EprValidation.SetError(LblGroup, "Grupo do produto não encontrado.")
-            EprValidation.SetIconAlignment(LblGroup, ErrorIconAlignment.MiddleRight)
-            TcProduct.SelectedTab = TabMain
-            QbxGroup.Select()
-            Return False
-        ElseIf String.IsNullOrWhiteSpace(QbxUnit.Text) Then
-            EprValidation.SetError(LblUnit, "Campo obrigatório.")
-            EprValidation.SetIconAlignment(LblUnit, ErrorIconAlignment.MiddleRight)
-            TcProduct.SelectedTab = TabMain
-            QbxUnit.Select()
-            Return False
-        ElseIf Not QbxUnit.IsFreezed Then
-            EprValidation.SetError(LblUnit, "Unidade de medida do produto não encontrada.")
-            EprValidation.SetIconAlignment(LblUnit, ErrorIconAlignment.MiddleRight)
-            TcProduct.SelectedTab = TabMain
-            QbxUnit.Select()
-            Return False
-        ElseIf DbxQtyMin.DecimalValue > DbxQtyMax.DecimalValue Then
-            EprValidation.SetError(LblQtyMin, "A quanidade mínima não pode ser maior que a quantidade máxima.")
-            EprValidation.SetIconAlignment(LblQtyMin, ErrorIconAlignment.MiddleRight)
-            TcProduct.SelectedTab = TabMain
-            DbxQtyMin.Select()
-            Return False
-        ElseIf DbxGrossWeight.DecimalValue < DbxNetWeight.DecimalValue Then
-            EprValidation.SetError(LblGrossWeight, "O peso bruto não pode ser menor que o peso líquido.")
-            EprValidation.SetIconAlignment(LblGrossWeight, ErrorIconAlignment.MiddleRight)
-            TcProduct.SelectedTab = TabMain
-            DbxGrossWeight.Select()
+        ElseIf String.IsNullOrWhiteSpace(TxtServiceCode.Text) Then
+            EprValidation.SetError(LblServiceCode, "Campo obrigatório.")
+            EprValidation.SetIconAlignment(LblServiceCode, ErrorIconAlignment.MiddleRight)
+            TcService.SelectedTab = TabMain
+            TxtName.Select()
             Return False
         End If
         Return True
@@ -383,7 +317,6 @@ Public Class FrmService
         Dim DocumentPath As String = String.Empty
         Dim Success As Boolean
         TxtName.Text = TxtName.Text.Trim.ToUnaccented()
-        TxtInternalName.Text = TxtInternalName.Text.Trim.ToUnaccented()
         TxtServiceCode.Text = TxtServiceCode.Text.Trim.ToUnaccented()
         TxtNote.Text = TxtNote.Text.ToUpper.ToUnaccented()
         If _Service.LockInfo.IsLocked And _Service.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
@@ -395,28 +328,18 @@ Public Class FrmService
                     Cursor = Cursors.WaitCursor
                     _Service.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
                     _Service.Name = TxtName.Text
-                    _Service.InternalName = TxtInternalName.Text
-                    _Service.Family = New ProductFamily().Load(QbxFamily.FreezedPrimaryKey, False)
-                    _Service.Group = New ProductGroup().Load(QbxGroup.FreezedPrimaryKey, False)
-                    _Service.Unit = New ProductUnit().Load(QbxUnit.FreezedPrimaryKey, False)
-                    _Service.Location = TxtServiceCode.Text
-                    _Service.MinimumQuantity = DbxQtyMin.DecimalValue
-                    _Service.MaximumQuantity = DbxQtyMax.DecimalValue
-                    _Service.GrossWeight = DbxGrossWeight.DecimalValue
-                    _Service.NetWeight = DbxNetWeight.DecimalValue
+                    _Service.ServiceCode = TxtServiceCode.Text
                     _Service.Note = TxtNote.Text
                     _Service.SaveChanges()
                     _Service.Lock()
                     LblIDValue.Text = _Service.ID
-                    DgvProviderCode.Fill(_Service.ProviderCodes)
-                    DgvCode.Fill(_Service.Codes)
+                    DgvComplement.Fill(_Service.Complements)
                     DgvPrice.Fill(_Service.Prices)
-                    DgvPicture.Fill(_Service.Pictures)
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = _User.CanDelete(Routine.Product)
+                    BtnDelete.Enabled = _User.CanDelete(Routine.Service)
                     If _ServicesForm IsNot Nothing Then
                         _Filter.Filter()
-                        _ServicesForm.DgvProductLayout.Load()
+                        _ServicesForm.DgvServiceLayout.Load()
                         Row = _ServicesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()
@@ -434,7 +357,7 @@ Public Class FrmService
         End If
         Return Success
     End Function
-    Private Sub TxtKeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtFilterProviderCode.KeyPress,
+    Private Sub TxtKeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtFilterPrice.KeyPress,
                                                                                             TxtFilterDescription.KeyPress,
                                                                                             TxtFilterPrice.KeyPress
         Dim LstChar As New List(Of Char) From {" ", ".", ",", "-", "/", "(", ")", "+", "*", "%", "&", "@", "#", "$", "<", ">", "\"}
@@ -442,42 +365,21 @@ Public Class FrmService
             e.Handled = True
         End If
     End Sub
-    Private Sub TxtFilterProviderCode_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterProviderCode.TextChanged
-        FilterProviderCode()
+    Private Sub TxtFilterProviderCode_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterPrice.TextChanged
+        FilterComplement()
     End Sub
-    Private Sub FilterProviderCode()
+    Private Sub FilterComplement()
         Dim Table As DataTable
         Dim View As DataView
         Dim Filter As String = String.Format("{0} OR {1}",
-                                                 "Code LIKE '%@VALUE%'",
+                                                 "Complement LIKE '%@VALUE%'",
                                                  "Convert([Provider], 'System.String') LIKE '%@VALUE%'"
                                             )
-        If DgvProviderCode.DataSource IsNot Nothing Then
-            Table = DgvProviderCode.DataSource
+        If DgvComplement.DataSource IsNot Nothing Then
+            Table = DgvComplement.DataSource
             View = Table.DefaultView
-            If TxtFilterProviderCode.Text <> Nothing Then
-                Filter = Filter.Replace("@VALUE", TxtFilterProviderCode.Text.Replace("%", Nothing).Replace("*", Nothing))
-                View.RowFilter = Filter
-            Else
-                View.RowFilter = Nothing
-            End If
-        End If
-    End Sub
-    Private Sub TxtFilterCode_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterDescription.TextChanged
-        FilterCode()
-    End Sub
-    Private Sub FilterCode()
-        Dim Table As DataTable
-        Dim View As DataView
-        Dim Filter As String = String.Format("{0} OR {1}",
-                                                 "Name LIKE '%@VALUE%'",
-                                                 "Code LIKE '%@VALUE%'"
-                                            )
-        If DgvCode.DataSource IsNot Nothing Then
-            Table = DgvCode.DataSource
-            View = Table.DefaultView
-            If TxtFilterDescription.Text <> Nothing Then
-                Filter = Filter.Replace("@VALUE", TxtFilterDescription.Text.Replace("%", Nothing).Replace("*", Nothing))
+            If TxtFilterComplement.Text <> Nothing Then
+                Filter = Filter.Replace("@VALUE", TxtFilterPrice.Text.Replace("%", Nothing).Replace("*", Nothing))
                 View.RowFilter = Filter
             Else
                 View.RowFilter = Nothing
@@ -502,153 +404,17 @@ Public Class FrmService
             End If
         End If
     End Sub
-    Private Sub TxtFilterPicture_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterPicture.TextChanged
-        FilterPicture()
+
+
+    Private Sub TxtFilterComplement_Enter(sender As Object, e As EventArgs) Handles TxtFilterComplement.Enter
+        EprInformation.SetError(TsComplement, "Filtrando os campos: Complemento")
+        EprInformation.SetIconAlignment(TsComplement, ErrorIconAlignment.MiddleLeft)
+        EprInformation.SetIconPadding(TsComplement, -365)
     End Sub
-    Private Sub FilterPicture()
-        Dim Table As DataTable
-        Dim View As DataView
-        Dim Filter As String = String.Format("{0}", "Caption LIKE '%@VALUE%'")
-        If DgvPicture.DataSource IsNot Nothing Then
-            Table = DgvPicture.DataSource
-            View = Table.DefaultView
-            If TxtFilterPicture.Text <> Nothing Then
-                Filter = Filter.Replace("@VALUE", TxtFilterPicture.Text.Replace("%", Nothing).Replace("*", Nothing))
-                View.RowFilter = Filter
-            Else
-                View.RowFilter = Nothing
-            End If
-        End If
-    End Sub
-    Private Sub TmrQueriedBoxFamily_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBoxFamily.Tick
-        BtnViewFamily.Visible = False
-        BtnNewFamily.Visible = False
-        BtnFilterFamily.Visible = False
-        TmrQueriedBoxFamily.Stop()
-    End Sub
-    Private Sub QbxFamily_Enter(sender As Object, e As EventArgs) Handles QbxFamily.Enter
-        TmrQueriedBoxFamily.Stop()
-        BtnViewFamily.Visible = QbxFamily.IsFreezed And _User.CanWrite(Routine.ProductFamily)
-        BtnNewFamily.Visible = _User.CanWrite(Routine.ProductFamily)
-        BtnFilterFamily.Visible = _User.CanAccess(Routine.ProductFamily)
-    End Sub
-    Private Sub QbxFamily_Leave(sender As Object, e As EventArgs) Handles QbxFamily.Leave
-        TmrQueriedBoxFamily.Stop()
-        TmrQueriedBoxFamily.Start()
-    End Sub
-    Private Sub QbxFamily_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxFamily.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnViewFamily.Visible = QbxFamily.IsFreezed And _User.CanWrite(Routine.ProductFamily)
-    End Sub
-    Private Sub BtnNewFamily_Click(sender As Object, e As EventArgs) Handles BtnNewFamily.Click
-        Dim Family As ProductFamily
-        Dim Form As FrmProductFamily
-        Family = New ProductFamily
-        Form = New FrmProductFamily(Family)
-        Form.ShowDialog()
-        EprValidation.Clear()
-        If Family.ID > 0 Then
-            QbxFamily.Freeze(Family.ID)
-        End If
-        QbxFamily.Select()
-    End Sub
-    Private Sub BtnViewFamily_Click(sender As Object, e As EventArgs) Handles BtnViewFamily.Click
-        Dim Form As New FrmProductFamily(New ProductFamily().Load(QbxFamily.FreezedPrimaryKey, True))
-        Form.ShowDialog()
-        QbxFamily.Freeze(QbxFamily.FreezedPrimaryKey)
-        QbxFamily.Select()
-    End Sub
-    Private Sub BtnFilterFamily_Click(sender As Object, e As EventArgs) Handles BtnFilterFamily.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New ProductFamilyQueriedBoxFilter(), QbxFamily)
-        FilterForm.Text = "Filtro de Família de Produto"
-        FilterForm.ShowDialog()
-        QbxFamily.Select()
-    End Sub
-    Private Sub TmrQueriedBoxGroup_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBoxGroup.Tick
-        BtnViewGroup.Visible = False
-        BtnNewGroup.Visible = False
-        BtnFilterGroup.Visible = False
-        TmrQueriedBoxGroup.Stop()
-    End Sub
-    Private Sub QbxGroup_Enter(sender As Object, e As EventArgs) Handles QbxGroup.Enter
-        TmrQueriedBoxGroup.Stop()
-        BtnViewGroup.Visible = QbxGroup.IsFreezed And _User.CanWrite(Routine.ProductGroup)
-        BtnNewGroup.Visible = _User.CanWrite(Routine.ProductGroup)
-        BtnFilterGroup.Visible = _User.CanAccess(Routine.ProductGroup)
-    End Sub
-    Private Sub QbxGroup_Leave(sender As Object, e As EventArgs) Handles QbxGroup.Leave
-        TmrQueriedBoxGroup.Stop()
-        TmrQueriedBoxGroup.Start()
-    End Sub
-    Private Sub QbxGroup_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxGroup.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnViewGroup.Visible = QbxGroup.IsFreezed And _User.CanWrite(Routine.ProductGroup)
-    End Sub
-    Private Sub BtnNewGroup_Click(sender As Object, e As EventArgs) Handles BtnNewGroup.Click
-        Dim Group As ProductGroup
-        Dim Form As FrmProductGroup
-        Group = New ProductGroup
-        Form = New FrmProductGroup(Group)
-        Form.ShowDialog()
-        EprValidation.Clear()
-        If Group.ID > 0 Then
-            QbxGroup.Freeze(Group.ID)
-        End If
-        QbxGroup.Select()
-    End Sub
-    Private Sub BtnViewGroup_Click(sender As Object, e As EventArgs) Handles BtnViewGroup.Click
-        Dim Form As New FrmProductGroup(New ProductGroup().Load(QbxGroup.FreezedPrimaryKey, True))
-        Form.ShowDialog()
-        QbxGroup.Freeze(QbxGroup.FreezedPrimaryKey)
-        QbxGroup.Select()
-    End Sub
-    Private Sub BtnFilterGroup_Click(sender As Object, e As EventArgs) Handles BtnFilterGroup.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New ProductGroupQueriedBoxFilter(), QbxGroup)
-        FilterForm.Text = "Filtro de Grupo de Produto"
-        FilterForm.ShowDialog()
-        QbxGroup.Select()
-    End Sub
-    Private Sub BtnIncludePicture_Click(sender As Object, e As EventArgs) Handles BtnIncludePicture.Click
-        Dim Form As New FrmProductPicture(_Service, New ProductPicture(), Me)
-        Form.ShowDialog()
-    End Sub
-    Private Sub BtnEditPicture_Click(sender As Object, e As EventArgs) Handles BtnEditPicture.Click
-        Dim Form As FrmProductPicture
-        Dim Picture As ProductPicture
-        If DgvPicture.SelectedRows.Count = 1 Then
-            Picture = _Service.Pictures.Single(Function(x) x.Guid = DgvPicture.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmProductPicture(_Service, Picture, Me)
-            Form.ShowDialog()
-        End If
-    End Sub
-    Private Sub BtnDeletePicture_Click(sender As Object, e As EventArgs) Handles BtnDeletePicture.Click
-        Dim Picture As ProductPicture
-        If DgvPicture.SelectedRows.Count = 1 Then
-            If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Picture = _Service.Pictures.Single(Function(x) x.Guid = DgvPicture.SelectedRows(0).Cells("Guid").Value)
-                _Service.Pictures.Remove(Picture)
-                DgvPicture.Fill(_Service.Pictures)
-                BtnSave.Enabled = True
-            End If
-        End If
-    End Sub
-    Private Sub TxtName_Leave(sender As Object, e As EventArgs) Handles TxtName.Leave
-        If TxtInternalName.Text = Nothing Then TxtInternalName.Text = TxtName.Text
-    End Sub
-    Private Sub TxtFilterCode_Enter(sender As Object, e As EventArgs) Handles TxtFilterDescription.Enter
-        EprInformation.SetError(TsCode, "Filtrando os campos: Nome e Código")
-        EprInformation.SetIconAlignment(TsCode, ErrorIconAlignment.MiddleLeft)
-        EprInformation.SetIconPadding(TsCode, -365)
-    End Sub
-    Private Sub TxtFilterCode_Leave(sender As Object, e As EventArgs) Handles TxtFilterDescription.Leave
+    Private Sub TxtFilterComplement_Leave(sender As Object, e As EventArgs) Handles TxtFilterComplement.Leave
         EprInformation.Clear()
     End Sub
-    Private Sub TxtFilterProviderCode_Enter(sender As Object, e As EventArgs) Handles TxtFilterProviderCode.Enter
-        EprInformation.SetError(TsProviderCode, "Filtrando os campos: Código e Fornecedor")
-        EprInformation.SetIconAlignment(TsProviderCode, ErrorIconAlignment.MiddleLeft)
-        EprInformation.SetIconPadding(TsProviderCode, -365)
-    End Sub
-    Private Sub TxtFilterProviderCode_Leave(sender As Object, e As EventArgs) Handles TxtFilterProviderCode.Leave
+    Private Sub TxtFilterProviderCode_Leave(sender As Object, e As EventArgs) Handles TxtFilterPrice.Leave
         EprInformation.Clear()
     End Sub
     Private Sub TxtFilterPrice_Enter(sender As Object, e As EventArgs) Handles TxtFilterPrice.Enter
@@ -659,36 +425,28 @@ Public Class FrmService
     Private Sub TxtFilterPrice_Leave(sender As Object, e As EventArgs) Handles TxtFilterPrice.Leave
         EprInformation.Clear()
     End Sub
-    Private Sub TxtFilterPicture_Enter(sender As Object, e As EventArgs) Handles TxtFilterPicture.Enter
-        EprInformation.SetError(TsPicture, "Filtrando o campo: Legenda")
-        EprInformation.SetIconAlignment(TsPicture, ErrorIconAlignment.MiddleLeft)
-        EprInformation.SetIconPadding(TsPicture, -365)
-    End Sub
-    Private Sub TxtFilterPicture_Leave(sender As Object, e As EventArgs) Handles TxtFilterPicture.Leave
-        EprInformation.Clear()
-    End Sub
-    Private Sub FrmProduct_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+
+
+
+
+    Private Sub FrmService_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         _Service.Unlock()
     End Sub
-    Private Sub DgvProviderCode_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvProviderCode.DataSourceChanged
-        FilterProviderCode()
+    Private Sub DgvComplement_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvComplement.DataSourceChanged
+        FilterComplement()
     End Sub
-    Private Sub DgvCode_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvCode.DataSourceChanged
-        FilterCode()
-    End Sub
+
     Private Sub DgvPrice_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvPrice.DataSourceChanged
         FilterPrice()
     End Sub
-    Private Sub DgvPicture_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvPicture.DataSourceChanged
-        FilterPicture()
-    End Sub
-    Private Sub DgvPicture_SelectionChanged(sender As Object, e As EventArgs) Handles DgvPicture.SelectionChanged
-        If DgvPicture.SelectedRows.Count = 0 Then
-            BtnEditPicture.Enabled = False
-            BtnDeletePicture.Enabled = False
+
+    Private Sub DgvComplement_SelectionChanged(sender As Object, e As EventArgs) Handles DgvComplement.SelectionChanged
+        If DgvComplement.SelectedRows.Count = 0 Then
+            BtnEditComplement.Enabled = False
+            BtnDeleteComplement.Enabled = False
         Else
-            BtnEditPicture.Enabled = True
-            BtnDeletePicture.Enabled = True
+            BtnEditComplement.Enabled = True
+            BtnDeleteComplement.Enabled = True
         End If
     End Sub
     Private Sub DgvPrice_SelectionChanged(sender As Object, e As EventArgs) Handles DgvPrice.SelectionChanged
@@ -700,22 +458,5 @@ Public Class FrmService
             BtnDeletePrice.Enabled = True
         End If
     End Sub
-    Private Sub DgvCode_SelectionChanged(sender As Object, e As EventArgs) Handles DgvCode.SelectionChanged
-        If DgvCode.SelectedRows.Count = 0 Then
-            BtnEditCode.Enabled = False
-            BtnDeleteCode.Enabled = False
-        Else
-            BtnEditCode.Enabled = True
-            BtnDeleteCode.Enabled = True
-        End If
-    End Sub
-    Private Sub DgvProviderCode_SelectionChanged(sender As Object, e As EventArgs) Handles DgvProviderCode.SelectionChanged
-        If DgvProviderCode.SelectedRows.Count = 0 Then
-            BtnEditProviderCode.Enabled = False
-            BtnDeleteProviderCode.Enabled = False
-        Else
-            BtnEditProviderCode.Enabled = True
-            BtnDeleteProviderCode.Enabled = True
-        End If
-    End Sub
+
 End Class

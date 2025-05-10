@@ -354,11 +354,11 @@ Partial Class FrmProduct
         '
         Me.TabPrice.Controls.Add(Me.DgvPrice)
         Me.TabPrice.Controls.Add(Me.TsPrice)
-        Me.TabPrice.Location = New System.Drawing.Point(4, 48)
+        Me.TabPrice.Location = New System.Drawing.Point(4, 22)
         Me.TabPrice.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabPrice.Name = "TabPrice"
         Me.TabPrice.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabPrice.Size = New System.Drawing.Size(475, 194)
+        Me.TabPrice.Size = New System.Drawing.Size(475, 220)
         Me.TabPrice.TabIndex = 1
         Me.TabPrice.Text = "Preços"
         Me.TabPrice.UseVisualStyleBackColor = True
@@ -381,7 +381,7 @@ Partial Class FrmProduct
         Me.DgvPrice.RowHeadersVisible = False
         Me.DgvPrice.RowTemplate.Height = 26
         Me.DgvPrice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPrice.Size = New System.Drawing.Size(469, 161)
+        Me.DgvPrice.Size = New System.Drawing.Size(469, 187)
         Me.DgvPrice.TabIndex = 1
         '
         'TsPrice
@@ -447,10 +447,10 @@ Partial Class FrmProduct
         '
         Me.TabProductCode.Controls.Add(Me.DgvCode)
         Me.TabProductCode.Controls.Add(Me.TsCode)
-        Me.TabProductCode.Location = New System.Drawing.Point(4, 48)
+        Me.TabProductCode.Location = New System.Drawing.Point(4, 22)
         Me.TabProductCode.Name = "TabProductCode"
         Me.TabProductCode.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabProductCode.Size = New System.Drawing.Size(475, 194)
+        Me.TabProductCode.Size = New System.Drawing.Size(475, 220)
         Me.TabProductCode.TabIndex = 7
         Me.TabProductCode.Text = "Cód. Produto"
         Me.TabProductCode.UseVisualStyleBackColor = True
@@ -473,7 +473,7 @@ Partial Class FrmProduct
         Me.DgvCode.RowHeadersVisible = False
         Me.DgvCode.RowTemplate.Height = 26
         Me.DgvCode.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvCode.Size = New System.Drawing.Size(469, 163)
+        Me.DgvCode.Size = New System.Drawing.Size(469, 189)
         Me.DgvCode.TabIndex = 1
         '
         'TsCode
@@ -1052,10 +1052,10 @@ Partial Class FrmProduct
         '
         Me.TabPicture.Controls.Add(Me.DgvPicture)
         Me.TabPicture.Controls.Add(Me.TsPicture)
-        Me.TabPicture.Location = New System.Drawing.Point(4, 48)
+        Me.TabPicture.Location = New System.Drawing.Point(4, 22)
         Me.TabPicture.Name = "TabPicture"
         Me.TabPicture.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPicture.Size = New System.Drawing.Size(475, 194)
+        Me.TabPicture.Size = New System.Drawing.Size(475, 220)
         Me.TabPicture.TabIndex = 8
         Me.TabPicture.Text = "Foto"
         Me.TabPicture.UseVisualStyleBackColor = True
@@ -1078,7 +1078,7 @@ Partial Class FrmProduct
         Me.DgvPicture.RowHeadersVisible = False
         Me.DgvPicture.RowTemplate.Height = 60
         Me.DgvPicture.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPicture.Size = New System.Drawing.Size(469, 163)
+        Me.DgvPicture.Size = New System.Drawing.Size(469, 189)
         Me.DgvPicture.TabIndex = 3
         '
         'TsPicture

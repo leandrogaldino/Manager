@@ -114,7 +114,6 @@ Public Enum Routine
     VisitSchedule = 22
     <Description("Serviço")> <TriStatePrivilege>
     Service = 23
-    <Description("Serviço")> <TriStatePrivilege>
     ServiceComplement = 2301
     <Description("Exportar as grades")> <BiStatePrivilege>
     ExportGrid = 9901

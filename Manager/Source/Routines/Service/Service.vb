@@ -11,7 +11,7 @@ Public Class Service
     Private _Shadow As Service
     Public Property Complements As New List(Of ServiceComplement)
     Public Property ServiceCode As String
-    Public Property Prices As New List(Of SellablePrice)
+
     Public Sub New()
         SetRoutine(Routine.Product)
     End Sub
@@ -114,14 +114,14 @@ Public Class Service
                     End Using
                 Next Complement
                 For Each Price As SellablePrice In Prices
-                    Using CmdCode As New MySqlCommand(My.Resources.ProductPriceInsert, Con)
-                        CmdCode.Parameters.AddWithValue("@serviceid", ID)
-                        CmdCode.Parameters.AddWithValue("@creation", Price.Creation)
-                        CmdCode.Parameters.AddWithValue("@pricetableid", Price.PriceTable.ID)
-                        CmdCode.Parameters.AddWithValue("@price", Price.Price)
-                        CmdCode.Parameters.AddWithValue("@userid", Price.User.ID)
-                        CmdCode.ExecuteNonQuery()
-                        Price.SetID(CmdCode.LastInsertedId)
+                    Using CmdSellablePrice As New MySqlCommand(My.Resources.SellablePriceInsert, Con)
+                        CmdSellablePrice.Parameters.AddWithValue("@serviceid", ID)
+                        CmdSellablePrice.Parameters.AddWithValue("@creation", Price.Creation)
+                        CmdSellablePrice.Parameters.AddWithValue("@pricetableid", Price.PriceTable.ID)
+                        CmdSellablePrice.Parameters.AddWithValue("@price", Price.Price)
+                        CmdSellablePrice.Parameters.AddWithValue("@userid", Price.User.ID)
+                        CmdSellablePrice.ExecuteNonQuery()
+                        Price.SetID(CmdSellablePrice.LastInsertedId)
                     End Using
                 Next Price
             End Using
@@ -172,7 +172,7 @@ Public Class Service
 
                 For Each Price As SellablePrice In _Shadow.Prices
                     If Not Prices.Any(Function(x) x.ID = Price.ID And x.ID > 0) Then
-                        Using CmdPrice As New MySqlCommand(My.Resources.ProductPriceDelete, Con)
+                        Using CmdPrice As New MySqlCommand(My.Resources.SellablePriceDelete, Con)
                             CmdPrice.Parameters.AddWithValue("@id", Price.ID)
                             CmdPrice.ExecuteNonQuery()
                         End Using
@@ -180,7 +180,7 @@ Public Class Service
                 Next Price
                 For Each Price As SellablePrice In Prices
                     If Price.ID = 0 Then
-                        Using CmdPrice As New MySqlCommand(My.Resources.ProductPriceInsert, Con)
+                        Using CmdPrice As New MySqlCommand(My.Resources.SellablePriceInsert, Con)
                             CmdPrice.Parameters.AddWithValue("@serviceid", ID)
                             CmdPrice.Parameters.AddWithValue("@creation", Price.Creation)
                             CmdPrice.Parameters.AddWithValue("@pricetableid", Price.PriceTable.ID)
@@ -190,7 +190,7 @@ Public Class Service
                             Price.SetID(CmdPrice.LastInsertedId)
                         End Using
                     Else
-                        Using CmdPrice As New MySqlCommand(My.Resources.ProductPriceUpdate, Con)
+                        Using CmdPrice As New MySqlCommand(My.Resources.SellablePriceUpdate, Con)
                             CmdPrice.Parameters.AddWithValue("@id", Price.ID)
                             CmdPrice.Parameters.AddWithValue("@pricetableid", Price.PriceTable.ID)
                             CmdPrice.Parameters.AddWithValue("@price", Price.Price)
@@ -231,7 +231,7 @@ Public Class Service
         Dim TableResult As DataTable
         Dim ProductPrices As List(Of SellablePrice)
         Dim ProductPrice As SellablePrice
-        Using CmdPrice As New MySqlCommand(My.Resources.ProductPriceSelect, Transaction.Connection)
+        Using CmdPrice As New MySqlCommand(My.Resources.SellablePriceSelect, Transaction.Connection)
             CmdPrice.Transaction = Transaction
             CmdPrice.Parameters.AddWithValue("@serviceid", ID)
             Using Adp As New MySqlDataAdapter(CmdPrice)
@@ -269,7 +269,7 @@ Public Class Service
     Public Shared Sub FillPriceDataGridView(ProductID As Long, Dgv As DataGridView)
         Dim TableResult As New DataTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
-            Using Cmd As New MySqlCommand(My.Resources.ProductPriceDetailSelect, Con)
+            Using Cmd As New MySqlCommand(My.Resources.SellablePriceDetailSelect, Con)
                 Cmd.Parameters.AddWithValue("@productid", ProductID)
                 Using Adp As New MySqlDataAdapter(Cmd)
                     Adp.Fill(TableResult)

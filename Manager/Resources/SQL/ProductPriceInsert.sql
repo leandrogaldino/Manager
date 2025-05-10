@@ -1,8 +1,8 @@
-INSERT INTO productprice
+INSERT INTO sellableprice
 (
 	productid,
 	creation,
-	pricetableid,
+	sellablepricetableid,
 	price,
 	userid
 )
@@ -10,7 +10,7 @@ VALUES
 (
 	@productid,
 	@creation,
-	@pricetableid,
+	@sellablepricetableid,
 	@price,
 	@userid
 );

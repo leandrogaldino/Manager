@@ -1,8 +1,11 @@
-INSERT INTO sellablepriceTable
+INSERT INTO service
 (
     creation,
     statusid,
     name,
+    servicecode,
+    note,
+    lastupdate,
     userid
 )
 VALUES
@@ -10,5 +13,8 @@ VALUES
     @creation,
     @statusid,
     @name,
+    @servicecode,
+    @note,
+    @lastupdate,
     @userid
 );

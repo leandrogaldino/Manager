@@ -7,15 +7,13 @@ Imports MySql.Data.MySqlClient
 ''' Representa um produto.
 ''' </summary>
 Public Class Product
-    Inherits ParentModel
+    Inherits SellableModel
     Private _Shadow As Product
-    Public Property Status As SimpleStatus = SimpleStatus.Active
-    Public Property Name As String
     Public Property InternalName As String
     Public Property Pictures As New List(Of ProductPicture)
     Public Property ProviderCodes As New List(Of ProductProviderCode)
     Public Property Codes As New List(Of ProductCode)
-    Public Property Prices As New List(Of ProductPrice)
+    Public Property Prices As New List(Of SellablePrice)
     Public Property Location As String
     Public Property Family As New ProductFamily
     Public Property Group As New ProductGroup
@@ -24,7 +22,6 @@ Public Class Product
     Public Property MaximumQuantity As Decimal
     Public Property GrossWeight As Decimal
     Public Property NetWeight As Decimal
-    Public Property Note As String
     Public Sub New()
         SetRoutine(Routine.Product)
     End Sub
@@ -39,7 +36,7 @@ Public Class Product
         Pictures = New List(Of ProductPicture)
         ProviderCodes = New List(Of ProductProviderCode)
         Codes = New List(Of ProductCode)
-        Prices = New List(Of ProductPrice)
+        Prices = New List(Of SellablePrice)
         Location = Nothing
         MinimumQuantity = 0
         MaximumQuantity = 0
@@ -183,7 +180,7 @@ Public Class Product
                         Code.SetID(CmdCode.LastInsertedId)
                     End Using
                 Next Code
-                For Each Price As ProductPrice In Prices
+                For Each Price As SellablePrice In Prices
                     Using CmdCode As New MySqlCommand(My.Resources.ProductPriceInsert, Con)
                         CmdCode.Parameters.AddWithValue("@productid", ID)
                         CmdCode.Parameters.AddWithValue("@creation", Price.Creation)
@@ -315,7 +312,7 @@ Public Class Product
                         End Using
                     End If
                 Next Code
-                For Each Price As ProductPrice In _Shadow.Prices
+                For Each Price As SellablePrice In _Shadow.Prices
                     If Not Prices.Any(Function(x) x.ID = Price.ID And x.ID > 0) Then
                         Using CmdPrice As New MySqlCommand(My.Resources.ProductPriceDelete, Con)
                             CmdPrice.Parameters.AddWithValue("@id", Price.ID)
@@ -323,7 +320,7 @@ Public Class Product
                         End Using
                     End If
                 Next Price
-                For Each Price As ProductPrice In Prices
+                For Each Price As SellablePrice In Prices
                     If Price.ID = 0 Then
                         Using CmdPrice As New MySqlCommand(My.Resources.ProductPriceInsert, Con)
                             CmdPrice.Parameters.AddWithValue("@productid", ID)
@@ -428,20 +425,20 @@ Public Class Product
         End Using
         Return Codes
     End Function
-    Private Function GetPrices(Transaction As MySqlTransaction) As List(Of ProductPrice)
+    Private Function GetPrices(Transaction As MySqlTransaction) As List(Of SellablePrice)
         Dim TableResult As DataTable
-        Dim ProductPrices As List(Of ProductPrice)
-        Dim ProductPrice As ProductPrice
+        Dim ProductPrices As List(Of SellablePrice)
+        Dim ProductPrice As SellablePrice
         Using CmdPrice As New MySqlCommand(My.Resources.ProductPriceSelect, Transaction.Connection)
             CmdPrice.Transaction = Transaction
             CmdPrice.Parameters.AddWithValue("@productid", ID)
             Using Adp As New MySqlDataAdapter(CmdPrice)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                ProductPrices = New List(Of ProductPrice)
+                ProductPrices = New List(Of SellablePrice)
                 For Each Row As DataRow In TableResult.Rows
-                    ProductPrice = New ProductPrice With {
-                        .PriceTable = New ProductPriceTable().Load(Row.Item("pricetableid"), False),
+                    ProductPrice = New SellablePrice With {
+                        .PriceTable = New SellablePriceTable().Load(Row.Item("pricetableid"), False),
                         .Price = Row.Item("price")
                     }
                     ProductPrice.SetIsSaved(True)

@@ -119,7 +119,7 @@ Public Class FrmMain
         If _User.CanAccess(Routine.Product) Then
             If _User.CanAccess(Routine.ProductFamily) Or
                 _User.CanAccess(Routine.ProductGroup) Or
-                _User.CanAccess(Routine.ProductPrice) Or
+                _User.CanAccess(Routine.SellablePrice) Or
                 _User.CanAccess(Routine.ProductUnit) Then
                 TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripSplitButton("Produto", "Cadastro de Produtos", My.Resources.Product, AddressOf ProductClick))
                 If _User.CanAccess(Routine.ProductFamily) Then
@@ -128,7 +128,7 @@ Public Class FrmMain
                 If _User.CanAccess(Routine.ProductGroup) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Produto").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Grupo de Produto", "Cadastro de Grupos de Produto", My.Resources.ProductGroup, AddressOf ProductGroupClick))
                 End If
-                If _User.CanAccess(Routine.ProductPriceTable) Then
+                If _User.CanAccess(Routine.SellablePriceTable) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Produto").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Tabela de Preço", "Cadastro de Tabelas de Preço de Produto", My.Resources.ProductPriceTable, AddressOf ProductPriceTableClick))
                 End If
                 If _User.CanAccess(Routine.ProductUnit) Then
@@ -204,10 +204,10 @@ Public Class FrmMain
         End If
     End Sub
     Private Sub ProductPriceTableClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.ProductPriceTable)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmProductPriceTables, EnumHelper.GetEnumDescription(Routine.ProductPriceTable))
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.SellablePriceTable)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmSellablePriceTables, EnumHelper.GetEnumDescription(Routine.SellablePriceTable))
         Else
-            SelectTab(Routine.ProductPriceTable)
+            SelectTab(Routine.SellablePriceTable)
         End If
     End Sub
     Private Sub ProductFamilyClick()

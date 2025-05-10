@@ -227,3 +227,70 @@ IF IFNULL(OLD.itemname, OLD.productid) <> IFNULL(NEW.itemname, NEW.productid) TH
 IF OLD.quantity <> NEW.quantity THEN INSERT INTO log VALUES (NULL, 1312, NEW.id, 'Quantidade', FORMAT(OLD.quantity, 2, 'pt_BR'), FORMAT(NEW.quantity, 2, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DELIMITER ;
+
+CREATE TABLE service (
+	id INT NOT NULL AUTO_INCREMENT,
+    statusid INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    servicecode VARCHAR(20) NOT NULL,
+    note LONGTEXT,
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE servicecomplement (
+	id INT NOT NULL AUTO_INCREMENT,
+    serviceid INT NOT NULL,
+    complement VARCHAR(255) NOT NULL,
+	PRIMARY KEY(id),
+    FOREIGN KEY (serviceid) REFERENCES service(id) ON DELETE CASCADE
+);
+
+
+ALTER TABLE `productprice`
+  MODIFY COLUMN `productid` INT DEFAULT NULL,
+  ADD COLUMN `serviceid` INT DEFAULT NULL AFTER `productid`,
+  ADD KEY `serviceid` (`serviceid`),
+  ADD CONSTRAINT `productprice_service` FOREIGN KEY (`serviceid`) REFERENCES `service` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `chk_product_or_service` CHECK (
+    (`productid` IS NOT NULL AND `serviceid` IS NULL) OR
+    (`productid` IS NULL AND `serviceid` IS NOT NULL)
+  );
+  
+ALTER TABLE `manager`.`productpricetable` RENAME TO  `manager`.`sellablepricetable` ;
+ALTER TABLE `manager`.`productprice` RENAME TO  `manager`.`sellableprice` ;
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS `manager`.`productpricetableinsert` $$
+DROP TRIGGER IF EXISTS `manager`.`productpricetableupdate` $$
+DROP TRIGGER IF EXISTS `manager`.`productpricetabledelete` $$
+DROP TRIGGER IF EXISTS `manager`.`sellablepricetableinsert` $$
+CREATE DEFINER=`root`@`localhost` TRIGGER `sellablepricetableinsert` AFTER INSERT ON `sellablepricetable` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 8, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END$$
+DROP TRIGGER IF EXISTS `manager`.`sellablepricetablepdate`$$
+CREATE DEFINER=`root`@`localhost` TRIGGER `sellablepricetablepdate` AFTER UPDATE ON `sellablepricetable` FOR EACH ROW BEGIN
+IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 8, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'ATIVO' WHEN OLD.statusid = 1 THEN 'INATIVO' END, CASE WHEN NEW.statusid = 0 THEN 'ATIVO' WHEN NEW.statusid = 1 THEN 'INATIVO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.name <> NEW.name THEN INSERT INTO log VALUES (NULL, 8, NEW.id, 'Nome', OLD.name, NEW.name, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+END$$
+DROP TRIGGER IF EXISTS `manager`.`sellablepricetabledelete`$$
+USE `manager`$$
+CREATE DEFINER=`root`@`localhost` TRIGGER `sellablepricetabledelete` AFTER DELETE ON `sellablepricetable` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 8, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
+END$$
+DROP TRIGGER IF EXISTS `manager`.`productpriceinsert` $$
+DROP TRIGGER IF EXISTS `manager`.`productpriceupdate` $$
+DROP TRIGGER IF EXISTS `manager`.`productpricedelete` $$
+DROP TRIGGER IF EXISTS `manager`.`sellablepriceinsert`  $$
+CREATE DEFINER=`root`@`localhost` TRIGGER `sellablepriceinsert` AFTER INSERT ON `sellableprice` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 603, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END$$
+DROP TRIGGER IF EXISTS `manager`.`sellablepriceupdate` $$
+CREATE DEFINER=`root`@`localhost` TRIGGER `sellablepriceupdate` AFTER UPDATE ON `sellableprice` FOR EACH ROW BEGIN
+IF OLD.pricetableid <> NEW.pricetableid THEN INSERT INTO log VALUES (NULL, 603, NEW.id, 'Tabela de Preço', CONCAT(OLD.pricetableid, ' - ', (SELECT productpricetable.name FROM productpricetable WHERE productpricetable.id = OLD.pricetableid)), CONCAT(NEW.pricetableid, ' - ', (SELECT productpricetable.name FROM productpricetable WHERE productpricetable.id = NEW.pricetableid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.price <> NEW.price THEN INSERT INTO log VALUES (NULL, 603, NEW.id, 'Preço', FORMAT(OLD.price, 2, 'pt_BR'), FORMAT(NEW.price, 2, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+END$$
+DROP TRIGGER IF EXISTS `manager`.`sellablepricedelete` $$
+CREATE DEFINER=`root`@`localhost` TRIGGER `sellablepricedelete` AFTER DELETE ON `sellableprice` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 603, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
+END$$
+DELIMITER ;

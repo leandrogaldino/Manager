@@ -1,7 +1,7 @@
 SELECT
-	productpricetable.id,
-	productpricetable.creation,
-    productpricetable.statusid,
-	productpricetable.name
-FROM productpricetable
-WHERE productpricetable.id = @id;
+	sellablepricetable.id,
+	sellablepricetable.creation,
+    sellablepricetable.statusid,
+	sellablepricetable.name
+FROM sellablepricetable
+WHERE sellablepricetable.id = @id;

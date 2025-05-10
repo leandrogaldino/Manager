@@ -2,7 +2,7 @@
 Imports ControlLibrary
 
 Public Class ProductPriceTableQueriedBoxFilter
-    Inherits ProductPriceTableFilter
+    Inherits SellablePriceTableFilter
     <Browsable(False)>
     Overrides Property Status As String
     Public Overrides Function Filter() As Boolean

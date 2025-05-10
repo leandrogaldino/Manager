@@ -1,11 +1,11 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
-Public Class FrmProduct
-    Private _Product As Product
-    Private _ProductsForm As FrmProducts
-    Private _ProductsGrid As DataGridView
-    Private _Filter As ProductFilter
+Public Class FrmService
+    Private _Service As Service
+    Private _ServicesForm As FrmServices
+    Private _ServicesGrid As DataGridView
+    Private _Filter As ServiceFilter
     Private _Deleting As Boolean
     Private _Loading As Boolean
     Private _User As User
@@ -27,19 +27,19 @@ Public Class FrmProduct
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(Product As Product, ProductsForm As FrmProducts)
+    Public Sub New(Service As Service, ServicesForm As FrmServices)
         InitializeComponent()
-        _Product = Product
-        _ProductsForm = ProductsForm
-        _ProductsGrid = _ProductsForm.DgvData
-        _Filter = CType(_ProductsForm.PgFilter.SelectedObject, ProductFilter)
+        _Service = Service
+        _ServicesForm = ServicesForm
+        _ServicesGrid = _ServicesForm.DgvData
+        _Filter = CType(_ServicesForm.PgFilter.SelectedObject, ServiceFilter)
         _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
     End Sub
-    Public Sub New(Product As Product)
+    Public Sub New(Service As Service)
         InitializeComponent()
-        _Product = Product
+        _Service = Service
         _User = Locator.GetInstance(Of Session).User
         TsNavigation.Visible = False
         TsNavigation.Enabled = False
@@ -59,11 +59,9 @@ Public Class FrmProduct
         DgvPictureLayout.Load()
     End Sub
     Private Sub LoadForm()
-        ControlHelper.EnableControlDoubleBuffer(DgvProviderCode, True)
-        ControlHelper.EnableControlDoubleBuffer(DgvCode, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvComplement, True)
         ControlHelper.EnableControlDoubleBuffer(DgvPrice, True)
-        ControlHelper.EnableControlDoubleBuffer(DgvPicture, True)
-        DgvNavigator.DataGridView = _ProductsGrid
+        DgvNavigator.DataGridView = _ServicesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = _User.CanAccess(Routine.Log)
@@ -71,34 +69,20 @@ Public Class FrmProduct
     Private Sub LoadData()
         _Loading = True
         TcProduct.SelectedTab = TabMain
-        LblIDValue.Text = _Product.ID
-        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Product.Status)
-        LblCreationValue.Text = _Product.Creation.ToString("dd/MM/yyyy")
-        TxtName.Text = _Product.Name
-        TxtInternalName.Text = _Product.InternalName
-        QbxFamily.Unfreeze()
-        QbxFamily.Freeze(_Product.Family.ID)
-        QbxGroup.Unfreeze()
-        QbxGroup.Freeze(_Product.Group.ID)
-        QbxUnit.Unfreeze()
-        QbxUnit.Freeze(_Product.Unit.ID)
-        TxtLocation.Text = _Product.Location
-        DbxQtyMin.Text = _Product.MinimumQuantity
-        DbxQtyMax.Text = _Product.MaximumQuantity
-        DbxGrossWeight.Text = _Product.GrossWeight
-        DbxNetWeight.Text = _Product.NetWeight
-        TxtNote.Text = _Product.Note
-        TxtFilterProviderCode.Clear()
-        TxtFilterCode.Clear()
+        LblIDValue.Text = _Service.ID
+        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Service.Status)
+        LblCreationValue.Text = _Service.Creation.ToString("dd/MM/yyyy")
+        TxtName.Text = _Service.Name
+        TxtServiceCode.Text = _Service.ServiceCode
+        TxtNote.Text = _Service.Note
+        TxtFilterDescription.Clear()
         TxtFilterPrice.Clear()
-        If _Product.ProviderCodes IsNot Nothing Then DgvProviderCode.Fill(_Product.ProviderCodes)
-        If _Product.Codes IsNot Nothing Then DgvCode.Fill(_Product.Codes)
-        If _Product.Prices IsNot Nothing Then DgvPrice.Fill(_Product.Prices)
-        If _Product.Pictures IsNot Nothing Then DgvPicture.Fill(_Product.Pictures)
-        BtnDelete.Enabled = _Product.ID > 0 And _User.CanDelete(Routine.Product)
-        Text = "Produto"
-        If _Product.LockInfo.IsLocked And Not _Product.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Product.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _Product.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
+        If _Service.Complements IsNot Nothing Then DgvComplement.Fill(_Service.Complements)
+        If _Service.Prices IsNot Nothing Then DgvPrice.Fill(_Service.Prices)
+        BtnDelete.Enabled = _Service.ID > 0 And _User.CanDelete(Routine.Product)
+        Text = "Serviço"
+        If _Service.LockInfo.IsLocked And Not _Service.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Service.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
+            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _Service.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
         End If
         BtnSave.Enabled = False
@@ -117,12 +101,7 @@ Public Class FrmProduct
     Private Sub AfterDataGridViewRowMove()
         Try
             Cursor = Cursors.WaitCursor
-            _Product.Load(_ProductsGrid.SelectedRows(0).Cells("id").Value, True)
-            For Each p In _Product.Pictures.ToArray.Reverse
-                If Not IO.File.Exists(p.Picture.OriginalFile) Then
-                    _Product.Pictures.Remove(p)
-                End If
-            Next p
+            _Service.Load(_ServicesGrid.SelectedRows(0).Cells("id").Value, True)
             LoadData()
         Catch ex As Exception
             CMessageBox.Show("ERRO PD001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -139,11 +118,9 @@ Public Class FrmProduct
                     End If
                 End If
             End If
-            If _ProductsForm IsNot Nothing Then
-                DgvProviderCode.Fill(_Product.ProviderCodes)
-                DgvCode.Fill(_Product.Codes)
-                DgvPrice.Fill(_Product.Prices)
-                DgvPicture.Fill(_Product.Pictures)
+            If _ServicesForm IsNot Nothing Then
+                DgvComplement.Fill(_Service.Complements)
+                DgvPrice.Fill(_Service.Prices)
             End If
             _Deleting = False
         End If
@@ -154,25 +131,25 @@ Public Class FrmProduct
                 If Not Save() Then Exit Sub
             End If
         End If
-        _Product = New Product
+        _Service = New Service
         LoadData()
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
-        If _Product.ID <> 0 Then
+        If _Service.ID <> 0 Then
             Try
                 Cursor = Cursors.WaitCursor
                 If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                    If Not _Product.LockInfo.IsLocked Or (_Product.LockInfo.IsLocked And Locator.GetInstance(Of Session).Token = _Product.LockInfo.SessionToken) Then
-                        _Product.Delete()
-                        If _ProductsGrid IsNot Nothing Then
+                    If Not _Service.LockInfo.IsLocked Or (_Service.LockInfo.IsLocked And Locator.GetInstance(Of Session).Token = _Service.LockInfo.SessionToken) Then
+                        _Service.Delete()
+                        If _ServicesGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _ProductsForm.DgvProductLayout.Load()
-                            _ProductsGrid.ClearSelection()
+                            _ServicesForm.DgvServiceLayout.Load()
+                            _ServicesGrid.ClearSelection()
                         End If
                         _Deleting = True
                         Dispose()
                     Else
-                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Product.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
+                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Service.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                     End If
                 End If
             Catch ex As MySqlException
@@ -187,18 +164,18 @@ Public Class FrmProduct
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.Product, _Product.ID)
+        Dim Frm As New FrmLog(Routine.Product, _Service.ID)
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
             BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
-            If _Product.Status = SimpleStatus.Active Then
+            If _Service.Status = SimpleStatus.Active Then
                 CMessageBox.Show("O registro foi marcado para ser inativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
         ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive) Then
             BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active)
-            If _Product.Status = SimpleStatus.Inactive Then
+            If _Service.Status = SimpleStatus.Inactive Then
                 CMessageBox.Show("O registro foi marcado para ser ativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
         End If
@@ -210,15 +187,7 @@ Public Class FrmProduct
     End Sub
 
     Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtName.TextChanged,
-                                                                          TxtInternalName.TextChanged,
-                                                                          QbxFamily.TextChanged,
-                                                                          QbxGroup.TextChanged,
-                                                                          QbxUnit.TextChanged,
-                                                                          TxtLocation.TextChanged,
-                                                                          DbxQtyMin.TextChanged,
-                                                                          DbxQtyMax.TextChanged,
-                                                                          DbxGrossWeight.TextChanged,
-                                                                          DbxNetWeight.TextChanged,
+                                                                          TxtServiceCode.TextChanged,
                                                                           TxtNote.TextChanged
 
         EprValidation.Clear()
@@ -245,40 +214,17 @@ Public Class FrmProduct
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
         Save()
     End Sub
-    Private Sub BtnIncludeProviderCode_Click(sender As Object, e As EventArgs) Handles BtnIncludeProviderCode.Click
-        Dim Form As New FrmProductProviderCode(_Product, New ProductProviderCode(), Me)
-        Form.ShowDialog()
-    End Sub
-    Private Sub BtnEditProviderCode_Click(sender As Object, e As EventArgs) Handles BtnEditProviderCode.Click
-        Dim Form As FrmProductProviderCode
-        Dim ProviderCode As ProductProviderCode
-        If DgvProviderCode.SelectedRows.Count = 1 Then
-            ProviderCode = _Product.ProviderCodes.Single(Function(x) x.Guid = DgvProviderCode.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmProductProviderCode(_Product, ProviderCode, Me)
-            Form.ShowDialog()
-        End If
-    End Sub
-    Private Sub BtnDeleteProviderCode_Click(sender As Object, e As EventArgs) Handles BtnDeleteProviderCode.Click
-        Dim ProviderCode As ProductProviderCode
-        If DgvProviderCode.SelectedRows.Count = 1 Then
-            If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                ProviderCode = _Product.ProviderCodes.Single(Function(x) x.Guid = DgvProviderCode.SelectedRows(0).Cells("Guid").Value)
-                _Product.ProviderCodes.Remove(ProviderCode)
-                DgvProviderCode.Fill(_Product.ProviderCodes)
-                BtnSave.Enabled = True
-            End If
-        End If
-    End Sub
+
     Private Sub BtnIncludeCode_Click(sender As Object, e As EventArgs) Handles BtnIncludeCode.Click
-        Dim Form As New FrmProductCode(_Product, New ProductCode, Me)
+        Dim Form As New FrmProductCode(_Service, New ProductCode, Me)
         Form.ShowDialog()
     End Sub
     Private Sub BtnEditCode_Click(sender As Object, e As EventArgs) Handles BtnEditCode.Click
         Dim Form As FrmProductCode
         Dim Code As ProductCode
         If DgvCode.SelectedRows.Count = 1 Then
-            Code = _Product.Codes.Single(Function(x) x.Guid = DgvCode.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmProductCode(_Product, Code, Me)
+            Code = _Service.Codes.Single(Function(x) x.Guid = DgvCode.SelectedRows(0).Cells("Guid").Value)
+            Form = New FrmProductCode(_Service, Code, Me)
             Form.ShowDialog()
         End If
     End Sub
@@ -286,23 +232,23 @@ Public Class FrmProduct
         Dim Code As ProductCode
         If DgvCode.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Code = _Product.Codes.Single(Function(x) x.Guid = DgvCode.SelectedRows(0).Cells("Guid").Value)
-                _Product.Codes.Remove(Code)
-                DgvCode.Fill(_Product.Codes)
+                Code = _Service.Codes.Single(Function(x) x.Guid = DgvCode.SelectedRows(0).Cells("Guid").Value)
+                _Service.Codes.Remove(Code)
+                DgvCode.Fill(_Service.Codes)
                 BtnSave.Enabled = True
             End If
         End If
     End Sub
     Private Sub BtnIncludePrice_Click(sender As Object, e As EventArgs) Handles BtnIncludePrice.Click
-        Dim Form As New FrmSellablePrice(_Product, New SellablePrice(), Me)
+        Dim Form As New FrmProductPrice(_Service, New SellablePrice(), Me)
         Form.ShowDialog()
     End Sub
     Private Sub BtnEditPrice_Click(sender As Object, e As EventArgs) Handles BtnEditPrice.Click
         Dim Form As FrmSellablePrice
         Dim Price As SellablePrice
         If DgvPrice.SelectedRows.Count = 1 Then
-            Price = _Product.Prices.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmSellablePrice(_Product, Price, Me)
+            Price = _Service.Prices.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
+            Form = New FrmProductPrice(_Service, Price, Me)
             Form.ShowDialog()
         End If
     End Sub
@@ -310,9 +256,9 @@ Public Class FrmProduct
         Dim Price As SellablePrice
         If DgvPrice.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Price = _Product.Prices.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
-                _Product.Prices.Remove(Price)
-                DgvPrice.Fill(_Product.Prices)
+                Price = _Service.Prices.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
+                _Service.Prices.Remove(Price)
+                DgvPrice.Fill(_Service.Prices)
                 BtnSave.Enabled = True
             End If
         End If
@@ -438,40 +384,40 @@ Public Class FrmProduct
         Dim Success As Boolean
         TxtName.Text = TxtName.Text.Trim.ToUnaccented()
         TxtInternalName.Text = TxtInternalName.Text.Trim.ToUnaccented()
-        TxtLocation.Text = TxtLocation.Text.Trim.ToUnaccented()
+        TxtServiceCode.Text = TxtServiceCode.Text.Trim.ToUnaccented()
         TxtNote.Text = TxtNote.Text.ToUpper.ToUnaccented()
-        If _Product.LockInfo.IsLocked And _Product.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
-            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Product.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
+        If _Service.LockInfo.IsLocked And _Service.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
+            CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Service.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Success = False
         Else
             If IsValidFields() Then
                 Try
                     Cursor = Cursors.WaitCursor
-                    _Product.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
-                    _Product.Name = TxtName.Text
-                    _Product.InternalName = TxtInternalName.Text
-                    _Product.Family = New ProductFamily().Load(QbxFamily.FreezedPrimaryKey, False)
-                    _Product.Group = New ProductGroup().Load(QbxGroup.FreezedPrimaryKey, False)
-                    _Product.Unit = New ProductUnit().Load(QbxUnit.FreezedPrimaryKey, False)
-                    _Product.Location = TxtLocation.Text
-                    _Product.MinimumQuantity = DbxQtyMin.DecimalValue
-                    _Product.MaximumQuantity = DbxQtyMax.DecimalValue
-                    _Product.GrossWeight = DbxGrossWeight.DecimalValue
-                    _Product.NetWeight = DbxNetWeight.DecimalValue
-                    _Product.Note = TxtNote.Text
-                    _Product.SaveChanges()
-                    _Product.Lock()
-                    LblIDValue.Text = _Product.ID
-                    DgvProviderCode.Fill(_Product.ProviderCodes)
-                    DgvCode.Fill(_Product.Codes)
-                    DgvPrice.Fill(_Product.Prices)
-                    DgvPicture.Fill(_Product.Pictures)
+                    _Service.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                    _Service.Name = TxtName.Text
+                    _Service.InternalName = TxtInternalName.Text
+                    _Service.Family = New ProductFamily().Load(QbxFamily.FreezedPrimaryKey, False)
+                    _Service.Group = New ProductGroup().Load(QbxGroup.FreezedPrimaryKey, False)
+                    _Service.Unit = New ProductUnit().Load(QbxUnit.FreezedPrimaryKey, False)
+                    _Service.Location = TxtServiceCode.Text
+                    _Service.MinimumQuantity = DbxQtyMin.DecimalValue
+                    _Service.MaximumQuantity = DbxQtyMax.DecimalValue
+                    _Service.GrossWeight = DbxGrossWeight.DecimalValue
+                    _Service.NetWeight = DbxNetWeight.DecimalValue
+                    _Service.Note = TxtNote.Text
+                    _Service.SaveChanges()
+                    _Service.Lock()
+                    LblIDValue.Text = _Service.ID
+                    DgvProviderCode.Fill(_Service.ProviderCodes)
+                    DgvCode.Fill(_Service.Codes)
+                    DgvPrice.Fill(_Service.Prices)
+                    DgvPicture.Fill(_Service.Pictures)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Product)
-                    If _ProductsForm IsNot Nothing Then
+                    If _ServicesForm IsNot Nothing Then
                         _Filter.Filter()
-                        _ProductsForm.DgvProductLayout.Load()
-                        Row = _ProductsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
+                        _ServicesForm.DgvProductLayout.Load()
+                        Row = _ServicesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()
                     End If
@@ -489,7 +435,7 @@ Public Class FrmProduct
         Return Success
     End Function
     Private Sub TxtKeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtFilterProviderCode.KeyPress,
-                                                                                            TxtFilterCode.KeyPress,
+                                                                                            TxtFilterDescription.KeyPress,
                                                                                             TxtFilterPrice.KeyPress
         Dim LstChar As New List(Of Char) From {" ", ".", ",", "-", "/", "(", ")", "+", "*", "%", "&", "@", "#", "$", "<", ">", "\"}
         If Not Char.IsLetter(e.KeyChar) And Not Char.IsNumber(e.KeyChar) And Not LstChar.Contains(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
@@ -517,7 +463,7 @@ Public Class FrmProduct
             End If
         End If
     End Sub
-    Private Sub TxtFilterCode_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterCode.TextChanged
+    Private Sub TxtFilterCode_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterDescription.TextChanged
         FilterCode()
     End Sub
     Private Sub FilterCode()
@@ -530,8 +476,8 @@ Public Class FrmProduct
         If DgvCode.DataSource IsNot Nothing Then
             Table = DgvCode.DataSource
             View = Table.DefaultView
-            If TxtFilterCode.Text <> Nothing Then
-                Filter = Filter.Replace("@VALUE", TxtFilterCode.Text.Replace("%", Nothing).Replace("*", Nothing))
+            If TxtFilterDescription.Text <> Nothing Then
+                Filter = Filter.Replace("@VALUE", TxtFilterDescription.Text.Replace("%", Nothing).Replace("*", Nothing))
                 View.RowFilter = Filter
             Else
                 View.RowFilter = Nothing
@@ -663,15 +609,15 @@ Public Class FrmProduct
         QbxGroup.Select()
     End Sub
     Private Sub BtnIncludePicture_Click(sender As Object, e As EventArgs) Handles BtnIncludePicture.Click
-        Dim Form As New FrmProductPicture(_Product, New ProductPicture(), Me)
+        Dim Form As New FrmProductPicture(_Service, New ProductPicture(), Me)
         Form.ShowDialog()
     End Sub
     Private Sub BtnEditPicture_Click(sender As Object, e As EventArgs) Handles BtnEditPicture.Click
         Dim Form As FrmProductPicture
         Dim Picture As ProductPicture
         If DgvPicture.SelectedRows.Count = 1 Then
-            Picture = _Product.Pictures.Single(Function(x) x.Guid = DgvPicture.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmProductPicture(_Product, Picture, Me)
+            Picture = _Service.Pictures.Single(Function(x) x.Guid = DgvPicture.SelectedRows(0).Cells("Guid").Value)
+            Form = New FrmProductPicture(_Service, Picture, Me)
             Form.ShowDialog()
         End If
     End Sub
@@ -679,9 +625,9 @@ Public Class FrmProduct
         Dim Picture As ProductPicture
         If DgvPicture.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Picture = _Product.Pictures.Single(Function(x) x.Guid = DgvPicture.SelectedRows(0).Cells("Guid").Value)
-                _Product.Pictures.Remove(Picture)
-                DgvPicture.Fill(_Product.Pictures)
+                Picture = _Service.Pictures.Single(Function(x) x.Guid = DgvPicture.SelectedRows(0).Cells("Guid").Value)
+                _Service.Pictures.Remove(Picture)
+                DgvPicture.Fill(_Service.Pictures)
                 BtnSave.Enabled = True
             End If
         End If
@@ -689,12 +635,12 @@ Public Class FrmProduct
     Private Sub TxtName_Leave(sender As Object, e As EventArgs) Handles TxtName.Leave
         If TxtInternalName.Text = Nothing Then TxtInternalName.Text = TxtName.Text
     End Sub
-    Private Sub TxtFilterCode_Enter(sender As Object, e As EventArgs) Handles TxtFilterCode.Enter
+    Private Sub TxtFilterCode_Enter(sender As Object, e As EventArgs) Handles TxtFilterDescription.Enter
         EprInformation.SetError(TsCode, "Filtrando os campos: Nome e Código")
         EprInformation.SetIconAlignment(TsCode, ErrorIconAlignment.MiddleLeft)
         EprInformation.SetIconPadding(TsCode, -365)
     End Sub
-    Private Sub TxtFilterCode_Leave(sender As Object, e As EventArgs) Handles TxtFilterCode.Leave
+    Private Sub TxtFilterCode_Leave(sender As Object, e As EventArgs) Handles TxtFilterDescription.Leave
         EprInformation.Clear()
     End Sub
     Private Sub TxtFilterProviderCode_Enter(sender As Object, e As EventArgs) Handles TxtFilterProviderCode.Enter
@@ -722,7 +668,7 @@ Public Class FrmProduct
         EprInformation.Clear()
     End Sub
     Private Sub FrmProduct_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-        _Product.Unlock()
+        _Service.Unlock()
     End Sub
     Private Sub DgvProviderCode_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvProviderCode.DataSourceChanged
         FilterProviderCode()

@@ -34,12 +34,12 @@ Public Enum Routine
     Product = 6
     ProductProviderCode = 601
     ProductCode = 602
-    ProductPrice = 603
+    SellablePrice = 603
     ProductPicture = 604
     <Description("Unidade de Medida")> <TriStatePrivilege> <RoutineDependency(Product)>
     ProductUnit = 7
     <Description("Tabela de Preços")> <TriStatePrivilege> <RoutineDependency(Product)>
-    ProductPriceTable = 8
+    SellablePriceTable = 8
     <Description("Família de Produtos")> <TriStatePrivilege> <RoutineDependency(Product)>
     ProductFamily = 9
     <Description("Grupo de Produtos")> <TriStatePrivilege> <RoutineDependency(Product)>
@@ -112,6 +112,10 @@ Public Enum Routine
     CrmEditTreatment = 2106
     <Description("Agendamento de Visita")> <TriStatePrivilege> <RoutineDependency(Evaluation)>
     VisitSchedule = 22
+    <Description("Serviço")> <TriStatePrivilege>
+    Service = 23
+    <Description("Serviço")> <TriStatePrivilege>
+    ServiceComplement = 2301
     <Description("Exportar as grades")> <BiStatePrivilege>
     ExportGrid = 9901
     <Description("Acessar o histórico")> <BiStatePrivilege>

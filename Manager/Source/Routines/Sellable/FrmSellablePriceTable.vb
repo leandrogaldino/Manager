@@ -1,11 +1,11 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
-Public Class FrmProductPriceTable
-    Private _PriceTable As ProductPriceTable
-    Private _PriceTablesForm As FrmProductPriceTables
+Public Class FrmSellablePriceTable
+    Private _PriceTable As SellablePriceTable
+    Private _PriceTablesForm As FrmSellablePriceTables
     Private _PriceTablesGrid As DataGridView
-    Private _Filter As ProductPriceTableFilter
+    Private _Filter As SellablePriceTableFilter
     Private _Deleting As Boolean
     Private _Loading As Boolean
     Private _User As User
@@ -27,17 +27,17 @@ Public Class FrmProductPriceTable
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(PriceTable As ProductPriceTable, PriceTablesForm As FrmProductPriceTables)
+    Public Sub New(PriceTable As SellablePriceTable, PriceTablesForm As FrmSellablePriceTables)
         InitializeComponent()
         _PriceTable = PriceTable
         _PriceTablesForm = PriceTablesForm
         _PriceTablesGrid = _PriceTablesForm.DgvData
-        _Filter = CType(_PriceTablesForm.PgFilter.SelectedObject, ProductPriceTableFilter)
+        _Filter = CType(_PriceTablesForm.PgFilter.SelectedObject, SellablePriceTableFilter)
         _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
     End Sub
-    Public Sub New(PriceTable As ProductPriceTable)
+    Public Sub New(PriceTable As SellablePriceTable)
         InitializeComponent()
         _PriceTable = PriceTable
         _User = Locator.GetInstance(Of Session).User
@@ -64,7 +64,7 @@ Public Class FrmProductPriceTable
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_PriceTable.Status)
         LblCreationValue.Text = _PriceTable.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _PriceTable.Name
-        BtnDelete.Enabled = _PriceTable.ID > 0 And _User.CanDelete(Routine.ProductPriceTable)
+        BtnDelete.Enabled = _PriceTable.ID > 0 And _User.CanDelete(Routine.SellablePriceTable)
         Text = "Tabela de Preço"
         If _PriceTable.LockInfo.IsLocked And Not _PriceTable.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _PriceTable.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _PriceTable.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
@@ -112,7 +112,7 @@ Public Class FrmProductPriceTable
                 If Not Save() Then Exit Sub
             End If
         End If
-        _PriceTable = New ProductPriceTable
+        _PriceTable = New SellablePriceTable
         LoadData()
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
@@ -145,7 +145,7 @@ Public Class FrmProductPriceTable
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.ProductPriceTable, _PriceTable.ID)
+        Dim Frm As New FrmLog(Routine.SellablePriceTable, _PriceTable.ID)
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
@@ -212,7 +212,7 @@ Public Class FrmProductPriceTable
                     _PriceTable.Lock()
                     LblIDValue.Text = _PriceTable.ID
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = _User.CanDelete(Routine.ProductPriceTable)
+                    BtnDelete.Enabled = _User.CanDelete(Routine.SellablePriceTable)
                     If _PriceTablesForm IsNot Nothing Then
                         _Filter.Filter()
                         _PriceTablesForm.DgvPriceTableLayout.Load()

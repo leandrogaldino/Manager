@@ -1171,7 +1171,7 @@ Partial Class FrmProduct
         'DgvPriceLayout
         '
         Me.DgvPriceLayout.DataGridView = Me.DgvPrice
-        Me.DgvPriceLayout.Routine = Manager.Routine.ProductPrice
+        Me.DgvPriceLayout.Routine = Manager.Routine.SellablePrice
         '
         'DgvPictureLayout
         '

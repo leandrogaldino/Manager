@@ -1,6 +1,5 @@
-UPDATE productprice SET
-
-    pricetableid = @pricetableid,
+UPDATE sellableprice SET
+    sellabletableid = @sellabletableid,
     price = @price,
     userid = @userid
-WHERE productprice.id = @id;
+WHERE sellableprice.id = @id;

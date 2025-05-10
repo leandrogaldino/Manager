@@ -1,10 +1,8 @@
-﻿Imports System.ComponentModel
-Imports ControlLibrary
+﻿Imports ControlLibrary
 Imports MySql.Data.MySqlClient
-''' <summary>
-''' Representa o filtro das tabelas de preços.
-''' </summary>
-Public Class ProductPriceTableFilter
+Imports System.ComponentModel
+
+Public Class ServiceFilter
     <Browsable(False)>
     Public Property DataGridView As DataGridView
     <Browsable(False)>
@@ -17,11 +15,22 @@ Public Class ProductPriceTableFilter
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(SimpleStatusConverter))>
     Public Overridable Property Status As String
+    <DisplayName("Nome")>
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(UpperNoAccentConverter))>
-    <DisplayName("Nome")>
     Public Property Name As String
+    <DisplayName("Código Serviço")>
+    <NotifyParentProperty(True)>
+    <RefreshProperties(RefreshProperties.All)>
+    <TypeConverter(GetType(UpperNoAccentConverter))>
+    Public Property ServiceCode As String
+    <DisplayName("Observação")>
+    <NotifyParentProperty(True)>
+    <RefreshProperties(RefreshProperties.All)>
+    <TypeConverter(GetType(UpperNoAccentConverter))>
+    Public Overridable Property Note As String
+
     Public Sub New(Dgv As DataGridView, Pg As PropertyGrid)
         DataGridView = Dgv
         PropertyGrid = Pg
@@ -42,10 +51,12 @@ Public Class ProductPriceTableFilter
         End If
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
-            Using Cmd As New MySqlCommand(My.Resources.ProductPriceTableFilter, Con)
+            Using Cmd As New MySqlCommand(My.Resources.ServiceFilter, Con)
                 If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
                 If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = EnumHelper.GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
                 If Name <> Nothing Then Cmd.Parameters.AddWithValue("@name", Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@name", "%")
+                If ServiceCode <> Nothing Then Cmd.Parameters.AddWithValue("@code", ServiceCode) : Filtering = True Else Cmd.Parameters.AddWithValue("@servicecode", "%")
+                If Note <> Nothing Then Cmd.Parameters.AddWithValue("@note", Note) : Filtering = True Else Cmd.Parameters.AddWithValue("@note", "%")
                 Using Adp As New MySqlDataAdapter(Cmd)
                     Adp.Fill(Table)
                     DataGridView.DataSource = Nothing
@@ -77,5 +88,7 @@ Public Class ProductPriceTableFilter
         ID = Nothing
         Status = Nothing
         Name = Nothing
+        ServiceCode = Nothing
+        Note = Nothing
     End Sub
 End Class

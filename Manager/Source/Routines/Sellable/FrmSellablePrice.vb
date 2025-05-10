@@ -1,9 +1,9 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Extensions
-Public Class FrmProductPrice
+Public Class FrmSellablePrice
     Private _ProductForm As FrmProduct
-    Private _Product As Product
-    Private _ProductPrice As ProductPrice
+    Private _Sellable As SellableModel
+    Private _SellablePrice As SellablePrice
     Private _Deleting As Boolean
     Private _Loading As Boolean
     Private _User As User
@@ -19,10 +19,10 @@ Public Class FrmProductPrice
         End If
         MyBase.DefWndProc(m)
     End Sub
-    Public Sub New(Product As Product, ProductPrice As ProductPrice, ProductForm As FrmProduct)
+    Public Sub New(Product As Product, ProductPrice As SellablePrice, ProductForm As FrmProduct)
         InitializeComponent()
-        _Product = Product
-        _ProductPrice = ProductPrice
+        _Sellable = Product
+        _SellablePrice = ProductPrice
         _ProductForm = ProductForm
         _User = Locator.GetInstance(Of Session).User
         LoadForm()
@@ -43,7 +43,7 @@ Public Class FrmProductPrice
     Private Sub AfterDataGridViewRowMove()
         If _ProductForm.DgvPrice.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _ProductPrice = _Product.Prices.Single(Function(x) x.Guid = _ProductForm.DgvPrice.SelectedRows(0).Cells("Guid").Value)
+            _SellablePrice = _Sellable.Prices.Single(Function(x) x.Guid = _ProductForm.DgvPrice.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -79,15 +79,15 @@ Public Class FrmProductPrice
                 If Not PreSave() Then Exit Sub
             End If
         End If
-        _ProductPrice = New ProductPrice()
+        _SellablePrice = New SellablePrice()
         LoadForm()
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _ProductForm.DgvPrice.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _ProductPrice = _Product.Prices.Single(Function(x) x.Guid = _ProductForm.DgvPrice.SelectedRows(0).Cells("Guid").Value)
-                _Product.Prices.Remove(_ProductPrice)
-                _ProductForm.DgvPrice.Fill(_Product.Prices)
+                _SellablePrice = _Sellable.Prices.Single(Function(x) x.Guid = _ProductForm.DgvPrice.SelectedRows(0).Cells("Guid").Value)
+                _Sellable.Prices.Remove(_SellablePrice)
+                _ProductForm.DgvPrice.Fill(_Sellable.Prices)
                 _ProductForm.DgvPriceLayout.Load()
                 _Deleting = True
                 Dispose()
@@ -96,7 +96,7 @@ Public Class FrmProductPrice
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.ProductPrice, _ProductPrice.ID)
+        Dim Frm As New FrmLog(Routine.SellablePrice, _SellablePrice.ID)
         Frm.ShowDialog()
     End Sub
     Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles QbxPriceTable.TextChanged,
@@ -109,12 +109,12 @@ Public Class FrmProductPrice
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = If(_ProductPrice.IsSaved, _ProductForm.DgvPrice.SelectedRows(0).Cells("Order").Value, 0)
-        LblCreationValue.Text = _ProductPrice.Creation
+        LblOrderValue.Text = If(_SellablePrice.IsSaved, _ProductForm.DgvPrice.SelectedRows(0).Cells("Order").Value, 0)
+        LblCreationValue.Text = _SellablePrice.Creation
         QbxPriceTable.Unfreeze()
-        QbxPriceTable.Freeze(_ProductPrice.PriceTable.ID)
-        DbxPrice.Text = _ProductPrice.Price
-        If Not _ProductPrice.IsSaved Then
+        QbxPriceTable.Freeze(_SellablePrice.PriceTable.ID)
+        DbxPrice.Text = _SellablePrice.Price
+        If Not _SellablePrice.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
         Else
@@ -136,7 +136,7 @@ Public Class FrmProductPrice
             EprValidation.SetIconAlignment(LblPriceTable, ErrorIconAlignment.MiddleRight)
             QbxPriceTable.Select()
             Return False
-        ElseIf Not _ProductPrice.IsSaved And _Product.Prices.Any(Function(x) x.PriceTable.ID = QbxPriceTable.FreezedPrimaryKey) Then
+        ElseIf Not _SellablePrice.IsSaved And _Sellable.Prices.Any(Function(x) x.PriceTable.ID = QbxPriceTable.FreezedPrimaryKey) Then
             EprValidation.SetError(LblPriceTable, "Este produto já possui um preço nessa tabela de preços.")
             EprValidation.SetIconAlignment(LblPriceTable, ErrorIconAlignment.MiddleRight)
             QbxPriceTable.Select()
@@ -152,28 +152,28 @@ Public Class FrmProductPrice
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
         If IsValidFields() Then
-            If _ProductPrice.IsSaved Then
-                _Product.Prices.Single(Function(x) x.Guid = _ProductPrice.Guid).PriceTable = New ProductPriceTable().Load(QbxPriceTable.FreezedPrimaryKey, False)
-                _Product.Prices.Single(Function(x) x.Guid = _ProductPrice.Guid).Price = DbxPrice.DecimalValue
+            If _SellablePrice.IsSaved Then
+                _Sellable.Prices.Single(Function(x) x.Guid = _SellablePrice.Guid).PriceTable = New SellablePriceTable().Load(QbxPriceTable.FreezedPrimaryKey, False)
+                _Sellable.Prices.Single(Function(x) x.Guid = _SellablePrice.Guid).Price = DbxPrice.DecimalValue
             Else
-                _ProductPrice = New ProductPrice With {
-                    .PriceTable = New ProductPriceTable().Load(QbxPriceTable.FreezedPrimaryKey, False),
+                _SellablePrice = New SellablePrice With {
+                    .PriceTable = New SellablePriceTable().Load(QbxPriceTable.FreezedPrimaryKey, False),
                     .Price = DbxPrice.DecimalValue
                 }
-                _ProductPrice.SetIsSaved(True)
-                _Product.Prices.Add(_ProductPrice)
+                _SellablePrice.SetIsSaved(True)
+                _Sellable.Prices.Add(_SellablePrice)
             End If
-            _ProductForm.DgvPrice.Fill(_Product.Prices)
+            _ProductForm.DgvPrice.Fill(_Sellable.Prices)
             _ProductForm.DgvPriceLayout.Load()
             BtnSave.Enabled = False
-            If Not _ProductPrice.IsSaved Then
+            If Not _SellablePrice.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _ProductForm.DgvPrice.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ProductPrice.Guid)
+            Row = _ProductForm.DgvPrice.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _SellablePrice.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
             LblOrderValue.Text = _ProductForm.DgvPrice.SelectedRows(0).Cells("Order").Value
             _ProductForm.EprValidation.Clear()
@@ -192,22 +192,22 @@ Public Class FrmProductPrice
     End Sub
     Private Sub QbxPriceTable_Enter(sender As Object, e As EventArgs) Handles QbxPriceTable.Enter
         TmrQueriedBox.Stop()
-        BtnView.Visible = QbxPriceTable.IsFreezed And _User.CanWrite(Routine.ProductPriceTable)
-        BtnNew.Visible = _User.CanWrite(Routine.ProductPriceTable)
-        BtnFilter.Visible = _User.CanAccess(Routine.ProductPriceTable)
+        BtnView.Visible = QbxPriceTable.IsFreezed And _User.CanWrite(Routine.SellablePriceTable)
+        BtnNew.Visible = _User.CanWrite(Routine.SellablePriceTable)
+        BtnFilter.Visible = _User.CanAccess(Routine.SellablePriceTable)
     End Sub
     Private Sub QbxPriceTableLeave(sender As Object, e As EventArgs) Handles QbxPriceTable.Leave
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
     Private Sub QbxPriceTable_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxPriceTable.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnView.Visible = QbxPriceTable.IsFreezed And _User.CanWrite(Routine.ProductPriceTable)
+        If Not _Loading Then BtnView.Visible = QbxPriceTable.IsFreezed And _User.CanWrite(Routine.SellablePriceTable)
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
-        Dim PriceTable As ProductPriceTable
-        Dim Form As FrmProductPriceTable
-        PriceTable = New ProductPriceTable
-        Form = New FrmProductPriceTable(PriceTable)
+        Dim PriceTable As SellablePriceTable
+        Dim Form As FrmSellablePriceTable
+        PriceTable = New SellablePriceTable
+        Form = New FrmSellablePriceTable(PriceTable)
         Form.ShowDialog()
         EprValidation.Clear()
         If PriceTable.ID > 0 Then
@@ -216,7 +216,7 @@ Public Class FrmProductPrice
         QbxPriceTable.Select()
     End Sub
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
-        Dim Form As New FrmProductPriceTable(New ProductPriceTable().Load(QbxPriceTable.FreezedPrimaryKey, True))
+        Dim Form As New FrmSellablePriceTable(New SellablePriceTable().Load(QbxPriceTable.FreezedPrimaryKey, True))
         Form.ShowDialog()
         QbxPriceTable.Freeze(QbxPriceTable.FreezedPrimaryKey)
         QbxPriceTable.Select()

@@ -3,12 +3,12 @@ Imports MySql.Data.MySqlClient
 ''' <summary>
 ''' Representa uma tabela de preços.
 ''' </summary>
-Public Class ProductPriceTable
+Public Class SellablePriceTable
     Inherits ParentModel
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
     Public Sub New()
-        SetRoutine(Routine.ProductPriceTable)
+        SetRoutine(Routine.SellablePriceTable)
     End Sub
     Public Sub Clear()
         Unlock()
@@ -19,7 +19,7 @@ Public Class ProductPriceTable
         Name = Nothing
         If LockInfo.IsLocked Then Unlock()
     End Sub
-    Public Function Load(Identity As Long, LockMe As Boolean) As ProductPriceTable
+    Public Function Load(Identity As Long, LockMe As Boolean) As SellablePriceTable
         Dim TableResult As DataTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()

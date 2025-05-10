@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class FrmProductPrice
+Partial Class FrmSellablePrice
     Inherits System.Windows.Forms.Form
 
     'Descartar substituições de formulário para limpar a lista de componentes.
@@ -303,6 +303,7 @@ Partial Class FrmProductPrice
         Condition1.TableNameOrAlias = "productpricetable"
         Condition1.Value = "@statusid"
         Me.QbxPriceTable.Conditions.Add(Condition1)
+        Me.QbxPriceTable.DebugOnTextChanged = False
         Me.QbxPriceTable.DisplayFieldAlias = "Nome"
         Me.QbxPriceTable.DisplayFieldName = "name"
         Me.QbxPriceTable.DisplayMainFieldName = "id"
@@ -372,7 +373,7 @@ Partial Class FrmProductPrice
         Me.FlpPriceTable.Size = New System.Drawing.Size(69, 21)
         Me.FlpPriceTable.TabIndex = 4
         '
-        'FrmProductPrice
+        'FrmSellablePrice
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
@@ -391,9 +392,9 @@ Partial Class FrmProductPrice
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "FrmProductPrice"
+        Me.Name = "FrmSellablePrice"
         Me.ShowIcon = False
-        Me.Text = "Preço de Produto"
+        Me.Text = "Preço"
         Me.TsMain.ResumeLayout(False)
         Me.TsMain.PerformLayout()
         Me.Panel1.ResumeLayout(False)

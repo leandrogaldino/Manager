@@ -5611,6 +5611,173 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM servicecomplement
+        '''WHERE servicecomplement.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property ServiceComplementDelete() As String
+            Get
+                Return ResourceManager.GetString("ServiceComplementDelete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
+        '''	servicecomplement.complement AS &apos;Complemento&apos;
+        '''FROM servicecomplement
+        '''WHERE servicecomplement.serviceid = @serviceid;.
+        '''</summary>
+        Friend ReadOnly Property ServiceComplementDetailSelect() As String
+            Get
+                Return ResourceManager.GetString("ServiceComplementDetailSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO servicecomplement
+        '''(
+        '''	serviceid,
+        '''	creation,
+        '''	complement,
+        '''
+        '''	userid
+        ''')
+        '''VALUES
+        '''(
+        '''	@serviceid,
+        '''	@creation,
+        '''	@complement,
+        '''	@userid
+        ''');
+        '''.
+        '''</summary>
+        Friend ReadOnly Property ServiceComplementInsert() As String
+            Get
+                Return ResourceManager.GetString("ServiceComplementInsert", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	servicecomplement.id,
+        '''	servicecomplement.creation,
+        '''	servicecomplement.complement,
+        '''FROM servicecomplement
+        '''WHERE servicecomplement.serviceid = @serviceid;.
+        '''</summary>
+        Friend ReadOnly Property ServiceComplementSelect() As String
+            Get
+                Return ResourceManager.GetString("ServiceComplementSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE servicecomplement SET
+        '''    complement = @complement,
+        '''    userid = @userid
+        '''WHERE servicecomplement.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property ServiceComplementUpdate() As String
+            Get
+                Return ResourceManager.GetString("ServiceComplementUpdate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM service
+        '''WHERE service.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property ServiceDelete() As String
+            Get
+                Return ResourceManager.GetString("ServiceDelete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
+        '''	product.id AS &apos;ID&apos;,
+        '''    product.creation AS &apos;Criação&apos;,
+        '''    CASE 
+        '''		WHEN product.statusid = 0 THEN &quot;ATIVO&quot;
+        '''        WHEN product.statusid = 1 THEN &quot;INATIVO&quot;
+        '''	END AS &apos;Status&apos;,
+        '''    code.code AS &apos;Código&apos;,
+        '''    product.name AS &apos;Nome&apos;,
+        '''    product.internalname AS &apos;Nome Interno&apos;,
+        '''    productfamily.name AS &apos;Família&apos;,
+        '''    productgroup.name AS &apos;Grupo&apos;,
+        '''    product.location AS &apos;Localização&apos;,
+        '''    product.minimumquantity AS &apos;Qtd. Min.&apos;,
+        '''    product.maximumquantity AS &apos;Qtd. Max.&apos;,
+        '''    product.grossw [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property ServiceFilter() As String
+            Get
+                Return ResourceManager.GetString("ServiceFilter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO service
+        '''(
+        '''    creation,
+        '''    statusid,
+        '''    name,
+        '''    servicecode,
+        '''    note,
+        '''    lastupdate,
+        '''    userid
+        ''')
+        '''VALUES
+        '''(
+        '''    @creation,
+        '''    @statusid,
+        '''    @name,
+        '''    @servicecode,
+        '''    @note,
+        '''    @lastupdate,
+        '''    @userid
+        ''');.
+        '''</summary>
+        Friend ReadOnly Property ServiceInsert() As String
+            Get
+                Return ResourceManager.GetString("ServiceInsert", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	service.id,
+        '''	service.creation,
+        '''    service.statusid,
+        '''	service.name,
+        '''	service.servicecode,
+        '''	service.note,
+        '''	service.lastupdate
+        '''FROM service
+        '''WHERE service.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property ServiceSelect() As String
+            Get
+                Return ResourceManager.GetString("ServiceSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE service SET
+        '''    statusid =  @statusid,
+        '''    name = @name,
+        '''    servicecode = @servicecode,
+        '''    note = @note,
+        '''    lastupdate = @lastupdate
+        '''WHERE service.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property ServiceUpdate() As String
+            Get
+                Return ResourceManager.GetString("ServiceUpdate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SET lc_time_names = &apos;pt_BR&apos;;.
         '''</summary>
         Friend ReadOnly Property SetBrazilianDatabaseMonthNames() As String

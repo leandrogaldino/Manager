@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class FrmProductPriceTables
+Partial Class FrmSellablePriceTables
     Inherits System.Windows.Forms.Form
 
     'Descartar substituições de formulário para limpar a lista de componentes.
@@ -362,7 +362,7 @@ Partial Class FrmProductPriceTables
         'DgvPriceTableLayout
         '
         Me.DgvPriceTableLayout.DataGridView = Me.DgvData
-        Me.DgvPriceTableLayout.Routine = Manager.Routine.ProductPriceTable
+        Me.DgvPriceTableLayout.Routine = Manager.Routine.SellablePriceTable
         '
         'FrmProductPriceTables
         '

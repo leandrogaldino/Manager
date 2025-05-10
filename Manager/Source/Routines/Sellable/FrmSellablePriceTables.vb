@@ -1,9 +1,9 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
-Public Class FrmProductPriceTables
-    Private _PriceTable As New ProductPriceTable
-    Private _Filter As ProductPriceTableFilter
+Public Class FrmSellablePriceTables
+    Private _PriceTable As New SellablePriceTable
+    Private _Filter As SellablePriceTableFilter
     Private _User As User
     Public Sub New()
         InitializeComponent()
@@ -12,13 +12,13 @@ Public Class FrmProductPriceTables
         SplitContainer1.SplitterDistance = 250
         SplitContainer2.Panel1Collapsed = True
         SplitContainer2.SplitterDistance = 800
-        _Filter = New ProductPriceTableFilter(DgvData, PgFilter)
+        _Filter = New SellablePriceTableFilter(DgvData, PgFilter)
         _Filter.Filter()
         _User = Locator.GetInstance(Of Session).User
         PgFilter.SelectedObject = _Filter
-        BtnInclude.Visible = _User.CanWrite(Routine.ProductPriceTable)
-        BtnEdit.Visible = _User.CanWrite(Routine.ProductPriceTable)
-        BtnDelete.Visible = _User.CanDelete(Routine.ProductPriceTable)
+        BtnInclude.Visible = _User.CanWrite(Routine.SellablePriceTable)
+        BtnEdit.Visible = _User.CanWrite(Routine.SellablePriceTable)
+        BtnDelete.Visible = _User.CanDelete(Routine.SellablePriceTable)
         BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -28,16 +28,16 @@ Public Class FrmProductPriceTables
         AddHandler Parent.FindForm.Resize, AddressOf FrmMain_ResizeEnd
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
-        Dim Form As New FrmProductPriceTable(New ProductPriceTable, Me)
+        Dim Form As New FrmSellablePriceTable(New SellablePriceTable, Me)
         Form.ShowDialog()
     End Sub
     Private Sub BtnEdit_Click(sender As Object, e As EventArgs) Handles BtnEdit.Click
-        Dim PriceTableForm As FrmProductPriceTable
+        Dim PriceTableForm As FrmSellablePriceTable
         If DgvData.SelectedRows.Count = 1 Then
             Try
                 Cursor = Cursors.WaitCursor
-                _PriceTable = New ProductPriceTable().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
-                PriceTableForm = New FrmProductPriceTable(_PriceTable, Me)
+                _PriceTable = New SellablePriceTable().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
+                PriceTableForm = New FrmSellablePriceTable(_PriceTable, Me)
                 PriceTableForm.ShowDialog()
             Catch ex As Exception
                 CMessageBox.Show("ERRO PP004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

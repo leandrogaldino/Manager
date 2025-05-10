@@ -746,8 +746,21 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Routines\PrivilegePreset\PrivilegePresetFilter.vb" />
+    <Compile Include="Source\Routines\Service\FrmService.Designer.vb">
+      <DependentUpon>FrmService.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Service\FrmService.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\Service\FrmServices.Designer.vb">
+      <DependentUpon>FrmServices.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Service\FrmServices.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Source\Routines\Service\Service.vb" />
     <Compile Include="Source\Routines\Service\ServiceComplement.vb" />
+    <Compile Include="Source\Routines\Service\ServiceFilter.vb" />
     <Compile Include="Source\Routines\User\UserPrivilege.vb" />
     <Compile Include="Source\Routines\VisitSchedule\FrmVisitSchedule.Designer.vb">
       <DependentUpon>FrmVisitSchedule.vb</DependentUpon>
@@ -1562,6 +1575,9 @@
     <EmbeddedResource Include="Source\Controls\UcTriStatePrivilegeTitle.resx">
       <DependentUpon>UcTriStatePrivilegeTitle.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Service\FrmServices.resx">
+      <DependentUpon>FrmServices.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\User\FrmUser.resx">
       <DependentUpon>FrmUser.vb</DependentUpon>
     </EmbeddedResource>
@@ -1681,13 +1697,23 @@
     <Content Include="Resources\SQL\PrivilegePresetUpdate.sql" />
     <Content Include="Resources\SQL\PrivilegePresetPrivilegeDelete.sql" />
     <Content Include="Resources\SQL\PrivilegePresetFilter.sql" />
+    <Content Include="Resources\SQL\ServiceFilter.sql" />
+    <Content Include="Resources\SQL\ServiceComplementDetailSelect.sql" />
+    <Content Include="Resources\SQL\ServiceComplementDelete.sql" />
+    <Content Include="Resources\SQL\ServiceComplementInsert.sql" />
+    <Content Include="Resources\SQL\ServiceComplementSelect.sql" />
+    <Content Include="Resources\SQL\ServiceComplementUpdate.sql" />
     <Content Include="Resources\SQL\UserPrivilegeDelete.sql" />
     <Content Include="Resources\SQL\PrivilegePresetPrivilegeInsert.sql" />
     <Content Include="Resources\SQL\PrivilegePresetPrivilegeSelect.sql" />
+    <Content Include="Resources\SQL\ServiceDelete.sql" />
     <Content Include="Resources\SQL\VisitScheduleDelete .sql" />
     <Content Include="Resources\SQL\VisitScheduleFilter.sql" />
+    <Content Include="Resources\SQL\ServiceInsert.sql" />
     <Content Include="Resources\SQL\VisitScheduleInsert.sql" />
+    <Content Include="Resources\SQL\ServiceSelect.sql" />
     <Content Include="Resources\SQL\VisitScheduleSelect.sql" />
+    <Content Include="Resources\SQL\ServiceUpdate.sql" />
     <Content Include="Resources\SQL\VisitScheduleUpdate.sql" />
     <Content Include="Resources\SQL\CrmDetailSelect.sql" />
     <Content Include="Resources\SQL\CrmSetStatus.sql" />

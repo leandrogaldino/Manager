@@ -183,6 +183,7 @@ Public Class Product
                 For Each Price As SellablePrice In Prices
                     Using CmdSellablePrice As New MySqlCommand(My.Resources.SellablePriceInsert, Con)
                         CmdSellablePrice.Parameters.AddWithValue("@productid", ID)
+                        CmdSellablePrice.Parameters.AddWithValue("@serviceid", DBNull.Value)
                         CmdSellablePrice.Parameters.AddWithValue("@creation", Price.Creation)
                         CmdSellablePrice.Parameters.AddWithValue("@sellablepricetableid", Price.PriceTable.ID)
                         CmdSellablePrice.Parameters.AddWithValue("@price", Price.Price)
@@ -324,6 +325,7 @@ Public Class Product
                     If Price.ID = 0 Then
                         Using CmdPrice As New MySqlCommand(My.Resources.SellablePriceInsert, Con)
                             CmdPrice.Parameters.AddWithValue("@productid", ID)
+                            CmdPrice.Parameters.AddWithValue("@serviceid", DBNull.Value)
                             CmdPrice.Parameters.AddWithValue("@creation", Price.Creation)
                             CmdPrice.Parameters.AddWithValue("@sellablepricetableid", Price.PriceTable.ID)
                             CmdPrice.Parameters.AddWithValue("@price", Price.Price)
@@ -432,6 +434,7 @@ Public Class Product
         Using CmdPrice As New MySqlCommand(My.Resources.SellablePriceSelect, Transaction.Connection)
             CmdPrice.Transaction = Transaction
             CmdPrice.Parameters.AddWithValue("@productid", ID)
+            CmdPrice.Parameters.AddWithValue("@serviceid", DBNull.Value)
             Using Adp As New MySqlDataAdapter(CmdPrice)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
@@ -495,6 +498,7 @@ Public Class Product
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Using Cmd As New MySqlCommand(My.Resources.SellablePriceDetailSelect, Con)
                 Cmd.Parameters.AddWithValue("@productid", ProductID)
+                Cmd.Parameters.AddWithValue("@serviceid", DBNull.Value)
                 Using Adp As New MySqlDataAdapter(Cmd)
                     Adp.Fill(TableResult)
                     Dgv.DataSource = TableResult

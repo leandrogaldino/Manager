@@ -40,7 +40,7 @@ Public Class FrmSellablePriceTables
                 PriceTableForm = New FrmSellablePriceTable(_PriceTable, Me)
                 PriceTableForm.ShowDialog()
             Catch ex As Exception
-                CMessageBox.Show("ERRO PP004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                CMessageBox.Show("ERRO SL004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
                 Cursor = Cursors.Default
             End Try
@@ -62,7 +62,7 @@ Public Class FrmSellablePriceTables
                             If ex.Number = 1451 Then
                                 CMessageBox.Show("Esse registro não pode ser excluído pois já foi referenciado em outras rotinas.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                             Else
-                                CMessageBox.Show("ERRO PP005", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                                CMessageBox.Show("ERRO SL005", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                             End If
                         End Try
                     End If
@@ -70,7 +70,7 @@ Public Class FrmSellablePriceTables
                     CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _PriceTable.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                 End If
             Catch ex As Exception
-                CMessageBox.Show("ERRO PP006", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                CMessageBox.Show("ERRO SL006", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
                 Cursor = Cursors.Default
             End Try

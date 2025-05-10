@@ -89,7 +89,7 @@ Public Class FrmSellablePriceTable
             _PriceTable.Load(_PriceTablesGrid.SelectedRows(0).Cells("id").Value, True)
             LoadData()
         Catch ex As Exception
-            CMessageBox.Show("ERRO PP001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+            CMessageBox.Show("ERRO SL001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally
             Cursor = Cursors.Default
         End Try
@@ -137,7 +137,7 @@ Public Class FrmSellablePriceTable
                 If ex.Number = MysqlError.ForeignKey Then
                     CMessageBox.Show("Esse registro não pode ser excluído pois já foi referenciado em outras rotinas.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                 Else
-                    CMessageBox.Show("ERRO PP002", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                    CMessageBox.Show("ERRO SL002", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                 End If
             Finally
                 Cursor = Cursors.Default
@@ -225,7 +225,7 @@ Public Class FrmSellablePriceTable
                     If ex.Number = MysqlError.UniqueKey Then
                         CMessageBox.Show("Já existe uma tabela de preços cadastrada com esse nome.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                     Else
-                        CMessageBox.Show("ERRO PP003", "Ocorreu um erro salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                        CMessageBox.Show("ERRO SL003", "Ocorreu um erro salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                     End If
                     Return False
                 End Try

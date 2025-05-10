@@ -328,6 +328,7 @@ Public Class Evaluation
         PartsElapsedDay.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         ReplacedItems.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         Photos.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        _Shadow = Clone()
     End Sub
     Private Sub Insert()
         Dim Session = Locator.GetInstance(Of Session)

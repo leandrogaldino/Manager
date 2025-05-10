@@ -1,6 +1,6 @@
 SELECT
 	servicecomplement.id,
 	servicecomplement.creation,
-	servicecomplement.complement,
+	servicecomplement.complement
 FROM servicecomplement
 WHERE servicecomplement.serviceid = @serviceid;

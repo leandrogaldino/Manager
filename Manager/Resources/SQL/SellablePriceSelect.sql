@@ -4,4 +4,7 @@ SELECT
 	sellableprice.sellablepricetableid,
 	sellableprice.price
 FROM sellableprice
-WHERE sellableprice.productid = @productid;
+WHERE 
+(@productid IS NULL OR (sellableprice.productid IS NOT NULL AND sellableprice.productid = @productid))
+    AND
+    (@serviceid IS NULL OR (sellableprice.serviceid IS NOT NULL AND sellableprice.serviceid = @serviceid));

@@ -102,6 +102,7 @@ Public Class Request
         End If
         SetIsSaved(True)
         Items.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        _Shadow = Clone()
     End Sub
     Private Sub Insert()
         Using Transaction As New Transactions.TransactionScope()

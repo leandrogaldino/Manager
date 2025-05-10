@@ -23,9 +23,7 @@ Public Class FrmServices
         BtnDelete.Visible = _User.CanDelete(Routine.Service)
         BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
     End Sub
-    Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvServiceLayout.Load()
-    End Sub
+
     Private Sub Form_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         AddHandler Parent.FindForm.Resize, AddressOf FrmMain_ResizeEnd
     End Sub
@@ -44,7 +42,7 @@ Public Class FrmServices
                 ServiceForm.DgvPrice.Fill(_Service.Prices)
                 ServiceForm.ShowDialog()
             Catch ex As Exception
-                CMessageBox.Show("ERRO PD004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                CMessageBox.Show("ERRO SV004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
                 Cursor = Cursors.Default
             End Try
@@ -66,7 +64,7 @@ Public Class FrmServices
                             If ex.Number = 1451 Then
                                 CMessageBox.Show("Esse registro não pode ser excluído pois já foi referenciado em outras rotinas.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                             Else
-                                CMessageBox.Show("ERRO PD005", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                                CMessageBox.Show("ERRO SV005", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                             End If
                         End Try
                     End If
@@ -74,7 +72,7 @@ Public Class FrmServices
                     CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _Service.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                 End If
             Catch ex As Exception
-                CMessageBox.Show("ERRO PD006", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                CMessageBox.Show("ERRO SV006", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
                 Cursor = Cursors.Default
             End Try
@@ -141,18 +139,6 @@ Public Class FrmServices
                 Case Is = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
                     e.CellStyle.ForeColor = Color.DarkRed
             End Select
-        ElseIf e.ColumnIndex = Dgv.Columns("Qtd. Min.").Index Then
-            e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            e.CellStyle.Format = "N2"
-        ElseIf e.ColumnIndex = Dgv.Columns("Qtd. Max.").Index Then
-            e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            e.CellStyle.Format = "N2"
-        ElseIf e.ColumnIndex = Dgv.Columns("Peso Bruto").Index Then
-            e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            e.CellStyle.Format = "N2"
-        ElseIf e.ColumnIndex = Dgv.Columns("Peso Liq.").Index Then
-            e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            e.CellStyle.Format = "N2"
         End If
     End Sub
     Private Sub DgvData_SelectionChanged(sender As Object, e As EventArgs) Handles DgvData.SelectionChanged
@@ -189,7 +175,7 @@ Public Class FrmServices
                     Service.FillPriceDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPrice)
                 Catch ex As Exception
                     TmrLoadDetails.Stop()
-                    CMessageBox.Show("ERRO PD007", "Ocorreu um erro ao consultar os dados do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                    CMessageBox.Show("ERRO SV007", "Ocorreu um erro ao consultar os dados do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                 End Try
             Else
                 DgvComplement.DataSource = Nothing

@@ -92,6 +92,7 @@ Public Class City
         End If
         SetIsSaved(True)
         Routes.Value.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        _Shadow = Clone()
     End Sub
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)

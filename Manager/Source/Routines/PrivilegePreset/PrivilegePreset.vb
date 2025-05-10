@@ -62,6 +62,7 @@ Public Class PrivilegePreset
             Update()
         End If
         SetIsSaved(True)
+        _Shadow = Clone()
     End Sub
     Public Sub Delete()
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())

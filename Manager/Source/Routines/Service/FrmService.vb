@@ -102,7 +102,7 @@ Public Class FrmService
             _Service.Load(_ServicesGrid.SelectedRows(0).Cells("id").Value, True)
             LoadData()
         Catch ex As Exception
-            CMessageBox.Show("ERRO PD001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+            CMessageBox.Show("ERRO SV001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally
             Cursor = Cursors.Default
         End Try
@@ -154,7 +154,7 @@ Public Class FrmService
                 If ex.Number = MysqlError.ForeignKey Then
                     CMessageBox.Show("Esse registro não pode ser excluído pois já foi referenciado em outras rotinas.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                 Else
-                    CMessageBox.Show("ERRO PD002", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                    CMessageBox.Show("ERRO SV002", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                 End If
             Finally
                 Cursor = Cursors.Default
@@ -346,7 +346,7 @@ Public Class FrmService
                     End If
                     Success = True
                 Catch ex As Exception
-                    CMessageBox.Show("ERRO PD003", "Ocorreu um erro salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                    CMessageBox.Show("ERRO SV003", "Ocorreu um erro salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                     Success = False
                 Finally
                     Cursor = Cursors.Default

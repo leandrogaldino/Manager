@@ -4,8 +4,8 @@ Imports MySql.Data.MySqlClient
 
 Public Class VisitSchedule
     Inherits ParentModel
-    Private _RemoteDB As RemoteDB
-    Private _Evaluation As Lazy(Of Evaluation)
+    Private ReadOnly _RemoteDB As RemoteDB
+    Private ReadOnly _Evaluation As Lazy(Of Evaluation)
     Public Property Status As VisitScheduleStatus = VisitScheduleStatus.Pending
     Public Property CallType As CallType = CallType.None
     Public Property VisitDate As Date = Today

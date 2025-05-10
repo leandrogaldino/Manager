@@ -1,6 +1,7 @@
 INSERT INTO sellableprice
 (
 	productid,
+	serviceid,
 	creation,
 	sellablepricetableid,
 	price,
@@ -9,6 +10,7 @@ INSERT INTO sellableprice
 VALUES
 (
 	@productid,
+	@serviceid,
 	@creation,
 	@sellablepricetableid,
 	@price,

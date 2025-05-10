@@ -160,7 +160,7 @@ Public Class FrmSellablePrice
             EprValidation.SetIconAlignment(LblPriceTable, ErrorIconAlignment.MiddleRight)
             QbxPriceTable.Select()
             Return False
-        ElseIf _Sellable.Prices.Any(Function(x) x.PriceTable.ID = QbxPriceTable.FreezedPrimaryKey) Then
+        ElseIf Not _SellablePrice.IsSaved And _Sellable.Prices.Any(Function(x) x.PriceTable.ID = QbxPriceTable.FreezedPrimaryKey) Then
             EprValidation.SetError(LblPriceTable, "Este produto já possui um preço nessa tabela de preços.")
             EprValidation.SetIconAlignment(LblPriceTable, ErrorIconAlignment.MiddleRight)
             QbxPriceTable.Select()
@@ -205,17 +205,19 @@ Public Class FrmSellablePrice
             If _ServiceForm IsNot Nothing Then Row = _ServiceForm.DgvPrice.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _SellablePrice.Guid)
 
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _ProductForm.DgvPrice.SelectedRows(0).Cells("Order").Value
+            If _ProductForm IsNot Nothing Then LblOrderValue.Text = _ProductForm.DgvPrice.SelectedRows(0).Cells("Order").Value
+            If _ServiceForm IsNot Nothing Then LblOrderValue.Text = _ServiceForm.DgvPrice.SelectedRows(0).Cells("Order").Value
+
             If _ProductForm IsNot Nothing Then _ProductForm.EprValidation.Clear()
-            If _ProductForm IsNot Nothing Then _ProductForm.BtnSave.Enabled = True
+                If _ProductForm IsNot Nothing Then _ProductForm.BtnSave.Enabled = True
 
-            If _ServiceForm IsNot Nothing Then _ServiceForm.EprValidation.Clear()
-            If _ServiceForm IsNot Nothing Then _ServiceForm.BtnSave.Enabled = True
+                If _ServiceForm IsNot Nothing Then _ServiceForm.EprValidation.Clear()
+                If _ServiceForm IsNot Nothing Then _ServiceForm.BtnSave.Enabled = True
 
-            DgvNavigator.RefreshButtons()
-            Return True
-        Else
-            Return False
+                DgvNavigator.RefreshButtons()
+                Return True
+            Else
+                Return False
         End If
     End Function
     Private Sub TmrQueriedBox_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBox.Tick

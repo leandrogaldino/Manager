@@ -77,6 +77,7 @@ Public Class Cash
         SetIsSaved(True)
         CashItems.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         CashItems.ToList().ForEach(Sub(x) x.Responsibles.ToList().ForEach(Sub(y) y.SetIsSaved(True)))
+        _Shadow = Clone()
     End Sub
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)

@@ -142,6 +142,7 @@ Public Class User
         End If
         SetIsSaved(True)
         Emails.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        _Shadow = Clone()
     End Sub
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)

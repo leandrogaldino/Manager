@@ -88,6 +88,7 @@ Public Class CashFlow
         End If
         SetIsSaved(True)
         Authorizeds.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        _Shadow = Clone()
     End Sub
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)

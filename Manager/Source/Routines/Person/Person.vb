@@ -141,13 +141,6 @@ Public Class Person
         Return Me
     End Function
 
-    Public Function getshadow() As Integer
-        Return _Shadow.Compressors.First.PartsElapsedDay.Count
-    End Function
-    Public Function getnormal() As Integer
-        Return Compressors.First.PartsElapsedDay.Count
-    End Function
-
     Public Sub SaveChanges()
         If Not IsSaved Then
             Insert()
@@ -160,6 +153,7 @@ Public Class Person
         Compressors.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         Compressors.ToList().ForEach(Sub(x) x.PartsWorkedHour.ToList().ForEach(Sub(y) y.SetIsSaved(True)))
         Compressors.ToList().ForEach(Sub(x) x.PartsElapsedDay.ToList().ForEach(Sub(y) y.SetIsSaved(True)))
+        _Shadow = Clone()
     End Sub
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)

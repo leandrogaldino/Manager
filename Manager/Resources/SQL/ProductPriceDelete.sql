@@ -1,2 +1,2 @@
-DELETE FROM productprice
-WHERE productprice.id = @id;
+DELETE FROM sellableprice
+WHERE sellableprice.id = @id;

@@ -703,11 +703,11 @@
     <Compile Include="Source\Helper\Flags\Routine.vb" />
     <Compile Include="Source\Helper\Flags\SimpleStatus.vb" />
     <Compile Include="Source\Helper\Flags\VisitScheduleStatus.vb" />
-    <Compile Include="Source\Routines\Evaluation\EvaluationReplacedItem.vb" />
-    <Compile Include="Source\Routines\Evaluation\FrmEvaluationReplacedItem.Designer.vb">
-      <DependentUpon>FrmEvaluationReplacedItem.vb</DependentUpon>
+    <Compile Include="Source\Routines\Evaluation\EvaluationReplacedPart.vb" />
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationReplacedPart.Designer.vb">
+      <DependentUpon>FrmEvaluationReplacedPart.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Routines\Evaluation\FrmEvaluationReplacedItem.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationReplacedPart.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Routines\PrivilegePreset\FrmPrivilegePreset.Designer.vb">
@@ -1410,8 +1410,8 @@
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationRejectReason.resx">
       <DependentUpon>FrmEvaluationRejectReason.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationReplacedItem.resx">
-      <DependentUpon>FrmEvaluationReplacedItem.vb</DependentUpon>
+    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationReplacedPart.resx">
+      <DependentUpon>FrmEvaluationReplacedPart.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluations.resx">
       <DependentUpon>FrmEvaluations.vb</DependentUpon>
@@ -1702,10 +1702,10 @@
     <Content Include="Resources\SQL\CashFlowAuthorizedInsert.sql" />
     <Content Include="Resources\SQL\CashFlowAuthorizedSelect.sql" />
     <Content Include="Resources\SQL\CashFlowAuthorizedUpdate.sql" />
-    <Content Include="Resources\SQL\EvaluationReplacedItemDelete.sql" />
-    <Content Include="Resources\SQL\EvaluationReplacedItemInsert.sql" />
-    <Content Include="Resources\SQL\EvaluationReplacedItemSelect.sql" />
-    <Content Include="Resources\SQL\EvaluationReplacedItemUpdate.sql" />
+    <Content Include="Resources\SQL\EvaluationReplacedPartDelete.sql" />
+    <Content Include="Resources\SQL\EvaluationReplacedPartInsert.sql" />
+    <Content Include="Resources\SQL\EvaluationReplacedPartSelect.sql" />
+    <Content Include="Resources\SQL\EvaluationReplacedPartUpdate.sql" />
     <Content Include="Resources\SQL\PrivilegePresetDelete.sql" />
     <Content Include="Resources\SQL\PrivilegePresetInsert.sql" />
     <Content Include="Resources\SQL\PrivilegePresetSelect.sql" />
@@ -1748,7 +1748,9 @@
     <Content Include="Resources\SQL\UserPersonShortNameSelect.sql" />
     <Content Include="Resources\XML\CashFlowAuthorizedGrid.xml" />
     <Content Include="Resources\XML\CashFlowGrid.xml" />
+    <Content Include="Resources\XML\ServiceGrid.xml" />
     <Content Include="Resources\XML\EvaluationTechnicianGrid.xml" />
+    <Content Include="Resources\XML\ServiceComplementGrid.xml" />
     <Content Include="Resources\XML\VisitScheduleGrid.xml" />
     <Content Include="Resources\XML\CityRouteGrid.xml" />
     <Content Include="Resources\XML\CrmGrid.xml" />

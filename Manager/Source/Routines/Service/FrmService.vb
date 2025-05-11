@@ -365,7 +365,7 @@ Public Class FrmService
             e.Handled = True
         End If
     End Sub
-    Private Sub TxtFilterProviderCode_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterPrice.TextChanged
+    Private Sub TxtFilterComplement_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterComplement.TextChanged
         FilterComplement()
     End Sub
     Private Sub FilterComplement()
@@ -373,13 +373,13 @@ Public Class FrmService
         Dim View As DataView
         Dim Filter As String = String.Format("{0} OR {1}",
                                                  "Complement LIKE '%@VALUE%'",
-                                                 "Convert([Provider], 'System.String') LIKE '%@VALUE%'"
+                                                 "Convert([Complement], 'System.String') LIKE '%@VALUE%'"
                                             )
         If DgvComplement.DataSource IsNot Nothing Then
             Table = DgvComplement.DataSource
             View = Table.DefaultView
             If TxtFilterComplement.Text <> Nothing Then
-                Filter = Filter.Replace("@VALUE", TxtFilterPrice.Text.Replace("%", Nothing).Replace("*", Nothing))
+                Filter = Filter.Replace("@VALUE", TxtFilterComplement.Text.Replace("%", Nothing).Replace("*", Nothing))
                 View.RowFilter = Filter
             Else
                 View.RowFilter = Nothing
@@ -407,7 +407,7 @@ Public Class FrmService
 
 
     Private Sub TxtFilterComplement_Enter(sender As Object, e As EventArgs) Handles TxtFilterComplement.Enter
-        EprInformation.SetError(TsComplement, "Filtrando os campos: Complemento")
+        EprInformation.SetError(TsComplement, "Filtrando os campo: Complemento.")
         EprInformation.SetIconAlignment(TsComplement, ErrorIconAlignment.MiddleLeft)
         EprInformation.SetIconPadding(TsComplement, -365)
     End Sub

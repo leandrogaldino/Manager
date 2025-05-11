@@ -23,7 +23,9 @@ Public Class FrmServices
         BtnDelete.Visible = _User.CanDelete(Routine.Service)
         BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
     End Sub
-
+    Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        DgvServiceLayout.Load()
+    End Sub
     Private Sub Form_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         AddHandler Parent.FindForm.Resize, AddressOf FrmMain_ResizeEnd
     End Sub

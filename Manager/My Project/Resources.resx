@@ -1153,17 +1153,17 @@
   <data name="VisitScheduleGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\VisitScheduleGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="EvaluationReplacedItemDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationReplacedItemDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="EvaluationReplacedPartDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\EvaluationReplacedPartDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="EvaluationReplacedItemInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationReplacedItemInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="EvaluationReplacedPartInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\EvaluationReplacedPartInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="EvaluationReplacedItemSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationReplacedItemSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="EvaluationReplacedPartSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\EvaluationReplacedPartSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="EvaluationReplacedItemUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationReplacedItemUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="EvaluationReplacedPartUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\EvaluationReplacedPartUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationTechnicianGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\EvaluationTechnicianGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
@@ -1200,5 +1200,11 @@
   </data>
   <data name="Service" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Service.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServiceComplementGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XML\ServiceComplementGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="ServiceGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XML\ServiceGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

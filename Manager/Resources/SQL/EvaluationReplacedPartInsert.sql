@@ -1,4 +1,4 @@
-INSERT INTO evaluationreplaceditem
+INSERT INTO evaluationreplacedpart
 (
 	evaluationid,
 	creation,

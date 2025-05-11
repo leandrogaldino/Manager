@@ -83,7 +83,7 @@ Public Class Evaluation
     Public Property AverageWorkLoad As Decimal = 5.71
     Public Property PartsWorkedHour As New List(Of EvaluationPart)
     Public Property PartsElapsedDay As New List(Of EvaluationPart)
-    Public Property ReplacedItems As New List(Of EvaluationReplacedItem)
+    Public Property ReplacedParts As New List(Of EvaluationReplacedPart)
     Public Property TechnicalAdvice As String
     Public Property Document As New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
     Public Property Signature As New FileManager(ApplicationPaths.EvaluationSignatureDirectory)
@@ -118,7 +118,7 @@ Public Class Evaluation
         AverageWorkLoad = 0
         PartsWorkedHour = New List(Of EvaluationPart)
         PartsElapsedDay = New List(Of EvaluationPart)
-        ReplacedItems = New List(Of EvaluationReplacedItem)
+        ReplacedParts = New List(Of EvaluationReplacedPart)
         TechnicalAdvice = Nothing
         Document = New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
         Signature = New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
@@ -171,7 +171,7 @@ Public Class Evaluation
                         _RejectReason = TableResult.Rows(0).Item("rejectreason").ToString
                         Technicians = GetTechnicians(Tra)
                         GetParts(Tra)
-                        GetReplacedItems(Tra)
+                        GetReplacedParts(Tra)
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
                     Else
@@ -293,17 +293,17 @@ Public Class Evaluation
             End Using
         End Using
     End Sub
-    Private Sub GetReplacedItems(Transaction As MySqlTransaction)
+    Private Sub GetReplacedParts(Transaction As MySqlTransaction)
         Dim TableResult As DataTable
-        Dim Item As EvaluationReplacedItem
-        Using CmdEvaluationItem As New MySqlCommand(My.Resources.EvaluationReplacedItemSelect, Transaction.Connection)
+        Dim Item As EvaluationReplacedPart
+        Using CmdEvaluationItem As New MySqlCommand(My.Resources.EvaluationReplacedPartSelect, Transaction.Connection)
             CmdEvaluationItem.Transaction = Transaction
             CmdEvaluationItem.Parameters.AddWithValue("@evaluationid", ID)
             Using Adp As New MySqlDataAdapter(CmdEvaluationItem)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
                 For Each Row As DataRow In TableResult.Rows
-                    Item = New EvaluationReplacedItem With {
+                    Item = New EvaluationReplacedPart With {
                         .ItemName = Row.Item("itemname").ToString,
                         .Product = New Product().Load(Row.Item("productid"), False),
                         .Quantity = Row.Item("quantity")
@@ -311,7 +311,7 @@ Public Class Evaluation
                     Item.SetIsSaved(True)
                     Item.SetID(Row.Item("id"))
                     Item.SetCreation(Row.Item("creation"))
-                    ReplacedItems.Add(Item)
+                    ReplacedParts.Add(Item)
                 Next Row
             End Using
         End Using
@@ -326,7 +326,7 @@ Public Class Evaluation
         Technicians.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         PartsWorkedHour.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         PartsElapsedDay.ToList().ForEach(Sub(x) x.SetIsSaved(True))
-        ReplacedItems.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        ReplacedParts.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         Photos.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         _Shadow = Clone()
     End Sub
@@ -397,8 +397,8 @@ Public Class Evaluation
                         PartElapsedDay.SetID(CmdPartElapsedDay.LastInsertedId)
                     End Using
                 Next PartElapsedDay
-                For Each Item As EvaluationReplacedItem In ReplacedItems
-                    Using CmdItem As New MySqlCommand(My.Resources.EvaluationReplacedItemInsert, Con)
+                For Each Item As EvaluationReplacedPart In ReplacedParts
+                    Using CmdItem As New MySqlCommand(My.Resources.EvaluationReplacedPartInsert, Con)
                         CmdItem.Parameters.AddWithValue("@evaluationid", ID)
                         CmdItem.Parameters.AddWithValue("@creation", Item.Creation)
                         CmdItem.Parameters.AddWithValue("@statusid", CInt(Status))
@@ -590,17 +590,17 @@ Public Class Evaluation
                         End If
                     Next PartElapsedDay
                 End If
-                For Each Item As EvaluationReplacedItem In _Shadow.ReplacedItems
-                    If Not ReplacedItems.Any(Function(x) x.ID = Item.ID And x.ID > 0) Then
-                        Using CmdItem As New MySqlCommand(My.Resources.EvaluationReplacedItemDelete, Con)
+                For Each Item As EvaluationReplacedPart In _Shadow.ReplacedParts
+                    If Not ReplacedParts.Any(Function(x) x.ID = Item.ID And x.ID > 0) Then
+                        Using CmdItem As New MySqlCommand(My.Resources.EvaluationReplacedPartDelete, Con)
                             CmdItem.Parameters.AddWithValue("@id", Item.ID)
                             CmdItem.ExecuteNonQuery()
                         End Using
                     End If
                 Next Item
-                For Each Item As EvaluationReplacedItem In ReplacedItems
+                For Each Item As EvaluationReplacedPart In ReplacedParts
                     If Item.ID = 0 Then
-                        Using CmdItem As New MySqlCommand(My.Resources.EvaluationReplacedItemInsert, Con)
+                        Using CmdItem As New MySqlCommand(My.Resources.EvaluationReplacedPartInsert, Con)
                             CmdItem.Parameters.AddWithValue("@evaluationid", ID)
                             CmdItem.Parameters.AddWithValue("@creation", Item.Creation)
                             CmdItem.Parameters.AddWithValue("@statusid", CInt(Status))
@@ -612,7 +612,7 @@ Public Class Evaluation
                             Item.SetID(CmdItem.LastInsertedId)
                         End Using
                     Else
-                        Using CmdItem As New MySqlCommand(My.Resources.EvaluationReplacedItemUpdate, Con)
+                        Using CmdItem As New MySqlCommand(My.Resources.EvaluationReplacedPartUpdate, Con)
                             CmdItem.Parameters.AddWithValue("@id", Item.ID)
                             CmdItem.Parameters.AddWithValue("@itemname", If(String.IsNullOrEmpty(Item.ItemName), DBNull.Value, Item.ItemName))
                             CmdItem.Parameters.AddWithValue("@productid", If(Item.Product.ID = 0, DBNull.Value, Item.Product.ID))

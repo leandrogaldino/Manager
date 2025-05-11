@@ -24,44 +24,44 @@ Partial Class FrmEvaluation
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmEvaluation))
-        Dim RichTextPart1 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
-        Dim RichTextPart2 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
-        Dim RichTextPart3 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
-        Dim RichTextPart4 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
-        Dim RichTextPart5 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
-        Dim RichTextPart6 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
-        Dim RichTextPart7 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
-        Dim RichTextPart8 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
-        Dim RichTextPart9 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
-        Dim RichTextPart10 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
-        Dim RichTextPart11 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
-        Dim RichTextPart12 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
-        Dim RichTextPart13 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
-        Dim RichTextPart14 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
-        Dim RichTextPart15 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
-        Dim RichTextPart16 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
-        Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Condition3 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim OtherField1 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField2 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField3 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField4 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Parameter3 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Relation1 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Relation2 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Relation3 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Condition4 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim OtherField5 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField6 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField7 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim Parameter4 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Relation4 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim MessageBoxSettings1 As Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings = New Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings()
-        Dim PdfViewerPrinterSettings1 As Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings = New Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings()
-        Dim TextSearchSettings1 As Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings = New Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings()
+        Dim RichTextPart17 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart18 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart19 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart20 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart21 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart22 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart23 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart24 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart25 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart26 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart27 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart28 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart29 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart30 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart31 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim RichTextPart32 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
+        Dim Condition5 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Condition6 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Condition7 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim OtherField8 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField9 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField10 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField11 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim Parameter5 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Parameter6 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Parameter7 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Relation5 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Relation6 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Relation7 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Condition8 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim OtherField12 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField13 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField14 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim Parameter8 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Relation8 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim MessageBoxSettings2 As Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings = New Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings()
+        Dim PdfViewerPrinterSettings2 As Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings = New Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings()
+        Dim TextSearchSettings2 As Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings = New Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings()
         Me.PnBottom = New System.Windows.Forms.Panel()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnCalculate = New System.Windows.Forms.Button()
@@ -129,14 +129,6 @@ Partial Class FrmEvaluation
         Me.TlpAdvice = New System.Windows.Forms.TableLayoutPanel()
         Me.GbxAdvice = New System.Windows.Forms.GroupBox()
         Me.TxtTechnicalAdvice = New System.Windows.Forms.RichTextBox()
-        Me.GbxReplacedItems = New System.Windows.Forms.GroupBox()
-        Me.DgvReplacedItems = New System.Windows.Forms.DataGridView()
-        Me.TsReplacedItem = New System.Windows.Forms.ToolStrip()
-        Me.BtnIncludeItem = New System.Windows.Forms.ToolStripButton()
-        Me.BtnEditItem = New System.Windows.Forms.ToolStripButton()
-        Me.BtnDeleteItem = New System.Windows.Forms.ToolStripButton()
-        Me.LblFilter = New System.Windows.Forms.ToolStripLabel()
-        Me.TxtFilterItem = New System.Windows.Forms.ToolStripTextBox()
         Me.TabDocument = New System.Windows.Forms.TabPage()
         Me.PdfDocumentViewer = New Syncfusion.Windows.Forms.PdfViewer.PdfDocumentView()
         Me.TsDocument = New System.Windows.Forms.ToolStrip()
@@ -178,6 +170,23 @@ Partial Class FrmEvaluation
         Me.DgvPartElapsedDayNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.CcoCallTypeHasRepairNeedProposal = New ControlLibrary.ControlContainer()
         Me.CcoUnitTemperaturePressure = New ControlLibrary.ControlContainer()
+        Me.TlpReplaced = New System.Windows.Forms.TableLayoutPanel()
+        Me.GbxReplacedItems = New System.Windows.Forms.GroupBox()
+        Me.DgvPart = New System.Windows.Forms.DataGridView()
+        Me.TsReplacedItem = New System.Windows.Forms.ToolStrip()
+        Me.BtnIncludePart = New System.Windows.Forms.ToolStripButton()
+        Me.BtnEditPart = New System.Windows.Forms.ToolStripButton()
+        Me.BtnDeletePart = New System.Windows.Forms.ToolStripButton()
+        Me.LblFilter = New System.Windows.Forms.ToolStripLabel()
+        Me.TxtFilterParts = New System.Windows.Forms.ToolStripTextBox()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.DgvService = New System.Windows.Forms.DataGridView()
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
+        Me.TxtFilterService = New System.Windows.Forms.ToolStripTextBox()
         Me.PnBottom.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -196,9 +205,6 @@ Partial Class FrmEvaluation
         Me.TabTechnicalAdvice.SuspendLayout()
         Me.TlpAdvice.SuspendLayout()
         Me.GbxAdvice.SuspendLayout()
-        Me.GbxReplacedItems.SuspendLayout()
-        CType(Me.DgvReplacedItems, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TsReplacedItem.SuspendLayout()
         Me.TabDocument.SuspendLayout()
         Me.TsDocument.SuspendLayout()
         Me.TabPhoto.SuspendLayout()
@@ -210,6 +216,13 @@ Partial Class FrmEvaluation
         CType(Me.PbxSignature, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NudHourPerDay, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TlpReplaced.SuspendLayout()
+        Me.GbxReplacedItems.SuspendLayout()
+        CType(Me.DgvPart, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TsReplacedItem.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
+        CType(Me.DgvService, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'PnBottom
@@ -668,38 +681,38 @@ Partial Class FrmEvaluation
         Me.BtnCallTypeHasRepairNeedProposal.Name = "BtnCallTypeHasRepairNeedProposal"
         Me.BtnCallTypeHasRepairNeedProposal.Size = New System.Drawing.Size(382, 25)
         Me.BtnCallTypeHasRepairNeedProposal.TabIndex = 23
-        RichTextPart1.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart1.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        RichTextPart1.Text = "Tipo:"
-        RichTextPart2.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart2.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        RichTextPart2.Text = "N/A"
-        RichTextPart3.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        RichTextPart3.Text = "    "
-        RichTextPart4.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart4.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
-        RichTextPart4.Text = "Reparo:"
-        RichTextPart5.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart5.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        RichTextPart5.Text = "N/A"
-        RichTextPart6.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        RichTextPart6.Text = "    "
-        RichTextPart7.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart7.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
-        RichTextPart7.Text = "Proposta:"
-        RichTextPart8.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart8.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        RichTextPart8.Text = "N/A"
-        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart1)
-        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart2)
-        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart3)
-        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart4)
-        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart5)
-        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart6)
-        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart7)
-        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart8)
+        RichTextPart17.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart17.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart17.Text = "Tipo:"
+        RichTextPart18.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart18.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart18.Text = "N/A"
+        RichTextPart19.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart19.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        RichTextPart19.Text = "    "
+        RichTextPart20.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart20.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
+        RichTextPart20.Text = "Reparo:"
+        RichTextPart21.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart21.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart21.Text = "N/A"
+        RichTextPart22.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart22.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        RichTextPart22.Text = "    "
+        RichTextPart23.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart23.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
+        RichTextPart23.Text = "Proposta:"
+        RichTextPart24.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart24.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart24.Text = "N/A"
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart17)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart18)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart19)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart20)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart21)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart22)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart23)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart24)
         Me.BtnCallTypeHasRepairNeedProposal.TooltipText = ""
         Me.BtnCallTypeHasRepairNeedProposal.UseVisualStyleBackColor = True
         '
@@ -712,38 +725,38 @@ Partial Class FrmEvaluation
         Me.BtnUnitTemperaturePressure.Name = "BtnUnitTemperaturePressure"
         Me.BtnUnitTemperaturePressure.Size = New System.Drawing.Size(382, 25)
         Me.BtnUnitTemperaturePressure.TabIndex = 23
-        RichTextPart9.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart9.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        RichTextPart9.Text = "Unidade:"
-        RichTextPart10.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart10.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        RichTextPart10.Text = "N/A"
-        RichTextPart11.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        RichTextPart11.Text = "    "
-        RichTextPart12.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart12.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
-        RichTextPart12.Text = "Temperatura:"
-        RichTextPart13.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart13.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        RichTextPart13.Text = "N/A"
-        RichTextPart14.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart14.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        RichTextPart14.Text = "    "
-        RichTextPart15.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart15.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
-        RichTextPart15.Text = "Pressão:"
-        RichTextPart16.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart16.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        RichTextPart16.Text = "N/A"
-        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart9)
-        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart10)
-        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart11)
-        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart12)
-        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart13)
-        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart14)
-        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart15)
-        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart16)
+        RichTextPart25.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart25.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart25.Text = "Unidade:"
+        RichTextPart26.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart26.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart26.Text = "N/A"
+        RichTextPart27.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart27.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        RichTextPart27.Text = "    "
+        RichTextPart28.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart28.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
+        RichTextPart28.Text = "Temperatura:"
+        RichTextPart29.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart29.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart29.Text = "N/A"
+        RichTextPart30.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart30.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        RichTextPart30.Text = "    "
+        RichTextPart31.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart31.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
+        RichTextPart31.Text = "Pressão:"
+        RichTextPart32.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart32.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart32.Text = "N/A"
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart25)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart26)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart27)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart28)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart29)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart30)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart31)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart32)
         Me.BtnUnitTemperaturePressure.TooltipText = ""
         Me.BtnUnitTemperaturePressure.UseVisualStyleBackColor = True
         '
@@ -751,21 +764,21 @@ Partial Class FrmEvaluation
         '
         Me.QbxCustomer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxCustomer.CharactersToQuery = 1
-        Condition1.FieldName = "iscustomer"
-        Condition1.Operator = "="
-        Condition1.TableNameOrAlias = "person"
-        Condition1.Value = "@iscustomer"
-        Condition2.FieldName = "statusid"
-        Condition2.Operator = "="
-        Condition2.TableNameOrAlias = "person"
-        Condition2.Value = "@statusid"
-        Condition3.FieldName = "controlmaintenance"
-        Condition3.Operator = "="
-        Condition3.TableNameOrAlias = "person"
-        Condition3.Value = "@controlmaintenance"
-        Me.QbxCustomer.Conditions.Add(Condition1)
-        Me.QbxCustomer.Conditions.Add(Condition2)
-        Me.QbxCustomer.Conditions.Add(Condition3)
+        Condition5.FieldName = "iscustomer"
+        Condition5.Operator = "="
+        Condition5.TableNameOrAlias = "person"
+        Condition5.Value = "@iscustomer"
+        Condition6.FieldName = "statusid"
+        Condition6.Operator = "="
+        Condition6.TableNameOrAlias = "person"
+        Condition6.Value = "@statusid"
+        Condition7.FieldName = "controlmaintenance"
+        Condition7.Operator = "="
+        Condition7.TableNameOrAlias = "person"
+        Condition7.Value = "@controlmaintenance"
+        Me.QbxCustomer.Conditions.Add(Condition5)
+        Me.QbxCustomer.Conditions.Add(Condition6)
+        Me.QbxCustomer.Conditions.Add(Condition7)
         Me.QbxCustomer.DebugOnTextChanged = False
         Me.QbxCustomer.DisplayFieldAlias = "Nome Curto"
         Me.QbxCustomer.DisplayFieldName = "shortname"
@@ -782,83 +795,83 @@ Partial Class FrmEvaluation
         Me.QbxCustomer.MainTableAlias = Nothing
         Me.QbxCustomer.MainTableName = "person"
         Me.QbxCustomer.Name = "QbxCustomer"
-        OtherField1.DisplayFieldAlias = "Nome"
-        OtherField1.DisplayFieldName = "name"
-        OtherField1.DisplayMainFieldName = "id"
-        OtherField1.DisplayTableAlias = Nothing
-        OtherField1.DisplayTableName = "person"
-        OtherField1.Freeze = False
-        OtherField1.IfNull = Nothing
-        OtherField1.Prefix = Nothing
-        OtherField1.Suffix = Nothing
-        OtherField2.DisplayFieldAlias = "CNPJ/CPF"
-        OtherField2.DisplayFieldName = "document"
-        OtherField2.DisplayMainFieldName = "id"
-        OtherField2.DisplayTableAlias = Nothing
-        OtherField2.DisplayTableName = "person"
-        OtherField2.Freeze = False
-        OtherField2.IfNull = Nothing
-        OtherField2.Prefix = Nothing
-        OtherField2.Suffix = Nothing
-        OtherField3.DisplayFieldAlias = "Cidade"
-        OtherField3.DisplayFieldName = "name"
-        OtherField3.DisplayMainFieldName = "id"
-        OtherField3.DisplayTableAlias = Nothing
-        OtherField3.DisplayTableName = "city"
-        OtherField3.Freeze = False
-        OtherField3.IfNull = Nothing
-        OtherField3.Prefix = Nothing
-        OtherField3.Suffix = Nothing
-        OtherField4.DisplayFieldAlias = "Estado"
-        OtherField4.DisplayFieldName = "name"
-        OtherField4.DisplayMainFieldName = "id"
-        OtherField4.DisplayTableAlias = Nothing
-        OtherField4.DisplayTableName = "state"
-        OtherField4.Freeze = False
-        OtherField4.IfNull = Nothing
-        OtherField4.Prefix = Nothing
-        OtherField4.Suffix = Nothing
-        Me.QbxCustomer.OtherFields.Add(OtherField1)
-        Me.QbxCustomer.OtherFields.Add(OtherField2)
-        Me.QbxCustomer.OtherFields.Add(OtherField3)
-        Me.QbxCustomer.OtherFields.Add(OtherField4)
-        Parameter1.ParameterName = "@iscustomer"
-        Parameter1.ParameterValue = "1"
-        Parameter2.ParameterName = "@statusid"
-        Parameter2.ParameterValue = "0"
-        Parameter3.ParameterName = "@controlmaintenance"
-        Parameter3.ParameterValue = "1"
-        Me.QbxCustomer.Parameters.Add(Parameter1)
-        Me.QbxCustomer.Parameters.Add(Parameter2)
-        Me.QbxCustomer.Parameters.Add(Parameter3)
+        OtherField8.DisplayFieldAlias = "Nome"
+        OtherField8.DisplayFieldName = "name"
+        OtherField8.DisplayMainFieldName = "id"
+        OtherField8.DisplayTableAlias = Nothing
+        OtherField8.DisplayTableName = "person"
+        OtherField8.Freeze = False
+        OtherField8.IfNull = Nothing
+        OtherField8.Prefix = Nothing
+        OtherField8.Suffix = Nothing
+        OtherField9.DisplayFieldAlias = "CNPJ/CPF"
+        OtherField9.DisplayFieldName = "document"
+        OtherField9.DisplayMainFieldName = "id"
+        OtherField9.DisplayTableAlias = Nothing
+        OtherField9.DisplayTableName = "person"
+        OtherField9.Freeze = False
+        OtherField9.IfNull = Nothing
+        OtherField9.Prefix = Nothing
+        OtherField9.Suffix = Nothing
+        OtherField10.DisplayFieldAlias = "Cidade"
+        OtherField10.DisplayFieldName = "name"
+        OtherField10.DisplayMainFieldName = "id"
+        OtherField10.DisplayTableAlias = Nothing
+        OtherField10.DisplayTableName = "city"
+        OtherField10.Freeze = False
+        OtherField10.IfNull = Nothing
+        OtherField10.Prefix = Nothing
+        OtherField10.Suffix = Nothing
+        OtherField11.DisplayFieldAlias = "Estado"
+        OtherField11.DisplayFieldName = "name"
+        OtherField11.DisplayMainFieldName = "id"
+        OtherField11.DisplayTableAlias = Nothing
+        OtherField11.DisplayTableName = "state"
+        OtherField11.Freeze = False
+        OtherField11.IfNull = Nothing
+        OtherField11.Prefix = Nothing
+        OtherField11.Suffix = Nothing
+        Me.QbxCustomer.OtherFields.Add(OtherField8)
+        Me.QbxCustomer.OtherFields.Add(OtherField9)
+        Me.QbxCustomer.OtherFields.Add(OtherField10)
+        Me.QbxCustomer.OtherFields.Add(OtherField11)
+        Parameter5.ParameterName = "@iscustomer"
+        Parameter5.ParameterValue = "1"
+        Parameter6.ParameterName = "@statusid"
+        Parameter6.ParameterValue = "0"
+        Parameter7.ParameterName = "@controlmaintenance"
+        Parameter7.ParameterValue = "1"
+        Me.QbxCustomer.Parameters.Add(Parameter5)
+        Me.QbxCustomer.Parameters.Add(Parameter6)
+        Me.QbxCustomer.Parameters.Add(Parameter7)
         Me.QbxCustomer.Prefix = Nothing
-        Relation1.Operator = "="
-        Relation1.RelateFieldName = "personid"
-        Relation1.RelateTableAlias = Nothing
-        Relation1.RelateTableName = "personaddress"
-        Relation1.RelationType = "LEFT"
-        Relation1.WithFieldName = "id"
-        Relation1.WithTableAlias = Nothing
-        Relation1.WithTableName = "person"
-        Relation2.Operator = "="
-        Relation2.RelateFieldName = "id"
-        Relation2.RelateTableAlias = Nothing
-        Relation2.RelateTableName = "city"
-        Relation2.RelationType = "LEFT"
-        Relation2.WithFieldName = "cityid"
-        Relation2.WithTableAlias = Nothing
-        Relation2.WithTableName = "personaddress"
-        Relation3.Operator = "="
-        Relation3.RelateFieldName = "id"
-        Relation3.RelateTableAlias = Nothing
-        Relation3.RelateTableName = "state"
-        Relation3.RelationType = "LEFT"
-        Relation3.WithFieldName = "stateid"
-        Relation3.WithTableAlias = Nothing
-        Relation3.WithTableName = "city"
-        Me.QbxCustomer.Relations.Add(Relation1)
-        Me.QbxCustomer.Relations.Add(Relation2)
-        Me.QbxCustomer.Relations.Add(Relation3)
+        Relation5.Operator = "="
+        Relation5.RelateFieldName = "personid"
+        Relation5.RelateTableAlias = Nothing
+        Relation5.RelateTableName = "personaddress"
+        Relation5.RelationType = "LEFT"
+        Relation5.WithFieldName = "id"
+        Relation5.WithTableAlias = Nothing
+        Relation5.WithTableName = "person"
+        Relation6.Operator = "="
+        Relation6.RelateFieldName = "id"
+        Relation6.RelateTableAlias = Nothing
+        Relation6.RelateTableName = "city"
+        Relation6.RelationType = "LEFT"
+        Relation6.WithFieldName = "cityid"
+        Relation6.WithTableAlias = Nothing
+        Relation6.WithTableName = "personaddress"
+        Relation7.Operator = "="
+        Relation7.RelateFieldName = "id"
+        Relation7.RelateTableAlias = Nothing
+        Relation7.RelateTableName = "state"
+        Relation7.RelationType = "LEFT"
+        Relation7.WithFieldName = "stateid"
+        Relation7.WithTableAlias = Nothing
+        Relation7.WithTableName = "city"
+        Me.QbxCustomer.Relations.Add(Relation5)
+        Me.QbxCustomer.Relations.Add(Relation6)
+        Me.QbxCustomer.Relations.Add(Relation7)
         Me.QbxCustomer.Size = New System.Drawing.Size(382, 23)
         Me.QbxCustomer.Suffix = Nothing
         Me.QbxCustomer.TabIndex = 12
@@ -1093,11 +1106,11 @@ Partial Class FrmEvaluation
         '
         Me.QbxCompressor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxCompressor.CharactersToQuery = 1
-        Condition4.FieldName = "statusid"
-        Condition4.Operator = "="
-        Condition4.TableNameOrAlias = "personcompressor"
-        Condition4.Value = "@statusid"
-        Me.QbxCompressor.Conditions.Add(Condition4)
+        Condition8.FieldName = "statusid"
+        Condition8.Operator = "="
+        Condition8.TableNameOrAlias = "personcompressor"
+        Condition8.Value = "@statusid"
+        Me.QbxCompressor.Conditions.Add(Condition8)
         Me.QbxCompressor.DebugOnTextChanged = False
         Me.QbxCompressor.DisplayFieldAlias = "Compressor"
         Me.QbxCompressor.DisplayFieldName = "name"
@@ -1114,49 +1127,49 @@ Partial Class FrmEvaluation
         Me.QbxCompressor.MainTableAlias = Nothing
         Me.QbxCompressor.MainTableName = "personcompressor"
         Me.QbxCompressor.Name = "QbxCompressor"
-        OtherField5.DisplayFieldAlias = "Nº de Série"
-        OtherField5.DisplayFieldName = "serialnumber"
-        OtherField5.DisplayMainFieldName = "id"
-        OtherField5.DisplayTableAlias = Nothing
-        OtherField5.DisplayTableName = "personcompressor"
-        OtherField5.Freeze = True
-        OtherField5.IfNull = Nothing
-        OtherField5.Prefix = " NS: "
-        OtherField5.Suffix = Nothing
-        OtherField6.DisplayFieldAlias = "Patrimônio"
-        OtherField6.DisplayFieldName = "patrimony"
-        OtherField6.DisplayMainFieldName = "id"
-        OtherField6.DisplayTableAlias = Nothing
-        OtherField6.DisplayTableName = "personcompressor"
-        OtherField6.Freeze = True
-        OtherField6.IfNull = Nothing
-        OtherField6.Prefix = " PAT: "
-        OtherField6.Suffix = Nothing
-        OtherField7.DisplayFieldAlias = "Setor"
-        OtherField7.DisplayFieldName = "sector"
-        OtherField7.DisplayMainFieldName = "id"
-        OtherField7.DisplayTableAlias = Nothing
-        OtherField7.DisplayTableName = "personcompressor"
-        OtherField7.Freeze = True
-        OtherField7.IfNull = Nothing
-        OtherField7.Prefix = " SETOR: "
-        OtherField7.Suffix = Nothing
-        Me.QbxCompressor.OtherFields.Add(OtherField5)
-        Me.QbxCompressor.OtherFields.Add(OtherField6)
-        Me.QbxCompressor.OtherFields.Add(OtherField7)
-        Parameter4.ParameterName = "@statusid"
-        Parameter4.ParameterValue = "0"
-        Me.QbxCompressor.Parameters.Add(Parameter4)
+        OtherField12.DisplayFieldAlias = "Nº de Série"
+        OtherField12.DisplayFieldName = "serialnumber"
+        OtherField12.DisplayMainFieldName = "id"
+        OtherField12.DisplayTableAlias = Nothing
+        OtherField12.DisplayTableName = "personcompressor"
+        OtherField12.Freeze = True
+        OtherField12.IfNull = Nothing
+        OtherField12.Prefix = " NS: "
+        OtherField12.Suffix = Nothing
+        OtherField13.DisplayFieldAlias = "Patrimônio"
+        OtherField13.DisplayFieldName = "patrimony"
+        OtherField13.DisplayMainFieldName = "id"
+        OtherField13.DisplayTableAlias = Nothing
+        OtherField13.DisplayTableName = "personcompressor"
+        OtherField13.Freeze = True
+        OtherField13.IfNull = Nothing
+        OtherField13.Prefix = " PAT: "
+        OtherField13.Suffix = Nothing
+        OtherField14.DisplayFieldAlias = "Setor"
+        OtherField14.DisplayFieldName = "sector"
+        OtherField14.DisplayMainFieldName = "id"
+        OtherField14.DisplayTableAlias = Nothing
+        OtherField14.DisplayTableName = "personcompressor"
+        OtherField14.Freeze = True
+        OtherField14.IfNull = Nothing
+        OtherField14.Prefix = " SETOR: "
+        OtherField14.Suffix = Nothing
+        Me.QbxCompressor.OtherFields.Add(OtherField12)
+        Me.QbxCompressor.OtherFields.Add(OtherField13)
+        Me.QbxCompressor.OtherFields.Add(OtherField14)
+        Parameter8.ParameterName = "@statusid"
+        Parameter8.ParameterValue = "0"
+        Me.QbxCompressor.Parameters.Add(Parameter8)
         Me.QbxCompressor.Prefix = Nothing
-        Relation4.Operator = "="
-        Relation4.RelateFieldName = "id"
-        Relation4.RelateTableAlias = Nothing
-        Relation4.RelateTableName = "compressor"
-        Relation4.RelationType = "INNER"
-        Relation4.WithFieldName = "compressorid"
-        Relation4.WithTableAlias = Nothing
-        Relation4.WithTableName = "personcompressor"
-        Me.QbxCompressor.Relations.Add(Relation4)
+        Relation8.Operator = "="
+        Relation8.RelateFieldName = "id"
+        Relation8.RelateTableAlias = Nothing
+        Relation8.RelateTableName = "compressor"
+        Relation8.RelationType = "INNER"
+        Relation8.WithFieldName = "compressorid"
+        Relation8.WithTableAlias = Nothing
+        Relation8.WithTableName = "personcompressor"
+        Me.QbxCompressor.Relations.Add(Relation8)
         Me.QbxCompressor.Size = New System.Drawing.Size(382, 23)
         Me.QbxCompressor.Suffix = Nothing
         Me.QbxCompressor.TabIndex = 15
@@ -1177,7 +1190,7 @@ Partial Class FrmEvaluation
         Me.TlpAdvice.ColumnCount = 1
         Me.TlpAdvice.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TlpAdvice.Controls.Add(Me.GbxAdvice, 0, 0)
-        Me.TlpAdvice.Controls.Add(Me.GbxReplacedItems, 0, 1)
+        Me.TlpAdvice.Controls.Add(Me.TlpReplaced, 0, 1)
         Me.TlpAdvice.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TlpAdvice.Location = New System.Drawing.Point(3, 3)
         Me.TlpAdvice.Name = "TlpAdvice"
@@ -1209,97 +1222,6 @@ Partial Class FrmEvaluation
         Me.TxtTechnicalAdvice.TabIndex = 1
         Me.TxtTechnicalAdvice.Text = ""
         '
-        'GbxReplacedItems
-        '
-        Me.GbxReplacedItems.Controls.Add(Me.DgvReplacedItems)
-        Me.GbxReplacedItems.Controls.Add(Me.TsReplacedItem)
-        Me.GbxReplacedItems.Location = New System.Drawing.Point(3, 203)
-        Me.GbxReplacedItems.Name = "GbxReplacedItems"
-        Me.GbxReplacedItems.Size = New System.Drawing.Size(416, 195)
-        Me.GbxReplacedItems.TabIndex = 1
-        Me.GbxReplacedItems.TabStop = False
-        Me.GbxReplacedItems.Text = "Peças Substituídas"
-        '
-        'DgvReplacedItems
-        '
-        Me.DgvReplacedItems.AllowUserToAddRows = False
-        Me.DgvReplacedItems.AllowUserToDeleteRows = False
-        Me.DgvReplacedItems.AllowUserToResizeColumns = False
-        Me.DgvReplacedItems.AllowUserToResizeRows = False
-        Me.DgvReplacedItems.BackgroundColor = System.Drawing.Color.White
-        Me.DgvReplacedItems.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DgvReplacedItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvReplacedItems.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvReplacedItems.GridColor = System.Drawing.Color.Gainsboro
-        Me.DgvReplacedItems.Location = New System.Drawing.Point(3, 44)
-        Me.DgvReplacedItems.MultiSelect = False
-        Me.DgvReplacedItems.Name = "DgvReplacedItems"
-        Me.DgvReplacedItems.ReadOnly = True
-        Me.DgvReplacedItems.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvReplacedItems.RowHeadersVisible = False
-        Me.DgvReplacedItems.RowTemplate.Height = 26
-        Me.DgvReplacedItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvReplacedItems.Size = New System.Drawing.Size(410, 148)
-        Me.DgvReplacedItems.TabIndex = 1
-        Me.DgvReplacedItems.TabStop = False
-        '
-        'TsReplacedItem
-        '
-        Me.TsReplacedItem.BackColor = System.Drawing.Color.Transparent
-        Me.TsReplacedItem.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TsReplacedItem.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsReplacedItem.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludeItem, Me.BtnEditItem, Me.BtnDeleteItem, Me.LblFilter, Me.TxtFilterItem})
-        Me.TsReplacedItem.Location = New System.Drawing.Point(3, 19)
-        Me.TsReplacedItem.Name = "TsReplacedItem"
-        Me.TsReplacedItem.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsReplacedItem.Size = New System.Drawing.Size(410, 25)
-        Me.TsReplacedItem.TabIndex = 2
-        Me.TsReplacedItem.Text = "ToolStrip2"
-        '
-        'BtnIncludeItem
-        '
-        Me.BtnIncludeItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnIncludeItem.Image = Global.Manager.My.Resources.Resources.IncludeSmall
-        Me.BtnIncludeItem.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnIncludeItem.Name = "BtnIncludeItem"
-        Me.BtnIncludeItem.Size = New System.Drawing.Size(23, 22)
-        Me.BtnIncludeItem.Text = "Incluir Item"
-        '
-        'BtnEditItem
-        '
-        Me.BtnEditItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnEditItem.Image = CType(resources.GetObject("BtnEditItem.Image"), System.Drawing.Image)
-        Me.BtnEditItem.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnEditItem.Name = "BtnEditItem"
-        Me.BtnEditItem.Size = New System.Drawing.Size(23, 22)
-        Me.BtnEditItem.Text = "Editar Item"
-        Me.BtnEditItem.ToolTipText = "Editar"
-        '
-        'BtnDeleteItem
-        '
-        Me.BtnDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnDeleteItem.Image = Global.Manager.My.Resources.Resources.DeleteSmall
-        Me.BtnDeleteItem.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnDeleteItem.Name = "BtnDeleteItem"
-        Me.BtnDeleteItem.Size = New System.Drawing.Size(23, 22)
-        Me.BtnDeleteItem.Text = "Excluir Item"
-        '
-        'LblFilter
-        '
-        Me.LblFilter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.LblFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.LblFilter.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
-        Me.LblFilter.Name = "LblFilter"
-        Me.LblFilter.Size = New System.Drawing.Size(46, 25)
-        Me.LblFilter.Text = "Filtrar:"
-        '
-        'TxtFilterItem
-        '
-        Me.TxtFilterItem.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtFilterItem.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.TxtFilterItem.Name = "TxtFilterItem"
-        Me.TxtFilterItem.Size = New System.Drawing.Size(200, 25)
-        '
         'TabDocument
         '
         Me.TabDocument.AutoScroll = True
@@ -1324,16 +1246,16 @@ Partial Class FrmEvaluation
         Me.PdfDocumentViewer.IsTextSearchEnabled = True
         Me.PdfDocumentViewer.IsTextSelectionEnabled = True
         Me.PdfDocumentViewer.Location = New System.Drawing.Point(3, 28)
-        MessageBoxSettings1.EnableNotification = True
-        Me.PdfDocumentViewer.MessageBoxSettings = MessageBoxSettings1
+        MessageBoxSettings2.EnableNotification = True
+        Me.PdfDocumentViewer.MessageBoxSettings = MessageBoxSettings2
         Me.PdfDocumentViewer.MinimumZoomPercentage = 50
         Me.PdfDocumentViewer.Name = "PdfDocumentViewer"
         Me.PdfDocumentViewer.PageBorderThickness = 1
-        PdfViewerPrinterSettings1.PageOrientation = Syncfusion.Windows.PdfViewer.PdfViewerPrintOrientation.[Auto]
-        PdfViewerPrinterSettings1.PageSize = Syncfusion.Windows.PdfViewer.PdfViewerPrintSize.ActualSize
-        PdfViewerPrinterSettings1.PrintLocation = CType(resources.GetObject("PdfViewerPrinterSettings1.PrintLocation"), System.Drawing.PointF)
-        PdfViewerPrinterSettings1.ShowPrintStatusDialog = True
-        Me.PdfDocumentViewer.PrinterSettings = PdfViewerPrinterSettings1
+        PdfViewerPrinterSettings2.PageOrientation = Syncfusion.Windows.PdfViewer.PdfViewerPrintOrientation.[Auto]
+        PdfViewerPrinterSettings2.PageSize = Syncfusion.Windows.PdfViewer.PdfViewerPrintSize.ActualSize
+        PdfViewerPrinterSettings2.PrintLocation = CType(resources.GetObject("PdfViewerPrinterSettings2.PrintLocation"), System.Drawing.PointF)
+        PdfViewerPrinterSettings2.ShowPrintStatusDialog = True
+        Me.PdfDocumentViewer.PrinterSettings = PdfViewerPrinterSettings2
         Me.PdfDocumentViewer.ReferencePath = Nothing
         Me.PdfDocumentViewer.ScrollDisplacementValue = 0
         Me.PdfDocumentViewer.ShowHorizontalScrollBar = True
@@ -1341,10 +1263,10 @@ Partial Class FrmEvaluation
         Me.PdfDocumentViewer.Size = New System.Drawing.Size(1026, 380)
         Me.PdfDocumentViewer.SpaceBetweenPages = 8
         Me.PdfDocumentViewer.TabIndex = 1
-        TextSearchSettings1.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
-        TextSearchSettings1.HighlightAllInstance = True
-        TextSearchSettings1.OtherInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(254, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.PdfDocumentViewer.TextSearchSettings = TextSearchSettings1
+        TextSearchSettings2.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
+        TextSearchSettings2.HighlightAllInstance = True
+        TextSearchSettings2.OtherInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(254, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.PdfDocumentViewer.TextSearchSettings = TextSearchSettings2
         Me.PdfDocumentViewer.ThemeName = "Default"
         Me.PdfDocumentViewer.VerticalScrollOffset = 0
         Me.PdfDocumentViewer.VisualStyle = Syncfusion.Windows.Forms.PdfViewer.VisualStyle.[Default]
@@ -1736,6 +1658,205 @@ Partial Class FrmEvaluation
         Me.CcoUnitTemperaturePressure.DropDownEnabled = True
         Me.CcoUnitTemperaturePressure.HostControl = Me.BtnUnitTemperaturePressure
         '
+        'TlpReplaced
+        '
+        Me.TlpReplaced.ColumnCount = 2
+        Me.TlpReplaced.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TlpReplaced.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TlpReplaced.Controls.Add(Me.GroupBox1, 1, 0)
+        Me.TlpReplaced.Controls.Add(Me.GbxReplacedItems, 0, 0)
+        Me.TlpReplaced.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TlpReplaced.Location = New System.Drawing.Point(3, 203)
+        Me.TlpReplaced.Name = "TlpReplaced"
+        Me.TlpReplaced.RowCount = 1
+        Me.TlpReplaced.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TlpReplaced.Size = New System.Drawing.Size(1020, 195)
+        Me.TlpReplaced.TabIndex = 1
+        '
+        'GbxReplacedItems
+        '
+        Me.GbxReplacedItems.Controls.Add(Me.DgvPart)
+        Me.GbxReplacedItems.Controls.Add(Me.TsReplacedItem)
+        Me.GbxReplacedItems.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GbxReplacedItems.Location = New System.Drawing.Point(3, 3)
+        Me.GbxReplacedItems.Name = "GbxReplacedItems"
+        Me.GbxReplacedItems.Size = New System.Drawing.Size(504, 189)
+        Me.GbxReplacedItems.TabIndex = 2
+        Me.GbxReplacedItems.TabStop = False
+        Me.GbxReplacedItems.Text = "Peças Substituídas"
+        '
+        'DgvPart
+        '
+        Me.DgvPart.AllowUserToAddRows = False
+        Me.DgvPart.AllowUserToDeleteRows = False
+        Me.DgvPart.AllowUserToResizeColumns = False
+        Me.DgvPart.AllowUserToResizeRows = False
+        Me.DgvPart.BackgroundColor = System.Drawing.Color.White
+        Me.DgvPart.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DgvPart.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvPart.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvPart.GridColor = System.Drawing.Color.Gainsboro
+        Me.DgvPart.Location = New System.Drawing.Point(3, 44)
+        Me.DgvPart.MultiSelect = False
+        Me.DgvPart.Name = "DgvPart"
+        Me.DgvPart.ReadOnly = True
+        Me.DgvPart.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvPart.RowHeadersVisible = False
+        Me.DgvPart.RowTemplate.Height = 26
+        Me.DgvPart.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvPart.Size = New System.Drawing.Size(498, 142)
+        Me.DgvPart.TabIndex = 1
+        Me.DgvPart.TabStop = False
+        '
+        'TsReplacedItem
+        '
+        Me.TsReplacedItem.BackColor = System.Drawing.Color.Transparent
+        Me.TsReplacedItem.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TsReplacedItem.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.TsReplacedItem.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludePart, Me.BtnEditPart, Me.BtnDeletePart, Me.LblFilter, Me.TxtFilterParts})
+        Me.TsReplacedItem.Location = New System.Drawing.Point(3, 19)
+        Me.TsReplacedItem.Name = "TsReplacedItem"
+        Me.TsReplacedItem.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.TsReplacedItem.Size = New System.Drawing.Size(498, 25)
+        Me.TsReplacedItem.TabIndex = 2
+        Me.TsReplacedItem.Text = "ToolStrip2"
+        '
+        'BtnIncludePart
+        '
+        Me.BtnIncludePart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnIncludePart.Image = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnIncludePart.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnIncludePart.Name = "BtnIncludePart"
+        Me.BtnIncludePart.Size = New System.Drawing.Size(23, 22)
+        Me.BtnIncludePart.Text = "Incluir Peça"
+        '
+        'BtnEditPart
+        '
+        Me.BtnEditPart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnEditPart.Image = CType(resources.GetObject("BtnEditPart.Image"), System.Drawing.Image)
+        Me.BtnEditPart.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnEditPart.Name = "BtnEditPart"
+        Me.BtnEditPart.Size = New System.Drawing.Size(23, 22)
+        Me.BtnEditPart.Text = "Editar Peça"
+        Me.BtnEditPart.ToolTipText = "Editar"
+        '
+        'BtnDeletePart
+        '
+        Me.BtnDeletePart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnDeletePart.Image = Global.Manager.My.Resources.Resources.DeleteSmall
+        Me.BtnDeletePart.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnDeletePart.Name = "BtnDeletePart"
+        Me.BtnDeletePart.Size = New System.Drawing.Size(23, 22)
+        Me.BtnDeletePart.Text = "Excluir Peça"
+        '
+        'LblFilter
+        '
+        Me.LblFilter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.LblFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.LblFilter.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
+        Me.LblFilter.Name = "LblFilter"
+        Me.LblFilter.Size = New System.Drawing.Size(46, 25)
+        Me.LblFilter.Text = "Filtrar:"
+        '
+        'TxtFilterParts
+        '
+        Me.TxtFilterParts.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtFilterParts.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.TxtFilterParts.Name = "TxtFilterParts"
+        Me.TxtFilterParts.Size = New System.Drawing.Size(200, 25)
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.DgvService)
+        Me.GroupBox1.Controls.Add(Me.ToolStrip1)
+        Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupBox1.Location = New System.Drawing.Point(513, 3)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(504, 189)
+        Me.GroupBox1.TabIndex = 3
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Serviços Prestados"
+        '
+        'DgvService
+        '
+        Me.DgvService.AllowUserToAddRows = False
+        Me.DgvService.AllowUserToDeleteRows = False
+        Me.DgvService.AllowUserToResizeColumns = False
+        Me.DgvService.AllowUserToResizeRows = False
+        Me.DgvService.BackgroundColor = System.Drawing.Color.White
+        Me.DgvService.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DgvService.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvService.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvService.GridColor = System.Drawing.Color.Gainsboro
+        Me.DgvService.Location = New System.Drawing.Point(3, 44)
+        Me.DgvService.MultiSelect = False
+        Me.DgvService.Name = "DgvService"
+        Me.DgvService.ReadOnly = True
+        Me.DgvService.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvService.RowHeadersVisible = False
+        Me.DgvService.RowTemplate.Height = 26
+        Me.DgvService.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvService.Size = New System.Drawing.Size(498, 142)
+        Me.DgvService.TabIndex = 1
+        Me.DgvService.TabStop = False
+        '
+        'ToolStrip1
+        '
+        Me.ToolStrip1.BackColor = System.Drawing.Color.Transparent
+        Me.ToolStrip1.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripButton3, Me.ToolStripLabel1, Me.TxtFilterService})
+        Me.ToolStrip1.Location = New System.Drawing.Point(3, 19)
+        Me.ToolStrip1.Name = "ToolStrip1"
+        Me.ToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.ToolStrip1.Size = New System.Drawing.Size(498, 25)
+        Me.ToolStrip1.TabIndex = 2
+        Me.ToolStrip1.Text = "ToolStrip2"
+        '
+        'ToolStripButton1
+        '
+        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton1.Image = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton1.Name = "ToolStripButton1"
+        Me.ToolStripButton1.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton1.Text = "Incluir Serviço"
+        '
+        'ToolStripButton2
+        '
+        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton2.Image = CType(resources.GetObject("ToolStripButton2.Image"), System.Drawing.Image)
+        Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton2.Name = "ToolStripButton2"
+        Me.ToolStripButton2.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton2.Text = "Editar Serviço"
+        Me.ToolStripButton2.ToolTipText = "Editar"
+        '
+        'ToolStripButton3
+        '
+        Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton3.Image = Global.Manager.My.Resources.Resources.DeleteSmall
+        Me.ToolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton3.Name = "ToolStripButton3"
+        Me.ToolStripButton3.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton3.Text = "Excluir Serviço"
+        '
+        'ToolStripLabel1
+        '
+        Me.ToolStripLabel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.ToolStripLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripLabel1.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
+        Me.ToolStripLabel1.Name = "ToolStripLabel1"
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(46, 25)
+        Me.ToolStripLabel1.Text = "Filtrar:"
+        '
+        'TxtFilterService
+        '
+        Me.TxtFilterService.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtFilterService.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.TxtFilterService.Name = "TxtFilterService"
+        Me.TxtFilterService.Size = New System.Drawing.Size(200, 25)
+        '
         'FrmEvaluation
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
@@ -1775,11 +1896,6 @@ Partial Class FrmEvaluation
         Me.TabTechnicalAdvice.ResumeLayout(False)
         Me.TlpAdvice.ResumeLayout(False)
         Me.GbxAdvice.ResumeLayout(False)
-        Me.GbxReplacedItems.ResumeLayout(False)
-        Me.GbxReplacedItems.PerformLayout()
-        CType(Me.DgvReplacedItems, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TsReplacedItem.ResumeLayout(False)
-        Me.TsReplacedItem.PerformLayout()
         Me.TabDocument.ResumeLayout(False)
         Me.TsDocument.ResumeLayout(False)
         Me.TsDocument.PerformLayout()
@@ -1792,6 +1908,17 @@ Partial Class FrmEvaluation
         CType(Me.PbxSignature, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NudHourPerDay, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TlpReplaced.ResumeLayout(False)
+        Me.GbxReplacedItems.ResumeLayout(False)
+        Me.GbxReplacedItems.PerformLayout()
+        CType(Me.DgvPart, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TsReplacedItem.ResumeLayout(False)
+        Me.TsReplacedItem.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
+        CType(Me.DgvService, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ToolStrip1.ResumeLayout(False)
+        Me.ToolStrip1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1900,15 +2027,24 @@ Partial Class FrmEvaluation
     Friend WithEvents CcoCallTypeHasRepairNeedProposal As ControlLibrary.ControlContainer
     Friend WithEvents TlpAdvice As TableLayoutPanel
     Friend WithEvents GbxAdvice As GroupBox
-    Friend WithEvents GbxReplacedItems As GroupBox
-    Friend WithEvents DgvReplacedItems As DataGridView
-    Friend WithEvents TsReplacedItem As ToolStrip
-    Friend WithEvents BtnIncludeItem As ToolStripButton
-    Friend WithEvents BtnEditItem As ToolStripButton
-    Friend WithEvents BtnDeleteItem As ToolStripButton
-    Friend WithEvents LblFilter As ToolStripLabel
-    Friend WithEvents TxtFilterItem As ToolStripTextBox
     Friend WithEvents CcoUnitTemperaturePressure As ControlLibrary.ControlContainer
     Friend WithEvents BtnUnitTemperaturePressure As ControlLibrary.RichTextButton
     Friend WithEvents BtnCallTypeHasRepairNeedProposal As ControlLibrary.RichTextButton
+    Friend WithEvents TlpReplaced As TableLayoutPanel
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents DgvService As DataGridView
+    Friend WithEvents ToolStrip1 As ToolStrip
+    Friend WithEvents ToolStripButton1 As ToolStripButton
+    Friend WithEvents ToolStripButton2 As ToolStripButton
+    Friend WithEvents ToolStripButton3 As ToolStripButton
+    Friend WithEvents ToolStripLabel1 As ToolStripLabel
+    Friend WithEvents TxtFilterService As ToolStripTextBox
+    Friend WithEvents GbxReplacedItems As GroupBox
+    Friend WithEvents DgvPart As DataGridView
+    Friend WithEvents TsReplacedItem As ToolStrip
+    Friend WithEvents BtnIncludePart As ToolStripButton
+    Friend WithEvents BtnEditPart As ToolStripButton
+    Friend WithEvents BtnDeletePart As ToolStripButton
+    Friend WithEvents LblFilter As ToolStripLabel
+    Friend WithEvents TxtFilterParts As ToolStripTextBox
 End Class

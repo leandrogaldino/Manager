@@ -1451,26 +1451,26 @@ Public Class FrmEvaluation
 
 
 
-    Private Sub BtnIncludeReplacedItem_Click(sender As Object, e As EventArgs) Handles BtnIncludeItem.Click
-        Dim Form As New FrmEvaluationReplacedItem(_Evaluation, New EvaluationReplacedItem(), Me)
+    Private Sub BtnIncludePart_Click(sender As Object, e As EventArgs) Handles BtnIncludePart.Click
+        Dim Form As New FrmEvaluationReplacedPart(_Evaluation, New EvaluationReplacedPart(), Me)
         Form.ShowDialog()
     End Sub
-    Private Sub BtnEditReplacedItem_Click(sender As Object, e As EventArgs) Handles BtnEditItem.Click
-        Dim Form As FrmEvaluationReplacedItem
-        Dim Item As EvaluationReplacedItem
-        If DgvReplacedItems.SelectedRows.Count = 1 Then
-            Item = _Evaluation.ReplacedItems.Single(Function(x) x.Guid = DgvReplacedItems.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmEvaluationReplacedItem(_Evaluation, Item, Me)
+    Private Sub BtnEditPart_Click(sender As Object, e As EventArgs) Handles BtnEditPart.Click
+        Dim Form As FrmEvaluationReplacedPart
+        Dim Item As EvaluationReplacedPart
+        If DgvPart.SelectedRows.Count = 1 Then
+            Item = _Evaluation.ReplacedParts.Single(Function(x) x.Guid = DgvPart.SelectedRows(0).Cells("Guid").Value)
+            Form = New FrmEvaluationReplacedPart(_Evaluation, Item, Me)
             Form.ShowDialog()
         End If
     End Sub
-    Private Sub BtnDeleteReplacedItem_Click(sender As Object, e As EventArgs) Handles BtnDeleteItem.Click
-        Dim Item As EvaluationReplacedItem
-        If DgvReplacedItems.SelectedRows.Count = 1 Then
+    Private Sub BtnDeleteReplacedItem_Click(sender As Object, e As EventArgs) Handles BtnDeletePart.Click
+        Dim Item As EvaluationReplacedPart
+        If DgvPart.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Item = _Evaluation.ReplacedItems.Single(Function(x) x.Guid = DgvReplacedItems.SelectedRows(0).Cells("Guid").Value)
-                _Evaluation.ReplacedItems.Remove(Item)
-                DgvReplacedItems.Fill(_Evaluation.ReplacedItems)
+                Item = _Evaluation.ReplacedParts.Single(Function(x) x.Guid = DgvPart.SelectedRows(0).Cells("Guid").Value)
+                _Evaluation.ReplacedParts.Remove(Item)
+                DgvPart.Fill(_Evaluation.ReplacedParts)
                 BtnSave.Enabled = True
             End If
         End If

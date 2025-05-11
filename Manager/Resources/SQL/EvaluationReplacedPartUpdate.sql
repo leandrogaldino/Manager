@@ -1,6 +1,6 @@
-UPDATE evaluationreplaceditem SET
+UPDATE evaluationreplacedpart SET
 	itemname = @itemname,
 	productid = @productid,
 	quantity = @quantity,
 	userid = @userid
-WHERE evaluationreplaceditem.id = @id;
+WHERE evaluationreplacedpart.id = @id;

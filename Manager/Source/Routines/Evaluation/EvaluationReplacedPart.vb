@@ -1,4 +1,4 @@
-﻿Public Class EvaluationReplacedItem
+﻿Public Class EvaluationReplacedPart
     Inherits ChildModel
     Public ReadOnly Property Code As String
         Get
@@ -20,6 +20,6 @@
     End Property
     Public Property Quantity As Decimal
     Public Sub New()
-        SetRoutine(Routine.EvaluationReplacedItem)
+        SetRoutine(Routine.EvaluationReplacedPart)
     End Sub
 End Class

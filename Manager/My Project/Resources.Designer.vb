@@ -2592,17 +2592,17 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM evaluationreplaceditem
-        '''WHERE evaluationreplaceditem.id = @id;.
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM evaluationreplacedpart
+        '''WHERE evaluationreplacedpart.id = @id;.
         '''</summary>
-        Friend ReadOnly Property EvaluationReplacedItemDelete() As String
+        Friend ReadOnly Property EvaluationReplacedPartDelete() As String
             Get
-                Return ResourceManager.GetString("EvaluationReplacedItemDelete", resourceCulture)
+                Return ResourceManager.GetString("EvaluationReplacedPartDelete", resourceCulture)
             End Get
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO evaluationreplaceditem
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO evaluationreplacedpart
         '''(
         '''	evaluationid,
         '''	creation,
@@ -2622,40 +2622,40 @@ Namespace My.Resources
         ''');
         '''.
         '''</summary>
-        Friend ReadOnly Property EvaluationReplacedItemInsert() As String
+        Friend ReadOnly Property EvaluationReplacedPartInsert() As String
             Get
-                Return ResourceManager.GetString("EvaluationReplacedItemInsert", resourceCulture)
+                Return ResourceManager.GetString("EvaluationReplacedPartInsert", resourceCulture)
             End Get
         End Property
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	evaluationreplaceditem.id,
-        '''	evaluationreplaceditem.creation,
-        '''	evaluationreplaceditem.itemname,
-        '''	IFNULL(evaluationreplaceditem.productid, 0) AS productid,
-        '''	evaluationreplaceditem.quantity
-        '''FROM evaluationreplaceditem
-        '''WHERE evaluationreplaceditem.evaluationid = @evaluationid;.
+        '''	evaluationreplacedpart.id,
+        '''	evaluationreplacedpart.creation,
+        '''	evaluationreplacedpart.itemname,
+        '''	IFNULL(evaluationreplacedpart.productid, 0) AS productid,
+        '''	evaluationreplacedpart.quantity
+        '''FROM evaluationreplacedpart
+        '''WHERE evaluationreplacedpart.evaluationid = @evaluationid;.
         '''</summary>
-        Friend ReadOnly Property EvaluationReplacedItemSelect() As String
+        Friend ReadOnly Property EvaluationReplacedPartSelect() As String
             Get
-                Return ResourceManager.GetString("EvaluationReplacedItemSelect", resourceCulture)
+                Return ResourceManager.GetString("EvaluationReplacedPartSelect", resourceCulture)
             End Get
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluationreplaceditem SET
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluationreplacedpart SET
         '''	itemname = @itemname,
         '''	productid = @productid,
         '''	quantity = @quantity,
         '''	userid = @userid
-        '''WHERE evaluationreplaceditem.id = @id;
+        '''WHERE evaluationreplacedpart.id = @id;
         '''.
         '''</summary>
-        Friend ReadOnly Property EvaluationReplacedItemUpdate() As String
+        Friend ReadOnly Property EvaluationReplacedPartUpdate() As String
             Get
-                Return ResourceManager.GetString("EvaluationReplacedItemUpdate", resourceCulture)
+                Return ResourceManager.GetString("EvaluationReplacedPartUpdate", resourceCulture)
             End Get
         End Property
         
@@ -5648,6 +5648,31 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;ServiceComplement&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''    &lt;Column Index=&quot;0&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;Ordem&lt;/Name&gt;
+        '''        &lt;Width&gt;70&lt;/Width&gt;
+        '''    &lt;/Column&gt;    
+        '''	&lt;Column Index=&quot;1&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Complemento&lt;/Name&gt;
+        '''		&lt;Width&gt;Fill&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property ServiceComplementGrid() As String
+            Get
+                Return ResourceManager.GetString("ServiceComplementGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO servicecomplement
         '''(
         '''	serviceid,
@@ -5728,6 +5753,32 @@ Namespace My.Resources
         Friend ReadOnly Property ServiceFilter() As String
             Get
                 Return ResourceManager.GetString("ServiceFilter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;City&quot; Version=&quot;2&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''    &lt;Column Index=&quot;0&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;ID&lt;/Name&gt;
+        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''    &lt;/Column&gt;    
+        '''    &lt;Column Index=&quot;1&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;Criação&lt;/Name&gt;
+        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''    &lt;/Column&gt;
+        '''    &lt;Column Index=&quot;2&quot;&gt;
+        '''        [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property ServiceGrid() As String
+            Get
+                Return ResourceManager.GetString("ServiceGrid", resourceCulture)
             End Get
         End Property
         

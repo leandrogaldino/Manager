@@ -1,9 +1,9 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Extensions
-Public Class FrmEvaluationReplacedItem
+Public Class FrmEvaluationReplacedPart
     Private _EvaluationForm As FrmEvaluation
     Private _Evaluation As Evaluation
-    Private _ReplacedItem As EvaluationReplacedItem
+    Private _ReplacedItem As EvaluationReplacedPart
     Private _Deleting As Boolean
     Private _Loading As Boolean
     Private _User As User
@@ -19,22 +19,22 @@ Public Class FrmEvaluationReplacedItem
         End If
         MyBase.DefWndProc(m)
     End Sub
-    Public Sub New(Evaluation As Evaluation, ReplacedItem As EvaluationReplacedItem, EvaluationForm As FrmEvaluation)
+    Public Sub New(Evaluation As Evaluation, ReplacedPart As EvaluationReplacedPart, EvaluationForm As FrmEvaluation)
         InitializeComponent()
         _Evaluation = Evaluation
-        _ReplacedItem = ReplacedItem
+        _ReplacedItem = ReplacedPart
         _EvaluationForm = EvaluationForm
         _User = Locator.GetInstance(Of Session).User
         Height = 235
         LoadForm()
-        DgvNavigator.DataGridView = _EvaluationForm.DgvReplacedItems
+        DgvNavigator.DataGridView = _EvaluationForm.DgvPart
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = _User.CanAccess(Routine.Log)
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = If(_ReplacedItem.IsSaved, _EvaluationForm.DgvReplacedItems.SelectedRows(0).Cells("Order").Value, 0)
+        LblOrderValue.Text = If(_ReplacedItem.IsSaved, _EvaluationForm.DgvPart.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _ReplacedItem.Creation
         QbxItem.Unfreeze()
         If _ReplacedItem.ItemName = Nothing And _ReplacedItem.Product.ID > 0 Then
@@ -66,9 +66,9 @@ Public Class FrmEvaluationReplacedItem
         End If
     End Sub
     Private Sub AfterDataGridViewRowMove()
-        If _EvaluationForm.DgvReplacedItems.SelectedRows.Count = 1 Then
+        If _EvaluationForm.DgvPart.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _ReplacedItem = _Evaluation.ReplacedItems.Single(Function(x) x.Guid = _EvaluationForm.DgvReplacedItems.SelectedRows(0).Cells("Guid").Value)
+            _ReplacedItem = _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _EvaluationForm.DgvPart.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -128,7 +128,7 @@ Public Class FrmEvaluationReplacedItem
     End Function
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
-        Dim TargetItems As List(Of EvaluationReplacedItem)
+        Dim TargetItems As List(Of EvaluationReplacedPart)
         If Not QbxItem.IsFreezed Then
             QbxItem.QueryEnabled = False
             QbxItem.Text = QbxItem.Text.Trim.ToUnaccented()
@@ -137,15 +137,15 @@ Public Class FrmEvaluationReplacedItem
         If IsValidFields() Then
             If _ReplacedItem.IsSaved Then
                 If QbxItem.IsFreezed Then
-                    _Evaluation.ReplacedItems.Single(Function(x) x.Guid = _ReplacedItem.Guid).ItemName = Nothing
-                    _Evaluation.ReplacedItems.Single(Function(x) x.Guid = _ReplacedItem.Guid).Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
+                    _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _ReplacedItem.Guid).ItemName = Nothing
+                    _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _ReplacedItem.Guid).Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
                 Else
-                    _Evaluation.ReplacedItems.Single(Function(x) x.Guid = _ReplacedItem.Guid).ItemName = QbxItem.Text
-                    _Evaluation.ReplacedItems.Single(Function(x) x.Guid = _ReplacedItem.Guid).Product = New Product
+                    _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _ReplacedItem.Guid).ItemName = QbxItem.Text
+                    _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _ReplacedItem.Guid).Product = New Product
                 End If
-                _Evaluation.ReplacedItems.Single(Function(x) x.Guid = _ReplacedItem.Guid).Quantity = DbxQuantity.Text
+                _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _ReplacedItem.Guid).Quantity = DbxQuantity.Text
             Else
-                _ReplacedItem = New EvaluationReplacedItem()
+                _ReplacedItem = New EvaluationReplacedPart()
                 If QbxItem.IsFreezed Then
                     _ReplacedItem.ItemName = Nothing
                     _ReplacedItem.Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
@@ -154,16 +154,16 @@ Public Class FrmEvaluationReplacedItem
                     _ReplacedItem.Product = New Product
                 End If
                 _ReplacedItem.Quantity = DbxQuantity.Text
-                TargetItems = _Evaluation.ReplacedItems.Where(Function(x) x.Equals(_ReplacedItem)).ToList
+                TargetItems = _Evaluation.ReplacedParts.Where(Function(x) x.Equals(_ReplacedItem)).ToList
                 If TargetItems IsNot Nothing AndAlso TargetItems.Count > 0 Then
                     If CMessageBox.Show("Esse item já foi incluido na requisição, deseja incluir novamente?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.No Then
                         Return False
                     End If
                 End If
                 _ReplacedItem.SetIsSaved(True)
-                _Evaluation.ReplacedItems.Add(_ReplacedItem)
+                _Evaluation.ReplacedParts.Add(_ReplacedItem)
             End If
-            _EvaluationForm.DgvReplacedItems.Fill(_Evaluation.ReplacedItems)
+            _EvaluationForm.DgvPart.Fill(_Evaluation.ReplacedParts)
             ' _EvaluationForm.DgvReplacedItemsLayout.Load()
             BtnSave.Enabled = False
             If Not _ReplacedItem.IsSaved Then
@@ -173,9 +173,9 @@ Public Class FrmEvaluationReplacedItem
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _EvaluationForm.DgvReplacedItems.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ReplacedItem.Guid)
+            Row = _EvaluationForm.DgvPart.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ReplacedItem.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _EvaluationForm.DgvReplacedItems.SelectedRows(0).Cells("Order").Value
+            LblOrderValue.Text = _EvaluationForm.DgvPart.SelectedRows(0).Cells("Order").Value
             _EvaluationForm.EprValidation.Clear()
             _EvaluationForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()
@@ -234,15 +234,15 @@ Public Class FrmEvaluationReplacedItem
                 If Not PreSave() Then Exit Sub
             End If
         End If
-        _ReplacedItem = New EvaluationReplacedItem()
+        _ReplacedItem = New EvaluationReplacedPart()
         LoadForm()
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
-        If _EvaluationForm.DgvReplacedItems.SelectedRows.Count = 1 Then
+        If _EvaluationForm.DgvPart.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _ReplacedItem = _Evaluation.ReplacedItems.Single(Function(x) x.Guid = _EvaluationForm.DgvReplacedItems.SelectedRows(0).Cells("Guid").Value)
-                _Evaluation.ReplacedItems.Remove(_ReplacedItem)
-                _EvaluationForm.DgvReplacedItems.Fill(_Evaluation.ReplacedItems)
+                _ReplacedItem = _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _EvaluationForm.DgvPart.SelectedRows(0).Cells("Guid").Value)
+                _Evaluation.ReplacedParts.Remove(_ReplacedItem)
+                _EvaluationForm.DgvPart.Fill(_Evaluation.ReplacedParts)
                 '_EvaluationForm.DgvReplacedItemsLayout.Load()
                 _Deleting = True
                 Dispose()

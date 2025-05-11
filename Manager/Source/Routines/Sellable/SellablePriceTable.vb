@@ -1,5 +1,4 @@
 ﻿Imports ControlLibrary
-Imports DocumentFormat.OpenXml.Spreadsheet
 Imports MySql.Data.MySqlClient
 ''' <summary>
 ''' Representa uma tabela de preços.
@@ -57,8 +56,6 @@ Public Class SellablePriceTable
         _Shadow = Clone()
         Return Me
     End Function
-
-
     Private Function GetSellables(Transaction As MySqlTransaction) As List(Of SellablePrice)
         Dim TableResult As DataTable
         Dim Prices As List(Of SellablePrice)
@@ -99,27 +96,6 @@ Public Class SellablePriceTable
         End Using
         Return Prices
     End Function
-
-    Public Shared Sub FillSellablesDataGridView(SellablePriceTableID As Long, Dgv As DataGridView)
-        Dim TableResult As New DataTable
-        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
-            Using Cmd As New MySqlCommand(My.Resources.SellablePriceTableDetailSelect, Con)
-                Cmd.Parameters.AddWithValue("@sellablepricetableid", SellablePriceTableID)
-                Using Adp As New MySqlDataAdapter(Cmd)
-                    Adp.Fill(TableResult)
-                    Dgv.DataSource = TableResult
-                    Dgv.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-                    Dgv.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    Dgv.Columns(0).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    Dgv.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-                    Dgv.Columns(2).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-                    Dgv.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    Dgv.Columns(2).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
-                End Using
-            End Using
-        End Using
-    End Sub
-
     Public Sub SaveChanges()
         If Not IsSaved Then
             Insert()
@@ -154,11 +130,6 @@ Public Class SellablePriceTable
                     CmdSellablePriceTableInsert.ExecuteNonQuery()
                     SetID(CmdSellablePriceTableInsert.LastInsertedId)
                 End Using
-
-
-
-
-
                 Tra.Commit()
             End Using
         End Using
@@ -174,13 +145,25 @@ Public Class SellablePriceTable
                 CmdSellablePriceTableUpdate.Parameters.AddWithValue("@userid", User.ID)
                 CmdSellablePriceTableUpdate.ExecuteNonQuery()
             End Using
-
-
-
-
-
-
-
+        End Using
+    End Sub
+    Public Shared Sub FillSellablesDataGridView(SellablePriceTableID As Long, Dgv As DataGridView)
+        Dim TableResult As New DataTable
+        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Using Cmd As New MySqlCommand(My.Resources.SellablePriceTableDetailSelect, Con)
+                Cmd.Parameters.AddWithValue("@sellablepricetableid", SellablePriceTableID)
+                Using Adp As New MySqlDataAdapter(Cmd)
+                    Adp.Fill(TableResult)
+                    Dgv.DataSource = TableResult
+                    Dgv.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                    Dgv.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Dgv.Columns(0).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Dgv.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                    Dgv.Columns(2).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                    Dgv.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Dgv.Columns(2).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+                End Using
+            End Using
         End Using
     End Sub
     Public Overrides Function ToString() As String

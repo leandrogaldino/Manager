@@ -235,6 +235,50 @@ Public Class FrmEvaluationManagement
         End Try
     End Sub
 
+    Private Function GetAutomaticPDF() As String
+        Dim Filename As String
+        Filename = Util.GetFilename(".pdf")
+        Using document As New PdfDocument()
+            Dim page As PdfPage = document.Pages.Add()
+            Dim graphics As PdfGraphics = page.Graphics
+            Dim font As PdfFont = New PdfStandardFont(PdfFontFamily.Helvetica, 100)
+            Dim text As String = "AUTOMÁTICO"
+            Dim textSize As SizeF = font.MeasureString(text)
+            Dim startPoint As New PointF((page.Size.Width - textSize.Width) / 2, (page.Size.Height - textSize.Height) / 2)
+            graphics.TranslateTransform(startPoint.X + textSize.Width / 2, startPoint.Y + textSize.Height / 2)
+            graphics.RotateTransform(45)
+            graphics.TranslateTransform(-textSize.Width / 2, -textSize.Height / 2)
+            graphics.DrawString(text, font, PdfBrushes.DarkRed, PointF.Empty)
+            graphics.TranslateTransform(startPoint.X + textSize.Width / 2, startPoint.Y + textSize.Height / 2)
+            graphics.RotateTransform(-45)
+            graphics.TranslateTransform(-startPoint.X - textSize.Width / 2, -startPoint.Y - textSize.Height / 2)
+            Filename = Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename)
+            Try
+                document.Save(Filename)
+                Return Filename
+            Catch ex As Exception
+                Throw ex
+            End Try
+        End Using
+    End Function
+    Private Sub DgvData_MouseDown(sender As Object, e As MouseEventArgs) Handles DgvData.MouseDown
+        Dim Click As DataGridView.HitTestInfo = DgvData.HitTest(e.X, e.Y)
+        If Click.Type = DataGridViewHitTestType.Cell And e.Button = MouseButtons.Right Then
+            DgvData.Rows(Click.RowIndex).Selected = True
+            _ShowCms = True
+            _CmsPoint = e.Location
+        End If
+    End Sub
+    Private Sub DgvData_MouseUp(sender As Object, e As MouseEventArgs) Handles DgvData.MouseUp
+        CmsOptions.Show(DgvData.PointToScreen(_CmsPoint))
+        _ShowCms = False
+    End Sub
+
+    Private Sub CmsOptions_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles CmsOptions.Opening
+        If Not _User.CanAccess(Routine.EvaluationCreateAutomaticRecord) And Not _User.CanAccess(Routine.VisitSchedule) Then e.Cancel = True
+        BtnAutoEvaluation.Visible = _User.CanAccess(Routine.EvaluationCreateAutomaticRecord)
+        BtnVisitSchedule.Visible = _User.CanAccess(Routine.VisitSchedule)
+    End Sub
     Private Sub BtnAutoEvaluation_Click(sender As Object, e As EventArgs) Handles BtnAutoEvaluation.Click
         Try
             If DgvData.SelectedRows.Count = 1 Then
@@ -279,74 +323,20 @@ Public Class FrmEvaluationManagement
             CMessageBox.Show("ERRO EV024", "Ocorreu um erro ao gerar a avaliação.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         End Try
     End Sub
-
-
-
-    Private Function GetAutomaticPDF() As String
-        Dim Filename As String
-        Filename = Util.GetFilename(".pdf")
-
-
-
-        Using document As New PdfDocument()
-            ' Adicione uma página ao documento.
-            Dim page As PdfPage = document.Pages.Add()
-
-            ' Crie gráficos PDF para a página.
-            Dim graphics As PdfGraphics = page.Graphics
-
-            ' Defina a fonte padrão.
-            Dim font As PdfFont = New PdfStandardFont(PdfFontFamily.Helvetica, 100)
-
-            ' Defina o texto.
-            Dim text As String = "AUTOMÁTICO"
-
-            ' Obtenha o tamanho do texto.
-            Dim textSize As SizeF = font.MeasureString(text)
-
-            ' Defina a posição inicial para o texto rotacionado.
-            Dim startPoint As New PointF((page.Size.Width - textSize.Width) / 2, (page.Size.Height - textSize.Height) / 2)
-
-            ' Ajuste a matriz de transformação para rotacionar o texto.
-            graphics.TranslateTransform(startPoint.X + textSize.Width / 2, startPoint.Y + textSize.Height / 2)
-            graphics.RotateTransform(45)
-            graphics.TranslateTransform(-textSize.Width / 2, -textSize.Height / 2)
-
-            ' Desenhe o texto em vermelho.
-            graphics.DrawString(text, font, PdfBrushes.DarkRed, PointF.Empty)
-
-            ' Restaure a matriz de transformação para o estado original.
-            graphics.TranslateTransform(startPoint.X + textSize.Width / 2, startPoint.Y + textSize.Height / 2)
-            graphics.RotateTransform(-45)
-            graphics.TranslateTransform(-startPoint.X - textSize.Width / 2, -startPoint.Y - textSize.Height / 2)
-
-            Filename = Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename)
-
-            Try
-                document.Save(Filename)
-                Return Filename
-            Catch ex As Exception
-                Throw ex
-            End Try
-
-        End Using
-    End Function
-    Private Sub DgvData_MouseDown(sender As Object, e As MouseEventArgs) Handles DgvData.MouseDown
-        Dim Click As DataGridView.HitTestInfo = DgvData.HitTest(e.X, e.Y)
-        If Click.Type = DataGridViewHitTestType.Cell And e.Button = MouseButtons.Right Then
-            DgvData.Rows(Click.RowIndex).Selected = True
-            _ShowCms = True
-            _CmsPoint = e.Location
-        End If
-    End Sub
-    Private Sub DgvData_MouseUp(sender As Object, e As MouseEventArgs) Handles DgvData.MouseUp
-        CmsAutoEvaluation.Show(DgvData.PointToScreen(_CmsPoint))
-        _ShowCms = False
-    End Sub
-
-    Private Sub CmsAutoEvaluation_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles CmsAutoEvaluation.Opening
-        If Not _User.CanAccess(Routine.EvaluationCreateAutomaticRecord) And Not _User.CanAccess(Routine.VisitSchedule) Then e.Cancel = True
-        BtnAutoEvaluation.Visible = _User.CanAccess(Routine.EvaluationCreateAutomaticRecord)
-        BtnVisitSchedule.Visible = _User.CanAccess(Routine.VisitSchedule)
+    Private Sub BtnVisitSchedule_Click(sender As Object, e As EventArgs) Handles BtnVisitSchedule.Click
+        Try
+            If DgvData.SelectedRows.Count = 1 Then
+                Dim SelectedEvaluation As Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("evaluation").Value, False)
+                Dim Visit As New VisitSchedule With {
+                    .Compressor = SelectedEvaluation.Compressor,
+                    .Customer = SelectedEvaluation.Customer
+                }
+                Dim FrmVisitSchedule As New FrmVisitSchedule(Visit)
+                FrmVisitSchedule.ShowDialog()
+                BtnRefresh.PerformClick()
+            End If
+        Catch ex As Exception
+            CMessageBox.Show("ERRO EV025", "Ocorreu um erro agendar uma visita.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+        End Try
     End Sub
 End Class

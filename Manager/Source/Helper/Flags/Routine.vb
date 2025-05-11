@@ -110,7 +110,7 @@ Public Enum Routine
     CrmChangeSubject = 2105
     <Description("Editar um atendimento do CRM")> <BiStatePrivilege> <RoutineDependency(Crm)>
     CrmEditTreatment = 2106
-    <Description("Agendamento de Visita")> <TriStatePrivilege> <RoutineDependency(Evaluation)>
+    <Description("Agenda de Visita")> <TriStatePrivilege> <RoutineDependency(Evaluation)>
     VisitSchedule = 22
     <Description("Serviço")> <TriStatePrivilege>
     Service = 23

@@ -710,7 +710,7 @@ Partial Class FrmVisitSchedule
         Me.MinimizeBox = False
         Me.Name = "FrmVisitSchedule"
         Me.ShowIcon = False
-        Me.Text = "Agendamento de Visita"
+        Me.Text = "Agenda de Visita"
         Me.Panel1.ResumeLayout(False)
         Me.TsTitle.ResumeLayout(False)
         Me.TsTitle.PerformLayout()

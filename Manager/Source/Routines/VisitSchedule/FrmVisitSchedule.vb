@@ -42,6 +42,7 @@ Public Class FrmVisitSchedule
         _VisitSchedule = VisitSchedule
         _LoggedUser = Locator.GetInstance(Of Session).User
         Height -= TsNavigation.Height
+        LblVisitType.Top -= TsNavigation.Height
         RbtGathering.Top -= TsNavigation.Height
         RbtPreventive.Top -= TsNavigation.Height
         RbtCalled.Top -= TsNavigation.Height

@@ -55,7 +55,7 @@ Partial Class FrmEvaluationManagement
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.DgvEvaluationManagementLayout = New Manager.DataGridViewLayout()
-        Me.CmsAutoEvaluation = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.CmsOptions = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.BtnAutoEvaluation = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnVisitSchedule = New System.Windows.Forms.ToolStripMenuItem()
         Me.TsMenu.SuspendLayout()
@@ -79,7 +79,7 @@ Partial Class FrmEvaluationManagement
         Me.Panel1.SuspendLayout()
         Me.TsDetails.SuspendLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.CmsAutoEvaluation.SuspendLayout()
+        Me.CmsOptions.SuspendLayout()
         Me.SuspendLayout()
         '
         'TsMenu
@@ -468,11 +468,11 @@ Partial Class FrmEvaluationManagement
         Me.DgvEvaluationManagementLayout.DataGridView = Me.DgvData
         Me.DgvEvaluationManagementLayout.Routine = Manager.Routine.EvaluationManagement
         '
-        'CmsAutoEvaluation
+        'CmsOptions
         '
-        Me.CmsAutoEvaluation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnAutoEvaluation, Me.BtnVisitSchedule})
-        Me.CmsAutoEvaluation.Name = "CmsApproval"
-        Me.CmsAutoEvaluation.Size = New System.Drawing.Size(207, 48)
+        Me.CmsOptions.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnAutoEvaluation, Me.BtnVisitSchedule})
+        Me.CmsOptions.Name = "CmsApproval"
+        Me.CmsOptions.Size = New System.Drawing.Size(207, 48)
         '
         'BtnAutoEvaluation
         '
@@ -529,7 +529,7 @@ Partial Class FrmEvaluationManagement
         Me.TsDetails.ResumeLayout(False)
         Me.TsDetails.PerformLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.CmsAutoEvaluation.ResumeLayout(False)
+        Me.CmsOptions.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -568,7 +568,7 @@ Partial Class FrmEvaluationManagement
     Friend WithEvents Panel1 As Panel
     Friend WithEvents LblUnit As Label
     Friend WithEvents Label3 As Label
-    Friend WithEvents CmsAutoEvaluation As ContextMenuStrip
+    Friend WithEvents CmsOptions As ContextMenuStrip
     Friend WithEvents BtnAutoEvaluation As ToolStripMenuItem
     Friend WithEvents BtnVisitSchedule As ToolStripMenuItem
 End Class

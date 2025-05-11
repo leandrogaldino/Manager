@@ -6,15 +6,9 @@
 /*No caixa aberto no mes 03/2024 tem um registro do almoço leandro que está sem responsavel, colocar leandro
 /*Tem alguma avaliação que está com ano muito errado
 /*Deletar UserPrivilege e UserPriuvilegePreset, PrivilegePreset  e PrivilegePresetPrivilege*/
-
-
 ALTER TABLE personcompressorpart ADD COLUMN partbindid INT NOT NULL AFTER statusid;
-
 ALTER TABLE `manager`.`agentevent` CHANGE COLUMN `description` `description` TEXT NULL DEFAULT NULL ;
-
-
 DROP TRIGGER IF EXISTS `manager`.`personcompressorpartupdate`;
-
 DELIMITER $$
 USE `manager`$$
 CREATE TRIGGER `personcompressorpartupdate` AFTER UPDATE ON `personcompressorpart` FOR EACH ROW BEGIN
@@ -25,11 +19,8 @@ IF OLD.quantity <> NEW.quantity THEN INSERT INTO log VALUES (NULL, CASE WHEN old
 IF OLD.capacity <> NEW.capacity THEN INSERT INTO log VALUES (NULL, CASE WHEN old.parttypeid = 0 THEN 204 WHEN old.parttypeid = 1 THEN 205 END, NEW.id, 'Cap.', FORMAT(OLD.capacity, 0, 'pt_BR'), FORMAT(NEW.capacity, 0, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DELIMITER ;
-
 ALTER TABLE `manager`.`evaluation` ADD COLUMN `signaturename` VARCHAR(255) NULL DEFAULT NULL AFTER `documentname`;
-
 DROP TRIGGER IF EXISTS `manager`.`evaluationupdate`;
-
 DELIMITER $$
 USE `manager`$$
 CREATE TRIGGER `evaluationupdate` AFTER UPDATE ON `evaluation` FOR EACH ROW BEGIN
@@ -49,9 +40,7 @@ IF IFNULL(OLD.documentname, '') <> IFNULL(NEW.documentname, '') THEN INSERT INTO
 IF IFNULL(OLD.signaturename, '') <> IFNULL(NEW.signaturename, '') THEN INSERT INTO log VALUES (NULL, 13, NEW.id, 'Assinatura', NULL, 'Alterado', NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DELIMITER ;
-
 /*INCLUI OS PARTBIND NOS ITEMS*/
-
 SET SQL_SAFE_UPDATES = 0;
 UPDATE personcompressorpart pcp
 LEFT JOIN product p
@@ -68,20 +57,15 @@ SET pcp.partbindid =
     ELSE pcp.partbindid
   END;
 SET SQL_SAFE_UPDATES = 1;
-
 ALTER TABLE `manager`.`visitschedule` DROP FOREIGN KEY `visitschedule_ibfk_4`;
 ALTER TABLE `manager`.`visitschedule` DROP COLUMN `parentid`, DROP INDEX `parentid` ;
-
-
 DROP TRIGGER IF EXISTS `manager`.`visitscheduleinsert`;
 DROP TRIGGER IF EXISTS `manager`.`visitscheduleupdate`;
 DROP TRIGGER IF EXISTS `manager`.`visitscheduledelete`;
-
 DELIMITER $$
 CREATE TRIGGER `visitscheduleinsert` AFTER INSERT ON `visitschedule` FOR EACH ROW BEGIN
 INSERT INTO log VALUES (NULL, 22, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
 END$$
-
 CREATE TRIGGER `visitscheduleupdate` AFTER UPDATE ON `visitschedule` FOR EACH ROW BEGIN
 IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'PENDENTE' WHEN OLD.statusid = 1 THEN 'FINALIZADA' WHEN OLD.statusid = 2 THEN 'CANCELADA' END, CASE WHEN NEW.statusid = 0 THEN 'PENDENTE' WHEN NEW.statusid = 1 THEN 'FINALIZADA' WHEN NEW.statusid = 2 THEN 'CANCELADA' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.visitdate <> NEW.visitdate THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Data da Visita', OLD.visitdate, NEW.visitdate, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
@@ -90,19 +74,13 @@ IF OLD.customerid <> NEW.customerid THEN INSERT INTO log VALUES (NULL, 22, NEW.i
 IF OLD.personcompressorid <> NEW.personcompressorid THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Compressor', CONCAT(OLD.personcompressorid, ' - ', (SELECT compressor.name FROM personcompressor LEFT JOIN compressor ON compressor.id = personcompressor.compressorid WHERE personcompressor.id = OLD.personcompressorid)), CONCAT(NEW.personcompressorid, ' - ', (SELECT compressor.name FROM personcompressor LEFT JOIN compressor ON compressor.id = personcompressor.compressorid WHERE personcompressor.id = NEW.personcompressorid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF IFNULL(OLD.instructions, '') <> IFNULL(NEW.instructions, '') THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Instruções', OLD.instructions, NEW.instructions, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
-
 CREATE TRIGGER `visitscheduledelete` AFTER DELETE ON `visitschedule` FOR EACH ROW BEGIN
 INSERT INTO log VALUES (NULL, 22, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
 END$$
 DELIMITER ;
-
-
 DROP TABLE userprivilege;
-
 DROP TABLE userprivilegepreset;
-
 DROP TABLE privilegepreset;
-
 CREATE TABLE userprivilege (
 	id INT NOT NULL AUTO_INCREMENT,
     creation DATE NOT NULL,
@@ -115,22 +93,18 @@ CREATE TABLE userprivilege (
     FOREIGN KEY (granteduserid) REFERENCES user(id) ON DELETE CASCADE,
     FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
 );
-
 DELIMITER $$
 USE `manager`$$
 CREATE TRIGGER `userprivilegeinsert` AFTER INSERT ON `userprivilege` FOR EACH ROW BEGIN
 INSERT INTO log VALUES (NULL, 1, NEW.granteduserid, CONCAT('Permissão: ', NEW.routinename), CASE WHEN NEW.privilegelevelid = 0 THEN 'Acesso Negado' WHEN NEW.privilegelevelid = 1 THEN 'Escrita Negada' WHEN NEW.privilegelevelid = 2 THEN 'Deleção Negada' END, CASE WHEN NEW.privilegelevelid = 0 THEN 'Acesso Permitido' WHEN NEW.privilegelevelid = 1 THEN 'Escrita Permitida' WHEN NEW.privilegelevelid = 2 THEN 'Deleção Permitida' END ,NOW(), CONCAT(NEW.userid, ' - ', (SELECT username FROM user WHERE id = NEW.userid)));
 END$$
-
 CREATE TRIGGER `userprivilegedelete` AFTER DELETE ON `userprivilege` FOR EACH ROW BEGIN
 INSERT INTO log VALUES (NULL, 1, OLD.granteduserid, CONCAT('Permissão: ', OLD.routinename), CASE WHEN OLD.privilegelevelid = 0 THEN 'Acesso Permitido' WHEN OLD.privilegelevelid = 1 THEN 'Escrita Permitida' WHEN OLD.privilegelevelid = 2 THEN 'Deleção Permitida' END, CASE WHEN OLD.privilegelevelid = 0 THEN 'Acesso Negado' WHEN OLD.privilegelevelid = 1 THEN 'Escrita Negada' WHEN OLD.privilegelevelid = 2 THEN 'Deleção Negada' END ,NOW(), CONCAT(OLD.userid, ' - ', (SELECT username FROM user WHERE id = OLD.userid)));
 END$$
 DELIMITER ;
-
 INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 0, 1);
 INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 1, 1);
 INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 2, 1);
-
 CREATE TABLE privilegepresetprivilege (
 	id INT NOT NULL AUTO_INCREMENT,
     privilegepresetid INT NOT NULL,
@@ -143,18 +117,14 @@ CREATE TABLE privilegepresetprivilege (
     FOREIGN KEY (privilegepresetid) REFERENCES privilegepreset(id) ON DELETE CASCADE,
     FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
 );
-
 SET SQL_SAFE_UPDATES = 0;
 ALTER TABLE `manager`.`evaluation` ADD COLUMN `needproposalid` INT NOT NULL AFTER `evaluationtypeid`;
 UPDATE evaluation SET needproposalid = 1;
 ALTER TABLE `manager`.`evaluation` ADD COLUMN `hasrepairid` INT NOT NULL AFTER `needproposalid`;
 UPDATE evaluation SET hasrepairid = 1;
 SET SQL_SAFE_UPDATES = 1;
-
 ALTER TABLE `manager`.`evaluation` CHANGE COLUMN `evaluationtypeid` `calltypeid` INT NOT NULL ;
-
 DROP TRIGGER IF EXISTS `manager`.`evaluationupdate`;
-
 DELIMITER $$
 USE `manager`$$
 CREATE DEFINER=`root`@`localhost` TRIGGER `evaluationupdate` AFTER UPDATE ON `evaluation` FOR EACH ROW BEGIN
@@ -176,13 +146,9 @@ IF IFNULL(OLD.documentname, '') <> IFNULL(NEW.documentname, '') THEN INSERT INTO
 IF IFNULL(OLD.signaturename, '') <> IFNULL(NEW.signaturename, '') THEN INSERT INTO log VALUES (NULL, 13, NEW.id, 'Assinatura', NULL, 'Alterado', NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DELIMITER ;
-
 ALTER TABLE `manager`.`visitschedule` CHANGE COLUMN `visittypeid` `calltypeid` INT NOT NULL ;
-
 ALTER TABLE `manager`.`visitschedule` ADD COLUMN `evaluationid` INT NULL DEFAULT NULL AFTER `lastupdate`;
-
 DROP TRIGGER IF EXISTS `manager`.`visitscheduleupdate`;
-
 DELIMITER $$
 USE `manager`$$
 CREATE DEFINER=`root`@`localhost` TRIGGER `visitscheduleupdate` AFTER UPDATE ON `visitschedule` FOR EACH ROW BEGIN
@@ -194,7 +160,6 @@ IF OLD.personcompressorid <> NEW.personcompressorid THEN INSERT INTO log VALUES 
 IF IFNULL(OLD.instructions, '') <> IFNULL(NEW.instructions, '') THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Instruções', OLD.instructions, NEW.instructions, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DELIMITER ;
-
 CREATE TABLE `evaluationreplacedpart` (
   `id` int NOT NULL AUTO_INCREMENT,
   `evaluationid` int NOT NULL,
@@ -211,24 +176,19 @@ CREATE TABLE `evaluationreplacedpart` (
   CONSTRAINT `evaluationreplacedpart_evaluation` FOREIGN KEY (`evaluationid`) REFERENCES `evaluation` (`id`) ON DELETE CASCADE,
   CONSTRAINT `evaluationreplacedpart_user` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=2789 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
 DELIMITER $$
 USE `manager`$$
 CREATE DEFINER=`root`@`localhost` TRIGGER `evaluationreplacedpartinsert` AFTER INSERT ON `evaluationreplacedpart` FOR EACH ROW BEGIN
 INSERT INTO log VALUES (NULL, 1312, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
 END$$
-
 CREATE DEFINER=`root`@`localhost` TRIGGER `evaluationreplacedpartdelete` AFTER DELETE ON `evaluationreplacedpart` FOR EACH ROW BEGIN
 INSERT INTO log VALUES (NULL, 1312, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ', (SELECT user.username FROM user WHERE user.id = OLD.userid)));
 END$$
-
 CREATE DEFINER=`root`@`localhost` TRIGGER `evaluationreplacedpartupdate` AFTER UPDATE ON `evaluationreplacedpart` FOR EACH ROW BEGIN
 IF IFNULL(OLD.itemname, OLD.productid) <> IFNULL(NEW.itemname, NEW.productid) THEN INSERT INTO log VALUES (NULL, 1312, NEW.id, 'Item', IFNULL(OLD.itemname, (SELECT CONCAT(product.id, ' - ', product.name) FROM product WHERE product.id = OLD.productid)), IFNULL(NEW.itemname, (SELECT CONCAT(product.id, ' - ', product.name) FROM product WHERE product.id = NEW.productid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.quantity <> NEW.quantity THEN INSERT INTO log VALUES (NULL, 1312, NEW.id, 'Quantidade', FORMAT(OLD.quantity, 2, 'pt_BR'), FORMAT(NEW.quantity, 2, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DELIMITER ;
-
 CREATE TABLE service (
 	id INT NOT NULL AUTO_INCREMENT,
     creation DATE NOT NULL,
@@ -240,7 +200,6 @@ CREATE TABLE service (
 	PRIMARY KEY(id),
     FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
 );
-
 CREATE TABLE servicecomplement (
 	id INT NOT NULL AUTO_INCREMENT,
 	creation DATE NOT NULL,
@@ -251,8 +210,6 @@ CREATE TABLE servicecomplement (
     FOREIGN KEY (serviceid) REFERENCES service(id) ON DELETE CASCADE,
 	FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
 );
-
-
 ALTER TABLE `productprice`
   MODIFY COLUMN `productid` INT DEFAULT NULL,
   ADD COLUMN `serviceid` INT DEFAULT NULL AFTER `productid`,
@@ -262,15 +219,11 @@ ALTER TABLE `productprice`
     (`productid` IS NOT NULL AND `serviceid` IS NULL) OR
     (`productid` IS NULL AND `serviceid` IS NOT NULL)
   );
-  
 ALTER TABLE `manager`.`productpricetable` RENAME TO  `manager`.`sellablepricetable` ;
 ALTER TABLE `manager`.`productprice` RENAME TO  `manager`.`sellableprice` ;
-
 ALTER TABLE `manager`.`sellableprice` DROP FOREIGN KEY `productprice_productpricetable`;
 ALTER TABLE `manager`.`sellableprice` CHANGE COLUMN `pricetableid` `sellablepricetableid` INT NOT NULL ;
 ALTER TABLE `manager`.`sellableprice` ADD CONSTRAINT `productprice_productpricetable` FOREIGN KEY (`sellablepricetableid`) REFERENCES `manager`.`sellablepricetable` (`id`)  ON DELETE RESTRICT;
-
-
 DELIMITER $$
 USE `manager`$$
 DROP TRIGGER IF EXISTS `manager`.`productpricetableinsert` $$
@@ -297,21 +250,41 @@ CREATE DEFINER=`root`@`localhost` TRIGGER `sellablepriceinsert` AFTER INSERT ON 
 INSERT INTO log VALUES (NULL, 603, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
 END$$
 DROP TRIGGER IF EXISTS `manager`.`sellablepriceupdate` $$
-
 DROP TRIGGER IF EXISTS `manager`.`sellablepriceupdate`;
-
-
 CREATE DEFINER=`root`@`localhost` TRIGGER `sellablepriceupdate` AFTER UPDATE ON `sellableprice` FOR EACH ROW BEGIN
 IF OLD.sellablepricetableid <> NEW.sellablepricetableid THEN INSERT INTO log VALUES (NULL, 603, NEW.id, 'Tabela de Preço', CONCAT(OLD.sellablepricetableid, ' - ', (SELECT sellablepricetable.name FROM sellablepricetable WHERE sellablepricetable.id = OLD.sellablepricetableid)), CONCAT(NEW.sellablepricetableid, ' - ', (SELECT sellablepricetable.name FROM sellablepricetable WHERE sellablepricetable.id = NEW.sellablepricetableid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.price <> NEW.price THEN INSERT INTO log VALUES (NULL, 603, NEW.id, 'Preço', FORMAT(OLD.price, 2, 'pt_BR'), FORMAT(NEW.price, 2, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
-
-
 DROP TRIGGER IF EXISTS `manager`.`sellablepricedelete` $$
 CREATE DEFINER=`root`@`localhost` TRIGGER `sellablepricedelete` AFTER DELETE ON `sellableprice` FOR EACH ROW BEGIN
 INSERT INTO log VALUES (NULL, 603, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
 END$$
+DROP TRIGGER IF EXISTS `manager`.`serviceinsert` $$
+CREATE DEFINER=`root`@`localhost` TRIGGER `serviceinsert` AFTER INSERT ON `service` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 23, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END$$
+DROP TRIGGER IF EXISTS `manager`.`servicedelete` $$
+CREATE DEFINER=`root`@`localhost` TRIGGER `servicedelete` AFTER DELETE ON `service` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 23, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
+END$$
+DROP TRIGGER IF EXISTS `manager`.`serviceupdate` $$
+CREATE DEFINER=`root`@`localhost` TRIGGER `serviceupdate` AFTER UPDATE ON `service` FOR EACH ROW BEGIN
+IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 23, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'ATIVO' WHEN OLD.statusid = 1 THEN 'INATIVO' END, CASE WHEN NEW.statusid = 0 THEN 'ATIVO' WHEN NEW.statusid = 1 THEN 'INATIVO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.name <> NEW.name THEN INSERT INTO log VALUES (NULL, 23, NEW.id, 'Nome', OLD.name, NEW.name, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.servicecode <> NEW.servicecode THEN INSERT INTO log VALUES (NULL, 23, NEW.id, 'Cód. Serviço', OLD.servicecode, NEW.servicecode, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF IFNULL(OLD.note, '') <> IFNULL(NEW.note, '') THEN INSERT INTO log VALUES (NULL, 23, NEW.id, 'Observação', OLD.note, NEW.note, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+END$$
+DROP TRIGGER IF EXISTS `manager`.`servicecomplementinsert` $$
+CREATE DEFINER=`root`@`localhost` TRIGGER `servicecomplementinsert` AFTER INSERT ON `servicecomplement` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 2301, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END$$
+DROP TRIGGER IF EXISTS `manager`.`servicecomplementdelete` $$
+CREATE DEFINER=`root`@`localhost` TRIGGER `servicecomplementdelete` AFTER DELETE ON `servicecomplement` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 2301, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
+END$$
+DROP TRIGGER IF EXISTS `manager`.`servicecomplementupdate` $$
+CREATE DEFINER=`root`@`localhost` TRIGGER `servicecomplementupdate` AFTER UPDATE ON `servicecomplement` FOR EACH ROW BEGIN
+IF OLD.complement <> NEW.complement THEN INSERT INTO log VALUES (NULL, 2301, NEW.id, 'Complemento', OLD.complement, NEW.complement, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+END$$
 DELIMITER ;
-
-
 ALTER TABLE `sellableprice` ADD UNIQUE KEY `uq_sellableprice_product` (`sellablepricetableid`, `productid`);

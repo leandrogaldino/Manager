@@ -5,6 +5,7 @@ Imports MySql.Data.MySqlClient
 ''' </summary>
 Public Class SellablePriceTable
     Inherits ParentModel
+    Private _Shadow As SellablePriceTable
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
     Public Sub New()
@@ -49,6 +50,7 @@ Public Class SellablePriceTable
                 Tra.Commit()
             End Using
         End Using
+        _Shadow = Clone()
         Return Me
     End Function
     Public Sub SaveChanges()
@@ -58,6 +60,7 @@ Public Class SellablePriceTable
             Update()
         End If
         SetIsSaved(True)
+        _Shadow = Clone()
     End Sub
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)

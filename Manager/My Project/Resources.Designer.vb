@@ -5758,7 +5758,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;City&quot; Version=&quot;2&quot;&gt;
+        '''&lt;Routine Id=&quot;Service&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -5774,7 +5774,7 @@ Namespace My.Resources
         '''        &lt;Width&gt;100&lt;/Width&gt;
         '''    &lt;/Column&gt;
         '''    &lt;Column Index=&quot;2&quot;&gt;
-        '''        [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''     [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property ServiceGrid() As String
             Get

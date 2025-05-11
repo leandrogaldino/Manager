@@ -45,10 +45,25 @@ Partial Class FrmSellablePriceTable
         Me.TxtName = New System.Windows.Forms.TextBox()
         Me.LblName = New System.Windows.Forms.Label()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
+        Me.TcService = New System.Windows.Forms.TabControl()
+        Me.TabMain = New System.Windows.Forms.TabPage()
+        Me.TabPartService = New System.Windows.Forms.TabPage()
+        Me.DgvPartService = New System.Windows.Forms.DataGridView()
+        Me.TsComplement = New System.Windows.Forms.ToolStrip()
+        Me.BtnIncludePartService = New System.Windows.Forms.ToolStripButton()
+        Me.BtnEditPartService = New System.Windows.Forms.ToolStripButton()
+        Me.BtnDeletePartService = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripLabel9 = New System.Windows.Forms.ToolStripLabel()
+        Me.TxtFilterPartService = New System.Windows.Forms.ToolStripTextBox()
         Me.Panel1.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TcService.SuspendLayout()
+        Me.TabMain.SuspendLayout()
+        Me.TabPartService.SuspendLayout()
+        CType(Me.DgvPartService, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TsComplement.SuspendLayout()
         Me.SuspendLayout()
         '
         'Panel1
@@ -57,9 +72,9 @@ Partial Class FrmSellablePriceTable
         Me.Panel1.Controls.Add(Me.BtnClose)
         Me.Panel1.Controls.Add(Me.BtnSave)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 102)
+        Me.Panel1.Location = New System.Drawing.Point(0, 546)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(358, 44)
+        Me.Panel1.Size = New System.Drawing.Size(961, 44)
         Me.Panel1.TabIndex = 4
         '
         'BtnClose
@@ -88,13 +103,14 @@ Partial Class FrmSellablePriceTable
         Me.TsTitle.BackColor = System.Drawing.Color.White
         Me.TsTitle.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsTitle.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsTitle.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblID, Me.LblIDValue, Me.LblStatus, Me.BtnStatusValue, Me.LblCreationDate, Me.LblCreationValue})
         Me.TsTitle.Location = New System.Drawing.Point(0, 25)
         Me.TsTitle.Name = "TsTitle"
         Me.TsTitle.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsTitle.Size = New System.Drawing.Size(358, 25)
+        Me.TsTitle.Size = New System.Drawing.Size(961, 25)
         Me.TsTitle.TabIndex = 1
         Me.TsTitle.Text = "ToolStrip1"
+        Me.TsTitle.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblID, Me.LblIDValue, Me.LblStatus, Me.BtnStatusValue, Me.LblCreationDate, Me.LblCreationValue})
+
         '
         'LblID
         '
@@ -152,13 +168,14 @@ Partial Class FrmSellablePriceTable
         Me.TsNavigation.BackColor = System.Drawing.Color.White
         Me.TsNavigation.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsNavigation.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsNavigation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnDelete, Me.BtnFirst, Me.BtnPrevious, Me.BtnNext, Me.BtnLast, Me.BtnLog})
         Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsNavigation.Size = New System.Drawing.Size(358, 25)
+        Me.TsNavigation.Size = New System.Drawing.Size(961, 25)
         Me.TsNavigation.TabIndex = 0
         Me.TsNavigation.Text = "ToolStrip2"
+        Me.TsNavigation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnDelete, Me.BtnFirst, Me.BtnPrevious, Me.BtnNext, Me.BtnLast, Me.BtnLog})
+
         '
         'BtnInclude
         '
@@ -239,7 +256,7 @@ Partial Class FrmSellablePriceTable
         'TxtName
         '
         Me.TxtName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtName.Location = New System.Drawing.Point(15, 70)
+        Me.TxtName.Location = New System.Drawing.Point(6, 24)
         Me.TxtName.Margin = New System.Windows.Forms.Padding(3, 3, 3, 6)
         Me.TxtName.MaxLength = 100
         Me.TxtName.Name = "TxtName"
@@ -249,7 +266,7 @@ Partial Class FrmSellablePriceTable
         'LblName
         '
         Me.LblName.AutoSize = True
-        Me.LblName.Location = New System.Drawing.Point(12, 50)
+        Me.LblName.Location = New System.Drawing.Point(3, 4)
         Me.LblName.Name = "LblName"
         Me.LblName.Size = New System.Drawing.Size(48, 17)
         Me.LblName.TabIndex = 2
@@ -257,18 +274,135 @@ Partial Class FrmSellablePriceTable
         '
         'DgvNavigator
         '
+        Me.DgvNavigator.CancelNextMove = False
         Me.DgvNavigator.FirstButton = Me.BtnFirst
         Me.DgvNavigator.LastButton = Me.BtnLast
         Me.DgvNavigator.NextButton = Me.BtnNext
         Me.DgvNavigator.PreviousButton = Me.BtnPrevious
         '
-        'FrmProductPriceTable
+        'TcService
+        '
+        Me.TcService.Controls.Add(Me.TabMain)
+        Me.TcService.Controls.Add(Me.TabPartService)
+        Me.TcService.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TcService.Location = New System.Drawing.Point(0, 50)
+        Me.TcService.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TcService.Multiline = True
+        Me.TcService.Name = "TcService"
+        Me.TcService.SelectedIndex = 0
+        Me.TcService.Size = New System.Drawing.Size(961, 496)
+        Me.TcService.TabIndex = 5
+        '
+        'TabMain
+        '
+        Me.TabMain.Controls.Add(Me.LblName)
+        Me.TabMain.Controls.Add(Me.TxtName)
+        Me.TabMain.Location = New System.Drawing.Point(4, 26)
+        Me.TabMain.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TabMain.Name = "TabMain"
+        Me.TabMain.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TabMain.Size = New System.Drawing.Size(953, 466)
+        Me.TabMain.TabIndex = 0
+        Me.TabMain.Text = "Identificação"
+        Me.TabMain.UseVisualStyleBackColor = True
+        '
+        'TabPartService
+        '
+        Me.TabPartService.Controls.Add(Me.DgvPartService)
+        Me.TabPartService.Controls.Add(Me.TsComplement)
+        Me.TabPartService.Location = New System.Drawing.Point(4, 26)
+        Me.TabPartService.Name = "TabPartService"
+        Me.TabPartService.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPartService.Size = New System.Drawing.Size(953, 466)
+        Me.TabPartService.TabIndex = 7
+        Me.TabPartService.Text = "Peças & Serviços"
+        Me.TabPartService.UseVisualStyleBackColor = True
+        '
+        'DgvPartService
+        '
+        Me.DgvPartService.AllowUserToAddRows = False
+        Me.DgvPartService.AllowUserToDeleteRows = False
+        Me.DgvPartService.AllowUserToOrderColumns = True
+        Me.DgvPartService.AllowUserToResizeRows = False
+        Me.DgvPartService.BackgroundColor = System.Drawing.Color.WhiteSmoke
+        Me.DgvPartService.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DgvPartService.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvPartService.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvPartService.Location = New System.Drawing.Point(3, 28)
+        Me.DgvPartService.MultiSelect = False
+        Me.DgvPartService.Name = "DgvPartService"
+        Me.DgvPartService.ReadOnly = True
+        Me.DgvPartService.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvPartService.RowHeadersVisible = False
+        Me.DgvPartService.RowTemplate.Height = 26
+        Me.DgvPartService.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvPartService.Size = New System.Drawing.Size(947, 435)
+        Me.DgvPartService.TabIndex = 1
+        '
+        'TsComplement
+        '
+        Me.TsComplement.BackColor = System.Drawing.Color.Transparent
+        Me.TsComplement.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TsComplement.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.TsComplement.Location = New System.Drawing.Point(3, 3)
+        Me.TsComplement.Name = "TsComplement"
+        Me.TsComplement.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.TsComplement.Size = New System.Drawing.Size(947, 25)
+        Me.TsComplement.TabIndex = 2
+        Me.TsComplement.Text = "ToolStrip2"
+        '
+        'BtnIncludePartService
+        '
+        Me.BtnIncludePartService.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnIncludePartService.Image = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnIncludePartService.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnIncludePartService.Name = "BtnIncludePartService"
+        Me.BtnIncludePartService.Size = New System.Drawing.Size(23, 22)
+        Me.BtnIncludePartService.Text = "Incluir Peça/Serviço"
+        '
+        'BtnEditPartService
+        '
+        Me.BtnEditPartService.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnEditPartService.Enabled = False
+        Me.BtnEditPartService.Image = Global.Manager.My.Resources.Resources.EditSmall
+        Me.BtnEditPartService.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnEditPartService.Name = "BtnEditPartService"
+        Me.BtnEditPartService.Size = New System.Drawing.Size(23, 22)
+        Me.BtnEditPartService.Text = "Editar Peça/Serviço"
+        Me.BtnEditPartService.ToolTipText = "Editar"
+        '
+        'BtnDeletePartService
+        '
+        Me.BtnDeletePartService.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnDeletePartService.Enabled = False
+        Me.BtnDeletePartService.Image = Global.Manager.My.Resources.Resources.DeleteSmall
+        Me.BtnDeletePartService.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnDeletePartService.Name = "BtnDeletePartService"
+        Me.BtnDeletePartService.Size = New System.Drawing.Size(23, 22)
+        Me.BtnDeletePartService.Text = "Excluir Peça/Serviço"
+        '
+        'ToolStripLabel9
+        '
+        Me.ToolStripLabel9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.ToolStripLabel9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripLabel9.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
+        Me.ToolStripLabel9.Name = "ToolStripLabel9"
+        Me.ToolStripLabel9.Size = New System.Drawing.Size(46, 25)
+        Me.ToolStripLabel9.Text = "Filtrar:"
+        '
+        'TxtFilterPartService
+        '
+        Me.TxtFilterPartService.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtFilterPartService.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.TxtFilterPartService.Name = "TxtFilterPartService"
+        Me.TxtFilterPartService.Size = New System.Drawing.Size(200, 25)
+        '
+        'FrmSellablePriceTable
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(358, 146)
-        Me.Controls.Add(Me.TxtName)
-        Me.Controls.Add(Me.LblName)
+        Me.ClientSize = New System.Drawing.Size(961, 590)
+        Me.Controls.Add(Me.TcService)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.TsTitle)
         Me.Controls.Add(Me.TsNavigation)
@@ -277,7 +411,7 @@ Partial Class FrmSellablePriceTable
         Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "FrmProductPriceTable"
+        Me.Name = "FrmSellablePriceTable"
         Me.ShowIcon = False
         Me.Text = "Tabela de Preço"
         Me.Panel1.ResumeLayout(False)
@@ -286,8 +420,15 @@ Partial Class FrmSellablePriceTable
         Me.TsNavigation.ResumeLayout(False)
         Me.TsNavigation.PerformLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TcService.ResumeLayout(False)
+        Me.TabMain.ResumeLayout(False)
+        Me.TabMain.PerformLayout()
+        Me.TabPartService.ResumeLayout(False)
+        Me.TabPartService.PerformLayout()
+        CType(Me.DgvPartService, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TsComplement.ResumeLayout(False)
+        Me.TsComplement.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 
@@ -313,4 +454,14 @@ Partial Class FrmSellablePriceTable
     Friend WithEvents DgvNavigator As ControlLibrary.DataGridViewNavigator
     Friend WithEvents TxtName As TextBox
     Friend WithEvents LblName As Label
+    Friend WithEvents TcService As TabControl
+    Friend WithEvents TabMain As TabPage
+    Friend WithEvents TabPartService As TabPage
+    Friend WithEvents DgvPartService As DataGridView
+    Friend WithEvents TsComplement As ToolStrip
+    Friend WithEvents BtnIncludePartService As ToolStripButton
+    Friend WithEvents BtnEditPartService As ToolStripButton
+    Friend WithEvents BtnDeletePartService As ToolStripButton
+    Friend WithEvents ToolStripLabel9 As ToolStripLabel
+    Friend WithEvents TxtFilterPartService As ToolStripTextBox
 End Class

@@ -1,7 +1,4 @@
-﻿Imports System.IO
-Imports ChinhDo.Transactions
-Imports ControlLibrary
-Imports ManagerCore
+﻿Imports ControlLibrary
 Imports MySql.Data.MySqlClient
 ''' <summary>
 ''' Representa um serviço.

@@ -37,7 +37,6 @@ Partial Class FrmService
         Me.BtnPrevious = New System.Windows.Forms.ToolStripButton()
         Me.BtnNext = New System.Windows.Forms.ToolStripButton()
         Me.BtnLast = New System.Windows.Forms.ToolStripButton()
-        Me.BtnLog = New System.Windows.Forms.ToolStripButton()
         Me.PnButtons = New System.Windows.Forms.Panel()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TabNote = New System.Windows.Forms.TabPage()
@@ -72,20 +71,8 @@ Partial Class FrmService
         Me.TcService = New System.Windows.Forms.TabControl()
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TsNavigation = New System.Windows.Forms.ToolStrip()
-        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripButton7 = New System.Windows.Forms.ToolStripButton()
+        Me.BtnLog = New System.Windows.Forms.ToolStripButton()
         Me.TsTitle = New System.Windows.Forms.ToolStrip()
-        Me.ToolStripLabel3 = New System.Windows.Forms.ToolStripLabel()
-        Me.ToolStripLabel4 = New System.Windows.Forms.ToolStripLabel()
-        Me.ToolStripLabel5 = New System.Windows.Forms.ToolStripLabel()
-        Me.ToolStripButton8 = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripLabel6 = New System.Windows.Forms.ToolStripLabel()
-        Me.ToolStripLabel7 = New System.Windows.Forms.ToolStripLabel()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.DgvPriceLayout = New Manager.DataGridViewLayout()
         Me.DgvComplementnLayout = New Manager.DataGridViewLayout()
@@ -102,7 +89,6 @@ Partial Class FrmService
         Me.TcService.SuspendLayout()
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsNavigation.SuspendLayout()
-        Me.TsTitle.SuspendLayout()
         Me.SuspendLayout()
         '
         'BtnClose
@@ -236,16 +222,6 @@ Partial Class FrmService
         Me.BtnLast.Name = "BtnLast"
         Me.BtnLast.Size = New System.Drawing.Size(23, 22)
         Me.BtnLast.Text = "Último Produto"
-        '
-        'BtnLog
-        '
-        Me.BtnLog.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.BtnLog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnLog.Image = Global.Manager.My.Resources.Resources.Log
-        Me.BtnLog.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnLog.Name = "BtnLog"
-        Me.BtnLog.Size = New System.Drawing.Size(23, 22)
-        Me.BtnLog.Text = "Histórico"
         '
         'PnButtons
         '
@@ -602,7 +578,7 @@ Partial Class FrmService
         Me.TsNavigation.BackColor = System.Drawing.Color.White
         Me.TsNavigation.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsNavigation.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsNavigation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripButton3, Me.ToolStripButton4, Me.ToolStripButton5, Me.ToolStripButton6, Me.ToolStripButton7})
+        Me.TsNavigation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnDelete, Me.BtnFirst, Me.BtnPrevious, Me.BtnNext, Me.BtnLast, Me.BtnLog})
         Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -610,75 +586,15 @@ Partial Class FrmService
         Me.TsNavigation.TabIndex = 4
         Me.TsNavigation.Text = "ToolStrip2"
         '
-        'ToolStripButton1
+        'BtnLog
         '
-        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton1.Image = Global.Manager.My.Resources.Resources.IncludeSmall
-        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton1.Margin = New System.Windows.Forms.Padding(1, 1, 0, 2)
-        Me.ToolStripButton1.Name = "ToolStripButton1"
-        Me.ToolStripButton1.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton1.Text = "Incluir Produto"
-        '
-        'ToolStripButton2
-        '
-        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton2.Image = Global.Manager.My.Resources.Resources.DeleteSmall
-        Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton2.Margin = New System.Windows.Forms.Padding(0, 1, 10, 2)
-        Me.ToolStripButton2.Name = "ToolStripButton2"
-        Me.ToolStripButton2.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton2.Text = "Excluir Produto"
-        '
-        'ToolStripButton3
-        '
-        Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton3.Enabled = False
-        Me.ToolStripButton3.Image = Global.Manager.My.Resources.Resources.NavFirst
-        Me.ToolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton3.Name = "ToolStripButton3"
-        Me.ToolStripButton3.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton3.Text = "Primeiro Produto"
-        '
-        'ToolStripButton4
-        '
-        Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton4.Enabled = False
-        Me.ToolStripButton4.Image = Global.Manager.My.Resources.Resources.NavPrevious
-        Me.ToolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton4.Name = "ToolStripButton4"
-        Me.ToolStripButton4.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton4.Text = "Produto Anterior"
-        '
-        'ToolStripButton5
-        '
-        Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton5.Enabled = False
-        Me.ToolStripButton5.Image = Global.Manager.My.Resources.Resources.NavNext
-        Me.ToolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton5.Name = "ToolStripButton5"
-        Me.ToolStripButton5.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton5.Text = "Próximo Produto"
-        '
-        'ToolStripButton6
-        '
-        Me.ToolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton6.Enabled = False
-        Me.ToolStripButton6.Image = Global.Manager.My.Resources.Resources.NavLast
-        Me.ToolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton6.Name = "ToolStripButton6"
-        Me.ToolStripButton6.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton6.Text = "Último Produto"
-        '
-        'ToolStripButton7
-        '
-        Me.ToolStripButton7.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.ToolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton7.Image = Global.Manager.My.Resources.Resources.Log
-        Me.ToolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton7.Name = "ToolStripButton7"
-        Me.ToolStripButton7.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton7.Text = "Histórico"
+        Me.BtnLog.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.BtnLog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnLog.Image = Global.Manager.My.Resources.Resources.Log
+        Me.BtnLog.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnLog.Name = "BtnLog"
+        Me.BtnLog.Size = New System.Drawing.Size(23, 22)
+        Me.BtnLog.Text = "Histórico"
         '
         'TsTitle
         '
@@ -686,63 +602,13 @@ Partial Class FrmService
         Me.TsTitle.BackColor = System.Drawing.Color.White
         Me.TsTitle.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsTitle.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsTitle.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel3, Me.ToolStripLabel4, Me.ToolStripLabel5, Me.ToolStripButton8, Me.ToolStripLabel6, Me.ToolStripLabel7})
         Me.TsTitle.Location = New System.Drawing.Point(0, 25)
         Me.TsTitle.Name = "TsTitle"
         Me.TsTitle.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.TsTitle.Size = New System.Drawing.Size(494, 25)
         Me.TsTitle.TabIndex = 5
         Me.TsTitle.Text = "ToolStrip1"
-        '
-        'ToolStripLabel3
-        '
-        Me.ToolStripLabel3.BackColor = System.Drawing.Color.White
-        Me.ToolStripLabel3.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ToolStripLabel3.Name = "ToolStripLabel3"
-        Me.ToolStripLabel3.Size = New System.Drawing.Size(24, 22)
-        Me.ToolStripLabel3.Text = "ID:"
-        '
-        'ToolStripLabel4
-        '
-        Me.ToolStripLabel4.BackColor = System.Drawing.Color.White
-        Me.ToolStripLabel4.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ToolStripLabel4.Name = "ToolStripLabel4"
-        Me.ToolStripLabel4.Size = New System.Drawing.Size(32, 22)
-        Me.ToolStripLabel4.Text = "      "
-        '
-        'ToolStripLabel5
-        '
-        Me.ToolStripLabel5.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ToolStripLabel5.Margin = New System.Windows.Forms.Padding(10, 1, 0, 2)
-        Me.ToolStripLabel5.Name = "ToolStripLabel5"
-        Me.ToolStripLabel5.Size = New System.Drawing.Size(49, 22)
-        Me.ToolStripLabel5.Text = "Status:"
-        '
-        'ToolStripButton8
-        '
-        Me.ToolStripButton8.AutoToolTip = False
-        Me.ToolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.ToolStripButton8.ForeColor = System.Drawing.Color.DarkBlue
-        Me.ToolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton8.Name = "ToolStripButton8"
-        Me.ToolStripButton8.Size = New System.Drawing.Size(44, 22)
-        Me.ToolStripButton8.Text = "        "
-        '
-        'ToolStripLabel6
-        '
-        Me.ToolStripLabel6.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ToolStripLabel6.Margin = New System.Windows.Forms.Padding(10, 1, 0, 2)
-        Me.ToolStripLabel6.Name = "ToolStripLabel6"
-        Me.ToolStripLabel6.Size = New System.Drawing.Size(64, 22)
-        Me.ToolStripLabel6.Text = "Criação:"
-        '
-        'ToolStripLabel7
-        '
-        Me.ToolStripLabel7.BackColor = System.Drawing.Color.White
-        Me.ToolStripLabel7.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ToolStripLabel7.Name = "ToolStripLabel7"
-        Me.ToolStripLabel7.Size = New System.Drawing.Size(32, 22)
-        Me.ToolStripLabel7.Text = "      "
+        Me.TsTitle.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblID, Me.LblIDValue, Me.LblStatus, Me.BtnStatusValue, Me.LblCreation, Me.LblCreationValue})
         '
         'DgvNavigator
         '
@@ -799,8 +665,6 @@ Partial Class FrmService
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsNavigation.ResumeLayout(False)
         Me.TsNavigation.PerformLayout()
-        Me.TsTitle.ResumeLayout(False)
-        Me.TsTitle.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -820,7 +684,6 @@ Partial Class FrmService
     Friend WithEvents BtnLast As ToolStripButton
     Friend WithEvents PnButtons As Panel
     Friend WithEvents EprValidation As ErrorProvider
-    Friend WithEvents BtnLog As ToolStripButton
     Friend WithEvents TcService As TabControl
     Friend WithEvents TabMain As TabPage
     Friend WithEvents TxtName As TextBox
@@ -841,20 +704,8 @@ Partial Class FrmService
     Friend WithEvents TxtServiceCode As TextBox
     Friend WithEvents EprInformation As ErrorProvider
     Friend WithEvents TsNavigation As ToolStrip
-    Friend WithEvents ToolStripButton1 As ToolStripButton
-    Friend WithEvents ToolStripButton2 As ToolStripButton
-    Friend WithEvents ToolStripButton3 As ToolStripButton
-    Friend WithEvents ToolStripButton4 As ToolStripButton
-    Friend WithEvents ToolStripButton5 As ToolStripButton
-    Friend WithEvents ToolStripButton6 As ToolStripButton
-    Friend WithEvents ToolStripButton7 As ToolStripButton
+    Friend WithEvents BtnLog As ToolStripButton
     Friend WithEvents TsTitle As ToolStrip
-    Friend WithEvents ToolStripLabel3 As ToolStripLabel
-    Friend WithEvents ToolStripLabel4 As ToolStripLabel
-    Friend WithEvents ToolStripLabel5 As ToolStripLabel
-    Friend WithEvents ToolStripButton8 As ToolStripButton
-    Friend WithEvents ToolStripLabel6 As ToolStripLabel
-    Friend WithEvents ToolStripLabel7 As ToolStripLabel
     Friend WithEvents DgvNavigator As ControlLibrary.DataGridViewNavigator
     Friend WithEvents DgvPriceLayout As DataGridViewLayout
     Friend WithEvents DgvComplementnLayout As DataGridViewLayout

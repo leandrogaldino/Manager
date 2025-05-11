@@ -8,14 +8,14 @@ Public Class FrmSellablePriceTables
     Public Sub New()
         InitializeComponent()
         ControlHelper.EnableControlDoubleBuffer(DgvData, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvSellable, True)
         SplitContainer1.Panel1Collapsed = True
-        SplitContainer1.SplitterDistance = 250
         SplitContainer2.Panel1Collapsed = True
-        SplitContainer2.SplitterDistance = 800
         _Filter = New SellablePriceTableFilter(DgvData, PgFilter)
         _Filter.Filter()
         _User = Locator.GetInstance(Of Session).User
         PgFilter.SelectedObject = _Filter
+        LoadDetails()
         BtnInclude.Visible = _User.CanWrite(Routine.SellablePriceTable)
         BtnEdit.Visible = _User.CanWrite(Routine.SellablePriceTable)
         BtnDelete.Visible = _User.CanDelete(Routine.SellablePriceTable)
@@ -114,6 +114,8 @@ Public Class FrmSellablePriceTables
     End Sub
     Private Sub BtnDetails_Click(sender As Object, e As EventArgs) Handles BtnDetails.Click
         SplitContainer2.Panel1Collapsed = Not BtnDetails.Checked
+        SplitContainer2.SplitterDistance = 700
+        LoadDetails()
     End Sub
     Private Sub BtnCloseDetails_Click(sender As Object, e As EventArgs) Handles BtnCloseDetails.Click
         SplitContainer2.Panel1Collapsed = True
@@ -138,6 +140,7 @@ Public Class FrmSellablePriceTables
         End If
     End Sub
     Private Sub DgvData_SelectionChanged(sender As Object, e As EventArgs) Handles DgvData.SelectionChanged
+        TmrLoadDetails.Start()
         If DgvData.SelectedRows.Count = 0 Then
             BtnEdit.Enabled = False
             BtnDelete.Enabled = False
@@ -146,6 +149,11 @@ Public Class FrmSellablePriceTables
             BtnDelete.Enabled = True
         End If
     End Sub
+    Private Sub TmrLoadDetails_Tick(sender As Object, e As EventArgs) Handles TmrLoadDetails.Tick
+        LoadDetails()
+        TmrLoadDetails.Stop()
+    End Sub
+
     Private Sub PgFilter_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles PgFilter.PropertyValueChanged
         If _Filter.Filter() = True Then
             LblStatus.Text = "Filtro Ativo"
@@ -157,6 +165,20 @@ Public Class FrmSellablePriceTables
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
         DgvPriceTableLayout.Load()
+    End Sub
+    Private Sub LoadDetails()
+        If BtnDetails.Checked Then
+            If DgvData.SelectedRows.Count = 1 Then
+                Try
+                    SellablePriceTable.FillSellablesDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvSellable)
+                Catch ex As Exception
+                    TmrLoadDetails.Stop()
+                    CMessageBox.Show("ERRO SL007", "Ocorreu um erro ao consultar os detalhes do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                End Try
+            Else
+                DgvSellable.DataSource = Nothing
+            End If
+        End If
     End Sub
     Private Sub DgvData_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvData.KeyDown
         If e.KeyCode = Keys.Enter Then

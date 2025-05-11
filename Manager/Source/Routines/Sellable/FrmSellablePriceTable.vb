@@ -200,7 +200,7 @@ Public Class FrmSellablePriceTable
         Save()
     End Sub
     Private Sub BtnIncludePrice_Click(sender As Object, e As EventArgs) Handles BtnIncludeSellablePrice.Click
-        Dim Form As New FrmSellablePartService(_PriceTable, New SellablePrice, Me)
+        Dim Form As New FrmSellablePartService(_PriceTable, New SellablePrice(), Me)
         Form.ShowDialog()
     End Sub
     Private Sub BtnEditPrice_Click(sender As Object, e As EventArgs) Handles BtnEditSellablePrice.Click
@@ -299,8 +299,6 @@ Public Class FrmSellablePriceTable
             End If
         End If
     End Function
-
-
     Private Sub TxtFilterSellablePrice_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtFilterSellablePrice.KeyPress
         Dim LstChar As New List(Of Char) From {"", ".", ",", "-", "/", "(", ")", "+", "*", "%", "&", "@", "#", "$", "<", ">", "\"}
         If Not Char.IsLetter(e.KeyChar) And Not Char.IsNumber(e.KeyChar) And Not LstChar.Contains(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
@@ -321,7 +319,7 @@ Public Class FrmSellablePriceTable
     Private Sub FilterRequestItem()
         Dim Table As DataTable
         Dim View As DataView
-        Dim Filter As String = "ItemNameOrProduct LIKE '%@value%' OR Code LIKE '%@value%'"
+        Dim Filter As String = "Name LIKE '%@value%' OR Code LIKE '%@value%'"
         If DgvSellablePrice.DataSource IsNot Nothing Then
             Table = DgvSellablePrice.DataSource
             View = Table.DefaultView
@@ -333,19 +331,21 @@ Public Class FrmSellablePriceTable
             End If
         End If
     End Sub
-
     Private Sub DgvSellablePrice_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvSellablePrice.DataSourceChanged
         FilterRequestItem()
     End Sub
 
+    Private Sub DgvSellablePrice_SelectionChanged(sender As Object, e As EventArgs) Handles DgvSellablePrice.SelectionChanged
+        If DgvSellablePrice.SelectedRows.Count = 1 Then
+            BtnEditSellablePrice.Enabled = True
+            BtnDeleteSellablePrice.Enabled = True
+        Else
+            BtnEditSellablePrice.Enabled = False
+            BtnDeleteSellablePrice.Enabled = False
+        End If
+    End Sub
 
     Private Sub FrmProductPriceTable_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         _PriceTable.Unlock()
     End Sub
-
-
-
-
-
-
 End Class

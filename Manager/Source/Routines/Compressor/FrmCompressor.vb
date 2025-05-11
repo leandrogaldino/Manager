@@ -287,8 +287,9 @@ Public Class FrmCompressor
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Manufacturer As Person
         Dim Form As FrmPerson
-        Manufacturer = New Person
-        Manufacturer.IsProvider = True
+        Manufacturer = New Person With {
+            .IsProvider = True
+        }
         Form = New FrmPerson(Manufacturer)
         Form.CbxIsProvider.Enabled = False
         Form.ShowDialog()

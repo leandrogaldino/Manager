@@ -362,7 +362,7 @@ Partial Class FrmRoutes
         'DgvlRouteLayout
         '
         Me.DgvlRouteLayout.DataGridView = Me.DgvData
-        Me.DgvlRouteLayout.Routine = Manager.Routine.VisitSchedule
+        Me.DgvlRouteLayout.Routine = Manager.Routine.Route
         '
         'FrmRoutes
         '

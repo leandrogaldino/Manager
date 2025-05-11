@@ -363,6 +363,7 @@ Partial Class FrmCity
         Me.DgvRoute.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.DgvRoute.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.DgvRoute.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvRoute.ColumnHeadersVisible = False
         Me.DgvRoute.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DgvRoute.Location = New System.Drawing.Point(0, 25)
         Me.DgvRoute.MultiSelect = False

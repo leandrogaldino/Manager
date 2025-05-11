@@ -1,4 +1,5 @@
 ﻿Imports ControlLibrary
+Imports DocumentFormat.OpenXml.Spreadsheet
 Imports MySql.Data.MySqlClient
 ''' <summary>
 ''' Representa uma tabela de preços.
@@ -76,6 +77,9 @@ Public Class SellablePriceTable
                             .Price = Row.Item("price"),
                             .PriceTable = Me
                         }
+                        Price.SetIsSaved(True)
+                        Price.SetID(Row.Item("id"))
+                        Price.SetCreation(Row.Item("creation"))
                         Prices.Add(Price)
                     End If
                     If (Row.Item("serviceid")) IsNot DBNull.Value Then
@@ -85,9 +89,11 @@ Public Class SellablePriceTable
                             .Price = Row.Item("price"),
                             .PriceTable = Me
                         }
+                        Price.SetIsSaved(True)
+                        Price.SetID(Row.Item("id"))
+                        Price.SetCreation(Row.Item("creation"))
                         Prices.Add(Price)
                     End If
-
                 Next Row
             End Using
         End Using
@@ -102,10 +108,13 @@ Public Class SellablePriceTable
                 Using Adp As New MySqlDataAdapter(Cmd)
                     Adp.Fill(TableResult)
                     Dgv.DataSource = TableResult
-                    'Dgv.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-                    'Dgv.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-                    'Dgv.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    'Dgv.Columns(1).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Dgv.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                    Dgv.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Dgv.Columns(0).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Dgv.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                    Dgv.Columns(2).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                    Dgv.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Dgv.Columns(2).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
                 End Using
             End Using
         End Using

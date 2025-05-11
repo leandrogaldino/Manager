@@ -80,7 +80,7 @@ Public Class Route
                     CmdRouteInsert.Parameters.AddWithValue("@name", Name)
                     CmdRouteInsert.Parameters.AddWithValue("@userid", User.ID)
                     CmdRouteInsert.ExecuteNonQuery()
-                    SetIsSaved(CmdRouteInsert.LastInsertedId)
+                    SetID(CmdRouteInsert.LastInsertedId)
                 End Using
                 Tra.Commit()
             End Using

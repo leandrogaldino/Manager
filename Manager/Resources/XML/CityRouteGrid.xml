@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Routine Id="CityRoute" Version="1">
+<Routine Id="CityRoute" Version="2">
 	<SortedColumn>-1</SortedColumn>
 	<SortDirection>0</SortDirection>
-	<Column Index="0">
-		<Visible>True</Visible>
+	<Column Index="0" ButtonState="Hidden">
+		<Visible>False</Visible>
 		<DisplayIndex>0</DisplayIndex>
 		<Name>Ordem</Name>
 		<Width>70</Width>
@@ -12,7 +12,7 @@
 		<Visible>True</Visible>
 		<DisplayIndex>1</DisplayIndex>
 		<Name>Rota</Name>
-		<Width>100</Width>
+		<Width>Fill</Width>
 	</Column>	
 	<Column Index="2" ButtonState="Hidden">
 		<Visible>False</Visible>
@@ -26,8 +26,8 @@
 		<Name>ID</Name>
 		<Width>100</Width>
 	</Column>
-	<Column Index="4">
-		<Visible>True</Visible>
+	<Column Index="4" ButtonState="Hidden">
+		<Visible>False</Visible>
 		<DisplayIndex>4</DisplayIndex>
 		<Name>Criação</Name>
 		<Width>100</Width>

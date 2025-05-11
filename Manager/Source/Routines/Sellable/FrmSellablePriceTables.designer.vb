@@ -22,6 +22,7 @@ Partial Class FrmSellablePriceTables
     'Não o modifique usando o editor de códigos.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.TsMenu = New System.Windows.Forms.ToolStrip()
         Me.BtnInclude = New System.Windows.Forms.ToolStripButton()
         Me.BtnEdit = New System.Windows.Forms.ToolStripButton()
@@ -49,6 +50,10 @@ Partial Class FrmSellablePriceTables
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.DgvPriceTableLayout = New Manager.DataGridViewLayout()
+        Me.TcDetail = New System.Windows.Forms.TabControl()
+        Me.TabSellable = New System.Windows.Forms.TabPage()
+        Me.DgvSellable = New System.Windows.Forms.DataGridView()
+        Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -63,6 +68,9 @@ Partial Class FrmSellablePriceTables
         Me.SplitContainer2.SuspendLayout()
         Me.TsDetails.SuspendLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TcDetail.SuspendLayout()
+        Me.TabSellable.SuspendLayout()
+        CType(Me.DgvSellable, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TsMenu
@@ -141,7 +149,6 @@ Partial Class FrmSellablePriceTables
         Me.BtnDetails.Name = "BtnDetails"
         Me.BtnDetails.Size = New System.Drawing.Size(100, 36)
         Me.BtnDetails.Text = "Detalhes"
-        Me.BtnDetails.Visible = False
         '
         'BtnClose
         '
@@ -297,6 +304,7 @@ Partial Class FrmSellablePriceTables
         '
         'SplitContainer2.Panel1
         '
+        Me.SplitContainer2.Panel1.Controls.Add(Me.TcDetail)
         Me.SplitContainer2.Panel1.Controls.Add(Me.TsDetails)
         Me.SplitContainer2.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         '
@@ -364,7 +372,49 @@ Partial Class FrmSellablePriceTables
         Me.DgvPriceTableLayout.DataGridView = Me.DgvData
         Me.DgvPriceTableLayout.Routine = Manager.Routine.SellablePriceTable
         '
-        'FrmProductPriceTables
+        'TcDetail
+        '
+        Me.TcDetail.Controls.Add(Me.TabSellable)
+        Me.TcDetail.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TcDetail.Location = New System.Drawing.Point(0, 25)
+        Me.TcDetail.Name = "TcDetail"
+        Me.TcDetail.SelectedIndex = 0
+        Me.TcDetail.Size = New System.Drawing.Size(270, 412)
+        Me.TcDetail.TabIndex = 2
+        '
+        'TabSellable
+        '
+        Me.TabSellable.Controls.Add(Me.DgvSellable)
+        Me.TabSellable.Location = New System.Drawing.Point(4, 26)
+        Me.TabSellable.Name = "TabSellable"
+        Me.TabSellable.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabSellable.Size = New System.Drawing.Size(262, 382)
+        Me.TabSellable.TabIndex = 1
+        Me.TabSellable.Text = "Peças/Serviços"
+        Me.TabSellable.UseVisualStyleBackColor = True
+        '
+        'DgvSellable
+        '
+        Me.DgvSellable.AllowUserToAddRows = False
+        Me.DgvSellable.AllowUserToDeleteRows = False
+        Me.DgvSellable.AllowUserToResizeColumns = False
+        Me.DgvSellable.AllowUserToResizeRows = False
+        Me.DgvSellable.BackgroundColor = System.Drawing.Color.White
+        Me.DgvSellable.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.DgvSellable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvSellable.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvSellable.Location = New System.Drawing.Point(3, 3)
+        Me.DgvSellable.MultiSelect = False
+        Me.DgvSellable.Name = "DgvSellable"
+        Me.DgvSellable.ReadOnly = True
+        Me.DgvSellable.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvSellable.RowHeadersVisible = False
+        Me.DgvSellable.RowTemplate.Height = 26
+        Me.DgvSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvSellable.Size = New System.Drawing.Size(256, 376)
+        Me.DgvSellable.TabIndex = 1
+        '
+        'FrmSellablePriceTables
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -376,7 +426,7 @@ Partial Class FrmSellablePriceTables
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "FrmProductPriceTables"
+        Me.Name = "FrmSellablePriceTables"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.TsMenu.ResumeLayout(False)
@@ -400,6 +450,9 @@ Partial Class FrmSellablePriceTables
         Me.TsDetails.ResumeLayout(False)
         Me.TsDetails.PerformLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TcDetail.ResumeLayout(False)
+        Me.TabSellable.ResumeLayout(False)
+        CType(Me.DgvSellable, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -433,4 +486,8 @@ Partial Class FrmSellablePriceTables
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents DgvPriceTableLayout As DataGridViewLayout
     Friend WithEvents BtnExport As ToolStripButton
+    Friend WithEvents TcDetail As TabControl
+    Friend WithEvents TabSellable As TabPage
+    Friend WithEvents DgvSellable As DataGridView
+    Friend WithEvents TmrLoadDetails As Timer
 End Class

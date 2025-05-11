@@ -147,7 +147,9 @@ Public Class DataGridViewLayout
                             DataGridView.FirstDisplayedScrollingRowIndex = 0
                         End If
                     Else
-                        DataGridView.FirstDisplayedScrollingRowIndex = 0
+                        If DataGridView.Rows.Count > 0 AndAlso DataGridView.DisplayedRowCount(False) > 0 Then
+                            DataGridView.FirstDisplayedScrollingRowIndex = 0
+                        End If
                     End If
                 End If
             End If

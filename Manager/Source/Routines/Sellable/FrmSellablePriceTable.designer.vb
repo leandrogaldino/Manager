@@ -83,8 +83,9 @@ Partial Class FrmSellablePriceTable
         '
         'BtnClose
         '
+        Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnClose.Location = New System.Drawing.Point(254, 7)
+        Me.BtnClose.Location = New System.Drawing.Point(242, 7)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(95, 30)
         Me.BtnClose.TabIndex = 1
@@ -93,8 +94,9 @@ Partial Class FrmSellablePriceTable
         '
         'BtnSave
         '
+        Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnSave.Enabled = False
-        Me.BtnSave.Location = New System.Drawing.Point(153, 7)
+        Me.BtnSave.Location = New System.Drawing.Point(141, 7)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(95, 30)
         Me.BtnSave.TabIndex = 0
@@ -304,10 +306,10 @@ Partial Class FrmSellablePriceTable
         '
         Me.TabPartService.Controls.Add(Me.DgvSellablePrice)
         Me.TabPartService.Controls.Add(Me.TsSellablePrice)
-        Me.TabPartService.Location = New System.Drawing.Point(4, 22)
+        Me.TabPartService.Location = New System.Drawing.Point(4, 26)
         Me.TabPartService.Name = "TabPartService"
         Me.TabPartService.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPartService.Size = New System.Drawing.Size(341, 56)
+        Me.TabPartService.Size = New System.Drawing.Size(341, 52)
         Me.TabPartService.TabIndex = 7
         Me.TabPartService.Text = "Peças & Serviços"
         Me.TabPartService.UseVisualStyleBackColor = True
@@ -330,7 +332,7 @@ Partial Class FrmSellablePriceTable
         Me.DgvSellablePrice.RowHeadersVisible = False
         Me.DgvSellablePrice.RowTemplate.Height = 26
         Me.DgvSellablePrice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvSellablePrice.Size = New System.Drawing.Size(335, 25)
+        Me.DgvSellablePrice.Size = New System.Drawing.Size(335, 21)
         Me.DgvSellablePrice.TabIndex = 1
         '
         'TsSellablePrice

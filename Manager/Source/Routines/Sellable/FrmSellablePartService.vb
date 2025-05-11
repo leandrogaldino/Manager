@@ -1,7 +1,6 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Extensions
 Public Class FrmSellablePartService
-
     Private _PriceTableForm As FrmSellablePriceTable
     Private _PriceTable As SellablePriceTable
     Private _SellablePrice As SellablePrice
@@ -39,17 +38,11 @@ Public Class FrmSellablePartService
         LblCreationValue.Text = _SellablePrice.Creation
         ClearQbxSellable()
         SetUpQbxSellableForProduct()
-
         If _SellablePrice.Product Is Nothing And _SellablePrice.Service Is Nothing Then RbtPart.Checked = True
-
         If _SellablePrice.Product IsNot Nothing Then RbtPart.Checked = True
-
         If _SellablePrice.Service IsNot Nothing Then RbtService.Checked = True
-
-
+        If _SellablePrice.Sellable IsNot Nothing AndAlso _SellablePrice.Sellable.ID > 0 Then QbxSellable.Freeze(_SellablePrice.Sellable.ID)
         DbxPrice.Text = _SellablePrice.Price
-
-
         If Not _SellablePrice.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
@@ -331,6 +324,7 @@ Public Class FrmSellablePartService
         QbxSellable.DisplayTableName = "service"
         QbxSellable.DisplayFieldName = "name"
         QbxSellable.DisplayFieldAlias = "Serviço"
+        QbxSellable.DisplayFieldAutoSizeColumnMode = DataGridViewAutoSizeColumnMode.Fill
         QbxSellable.DisplayMainFieldName = "id"
         QbxSellable.Conditions.Add(New QueriedBox.Condition() With {
             .FieldName = "statusid",
@@ -347,6 +341,7 @@ Public Class FrmSellablePartService
         QbxSellable.MainTableName = "product"
         QbxSellable.DisplayFieldName = "code"
         QbxSellable.DisplayFieldAlias = "Código"
+        QbxSellable.DisplayFieldAutoSizeColumnMode = DataGridViewAutoSizeColumnMode.AllCells
         QbxSellable.MainReturnFieldName = "id"
         QbxSellable.DisplayMainFieldName = "id"
         QbxSellable.DisplayTableName = "productprovidercode"
@@ -379,7 +374,8 @@ Public Class FrmSellablePartService
             .DisplayFieldAlias = "Peça",
             .DisplayFieldName = "name",
             .DisplayMainFieldName = "id",
-            .DisplayTableName = "product"
+            .DisplayTableName = "product",
+            .DisplayFieldAutoSizeColumnMode = DataGridViewAutoSizeColumnMode.Fill
         })
         QbxSellable.Conditions.Add(New QueriedBox.Condition() With {
             .FieldName = "statusid",

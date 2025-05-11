@@ -286,5 +286,11 @@ DROP TRIGGER IF EXISTS `manager`.`servicecomplementupdate` $$
 CREATE DEFINER=`root`@`localhost` TRIGGER `servicecomplementupdate` AFTER UPDATE ON `servicecomplement` FOR EACH ROW BEGIN
 IF OLD.complement <> NEW.complement THEN INSERT INTO log VALUES (NULL, 2301, NEW.id, 'Complemento', OLD.complement, NEW.complement, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
+DROP TRIGGER IF EXISTS `manager`.`sellablepriceupdate` $$
+CREATE DEFINER=`root`@`localhost` TRIGGER `sellablepriceupdate` AFTER UPDATE ON `sellableprice` FOR EACH ROW BEGIN
+IF OLD.sellablepricetableid <> NEW.sellablepricetableid THEN INSERT INTO log VALUES (NULL, 603, NEW.id, 'Tabela de Preço', CONCAT(OLD.sellablepricetableid, ' - ', (SELECT sellablepricetable.name FROM sellablepricetable WHERE sellablepricetable.id = OLD.sellablepricetableid)), CONCAT(NEW.sellablepricetableid, ' - ', (SELECT sellablepricetable.name FROM sellablepricetable WHERE sellablepricetable.id = NEW.sellablepricetableid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF IFNULL(OLD.productid, OLD.serviceid) <> IFNULL(NEW.productid, NEW.serviceid) THEN INSERT INTO log VALUES (NULL, 603, NEW.id, 'Peça/Serviço', CASE	WHEN OLD.productid IS NOT NULL THEN (SELECT CONCAT(product.id, ' - ', product.name) FROM product WHERE product.id = OLD.productid) WHEN OLD.serviceid IS NOT NULL THEN (SELECT CONCAT(service.id, ' - ', service.name) FROM service WHERE service.id = OLD.serviceid) END, CASE	WHEN NEW.productid IS NOT NULL THEN (SELECT CONCAT(product.id, ' - ', product.name) FROM product WHERE product.id = NEW.productid) WHEN NEW.serviceid IS NOT NULL THEN (SELECT CONCAT(service.id, ' - ', service.name) FROM service WHERE service.id = NEW.serviceid) END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.price <> NEW.price THEN INSERT INTO log VALUES (NULL, 603, NEW.id, 'Preço', FORMAT(OLD.price, 2, 'pt_BR'), FORMAT(NEW.price, 2, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+END$$
 DELIMITER ;
 ALTER TABLE `sellableprice` ADD UNIQUE KEY `uq_sellableprice_product` (`sellablepricetableid`, `productid`);

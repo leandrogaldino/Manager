@@ -337,6 +337,8 @@ Public Class Product
                         Using CmdPrice As New MySqlCommand(My.Resources.SellablePriceUpdate, Con)
                             CmdPrice.Parameters.AddWithValue("@id", Price.ID)
                             CmdPrice.Parameters.AddWithValue("@sellablepricetableid", Price.PriceTable.ID)
+                            CmdPrice.Parameters.AddWithValue("@productid", If(Price.Product IsNot Nothing, Price.Product.ID, DBNull.Value))
+                            CmdPrice.Parameters.AddWithValue("@serviceid", If(Price.Service IsNot Nothing, Price.Service.ID, DBNull.Value))
                             CmdPrice.Parameters.AddWithValue("@price", Price.Price)
                             CmdPrice.Parameters.AddWithValue("@userid", Price.User.ID)
                             CmdPrice.ExecuteNonQuery()
@@ -445,6 +447,7 @@ Public Class Product
                             .PriceTable = New SellablePriceTable().Load(Row.Item("sellablepricetableid"), False),
                             .Price = Row.Item("price")
                         }
+                        ProductPrice.Product = Me
                         ProductPrice.SetIsSaved(True)
                         ProductPrice.SetID(Row.Item("id"))
                         ProductPrice.SetCreation(Row.Item("creation"))

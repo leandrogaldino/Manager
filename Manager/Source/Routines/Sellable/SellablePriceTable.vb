@@ -130,6 +130,19 @@ Public Class SellablePriceTable
                     CmdSellablePriceTableInsert.ExecuteNonQuery()
                     SetID(CmdSellablePriceTableInsert.LastInsertedId)
                 End Using
+                For Each SellablePrice As SellablePrice In SellablePrices
+                    Using CmdSellablePrice As New MySqlCommand(My.Resources.SellablePriceInsert, Con)
+                        CmdSellablePrice.Transaction = Tra
+                        CmdSellablePrice.Parameters.AddWithValue("@productid", If(SellablePrice.Product IsNot Nothing, SellablePrice.Product.ID, DBNull.Value))
+                        CmdSellablePrice.Parameters.AddWithValue("@serviceid", If(SellablePrice.Service IsNot Nothing, SellablePrice.Service.ID, DBNull.Value))
+                        CmdSellablePrice.Parameters.AddWithValue("@creation", SellablePrice.Creation)
+                        CmdSellablePrice.Parameters.AddWithValue("@sellablepricetableid", ID)
+                        CmdSellablePrice.Parameters.AddWithValue("@price", SellablePrice.Price)
+                        CmdSellablePrice.Parameters.AddWithValue("@userid", SellablePrice.User.ID)
+                        CmdSellablePrice.ExecuteNonQuery()
+                        SellablePrice.SetID(CmdSellablePrice.LastInsertedId)
+                    End Using
+                Next SellablePrice
                 Tra.Commit()
             End Using
         End Using
@@ -138,13 +151,54 @@ Public Class SellablePriceTable
         Dim Session = Locator.GetInstance(Of Session)
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
-            Using CmdSellablePriceTableUpdate As New MySqlCommand(My.Resources.SellablePriceTableUpdate, Con)
-                CmdSellablePriceTableUpdate.Parameters.AddWithValue("@id", ID)
-                CmdSellablePriceTableUpdate.Parameters.AddWithValue("@statusid", CInt(Status))
-                CmdSellablePriceTableUpdate.Parameters.AddWithValue("@name", Name)
-                CmdSellablePriceTableUpdate.Parameters.AddWithValue("@userid", User.ID)
-                CmdSellablePriceTableUpdate.ExecuteNonQuery()
-            End Using
+            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
+
+                Using CmdSellablePriceTableUpdate As New MySqlCommand(My.Resources.SellablePriceTableUpdate, Con)
+                    CmdSellablePriceTableUpdate.Transaction = Tra
+                    CmdSellablePriceTableUpdate.Parameters.AddWithValue("@id", ID)
+                    CmdSellablePriceTableUpdate.Parameters.AddWithValue("@statusid", CInt(Status))
+                    CmdSellablePriceTableUpdate.Parameters.AddWithValue("@name", Name)
+                    CmdSellablePriceTableUpdate.Parameters.AddWithValue("@userid", User.ID)
+                    CmdSellablePriceTableUpdate.ExecuteNonQuery()
+                End Using
+
+                For Each SellablePrice As SellablePrice In _Shadow.SellablePrices
+                    If Not SellablePrices.Any(Function(x) x.ID = SellablePrice.ID And x.ID > 0) Then
+                        Using CmdSellablePrice As New MySqlCommand(My.Resources.SellablePriceDelete, Con)
+                            CmdSellablePrice.Transaction = Tra
+                            CmdSellablePrice.Parameters.AddWithValue("@id", SellablePrice.ID)
+                            CmdSellablePrice.ExecuteNonQuery()
+                        End Using
+                    End If
+                Next SellablePrice
+                For Each SellablePrice As SellablePrice In SellablePrices
+                    If SellablePrice.ID = 0 Then
+                        Using CmdSellablePrice As New MySqlCommand(My.Resources.SellablePriceInsert, Con)
+                            CmdSellablePrice.Transaction = Tra
+                            CmdSellablePrice.Parameters.AddWithValue("@productid", If(SellablePrice.Product IsNot Nothing, SellablePrice.Product.ID, DBNull.Value))
+                            CmdSellablePrice.Parameters.AddWithValue("@serviceid", If(SellablePrice.Service IsNot Nothing, SellablePrice.Service.ID, DBNull.Value))
+                            CmdSellablePrice.Parameters.AddWithValue("@creation", SellablePrice.Creation)
+                            CmdSellablePrice.Parameters.AddWithValue("@sellablepricetableid", ID)
+                            CmdSellablePrice.Parameters.AddWithValue("@price", SellablePrice.Price)
+                            CmdSellablePrice.Parameters.AddWithValue("@userid", SellablePrice.User.ID)
+                            CmdSellablePrice.ExecuteNonQuery()
+                            SellablePrice.SetID(CmdSellablePrice.LastInsertedId)
+                        End Using
+                    Else
+                        Using CmdSellablePrice As New MySqlCommand(My.Resources.SellablePriceUpdate, Con)
+                            CmdSellablePrice.Transaction = Tra
+                            CmdSellablePrice.Parameters.AddWithValue("@id", SellablePrice.ID)
+                            CmdSellablePrice.Parameters.AddWithValue("@sellablepricetableid", ID)
+                            CmdSellablePrice.Parameters.AddWithValue("@productid", If(SellablePrice.Product IsNot Nothing, SellablePrice.Product.ID, DBNull.Value))
+                            CmdSellablePrice.Parameters.AddWithValue("@serviceid", If(SellablePrice.Service IsNot Nothing, SellablePrice.Service.ID, DBNull.Value))
+                            CmdSellablePrice.Parameters.AddWithValue("@price", SellablePrice.Price)
+                            CmdSellablePrice.Parameters.AddWithValue("@userid", SellablePrice.User.ID)
+                            CmdSellablePrice.ExecuteNonQuery()
+                        End Using
+                    End If
+                Next SellablePrice
+                Tra.Commit()
+                End Using
         End Using
     End Sub
     Public Shared Sub FillSellablesDataGridView(SellablePriceTableID As Long, Dgv As DataGridView)

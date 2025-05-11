@@ -110,18 +110,18 @@ Public Class Service
                         Complement.SetID(CmdComplement.LastInsertedId)
                     End Using
                 Next Complement
-                For Each Price As SellablePrice In Prices.Value
+                For Each SellablePrice As SellablePrice In Prices.Value
                     Using CmdSellablePrice As New MySqlCommand(My.Resources.SellablePriceInsert, Con)
                         CmdSellablePrice.Parameters.AddWithValue("@productid", DBNull.Value)
                         CmdSellablePrice.Parameters.AddWithValue("@serviceid", ID)
-                        CmdSellablePrice.Parameters.AddWithValue("@creation", Price.Creation)
-                        CmdSellablePrice.Parameters.AddWithValue("@sellablepricetableid", Price.PriceTable.ID)
-                        CmdSellablePrice.Parameters.AddWithValue("@price", Price.Price)
-                        CmdSellablePrice.Parameters.AddWithValue("@userid", Price.User.ID)
+                        CmdSellablePrice.Parameters.AddWithValue("@creation", SellablePrice.Creation)
+                        CmdSellablePrice.Parameters.AddWithValue("@sellablepricetableid", SellablePrice.PriceTable.ID)
+                        CmdSellablePrice.Parameters.AddWithValue("@price", SellablePrice.Price)
+                        CmdSellablePrice.Parameters.AddWithValue("@userid", SellablePrice.User.ID)
                         CmdSellablePrice.ExecuteNonQuery()
-                        Price.SetID(CmdSellablePrice.LastInsertedId)
+                        SellablePrice.SetID(CmdSellablePrice.LastInsertedId)
                     End Using
-                Next Price
+                Next SellablePrice
             End Using
             Transaction.Complete()
         End Using
@@ -190,6 +190,8 @@ Public Class Service
                         Using CmdPrice As New MySqlCommand(My.Resources.SellablePriceUpdate, Con)
                             CmdPrice.Parameters.AddWithValue("@id", Price.ID)
                             CmdPrice.Parameters.AddWithValue("@sellablepricetableid", Price.PriceTable.ID)
+                            CmdPrice.Parameters.AddWithValue("@productid", If(Price.Product IsNot Nothing, Price.Product.ID, DBNull.Value))
+                            CmdPrice.Parameters.AddWithValue("@serviceid", If(Price.Service IsNot Nothing, Price.Service.ID, DBNull.Value))
                             CmdPrice.Parameters.AddWithValue("@price", Price.Price)
                             CmdPrice.Parameters.AddWithValue("@userid", Price.User.ID)
                             CmdPrice.ExecuteNonQuery()
@@ -242,6 +244,7 @@ Public Class Service
                             .PriceTable = New SellablePriceTable().Load(Row.Item("sellablepricetableid"), False),
                             .Price = Row.Item("price")
                         }
+                        ProductPrice.Service = Me
                         ProductPrice.SetIsSaved(True)
                         ProductPrice.SetID(Row.Item("id"))
                         ProductPrice.SetCreation(Row.Item("creation"))

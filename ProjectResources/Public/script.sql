@@ -210,6 +210,10 @@ CREATE TABLE servicecomplement (
     FOREIGN KEY (serviceid) REFERENCES service(id) ON DELETE CASCADE,
 	FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
 );
+
+
+--ALTERAR A PRODUCTPRICE E PRODUCTPRICETABLE CONFORME ABAIXO
+
 ALTER TABLE `productprice`
   MODIFY COLUMN `productid` INT DEFAULT NULL,
   ADD COLUMN `serviceid` INT DEFAULT NULL AFTER `productid`,
@@ -224,6 +228,10 @@ ALTER TABLE `manager`.`productprice` RENAME TO  `manager`.`sellableprice` ;
 ALTER TABLE `manager`.`sellableprice` DROP FOREIGN KEY `productprice_productpricetable`;
 ALTER TABLE `manager`.`sellableprice` CHANGE COLUMN `pricetableid` `sellablepricetableid` INT NOT NULL ;
 ALTER TABLE `manager`.`sellableprice` ADD CONSTRAINT `productprice_productpricetable` FOREIGN KEY (`sellablepricetableid`) REFERENCES `manager`.`sellablepricetable` (`id`)  ON DELETE RESTRICT;
+ALTER TABLE `sellableprice` ADD UNIQUE KEY `uq_sellableprice_product` (`sellablepricetableid`, `productid`);
+
+
+
 DELIMITER $$
 USE `manager`$$
 DROP TRIGGER IF EXISTS `manager`.`productpricetableinsert` $$
@@ -293,4 +301,3 @@ IF IFNULL(OLD.productid, OLD.serviceid) <> IFNULL(NEW.productid, NEW.serviceid) 
 IF OLD.price <> NEW.price THEN INSERT INTO log VALUES (NULL, 603, NEW.id, 'Preço', FORMAT(OLD.price, 2, 'pt_BR'), FORMAT(NEW.price, 2, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DELIMITER ;
-ALTER TABLE `sellableprice` ADD UNIQUE KEY `uq_sellableprice_product` (`sellablepricetableid`, `productid`);

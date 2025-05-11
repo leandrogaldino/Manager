@@ -509,6 +509,7 @@
     <Compile Include="Source\Helper\Attibutes\RoutineDependencyAttribute.vb" />
     <Compile Include="Source\Helper\FilterExpandable\VisitScheduleStatusExpandable.vb" />
     <Compile Include="Source\Helper\FilterQueriedBox\PrivilegePresetQueriedBoxFilter.vb" />
+    <Compile Include="Source\Helper\FilterQueriedBox\ServiceQueriedBoxFilter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\IntegerConverter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\VisitScheduleTypeConverter.vb" />
     <Compile Include="Source\Helper\Flags\ConfirmationType.vb" />
@@ -1758,6 +1759,7 @@
     <Content Include="Resources\SQL\UserPersonShortNameSelect.sql" />
     <Content Include="Resources\XML\CashFlowAuthorizedGrid.xml" />
     <Content Include="Resources\XML\CashFlowGrid.xml" />
+    <Content Include="Resources\XML\SellablePriceTableSellablePriceGrid.xml" />
     <Content Include="Resources\XML\ServiceGrid.xml" />
     <Content Include="Resources\XML\EvaluationTechnicianGrid.xml" />
     <Content Include="Resources\XML\ServiceComplementGrid.xml" />
@@ -2049,7 +2051,7 @@
     <Content Include="Resources\XML\PersonContactGrid.xml" />
     <Content Include="Resources\XML\EvaluationManagementGrid.xml" />
     <Content Include="Resources\XML\ProductPictureGrid.xml" />
-    <Content Include="Resources\XML\SellablePriceGrid.xml" />
+    <Content Include="Resources\XML\ProductSellablePriceGrid.xml" />
     <Content Include="Resources\XML\ProductProviderCodeGrid.xml" />
     <Content Include="Resources\XML\ProductCodeGrid.xml" />
     <Content Include="Resources\XML\ProductGrid.xml" />

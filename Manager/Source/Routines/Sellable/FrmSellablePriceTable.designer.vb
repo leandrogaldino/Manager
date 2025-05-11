@@ -23,6 +23,7 @@ Partial Class FrmSellablePriceTable
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmSellablePriceTable))
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
@@ -44,7 +45,7 @@ Partial Class FrmSellablePriceTable
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TxtName = New System.Windows.Forms.TextBox()
         Me.LblName = New System.Windows.Forms.Label()
-        Me.TcService = New System.Windows.Forms.TabControl()
+        Me.TcPriceTable = New System.Windows.Forms.TabControl()
         Me.TabMain = New System.Windows.Forms.TabPage()
         Me.TabPartService = New System.Windows.Forms.TabPage()
         Me.DgvSellablePrice = New System.Windows.Forms.DataGridView()
@@ -55,16 +56,18 @@ Partial Class FrmSellablePriceTable
         Me.ToolStripLabel9 = New System.Windows.Forms.ToolStripLabel()
         Me.TxtFilterSellablePrice = New System.Windows.Forms.ToolStripTextBox()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
+        Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.DgvSellablePriceLayout = New Manager.DataGridViewLayout()
         Me.Panel1.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TcService.SuspendLayout()
+        Me.TcPriceTable.SuspendLayout()
         Me.TabMain.SuspendLayout()
         Me.TabPartService.SuspendLayout()
         CType(Me.DgvSellablePrice, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsSellablePrice.SuspendLayout()
+        CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Panel1
@@ -73,9 +76,9 @@ Partial Class FrmSellablePriceTable
         Me.Panel1.Controls.Add(Me.BtnClose)
         Me.Panel1.Controls.Add(Me.BtnSave)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 546)
+        Me.Panel1.Location = New System.Drawing.Point(0, 132)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(961, 44)
+        Me.Panel1.Size = New System.Drawing.Size(349, 44)
         Me.Panel1.TabIndex = 4
         '
         'BtnClose
@@ -108,7 +111,7 @@ Partial Class FrmSellablePriceTable
         Me.TsTitle.Location = New System.Drawing.Point(0, 25)
         Me.TsTitle.Name = "TsTitle"
         Me.TsTitle.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsTitle.Size = New System.Drawing.Size(961, 25)
+        Me.TsTitle.Size = New System.Drawing.Size(349, 25)
         Me.TsTitle.TabIndex = 1
         Me.TsTitle.Text = "ToolStrip1"
         '
@@ -172,7 +175,7 @@ Partial Class FrmSellablePriceTable
         Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsNavigation.Size = New System.Drawing.Size(961, 25)
+        Me.TsNavigation.Size = New System.Drawing.Size(349, 25)
         Me.TsNavigation.TabIndex = 0
         Me.TsNavigation.Text = "ToolStrip2"
         '
@@ -271,18 +274,18 @@ Partial Class FrmSellablePriceTable
         Me.LblName.TabIndex = 2
         Me.LblName.Text = "Nome"
         '
-        'TcService
+        'TcPriceTable
         '
-        Me.TcService.Controls.Add(Me.TabMain)
-        Me.TcService.Controls.Add(Me.TabPartService)
-        Me.TcService.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TcService.Location = New System.Drawing.Point(0, 50)
-        Me.TcService.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TcService.Multiline = True
-        Me.TcService.Name = "TcService"
-        Me.TcService.SelectedIndex = 0
-        Me.TcService.Size = New System.Drawing.Size(961, 496)
-        Me.TcService.TabIndex = 5
+        Me.TcPriceTable.Controls.Add(Me.TabMain)
+        Me.TcPriceTable.Controls.Add(Me.TabPartService)
+        Me.TcPriceTable.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TcPriceTable.Location = New System.Drawing.Point(0, 50)
+        Me.TcPriceTable.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TcPriceTable.Multiline = True
+        Me.TcPriceTable.Name = "TcPriceTable"
+        Me.TcPriceTable.SelectedIndex = 0
+        Me.TcPriceTable.Size = New System.Drawing.Size(349, 82)
+        Me.TcPriceTable.TabIndex = 5
         '
         'TabMain
         '
@@ -292,7 +295,7 @@ Partial Class FrmSellablePriceTable
         Me.TabMain.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabMain.Name = "TabMain"
         Me.TabMain.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabMain.Size = New System.Drawing.Size(953, 466)
+        Me.TabMain.Size = New System.Drawing.Size(341, 52)
         Me.TabMain.TabIndex = 0
         Me.TabMain.Text = "Identificação"
         Me.TabMain.UseVisualStyleBackColor = True
@@ -301,10 +304,10 @@ Partial Class FrmSellablePriceTable
         '
         Me.TabPartService.Controls.Add(Me.DgvSellablePrice)
         Me.TabPartService.Controls.Add(Me.TsSellablePrice)
-        Me.TabPartService.Location = New System.Drawing.Point(4, 26)
+        Me.TabPartService.Location = New System.Drawing.Point(4, 22)
         Me.TabPartService.Name = "TabPartService"
         Me.TabPartService.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPartService.Size = New System.Drawing.Size(953, 466)
+        Me.TabPartService.Size = New System.Drawing.Size(341, 56)
         Me.TabPartService.TabIndex = 7
         Me.TabPartService.Text = "Peças & Serviços"
         Me.TabPartService.UseVisualStyleBackColor = True
@@ -327,7 +330,7 @@ Partial Class FrmSellablePriceTable
         Me.DgvSellablePrice.RowHeadersVisible = False
         Me.DgvSellablePrice.RowTemplate.Height = 26
         Me.DgvSellablePrice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvSellablePrice.Size = New System.Drawing.Size(947, 435)
+        Me.DgvSellablePrice.Size = New System.Drawing.Size(335, 25)
         Me.DgvSellablePrice.TabIndex = 1
         '
         'TsSellablePrice
@@ -339,7 +342,7 @@ Partial Class FrmSellablePriceTable
         Me.TsSellablePrice.Location = New System.Drawing.Point(3, 3)
         Me.TsSellablePrice.Name = "TsSellablePrice"
         Me.TsSellablePrice.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsSellablePrice.Size = New System.Drawing.Size(947, 25)
+        Me.TsSellablePrice.Size = New System.Drawing.Size(335, 25)
         Me.TsSellablePrice.TabIndex = 2
         Me.TsSellablePrice.Text = "ToolStrip2"
         '
@@ -387,7 +390,7 @@ Partial Class FrmSellablePriceTable
         Me.TxtFilterSellablePrice.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.TxtFilterSellablePrice.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.TxtFilterSellablePrice.Name = "TxtFilterSellablePrice"
-        Me.TxtFilterSellablePrice.Size = New System.Drawing.Size(200, 25)
+        Me.TxtFilterSellablePrice.Size = New System.Drawing.Size(200, 23)
         '
         'DgvNavigator
         '
@@ -397,17 +400,23 @@ Partial Class FrmSellablePriceTable
         Me.DgvNavigator.NextButton = Me.BtnNext
         Me.DgvNavigator.PreviousButton = Me.BtnPrevious
         '
+        'EprInformation
+        '
+        Me.EprInformation.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink
+        Me.EprInformation.ContainerControl = Me
+        Me.EprInformation.Icon = CType(resources.GetObject("EprInformation.Icon"), System.Drawing.Icon)
+        '
         'DgvSellablePriceLayout
         '
         Me.DgvSellablePriceLayout.DataGridView = Me.DgvSellablePrice
-        Me.DgvSellablePriceLayout.Routine = Manager.Routine.SellablePrice
+        Me.DgvSellablePriceLayout.Routine = Manager.Routine.SellablePriceTableSellablePrice
         '
         'FrmSellablePriceTable
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(961, 590)
-        Me.Controls.Add(Me.TcService)
+        Me.ClientSize = New System.Drawing.Size(349, 176)
+        Me.Controls.Add(Me.TcPriceTable)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.TsTitle)
         Me.Controls.Add(Me.TsNavigation)
@@ -425,7 +434,7 @@ Partial Class FrmSellablePriceTable
         Me.TsNavigation.ResumeLayout(False)
         Me.TsNavigation.PerformLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TcService.ResumeLayout(False)
+        Me.TcPriceTable.ResumeLayout(False)
         Me.TabMain.ResumeLayout(False)
         Me.TabMain.PerformLayout()
         Me.TabPartService.ResumeLayout(False)
@@ -433,6 +442,7 @@ Partial Class FrmSellablePriceTable
         CType(Me.DgvSellablePrice, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsSellablePrice.ResumeLayout(False)
         Me.TsSellablePrice.PerformLayout()
+        CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -459,7 +469,7 @@ Partial Class FrmSellablePriceTable
     Friend WithEvents DgvNavigator As ControlLibrary.DataGridViewNavigator
     Friend WithEvents TxtName As TextBox
     Friend WithEvents LblName As Label
-    Friend WithEvents TcService As TabControl
+    Friend WithEvents TcPriceTable As TabControl
     Friend WithEvents TabMain As TabPage
     Friend WithEvents TabPartService As TabPage
     Friend WithEvents DgvSellablePrice As DataGridView
@@ -470,4 +480,5 @@ Partial Class FrmSellablePriceTable
     Friend WithEvents ToolStripLabel9 As ToolStripLabel
     Friend WithEvents TxtFilterSellablePrice As ToolStripTextBox
     Friend WithEvents DgvSellablePriceLayout As DataGridViewLayout
+    Friend WithEvents EprInformation As ErrorProvider
 End Class

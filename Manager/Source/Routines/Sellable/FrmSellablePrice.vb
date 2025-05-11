@@ -122,7 +122,7 @@ Public Class FrmSellablePrice
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.SellablePrice, _SellablePrice.ID)
+        Dim Frm As New FrmLog(Routine.ProductSellablePrice, _SellablePrice.ID)
         Frm.ShowDialog()
     End Sub
     Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles QbxPriceTable.TextChanged,

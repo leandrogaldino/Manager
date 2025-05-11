@@ -119,7 +119,7 @@ Public Class FrmMain
         If _User.CanAccess(Routine.Product) Then
             If _User.CanAccess(Routine.ProductFamily) Or
                 _User.CanAccess(Routine.ProductGroup) Or
-                _User.CanAccess(Routine.SellablePrice) Or
+                _User.CanAccess(Routine.ProductSellablePrice) Or
                 _User.CanAccess(Routine.ProductUnit) Then
                 TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripSplitButton("Produto", "Cadastro de Produtos", My.Resources.Product, AddressOf ProductClick))
                 If _User.CanAccess(Routine.ProductFamily) Then

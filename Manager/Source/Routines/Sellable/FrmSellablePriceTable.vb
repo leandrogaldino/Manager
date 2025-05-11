@@ -52,6 +52,9 @@ Public Class FrmSellablePriceTable
         LoadData()
         LoadForm()
     End Sub
+    Private Sub FrmSellablePriceTable_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        DgvSellablePriceLayout.Load()
+    End Sub
     Private Sub LoadForm()
         ControlHelper.EnableControlDoubleBuffer(DgvSellablePrice, True)
         DgvNavigator.DataGridView = _PriceTablesGrid
@@ -65,10 +68,7 @@ Public Class FrmSellablePriceTable
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_PriceTable.Status)
         LblCreationValue.Text = _PriceTable.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _PriceTable.Name
-
-
         If _PriceTable.SellablePrices IsNot Nothing Then DgvSellablePrice.Fill(_PriceTable.SellablePrices)
-
         BtnDelete.Enabled = _PriceTable.ID > 0 And _User.CanDelete(Routine.SellablePriceTable)
         Text = "Tabela de Preço"
         If _PriceTable.LockInfo.IsLocked And Not _PriceTable.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _PriceTable.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
@@ -158,6 +158,14 @@ Public Class FrmSellablePriceTable
         Dim Frm As New FrmLog(Routine.SellablePriceTable, _PriceTable.ID)
         Frm.ShowDialog()
     End Sub
+    Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
+        EprValidation.Clear()
+        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
+    End Sub
+    Private Sub TxtName_TextChanged(sender As Object, e As EventArgs) Handles TxtName.TextChanged
+        EprValidation.Clear()
+        If Not _Loading Then BtnSave.Enabled = True
+    End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
             BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
@@ -172,14 +180,7 @@ Public Class FrmSellablePriceTable
         End If
         BtnSave.Enabled = True
     End Sub
-    Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
-        EprValidation.Clear()
-        BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
-    End Sub
-    Private Sub TxtName_TextChanged(sender As Object, e As EventArgs) Handles TxtName.TextChanged
-        EprValidation.Clear()
-        If Not _Loading Then BtnSave.Enabled = True
-    End Sub
+
     Private Sub Form_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If e.KeyCode = Keys.Insert And e.Control Then
             If BtnInclude.Enabled Then BtnInclude.PerformClick()
@@ -197,6 +198,57 @@ Public Class FrmSellablePriceTable
     End Sub
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
         Save()
+    End Sub
+    Private Sub BtnIncludePrice_Click(sender As Object, e As EventArgs) Handles BtnIncludeSellablePrice.Click
+        Dim Form As New FrmSellablePartService(_PriceTable, New SellablePrice, Me)
+        Form.ShowDialog()
+    End Sub
+    Private Sub BtnEditPrice_Click(sender As Object, e As EventArgs) Handles BtnEditSellablePrice.Click
+        Dim Form As FrmSellablePartService
+        Dim Price As SellablePrice
+        If DgvSellablePrice.SelectedRows.Count = 1 Then
+            Price = _PriceTable.SellablePrices.Single(Function(x) x.Guid = DgvSellablePrice.SelectedRows(0).Cells("Guid").Value)
+            Form = New FrmSellablePartService(_PriceTable, Price, Me)
+            Form.ShowDialog()
+        End If
+    End Sub
+    Private Sub BtnDeletePrice_Click(sender As Object, e As EventArgs) Handles BtnDeleteSellablePrice.Click
+        Dim Price As SellablePrice
+        If DgvSellablePrice.SelectedRows.Count = 1 Then
+            If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+                Price = _PriceTable.SellablePrices.Single(Function(x) x.Guid = DgvSellablePrice.SelectedRows(0).Cells("Guid").Value)
+                _PriceTable.SellablePrices.Remove(Price)
+                DgvSellablePrice.Fill(_PriceTable.SellablePrices)
+                BtnSave.Enabled = True
+            End If
+        End If
+    End Sub
+    Private Sub TcPriceTable_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcPriceTable.SelectedIndexChanged
+        If TcPriceTable.SelectedTab Is TabMain Then
+            Size = New Size(365, 215)
+            FormBorderStyle = FormBorderStyle.FixedSingle
+            WindowState = FormWindowState.Normal
+            MaximizeBox = False
+        Else
+            FormBorderStyle = FormBorderStyle.Sizable
+            WindowState = FormWindowState.Maximized
+            MaximizeBox = True
+        End If
+    End Sub
+    <DebuggerStepThrough>
+    Private Sub DgvSellablePrice_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvSellablePrice.CellFormatting
+        Dim Dgv As DataGridView = sender
+        If e.ColumnIndex = Dgv.Columns("Price").Index Then
+            e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            e.CellStyle.Format = "N2"
+        End If
+    End Sub
+
+    Private Sub DgvSellablePrice_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvSellablePrice.MouseDoubleClick
+        Dim ClickPlace As DataGridView.HitTestInfo = DgvSellablePrice.HitTest(e.X, e.Y)
+        If ClickPlace.Type = DataGridViewHitTestType.Cell Then
+            BtnEditSellablePrice.PerformClick()
+        End If
     End Sub
     Private Function IsValidFields() As Boolean
         If String.IsNullOrWhiteSpace(TxtName.Text) Then
@@ -247,38 +299,53 @@ Public Class FrmSellablePriceTable
             End If
         End If
     End Function
+
+
+    Private Sub TxtFilterSellablePrice_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtFilterSellablePrice.KeyPress
+        Dim LstChar As New List(Of Char) From {"", ".", ",", "-", "/", "(", ")", "+", "*", "%", "&", "@", "#", "$", "<", ">", "\"}
+        If Not Char.IsLetter(e.KeyChar) And Not Char.IsNumber(e.KeyChar) And Not LstChar.Contains(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub TxtFilterSellablePrice_Enter(sender As Object, e As EventArgs) Handles TxtFilterSellablePrice.Enter
+        EprInformation.SetError(TsSellablePrice, "Filtrando os campos: Código e Nome.")
+        EprInformation.SetIconAlignment(TsSellablePrice, ErrorIconAlignment.MiddleLeft)
+        EprInformation.SetIconPadding(TsSellablePrice, -365)
+    End Sub
+    Private Sub TxtFilterSellablePrice_Leave(sender As Object, e As EventArgs) Handles TxtFilterSellablePrice.Leave
+        EprInformation.Clear()
+    End Sub
+    Private Sub TxtFilterSellablePrice_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterSellablePrice.TextChanged
+        FilterRequestItem()
+    End Sub
+    Private Sub FilterRequestItem()
+        Dim Table As DataTable
+        Dim View As DataView
+        Dim Filter As String = "ItemNameOrProduct LIKE '%@value%' OR Code LIKE '%@value%'"
+        If DgvSellablePrice.DataSource IsNot Nothing Then
+            Table = DgvSellablePrice.DataSource
+            View = Table.DefaultView
+            If TxtFilterSellablePrice.Text <> Nothing Then
+                Filter = Filter.Replace("@value", TxtFilterSellablePrice.Text.Replace("%", Nothing).Replace("*", Nothing))
+                View.RowFilter = Filter
+            Else
+                View.RowFilter = Nothing
+            End If
+        End If
+    End Sub
+
+    Private Sub DgvSellablePrice_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvSellablePrice.DataSourceChanged
+        FilterRequestItem()
+    End Sub
+
+
     Private Sub FrmProductPriceTable_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         _PriceTable.Unlock()
     End Sub
 
-    Private Sub BtnIncludePrice_Click(sender As Object, e As EventArgs) Handles BtnIncludeSellablePrice.Click
-        Dim Form As New FrmSellablePartService()
-        Form.ShowDialog()
-    End Sub
-    Private Sub BtnEditPrice_Click(sender As Object, e As EventArgs) Handles BtnEditSellablePrice.Click
-        'Dim Form As FrmSellablePrice
-        'Dim Price As SellablePrice
-        'If DgvSellablePrice.SelectedRows.Count = 1 Then
-        '    Price = _PriceTable.SellablePrices.Single(Function(x) x.Guid = DgvSellablePrice.SelectedRows(0).Cells("Guid").Value)
-        '    Form = New FrmSellablePrice(_PriceTable, Price, Nothing, Me)
-        '    Form.ShowDialog()
-        'End If
-    End Sub
-    Private Sub BtnDeletePrice_Click(sender As Object, e As EventArgs) Handles BtnDeleteSellablePrice.Click
-        'Dim Price As SellablePrice
-        'If DgvSellablePrice.SelectedRows.Count = 1 Then
-        '    If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-        '        Price = _PriceTable.SellablePrices.Single(Function(x) x.Guid = DgvSellablePrice.SelectedRows(0).Cells("Guid").Value)
-        '        _PriceTable.SellablePrices.Remove(Price)
-        '        DgvSellablePrice.Fill(_PriceTable.SellablePrices)
-        '        BtnSave.Enabled = True
-        '    End If
-        'End If
-    End Sub
 
-    Private Sub FrmSellablePriceTable_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvSellablePriceLayout.Load()
-    End Sub
+
+
 
 
 End Class

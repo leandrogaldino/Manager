@@ -178,7 +178,6 @@ Public Class FrmRequest
     Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtDestination.TextChanged,
                                                                           TxtResponsible.TextChanged,
                                                                           TxtNote.TextChanged
-
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
@@ -349,12 +348,6 @@ Public Class FrmRequest
         End If
         Return Success
     End Function
-    Private Sub TxtKeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtFilterItem.KeyPress
-        Dim LstChar As New List(Of Char) From {"", ".", ",", "-", "/", "(", ")", "+", "*", "%", "&", "@", "#", "$", "<", ">", "\"}
-        If Not Char.IsLetter(e.KeyChar) And Not Char.IsNumber(e.KeyChar) And Not LstChar.Contains(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
-            e.Handled = True
-        End If
-    End Sub
     Private Sub BtnZoomOut_Click(sender As Object, e As EventArgs) Handles BtnZoomOut.Click
         PdfDocumentViewer.ZoomTo(PdfDocumentViewer.ZoomPercentage - 10)
     End Sub
@@ -435,6 +428,19 @@ Public Class FrmRequest
             LblStatusValue.ForeColor = Color.DarkGreen
         End If
     End Sub
+    Private Sub BtnRequestSheet_Click(sender As Object, e As EventArgs) Handles BtnRequestSheet.Click
+        Using FormSheet As New FrmRequestSheet(_Request, BtnSave.Enabled)
+            FormSheet.ShowDialog()
+        End Using
+    End Sub
+
+
+    Private Sub TxtKeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtFilterItem.KeyPress
+        Dim LstChar As New List(Of Char) From {"", ".", ",", "-", "/", "(", ")", "+", "*", "%", "&", "@", "#", "$", "<", ">", "\"}
+        If Not Char.IsLetter(e.KeyChar) And Not Char.IsNumber(e.KeyChar) And Not LstChar.Contains(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
     Private Sub TxtFilterItem_Enter(sender As Object, e As EventArgs) Handles TxtFilterItem.Enter
         EprInformation.SetError(TsItem, "Filtrando os campos: Código e Item.")
         EprInformation.SetIconAlignment(TsItem, ErrorIconAlignment.MiddleLeft)
@@ -442,11 +448,6 @@ Public Class FrmRequest
     End Sub
     Private Sub TxtFilterItem_Leave(sender As Object, e As EventArgs) Handles TxtFilterItem.Leave
         EprInformation.Clear()
-    End Sub
-    Private Sub BtnRequestSheet_Click(sender As Object, e As EventArgs) Handles BtnRequestSheet.Click
-        Using FormSheet As New FrmRequestSheet(_Request, BtnSave.Enabled)
-            FormSheet.ShowDialog()
-        End Using
     End Sub
     Private Sub TxtFilterItem_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterItem.TextChanged
         FilterRequestItem()

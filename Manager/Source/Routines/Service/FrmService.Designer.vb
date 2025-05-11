@@ -622,7 +622,7 @@ Partial Class FrmService
         'DgvPriceLayout
         '
         Me.DgvPriceLayout.DataGridView = Me.DgvPrice
-        Me.DgvPriceLayout.Routine = Manager.Routine.SellablePrice
+        Me.DgvPriceLayout.Routine = Manager.Routine.ProductSellablePrice
         '
         'DgvComplementnLayout
         '

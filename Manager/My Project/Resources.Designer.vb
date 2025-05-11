@@ -4756,6 +4756,31 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;ProductSellablePrice&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''    &lt;Column Index=&quot;0&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;Ordem&lt;/Name&gt;
+        '''        &lt;Width&gt;70&lt;/Width&gt;
+        '''    &lt;/Column&gt;    
+        '''        &lt;Column Index=&quot;1&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;Tabela de Preço&lt;/Name&gt;
+        '''        &lt;Width&gt;150&lt;/Width&gt;
+        '''    &lt;/Column&gt;
+        '''	 [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property ProductSellablePriceGrid() As String
+            Get
+                Return ResourceManager.GetString("ProductSellablePriceGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property ProductUnit() As System.Drawing.Bitmap
@@ -5434,31 +5459,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;SellablePrice&quot; Version=&quot;1&quot;&gt;
-        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
-        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
-        '''    &lt;Column Index=&quot;0&quot;&gt;
-        '''        &lt;Visible&gt;True&lt;/Visible&gt;
-        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
-        '''        &lt;Name&gt;Ordem&lt;/Name&gt;
-        '''        &lt;Width&gt;70&lt;/Width&gt;
-        '''    &lt;/Column&gt;    
-        '''        &lt;Column Index=&quot;1&quot;&gt;
-        '''        &lt;Visible&gt;True&lt;/Visible&gt;
-        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''        &lt;Name&gt;Tabela de Preço&lt;/Name&gt;
-        '''        &lt;Width&gt;150&lt;/Width&gt;
-        '''    &lt;/Column&gt;
-        '''    &lt;Col [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property SellablePriceGrid() As String
-            Get
-                Return ResourceManager.GetString("SellablePriceGrid", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO sellableprice
         '''(
         '''	productid,
@@ -5525,13 +5525,14 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	sellablepricetable.name AS &apos;Tabela&apos;,
+        '''	IFNULL(product.name, service.name) AS &apos;Produto/Serviço&apos;,
         '''	sellableprice.price AS &apos;Preço&apos;
         '''FROM sellableprice
         '''INNER JOIN sellablepricetable ON sellablepricetable.id = sellableprice.sellablepricetableid
+        '''LEFT JOIN product ON product.id = sellableprice.productid
+        '''LEFT JOIN service ON service.id = sellableprice.serviceid
         '''WHERE 
-        '''	(@productid IS NULL OR (sellableprice.productid IS NOT NULL AND sellableprice.productid = @productid)) AND
-        '''    (@serviceid IS NULL OR (sellableprice.serviceid IS NOT NULL AND sellableprice.serviceid = @serviceid));
+        '''	sellablepricetable.id = @sellablepricetableid;
         '''.
         '''</summary>
         Friend ReadOnly Property SellablePriceTableDetailSelect() As String
@@ -5621,6 +5622,31 @@ Namespace My.Resources
         Friend ReadOnly Property SellablePriceTableSelect() As String
             Get
                 Return ResourceManager.GetString("SellablePriceTableSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;ProductSellablePrice&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''    &lt;Column Index=&quot;0&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;Ordem&lt;/Name&gt;
+        '''        &lt;Width&gt;70&lt;/Width&gt;
+        '''    &lt;/Column&gt;    
+        '''        &lt;Column Index=&quot;1&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;Tabela de Preço&lt;/Name&gt;
+        '''        &lt;Width&gt;150&lt;/Width&gt;
+        '''    &lt;/Column&gt;
+        '''	 [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property SellablePriceTableSellablePriceGrid() As String
+            Get
+                Return ResourceManager.GetString("SellablePriceTableSellablePriceGrid", resourceCulture)
             End Get
         End Property
         

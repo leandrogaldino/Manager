@@ -89,6 +89,7 @@ Partial Class FrmService
         Me.TcService.SuspendLayout()
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsNavigation.SuspendLayout()
+        Me.TsTitle.SuspendLayout()
         Me.SuspendLayout()
         '
         'BtnClose
@@ -367,10 +368,10 @@ Partial Class FrmService
         '
         Me.TabComplement.Controls.Add(Me.DgvComplement)
         Me.TabComplement.Controls.Add(Me.TsComplement)
-        Me.TabComplement.Location = New System.Drawing.Point(4, 22)
+        Me.TabComplement.Location = New System.Drawing.Point(4, 26)
         Me.TabComplement.Name = "TabComplement"
         Me.TabComplement.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabComplement.Size = New System.Drawing.Size(486, 66)
+        Me.TabComplement.Size = New System.Drawing.Size(486, 62)
         Me.TabComplement.TabIndex = 7
         Me.TabComplement.Text = "Complementos"
         Me.TabComplement.UseVisualStyleBackColor = True
@@ -393,7 +394,7 @@ Partial Class FrmService
         Me.DgvComplement.RowHeadersVisible = False
         Me.DgvComplement.RowTemplate.Height = 26
         Me.DgvComplement.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvComplement.Size = New System.Drawing.Size(480, 35)
+        Me.DgvComplement.Size = New System.Drawing.Size(480, 31)
         Me.DgvComplement.TabIndex = 1
         '
         'TsComplement
@@ -602,13 +603,13 @@ Partial Class FrmService
         Me.TsTitle.BackColor = System.Drawing.Color.White
         Me.TsTitle.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsTitle.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.TsTitle.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblID, Me.LblIDValue, Me.LblStatus, Me.BtnStatusValue, Me.LblCreation, Me.LblCreationValue})
         Me.TsTitle.Location = New System.Drawing.Point(0, 25)
         Me.TsTitle.Name = "TsTitle"
         Me.TsTitle.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.TsTitle.Size = New System.Drawing.Size(494, 25)
         Me.TsTitle.TabIndex = 5
         Me.TsTitle.Text = "ToolStrip1"
-        Me.TsTitle.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblID, Me.LblIDValue, Me.LblStatus, Me.BtnStatusValue, Me.LblCreation, Me.LblCreationValue})
         '
         'DgvNavigator
         '
@@ -665,6 +666,8 @@ Partial Class FrmService
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsNavigation.ResumeLayout(False)
         Me.TsNavigation.PerformLayout()
+        Me.TsTitle.ResumeLayout(False)
+        Me.TsTitle.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub

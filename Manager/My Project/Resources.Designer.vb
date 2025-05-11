@@ -5389,6 +5389,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	sellableprice.id,
+        '''	sellableprice.creation,
+        '''	sellableprice.sellablepricetableid,
+        '''	sellableprice.price,
+        '''	sellableprice.productid,
+        '''	sellableprice.serviceid
+        '''FROM sellableprice
+        '''WHERE 
+        '''	sellableprice.sellablepricetableid = @sellablepricetableid;.
+        '''</summary>
+        Friend ReadOnly Property SellablePriceByPriceTableSelect() As String
+            Get
+                Return ResourceManager.GetString("SellablePriceByPriceTableSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM sellableprice
         '''WHERE sellableprice.id = @id;.
         '''</summary>
@@ -5502,6 +5520,23 @@ Namespace My.Resources
         Friend ReadOnly Property SellablePriceTableDelete() As String
             Get
                 Return ResourceManager.GetString("SellablePriceTableDelete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	sellablepricetable.name AS &apos;Tabela&apos;,
+        '''	sellableprice.price AS &apos;Preço&apos;
+        '''FROM sellableprice
+        '''INNER JOIN sellablepricetable ON sellablepricetable.id = sellableprice.sellablepricetableid
+        '''WHERE 
+        '''	(@productid IS NULL OR (sellableprice.productid IS NOT NULL AND sellableprice.productid = @productid)) AND
+        '''    (@serviceid IS NULL OR (sellableprice.serviceid IS NOT NULL AND sellableprice.serviceid = @serviceid));
+        '''.
+        '''</summary>
+        Friend ReadOnly Property SellablePriceTableDetailSelect() As String
+            Get
+                Return ResourceManager.GetString("SellablePriceTableDetailSelect", resourceCulture)
             End Get
         End Property
         

@@ -41,7 +41,7 @@ Public Class FrmServices
                 _Service = New Service().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
                 ServiceForm = New FrmService(_Service, Me)
                 ServiceForm.DgvComplement.Fill(_Service.Complements)
-                ServiceForm.DgvPrice.Fill(_Service.Prices)
+                ServiceForm.DgvPrice.Fill(_Service.Prices.Value)
                 ServiceForm.ShowDialog()
             Catch ex As Exception
                 CMessageBox.Show("ERRO SV004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

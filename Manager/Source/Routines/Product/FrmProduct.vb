@@ -93,7 +93,7 @@ Public Class FrmProduct
         TxtFilterPrice.Clear()
         If _Product.ProviderCodes IsNot Nothing Then DgvProviderCode.Fill(_Product.ProviderCodes)
         If _Product.Codes IsNot Nothing Then DgvCode.Fill(_Product.Codes)
-        If _Product.Prices IsNot Nothing Then DgvPrice.Fill(_Product.Prices)
+        If _Product.Prices.Value IsNot Nothing Then DgvPrice.Fill(_Product.Prices.Value)
         If _Product.Pictures IsNot Nothing Then DgvPicture.Fill(_Product.Pictures)
         BtnDelete.Enabled = _Product.ID > 0 And _User.CanDelete(Routine.Product)
         Text = "Produto"
@@ -142,7 +142,7 @@ Public Class FrmProduct
             If _ProductsForm IsNot Nothing Then
                 DgvProviderCode.Fill(_Product.ProviderCodes)
                 DgvCode.Fill(_Product.Codes)
-                DgvPrice.Fill(_Product.Prices)
+                DgvPrice.Fill(_Product.Prices.Value)
                 DgvPicture.Fill(_Product.Pictures)
             End If
             _Deleting = False
@@ -301,7 +301,7 @@ Public Class FrmProduct
         Dim Form As FrmSellablePrice
         Dim Price As SellablePrice
         If DgvPrice.SelectedRows.Count = 1 Then
-            Price = _Product.Prices.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
+            Price = _Product.Prices.Value.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmSellablePrice(_Product, Price, Me, Nothing)
             Form.ShowDialog()
         End If
@@ -310,8 +310,8 @@ Public Class FrmProduct
         Dim Price As SellablePrice
         If DgvPrice.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Price = _Product.Prices.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
-                _Product.Prices.Remove(Price)
+                Price = _Product.Prices.Value.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
+                _Product.Prices.Value.Remove(Price)
                 DgvPrice.Fill(_Product.Prices)
                 BtnSave.Enabled = True
             End If
@@ -464,7 +464,7 @@ Public Class FrmProduct
                     LblIDValue.Text = _Product.ID
                     DgvProviderCode.Fill(_Product.ProviderCodes)
                     DgvCode.Fill(_Product.Codes)
-                    DgvPrice.Fill(_Product.Prices)
+                    DgvPrice.Fill(_Product.Prices.Value)
                     DgvPicture.Fill(_Product.Pictures)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Product)

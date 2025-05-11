@@ -52,7 +52,6 @@ Public MustInherit Class BaseModel
         If obj Is Nothing Then Return False
         If TypeOf obj IsNot BaseModel Then Return False
         Return MyBase.Equals(obj)
-        'Return Me.Equals(DirectCast(obj, BaseModel))
     End Function
 
     Public Overloads Function Equals(other As BaseModel) As Boolean Implements IEquatable(Of BaseModel).Equals

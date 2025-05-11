@@ -23,12 +23,6 @@ Partial Class FrmSellablePartService
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim OtherField1 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Relation1 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
         Me.TsMain = New System.Windows.Forms.ToolStrip()
@@ -47,21 +41,22 @@ Partial Class FrmSellablePartService
         Me.LblOrderValue = New System.Windows.Forms.ToolStripLabel()
         Me.LblCreation = New System.Windows.Forms.ToolStripLabel()
         Me.LblCreationValue = New System.Windows.Forms.ToolStripLabel()
-        Me.LblItem = New System.Windows.Forms.Label()
-        Me.FlpProduct = New System.Windows.Forms.FlowLayoutPanel()
+        Me.FlpSellable = New System.Windows.Forms.FlowLayoutPanel()
         Me.BtnFilter = New ControlLibrary.NoFocusCueButton()
         Me.BtnView = New ControlLibrary.NoFocusCueButton()
         Me.BtnNew = New ControlLibrary.NoFocusCueButton()
         Me.TmrQueriedBox = New System.Windows.Forms.Timer(Me.components)
-        Me.QbxItem = New ControlLibrary.QueriedBox()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.DbxPrice = New ControlLibrary.DecimalBox()
         Me.LblPrice = New System.Windows.Forms.Label()
+        Me.RbtPart = New System.Windows.Forms.RadioButton()
+        Me.RbtService = New System.Windows.Forms.RadioButton()
+        Me.QbxSellable = New ControlLibrary.QueriedBox()
         Me.TsMain.SuspendLayout()
         Me.Panel1.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsData.SuspendLayout()
-        Me.FlpProduct.SuspendLayout()
+        Me.FlpSellable.SuspendLayout()
         Me.SuspendLayout()
         '
         'BtnClose
@@ -242,26 +237,16 @@ Partial Class FrmSellablePartService
         Me.LblCreationValue.Size = New System.Drawing.Size(32, 22)
         Me.LblCreationValue.Text = "      "
         '
-        'LblItem
+        'FlpSellable
         '
-        Me.LblItem.AutoSize = True
-        Me.LblItem.Location = New System.Drawing.Point(9, 60)
-        Me.LblItem.Margin = New System.Windows.Forms.Padding(3, 10, 3, 0)
-        Me.LblItem.Name = "LblItem"
-        Me.LblItem.Size = New System.Drawing.Size(37, 17)
-        Me.LblItem.TabIndex = 2
-        Me.LblItem.Text = "Item"
-        '
-        'FlpProduct
-        '
-        Me.FlpProduct.Controls.Add(Me.BtnFilter)
-        Me.FlpProduct.Controls.Add(Me.BtnView)
-        Me.FlpProduct.Controls.Add(Me.BtnNew)
-        Me.FlpProduct.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-        Me.FlpProduct.Location = New System.Drawing.Point(328, 60)
-        Me.FlpProduct.Name = "FlpProduct"
-        Me.FlpProduct.Size = New System.Drawing.Size(69, 21)
-        Me.FlpProduct.TabIndex = 4
+        Me.FlpSellable.Controls.Add(Me.BtnFilter)
+        Me.FlpSellable.Controls.Add(Me.BtnView)
+        Me.FlpSellable.Controls.Add(Me.BtnNew)
+        Me.FlpSellable.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
+        Me.FlpSellable.Location = New System.Drawing.Point(328, 60)
+        Me.FlpSellable.Name = "FlpSellable"
+        Me.FlpSellable.Size = New System.Drawing.Size(69, 21)
+        Me.FlpSellable.TabIndex = 4
         '
         'BtnFilter
         '
@@ -316,65 +301,6 @@ Partial Class FrmSellablePartService
         Me.TmrQueriedBox.Enabled = True
         Me.TmrQueriedBox.Interval = 300
         '
-        'QbxItem
-        '
-        Me.QbxItem.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.QbxItem.CharactersToQuery = 1
-        Condition1.FieldName = "statusid"
-        Condition1.Operator = "="
-        Condition1.TableNameOrAlias = "product"
-        Condition1.Value = "@statusid"
-        Me.QbxItem.Conditions.Add(Condition1)
-        Me.QbxItem.DebugOnTextChanged = True
-        Me.QbxItem.DisplayFieldAlias = "Código"
-        Me.QbxItem.DisplayFieldName = "code"
-        Me.QbxItem.DisplayMainFieldName = "id"
-        Me.QbxItem.DisplayTableAlias = ""
-        Me.QbxItem.DisplayTableName = "productprovidercode"
-        Me.QbxItem.Distinct = False
-        Me.QbxItem.DropDownAutoStretchRight = False
-        Me.QbxItem.GridHeaderBackColor = System.Drawing.SystemColors.Window
-        Me.QbxItem.IfNull = Nothing
-        Me.QbxItem.Location = New System.Drawing.Point(12, 80)
-        Me.QbxItem.MainReturnFieldName = "id"
-        Me.QbxItem.MainTableAlias = Nothing
-        Me.QbxItem.MainTableName = "product"
-        Me.QbxItem.Name = "QbxItem"
-        OtherField1.DisplayFieldAlias = "Produto"
-        OtherField1.DisplayFieldName = "name"
-        OtherField1.DisplayMainFieldName = "id"
-        OtherField1.DisplayTableAlias = ""
-        OtherField1.DisplayTableName = "product"
-        OtherField1.Freeze = True
-        OtherField1.IfNull = Nothing
-        OtherField1.Prefix = Nothing
-        OtherField1.Suffix = Nothing
-        Me.QbxItem.OtherFields.Add(OtherField1)
-        Parameter1.ParameterName = "@statusid"
-        Parameter1.ParameterValue = "0"
-        Parameter2.ParameterName = "@ismainprovider"
-        Parameter2.ParameterValue = "1"
-        Me.QbxItem.Parameters.Add(Parameter1)
-        Me.QbxItem.Parameters.Add(Parameter2)
-        Me.QbxItem.Prefix = Nothing
-        Condition2.FieldName = "ismainprovider"
-        Condition2.Operator = "="
-        Condition2.TableNameOrAlias = "productprovidercode"
-        Condition2.Value = "@ismainprovider"
-        Relation1.Conditions.Add(Condition2)
-        Relation1.Operator = "="
-        Relation1.RelateFieldName = "productid"
-        Relation1.RelateTableAlias = Nothing
-        Relation1.RelateTableName = "productprovidercode"
-        Relation1.RelationType = "LEFT"
-        Relation1.WithFieldName = "id"
-        Relation1.WithTableAlias = Nothing
-        Relation1.WithTableName = "product"
-        Me.QbxItem.Relations.Add(Relation1)
-        Me.QbxItem.Size = New System.Drawing.Size(385, 23)
-        Me.QbxItem.Suffix = " - "
-        Me.QbxItem.TabIndex = 3
-        '
         'DgvNavigator
         '
         Me.DgvNavigator.CancelNextMove = False
@@ -403,16 +329,62 @@ Partial Class FrmSellablePartService
         Me.LblPrice.TabIndex = 18
         Me.LblPrice.Text = "Preço"
         '
+        'RbtPart
+        '
+        Me.RbtPart.AutoSize = True
+        Me.RbtPart.Checked = True
+        Me.RbtPart.Location = New System.Drawing.Point(12, 59)
+        Me.RbtPart.Name = "RbtPart"
+        Me.RbtPart.Size = New System.Drawing.Size(59, 21)
+        Me.RbtPart.TabIndex = 20
+        Me.RbtPart.TabStop = True
+        Me.RbtPart.Text = "Peça"
+        Me.RbtPart.UseVisualStyleBackColor = True
+        '
+        'RbtService
+        '
+        Me.RbtService.AutoSize = True
+        Me.RbtService.Location = New System.Drawing.Point(77, 58)
+        Me.RbtService.Name = "RbtService"
+        Me.RbtService.Size = New System.Drawing.Size(72, 21)
+        Me.RbtService.TabIndex = 21
+        Me.RbtService.Text = "Serviço"
+        Me.RbtService.UseVisualStyleBackColor = True
+        '
+        'QbxSellable
+        '
+        Me.QbxSellable.CharactersToQuery = 2
+        Me.QbxSellable.DebugOnTextChanged = False
+        Me.QbxSellable.DisplayFieldAlias = ""
+        Me.QbxSellable.DisplayFieldName = ""
+        Me.QbxSellable.DisplayMainFieldName = ""
+        Me.QbxSellable.DisplayTableAlias = ""
+        Me.QbxSellable.DisplayTableName = ""
+        Me.QbxSellable.Distinct = False
+        Me.QbxSellable.DropDownAutoStretchRight = False
+        Me.QbxSellable.GridHeaderBackColor = System.Drawing.SystemColors.Window
+        Me.QbxSellable.IfNull = Nothing
+        Me.QbxSellable.Location = New System.Drawing.Point(12, 80)
+        Me.QbxSellable.MainReturnFieldName = ""
+        Me.QbxSellable.MainTableAlias = ""
+        Me.QbxSellable.MainTableName = ""
+        Me.QbxSellable.Name = "QbxSellable"
+        Me.QbxSellable.Prefix = Nothing
+        Me.QbxSellable.Size = New System.Drawing.Size(385, 23)
+        Me.QbxSellable.Suffix = Nothing
+        Me.QbxSellable.TabIndex = 22
+        '
         'FrmSellablePartService
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(515, 158)
+        Me.Controls.Add(Me.QbxSellable)
+        Me.Controls.Add(Me.RbtService)
+        Me.Controls.Add(Me.RbtPart)
         Me.Controls.Add(Me.DbxPrice)
         Me.Controls.Add(Me.LblPrice)
-        Me.Controls.Add(Me.FlpProduct)
-        Me.Controls.Add(Me.QbxItem)
-        Me.Controls.Add(Me.LblItem)
+        Me.Controls.Add(Me.FlpSellable)
         Me.Controls.Add(Me.TsData)
         Me.Controls.Add(Me.TsMain)
         Me.Controls.Add(Me.Panel1)
@@ -431,7 +403,7 @@ Partial Class FrmSellablePartService
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsData.ResumeLayout(False)
         Me.TsData.PerformLayout()
-        Me.FlpProduct.ResumeLayout(False)
+        Me.FlpSellable.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -455,13 +427,14 @@ Partial Class FrmSellablePartService
     Friend WithEvents LblOrderValue As ToolStripLabel
     Friend WithEvents LblCreation As ToolStripLabel
     Friend WithEvents LblCreationValue As ToolStripLabel
-    Friend WithEvents LblItem As Label
-    Friend WithEvents FlpProduct As FlowLayoutPanel
+    Friend WithEvents FlpSellable As FlowLayoutPanel
     Friend WithEvents BtnFilter As ControlLibrary.NoFocusCueButton
     Friend WithEvents BtnNew As ControlLibrary.NoFocusCueButton
     Friend WithEvents BtnView As ControlLibrary.NoFocusCueButton
     Friend WithEvents TmrQueriedBox As Timer
-    Friend WithEvents QbxItem As ControlLibrary.QueriedBox
     Friend WithEvents DbxPrice As ControlLibrary.DecimalBox
     Friend WithEvents LblPrice As Label
+    Friend WithEvents RbtPart As RadioButton
+    Friend WithEvents RbtService As RadioButton
+    Friend WithEvents QbxSellable As ControlLibrary.QueriedBox
 End Class

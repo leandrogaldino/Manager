@@ -4,9 +4,10 @@ Public Class FrmSellablePrice
     Private _ProductForm As FrmProduct
     Private _ServiceForm As FrmService
 
+
+
     Private _DgvPrice As DataGridView
     Private _DgvLayout As DataGridViewLayout
-
     Private _Sellable As SellableModel
     Private _SellablePrice As SellablePrice
     Private _Deleting As Boolean
@@ -24,12 +25,16 @@ Public Class FrmSellablePrice
         End If
         MyBase.DefWndProc(m)
     End Sub
+
+
+
     Public Sub New(Sellable As SellableModel, SellablePrice As SellablePrice, ProductForm As FrmProduct, ServiceForm As FrmService)
         InitializeComponent()
         _Sellable = Sellable
         _SellablePrice = SellablePrice
         _ProductForm = ProductForm
         _ServiceForm = ServiceForm
+
         _User = Locator.GetInstance(Of Session).User
         LoadForm()
         If (ProductForm Is Nothing And ServiceForm Is Nothing) Or (ProductForm IsNot Nothing And ServiceForm IsNot Nothing) Then
@@ -45,6 +50,7 @@ Public Class FrmSellablePrice
             _DgvPrice = _ServiceForm.DgvPrice
             _DgvLayout = _ServiceForm.DgvPriceLayout
         End If
+
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = _User.CanAccess(Routine.Log)
@@ -61,8 +67,8 @@ Public Class FrmSellablePrice
     Private Sub AfterDataGridViewRowMove()
         If _DgvPrice.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            If _ProductForm IsNot Nothing Then _SellablePrice = _Sellable.Prices.Single(Function(x) x.Guid = _ProductForm.DgvPrice.SelectedRows(0).Cells("Guid").Value)
-            If _ServiceForm IsNot Nothing Then _SellablePrice = _Sellable.Prices.Single(Function(x) x.Guid = _ServiceForm.DgvPrice.SelectedRows(0).Cells("Guid").Value)
+            If _ProductForm IsNot Nothing Then _SellablePrice = _Sellable.Prices.Value.Single(Function(x) x.Guid = _ProductForm.DgvPrice.SelectedRows(0).Cells("Guid").Value)
+            If _ServiceForm IsNot Nothing Then _SellablePrice = _Sellable.Prices.Value.Single(Function(x) x.Guid = _ServiceForm.DgvPrice.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -104,9 +110,9 @@ Public Class FrmSellablePrice
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _DgvPrice.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _SellablePrice = _Sellable.Prices.Single(Function(x) x.Guid = _DgvPrice.SelectedRows(0).Cells("Guid").Value)
-                _Sellable.Prices.Remove(_SellablePrice)
-                _DgvPrice.Fill(_Sellable.Prices)
+                _SellablePrice = _Sellable.Prices.Value.Single(Function(x) x.Guid = _DgvPrice.SelectedRows(0).Cells("Guid").Value)
+                _Sellable.Prices.Value.Remove(_SellablePrice)
+                _DgvPrice.Fill(_Sellable.Prices.Value)
                 _DgvLayout.Load()
                 _Deleting = True
                 Dispose()
@@ -160,7 +166,7 @@ Public Class FrmSellablePrice
             EprValidation.SetIconAlignment(LblPriceTable, ErrorIconAlignment.MiddleRight)
             QbxPriceTable.Select()
             Return False
-        ElseIf Not _SellablePrice.IsSaved And _Sellable.Prices.Any(Function(x) x.PriceTable.ID = QbxPriceTable.FreezedPrimaryKey) Then
+        ElseIf Not _SellablePrice.IsSaved And _Sellable.Prices.Value.Any(Function(x) x.PriceTable.ID = QbxPriceTable.FreezedPrimaryKey) Then
             EprValidation.SetError(LblPriceTable, "Este produto já possui um preço nessa tabela de preços.")
             EprValidation.SetIconAlignment(LblPriceTable, ErrorIconAlignment.MiddleRight)
             QbxPriceTable.Select()
@@ -177,20 +183,22 @@ Public Class FrmSellablePrice
         Dim Row As DataGridViewRow = Nothing
         If IsValidFields() Then
             If _SellablePrice.IsSaved Then
-                _Sellable.Prices.Single(Function(x) x.Guid = _SellablePrice.Guid).PriceTable = New SellablePriceTable().Load(QbxPriceTable.FreezedPrimaryKey, False)
-                _Sellable.Prices.Single(Function(x) x.Guid = _SellablePrice.Guid).Price = DbxPrice.DecimalValue
+                _Sellable.Prices.Value.Single(Function(x) x.Guid = _SellablePrice.Guid).PriceTable = New SellablePriceTable().Load(QbxPriceTable.FreezedPrimaryKey, False)
+                _Sellable.Prices.Value.Single(Function(x) x.Guid = _SellablePrice.Guid).Price = DbxPrice.DecimalValue
             Else
                 _SellablePrice = New SellablePrice With {
                     .PriceTable = New SellablePriceTable().Load(QbxPriceTable.FreezedPrimaryKey, False),
                     .Price = DbxPrice.DecimalValue
                 }
                 _SellablePrice.SetIsSaved(True)
-                _Sellable.Prices.Add(_SellablePrice)
+                _Sellable.Prices.Value.Add(_SellablePrice)
             End If
-            If _ProductForm IsNot Nothing Then _ProductForm.DgvPrice.Fill(_Sellable.Prices)
+            If _ProductForm IsNot Nothing Then _ProductForm.DgvPrice.Fill(_Sellable.Prices.Value)
             If _ProductForm IsNot Nothing Then _ProductForm.DgvPriceLayout.Load()
 
-            If _ServiceForm IsNot Nothing Then _ServiceForm.DgvPrice.Fill(_Sellable.Prices)
+            If _ServiceForm IsNot Nothing Then _ServiceForm.DgvPrice.Fill(_Sellable.Prices.Value)
+            If _ServiceForm IsNot Nothing Then _ServiceForm.DgvPriceLayout.Load()
+
             If _ServiceForm IsNot Nothing Then _ServiceForm.DgvPriceLayout.Load()
 
             BtnSave.Enabled = False

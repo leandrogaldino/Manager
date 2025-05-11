@@ -8,6 +8,7 @@ Public Class SellablePriceTable
     Private _Shadow As SellablePriceTable
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
+    Public Property SellablePrices As New List(Of SellablePrice)
     Public Sub New()
         SetRoutine(Routine.SellablePriceTable)
     End Sub
@@ -18,6 +19,7 @@ Public Class SellablePriceTable
         SetCreation(Today)
         Status = SimpleStatus.Active
         Name = Nothing
+        SellablePrices = New List(Of SellablePrice)
         If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As SellablePriceTable
@@ -41,6 +43,7 @@ Public Class SellablePriceTable
                         SetIsSaved(True)
                         Status = TableResult.Rows(0).Item("statusid")
                         Name = TableResult.Rows(0).Item("name").ToString
+                        SellablePrices = GetSellables(Tra)
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
                     Else
@@ -53,6 +56,61 @@ Public Class SellablePriceTable
         _Shadow = Clone()
         Return Me
     End Function
+
+
+    Private Function GetSellables(Transaction As MySqlTransaction) As List(Of SellablePrice)
+        Dim TableResult As DataTable
+        Dim Prices As List(Of SellablePrice)
+        Dim Price As SellablePrice
+        Using CmdSellable As New MySqlCommand(My.Resources.SellablePriceByPriceTableSelect, Transaction.Connection)
+            CmdSellable.Parameters.AddWithValue("@sellablepricetableid", ID)
+            Using Adp As New MySqlDataAdapter(CmdSellable)
+                TableResult = New DataTable
+                Adp.Fill(TableResult)
+                Prices = New List(Of SellablePrice)
+                For Each Row As DataRow In TableResult.Rows
+                    If (Row.Item("productid")) IsNot DBNull.Value Then
+                        Price = New SellablePrice With {
+                            .Product = New Product().Load(Row.Item("productid"), False),
+                            .Service = Nothing,
+                            .Price = Row.Item("price"),
+                            .PriceTable = Me
+                        }
+                        Prices.Add(Price)
+                    End If
+                    If (Row.Item("serviceid")) IsNot DBNull.Value Then
+                        Price = New SellablePrice With {
+                            .Service = New Service().Load(Row.Item("serviceid"), False),
+                            .Product = Nothing,
+                            .Price = Row.Item("price"),
+                            .PriceTable = Me
+                        }
+                        Prices.Add(Price)
+                    End If
+
+                Next Row
+            End Using
+        End Using
+        Return Prices
+    End Function
+
+    Public Shared Sub FillSellablesDataGridView(SellablePriceTableID As Long, Dgv As DataGridView)
+        Dim TableResult As New DataTable
+        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Using Cmd As New MySqlCommand(My.Resources.SellablePriceTableDetailSelect, Con)
+                Cmd.Parameters.AddWithValue("@sellablepricetableid", SellablePriceTableID)
+                Using Adp As New MySqlDataAdapter(Cmd)
+                    Adp.Fill(TableResult)
+                    Dgv.DataSource = TableResult
+                    'Dgv.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                    'Dgv.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                    'Dgv.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    'Dgv.Columns(1).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+                End Using
+            End Using
+        End Using
+    End Sub
+
     Public Sub SaveChanges()
         If Not IsSaved Then
             Insert()
@@ -87,6 +145,11 @@ Public Class SellablePriceTable
                     CmdSellablePriceTableInsert.ExecuteNonQuery()
                     SetID(CmdSellablePriceTableInsert.LastInsertedId)
                 End Using
+
+
+
+
+
                 Tra.Commit()
             End Using
         End Using
@@ -102,6 +165,13 @@ Public Class SellablePriceTable
                 CmdSellablePriceTableUpdate.Parameters.AddWithValue("@userid", User.ID)
                 CmdSellablePriceTableUpdate.ExecuteNonQuery()
             End Using
+
+
+
+
+
+
+
         End Using
     End Sub
     Public Overrides Function ToString() As String

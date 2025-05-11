@@ -47,7 +47,7 @@ Public Class FrmProducts
                 ProductForm = New FrmProduct(_Product, Me)
                 ProductForm.DgvProviderCode.Fill(_Product.ProviderCodes)
                 ProductForm.DgvCode.Fill(_Product.Codes)
-                ProductForm.DgvPrice.Fill(_Product.Prices)
+                ProductForm.DgvPrice.Fill(_Product.Prices.Value)
                 ProductForm.ShowDialog()
             Catch ex As Exception
                 CMessageBox.Show("ERRO PD004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

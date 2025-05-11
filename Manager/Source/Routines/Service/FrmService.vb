@@ -76,7 +76,7 @@ Public Class FrmService
         TxtFilterDescription.Clear()
         TxtFilterPrice.Clear()
         If _Service.Complements IsNot Nothing Then DgvComplement.Fill(_Service.Complements)
-        If _Service.Prices IsNot Nothing Then DgvPrice.Fill(_Service.Prices)
+        If _Service.Prices.Value IsNot Nothing Then DgvPrice.Fill(_Service.Prices.Value)
         BtnDelete.Enabled = _Service.ID > 0 And _User.CanDelete(Routine.Service)
         Text = "Serviço"
         If _Service.LockInfo.IsLocked And Not _Service.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Service.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
@@ -118,7 +118,7 @@ Public Class FrmService
             End If
             If _ServicesForm IsNot Nothing Then
                 DgvComplement.Fill(_Service.Complements)
-                DgvPrice.Fill(_Service.Prices)
+                DgvPrice.Fill(_Service.Prices.Value)
             End If
             _Deleting = False
         End If
@@ -245,7 +245,7 @@ Public Class FrmService
         Dim Form As FrmSellablePrice
         Dim Price As SellablePrice
         If DgvPrice.SelectedRows.Count = 1 Then
-            Price = _Service.Prices.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
+            Price = _Service.Prices.Value.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmSellablePrice(_Service, Price, Nothing, Me)
             Form.ShowDialog()
         End If
@@ -254,9 +254,9 @@ Public Class FrmService
         Dim Price As SellablePrice
         If DgvPrice.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Price = _Service.Prices.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
-                _Service.Prices.Remove(Price)
-                DgvPrice.Fill(_Service.Prices)
+                Price = _Service.Prices.Value.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
+                _Service.Prices.Value.Remove(Price)
+                DgvPrice.Fill(_Service.Prices.Value)
                 BtnSave.Enabled = True
             End If
         End If
@@ -334,7 +334,7 @@ Public Class FrmService
                     _Service.Lock()
                     LblIDValue.Text = _Service.ID
                     DgvComplement.Fill(_Service.Complements)
-                    DgvPrice.Fill(_Service.Prices)
+                    DgvPrice.Fill(_Service.Prices.Value)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Service)
                     If _ServicesForm IsNot Nothing Then

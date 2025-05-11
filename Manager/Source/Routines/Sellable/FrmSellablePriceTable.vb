@@ -53,6 +53,7 @@ Public Class FrmSellablePriceTable
         LoadForm()
     End Sub
     Private Sub LoadForm()
+        ControlHelper.EnableControlDoubleBuffer(DgvSellablePrice, True)
         DgvNavigator.DataGridView = _PriceTablesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
@@ -64,6 +65,10 @@ Public Class FrmSellablePriceTable
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_PriceTable.Status)
         LblCreationValue.Text = _PriceTable.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _PriceTable.Name
+
+
+        If _PriceTable.SellablePrices IsNot Nothing Then DgvSellablePrice.Fill(_PriceTable.SellablePrices)
+
         BtnDelete.Enabled = _PriceTable.ID > 0 And _User.CanDelete(Routine.SellablePriceTable)
         Text = "Tabela de Preço"
         If _PriceTable.LockInfo.IsLocked And Not _PriceTable.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _PriceTable.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
@@ -103,6 +108,11 @@ Public Class FrmSellablePriceTable
                     End If
                 End If
             End If
+
+            If _PriceTablesForm IsNot Nothing Then
+                DgvSellablePrice.Fill(_PriceTable.SellablePrices)
+            End If
+
             _Deleting = False
         End If
     End Sub
@@ -211,6 +221,9 @@ Public Class FrmSellablePriceTable
                     _PriceTable.SaveChanges()
                     _PriceTable.Lock()
                     LblIDValue.Text = _PriceTable.ID
+
+                    DgvSellablePrice.Fill(_PriceTable.SellablePrices)
+
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.SellablePriceTable)
                     If _PriceTablesForm IsNot Nothing Then
@@ -237,4 +250,35 @@ Public Class FrmSellablePriceTable
     Private Sub FrmProductPriceTable_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         _PriceTable.Unlock()
     End Sub
+
+    Private Sub BtnIncludePrice_Click(sender As Object, e As EventArgs) Handles BtnIncludeSellablePrice.Click
+        Dim Form As New FrmSellablePartService()
+        Form.ShowDialog()
+    End Sub
+    Private Sub BtnEditPrice_Click(sender As Object, e As EventArgs) Handles BtnEditSellablePrice.Click
+        'Dim Form As FrmSellablePrice
+        'Dim Price As SellablePrice
+        'If DgvSellablePrice.SelectedRows.Count = 1 Then
+        '    Price = _PriceTable.SellablePrices.Single(Function(x) x.Guid = DgvSellablePrice.SelectedRows(0).Cells("Guid").Value)
+        '    Form = New FrmSellablePrice(_PriceTable, Price, Nothing, Me)
+        '    Form.ShowDialog()
+        'End If
+    End Sub
+    Private Sub BtnDeletePrice_Click(sender As Object, e As EventArgs) Handles BtnDeleteSellablePrice.Click
+        'Dim Price As SellablePrice
+        'If DgvSellablePrice.SelectedRows.Count = 1 Then
+        '    If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+        '        Price = _PriceTable.SellablePrices.Single(Function(x) x.Guid = DgvSellablePrice.SelectedRows(0).Cells("Guid").Value)
+        '        _PriceTable.SellablePrices.Remove(Price)
+        '        DgvSellablePrice.Fill(_PriceTable.SellablePrices)
+        '        BtnSave.Enabled = True
+        '    End If
+        'End If
+    End Sub
+
+    Private Sub FrmSellablePriceTable_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        DgvSellablePriceLayout.Load()
+    End Sub
+
+
 End Class

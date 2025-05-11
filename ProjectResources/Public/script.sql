@@ -195,7 +195,7 @@ IF IFNULL(OLD.instructions, '') <> IFNULL(NEW.instructions, '') THEN INSERT INTO
 END$$
 DELIMITER ;
 
-CREATE TABLE `evaluationreplaceditem` (
+CREATE TABLE `evaluationreplacedpart` (
   `id` int NOT NULL AUTO_INCREMENT,
   `evaluationid` int NOT NULL,
   `creation` date NOT NULL,
@@ -207,22 +207,23 @@ CREATE TABLE `evaluationreplaceditem` (
   KEY `evaluationid` (`evaluationid`),
   KEY `productid` (`productid`),
   KEY `userid` (`userid`),
-  CONSTRAINT `evaluationreplaceditem_product` FOREIGN KEY (`productid`) REFERENCES `product` (`id`) ON DELETE RESTRICT,
-  CONSTRAINT `evaluationreplaceditem_evaluation` FOREIGN KEY (`evaluationid`) REFERENCES `evaluation` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `evaluationreplaceditem_user` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT
+  CONSTRAINT `evaluationreplacedpart_product` FOREIGN KEY (`productid`) REFERENCES `product` (`id`) ON DELETE RESTRICT,
+  CONSTRAINT `evaluationreplacedpart_evaluation` FOREIGN KEY (`evaluationid`) REFERENCES `evaluation` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `evaluationreplacedpart_user` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=2789 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` TRIGGER `evaluationreplacediteminsert` AFTER INSERT ON `evaluationreplaceditem` FOR EACH ROW BEGIN
+USE `manager`$$
+CREATE DEFINER=`root`@`localhost` TRIGGER `evaluationreplacedpartinsert` AFTER INSERT ON `evaluationreplacedpart` FOR EACH ROW BEGIN
 INSERT INTO log VALUES (NULL, 1312, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
 END$$
 
-CREATE DEFINER=`root`@`localhost` TRIGGER `evaluationreplaceditemdelete` AFTER DELETE ON `evaluationreplaceditem` FOR EACH ROW BEGIN
+CREATE DEFINER=`root`@`localhost` TRIGGER `evaluationreplacedpartdelete` AFTER DELETE ON `evaluationreplacedpart` FOR EACH ROW BEGIN
 INSERT INTO log VALUES (NULL, 1312, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ', (SELECT user.username FROM user WHERE user.id = OLD.userid)));
 END$$
 
-CREATE DEFINER=`root`@`localhost` TRIGGER `evaluationreplaceditemupdate` AFTER UPDATE ON `evaluationreplaceditem` FOR EACH ROW BEGIN
+CREATE DEFINER=`root`@`localhost` TRIGGER `evaluationreplacedpartupdate` AFTER UPDATE ON `evaluationreplacedpart` FOR EACH ROW BEGIN
 IF IFNULL(OLD.itemname, OLD.productid) <> IFNULL(NEW.itemname, NEW.productid) THEN INSERT INTO log VALUES (NULL, 1312, NEW.id, 'Item', IFNULL(OLD.itemname, (SELECT CONCAT(product.id, ' - ', product.name) FROM product WHERE product.id = OLD.productid)), IFNULL(NEW.itemname, (SELECT CONCAT(product.id, ' - ', product.name) FROM product WHERE product.id = NEW.productid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.quantity <> NEW.quantity THEN INSERT INTO log VALUES (NULL, 1312, NEW.id, 'Quantidade', FORMAT(OLD.quantity, 2, 'pt_BR'), FORMAT(NEW.quantity, 2, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
@@ -271,6 +272,7 @@ ALTER TABLE `manager`.`sellableprice` ADD CONSTRAINT `productprice_productpricet
 
 
 DELIMITER $$
+USE `manager`$$
 DROP TRIGGER IF EXISTS `manager`.`productpricetableinsert` $$
 DROP TRIGGER IF EXISTS `manager`.`productpricetableupdate` $$
 DROP TRIGGER IF EXISTS `manager`.`productpricetabledelete` $$

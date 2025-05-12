@@ -8,7 +8,7 @@ Public Class SellablePriceTable
     Private _Shadow As SellablePriceTable
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
-    Public Property SellablePrices As New List(Of SellablePrice)
+    Public Property Prices As New Lazy(Of List(Of SellablePrice))(Function() GetPrices())
     Public Sub New()
         SetRoutine(Routine.SellablePriceTable)
     End Sub
@@ -19,9 +19,10 @@ Public Class SellablePriceTable
         SetCreation(Today)
         Status = SimpleStatus.Active
         Name = Nothing
-        SellablePrices = New List(Of SellablePrice)
+        Prices = New Lazy(Of List(Of SellablePrice))(Function() GetPrices())
         If LockInfo.IsLocked Then Unlock()
     End Sub
+
     Public Function Load(Identity As Long, LockMe As Boolean) As SellablePriceTable
         Dim TableResult As DataTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
@@ -43,7 +44,6 @@ Public Class SellablePriceTable
                         SetIsSaved(True)
                         Status = TableResult.Rows(0).Item("statusid")
                         Name = TableResult.Rows(0).Item("name").ToString
-                        SellablePrices = GetSellables(Tra)
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
                     Else
@@ -56,42 +56,45 @@ Public Class SellablePriceTable
         _Shadow = Clone()
         Return Me
     End Function
-    Private Function GetSellables(Transaction As MySqlTransaction) As List(Of SellablePrice)
+    Private Function GetPrices() As List(Of SellablePrice)
         Dim TableResult As DataTable
         Dim Prices As List(Of SellablePrice)
         Dim Price As SellablePrice
-        Using CmdSellable As New MySqlCommand(My.Resources.SellablePriceByPriceTableSelect, Transaction.Connection)
-            CmdSellable.Parameters.AddWithValue("@sellablepricetableid", ID)
-            Using Adp As New MySqlDataAdapter(CmdSellable)
-                TableResult = New DataTable
-                Adp.Fill(TableResult)
-                Prices = New List(Of SellablePrice)
-                For Each Row As DataRow In TableResult.Rows
-                    If (Row.Item("productid")) IsNot DBNull.Value Then
-                        Price = New SellablePrice With {
-                            .Product = New Product().Load(Row.Item("productid"), False),
-                            .Service = Nothing,
-                            .Price = Row.Item("price"),
-                            .PriceTable = Me
-                        }
-                        Price.SetIsSaved(True)
-                        Price.SetID(Row.Item("id"))
-                        Price.SetCreation(Row.Item("creation"))
-                        Prices.Add(Price)
-                    End If
-                    If (Row.Item("serviceid")) IsNot DBNull.Value Then
-                        Price = New SellablePrice With {
-                            .Service = New Service().Load(Row.Item("serviceid"), False),
-                            .Product = Nothing,
-                            .Price = Row.Item("price"),
-                            .PriceTable = Me
-                        }
-                        Price.SetIsSaved(True)
-                        Price.SetID(Row.Item("id"))
-                        Price.SetCreation(Row.Item("creation"))
-                        Prices.Add(Price)
-                    End If
-                Next Row
+        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Con.Open()
+            Using CmdSellable As New MySqlCommand(My.Resources.SellablePriceByPriceTableSelect, Con)
+                CmdSellable.Parameters.AddWithValue("@sellablepricetableid", ID)
+                Using Adp As New MySqlDataAdapter(CmdSellable)
+                    TableResult = New DataTable
+                    Adp.Fill(TableResult)
+                    Prices = New List(Of SellablePrice)
+                    For Each Row As DataRow In TableResult.Rows
+                        If (Row.Item("productid")) IsNot DBNull.Value Then
+                            Price = New SellablePrice With {
+                                .Product = New Product().Load(Row.Item("productid"), False),
+                                .Service = Nothing,
+                                .Price = Row.Item("price"),
+                                .PriceTable = Me
+                            }
+                            Price.SetIsSaved(True)
+                            Price.SetID(Row.Item("id"))
+                            Price.SetCreation(Row.Item("creation"))
+                            Prices.Add(Price)
+                        End If
+                        If (Row.Item("serviceid")) IsNot DBNull.Value Then
+                            Price = New SellablePrice With {
+                                .Service = New Service().Load(Row.Item("serviceid"), False),
+                                .Product = Nothing,
+                                .Price = Row.Item("price"),
+                                .PriceTable = Me
+                            }
+                            Price.SetIsSaved(True)
+                            Price.SetID(Row.Item("id"))
+                            Price.SetCreation(Row.Item("creation"))
+                            Prices.Add(Price)
+                        End If
+                    Next Row
+                End Using
             End Using
         End Using
         Return Prices
@@ -130,7 +133,7 @@ Public Class SellablePriceTable
                     CmdSellablePriceTableInsert.ExecuteNonQuery()
                     SetID(CmdSellablePriceTableInsert.LastInsertedId)
                 End Using
-                For Each SellablePrice As SellablePrice In SellablePrices
+                For Each SellablePrice As SellablePrice In Prices.Value
                     Using CmdSellablePrice As New MySqlCommand(My.Resources.SellablePriceInsert, Con)
                         CmdSellablePrice.Transaction = Tra
                         CmdSellablePrice.Parameters.AddWithValue("@productid", If(SellablePrice.Product IsNot Nothing, SellablePrice.Product.ID, DBNull.Value))
@@ -162,8 +165,8 @@ Public Class SellablePriceTable
                     CmdSellablePriceTableUpdate.ExecuteNonQuery()
                 End Using
 
-                For Each SellablePrice As SellablePrice In _Shadow.SellablePrices
-                    If Not SellablePrices.Any(Function(x) x.ID = SellablePrice.ID And x.ID > 0) Then
+                For Each SellablePrice As SellablePrice In _Shadow.Prices.Value
+                    If Not Prices.Value.Any(Function(x) x.ID = SellablePrice.ID And x.ID > 0) Then
                         Using CmdSellablePrice As New MySqlCommand(My.Resources.SellablePriceDelete, Con)
                             CmdSellablePrice.Transaction = Tra
                             CmdSellablePrice.Parameters.AddWithValue("@id", SellablePrice.ID)
@@ -171,7 +174,7 @@ Public Class SellablePriceTable
                         End Using
                     End If
                 Next SellablePrice
-                For Each SellablePrice As SellablePrice In SellablePrices
+                For Each SellablePrice As SellablePrice In Prices.Value
                     If SellablePrice.ID = 0 Then
                         Using CmdSellablePrice As New MySqlCommand(My.Resources.SellablePriceInsert, Con)
                             CmdSellablePrice.Transaction = Tra

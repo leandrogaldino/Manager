@@ -66,7 +66,7 @@ Public Class FrmSellablePriceTable
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_PriceTable.Status)
         LblCreationValue.Text = _PriceTable.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _PriceTable.Name
-        If _PriceTable.SellablePrices IsNot Nothing Then DgvSellablePrice.Fill(_PriceTable.SellablePrices)
+        If _PriceTable.Prices IsNot Nothing Then DgvSellablePrice.Fill(_PriceTable.Prices.Value)
         BtnDelete.Enabled = _PriceTable.ID > 0 And _User.CanDelete(Routine.SellablePriceTable)
         Text = "Tabela de Preço"
         If _PriceTable.LockInfo.IsLocked And Not _PriceTable.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _PriceTable.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
@@ -108,7 +108,7 @@ Public Class FrmSellablePriceTable
             End If
 
             If _PriceTablesForm IsNot Nothing Then
-                DgvSellablePrice.Fill(_PriceTable.SellablePrices)
+                DgvSellablePrice.Fill(_PriceTable.Prices)
             End If
 
             _Deleting = False
@@ -205,7 +205,7 @@ Public Class FrmSellablePriceTable
         Dim Form As FrmSellablePartService
         Dim Price As SellablePrice
         If DgvSellablePrice.SelectedRows.Count = 1 Then
-            Price = _PriceTable.SellablePrices.Single(Function(x) x.Guid = DgvSellablePrice.SelectedRows(0).Cells("Guid").Value)
+            Price = _PriceTable.Prices.Value.Single(Function(x) x.Guid = DgvSellablePrice.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmSellablePartService(_PriceTable, Price, Me)
             Form.ShowDialog()
         End If
@@ -214,9 +214,9 @@ Public Class FrmSellablePriceTable
         Dim Price As SellablePrice
         If DgvSellablePrice.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Price = _PriceTable.SellablePrices.Single(Function(x) x.Guid = DgvSellablePrice.SelectedRows(0).Cells("Guid").Value)
-                _PriceTable.SellablePrices.Remove(Price)
-                DgvSellablePrice.Fill(_PriceTable.SellablePrices)
+                Price = _PriceTable.Prices.Value.Single(Function(x) x.Guid = DgvSellablePrice.SelectedRows(0).Cells("Guid").Value)
+                _PriceTable.Prices.Value.Remove(Price)
+                DgvSellablePrice.Fill(_PriceTable.Prices)
                 BtnSave.Enabled = True
             End If
         End If
@@ -272,7 +272,7 @@ Public Class FrmSellablePriceTable
                     _PriceTable.Lock()
                     LblIDValue.Text = _PriceTable.ID
 
-                    DgvSellablePrice.Fill(_PriceTable.SellablePrices)
+                    DgvSellablePrice.Fill(_PriceTable.Prices.Value)
 
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.SellablePriceTable)

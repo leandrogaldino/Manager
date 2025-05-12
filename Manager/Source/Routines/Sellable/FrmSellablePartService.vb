@@ -66,7 +66,7 @@ Public Class FrmSellablePartService
     Private Sub AfterDataGridViewRowMove()
         If _PriceTableForm.DgvSellablePrice.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _SellablePrice = _PriceTable.SellablePrices.Single(Function(x) x.Guid = _PriceTableForm.DgvSellablePrice.SelectedRows(0).Cells("Guid").Value)
+            _SellablePrice = _PriceTable.Prices.Value.Single(Function(x) x.Guid = _PriceTableForm.DgvSellablePrice.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -138,13 +138,13 @@ Public Class FrmSellablePartService
         Dim TargetItems As List(Of SellablePrice)
         If IsValidFields() Then
             If _SellablePrice.IsSaved Then
-                _PriceTable.SellablePrices.Single(Function(x) x.Guid = _SellablePrice.Guid).Price = DbxPrice.DecimalValue
+                _PriceTable.Prices.Value.Single(Function(x) x.Guid = _SellablePrice.Guid).Price = DbxPrice.DecimalValue
                 If RbtPart.Checked Then
-                    _PriceTable.SellablePrices.Single(Function(x) x.Guid = _SellablePrice.Guid).Product = New Product().Load(QbxSellable.FreezedPrimaryKey, False)
-                    _PriceTable.SellablePrices.Single(Function(x) x.Guid = _SellablePrice.Guid).Service = Nothing
+                    _PriceTable.Prices.Value.Single(Function(x) x.Guid = _SellablePrice.Guid).Product = New Product().Load(QbxSellable.FreezedPrimaryKey, False)
+                    _PriceTable.Prices.Value.Single(Function(x) x.Guid = _SellablePrice.Guid).Service = Nothing
                 Else
-                    _PriceTable.SellablePrices.Single(Function(x) x.Guid = _SellablePrice.Guid).Service = New Service().Load(QbxSellable.FreezedPrimaryKey, False)
-                    _PriceTable.SellablePrices.Single(Function(x) x.Guid = _SellablePrice.Guid).Product = Nothing
+                    _PriceTable.Prices.Value.Single(Function(x) x.Guid = _SellablePrice.Guid).Service = New Service().Load(QbxSellable.FreezedPrimaryKey, False)
+                    _PriceTable.Prices.Value.Single(Function(x) x.Guid = _SellablePrice.Guid).Product = Nothing
                 End If
             Else
                 _SellablePrice = New SellablePrice With {
@@ -153,11 +153,11 @@ Public Class FrmSellablePartService
                 If RbtPart.Checked Then
                     _SellablePrice.Product = New Product().Load(QbxSellable.FreezedPrimaryKey, False)
                     _SellablePrice.Service = Nothing
-                    TargetItems = _PriceTable.SellablePrices.Where(Function(x) x.Product IsNot Nothing AndAlso x.Product.ID.Equals(_SellablePrice.Product.ID)).ToList
+                    TargetItems = _PriceTable.Prices.Value.Where(Function(x) x.Product IsNot Nothing AndAlso x.Product.ID.Equals(_SellablePrice.Product.ID)).ToList
                 Else
                     _SellablePrice.Product = Nothing
                     _SellablePrice.Service = New Service().Load(QbxSellable.FreezedPrimaryKey, False)
-                    TargetItems = _PriceTable.SellablePrices.Where(Function(x) x.Service IsNot Nothing AndAlso x.Service.ID.Equals(_SellablePrice.Service.ID)).ToList
+                    TargetItems = _PriceTable.Prices.Value.Where(Function(x) x.Service IsNot Nothing AndAlso x.Service.ID.Equals(_SellablePrice.Service.ID)).ToList
                 End If
                 If TargetItems IsNot Nothing AndAlso TargetItems.Count > 0 Then
                     If RbtPart.Checked Then
@@ -168,9 +168,9 @@ Public Class FrmSellablePartService
                     Return False
                 End If
                 _SellablePrice.SetIsSaved(True)
-                _PriceTable.SellablePrices.Add(_SellablePrice)
+                _PriceTable.Prices.Value.Add(_SellablePrice)
             End If
-            _PriceTableForm.DgvSellablePrice.Fill(_PriceTable.SellablePrices)
+            _PriceTableForm.DgvSellablePrice.Fill(_PriceTable.Prices)
             _PriceTableForm.DgvSellablePriceLayout.Load()
             BtnSave.Enabled = False
             If Not _SellablePrice.IsSaved Then
@@ -287,9 +287,9 @@ Public Class FrmSellablePartService
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _PriceTableForm.DgvSellablePrice.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _SellablePrice = _PriceTable.SellablePrices.Single(Function(x) x.Guid = _PriceTableForm.DgvSellablePrice.SelectedRows(0).Cells("Guid").Value)
-                _PriceTable.SellablePrices.Remove(_SellablePrice)
-                _PriceTableForm.DgvSellablePrice.Fill(_PriceTable.SellablePrices)
+                _SellablePrice = _PriceTable.Prices.Value.Single(Function(x) x.Guid = _PriceTableForm.DgvSellablePrice.SelectedRows(0).Cells("Guid").Value)
+                _PriceTable.Prices.Value.Remove(_SellablePrice)
+                _PriceTableForm.DgvSellablePrice.Fill(_PriceTable.Prices)
                 _PriceTableForm.DgvSellablePriceLayout.Load()
                 _Deleting = True
                 Dispose()

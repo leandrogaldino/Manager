@@ -3,9 +3,6 @@ Imports ControlLibrary.Extensions
 Public Class FrmSellablePrice
     Private _ProductForm As FrmProduct
     Private _ServiceForm As FrmService
-
-
-
     Private _DgvPrice As DataGridView
     Private _DgvLayout As DataGridViewLayout
     Private _Sellable As SellableModel

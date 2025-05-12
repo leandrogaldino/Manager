@@ -127,6 +127,8 @@ Public Class Service
         End Using
     End Sub
     Private Sub Update()
+        Dim ShadowPrices = _Shadow.Prices.Value
+
         Using Transaction As New Transactions.TransactionScope()
             Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
                 Con.Open()
@@ -166,7 +168,7 @@ Public Class Service
                         End Using
                     End If
                 Next Complement
-                For Each Price As SellablePrice In _Shadow.Prices.Value
+                For Each Price As SellablePrice In ShadowPrices
                     If Not Prices.Value.Any(Function(x) x.ID = Price.ID And x.ID > 0) Then
                         Using CmdPrice As New MySqlCommand(My.Resources.SellablePriceDelete, Con)
                             CmdPrice.Parameters.AddWithValue("@id", Price.ID)

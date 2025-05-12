@@ -105,6 +105,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ControlLibrary\ControlLibrary\bin\Debug\ControlLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="DeepCloner, Version=0.10.0.0, Culture=neutral, PublicKeyToken=dc0b95cf99bf4e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\DeepCloner.0.10.4\lib\net40\DeepCloner.dll</HintPath>
+    </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=3.0.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.3.0.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>

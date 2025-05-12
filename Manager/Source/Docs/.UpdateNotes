@@ -1,8 +1,12 @@
 #2.0.0
-• Correções na tela de alteração de capacidades das peças da avaliação.
-• Corrigido um problema que fazia com que o mês de março relatório de caixa por responsável aparecesse como "MMARÇO".
-• Motor de integração entre o Gerenciador e o Agente reestruturado (ManagerEnvironment para ManagerCore).
 • Incluída integração com a núvem para avaliações online.
+• Inclusão do módulo de Agendamento de Visitas.
+• Inclusão da opção de lançar visitas diretamente na tela do gerenciamento de avaliações.
+• Inclusão do módulo de Serviços.
+• Reestruturação da tabela de preços, com acesso pelo produto, serviço ou pelo módulo Tabela de Preços.
+• O módulo Avaliações foi reestruturado para conter os documentos recebidos pela núvem.
+• Motor de integração entre o Gerenciador e o Agente reestruturado.
+• Correções na tela de alteração de capacidades das peças da avaliação.
 #1.3.1
 • Corrigido um bug que fazia a avaliação automática vencer no mesmo dia em que era criada.
 #1.3.0

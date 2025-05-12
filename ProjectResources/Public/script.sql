@@ -160,6 +160,10 @@ IF OLD.personcompressorid <> NEW.personcompressorid THEN INSERT INTO log VALUES 
 IF IFNULL(OLD.instructions, '') <> IFNULL(NEW.instructions, '') THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Instruções', OLD.instructions, NEW.instructions, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DELIMITER ;
+
+
+
+
 CREATE TABLE `evaluationreplacedpart` (
   `id` int NOT NULL AUTO_INCREMENT,
   `evaluationid` int NOT NULL,
@@ -189,6 +193,12 @@ IF IFNULL(OLD.itemname, OLD.productid) <> IFNULL(NEW.itemname, NEW.productid) TH
 IF OLD.quantity <> NEW.quantity THEN INSERT INTO log VALUES (NULL, 1312, NEW.id, 'Quantidade', FORMAT(OLD.quantity, 2, 'pt_BR'), FORMAT(NEW.quantity, 2, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DELIMITER ;
+
+
+
+
+
+
 CREATE TABLE service (
 	id INT NOT NULL AUTO_INCREMENT,
     creation DATE NOT NULL,
@@ -211,8 +221,6 @@ CREATE TABLE servicecomplement (
 	FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
 );
 
-
---ALTERAR A PRODUCTPRICE E PRODUCTPRICETABLE CONFORME ABAIXO
 
 ALTER TABLE `productprice`
   MODIFY COLUMN `productid` INT DEFAULT NULL,
@@ -238,66 +246,104 @@ DROP TRIGGER IF EXISTS `manager`.`productpricetableinsert` $$
 DROP TRIGGER IF EXISTS `manager`.`productpricetableupdate` $$
 DROP TRIGGER IF EXISTS `manager`.`productpricetabledelete` $$
 DROP TRIGGER IF EXISTS `manager`.`sellablepricetableinsert` $$
-CREATE DEFINER=`root`@`localhost` TRIGGER `sellablepricetableinsert` AFTER INSERT ON `sellablepricetable` FOR EACH ROW BEGIN
+CREATE TRIGGER `sellablepricetableinsert` AFTER INSERT ON `sellablepricetable` FOR EACH ROW BEGIN
 INSERT INTO log VALUES (NULL, 8, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
 END$$
 DROP TRIGGER IF EXISTS `manager`.`sellablepricetablepdate`$$
-CREATE DEFINER=`root`@`localhost` TRIGGER `sellablepricetablepdate` AFTER UPDATE ON `sellablepricetable` FOR EACH ROW BEGIN
+CREATE TRIGGER `sellablepricetablepdate` AFTER UPDATE ON `sellablepricetable` FOR EACH ROW BEGIN
 IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 8, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'ATIVO' WHEN OLD.statusid = 1 THEN 'INATIVO' END, CASE WHEN NEW.statusid = 0 THEN 'ATIVO' WHEN NEW.statusid = 1 THEN 'INATIVO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.name <> NEW.name THEN INSERT INTO log VALUES (NULL, 8, NEW.id, 'Nome', OLD.name, NEW.name, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DROP TRIGGER IF EXISTS `manager`.`sellablepricetabledelete`$$
-CREATE DEFINER=`root`@`localhost` TRIGGER `sellablepricetabledelete` AFTER DELETE ON `sellablepricetable` FOR EACH ROW BEGIN
+CREATE TRIGGER `sellablepricetabledelete` AFTER DELETE ON `sellablepricetable` FOR EACH ROW BEGIN
 INSERT INTO log VALUES (NULL, 8, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
 END$$
 DROP TRIGGER IF EXISTS `manager`.`productpriceinsert` $$
 DROP TRIGGER IF EXISTS `manager`.`productpriceupdate` $$
 DROP TRIGGER IF EXISTS `manager`.`productpricedelete` $$
 DROP TRIGGER IF EXISTS `manager`.`sellablepriceinsert`  $$
-CREATE DEFINER=`root`@`localhost` TRIGGER `sellablepriceinsert` AFTER INSERT ON `sellableprice` FOR EACH ROW BEGIN
+CREATE TRIGGER `sellablepriceinsert` AFTER INSERT ON `sellableprice` FOR EACH ROW BEGIN
 INSERT INTO log VALUES (NULL, 603, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
 END$$
 DROP TRIGGER IF EXISTS `manager`.`sellablepriceupdate` $$
-DROP TRIGGER IF EXISTS `manager`.`sellablepriceupdate`;
-CREATE DEFINER=`root`@`localhost` TRIGGER `sellablepriceupdate` AFTER UPDATE ON `sellableprice` FOR EACH ROW BEGIN
+DROP TRIGGER IF EXISTS `manager`.`sellablepriceupdate`$$
+CREATE TRIGGER `sellablepriceupdate` AFTER UPDATE ON `sellableprice` FOR EACH ROW BEGIN
 IF OLD.sellablepricetableid <> NEW.sellablepricetableid THEN INSERT INTO log VALUES (NULL, 603, NEW.id, 'Tabela de Preço', CONCAT(OLD.sellablepricetableid, ' - ', (SELECT sellablepricetable.name FROM sellablepricetable WHERE sellablepricetable.id = OLD.sellablepricetableid)), CONCAT(NEW.sellablepricetableid, ' - ', (SELECT sellablepricetable.name FROM sellablepricetable WHERE sellablepricetable.id = NEW.sellablepricetableid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.price <> NEW.price THEN INSERT INTO log VALUES (NULL, 603, NEW.id, 'Preço', FORMAT(OLD.price, 2, 'pt_BR'), FORMAT(NEW.price, 2, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DROP TRIGGER IF EXISTS `manager`.`sellablepricedelete` $$
-CREATE DEFINER=`root`@`localhost` TRIGGER `sellablepricedelete` AFTER DELETE ON `sellableprice` FOR EACH ROW BEGIN
+CREATE TRIGGER `sellablepricedelete` AFTER DELETE ON `sellableprice` FOR EACH ROW BEGIN
 INSERT INTO log VALUES (NULL, 603, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
 END$$
 DROP TRIGGER IF EXISTS `manager`.`serviceinsert` $$
-CREATE DEFINER=`root`@`localhost` TRIGGER `serviceinsert` AFTER INSERT ON `service` FOR EACH ROW BEGIN
+CREATE TRIGGER `serviceinsert` AFTER INSERT ON `service` FOR EACH ROW BEGIN
 INSERT INTO log VALUES (NULL, 23, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
 END$$
 DROP TRIGGER IF EXISTS `manager`.`servicedelete` $$
-CREATE DEFINER=`root`@`localhost` TRIGGER `servicedelete` AFTER DELETE ON `service` FOR EACH ROW BEGIN
+CREATE TRIGGER `servicedelete` AFTER DELETE ON `service` FOR EACH ROW BEGIN
 INSERT INTO log VALUES (NULL, 23, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
 END$$
 DROP TRIGGER IF EXISTS `manager`.`serviceupdate` $$
-CREATE DEFINER=`root`@`localhost` TRIGGER `serviceupdate` AFTER UPDATE ON `service` FOR EACH ROW BEGIN
+CREATE TRIGGER `serviceupdate` AFTER UPDATE ON `service` FOR EACH ROW BEGIN
 IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 23, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'ATIVO' WHEN OLD.statusid = 1 THEN 'INATIVO' END, CASE WHEN NEW.statusid = 0 THEN 'ATIVO' WHEN NEW.statusid = 1 THEN 'INATIVO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.name <> NEW.name THEN INSERT INTO log VALUES (NULL, 23, NEW.id, 'Nome', OLD.name, NEW.name, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.servicecode <> NEW.servicecode THEN INSERT INTO log VALUES (NULL, 23, NEW.id, 'Cód. Serviço', OLD.servicecode, NEW.servicecode, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF IFNULL(OLD.note, '') <> IFNULL(NEW.note, '') THEN INSERT INTO log VALUES (NULL, 23, NEW.id, 'Observação', OLD.note, NEW.note, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DROP TRIGGER IF EXISTS `manager`.`servicecomplementinsert` $$
-CREATE DEFINER=`root`@`localhost` TRIGGER `servicecomplementinsert` AFTER INSERT ON `servicecomplement` FOR EACH ROW BEGIN
+CREATE TRIGGER `servicecomplementinsert` AFTER INSERT ON `servicecomplement` FOR EACH ROW BEGIN
 INSERT INTO log VALUES (NULL, 2301, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
 END$$
 DROP TRIGGER IF EXISTS `manager`.`servicecomplementdelete` $$
-CREATE DEFINER=`root`@`localhost` TRIGGER `servicecomplementdelete` AFTER DELETE ON `servicecomplement` FOR EACH ROW BEGIN
+CREATE TRIGGER `servicecomplementdelete` AFTER DELETE ON `servicecomplement` FOR EACH ROW BEGIN
 INSERT INTO log VALUES (NULL, 2301, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
 END$$
 DROP TRIGGER IF EXISTS `manager`.`servicecomplementupdate` $$
-CREATE DEFINER=`root`@`localhost` TRIGGER `servicecomplementupdate` AFTER UPDATE ON `servicecomplement` FOR EACH ROW BEGIN
+CREATE TRIGGER `servicecomplementupdate` AFTER UPDATE ON `servicecomplement` FOR EACH ROW BEGIN
 IF OLD.complement <> NEW.complement THEN INSERT INTO log VALUES (NULL, 2301, NEW.id, 'Complemento', OLD.complement, NEW.complement, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DROP TRIGGER IF EXISTS `manager`.`sellablepriceupdate` $$
-CREATE DEFINER=`root`@`localhost` TRIGGER `sellablepriceupdate` AFTER UPDATE ON `sellableprice` FOR EACH ROW BEGIN
+CREATE TRIGGER `sellablepriceupdate` AFTER UPDATE ON `sellableprice` FOR EACH ROW BEGIN
 IF OLD.sellablepricetableid <> NEW.sellablepricetableid THEN INSERT INTO log VALUES (NULL, 603, NEW.id, 'Tabela de Preço', CONCAT(OLD.sellablepricetableid, ' - ', (SELECT sellablepricetable.name FROM sellablepricetable WHERE sellablepricetable.id = OLD.sellablepricetableid)), CONCAT(NEW.sellablepricetableid, ' - ', (SELECT sellablepricetable.name FROM sellablepricetable WHERE sellablepricetable.id = NEW.sellablepricetableid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF IFNULL(OLD.productid, OLD.serviceid) <> IFNULL(NEW.productid, NEW.serviceid) THEN INSERT INTO log VALUES (NULL, 603, NEW.id, 'Peça/Serviço', CASE	WHEN OLD.productid IS NOT NULL THEN (SELECT CONCAT(product.id, ' - ', product.name) FROM product WHERE product.id = OLD.productid) WHEN OLD.serviceid IS NOT NULL THEN (SELECT CONCAT(service.id, ' - ', service.name) FROM service WHERE service.id = OLD.serviceid) END, CASE	WHEN NEW.productid IS NOT NULL THEN (SELECT CONCAT(product.id, ' - ', product.name) FROM product WHERE product.id = NEW.productid) WHEN NEW.serviceid IS NOT NULL THEN (SELECT CONCAT(service.id, ' - ', service.name) FROM service WHERE service.id = NEW.serviceid) END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.price <> NEW.price THEN INSERT INTO log VALUES (NULL, 603, NEW.id, 'Preço', FORMAT(OLD.price, 2, 'pt_BR'), FORMAT(NEW.price, 2, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DELIMITER ;
+
+
+
+
+
+TEMP
+CREATE TABLE `sellablepricetable` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `creation` date NOT NULL,
+  `statusid` int NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `userid` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  KEY `userid` (`userid`),
+  CONSTRAINT `productpricetable_user` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `sellableprice` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `productid` int DEFAULT NULL,
+  `serviceid` int DEFAULT NULL,
+  `creation` date NOT NULL,
+  `sellablepricetableid` int NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `userid` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_sellableprice_product` (`sellablepricetableid`,`productid`),
+  KEY `productid` (`productid`),
+  KEY `pricetableid` (`sellablepricetableid`),
+  KEY `userid` (`userid`),
+  KEY `serviceid` (`serviceid`),
+  CONSTRAINT `productprice_product` FOREIGN KEY (`productid`) REFERENCES `product` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `productprice_productpricetable` FOREIGN KEY (`sellablepricetableid`) REFERENCES `sellablepricetable` (`id`) ON DELETE RESTRICT,
+  CONSTRAINT `productprice_service` FOREIGN KEY (`serviceid`) REFERENCES `service` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `productprice_user` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT,
+  CONSTRAINT `chk_product_or_service` CHECK ((((`productid` is not null) and (`serviceid` is null)) or ((`productid` is null) and (`serviceid` is not null))))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci

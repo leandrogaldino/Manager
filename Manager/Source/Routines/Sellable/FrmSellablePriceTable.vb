@@ -42,8 +42,6 @@ Public Class FrmSellablePriceTable
         _PriceTable = PriceTable
         _User = Locator.GetInstance(Of Session).User
         Height -= TsNavigation.Height
-        LblName.Top -= TsNavigation.Height
-        TxtName.Top -= TsNavigation.Height
         TsNavigation.Visible = False
         TsNavigation.Enabled = False
         LblStatus.Visible = False

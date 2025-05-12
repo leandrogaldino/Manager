@@ -252,6 +252,7 @@ Public Class FrmSellablePrice
         Dim Form As FrmSellablePriceTable
         PriceTable = New SellablePriceTable
         Form = New FrmSellablePriceTable(PriceTable)
+        Form.TcPriceTable.TabPages.RemoveAt(1)
         Form.ShowDialog()
         EprValidation.Clear()
         If PriceTable.ID > 0 Then

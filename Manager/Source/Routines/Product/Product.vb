@@ -7,8 +7,11 @@ Imports MySql.Data.MySqlClient
 ''' Representa um produto.
 ''' </summary>
 Public Class Product
-    Inherits SellableModel
+    Inherits ParentModel
     Private _Shadow As Product
+    Public Property Status As SimpleStatus = SimpleStatus.Active
+    Public Property Name As String
+    Public Property Note As String
     Public Property InternalName As String
     Public Property Pictures As New List(Of ProductPicture)
     Public Property ProviderCodes As New List(Of ProductProviderCode)
@@ -23,7 +26,6 @@ Public Class Product
     Public Property NetWeight As Decimal
     Public Sub New()
         SetRoutine(Routine.Product)
-        Prices = New Lazy(Of List(Of SellablePrice))(Function() GetPrices())
     End Sub
     Public Sub Clear()
         Unlock()
@@ -36,7 +38,6 @@ Public Class Product
         Pictures = New List(Of ProductPicture)
         ProviderCodes = New List(Of ProductProviderCode)
         Codes = New List(Of ProductCode)
-        Prices = New Lazy(Of List(Of SellablePrice))(Function() GetPrices())
         Location = Nothing
         MinimumQuantity = 0
         MaximumQuantity = 0
@@ -104,7 +105,6 @@ Public Class Product
         Pictures.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         ProviderCodes.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         Codes.ToList().ForEach(Sub(x) x.SetIsSaved(True))
-        Prices.Value.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         _Shadow = Clone()
     End Sub
     Public Sub Delete()
@@ -180,18 +180,6 @@ Public Class Product
                         Code.SetID(CmdCode.LastInsertedId)
                     End Using
                 Next Code
-                For Each Price As SellablePrice In Prices.Value
-                    Using CmdSellablePrice As New MySqlCommand(My.Resources.SellablePriceInsert, Con)
-                        CmdSellablePrice.Parameters.AddWithValue("@productid", ID)
-                        CmdSellablePrice.Parameters.AddWithValue("@serviceid", DBNull.Value)
-                        CmdSellablePrice.Parameters.AddWithValue("@creation", Price.Creation)
-                        CmdSellablePrice.Parameters.AddWithValue("@sellablepricetableid", Price.PriceTable.ID)
-                        CmdSellablePrice.Parameters.AddWithValue("@price", Price.Price)
-                        CmdSellablePrice.Parameters.AddWithValue("@userid", Price.User.ID)
-                        CmdSellablePrice.ExecuteNonQuery()
-                        Price.SetID(CmdSellablePrice.LastInsertedId)
-                    End Using
-                Next Price
             End Using
             For Each Picture As ProductPicture In Pictures
                 Picture.Picture.Execute()
@@ -313,38 +301,6 @@ Public Class Product
                         End Using
                     End If
                 Next Code
-                For Each Price As SellablePrice In _Shadow.Prices.Value
-                    If Not Prices.Value.Any(Function(x) x.ID = Price.ID And x.ID > 0) Then
-                        Using CmdPrice As New MySqlCommand(My.Resources.SellablePriceDelete, Con)
-                            CmdPrice.Parameters.AddWithValue("@id", Price.ID)
-                            CmdPrice.ExecuteNonQuery()
-                        End Using
-                    End If
-                Next Price
-                For Each Price As SellablePrice In Prices.Value
-                    If Price.ID = 0 Then
-                        Using CmdPrice As New MySqlCommand(My.Resources.SellablePriceInsert, Con)
-                            CmdPrice.Parameters.AddWithValue("@productid", ID)
-                            CmdPrice.Parameters.AddWithValue("@serviceid", DBNull.Value)
-                            CmdPrice.Parameters.AddWithValue("@creation", Price.Creation)
-                            CmdPrice.Parameters.AddWithValue("@sellablepricetableid", Price.PriceTable.ID)
-                            CmdPrice.Parameters.AddWithValue("@price", Price.Price)
-                            CmdPrice.Parameters.AddWithValue("@userid", Price.User.ID)
-                            CmdPrice.ExecuteNonQuery()
-                            Price.SetID(CmdPrice.LastInsertedId)
-                        End Using
-                    Else
-                        Using CmdPrice As New MySqlCommand(My.Resources.SellablePriceUpdate, Con)
-                            CmdPrice.Parameters.AddWithValue("@id", Price.ID)
-                            CmdPrice.Parameters.AddWithValue("@sellablepricetableid", Price.PriceTable.ID)
-                            CmdPrice.Parameters.AddWithValue("@productid", If(Price.Product IsNot Nothing, Price.Product.ID, DBNull.Value))
-                            CmdPrice.Parameters.AddWithValue("@serviceid", If(Price.Service IsNot Nothing, Price.Service.ID, DBNull.Value))
-                            CmdPrice.Parameters.AddWithValue("@price", Price.Price)
-                            CmdPrice.Parameters.AddWithValue("@userid", Price.User.ID)
-                            CmdPrice.ExecuteNonQuery()
-                        End Using
-                    End If
-                Next Price
             End Using
             For Each Picture As ProductPicture In Pictures
                 Picture.Picture.Execute()
@@ -429,35 +385,6 @@ Public Class Product
         End Using
         Return Codes
     End Function
-    Private Function GetPrices() As List(Of SellablePrice)
-        Dim TableResult As DataTable
-        Dim ProductPrices As List(Of SellablePrice)
-        Dim ProductPrice As SellablePrice
-        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
-            Con.Open()
-            Using CmdPrice As New MySqlCommand(My.Resources.SellablePriceSelect, Con)
-                CmdPrice.Parameters.AddWithValue("@productid", ID)
-                CmdPrice.Parameters.AddWithValue("@serviceid", DBNull.Value)
-                Using Adp As New MySqlDataAdapter(CmdPrice)
-                    TableResult = New DataTable
-                    Adp.Fill(TableResult)
-                    ProductPrices = New List(Of SellablePrice)
-                    For Each Row As DataRow In TableResult.Rows
-                        ProductPrice = New SellablePrice With {
-                            .PriceTable = New SellablePriceTable().Load(Row.Item("sellablepricetableid"), False),
-                            .Price = Row.Item("price")
-                        }
-                        ProductPrice.Product = Me
-                        ProductPrice.SetIsSaved(True)
-                        ProductPrice.SetID(Row.Item("id"))
-                        ProductPrice.SetCreation(Row.Item("creation"))
-                        ProductPrices.Add(ProductPrice)
-                    Next Row
-                End Using
-            End Using
-        End Using
-        Return ProductPrices
-    End Function
     Public Shared Sub FillCodeDataGridView(ProductID As Long, Dgv As DataGridView)
         Dim TableResult As New DataTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
@@ -494,23 +421,6 @@ Public Class Product
                     Dgv.Columns(2).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
                     Dgv.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
                     Dgv.Columns(2).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
-                End Using
-            End Using
-        End Using
-    End Sub
-    Public Shared Sub FillPriceDataGridView(ProductID As Long, Dgv As DataGridView)
-        Dim TableResult As New DataTable
-        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
-            Using Cmd As New MySqlCommand(My.Resources.SellablePriceDetailSelect, Con)
-                Cmd.Parameters.AddWithValue("@productid", ProductID)
-                Cmd.Parameters.AddWithValue("@serviceid", DBNull.Value)
-                Using Adp As New MySqlDataAdapter(Cmd)
-                    Adp.Fill(TableResult)
-                    Dgv.DataSource = TableResult
-                    Dgv.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-                    Dgv.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-                    Dgv.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    Dgv.Columns(1).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
                 End Using
             End Using
         End Using

@@ -41,14 +41,6 @@ Partial Class FrmService
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TabNote = New System.Windows.Forms.TabPage()
         Me.TxtNote = New System.Windows.Forms.RichTextBox()
-        Me.TabPrice = New System.Windows.Forms.TabPage()
-        Me.DgvPrice = New System.Windows.Forms.DataGridView()
-        Me.TsPrice = New System.Windows.Forms.ToolStrip()
-        Me.BtnIncludePrice = New System.Windows.Forms.ToolStripButton()
-        Me.BtnEditPrice = New System.Windows.Forms.ToolStripButton()
-        Me.BtnDeletePrice = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripLabel8 = New System.Windows.Forms.ToolStripLabel()
-        Me.TxtFilterPrice = New System.Windows.Forms.ToolStripTextBox()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.TabComplement = New System.Windows.Forms.TabPage()
         Me.DgvComplement = New System.Windows.Forms.DataGridView()
@@ -74,14 +66,10 @@ Partial Class FrmService
         Me.BtnLog = New System.Windows.Forms.ToolStripButton()
         Me.TsTitle = New System.Windows.Forms.ToolStrip()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
-        Me.DgvPriceLayout = New Manager.DataGridViewLayout()
         Me.DgvComplementnLayout = New Manager.DataGridViewLayout()
         Me.PnButtons.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabNote.SuspendLayout()
-        Me.TabPrice.SuspendLayout()
-        CType(Me.DgvPrice, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TsPrice.SuspendLayout()
         Me.TabComplement.SuspendLayout()
         CType(Me.DgvComplement, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsComplement.SuspendLayout()
@@ -261,99 +249,6 @@ Partial Class FrmService
         Me.TxtNote.Size = New System.Drawing.Size(480, 60)
         Me.TxtNote.TabIndex = 0
         Me.TxtNote.Text = ""
-        '
-        'TabPrice
-        '
-        Me.TabPrice.Controls.Add(Me.DgvPrice)
-        Me.TabPrice.Controls.Add(Me.TsPrice)
-        Me.TabPrice.Location = New System.Drawing.Point(4, 26)
-        Me.TabPrice.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabPrice.Name = "TabPrice"
-        Me.TabPrice.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabPrice.Size = New System.Drawing.Size(486, 62)
-        Me.TabPrice.TabIndex = 1
-        Me.TabPrice.Text = "Preços"
-        Me.TabPrice.UseVisualStyleBackColor = True
-        '
-        'DgvPrice
-        '
-        Me.DgvPrice.AllowUserToAddRows = False
-        Me.DgvPrice.AllowUserToDeleteRows = False
-        Me.DgvPrice.AllowUserToOrderColumns = True
-        Me.DgvPrice.AllowUserToResizeRows = False
-        Me.DgvPrice.BackgroundColor = System.Drawing.Color.WhiteSmoke
-        Me.DgvPrice.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DgvPrice.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvPrice.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvPrice.Location = New System.Drawing.Point(3, 29)
-        Me.DgvPrice.MultiSelect = False
-        Me.DgvPrice.Name = "DgvPrice"
-        Me.DgvPrice.ReadOnly = True
-        Me.DgvPrice.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvPrice.RowHeadersVisible = False
-        Me.DgvPrice.RowTemplate.Height = 26
-        Me.DgvPrice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPrice.Size = New System.Drawing.Size(480, 29)
-        Me.DgvPrice.TabIndex = 1
-        '
-        'TsPrice
-        '
-        Me.TsPrice.BackColor = System.Drawing.Color.Transparent
-        Me.TsPrice.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TsPrice.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsPrice.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludePrice, Me.BtnEditPrice, Me.BtnDeletePrice, Me.ToolStripLabel8, Me.TxtFilterPrice})
-        Me.TsPrice.Location = New System.Drawing.Point(3, 4)
-        Me.TsPrice.Name = "TsPrice"
-        Me.TsPrice.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsPrice.Size = New System.Drawing.Size(480, 25)
-        Me.TsPrice.TabIndex = 2
-        Me.TsPrice.Text = "ToolStrip2"
-        '
-        'BtnIncludePrice
-        '
-        Me.BtnIncludePrice.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnIncludePrice.Image = Global.Manager.My.Resources.Resources.IncludeSmall
-        Me.BtnIncludePrice.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnIncludePrice.Name = "BtnIncludePrice"
-        Me.BtnIncludePrice.Size = New System.Drawing.Size(23, 22)
-        Me.BtnIncludePrice.Text = "Incluir Preço"
-        '
-        'BtnEditPrice
-        '
-        Me.BtnEditPrice.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnEditPrice.Enabled = False
-        Me.BtnEditPrice.Image = Global.Manager.My.Resources.Resources.EditSmall
-        Me.BtnEditPrice.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnEditPrice.Name = "BtnEditPrice"
-        Me.BtnEditPrice.Size = New System.Drawing.Size(23, 22)
-        Me.BtnEditPrice.Text = "Editar Preço"
-        Me.BtnEditPrice.ToolTipText = "Editar"
-        '
-        'BtnDeletePrice
-        '
-        Me.BtnDeletePrice.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnDeletePrice.Enabled = False
-        Me.BtnDeletePrice.Image = Global.Manager.My.Resources.Resources.DeleteSmall
-        Me.BtnDeletePrice.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnDeletePrice.Name = "BtnDeletePrice"
-        Me.BtnDeletePrice.Size = New System.Drawing.Size(23, 22)
-        Me.BtnDeletePrice.Text = "Excluir Preço"
-        '
-        'ToolStripLabel8
-        '
-        Me.ToolStripLabel8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.ToolStripLabel8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.ToolStripLabel8.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
-        Me.ToolStripLabel8.Name = "ToolStripLabel8"
-        Me.ToolStripLabel8.Size = New System.Drawing.Size(46, 25)
-        Me.ToolStripLabel8.Text = "Filtrar:"
-        '
-        'TxtFilterPrice
-        '
-        Me.TxtFilterPrice.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtFilterPrice.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.TxtFilterPrice.Name = "TxtFilterPrice"
-        Me.TxtFilterPrice.Size = New System.Drawing.Size(200, 25)
         '
         'ToolStripLabel1
         '
@@ -557,7 +452,6 @@ Partial Class FrmService
         '
         Me.TcService.Controls.Add(Me.TabMain)
         Me.TcService.Controls.Add(Me.TabComplement)
-        Me.TcService.Controls.Add(Me.TabPrice)
         Me.TcService.Controls.Add(Me.TabNote)
         Me.TcService.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TcService.Location = New System.Drawing.Point(0, 50)
@@ -619,11 +513,6 @@ Partial Class FrmService
         Me.DgvNavigator.NextButton = Me.BtnNext
         Me.DgvNavigator.PreviousButton = Me.BtnPrevious
         '
-        'DgvPriceLayout
-        '
-        Me.DgvPriceLayout.DataGridView = Me.DgvPrice
-        Me.DgvPriceLayout.Routine = Manager.Routine.ProductSellablePrice
-        '
         'DgvComplementnLayout
         '
         Me.DgvComplementnLayout.DataGridView = Me.DgvComplement
@@ -650,11 +539,6 @@ Partial Class FrmService
         Me.PnButtons.ResumeLayout(False)
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabNote.ResumeLayout(False)
-        Me.TabPrice.ResumeLayout(False)
-        Me.TabPrice.PerformLayout()
-        CType(Me.DgvPrice, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TsPrice.ResumeLayout(False)
-        Me.TsPrice.PerformLayout()
         Me.TabComplement.ResumeLayout(False)
         Me.TabComplement.PerformLayout()
         CType(Me.DgvComplement, System.ComponentModel.ISupportInitialize).EndInit()
@@ -698,8 +582,6 @@ Partial Class FrmService
     Friend WithEvents BtnDeleteCode As ToolStripButton
     Friend WithEvents ToolStripLabel2 As ToolStripLabel
     Friend WithEvents TxtFilterDescription As ToolStripTextBox
-    Friend WithEvents TabPrice As TabPage
-    Friend WithEvents DgvPrice As DataGridView
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
     Friend WithEvents TabNote As TabPage
     Friend WithEvents TxtNote As RichTextBox
@@ -710,7 +592,6 @@ Partial Class FrmService
     Friend WithEvents BtnLog As ToolStripButton
     Friend WithEvents TsTitle As ToolStrip
     Friend WithEvents DgvNavigator As ControlLibrary.DataGridViewNavigator
-    Friend WithEvents DgvPriceLayout As DataGridViewLayout
     Friend WithEvents DgvComplementnLayout As DataGridViewLayout
     Friend WithEvents TsComplement As ToolStrip
     Friend WithEvents BtnIncludeComplement As ToolStripButton
@@ -718,10 +599,4 @@ Partial Class FrmService
     Friend WithEvents BtnDeleteComplement As ToolStripButton
     Friend WithEvents ToolStripLabel9 As ToolStripLabel
     Friend WithEvents TxtFilterComplement As ToolStripTextBox
-    Friend WithEvents TsPrice As ToolStrip
-    Friend WithEvents BtnIncludePrice As ToolStripButton
-    Friend WithEvents BtnEditPrice As ToolStripButton
-    Friend WithEvents BtnDeletePrice As ToolStripButton
-    Friend WithEvents ToolStripLabel8 As ToolStripLabel
-    Friend WithEvents TxtFilterPrice As ToolStripTextBox
 End Class

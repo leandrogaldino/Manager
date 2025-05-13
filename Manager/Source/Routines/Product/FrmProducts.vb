@@ -47,7 +47,6 @@ Public Class FrmProducts
                 ProductForm = New FrmProduct(_Product, Me)
                 ProductForm.DgvProviderCode.Fill(_Product.ProviderCodes)
                 ProductForm.DgvCode.Fill(_Product.Codes)
-                ProductForm.DgvPrice.Fill(_Product.Prices.Value)
                 ProductForm.ShowDialog()
             Catch ex As Exception
                 CMessageBox.Show("ERRO PD004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -193,7 +192,6 @@ Public Class FrmProducts
                 Try
                     Product.FillProviderCodeDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvProviderCode)
                     Product.FillCodeDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvCode)
-                    Product.FillPriceDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPrice)
                 Catch ex As Exception
                     TmrLoadDetails.Stop()
                     CMessageBox.Show("ERRO PD007", "Ocorreu um erro ao consultar os dados do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

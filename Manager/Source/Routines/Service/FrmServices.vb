@@ -41,7 +41,6 @@ Public Class FrmServices
                 _Service = New Service().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
                 ServiceForm = New FrmService(_Service, Me)
                 ServiceForm.DgvComplement.Fill(_Service.Complements)
-                ServiceForm.DgvPrice.Fill(_Service.Prices.Value)
                 ServiceForm.ShowDialog()
             Catch ex As Exception
                 CMessageBox.Show("ERRO SV004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -174,7 +173,6 @@ Public Class FrmServices
             If DgvData.SelectedRows.Count = 1 Then
                 Try
                     Service.FillComplementDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvComplement)
-                    Service.FillPriceDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPrice)
                 Catch ex As Exception
                     TmrLoadDetails.Stop()
                     CMessageBox.Show("ERRO SV007", "Ocorreu um erro ao consultar os dados do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

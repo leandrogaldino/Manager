@@ -48,14 +48,6 @@ Partial Class FrmProduct
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TabNote = New System.Windows.Forms.TabPage()
         Me.TxtNote = New System.Windows.Forms.RichTextBox()
-        Me.TabPrice = New System.Windows.Forms.TabPage()
-        Me.DgvPrice = New System.Windows.Forms.DataGridView()
-        Me.TsPrice = New System.Windows.Forms.ToolStrip()
-        Me.BtnIncludePrice = New System.Windows.Forms.ToolStripButton()
-        Me.BtnEditPrice = New System.Windows.Forms.ToolStripButton()
-        Me.BtnDeletePrice = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
-        Me.TxtFilterPrice = New System.Windows.Forms.ToolStripTextBox()
         Me.TabProductCode = New System.Windows.Forms.TabPage()
         Me.DgvCode = New System.Windows.Forms.DataGridView()
         Me.TsCode = New System.Windows.Forms.ToolStrip()
@@ -116,16 +108,12 @@ Partial Class FrmProduct
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.DgvProviderCodeLayout = New Manager.DataGridViewLayout()
         Me.DgvCodeLayout = New Manager.DataGridViewLayout()
-        Me.DgvPriceLayout = New Manager.DataGridViewLayout()
         Me.DgvPictureLayout = New Manager.DataGridViewLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
         Me.PnButtons.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabNote.SuspendLayout()
-        Me.TabPrice.SuspendLayout()
-        CType(Me.DgvPrice, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TsPrice.SuspendLayout()
         Me.TabProductCode.SuspendLayout()
         CType(Me.DgvCode, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsCode.SuspendLayout()
@@ -350,107 +338,14 @@ Partial Class FrmProduct
         Me.TxtNote.TabIndex = 0
         Me.TxtNote.Text = ""
         '
-        'TabPrice
-        '
-        Me.TabPrice.Controls.Add(Me.DgvPrice)
-        Me.TabPrice.Controls.Add(Me.TsPrice)
-        Me.TabPrice.Location = New System.Drawing.Point(4, 48)
-        Me.TabPrice.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabPrice.Name = "TabPrice"
-        Me.TabPrice.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabPrice.Size = New System.Drawing.Size(475, 194)
-        Me.TabPrice.TabIndex = 1
-        Me.TabPrice.Text = "Preços"
-        Me.TabPrice.UseVisualStyleBackColor = True
-        '
-        'DgvPrice
-        '
-        Me.DgvPrice.AllowUserToAddRows = False
-        Me.DgvPrice.AllowUserToDeleteRows = False
-        Me.DgvPrice.AllowUserToOrderColumns = True
-        Me.DgvPrice.AllowUserToResizeRows = False
-        Me.DgvPrice.BackgroundColor = System.Drawing.Color.WhiteSmoke
-        Me.DgvPrice.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DgvPrice.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvPrice.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvPrice.Location = New System.Drawing.Point(3, 29)
-        Me.DgvPrice.MultiSelect = False
-        Me.DgvPrice.Name = "DgvPrice"
-        Me.DgvPrice.ReadOnly = True
-        Me.DgvPrice.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvPrice.RowHeadersVisible = False
-        Me.DgvPrice.RowTemplate.Height = 26
-        Me.DgvPrice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPrice.Size = New System.Drawing.Size(469, 161)
-        Me.DgvPrice.TabIndex = 1
-        '
-        'TsPrice
-        '
-        Me.TsPrice.BackColor = System.Drawing.Color.Transparent
-        Me.TsPrice.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TsPrice.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsPrice.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludePrice, Me.BtnEditPrice, Me.BtnDeletePrice, Me.ToolStripLabel1, Me.TxtFilterPrice})
-        Me.TsPrice.Location = New System.Drawing.Point(3, 4)
-        Me.TsPrice.Name = "TsPrice"
-        Me.TsPrice.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsPrice.Size = New System.Drawing.Size(469, 25)
-        Me.TsPrice.TabIndex = 0
-        Me.TsPrice.Text = "ToolStrip2"
-        '
-        'BtnIncludePrice
-        '
-        Me.BtnIncludePrice.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnIncludePrice.Image = Global.Manager.My.Resources.Resources.IncludeSmall
-        Me.BtnIncludePrice.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnIncludePrice.Name = "BtnIncludePrice"
-        Me.BtnIncludePrice.Size = New System.Drawing.Size(23, 22)
-        Me.BtnIncludePrice.Text = "Incluir Preço"
-        '
-        'BtnEditPrice
-        '
-        Me.BtnEditPrice.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnEditPrice.Enabled = False
-        Me.BtnEditPrice.Image = Global.Manager.My.Resources.Resources.EditSmall
-        Me.BtnEditPrice.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnEditPrice.Name = "BtnEditPrice"
-        Me.BtnEditPrice.Size = New System.Drawing.Size(23, 22)
-        Me.BtnEditPrice.Text = "Editar Preço"
-        Me.BtnEditPrice.ToolTipText = "Editar"
-        '
-        'BtnDeletePrice
-        '
-        Me.BtnDeletePrice.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnDeletePrice.Enabled = False
-        Me.BtnDeletePrice.Image = Global.Manager.My.Resources.Resources.DeleteSmall
-        Me.BtnDeletePrice.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnDeletePrice.Name = "BtnDeletePrice"
-        Me.BtnDeletePrice.Size = New System.Drawing.Size(23, 22)
-        Me.BtnDeletePrice.Text = "Excluir Preço"
-        '
-        'ToolStripLabel1
-        '
-        Me.ToolStripLabel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.ToolStripLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.ToolStripLabel1.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
-        Me.ToolStripLabel1.Name = "ToolStripLabel1"
-        Me.ToolStripLabel1.Size = New System.Drawing.Size(46, 25)
-        Me.ToolStripLabel1.Text = "Filtrar:"
-        '
-        'TxtFilterPrice
-        '
-        Me.TxtFilterPrice.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtFilterPrice.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.TxtFilterPrice.Name = "TxtFilterPrice"
-        Me.TxtFilterPrice.Size = New System.Drawing.Size(200, 25)
-        '
         'TabProductCode
         '
         Me.TabProductCode.Controls.Add(Me.DgvCode)
         Me.TabProductCode.Controls.Add(Me.TsCode)
-        Me.TabProductCode.Location = New System.Drawing.Point(4, 48)
+        Me.TabProductCode.Location = New System.Drawing.Point(4, 22)
         Me.TabProductCode.Name = "TabProductCode"
         Me.TabProductCode.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabProductCode.Size = New System.Drawing.Size(475, 194)
+        Me.TabProductCode.Size = New System.Drawing.Size(475, 220)
         Me.TabProductCode.TabIndex = 7
         Me.TabProductCode.Text = "Cód. Produto"
         Me.TabProductCode.UseVisualStyleBackColor = True
@@ -473,7 +368,7 @@ Partial Class FrmProduct
         Me.DgvCode.RowHeadersVisible = False
         Me.DgvCode.RowTemplate.Height = 26
         Me.DgvCode.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvCode.Size = New System.Drawing.Size(469, 163)
+        Me.DgvCode.Size = New System.Drawing.Size(469, 189)
         Me.DgvCode.TabIndex = 1
         '
         'TsCode
@@ -651,11 +546,11 @@ Partial Class FrmProduct
         Me.TabMain.Controls.Add(Me.LblFamily)
         Me.TabMain.Controls.Add(Me.LblInternalName)
         Me.TabMain.Controls.Add(Me.LblName)
-        Me.TabMain.Location = New System.Drawing.Point(4, 48)
+        Me.TabMain.Location = New System.Drawing.Point(4, 26)
         Me.TabMain.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabMain.Name = "TabMain"
         Me.TabMain.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabMain.Size = New System.Drawing.Size(475, 194)
+        Me.TabMain.Size = New System.Drawing.Size(475, 216)
         Me.TabMain.TabIndex = 0
         Me.TabMain.Text = "Identificação"
         Me.TabMain.UseVisualStyleBackColor = True
@@ -887,6 +782,7 @@ Partial Class FrmProduct
         Me.QbxUnit.Conditions.Add(Condition1)
         Me.QbxUnit.DebugOnTextChanged = False
         Me.QbxUnit.DisplayFieldAlias = "Sigla"
+        Me.QbxUnit.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         Me.QbxUnit.DisplayFieldName = "shortname"
         Me.QbxUnit.DisplayMainFieldName = "id"
         Me.QbxUnit.DisplayTableAlias = Nothing
@@ -902,6 +798,7 @@ Partial Class FrmProduct
         Me.QbxUnit.MainTableName = "productunit"
         Me.QbxUnit.Name = "QbxUnit"
         OtherField1.DisplayFieldAlias = "Unidade"
+        OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField1.DisplayFieldName = "name"
         OtherField1.DisplayMainFieldName = "id"
         OtherField1.DisplayTableAlias = Nothing
@@ -926,6 +823,7 @@ Partial Class FrmProduct
         Me.QbxGroup.CharactersToQuery = 1
         Me.QbxGroup.DebugOnTextChanged = False
         Me.QbxGroup.DisplayFieldAlias = "Grupo"
+        Me.QbxGroup.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         Me.QbxGroup.DisplayFieldName = "name"
         Me.QbxGroup.DisplayMainFieldName = "id"
         Me.QbxGroup.DisplayTableAlias = ""
@@ -950,6 +848,7 @@ Partial Class FrmProduct
         Me.QbxFamily.CharactersToQuery = 1
         Me.QbxFamily.DebugOnTextChanged = False
         Me.QbxFamily.DisplayFieldAlias = "Nome"
+        Me.QbxFamily.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         Me.QbxFamily.DisplayFieldName = "name"
         Me.QbxFamily.DisplayMainFieldName = "id"
         Me.QbxFamily.DisplayTableAlias = Nothing
@@ -1036,7 +935,6 @@ Partial Class FrmProduct
         Me.TcProduct.Controls.Add(Me.TabMain)
         Me.TcProduct.Controls.Add(Me.TabProductProviderCode)
         Me.TcProduct.Controls.Add(Me.TabProductCode)
-        Me.TcProduct.Controls.Add(Me.TabPrice)
         Me.TcProduct.Controls.Add(Me.TabPicture)
         Me.TcProduct.Controls.Add(Me.TabNote)
         Me.TcProduct.Dock = System.Windows.Forms.DockStyle.Fill
@@ -1174,11 +1072,6 @@ Partial Class FrmProduct
         Me.DgvCodeLayout.DataGridView = Me.DgvCode
         Me.DgvCodeLayout.Routine = Manager.Routine.ProductCode
         '
-        'DgvPriceLayout
-        '
-        Me.DgvPriceLayout.DataGridView = Me.DgvPrice
-        Me.DgvPriceLayout.Routine = Manager.Routine.ProductSellablePrice
-        '
         'DgvPictureLayout
         '
         Me.DgvPictureLayout.DataGridView = Me.DgvPicture
@@ -1209,11 +1102,6 @@ Partial Class FrmProduct
         Me.PnButtons.ResumeLayout(False)
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabNote.ResumeLayout(False)
-        Me.TabPrice.ResumeLayout(False)
-        Me.TabPrice.PerformLayout()
-        CType(Me.DgvPrice, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TsPrice.ResumeLayout(False)
-        Me.TsPrice.PerformLayout()
         Me.TabProductCode.ResumeLayout(False)
         Me.TabProductCode.PerformLayout()
         CType(Me.DgvCode, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1271,14 +1159,6 @@ Partial Class FrmProduct
     Friend WithEvents BtnDeleteCode As ToolStripButton
     Friend WithEvents ToolStripLabel2 As ToolStripLabel
     Friend WithEvents TxtFilterCode As ToolStripTextBox
-    Friend WithEvents TabPrice As TabPage
-    Friend WithEvents DgvPrice As DataGridView
-    Friend WithEvents TsPrice As ToolStrip
-    Friend WithEvents BtnIncludePrice As ToolStripButton
-    Friend WithEvents BtnEditPrice As ToolStripButton
-    Friend WithEvents BtnDeletePrice As ToolStripButton
-    Friend WithEvents ToolStripLabel1 As ToolStripLabel
-    Friend WithEvents TxtFilterPrice As ToolStripTextBox
     Friend WithEvents TabNote As TabPage
     Friend WithEvents TxtNote As RichTextBox
     Friend WithEvents DgvProviderCodeLayout As DataGridViewLayout
@@ -1290,7 +1170,6 @@ Partial Class FrmProduct
     Friend WithEvents ToolStripLabel3 As ToolStripLabel
     Friend WithEvents TxtFilterProviderCode As ToolStripTextBox
     Friend WithEvents DgvCodeLayout As DataGridViewLayout
-    Friend WithEvents DgvPriceLayout As DataGridViewLayout
     Friend WithEvents QbxFamily As ControlLibrary.QueriedBox
     Friend WithEvents LblGroup As Label
     Friend WithEvents LblFamily As Label

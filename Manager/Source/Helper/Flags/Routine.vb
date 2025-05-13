@@ -34,13 +34,9 @@ Public Enum Routine
     Product = 6
     ProductProviderCode = 601
     ProductCode = 602
-    ProductSellablePrice = 603
     ProductPicture = 604
     <Description("Unidade de Medida")> <TriStatePrivilege> <RoutineDependency(Product)>
     ProductUnit = 7
-    <Description("Tabela de Preços")> <TriStatePrivilege> <RoutineDependency(Product)>
-    SellablePriceTable = 8
-    SellablePriceTableSellablePrice = 801
     <Description("Família de Produtos")> <TriStatePrivilege> <RoutineDependency(Product)>
     ProductFamily = 9
     <Description("Grupo de Produtos")> <TriStatePrivilege> <RoutineDependency(Product)>

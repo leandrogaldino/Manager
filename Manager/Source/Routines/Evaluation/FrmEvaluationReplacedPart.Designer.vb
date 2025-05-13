@@ -245,12 +245,12 @@ Partial Class FrmEvaluationReplacedPart
         'LblItem
         '
         Me.LblItem.AutoSize = True
-        Me.LblItem.Location = New System.Drawing.Point(9, 60)
+        Me.LblItem.Location = New System.Drawing.Point(12, 60)
         Me.LblItem.Margin = New System.Windows.Forms.Padding(3, 10, 3, 0)
         Me.LblItem.Name = "LblItem"
-        Me.LblItem.Size = New System.Drawing.Size(37, 17)
+        Me.LblItem.Size = New System.Drawing.Size(41, 17)
         Me.LblItem.TabIndex = 2
-        Me.LblItem.Text = "Item"
+        Me.LblItem.Text = "Peça"
         '
         'LblTaked
         '
@@ -336,6 +336,7 @@ Partial Class FrmEvaluationReplacedPart
         Me.QbxItem.Conditions.Add(Condition1)
         Me.QbxItem.DebugOnTextChanged = True
         Me.QbxItem.DisplayFieldAlias = "Código"
+        Me.QbxItem.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         Me.QbxItem.DisplayFieldName = "code"
         Me.QbxItem.DisplayMainFieldName = "id"
         Me.QbxItem.DisplayTableAlias = ""
@@ -350,6 +351,7 @@ Partial Class FrmEvaluationReplacedPart
         Me.QbxItem.MainTableName = "product"
         Me.QbxItem.Name = "QbxItem"
         OtherField1.DisplayFieldAlias = "Produto"
+        OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField1.DisplayFieldName = "name"
         OtherField1.DisplayMainFieldName = "id"
         OtherField1.DisplayTableAlias = ""
@@ -404,7 +406,7 @@ Partial Class FrmEvaluationReplacedPart
         Me.DgvNavigator.NextButton = Me.BtnNext
         Me.DgvNavigator.PreviousButton = Me.BtnPrevious
         '
-        'FrmEvaluationReplacedItem
+        'FrmEvaluationReplacedPart
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
@@ -423,7 +425,7 @@ Partial Class FrmEvaluationReplacedPart
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "FrmEvaluationReplacedItem"
+        Me.Name = "FrmEvaluationReplacedPart"
         Me.ShowIcon = False
         Me.Text = "Peça Substituída"
         Me.TsMain.ResumeLayout(False)

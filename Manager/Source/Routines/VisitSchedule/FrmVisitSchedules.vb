@@ -184,7 +184,7 @@ Public Class FrmVisitSchedules
     End Sub
 
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
-        Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Rotas", .Grid = DgvData}})
+        Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Agendamentos de Visita", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
         FrmMain.OpenTab(FormReport, EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub

@@ -726,6 +726,24 @@
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationReplacedPart.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Source\Routines\PriceTable\FrmPriceTable.Designer.vb">
+      <DependentUpon>FrmPriceTable.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\PriceTable\FrmPriceTable.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\PriceTable\FrmPriceTableItem.Designer.vb">
+      <DependentUpon>FrmPriceTableItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\PriceTable\FrmPriceTableItem.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\PriceTable\FrmPriceTables.Designer.vb">
+      <DependentUpon>FrmPriceTables.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\PriceTable\FrmPriceTables.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Source\Routines\PriceTable\PriceTable.vb" />
     <Compile Include="Source\Routines\PriceTable\PriceTableFilter.vb" />
     <Compile Include="Source\Routines\PriceTable\PriceTableItem.vb" />
@@ -1453,6 +1471,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Person\FrmPersonMaintenancePlan.resx">
       <DependentUpon>FrmPersonMaintenancePlan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\PriceTable\FrmPriceTable.resx">
+      <DependentUpon>FrmPriceTable.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\PriceTable\FrmPriceTables.resx">
+      <DependentUpon>FrmPriceTables.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\PrivilegePreset\FrmPrivilegePreset.resx">
       <DependentUpon>FrmPrivilegePreset.vb</DependentUpon>

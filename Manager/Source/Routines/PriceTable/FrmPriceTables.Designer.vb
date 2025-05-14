@@ -22,6 +22,8 @@ Partial Class FrmPriceTables
     'Não o modifique usando o editor de códigos.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TsMenu = New System.Windows.Forms.ToolStrip()
         Me.BtnInclude = New System.Windows.Forms.ToolStripButton()
         Me.BtnEdit = New System.Windows.Forms.ToolStripButton()
@@ -30,6 +32,7 @@ Partial Class FrmPriceTables
         Me.BtnFilter = New System.Windows.Forms.ToolStripButton()
         Me.BtnDetails = New System.Windows.Forms.ToolStripButton()
         Me.BtnClose = New System.Windows.Forms.ToolStripButton()
+        Me.BtnExport = New System.Windows.Forms.ToolStripButton()
         Me.SsInformation = New System.Windows.Forms.StatusStrip()
         Me.LblInfo = New System.Windows.Forms.ToolStripStatusLabel()
         Me.LblStatus = New System.Windows.Forms.ToolStripStatusLabel()
@@ -43,12 +46,15 @@ Partial Class FrmPriceTables
         Me.BtnClean = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
+        Me.TcDetail = New System.Windows.Forms.TabControl()
+        Me.TabItems = New System.Windows.Forms.TabPage()
+        Me.DgvItems = New System.Windows.Forms.DataGridView()
         Me.TsDetails = New System.Windows.Forms.ToolStrip()
         Me.BtnCloseDetails = New System.Windows.Forms.ToolStripButton()
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
-        Me.DgvCitiesLayout = New Manager.DataGridViewLayout()
-        Me.BtnExport = New System.Windows.Forms.ToolStripButton()
+        Me.DgvPriceTablesLayout = New Manager.DataGridViewLayout()
+        Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -61,6 +67,9 @@ Partial Class FrmPriceTables
         Me.SplitContainer2.Panel1.SuspendLayout()
         Me.SplitContainer2.Panel2.SuspendLayout()
         Me.SplitContainer2.SuspendLayout()
+        Me.TcDetail.SuspendLayout()
+        Me.TabItems.SuspendLayout()
+        CType(Me.DgvItems, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsDetails.SuspendLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -141,7 +150,6 @@ Partial Class FrmPriceTables
         Me.BtnDetails.Name = "BtnDetails"
         Me.BtnDetails.Size = New System.Drawing.Size(100, 36)
         Me.BtnDetails.Text = "Detalhes"
-        Me.BtnDetails.Visible = False
         '
         'BtnClose
         '
@@ -155,6 +163,16 @@ Partial Class FrmPriceTables
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(36, 36)
         Me.BtnClose.Text = "Fechar"
+        '
+        'BtnExport
+        '
+        Me.BtnExport.AutoToolTip = False
+        Me.BtnExport.Image = Global.Manager.My.Resources.Resources.Export
+        Me.BtnExport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnExport.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnExport.Name = "BtnExport"
+        Me.BtnExport.Size = New System.Drawing.Size(97, 36)
+        Me.BtnExport.Text = "Exportar"
         '
         'SsInformation
         '
@@ -287,6 +305,7 @@ Partial Class FrmPriceTables
         '
         'SplitContainer2.Panel1
         '
+        Me.SplitContainer2.Panel1.Controls.Add(Me.TcDetail)
         Me.SplitContainer2.Panel1.Controls.Add(Me.TsDetails)
         Me.SplitContainer2.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         '
@@ -298,6 +317,57 @@ Partial Class FrmPriceTables
         Me.SplitContainer2.Size = New System.Drawing.Size(824, 439)
         Me.SplitContainer2.SplitterDistance = 272
         Me.SplitContainer2.TabIndex = 0
+        '
+        'TcDetail
+        '
+        Me.TcDetail.Controls.Add(Me.TabItems)
+        Me.TcDetail.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TcDetail.Location = New System.Drawing.Point(0, 25)
+        Me.TcDetail.Name = "TcDetail"
+        Me.TcDetail.SelectedIndex = 0
+        Me.TcDetail.Size = New System.Drawing.Size(270, 412)
+        Me.TcDetail.TabIndex = 2
+        '
+        'TabItems
+        '
+        Me.TabItems.Controls.Add(Me.DgvItems)
+        Me.TabItems.Location = New System.Drawing.Point(4, 26)
+        Me.TabItems.Name = "TabItems"
+        Me.TabItems.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabItems.Size = New System.Drawing.Size(262, 382)
+        Me.TabItems.TabIndex = 1
+        Me.TabItems.Text = "Itens"
+        Me.TabItems.UseVisualStyleBackColor = True
+        '
+        'DgvItems
+        '
+        Me.DgvItems.AllowUserToAddRows = False
+        Me.DgvItems.AllowUserToDeleteRows = False
+        Me.DgvItems.AllowUserToResizeColumns = False
+        Me.DgvItems.AllowUserToResizeRows = False
+        Me.DgvItems.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.DgvItems.BackgroundColor = System.Drawing.Color.White
+        Me.DgvItems.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.DgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DgvItems.DefaultCellStyle = DataGridViewCellStyle1
+        Me.DgvItems.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvItems.Location = New System.Drawing.Point(3, 3)
+        Me.DgvItems.MultiSelect = False
+        Me.DgvItems.Name = "DgvItems"
+        Me.DgvItems.ReadOnly = True
+        Me.DgvItems.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvItems.RowHeadersVisible = False
+        Me.DgvItems.RowTemplate.Height = 26
+        Me.DgvItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvItems.Size = New System.Drawing.Size(256, 376)
+        Me.DgvItems.TabIndex = 1
         '
         'TsDetails
         '
@@ -349,22 +419,12 @@ Partial Class FrmPriceTables
         Me.DgvData.Size = New System.Drawing.Size(546, 437)
         Me.DgvData.TabIndex = 0
         '
-        'DgvCitiesLayout
+        'DgvPriceTablesLayout
         '
-        Me.DgvCitiesLayout.DataGridView = Me.DgvData
-        Me.DgvCitiesLayout.Routine = Routine.City
+        Me.DgvPriceTablesLayout.DataGridView = Me.DgvData
+        Me.DgvPriceTablesLayout.Routine = Manager.Routine.Request
         '
-        'BtnExport
-        '
-        Me.BtnExport.AutoToolTip = False
-        Me.BtnExport.Image = Global.Manager.My.Resources.Resources.Export
-        Me.BtnExport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.BtnExport.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnExport.Name = "BtnExport"
-        Me.BtnExport.Size = New System.Drawing.Size(97, 36)
-        Me.BtnExport.Text = "Exportar"
-        '
-        'FrmCities
+        'FrmPriceTables
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -376,7 +436,7 @@ Partial Class FrmPriceTables
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "FrmCities"
+        Me.Name = "FrmPriceTables"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.TsMenu.ResumeLayout(False)
@@ -397,6 +457,9 @@ Partial Class FrmPriceTables
         Me.SplitContainer2.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer2.ResumeLayout(False)
+        Me.TcDetail.ResumeLayout(False)
+        Me.TabItems.ResumeLayout(False)
+        CType(Me.DgvItems, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsDetails.ResumeLayout(False)
         Me.TsDetails.PerformLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).EndInit()
@@ -431,6 +494,10 @@ Partial Class FrmPriceTables
     Friend WithEvents LblCounter As ToolStripStatusLabel
     Friend WithEvents BtnDetails As ToolStripButton
     Friend WithEvents ToolStripButton1 As ToolStripButton
-    Friend WithEvents DgvCitiesLayout As DataGridViewLayout
+    Friend WithEvents DgvPriceTablesLayout As DataGridViewLayout
     Friend WithEvents BtnExport As ToolStripButton
+    Friend WithEvents TcDetail As TabControl
+    Friend WithEvents TabItems As TabPage
+    Friend WithEvents DgvItems As DataGridView
+    Friend WithEvents TmrLoadDetails As Timer
 End Class

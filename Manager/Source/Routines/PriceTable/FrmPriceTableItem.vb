@@ -1,4 +1,5 @@
 ﻿Imports ControlLibrary
+Imports ControlLibrary.Extensions
 
 Public Class FrmPriceTableItem
     Private _PriceTableForm As FrmPriceTable
@@ -27,21 +28,21 @@ Public Class FrmPriceTableItem
         _User = Locator.GetInstance(Of Session).User
         Height = 235
         LoadForm()
-        DgvNavigator.DataGridView = _PriceTableForm.DgvSellablePrice
+        DgvNavigator.DataGridView = _PriceTableForm.DgvPriceTableItem
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = _User.CanAccess(Routine.Log)
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = If(_PriceTableItem.IsSaved, _PriceTableForm.DgvSellablePrice.SelectedRows(0).Cells("Order").Value, 0)
+        LblOrderValue.Text = If(_PriceTableItem.IsSaved, _PriceTableForm.DgvPriceTableItem.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _PriceTableItem.Creation
         ClearQbxSellable()
         SetUpQbxSellableForProduct()
         If _PriceTableItem.Product Is Nothing And _PriceTableItem.Service Is Nothing Then RbtPart.Checked = True
         If _PriceTableItem.Product IsNot Nothing Then RbtPart.Checked = True
         If _PriceTableItem.Service IsNot Nothing Then RbtService.Checked = True
-        If _PriceTableItem.Sellable IsNot Nothing AndAlso _PriceTableItem.Sellable.ID > 0 Then QbxSellable.Freeze(_PriceTableItem.Sellable.ID)
+        If _PriceTableItem.Sellable IsNot Nothing AndAlso _PriceTableItem.Sellable.Value.ID > 0 Then QbxSellable.Freeze(_PriceTableItem.Sellable.Value.ID)
         DbxPrice.Text = _PriceTableItem.Price
         If Not _PriceTableItem.IsSaved Then
             BtnSave.Text = "Incluir"
@@ -64,9 +65,9 @@ Public Class FrmPriceTableItem
         End If
     End Sub
     Private Sub AfterDataGridViewRowMove()
-        If _PriceTableForm.DgvSellablePrice.SelectedRows.Count = 1 Then
+        If _PriceTableForm.DgvPriceTableItem.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _PriceTableItem = _PriceTable.Prices.Value.Single(Function(x) x.Guid = _PriceTableForm.DgvSellablePrice.SelectedRows(0).Cells("Guid").Value)
+            _PriceTableItem = _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableForm.DgvPriceTableItem.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -95,7 +96,7 @@ Public Class FrmPriceTableItem
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.ProductSellablePrice, _PriceTableItem.ID)
+        Dim Frm As New FrmLog(Routine.PriceTableItem, _PriceTableItem.ID)
         Frm.ShowDialog()
     End Sub
     Private Sub QbxSellable_TextChanged(sender As Object, e As EventArgs) Handles QbxSellable.TextChanged
@@ -135,19 +136,27 @@ Public Class FrmPriceTableItem
     End Function
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
-        Dim TargetItems As List(Of SellablePrice)
+        Dim TargetItems As List(Of PriceTableItem)
         If IsValidFields() Then
             If _PriceTableItem.IsSaved Then
-                _PriceTable.Prices.Value.Single(Function(x) x.Guid = _PriceTableItem.Guid).Price = DbxPrice.DecimalValue
+                _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Price = DbxPrice.DecimalValue
                 If RbtPart.Checked Then
-                    _PriceTable.Prices.Value.Single(Function(x) x.Guid = _PriceTableItem.Guid).Product = New Product().Load(QbxSellable.FreezedPrimaryKey, False)
-                    _PriceTable.Prices.Value.Single(Function(x) x.Guid = _PriceTableItem.Guid).Service = Nothing
+                    _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Sellable = New Lazy(Of SellableModel)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
+                    Dim Sellable As SellableModel = _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Sellable.Value
+                    _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).SellableID = Sellable.ID
+                    _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Name = Sellable.Name
+                    _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Code = CType(Sellable, Product).ProviderCodes.FirstOrNew(Function(x) x.IsMainProvider = True).Code
+                    _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Price = DbxPrice.DecimalValue
                 Else
-                    _PriceTable.Prices.Value.Single(Function(x) x.Guid = _PriceTableItem.Guid).Service = New Service().Load(QbxSellable.FreezedPrimaryKey, False)
-                    _PriceTable.Prices.Value.Single(Function(x) x.Guid = _PriceTableItem.Guid).Product = Nothing
+                    _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Sellable = New Lazy(Of SellableModel)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
+                    Dim Sellable As SellableModel = _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Sellable.Value
+                    _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).SellableID = Sellable.ID
+                    _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Name = Sellable.Name
+                    _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Code = String.Empty
+                    _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Price = DbxPrice.DecimalValue
                 End If
             Else
-                _PriceTableItem = New SellablePrice With {
+                _PriceTableItem = New PriceTableItem With {
                     .Price = DbxPrice.DecimalValue
                 }
                 If RbtPart.Checked Then

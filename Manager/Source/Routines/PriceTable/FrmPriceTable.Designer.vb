@@ -62,7 +62,7 @@ Partial Class FrmPriceTable
         Me.BtnLog = New System.Windows.Forms.ToolStripButton()
         Me.TsTitle = New System.Windows.Forms.ToolStrip()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
-        Me.DgvComplementnLayout = New Manager.DataGridViewLayout()
+        Me.DgvPriceTableItemLayout = New Manager.DataGridViewLayout()
         Me.PnButtons.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabIItems.SuspendLayout()
@@ -465,10 +465,10 @@ Partial Class FrmPriceTable
         Me.DgvNavigator.NextButton = Me.BtnNext
         Me.DgvNavigator.PreviousButton = Me.BtnPrevious
         '
-        'DgvComplementnLayout
+        'DgvPriceTableItemLayout
         '
-        Me.DgvComplementnLayout.DataGridView = Me.DgvPriceTableItem
-        Me.DgvComplementnLayout.Routine = Manager.Routine.ServiceComplement
+        Me.DgvPriceTableItemLayout.DataGridView = Me.DgvPriceTableItem
+        Me.DgvPriceTableItemLayout.Routine = Manager.Routine.ServiceComplement
         '
         'FrmPriceTable
         '
@@ -539,7 +539,7 @@ Partial Class FrmPriceTable
     Friend WithEvents BtnLog As ToolStripButton
     Friend WithEvents TsTitle As ToolStrip
     Friend WithEvents DgvNavigator As ControlLibrary.DataGridViewNavigator
-    Friend WithEvents DgvComplementnLayout As DataGridViewLayout
+    Friend WithEvents DgvPriceTableItemLayout As DataGridViewLayout
     Friend WithEvents TsComplement As ToolStrip
     Friend WithEvents BtnIncludePriceTableItem As ToolStripButton
     Friend WithEvents BtnEditPriceTableItem As ToolStripButton

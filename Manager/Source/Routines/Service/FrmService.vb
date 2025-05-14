@@ -53,7 +53,7 @@ Public Class FrmService
         LoadForm()
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvComplementnLayout.Load()
+        DgvComplementLayout.Load()
     End Sub
     Private Sub LoadForm()
         ControlHelper.EnableControlDoubleBuffer(DgvComplement, True)

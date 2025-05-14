@@ -86,7 +86,7 @@ Public Class FrmServiceComplement
                 _ServiceComplement = _Service.Complements.Single(Function(x) x.Guid = _ServiceForm.DgvComplement.SelectedRows(0).Cells("Guid").Value)
                 _Service.Complements.Remove(_ServiceComplement)
                 _ServiceForm.DgvComplement.Fill(_Service.Complements)
-                _ServiceForm.DgvComplementnLayout.Load()
+                _ServiceForm.DgvComplementLayout.Load()
                 _Deleting = True
                 Dispose()
                 _ServiceForm.BtnSave.Enabled = True
@@ -143,7 +143,7 @@ Public Class FrmServiceComplement
                 _Service.Complements.Add(_ServiceComplement)
             End If
             _ServiceForm.DgvComplement.Fill(_Service.Complements)
-            _ServiceForm.DgvComplementnLayout.Load()
+            _ServiceForm.DgvComplementLayout.Load()
             BtnSave.Enabled = False
             If Not _ServiceComplement.IsSaved Then
                 BtnSave.Text = "Incluir"

@@ -10,7 +10,6 @@ Public Class FrmServices
         InitializeComponent()
         ControlHelper.EnableControlDoubleBuffer(DgvData, True)
         ControlHelper.EnableControlDoubleBuffer(DgvComplement, True)
-        ControlHelper.EnableControlDoubleBuffer(DgvPrice, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Filter = New ServiceFilter(DgvData, PgFilter)
@@ -152,10 +151,6 @@ Public Class FrmServices
             BtnDelete.Enabled = True
         End If
     End Sub
-    Private Sub TmrLoadDetails_Tick(sender As Object, e As EventArgs) Handles TmrLoadDetails.Tick
-        LoadDetails()
-        TmrLoadDetails.Stop()
-    End Sub
     Private Sub PgFilter_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles PgFilter.PropertyValueChanged
         If _Filter.Filter() = True Then
             LblStatus.Text = "Filtro Ativo"
@@ -168,6 +163,10 @@ Public Class FrmServices
         End If
         DgvServiceLayout.Load()
     End Sub
+    Private Sub TmrLoadDetails_Tick(sender As Object, e As EventArgs) Handles TmrLoadDetails.Tick
+        LoadDetails()
+        TmrLoadDetails.Stop()
+    End Sub
     Private Sub LoadDetails()
         If BtnDetails.Checked Then
             If DgvData.SelectedRows.Count = 1 Then
@@ -179,7 +178,6 @@ Public Class FrmServices
                 End Try
             Else
                 DgvComplement.DataSource = Nothing
-                DgvPrice.DataSource = Nothing
             End If
         End If
     End Sub
@@ -206,7 +204,7 @@ Public Class FrmServices
     End Sub
 
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
-        Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Produtos", .Grid = DgvData}})
+        Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Serviços", .Grid = DgvData}})
         Dim FormReport As New FrmReport(Result)
         FrmMain.OpenTab(FormReport, EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub

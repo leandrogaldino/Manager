@@ -66,7 +66,7 @@ Partial Class FrmService
         Me.BtnLog = New System.Windows.Forms.ToolStripButton()
         Me.TsTitle = New System.Windows.Forms.ToolStrip()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
-        Me.DgvComplementnLayout = New Manager.DataGridViewLayout()
+        Me.DgvComplementLayout = New Manager.DataGridViewLayout()
         Me.PnButtons.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabNote.SuspendLayout()
@@ -231,10 +231,10 @@ Partial Class FrmService
         'TabNote
         '
         Me.TabNote.Controls.Add(Me.TxtNote)
-        Me.TabNote.Location = New System.Drawing.Point(4, 26)
+        Me.TabNote.Location = New System.Drawing.Point(4, 22)
         Me.TabNote.Name = "TabNote"
         Me.TabNote.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabNote.Size = New System.Drawing.Size(486, 62)
+        Me.TabNote.Size = New System.Drawing.Size(486, 66)
         Me.TabNote.TabIndex = 5
         Me.TabNote.Text = "Observação"
         Me.TabNote.UseVisualStyleBackColor = True
@@ -246,7 +246,7 @@ Partial Class FrmService
         Me.TxtNote.Location = New System.Drawing.Point(3, 3)
         Me.TxtNote.MaxLength = 1000000
         Me.TxtNote.Name = "TxtNote"
-        Me.TxtNote.Size = New System.Drawing.Size(480, 56)
+        Me.TxtNote.Size = New System.Drawing.Size(480, 60)
         Me.TxtNote.TabIndex = 0
         Me.TxtNote.Text = ""
         '
@@ -263,10 +263,10 @@ Partial Class FrmService
         '
         Me.TabComplement.Controls.Add(Me.DgvComplement)
         Me.TabComplement.Controls.Add(Me.TsComplement)
-        Me.TabComplement.Location = New System.Drawing.Point(4, 26)
+        Me.TabComplement.Location = New System.Drawing.Point(4, 22)
         Me.TabComplement.Name = "TabComplement"
         Me.TabComplement.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabComplement.Size = New System.Drawing.Size(486, 62)
+        Me.TabComplement.Size = New System.Drawing.Size(486, 66)
         Me.TabComplement.TabIndex = 7
         Me.TabComplement.Text = "Complementos"
         Me.TabComplement.UseVisualStyleBackColor = True
@@ -289,7 +289,7 @@ Partial Class FrmService
         Me.DgvComplement.RowHeadersVisible = False
         Me.DgvComplement.RowTemplate.Height = 26
         Me.DgvComplement.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvComplement.Size = New System.Drawing.Size(480, 31)
+        Me.DgvComplement.Size = New System.Drawing.Size(480, 35)
         Me.DgvComplement.TabIndex = 1
         '
         'TsComplement
@@ -513,10 +513,10 @@ Partial Class FrmService
         Me.DgvNavigator.NextButton = Me.BtnNext
         Me.DgvNavigator.PreviousButton = Me.BtnPrevious
         '
-        'DgvComplementnLayout
+        'DgvComplementLayout
         '
-        Me.DgvComplementnLayout.DataGridView = Me.DgvComplement
-        Me.DgvComplementnLayout.Routine = Manager.Routine.ServiceComplement
+        Me.DgvComplementLayout.DataGridView = Me.DgvComplement
+        Me.DgvComplementLayout.Routine = Manager.Routine.ServiceComplement
         '
         'FrmService
         '
@@ -592,7 +592,7 @@ Partial Class FrmService
     Friend WithEvents BtnLog As ToolStripButton
     Friend WithEvents TsTitle As ToolStrip
     Friend WithEvents DgvNavigator As ControlLibrary.DataGridViewNavigator
-    Friend WithEvents DgvComplementnLayout As DataGridViewLayout
+    Friend WithEvents DgvComplementLayout As DataGridViewLayout
     Friend WithEvents TsComplement As ToolStrip
     Friend WithEvents BtnIncludeComplement As ToolStripButton
     Friend WithEvents BtnEditComplement As ToolStripButton

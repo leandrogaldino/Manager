@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class FrmServiceComplement
+Partial Class FrmPriceTableItem
     Inherits System.Windows.Forms.Form
 
     'Descartar substituições de formulário para limpar a lista de componentes.
@@ -36,25 +36,34 @@ Partial Class FrmServiceComplement
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.TsData = New System.Windows.Forms.ToolStrip()
         Me.LblOrder = New System.Windows.Forms.ToolStripLabel()
         Me.LblOrderValue = New System.Windows.Forms.ToolStripLabel()
         Me.LblCreation = New System.Windows.Forms.ToolStripLabel()
         Me.LblCreationValue = New System.Windows.Forms.ToolStripLabel()
-        Me.LblComplement = New System.Windows.Forms.Label()
-        Me.TxtComplement = New System.Windows.Forms.TextBox()
+        Me.FlpSellable = New System.Windows.Forms.FlowLayoutPanel()
+        Me.BtnFilter = New ControlLibrary.NoFocusCueButton()
+        Me.BtnView = New ControlLibrary.NoFocusCueButton()
+        Me.BtnNew = New ControlLibrary.NoFocusCueButton()
+        Me.TmrQueriedBox = New System.Windows.Forms.Timer(Me.components)
+        Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
+        Me.DbxPrice = New ControlLibrary.DecimalBox()
+        Me.LblPrice = New System.Windows.Forms.Label()
+        Me.RbtPart = New System.Windows.Forms.RadioButton()
+        Me.RbtService = New System.Windows.Forms.RadioButton()
+        Me.QbxSellable = New ControlLibrary.QueriedBox()
         Me.TsMain.SuspendLayout()
         Me.Panel1.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsData.SuspendLayout()
+        Me.FlpSellable.SuspendLayout()
         Me.SuspendLayout()
         '
         'BtnClose
         '
         Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnClose.Location = New System.Drawing.Point(315, 7)
+        Me.BtnClose.Location = New System.Drawing.Point(408, 7)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(95, 30)
         Me.BtnClose.TabIndex = 1
@@ -65,11 +74,11 @@ Partial Class FrmServiceComplement
         '
         Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnSave.Enabled = False
-        Me.BtnSave.Location = New System.Drawing.Point(214, 7)
+        Me.BtnSave.Location = New System.Drawing.Point(307, 7)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(95, 30)
         Me.BtnSave.TabIndex = 0
-        Me.BtnSave.Text = "Salvar"
+        Me.BtnSave.Text = "Incluir"
         Me.BtnSave.UseVisualStyleBackColor = True
         '
         'TsMain
@@ -82,7 +91,7 @@ Partial Class FrmServiceComplement
         Me.TsMain.Location = New System.Drawing.Point(0, 0)
         Me.TsMain.Name = "TsMain"
         Me.TsMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsMain.Size = New System.Drawing.Size(422, 25)
+        Me.TsMain.Size = New System.Drawing.Size(515, 25)
         Me.TsMain.TabIndex = 0
         Me.TsMain.Text = "ToolStrip2"
         '
@@ -94,7 +103,7 @@ Partial Class FrmServiceComplement
         Me.BtnInclude.Margin = New System.Windows.Forms.Padding(1, 1, 0, 2)
         Me.BtnInclude.Name = "BtnInclude"
         Me.BtnInclude.Size = New System.Drawing.Size(23, 22)
-        Me.BtnInclude.Text = "Incluir Complemento"
+        Me.BtnInclude.Text = "Incluir Item"
         '
         'BtnDelete
         '
@@ -105,7 +114,7 @@ Partial Class FrmServiceComplement
         Me.BtnDelete.Margin = New System.Windows.Forms.Padding(0, 1, 10, 2)
         Me.BtnDelete.Name = "BtnDelete"
         Me.BtnDelete.Size = New System.Drawing.Size(23, 22)
-        Me.BtnDelete.Text = "Excluir  Complemento"
+        Me.BtnDelete.Text = "Excluir Item"
         '
         'BtnFirst
         '
@@ -115,7 +124,7 @@ Partial Class FrmServiceComplement
         Me.BtnFirst.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnFirst.Name = "BtnFirst"
         Me.BtnFirst.Size = New System.Drawing.Size(23, 22)
-        Me.BtnFirst.Text = "Primeiro Complemento"
+        Me.BtnFirst.Text = "Primeiro Item"
         '
         'BtnPrevious
         '
@@ -125,7 +134,7 @@ Partial Class FrmServiceComplement
         Me.BtnPrevious.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnPrevious.Name = "BtnPrevious"
         Me.BtnPrevious.Size = New System.Drawing.Size(23, 22)
-        Me.BtnPrevious.Text = "Complemento Anterior"
+        Me.BtnPrevious.Text = "Item Anterior"
         '
         'BtnNext
         '
@@ -135,7 +144,7 @@ Partial Class FrmServiceComplement
         Me.BtnNext.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnNext.Name = "BtnNext"
         Me.BtnNext.Size = New System.Drawing.Size(23, 22)
-        Me.BtnNext.Text = "Próximo Complemento"
+        Me.BtnNext.Text = "Próximo Item"
         '
         'BtnLast
         '
@@ -146,7 +155,7 @@ Partial Class FrmServiceComplement
         Me.BtnLast.Margin = New System.Windows.Forms.Padding(0, 1, 10, 2)
         Me.BtnLast.Name = "BtnLast"
         Me.BtnLast.Size = New System.Drawing.Size(23, 22)
-        Me.BtnLast.Text = "Último Complemento"
+        Me.BtnLast.Text = "Último Item"
         '
         'BtnLog
         '
@@ -172,23 +181,15 @@ Partial Class FrmServiceComplement
         Me.Panel1.Controls.Add(Me.BtnSave)
         Me.Panel1.Controls.Add(Me.BtnClose)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 172)
+        Me.Panel1.Location = New System.Drawing.Point(0, 114)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(422, 44)
-        Me.Panel1.TabIndex = 6
+        Me.Panel1.Size = New System.Drawing.Size(515, 44)
+        Me.Panel1.TabIndex = 17
         '
         'EprValidation
         '
         Me.EprValidation.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink
         Me.EprValidation.ContainerControl = Me
-        '
-        'DgvNavigator
-        '
-        Me.DgvNavigator.CancelNextMove = False
-        Me.DgvNavigator.FirstButton = Me.BtnFirst
-        Me.DgvNavigator.LastButton = Me.BtnLast
-        Me.DgvNavigator.NextButton = Me.BtnNext
-        Me.DgvNavigator.PreviousButton = Me.BtnPrevious
         '
         'TsData
         '
@@ -200,7 +201,7 @@ Partial Class FrmServiceComplement
         Me.TsData.Location = New System.Drawing.Point(0, 25)
         Me.TsData.Name = "TsData"
         Me.TsData.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsData.Size = New System.Drawing.Size(422, 25)
+        Me.TsData.Size = New System.Drawing.Size(515, 25)
         Me.TsData.TabIndex = 1
         Me.TsData.Text = "ToolStrip1"
         '
@@ -217,8 +218,8 @@ Partial Class FrmServiceComplement
         Me.LblOrderValue.ForeColor = System.Drawing.Color.DarkBlue
         Me.LblOrderValue.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.LblOrderValue.Name = "LblOrderValue"
-        Me.LblOrderValue.Size = New System.Drawing.Size(40, 22)
-        Me.LblOrderValue.Text = "        "
+        Me.LblOrderValue.Size = New System.Drawing.Size(32, 22)
+        Me.LblOrderValue.Text = "      "
         '
         'LblCreation
         '
@@ -236,33 +237,154 @@ Partial Class FrmServiceComplement
         Me.LblCreationValue.Size = New System.Drawing.Size(32, 22)
         Me.LblCreationValue.Text = "      "
         '
-        'LblComplement
+        'FlpSellable
         '
-        Me.LblComplement.AutoSize = True
-        Me.LblComplement.Location = New System.Drawing.Point(9, 55)
-        Me.LblComplement.Margin = New System.Windows.Forms.Padding(3, 5, 3, 0)
-        Me.LblComplement.Name = "LblComplement"
-        Me.LblComplement.Size = New System.Drawing.Size(104, 17)
-        Me.LblComplement.TabIndex = 2
-        Me.LblComplement.Text = "Complemento"
+        Me.FlpSellable.Controls.Add(Me.BtnFilter)
+        Me.FlpSellable.Controls.Add(Me.BtnView)
+        Me.FlpSellable.Controls.Add(Me.BtnNew)
+        Me.FlpSellable.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
+        Me.FlpSellable.Location = New System.Drawing.Point(328, 60)
+        Me.FlpSellable.Name = "FlpSellable"
+        Me.FlpSellable.Size = New System.Drawing.Size(69, 21)
+        Me.FlpSellable.TabIndex = 4
         '
-        'TxtComplement
+        'BtnFilter
         '
-        Me.TxtComplement.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtComplement.Location = New System.Drawing.Point(12, 75)
-        Me.TxtComplement.MaxLength = 255
-        Me.TxtComplement.Multiline = True
-        Me.TxtComplement.Name = "TxtComplement"
-        Me.TxtComplement.Size = New System.Drawing.Size(398, 92)
-        Me.TxtComplement.TabIndex = 5
+        Me.BtnFilter.BackColor = System.Drawing.Color.Transparent
+        Me.BtnFilter.BackgroundImage = Global.Manager.My.Resources.Resources.Magnifier
+        Me.BtnFilter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnFilter.FlatAppearance.BorderSize = 0
+        Me.BtnFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnFilter.Location = New System.Drawing.Point(49, 3)
+        Me.BtnFilter.Name = "BtnFilter"
+        Me.BtnFilter.Size = New System.Drawing.Size(17, 17)
+        Me.BtnFilter.TabIndex = 2
+        Me.BtnFilter.TabStop = False
+        Me.BtnFilter.TooltipText = ""
+        Me.BtnFilter.UseVisualStyleBackColor = False
+        Me.BtnFilter.Visible = False
         '
-        'FrmServiceComplement
+        'BtnView
+        '
+        Me.BtnView.BackColor = System.Drawing.Color.Transparent
+        Me.BtnView.BackgroundImage = Global.Manager.My.Resources.Resources.View
+        Me.BtnView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnView.FlatAppearance.BorderSize = 0
+        Me.BtnView.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnView.Location = New System.Drawing.Point(26, 3)
+        Me.BtnView.Name = "BtnView"
+        Me.BtnView.Size = New System.Drawing.Size(17, 17)
+        Me.BtnView.TabIndex = 0
+        Me.BtnView.TabStop = False
+        Me.BtnView.TooltipText = ""
+        Me.BtnView.UseVisualStyleBackColor = False
+        Me.BtnView.Visible = False
+        '
+        'BtnNew
+        '
+        Me.BtnNew.BackColor = System.Drawing.Color.Transparent
+        Me.BtnNew.BackgroundImage = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnNew.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnNew.FlatAppearance.BorderSize = 0
+        Me.BtnNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnNew.Location = New System.Drawing.Point(3, 3)
+        Me.BtnNew.Name = "BtnNew"
+        Me.BtnNew.Size = New System.Drawing.Size(17, 17)
+        Me.BtnNew.TabIndex = 1
+        Me.BtnNew.TabStop = False
+        Me.BtnNew.TooltipText = ""
+        Me.BtnNew.UseVisualStyleBackColor = False
+        Me.BtnNew.Visible = False
+        '
+        'TmrQueriedBox
+        '
+        Me.TmrQueriedBox.Enabled = True
+        Me.TmrQueriedBox.Interval = 300
+        '
+        'DgvNavigator
+        '
+        Me.DgvNavigator.CancelNextMove = False
+        Me.DgvNavigator.FirstButton = Me.BtnFirst
+        Me.DgvNavigator.LastButton = Me.BtnLast
+        Me.DgvNavigator.NextButton = Me.BtnNext
+        Me.DgvNavigator.PreviousButton = Me.BtnPrevious
+        '
+        'DbxPrice
+        '
+        Me.DbxPrice.DecimalOnly = True
+        Me.DbxPrice.DecimalPlaces = 2
+        Me.DbxPrice.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
+        Me.DbxPrice.Location = New System.Drawing.Point(403, 80)
+        Me.DbxPrice.Name = "DbxPrice"
+        Me.DbxPrice.Size = New System.Drawing.Size(100, 23)
+        Me.DbxPrice.TabIndex = 19
+        Me.DbxPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'LblPrice
+        '
+        Me.LblPrice.AutoSize = True
+        Me.LblPrice.Location = New System.Drawing.Point(403, 60)
+        Me.LblPrice.Name = "LblPrice"
+        Me.LblPrice.Size = New System.Drawing.Size(45, 17)
+        Me.LblPrice.TabIndex = 18
+        Me.LblPrice.Text = "Preço"
+        '
+        'RbtPart
+        '
+        Me.RbtPart.AutoSize = True
+        Me.RbtPart.Checked = True
+        Me.RbtPart.Location = New System.Drawing.Point(12, 59)
+        Me.RbtPart.Name = "RbtPart"
+        Me.RbtPart.Size = New System.Drawing.Size(59, 21)
+        Me.RbtPart.TabIndex = 20
+        Me.RbtPart.TabStop = True
+        Me.RbtPart.Text = "Peça"
+        Me.RbtPart.UseVisualStyleBackColor = True
+        '
+        'RbtService
+        '
+        Me.RbtService.AutoSize = True
+        Me.RbtService.Location = New System.Drawing.Point(77, 58)
+        Me.RbtService.Name = "RbtService"
+        Me.RbtService.Size = New System.Drawing.Size(72, 21)
+        Me.RbtService.TabIndex = 21
+        Me.RbtService.Text = "Serviço"
+        Me.RbtService.UseVisualStyleBackColor = True
+        '
+        'QbxSellable
+        '
+        Me.QbxSellable.CharactersToQuery = 2
+        Me.QbxSellable.DebugOnTextChanged = False
+        Me.QbxSellable.DisplayFieldAlias = ""
+        Me.QbxSellable.DisplayFieldName = ""
+        Me.QbxSellable.DisplayMainFieldName = ""
+        Me.QbxSellable.DisplayTableAlias = ""
+        Me.QbxSellable.DisplayTableName = ""
+        Me.QbxSellable.Distinct = False
+        Me.QbxSellable.DropDownAutoStretchRight = False
+        Me.QbxSellable.GridHeaderBackColor = System.Drawing.SystemColors.Window
+        Me.QbxSellable.IfNull = Nothing
+        Me.QbxSellable.Location = New System.Drawing.Point(12, 80)
+        Me.QbxSellable.MainReturnFieldName = ""
+        Me.QbxSellable.MainTableAlias = ""
+        Me.QbxSellable.MainTableName = ""
+        Me.QbxSellable.Name = "QbxSellable"
+        Me.QbxSellable.Prefix = Nothing
+        Me.QbxSellable.Size = New System.Drawing.Size(385, 23)
+        Me.QbxSellable.Suffix = Nothing
+        Me.QbxSellable.TabIndex = 22
+        '
+        'FrmSellablePartService
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(422, 216)
-        Me.Controls.Add(Me.LblComplement)
-        Me.Controls.Add(Me.TxtComplement)
+        Me.ClientSize = New System.Drawing.Size(515, 158)
+        Me.Controls.Add(Me.QbxSellable)
+        Me.Controls.Add(Me.RbtService)
+        Me.Controls.Add(Me.RbtPart)
+        Me.Controls.Add(Me.DbxPrice)
+        Me.Controls.Add(Me.LblPrice)
+        Me.Controls.Add(Me.FlpSellable)
         Me.Controls.Add(Me.TsData)
         Me.Controls.Add(Me.TsMain)
         Me.Controls.Add(Me.Panel1)
@@ -272,15 +394,16 @@ Partial Class FrmServiceComplement
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "FrmServiceComplement"
+        Me.Name = "FrmSellablePartService"
         Me.ShowIcon = False
-        Me.Text = "Complemento"
+        Me.Text = "Peça/Serviço"
         Me.TsMain.ResumeLayout(False)
         Me.TsMain.PerformLayout()
         Me.Panel1.ResumeLayout(False)
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsData.ResumeLayout(False)
         Me.TsData.PerformLayout()
+        Me.FlpSellable.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -304,7 +427,14 @@ Partial Class FrmServiceComplement
     Friend WithEvents LblOrderValue As ToolStripLabel
     Friend WithEvents LblCreation As ToolStripLabel
     Friend WithEvents LblCreationValue As ToolStripLabel
-    Friend WithEvents LblComplement As Label
-    Friend WithEvents TxtComplement As TextBox
+    Friend WithEvents FlpSellable As FlowLayoutPanel
+    Friend WithEvents BtnFilter As ControlLibrary.NoFocusCueButton
+    Friend WithEvents BtnNew As ControlLibrary.NoFocusCueButton
+    Friend WithEvents BtnView As ControlLibrary.NoFocusCueButton
+    Friend WithEvents TmrQueriedBox As Timer
+    Friend WithEvents DbxPrice As ControlLibrary.DecimalBox
+    Friend WithEvents LblPrice As Label
+    Friend WithEvents RbtPart As RadioButton
+    Friend WithEvents RbtService As RadioButton
+    Friend WithEvents QbxSellable As ControlLibrary.QueriedBox
 End Class
-

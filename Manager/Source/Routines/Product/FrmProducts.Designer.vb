@@ -49,8 +49,6 @@ Partial Class FrmProducts
         Me.DgvProviderCode = New System.Windows.Forms.DataGridView()
         Me.TpgCode = New System.Windows.Forms.TabPage()
         Me.DgvCode = New System.Windows.Forms.DataGridView()
-        Me.TpgPrice = New System.Windows.Forms.TabPage()
-        Me.DgvPrice = New System.Windows.Forms.DataGridView()
         Me.TsDetails = New System.Windows.Forms.ToolStrip()
         Me.BtnCloseDetails = New System.Windows.Forms.ToolStripButton()
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
@@ -74,8 +72,6 @@ Partial Class FrmProducts
         CType(Me.DgvProviderCode, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TpgCode.SuspendLayout()
         CType(Me.DgvCode, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TpgPrice.SuspendLayout()
-        CType(Me.DgvPrice, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsDetails.SuspendLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -320,7 +316,6 @@ Partial Class FrmProducts
         '
         Me.TcDetail.Controls.Add(Me.TpgProviderCode)
         Me.TcDetail.Controls.Add(Me.TpgCode)
-        Me.TcDetail.Controls.Add(Me.TpgPrice)
         Me.TcDetail.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TcDetail.Location = New System.Drawing.Point(0, 25)
         Me.TcDetail.Name = "TcDetail"
@@ -391,37 +386,6 @@ Partial Class FrmProducts
         Me.DgvCode.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DgvCode.Size = New System.Drawing.Size(256, 380)
         Me.DgvCode.TabIndex = 1
-        '
-        'TpgPrice
-        '
-        Me.TpgPrice.Controls.Add(Me.DgvPrice)
-        Me.TpgPrice.Location = New System.Drawing.Point(4, 22)
-        Me.TpgPrice.Name = "TpgPrice"
-        Me.TpgPrice.Size = New System.Drawing.Size(262, 386)
-        Me.TpgPrice.TabIndex = 2
-        Me.TpgPrice.Text = "Preços"
-        Me.TpgPrice.UseVisualStyleBackColor = True
-        '
-        'DgvPrice
-        '
-        Me.DgvPrice.AllowUserToAddRows = False
-        Me.DgvPrice.AllowUserToDeleteRows = False
-        Me.DgvPrice.AllowUserToResizeColumns = False
-        Me.DgvPrice.AllowUserToResizeRows = False
-        Me.DgvPrice.BackgroundColor = System.Drawing.Color.White
-        Me.DgvPrice.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.DgvPrice.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvPrice.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvPrice.Location = New System.Drawing.Point(0, 0)
-        Me.DgvPrice.MultiSelect = False
-        Me.DgvPrice.Name = "DgvPrice"
-        Me.DgvPrice.ReadOnly = True
-        Me.DgvPrice.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvPrice.RowHeadersVisible = False
-        Me.DgvPrice.RowTemplate.Height = 26
-        Me.DgvPrice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPrice.Size = New System.Drawing.Size(262, 386)
-        Me.DgvPrice.TabIndex = 9
         '
         'TsDetails
         '
@@ -519,8 +483,6 @@ Partial Class FrmProducts
         CType(Me.DgvProviderCode, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TpgCode.ResumeLayout(False)
         CType(Me.DgvCode, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TpgPrice.ResumeLayout(False)
-        CType(Me.DgvPrice, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsDetails.ResumeLayout(False)
         Me.TsDetails.PerformLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).EndInit()
@@ -558,8 +520,6 @@ Partial Class FrmProducts
     Friend WithEvents TcDetail As TabControl
     Friend WithEvents TpgProviderCode As TabPage
     Friend WithEvents TpgCode As TabPage
-    Friend WithEvents TpgPrice As TabPage
-    Friend WithEvents DgvPrice As DataGridView
     Friend WithEvents DgvProductLayout As DataGridViewLayout
     Friend WithEvents DgvProviderCode As DataGridView
     Friend WithEvents DgvCode As DataGridView

@@ -216,7 +216,7 @@ Partial Class FrmVisitSchedule
         Me.BtnInclude.Margin = New System.Windows.Forms.Padding(1, 1, 0, 2)
         Me.BtnInclude.Name = "BtnInclude"
         Me.BtnInclude.Size = New System.Drawing.Size(23, 22)
-        Me.BtnInclude.Text = "Incluir Rota"
+        Me.BtnInclude.Text = "Incluir Agendamento de Visita"
         '
         'BtnDelete
         '
@@ -226,7 +226,7 @@ Partial Class FrmVisitSchedule
         Me.BtnDelete.Margin = New System.Windows.Forms.Padding(0, 1, 10, 2)
         Me.BtnDelete.Name = "BtnDelete"
         Me.BtnDelete.Size = New System.Drawing.Size(23, 22)
-        Me.BtnDelete.Text = "Excluir Rota"
+        Me.BtnDelete.Text = "Excluir Agendamento de Visita"
         '
         'BtnFirst
         '
@@ -236,7 +236,7 @@ Partial Class FrmVisitSchedule
         Me.BtnFirst.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnFirst.Name = "BtnFirst"
         Me.BtnFirst.Size = New System.Drawing.Size(23, 22)
-        Me.BtnFirst.Text = "Primeira Rota"
+        Me.BtnFirst.Text = "Primeiro Agendamento de Visita"
         '
         'BtnPrevious
         '
@@ -246,7 +246,7 @@ Partial Class FrmVisitSchedule
         Me.BtnPrevious.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnPrevious.Name = "BtnPrevious"
         Me.BtnPrevious.Size = New System.Drawing.Size(23, 22)
-        Me.BtnPrevious.Text = "Rota Anterior"
+        Me.BtnPrevious.Text = "Agendamento de Visita Anterior"
         '
         'BtnNext
         '
@@ -256,7 +256,7 @@ Partial Class FrmVisitSchedule
         Me.BtnNext.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnNext.Name = "BtnNext"
         Me.BtnNext.Size = New System.Drawing.Size(23, 22)
-        Me.BtnNext.Text = "Próxima Rota"
+        Me.BtnNext.Text = "Próximo Agendamento de Visita"
         '
         'BtnLast
         '
@@ -266,7 +266,7 @@ Partial Class FrmVisitSchedule
         Me.BtnLast.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnLast.Name = "BtnLast"
         Me.BtnLast.Size = New System.Drawing.Size(23, 22)
-        Me.BtnLast.Text = "Última Rota"
+        Me.BtnLast.Text = "Último Agendamento de Visita"
         '
         'ToolStripButton1
         '
@@ -503,6 +503,7 @@ Partial Class FrmVisitSchedule
         Me.QbxCustomer.Conditions.Add(Condition3)
         Me.QbxCustomer.DebugOnTextChanged = False
         Me.QbxCustomer.DisplayFieldAlias = "Nome Curto"
+        Me.QbxCustomer.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         Me.QbxCustomer.DisplayFieldName = "shortname"
         Me.QbxCustomer.DisplayMainFieldName = "id"
         Me.QbxCustomer.DisplayTableAlias = Nothing
@@ -519,6 +520,7 @@ Partial Class FrmVisitSchedule
         Me.QbxCustomer.MainTableName = "person"
         Me.QbxCustomer.Name = "QbxCustomer"
         OtherField1.DisplayFieldAlias = "Nome"
+        OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField1.DisplayFieldName = "name"
         OtherField1.DisplayMainFieldName = "id"
         OtherField1.DisplayTableAlias = Nothing
@@ -528,6 +530,7 @@ Partial Class FrmVisitSchedule
         OtherField1.Prefix = Nothing
         OtherField1.Suffix = Nothing
         OtherField2.DisplayFieldAlias = "CNPJ/CPF"
+        OtherField2.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField2.DisplayFieldName = "document"
         OtherField2.DisplayMainFieldName = "id"
         OtherField2.DisplayTableAlias = Nothing
@@ -537,6 +540,7 @@ Partial Class FrmVisitSchedule
         OtherField2.Prefix = Nothing
         OtherField2.Suffix = Nothing
         OtherField3.DisplayFieldAlias = "Cidade"
+        OtherField3.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField3.DisplayFieldName = "name"
         OtherField3.DisplayMainFieldName = "id"
         OtherField3.DisplayTableAlias = Nothing
@@ -546,6 +550,7 @@ Partial Class FrmVisitSchedule
         OtherField3.Prefix = Nothing
         OtherField3.Suffix = Nothing
         OtherField4.DisplayFieldAlias = "Estado"
+        OtherField4.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField4.DisplayFieldName = "name"
         OtherField4.DisplayMainFieldName = "id"
         OtherField4.DisplayTableAlias = Nothing
@@ -610,6 +615,7 @@ Partial Class FrmVisitSchedule
         Me.QbxCompressor.Conditions.Add(Condition4)
         Me.QbxCompressor.DebugOnTextChanged = False
         Me.QbxCompressor.DisplayFieldAlias = "Compressor"
+        Me.QbxCompressor.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         Me.QbxCompressor.DisplayFieldName = "name"
         Me.QbxCompressor.DisplayMainFieldName = "id"
         Me.QbxCompressor.DisplayTableAlias = Nothing
@@ -627,6 +633,7 @@ Partial Class FrmVisitSchedule
         Me.QbxCompressor.MainTableName = "personcompressor"
         Me.QbxCompressor.Name = "QbxCompressor"
         OtherField5.DisplayFieldAlias = "Nº de Série"
+        OtherField5.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField5.DisplayFieldName = "serialnumber"
         OtherField5.DisplayMainFieldName = "id"
         OtherField5.DisplayTableAlias = Nothing
@@ -636,6 +643,7 @@ Partial Class FrmVisitSchedule
         OtherField5.Prefix = " NS: "
         OtherField5.Suffix = Nothing
         OtherField6.DisplayFieldAlias = "Patrimônio"
+        OtherField6.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField6.DisplayFieldName = "patrimony"
         OtherField6.DisplayMainFieldName = "id"
         OtherField6.DisplayTableAlias = Nothing
@@ -645,6 +653,7 @@ Partial Class FrmVisitSchedule
         OtherField6.Prefix = " PAT: "
         OtherField6.Suffix = Nothing
         OtherField7.DisplayFieldAlias = "Setor"
+        OtherField7.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField7.DisplayFieldName = "sector"
         OtherField7.DisplayMainFieldName = "id"
         OtherField7.DisplayTableAlias = Nothing

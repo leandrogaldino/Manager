@@ -7,7 +7,7 @@ Imports MySql.Data.MySqlClient
 ''' Representa um produto.
 ''' </summary>
 Public Class Product
-    Inherits Sellable
+    Inherits SellableModel
     Private _Shadow As Product
     Public Property InternalName As String
     Public Property Pictures As New List(Of ProductPicture)

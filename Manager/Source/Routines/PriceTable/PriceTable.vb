@@ -169,13 +169,13 @@ Public Class PriceTable
                         .Name = Row.Item("name"),
                         .SellableID = Row.Item("sellableid"),
                         .Price = Row.Item("price"),
-                        .Sellable = New Lazy(Of Sellable)(Function()
-                                                              If Row.Item("productid") Is DBNull.Value Then
-                                                                  Return New Product().Load(Row.Item("productid").ToString, False)
-                                                              Else
-                                                                  Return New Service().Load(Row.Item("serviceid").ToString, False)
-                                                              End If
-                                                          End Function)
+                        .Sellable = New Lazy(Of SellableModel)(Function()
+                                                                   If Row.Item("productid") Is DBNull.Value Then
+                                                                       Return New Product().Load(Row.Item("productid").ToString, False)
+                                                                   Else
+                                                                       Return New Service().Load(Row.Item("serviceid").ToString, False)
+                                                                   End If
+                                                               End Function)
                     }
                     Item.SetIsSaved(True)
                     Item.SetID(Row.Item("id"))
@@ -205,66 +205,3 @@ Public Class PriceTable
         Return If(Name, String.Empty)
     End Function
 End Class
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Public Enum SellableType
-    None
-    Product
-    Service
-End Enum
-
-Public Class PriceTableItem
-    Inherits ChildModel
-    Public ReadOnly Property SellableType As SellableType
-        Get
-            If Sellable.Value IsNot Nothing Then
-                If TypeOf Sellable.Value Is Product Then Return SellableType.Product
-                If TypeOf Sellable.Value Is Service Then Return SellableType.Service
-            End If
-            Return SellableType.None
-        End Get
-    End Property
-
-    Public ReadOnly Property Product As Product
-        Get
-            Return TryCast(Sellable.Value, Product)
-        End Get
-    End Property
-    Public ReadOnly Property Service As Service
-        Get
-            Return TryCast(Sellable.Value, Service)
-        End Get
-    End Property
-    Public Property Sellable As Lazy(Of Sellable)
-    Public Property SellableID As Long
-    Public Property Code As String
-    Public Property Name As String
-    Public Property Price As Decimal
-End Class
-
-
-Public Class Sellable
-    Inherits ParentModel
-    Public Property Name As String
-    Public Property Status As SimpleStatus = SimpleStatus.Active
-    Public Property Note As String
-End Class
-

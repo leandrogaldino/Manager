@@ -3902,6 +3902,165 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM pricetable
+        '''WHERE pricetable.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property PriceTableDelete() As String
+            Get
+                Return ResourceManager.GetString("PriceTableDelete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
+        '''	pricetable.id AS &apos;ID&apos;,
+        '''    pricetable.creation AS &apos;Criação&apos;,
+        '''    CASE 
+        '''		WHEN pricetable.statusid = 0 THEN &quot;ATIVO&quot;
+        '''        WHEN pricetable.statusid = 1 THEN &quot;INATIVO&quot;
+        '''	END AS &apos;Status&apos;,
+        '''    pricetable.name AS &apos;Nome&apos;
+        '''FROM pricetable
+        '''WHERE
+        '''	IFNULL(pricetable.id, &apos;&apos;) LIKE @id AND
+        '''    IFNULL(pricetable.statusid, &apos;&apos;) LIKE @statusid AND
+        '''    IFNULL(pricetable.name, &apos;&apos;) LIKE CONCAT(&apos;%&apos;, @name, &apos;%&apos;)
+        '''GROUP BY pricetable.id
+        '''ORDER BY pricetable.id;.
+        '''</summary>
+        Friend ReadOnly Property PriceTableFilter() As String
+            Get
+                Return ResourceManager.GetString("PriceTableFilter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO pricetable
+        '''(
+        '''    creation,
+        '''    statusid,
+        '''    name
+        ''')
+        '''VALUES
+        '''(
+        '''    @creation,
+        '''    @statusid,
+        '''    @name
+        ''');.
+        '''</summary>
+        Friend ReadOnly Property PriceTableInsert() As String
+            Get
+                Return ResourceManager.GetString("PriceTableInsert", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM pricetableitem
+        '''WHERE pricetableitem.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property PriceTableItemDelete() As String
+            Get
+                Return ResourceManager.GetString("PriceTableItemDelete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a Public Class PriceTableItemDetailSelect
+        '''
+        '''End Class
+        '''.
+        '''</summary>
+        Friend ReadOnly Property PriceTableItemDetailSelect() As String
+            Get
+                Return ResourceManager.GetString("PriceTableItemDetailSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO pricetableitem
+        '''(
+        '''    pricetableid,
+        '''    creation,
+        '''    productid,
+        '''    serviceid,
+        '''    price,
+        '''    userid
+        ''')
+        '''VALUES
+        '''(
+        '''    @pricetableid,
+        '''    @creation,
+        '''    @productid,
+        '''    @serviceid,
+        '''    @price,
+        '''    @userid
+        ''');.
+        '''</summary>
+        Friend ReadOnly Property PriceTableItemInsert() As String
+            Get
+                Return ResourceManager.GetString("PriceTableItemInsert", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	pricetableitem.id,
+        '''	pricetableitem.pricetableid,
+        '''	pricetableitem.creation,
+        '''	pricetableitem.productid,
+        '''	pricetableitem.serviceid,
+        '''	pricetableitem.price
+        '''FROM pricetableitem
+        '''WHERE pricetableitem.pricetableid = @pricetableid;.
+        '''</summary>
+        Friend ReadOnly Property PriceTableItemSelect() As String
+            Get
+                Return ResourceManager.GetString("PriceTableItemSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE pricetableitem SET
+        '''    productid = @productid,
+        '''    serviceid = @serviceid,
+        '''    price =  @price
+        '''WHERE cityroute.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property PriceTableItemUpdate() As String
+            Get
+                Return ResourceManager.GetString("PriceTableItemUpdate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	pricetable.id,
+        '''	pricetable.creation,
+        '''    pricetable.statusid,
+        '''	pricetable.name
+        '''FROM pricetable
+        '''WHERE pricetable.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property PriceTableSelect() As String
+            Get
+                Return ResourceManager.GetString("PriceTableSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE pricetable Set
+        '''    statusid =  @statusid,
+        '''    name = @name
+        '''    userid = @userid
+        '''WHERE pricetable.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property PriceTableUpdate() As String
+            Get
+                Return ResourceManager.GetString("PriceTableUpdate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Print() As System.Drawing.Bitmap

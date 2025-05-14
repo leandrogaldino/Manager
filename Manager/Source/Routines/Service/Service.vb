@@ -4,7 +4,7 @@ Imports MySql.Data.MySqlClient
 ''' Representa um serviço.
 ''' </summary>
 Public Class Service
-    Inherits Sellable
+    Inherits SellableModel
     Private _Shadow As Service
     Public Property Complements As New List(Of ServiceComplement)
     Public Property ServiceCode As String

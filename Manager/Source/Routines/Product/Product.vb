@@ -7,11 +7,8 @@ Imports MySql.Data.MySqlClient
 ''' Representa um produto.
 ''' </summary>
 Public Class Product
-    Inherits ParentModel
+    Inherits Sellable
     Private _Shadow As Product
-    Public Property Status As SimpleStatus = SimpleStatus.Active
-    Public Property Name As String
-    Public Property Note As String
     Public Property InternalName As String
     Public Property Pictures As New List(Of ProductPicture)
     Public Property ProviderCodes As New List(Of ProductProviderCode)

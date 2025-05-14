@@ -37,6 +37,9 @@ Public Enum Routine
     ProductPicture = 604
     <Description("Unidade de Medida")> <TriStatePrivilege> <RoutineDependency(Product)>
     ProductUnit = 7
+    <Description("Tabela de Preços")> <TriStatePrivilege> <RoutineDependency(Product)>
+    PriceTable = 8
+    PriceTableItem = 801
     <Description("Família de Produtos")> <TriStatePrivilege> <RoutineDependency(Product)>
     ProductFamily = 9
     <Description("Grupo de Produtos")> <TriStatePrivilege> <RoutineDependency(Product)>

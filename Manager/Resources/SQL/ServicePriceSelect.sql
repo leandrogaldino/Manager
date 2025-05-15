@@ -1,5 +1,6 @@
 ﻿SELECT
 	pricetableitem.id,
+	pricetableitem.creation,
 	service.name service,
     pricetable.id pricetableid,
 	pricetable.name pricetablename,

@@ -4,4 +4,5 @@
     Public Property PriceTableName As String
     Public Property PriceTable As Lazy(Of PriceTable)
     Public Property Price As Decimal
+
 End Class

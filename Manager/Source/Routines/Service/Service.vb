@@ -8,7 +8,7 @@ Public Class Service
     Private _Shadow As Service
     Public Property Complements As New List(Of ServiceComplement)
     Public Property ServiceCode As String
-    Public Property Prices As New List(Of SellablePrice)
+    Public Property Prices As New List(Of ServicePrice)
     Public Sub New()
         SetRoutine(Routine.Service)
     End Sub
@@ -20,7 +20,7 @@ Public Class Service
         Status = SimpleStatus.Active
         Name = Nothing
         Complements = New List(Of ServiceComplement)
-        Prices = New List(Of SellablePrice)
+        Prices = New List(Of ServicePrice)
         ServiceCode = Nothing
         Note = Nothing
         If LockInfo.IsLocked Then Unlock()
@@ -46,6 +46,7 @@ Public Class Service
                         SetIsSaved(True)
                         Status = TableResult.Rows(0).Item("statusid")
                         Name = TableResult.Rows(0).Item("name").ToString
+                        Prices = GetPrices(Tra)
                         Complements = GetComplements(Tra)
                         ServiceCode = TableResult.Rows(0).Item("servicecode").ToString
                         Note = TableResult.Rows(0).Item("note").ToString
@@ -223,23 +224,24 @@ Public Class Service
         End Using
         Return Complements
     End Function
-    Private Function GetPrices(Transaction As MySqlTransaction) As List(Of SellablePrice)
+    Private Function GetPrices(Transaction As MySqlTransaction) As List(Of ServicePrice)
         Dim TableResult As DataTable
-        Dim Prices As List(Of SellablePrice)
-        Dim Price As SellablePrice
+        Dim Prices As List(Of ServicePrice)
+        Dim Price As ServicePrice
         Using CmdPrice As New MySqlCommand(My.Resources.ServicePriceSelect, Transaction.Connection)
             CmdPrice.Transaction = Transaction
             CmdPrice.Parameters.AddWithValue("@serviceid", ID)
             Using Adp As New MySqlDataAdapter(CmdPrice)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                Prices = New List(Of SellablePrice)
+                Prices = New List(Of ServicePrice)
                 For Each Row As DataRow In TableResult.Rows
-                    Price = New SellablePrice
-                    Price.PriceTableID = Convert.ToInt32(Row.Item("pricetableid"))
-                    Price.PriceTable = New Lazy(Of PriceTable)(Function() New PriceTable().Load(Convert.ToInt32(Row.Item("pricetableid")), False))
-                    Price.PriceTableName = Row.Item("pricetablename").ToString
-                    Price.Price = Convert.ToDecimal(Row.Item("price"))
+                    Price = New ServicePrice With {
+                        .PriceTableID = Convert.ToInt32(Row.Item("pricetableid")),
+                        .PriceTable = New Lazy(Of PriceTable)(Function() New PriceTable().Load(Convert.ToInt32(Row.Item("pricetableid")), False)),
+                        .PriceTableName = Row.Item("pricetablename").ToString,
+                        .Price = Convert.ToDecimal(Row.Item("price"))
+                    }
                     Price.SetIsSaved(True)
                     Price.SetID(Row.Item("id"))
                     Price.SetCreation(Row.Item("creation"))

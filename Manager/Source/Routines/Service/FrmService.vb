@@ -53,9 +53,11 @@ Public Class FrmService
         LoadForm()
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        DgvPriceLayout.Load()
         DgvComplementLayout.Load()
     End Sub
     Private Sub LoadForm()
+        ControlHelper.EnableControlDoubleBuffer(DgvPrice, True)
         ControlHelper.EnableControlDoubleBuffer(DgvComplement, True)
         DgvNavigator.DataGridView = _ServicesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
@@ -72,6 +74,7 @@ Public Class FrmService
         TxtServiceCode.Text = _Service.ServiceCode
         TxtNote.Text = _Service.Note
         TxtFilterDescription.Clear()
+        If _Service.Prices IsNot Nothing Then DgvPrice.Fill(_Service.Prices)
         If _Service.Complements IsNot Nothing Then DgvComplement.Fill(_Service.Complements)
         BtnDelete.Enabled = _Service.ID > 0 And _User.CanDelete(Routine.Service)
         Text = "Serviço"
@@ -113,6 +116,7 @@ Public Class FrmService
                 End If
             End If
             If _ServicesForm IsNot Nothing Then
+                DgvPrice.Fill(_Service.Prices)
                 DgvComplement.Fill(_Service.Complements)
             End If
             _Deleting = False
@@ -208,6 +212,33 @@ Public Class FrmService
         Save()
     End Sub
 
+
+    Private Sub BtnIncludePrice_Click(sender As Object, e As EventArgs) Handles BtnIncludePrice.Click
+        'Dim Form As New FrmServiceComplement(_Service, New ServiceComplement, Me)
+        'Form.ShowDialog()
+    End Sub
+    Private Sub BtnEditPrice_Click(sender As Object, e As EventArgs) Handles BtnEditPrice.Click
+        'Dim Form As FrmServiceComplement
+        'Dim Complement As ServiceComplement
+        'If DgvComplement.SelectedRows.Count = 1 Then
+        '    Complement = _Service.Complements.Single(Function(x) x.Guid = DgvComplement.SelectedRows(0).Cells("Guid").Value)
+        '    Form = New FrmServiceComplement(_Service, Complement, Me)
+        '    Form.ShowDialog()
+        'End If
+    End Sub
+    Private Sub BtnDeletePrice_Click(sender As Object, e As EventArgs) Handles BtnDeletePrice.Click
+        'Dim Complement As ServiceComplement
+        'If DgvComplement.SelectedRows.Count = 1 Then
+        '    If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+        '        Complement = _Service.Complements.Single(Function(x) x.Guid = DgvComplement.SelectedRows(0).Cells("Guid").Value)
+        '        _Service.Complements.Remove(Complement)
+        '        DgvComplement.Fill(_Service.Complements)
+        '        BtnSave.Enabled = True
+        '    End If
+        'End If
+    End Sub
+
+
     Private Sub BtnIncludeComplement_Click(sender As Object, e As EventArgs) Handles BtnIncludeComplement.Click
         Dim Form As New FrmServiceComplement(_Service, New ServiceComplement, Me)
         Form.ShowDialog()
@@ -234,7 +265,7 @@ Public Class FrmService
     End Sub
     Private Sub TcPerson_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcService.SelectedIndexChanged
         If TcService.SelectedTab Is TabMain Then
-            Size = New Size(510, 225)
+            Size = New Size(515, 225)
             FormBorderStyle = FormBorderStyle.FixedSingle
             WindowState = FormWindowState.Normal
             MaximizeBox = False

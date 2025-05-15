@@ -400,5 +400,4 @@ Public Class FrmPriceTableItem
             .Value = "@statusid"
         })
     End Sub
-
 End Class

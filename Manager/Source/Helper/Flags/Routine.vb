@@ -115,6 +115,7 @@ Public Enum Routine
     <Description("Serviço")> <TriStatePrivilege>
     Service = 23
     ServiceComplement = 2301
+    ServicePrice = 2302
     <Description("Exportar as grades")> <BiStatePrivilege>
     ExportGrid = 9901
     <Description("Acessar o histórico")> <BiStatePrivilege>

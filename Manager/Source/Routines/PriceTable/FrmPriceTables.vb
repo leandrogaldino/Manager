@@ -10,9 +10,7 @@ Public Class FrmPriceTables
         ControlHelper.EnableControlDoubleBuffer(DgvData, True)
         ControlHelper.EnableControlDoubleBuffer(DgvItems, True)
         SplitContainer1.Panel1Collapsed = True
-        SplitContainer1.SplitterDistance = 250
         SplitContainer2.Panel1Collapsed = True
-        SplitContainer2.SplitterDistance = 800
         _Filter = New PriceTableFilter(DgvData, PgFilter)
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter

@@ -494,6 +494,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Resources\Image\PriceTable.png" />
     <Content Include="Resources\SQL\PriceTableDelete.sql" />
     <Content Include="Resources\SQL\PriceTableFilter.sql" />
     <Content Include="Resources\SQL\PriceTableItemDelete.sql" />
@@ -515,7 +516,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Helper\Attibutes\RoutineDependencyAttribute.vb" />
-    <Compile Include="Source\Helper\FilterExpandable\PriceTableItemExpandable.vb" />
     <Compile Include="Source\Helper\FilterExpandable\VisitScheduleStatusExpandable.vb" />
     <Compile Include="Source\Helper\FilterQueriedBox\PrivilegePresetQueriedBoxFilter.vb" />
     <Compile Include="Source\Helper\FilterQueriedBox\ServiceQueriedBoxFilter.vb" />
@@ -1475,6 +1475,9 @@
     <EmbeddedResource Include="Source\Routines\PriceTable\FrmPriceTable.resx">
       <DependentUpon>FrmPriceTable.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\PriceTable\FrmPriceTableItem.resx">
+      <DependentUpon>FrmPriceTableItem.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\PriceTable\FrmPriceTables.resx">
       <DependentUpon>FrmPriceTables.vb</DependentUpon>
     </EmbeddedResource>
@@ -1819,7 +1822,6 @@
     <Content Include="Resources\Image\Product.png" />
     <Content Include="Resources\Image\ProductFamily.png" />
     <Content Include="Resources\Image\ProductGroup.png" />
-    <Content Include="Resources\Image\SellablePriceTable.png" />
     <Content Include="Resources\Image\ProductUnit.png" />
     <Content Include="Resources\Image\Refresh.png" />
     <Content Include="Resources\Image\Reject.png" />

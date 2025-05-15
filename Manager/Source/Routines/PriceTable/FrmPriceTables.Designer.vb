@@ -422,7 +422,10 @@ Partial Class FrmPriceTables
         'DgvPriceTablesLayout
         '
         Me.DgvPriceTablesLayout.DataGridView = Me.DgvData
-        Me.DgvPriceTablesLayout.Routine = Manager.Routine.Request
+        Me.DgvPriceTablesLayout.Routine = Manager.Routine.PriceTable
+        '
+        'TmrLoadDetails
+        '
         '
         'FrmPriceTables
         '

@@ -120,6 +120,7 @@ Public Class FrmMain
             If _User.CanAccess(Routine.ProductFamily) Or
                 _User.CanAccess(Routine.ProductGroup) Or
                 _User.CanAccess(Routine.ProductUnit) Or
+                _User.CanAccess(Routine.PriceTable) Or
                 _User.CanAccess(Routine.Service) Then
                 TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripSplitButton("Produto", "Cadastro de Produtos", My.Resources.Product, AddressOf ProductClick))
                 If _User.CanAccess(Routine.ProductFamily) Then
@@ -130,6 +131,9 @@ Public Class FrmMain
                 End If
                 If _User.CanAccess(Routine.ProductUnit) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Produto").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Unidade de Medida", "Cadastro de Unidades de Medida de Produto", My.Resources.ProductUnit, AddressOf ProductUnitClick))
+                End If
+                If _User.CanAccess(Routine.PriceTable) Then
+                    TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Produto").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Tabela de Preços", "Cadastro de Tabelas de Preços de Produtos e Serviços", My.Resources.PriceTable, AddressOf PriceTableClick))
                 End If
                 If _User.CanAccess(Routine.Service) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Produto").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Serviço", "Cadastro de Serviços Prestados", My.Resources.Service, AddressOf ServiceClick))
@@ -201,6 +205,13 @@ Public Class FrmMain
             OpenTab(New FrmProductUnits, EnumHelper.GetEnumDescription(Routine.ProductUnit))
         Else
             SelectTab(Routine.ProductUnit)
+        End If
+    End Sub
+    Private Sub PriceTableClick()
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.PriceTable)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New FrmPriceTables, EnumHelper.GetEnumDescription(Routine.PriceTable))
+        Else
+            SelectTab(Routine.PriceTable)
         End If
     End Sub
     Private Sub ServiceClick()

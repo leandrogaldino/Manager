@@ -1,5 +1,7 @@
-﻿Public Class PriceTableItem
+﻿Imports ControlLibrary
+Public Class PriceTableItem
     Inherits ChildModel
+    <IgnoreInToTable>
     Public ReadOnly Property SellableType As SellableType
         Get
             If Sellable.Value IsNot Nothing Then
@@ -10,11 +12,13 @@
         End Get
     End Property
 
+    <IgnoreInToTable>
     Public ReadOnly Property Product As Product
         Get
             Return TryCast(Sellable.Value, Product)
         End Get
     End Property
+    <IgnoreInToTable>
     Public ReadOnly Property Service As Service
         Get
             Return TryCast(Sellable.Value, Service)
@@ -25,4 +29,7 @@
     Public Property Code As String
     Public Property Name As String
     Public Property Price As Decimal
+    Public Sub New()
+        SetRoutine(Routine.PriceTableItem)
+    End Sub
 End Class

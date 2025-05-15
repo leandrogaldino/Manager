@@ -16,10 +16,9 @@ WHERE
     IFNULL(pricetable.statusid, '') LIKE @statusid AND
     IFNULL(pricetable.name, '') LIKE CONCAT('%', @name, '%') AND
     (
-        IFNULL(product.name, '') LIKE CONCAT('%', @codeorname, '%') OR
-        IFNULL(service.name, '') LIKE CONCAT('%', @codeorname, '%') OR
-        IFNULL(productprovidercode.code, '') LIKE CONCAT('%', @codeorname, '%')
-    ) AND
-    pricetableitem.price BETWEEN @pricemin AND @pricemax AND
+        IFNULL(product.name, '') LIKE CONCAT('%', @productorservice, '%') OR
+        IFNULL(service.name, '') LIKE CONCAT('%', @productorservice, '%') OR
+        IFNULL(productprovidercode.code, '') LIKE CONCAT('%', @productorservice, '%')
+    )
 GROUP BY pricetable.id
 ORDER BY pricetable.id;

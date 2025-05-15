@@ -49,7 +49,7 @@ Partial Class FrmPriceTableItem
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.DbxPrice = New ControlLibrary.DecimalBox()
         Me.LblPrice = New System.Windows.Forms.Label()
-        Me.RbtPart = New System.Windows.Forms.RadioButton()
+        Me.RbtProduct = New System.Windows.Forms.RadioButton()
         Me.RbtService = New System.Windows.Forms.RadioButton()
         Me.QbxSellable = New ControlLibrary.QueriedBox()
         Me.TsMain.SuspendLayout()
@@ -184,7 +184,7 @@ Partial Class FrmPriceTableItem
         Me.Panel1.Location = New System.Drawing.Point(0, 114)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(515, 44)
-        Me.Panel1.TabIndex = 17
+        Me.Panel1.TabIndex = 8
         '
         'EprValidation
         '
@@ -243,10 +243,10 @@ Partial Class FrmPriceTableItem
         Me.FlpSellable.Controls.Add(Me.BtnView)
         Me.FlpSellable.Controls.Add(Me.BtnNew)
         Me.FlpSellable.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-        Me.FlpSellable.Location = New System.Drawing.Point(328, 60)
+        Me.FlpSellable.Location = New System.Drawing.Point(328, 59)
         Me.FlpSellable.Name = "FlpSellable"
         Me.FlpSellable.Size = New System.Drawing.Size(69, 21)
-        Me.FlpSellable.TabIndex = 4
+        Me.FlpSellable.TabIndex = 5
         '
         'BtnFilter
         '
@@ -274,7 +274,7 @@ Partial Class FrmPriceTableItem
         Me.BtnView.Location = New System.Drawing.Point(26, 3)
         Me.BtnView.Name = "BtnView"
         Me.BtnView.Size = New System.Drawing.Size(17, 17)
-        Me.BtnView.TabIndex = 0
+        Me.BtnView.TabIndex = 1
         Me.BtnView.TabStop = False
         Me.BtnView.TooltipText = ""
         Me.BtnView.UseVisualStyleBackColor = False
@@ -290,7 +290,7 @@ Partial Class FrmPriceTableItem
         Me.BtnNew.Location = New System.Drawing.Point(3, 3)
         Me.BtnNew.Name = "BtnNew"
         Me.BtnNew.Size = New System.Drawing.Size(17, 17)
-        Me.BtnNew.TabIndex = 1
+        Me.BtnNew.TabIndex = 0
         Me.BtnNew.TabStop = False
         Me.BtnNew.TooltipText = ""
         Me.BtnNew.UseVisualStyleBackColor = False
@@ -317,7 +317,7 @@ Partial Class FrmPriceTableItem
         Me.DbxPrice.Location = New System.Drawing.Point(403, 80)
         Me.DbxPrice.Name = "DbxPrice"
         Me.DbxPrice.Size = New System.Drawing.Size(100, 23)
-        Me.DbxPrice.TabIndex = 19
+        Me.DbxPrice.TabIndex = 7
         Me.DbxPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'LblPrice
@@ -326,28 +326,28 @@ Partial Class FrmPriceTableItem
         Me.LblPrice.Location = New System.Drawing.Point(403, 60)
         Me.LblPrice.Name = "LblPrice"
         Me.LblPrice.Size = New System.Drawing.Size(45, 17)
-        Me.LblPrice.TabIndex = 18
+        Me.LblPrice.TabIndex = 6
         Me.LblPrice.Text = "Preço"
         '
-        'RbtPart
+        'RbtProduct
         '
-        Me.RbtPart.AutoSize = True
-        Me.RbtPart.Checked = True
-        Me.RbtPart.Location = New System.Drawing.Point(12, 59)
-        Me.RbtPart.Name = "RbtPart"
-        Me.RbtPart.Size = New System.Drawing.Size(59, 21)
-        Me.RbtPart.TabIndex = 20
-        Me.RbtPart.TabStop = True
-        Me.RbtPart.Text = "Peça"
-        Me.RbtPart.UseVisualStyleBackColor = True
+        Me.RbtProduct.AutoSize = True
+        Me.RbtProduct.Checked = True
+        Me.RbtProduct.Location = New System.Drawing.Point(12, 53)
+        Me.RbtProduct.Name = "RbtProduct"
+        Me.RbtProduct.Size = New System.Drawing.Size(78, 21)
+        Me.RbtProduct.TabIndex = 2
+        Me.RbtProduct.TabStop = True
+        Me.RbtProduct.Text = "Produto"
+        Me.RbtProduct.UseVisualStyleBackColor = True
         '
         'RbtService
         '
         Me.RbtService.AutoSize = True
-        Me.RbtService.Location = New System.Drawing.Point(77, 58)
+        Me.RbtService.Location = New System.Drawing.Point(96, 53)
         Me.RbtService.Name = "RbtService"
         Me.RbtService.Size = New System.Drawing.Size(72, 21)
-        Me.RbtService.TabIndex = 21
+        Me.RbtService.TabIndex = 3
         Me.RbtService.Text = "Serviço"
         Me.RbtService.UseVisualStyleBackColor = True
         '
@@ -356,6 +356,7 @@ Partial Class FrmPriceTableItem
         Me.QbxSellable.CharactersToQuery = 2
         Me.QbxSellable.DebugOnTextChanged = False
         Me.QbxSellable.DisplayFieldAlias = ""
+        Me.QbxSellable.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         Me.QbxSellable.DisplayFieldName = ""
         Me.QbxSellable.DisplayMainFieldName = ""
         Me.QbxSellable.DisplayTableAlias = ""
@@ -372,16 +373,16 @@ Partial Class FrmPriceTableItem
         Me.QbxSellable.Prefix = Nothing
         Me.QbxSellable.Size = New System.Drawing.Size(385, 23)
         Me.QbxSellable.Suffix = Nothing
-        Me.QbxSellable.TabIndex = 22
+        Me.QbxSellable.TabIndex = 4
         '
-        'FrmSellablePartService
+        'FrmPriceTableItem
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(515, 158)
         Me.Controls.Add(Me.QbxSellable)
         Me.Controls.Add(Me.RbtService)
-        Me.Controls.Add(Me.RbtPart)
+        Me.Controls.Add(Me.RbtProduct)
         Me.Controls.Add(Me.DbxPrice)
         Me.Controls.Add(Me.LblPrice)
         Me.Controls.Add(Me.FlpSellable)
@@ -394,9 +395,9 @@ Partial Class FrmPriceTableItem
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "FrmSellablePartService"
+        Me.Name = "FrmPriceTableItem"
         Me.ShowIcon = False
-        Me.Text = "Peça/Serviço"
+        Me.Text = "Produto/Serviço"
         Me.TsMain.ResumeLayout(False)
         Me.TsMain.PerformLayout()
         Me.Panel1.ResumeLayout(False)
@@ -434,7 +435,7 @@ Partial Class FrmPriceTableItem
     Friend WithEvents TmrQueriedBox As Timer
     Friend WithEvents DbxPrice As ControlLibrary.DecimalBox
     Friend WithEvents LblPrice As Label
-    Friend WithEvents RbtPart As RadioButton
+    Friend WithEvents RbtProduct As RadioButton
     Friend WithEvents RbtService As RadioButton
     Friend WithEvents QbxSellable As ControlLibrary.QueriedBox
 End Class

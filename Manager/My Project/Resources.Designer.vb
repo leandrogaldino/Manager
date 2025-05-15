@@ -3902,6 +3902,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property PriceTable() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("PriceTable", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM pricetable
         '''WHERE pricetable.id = @id;.
         '''</summary>
@@ -3921,12 +3931,10 @@ Namespace My.Resources
         '''	END AS &apos;Status&apos;,
         '''    pricetable.name AS &apos;Nome&apos;
         '''FROM pricetable
-        '''WHERE
-        '''	IFNULL(pricetable.id, &apos;&apos;) LIKE @id AND
-        '''    IFNULL(pricetable.statusid, &apos;&apos;) LIKE @statusid AND
-        '''    IFNULL(pricetable.name, &apos;&apos;) LIKE CONCAT(&apos;%&apos;, @name, &apos;%&apos;)
-        '''GROUP BY pricetable.id
-        '''ORDER BY pricetable.id;.
+        '''LEFT JOIN pricetableitem ON pricetableitem.pricetableid = pricetable.id
+        '''LEFT JOIN product ON product.id = pricetableitem.productid
+        '''LEFT JOIN service ON service.id = pricetableitem.serviceid
+        '''LEFT JOIN productprovidercode ON productprovidercode.productid = produ [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PriceTableFilter() As String
             Get
@@ -3965,10 +3973,17 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a Public Class PriceTableItemDetailSelect
-        '''
-        '''End Class
-        '''.
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
+        '''    CASE
+        '''		WHEN pricetableitem.statusid = 0 THEN &apos;ATIVO&apos;
+        '''        WHEN pricetableitem.statusid = 1 THEN &apos;INATIVO&apos;
+        '''	END AS &apos;Status&apos;,
+        '''    IFNULL(product.name, service.name) &apos;Produto/Serviço&apos;
+        '''    pricetableitem.price &apos;Preço&apos;
+        '''FROM pricetableitem
+        '''LEFT JOIN product ON product.id = pricetableitem.productid
+        '''LEFT JOIN service ON service.id = pricetableitem.serviceid
+        '''WHERE pricetableitem.pricetableid = @pricetableid;.
         '''</summary>
         Friend ReadOnly Property PriceTableItemDetailSelect() As String
             Get

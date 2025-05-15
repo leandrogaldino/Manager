@@ -124,7 +124,7 @@ Public Class PriceTable
                         End Using
                     End If
                 Next Item
-                For Each Item As PriceTableItem In Items
+                For Each Item As PriceTableItem In Items.Where(Function(x) x.Sellable.IsValueCreated)
                     If Item.ID = 0 Then
                         Using CmdItem As New MySqlCommand(My.Resources.PriceTableItemInsert, Con)
                             CmdItem.Parameters.AddWithValue("@pricetableid", ID)
@@ -156,10 +156,10 @@ Public Class PriceTable
         Dim TableResult As DataTable
         Dim Items As List(Of PriceTableItem)
         Dim Item As PriceTableItem
-        Using CmdComplement As New MySqlCommand(My.Resources.PriceTableItemSelect, Transaction.Connection)
-            CmdComplement.Transaction = Transaction
-            CmdComplement.Parameters.AddWithValue("@serviceid", ID)
-            Using Adp As New MySqlDataAdapter(CmdComplement)
+        Using CmdPriceTableItem As New MySqlCommand(My.Resources.PriceTableItemSelect, Transaction.Connection)
+            CmdPriceTableItem.Transaction = Transaction
+            CmdPriceTableItem.Parameters.AddWithValue("@pricetableid", ID)
+            Using Adp As New MySqlDataAdapter(CmdPriceTableItem)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
                 Items = New List(Of PriceTableItem)
@@ -167,13 +167,13 @@ Public Class PriceTable
                     Item = New PriceTableItem With {
                         .Code = Row.Item("code"),
                         .Name = Row.Item("name"),
-                        .SellableID = Row.Item("sellableid"),
+                        .SellableID = If(Row.Item("productid") IsNot DBNull.Value, Row.Item("productid"), Row.Item("serviceid")),
                         .Price = Row.Item("price"),
                         .Sellable = New Lazy(Of SellableModel)(Function()
-                                                                   If Row.Item("productid") Is DBNull.Value Then
-                                                                       Return New Product().Load(Row.Item("productid").ToString, False)
+                                                                   If Row.Item("productid") IsNot DBNull.Value Then
+                                                                       Return New Product().Load(Row.Item("productid"), False)
                                                                    Else
-                                                                       Return New Service().Load(Row.Item("serviceid").ToString, False)
+                                                                       Return New Service().Load(Row.Item("serviceid"), False)
                                                                    End If
                                                                End Function)
                     }

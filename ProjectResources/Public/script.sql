@@ -1,3 +1,25 @@
+INSERT INTO manager.pricetableitem (
+    id,
+    pricetableid,
+    creation,
+    productid,
+    serviceid,
+    price,
+    userid
+)
+SELECT
+    UUID(),                  -- ID gerado (ajuste se não usar UUID)
+    1,                       -- pricetableid fixo
+    NOW(),                   -- data de criação
+    p.id,                    -- productid vindo da tabela product
+    NULL,                    -- serviceid nulo
+    ROUND(RAND() * 1000, 2), -- price aleatório entre 0.00 e 1000.00 com 2 casas decimais
+    1
+FROM product p;
+
+
+
+
 /*Como a cryptokey foi alterada, a senha de todos os usuarios deve ser resetada
 /*Como a cryptokey foi alterada, a senha de todos os e-mails cadastradosuser
 /*No caixa reicol comercio no mes 02/2024 tem um registro do expresso vedações que está sem responsavel, colocar reicol
@@ -264,7 +286,7 @@ IF IFNULL(OLD.productid, OLD.serviceid) <> IFNULL(NEW.productid, NEW.serviceid) 
         CASE
 			WHEN NEW.productid IS NOT NULL
 				THEN (SELECT CONCAT(product.id, ' - ', product.name) FROM product WHERE product.id = NEW.productid)
-			WHEN OLD.serviceid IS NOT NULL
+			WHEN NEW.serviceid IS NOT NULL
 				THEN (SELECT CONCAT(service.id, ' - ', service.name) FROM service WHERE service.id = NEW.serviceid)
 		END,
         NOW(),

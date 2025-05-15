@@ -23,9 +23,11 @@ Public Class PriceTableFilter
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(UpperNoAccentConverter))>
     Public Property Name As String
-    <DisplayName("Item")>
-    <TypeConverter(GetType(ExpandableObjectConverter))>
-    Public Property Item As New PriceTableItemExpandable()
+    <DisplayName("Produto/Serviço")>
+    <NotifyParentProperty(True)>
+    <RefreshProperties(RefreshProperties.All)>
+    <TypeConverter(GetType(UpperNoAccentConverter))>
+    Public Property ProductOrService As String
     Public Sub New(Dgv As DataGridView, Pg As PropertyGrid)
         DataGridView = Dgv
         PropertyGrid = Pg
@@ -50,9 +52,7 @@ Public Class PriceTableFilter
                 If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
                 If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = EnumHelper.GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
                 If Name <> Nothing Then Cmd.Parameters.AddWithValue("@name", Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@name", "%")
-                If Item.CodeOrName <> Nothing Then Cmd.Parameters.AddWithValue("@codeorname", Item) : Filtering = True Else Cmd.Parameters.AddWithValue("@codeorname", "%")
-                If Item.Price.MinimumValue <> Nothing Then Cmd.Parameters.AddWithValue("@pricemin", Item.Price.MinimumValue) : Filtering = True Else Cmd.Parameters.AddWithValue("@pricemin", -9999999999)
-                If Item.Price.MaximumValue <> Nothing Then Cmd.Parameters.AddWithValue("@pricemax", Item.Price.MaximumValue) : Filtering = True Else Cmd.Parameters.AddWithValue("@pricemax", 9999999999)
+                If ProductOrService <> Nothing Then Cmd.Parameters.AddWithValue("@productorservice", ProductOrService) : Filtering = True Else Cmd.Parameters.AddWithValue("@productorservice", "%")
                 Using Adp As New MySqlDataAdapter(Cmd)
                     Adp.Fill(Table)
                     DataGridView.DataSource = Nothing
@@ -84,6 +84,6 @@ Public Class PriceTableFilter
         ID = Nothing
         Status = Nothing
         Name = Nothing
-        Item = New PriceTableItemExpandable()
+        ProductOrService = Nothing
     End Sub
 End Class

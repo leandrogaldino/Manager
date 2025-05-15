@@ -275,7 +275,7 @@ Partial Class FrmPriceTable
         Me.TsComplement.Name = "TsComplement"
         Me.TsComplement.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.TsComplement.Size = New System.Drawing.Size(370, 25)
-        Me.TsComplement.TabIndex = 2
+        Me.TsComplement.TabIndex = 0
         Me.TsComplement.Text = "ToolStrip2"
         '
         'BtnIncludePriceTableItem
@@ -430,7 +430,7 @@ Partial Class FrmPriceTable
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.TsNavigation.Size = New System.Drawing.Size(384, 25)
-        Me.TsNavigation.TabIndex = 4
+        Me.TsNavigation.TabIndex = 0
         Me.TsNavigation.Text = "ToolStrip2"
         '
         'BtnLog
@@ -454,7 +454,7 @@ Partial Class FrmPriceTable
         Me.TsTitle.Name = "TsTitle"
         Me.TsTitle.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.TsTitle.Size = New System.Drawing.Size(384, 25)
-        Me.TsTitle.TabIndex = 5
+        Me.TsTitle.TabIndex = 1
         Me.TsTitle.Text = "ToolStrip1"
         '
         'DgvNavigator
@@ -468,7 +468,7 @@ Partial Class FrmPriceTable
         'DgvPriceTableItemLayout
         '
         Me.DgvPriceTableItemLayout.DataGridView = Me.DgvPriceTableItem
-        Me.DgvPriceTableItemLayout.Routine = Manager.Routine.ServiceComplement
+        Me.DgvPriceTableItemLayout.Routine = Manager.Routine.PriceTableItem
         '
         'FrmPriceTable
         '

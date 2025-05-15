@@ -2,11 +2,13 @@
 (
     creation,
     statusid,
-    name
+    name,
+    userid
 )
 VALUES
 (
     @creation,
     @statusid,
-    @name
+    @name,
+    @userid
 );

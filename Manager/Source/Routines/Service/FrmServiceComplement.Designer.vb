@@ -175,7 +175,7 @@ Partial Class FrmServiceComplement
         Me.Panel1.Location = New System.Drawing.Point(0, 172)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(422, 44)
-        Me.Panel1.TabIndex = 6
+        Me.Panel1.TabIndex = 4
         '
         'EprValidation
         '
@@ -254,7 +254,7 @@ Partial Class FrmServiceComplement
         Me.TxtComplement.Multiline = True
         Me.TxtComplement.Name = "TxtComplement"
         Me.TxtComplement.Size = New System.Drawing.Size(398, 92)
-        Me.TxtComplement.TabIndex = 5
+        Me.TxtComplement.TabIndex = 3
         '
         'FrmServiceComplement
         '

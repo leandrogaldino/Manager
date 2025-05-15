@@ -10,7 +10,6 @@ Public Class FrmProducts
         ControlHelper.EnableControlDoubleBuffer(DgvData, True)
         ControlHelper.EnableControlDoubleBuffer(DgvProviderCode, True)
         ControlHelper.EnableControlDoubleBuffer(DgvCode, True)
-        ControlHelper.EnableControlDoubleBuffer(DgvPrice, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Filter = New ProductFilter(DgvData, PgFilter)
@@ -199,7 +198,6 @@ Public Class FrmProducts
             Else
                 DgvProviderCode.DataSource = Nothing
                 DgvCode.DataSource = Nothing
-                DgvPrice.DataSource = Nothing
             End If
         End If
     End Sub

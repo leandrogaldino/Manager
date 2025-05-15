@@ -231,10 +231,10 @@ Partial Class FrmService
         'TabNote
         '
         Me.TabNote.Controls.Add(Me.TxtNote)
-        Me.TabNote.Location = New System.Drawing.Point(4, 22)
+        Me.TabNote.Location = New System.Drawing.Point(4, 26)
         Me.TabNote.Name = "TabNote"
         Me.TabNote.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabNote.Size = New System.Drawing.Size(486, 66)
+        Me.TabNote.Size = New System.Drawing.Size(486, 62)
         Me.TabNote.TabIndex = 5
         Me.TabNote.Text = "Observação"
         Me.TabNote.UseVisualStyleBackColor = True
@@ -246,7 +246,7 @@ Partial Class FrmService
         Me.TxtNote.Location = New System.Drawing.Point(3, 3)
         Me.TxtNote.MaxLength = 1000000
         Me.TxtNote.Name = "TxtNote"
-        Me.TxtNote.Size = New System.Drawing.Size(480, 60)
+        Me.TxtNote.Size = New System.Drawing.Size(480, 56)
         Me.TxtNote.TabIndex = 0
         Me.TxtNote.Text = ""
         '
@@ -263,10 +263,10 @@ Partial Class FrmService
         '
         Me.TabComplement.Controls.Add(Me.DgvComplement)
         Me.TabComplement.Controls.Add(Me.TsComplement)
-        Me.TabComplement.Location = New System.Drawing.Point(4, 22)
+        Me.TabComplement.Location = New System.Drawing.Point(4, 26)
         Me.TabComplement.Name = "TabComplement"
         Me.TabComplement.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabComplement.Size = New System.Drawing.Size(486, 66)
+        Me.TabComplement.Size = New System.Drawing.Size(486, 62)
         Me.TabComplement.TabIndex = 7
         Me.TabComplement.Text = "Complementos"
         Me.TabComplement.UseVisualStyleBackColor = True
@@ -289,7 +289,7 @@ Partial Class FrmService
         Me.DgvComplement.RowHeadersVisible = False
         Me.DgvComplement.RowTemplate.Height = 26
         Me.DgvComplement.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvComplement.Size = New System.Drawing.Size(480, 35)
+        Me.DgvComplement.Size = New System.Drawing.Size(480, 31)
         Me.DgvComplement.TabIndex = 1
         '
         'TsComplement
@@ -302,7 +302,7 @@ Partial Class FrmService
         Me.TsComplement.Name = "TsComplement"
         Me.TsComplement.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.TsComplement.Size = New System.Drawing.Size(480, 25)
-        Me.TsComplement.TabIndex = 2
+        Me.TsComplement.TabIndex = 0
         Me.TsComplement.Text = "ToolStrip2"
         '
         'BtnIncludeComplement
@@ -418,7 +418,7 @@ Partial Class FrmService
         Me.LblServiceCode.Location = New System.Drawing.Point(349, 4)
         Me.LblServiceCode.Name = "LblServiceCode"
         Me.LblServiceCode.Size = New System.Drawing.Size(91, 17)
-        Me.LblServiceCode.TabIndex = 12
+        Me.LblServiceCode.TabIndex = 2
         Me.LblServiceCode.Text = "Cod. Serviço"
         '
         'TxtServiceCode
@@ -428,7 +428,7 @@ Partial Class FrmService
         Me.TxtServiceCode.MaxLength = 20
         Me.TxtServiceCode.Name = "TxtServiceCode"
         Me.TxtServiceCode.Size = New System.Drawing.Size(128, 23)
-        Me.TxtServiceCode.TabIndex = 13
+        Me.TxtServiceCode.TabIndex = 3
         '
         'TxtName
         '
@@ -478,7 +478,7 @@ Partial Class FrmService
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.TsNavigation.Size = New System.Drawing.Size(494, 25)
-        Me.TsNavigation.TabIndex = 4
+        Me.TsNavigation.TabIndex = 0
         Me.TsNavigation.Text = "ToolStrip2"
         '
         'BtnLog
@@ -502,7 +502,7 @@ Partial Class FrmService
         Me.TsTitle.Name = "TsTitle"
         Me.TsTitle.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.TsTitle.Size = New System.Drawing.Size(494, 25)
-        Me.TsTitle.TabIndex = 5
+        Me.TsTitle.TabIndex = 1
         Me.TsTitle.Text = "ToolStrip1"
         '
         'DgvNavigator

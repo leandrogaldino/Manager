@@ -2,4 +2,4 @@
     productid = @productid,
     serviceid = @serviceid,
     price =  @price
-WHERE cityroute.id = @id;
+WHERE pricetableitem.id = @id;

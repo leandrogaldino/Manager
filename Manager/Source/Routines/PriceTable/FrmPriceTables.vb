@@ -19,7 +19,7 @@ Public Class FrmPriceTables
         BtnDelete.Visible = Locator.GetInstance(Of Session).User.CanDelete(Routine.PriceTable)
         BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
-    Private Sub Frm(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvPriceTablesLayout.Load()
     End Sub
     Private Sub Form_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
@@ -113,6 +113,8 @@ Public Class FrmPriceTables
     End Sub
     Private Sub BtnDetails_Click(sender As Object, e As EventArgs) Handles BtnDetails.Click
         SplitContainer2.Panel1Collapsed = Not BtnDetails.Checked
+        SplitContainer2.SplitterDistance = 400
+        LoadDetails()
     End Sub
     Private Sub BtnCloseDetails_Click(sender As Object, e As EventArgs) Handles BtnCloseDetails.Click
         SplitContainer2.Panel1Collapsed = True
@@ -170,9 +172,9 @@ Public Class FrmPriceTables
             LblCounter.Font = New Font(LblCounter.Font, FontStyle.Bold)
         End If
     End Sub
-
     Private Sub TmrLoadDetails_Tick(sender As Object, e As EventArgs) Handles TmrLoadDetails.Tick
-
+        LoadDetails()
+        TmrLoadDetails.Stop()
     End Sub
     Private Sub LoadDetails()
         If BtnDetails.Checked Then

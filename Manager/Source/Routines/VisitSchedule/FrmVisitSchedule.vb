@@ -118,7 +118,7 @@ Public Class FrmVisitSchedule
             _VisitSchedule.Load(_VisitSchedulesGrid.SelectedRows(0).Cells("id").Value, True)
             LoadData()
         Catch ex As Exception
-            CMessageBox.Show("ERRO VS001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+            CMessageBox.Show("ERRO VS004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally
             Cursor = Cursors.Default
         End Try
@@ -166,7 +166,7 @@ Public Class FrmVisitSchedule
                 If ex.Number = MysqlError.ForeignKey Then
                     CMessageBox.Show("Esse registro não pode ser excluído pois já foi referenciado em outras rotinas.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                 Else
-                    CMessageBox.Show("ERRO VS002", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                    CMessageBox.Show("ERRO VS005", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                 End If
             Finally
                 Cursor = Cursors.Default
@@ -302,7 +302,7 @@ Public Class FrmVisitSchedule
             End If
             Return True
         Catch ex As Exception
-            CMessageBox.Show("ERRO VS003", "Ocorreu um erro ao salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+            CMessageBox.Show("ERRO VS006", "Ocorreu um erro ao salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Return False
         Finally
             Cursor = Cursors.Default

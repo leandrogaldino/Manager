@@ -1,25 +1,3 @@
-INSERT INTO manager.pricetableitem (
-    id,
-    pricetableid,
-    creation,
-    productid,
-    serviceid,
-    price,
-    userid
-)
-SELECT
-    UUID(),                  -- ID gerado (ajuste se não usar UUID)
-    1,                       -- pricetableid fixo
-    NOW(),                   -- data de criação
-    p.id,                    -- productid vindo da tabela product
-    NULL,                    -- serviceid nulo
-    ROUND(RAND() * 1000, 2), -- price aleatório entre 0.00 e 1000.00 com 2 casas decimais
-    1
-FROM product p;
-
-
-
-
 /*Como a cryptokey foi alterada, a senha de todos os usuarios deve ser resetada
 /*Como a cryptokey foi alterada, a senha de todos os e-mails cadastradosuser
 /*No caixa reicol comercio no mes 02/2024 tem um registro do expresso vedações que está sem responsavel, colocar reicol
@@ -271,7 +249,11 @@ INSERT INTO log VALUES (NULL, 801, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCA
 END$$
 DROP TRIGGER IF EXISTS `manager`.`pricetableitemupdate`$$
 CREATE TRIGGER `pricetableitemupdate` AFTER UPDATE ON `pricetableitem` FOR EACH ROW BEGIN
-IF IFNULL(OLD.productid, OLD.serviceid) <> IFNULL(NEW.productid, NEW.serviceid) THEN 
+IF (
+    (OLD.productid IS NOT NULL AND NEW.productid IS NULL AND OLD.serviceid IS NULL AND NEW.serviceid IS NOT NULL) OR
+    (OLD.serviceid IS NOT NULL AND NEW.serviceid IS NULL AND OLD.productid IS NULL AND NEW.productid IS NOT NULL) OR
+    (OLD.productid <> NEW.productid) OR (OLD.serviceid <> NEW.serviceid)
+) THEN
 	INSERT INTO log VALUES (
 		NULL,
         801,
@@ -293,5 +275,5 @@ IF IFNULL(OLD.productid, OLD.serviceid) <> IFNULL(NEW.productid, NEW.serviceid) 
         CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
 END IF;
 IF OLD.price <> NEW.price THEN INSERT INTO log VALUES (NULL, 801, NEW.id, 'Preço', FORMAT(OLD.price, 2, 'pt_BR'), FORMAT(NEW.price, 2, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-END$$
+END
 DELIMITER ;

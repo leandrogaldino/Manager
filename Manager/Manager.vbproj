@@ -1765,6 +1765,8 @@
     <Content Include="Resources\SQL\UserPersonShortNameSelect.sql" />
     <Content Include="Resources\XML\CashFlowAuthorizedGrid.xml" />
     <Content Include="Resources\XML\CashFlowGrid.xml" />
+    <Content Include="Resources\XML\PriceTableGrid.xml" />
+    <Content Include="Resources\XML\PriceTableItemGrid.xml" />
     <Content Include="Resources\XML\ServiceGrid.xml" />
     <Content Include="Resources\XML\EvaluationTechnicianGrid.xml" />
     <Content Include="Resources\XML\ServiceComplementGrid.xml" />

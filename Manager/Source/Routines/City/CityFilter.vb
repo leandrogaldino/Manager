@@ -22,6 +22,10 @@ Public Class CityFilter
     <TypeConverter(GetType(UpperNoAccentConverter))>
     <DisplayName("Nome")>
     Public Property Name As String
+    <NotifyParentProperty(True)>
+    <RefreshProperties(RefreshProperties.All)>
+    <TypeConverter(GetType(UpperNoAccentConverter))>
+    <DisplayName("Código IBGE")>
     Public Property BIGSCode As String
 
     <DisplayName("Estado")>

@@ -97,7 +97,7 @@ Public Class FrmPriceTable
             _PriceTable.Load(_PriceTablesGrid.SelectedRows(0).Cells("id").Value, True)
             LoadData()
         Catch ex As Exception
-            CMessageBox.Show("ERRO SV001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+            CMessageBox.Show("ERRO PT005", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally
             Cursor = Cursors.Default
         End Try
@@ -148,7 +148,7 @@ Public Class FrmPriceTable
                 If ex.Number = MysqlError.ForeignKey Then
                     CMessageBox.Show("Esse registro não pode ser excluído pois já foi referenciado em outras rotinas.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                 Else
-                    CMessageBox.Show("ERRO SV002", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                    CMessageBox.Show("ERRO PT006", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                 End If
             Finally
                 Cursor = Cursors.Default
@@ -227,8 +227,7 @@ Public Class FrmPriceTable
     End Sub
     Private Sub TcPriceTable_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcPriceTable.SelectedIndexChanged
         If TcPriceTable.SelectedTab Is TabMain Then
-            'TODO: Ajustar tamanho
-            Size = New Size(510, 225)
+            Size = New Size(400, 225)
             FormBorderStyle = FormBorderStyle.FixedSingle
             WindowState = FormWindowState.Normal
             MaximizeBox = False
@@ -259,7 +258,6 @@ Public Class FrmPriceTable
             TcPriceTable.SelectedTab = TabMain
             TxtName.Select()
             Return False
-            'TODO: Validar lista
         End If
         Return True
     End Function
@@ -292,7 +290,7 @@ Public Class FrmPriceTable
                     End If
                     Success = True
                 Catch ex As Exception
-                    CMessageBox.Show("ERRO SV003", "Ocorreu um erro salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                    CMessageBox.Show("ERRO PT007", "Ocorreu um erro salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                     Success = False
                 Finally
                     Cursor = Cursors.Default
@@ -312,13 +310,12 @@ Public Class FrmPriceTable
     Private Sub TxtFilterComplement_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterPriceTableItem.TextChanged
         FilterPriceTableItem()
     End Sub
-    'TODO: Ajustar
     Private Sub FilterPriceTableItem()
         Dim Table As DataTable
         Dim View As DataView
         Dim Filter As String = String.Format("{0} OR {1}",
-                                                 "Complement LIKE '%@VALUE%'",
-                                                 "Convert([Complement], 'System.String') LIKE '%@VALUE%'"
+                                                 "Code LIKE '%@VALUE%'",
+                                                 "Name LIKE '%@VALUE%'"
                                             )
         If DgvPriceTableItem.DataSource IsNot Nothing Then
             Table = DgvPriceTableItem.DataSource
@@ -331,9 +328,8 @@ Public Class FrmPriceTable
             End If
         End If
     End Sub
-    'TODO: Ajustar
-    Private Sub TxtFilterComplement_Enter(sender As Object, e As EventArgs) Handles TxtFilterPriceTableItem.Enter
-        EprInformation.SetError(TsComplement, "Filtrando os campo: Complemento.")
+    Private Sub TxtFilterPriceTableItem_Enter(sender As Object, e As EventArgs) Handles TxtFilterPriceTableItem.Enter
+        EprInformation.SetError(TsComplement, "Filtrando os campo: Código e Nome.")
         EprInformation.SetIconAlignment(TsComplement, ErrorIconAlignment.MiddleLeft)
         EprInformation.SetIconPadding(TsComplement, -365)
     End Sub

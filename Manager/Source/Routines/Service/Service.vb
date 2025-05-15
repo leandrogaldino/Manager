@@ -154,7 +154,6 @@ Public Class Service
             Transaction.Complete()
         End Using
     End Sub
-
     Private Function GetComplements(Transaction As MySqlTransaction) As List(Of ServiceComplement)
         Dim TableResult As DataTable
         Dim Complements As List(Of ServiceComplement)
@@ -178,7 +177,6 @@ Public Class Service
         End Using
         Return Complements
     End Function
-
     Public Shared Sub FillComplementDataGridView(ServiceID As Long, Dgv As DataGridView)
         Dim TableResult As New DataTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())

@@ -167,7 +167,7 @@ Public Class FrmPriceTableItem
                     _PriceTableItem.Code = CType(Sellable, Product).ProviderCodes.FirstOrNew(Function(x) x.IsMainProvider = True).Code
                     _PriceTableItem.Price = DbxPrice.DecimalValue
 
-                    ta avaliando todos os itens do lazy
+
                     TargetItems = _PriceTable.Items.Where(Function(x) x.Product IsNot Nothing AndAlso x.Product.ID.Equals(_PriceTableItem.Product.ID)).ToList
                 Else
                     _PriceTableItem.Sellable = New Lazy(Of SellableModel)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
@@ -179,12 +179,12 @@ Public Class FrmPriceTableItem
                     _PriceTableItem.Price = DbxPrice.DecimalValue
 
 
-                    ta avaliando todos os itens do lazy
+
                     TargetItems = _PriceTable.Items.Where(Function(x) x.Service IsNot Nothing AndAlso x.Service.ID.Equals(_PriceTableItem.Service.ID)).ToList
                 End If
                 If TargetItems IsNot Nothing AndAlso TargetItems.Count > 0 Then
                     If RbtProduct.Checked Then
-                        CMessageBox.Show("Esse pproduto já foi incluido na tabela.", CMessageBoxType.Information)
+                        CMessageBox.Show("Esse produto já foi incluido na tabela.", CMessageBoxType.Information)
                     Else
                         CMessageBox.Show("Esse serviço já foi incluido na tabela.", CMessageBoxType.Information)
                     End If

@@ -3943,17 +3943,47 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;PriceTable&quot; Version=&quot;2&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''	&lt;Column Index=&quot;0&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;ID&lt;/Name&gt;
+        '''		&lt;Width&gt;100&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;1&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Criação&lt;/Name&gt;
+        '''		&lt;Width&gt;100&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;2&lt;/DisplayIndex&gt;
+        '''		&lt;Name [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property PriceTableGrid() As String
+            Get
+                Return ResourceManager.GetString("PriceTableGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO pricetable
         '''(
         '''    creation,
         '''    statusid,
-        '''    name
+        '''    name,
+        '''    userid
         ''')
         '''VALUES
         '''(
         '''    @creation,
         '''    @statusid,
-        '''    @name
+        '''    @name,
+        '''    @userid
         ''');.
         '''</summary>
         Friend ReadOnly Property PriceTableInsert() As String
@@ -3992,6 +4022,32 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;PriceTableItem&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''	&lt;Column Index=&quot;0&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Ordem&lt;/Name&gt;
+        '''		&lt;Width&gt;70&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;1&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''		&lt;Visible&gt;False&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Vendável&lt;/Name&gt;
+        '''		&lt;Width&gt;70&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''		&lt;Visible&gt;False&lt;/V [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property PriceTableItemGrid() As String
+            Get
+                Return ResourceManager.GetString("PriceTableItemGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO pricetableitem
         '''(
         '''    pricetableid,
@@ -4024,9 +4080,13 @@ Namespace My.Resources
         '''	pricetableitem.creation,
         '''	pricetableitem.productid,
         '''	pricetableitem.serviceid,
-        '''	pricetableitem.price
+        '''	pricetableitem.price,
+        '''	IFNULL(product.name, service.name) name,
+        '''	IFNULL(productprovidercode.code, &apos;&apos;) code
         '''FROM pricetableitem
-        '''WHERE pricetableitem.pricetableid = @pricetableid;.
+        '''LEFT JOIN product ON product.id = pricetableitem.productid
+        '''LEFT JOIN service ON service.id = pricetableitem.serviceid
+        '''LEFT JOIN productprovidercode ON productprovidercode.productid = product.id AND productprovidercode.ismainprovider =  [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PriceTableItemSelect() As String
             Get
@@ -4039,7 +4099,7 @@ Namespace My.Resources
         '''    productid = @productid,
         '''    serviceid = @serviceid,
         '''    price =  @price
-        '''WHERE cityroute.id = @id;.
+        '''WHERE pricetableitem.id = @id;.
         '''</summary>
         Friend ReadOnly Property PriceTableItemUpdate() As String
             Get
@@ -4063,9 +4123,9 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE pricetable Set
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE pricetable SET
         '''    statusid =  @statusid,
-        '''    name = @name
+        '''    name = @name,
         '''    userid = @userid
         '''WHERE pricetable.id = @id;.
         '''</summary>

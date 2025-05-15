@@ -52,8 +52,7 @@ Public Class Person
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
-                Using CmdPerson As New MySqlCommand(My.Resources.PersonSelect, Con)
-                    CmdPerson.Transaction = Tra
+                Using CmdPerson As New MySqlCommand(My.Resources.PersonSelect, Con, Tra)
                     CmdPerson.Parameters.AddWithValue("@id", Identity)
                     Using Adp As New MySqlDataAdapter(CmdPerson)
                         TableResult = New DataTable

@@ -1,3 +1,4 @@
 UPDATE evaluationtechnician SET
-    technicianid =  @technicianid
+    technicianid =  @technicianid,
+    userid = @userid
 WHERE evaluationtechnician.id = @id;

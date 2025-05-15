@@ -4,10 +4,11 @@ Imports MySql.Data.MySqlClient
 ''' Representa um serviço.
 ''' </summary>
 Public Class Service
-    Inherits SellableModel
+    Inherits Sellable
     Private _Shadow As Service
     Public Property Complements As New List(Of ServiceComplement)
     Public Property ServiceCode As String
+    Public Property Prices As New List(Of SellablePrice)
     Public Sub New()
         SetRoutine(Routine.Service)
     End Sub
@@ -19,6 +20,7 @@ Public Class Service
         Status = SimpleStatus.Active
         Name = Nothing
         Complements = New List(Of ServiceComplement)
+        Prices = New List(Of SellablePrice)
         ServiceCode = Nothing
         Note = Nothing
         If LockInfo.IsLocked Then Unlock()
@@ -67,26 +69,27 @@ Public Class Service
         End If
         SetIsSaved(True)
         Complements.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        Prices.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         _Shadow = Clone()
     End Sub
     Public Sub Delete()
-        Using Transaction As New Transactions.TransactionScope()
-            Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
                 Con.Open()
                 Using CmdService As New MySqlCommand(My.Resources.ServiceDelete, Con)
                     CmdService.Parameters.AddWithValue("@id", ID)
                     CmdService.ExecuteNonQuery()
                 End Using
+                Tra.Commit()
             End Using
-            Transaction.Complete()
         End Using
         Clear()
     End Sub
     Private Sub Insert()
-        Using Transaction As New Transactions.TransactionScope()
-            Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
                 Con.Open()
-                Using CmdService As New MySqlCommand(My.Resources.ServiceInsert, Con)
+                Using CmdService As New MySqlCommand(My.Resources.ServiceInsert, Con, Tra)
                     CmdService.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     CmdService.Parameters.AddWithValue("@statusid", CInt(Status))
                     CmdService.Parameters.AddWithValue("@name", Name)
@@ -97,7 +100,7 @@ Public Class Service
                     SetID(CmdService.LastInsertedId)
                 End Using
                 For Each Complement As ServiceComplement In Complements
-                    Using CmdComplement As New MySqlCommand(My.Resources.ServiceComplementInsert, Con)
+                    Using CmdComplement As New MySqlCommand(My.Resources.ServiceComplementInsert, Con, Tra)
                         CmdComplement.Parameters.AddWithValue("@serviceid", ID)
                         CmdComplement.Parameters.AddWithValue("@creation", Complement.Creation)
                         CmdComplement.Parameters.AddWithValue("@complement", Complement.Complement)
@@ -106,15 +109,27 @@ Public Class Service
                         Complement.SetID(CmdComplement.LastInsertedId)
                     End Using
                 Next Complement
+                For Each Price As SellablePrice In Prices
+                    Using CmdPrice As New MySqlCommand(My.Resources.PriceTableItemInsert, Con, Tra)
+                        CmdPrice.Parameters.AddWithValue("@pricetableid", Price.PriceTableID)
+                        CmdPrice.Parameters.AddWithValue("@creation", Price.Creation)
+                        CmdPrice.Parameters.AddWithValue("@price", Price.Price)
+                        CmdPrice.Parameters.AddWithValue("@serviceid", ID)
+                        CmdPrice.Parameters.AddWithValue("@productid", DBNull.Value)
+                        CmdPrice.Parameters.AddWithValue("@userid", Price.User.ID)
+                        CmdPrice.ExecuteNonQuery()
+                        Price.SetID(CmdPrice.LastInsertedId)
+                    End Using
+                Next Price
             End Using
-            Transaction.Complete()
+
         End Using
     End Sub
     Private Sub Update()
-        Using Transaction As New Transactions.TransactionScope()
-            Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
-                Con.Open()
-                Using CmdService As New MySqlCommand(My.Resources.ServiceUpdate, Con)
+        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Con.Open()
+            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
+                Using CmdService As New MySqlCommand(My.Resources.ServiceUpdate, Con, Tra)
                     CmdService.Parameters.AddWithValue("@id", ID)
                     CmdService.Parameters.AddWithValue("@statusid", CInt(Status))
                     CmdService.Parameters.AddWithValue("@name", Name)
@@ -125,7 +140,7 @@ Public Class Service
                 End Using
                 For Each Complement As ServiceComplement In _Shadow.Complements
                     If Not Complements.Any(Function(x) x.ID = Complement.ID And x.ID > 0) Then
-                        Using CmdComplement As New MySqlCommand(My.Resources.ServiceComplementDelete, Con)
+                        Using CmdComplement As New MySqlCommand(My.Resources.ServiceComplementDelete, Con, Tra)
                             CmdComplement.Parameters.AddWithValue("@id", Complement.ID)
                             CmdComplement.ExecuteNonQuery()
                         End Using
@@ -133,7 +148,7 @@ Public Class Service
                 Next Complement
                 For Each Complement As ServiceComplement In Complements
                     If Complement.ID = 0 Then
-                        Using CmdComplement As New MySqlCommand(My.Resources.ServiceComplementInsert, Con)
+                        Using CmdComplement As New MySqlCommand(My.Resources.ServiceComplementInsert, Con, Tra)
                             CmdComplement.Parameters.AddWithValue("@serviceid", ID)
                             CmdComplement.Parameters.AddWithValue("@creation", Complement.Creation)
                             CmdComplement.Parameters.AddWithValue("@complement", Complement.Complement)
@@ -142,7 +157,7 @@ Public Class Service
                             Complement.SetID(CmdComplement.LastInsertedId)
                         End Using
                     Else
-                        Using CmdServiceComplement As New MySqlCommand(My.Resources.ServiceComplementUpdate, Con)
+                        Using CmdServiceComplement As New MySqlCommand(My.Resources.ServiceComplementUpdate, Con, Tra)
                             CmdServiceComplement.Parameters.AddWithValue("@id", Complement.ID)
                             CmdServiceComplement.Parameters.AddWithValue("@complement", Complement.Complement)
                             CmdServiceComplement.Parameters.AddWithValue("@userid", Complement.User.ID)
@@ -150,8 +165,39 @@ Public Class Service
                         End Using
                     End If
                 Next Complement
+                For Each Price As SellablePrice In _Shadow.Prices
+                    If Not Prices.Any(Function(x) x.ID = Price.ID And x.ID > 0) Then
+                        Using CmdPrice As New MySqlCommand(My.Resources.PriceTableItemDelete, Con, Tra)
+                            CmdPrice.Parameters.AddWithValue("@id", Price.ID)
+                            CmdPrice.ExecuteNonQuery()
+                        End Using
+                    End If
+                Next Price
+                For Each Price As SellablePrice In Prices
+                    If Price.ID = 0 Then
+                        Using CmdPrice As New MySqlCommand(My.Resources.PriceTableItemInsert, Con, Tra)
+                            CmdPrice.Parameters.AddWithValue("@pricetableid", Price.PriceTableID)
+                            CmdPrice.Parameters.AddWithValue("@creation", Price.Creation)
+                            CmdPrice.Parameters.AddWithValue("@price", Price.Price)
+                            CmdPrice.Parameters.AddWithValue("@serviceid", ID)
+                            CmdPrice.Parameters.AddWithValue("@productid", DBNull.Value)
+                            CmdPrice.Parameters.AddWithValue("@userid", Price.User.ID)
+                            CmdPrice.ExecuteNonQuery()
+                            Price.SetID(CmdPrice.LastInsertedId)
+                        End Using
+                    Else
+                        Using CmdPrice As New MySqlCommand(My.Resources.PriceTableItemUpdate, Con, Tra)
+                            CmdPrice.Parameters.AddWithValue("@id", Price.ID)
+                            CmdPrice.Parameters.AddWithValue("@productid", DBNull.Value)
+                            CmdPrice.Parameters.AddWithValue("@serviceid", ID)
+                            CmdPrice.Parameters.AddWithValue("@price", Price.Price)
+                            CmdPrice.Parameters.AddWithValue("@userid", Price.User.ID)
+                            CmdPrice.ExecuteNonQuery()
+                        End Using
+                    End If
+                Next Price
+                Tra.Commit()
             End Using
-            Transaction.Complete()
         End Using
     End Sub
     Private Function GetComplements(Transaction As MySqlTransaction) As List(Of ServiceComplement)
@@ -177,6 +223,32 @@ Public Class Service
         End Using
         Return Complements
     End Function
+    Private Function GetPrices(Transaction As MySqlTransaction) As List(Of SellablePrice)
+        Dim TableResult As DataTable
+        Dim Prices As List(Of SellablePrice)
+        Dim Price As SellablePrice
+        Using CmdPrice As New MySqlCommand(My.Resources.ServicePriceSelect, Transaction.Connection)
+            CmdPrice.Transaction = Transaction
+            CmdPrice.Parameters.AddWithValue("@serviceid", ID)
+            Using Adp As New MySqlDataAdapter(CmdPrice)
+                TableResult = New DataTable
+                Adp.Fill(TableResult)
+                Prices = New List(Of SellablePrice)
+                For Each Row As DataRow In TableResult.Rows
+                    Price = New SellablePrice
+                    Price.PriceTableID = Convert.ToInt32(Row.Item("pricetableid"))
+                    Price.PriceTable = New Lazy(Of PriceTable)(Function() New PriceTable().Load(Convert.ToInt32(Row.Item("pricetableid")), False))
+                    Price.PriceTableName = Row.Item("pricetablename").ToString
+                    Price.Price = Convert.ToDecimal(Row.Item("price"))
+                    Price.SetIsSaved(True)
+                    Price.SetID(Row.Item("id"))
+                    Price.SetCreation(Row.Item("creation"))
+                    Prices.Add(Price)
+                Next Row
+            End Using
+        End Using
+        Return Prices
+    End Function
     Public Shared Sub FillComplementDataGridView(ServiceID As Long, Dgv As DataGridView)
         Dim TableResult As New DataTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
@@ -186,6 +258,20 @@ Public Class Service
                     Adp.Fill(TableResult)
                     Dgv.DataSource = TableResult
                     Dgv.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                End Using
+            End Using
+        End Using
+    End Sub
+    Public Shared Sub FillPriceDataGridView(ServiceID As Long, Dgv As DataGridView)
+        Dim TableResult As New DataTable
+        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Using Cmd As New MySqlCommand(My.Resources.ServicePriceDetailSelect, Con)
+                Cmd.Parameters.AddWithValue("@serviceid", ServiceID)
+                Using Adp As New MySqlDataAdapter(Cmd)
+                    Adp.Fill(TableResult)
+                    Dgv.DataSource = TableResult
+                    Dgv.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                    Dgv.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
                 End Using
             End Using
         End Using

@@ -477,6 +477,7 @@ Public Class Evaluation
                         Using Cmd As New MySqlCommand(My.Resources.EvaluationTechnicianUpdate, Con)
                             Cmd.Parameters.AddWithValue("@id", Technician.ID)
                             Cmd.Parameters.AddWithValue("@technicianid", Technician.Technician.ID)
+                            Cmd.Parameters.AddWithValue("@userid", Technician.User.ID)
                             Cmd.ExecuteNonQuery()
                         End Using
                     End If
@@ -650,6 +651,7 @@ Public Class Evaluation
                         Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoUpdate, Con)
                             Cmd.Parameters.AddWithValue("@id", Photo.ID)
                             Cmd.Parameters.AddWithValue("@photoname", Path.GetFileName(Photo.Photo.CurrentFile))
+                            Cmd.Parameters.AddWithValue("@userid", Photo.User.ID)
                             Cmd.ExecuteNonQuery()
                         End Using
                     End If

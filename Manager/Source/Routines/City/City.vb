@@ -177,6 +177,7 @@ Public Class City
                             CmdRoute.Transaction = Tra
                             CmdRoute.Parameters.AddWithValue("@id", Route.ID)
                             CmdRoute.Parameters.AddWithValue("@routeid", Route.Route.ID)
+                            CmdRoute.Parameters.AddWithValue("@userid", Route.User.ID)
                             CmdRoute.ExecuteNonQuery()
                         End Using
                     End If

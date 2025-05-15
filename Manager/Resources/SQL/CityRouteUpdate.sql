@@ -1,3 +1,3 @@
 UPDATE cityroute SET
-    routeid =  @routeid
+    routeid = @routeid
 WHERE cityroute.id = @id;

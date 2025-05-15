@@ -24,7 +24,7 @@ Public Class PriceTableItem
             Return TryCast(Sellable.Value, Service)
         End Get
     End Property
-    Public Property Sellable As Lazy(Of SellableModel)
+    Public Property Sellable As Lazy(Of Sellable)
     Public Property SellableID As Long
     Public Property Code As String
     Public Property Name As String

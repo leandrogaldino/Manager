@@ -905,7 +905,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE cityroute SET
-        '''    routeid =  @routeid
+        '''    routeid = @routeid
         '''WHERE cityroute.id = @id;.
         '''</summary>
         Friend ReadOnly Property CityRouteUpdate() As String
@@ -2518,7 +2518,8 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluationphoto SET
-        '''    photoname =  @photoname
+        '''    photoname =  @photoname,
+        '''    userid = @userid
         '''WHERE evaluationphoto.id = @id;.
         '''</summary>
         Friend ReadOnly Property EvaluationPhotoUpdate() As String
@@ -2784,7 +2785,8 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluationtechnician SET
-        '''    technicianid =  @technicianid
+        '''    technicianid =  @technicianid,
+        '''    userid = @userid
         '''WHERE evaluationtechnician.id = @id;.
         '''</summary>
         Friend ReadOnly Property EvaluationTechnicianUpdate() As String
@@ -4004,16 +4006,15 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
-        '''    CASE
-        '''		WHEN pricetableitem.statusid = 0 THEN &apos;ATIVO&apos;
-        '''        WHEN pricetableitem.statusid = 1 THEN &apos;INATIVO&apos;
-        '''	END AS &apos;Status&apos;,
-        '''    IFNULL(product.name, service.name) &apos;Produto/Serviço&apos;
+        '''	IFNULL(productprovidercode.code, &apos;&apos;) &apos;Código&apos;,
+        '''    IFNULL(product.name, service.name) &apos;Produto/Serviço&apos;,
         '''    pricetableitem.price &apos;Preço&apos;
         '''FROM pricetableitem
         '''LEFT JOIN product ON product.id = pricetableitem.productid
         '''LEFT JOIN service ON service.id = pricetableitem.serviceid
-        '''WHERE pricetableitem.pricetableid = @pricetableid;.
+        '''LEFT JOIN productprovidercode ON productprovidercode.productid = product.id AND productprovidercode.ismainprovider = 1
+        '''WHERE pricetableitem.pricetableid = @pricetableid
+        '''ORDER BY productprovidercode.code, IFNULL(product [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PriceTableItemDetailSelect() As String
             Get
@@ -4098,7 +4099,8 @@ Namespace My.Resources
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE pricetableitem SET
         '''    productid = @productid,
         '''    serviceid = @serviceid,
-        '''    price =  @price
+        '''    price =  @price,
+        '''    userid = @userid
         '''WHERE pricetableitem.id = @id;.
         '''</summary>
         Friend ReadOnly Property PriceTableItemUpdate() As String
@@ -5815,6 +5817,36 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a Public Class ServicePriceDetailSelect
+        '''
+        '''End Class
+        '''.
+        '''</summary>
+        Friend ReadOnly Property ServicePriceDetailSelect() As String
+            Get
+                Return ResourceManager.GetString("ServicePriceDetailSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	pricetableitem.id,
+        '''	service.name service,
+        '''    pricetable.id pricetableid,
+        '''	pricetable.name pricetablename,
+        '''    pricetableitem.price
+        '''FROM pricetable
+        '''LEFT JOIN pricetableitem ON pricetableitem.pricetableid = pricetable.id
+        '''LEFT JOIN service ON service.id = pricetableitem.serviceid
+        '''WHERE service.id = @serviceid;.
+        '''</summary>
+        Friend ReadOnly Property ServicePriceSelect() As String
+            Get
+                Return ResourceManager.GetString("ServicePriceSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	service.id,
         '''	service.creation,
@@ -5836,7 +5868,8 @@ Namespace My.Resources
         '''    statusid =  @statusid,
         '''    name = @name,
         '''    servicecode = @servicecode,
-        '''    note = @note
+        '''    note = @note,
+        '''    userid = @userid
         '''WHERE service.id = @id;.
         '''</summary>
         Friend ReadOnly Property ServiceUpdate() As String
@@ -6370,7 +6403,8 @@ Namespace My.Resources
         '''    personcompressorid = @personcompressorid,
         '''    instructions = @instructions,
         '''    evaluationid = @evaluationid,
-        '''    lastupdate = @lastupdate
+        '''    lastupdate = @lastupdate,
+        '''    userid = @userid
         '''WHERE visitschedule.id = @id;.
         '''</summary>
         Friend ReadOnly Property VisitScheduleUpdate() As String

@@ -526,7 +526,8 @@
     <Compile Include="Source\Helper\ModelBases\BaseModel.vb" />
     <Compile Include="Source\Helper\ModelBases\CloneableModel.vb" />
     <Compile Include="Source\Helper\ModelBases\ChildModel.vb" />
-    <Compile Include="Source\Helper\ModelBases\SellableModel.vb" />
+    <Compile Include="Source\Helper\ModelBases\Sellable.vb" />
+    <Compile Include="Source\Helper\ModelBases\SellablePrice.vb" />
     <Compile Include="Source\Routines\CashFlow\CashFlow.vb" />
     <Compile Include="Source\Routines\CashFlow\CashFlowAuthorized.vb" />
     <Compile Include="Source\Routines\CashFlow\CashFlowFilter.vb" />
@@ -1735,6 +1736,8 @@
     <Content Include="Resources\SQL\ServiceComplementInsert.sql" />
     <Content Include="Resources\SQL\ServiceComplementSelect.sql" />
     <Content Include="Resources\SQL\ServiceComplementUpdate.sql" />
+    <Content Include="Resources\SQL\ServicePriceDetailSelect.sql" />
+    <Content Include="Resources\SQL\ServicePriceSelect.sql" />
     <Content Include="Resources\SQL\UserPrivilegeDelete.sql" />
     <Content Include="Resources\SQL\PrivilegePresetPrivilegeInsert.sql" />
     <Content Include="Resources\SQL\PrivilegePresetPrivilegeSelect.sql" />

@@ -172,6 +172,7 @@ Public Class FrmServices
             If DgvData.SelectedRows.Count = 1 Then
                 Try
                     Service.FillComplementDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvComplement)
+                    Service.FillPriceDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPrice)
                 Catch ex As Exception
                     TmrLoadDetails.Stop()
                     CMessageBox.Show("ERRO SV004", "Ocorreu um erro ao consultar os dados do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

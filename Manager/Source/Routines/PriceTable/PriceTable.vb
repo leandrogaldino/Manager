@@ -169,7 +169,7 @@ Public Class PriceTable
                         .Name = Row.Item("name"),
                         .SellableID = If(Row.Item("productid") IsNot DBNull.Value, Row.Item("productid"), Row.Item("serviceid")),
                         .Price = Row.Item("price"),
-                        .Sellable = New Lazy(Of SellableModel)(Function()
+                        .Sellable = New Lazy(Of Sellable)(Function()
                                                                    If Row.Item("productid") IsNot DBNull.Value Then
                                                                        Return New Product().Load(Row.Item("productid"), False)
                                                                    Else

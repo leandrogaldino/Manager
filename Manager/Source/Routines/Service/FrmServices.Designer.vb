@@ -23,6 +23,7 @@ Partial Class FrmServices
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TsMenu = New System.Windows.Forms.ToolStrip()
         Me.BtnInclude = New System.Windows.Forms.ToolStripButton()
@@ -54,6 +55,8 @@ Partial Class FrmServices
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.DgvServiceLayout = New Manager.DataGridViewLayout()
+        Me.TabPrice = New System.Windows.Forms.TabPage()
+        Me.DgvPrice = New System.Windows.Forms.DataGridView()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -71,6 +74,8 @@ Partial Class FrmServices
         CType(Me.DgvComplement, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsDetails.SuspendLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPrice.SuspendLayout()
+        CType(Me.DgvPrice, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TsMenu
@@ -311,6 +316,7 @@ Partial Class FrmServices
         '
         'TcDetail
         '
+        Me.TcDetail.Controls.Add(Me.TabPrice)
         Me.TcDetail.Controls.Add(Me.TpgComplement)
         Me.TcDetail.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TcDetail.Location = New System.Drawing.Point(0, 25)
@@ -340,14 +346,14 @@ Partial Class FrmServices
         Me.DgvComplement.BackgroundColor = System.Drawing.Color.White
         Me.DgvComplement.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.DgvComplement.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DgvComplement.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DgvComplement.DefaultCellStyle = DataGridViewCellStyle2
         Me.DgvComplement.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DgvComplement.Location = New System.Drawing.Point(3, 3)
         Me.DgvComplement.MultiSelect = False
@@ -418,6 +424,47 @@ Partial Class FrmServices
         Me.DgvServiceLayout.DataGridView = Me.DgvData
         Me.DgvServiceLayout.Routine = Manager.Routine.Service
         '
+        'TabPrice
+        '
+        Me.TabPrice.Controls.Add(Me.DgvPrice)
+        Me.TabPrice.Location = New System.Drawing.Point(4, 26)
+        Me.TabPrice.Name = "TabPrice"
+        Me.TabPrice.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPrice.Size = New System.Drawing.Size(262, 382)
+        Me.TabPrice.TabIndex = 2
+        Me.TabPrice.Text = "Preços"
+        Me.TabPrice.UseVisualStyleBackColor = True
+        '
+        'DgvPrice
+        '
+        Me.DgvPrice.AllowUserToAddRows = False
+        Me.DgvPrice.AllowUserToDeleteRows = False
+        Me.DgvPrice.AllowUserToResizeColumns = False
+        Me.DgvPrice.AllowUserToResizeRows = False
+        Me.DgvPrice.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.DgvPrice.BackgroundColor = System.Drawing.Color.White
+        Me.DgvPrice.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.DgvPrice.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DgvPrice.DefaultCellStyle = DataGridViewCellStyle1
+        Me.DgvPrice.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvPrice.Location = New System.Drawing.Point(3, 3)
+        Me.DgvPrice.MultiSelect = False
+        Me.DgvPrice.Name = "DgvPrice"
+        Me.DgvPrice.ReadOnly = True
+        Me.DgvPrice.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvPrice.RowHeadersVisible = False
+        Me.DgvPrice.RowTemplate.Height = 26
+        Me.DgvPrice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvPrice.Size = New System.Drawing.Size(256, 376)
+        Me.DgvPrice.TabIndex = 2
+        '
         'FrmServices
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
@@ -457,6 +504,8 @@ Partial Class FrmServices
         Me.TsDetails.ResumeLayout(False)
         Me.TsDetails.PerformLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPrice.ResumeLayout(False)
+        CType(Me.DgvPrice, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -493,4 +542,6 @@ Partial Class FrmServices
     Friend WithEvents DgvServiceLayout As DataGridViewLayout
     Friend WithEvents DgvComplement As DataGridView
     Friend WithEvents BtnExport As ToolStripButton
+    Friend WithEvents TabPrice As TabPage
+    Friend WithEvents DgvPrice As DataGridView
 End Class

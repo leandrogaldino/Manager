@@ -161,25 +161,18 @@ Public Class FrmPriceTableItem
                 If RbtProduct.Checked Then
                     _PriceTableItem.Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
                     Dim Sellable As Sellable = _PriceTableItem.Sellable.Value
-
                     _PriceTableItem.SellableID = Sellable.ID
                     _PriceTableItem.Name = Sellable.Name
                     _PriceTableItem.Code = CType(Sellable, Product).ProviderCodes.FirstOrNew(Function(x) x.IsMainProvider = True).Code
                     _PriceTableItem.Price = DbxPrice.DecimalValue
-
-
                     TargetItems = _PriceTable.Items.Where(Function(x) x.Product IsNot Nothing AndAlso x.Product.ID.Equals(_PriceTableItem.Product.ID)).ToList
                 Else
                     _PriceTableItem.Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
                     Dim Sellable As Sellable = _PriceTableItem.Sellable.Value
-
                     _PriceTableItem.SellableID = Sellable.ID
                     _PriceTableItem.Name = Sellable.Name
                     _PriceTableItem.Code = String.Empty
                     _PriceTableItem.Price = DbxPrice.DecimalValue
-
-
-
                     TargetItems = _PriceTable.Items.Where(Function(x) x.Service IsNot Nothing AndAlso x.Service.ID.Equals(_PriceTableItem.Service.ID)).ToList
                 End If
                 If TargetItems IsNot Nothing AndAlso TargetItems.Count > 0 Then

@@ -139,6 +139,7 @@ Public Class FrmPriceTables
         End If
     End Sub
     Private Sub DgvData_SelectionChanged(sender As Object, e As EventArgs) Handles DgvData.SelectionChanged
+        TmrLoadDetails.Start()
         If DgvData.SelectedRows.Count = 0 Then
             BtnEdit.Enabled = False
             BtnDelete.Enabled = False

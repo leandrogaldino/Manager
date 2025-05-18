@@ -17,12 +17,18 @@
 	<Column Index="2">
 		<Visible>True</Visible>
 		<DisplayIndex>2</DisplayIndex>
-		<Name>Status</Name>
+		<Name>Tipo</Name>
 		<Width>100</Width>
 	</Column>
 	<Column Index="3">
 		<Visible>True</Visible>
 		<DisplayIndex>3</DisplayIndex>
+		<Name>Status</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="4">
+		<Visible>True</Visible>
+		<DisplayIndex>4</DisplayIndex>
 		<Name>Nome</Name>
 		<Width>400</Width>
 	</Column>

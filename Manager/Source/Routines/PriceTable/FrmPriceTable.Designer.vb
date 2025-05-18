@@ -236,10 +236,10 @@ Partial Class FrmPriceTable
         '
         Me.TabIItems.Controls.Add(Me.DgvPriceTableItem)
         Me.TabIItems.Controls.Add(Me.TsComplement)
-        Me.TabIItems.Location = New System.Drawing.Point(4, 22)
+        Me.TabIItems.Location = New System.Drawing.Point(4, 26)
         Me.TabIItems.Name = "TabIItems"
         Me.TabIItems.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabIItems.Size = New System.Drawing.Size(376, 66)
+        Me.TabIItems.Size = New System.Drawing.Size(376, 62)
         Me.TabIItems.TabIndex = 7
         Me.TabIItems.Text = "Itens"
         Me.TabIItems.UseVisualStyleBackColor = True
@@ -262,7 +262,7 @@ Partial Class FrmPriceTable
         Me.DgvPriceTableItem.RowHeadersVisible = False
         Me.DgvPriceTableItem.RowTemplate.Height = 26
         Me.DgvPriceTableItem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPriceTableItem.Size = New System.Drawing.Size(370, 35)
+        Me.DgvPriceTableItem.Size = New System.Drawing.Size(370, 31)
         Me.DgvPriceTableItem.TabIndex = 1
         '
         'TsComplement

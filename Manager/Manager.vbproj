@@ -522,8 +522,10 @@
     <Compile Include="Source\Helper\FilterQueriedBox\PriceTableQueriedBoxFilter.vb" />
     <Compile Include="Source\Helper\FilterQueriedBox\ServiceQueriedBoxFilter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\IntegerConverter.vb" />
+    <Compile Include="Source\Helper\FiltrerConverter\PriceTableTypeConverter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\VisitScheduleTypeConverter.vb" />
     <Compile Include="Source\Helper\Flags\ConfirmationType.vb" />
+    <Compile Include="Source\Helper\Flags\PriceTableType.vb" />
     <Compile Include="Source\Helper\Flags\SellableType.vb" />
     <Compile Include="Source\Helper\ModelBases\BaseModel.vb" />
     <Compile Include="Source\Helper\ModelBases\CloneableModel.vb" />

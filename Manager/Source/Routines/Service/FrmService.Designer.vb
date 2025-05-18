@@ -436,10 +436,10 @@ Partial Class FrmService
         '
         Me.TabPrice.Controls.Add(Me.DgvPrice)
         Me.TabPrice.Controls.Add(Me.TsPrice)
-        Me.TabPrice.Location = New System.Drawing.Point(4, 22)
+        Me.TabPrice.Location = New System.Drawing.Point(4, 26)
         Me.TabPrice.Name = "TabPrice"
         Me.TabPrice.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPrice.Size = New System.Drawing.Size(491, 66)
+        Me.TabPrice.Size = New System.Drawing.Size(491, 62)
         Me.TabPrice.TabIndex = 8
         Me.TabPrice.Text = "Preços"
         Me.TabPrice.UseVisualStyleBackColor = True
@@ -462,7 +462,7 @@ Partial Class FrmService
         Me.DgvPrice.RowHeadersVisible = False
         Me.DgvPrice.RowTemplate.Height = 26
         Me.DgvPrice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPrice.Size = New System.Drawing.Size(485, 35)
+        Me.DgvPrice.Size = New System.Drawing.Size(485, 31)
         Me.DgvPrice.TabIndex = 2
         '
         'TsPrice

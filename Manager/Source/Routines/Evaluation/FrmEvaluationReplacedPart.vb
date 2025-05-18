@@ -126,15 +126,27 @@ Public Class FrmEvaluationReplacedPart
         End If
         Return True
     End Function
+    Private Function HasDuplicatedItem() As Boolean
+        Dim TargetItems As List(Of EvaluationReplacedPart)
+        TargetItems = _Evaluation.ReplacedParts.Where(Function(x) Not x.Product.ID.Equals(_ReplacedItem.Product.ID) AndAlso x.Product.ID.Equals(QbxItem.FreezedPrimaryKey)).ToList()
+        If TargetItems.Count > 0 Then
+            CMessageBox.Show("Essa peça já foi incluida na avaliação.", CMessageBoxType.Information)
+            QbxItem.Freeze(_ReplacedItem.Product.ID)
+            DbxQuantity.Text = 0
+            QbxItem.Select()
+            Return True
+        End If
+        Return False
+    End Function
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
-        Dim TargetItems As List(Of EvaluationReplacedPart)
         If Not QbxItem.IsFreezed Then
             QbxItem.QueryEnabled = False
             QbxItem.Text = QbxItem.Text.Trim.ToUnaccented()
             QbxItem.QueryEnabled = True
         End If
         If IsValidFields() Then
+            If HasDuplicatedItem() Then Return False
             If _ReplacedItem.IsSaved Then
                 If QbxItem.IsFreezed Then
                     _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _ReplacedItem.Guid).ItemName = Nothing
@@ -154,12 +166,6 @@ Public Class FrmEvaluationReplacedPart
                     _ReplacedItem.Product = New Product
                 End If
                 _ReplacedItem.Quantity = DbxQuantity.Text
-                TargetItems = _Evaluation.ReplacedParts.Where(Function(x) x.Equals(_ReplacedItem)).ToList
-                If TargetItems IsNot Nothing AndAlso TargetItems.Count > 0 Then
-                    If CMessageBox.Show("Esse item já foi incluido na requisição, deseja incluir novamente?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.No Then
-                        Return False
-                    End If
-                End If
                 _ReplacedItem.SetIsSaved(True)
                 _Evaluation.ReplacedParts.Add(_ReplacedItem)
             End If

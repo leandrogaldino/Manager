@@ -23,6 +23,8 @@ Partial Class FrmServicePrice
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
         Me.TsMain = New System.Windows.Forms.ToolStrip()
@@ -33,8 +35,7 @@ Partial Class FrmServicePrice
         Me.BtnNext = New System.Windows.Forms.ToolStripButton()
         Me.BtnLast = New System.Windows.Forms.ToolStripButton()
         Me.BtnLog = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
-        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.PnButtons = New System.Windows.Forms.Panel()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TsData = New System.Windows.Forms.ToolStrip()
         Me.LblOrder = New System.Windows.Forms.ToolStripLabel()
@@ -52,7 +53,7 @@ Partial Class FrmServicePrice
         Me.QbxPriceTable = New ControlLibrary.QueriedBox()
         Me.LblPriceTable = New System.Windows.Forms.Label()
         Me.TsMain.SuspendLayout()
-        Me.Panel1.SuspendLayout()
+        Me.PnButtons.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsData.SuspendLayout()
         Me.FlpPriceTable.SuspendLayout()
@@ -86,7 +87,7 @@ Partial Class FrmServicePrice
         Me.TsMain.BackColor = System.Drawing.Color.White
         Me.TsMain.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnDelete, Me.BtnFirst, Me.BtnPrevious, Me.BtnNext, Me.BtnLast, Me.BtnLog, Me.ToolStripButton1})
+        Me.TsMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnDelete, Me.BtnFirst, Me.BtnPrevious, Me.BtnNext, Me.BtnLast, Me.BtnLog})
         Me.TsMain.Location = New System.Drawing.Point(0, 0)
         Me.TsMain.Name = "TsMain"
         Me.TsMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -166,24 +167,16 @@ Partial Class FrmServicePrice
         Me.BtnLog.Size = New System.Drawing.Size(23, 22)
         Me.BtnLog.Text = "Histórico"
         '
-        'ToolStripButton1
+        'PnButtons
         '
-        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton1.Name = "ToolStripButton1"
-        Me.ToolStripButton1.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton1.Text = "ToolStripButton1"
-        '
-        'Panel1
-        '
-        Me.Panel1.BackColor = System.Drawing.Color.White
-        Me.Panel1.Controls.Add(Me.BtnSave)
-        Me.Panel1.Controls.Add(Me.BtnClose)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 114)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(515, 44)
-        Me.Panel1.TabIndex = 8
+        Me.PnButtons.BackColor = System.Drawing.Color.White
+        Me.PnButtons.Controls.Add(Me.BtnSave)
+        Me.PnButtons.Controls.Add(Me.BtnClose)
+        Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.PnButtons.Location = New System.Drawing.Point(0, 114)
+        Me.PnButtons.Name = "PnButtons"
+        Me.PnButtons.Size = New System.Drawing.Size(515, 44)
+        Me.PnButtons.TabIndex = 8
         '
         'EprValidation
         '
@@ -331,22 +324,30 @@ Partial Class FrmServicePrice
         'QbxPriceTable
         '
         Me.QbxPriceTable.CharactersToQuery = 2
-        Me.QbxPriceTable.DebugOnTextChanged = False
-        Me.QbxPriceTable.DisplayFieldAlias = ""
+        Condition1.FieldName = "statusid"
+        Condition1.Operator = "="
+        Condition1.TableNameOrAlias = "pricetable"
+        Condition1.Value = "@statusid"
+        Me.QbxPriceTable.Conditions.Add(Condition1)
+        Me.QbxPriceTable.DebugOnTextChanged = True
+        Me.QbxPriceTable.DisplayFieldAlias = "Nome"
         Me.QbxPriceTable.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        Me.QbxPriceTable.DisplayFieldName = ""
-        Me.QbxPriceTable.DisplayMainFieldName = ""
+        Me.QbxPriceTable.DisplayFieldName = "name"
+        Me.QbxPriceTable.DisplayMainFieldName = "id"
         Me.QbxPriceTable.DisplayTableAlias = ""
-        Me.QbxPriceTable.DisplayTableName = ""
+        Me.QbxPriceTable.DisplayTableName = "pricetable"
         Me.QbxPriceTable.Distinct = False
         Me.QbxPriceTable.DropDownAutoStretchRight = False
         Me.QbxPriceTable.GridHeaderBackColor = System.Drawing.SystemColors.Window
         Me.QbxPriceTable.IfNull = Nothing
         Me.QbxPriceTable.Location = New System.Drawing.Point(12, 80)
-        Me.QbxPriceTable.MainReturnFieldName = ""
+        Me.QbxPriceTable.MainReturnFieldName = "id"
         Me.QbxPriceTable.MainTableAlias = ""
-        Me.QbxPriceTable.MainTableName = ""
+        Me.QbxPriceTable.MainTableName = "pricetable"
         Me.QbxPriceTable.Name = "QbxPriceTable"
+        Parameter1.ParameterName = "@statusid"
+        Parameter1.ParameterValue = "0"
+        Me.QbxPriceTable.Parameters.Add(Parameter1)
         Me.QbxPriceTable.Prefix = Nothing
         Me.QbxPriceTable.Size = New System.Drawing.Size(385, 23)
         Me.QbxPriceTable.Suffix = Nothing
@@ -373,7 +374,7 @@ Partial Class FrmServicePrice
         Me.Controls.Add(Me.FlpPriceTable)
         Me.Controls.Add(Me.TsData)
         Me.Controls.Add(Me.TsMain)
-        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.PnButtons)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.KeyPreview = True
@@ -382,10 +383,10 @@ Partial Class FrmServicePrice
         Me.MinimizeBox = False
         Me.Name = "FrmServicePrice"
         Me.ShowIcon = False
-        Me.Text = "Preço"
+        Me.Text = "Preço do Serviço"
         Me.TsMain.ResumeLayout(False)
         Me.TsMain.PerformLayout()
-        Me.Panel1.ResumeLayout(False)
+        Me.PnButtons.ResumeLayout(False)
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsData.ResumeLayout(False)
         Me.TsData.PerformLayout()
@@ -403,11 +404,10 @@ Partial Class FrmServicePrice
     Friend WithEvents BtnPrevious As ToolStripButton
     Friend WithEvents BtnNext As ToolStripButton
     Friend WithEvents BtnLast As ToolStripButton
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents PnButtons As Panel
     Friend WithEvents BtnLog As ToolStripButton
     Friend WithEvents EprValidation As ErrorProvider
     Friend WithEvents DgvNavigator As ControlLibrary.DataGridViewNavigator
-    Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents TsData As ToolStrip
     Friend WithEvents LblOrder As ToolStripLabel
     Friend WithEvents LblOrderValue As ToolStripLabel

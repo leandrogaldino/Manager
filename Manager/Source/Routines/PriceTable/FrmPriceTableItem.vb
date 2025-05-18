@@ -135,8 +135,8 @@ Public Class FrmPriceTableItem
     End Function
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
-        Dim TargetItems As List(Of PriceTableItem)
         If IsValidFields() Then
+            If HasDuplicatedItem() Then Return False
             If _PriceTableItem.IsSaved Then
                 _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Price = DbxPrice.DecimalValue
                 If RbtProduct.Checked Then
@@ -145,15 +145,14 @@ Public Class FrmPriceTableItem
                     _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).SellableID = Sellable.ID
                     _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Name = Sellable.Name
                     _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Code = CType(Sellable, Product).ProviderCodes.FirstOrNew(Function(x) x.IsMainProvider = True).Code
-                    _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Price = DbxPrice.DecimalValue
                 Else
                     _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
                     Dim Sellable As Sellable = _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Sellable.Value
                     _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).SellableID = Sellable.ID
                     _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Name = Sellable.Name
                     _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Code = String.Empty
-                    _PriceTable.Items.Single(Function(x) x.Guid = _PriceTableItem.Guid).Price = DbxPrice.DecimalValue
                 End If
+
             Else
                 _PriceTableItem = New PriceTableItem With {
                     .Price = DbxPrice.DecimalValue
@@ -165,7 +164,6 @@ Public Class FrmPriceTableItem
                     _PriceTableItem.Name = Sellable.Name
                     _PriceTableItem.Code = CType(Sellable, Product).ProviderCodes.FirstOrNew(Function(x) x.IsMainProvider = True).Code
                     _PriceTableItem.Price = DbxPrice.DecimalValue
-                    TargetItems = _PriceTable.Items.Where(Function(x) x.Product IsNot Nothing AndAlso x.Product.ID.Equals(_PriceTableItem.Product.ID)).ToList
                 Else
                     _PriceTableItem.Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
                     Dim Sellable As Sellable = _PriceTableItem.Sellable.Value
@@ -173,15 +171,6 @@ Public Class FrmPriceTableItem
                     _PriceTableItem.Name = Sellable.Name
                     _PriceTableItem.Code = String.Empty
                     _PriceTableItem.Price = DbxPrice.DecimalValue
-                    TargetItems = _PriceTable.Items.Where(Function(x) x.Service IsNot Nothing AndAlso x.Service.ID.Equals(_PriceTableItem.Service.ID)).ToList
-                End If
-                If TargetItems IsNot Nothing AndAlso TargetItems.Count > 0 Then
-                    If RbtProduct.Checked Then
-                        CMessageBox.Show("Esse produto já foi incluido na tabela.", CMessageBoxType.Information)
-                    Else
-                        CMessageBox.Show("Esse serviço já foi incluido na tabela.", CMessageBoxType.Information)
-                    End If
-                    Return False
                 End If
                 _PriceTableItem.SetIsSaved(True)
                 _PriceTable.Items.Add(_PriceTableItem)
@@ -207,6 +196,27 @@ Public Class FrmPriceTableItem
             Return False
         End If
     End Function
+
+
+    Private Function HasDuplicatedItem() As Boolean
+        Dim TargetItems As List(Of PriceTableItem)
+        If RbtProduct.Checked Then
+            TargetItems = _PriceTable.Items.Where(Function(x) Not x.SellableID.Equals(_PriceTableItem.SellableID) AndAlso x.Product IsNot Nothing AndAlso x.Product.ID.Equals(_PriceTableItem.Product.ID)).ToList
+        Else
+            TargetItems = _PriceTable.Items.Where(Function(x) Not x.SellableID.Equals(_PriceTableItem.SellableID) AndAlso x.Service IsNot Nothing AndAlso x.Service.ID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+        End If
+        If TargetItems IsNot Nothing AndAlso TargetItems.Count > 0 Then
+            If RbtProduct.Checked Then
+                CMessageBox.Show("Esse produto já foi incluido na tabela.", CMessageBoxType.Information)
+            Else
+                CMessageBox.Show("Esse serviço já foi incluido na tabela.", CMessageBoxType.Information)
+            End If
+            Return True
+        End If
+        Return False
+    End Function
+
+
     Private Sub TmrQueriedBox_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBox.Tick
         BtnView.Visible = False
         BtnNew.Visible = False

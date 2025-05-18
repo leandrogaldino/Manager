@@ -75,9 +75,9 @@ Public Class Service
     End Sub
     Public Sub Delete()
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
-                Con.Open()
-                Using CmdService As New MySqlCommand(My.Resources.ServiceDelete, Con)
+                Using CmdService As New MySqlCommand(My.Resources.ServiceDelete, Con, Tra)
                     CmdService.Parameters.AddWithValue("@id", ID)
                     CmdService.ExecuteNonQuery()
                 End Using
@@ -88,8 +88,8 @@ Public Class Service
     End Sub
     Private Sub Insert()
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
-                Con.Open()
                 Using CmdService As New MySqlCommand(My.Resources.ServiceInsert, Con, Tra)
                     CmdService.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     CmdService.Parameters.AddWithValue("@statusid", CInt(Status))
@@ -122,8 +122,8 @@ Public Class Service
                         Price.SetID(CmdPrice.LastInsertedId)
                     End Using
                 Next Price
+                Tra.Commit()
             End Using
-
         End Using
     End Sub
     Private Sub Update()

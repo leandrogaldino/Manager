@@ -201,6 +201,15 @@ Public Class PriceTable
             End Using
         End Using
     End Sub
+    Public Shared Function GetPriceTableName(PriceTableID As Long) As String
+        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Con.Open()
+            Using Cmd As New MySqlCommand(My.Resources.PriceTableGetPriceTableName, Con)
+                Cmd.Parameters.AddWithValue("@pricetableid", PriceTableID)
+                Return Cmd.ExecuteScalar()
+            End Using
+        End Using
+    End Function
     Public Overrides Function ToString() As String
         Return If(Name, String.Empty)
     End Function

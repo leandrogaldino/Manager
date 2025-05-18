@@ -3945,6 +3945,18 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	pricetable.name
+        '''FROM pricetable
+        '''WHERE pricetable.id = @pricetableid;.
+        '''</summary>
+        Friend ReadOnly Property PriceTableGetPriceTableName() As String
+            Get
+                Return ResourceManager.GetString("PriceTableGetPriceTableName", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;PriceTable&quot; Version=&quot;2&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
@@ -5817,10 +5829,13 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a Public Class ServicePriceDetailSelect
-        '''
-        '''End Class
-        '''.
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	pricetable.name AS &apos;Tabela de Preços&apos;,
+        '''    pricetableitem.price AS &apos;Preço&apos;
+        '''FROM pricetable
+        '''LEFT JOIN pricetableitem ON pricetableitem.pricetableid = pricetable.id
+        '''LEFT JOIN service ON service.id = pricetableitem.serviceid
+        '''WHERE service.id = @serviceid;.
         '''</summary>
         Friend ReadOnly Property ServicePriceDetailSelect() As String
             Get
@@ -5831,6 +5846,7 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	pricetableitem.id,
+        '''	pricetableitem.creation,
         '''	service.name service,
         '''    pricetable.id pricetableid,
         '''	pricetable.name pricetablename,

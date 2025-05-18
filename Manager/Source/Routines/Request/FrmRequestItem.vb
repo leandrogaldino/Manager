@@ -180,7 +180,7 @@ Public Class FrmRequestItem
     End Function
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
-        Dim TargetItems As List(Of RequestItem)
+        Dim HasDuplicate As Boolean = False
         If Not QbxItem.IsFreezed Then
             QbxItem.QueryEnabled = False
             QbxItem.Text = QbxItem.Text.Trim.ToUnaccented()
@@ -188,10 +188,12 @@ Public Class FrmRequestItem
         End If
         TxtLostReason.Text = TxtLostReason.Text.ToUnaccented()
         If IsValidFields() Then
+            HasDuplicate = HasDuplicateItem()
+            If HasDuplicate Then Return False
             If _RequestItem.IsSaved Then
                 _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).Status = EnumHelper.GetEnumValue(Of RequestStatus)(LblStatusValue.Text)
                 If QbxItem.IsFreezed Then
-                    _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).ItemName = Nothing
+                    _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).ItemName = String.Empty
                     _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
                 Else
                     _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).ItemName = QbxItem.Text
@@ -206,7 +208,7 @@ Public Class FrmRequestItem
                 _RequestItem = New RequestItem()
                 _RequestItem.Status = EnumHelper.GetEnumValue(Of RequestStatus)(LblStatusValue.Text)
                 If QbxItem.IsFreezed Then
-                    _RequestItem.ItemName = Nothing
+                    _RequestItem.ItemName = String.Empty
                     _RequestItem.Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
                 Else
                     _RequestItem.ItemName = QbxItem.Text
@@ -217,12 +219,6 @@ Public Class FrmRequestItem
                 _RequestItem.Applied = DbxApplied.Text
                 _RequestItem.Lossed = DbxLossed.Text
                 _RequestItem.LossReason = TxtLostReason.Text
-                TargetItems = _Request.Items.Where(Function(x) x.Equals(_RequestItem)).ToList
-                If TargetItems IsNot Nothing AndAlso TargetItems.Count > 0 Then
-                    If CMessageBox.Show("Esse item já foi incluido na requisição, deseja incluir novamente?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.No Then
-                        Return False
-                    End If
-                End If
                 _RequestItem.SetIsSaved(True)
                 _Request.Items.Add(_RequestItem)
             End If
@@ -246,6 +242,23 @@ Public Class FrmRequestItem
         Else
             Return False
         End If
+    End Function
+    Private Function HasDuplicateItem() As Boolean
+        Dim TargetItems As List(Of RequestItem)
+        TargetItems = _Request.Items.Where(Function(x)
+                                               If QbxItem.IsFreezed Then
+                                                   Return x.Product.ID.Equals(QbxItem.FreezedPrimaryKey)
+                                               Else
+                                                   Return x.ItemName.Equals(QbxItem.Text)
+                                               End If
+                                               Return False
+                                           End Function).ToList
+        If TargetItems IsNot Nothing AndAlso TargetItems.Count > 0 Then
+            If CMessageBox.Show("Esse item já foi incluido na requisição, deseja incluir novamente?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.No Then
+                Return True
+            End If
+        End If
+        Return False
     End Function
     Private Sub TmrQueriedBox_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBox.Tick
         BtnView.Visible = False

@@ -497,6 +497,7 @@
     <None Include="Resources\Image\PriceTable.png" />
     <Content Include="Resources\SQL\PriceTableDelete.sql" />
     <Content Include="Resources\SQL\PriceTableFilter.sql" />
+    <Content Include="Resources\SQL\PriceTableGetPriceTableName.sql" />
     <Content Include="Resources\SQL\PriceTableItemDelete.sql" />
     <Content Include="Resources\SQL\PriceTableItemDetailSelect.sql" />
     <Content Include="Resources\SQL\PriceTableItemInsert.sql" />
@@ -518,6 +519,7 @@
     <Compile Include="Source\Helper\Attibutes\RoutineDependencyAttribute.vb" />
     <Compile Include="Source\Helper\FilterExpandable\VisitScheduleStatusExpandable.vb" />
     <Compile Include="Source\Helper\FilterQueriedBox\PrivilegePresetQueriedBoxFilter.vb" />
+    <Compile Include="Source\Helper\FilterQueriedBox\PriceTableQueriedBoxFilter.vb" />
     <Compile Include="Source\Helper\FilterQueriedBox\ServiceQueriedBoxFilter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\IntegerConverter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\VisitScheduleTypeConverter.vb" />

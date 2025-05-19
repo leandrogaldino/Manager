@@ -43,9 +43,7 @@ CREATE TABLE userprivilege (
     FOREIGN KEY (granteduserid) REFERENCES user(id) ON DELETE CASCADE,
     FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
 );
-INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 0, 1);
-INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 1, 1);
-INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 2, 1);
+
 CREATE TABLE privilegepresetprivilege (
 	id INT NOT NULL AUTO_INCREMENT,
     privilegepresetid INT NOT NULL,
@@ -109,6 +107,7 @@ DROP TABLE `manager`.`productpricetable`;
 
 CREATE TABLE pricetable (
 	id INT NOT NULL AUTO_INCREMENT,
+    pricetabletypeid INT NOT NULL,
     creation DATE NOT NULL,
     statusid INT NOT NULL,
     name VARCHAR(255) NOT NULL,
@@ -132,7 +131,6 @@ CREATE TABLE pricetableitem (
 	UNIQUE (pricetableid, productid),
 	UNIQUE (pricetableid, serviceid)
 );
-
 DELIMITER $$
 DROP TRIGGER IF EXISTS `manager`.`personcompressorpartupdate`$$
 CREATE TRIGGER `personcompressorpartupdate` AFTER UPDATE ON `personcompressorpart` FOR EACH ROW BEGIN
@@ -277,3 +275,189 @@ END IF;
 IF OLD.price <> NEW.price THEN INSERT INTO log VALUES (NULL, 801, NEW.id, 'Preço', FORMAT(OLD.price, 2, 'pt_BR'), FORMAT(NEW.price, 2, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END
 DELIMITER ;
+
+INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 0, 1);
+INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 1, 1);
+INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 2, 1);
+INSERT INTO pricetable VALUES (
+	NULL,
+    1,
+	DATE(NOW()),
+    0,
+    'CUSTO BRUTO',
+    1
+);
+INSERT INTO manager.pricetableitem (
+    id,
+    pricetableid,
+    creation,
+    productid,
+    serviceid,
+    price,
+    userid
+)
+SELECT
+    NULL, 
+    1,                 
+    DATE(NOW()),           
+    p.id,               
+    NULL,   
+    0,
+    1
+FROM product p;
+INSERT INTO pricetable VALUES (
+	NULL,
+    1,
+	DATE(NOW()),
+    0,
+    'CUSTO LÍQUIDO',
+    1
+);
+INSERT INTO manager.pricetableitem (
+    id,
+    pricetableid,
+    creation,
+    productid,
+    serviceid,
+    price,
+    userid
+)
+SELECT
+    NULL, 
+    2,                 
+    DATE(NOW()),           
+    p.id,               
+    NULL,   
+    0,
+    1
+FROM product p;
+INSERT INTO pricetable VALUES (
+	NULL,
+    1,
+	DATE(NOW()),
+    0,
+    'CUSTO MÉDIO',
+    1
+);
+INSERT INTO manager.pricetableitem (
+    id,
+    pricetableid,
+    creation,
+    productid,
+    serviceid,
+    price,
+    userid
+)
+SELECT
+    NULL, 
+    3,                 
+    DATE(NOW()),           
+    p.id,               
+    NULL,   
+    0,
+    1
+FROM product p;
+INSERT INTO pricetable VALUES (
+	NULL,
+    1,
+	DATE(NOW()),
+    0,
+    'PREÇO MÍNIMO',
+    1
+);
+INSERT INTO manager.pricetableitem (
+    id,
+    pricetableid,
+    creation,
+    productid,
+    serviceid,
+    price,
+    userid
+)
+SELECT
+    NULL, 
+    4,                 
+    DATE(NOW()),           
+    p.id,               
+    NULL,   
+    0,
+    1
+FROM product p;
+INSERT INTO pricetable VALUES (
+	NULL,
+	1,
+	DATE(NOW()),
+    0,
+    'MENOR VENDA',
+    1
+);
+INSERT INTO manager.pricetableitem (
+    id,
+    pricetableid,
+    creation,
+    productid,
+    serviceid,
+    price,
+    userid
+)
+SELECT
+    NULL, 
+    5,                 
+    DATE(NOW()),           
+    p.id,               
+    NULL,   
+    0,
+    1
+FROM product p;
+INSERT INTO pricetable VALUES (
+	NULL,
+    1,
+	DATE(NOW()),
+    0,
+    'MAIOR VENDA',
+    1
+);
+INSERT INTO manager.pricetableitem (
+    id,
+    pricetableid,
+    creation,
+    productid,
+    serviceid,
+    price,
+    userid
+)
+SELECT
+    NULL, 
+    6,                 
+    DATE(NOW()),           
+    p.id,               
+    NULL,   
+    0,
+    1
+FROM product p;
+INSERT INTO pricetable VALUES (
+	NULL,
+    1,
+	DATE(NOW()),
+    0,
+    'ÚLTIMA COMPRA',
+    1
+);
+INSERT INTO manager.pricetableitem (
+    id,
+    pricetableid,
+    creation,
+    productid,
+    serviceid,
+    price,
+    userid
+)
+SELECT
+    NULL, 
+    7,                 
+    DATE(NOW()),           
+    p.id,               
+    NULL,   
+    0,
+    1
+FROM product p;

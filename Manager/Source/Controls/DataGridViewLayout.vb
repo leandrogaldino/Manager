@@ -2,7 +2,6 @@
 Imports System.IO
 Imports System.Xml
 Imports ControlLibrary
-Imports Org.BouncyCastle.Bcpg
 Public Class DataGridViewLayout
     Inherits Component
     Public Event Loaded(sender As Object, e As EventArgs)

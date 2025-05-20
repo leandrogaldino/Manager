@@ -122,82 +122,82 @@
     <value>..\Resources\Image\Cash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CashDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\CashGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="CashInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashItemDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashItemDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashItemDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashItemGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\CashItemGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="CashItemInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashItemInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashItemInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashItemResponsibleDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashItemResponsibleDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashItemResponsibleDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashItemResponsibleGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\CashItemResponsibleGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="CashItemResponsibleInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashItemResponsibleInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashItemResponsibleInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashItemResponsibleSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashItemResponsibleSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashItemResponsibleSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashItemResponsibleUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashItemResponsibleUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashItemResponsibleUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashItemSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashItemSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashItemSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashItemUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashItemUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashItemUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashLastBalanceSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashLastBalanceSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashLastBalanceSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashPreviousBalanceSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashPreviousBalanceSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashPreviousBalanceSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashReportExpensesPerResponsible" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashReportExpensesPerResponsible.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashReportExpensesPerResponsible.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="City" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\City.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CityDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CityDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\City\CityDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CityFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CityFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\City\CityFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CityGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\CityGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="CityInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CityInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\City\CityInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CitySelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CitySelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\City\CitySelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CityUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CityUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\City\CityUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Clean" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Clean.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -209,22 +209,22 @@
     <value>..\Resources\Image\Compressor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CompressorDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CompressorDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Compressor\CompressorDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CompressorFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CompressorFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Compressor\CompressorFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CompressorGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\CompressorGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="CompressorInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CompressorInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Compressor\CompressorInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CompressorSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CompressorSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Compressor\CompressorSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CompressorUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CompressorUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Compressor\CompressorUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -272,7 +272,7 @@
     <value>..\Resources\Image\Logoff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LogSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\LogSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Resources\SQL\Log\LogSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="Magnifier" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Magnifier.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -293,184 +293,184 @@
     <value>..\Resources\Image\Person.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PersonAddressDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonAddressDelete .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonAddressDelete .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonAddressGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\PersonAddressGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PersonAddressInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonAddressInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonAddressInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonAddressSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonAddressSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonAddressSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonAddressUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonAddressUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonAddressUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonCompressorDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonCompressorDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonCompressorDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonCompressorGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\PersonCompressorGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PersonCompressorInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonCompressorInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonCompressorInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonCompressorSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonCompressorSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonCompressorSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonCompressorUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonCompressorUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonCompressorUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonContactDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonContactDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonContactDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonContactGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\PersonContactGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PersonContactInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonContactInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonContactInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonContactSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonContactSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonContactSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonContactUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonContactUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonContactUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\PersonGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PersonInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Product" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Product.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ProductDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductFamily" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\ProductFamily.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ProductFamilyDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductFamilyDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductFamilyDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductFamilyFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductFamilyFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductFamilyFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductFamilyGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\ProductFamilyGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="ProductFamilyInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductFamilyInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductFamilyInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductFamilySelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductFamilySelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductFamilySelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductFamilyUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductFamilyUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductFamilyUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductGroup" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\ProductGroup.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ProductGroupDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductGroupDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductGroupDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductGroupFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductGroupFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductGroupFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductGroupGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\ProductGroupGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="ProductGroupInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductGroupInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductGroupInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductGroupSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductGroupSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductGroupSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductGroupUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductGroupUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductGroupUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductCodeDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductCodeDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductCodeDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductCodeInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductCodeInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductCodeInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductCodeSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductCodeSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductCodeSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductCodeUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductCodeUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductCodeUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductPictureDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductPictureDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductPictureDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductPictureInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductPictureInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductPictureInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductPictureSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductPictureSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductPictureSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductPictureUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductPictureUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductPictureUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductProviderCodeDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductProviderCodeDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductProviderCodeDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductProviderCodeInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductProviderCodeInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductProviderCodeInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductProviderCodeSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductProviderCodeSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductProviderCodeSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductProviderCodeUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductProviderCodeUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductProviderCodeUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductUnit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\ProductUnit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ProductUnitDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductUnitDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductUnitDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductUnitFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductUnitFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductUnitFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductUnitGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\ProductUnitGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="ProductUnitInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductUnitInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductUnitInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductUnitSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductUnitSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductUnitSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductUnitUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductUnitUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductUnitUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Refresh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -485,52 +485,52 @@
     <value>..\Resources\Image\Route.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RouteDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\RouteDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Route\RouteDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="RouteFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\RouteFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Route\RouteFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="RouteGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\RouteGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="RouteInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\RouteInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Route\RouteInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="RouteSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\RouteSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Route\RouteSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="RouteUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\RouteUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Route\RouteUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="SetBrazilianDatabaseMonthNames" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\SetBrazilianDatabaseMonthNames.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Misc\SetBrazilianDatabaseMonthNames.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="StateSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\StateSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\State\StateSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="User" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\User.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="UserDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\User\UserDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="UserFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\User\UserFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="UserGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\UserGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="UserInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\User\UserInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="UserLoginSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserLoginSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\User\UserLoginSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="UserSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\User\UserSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="UserUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\User\UserUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="View" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\View.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -557,25 +557,25 @@
     <value>..\Resources\XML\ProductPictureGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="UserChangePassword" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserChangePassword.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\User\UserChangePassword.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonSelectByDocument" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonSelectByDocument.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonSelectByDocument.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CompressorPartInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CompressorPartInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Compressor\CompressorPartInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CompressorPartSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CompressorPartSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Compressor\CompressorPartSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CompressorPartWorkedHourGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\CompressorPartWorkedHourGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="CompressorPartDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CompressorPartDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Compressor\CompressorPartDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CompressorPartUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CompressorPartUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Compressor\CompressorPartUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="information" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icon\information.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -584,16 +584,16 @@
     <value>..\Resources\XML\CompressorPartElapsedDayGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PersonCompressorPartDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonCompressorPartDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonCompressorPartDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonCompressorPartInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonCompressorPartInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonCompressorPartInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonCompressorPartSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonCompressorPartSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonCompressorPartSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonCompressorPartUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonCompressorPartUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonCompressorPartUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonCompressorPartWorkedHourGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\PersonCompressorPartWorkedHourGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
@@ -605,64 +605,64 @@
     <value>..\Resources\XML\PersonCompressorPartElapsedDayGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="EvaluationSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationPartSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationPartSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationPartSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationPartInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationPartInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationPartInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationPartDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationPartDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationPartDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Evaluation" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Evaluation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EvaluationPartUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationPartUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationPartUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationPreviousEvaluationHorimeterSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationPreviousEvaluationHorimeterSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationPreviousEvaluationHorimeterSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\EvaluationGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="UserPrivilegeSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserPrivilegeSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\User\UserPrivilegeSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="UserPrivilegeInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserPrivilegeInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\User\UserPrivilegeInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationManagementFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationManagementFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationManagementFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationManagement" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\EvaluationManagement.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EvaluationManagementPartFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationManagementPartFilter .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationManagementPartFilter .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationManagementGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\EvaluationManagementGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="EvaluationHasPreviousEvaluationSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationHasPreviousEvaluationSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationHasPreviousEvaluationSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationPreviousEvaluationDateSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationPreviousEvaluationDateSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationPreviousEvaluationDateSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PrintSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\PrintSmall.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -680,31 +680,31 @@
     <value>..\Resources\Image\Request.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RequestDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\RequestDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Request\RequestDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="RequestFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\RequestFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Request\RequestFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="RequestInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\RequestInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Request\RequestInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="RequestItemDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\RequestItemDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Request\RequestItemDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="RequestItemInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\RequestItemInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Request\RequestItemInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="RequestItemSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\RequestItemSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Request\RequestItemSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="RequestItemUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\RequestItemUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Request\RequestItemUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="RequestSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\RequestSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Request\RequestSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="RequestUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\RequestUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Request\RequestUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="RequestGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\RequestGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
@@ -713,10 +713,10 @@
     <value>..\Resources\XML\RequestItemGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="UserHasPersonSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserHasPersonSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\User\UserHasPersonSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="RequestReportPendingItems" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\RequestReportPendingItems.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Request\RequestReportPendingItems.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Document" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Document.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -725,7 +725,7 @@
     <value>..\Resources\Image\UserPrivilegePreset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EvaluationManagementPanelVisitsChartSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationManagementPanelVisitsChartSelect .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationManagementPanelVisitsChartSelect .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Chart" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Chart.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -740,7 +740,7 @@
     <value>..\Resources\Image\Save.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EvaluationLastEvaluationSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationLastEvaluationSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationLastEvaluationSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ReportSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\ReportSmall.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -749,40 +749,40 @@
     <value>..\Resources\Image\EmailModel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="UserEmailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserEmailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\User\UserEmailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="UserEmailInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserEmailInsert .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\User\UserEmailInsert .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="UserEmailUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserEmailUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\User\UserEmailUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EmailModelDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EmailModelDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\EmailModel\EmailModelDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EmailModelFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EmailModelFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\EmailModel\EmailModelFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EmailModelInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EmailModelInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\EmailModel\EmailModelInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EmailModelSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EmailModelSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\EmailModel\EmailModelSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EmailModelUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EmailModelUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\EmailModel\EmailModelUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="UserEmailDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserEmailDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\User\UserEmailDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="UserEmailGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\UserEmailGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="EmailSentFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EmailSentFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\EmailSent\EmailSentFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EmailSentInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EmailSentInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\EmailSent\EmailSentInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EmailSent" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\EmailSent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -794,7 +794,7 @@
     <value>..\Resources\XML\EmailModelGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="EvaluationSetStatus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationSetStatus.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationSetStatus.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Approve" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Approve.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -803,133 +803,133 @@
     <value>..\Resources\Image\Reject.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EvaluationPreviousEvaluationIDSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationPreviousEvaluationIDSelect .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationPreviousEvaluationIDSelect .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CityRouteSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CityRouteSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\City\CityRouteSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CityRouteInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CityRouteInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\City\CityRouteInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CityRouteDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CityRouteDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\City\CityRouteDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CityRouteUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CityRouteUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\City\CityRouteUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="RouteFilterConverterSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\RouteFilterConverterSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Route\RouteFilterConverterSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="LockedRegistryDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\LockedRegistryDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\LockedRegistry\LockedRegistryDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="LockedRegistryInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\LockedRegistryInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\LockedRegistry\LockedRegistryInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="LockedRegistrySelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\LockedRegistrySelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\LockedRegistry\LockedRegistrySelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="LockedRegistryUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\LockedRegistryUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\LockedRegistry\LockedRegistryUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationManagementPanelYearSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationManagementPanelYearSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationManagementPanelYearSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Disapprove" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Disapprove.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EvaluationManagementPanelNoVisited" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationManagementPanelNoVisited.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationManagementPanelNoVisited.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationManagementPanelCustomerToVisit" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationManagementPanelCustomerToVisit.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationManagementPanelCustomerToVisit.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="RequestDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\RequestDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Request\RequestDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonAddressDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonAddressDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonAddressDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonCompressorDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonCompressorDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonCompressorDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PersonContactDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PersonContactDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Person\PersonContactDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductCodeDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductCodeDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductCodeDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ProductProviderCodeDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ProductProviderCodeDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Product\ProductProviderCodeDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationManagementPanelMonthSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationManagementPanelMonthSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationManagementPanelMonthSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationManagementPanelFillChartProductivityChartSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationManagementPanelFillChartProductivityChartSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationManagementPanelFillChartProductivityChartSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CompressorDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CompressorDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Compressor\CompressorDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashFlowDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashFlowDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashFlowDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashFlowFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashFlowFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashFlowFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashFlowInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashFlowInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashFlowInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashFlowSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashFlowSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashFlowSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashFlowUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashFlowUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashFlowUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashFlow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\CashFlow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CashFlowsIDSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashFlowsIDSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashFlowsIDSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashReportCashSheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashReportCashSheet.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashReportCashSheet.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationManagementUnit" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationManagementUnit.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationManagementUnit.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationManagementPanelUnitOverdue" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationManagementPanelUnitOverdue .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationManagementPanelUnitOverdue .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationCount" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationCount.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationCount.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationTechnicianDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationTechnicianDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationTechnicianDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationTechnicianInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationTechnicianInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationTechnicianInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationTechnicianSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationTechnicianSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationTechnicianSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationTechnicianUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationTechnicianUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationTechnicianUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="MaintenancePlan" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\MaintenancePlan.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashCount" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashCount.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashCount.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashSetStatus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashSetStatus.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashSetStatus.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CloseCash" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\CloseCash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -938,52 +938,52 @@
     <value>..\Resources\Image\OpenCash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EmailSignatureDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EmailSignatureDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\EmailSignature\EmailSignatureDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EmailSignatureFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EmailSignatureFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\EmailSignature\EmailSignatureFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EmailSignatureInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EmailSignatureInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\EmailSignature\EmailSignatureInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EmailSignatureSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EmailSignatureSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\EmailSignature\EmailSignatureSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EmailSignatureUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EmailSignatureUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\EmailSignature\EmailSignatureUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EmailSignaturesSelectByUser" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EmailSignaturesSelectByUser.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\EmailSignature\EmailSignaturesSelectByUser.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="icon_i" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icon\icon-i.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CrmDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CrmDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\CRM\CrmDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CrmInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CrmInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\CRM\CrmInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CrmSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CrmSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\CRM\CrmSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CrmTreatmentDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CrmTreatmentDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\CRM\CrmTreatmentDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CrmTreatmentInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CrmTreatmentInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\CRM\CrmTreatmentInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CrmTreatmentSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CrmTreatmentSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\CRM\CrmTreatmentSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CrmTreatmentUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CrmTreatmentUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\CRM\CrmTreatmentUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CrmUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CrmUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\CRM\CrmUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CrmFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CrmFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\CRM\CrmFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CRM" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\CRM.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -998,7 +998,7 @@
     <value>..\Resources\Image\ContactWhatsapp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="UserPersonShortNameSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserPersonShortNameSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\User\UserPersonShortNameSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CrmCards" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Html\CrmCards.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -1010,25 +1010,25 @@
     <value>..\Resources\Image\Pending.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CrmSetStatus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CrmSetStatus.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\CRM\CrmSetStatus.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CrmDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CrmDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\CRM\CrmDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CrmGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\CrmGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="CashFlowAuthorizedDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashFlowAuthorizedDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashFlowAuthorizedDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashFlowAuthorizedInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashFlowAuthorizedInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashFlowAuthorizedInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashFlowAuthorizedSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashFlowAuthorizedSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashFlowAuthorizedSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashFlowAuthorizedUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\CashFlowAuthorizedUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Cash\CashFlowAuthorizedUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Import" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Import.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -1037,31 +1037,31 @@
     <value>..\Resources\Html\Loading.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationPhotoDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationPhotoDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationPhotoDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationPhotoInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationPhotoInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationPhotoInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationPhotoSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationPhotoSelect .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationPhotoSelect .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationPhotoUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationPhotoUpdate .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationPhotoUpdate .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="VisitScheduleDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\VisitScheduleDelete .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\VisitSchedule\VisitScheduleDelete .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="VisitScheduleFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\VisitScheduleFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\VisitSchedule\VisitScheduleFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="VisitScheduleInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\VisitScheduleInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\VisitSchedule\VisitScheduleInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="VisitScheduleSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\VisitScheduleSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\VisitSchedule\VisitScheduleSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="VisitScheduleUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\VisitScheduleUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\VisitSchedule\VisitScheduleUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\EvaluationSmall.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -1070,7 +1070,7 @@
     <value>..\Resources\Image\VisitSchedule.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="UserPrivilegeDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\UserPrivilegeDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\User\UserPrivilegeDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="CashFlowGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\CashFlowGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
@@ -1082,28 +1082,28 @@
     <value>..\Resources\XML\EvaluationPartGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PrivilegePresetDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PrivilegePresetDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\PrivilegePreset\PrivilegePresetDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PrivilegePresetInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PrivilegePresetInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\PrivilegePreset\PrivilegePresetInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PrivilegePresetPrivilegeDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PrivilegePresetPrivilegeDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\PrivilegePreset\PrivilegePresetPrivilegeDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PrivilegePresetPrivilegeInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PrivilegePresetPrivilegeInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\PrivilegePreset\PrivilegePresetPrivilegeInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PrivilegePresetPrivilegeSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PrivilegePresetPrivilegeSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\PrivilegePreset\PrivilegePresetPrivilegeSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PrivilegePresetSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PrivilegePresetSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\PrivilegePreset\PrivilegePresetSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PrivilegePresetUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PrivilegePresetUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\PrivilegePreset\PrivilegePresetUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PrivilegePresetFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PrivilegePresetFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\PrivilegePreset\PrivilegePresetFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="PrivilegePresetGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\PrivilegePresetGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
@@ -1115,49 +1115,49 @@
     <value>..\Resources\XML\VisitScheduleGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="EvaluationReplacedPartDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationReplacedPartDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationReplacedPartDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationReplacedPartInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationReplacedPartInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationReplacedPartInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationReplacedPartSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationReplacedPartSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationReplacedPartSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationReplacedPartUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\EvaluationReplacedPartUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Evaluation\EvaluationReplacedPartUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationTechnicianGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\EvaluationTechnicianGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="ServiceComplementDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ServiceComplementDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Service\ServiceComplementDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ServiceComplementDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ServiceComplementDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Service\ServiceComplementDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ServiceComplementInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ServiceComplementInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Service\ServiceComplementInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ServiceComplementSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ServiceComplementSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Service\ServiceComplementSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ServiceComplementUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ServiceComplementUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Service\ServiceComplementUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ServiceDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ServiceDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Service\ServiceDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ServiceInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ServiceInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Service\ServiceInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ServiceSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ServiceSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Service\ServiceSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ServiceUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ServiceUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Service\ServiceUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ServiceFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ServiceFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Service\ServiceFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Service" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Service.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -1169,34 +1169,34 @@
     <value>..\Resources\XML\ServiceGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PriceTableDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PriceTableDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Resources\SQL\PriceTable\PriceTableDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PriceTableFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PriceTableFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Resources\SQL\PriceTable\PriceTableFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PriceTableInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PriceTableInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Resources\SQL\PriceTable\PriceTableInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PriceTableItemDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PriceTableItemDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Resources\SQL\PriceTable\PriceTableItemDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PriceTableItemInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PriceTableItemInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Resources\SQL\PriceTable\PriceTableItemInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PriceTableItemSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PriceTableItemSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Resources\SQL\PriceTable\PriceTableItemSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PriceTableItemUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PriceTableItemUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Resources\SQL\PriceTable\PriceTableItemUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PriceTableSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PriceTableSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Resources\SQL\PriceTable\PriceTableSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PriceTableUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PriceTableUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Resources\SQL\PriceTable\PriceTableUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PriceTableItemDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PriceTableItemDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Resources\SQL\PriceTable\PriceTableItemDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PriceTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\PriceTable.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -1208,12 +1208,27 @@
     <value>..\Resources\XML\PriceTableItemGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="ServicePriceSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ServicePriceSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Resources\SQL\Service\ServicePriceSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="ServicePriceDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\ServicePriceDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Resources\SQL\Service\ServicePriceDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PriceTableGetPriceTableName" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\PriceTableGetPriceTableName.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\PriceTable\PriceTableGetPriceTableName.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ServiceCodeDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Service\ServiceCodeDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ServiceCodeDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Service\ServiceCodeDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ServiceCodeInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Service\ServiceCodeInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ServiceCodeSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Service\ServiceCodeSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ServiceCodeUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Service\ServiceCodeUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

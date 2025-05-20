@@ -53,10 +53,12 @@ Public Class FrmService
         LoadForm()
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        DgvCodeLayout.Load()
         DgvPriceLayout.Load()
         DgvComplementLayout.Load()
     End Sub
     Private Sub LoadForm()
+        ControlHelper.EnableControlDoubleBuffer(DgvCode, True)
         ControlHelper.EnableControlDoubleBuffer(DgvPrice, True)
         ControlHelper.EnableControlDoubleBuffer(DgvComplement, True)
         DgvNavigator.DataGridView = _ServicesGrid
@@ -71,9 +73,11 @@ Public Class FrmService
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Service.Status)
         LblCreationValue.Text = _Service.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _Service.Name
-        TxtServiceCode.Text = _Service.ServiceCode
         TxtNote.Text = _Service.Note
+        TxtFilterCode.Clear()
         TxtFilterDescription.Clear()
+        TxtFilterPrice.Clear()
+        If _Service.Codes IsNot Nothing Then DgvCode.Fill(_Service.Codes)
         If _Service.Prices IsNot Nothing Then DgvPrice.Fill(_Service.Prices)
         If _Service.Complements IsNot Nothing Then DgvComplement.Fill(_Service.Complements)
         BtnDelete.Enabled = _Service.ID > 0 And _User.CanDelete(Routine.Service)
@@ -116,6 +120,7 @@ Public Class FrmService
                 End If
             End If
             If _ServicesForm IsNot Nothing Then
+                DgvCode.Fill(_Service.Codes)
                 DgvPrice.Fill(_Service.Prices)
                 DgvComplement.Fill(_Service.Complements)
             End If
@@ -182,9 +187,7 @@ Public Class FrmService
         EprValidation.Clear()
         BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
-
     Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtName.TextChanged,
-                                                                          TxtServiceCode.TextChanged,
                                                                           TxtNote.TextChanged
 
         EprValidation.Clear()
@@ -211,8 +214,30 @@ Public Class FrmService
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
         Save()
     End Sub
-
-
+    Private Sub BtnIncludeCode_Click(sender As Object, e As EventArgs) Handles BtnIncludeCode.Click
+        Dim Form As New FrmServiceCode(_Service, New ServiceCode, Me)
+        Form.ShowDialog()
+    End Sub
+    Private Sub BtnEditCode_Click(sender As Object, e As EventArgs) Handles BtnEditCode.Click
+        Dim Form As FrmServiceCode
+        Dim Code As ServiceCode
+        If DgvCode.SelectedRows.Count = 1 Then
+            Code = _Service.Codes.Single(Function(x) x.Guid = DgvCode.SelectedRows(0).Cells("Guid").Value)
+            Form = New FrmServiceCode(_Service, Code, Me)
+            Form.ShowDialog()
+        End If
+    End Sub
+    Private Sub BtnDeleteCode_Click(sender As Object, e As EventArgs) Handles BtnDeleteCode.Click
+        Dim Code As ServiceCode
+        If DgvCode.SelectedRows.Count = 1 Then
+            If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+                Code = _Service.Codes.Single(Function(x) x.Guid = DgvCode.SelectedRows(0).Cells("Guid").Value)
+                _Service.Codes.Remove(Code)
+                DgvCode.Fill(_Service.Codes)
+                BtnSave.Enabled = True
+            End If
+        End If
+    End Sub
     Private Sub BtnIncludePrice_Click(sender As Object, e As EventArgs) Handles BtnIncludePrice.Click
         Dim Form As New FrmServicePrice(_Service, New ServicePrice, Me)
         Form.ShowDialog()
@@ -237,8 +262,6 @@ Public Class FrmService
             End If
         End If
     End Sub
-
-
     Private Sub BtnIncludeComplement_Click(sender As Object, e As EventArgs) Handles BtnIncludeComplement.Click
         Dim Form As New FrmServiceComplement(_Service, New ServiceComplement, Me)
         Form.ShowDialog()
@@ -252,7 +275,7 @@ Public Class FrmService
             Form.ShowDialog()
         End If
     End Sub
-    Private Sub BtnDeleteCode_Click(sender As Object, e As EventArgs) Handles BtnDeleteComplement.Click
+    Private Sub BtnDeleteComplement_Click(sender As Object, e As EventArgs) Handles BtnDeleteComplement.Click
         Dim Complement As ServiceComplement
         If DgvComplement.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
@@ -265,7 +288,7 @@ Public Class FrmService
     End Sub
     Private Sub TcPerson_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcService.SelectedIndexChanged
         If TcService.SelectedTab Is TabMain Then
-            Size = New Size(515, 225)
+            Size = New Size(460, 225)
             FormBorderStyle = FormBorderStyle.FixedSingle
             WindowState = FormWindowState.Normal
             MaximizeBox = False
@@ -281,6 +304,12 @@ Public Class FrmService
         If e.ColumnIndex = Dgv.Columns("Price").Index Then
             e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             e.CellStyle.Format = "N2"
+        End If
+    End Sub
+    Private Sub DgvCode_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvCode.MouseDoubleClick
+        Dim ClickPlace As DataGridView.HitTestInfo = DgvCode.HitTest(e.X, e.Y)
+        If ClickPlace.Type = DataGridViewHitTestType.Cell Then
+            BtnEditCode.PerformClick()
         End If
     End Sub
     Private Sub DgvPrice_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvPrice.MouseDoubleClick
@@ -302,12 +331,6 @@ Public Class FrmService
             TcService.SelectedTab = TabMain
             TxtName.Select()
             Return False
-        ElseIf String.IsNullOrWhiteSpace(TxtServiceCode.Text) Then
-            EprValidation.SetError(LblServiceCode, "Campo obrigatório.")
-            EprValidation.SetIconAlignment(LblServiceCode, ErrorIconAlignment.MiddleRight)
-            TcService.SelectedTab = TabMain
-            TxtName.Select()
-            Return False
         End If
         Return True
     End Function
@@ -316,7 +339,6 @@ Public Class FrmService
         Dim DocumentPath As String = String.Empty
         Dim Success As Boolean
         TxtName.Text = TxtName.Text.Trim.ToUnaccented()
-        TxtServiceCode.Text = TxtServiceCode.Text.Trim.ToUnaccented()
         TxtNote.Text = TxtNote.Text.ToUpper.ToUnaccented()
         If _Service.LockInfo.IsLocked And _Service.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Service.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
@@ -327,12 +349,13 @@ Public Class FrmService
                     Cursor = Cursors.WaitCursor
                     _Service.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
                     _Service.Name = TxtName.Text
-                    _Service.ServiceCode = TxtServiceCode.Text
                     _Service.Note = TxtNote.Text
                     _Service.SaveChanges()
                     _Service.Lock()
                     LblIDValue.Text = _Service.ID
+                    DgvCode.Fill(_Service.Prices)
                     DgvComplement.Fill(_Service.Complements)
+                    DgvPrice.Fill(_Service.Prices)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Service)
                     If _ServicesForm IsNot Nothing Then
@@ -355,73 +378,16 @@ Public Class FrmService
         End If
         Return Success
     End Function
-    Private Sub TxtKeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtFilterDescription.KeyPress
+    Private Sub TxtKeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtFilterCode.KeyPress, TxtFilterPrice.KeyPress, TxtFilterDescription.KeyPress
         Dim LstChar As New List(Of Char) From {" ", ".", ",", "-", "/", "(", ")", "+", "*", "%", "&", "@", "#", "$", "<", ">", "\"}
         If Not Char.IsLetter(e.KeyChar) And Not Char.IsNumber(e.KeyChar) And Not LstChar.Contains(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
             e.Handled = True
         End If
     End Sub
-    Private Sub TxtFilterComplement_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterComplement.TextChanged
-        FilterComplement()
-    End Sub
-    Private Sub FilterComplement()
+    Private Sub FilterCode()
         Dim Table As DataTable
         Dim View As DataView
-        Dim Filter As String = String.Format("{0} OR {1}",
-                                                 "Complement LIKE '%@VALUE%'",
-                                                 "Convert([Complement], 'System.String') LIKE '%@VALUE%'"
-                                            )
-        If DgvComplement.DataSource IsNot Nothing Then
-            Table = DgvComplement.DataSource
-            View = Table.DefaultView
-            If TxtFilterComplement.Text <> Nothing Then
-                Filter = Filter.Replace("@VALUE", TxtFilterComplement.Text.Replace("%", Nothing).Replace("*", Nothing))
-                View.RowFilter = Filter
-            Else
-                View.RowFilter = Nothing
-            End If
-        End If
-    End Sub
-
-    Private Sub TxtFilterComplement_Enter(sender As Object, e As EventArgs) Handles TxtFilterComplement.Enter
-        EprInformation.SetError(TsComplement, "Filtrando os campo: Complemento.")
-        EprInformation.SetIconAlignment(TsComplement, ErrorIconAlignment.MiddleLeft)
-        EprInformation.SetIconPadding(TsComplement, -365)
-    End Sub
-    Private Sub TxtFilterComplement_Leave(sender As Object, e As EventArgs) Handles TxtFilterComplement.Leave
-        EprInformation.Clear()
-    End Sub
-
-    Private Sub FrmService_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-        _Service.Unlock()
-    End Sub
-    Private Sub DgvComplement_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvComplement.DataSourceChanged
-        FilterComplement()
-    End Sub
-
-    Private Sub DgvComplement_SelectionChanged(sender As Object, e As EventArgs) Handles DgvComplement.SelectionChanged
-        If DgvComplement.SelectedRows.Count = 0 Then
-            BtnEditComplement.Enabled = False
-            BtnDeleteComplement.Enabled = False
-        Else
-            BtnEditComplement.Enabled = True
-            BtnDeleteComplement.Enabled = True
-        End If
-    End Sub
-
-
-
-
-
-
-
-
-    Private Sub FilterPrice()
-        Dim Table As DataTable
-        Dim View As DataView
-        Dim Filter As String = String.Format("{0}",
-                                                 "PriceTableName LIKE '%@VALUE%'"
-                                            )
+        Dim Filter As String = String.Format("{0} OR {1}", "Name LIKE '%@VALUE%'", "Code LIKE '%@VALUE%'")
         If DgvPrice.DataSource IsNot Nothing Then
             Table = DgvPrice.DataSource
             View = Table.DefaultView
@@ -433,14 +399,92 @@ Public Class FrmService
             End If
         End If
     End Sub
-    Private Sub TxtFilterPriceComplement_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterPrice.TextChanged
-        FilterPrice()
+    Private Sub TxtFilterCode_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterCode.TextChanged
+        FilterCode()
     End Sub
 
-    Private Sub TxtFilterPrice_Enter(sender As Object, e As EventArgs) Handles TxtFilterPrice.Enter
-        EprInformation.SetError(TsComplement, "Filtrando os campo: Tabela de Preços.")
+    Private Sub TxtFilterCode_Enter(sender As Object, e As EventArgs) Handles TxtFilterCode.Enter
+        EprInformation.SetError(TsCode, "Filtrando os campo: Nome e Código.")
+        EprInformation.SetIconAlignment(TsCode, ErrorIconAlignment.MiddleLeft)
+        EprInformation.SetIconPadding(TsCode, -365)
+    End Sub
+    Private Sub TxtFilterCode_Leave(sender As Object, e As EventArgs) Handles TxtFilterCode.Leave
+        EprInformation.Clear()
+    End Sub
+
+    Private Sub DgvCode_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvCode.DataSourceChanged
+        FilterCode()
+    End Sub
+
+    Private Sub DgvCode_SelectionChanged(sender As Object, e As EventArgs) Handles DgvCode.SelectionChanged
+        If DgvCode.SelectedRows.Count = 0 Then
+            BtnEditCode.Enabled = False
+            BtnDeleteCode.Enabled = False
+        Else
+            BtnEditCode.Enabled = True
+            BtnDeleteCode.Enabled = True
+        End If
+    End Sub
+    Private Sub TxtFilterComplement_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterComplement.TextChanged
+        FilterComplement()
+    End Sub
+    Private Sub FilterComplement()
+        Dim Table As DataTable
+        Dim View As DataView
+        Dim Filter As String = String.Format("{0}", "Complement LIKE '%@VALUE%'")
+        If DgvComplement.DataSource IsNot Nothing Then
+            Table = DgvComplement.DataSource
+            View = Table.DefaultView
+            If TxtFilterComplement.Text <> Nothing Then
+                Filter = Filter.Replace("@VALUE", TxtFilterComplement.Text.Replace("%", Nothing).Replace("*", Nothing))
+                View.RowFilter = Filter
+            Else
+                View.RowFilter = Nothing
+            End If
+        End If
+    End Sub
+    Private Sub TxtFilterComplement_Enter(sender As Object, e As EventArgs) Handles TxtFilterComplement.Enter
+        EprInformation.SetError(TsComplement, "Filtrando os campo: Complemento.")
         EprInformation.SetIconAlignment(TsComplement, ErrorIconAlignment.MiddleLeft)
         EprInformation.SetIconPadding(TsComplement, -365)
+    End Sub
+    Private Sub TxtFilterComplement_Leave(sender As Object, e As EventArgs) Handles TxtFilterComplement.Leave
+        EprInformation.Clear()
+    End Sub
+    Private Sub DgvComplement_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvComplement.DataSourceChanged
+        FilterComplement()
+    End Sub
+    Private Sub DgvComplement_SelectionChanged(sender As Object, e As EventArgs) Handles DgvComplement.SelectionChanged
+        If DgvComplement.SelectedRows.Count = 0 Then
+            BtnEditComplement.Enabled = False
+            BtnDeleteComplement.Enabled = False
+        Else
+            BtnEditComplement.Enabled = True
+            BtnDeleteComplement.Enabled = True
+        End If
+    End Sub
+    Private Sub FilterPrice()
+        Dim Table As DataTable
+        Dim View As DataView
+        Dim Filter As String = String.Format("{0}", "PriceTableName LIKE '%@VALUE%'")
+        If DgvPrice.DataSource IsNot Nothing Then
+            Table = DgvPrice.DataSource
+            View = Table.DefaultView
+            If TxtFilterPrice.Text <> Nothing Then
+                Filter = Filter.Replace("@VALUE", TxtFilterPrice.Text.Replace("%", Nothing).Replace("*", Nothing))
+                View.RowFilter = Filter
+            Else
+                View.RowFilter = Nothing
+            End If
+        End If
+    End Sub
+    Private Sub TxtFilterPrice_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterPrice.TextChanged
+        FilterPrice()
+    End Sub
+    Private Sub TxtFilterPrice_Enter(sender As Object, e As EventArgs) Handles TxtFilterPrice.Enter
+        EprInformation.SetError(TsPrice, "Filtrando os campo: Tabela de Preços.")
+        EprInformation.SetIconAlignment(TsPrice, ErrorIconAlignment.MiddleLeft)
+        EprInformation.SetIconPadding(TsPrice, -365)
     End Sub
     Private Sub TxtFilterPrice_Leave(sender As Object, e As EventArgs) Handles TxtFilterPrice.Leave
         EprInformation.Clear()
@@ -449,7 +493,6 @@ Public Class FrmService
     Private Sub DgvPrice_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvPrice.DataSourceChanged
         FilterPrice()
     End Sub
-
     Private Sub DgvPrice_SelectionChanged(sender As Object, e As EventArgs) Handles DgvPrice.SelectionChanged
         If DgvPrice.SelectedRows.Count = 0 Then
             BtnEditPrice.Enabled = False
@@ -458,5 +501,8 @@ Public Class FrmService
             BtnEditPrice.Enabled = True
             BtnDeletePrice.Enabled = True
         End If
+    End Sub
+    Private Sub FrmService_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        _Service.Unlock()
     End Sub
 End Class

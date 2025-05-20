@@ -29,12 +29,6 @@
 	<Column Index="4">
 		<Visible>True</Visible>
 		<DisplayIndex>4</DisplayIndex>
-		<Name>Cód. Serviço</Name>
-		<Width>400</Width>
-	</Column>
-	<Column Index="5">
-		<Visible>True</Visible>
-		<DisplayIndex>5</DisplayIndex>
 		<Name>Observação</Name>
 		<Width>100</Width>
 	</Column>	

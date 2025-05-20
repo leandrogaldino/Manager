@@ -86,7 +86,6 @@ CREATE TABLE service (
     creation DATE NOT NULL,
     statusid INT NOT NULL,
     name VARCHAR(255) NOT NULL,
-    servicecode VARCHAR(20) NOT NULL,
     note LONGTEXT,
     userid INT NOT NULL,
 	PRIMARY KEY(id),
@@ -131,6 +130,20 @@ CREATE TABLE pricetableitem (
 	UNIQUE (pricetableid, productid),
 	UNIQUE (pricetableid, serviceid)
 );
+CREATE TABLE `servicecode` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `serviceid` int NOT NULL,
+  `creation` date NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `code` varchar(20) NOT NULL,
+  `userid` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `serviceid` (`serviceid`),
+  KEY `userid` (`userid`),
+  CONSTRAINT `servicecode_service` FOREIGN KEY (`serviceid`) REFERENCES `service` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `servicecode_user` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT
+);
+
 DELIMITER $$
 DROP TRIGGER IF EXISTS `manager`.`personcompressorpartupdate`$$
 CREATE TRIGGER `personcompressorpartupdate` AFTER UPDATE ON `personcompressorpart` FOR EACH ROW BEGIN
@@ -209,7 +222,6 @@ DROP TRIGGER IF EXISTS `manager`.`serviceupdate` $$
 CREATE TRIGGER `serviceupdate` AFTER UPDATE ON `service` FOR EACH ROW BEGIN
 IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 23, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'ATIVO' WHEN OLD.statusid = 1 THEN 'INATIVO' END, CASE WHEN NEW.statusid = 0 THEN 'ATIVO' WHEN NEW.statusid = 1 THEN 'INATIVO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.name <> NEW.name THEN INSERT INTO log VALUES (NULL, 23, NEW.id, 'Nome', OLD.name, NEW.name, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-IF OLD.servicecode <> NEW.servicecode THEN INSERT INTO log VALUES (NULL, 23, NEW.id, 'Cód. Serviço', OLD.servicecode, NEW.servicecode, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF IFNULL(OLD.note, '') <> IFNULL(NEW.note, '') THEN INSERT INTO log VALUES (NULL, 23, NEW.id, 'Observação', OLD.note, NEW.note, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DROP TRIGGER IF EXISTS `manager`.`servicecomplementinsert` $$
@@ -273,7 +285,18 @@ IF (
         CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
 END IF;
 IF OLD.price <> NEW.price THEN INSERT INTO log VALUES (NULL, 801, NEW.id, 'Preço', FORMAT(OLD.price, 2, 'pt_BR'), FORMAT(NEW.price, 2, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-END
+END$$
+
+CREATE TRIGGER `servicecodeinsert` AFTER INSERT ON `servicecode` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 2303, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END$$
+CREATE TRIGGER `servicecodedelete` AFTER DELETE ON `servicecode` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 2303, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
+END$$
+CREATE TRIGGER `servicecodeupdate` AFTER UPDATE ON `servicecode` FOR EACH ROW BEGIN
+IF OLD.name <> NEW.name THEN INSERT INTO log VALUES (NULL, 2303, NEW.id, 'Nome', OLD.name, NEW.name, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.code <> NEW.code THEN INSERT INTO log VALUES (NULL, 2303, NEW.id, 'Código', OLD.code, NEW.code, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+END$$
 DELIMITER ;
 
 INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 0, 1);

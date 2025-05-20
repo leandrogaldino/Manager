@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class FrmProductCode
+Partial Class FrmServiceCode
     Inherits System.Windows.Forms.Form
 
     'Descartar substituições de formulário para limpar a lista de componentes.
@@ -272,13 +272,13 @@ Partial Class FrmProductCode
         '
         Me.CbxName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CbxName.FormattingEnabled = True
-        Me.CbxName.Items.AddRange(New Object() {"ANP", "EAN", "NCM", "SKU"})
+        Me.CbxName.Items.AddRange(New Object() {"Cód. da Lista de Serviços"})
         Me.CbxName.Location = New System.Drawing.Point(12, 73)
         Me.CbxName.Name = "CbxName"
         Me.CbxName.Size = New System.Drawing.Size(157, 25)
         Me.CbxName.TabIndex = 3
         '
-        'FrmProductCode
+        'FrmServiceCode
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
@@ -296,9 +296,9 @@ Partial Class FrmProductCode
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "FrmProductCode"
+        Me.Name = "FrmServiceCode"
         Me.ShowIcon = False
-        Me.Text = "Código de Produto"
+        Me.Text = "Código de Serviço"
         Me.TsMain.ResumeLayout(False)
         Me.TsMain.PerformLayout()
         Me.Panel1.ResumeLayout(False)

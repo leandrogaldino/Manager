@@ -20,11 +20,16 @@ Public Class ServiceFilter
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(UpperNoAccentConverter))>
     Public Property Name As String
-    <DisplayName("Código Serviço")>
+    <DisplayName("Código")>
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(UpperNoAccentConverter))>
-    Public Property ServiceCode As String
+    Public Property Code As String
+    <DisplayName("Complemento")>
+    <NotifyParentProperty(True)>
+    <RefreshProperties(RefreshProperties.All)>
+    <TypeConverter(GetType(UpperNoAccentConverter))>
+    Public Property Complement As String
     <DisplayName("Observação")>
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
@@ -55,7 +60,8 @@ Public Class ServiceFilter
                 If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
                 If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = EnumHelper.GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
                 If Name <> Nothing Then Cmd.Parameters.AddWithValue("@name", Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@name", "%")
-                If ServiceCode <> Nothing Then Cmd.Parameters.AddWithValue("@code", ServiceCode) : Filtering = True Else Cmd.Parameters.AddWithValue("@servicecode", "%")
+                If Code <> Nothing Then Cmd.Parameters.AddWithValue("@code", Code) : Filtering = True Else Cmd.Parameters.AddWithValue("@code", "%")
+                If Complement <> Nothing Then Cmd.Parameters.AddWithValue("@complement", Complement) : Filtering = True Else Cmd.Parameters.AddWithValue("@complement", "%")
                 If Note <> Nothing Then Cmd.Parameters.AddWithValue("@note", Note) : Filtering = True Else Cmd.Parameters.AddWithValue("@note", "%")
                 Using Adp As New MySqlDataAdapter(Cmd)
                     Adp.Fill(Table)
@@ -88,7 +94,8 @@ Public Class ServiceFilter
         ID = Nothing
         Status = Nothing
         Name = Nothing
-        ServiceCode = Nothing
+        Code = Nothing
+        Complement = Nothing
         Note = Nothing
     End Sub
 End Class

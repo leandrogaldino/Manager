@@ -7,7 +7,7 @@ Public Class Service
     Inherits Sellable
     Private _Shadow As Service
     Public Property Complements As New List(Of ServiceComplement)
-    Public Property ServiceCode As String
+    Public Property Codes As New List(Of ServiceCode)
     Public Property Prices As New List(Of ServicePrice)
     Public Sub New()
         SetRoutine(Routine.Service)
@@ -21,7 +21,7 @@ Public Class Service
         Name = Nothing
         Complements = New List(Of ServiceComplement)
         Prices = New List(Of ServicePrice)
-        ServiceCode = Nothing
+        Codes = New List(Of ServiceCode)
         Note = Nothing
         If LockInfo.IsLocked Then Unlock()
     End Sub
@@ -48,7 +48,7 @@ Public Class Service
                         Name = TableResult.Rows(0).Item("name").ToString
                         Prices = GetPrices(Tra)
                         Complements = GetComplements(Tra)
-                        ServiceCode = TableResult.Rows(0).Item("servicecode").ToString
+                        Codes = GetCodes(Tra)
                         Note = TableResult.Rows(0).Item("note").ToString
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
@@ -94,7 +94,6 @@ Public Class Service
                     CmdService.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     CmdService.Parameters.AddWithValue("@statusid", CInt(Status))
                     CmdService.Parameters.AddWithValue("@name", Name)
-                    CmdService.Parameters.AddWithValue("@servicecode", ServiceCode)
                     CmdService.Parameters.AddWithValue("@note", If(String.IsNullOrEmpty(Note), DBNull.Value, Note))
                     CmdService.Parameters.AddWithValue("@userid", User.ID)
                     CmdService.ExecuteNonQuery()
@@ -122,6 +121,17 @@ Public Class Service
                         Price.SetID(CmdPrice.LastInsertedId)
                     End Using
                 Next Price
+                For Each Code As ServiceCode In Codes
+                    Using CmdCode As New MySqlCommand(My.Resources.ServiceCodeInsert, Con, Tra)
+                        CmdCode.Parameters.AddWithValue("@serviceid", ID)
+                        CmdCode.Parameters.AddWithValue("@creation", Code.Creation)
+                        CmdCode.Parameters.AddWithValue("@name", Code.Name)
+                        CmdCode.Parameters.AddWithValue("@code", Code.Code)
+                        CmdCode.Parameters.AddWithValue("@userid", Code.User.ID)
+                        CmdCode.ExecuteNonQuery()
+                        Code.SetID(CmdCode.LastInsertedId)
+                    End Using
+                Next Code
                 Tra.Commit()
             End Using
         End Using
@@ -134,7 +144,6 @@ Public Class Service
                     CmdService.Parameters.AddWithValue("@id", ID)
                     CmdService.Parameters.AddWithValue("@statusid", CInt(Status))
                     CmdService.Parameters.AddWithValue("@name", Name)
-                    CmdService.Parameters.AddWithValue("@servicecode", ServiceCode)
                     CmdService.Parameters.AddWithValue("@note", If(String.IsNullOrEmpty(Note), DBNull.Value, Note))
                     CmdService.Parameters.AddWithValue("@userid", User.ID)
                     CmdService.ExecuteNonQuery()
@@ -197,6 +206,35 @@ Public Class Service
                         End Using
                     End If
                 Next Price
+                For Each Code As ServiceCode In _Shadow.Codes
+                    If Not Codes.Any(Function(x) x.ID = Code.ID And x.ID > 0) Then
+                        Using CmdCode As New MySqlCommand(My.Resources.ServiceCodeDelete, Con, Tra)
+                            CmdCode.Parameters.AddWithValue("@id", Code.ID)
+                            CmdCode.ExecuteNonQuery()
+                        End Using
+                    End If
+                Next Code
+                For Each Code As ServiceCode In Codes
+                    If Code.ID = 0 Then
+                        Using CmdCode As New MySqlCommand(My.Resources.ServiceCodeInsert, Con, Tra)
+                            CmdCode.Parameters.AddWithValue("@serviceid", ID)
+                            CmdCode.Parameters.AddWithValue("@creation", Code.Creation)
+                            CmdCode.Parameters.AddWithValue("@name", Code.Name)
+                            CmdCode.Parameters.AddWithValue("@code", Code.Code)
+                            CmdCode.Parameters.AddWithValue("@userid", Code.User.ID)
+                            CmdCode.ExecuteNonQuery()
+                            Code.SetID(CmdCode.LastInsertedId)
+                        End Using
+                    Else
+                        Using CmdCode As New MySqlCommand(My.Resources.ServiceCodeUpdate, Con, Tra)
+                            CmdCode.Parameters.AddWithValue("@id", Code.ID)
+                            CmdCode.Parameters.AddWithValue("@name", Code.Name)
+                            CmdCode.Parameters.AddWithValue("@code", Code.Code)
+                            CmdCode.Parameters.AddWithValue("@userid", Code.User.ID)
+                            CmdCode.ExecuteNonQuery()
+                        End Using
+                    End If
+                Next Code
                 Tra.Commit()
             End Using
         End Using
@@ -251,6 +289,31 @@ Public Class Service
         End Using
         Return Prices
     End Function
+    Private Function GetCodes(Transaction As MySqlTransaction) As List(Of ServiceCode)
+        Dim TableResult As DataTable
+        Dim Codes As List(Of ServiceCode)
+        Dim Code As ServiceCode
+        Using CmdCode As New MySqlCommand(My.Resources.ServiceCodeSelect, Transaction.Connection)
+            CmdCode.Transaction = Transaction
+            CmdCode.Parameters.AddWithValue("@serviceid", ID)
+            Using Adp As New MySqlDataAdapter(CmdCode)
+                TableResult = New DataTable
+                Adp.Fill(TableResult)
+                Codes = New List(Of ServiceCode)
+                For Each Row As DataRow In TableResult.Rows
+                    Code = New ServiceCode With {
+                        .Name = Row.Item("name").ToString,
+                        .Code = Row.Item("code").ToString
+                    }
+                    Code.SetIsSaved(True)
+                    Code.SetID(Row.Item("id"))
+                    Code.SetCreation(Row.Item("creation"))
+                    Codes.Add(Code)
+                Next Row
+            End Using
+        End Using
+        Return Codes
+    End Function
     Public Shared Sub FillComplementDataGridView(ServiceID As Long, Dgv As DataGridView)
         Dim TableResult As New DataTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
@@ -274,6 +337,22 @@ Public Class Service
                     Dgv.DataSource = TableResult
                     Dgv.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
                     Dgv.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                End Using
+            End Using
+        End Using
+    End Sub
+    Public Shared Sub FillCodeDataGridView(ServiceID As Long, Dgv As DataGridView)
+        Dim TableResult As New DataTable
+        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Using Cmd As New MySqlCommand(My.Resources.ServiceCodeDetailSelect, Con)
+                Cmd.Parameters.AddWithValue("@serviceid", ServiceID)
+                Using Adp As New MySqlDataAdapter(Cmd)
+                    Adp.Fill(TableResult)
+                    Dgv.DataSource = TableResult
+                    Dgv.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                    Dgv.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                    Dgv.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Dgv.Columns(1).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
                 End Using
             End Using
         End Using

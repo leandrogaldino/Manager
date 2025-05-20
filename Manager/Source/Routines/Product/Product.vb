@@ -370,9 +370,10 @@ Public Class Product
                 Adp.Fill(TableResult)
                 Codes = New List(Of ProductCode)
                 For Each Row As DataRow In TableResult.Rows
-                    Code = New ProductCode
-                    Code.Name = Row.Item("name").ToString
-                    Code.Code = Row.Item("code").ToString
+                    Code = New ProductCode With {
+                        .Name = Row.Item("name").ToString,
+                        .Code = Row.Item("code").ToString
+                    }
                     Code.SetIsSaved(True)
                     Code.SetID(Row.Item("id"))
                     Code.SetCreation(Row.Item("creation"))

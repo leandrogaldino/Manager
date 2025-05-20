@@ -9,6 +9,8 @@ Public Class FrmServices
     Public Sub New()
         InitializeComponent()
         ControlHelper.EnableControlDoubleBuffer(DgvData, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvCode, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvPrice, True)
         ControlHelper.EnableControlDoubleBuffer(DgvComplement, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
@@ -39,6 +41,8 @@ Public Class FrmServices
                 Cursor = Cursors.WaitCursor
                 _Service = New Service().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
                 ServiceForm = New FrmService(_Service, Me)
+                ServiceForm.DgvCode.Fill(_Service.Codes)
+                ServiceForm.DgvPrice.Fill(_Service.Prices)
                 ServiceForm.DgvComplement.Fill(_Service.Complements)
                 ServiceForm.ShowDialog()
             Catch ex As Exception
@@ -171,8 +175,9 @@ Public Class FrmServices
         If BtnDetails.Checked Then
             If DgvData.SelectedRows.Count = 1 Then
                 Try
-                    Service.FillComplementDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvComplement)
+                    Service.FillCodeDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvCode)
                     Service.FillPriceDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPrice)
+                    Service.FillComplementDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvComplement)
                 Catch ex As Exception
                     TmrLoadDetails.Stop()
                     CMessageBox.Show("ERRO SV004", "Ocorreu um erro ao consultar os dados do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

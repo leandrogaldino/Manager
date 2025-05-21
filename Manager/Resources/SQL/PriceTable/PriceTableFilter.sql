@@ -2,8 +2,8 @@
 	pricetable.id AS 'ID',
     pricetable.creation AS 'Criação',
     CASE 
-		WHEN pricetable.pricetabletypeid = 0 THEN "USUÁRIO"
-        WHEN pricetable.pricetabletypeid = 1 THEN "SISTEMA"
+		WHEN pricetable.sourceid = 0 THEN "USUÁRIO"
+        WHEN pricetable.sourceid = 1 THEN "SISTEMA"
 	END AS 'Tipo',
     CASE 
 		WHEN pricetable.statusid = 0 THEN "ATIVO"
@@ -17,7 +17,7 @@ LEFT JOIN service ON service.id = pricetableitem.serviceid
 LEFT JOIN productprovidercode ON productprovidercode.productid = product.id
 WHERE
 	IFNULL(pricetable.id, '') LIKE @id AND
-    IFNULL(pricetable.pricetabletypeid, '') LIKE @pricetabletypeid AND
+    IFNULL(pricetable.sourceid, '') LIKE @sourceid AND
     IFNULL(pricetable.statusid, '') LIKE @statusid AND
     IFNULL(pricetable.name, '') LIKE CONCAT('%', @name, '%') AND
     (

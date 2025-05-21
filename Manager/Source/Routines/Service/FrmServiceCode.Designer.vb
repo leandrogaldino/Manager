@@ -56,7 +56,7 @@ Partial Class FrmServiceCode
         '
         Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnClose.Location = New System.Drawing.Point(237, 7)
+        Me.BtnClose.Location = New System.Drawing.Point(283, 7)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(95, 30)
         Me.BtnClose.TabIndex = 1
@@ -67,7 +67,7 @@ Partial Class FrmServiceCode
         '
         Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnSave.Enabled = False
-        Me.BtnSave.Location = New System.Drawing.Point(136, 7)
+        Me.BtnSave.Location = New System.Drawing.Point(182, 7)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(95, 30)
         Me.BtnSave.TabIndex = 0
@@ -84,7 +84,7 @@ Partial Class FrmServiceCode
         Me.TsMain.Location = New System.Drawing.Point(0, 0)
         Me.TsMain.Name = "TsMain"
         Me.TsMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsMain.Size = New System.Drawing.Size(344, 25)
+        Me.TsMain.Size = New System.Drawing.Size(390, 25)
         Me.TsMain.TabIndex = 0
         Me.TsMain.Text = "ToolStrip2"
         '
@@ -176,7 +176,7 @@ Partial Class FrmServiceCode
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel1.Location = New System.Drawing.Point(0, 107)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(344, 44)
+        Me.Panel1.Size = New System.Drawing.Size(390, 44)
         Me.Panel1.TabIndex = 6
         '
         'EprValidation
@@ -202,7 +202,7 @@ Partial Class FrmServiceCode
         Me.TsData.Location = New System.Drawing.Point(0, 25)
         Me.TsData.Name = "TsData"
         Me.TsData.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsData.Size = New System.Drawing.Size(344, 25)
+        Me.TsData.Size = New System.Drawing.Size(390, 25)
         Me.TsData.TabIndex = 1
         Me.TsData.Text = "ToolStrip1"
         '
@@ -251,7 +251,7 @@ Partial Class FrmServiceCode
         'TxtCode
         '
         Me.TxtCode.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtCode.Location = New System.Drawing.Point(175, 75)
+        Me.TxtCode.Location = New System.Drawing.Point(221, 73)
         Me.TxtCode.MaxLength = 20
         Me.TxtCode.Name = "TxtCode"
         Me.TxtCode.Size = New System.Drawing.Size(157, 23)
@@ -261,7 +261,7 @@ Partial Class FrmServiceCode
         'LblCode
         '
         Me.LblCode.AutoSize = True
-        Me.LblCode.Location = New System.Drawing.Point(172, 55)
+        Me.LblCode.Location = New System.Drawing.Point(218, 53)
         Me.LblCode.Margin = New System.Windows.Forms.Padding(3, 5, 3, 0)
         Me.LblCode.Name = "LblCode"
         Me.LblCode.Size = New System.Drawing.Size(58, 17)
@@ -275,14 +275,14 @@ Partial Class FrmServiceCode
         Me.CbxName.Items.AddRange(New Object() {"Cód. da Lista de Serviços"})
         Me.CbxName.Location = New System.Drawing.Point(12, 73)
         Me.CbxName.Name = "CbxName"
-        Me.CbxName.Size = New System.Drawing.Size(157, 25)
+        Me.CbxName.Size = New System.Drawing.Size(203, 25)
         Me.CbxName.TabIndex = 3
         '
         'FrmServiceCode
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(344, 151)
+        Me.ClientSize = New System.Drawing.Size(390, 151)
         Me.Controls.Add(Me.CbxName)
         Me.Controls.Add(Me.LblCode)
         Me.Controls.Add(Me.LblName)

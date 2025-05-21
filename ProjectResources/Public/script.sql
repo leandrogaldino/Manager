@@ -106,7 +106,7 @@ DROP TABLE `manager`.`productpricetable`;
 
 CREATE TABLE pricetable (
 	id INT NOT NULL AUTO_INCREMENT,
-    pricetabletypeid INT NOT NULL,
+    sourceid INT NOT NULL,
     creation DATE NOT NULL,
     statusid INT NOT NULL,
     name VARCHAR(255) NOT NULL,
@@ -134,7 +134,7 @@ CREATE TABLE `servicecode` (
   `id` int NOT NULL AUTO_INCREMENT,
   `serviceid` int NOT NULL,
   `creation` date NOT NULL,
-  `name` varchar(20) NOT NULL,
+  `name` varchar(30) NOT NULL,
   `code` varchar(20) NOT NULL,
   `userid` int NOT NULL,
   PRIMARY KEY (`id`),

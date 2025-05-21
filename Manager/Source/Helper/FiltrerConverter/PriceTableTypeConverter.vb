@@ -11,8 +11,8 @@ Public Class PriceTableTypeConverter
     Public Overrides Function GetStandardValues(ByVal context As ITypeDescriptorContext) As StandardValuesCollection
         Dim List As New List(Of String) From {
             "",
-            EnumHelper.GetEnumDescription(PriceTableType.FromUser),
-            EnumHelper.GetEnumDescription(PriceTableType.FromSystem)
+            EnumHelper.GetEnumDescription(PriceTableSource.FromUser),
+            EnumHelper.GetEnumDescription(PriceTableSource.FromSystem)
         }
         Return New StandardValuesCollection(List)
     End Function

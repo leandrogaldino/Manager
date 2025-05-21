@@ -353,7 +353,7 @@ Public Class FrmService
                     _Service.SaveChanges()
                     _Service.Lock()
                     LblIDValue.Text = _Service.ID
-                    DgvCode.Fill(_Service.Prices)
+                    DgvCode.Fill(_Service.Codes)
                     DgvComplement.Fill(_Service.Complements)
                     DgvPrice.Fill(_Service.Prices)
                     BtnSave.Enabled = False

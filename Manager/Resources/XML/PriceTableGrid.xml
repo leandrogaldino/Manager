@@ -17,7 +17,7 @@
 	<Column Index="2">
 		<Visible>True</Visible>
 		<DisplayIndex>2</DisplayIndex>
-		<Name>Tipo</Name>
+		<Name>Fonte</Name>
 		<Width>100</Width>
 	</Column>
 	<Column Index="3">

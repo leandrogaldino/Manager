@@ -5651,8 +5651,8 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM servicecomplement
-        '''WHERE servicecomplement.id = @id;.
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM servicecode
+        '''WHERE servicecode.id = @id;.
         '''</summary>
         Friend ReadOnly Property ServiceCodeDelete() As String
             Get
@@ -5662,9 +5662,10 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
-        '''	servicecomplement.complement AS &apos;Complemento&apos;
-        '''FROM servicecomplement
-        '''WHERE servicecomplement.serviceid = @serviceid;.
+        '''	servicecode.name AS &apos;Nome&apos;,
+        '''    servicecode.code AS &apos;Código&apos;
+        '''FROM servicecode
+        '''WHERE servicecode.serviceid = @serviceid;.
         '''</summary>
         Friend ReadOnly Property ServiceCodeDetailSelect() As String
             Get
@@ -5673,19 +5674,48 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO servicecomplement
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;ServiceCode&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''	&lt;Column Index=&quot;0&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Ordem&lt;/Name&gt;
+        '''		&lt;Width&gt;70&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;1&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Nome&lt;/Name&gt;
+        '''		&lt;Width&gt;200&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;2&lt;/DisplayIndex&gt;
+        '''		&lt;Name [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property ServiceCodeGrid() As String
+            Get
+                Return ResourceManager.GetString("ServiceCodeGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO servicecode
         '''(
         '''	serviceid,
         '''	creation,
-        '''	complement,
-        '''
+        '''	name,
+        '''	code,
         '''	userid
         ''')
         '''VALUES
         '''(
         '''	@serviceid,
         '''	@creation,
-        '''	@complement,
+        '''	@name,
+        '''	@code,
         '''	@userid
         ''');
         '''.
@@ -5697,10 +5727,13 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
-        '''	servicecomplement.complement AS &apos;Complemento&apos;
-        '''FROM servicecomplement
-        '''WHERE servicecomplement.serviceid = @serviceid;.
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	servicecode.id,
+        '''	servicecode.creation,
+        '''	servicecode.name,
+        '''	servicecode.code
+        '''FROM servicecode
+        '''WHERE servicecode.serviceid = @serviceid;.
         '''</summary>
         Friend ReadOnly Property ServiceCodeSelect() As String
             Get
@@ -5709,12 +5742,11 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	servicecomplement.id,
-        '''	servicecomplement.creation,
-        '''	servicecomplement.complement
-        '''FROM servicecomplement
-        '''WHERE servicecomplement.serviceid = @serviceid;.
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE servicecode SET
+        '''    name = @name,
+        '''    code = @code,
+        '''    userid = @userid
+        '''WHERE servicecode.id = @id;.
         '''</summary>
         Friend ReadOnly Property ServiceCodeUpdate() As String
             Get
@@ -5840,11 +5872,11 @@ Namespace My.Resources
         '''    service.name AS &apos;Nome&apos;,
         '''    REPLACE(service.note, &apos;\n&apos;, &apos; &apos;) AS &apos;Observação&apos;
         '''FROM service
+        '''LEFT JOIN servicecode ON servicecode.serviceid = service.id
+        '''LEFT JOIN servicecomplement ON servicecomplement.serviceid = service.id
         '''WHERE
         '''	IFNULL(service.id, &apos;&apos;) LIKE @id AND
-        '''    IFNULL(service.statusid, &apos;&apos;) LIKE @statusid AND
-        '''    IFNULL(service.name, &apos;&apos;) LIKE CONCAT(&apos;%&apos;, @name, &apos;%&apos;) AND
-        '''    IFNULL(service.servicecode, &apos;&apos;) LIKE CONCAT(&apos;%&apos;, @servicecode [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''    IFNULL(service.statusid, &apos;&apos;) LIKE @statusid [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property ServiceFilter() As String
             Get
@@ -5918,6 +5950,18 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a Public Class ServicePriceGrid
+        '''
+        '''End Class
+        '''.
+        '''</summary>
+        Friend ReadOnly Property ServicePriceGrid() As String
+            Get
+                Return ResourceManager.GetString("ServicePriceGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	pricetableitem.id,
         '''	pricetableitem.creation,
@@ -5942,7 +5986,6 @@ Namespace My.Resources
         '''	service.creation,
         '''    service.statusid,
         '''	service.name,
-        '''	service.servicecode,
         '''	service.note
         '''FROM service
         '''WHERE service.id = @id;.

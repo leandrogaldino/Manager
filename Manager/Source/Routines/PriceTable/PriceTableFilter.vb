@@ -14,11 +14,11 @@ Public Class PriceTableFilter
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(UpperNoAccentConverter))>
     Public Property ID As String
-    <DisplayName("Tipo")>
+    <DisplayName("Fonte")>
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(PriceTableTypeConverter))>
-    Public Overridable Property PriceTableType As String = EnumHelper.GetEnumDescription(Manager.PriceTableType.FromUser)
+    Public Overridable Property Source As String = EnumHelper.GetEnumDescription(PriceTableSource.FromUser)
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(SimpleStatusConverter))>
@@ -56,7 +56,7 @@ Public Class PriceTableFilter
             Using Cmd As New MySqlCommand(My.Resources.PriceTableFilter, Con)
                 If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
 
-                If PriceTableType <> Nothing Then Cmd.Parameters.AddWithValue("@pricetabletypeid", If(PriceTableType = EnumHelper.GetEnumDescription(Manager.PriceTableType.FromUser), CInt(Manager.PriceTableType.FromUser), CInt(Manager.PriceTableType.FromSystem))) : Filtering = True Else Cmd.Parameters.AddWithValue("@pricetabletypeid", "%")
+                If Source <> Nothing Then Cmd.Parameters.AddWithValue("@sourceid", If(Source = EnumHelper.GetEnumDescription(Manager.PriceTableSource.FromUser), CInt(Manager.PriceTableSource.FromUser), CInt(Manager.PriceTableSource.FromSystem))) : Filtering = True Else Cmd.Parameters.AddWithValue("@sourceid", "%")
 
                 If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = EnumHelper.GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
                 If Name <> Nothing Then Cmd.Parameters.AddWithValue("@name", Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@name", "%")
@@ -90,7 +90,7 @@ Public Class PriceTableFilter
     End Function
     Public Sub Clean()
         ID = Nothing
-        PriceTableType = EnumHelper.GetEnumDescription(Manager.PriceTableType.FromUser)
+        Source = EnumHelper.GetEnumDescription(Manager.PriceTableSource.FromUser)
         Status = Nothing
         Name = Nothing
         ProductOrService = Nothing

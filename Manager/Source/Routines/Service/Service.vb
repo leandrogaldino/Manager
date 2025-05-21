@@ -132,6 +132,7 @@ Public Class Service
                         Code.SetID(CmdCode.LastInsertedId)
                     End Using
                 Next Code
+                PriceTable.IncludeSellableInSystemPriceTables(Me, Tra)
                 Tra.Commit()
             End Using
         End Using

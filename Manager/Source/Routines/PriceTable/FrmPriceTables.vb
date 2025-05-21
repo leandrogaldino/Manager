@@ -50,23 +50,27 @@ Public Class FrmPriceTables
             Try
                 Cursor = Cursors.WaitCursor
                 _PriceTable.Load(DgvData.SelectedRows(0).Cells("id").Value, False)
-                If Not _PriceTable.LockInfo.IsLocked Then
-                    If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                        Try
-                            _PriceTable.Delete()
-                            _Filter.Filter()
-                            DgvPriceTablesLayout.Load()
-                            DgvData.ClearSelection()
-                        Catch ex As MySqlException
-                            If ex.Number = 1451 Then
-                                CMessageBox.Show("Esse registro não pode ser excluído pois já foi referenciado em outras rotinas.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
-                            Else
-                                CMessageBox.Show("ERRO PT002", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
-                            End If
-                        End Try
+                If _PriceTable.Source = PriceTableSource.FromUser Then
+                    If Not _PriceTable.LockInfo.IsLocked Then
+                        If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+                            Try
+                                _PriceTable.Delete()
+                                _Filter.Filter()
+                                DgvPriceTablesLayout.Load()
+                                DgvData.ClearSelection()
+                            Catch ex As MySqlException
+                                If ex.Number = 1451 Then
+                                    CMessageBox.Show("Esse registro não pode ser excluído pois já foi referenciado em outras rotinas.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
+                                Else
+                                    CMessageBox.Show("ERRO PT002", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                                End If
+                            End Try
+                        End If
+                    Else
+                        CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _PriceTable.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                     End If
                 Else
-                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _PriceTable.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
+                    CMessageBox.Show("Esse registro não pode ser excluído pois é uma tabela de preços do sistema.", CMessageBoxType.Information)
                 End If
             Catch ex As Exception
                 CMessageBox.Show("ERRO PT003", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

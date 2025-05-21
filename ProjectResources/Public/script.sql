@@ -299,6 +299,7 @@ IF OLD.code <> NEW.code THEN INSERT INTO log VALUES (NULL, 2303, NEW.id, 'Códig
 END$$
 DELIMITER ;
 
+
 INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 0, 1);
 INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 1, 1);
 INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 2, 1);
@@ -333,7 +334,7 @@ INSERT INTO pricetable VALUES (
     1,
 	DATE(NOW()),
     0,
-    'CUSTO LÍQUIDO',
+    'CUSTO LIQUIDO',
     1
 );
 INSERT INTO manager.pricetableitem (
@@ -359,7 +360,7 @@ INSERT INTO pricetable VALUES (
     1,
 	DATE(NOW()),
     0,
-    'CUSTO MÉDIO',
+    'CUSTO MEDIO',
     1
 );
 INSERT INTO manager.pricetableitem (
@@ -374,32 +375,6 @@ INSERT INTO manager.pricetableitem (
 SELECT
     NULL, 
     3,                 
-    DATE(NOW()),           
-    p.id,               
-    NULL,   
-    0,
-    1
-FROM product p;
-INSERT INTO pricetable VALUES (
-	NULL,
-    1,
-	DATE(NOW()),
-    0,
-    'PREÇO MÍNIMO',
-    1
-);
-INSERT INTO manager.pricetableitem (
-    id,
-    pricetableid,
-    creation,
-    productid,
-    serviceid,
-    price,
-    userid
-)
-SELECT
-    NULL, 
-    4,                 
     DATE(NOW()),           
     p.id,               
     NULL,   
@@ -425,7 +400,7 @@ INSERT INTO manager.pricetableitem (
 )
 SELECT
     NULL, 
-    5,                 
+    4,                 
     DATE(NOW()),           
     p.id,               
     NULL,   
@@ -451,7 +426,7 @@ INSERT INTO manager.pricetableitem (
 )
 SELECT
     NULL, 
-    6,                 
+    5,                 
     DATE(NOW()),           
     p.id,               
     NULL,   
@@ -463,7 +438,7 @@ INSERT INTO pricetable VALUES (
     1,
 	DATE(NOW()),
     0,
-    'ÚLTIMA COMPRA',
+    'ULTIMA COMPRA',
     1
 );
 INSERT INTO manager.pricetableitem (
@@ -477,7 +452,7 @@ INSERT INTO manager.pricetableitem (
 )
 SELECT
     NULL, 
-    7,                 
+    6,                 
     DATE(NOW()),           
     p.id,               
     NULL,   

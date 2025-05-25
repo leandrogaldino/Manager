@@ -343,9 +343,8 @@ Public Class Service
             Using Adp As New MySqlDataAdapter(CmdIndicator)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                Indicators = New List(Of ServicePriceIndicator)
                 For Each Row As DataRow In TableResult.Rows
-                    Indicator = Indicators.Single(Function(x) x.Indicator.Equals(Row.Item("indicatorid")))
+                    Indicator = Indicators.Single(Function(x) x.Indicator = Row.Item("indicatorid"))
                     Indicator.SetIsSaved(True)
                     Indicator.SetID(Row.Item("id"))
                     Indicator.SetCreation(Row.Item("creation"))

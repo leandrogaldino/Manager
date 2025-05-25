@@ -1,9 +1,20 @@
-﻿Public Class SellablePriceIndicator
+﻿Imports ControlLibrary
+
+Public Class SellablePriceIndicator
     Inherits ChildModel
     Public Property Indicator As PriceIndicator
+    Public ReadOnly Property IndicatorName As String
+        Get
+            Return UCase(EnumHelper.GetEnumDescription(Indicator))
+        End Get
+    End Property
+    Public ReadOnly Property IndicatorDescription As String
+        Get
+            Return UCase(GetIndicatorDescription())
+        End Get
+    End Property
     Public Property Price As Decimal
-
-    Public Function GetIndicatorDescription() As String
+    Private Function GetIndicatorDescription() As String
         Select Case Indicator
             Case PriceIndicator.GrossCost
                 Return "Custo do produto incluindo impostos, frete e encargos."

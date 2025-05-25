@@ -8,51 +8,63 @@
 		<Name>Ordem</Name>
 		<Width>70</Width>
 	</Column>	
-	<Column Index="1">
-		<Visible>True</Visible>
+	<Column Index="1" ButtonState="Hidden">
+		<Visible>False</Visible>
 		<DisplayIndex>1</DisplayIndex>
+		<Name>Enum Indicador</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="2">
+		<Visible>True</Visible>
+		<DisplayIndex>2</DisplayIndex>
 		<Name>Indicador</Name>
 		<Width>200</Width>
 	</Column>
-	<Column Index="2" Format="N2" CellAlignment="MiddleRight">
+	<Column Index="3">
 		<Visible>True</Visible>
-		<DisplayIndex>2</DisplayIndex>
+		<DisplayIndex>3</DisplayIndex>
+		<Name>Descrição</Name>
+		<Width>400</Width>
+	</Column>
+	<Column Index="4" Format="N2" CellAlignment="MiddleRight">
+		<Visible>True</Visible>
+		<DisplayIndex>4</DisplayIndex>
 		<Name>Preço</Name>
 		<Width>70</Width>
 	</Column>
-	<Column Index="3" ButtonState="Hidden">
+	<Column Index="5" ButtonState="Hidden">
 		<Visible>False</Visible>
-		<DisplayIndex>3</DisplayIndex>
-		<Name>Guid</Name>
-		<Width>100</Width>
-	</Column>
-	<Column Index="4" ButtonState="Hidden">
-		<Visible>False</Visible>
-		<DisplayIndex>4</DisplayIndex>
-		<Name>ID</Name>
-		<Width>100</Width>
-	</Column>
-	<Column Index="5">
-		<Visible>True</Visible>
 		<DisplayIndex>5</DisplayIndex>
-		<Name>Criação</Name>
+		<Name>Guid</Name>
 		<Width>100</Width>
 	</Column>
 	<Column Index="6" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>6</DisplayIndex>
-		<Name>Rotina</Name>
+		<Name>ID</Name>
 		<Width>100</Width>
 	</Column>
-	<Column Index="7" ButtonState="Hidden">
-		<Visible>False</Visible>
+	<Column Index="7">
+		<Visible>True</Visible>
 		<DisplayIndex>7</DisplayIndex>
-		<Name>Salvo</Name>
+		<Name>Criação</Name>
 		<Width>100</Width>
 	</Column>
 	<Column Index="8" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>8</DisplayIndex>
+		<Name>Rotina</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="9" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>9</DisplayIndex>
+		<Name>Salvo</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="10" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>10</DisplayIndex>
 		<Name>Usuário</Name>
 		<Width>100</Width>
 	</Column>

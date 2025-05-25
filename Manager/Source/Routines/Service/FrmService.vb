@@ -56,6 +56,7 @@ Public Class FrmService
         DgvCodeLayout.Load()
         DgvPriceLayout.Load()
         DgvComplementLayout.Load()
+        DgvIndicatorLayout.Load()
     End Sub
     Private Sub LoadForm()
         ControlHelper.EnableControlDoubleBuffer(DgvCode, True)

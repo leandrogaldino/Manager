@@ -49,6 +49,10 @@ Partial Class FrmProducts
         Me.DgvProviderCode = New System.Windows.Forms.DataGridView()
         Me.TpgCode = New System.Windows.Forms.TabPage()
         Me.DgvCode = New System.Windows.Forms.DataGridView()
+        Me.TabPrice = New System.Windows.Forms.TabPage()
+        Me.DgvPrice = New System.Windows.Forms.DataGridView()
+        Me.TabIndicator = New System.Windows.Forms.TabPage()
+        Me.DgvIndicator = New System.Windows.Forms.DataGridView()
         Me.TsDetails = New System.Windows.Forms.ToolStrip()
         Me.BtnCloseDetails = New System.Windows.Forms.ToolStripButton()
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
@@ -72,6 +76,10 @@ Partial Class FrmProducts
         CType(Me.DgvProviderCode, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TpgCode.SuspendLayout()
         CType(Me.DgvCode, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPrice.SuspendLayout()
+        CType(Me.DgvPrice, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabIndicator.SuspendLayout()
+        CType(Me.DgvIndicator, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsDetails.SuspendLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -316,6 +324,8 @@ Partial Class FrmProducts
         '
         Me.TcDetail.Controls.Add(Me.TpgProviderCode)
         Me.TcDetail.Controls.Add(Me.TpgCode)
+        Me.TcDetail.Controls.Add(Me.TabPrice)
+        Me.TcDetail.Controls.Add(Me.TabIndicator)
         Me.TcDetail.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TcDetail.Location = New System.Drawing.Point(0, 25)
         Me.TcDetail.Name = "TcDetail"
@@ -358,10 +368,10 @@ Partial Class FrmProducts
         'TpgCode
         '
         Me.TpgCode.Controls.Add(Me.DgvCode)
-        Me.TpgCode.Location = New System.Drawing.Point(4, 22)
+        Me.TpgCode.Location = New System.Drawing.Point(4, 26)
         Me.TpgCode.Name = "TpgCode"
         Me.TpgCode.Padding = New System.Windows.Forms.Padding(3)
-        Me.TpgCode.Size = New System.Drawing.Size(262, 386)
+        Me.TpgCode.Size = New System.Drawing.Size(262, 382)
         Me.TpgCode.TabIndex = 1
         Me.TpgCode.Text = "Códigos de Produto"
         Me.TpgCode.UseVisualStyleBackColor = True
@@ -384,8 +394,72 @@ Partial Class FrmProducts
         Me.DgvCode.RowHeadersVisible = False
         Me.DgvCode.RowTemplate.Height = 26
         Me.DgvCode.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvCode.Size = New System.Drawing.Size(256, 380)
+        Me.DgvCode.Size = New System.Drawing.Size(256, 376)
         Me.DgvCode.TabIndex = 1
+        '
+        'TabPrice
+        '
+        Me.TabPrice.Controls.Add(Me.DgvPrice)
+        Me.TabPrice.Location = New System.Drawing.Point(4, 26)
+        Me.TabPrice.Name = "TabPrice"
+        Me.TabPrice.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPrice.Size = New System.Drawing.Size(262, 382)
+        Me.TabPrice.TabIndex = 2
+        Me.TabPrice.Text = "Preços"
+        Me.TabPrice.UseVisualStyleBackColor = True
+        '
+        'DgvPrice
+        '
+        Me.DgvPrice.AllowUserToAddRows = False
+        Me.DgvPrice.AllowUserToDeleteRows = False
+        Me.DgvPrice.AllowUserToResizeColumns = False
+        Me.DgvPrice.AllowUserToResizeRows = False
+        Me.DgvPrice.BackgroundColor = System.Drawing.Color.White
+        Me.DgvPrice.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.DgvPrice.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvPrice.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvPrice.Location = New System.Drawing.Point(3, 3)
+        Me.DgvPrice.MultiSelect = False
+        Me.DgvPrice.Name = "DgvPrice"
+        Me.DgvPrice.ReadOnly = True
+        Me.DgvPrice.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvPrice.RowHeadersVisible = False
+        Me.DgvPrice.RowTemplate.Height = 26
+        Me.DgvPrice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvPrice.Size = New System.Drawing.Size(256, 376)
+        Me.DgvPrice.TabIndex = 1
+        '
+        'TabIndicator
+        '
+        Me.TabIndicator.Controls.Add(Me.DgvIndicator)
+        Me.TabIndicator.Location = New System.Drawing.Point(4, 26)
+        Me.TabIndicator.Name = "TabIndicator"
+        Me.TabIndicator.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabIndicator.Size = New System.Drawing.Size(262, 382)
+        Me.TabIndicator.TabIndex = 3
+        Me.TabIndicator.Text = "Indicadores"
+        Me.TabIndicator.UseVisualStyleBackColor = True
+        '
+        'DgvIndicator
+        '
+        Me.DgvIndicator.AllowUserToAddRows = False
+        Me.DgvIndicator.AllowUserToDeleteRows = False
+        Me.DgvIndicator.AllowUserToResizeColumns = False
+        Me.DgvIndicator.AllowUserToResizeRows = False
+        Me.DgvIndicator.BackgroundColor = System.Drawing.Color.White
+        Me.DgvIndicator.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.DgvIndicator.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvIndicator.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvIndicator.Location = New System.Drawing.Point(3, 3)
+        Me.DgvIndicator.MultiSelect = False
+        Me.DgvIndicator.Name = "DgvIndicator"
+        Me.DgvIndicator.ReadOnly = True
+        Me.DgvIndicator.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvIndicator.RowHeadersVisible = False
+        Me.DgvIndicator.RowTemplate.Height = 26
+        Me.DgvIndicator.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvIndicator.Size = New System.Drawing.Size(256, 376)
+        Me.DgvIndicator.TabIndex = 1
         '
         'TsDetails
         '
@@ -483,6 +557,10 @@ Partial Class FrmProducts
         CType(Me.DgvProviderCode, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TpgCode.ResumeLayout(False)
         CType(Me.DgvCode, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPrice.ResumeLayout(False)
+        CType(Me.DgvPrice, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabIndicator.ResumeLayout(False)
+        CType(Me.DgvIndicator, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsDetails.ResumeLayout(False)
         Me.TsDetails.PerformLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).EndInit()
@@ -524,4 +602,8 @@ Partial Class FrmProducts
     Friend WithEvents DgvProviderCode As DataGridView
     Friend WithEvents DgvCode As DataGridView
     Friend WithEvents BtnExport As ToolStripButton
+    Friend WithEvents TabPrice As TabPage
+    Friend WithEvents DgvPrice As DataGridView
+    Friend WithEvents TabIndicator As TabPage
+    Friend WithEvents DgvIndicator As DataGridView
 End Class

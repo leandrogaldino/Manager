@@ -10,6 +10,8 @@ Public Class FrmProducts
         ControlHelper.EnableControlDoubleBuffer(DgvData, True)
         ControlHelper.EnableControlDoubleBuffer(DgvProviderCode, True)
         ControlHelper.EnableControlDoubleBuffer(DgvCode, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvPrice, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvIndicator, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Filter = New ProductFilter(DgvData, PgFilter)
@@ -46,6 +48,8 @@ Public Class FrmProducts
                 ProductForm = New FrmProduct(_Product, Me)
                 ProductForm.DgvProviderCode.Fill(_Product.ProviderCodes)
                 ProductForm.DgvCode.Fill(_Product.Codes)
+                ProductForm.DgvPrice.Fill(_Product.Prices)
+                ProductForm.DgvIndicator.Fill(_Product.Indicators)
                 ProductForm.ShowDialog()
             Catch ex As Exception
                 CMessageBox.Show("ERRO PD004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -145,18 +149,6 @@ Public Class FrmProducts
                 Case Is = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
                     e.CellStyle.ForeColor = Color.DarkRed
             End Select
-        ElseIf e.ColumnIndex = Dgv.Columns("Qtd. Min.").Index Then
-            e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            e.CellStyle.Format = "N2"
-        ElseIf e.ColumnIndex = Dgv.Columns("Qtd. Max.").Index Then
-            e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            e.CellStyle.Format = "N2"
-        ElseIf e.ColumnIndex = Dgv.Columns("Peso Bruto").Index Then
-            e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            e.CellStyle.Format = "N2"
-        ElseIf e.ColumnIndex = Dgv.Columns("Peso Liq.").Index Then
-            e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            e.CellStyle.Format = "N2"
         End If
     End Sub
     Private Sub DgvData_SelectionChanged(sender As Object, e As EventArgs) Handles DgvData.SelectionChanged
@@ -191,6 +183,8 @@ Public Class FrmProducts
                 Try
                     Product.FillProviderCodeDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvProviderCode)
                     Product.FillCodeDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvCode)
+                    Product.FillPriceDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPrice)
+                    Product.FillPriceIndicatorDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvIndicator)
                 Catch ex As Exception
                     TmrLoadDetails.Stop()
                     CMessageBox.Show("ERRO PD007", "Ocorreu um erro ao consultar os dados do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

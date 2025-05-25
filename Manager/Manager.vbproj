@@ -504,6 +504,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Content Include="Resources\SQL\Product\ProductPriceDetailSelect.sql" />
+    <Content Include="Resources\SQL\Product\ProductPriceIndicatorDetailSelect.sql" />
+    <Content Include="Resources\SQL\Product\ProductPriceIndicatorSelect.sql" />
+    <Content Include="Resources\SQL\Product\ProductPriceSelect.sql" />
+    <Content Include="Resources\SQL\Service\ServicePriceIndicatorDetailSelect.sql" />
     <Content Include="Resources\SQL\Service\ServicePriceIndicatorSelect.sql" />
     <Compile Include="Source\Controls\UcEvaluationCallTypeHasRepairNeedProposal.Designer.vb">
       <DependentUpon>UcEvaluationCallTypeHasRepairNeedProposal.vb</DependentUpon>
@@ -792,6 +797,14 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Routines\PrivilegePreset\PrivilegePresetFilter.vb" />
+    <Compile Include="Source\Routines\Product\FrmProductPrice.Designer.vb">
+      <DependentUpon>FrmProductPrice.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Product\FrmProductPrice.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\Product\ProductPrice.vb" />
+    <Compile Include="Source\Routines\Product\ProductPriceIndicator.vb" />
     <Compile Include="Source\Routines\Service\FrmService.Designer.vb">
       <DependentUpon>FrmService.vb</DependentUpon>
     </Compile>
@@ -1509,6 +1522,9 @@
     <EmbeddedResource Include="Source\Routines\PrivilegePreset\FrmPrivilegePresets.resx">
       <DependentUpon>FrmPrivilegePresets.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Product\FrmProductPrice.resx">
+      <DependentUpon>FrmProductPrice.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Request\FrmRequest.resx">
       <DependentUpon>FrmRequest.vb</DependentUpon>
     </EmbeddedResource>
@@ -1802,6 +1818,8 @@
     <Content Include="Resources\XML\CashFlowGrid.xml" />
     <Content Include="Resources\XML\PriceTableGrid.xml" />
     <Content Include="Resources\XML\PriceTableItemGrid.xml" />
+    <Content Include="Resources\XML\ProductPriceGrid.xml" />
+    <Content Include="Resources\XML\ProductPriceIndicatorGrid.xml" />
     <Content Include="Resources\XML\ServiceCodeGrid.xml" />
     <Content Include="Resources\XML\ServiceGrid.xml" />
     <Content Include="Resources\XML\EvaluationTechnicianGrid.xml" />

@@ -117,80 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="TsTitle.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>242, 17</value>
-  </metadata>
-  <metadata name="TsNavigation.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>330, 17</value>
-  </metadata>
-  <metadata name="EprValidation.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>453, 17</value>
-  </metadata>
-  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>107</value>
-  </metadata>
-  <metadata name="TsProviderCode.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>669, 17</value>
-  </metadata>
-  <metadata name="TsCode.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>576, 17</value>
-  </metadata>
-  <metadata name="TsPrice.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>151, 17</value>
-  </metadata>
-  <metadata name="TsPicture.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1273, 17</value>
-  </metadata>
-  <metadata name="TmrQueriedBoxFamily.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>933, 17</value>
-  </metadata>
-  <metadata name="TmrQueriedBoxGroup.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1104, 17</value>
-  </metadata>
-  <metadata name="DgvNavigator.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>806, 17</value>
-  </metadata>
-  <metadata name="EprInformation.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="TsMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="EprInformation.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPxXADT4VQCA81QAwO1SAO3oUADt5E8AwOBNAIDdTAA0AAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPxXAGf+WADa/5hi//+OUv//gDz//3Mp//9oGf//Xwv/zUcA2sxG
-        AGcAAAAAAAAAAAAAAAAAAAAAAAAAAPxXAGf/XAb0/6Rz//+hb///lV7//4ZG//92Lv//Zxb//1oD/+xR
-        AP+6QAD0ukAAZwAAAAAAAAAAAAAAAPxXADT7VwDa/6Ny//+vhP//pHT//7uX///+/f///v3//51p//9b
-        Bf/rUQD/0kkA/6Y5ANqpOgA0AAAAAAAAAAD4VQCA/5dg//+hb///pHT//59t///RuP///v3///79///E
-        pf//WAD/6VAA/9BIAP+yPgD/ljQAgAAAAAAAAAAA81QAwP+OUv//lV7//5hh//+VXf//waH///79///+
-        /f//tY3/+lYA/+RPAP/MRwD/sz4A/4ItAMAAAAAAAAAAAO1SAO3/gDz//4VF//+JS///h0j//6t////+
-        /f///v3//5Ze//FTAP/aSwD/x0UA/7c/AP9wJwDtAAAAAAAAAADoUADt/3En//92Lv//eTP//3Yu//+A
-        Pf///v3///79//9mFf/lTwD/00kA/8FDAP+wPQD/XSAA7QAAAAAAAAAA5E8AwP9nF///Zxb//2ka//9n
-        Fv//YxH//4lL//+CP//pUAD/2EsA/8ZEAP+6QAD/njcA/0waAMAAAAAAAAAAAOBNAID/YAv//1gA//9a
-        A///WAD//4RC///+/f///v3//3Io/8lGAP+9QQD/sz4A/4AsAP89FQCAAAAAAAAAAADdTAA0yUYA2uxR
-        AP/qUQD/5lAA//95Mv///v3///79//95M/+/QgD/tD4A/5UzAP88FQDaLxAANAAAAAAAAAAAAAAAAMxG
-        AGe2PwD000kA/9BIAP/NRwD//2se//9oGf+5QAD/sj4A/5UzAP9BFwD0IAsAZwAAAAAAAAAAAAAAAAAA
-        AAAAAAAAukAAZ6Y5ANqyPgD/tD4A/7Y/AP+vPAD/njYA/4AsAP88FQDaIAsAZwAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAACpOgA0ljQAgIItAMBwJwDtXSAA7UwaAMA9FQCALxAANAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAA//8AAPAPAADgBwAAwAMAAIABAACAAQAAgAEAAIABAACAAQAAgAEAAIABAACAAQAAwAMAAOAH
-        AADwDwAA//8AAA==
-</value>
-  </data>
-  <metadata name="DgvProviderCodeLayout.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>323, 54</value>
+  <metadata name="EprValidation.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>109, 17</value>
   </metadata>
-  <metadata name="DgvCodeLayout.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>506, 54</value>
+  <metadata name="TsData.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>232, 17</value>
   </metadata>
-  <metadata name="DgvPictureLayout.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 54</value>
+  <metadata name="TmrQueriedBox.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>321, 17</value>
   </metadata>
-  <metadata name="DgvIndicatorLayout.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>165, 54</value>
-  </metadata>
-  <metadata name="DgvPriceLayout.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>645, 54</value>
+  <metadata name="DgvNavigator.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>457, 17</value>
   </metadata>
 </root>

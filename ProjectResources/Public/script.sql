@@ -147,13 +147,33 @@ CREATE TABLE `servicecode` (
 
 CREATE TABLE servicepriceindicator (
 	id INT NOT NULL AUTO_INCREMENT,
+	creation DATE NOT NULL,
     serviceid INT NOT NULL,
     indicatorid INT NOT NULL,
 	price DECIMAL(10,2) NOT NULL,
+	userid INT NOT NULL,
 	PRIMARY KEY (`id`),
+	KEY `userid` (`userid`),
 	KEY `serviceid` (`serviceid`),
-	CONSTRAINT `servicepriceindicator_service` FOREIGN KEY (`serviceid`) REFERENCES `service` (`id`) ON DELETE CASCADE
+	CONSTRAINT `servicepriceindicator_service` FOREIGN KEY (`serviceid`) REFERENCES `service` (`id`) ON DELETE CASCADE,
+	CONSTRAINT `servicepriceindicator_user` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT
 );
+CREATE TABLE productpriceindicator (
+	id INT NOT NULL AUTO_INCREMENT,
+	creation DATE NOT NULL,
+    productid INT NOT NULL,
+    indicatorid INT NOT NULL,
+	price DECIMAL(10,2) NOT NULL,
+	userid INT NOT NULL,
+	PRIMARY KEY (`id`),
+	KEY `userid` (`userid`),
+	KEY `productid` (`productid`),
+	CONSTRAINT `productpriceindicator_product` FOREIGN KEY (`productid`) REFERENCES `product` (`id`) ON DELETE CASCADE,
+	CONSTRAINT `productpriceindicator_user` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT
+);
+
+
+
 
 DELIMITER $$
 DROP TRIGGER IF EXISTS `manager`.`personcompressorpartupdate`$$

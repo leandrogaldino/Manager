@@ -56,25 +56,25 @@
 		<Name>Localização</Name>
 		<Width>100</Width>
 	</Column>
-	<Column Index="9">
+	<Column Index="9" Format="N2" CellAlignment="MiddleRight">
 		<Visible>True</Visible>
 		<DisplayIndex>9</DisplayIndex>
 		<Name>Qtd. Min.</Name>
 		<Width>100</Width>
 	</Column>
-	<Column Index="10">
+	<Column Index="10" Format="N2" CellAlignment="MiddleRight">
 		<Visible>True</Visible>
 		<DisplayIndex>10</DisplayIndex>
 		<Name>Qtd. Max.</Name>
 		<Width>100</Width>
 	</Column>
-	<Column Index="11">
+	<Column Index="11" Format="N2" CellAlignment="MiddleRight">
 		<Visible>True</Visible>
 		<DisplayIndex>11</DisplayIndex>
 		<Name>Peso Bruto</Name>
 		<Width>100</Width>
 	</Column>
-	<Column Index="12">
+	<Column Index="12" Format="N2" CellAlignment="MiddleRight">
 		<Visible>True</Visible>
 		<DisplayIndex>12</DisplayIndex>
 		<Name>Peso Liq.</Name>

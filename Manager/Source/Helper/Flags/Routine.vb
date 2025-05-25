@@ -35,6 +35,8 @@ Public Enum Routine
     ProductProviderCode = 601
     ProductCode = 602
     ProductPicture = 604
+    ProductPriceIndicator = 605
+    ProductPrice = 606
     <Description("Unidade de Medida")> <TriStatePrivilege> <RoutineDependency(Product)>
     ProductUnit = 7
     <Description("Tabela de Preços")> <TriStatePrivilege> <RoutineDependency(Product)>

@@ -4871,6 +4871,112 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a .
+        '''</summary>
+        Friend ReadOnly Property ProductPriceDetailSelect() As String
+            Get
+                Return ResourceManager.GetString("ProductPriceDetailSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;ProductPrice&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''	&lt;Column Index=&quot;0&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Ordem&lt;/Name&gt;
+        '''		&lt;Width&gt;70&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;1&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''		&lt;Visible&gt;False&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;ID Tabela de Preços&lt;/Name&gt;
+        '''		&lt;Width&gt;100&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt; [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property ProductPriceGrid() As String
+            Get
+                Return ResourceManager.GetString("ProductPriceGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a .
+        '''</summary>
+        Friend ReadOnly Property ProductPriceIndicatorDetailSelect() As String
+            Get
+                Return ResourceManager.GetString("ProductPriceIndicatorDetailSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;ProductPriceIndicator&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''	&lt;Column Index=&quot;0&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Ordem&lt;/Name&gt;
+        '''		&lt;Width&gt;70&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;1&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''		&lt;Visible&gt;False&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Enum Indicador&lt;/Name&gt;
+        '''		&lt;Width&gt;100&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property ProductPriceIndicatorGrid() As String
+            Get
+                Return ResourceManager.GetString("ProductPriceIndicatorGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	productpriceindicator.id,
+        '''	productpriceindicator.creation,
+        '''	productpriceindicator.productid,
+        '''    productpriceindicator.indicatorid,
+        '''    productpriceindicator.price
+        '''FROM productpriceindicator
+        '''WHERE productpriceindicator.productid = @productid;.
+        '''</summary>
+        Friend ReadOnly Property ProductPriceIndicatorSelect() As String
+            Get
+                Return ResourceManager.GetString("ProductPriceIndicatorSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	pricetableitem.id,
+        '''	pricetableitem.creation,
+        '''	product.name product,
+        '''    pricetable.id pricetableid,
+        '''	pricetable.name pricetablename,
+        '''    pricetableitem.price
+        '''FROM pricetable
+        '''LEFT JOIN pricetableitem ON pricetableitem.pricetableid = pricetable.id
+        '''LEFT JOIN product ON product.id = pricetableitem.productid
+        '''WHERE product.id = @productid;.
+        '''</summary>
+        Friend ReadOnly Property ProductPriceSelect() As String
+            Get
+                Return ResourceManager.GetString("ProductPriceSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM productprovidercode
         '''WHERE productprovidercode.id = @id;.
         '''</summary>
@@ -5972,6 +6078,19 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	servicepriceindicator.indicatorid,
+        '''    servicepriceindicator.price AS &apos;Preço&apos;
+        '''FROM servicepriceindicator
+        '''WHERE servicepriceindicator.serviceid = @serviceid;.
+        '''</summary>
+        Friend ReadOnly Property ServicePriceIndicatorDetailSelect() As String
+            Get
+                Return ResourceManager.GetString("ServicePriceIndicatorDetailSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;ServicePriceIndicator&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
@@ -5982,14 +6101,14 @@ Namespace My.Resources
         '''		&lt;Name&gt;Ordem&lt;/Name&gt;
         '''		&lt;Width&gt;70&lt;/Width&gt;
         '''	&lt;/Column&gt;	
-        '''	&lt;Column Index=&quot;1&quot;&gt;
-        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''	&lt;Column Index=&quot;1&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''		&lt;Visible&gt;False&lt;/Visible&gt;
         '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''		&lt;Name&gt;Indicador&lt;/Name&gt;
-        '''		&lt;Width&gt;200&lt;/Width&gt;
+        '''		&lt;Name&gt;Enum Indicador&lt;/Name&gt;
+        '''		&lt;Width&gt;100&lt;/Width&gt;
         '''	&lt;/Column&gt;
-        '''	&lt;Column Index=&quot;2&quot; Format=&quot;N2&quot; CellAlignment=&quot;MiddleRight&quot;&gt;
-        '''		&lt;Visible&gt;T [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	&lt;Column Index=&quot;2&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt; [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property ServicePriceIndicatorGrid() As String
             Get

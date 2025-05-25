@@ -11,6 +11,7 @@ Public Class FrmServices
         ControlHelper.EnableControlDoubleBuffer(DgvData, True)
         ControlHelper.EnableControlDoubleBuffer(DgvCode, True)
         ControlHelper.EnableControlDoubleBuffer(DgvPrice, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvIndicator, True)
         ControlHelper.EnableControlDoubleBuffer(DgvComplement, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
@@ -43,6 +44,7 @@ Public Class FrmServices
                 ServiceForm = New FrmService(_Service, Me)
                 ServiceForm.DgvCode.Fill(_Service.Codes)
                 ServiceForm.DgvPrice.Fill(_Service.Prices)
+                ServiceForm.DgvIndicator.Fill(_Service.Indicators)
                 ServiceForm.DgvComplement.Fill(_Service.Complements)
                 ServiceForm.ShowDialog()
             Catch ex As Exception
@@ -177,6 +179,7 @@ Public Class FrmServices
                 Try
                     Service.FillCodeDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvCode)
                     Service.FillPriceDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPrice)
+                    Service.FillPriceIndicatorDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvIndicator)
                     Service.FillComplementDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvComplement)
                 Catch ex As Exception
                     TmrLoadDetails.Stop()

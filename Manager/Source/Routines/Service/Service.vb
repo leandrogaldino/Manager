@@ -10,25 +10,10 @@ Public Class Service
     Public Property Codes As New List(Of ServiceCode)
     Public Property Prices As New List(Of ServicePrice)
     Public Property Indicators As New List(Of ServicePriceIndicator)
-
     Public Sub New()
         SetRoutine(Routine.Service)
-        FillIndicators()
-    End Sub
 
-    Private Sub FillIndicators()
-        Indicators = New List(Of ServicePriceIndicator) From {
-            New ServicePriceIndicator(PriceIndicator.GrossCost, 0),
-            New ServicePriceIndicator(PriceIndicator.NetCost, 0),
-            New ServicePriceIndicator(PriceIndicator.AverageCost, 0),
-            New ServicePriceIndicator(PriceIndicator.LastGrossCost, 0),
-            New ServicePriceIndicator(PriceIndicator.LastNetCost, 0),
-            New ServicePriceIndicator(PriceIndicator.HighestSale, 0),
-            New ServicePriceIndicator(PriceIndicator.LowestSale, 0),
-            New ServicePriceIndicator(PriceIndicator.MinimumSale, 0)
-        }
     End Sub
-
     Public Sub Clear()
         Unlock()
         SetIsSaved(False)
@@ -39,7 +24,7 @@ Public Class Service
         Complements = New List(Of ServiceComplement)
         Prices = New List(Of ServicePrice)
         Codes = New List(Of ServiceCode)
-        FillIndicators()
+        Indicators = New List(Of ServicePriceIndicator)
         Note = Nothing
         If LockInfo.IsLocked Then Unlock()
     End Sub
@@ -67,7 +52,7 @@ Public Class Service
                         Prices = GetPrices(Tra)
                         Complements = GetComplements(Tra)
                         Codes = GetCodes(Tra)
-                        FillIndicators(Tra)
+                        Indicators = GetIndicators(Tra)
                         Note = TableResult.Rows(0).Item("note").ToString
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
@@ -334,8 +319,9 @@ Public Class Service
         End Using
         Return Codes
     End Function
-    Private Sub FillIndicators(Transaction As MySqlTransaction)
+    Private Function GetIndicators(Transaction As MySqlTransaction) As List(Of ServicePriceIndicator)
         Dim TableResult As DataTable
+        Dim Indicators As List(Of ServicePriceIndicator)
         Dim Indicator As ServicePriceIndicator
         Using CmdIndicator As New MySqlCommand(My.Resources.ServicePriceIndicatorSelect, Transaction.Connection)
             CmdIndicator.Transaction = Transaction
@@ -343,16 +329,18 @@ Public Class Service
             Using Adp As New MySqlDataAdapter(CmdIndicator)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
+                Indicators = New List(Of ServicePriceIndicator)
                 For Each Row As DataRow In TableResult.Rows
-                    Indicator = Indicators.Single(Function(x) x.Indicator = Row.Item("indicatorid"))
+                    Indicator = New ServicePriceIndicator(Convert.ToInt32(Row.Item("indicatorid")), Convert.ToDecimal(Row.Item("price")))
                     Indicator.SetIsSaved(True)
                     Indicator.SetID(Row.Item("id"))
                     Indicator.SetCreation(Row.Item("creation"))
-                    Indicator.Price = Convert.ToDecimal(Row.Item("price"))
+                    Indicators.Add(Indicator)
                 Next Row
             End Using
         End Using
-    End Sub
+        Return Indicators
+    End Function
     Public Shared Sub FillComplementDataGridView(ServiceID As Long, Dgv As DataGridView)
         Dim TableResult As New DataTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
@@ -362,6 +350,22 @@ Public Class Service
                     Adp.Fill(TableResult)
                     Dgv.DataSource = TableResult
                     Dgv.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                End Using
+            End Using
+        End Using
+    End Sub
+    Public Shared Sub FillCodeDataGridView(ServiceID As Long, Dgv As DataGridView)
+        Dim TableResult As New DataTable
+        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Using Cmd As New MySqlCommand(My.Resources.ServiceCodeDetailSelect, Con)
+                Cmd.Parameters.AddWithValue("@serviceid", ServiceID)
+                Using Adp As New MySqlDataAdapter(Cmd)
+                    Adp.Fill(TableResult)
+                    Dgv.DataSource = TableResult
+                    Dgv.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                    Dgv.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                    Dgv.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Dgv.Columns(1).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
                 End Using
             End Using
         End Using
@@ -380,18 +384,22 @@ Public Class Service
             End Using
         End Using
     End Sub
-    Public Shared Sub FillCodeDataGridView(ServiceID As Long, Dgv As DataGridView)
+    Public Shared Sub FillPriceIndicatorDataGridView(ServiceID As Long, Dgv As DataGridView)
         Dim TableResult As New DataTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
-            Using Cmd As New MySqlCommand(My.Resources.ServiceCodeDetailSelect, Con)
+            Using Cmd As New MySqlCommand(My.Resources.ServicePriceIndicatorDetailSelect, Con)
                 Cmd.Parameters.AddWithValue("@serviceid", ServiceID)
                 Using Adp As New MySqlDataAdapter(Cmd)
                     Adp.Fill(TableResult)
+                    TableResult.Columns.Add("Indicador", GetType(String))
+                    For Each Row As DataRow In TableResult.Rows
+                        Row("Indicador") = EnumHelper.GetEnumDescription(CType(Row.Item("indicatorid"), PriceIndicator))
+                    Next Row
                     Dgv.DataSource = TableResult
-                    Dgv.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                    Dgv.Columns(0).Visible = False
                     Dgv.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-                    Dgv.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    Dgv.Columns(1).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Dgv.Columns(2).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                    Dgv.Columns(2).DisplayIndex = 0
                 End Using
             End Using
         End Using

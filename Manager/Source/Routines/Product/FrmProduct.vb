@@ -56,11 +56,15 @@ Public Class FrmProduct
         DgvProviderCodeLayout.Load()
         DgvCodeLayout.Load()
         DgvPictureLayout.Load()
+        DgvPriceLayout.Load()
+        DgvIndicatorLayout.Load()
     End Sub
     Private Sub LoadForm()
         ControlHelper.EnableControlDoubleBuffer(DgvProviderCode, True)
         ControlHelper.EnableControlDoubleBuffer(DgvCode, True)
         ControlHelper.EnableControlDoubleBuffer(DgvPicture, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvPrice, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvIndicator, True)
         DgvNavigator.DataGridView = _ProductsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
@@ -91,6 +95,8 @@ Public Class FrmProduct
         If _Product.ProviderCodes IsNot Nothing Then DgvProviderCode.Fill(_Product.ProviderCodes)
         If _Product.Codes IsNot Nothing Then DgvCode.Fill(_Product.Codes)
         If _Product.Pictures IsNot Nothing Then DgvPicture.Fill(_Product.Pictures)
+        If _Product.Prices IsNot Nothing Then DgvPrice.Fill(_Product.Prices)
+        If _Product.Indicators IsNot Nothing Then DgvIndicator.Fill(_Product.Indicators)
         BtnDelete.Enabled = _Product.ID > 0 And _User.CanDelete(Routine.Product)
         Text = "Produto"
         If _Product.LockInfo.IsLocked And Not _Product.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Product.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
@@ -139,6 +145,8 @@ Public Class FrmProduct
                 DgvProviderCode.Fill(_Product.ProviderCodes)
                 DgvCode.Fill(_Product.Codes)
                 DgvPicture.Fill(_Product.Pictures)
+                DgvPrice.Fill(_Product.Prices)
+                DgvIndicator.Fill(_Product.Indicators)
             End If
             _Deleting = False
         End If
@@ -214,7 +222,7 @@ Public Class FrmProduct
                                                                           DbxQtyMax.TextChanged,
                                                                           DbxGrossWeight.TextChanged,
                                                                           DbxNetWeight.TextChanged,
-                                                                          TxtNote.TextChanged
+                                                                          TxtNote.TextChanged, TextBox1.TextChanged, TextBox2.TextChanged
 
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
@@ -432,6 +440,8 @@ Public Class FrmProduct
                     DgvProviderCode.Fill(_Product.ProviderCodes)
                     DgvCode.Fill(_Product.Codes)
                     DgvPicture.Fill(_Product.Pictures)
+                    DgvPrice.Fill(_Product.Prices)
+                    DgvIndicator.Fill(_Product.Indicators)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Product)
                     If _ProductsForm IsNot Nothing Then
@@ -633,6 +643,117 @@ Public Class FrmProduct
             End If
         End If
     End Sub
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Private Sub BtnIncludePrice_Click(sender As Object, e As EventArgs) Handles BtnIncludePrice.Click
+        Dim Form As New FrmProductPrice(_Product, New ProductPrice, Me)
+        Form.ShowDialog()
+    End Sub
+    Private Sub BtnEditPrice_Click(sender As Object, e As EventArgs) Handles BtnEditPrice.Click
+        Dim Form As FrmProductPrice
+        Dim Price As ProductPrice
+        If DgvPrice.SelectedRows.Count = 1 Then
+            Price = _Product.Prices.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
+            Form = New FrmProductPrice(_Product, Price, Me)
+            Form.ShowDialog()
+        End If
+    End Sub
+    Private Sub BtnDeletePrice_Click(sender As Object, e As EventArgs) Handles BtnDeletePrice.Click
+        Dim Price As ProductPrice
+        If DgvPrice.SelectedRows.Count = 1 Then
+            If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+                Price = _Product.Prices.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
+                _Product.Prices.Remove(Price)
+                DgvPrice.Fill(_Product.Prices)
+                BtnSave.Enabled = True
+            End If
+        End If
+    End Sub
+    Private Sub DgvPrice_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvPrice.MouseDoubleClick
+        Dim ClickPlace As DataGridView.HitTestInfo = DgvPrice.HitTest(e.X, e.Y)
+        If ClickPlace.Type = DataGridViewHitTestType.Cell Then
+            BtnEditPrice.PerformClick()
+        End If
+    End Sub
+    Private Sub FilterPrice()
+        Dim Table As DataTable
+        Dim View As DataView
+        Dim Filter As String = String.Format("{0}", "PriceTableName LIKE '%@VALUE%'")
+        If DgvPrice.DataSource IsNot Nothing Then
+            Table = DgvPrice.DataSource
+            View = Table.DefaultView
+            If TxtFilterPrice.Text <> Nothing Then
+                Filter = Filter.Replace("@VALUE", TxtFilterPrice.Text.Replace("%", Nothing).Replace("*", Nothing))
+                View.RowFilter = Filter
+            Else
+                View.RowFilter = Nothing
+            End If
+        End If
+    End Sub
+    Private Sub TxtFilterPrice_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterPrice.TextChanged
+        FilterPrice()
+    End Sub
+    Private Sub TxtFilterPrice_Enter(sender As Object, e As EventArgs) Handles TxtFilterPrice.Enter
+        EprInformation.SetError(TsPrice, "Filtrando os campo: Tabela de Preços.")
+        EprInformation.SetIconAlignment(TsPrice, ErrorIconAlignment.MiddleLeft)
+        EprInformation.SetIconPadding(TsPrice, -365)
+    End Sub
+    Private Sub TxtFilterPrice_Leave(sender As Object, e As EventArgs) Handles TxtFilterPrice.Leave
+        EprInformation.Clear()
+    End Sub
+
+    Private Sub DgvPrice_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvPrice.DataSourceChanged
+        FilterPrice()
+    End Sub
+    Private Sub DgvPrice_SelectionChanged(sender As Object, e As EventArgs) Handles DgvPrice.SelectionChanged
+        If DgvPrice.SelectedRows.Count = 0 Then
+            BtnEditPrice.Enabled = False
+            BtnDeletePrice.Enabled = False
+        Else
+            BtnEditPrice.Enabled = True
+            BtnDeletePrice.Enabled = True
+        End If
+    End Sub
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     Private Sub TxtName_Leave(sender As Object, e As EventArgs) Handles TxtName.Leave
         If TxtInternalName.Text = Nothing Then TxtInternalName.Text = TxtName.Text
     End Sub

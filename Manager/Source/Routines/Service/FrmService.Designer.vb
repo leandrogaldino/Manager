@@ -72,12 +72,12 @@ Partial Class FrmService
         Me.LblFilterPrice = New System.Windows.Forms.ToolStripLabel()
         Me.TxtFilterPrice = New System.Windows.Forms.ToolStripTextBox()
         Me.TabIndicator = New System.Windows.Forms.TabPage()
+        Me.DgvIndicator = New System.Windows.Forms.DataGridView()
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TsNavigation = New System.Windows.Forms.ToolStrip()
         Me.BtnLog = New System.Windows.Forms.ToolStripButton()
         Me.TsTitle = New System.Windows.Forms.ToolStrip()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
-        Me.DgvIndicator = New System.Windows.Forms.DataGridView()
         Me.DgvComplementLayout = New Manager.DataGridViewLayout()
         Me.DgvPriceLayout = New Manager.DataGridViewLayout()
         Me.DgvCodeLayout = New Manager.DataGridViewLayout()
@@ -97,10 +97,10 @@ Partial Class FrmService
         CType(Me.DgvPrice, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsPrice.SuspendLayout()
         Me.TabIndicator.SuspendLayout()
+        CType(Me.DgvIndicator, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsNavigation.SuspendLayout()
         Me.TsTitle.SuspendLayout()
-        CType(Me.DgvIndicator, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'BtnClose
@@ -624,6 +624,27 @@ Partial Class FrmService
         Me.TabIndicator.Text = "Indicadores"
         Me.TabIndicator.UseVisualStyleBackColor = True
         '
+        'DgvIndicator
+        '
+        Me.DgvIndicator.AllowUserToAddRows = False
+        Me.DgvIndicator.AllowUserToDeleteRows = False
+        Me.DgvIndicator.AllowUserToOrderColumns = True
+        Me.DgvIndicator.AllowUserToResizeRows = False
+        Me.DgvIndicator.BackgroundColor = System.Drawing.Color.WhiteSmoke
+        Me.DgvIndicator.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DgvIndicator.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvIndicator.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvIndicator.Location = New System.Drawing.Point(3, 3)
+        Me.DgvIndicator.MultiSelect = False
+        Me.DgvIndicator.Name = "DgvIndicator"
+        Me.DgvIndicator.ReadOnly = True
+        Me.DgvIndicator.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvIndicator.RowHeadersVisible = False
+        Me.DgvIndicator.RowTemplate.Height = 26
+        Me.DgvIndicator.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvIndicator.Size = New System.Drawing.Size(510, 60)
+        Me.DgvIndicator.TabIndex = 3
+        '
         'EprInformation
         '
         Me.EprInformation.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink
@@ -674,27 +695,6 @@ Partial Class FrmService
         Me.DgvNavigator.LastButton = Me.BtnLast
         Me.DgvNavigator.NextButton = Me.BtnNext
         Me.DgvNavigator.PreviousButton = Me.BtnPrevious
-        '
-        'DgvIndicator
-        '
-        Me.DgvIndicator.AllowUserToAddRows = False
-        Me.DgvIndicator.AllowUserToDeleteRows = False
-        Me.DgvIndicator.AllowUserToOrderColumns = True
-        Me.DgvIndicator.AllowUserToResizeRows = False
-        Me.DgvIndicator.BackgroundColor = System.Drawing.Color.WhiteSmoke
-        Me.DgvIndicator.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DgvIndicator.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvIndicator.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvIndicator.Location = New System.Drawing.Point(3, 3)
-        Me.DgvIndicator.MultiSelect = False
-        Me.DgvIndicator.Name = "DgvIndicator"
-        Me.DgvIndicator.ReadOnly = True
-        Me.DgvIndicator.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvIndicator.RowHeadersVisible = False
-        Me.DgvIndicator.RowTemplate.Height = 26
-        Me.DgvIndicator.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvIndicator.Size = New System.Drawing.Size(510, 60)
-        Me.DgvIndicator.TabIndex = 3
         '
         'DgvComplementLayout
         '
@@ -756,12 +756,12 @@ Partial Class FrmService
         Me.TsPrice.ResumeLayout(False)
         Me.TsPrice.PerformLayout()
         Me.TabIndicator.ResumeLayout(False)
+        CType(Me.DgvIndicator, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsNavigation.ResumeLayout(False)
         Me.TsNavigation.PerformLayout()
         Me.TsTitle.ResumeLayout(False)
         Me.TsTitle.PerformLayout()
-        CType(Me.DgvIndicator, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

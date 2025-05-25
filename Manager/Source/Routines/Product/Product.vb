@@ -21,6 +21,8 @@ Public Class Product
     Public Property MaximumQuantity As Decimal
     Public Property GrossWeight As Decimal
     Public Property NetWeight As Decimal
+    Public Property Prices As New List(Of ProductPrice)
+    Public Property Indicators As New List(Of ProductPriceIndicator)
     Public Sub New()
         SetRoutine(Routine.Product)
     End Sub
@@ -43,6 +45,8 @@ Public Class Product
         Group = New ProductGroup
         GrossWeight = 0
         NetWeight = 0
+        Prices = New List(Of ProductPrice)
+        Indicators = New List(Of ProductPriceIndicator)
         Note = Nothing
         If LockInfo.IsLocked Then Unlock()
     End Sub
@@ -71,6 +75,7 @@ Public Class Product
                         Pictures = GetPictures(Tra)
                         ProviderCodes = GetProviderCodes(Tra)
                         Codes = GetCodes(Tra)
+                        Prices = GetPrices(Tra)
                         Location = TableResult.Rows(0).Item("location").ToString
                         MinimumQuantity = TableResult.Rows(0).Item("minimumquantity")
                         MaximumQuantity = TableResult.Rows(0).Item("maximumquantity")
@@ -80,6 +85,7 @@ Public Class Product
                         GrossWeight = TableResult.Rows(0).Item("grossweight")
                         NetWeight = TableResult.Rows(0).Item("netweight")
                         Note = TableResult.Rows(0).Item("note").ToString
+                        Indicators = GetIndicators(Tra)
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
                     Else
@@ -177,6 +183,18 @@ Public Class Product
                         Code.SetID(CmdCode.LastInsertedId)
                     End Using
                 Next Code
+                For Each Price As SellablePrice In Prices
+                    Using CmdPrice As New MySqlCommand(My.Resources.PriceTableItemInsert, Con)
+                        CmdPrice.Parameters.AddWithValue("@pricetableid", Price.PriceTableID)
+                        CmdPrice.Parameters.AddWithValue("@creation", Price.Creation)
+                        CmdPrice.Parameters.AddWithValue("@price", Price.Price)
+                        CmdPrice.Parameters.AddWithValue("@serviceid", DBNull.Value)
+                        CmdPrice.Parameters.AddWithValue("@productid", ID)
+                        CmdPrice.Parameters.AddWithValue("@userid", Price.User.ID)
+                        CmdPrice.ExecuteNonQuery()
+                        Price.SetID(CmdPrice.LastInsertedId)
+                    End Using
+                Next Price
             End Using
             For Each Picture As ProductPicture In Pictures
                 Picture.Picture.Execute()
@@ -298,6 +316,41 @@ Public Class Product
                         End Using
                     End If
                 Next Code
+
+
+
+                For Each Price As SellablePrice In _Shadow.Prices
+                    If Not Prices.Any(Function(x) x.ID = Price.ID And x.ID > 0) Then
+                        Using CmdPrice As New MySqlCommand(My.Resources.PriceTableItemDelete, Con)
+                            CmdPrice.Parameters.AddWithValue("@id", Price.ID)
+                            CmdPrice.ExecuteNonQuery()
+                        End Using
+                    End If
+                Next Price
+                For Each Price As SellablePrice In Prices
+                    If Price.ID = 0 Then
+                        Using CmdPrice As New MySqlCommand(My.Resources.PriceTableItemInsert, Con)
+                            CmdPrice.Parameters.AddWithValue("@pricetableid", Price.PriceTableID)
+                            CmdPrice.Parameters.AddWithValue("@creation", Price.Creation)
+                            CmdPrice.Parameters.AddWithValue("@price", Price.Price)
+                            CmdPrice.Parameters.AddWithValue("@serviceid", DBNull.Value)
+                            CmdPrice.Parameters.AddWithValue("@productid", ID)
+                            CmdPrice.Parameters.AddWithValue("@userid", Price.User.ID)
+                            CmdPrice.ExecuteNonQuery()
+                            Price.SetID(CmdPrice.LastInsertedId)
+                        End Using
+                    Else
+                        Using CmdPrice As New MySqlCommand(My.Resources.PriceTableItemUpdate, Con)
+                            CmdPrice.Parameters.AddWithValue("@id", Price.ID)
+                            CmdPrice.Parameters.AddWithValue("@productid", ID)
+                            CmdPrice.Parameters.AddWithValue("@serviceid", DBNull.Value)
+                            CmdPrice.Parameters.AddWithValue("@price", Price.Price)
+                            CmdPrice.Parameters.AddWithValue("@userid", Price.User.ID)
+                            CmdPrice.ExecuteNonQuery()
+                        End Using
+                    End If
+                Next Price
+
             End Using
             For Each Picture As ProductPicture In Pictures
                 Picture.Picture.Execute()
@@ -383,6 +436,55 @@ Public Class Product
         End Using
         Return Codes
     End Function
+    Private Function GetPrices(Transaction As MySqlTransaction) As List(Of ProductPrice)
+        Dim TableResult As DataTable
+        Dim Prices As List(Of ProductPrice)
+        Dim Price As ProductPrice
+        Using CmdPrice As New MySqlCommand(My.Resources.ProductPriceSelect, Transaction.Connection)
+            CmdPrice.Transaction = Transaction
+            CmdPrice.Parameters.AddWithValue("@productid", ID)
+            Using Adp As New MySqlDataAdapter(CmdPrice)
+                TableResult = New DataTable
+                Adp.Fill(TableResult)
+                Prices = New List(Of ProductPrice)
+                For Each Row As DataRow In TableResult.Rows
+                    Price = New ProductPrice With {
+                        .PriceTableID = Convert.ToInt32(Row.Item("pricetableid")),
+                        .PriceTable = New Lazy(Of PriceTable)(Function() New PriceTable().Load(Convert.ToInt32(Row.Item("pricetableid")), False)),
+                        .PriceTableName = Row.Item("pricetablename").ToString,
+                        .Price = Convert.ToDecimal(Row.Item("price"))
+                    }
+                    Price.SetIsSaved(True)
+                    Price.SetID(Row.Item("id"))
+                    Price.SetCreation(Row.Item("creation"))
+                    Prices.Add(Price)
+                Next Row
+            End Using
+        End Using
+        Return Prices
+    End Function
+    Private Function GetIndicators(Transaction As MySqlTransaction) As List(Of ProductPriceIndicator)
+        Dim TableResult As DataTable
+        Dim Indicators As List(Of ProductPriceIndicator)
+        Dim Indicator As ProductPriceIndicator
+        Using CmdIndicator As New MySqlCommand(My.Resources.ProductPriceIndicatorSelect, Transaction.Connection)
+            CmdIndicator.Transaction = Transaction
+            CmdIndicator.Parameters.AddWithValue("@productid", ID)
+            Using Adp As New MySqlDataAdapter(CmdIndicator)
+                TableResult = New DataTable
+                Adp.Fill(TableResult)
+                Indicators = New List(Of ProductPriceIndicator)
+                For Each Row As DataRow In TableResult.Rows
+                    Indicator = New ProductPriceIndicator(Convert.ToInt32(Row.Item("indicatorid")), Convert.ToDecimal(Row.Item("price")))
+                    Indicator.SetIsSaved(True)
+                    Indicator.SetID(Row.Item("id"))
+                    Indicator.SetCreation(Row.Item("creation"))
+                    Indicators.Add(Indicator)
+                Next Row
+            End Using
+        End Using
+        Return Indicators
+    End Function
     Public Shared Sub FillCodeDataGridView(ProductID As Long, Dgv As DataGridView)
         Dim TableResult As New DataTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
@@ -423,6 +525,42 @@ Public Class Product
             End Using
         End Using
     End Sub
+
+    Public Shared Sub FillPriceDataGridView(ProductID As Long, Dgv As DataGridView)
+        Dim TableResult As New DataTable
+        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Using Cmd As New MySqlCommand(My.Resources.ProductPriceDetailSelect, Con)
+                Cmd.Parameters.AddWithValue("@productid", ProductID)
+                Using Adp As New MySqlDataAdapter(Cmd)
+                    Adp.Fill(TableResult)
+                    Dgv.DataSource = TableResult
+                    Dgv.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                    Dgv.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                End Using
+            End Using
+        End Using
+    End Sub
+    Public Shared Sub FillPriceIndicatorDataGridView(ProductID As Long, Dgv As DataGridView)
+        Dim TableResult As New DataTable
+        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Using Cmd As New MySqlCommand(My.Resources.ProductPriceIndicatorDetailSelect, Con)
+                Cmd.Parameters.AddWithValue("@productid", ProductID)
+                Using Adp As New MySqlDataAdapter(Cmd)
+                    Adp.Fill(TableResult)
+                    TableResult.Columns.Add("Indicador", GetType(String))
+                    For Each Row As DataRow In TableResult.Rows
+                        Row("Indicador") = EnumHelper.GetEnumDescription(CType(Row.Item("indicatorid"), PriceIndicator))
+                    Next Row
+                    Dgv.DataSource = TableResult
+                    Dgv.Columns(0).Visible = False
+                    Dgv.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                    Dgv.Columns(2).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                    Dgv.Columns(2).DisplayIndex = 0
+                End Using
+            End Using
+        End Using
+    End Sub
+
     Public Overrides Function ToString() As String
         Return If(Name, String.Empty)
     End Function

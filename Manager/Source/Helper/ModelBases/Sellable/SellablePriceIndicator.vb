@@ -36,6 +36,4 @@ Public Class SellablePriceIndicator
                 Return String.Empty
         End Select
     End Function
-
-
 End Class

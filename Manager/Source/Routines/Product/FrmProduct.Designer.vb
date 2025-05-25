@@ -94,6 +94,8 @@ Partial Class FrmProduct
         Me.LblInternalName = New System.Windows.Forms.Label()
         Me.LblName = New System.Windows.Forms.Label()
         Me.TcProduct = New System.Windows.Forms.TabControl()
+        Me.TabPrice = New System.Windows.Forms.TabPage()
+        Me.TabIndicator = New System.Windows.Forms.TabPage()
         Me.TabPicture = New System.Windows.Forms.TabPage()
         Me.DgvPicture = New System.Windows.Forms.DataGridView()
         Me.TsPicture = New System.Windows.Forms.ToolStrip()
@@ -134,7 +136,7 @@ Partial Class FrmProduct
         '
         Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnClose.Location = New System.Drawing.Point(376, 7)
+        Me.BtnClose.Location = New System.Drawing.Point(507, 7)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(95, 30)
         Me.BtnClose.TabIndex = 1
@@ -145,7 +147,7 @@ Partial Class FrmProduct
         '
         Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnSave.Enabled = False
-        Me.BtnSave.Location = New System.Drawing.Point(275, 7)
+        Me.BtnSave.Location = New System.Drawing.Point(406, 7)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(95, 30)
         Me.BtnSave.TabIndex = 0
@@ -162,7 +164,7 @@ Partial Class FrmProduct
         Me.TsTitle.Location = New System.Drawing.Point(0, 25)
         Me.TsTitle.Name = "TsTitle"
         Me.TsTitle.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsTitle.Size = New System.Drawing.Size(483, 25)
+        Me.TsTitle.Size = New System.Drawing.Size(614, 25)
         Me.TsTitle.TabIndex = 1
         Me.TsTitle.Text = "ToolStrip1"
         '
@@ -226,7 +228,7 @@ Partial Class FrmProduct
         Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsNavigation.Size = New System.Drawing.Size(483, 25)
+        Me.TsNavigation.Size = New System.Drawing.Size(614, 25)
         Me.TsNavigation.TabIndex = 0
         Me.TsNavigation.Text = "ToolStrip2"
         '
@@ -306,9 +308,9 @@ Partial Class FrmProduct
         Me.PnButtons.Controls.Add(Me.BtnSave)
         Me.PnButtons.Controls.Add(Me.BtnClose)
         Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PnButtons.Location = New System.Drawing.Point(0, 296)
+        Me.PnButtons.Location = New System.Drawing.Point(0, 272)
         Me.PnButtons.Name = "PnButtons"
-        Me.PnButtons.Size = New System.Drawing.Size(483, 44)
+        Me.PnButtons.Size = New System.Drawing.Size(614, 44)
         Me.PnButtons.TabIndex = 3
         '
         'EprValidation
@@ -322,7 +324,7 @@ Partial Class FrmProduct
         Me.TabNote.Location = New System.Drawing.Point(4, 22)
         Me.TabNote.Name = "TabNote"
         Me.TabNote.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabNote.Size = New System.Drawing.Size(475, 220)
+        Me.TabNote.Size = New System.Drawing.Size(607, 197)
         Me.TabNote.TabIndex = 5
         Me.TabNote.Text = "Observação"
         Me.TabNote.UseVisualStyleBackColor = True
@@ -334,7 +336,7 @@ Partial Class FrmProduct
         Me.TxtNote.Location = New System.Drawing.Point(3, 3)
         Me.TxtNote.MaxLength = 1000000
         Me.TxtNote.Name = "TxtNote"
-        Me.TxtNote.Size = New System.Drawing.Size(469, 214)
+        Me.TxtNote.Size = New System.Drawing.Size(601, 191)
         Me.TxtNote.TabIndex = 0
         Me.TxtNote.Text = ""
         '
@@ -345,7 +347,7 @@ Partial Class FrmProduct
         Me.TabProductCode.Location = New System.Drawing.Point(4, 22)
         Me.TabProductCode.Name = "TabProductCode"
         Me.TabProductCode.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabProductCode.Size = New System.Drawing.Size(475, 220)
+        Me.TabProductCode.Size = New System.Drawing.Size(607, 197)
         Me.TabProductCode.TabIndex = 7
         Me.TabProductCode.Text = "Cód. Produto"
         Me.TabProductCode.UseVisualStyleBackColor = True
@@ -368,7 +370,7 @@ Partial Class FrmProduct
         Me.DgvCode.RowHeadersVisible = False
         Me.DgvCode.RowTemplate.Height = 26
         Me.DgvCode.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvCode.Size = New System.Drawing.Size(469, 189)
+        Me.DgvCode.Size = New System.Drawing.Size(601, 166)
         Me.DgvCode.TabIndex = 1
         '
         'TsCode
@@ -380,7 +382,7 @@ Partial Class FrmProduct
         Me.TsCode.Location = New System.Drawing.Point(3, 3)
         Me.TsCode.Name = "TsCode"
         Me.TsCode.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsCode.Size = New System.Drawing.Size(469, 25)
+        Me.TsCode.Size = New System.Drawing.Size(601, 25)
         Me.TsCode.TabIndex = 0
         Me.TsCode.Text = "ToolStrip2"
         '
@@ -437,7 +439,7 @@ Partial Class FrmProduct
         Me.TabProductProviderCode.Location = New System.Drawing.Point(4, 22)
         Me.TabProductProviderCode.Name = "TabProductProviderCode"
         Me.TabProductProviderCode.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabProductProviderCode.Size = New System.Drawing.Size(475, 220)
+        Me.TabProductProviderCode.Size = New System.Drawing.Size(607, 197)
         Me.TabProductProviderCode.TabIndex = 6
         Me.TabProductProviderCode.Text = "Cód. Fornecedor"
         Me.TabProductProviderCode.UseVisualStyleBackColor = True
@@ -460,7 +462,7 @@ Partial Class FrmProduct
         Me.DgvProviderCode.RowHeadersVisible = False
         Me.DgvProviderCode.RowTemplate.Height = 26
         Me.DgvProviderCode.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvProviderCode.Size = New System.Drawing.Size(469, 189)
+        Me.DgvProviderCode.Size = New System.Drawing.Size(601, 166)
         Me.DgvProviderCode.TabIndex = 1
         '
         'TsProviderCode
@@ -472,7 +474,7 @@ Partial Class FrmProduct
         Me.TsProviderCode.Location = New System.Drawing.Point(3, 3)
         Me.TsProviderCode.Name = "TsProviderCode"
         Me.TsProviderCode.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsProviderCode.Size = New System.Drawing.Size(469, 25)
+        Me.TsProviderCode.Size = New System.Drawing.Size(601, 25)
         Me.TsProviderCode.TabIndex = 0
         Me.TsProviderCode.Text = "ToolStrip2"
         '
@@ -550,7 +552,7 @@ Partial Class FrmProduct
         Me.TabMain.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabMain.Name = "TabMain"
         Me.TabMain.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabMain.Size = New System.Drawing.Size(475, 216)
+        Me.TabMain.Size = New System.Drawing.Size(606, 192)
         Me.TabMain.TabIndex = 0
         Me.TabMain.Text = "Identificação"
         Me.TabMain.UseVisualStyleBackColor = True
@@ -935,6 +937,8 @@ Partial Class FrmProduct
         Me.TcProduct.Controls.Add(Me.TabMain)
         Me.TcProduct.Controls.Add(Me.TabProductProviderCode)
         Me.TcProduct.Controls.Add(Me.TabProductCode)
+        Me.TcProduct.Controls.Add(Me.TabPrice)
+        Me.TcProduct.Controls.Add(Me.TabIndicator)
         Me.TcProduct.Controls.Add(Me.TabPicture)
         Me.TcProduct.Controls.Add(Me.TabNote)
         Me.TcProduct.Dock = System.Windows.Forms.DockStyle.Fill
@@ -943,8 +947,26 @@ Partial Class FrmProduct
         Me.TcProduct.Multiline = True
         Me.TcProduct.Name = "TcProduct"
         Me.TcProduct.SelectedIndex = 0
-        Me.TcProduct.Size = New System.Drawing.Size(483, 246)
+        Me.TcProduct.Size = New System.Drawing.Size(614, 222)
         Me.TcProduct.TabIndex = 2
+        '
+        'TabPrice
+        '
+        Me.TabPrice.Location = New System.Drawing.Point(4, 22)
+        Me.TabPrice.Name = "TabPrice"
+        Me.TabPrice.Size = New System.Drawing.Size(607, 197)
+        Me.TabPrice.TabIndex = 10
+        Me.TabPrice.Text = "Preços"
+        Me.TabPrice.UseVisualStyleBackColor = True
+        '
+        'TabIndicator
+        '
+        Me.TabIndicator.Location = New System.Drawing.Point(4, 22)
+        Me.TabIndicator.Name = "TabIndicator"
+        Me.TabIndicator.Size = New System.Drawing.Size(607, 197)
+        Me.TabIndicator.TabIndex = 9
+        Me.TabIndicator.Text = "Indicadores"
+        Me.TabIndicator.UseVisualStyleBackColor = True
         '
         'TabPicture
         '
@@ -953,7 +975,7 @@ Partial Class FrmProduct
         Me.TabPicture.Location = New System.Drawing.Point(4, 22)
         Me.TabPicture.Name = "TabPicture"
         Me.TabPicture.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPicture.Size = New System.Drawing.Size(475, 220)
+        Me.TabPicture.Size = New System.Drawing.Size(607, 197)
         Me.TabPicture.TabIndex = 8
         Me.TabPicture.Text = "Foto"
         Me.TabPicture.UseVisualStyleBackColor = True
@@ -976,7 +998,7 @@ Partial Class FrmProduct
         Me.DgvPicture.RowHeadersVisible = False
         Me.DgvPicture.RowTemplate.Height = 60
         Me.DgvPicture.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPicture.Size = New System.Drawing.Size(469, 189)
+        Me.DgvPicture.Size = New System.Drawing.Size(601, 166)
         Me.DgvPicture.TabIndex = 3
         '
         'TsPicture
@@ -988,7 +1010,7 @@ Partial Class FrmProduct
         Me.TsPicture.Location = New System.Drawing.Point(3, 3)
         Me.TsPicture.Name = "TsPicture"
         Me.TsPicture.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsPicture.Size = New System.Drawing.Size(469, 25)
+        Me.TsPicture.Size = New System.Drawing.Size(601, 25)
         Me.TsPicture.TabIndex = 2
         Me.TsPicture.Text = "ToolStrip2"
         '
@@ -1081,7 +1103,7 @@ Partial Class FrmProduct
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(483, 340)
+        Me.ClientSize = New System.Drawing.Size(614, 316)
         Me.Controls.Add(Me.TcProduct)
         Me.Controls.Add(Me.TsTitle)
         Me.Controls.Add(Me.TsNavigation)
@@ -1208,4 +1230,6 @@ Partial Class FrmProduct
     Friend WithEvents FlpGroup As FlowLayoutPanel
     Friend WithEvents FlpFamily As FlowLayoutPanel
     Friend WithEvents EprInformation As ErrorProvider
+    Friend WithEvents TabPrice As TabPage
+    Friend WithEvents TabIndicator As TabPage
 End Class

@@ -3928,17 +3928,15 @@ Namespace My.Resources
         '''	pricetable.id AS &apos;ID&apos;,
         '''    pricetable.creation AS &apos;Criação&apos;,
         '''    CASE 
-        '''		WHEN pricetable.pricetabletypeid = 0 THEN &quot;USUÁRIO&quot;
-        '''        WHEN pricetable.pricetabletypeid = 1 THEN &quot;SISTEMA&quot;
-        '''	END AS &apos;Tipo&apos;,
-        '''    CASE 
         '''		WHEN pricetable.statusid = 0 THEN &quot;ATIVO&quot;
         '''        WHEN pricetable.statusid = 1 THEN &quot;INATIVO&quot;
         '''	END AS &apos;Status&apos;,
         '''    pricetable.name AS &apos;Nome&apos;
         '''FROM pricetable
         '''LEFT JOIN pricetableitem ON pricetableitem.pricetableid = pricetable.id
-        '''LEFT JOIN product ON product.id = pricetableit [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''LEFT JOIN product ON product.id = pricetableitem.productid
+        '''LEFT JOIN service ON service.id = pricetableitem.serviceid
+        '''LEFT JOIN productprovidercode ON productprovidercode.productid = produ [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PriceTableFilter() As String
             Get
@@ -3989,7 +3987,6 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO pricetable
         '''(
-        '''    pricetabletypeid,
         '''    creation,
         '''    statusid,
         '''    name,
@@ -3997,7 +3994,6 @@ Namespace My.Resources
         ''')
         '''VALUES
         '''(
-        '''    @pricetabletypeid,
         '''    @creation,
         '''    @statusid,
         '''    @name,
@@ -4128,7 +4124,6 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	pricetable.id,
-        '''	pricetable.pricetabletypeid,
         '''	pricetable.creation,
         '''    pricetable.statusid,
         '''	pricetable.name
@@ -5950,14 +5945,71 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a Public Class ServicePriceGrid
-        '''
-        '''End Class
-        '''.
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;ServicePrice&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''	&lt;Column Index=&quot;0&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Ordem&lt;/Name&gt;
+        '''		&lt;Width&gt;70&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;1&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''		&lt;Visible&gt;False&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;ID Tabela de Preços&lt;/Name&gt;
+        '''		&lt;Width&gt;100&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt; [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property ServicePriceGrid() As String
             Get
                 Return ResourceManager.GetString("ServicePriceGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;ServicePriceIndicator&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''	&lt;Column Index=&quot;0&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Ordem&lt;/Name&gt;
+        '''		&lt;Width&gt;70&lt;/Width&gt;
+        '''	&lt;/Column&gt;	
+        '''	&lt;Column Index=&quot;1&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Indicador&lt;/Name&gt;
+        '''		&lt;Width&gt;200&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot; Format=&quot;N2&quot; CellAlignment=&quot;MiddleRight&quot;&gt;
+        '''		&lt;Visible&gt;T [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property ServicePriceIndicatorGrid() As String
+            Get
+                Return ResourceManager.GetString("ServicePriceIndicatorGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	servicepriceindicator.id,
+        '''	servicepriceindicator.creation,
+        '''	servicepriceindicator.serviceid,
+        '''    servicepriceindicator.indicatorid,
+        '''    servicepriceindicator.price
+        '''FROM servicepriceindicator
+        '''WHERE servicepriceindicator.serviceid = @serviceid;.
+        '''</summary>
+        Friend ReadOnly Property ServicePriceIndicatorSelect() As String
+            Get
+                Return ResourceManager.GetString("ServicePriceIndicatorSelect", resourceCulture)
             End Get
         End Property
         

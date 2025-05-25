@@ -9,9 +9,26 @@ Public Class Service
     Public Property Complements As New List(Of ServiceComplement)
     Public Property Codes As New List(Of ServiceCode)
     Public Property Prices As New List(Of ServicePrice)
+    Public Property Indicators As New List(Of ServicePriceIndicator)
+
     Public Sub New()
         SetRoutine(Routine.Service)
+        FillIndicators()
     End Sub
+
+    Private Sub FillIndicators()
+        Indicators = New List(Of ServicePriceIndicator) From {
+            New ServicePriceIndicator(PriceIndicator.GrossCost, 0),
+            New ServicePriceIndicator(PriceIndicator.NetCost, 0),
+            New ServicePriceIndicator(PriceIndicator.AverageCost, 0),
+            New ServicePriceIndicator(PriceIndicator.LastGrossCost, 0),
+            New ServicePriceIndicator(PriceIndicator.LastNetCost, 0),
+            New ServicePriceIndicator(PriceIndicator.HighestSale, 0),
+            New ServicePriceIndicator(PriceIndicator.LowestSale, 0),
+            New ServicePriceIndicator(PriceIndicator.MinimumSale, 0)
+        }
+    End Sub
+
     Public Sub Clear()
         Unlock()
         SetIsSaved(False)
@@ -22,6 +39,7 @@ Public Class Service
         Complements = New List(Of ServiceComplement)
         Prices = New List(Of ServicePrice)
         Codes = New List(Of ServiceCode)
+        FillIndicators()
         Note = Nothing
         If LockInfo.IsLocked Then Unlock()
     End Sub
@@ -49,6 +67,7 @@ Public Class Service
                         Prices = GetPrices(Tra)
                         Complements = GetComplements(Tra)
                         Codes = GetCodes(Tra)
+                        FillIndicators(Tra)
                         Note = TableResult.Rows(0).Item("note").ToString
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
@@ -315,6 +334,26 @@ Public Class Service
         End Using
         Return Codes
     End Function
+    Private Sub FillIndicators(Transaction As MySqlTransaction)
+        Dim TableResult As DataTable
+        Dim Indicator As ServicePriceIndicator
+        Using CmdIndicator As New MySqlCommand(My.Resources.ServicePriceIndicatorSelect, Transaction.Connection)
+            CmdIndicator.Transaction = Transaction
+            CmdIndicator.Parameters.AddWithValue("@serviceid", ID)
+            Using Adp As New MySqlDataAdapter(CmdIndicator)
+                TableResult = New DataTable
+                Adp.Fill(TableResult)
+                Indicators = New List(Of ServicePriceIndicator)
+                For Each Row As DataRow In TableResult.Rows
+                    Indicator = Indicators.Single(Function(x) x.Indicator.Equals(Row.Item("indicatorid")))
+                    Indicator.SetIsSaved(True)
+                    Indicator.SetID(Row.Item("id"))
+                    Indicator.SetCreation(Row.Item("creation"))
+                    Indicator.Price = Convert.ToDecimal(Row.Item("price"))
+                Next Row
+            End Using
+        End Using
+    End Sub
     Public Shared Sub FillComplementDataGridView(ServiceID As Long, Dgv As DataGridView)
         Dim TableResult As New DataTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())

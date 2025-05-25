@@ -3,7 +3,6 @@ Imports MySql.Data.MySqlClient
 Public Class PriceTable
     Inherits ParentModel
     Private _Shadow As PriceTable
-    Public Property Source As PriceTableSource = PriceTableSource.FromUser
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
     Public Property Items As New List(Of PriceTableItem)
@@ -16,7 +15,6 @@ Public Class PriceTable
         SetIsSaved(False)
         SetID(0)
         SetCreation(Today)
-        Source = PriceTableSource.FromUser
         Status = SimpleStatus.Active
         Name = Nothing
         Items = New List(Of PriceTableItem)
@@ -41,7 +39,6 @@ Public Class PriceTable
                         SetID(TableResult.Rows(0).Item("id"))
                         SetCreation(TableResult.Rows(0).Item("creation"))
                         SetIsSaved(True)
-                        Source = TableResult.Rows(0).Item("sourceid")
                         Status = TableResult.Rows(0).Item("statusid")
                         Name = TableResult.Rows(0).Item("name").ToString
                         Items = GetItems(Tra)
@@ -87,7 +84,6 @@ Public Class PriceTable
                 Using CmdService As New MySqlCommand(My.Resources.PriceTableInsert, Con)
                     CmdService.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     CmdService.Parameters.AddWithValue("@statusid", CInt(Status))
-                    CmdService.Parameters.AddWithValue("@sourceid", CInt(Source))
                     CmdService.Parameters.AddWithValue("@name", Name)
                     CmdService.Parameters.AddWithValue("@userid", User.ID)
                     CmdService.ExecuteNonQuery()

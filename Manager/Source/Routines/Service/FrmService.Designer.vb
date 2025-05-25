@@ -71,14 +71,17 @@ Partial Class FrmService
         Me.BtnDeletePrice = New System.Windows.Forms.ToolStripButton()
         Me.LblFilterPrice = New System.Windows.Forms.ToolStripLabel()
         Me.TxtFilterPrice = New System.Windows.Forms.ToolStripTextBox()
+        Me.TabIndicator = New System.Windows.Forms.TabPage()
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TsNavigation = New System.Windows.Forms.ToolStrip()
         Me.BtnLog = New System.Windows.Forms.ToolStripButton()
         Me.TsTitle = New System.Windows.Forms.ToolStrip()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
+        Me.DgvIndicator = New System.Windows.Forms.DataGridView()
         Me.DgvComplementLayout = New Manager.DataGridViewLayout()
         Me.DgvPriceLayout = New Manager.DataGridViewLayout()
         Me.DgvCodeLayout = New Manager.DataGridViewLayout()
+        Me.DgvIndicatorLayout = New Manager.DataGridViewLayout()
         Me.PnButtons.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabNote.SuspendLayout()
@@ -93,16 +96,18 @@ Partial Class FrmService
         Me.TabPrice.SuspendLayout()
         CType(Me.DgvPrice, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsPrice.SuspendLayout()
+        Me.TabIndicator.SuspendLayout()
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsNavigation.SuspendLayout()
         Me.TsTitle.SuspendLayout()
+        CType(Me.DgvIndicator, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'BtnClose
         '
         Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnClose.Location = New System.Drawing.Point(337, 7)
+        Me.BtnClose.Location = New System.Drawing.Point(417, 7)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(95, 30)
         Me.BtnClose.TabIndex = 1
@@ -113,7 +118,7 @@ Partial Class FrmService
         '
         Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnSave.Enabled = False
-        Me.BtnSave.Location = New System.Drawing.Point(236, 7)
+        Me.BtnSave.Location = New System.Drawing.Point(316, 7)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(95, 30)
         Me.BtnSave.TabIndex = 0
@@ -238,7 +243,7 @@ Partial Class FrmService
         Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.PnButtons.Location = New System.Drawing.Point(0, 142)
         Me.PnButtons.Name = "PnButtons"
-        Me.PnButtons.Size = New System.Drawing.Size(444, 44)
+        Me.PnButtons.Size = New System.Drawing.Size(524, 44)
         Me.PnButtons.TabIndex = 3
         '
         'EprValidation
@@ -252,7 +257,7 @@ Partial Class FrmService
         Me.TabNote.Location = New System.Drawing.Point(4, 22)
         Me.TabNote.Name = "TabNote"
         Me.TabNote.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabNote.Size = New System.Drawing.Size(436, 66)
+        Me.TabNote.Size = New System.Drawing.Size(516, 66)
         Me.TabNote.TabIndex = 5
         Me.TabNote.Text = "Observação"
         Me.TabNote.UseVisualStyleBackColor = True
@@ -264,7 +269,7 @@ Partial Class FrmService
         Me.TxtNote.Location = New System.Drawing.Point(3, 3)
         Me.TxtNote.MaxLength = 1000000
         Me.TxtNote.Name = "TxtNote"
-        Me.TxtNote.Size = New System.Drawing.Size(430, 60)
+        Me.TxtNote.Size = New System.Drawing.Size(510, 60)
         Me.TxtNote.TabIndex = 0
         Me.TxtNote.Text = ""
         '
@@ -281,10 +286,10 @@ Partial Class FrmService
         '
         Me.TabComplement.Controls.Add(Me.DgvComplement)
         Me.TabComplement.Controls.Add(Me.TsComplement)
-        Me.TabComplement.Location = New System.Drawing.Point(4, 26)
+        Me.TabComplement.Location = New System.Drawing.Point(4, 22)
         Me.TabComplement.Name = "TabComplement"
         Me.TabComplement.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabComplement.Size = New System.Drawing.Size(436, 62)
+        Me.TabComplement.Size = New System.Drawing.Size(516, 66)
         Me.TabComplement.TabIndex = 7
         Me.TabComplement.Text = "Complementos"
         Me.TabComplement.UseVisualStyleBackColor = True
@@ -307,7 +312,7 @@ Partial Class FrmService
         Me.DgvComplement.RowHeadersVisible = False
         Me.DgvComplement.RowTemplate.Height = 26
         Me.DgvComplement.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvComplement.Size = New System.Drawing.Size(430, 31)
+        Me.DgvComplement.Size = New System.Drawing.Size(510, 35)
         Me.DgvComplement.TabIndex = 1
         '
         'TsComplement
@@ -319,7 +324,7 @@ Partial Class FrmService
         Me.TsComplement.Location = New System.Drawing.Point(3, 3)
         Me.TsComplement.Name = "TsComplement"
         Me.TsComplement.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsComplement.Size = New System.Drawing.Size(430, 25)
+        Me.TsComplement.Size = New System.Drawing.Size(510, 25)
         Me.TsComplement.TabIndex = 0
         Me.TsComplement.Text = "ToolStrip2"
         '
@@ -384,7 +389,7 @@ Partial Class FrmService
         Me.TabMain.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabMain.Name = "TabMain"
         Me.TabMain.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabMain.Size = New System.Drawing.Size(436, 62)
+        Me.TabMain.Size = New System.Drawing.Size(516, 62)
         Me.TabMain.TabIndex = 0
         Me.TabMain.Text = "Identificação"
         Me.TabMain.UseVisualStyleBackColor = True
@@ -395,7 +400,7 @@ Partial Class FrmService
         Me.TxtName.Location = New System.Drawing.Point(11, 24)
         Me.TxtName.MaxLength = 255
         Me.TxtName.Name = "TxtName"
-        Me.TxtName.Size = New System.Drawing.Size(412, 23)
+        Me.TxtName.Size = New System.Drawing.Size(496, 23)
         Me.TxtName.TabIndex = 1
         '
         'LblName
@@ -412,6 +417,7 @@ Partial Class FrmService
         Me.TcService.Controls.Add(Me.TabMain)
         Me.TcService.Controls.Add(Me.TabCode)
         Me.TcService.Controls.Add(Me.TabPrice)
+        Me.TcService.Controls.Add(Me.TabIndicator)
         Me.TcService.Controls.Add(Me.TabComplement)
         Me.TcService.Controls.Add(Me.TabNote)
         Me.TcService.Dock = System.Windows.Forms.DockStyle.Fill
@@ -420,17 +426,17 @@ Partial Class FrmService
         Me.TcService.Multiline = True
         Me.TcService.Name = "TcService"
         Me.TcService.SelectedIndex = 0
-        Me.TcService.Size = New System.Drawing.Size(444, 92)
+        Me.TcService.Size = New System.Drawing.Size(524, 92)
         Me.TcService.TabIndex = 2
         '
         'TabCode
         '
         Me.TabCode.Controls.Add(Me.DgvCode)
         Me.TabCode.Controls.Add(Me.TsCode)
-        Me.TabCode.Location = New System.Drawing.Point(4, 26)
+        Me.TabCode.Location = New System.Drawing.Point(4, 22)
         Me.TabCode.Name = "TabCode"
         Me.TabCode.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabCode.Size = New System.Drawing.Size(436, 62)
+        Me.TabCode.Size = New System.Drawing.Size(516, 66)
         Me.TabCode.TabIndex = 9
         Me.TabCode.Text = "Códigos"
         Me.TabCode.UseVisualStyleBackColor = True
@@ -453,7 +459,7 @@ Partial Class FrmService
         Me.DgvCode.RowHeadersVisible = False
         Me.DgvCode.RowTemplate.Height = 26
         Me.DgvCode.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvCode.Size = New System.Drawing.Size(430, 31)
+        Me.DgvCode.Size = New System.Drawing.Size(510, 35)
         Me.DgvCode.TabIndex = 4
         '
         'TsCode
@@ -465,7 +471,7 @@ Partial Class FrmService
         Me.TsCode.Location = New System.Drawing.Point(3, 3)
         Me.TsCode.Name = "TsCode"
         Me.TsCode.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsCode.Size = New System.Drawing.Size(430, 25)
+        Me.TsCode.Size = New System.Drawing.Size(510, 25)
         Me.TsCode.TabIndex = 3
         Me.TsCode.Text = "ToolStrip2"
         '
@@ -519,10 +525,10 @@ Partial Class FrmService
         '
         Me.TabPrice.Controls.Add(Me.DgvPrice)
         Me.TabPrice.Controls.Add(Me.TsPrice)
-        Me.TabPrice.Location = New System.Drawing.Point(4, 26)
+        Me.TabPrice.Location = New System.Drawing.Point(4, 22)
         Me.TabPrice.Name = "TabPrice"
         Me.TabPrice.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPrice.Size = New System.Drawing.Size(436, 62)
+        Me.TabPrice.Size = New System.Drawing.Size(516, 66)
         Me.TabPrice.TabIndex = 8
         Me.TabPrice.Text = "Preços"
         Me.TabPrice.UseVisualStyleBackColor = True
@@ -545,7 +551,7 @@ Partial Class FrmService
         Me.DgvPrice.RowHeadersVisible = False
         Me.DgvPrice.RowTemplate.Height = 26
         Me.DgvPrice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPrice.Size = New System.Drawing.Size(430, 31)
+        Me.DgvPrice.Size = New System.Drawing.Size(510, 35)
         Me.DgvPrice.TabIndex = 2
         '
         'TsPrice
@@ -557,7 +563,7 @@ Partial Class FrmService
         Me.TsPrice.Location = New System.Drawing.Point(3, 3)
         Me.TsPrice.Name = "TsPrice"
         Me.TsPrice.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsPrice.Size = New System.Drawing.Size(430, 25)
+        Me.TsPrice.Size = New System.Drawing.Size(510, 25)
         Me.TsPrice.TabIndex = 1
         Me.TsPrice.Text = "ToolStrip2"
         '
@@ -607,6 +613,17 @@ Partial Class FrmService
         Me.TxtFilterPrice.Name = "TxtFilterPrice"
         Me.TxtFilterPrice.Size = New System.Drawing.Size(200, 25)
         '
+        'TabIndicator
+        '
+        Me.TabIndicator.Controls.Add(Me.DgvIndicator)
+        Me.TabIndicator.Location = New System.Drawing.Point(4, 22)
+        Me.TabIndicator.Name = "TabIndicator"
+        Me.TabIndicator.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabIndicator.Size = New System.Drawing.Size(516, 66)
+        Me.TabIndicator.TabIndex = 10
+        Me.TabIndicator.Text = "Indicadores"
+        Me.TabIndicator.UseVisualStyleBackColor = True
+        '
         'EprInformation
         '
         Me.EprInformation.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink
@@ -622,7 +639,7 @@ Partial Class FrmService
         Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsNavigation.Size = New System.Drawing.Size(444, 25)
+        Me.TsNavigation.Size = New System.Drawing.Size(524, 25)
         Me.TsNavigation.TabIndex = 0
         Me.TsNavigation.Text = "ToolStrip2"
         '
@@ -646,7 +663,7 @@ Partial Class FrmService
         Me.TsTitle.Location = New System.Drawing.Point(0, 25)
         Me.TsTitle.Name = "TsTitle"
         Me.TsTitle.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsTitle.Size = New System.Drawing.Size(444, 25)
+        Me.TsTitle.Size = New System.Drawing.Size(524, 25)
         Me.TsTitle.TabIndex = 1
         Me.TsTitle.Text = "ToolStrip1"
         '
@@ -657,6 +674,27 @@ Partial Class FrmService
         Me.DgvNavigator.LastButton = Me.BtnLast
         Me.DgvNavigator.NextButton = Me.BtnNext
         Me.DgvNavigator.PreviousButton = Me.BtnPrevious
+        '
+        'DgvIndicator
+        '
+        Me.DgvIndicator.AllowUserToAddRows = False
+        Me.DgvIndicator.AllowUserToDeleteRows = False
+        Me.DgvIndicator.AllowUserToOrderColumns = True
+        Me.DgvIndicator.AllowUserToResizeRows = False
+        Me.DgvIndicator.BackgroundColor = System.Drawing.Color.WhiteSmoke
+        Me.DgvIndicator.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DgvIndicator.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvIndicator.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvIndicator.Location = New System.Drawing.Point(3, 3)
+        Me.DgvIndicator.MultiSelect = False
+        Me.DgvIndicator.Name = "DgvIndicator"
+        Me.DgvIndicator.ReadOnly = True
+        Me.DgvIndicator.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvIndicator.RowHeadersVisible = False
+        Me.DgvIndicator.RowTemplate.Height = 26
+        Me.DgvIndicator.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvIndicator.Size = New System.Drawing.Size(510, 60)
+        Me.DgvIndicator.TabIndex = 3
         '
         'DgvComplementLayout
         '
@@ -673,11 +711,16 @@ Partial Class FrmService
         Me.DgvCodeLayout.DataGridView = Me.DgvCode
         Me.DgvCodeLayout.Routine = Manager.Routine.ServiceCode
         '
+        'DgvIndicatorLayout
+        '
+        Me.DgvIndicatorLayout.DataGridView = Me.DgvIndicator
+        Me.DgvIndicatorLayout.Routine = Manager.Routine.ServicePriceIndicator
+        '
         'FrmService
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(444, 186)
+        Me.ClientSize = New System.Drawing.Size(524, 186)
         Me.Controls.Add(Me.TcService)
         Me.Controls.Add(Me.TsTitle)
         Me.Controls.Add(Me.TsNavigation)
@@ -712,11 +755,13 @@ Partial Class FrmService
         CType(Me.DgvPrice, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsPrice.ResumeLayout(False)
         Me.TsPrice.PerformLayout()
+        Me.TabIndicator.ResumeLayout(False)
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsNavigation.ResumeLayout(False)
         Me.TsNavigation.PerformLayout()
         Me.TsTitle.ResumeLayout(False)
         Me.TsTitle.PerformLayout()
+        CType(Me.DgvIndicator, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -776,4 +821,7 @@ Partial Class FrmService
     Friend WithEvents LblFilterCode As ToolStripLabel
     Friend WithEvents TxtFilterCode As ToolStripTextBox
     Friend WithEvents DgvCodeLayout As DataGridViewLayout
+    Friend WithEvents TabIndicator As TabPage
+    Friend WithEvents DgvIndicator As DataGridView
+    Friend WithEvents DgvIndicatorLayout As DataGridViewLayout
 End Class

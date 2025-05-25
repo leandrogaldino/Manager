@@ -14,11 +14,6 @@ Public Class PriceTableFilter
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(UpperNoAccentConverter))>
     Public Property ID As String
-    <DisplayName("Fonte")>
-    <NotifyParentProperty(True)>
-    <RefreshProperties(RefreshProperties.All)>
-    <TypeConverter(GetType(PriceTableTypeConverter))>
-    Public Overridable Property Source As String = EnumHelper.GetEnumDescription(PriceTableSource.FromUser)
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(SimpleStatusConverter))>
@@ -55,9 +50,6 @@ Public Class PriceTableFilter
             Con.Open()
             Using Cmd As New MySqlCommand(My.Resources.PriceTableFilter, Con)
                 If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
-
-                If Source <> Nothing Then Cmd.Parameters.AddWithValue("@sourceid", If(Source = EnumHelper.GetEnumDescription(Manager.PriceTableSource.FromUser), CInt(Manager.PriceTableSource.FromUser), CInt(Manager.PriceTableSource.FromSystem))) : Filtering = True Else Cmd.Parameters.AddWithValue("@sourceid", "%")
-
                 If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = EnumHelper.GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
                 If Name <> Nothing Then Cmd.Parameters.AddWithValue("@name", Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@name", "%")
                 If ProductOrService <> Nothing Then Cmd.Parameters.AddWithValue("@productorservice", ProductOrService) : Filtering = True Else Cmd.Parameters.AddWithValue("@productorservice", "%")
@@ -90,7 +82,6 @@ Public Class PriceTableFilter
     End Function
     Public Sub Clean()
         ID = Nothing
-        Source = EnumHelper.GetEnumDescription(Manager.PriceTableSource.FromUser)
         Status = Nothing
         Name = Nothing
         ProductOrService = Nothing

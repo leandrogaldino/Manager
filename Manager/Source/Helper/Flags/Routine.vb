@@ -117,6 +117,7 @@ Public Enum Routine
     ServiceComplement = 2301
     ServicePrice = 2302
     ServiceCode = 2303
+    ServicePriceIndicator = 2304
     <Description("Exportar as grades")> <BiStatePrivilege>
     ExportGrid = 9901
     <Description("Acessar o histórico")> <BiStatePrivilege>

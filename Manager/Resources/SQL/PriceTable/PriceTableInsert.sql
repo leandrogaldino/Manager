@@ -1,6 +1,5 @@
 ﻿INSERT INTO pricetable
 (
-    sourceid,
     creation,
     statusid,
     name,
@@ -8,7 +7,6 @@
 )
 VALUES
 (
-    @sourceid,
     @creation,
     @statusid,
     @name,

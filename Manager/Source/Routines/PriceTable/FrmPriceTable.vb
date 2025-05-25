@@ -74,15 +74,10 @@ Public Class FrmPriceTable
         If _PriceTable.Items IsNot Nothing Then DgvPriceTableItem.Fill(_PriceTable.Items)
         BtnDelete.Enabled = _PriceTable.ID > 0 And _User.CanDelete(Routine.Service)
         Text = "Tabela de Preço"
-        If _PriceTable.Source = PriceTableSource.FromSystem Then
-            CMessageBox.Show("Essa é uma tabela de preços do sistema. Você não poderá salvar alterações.", CMessageBoxType.Information)
-            Text &= " - SOMENTE LEITURA"
-        Else
-            If _PriceTable.LockInfo.IsLocked And Not _PriceTable.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _PriceTable.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
+        If _PriceTable.LockInfo.IsLocked And Not _PriceTable.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _PriceTable.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
                 CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _PriceTable.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                 Text &= " - SOMENTE LEITURA"
             End If
-        End If
         BtnSave.Enabled = False
         TxtName.Select()
         _Loading = False
@@ -271,10 +266,7 @@ Public Class FrmPriceTable
         Dim DocumentPath As String = String.Empty
         Dim Success As Boolean
         TxtName.Text = TxtName.Text.Trim.ToUnaccented()
-        If _PriceTable.Source = PriceTableSource.FromSystem Then
-            CMessageBox.Show("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois é uma tabela do sistema.")
-            Success = False
-        ElseIf _PriceTable.LockInfo.IsLocked And _PriceTable.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
+        If _PriceTable.LockInfo.IsLocked And _PriceTable.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _PriceTable.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Success = False
         Else

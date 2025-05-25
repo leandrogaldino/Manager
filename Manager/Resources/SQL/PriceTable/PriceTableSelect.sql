@@ -1,6 +1,5 @@
 ﻿SELECT
 	pricetable.id,
-	pricetable.sourceid,
 	pricetable.creation,
     pricetable.statusid,
 	pricetable.name

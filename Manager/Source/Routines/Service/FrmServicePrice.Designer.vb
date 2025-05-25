@@ -44,8 +44,6 @@ Partial Class FrmServicePrice
         Me.LblCreationValue = New System.Windows.Forms.ToolStripLabel()
         Me.FlpPriceTable = New System.Windows.Forms.FlowLayoutPanel()
         Me.BtnFilter = New ControlLibrary.NoFocusCueButton()
-        Me.BtnView = New ControlLibrary.NoFocusCueButton()
-        Me.BtnNew = New ControlLibrary.NoFocusCueButton()
         Me.TmrQueriedBox = New System.Windows.Forms.Timer(Me.components)
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.DbxPrice = New ControlLibrary.DecimalBox()
@@ -232,8 +230,6 @@ Partial Class FrmServicePrice
         'FlpPriceTable
         '
         Me.FlpPriceTable.Controls.Add(Me.BtnFilter)
-        Me.FlpPriceTable.Controls.Add(Me.BtnView)
-        Me.FlpPriceTable.Controls.Add(Me.BtnNew)
         Me.FlpPriceTable.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
         Me.FlpPriceTable.Location = New System.Drawing.Point(328, 59)
         Me.FlpPriceTable.Name = "FlpPriceTable"
@@ -255,38 +251,6 @@ Partial Class FrmServicePrice
         Me.BtnFilter.TooltipText = ""
         Me.BtnFilter.UseVisualStyleBackColor = False
         Me.BtnFilter.Visible = False
-        '
-        'BtnView
-        '
-        Me.BtnView.BackColor = System.Drawing.Color.Transparent
-        Me.BtnView.BackgroundImage = Global.Manager.My.Resources.Resources.View
-        Me.BtnView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnView.FlatAppearance.BorderSize = 0
-        Me.BtnView.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnView.Location = New System.Drawing.Point(26, 3)
-        Me.BtnView.Name = "BtnView"
-        Me.BtnView.Size = New System.Drawing.Size(17, 17)
-        Me.BtnView.TabIndex = 1
-        Me.BtnView.TabStop = False
-        Me.BtnView.TooltipText = ""
-        Me.BtnView.UseVisualStyleBackColor = False
-        Me.BtnView.Visible = False
-        '
-        'BtnNew
-        '
-        Me.BtnNew.BackColor = System.Drawing.Color.Transparent
-        Me.BtnNew.BackgroundImage = Global.Manager.My.Resources.Resources.IncludeSmall
-        Me.BtnNew.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnNew.FlatAppearance.BorderSize = 0
-        Me.BtnNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnNew.Location = New System.Drawing.Point(3, 3)
-        Me.BtnNew.Name = "BtnNew"
-        Me.BtnNew.Size = New System.Drawing.Size(17, 17)
-        Me.BtnNew.TabIndex = 0
-        Me.BtnNew.TabStop = False
-        Me.BtnNew.TooltipText = ""
-        Me.BtnNew.UseVisualStyleBackColor = False
-        Me.BtnNew.Visible = False
         '
         'TmrQueriedBox
         '
@@ -415,8 +379,6 @@ Partial Class FrmServicePrice
     Friend WithEvents LblCreationValue As ToolStripLabel
     Friend WithEvents FlpPriceTable As FlowLayoutPanel
     Friend WithEvents BtnFilter As ControlLibrary.NoFocusCueButton
-    Friend WithEvents BtnNew As ControlLibrary.NoFocusCueButton
-    Friend WithEvents BtnView As ControlLibrary.NoFocusCueButton
     Friend WithEvents TmrQueriedBox As Timer
     Friend WithEvents DbxPrice As ControlLibrary.DecimalBox
     Friend WithEvents LblPrice As Label

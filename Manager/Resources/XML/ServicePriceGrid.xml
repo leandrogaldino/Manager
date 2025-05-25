@@ -26,11 +26,11 @@
 		<Name>ID Tabela de Preços Obj</Name>
 		<Width>100</Width>
 	</Column>
-	<Column Index="4">
+	<Column Index="4" Format="N2" CellAlignment="MiddleRight">
 		<Visible>True</Visible>
 		<DisplayIndex>4</DisplayIndex>
 		<Name>Preço</Name>
-		<Width>200</Width>
+		<Width>70</Width>
 	</Column>
 	<Column Index="5" ButtonState="Hidden">
 		<Visible>False</Visible>

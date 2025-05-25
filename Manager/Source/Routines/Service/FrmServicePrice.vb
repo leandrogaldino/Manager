@@ -138,7 +138,6 @@ Public Class FrmServicePrice
         End If
         Return False
     End Function
-
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
         If IsValidFields() Then
@@ -180,65 +179,23 @@ Public Class FrmServicePrice
         End If
     End Function
     Private Sub TmrQueriedBox_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBox.Tick
-        BtnView.Visible = False
-        BtnNew.Visible = False
         BtnFilter.Visible = False
         TmrQueriedBox.Stop()
     End Sub
     Private Sub QbxPriceTable_Enter(sender As Object, e As EventArgs) Handles QbxPriceTable.Enter
         TmrQueriedBox.Stop()
-
-        BtnView.Visible = QbxPriceTable.IsFreezed And _User.CanWrite(Routine.PriceTable)
-        BtnNew.Visible = _User.CanWrite(Routine.PriceTable)
         BtnFilter.Visible = _User.CanAccess(Routine.PriceTable)
-
     End Sub
     Private Sub QbxPriceTable_Leave(sender As Object, e As EventArgs) Handles QbxPriceTable.Leave
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
-    Private Sub QbxPriceTable_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxPriceTable.FreezedPrimaryKeyChanged
-        If Not _Loading Then
-
-            BtnView.Visible = QbxPriceTable.IsFreezed And _User.CanWrite(Routine.PriceTable)
-
-        End If
-    End Sub
-    Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
-
-        Dim PriceTable As PriceTable
-
-
-        Dim PriceTableForm As FrmPriceTable
-
-
-        PriceTable = New PriceTable
-        PriceTableForm = New FrmPriceTable(PriceTable)
-        PriceTableForm.ShowDialog()
-        If PriceTable.ID > 0 Then
-            QbxPriceTable.Freeze(PriceTable.ID)
-        End If
-
-        EprValidation.Clear()
-        QbxPriceTable.Select()
-    End Sub
-    Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
-        Dim PriceTableForm As FrmPriceTable
-
-        PriceTableForm = New FrmPriceTable(New PriceTable().Load(QbxPriceTable.FreezedPrimaryKey, True))
-        PriceTableForm.ShowDialog()
-
-        QbxPriceTable.Freeze(QbxPriceTable.FreezedPrimaryKey)
-        QbxPriceTable.Select()
-    End Sub
-    '
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
         Dim FilterForm As FrmFilter
 
         FilterForm = New FrmFilter(New PriceTableQueriedBoxFilter(), QbxPriceTable) With {
             .Text = "Filtro de Tabela de Preços"
         }
-
         FilterForm.ShowDialog()
         QbxPriceTable.Select()
     End Sub
@@ -264,5 +221,4 @@ Public Class FrmServicePrice
             End If
         End If
     End Sub
-
 End Class

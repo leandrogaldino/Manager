@@ -61,6 +61,7 @@ Public Class FrmService
         ControlHelper.EnableControlDoubleBuffer(DgvCode, True)
         ControlHelper.EnableControlDoubleBuffer(DgvPrice, True)
         ControlHelper.EnableControlDoubleBuffer(DgvComplement, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvIndicator, True)
         DgvNavigator.DataGridView = _ServicesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
@@ -80,6 +81,7 @@ Public Class FrmService
         If _Service.Codes IsNot Nothing Then DgvCode.Fill(_Service.Codes)
         If _Service.Prices IsNot Nothing Then DgvPrice.Fill(_Service.Prices)
         If _Service.Complements IsNot Nothing Then DgvComplement.Fill(_Service.Complements)
+        If _Service.Indicators IsNot Nothing Then DgvIndicator.Fill(_Service.Indicators)
         BtnDelete.Enabled = _Service.ID > 0 And _User.CanDelete(Routine.Service)
         Text = "Serviço"
         If _Service.LockInfo.IsLocked And Not _Service.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Service.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
@@ -123,6 +125,7 @@ Public Class FrmService
                 DgvCode.Fill(_Service.Codes)
                 DgvPrice.Fill(_Service.Prices)
                 DgvComplement.Fill(_Service.Complements)
+                DgvIndicator.Fill(_Service.Indicators)
             End If
             _Deleting = False
         End If
@@ -288,7 +291,7 @@ Public Class FrmService
     End Sub
     Private Sub TcPerson_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcService.SelectedIndexChanged
         If TcService.SelectedTab Is TabMain Then
-            Size = New Size(460, 225)
+            Size = New Size(540, 225)
             FormBorderStyle = FormBorderStyle.FixedSingle
             WindowState = FormWindowState.Normal
             MaximizeBox = False
@@ -296,14 +299,6 @@ Public Class FrmService
             FormBorderStyle = FormBorderStyle.Sizable
             WindowState = FormWindowState.Maximized
             MaximizeBox = True
-        End If
-    End Sub
-    <DebuggerStepThrough>
-    Private Sub DgvPrice_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs)
-        Dim Dgv As DataGridView = sender
-        If e.ColumnIndex = Dgv.Columns("Price").Index Then
-            e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            e.CellStyle.Format = "N2"
         End If
     End Sub
     Private Sub DgvCode_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvCode.MouseDoubleClick
@@ -356,6 +351,7 @@ Public Class FrmService
                     DgvCode.Fill(_Service.Codes)
                     DgvComplement.Fill(_Service.Complements)
                     DgvPrice.Fill(_Service.Prices)
+                    DgvIndicator.Fill(_Service.Indicators)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Service)
                     If _ServicesForm IsNot Nothing Then

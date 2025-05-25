@@ -106,7 +106,6 @@ DROP TABLE `manager`.`productpricetable`;
 
 CREATE TABLE pricetable (
 	id INT NOT NULL AUTO_INCREMENT,
-    sourceid INT NOT NULL,
     creation DATE NOT NULL,
     statusid INT NOT NULL,
     name VARCHAR(255) NOT NULL,
@@ -142,6 +141,18 @@ CREATE TABLE `servicecode` (
   KEY `userid` (`userid`),
   CONSTRAINT `servicecode_service` FOREIGN KEY (`serviceid`) REFERENCES `service` (`id`) ON DELETE CASCADE,
   CONSTRAINT `servicecode_user` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT
+);
+
+
+
+CREATE TABLE servicepriceindicator (
+	id INT NOT NULL AUTO_INCREMENT,
+    serviceid INT NOT NULL,
+    indicatorid INT NOT NULL,
+	price DECIMAL(10,2) NOT NULL,
+	PRIMARY KEY (`id`),
+	KEY `serviceid` (`serviceid`),
+	CONSTRAINT `servicepriceindicator_service` FOREIGN KEY (`serviceid`) REFERENCES `service` (`id`) ON DELETE CASCADE
 );
 
 DELIMITER $$
@@ -303,159 +314,3 @@ DELIMITER ;
 INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 0, 1);
 INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 1, 1);
 INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 2, 1);
-INSERT INTO pricetable VALUES (
-	NULL,
-    1,
-	DATE(NOW()),
-    0,
-    'CUSTO BRUTO',
-    1
-);
-INSERT INTO manager.pricetableitem (
-    id,
-    pricetableid,
-    creation,
-    productid,
-    serviceid,
-    price,
-    userid
-)
-SELECT
-    NULL, 
-    1,                 
-    DATE(NOW()),           
-    p.id,               
-    NULL,   
-    0,
-    1
-FROM product p;
-INSERT INTO pricetable VALUES (
-	NULL,
-    1,
-	DATE(NOW()),
-    0,
-    'CUSTO LIQUIDO',
-    1
-);
-INSERT INTO manager.pricetableitem (
-    id,
-    pricetableid,
-    creation,
-    productid,
-    serviceid,
-    price,
-    userid
-)
-SELECT
-    NULL, 
-    2,                 
-    DATE(NOW()),           
-    p.id,               
-    NULL,   
-    0,
-    1
-FROM product p;
-INSERT INTO pricetable VALUES (
-	NULL,
-    1,
-	DATE(NOW()),
-    0,
-    'CUSTO MEDIO',
-    1
-);
-INSERT INTO manager.pricetableitem (
-    id,
-    pricetableid,
-    creation,
-    productid,
-    serviceid,
-    price,
-    userid
-)
-SELECT
-    NULL, 
-    3,                 
-    DATE(NOW()),           
-    p.id,               
-    NULL,   
-    0,
-    1
-FROM product p;
-INSERT INTO pricetable VALUES (
-	NULL,
-	1,
-	DATE(NOW()),
-    0,
-    'MENOR VENDA',
-    1
-);
-INSERT INTO manager.pricetableitem (
-    id,
-    pricetableid,
-    creation,
-    productid,
-    serviceid,
-    price,
-    userid
-)
-SELECT
-    NULL, 
-    4,                 
-    DATE(NOW()),           
-    p.id,               
-    NULL,   
-    0,
-    1
-FROM product p;
-INSERT INTO pricetable VALUES (
-	NULL,
-    1,
-	DATE(NOW()),
-    0,
-    'MAIOR VENDA',
-    1
-);
-INSERT INTO manager.pricetableitem (
-    id,
-    pricetableid,
-    creation,
-    productid,
-    serviceid,
-    price,
-    userid
-)
-SELECT
-    NULL, 
-    5,                 
-    DATE(NOW()),           
-    p.id,               
-    NULL,   
-    0,
-    1
-FROM product p;
-INSERT INTO pricetable VALUES (
-	NULL,
-    1,
-	DATE(NOW()),
-    0,
-    'ULTIMA COMPRA',
-    1
-);
-INSERT INTO manager.pricetableitem (
-    id,
-    pricetableid,
-    creation,
-    productid,
-    serviceid,
-    price,
-    userid
-)
-SELECT
-    NULL, 
-    6,                 
-    DATE(NOW()),           
-    p.id,               
-    NULL,   
-    0,
-    1
-FROM product p;

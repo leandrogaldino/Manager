@@ -291,7 +291,7 @@ Public Class FrmProduct
 
     Private Sub TcPerson_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcProduct.SelectedIndexChanged
         If TcProduct.SelectedTab Is TabMain Then
-            Size = New Size(504, 379)
+            Size = New Size(630, 355)
             FormBorderStyle = FormBorderStyle.FixedSingle
             WindowState = FormWindowState.Normal
             MaximizeBox = False

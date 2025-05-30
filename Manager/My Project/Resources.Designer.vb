@@ -2602,6 +2602,31 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;EvaluationReplacedPart&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''    &lt;Column Index=&quot;0&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;Ordem&lt;/Name&gt;
+        '''        &lt;Width&gt;70&lt;/Width&gt;
+        '''    &lt;/Column&gt;        
+        '''    &lt;Column Index=&quot;1&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;Status&lt;/Name&gt;
+        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''    &lt;/Column&gt;
+        '''	&lt;Column [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property EvaluationReplacedPartGrid() As String
+            Get
+                Return ResourceManager.GetString("EvaluationReplacedPartGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO evaluationreplacedpart
         '''(
         '''	evaluationid,
@@ -4871,7 +4896,13 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a .
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	pricetable.name AS &apos;Tabela de Preços&apos;,
+        '''    pricetableitem.price AS &apos;Preço&apos;
+        '''FROM pricetable
+        '''LEFT JOIN pricetableitem ON pricetableitem.pricetableid = pricetable.id
+        '''LEFT JOIN product ON product.id = pricetableitem.productid
+        '''WHERE product.id = @productid;.
         '''</summary>
         Friend ReadOnly Property ProductPriceDetailSelect() As String
             Get
@@ -4907,7 +4938,11 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a .
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	productpriceindicator.indicatorid,
+        '''    productpriceindicator.price AS &apos;Preço&apos;
+        '''FROM productpriceindicator
+        '''WHERE productpriceindicator.productid = @productid;.
         '''</summary>
         Friend ReadOnly Property ProductPriceIndicatorDetailSelect() As String
             Get

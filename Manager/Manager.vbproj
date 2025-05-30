@@ -1820,6 +1820,7 @@
     <Content Include="Resources\XML\PriceTableItemGrid.xml" />
     <Content Include="Resources\XML\ProductPriceGrid.xml" />
     <Content Include="Resources\XML\ProductPriceIndicatorGrid.xml" />
+    <Content Include="Resources\XML\EvaluationReplacedPartGrid.xml" />
     <Content Include="Resources\XML\ServiceCodeGrid.xml" />
     <Content Include="Resources\XML\ServiceGrid.xml" />
     <Content Include="Resources\XML\EvaluationTechnicianGrid.xml" />

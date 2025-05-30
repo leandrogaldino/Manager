@@ -27,14 +27,14 @@ Public Class FrmEvaluationReplacedPart
         _User = Locator.GetInstance(Of Session).User
         Height = 235
         LoadForm()
-        DgvNavigator.DataGridView = _EvaluationForm.DgvPart
+        DgvNavigator.DataGridView = _EvaluationForm.DgvReplacedPart
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = _User.CanAccess(Routine.Log)
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = If(_ReplacedItem.IsSaved, _EvaluationForm.DgvPart.SelectedRows(0).Cells("Order").Value, 0)
+        LblOrderValue.Text = If(_ReplacedItem.IsSaved, _EvaluationForm.DgvReplacedPart.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _ReplacedItem.Creation
         QbxItem.Unfreeze()
         If _ReplacedItem.ItemName = Nothing And _ReplacedItem.Product.ID > 0 Then
@@ -66,9 +66,9 @@ Public Class FrmEvaluationReplacedPart
         End If
     End Sub
     Private Sub AfterDataGridViewRowMove()
-        If _EvaluationForm.DgvPart.SelectedRows.Count = 1 Then
+        If _EvaluationForm.DgvReplacedPart.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _ReplacedItem = _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _EvaluationForm.DgvPart.SelectedRows(0).Cells("Guid").Value)
+            _ReplacedItem = _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _EvaluationForm.DgvReplacedPart.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -169,7 +169,7 @@ Public Class FrmEvaluationReplacedPart
                 _ReplacedItem.SetIsSaved(True)
                 _Evaluation.ReplacedParts.Add(_ReplacedItem)
             End If
-            _EvaluationForm.DgvPart.Fill(_Evaluation.ReplacedParts)
+            _EvaluationForm.DgvReplacedPart.Fill(_Evaluation.ReplacedParts)
             ' _EvaluationForm.DgvReplacedItemsLayout.Load()
             BtnSave.Enabled = False
             If Not _ReplacedItem.IsSaved Then
@@ -179,9 +179,9 @@ Public Class FrmEvaluationReplacedPart
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _EvaluationForm.DgvPart.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ReplacedItem.Guid)
+            Row = _EvaluationForm.DgvReplacedPart.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ReplacedItem.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _EvaluationForm.DgvPart.SelectedRows(0).Cells("Order").Value
+            LblOrderValue.Text = _EvaluationForm.DgvReplacedPart.SelectedRows(0).Cells("Order").Value
             _EvaluationForm.EprValidation.Clear()
             _EvaluationForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()
@@ -244,11 +244,11 @@ Public Class FrmEvaluationReplacedPart
         LoadForm()
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
-        If _EvaluationForm.DgvPart.SelectedRows.Count = 1 Then
+        If _EvaluationForm.DgvReplacedPart.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _ReplacedItem = _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _EvaluationForm.DgvPart.SelectedRows(0).Cells("Guid").Value)
+                _ReplacedItem = _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _EvaluationForm.DgvReplacedPart.SelectedRows(0).Cells("Guid").Value)
                 _Evaluation.ReplacedParts.Remove(_ReplacedItem)
-                _EvaluationForm.DgvPart.Fill(_Evaluation.ReplacedParts)
+                _EvaluationForm.DgvReplacedPart.Fill(_Evaluation.ReplacedParts)
                 '_EvaluationForm.DgvReplacedItemsLayout.Load()
                 _Deleting = True
                 Dispose()

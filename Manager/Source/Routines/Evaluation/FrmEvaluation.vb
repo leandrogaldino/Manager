@@ -403,8 +403,11 @@ Public Class FrmEvaluation
         End If
         DgvPartWorkedHour.Fill(_Evaluation.PartsWorkedHour)
         DgvPartElapsedDay.Fill(_Evaluation.PartsElapsedDay)
+        DgvReplacedPart.Fill(_Evaluation.ReplacedParts)
         DgvlPartElapsedDayLayout.Load()
         DgvlPartWorkedHourLayout.Load()
+        DgvReplacedPartLayout.Load()
+
 
         If Not String.IsNullOrEmpty(_Evaluation.Document.CurrentFile) AndAlso File.Exists(_Evaluation.Document.CurrentFile) Then
             PdfDocumentViewer.Load(New MemoryStream(File.ReadAllBytes(_Evaluation.Document.CurrentFile)))
@@ -859,8 +862,10 @@ Public Class FrmEvaluation
                     DgvTechnician.Fill(_Evaluation.Technicians)
                     DgvPartWorkedHour.Fill(_Evaluation.PartsWorkedHour)
                     DgvPartElapsedDay.Fill(_Evaluation.PartsElapsedDay)
+                    DgvReplacedPart.Fill(_Evaluation.ReplacedParts)
                     DgvlPartElapsedDayLayout.Load()
                     DgvlPartWorkedHourLayout.Load()
+                    DgvReplacedPartLayout.Load()
                     'FillDataGridViewPart(DgvPartWorkedHour, _Evaluation.PartsWorkedHour)
                     'FillDataGridViewPart(DgvPartElapsedDay, _Evaluation.PartsElapsedDay)
                     BtnSave.Enabled = False
@@ -1447,32 +1452,94 @@ Public Class FrmEvaluation
         DgvlTechnicianLayout.Load()
         DgvlPartElapsedDayLayout.Load()
         DgvlPartWorkedHourLayout.Load()
+        DgvReplacedPartLayout.Load()
     End Sub
 
 
 
-    Private Sub BtnIncludePart_Click(sender As Object, e As EventArgs) Handles BtnIncludePart.Click
+
+
+
+
+
+
+
+    Private Sub BtnIncludeReplacedPart_Click(sender As Object, e As EventArgs) Handles BtnIncludeReplacedPart.Click
         Dim Form As New FrmEvaluationReplacedPart(_Evaluation, New EvaluationReplacedPart(), Me)
         Form.ShowDialog()
     End Sub
-    Private Sub BtnEditPart_Click(sender As Object, e As EventArgs) Handles BtnEditPart.Click
+    Private Sub BtnEditReplacedPart_Click(sender As Object, e As EventArgs) Handles BtnEditReplacedPart.Click
         Dim Form As FrmEvaluationReplacedPart
         Dim Item As EvaluationReplacedPart
-        If DgvPart.SelectedRows.Count = 1 Then
-            Item = _Evaluation.ReplacedParts.Single(Function(x) x.Guid = DgvPart.SelectedRows(0).Cells("Guid").Value)
+        If DgvReplacedPart.SelectedRows.Count = 1 Then
+            Item = _Evaluation.ReplacedParts.Single(Function(x) x.Guid = DgvReplacedPart.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmEvaluationReplacedPart(_Evaluation, Item, Me)
             Form.ShowDialog()
         End If
     End Sub
-    Private Sub BtnDeleteReplacedItem_Click(sender As Object, e As EventArgs) Handles BtnDeletePart.Click
+    Private Sub BtnDeleteReplacedPart_Click(sender As Object, e As EventArgs) Handles BtnDeleteReplacedPart.Click
         Dim Item As EvaluationReplacedPart
-        If DgvPart.SelectedRows.Count = 1 Then
+        If DgvReplacedPart.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Item = _Evaluation.ReplacedParts.Single(Function(x) x.Guid = DgvPart.SelectedRows(0).Cells("Guid").Value)
+                Item = _Evaluation.ReplacedParts.Single(Function(x) x.Guid = DgvReplacedPart.SelectedRows(0).Cells("Guid").Value)
                 _Evaluation.ReplacedParts.Remove(Item)
-                DgvPart.Fill(_Evaluation.ReplacedParts)
+                DgvReplacedPart.Fill(_Evaluation.ReplacedParts)
                 BtnSave.Enabled = True
             End If
+        End If
+    End Sub
+
+    Private Sub DgvReplacedPart_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvReplacedPart.MouseDoubleClick
+        Dim ClickPlace As DataGridView.HitTestInfo = DgvReplacedPart.HitTest(e.X, e.Y)
+        If ClickPlace.Type = DataGridViewHitTestType.Cell Then
+            BtnEditReplacedPart.PerformClick()
+        End If
+    End Sub
+
+
+    Private Sub TxtKeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtFilterReplacedParts.KeyPress, TxtFilterPerformedService.KeyPress
+        Dim LstChar As New List(Of Char) From {" ", ".", ",", "-", "/", "(", ")", "+", "*", "%", "&", "@", "#", "$", "<", ">", "\"}
+        If Not Char.IsLetter(e.KeyChar) And Not Char.IsNumber(e.KeyChar) And Not LstChar.Contains(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub TxtFilterReplacedParts_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterReplacedParts.TextChanged
+        FilterComplement()
+    End Sub
+    Private Sub FilterComplement()
+        Dim Table As DataTable
+        Dim View As DataView
+        Dim Filter As String = "ItemNameOrProduct LIKE '%@VALUE%' OR Code LIKE '%@VALUE%'"
+        If DgvReplacedPart.DataSource IsNot Nothing Then
+            Table = DgvReplacedPart.DataSource
+            View = Table.DefaultView
+            If TxtFilterReplacedParts.Text <> Nothing Then
+                Filter = Filter.Replace("@VALUE", TxtFilterReplacedParts.Text.Replace("%", Nothing).Replace("*", Nothing))
+                View.RowFilter = Filter
+            Else
+                View.RowFilter = Nothing
+            End If
+        End If
+    End Sub
+    Private Sub TxtFilterReplacedParts_Enter(sender As Object, e As EventArgs) Handles TxtFilterReplacedParts.Enter
+        EprInformation.SetError(TsReplacedPart, "Filtrando os campos: Código e Item.")
+        EprInformation.SetIconAlignment(TsReplacedPart, ErrorIconAlignment.MiddleLeft)
+        EprInformation.SetIconPadding(TsReplacedPart, -365)
+    End Sub
+    Private Sub TxtFilterReplacedParts_Leave(sender As Object, e As EventArgs) Handles TxtFilterReplacedParts.Leave
+        EprInformation.Clear()
+    End Sub
+    Private Sub DgvReplacedPart_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvReplacedPart.DataSourceChanged
+        FilterComplement()
+    End Sub
+    Private Sub DgvReplacedPart_SelectionChanged(sender As Object, e As EventArgs) Handles DgvReplacedPart.SelectionChanged
+        If DgvReplacedPart.SelectedRows.Count = 0 Then
+            BtnEditReplacedPart.Enabled = False
+            BtnDeleteReplacedPart.Enabled = False
+        Else
+            BtnEditReplacedPart.Enabled = True
+            BtnDeleteReplacedPart.Enabled = True
         End If
     End Sub
 End Class

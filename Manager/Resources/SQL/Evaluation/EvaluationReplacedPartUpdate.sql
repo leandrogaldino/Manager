@@ -1,5 +1,4 @@
 UPDATE evaluationreplacedpart SET
-	itemname = @itemname,
 	productid = @productid,
 	quantity = @quantity,
 	userid = @userid

@@ -7,76 +7,70 @@
         <DisplayIndex>0</DisplayIndex>
         <Name>Ordem</Name>
         <Width>70</Width>
-    </Column>        
-    <Column Index="1">
-        <Visible>True</Visible>
-        <DisplayIndex>1</DisplayIndex>
-        <Name>Status</Name>
-        <Width>100</Width>
     </Column>
+	<Column Index="1" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>1</DisplayIndex>
+		<Name>ID Produto</Name>
+		<Width>100</Width>
+	</Column>
 	<Column Index="2">
 		<Visible>True</Visible>
 		<DisplayIndex>2</DisplayIndex>
 		<Name>Código</Name>
 		<Width>100</Width>
 	</Column>
-    <Column Index="3" ButtonState="Hidden">
-        <Visible>False</Visible>
-        <DisplayIndex>3</DisplayIndex>
-        <Name>Nome do Item</Name>
-        <Width>100</Width>
-    </Column>
-    <Column Index="4" ButtonState="Hidden">
-        <Visible>False</Visible>
-        <DisplayIndex>4</DisplayIndex>
-        <Name>Nome do Produto</Name>
-        <Width>100</Width>
-    </Column>
-    <Column Index="5">
+    <Column Index="3">
         <Visible>True</Visible>
-        <DisplayIndex>5</DisplayIndex>
-        <Name>Item</Name>
+        <DisplayIndex>3</DisplayIndex>
+        <Name>Produto</Name>
         <Width>250</Width>
     </Column>
-    <Column Index="6">
+	<Column Index="4">
+		<Visible>True</Visible>
+		<DisplayIndex>4</DisplayIndex>
+		<Name>Produto Obj</Name>
+		<Width>100</Width>
+	</Column>
+    <Column Index="5" Format="N2">
         <Visible>True</Visible>
-        <DisplayIndex>6</DisplayIndex>
-        <Name>Retirado</Name>
-        <Width>120</Width>
+        <DisplayIndex>5</DisplayIndex>
+        <Name>Quantidade</Name>
+        <Width>100</Width>
     </Column>	
-	<Column Index="7" ButtonState="Hidden">
+	<Column Index="6" ButtonState="Hidden">
 		<Visible>False</Visible>
-		<DisplayIndex>7</DisplayIndex>
+		<DisplayIndex>6</DisplayIndex>
 		<Name>Guid</Name>
 		<Width>100</Width>
 	</Column>
-	<Column Index="8" ButtonState="Hidden">
+	<Column Index="7" ButtonState="Hidden">
 		<Visible>False</Visible>
-		<DisplayIndex>8</DisplayIndex>
+		<DisplayIndex>7</DisplayIndex>
 		<Name>ID</Name>
 		<Width>100</Width>
 	</Column>
-	<Column Index="9">
+	<Column Index="8">
 		<Visible>True</Visible>
-		<DisplayIndex>9</DisplayIndex>
+		<DisplayIndex>8</DisplayIndex>
 		<Name>Criação</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="9" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>9</DisplayIndex>
+		<Name>Rotina</Name>
 		<Width>100</Width>
 	</Column>
 	<Column Index="10" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>10</DisplayIndex>
-		<Name>Rotina</Name>
+		<Name>Salvo</Name>
 		<Width>100</Width>
 	</Column>
 	<Column Index="11" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>11</DisplayIndex>
-		<Name>Salvo</Name>
-		<Width>100</Width>
-	</Column>
-	<Column Index="12" ButtonState="Hidden">
-		<Visible>False</Visible>
-		<DisplayIndex>12</DisplayIndex>
 		<Name>Usuário</Name>
 		<Width>100</Width>
 	</Column>

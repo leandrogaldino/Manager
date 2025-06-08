@@ -35,10 +35,8 @@ Public Class FrmServicePrice
         _Loading = True
         LblOrderValue.Text = If(_ServicePrice.IsSaved, _ServiceForm.DgvPrice.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _ServicePrice.Creation
-
         QbxPriceTable.Unfreeze()
         QbxPriceTable.Freeze(_ServicePrice.PriceTableID)
-
         DbxPrice.Text = _ServicePrice.Price
         If Not _ServicePrice.IsSaved Then
             BtnSave.Text = "Incluir"

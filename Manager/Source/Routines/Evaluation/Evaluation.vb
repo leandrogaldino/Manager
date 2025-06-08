@@ -304,8 +304,10 @@ Public Class Evaluation
                 Adp.Fill(TableResult)
                 For Each Row As DataRow In TableResult.Rows
                     Item = New EvaluationReplacedPart With {
-                        .ItemName = Row.Item("itemname").ToString,
-                        .Product = New Product().Load(Row.Item("productid"), False),
+                        .ProductID = Convert.ToInt32(Row.Item("productid")),
+                        .ProductCode = Row.Item("productcode").ToString,
+                        .ProductName = Row.Item("productname").ToString,
+                        .Product = New Lazy(Of Product)(Function() New Product().Load(Convert.ToInt32(Row.Item("productid")), False)),
                         .Quantity = Row.Item("quantity")
                     }
                     Item.SetIsSaved(True)
@@ -401,9 +403,7 @@ Public Class Evaluation
                     Using CmdItem As New MySqlCommand(My.Resources.EvaluationReplacedPartInsert, Con)
                         CmdItem.Parameters.AddWithValue("@evaluationid", ID)
                         CmdItem.Parameters.AddWithValue("@creation", Item.Creation)
-                        CmdItem.Parameters.AddWithValue("@statusid", CInt(Status))
-                        CmdItem.Parameters.AddWithValue("@itemname", If(String.IsNullOrEmpty(Item.ItemName), DBNull.Value, Item.ItemName))
-                        CmdItem.Parameters.AddWithValue("@productid", If(Item.Product.ID = 0, DBNull.Value, Item.Product.ID))
+                        CmdItem.Parameters.AddWithValue("@productid", Item.ProductID)
                         CmdItem.Parameters.AddWithValue("@quantity", Item.Quantity)
                         CmdItem.Parameters.AddWithValue("@userid", Item.User.ID)
                         CmdItem.ExecuteNonQuery()
@@ -591,38 +591,35 @@ Public Class Evaluation
                         End If
                     Next PartElapsedDay
                 End If
-                For Each Item As EvaluationReplacedPart In _Shadow.ReplacedParts
-                    If Not ReplacedParts.Any(Function(x) x.ID = Item.ID And x.ID > 0) Then
-                        Using CmdItem As New MySqlCommand(My.Resources.EvaluationReplacedPartDelete, Con)
-                            CmdItem.Parameters.AddWithValue("@id", Item.ID)
-                            CmdItem.ExecuteNonQuery()
+                For Each ReplacedPart As EvaluationReplacedPart In _Shadow.ReplacedParts
+                    If Not ReplacedParts.Any(Function(x) x.ID = ReplacedPart.ID And x.ID > 0) Then
+                        Using CmdReplacedPart As New MySqlCommand(My.Resources.EvaluationReplacedPartDelete, Con)
+                            CmdReplacedPart.Parameters.AddWithValue("@id", ReplacedPart.ID)
+                            CmdReplacedPart.ExecuteNonQuery()
                         End Using
                     End If
-                Next Item
-                For Each Item As EvaluationReplacedPart In ReplacedParts
-                    If Item.ID = 0 Then
-                        Using CmdItem As New MySqlCommand(My.Resources.EvaluationReplacedPartInsert, Con)
-                            CmdItem.Parameters.AddWithValue("@evaluationid", ID)
-                            CmdItem.Parameters.AddWithValue("@creation", Item.Creation)
-                            CmdItem.Parameters.AddWithValue("@statusid", CInt(Status))
-                            CmdItem.Parameters.AddWithValue("@itemname", If(String.IsNullOrEmpty(Item.ItemName), DBNull.Value, Item.ItemName))
-                            CmdItem.Parameters.AddWithValue("@productid", If(Item.Product.ID = 0, DBNull.Value, Item.Product.ID))
-                            CmdItem.Parameters.AddWithValue("@quantity", Item.Quantity)
-                            CmdItem.Parameters.AddWithValue("@userid", Item.User.ID)
-                            CmdItem.ExecuteNonQuery()
-                            Item.SetID(CmdItem.LastInsertedId)
+                Next ReplacedPart
+                For Each ReplacedPart As EvaluationReplacedPart In ReplacedParts
+                    If ReplacedPart.ID = 0 Then
+                        Using CmdReplacedPart As New MySqlCommand(My.Resources.EvaluationReplacedPartInsert, Con)
+                            CmdReplacedPart.Parameters.AddWithValue("@evaluationid", ID)
+                            CmdReplacedPart.Parameters.AddWithValue("@creation", ReplacedPart.Creation)
+                            CmdReplacedPart.Parameters.AddWithValue("@productid", ReplacedPart.ProductID)
+                            CmdReplacedPart.Parameters.AddWithValue("@quantity", ReplacedPart.Quantity)
+                            CmdReplacedPart.Parameters.AddWithValue("@userid", ReplacedPart.User.ID)
+                            CmdReplacedPart.ExecuteNonQuery()
+                            ReplacedPart.SetID(CmdReplacedPart.LastInsertedId)
                         End Using
                     Else
-                        Using CmdItem As New MySqlCommand(My.Resources.EvaluationReplacedPartUpdate, Con)
-                            CmdItem.Parameters.AddWithValue("@id", Item.ID)
-                            CmdItem.Parameters.AddWithValue("@itemname", If(String.IsNullOrEmpty(Item.ItemName), DBNull.Value, Item.ItemName))
-                            CmdItem.Parameters.AddWithValue("@productid", If(Item.Product.ID = 0, DBNull.Value, Item.Product.ID))
-                            CmdItem.Parameters.AddWithValue("@quantity", Item.Quantity)
-                            CmdItem.Parameters.AddWithValue("@userid", Item.User.ID)
-                            CmdItem.ExecuteNonQuery()
+                        Using CmdReplacedPart As New MySqlCommand(My.Resources.EvaluationReplacedPartUpdate, Con)
+                            CmdReplacedPart.Parameters.AddWithValue("@id", ReplacedPart.ID)
+                            CmdReplacedPart.Parameters.AddWithValue("@productid", ReplacedPart.ProductID)
+                            CmdReplacedPart.Parameters.AddWithValue("@quantity", ReplacedPart.Quantity)
+                            CmdReplacedPart.Parameters.AddWithValue("@userid", ReplacedPart.User.ID)
+                            CmdReplacedPart.ExecuteNonQuery()
                         End Using
                     End If
-                Next Item
+                Next ReplacedPart
                 For Each Photo As EvaluationPhoto In _Shadow.Photos
                     If Not Photos.Any(Function(x) x.ID = Photo.ID And x.ID > 0) Then
                         Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoDelete, Con)

@@ -177,18 +177,6 @@
         i3cOcAMWQDfT6lwFGBpEtByrPHgBaQlxBFZzOncAAAAASUVORK5CYII=
 </value>
   </data>
-  <metadata name="TsPerformedService.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>398, 91</value>
-  </metadata>
-  <data name="BtnEditPerformedService.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACkSURBVDhPzZLLCQJBEETfQTOQ1Q1FA9mLcShoTt73ZhB+
-        8GIIggEISsE0DE3PrJ+LD+oy01Xd0wx8xhTYAzdg5S+HGAMH4Jlp7YtKTFLAEnhkAXdfGNEAR2AXhOg5
-        VcxsHS2kS+etN+R4sw+RisyAc2CWdK6dFCl1li7fjv3nZm3zFBglLUzft8oiML7V2dj+Yha9M+s5g2Pn
-        XFPIBpgDI19Q4wU4gFVz02HHqgAAAABJRU5ErkJggg==
-</value>
-  </data>
   <metadata name="TsReplacedPart.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>264, 91</value>
   </metadata>

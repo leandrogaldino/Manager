@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class FrmPriceTableItem
+Partial Class FrmPriceTableSellable
     Inherits System.Windows.Forms.Form
 
     'Descartar substituições de formulário para limpar a lista de componentes.
@@ -103,7 +103,7 @@ Partial Class FrmPriceTableItem
         Me.BtnInclude.Margin = New System.Windows.Forms.Padding(1, 1, 0, 2)
         Me.BtnInclude.Name = "BtnInclude"
         Me.BtnInclude.Size = New System.Drawing.Size(23, 22)
-        Me.BtnInclude.Text = "Incluir Item"
+        Me.BtnInclude.Text = "Incluir Produto/Serviço"
         '
         'BtnDelete
         '
@@ -114,7 +114,7 @@ Partial Class FrmPriceTableItem
         Me.BtnDelete.Margin = New System.Windows.Forms.Padding(0, 1, 10, 2)
         Me.BtnDelete.Name = "BtnDelete"
         Me.BtnDelete.Size = New System.Drawing.Size(23, 22)
-        Me.BtnDelete.Text = "Excluir Item"
+        Me.BtnDelete.Text = "Excluir Produto/Serviço"
         '
         'BtnFirst
         '
@@ -124,7 +124,7 @@ Partial Class FrmPriceTableItem
         Me.BtnFirst.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnFirst.Name = "BtnFirst"
         Me.BtnFirst.Size = New System.Drawing.Size(23, 22)
-        Me.BtnFirst.Text = "Primeiro Item"
+        Me.BtnFirst.Text = "Primeiro Produto/Serviço"
         '
         'BtnPrevious
         '
@@ -134,7 +134,7 @@ Partial Class FrmPriceTableItem
         Me.BtnPrevious.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnPrevious.Name = "BtnPrevious"
         Me.BtnPrevious.Size = New System.Drawing.Size(23, 22)
-        Me.BtnPrevious.Text = "Item Anterior"
+        Me.BtnPrevious.Text = "Produto/Serviço Anterior"
         '
         'BtnNext
         '
@@ -144,7 +144,7 @@ Partial Class FrmPriceTableItem
         Me.BtnNext.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnNext.Name = "BtnNext"
         Me.BtnNext.Size = New System.Drawing.Size(23, 22)
-        Me.BtnNext.Text = "Próximo Item"
+        Me.BtnNext.Text = "Próximo Produto/Serviço"
         '
         'BtnLast
         '
@@ -155,7 +155,7 @@ Partial Class FrmPriceTableItem
         Me.BtnLast.Margin = New System.Windows.Forms.Padding(0, 1, 10, 2)
         Me.BtnLast.Name = "BtnLast"
         Me.BtnLast.Size = New System.Drawing.Size(23, 22)
-        Me.BtnLast.Text = "Último Item"
+        Me.BtnLast.Text = "Último Produto/Serviço"
         '
         'BtnLog
         '
@@ -375,7 +375,7 @@ Partial Class FrmPriceTableItem
         Me.QbxSellable.Suffix = Nothing
         Me.QbxSellable.TabIndex = 4
         '
-        'FrmPriceTableItem
+        'FrmPriceTableSellable
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
@@ -395,7 +395,7 @@ Partial Class FrmPriceTableItem
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "FrmPriceTableItem"
+        Me.Name = "FrmPriceTableSellable"
         Me.ShowIcon = False
         Me.Text = "Produto/Serviço"
         Me.TsMain.ResumeLayout(False)

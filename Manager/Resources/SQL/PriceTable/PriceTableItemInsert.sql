@@ -1,4 +1,4 @@
-﻿INSERT INTO pricetableitem
+﻿INSERT INTO pricetablesellable
 (
     pricetableid,
     creation,

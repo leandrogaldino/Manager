@@ -57,7 +57,7 @@ Public Class FrmPriceTable
         DgvPriceTableItemLayout.Load()
     End Sub
     Private Sub LoadForm()
-        ControlHelper.EnableControlDoubleBuffer(DgvPriceTableItem, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvPriceTableSellable, True)
         DgvNavigator.DataGridView = _PriceTablesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
@@ -71,13 +71,13 @@ Public Class FrmPriceTable
         LblCreationValue.Text = _PriceTable.Creation.ToString("dd/MM/yyyy")
         TxtName.Text = _PriceTable.Name
         TxtFilterDescription.Clear()
-        If _PriceTable.Items IsNot Nothing Then DgvPriceTableItem.Fill(_PriceTable.Items)
+        If _PriceTable.Sellables IsNot Nothing Then DgvPriceTableSellable.Fill(_PriceTable.Sellables)
         BtnDelete.Enabled = _PriceTable.ID > 0 And _User.CanDelete(Routine.Service)
         Text = "Tabela de Preço"
         If _PriceTable.LockInfo.IsLocked And Not _PriceTable.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _PriceTable.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
-                CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _PriceTable.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
-                Text &= " - SOMENTE LEITURA"
-            End If
+            CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _PriceTable.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
+            Text &= " - SOMENTE LEITURA"
+        End If
         BtnSave.Enabled = False
         TxtName.Select()
         _Loading = False
@@ -112,7 +112,7 @@ Public Class FrmPriceTable
                 End If
             End If
             If _PriceTablesForm IsNot Nothing Then
-                DgvPriceTableItem.Fill(_PriceTable.Items)
+                DgvPriceTableSellable.Fill(_PriceTable.Sellables)
             End If
             _Deleting = False
         End If
@@ -201,26 +201,26 @@ Public Class FrmPriceTable
         Save()
     End Sub
 
-    Private Sub BtnIncludeComplement_Click(sender As Object, e As EventArgs) Handles BtnIncludePriceTableItem.Click
-        Dim Form As New FrmPriceTableItem(_PriceTable, New PriceTableItem, Me)
+    Private Sub BtnIncludePriceTableSellable_Click(sender As Object, e As EventArgs) Handles BtnIncludePriceTableSellable.Click
+        Dim Form As New FrmPriceTableSellable(_PriceTable, New PriceTableSellable, Me)
         Form.ShowDialog()
     End Sub
-    Private Sub BtnEditComplement_Click(sender As Object, e As EventArgs) Handles BtnEditPriceTableItem.Click
-        Dim Form As FrmPriceTableItem
-        Dim PriceTableItem As PriceTableItem
-        If DgvPriceTableItem.SelectedRows.Count = 1 Then
-            PriceTableItem = _PriceTable.Items.Single(Function(x) x.Guid = DgvPriceTableItem.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmPriceTableItem(_PriceTable, PriceTableItem, Me)
+    Private Sub BtnEditPriceTableSellable_Click(sender As Object, e As EventArgs) Handles BtnEditPriceTableSellable.Click
+        Dim Form As FrmPriceTableSellable
+        Dim PriceTableItem As PriceTableSellable
+        If DgvPriceTableSellable.SelectedRows.Count = 1 Then
+            PriceTableItem = _PriceTable.Sellables.Single(Function(x) x.Guid = DgvPriceTableSellable.SelectedRows(0).Cells("Guid").Value)
+            Form = New FrmPriceTableSellable(_PriceTable, PriceTableItem, Me)
             Form.ShowDialog()
         End If
     End Sub
-    Private Sub BtnDeleteCode_Click(sender As Object, e As EventArgs) Handles BtnDeletePriceTableItem.Click
-        Dim PriceTableItem As PriceTableItem
-        If DgvPriceTableItem.SelectedRows.Count = 1 Then
+    Private Sub BtnDeletePriceTableSellable_Click(sender As Object, e As EventArgs) Handles BtnDeletePriceTableSellable.Click
+        Dim PriceTableItem As PriceTableSellable
+        If DgvPriceTableSellable.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                PriceTableItem = _PriceTable.Items.Single(Function(x) x.Guid = DgvPriceTableItem.SelectedRows(0).Cells("Guid").Value)
-                _PriceTable.Items.Remove(PriceTableItem)
-                DgvPriceTableItem.Fill(_PriceTable.Items)
+                PriceTableItem = _PriceTable.Sellables.Single(Function(x) x.Guid = DgvPriceTableSellable.SelectedRows(0).Cells("Guid").Value)
+                _PriceTable.Sellables.Remove(PriceTableItem)
+                DgvPriceTableSellable.Fill(_PriceTable.Sellables)
                 BtnSave.Enabled = True
             End If
         End If
@@ -237,18 +237,10 @@ Public Class FrmPriceTable
             MaximizeBox = True
         End If
     End Sub
-    <DebuggerStepThrough>
-    Private Sub DgvPrice_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs)
-        Dim Dgv As DataGridView = sender
-        If e.ColumnIndex = Dgv.Columns("Price").Index Then
-            e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            e.CellStyle.Format = "N2"
-        End If
-    End Sub
-    Private Sub DgvPriceTableItem_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvPriceTableItem.MouseDoubleClick
-        Dim ClickPlace As DataGridView.HitTestInfo = DgvPriceTableItem.HitTest(e.X, e.Y)
+    Private Sub DgvPriceTableItem_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvPriceTableSellable.MouseDoubleClick
+        Dim ClickPlace As DataGridView.HitTestInfo = DgvPriceTableSellable.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
-            BtnEditPriceTableItem.PerformClick()
+            BtnEditPriceTableSellable.PerformClick()
         End If
     End Sub
     Private Function IsValidFields() As Boolean
@@ -278,7 +270,7 @@ Public Class FrmPriceTable
                     _PriceTable.SaveChanges()
                     _PriceTable.Lock()
                     LblIDValue.Text = _PriceTable.ID
-                    DgvPriceTableItem.Fill(_PriceTable.Items)
+                    DgvPriceTableSellable.Fill(_PriceTable.Sellables)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.PriceTable)
                     If _PriceTablesForm IsNot Nothing Then
@@ -307,7 +299,7 @@ Public Class FrmPriceTable
             e.Handled = True
         End If
     End Sub
-    Private Sub TxtFilterComplement_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterPriceTableItem.TextChanged
+    Private Sub TxtFilterPriceTableSellable_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterPriceTableSellable.TextChanged
         FilterPriceTableItem()
     End Sub
     Private Sub FilterPriceTableItem()
@@ -317,43 +309,39 @@ Public Class FrmPriceTable
                                                  "Code LIKE '%@VALUE%'",
                                                  "Name LIKE '%@VALUE%'"
                                             )
-        If DgvPriceTableItem.DataSource IsNot Nothing Then
-            Table = DgvPriceTableItem.DataSource
+        If DgvPriceTableSellable.DataSource IsNot Nothing Then
+            Table = DgvPriceTableSellable.DataSource
             View = Table.DefaultView
-            If TxtFilterPriceTableItem.Text <> Nothing Then
-                Filter = Filter.Replace("@VALUE", TxtFilterPriceTableItem.Text.Replace("%", Nothing).Replace("*", Nothing))
+            If TxtFilterPriceTableSellable.Text <> Nothing Then
+                Filter = Filter.Replace("@VALUE", TxtFilterPriceTableSellable.Text.Replace("%", Nothing).Replace("*", Nothing))
                 View.RowFilter = Filter
             Else
                 View.RowFilter = Nothing
             End If
         End If
     End Sub
-    Private Sub TxtFilterPriceTableItem_Enter(sender As Object, e As EventArgs) Handles TxtFilterPriceTableItem.Enter
+    Private Sub TxtFilterPriceTableSellable_Enter(sender As Object, e As EventArgs) Handles TxtFilterPriceTableSellable.Enter
         EprInformation.SetError(TsComplement, "Filtrando os campo: Código e Nome.")
         EprInformation.SetIconAlignment(TsComplement, ErrorIconAlignment.MiddleLeft)
         EprInformation.SetIconPadding(TsComplement, -365)
     End Sub
-    Private Sub TxtFilterComplement_Leave(sender As Object, e As EventArgs) Handles TxtFilterPriceTableItem.Leave
+    Private Sub TxtFilterPriceTableSellable_Leave(sender As Object, e As EventArgs) Handles TxtFilterPriceTableSellable.Leave
         EprInformation.Clear()
     End Sub
-    Private Sub TxtFilterProviderCode_Leave(sender As Object, e As EventArgs)
-        EprInformation.Clear()
-    End Sub
-
-    Private Sub FrmService_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+    Private Sub FrmPriceTable_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         _PriceTable.Unlock()
     End Sub
-    Private Sub DgvPriceTableItem_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvPriceTableItem.DataSourceChanged
+    Private Sub DgvPriceTableSellable_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvPriceTableSellable.DataSourceChanged
         FilterPriceTableItem()
     End Sub
 
-    Private Sub DgvPriceTableItem_SelectionChanged(sender As Object, e As EventArgs) Handles DgvPriceTableItem.SelectionChanged
-        If DgvPriceTableItem.SelectedRows.Count = 0 Then
-            BtnEditPriceTableItem.Enabled = False
-            BtnDeletePriceTableItem.Enabled = False
+    Private Sub DgvPriceTableSellable_SelectionChanged(sender As Object, e As EventArgs) Handles DgvPriceTableSellable.SelectionChanged
+        If DgvPriceTableSellable.SelectedRows.Count = 0 Then
+            BtnEditPriceTableSellable.Enabled = False
+            BtnDeletePriceTableSellable.Enabled = False
         Else
-            BtnEditPriceTableItem.Enabled = True
-            BtnDeletePriceTableItem.Enabled = True
+            BtnEditPriceTableSellable.Enabled = True
+            BtnDeletePriceTableSellable.Enabled = True
         End If
     End Sub
 End Class

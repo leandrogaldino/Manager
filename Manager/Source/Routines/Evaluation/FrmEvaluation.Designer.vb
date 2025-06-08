@@ -127,17 +127,7 @@ Partial Class FrmEvaluation
         Me.QbxCompressor = New ControlLibrary.QueriedBox()
         Me.TabTechnicalAdvice = New System.Windows.Forms.TabPage()
         Me.TlpAdvice = New System.Windows.Forms.TableLayoutPanel()
-        Me.GbxAdvice = New System.Windows.Forms.GroupBox()
-        Me.TxtTechnicalAdvice = New System.Windows.Forms.RichTextBox()
         Me.TlpReplaced = New System.Windows.Forms.TableLayoutPanel()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.DgvPerformedService = New System.Windows.Forms.DataGridView()
-        Me.TsPerformedService = New System.Windows.Forms.ToolStrip()
-        Me.BtnIncludePerformedService = New System.Windows.Forms.ToolStripButton()
-        Me.BtnEditPerformedService = New System.Windows.Forms.ToolStripButton()
-        Me.BtnDeletePerformedService = New System.Windows.Forms.ToolStripButton()
-        Me.LblFilterPerformedService = New System.Windows.Forms.ToolStripLabel()
-        Me.TxtFilterPerformedService = New System.Windows.Forms.ToolStripTextBox()
         Me.GbxReplacedItems = New System.Windows.Forms.GroupBox()
         Me.DgvReplacedPart = New System.Windows.Forms.DataGridView()
         Me.TsReplacedPart = New System.Windows.Forms.ToolStrip()
@@ -146,6 +136,8 @@ Partial Class FrmEvaluation
         Me.BtnDeleteReplacedPart = New System.Windows.Forms.ToolStripButton()
         Me.LblFilterReplacedParts = New System.Windows.Forms.ToolStripLabel()
         Me.TxtFilterReplacedParts = New System.Windows.Forms.ToolStripTextBox()
+        Me.GbxAdvice = New System.Windows.Forms.GroupBox()
+        Me.TxtTechnicalAdvice = New System.Windows.Forms.RichTextBox()
         Me.TabDocument = New System.Windows.Forms.TabPage()
         Me.PdfDocumentViewer = New Syncfusion.Windows.Forms.PdfViewer.PdfDocumentView()
         Me.TsDocument = New System.Windows.Forms.ToolStrip()
@@ -205,14 +197,11 @@ Partial Class FrmEvaluation
         Me.FlpCustomer.SuspendLayout()
         Me.TabTechnicalAdvice.SuspendLayout()
         Me.TlpAdvice.SuspendLayout()
-        Me.GbxAdvice.SuspendLayout()
         Me.TlpReplaced.SuspendLayout()
-        Me.GroupBox1.SuspendLayout()
-        CType(Me.DgvPerformedService, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TsPerformedService.SuspendLayout()
         Me.GbxReplacedItems.SuspendLayout()
         CType(Me.DgvReplacedPart, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsReplacedPart.SuspendLayout()
+        Me.GbxAdvice.SuspendLayout()
         Me.TabDocument.SuspendLayout()
         Me.TsDocument.SuspendLayout()
         Me.TabPhoto.SuspendLayout()
@@ -1199,144 +1188,30 @@ Partial Class FrmEvaluation
         '
         Me.TlpAdvice.ColumnCount = 1
         Me.TlpAdvice.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TlpAdvice.Controls.Add(Me.GbxAdvice, 0, 0)
-        Me.TlpAdvice.Controls.Add(Me.TlpReplaced, 0, 1)
+        Me.TlpAdvice.Controls.Add(Me.TlpReplaced, 0, 0)
+        Me.TlpAdvice.Controls.Add(Me.GbxAdvice, 0, 1)
         Me.TlpAdvice.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TlpAdvice.Location = New System.Drawing.Point(3, 3)
         Me.TlpAdvice.Name = "TlpAdvice"
         Me.TlpAdvice.RowCount = 2
-        Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.0!))
+        Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.0!))
         Me.TlpAdvice.Size = New System.Drawing.Size(1026, 401)
         Me.TlpAdvice.TabIndex = 2
         '
-        'GbxAdvice
-        '
-        Me.GbxAdvice.Controls.Add(Me.TxtTechnicalAdvice)
-        Me.GbxAdvice.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GbxAdvice.Location = New System.Drawing.Point(3, 3)
-        Me.GbxAdvice.Name = "GbxAdvice"
-        Me.GbxAdvice.Size = New System.Drawing.Size(1020, 194)
-        Me.GbxAdvice.TabIndex = 0
-        Me.GbxAdvice.TabStop = False
-        Me.GbxAdvice.Text = "Observação"
-        '
-        'TxtTechnicalAdvice
-        '
-        Me.TxtTechnicalAdvice.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TxtTechnicalAdvice.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TxtTechnicalAdvice.Location = New System.Drawing.Point(3, 19)
-        Me.TxtTechnicalAdvice.MaxLength = 1000000
-        Me.TxtTechnicalAdvice.Name = "TxtTechnicalAdvice"
-        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1014, 172)
-        Me.TxtTechnicalAdvice.TabIndex = 1
-        Me.TxtTechnicalAdvice.Text = ""
-        '
         'TlpReplaced
         '
-        Me.TlpReplaced.ColumnCount = 2
-        Me.TlpReplaced.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TlpReplaced.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TlpReplaced.Controls.Add(Me.GroupBox1, 1, 0)
+        Me.TlpReplaced.ColumnCount = 1
+        Me.TlpReplaced.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TlpReplaced.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TlpReplaced.Controls.Add(Me.GbxReplacedItems, 0, 0)
         Me.TlpReplaced.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TlpReplaced.Location = New System.Drawing.Point(3, 203)
+        Me.TlpReplaced.Location = New System.Drawing.Point(3, 3)
         Me.TlpReplaced.Name = "TlpReplaced"
         Me.TlpReplaced.RowCount = 1
-        Me.TlpReplaced.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TlpReplaced.Size = New System.Drawing.Size(1020, 195)
+        Me.TlpReplaced.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TlpReplaced.Size = New System.Drawing.Size(1020, 234)
         Me.TlpReplaced.TabIndex = 1
-        '
-        'GroupBox1
-        '
-        Me.GroupBox1.Controls.Add(Me.DgvPerformedService)
-        Me.GroupBox1.Controls.Add(Me.TsPerformedService)
-        Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupBox1.Location = New System.Drawing.Point(513, 3)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(504, 189)
-        Me.GroupBox1.TabIndex = 3
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Serviços Prestados"
-        '
-        'DgvPerformedService
-        '
-        Me.DgvPerformedService.AllowUserToAddRows = False
-        Me.DgvPerformedService.AllowUserToDeleteRows = False
-        Me.DgvPerformedService.AllowUserToResizeColumns = False
-        Me.DgvPerformedService.AllowUserToResizeRows = False
-        Me.DgvPerformedService.BackgroundColor = System.Drawing.Color.White
-        Me.DgvPerformedService.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DgvPerformedService.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvPerformedService.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvPerformedService.GridColor = System.Drawing.Color.Gainsboro
-        Me.DgvPerformedService.Location = New System.Drawing.Point(3, 44)
-        Me.DgvPerformedService.MultiSelect = False
-        Me.DgvPerformedService.Name = "DgvPerformedService"
-        Me.DgvPerformedService.ReadOnly = True
-        Me.DgvPerformedService.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvPerformedService.RowHeadersVisible = False
-        Me.DgvPerformedService.RowTemplate.Height = 26
-        Me.DgvPerformedService.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPerformedService.Size = New System.Drawing.Size(498, 142)
-        Me.DgvPerformedService.TabIndex = 1
-        Me.DgvPerformedService.TabStop = False
-        '
-        'TsPerformedService
-        '
-        Me.TsPerformedService.BackColor = System.Drawing.Color.Transparent
-        Me.TsPerformedService.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TsPerformedService.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsPerformedService.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludePerformedService, Me.BtnEditPerformedService, Me.BtnDeletePerformedService, Me.LblFilterPerformedService, Me.TxtFilterPerformedService})
-        Me.TsPerformedService.Location = New System.Drawing.Point(3, 19)
-        Me.TsPerformedService.Name = "TsPerformedService"
-        Me.TsPerformedService.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsPerformedService.Size = New System.Drawing.Size(498, 25)
-        Me.TsPerformedService.TabIndex = 2
-        Me.TsPerformedService.Text = "ToolStrip2"
-        '
-        'BtnIncludePerformedService
-        '
-        Me.BtnIncludePerformedService.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnIncludePerformedService.Image = Global.Manager.My.Resources.Resources.IncludeSmall
-        Me.BtnIncludePerformedService.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnIncludePerformedService.Name = "BtnIncludePerformedService"
-        Me.BtnIncludePerformedService.Size = New System.Drawing.Size(23, 22)
-        Me.BtnIncludePerformedService.Text = "Incluir Serviço"
-        '
-        'BtnEditPerformedService
-        '
-        Me.BtnEditPerformedService.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnEditPerformedService.Image = CType(resources.GetObject("BtnEditPerformedService.Image"), System.Drawing.Image)
-        Me.BtnEditPerformedService.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnEditPerformedService.Name = "BtnEditPerformedService"
-        Me.BtnEditPerformedService.Size = New System.Drawing.Size(23, 22)
-        Me.BtnEditPerformedService.Text = "Editar Serviço"
-        Me.BtnEditPerformedService.ToolTipText = "Editar"
-        '
-        'BtnDeletePerformedService
-        '
-        Me.BtnDeletePerformedService.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnDeletePerformedService.Image = Global.Manager.My.Resources.Resources.DeleteSmall
-        Me.BtnDeletePerformedService.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnDeletePerformedService.Name = "BtnDeletePerformedService"
-        Me.BtnDeletePerformedService.Size = New System.Drawing.Size(23, 22)
-        Me.BtnDeletePerformedService.Text = "Excluir Serviço"
-        '
-        'LblFilterPerformedService
-        '
-        Me.LblFilterPerformedService.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.LblFilterPerformedService.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.LblFilterPerformedService.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
-        Me.LblFilterPerformedService.Name = "LblFilterPerformedService"
-        Me.LblFilterPerformedService.Size = New System.Drawing.Size(46, 25)
-        Me.LblFilterPerformedService.Text = "Filtrar:"
-        '
-        'TxtFilterPerformedService
-        '
-        Me.TxtFilterPerformedService.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtFilterPerformedService.Name = "TxtFilterPerformedService"
-        Me.TxtFilterPerformedService.Size = New System.Drawing.Size(200, 25)
         '
         'GbxReplacedItems
         '
@@ -1345,10 +1220,10 @@ Partial Class FrmEvaluation
         Me.GbxReplacedItems.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GbxReplacedItems.Location = New System.Drawing.Point(3, 3)
         Me.GbxReplacedItems.Name = "GbxReplacedItems"
-        Me.GbxReplacedItems.Size = New System.Drawing.Size(504, 189)
+        Me.GbxReplacedItems.Size = New System.Drawing.Size(1014, 228)
         Me.GbxReplacedItems.TabIndex = 2
         Me.GbxReplacedItems.TabStop = False
-        Me.GbxReplacedItems.Text = "Peças Substituídas"
+        Me.GbxReplacedItems.Text = "Peças Substituídas/Serviços Executados"
         '
         'DgvReplacedPart
         '
@@ -1369,7 +1244,7 @@ Partial Class FrmEvaluation
         Me.DgvReplacedPart.RowHeadersVisible = False
         Me.DgvReplacedPart.RowTemplate.Height = 26
         Me.DgvReplacedPart.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvReplacedPart.Size = New System.Drawing.Size(498, 142)
+        Me.DgvReplacedPart.Size = New System.Drawing.Size(1008, 181)
         Me.DgvReplacedPart.TabIndex = 1
         Me.DgvReplacedPart.TabStop = False
         '
@@ -1382,7 +1257,7 @@ Partial Class FrmEvaluation
         Me.TsReplacedPart.Location = New System.Drawing.Point(3, 19)
         Me.TsReplacedPart.Name = "TsReplacedPart"
         Me.TsReplacedPart.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsReplacedPart.Size = New System.Drawing.Size(498, 25)
+        Me.TsReplacedPart.Size = New System.Drawing.Size(1008, 25)
         Me.TsReplacedPart.TabIndex = 2
         Me.TsReplacedPart.Text = "ToolStrip2"
         '
@@ -1426,8 +1301,31 @@ Partial Class FrmEvaluation
         'TxtFilterReplacedParts
         '
         Me.TxtFilterReplacedParts.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtFilterReplacedParts.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.TxtFilterReplacedParts.Name = "TxtFilterReplacedParts"
         Me.TxtFilterReplacedParts.Size = New System.Drawing.Size(200, 25)
+        '
+        'GbxAdvice
+        '
+        Me.GbxAdvice.Controls.Add(Me.TxtTechnicalAdvice)
+        Me.GbxAdvice.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GbxAdvice.Location = New System.Drawing.Point(3, 243)
+        Me.GbxAdvice.Name = "GbxAdvice"
+        Me.GbxAdvice.Size = New System.Drawing.Size(1020, 155)
+        Me.GbxAdvice.TabIndex = 0
+        Me.GbxAdvice.TabStop = False
+        Me.GbxAdvice.Text = "Observação"
+        '
+        'TxtTechnicalAdvice
+        '
+        Me.TxtTechnicalAdvice.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TxtTechnicalAdvice.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TxtTechnicalAdvice.Location = New System.Drawing.Point(3, 19)
+        Me.TxtTechnicalAdvice.MaxLength = 1000000
+        Me.TxtTechnicalAdvice.Name = "TxtTechnicalAdvice"
+        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1014, 133)
+        Me.TxtTechnicalAdvice.TabIndex = 1
+        Me.TxtTechnicalAdvice.Text = ""
         '
         'TabDocument
         '
@@ -1908,18 +1806,13 @@ Partial Class FrmEvaluation
         Me.FlpCustomer.ResumeLayout(False)
         Me.TabTechnicalAdvice.ResumeLayout(False)
         Me.TlpAdvice.ResumeLayout(False)
-        Me.GbxAdvice.ResumeLayout(False)
         Me.TlpReplaced.ResumeLayout(False)
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
-        CType(Me.DgvPerformedService, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TsPerformedService.ResumeLayout(False)
-        Me.TsPerformedService.PerformLayout()
         Me.GbxReplacedItems.ResumeLayout(False)
         Me.GbxReplacedItems.PerformLayout()
         CType(Me.DgvReplacedPart, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsReplacedPart.ResumeLayout(False)
         Me.TsReplacedPart.PerformLayout()
+        Me.GbxAdvice.ResumeLayout(False)
         Me.TabDocument.ResumeLayout(False)
         Me.TsDocument.ResumeLayout(False)
         Me.TsDocument.PerformLayout()
@@ -2044,14 +1937,6 @@ Partial Class FrmEvaluation
     Friend WithEvents BtnUnitTemperaturePressure As ControlLibrary.RichTextButton
     Friend WithEvents BtnCallTypeHasRepairNeedProposal As ControlLibrary.RichTextButton
     Friend WithEvents TlpReplaced As TableLayoutPanel
-    Friend WithEvents GroupBox1 As GroupBox
-    Friend WithEvents DgvPerformedService As DataGridView
-    Friend WithEvents TsPerformedService As ToolStrip
-    Friend WithEvents BtnIncludePerformedService As ToolStripButton
-    Friend WithEvents BtnEditPerformedService As ToolStripButton
-    Friend WithEvents BtnDeletePerformedService As ToolStripButton
-    Friend WithEvents LblFilterPerformedService As ToolStripLabel
-    Friend WithEvents TxtFilterPerformedService As ToolStripTextBox
     Friend WithEvents GbxReplacedItems As GroupBox
     Friend WithEvents DgvReplacedPart As DataGridView
     Friend WithEvents TsReplacedPart As ToolStrip

@@ -104,6 +104,7 @@ Public Class DataGridViewLayout
                 If IsNumeric(Node("Width").InnerText) Then
                     DataGridView.Columns(Index).Width = Node("Width").InnerText
                 Else
+                    DataGridView.Columns(Index).AutoSizeMode = DataGridViewAutoSizeColumnMode.None
                     DataGridView.Columns(Index).Width = 0
                     DataGridView.Columns(Index).AutoSizeMode = DirectCast([Enum].Parse(GetType(DataGridViewAutoSizeColumnMode), Node("Width").InnerText), DataGridViewAutoSizeColumnMode)
                 End If

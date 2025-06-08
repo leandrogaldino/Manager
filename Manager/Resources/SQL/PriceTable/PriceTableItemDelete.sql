@@ -1,2 +1,2 @@
-﻿DELETE FROM pricetableitem
-WHERE pricetableitem.id = @id;
+﻿DELETE FROM pricetablesellable
+WHERE pricetablesellable.id = @id;

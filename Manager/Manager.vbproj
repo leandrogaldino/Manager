@@ -744,10 +744,10 @@
     <Compile Include="Source\Routines\PriceTable\FrmPriceTable.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\PriceTable\FrmPriceTableItem.Designer.vb">
-      <DependentUpon>FrmPriceTableItem.vb</DependentUpon>
+    <Compile Include="Source\Routines\PriceTable\FrmPriceTableSellable.Designer.vb">
+      <DependentUpon>FrmPriceTableSellable.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Routines\PriceTable\FrmPriceTableItem.vb">
+    <Compile Include="Source\Routines\PriceTable\FrmPriceTableSellable.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Routines\PriceTable\FrmPriceTables.Designer.vb">
@@ -758,7 +758,7 @@
     </Compile>
     <Compile Include="Source\Routines\PriceTable\PriceTable.vb" />
     <Compile Include="Source\Routines\PriceTable\PriceTableFilter.vb" />
-    <Compile Include="Source\Routines\PriceTable\PriceTableItem.vb" />
+    <Compile Include="Source\Routines\PriceTable\PriceTableSellable.vb" />
     <Compile Include="Source\Routines\PrivilegePreset\FrmPrivilegePreset.Designer.vb">
       <DependentUpon>FrmPrivilegePreset.vb</DependentUpon>
     </Compile>
@@ -1510,8 +1510,8 @@
     <EmbeddedResource Include="Source\Routines\PriceTable\FrmPriceTable.resx">
       <DependentUpon>FrmPriceTable.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\PriceTable\FrmPriceTableItem.resx">
-      <DependentUpon>FrmPriceTableItem.vb</DependentUpon>
+    <EmbeddedResource Include="Source\Routines\PriceTable\FrmPriceTableSellable.resx">
+      <DependentUpon>FrmPriceTableSellable.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\PriceTable\FrmPriceTables.resx">
       <DependentUpon>FrmPriceTables.vb</DependentUpon>

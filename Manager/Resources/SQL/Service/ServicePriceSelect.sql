@@ -1,11 +1,11 @@
 ﻿SELECT
-	pricetableitem.id,
-	pricetableitem.creation,
+	pricetablesellable.id,
+	pricetablesellable.creation,
 	service.name service,
     pricetable.id pricetableid,
 	pricetable.name pricetablename,
-    pricetableitem.price
+    pricetablesellable.price
 FROM pricetable
-LEFT JOIN pricetableitem ON pricetableitem.pricetableid = pricetable.id
-LEFT JOIN service ON service.id = pricetableitem.serviceid
+LEFT JOIN pricetablesellable ON pricetablesellable.pricetableid = pricetable.id
+LEFT JOIN service ON service.id = pricetablesellable.serviceid
 WHERE service.id = @serviceid;

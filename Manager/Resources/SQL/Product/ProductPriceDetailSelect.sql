@@ -1,7 +1,7 @@
 SELECT
 	pricetable.name AS 'Tabela de Preços',
-    pricetableitem.price AS 'Preço'
+    pricetablesellable.price AS 'Preço'
 FROM pricetable
-LEFT JOIN pricetableitem ON pricetableitem.pricetableid = pricetable.id
-LEFT JOIN product ON product.id = pricetableitem.productid
+LEFT JOIN pricetablesellable ON pricetablesellable.pricetableid = pricetable.id
+LEFT JOIN product ON product.id = pricetablesellable.productid
 WHERE product.id = @productid;

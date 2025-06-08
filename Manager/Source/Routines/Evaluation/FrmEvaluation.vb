@@ -1497,7 +1497,7 @@ Public Class FrmEvaluation
     End Sub
 
 
-    Private Sub TxtKeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtFilterReplacedParts.KeyPress, TxtFilterPerformedService.KeyPress
+    Private Sub TxtKeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtFilterReplacedParts.KeyPress
         Dim LstChar As New List(Of Char) From {" ", ".", ",", "-", "/", "(", ")", "+", "*", "%", "&", "@", "#", "$", "<", ">", "\"}
         If Not Char.IsLetter(e.KeyChar) And Not Char.IsNumber(e.KeyChar) And Not LstChar.Contains(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
             e.Handled = True

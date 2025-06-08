@@ -8,7 +8,7 @@ Public Class FrmPriceTables
     Public Sub New()
         InitializeComponent()
         ControlHelper.EnableControlDoubleBuffer(DgvData, True)
-        ControlHelper.EnableControlDoubleBuffer(DgvItems, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvSellables, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Filter = New PriceTableFilter(DgvData, PgFilter)
@@ -36,7 +36,7 @@ Public Class FrmPriceTables
                 Cursor = Cursors.WaitCursor
                 _PriceTable = New PriceTable().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
                 Form = New FrmPriceTable(_PriceTable, Me)
-                Form.DgvPriceTableItem.Fill(_PriceTable.Items)
+                Form.DgvPriceTableSellable.Fill(_PriceTable.Sellables)
                 Form.ShowDialog()
             Catch ex As Exception
                 CMessageBox.Show("ERRO PT001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -181,13 +181,13 @@ Public Class FrmPriceTables
         If BtnDetails.Checked Then
             If DgvData.SelectedRows.Count = 1 Then
                 Try
-                    PriceTable.FillItemsDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvItems)
+                    PriceTable.FillISellablesDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvSellables)
                 Catch ex As Exception
                     TmrLoadDetails.Stop()
                     CMessageBox.Show("ERRO PT004", "Ocorreu um erro ao consultar os dados do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                 End Try
             Else
-                DgvItems.DataSource = Nothing
+                DgvSellables.DataSource = Nothing
             End If
         End If
     End Sub

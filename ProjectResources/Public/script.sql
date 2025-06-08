@@ -65,6 +65,7 @@ SET SQL_SAFE_UPDATES = 1;
 ALTER TABLE `manager`.`evaluation` CHANGE COLUMN `evaluationtypeid` `calltypeid` INT NOT NULL ;
 ALTER TABLE `manager`.`visitschedule` CHANGE COLUMN `visittypeid` `calltypeid` INT NOT NULL ;
 ALTER TABLE `manager`.`visitschedule` ADD COLUMN `evaluationid` INT NULL DEFAULT NULL AFTER `lastupdate`;
+
 CREATE TABLE `evaluationreplacedpart` (
   `id` int NOT NULL AUTO_INCREMENT,
   `evaluationid` int NOT NULL,
@@ -81,6 +82,11 @@ CREATE TABLE `evaluationreplacedpart` (
   CONSTRAINT `evaluationreplacedpart_evaluation` FOREIGN KEY (`evaluationid`) REFERENCES `evaluation` (`id`) ON DELETE CASCADE,
   CONSTRAINT `evaluationreplacedpart_user` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT
 );
+
+
+
+
+
 CREATE TABLE service (
 	id INT NOT NULL AUTO_INCREMENT,
     creation DATE NOT NULL,
@@ -142,9 +148,6 @@ CREATE TABLE `servicecode` (
   CONSTRAINT `servicecode_service` FOREIGN KEY (`serviceid`) REFERENCES `service` (`id`) ON DELETE CASCADE,
   CONSTRAINT `servicecode_user` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT
 );
-
-
-
 CREATE TABLE servicepriceindicator (
 	id INT NOT NULL AUTO_INCREMENT,
 	creation DATE NOT NULL,
@@ -171,10 +174,6 @@ CREATE TABLE productpriceindicator (
 	CONSTRAINT `productpriceindicator_product` FOREIGN KEY (`productid`) REFERENCES `product` (`id`) ON DELETE CASCADE,
 	CONSTRAINT `productpriceindicator_user` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT
 );
-
-
-
-
 DELIMITER $$
 DROP TRIGGER IF EXISTS `manager`.`personcompressorpartupdate`$$
 CREATE TRIGGER `personcompressorpartupdate` AFTER UPDATE ON `personcompressorpart` FOR EACH ROW BEGIN

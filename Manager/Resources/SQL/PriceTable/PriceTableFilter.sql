@@ -7,9 +7,9 @@
 	END AS 'Status',
     pricetable.name AS 'Nome'
 FROM pricetable
-LEFT JOIN pricetableitem ON pricetableitem.pricetableid = pricetable.id
-LEFT JOIN product ON product.id = pricetableitem.productid
-LEFT JOIN service ON service.id = pricetableitem.serviceid
+LEFT JOIN pricetablesellable ON pricetablesellable.pricetableid = pricetable.id
+LEFT JOIN product ON product.id = pricetablesellable.productid
+LEFT JOIN service ON service.id = pricetablesellable.serviceid
 LEFT JOIN productprovidercode ON productprovidercode.productid = product.id
 WHERE
 	IFNULL(pricetable.id, '') LIKE @id AND

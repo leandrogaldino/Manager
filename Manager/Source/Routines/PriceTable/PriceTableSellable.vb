@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Public Class PriceTableItem
+Public Class PriceTableSellable
     Inherits ChildModel
     <IgnoreInToTable>
     Public ReadOnly Property SellableType As SellableType
@@ -11,7 +11,6 @@ Public Class PriceTableItem
             Return SellableType.None
         End Get
     End Property
-
     <IgnoreInToTable>
     Public ReadOnly Property Product As Product
         Get

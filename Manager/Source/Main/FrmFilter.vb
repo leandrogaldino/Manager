@@ -58,14 +58,14 @@ Public Class FrmFilter
             BtnImport.PerformClick()
         End If
     End Sub
-    Private Sub DgvData_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvData.DataSourceChanged
-        If DgvData.Rows.Count > 0 Then
-            LblCounter.Text = DgvData.Rows.Count & " registro" & If(DgvData.Rows.Count > 1, "s", Nothing)
-            LblCounter.ForeColor = Color.DimGray
-            LblCounter.Font = New Font(LblCounter.Font, FontStyle.Bold)
-        End If
-        DgvData.Columns.Cast(Of DataGridViewColumn).Where(Function(x) x.HeaderText = "Status").ToList.ForEach(Sub(y) y.Visible = False)
-    End Sub
+    'Private Sub DgvData_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvData.DataSourceChanged
+    '    If DgvData.Rows.Count > 0 Then
+    '        LblCounter.Text = DgvData.Rows.Count & " registro" & If(DgvData.Rows.Count > 1, "s", Nothing)
+    '        LblCounter.ForeColor = Color.DimGray
+    '        LblCounter.Font = New Font(LblCounter.Font, FontStyle.Bold)
+    '    End If
+    '    DgvData.Columns.Cast(Of DataGridViewColumn).Where(Function(x) x.HeaderText = "Status").ToList.ForEach(Sub(y) y.Visible = False)
+    'End Sub
     Private Sub PgFilter_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles PgFilter.PropertyValueChanged
         _Filter.Filter()
     End Sub

@@ -661,7 +661,7 @@ Public Class Evaluation
         End Using
     End Sub
 
-    Public Shared Sub FillDataGridView(EvaluationID As Long, Dgv As DataGridView, PartType As CompressorPartType)
+    Public Shared Sub FillPartDataGridView(EvaluationID As Long, Dgv As DataGridView, PartType As CompressorPartType)
         Dim Session = Locator.GetInstance(Of Session)
         Dim TableResult As New DataTable
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
@@ -689,6 +689,11 @@ Public Class Evaluation
             End Using
         End Using
     End Sub
+
+
+
+
+
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)
         Dim FileManager As New TxFileManager(ApplicationPaths.ManagerTempDirectory)

@@ -40,14 +40,14 @@ Partial Class FrmPriceTable
         Me.PnButtons = New System.Windows.Forms.Panel()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
-        Me.TabIItems = New System.Windows.Forms.TabPage()
-        Me.DgvPriceTableItem = New System.Windows.Forms.DataGridView()
+        Me.TabSellable = New System.Windows.Forms.TabPage()
+        Me.DgvPriceTableSellable = New System.Windows.Forms.DataGridView()
         Me.TsComplement = New System.Windows.Forms.ToolStrip()
-        Me.BtnIncludePriceTableItem = New System.Windows.Forms.ToolStripButton()
-        Me.BtnEditPriceTableItem = New System.Windows.Forms.ToolStripButton()
-        Me.BtnDeletePriceTableItem = New System.Windows.Forms.ToolStripButton()
-        Me.LblFilterPriceTableItem = New System.Windows.Forms.ToolStripLabel()
-        Me.TxtFilterPriceTableItem = New System.Windows.Forms.ToolStripTextBox()
+        Me.BtnIncludePriceTableSellable = New System.Windows.Forms.ToolStripButton()
+        Me.BtnEditPriceTableSellable = New System.Windows.Forms.ToolStripButton()
+        Me.BtnDeletePriceTableSellable = New System.Windows.Forms.ToolStripButton()
+        Me.LblFilterPriceTableSellable = New System.Windows.Forms.ToolStripLabel()
+        Me.TxtFilterPriceTableSellable = New System.Windows.Forms.ToolStripTextBox()
         Me.BtnIncludeCode = New System.Windows.Forms.ToolStripButton()
         Me.BtnEditCode = New System.Windows.Forms.ToolStripButton()
         Me.BtnDeleteCode = New System.Windows.Forms.ToolStripButton()
@@ -65,8 +65,8 @@ Partial Class FrmPriceTable
         Me.DgvPriceTableItemLayout = New Manager.DataGridViewLayout()
         Me.PnButtons.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabIItems.SuspendLayout()
-        CType(Me.DgvPriceTableItem, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabSellable.SuspendLayout()
+        CType(Me.DgvPriceTableSellable, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsComplement.SuspendLayout()
         Me.TabMain.SuspendLayout()
         Me.TcPriceTable.SuspendLayout()
@@ -232,45 +232,45 @@ Partial Class FrmPriceTable
         Me.ToolStripLabel1.Size = New System.Drawing.Size(46, 25)
         Me.ToolStripLabel1.Text = "Filtrar:"
         '
-        'TabIItems
+        'TabSellable
         '
-        Me.TabIItems.Controls.Add(Me.DgvPriceTableItem)
-        Me.TabIItems.Controls.Add(Me.TsComplement)
-        Me.TabIItems.Location = New System.Drawing.Point(4, 26)
-        Me.TabIItems.Name = "TabIItems"
-        Me.TabIItems.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabIItems.Size = New System.Drawing.Size(376, 62)
-        Me.TabIItems.TabIndex = 7
-        Me.TabIItems.Text = "Itens"
-        Me.TabIItems.UseVisualStyleBackColor = True
+        Me.TabSellable.Controls.Add(Me.DgvPriceTableSellable)
+        Me.TabSellable.Controls.Add(Me.TsComplement)
+        Me.TabSellable.Location = New System.Drawing.Point(4, 26)
+        Me.TabSellable.Name = "TabSellable"
+        Me.TabSellable.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabSellable.Size = New System.Drawing.Size(376, 62)
+        Me.TabSellable.TabIndex = 7
+        Me.TabSellable.Text = "Produtos/Serviços"
+        Me.TabSellable.UseVisualStyleBackColor = True
         '
-        'DgvPriceTableItem
+        'DgvPriceTableSellable
         '
-        Me.DgvPriceTableItem.AllowUserToAddRows = False
-        Me.DgvPriceTableItem.AllowUserToDeleteRows = False
-        Me.DgvPriceTableItem.AllowUserToOrderColumns = True
-        Me.DgvPriceTableItem.AllowUserToResizeRows = False
-        Me.DgvPriceTableItem.BackgroundColor = System.Drawing.Color.WhiteSmoke
-        Me.DgvPriceTableItem.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DgvPriceTableItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvPriceTableItem.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvPriceTableItem.Location = New System.Drawing.Point(3, 28)
-        Me.DgvPriceTableItem.MultiSelect = False
-        Me.DgvPriceTableItem.Name = "DgvPriceTableItem"
-        Me.DgvPriceTableItem.ReadOnly = True
-        Me.DgvPriceTableItem.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvPriceTableItem.RowHeadersVisible = False
-        Me.DgvPriceTableItem.RowTemplate.Height = 26
-        Me.DgvPriceTableItem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPriceTableItem.Size = New System.Drawing.Size(370, 31)
-        Me.DgvPriceTableItem.TabIndex = 1
+        Me.DgvPriceTableSellable.AllowUserToAddRows = False
+        Me.DgvPriceTableSellable.AllowUserToDeleteRows = False
+        Me.DgvPriceTableSellable.AllowUserToOrderColumns = True
+        Me.DgvPriceTableSellable.AllowUserToResizeRows = False
+        Me.DgvPriceTableSellable.BackgroundColor = System.Drawing.Color.WhiteSmoke
+        Me.DgvPriceTableSellable.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DgvPriceTableSellable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvPriceTableSellable.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvPriceTableSellable.Location = New System.Drawing.Point(3, 28)
+        Me.DgvPriceTableSellable.MultiSelect = False
+        Me.DgvPriceTableSellable.Name = "DgvPriceTableSellable"
+        Me.DgvPriceTableSellable.ReadOnly = True
+        Me.DgvPriceTableSellable.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvPriceTableSellable.RowHeadersVisible = False
+        Me.DgvPriceTableSellable.RowTemplate.Height = 26
+        Me.DgvPriceTableSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvPriceTableSellable.Size = New System.Drawing.Size(370, 31)
+        Me.DgvPriceTableSellable.TabIndex = 1
         '
         'TsComplement
         '
         Me.TsComplement.BackColor = System.Drawing.Color.Transparent
         Me.TsComplement.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsComplement.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsComplement.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludePriceTableItem, Me.BtnEditPriceTableItem, Me.BtnDeletePriceTableItem, Me.LblFilterPriceTableItem, Me.TxtFilterPriceTableItem})
+        Me.TsComplement.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludePriceTableSellable, Me.BtnEditPriceTableSellable, Me.BtnDeletePriceTableSellable, Me.LblFilterPriceTableSellable, Me.TxtFilterPriceTableSellable})
         Me.TsComplement.Location = New System.Drawing.Point(3, 3)
         Me.TsComplement.Name = "TsComplement"
         Me.TsComplement.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -278,51 +278,51 @@ Partial Class FrmPriceTable
         Me.TsComplement.TabIndex = 0
         Me.TsComplement.Text = "ToolStrip2"
         '
-        'BtnIncludePriceTableItem
+        'BtnIncludePriceTableSellable
         '
-        Me.BtnIncludePriceTableItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnIncludePriceTableItem.Image = Global.Manager.My.Resources.Resources.IncludeSmall
-        Me.BtnIncludePriceTableItem.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnIncludePriceTableItem.Name = "BtnIncludePriceTableItem"
-        Me.BtnIncludePriceTableItem.Size = New System.Drawing.Size(23, 22)
-        Me.BtnIncludePriceTableItem.Text = "Incluir Complemento"
+        Me.BtnIncludePriceTableSellable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnIncludePriceTableSellable.Image = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnIncludePriceTableSellable.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnIncludePriceTableSellable.Name = "BtnIncludePriceTableSellable"
+        Me.BtnIncludePriceTableSellable.Size = New System.Drawing.Size(23, 22)
+        Me.BtnIncludePriceTableSellable.Text = "Incluir Produto/Serviço"
         '
-        'BtnEditPriceTableItem
+        'BtnEditPriceTableSellable
         '
-        Me.BtnEditPriceTableItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnEditPriceTableItem.Enabled = False
-        Me.BtnEditPriceTableItem.Image = Global.Manager.My.Resources.Resources.EditSmall
-        Me.BtnEditPriceTableItem.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnEditPriceTableItem.Name = "BtnEditPriceTableItem"
-        Me.BtnEditPriceTableItem.Size = New System.Drawing.Size(23, 22)
-        Me.BtnEditPriceTableItem.Text = "Editar Complemento"
-        Me.BtnEditPriceTableItem.ToolTipText = "Editar"
+        Me.BtnEditPriceTableSellable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnEditPriceTableSellable.Enabled = False
+        Me.BtnEditPriceTableSellable.Image = Global.Manager.My.Resources.Resources.EditSmall
+        Me.BtnEditPriceTableSellable.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnEditPriceTableSellable.Name = "BtnEditPriceTableSellable"
+        Me.BtnEditPriceTableSellable.Size = New System.Drawing.Size(23, 22)
+        Me.BtnEditPriceTableSellable.Text = "Editar Produto/Serviço"
+        Me.BtnEditPriceTableSellable.ToolTipText = "Editar"
         '
-        'BtnDeletePriceTableItem
+        'BtnDeletePriceTableSellable
         '
-        Me.BtnDeletePriceTableItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnDeletePriceTableItem.Enabled = False
-        Me.BtnDeletePriceTableItem.Image = Global.Manager.My.Resources.Resources.DeleteSmall
-        Me.BtnDeletePriceTableItem.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnDeletePriceTableItem.Name = "BtnDeletePriceTableItem"
-        Me.BtnDeletePriceTableItem.Size = New System.Drawing.Size(23, 22)
-        Me.BtnDeletePriceTableItem.Text = "Excluir Complemento"
+        Me.BtnDeletePriceTableSellable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnDeletePriceTableSellable.Enabled = False
+        Me.BtnDeletePriceTableSellable.Image = Global.Manager.My.Resources.Resources.DeleteSmall
+        Me.BtnDeletePriceTableSellable.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnDeletePriceTableSellable.Name = "BtnDeletePriceTableSellable"
+        Me.BtnDeletePriceTableSellable.Size = New System.Drawing.Size(23, 22)
+        Me.BtnDeletePriceTableSellable.Text = "Excluir Produto/Serviço"
         '
-        'LblFilterPriceTableItem
+        'LblFilterPriceTableSellable
         '
-        Me.LblFilterPriceTableItem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.LblFilterPriceTableItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.LblFilterPriceTableItem.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
-        Me.LblFilterPriceTableItem.Name = "LblFilterPriceTableItem"
-        Me.LblFilterPriceTableItem.Size = New System.Drawing.Size(46, 25)
-        Me.LblFilterPriceTableItem.Text = "Filtrar:"
+        Me.LblFilterPriceTableSellable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.LblFilterPriceTableSellable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.LblFilterPriceTableSellable.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
+        Me.LblFilterPriceTableSellable.Name = "LblFilterPriceTableSellable"
+        Me.LblFilterPriceTableSellable.Size = New System.Drawing.Size(46, 25)
+        Me.LblFilterPriceTableSellable.Text = "Filtrar:"
         '
-        'TxtFilterPriceTableItem
+        'TxtFilterPriceTableSellable
         '
-        Me.TxtFilterPriceTableItem.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtFilterPriceTableItem.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.TxtFilterPriceTableItem.Name = "TxtFilterPriceTableItem"
-        Me.TxtFilterPriceTableItem.Size = New System.Drawing.Size(200, 25)
+        Me.TxtFilterPriceTableSellable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtFilterPriceTableSellable.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.TxtFilterPriceTableSellable.Name = "TxtFilterPriceTableSellable"
+        Me.TxtFilterPriceTableSellable.Size = New System.Drawing.Size(200, 25)
         '
         'BtnIncludeCode
         '
@@ -404,7 +404,7 @@ Partial Class FrmPriceTable
         'TcPriceTable
         '
         Me.TcPriceTable.Controls.Add(Me.TabMain)
-        Me.TcPriceTable.Controls.Add(Me.TabIItems)
+        Me.TcPriceTable.Controls.Add(Me.TabSellable)
         Me.TcPriceTable.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TcPriceTable.Location = New System.Drawing.Point(0, 50)
         Me.TcPriceTable.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
@@ -467,7 +467,7 @@ Partial Class FrmPriceTable
         '
         'DgvPriceTableItemLayout
         '
-        Me.DgvPriceTableItemLayout.DataGridView = Me.DgvPriceTableItem
+        Me.DgvPriceTableItemLayout.DataGridView = Me.DgvPriceTableSellable
         Me.DgvPriceTableItemLayout.Routine = Manager.Routine.PriceTableItem
         '
         'FrmPriceTable
@@ -490,9 +490,9 @@ Partial Class FrmPriceTable
         Me.Text = "Tabela de Preços"
         Me.PnButtons.ResumeLayout(False)
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabIItems.ResumeLayout(False)
-        Me.TabIItems.PerformLayout()
-        CType(Me.DgvPriceTableItem, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabSellable.ResumeLayout(False)
+        Me.TabSellable.PerformLayout()
+        CType(Me.DgvPriceTableSellable, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsComplement.ResumeLayout(False)
         Me.TsComplement.PerformLayout()
         Me.TabMain.ResumeLayout(False)
@@ -526,8 +526,8 @@ Partial Class FrmPriceTable
     Friend WithEvents TabMain As TabPage
     Friend WithEvents TxtName As TextBox
     Friend WithEvents LblName As Label
-    Friend WithEvents TabIItems As TabPage
-    Friend WithEvents DgvPriceTableItem As DataGridView
+    Friend WithEvents TabSellable As TabPage
+    Friend WithEvents DgvPriceTableSellable As DataGridView
     Friend WithEvents BtnIncludeCode As ToolStripButton
     Friend WithEvents BtnEditCode As ToolStripButton
     Friend WithEvents BtnDeleteCode As ToolStripButton
@@ -541,9 +541,9 @@ Partial Class FrmPriceTable
     Friend WithEvents DgvNavigator As ControlLibrary.DataGridViewNavigator
     Friend WithEvents DgvPriceTableItemLayout As DataGridViewLayout
     Friend WithEvents TsComplement As ToolStrip
-    Friend WithEvents BtnIncludePriceTableItem As ToolStripButton
-    Friend WithEvents BtnEditPriceTableItem As ToolStripButton
-    Friend WithEvents BtnDeletePriceTableItem As ToolStripButton
-    Friend WithEvents LblFilterPriceTableItem As ToolStripLabel
-    Friend WithEvents TxtFilterPriceTableItem As ToolStripTextBox
+    Friend WithEvents BtnIncludePriceTableSellable As ToolStripButton
+    Friend WithEvents BtnEditPriceTableSellable As ToolStripButton
+    Friend WithEvents BtnDeletePriceTableSellable As ToolStripButton
+    Friend WithEvents LblFilterPriceTableSellable As ToolStripLabel
+    Friend WithEvents TxtFilterPriceTableSellable As ToolStripTextBox
 End Class

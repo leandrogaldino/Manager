@@ -665,7 +665,7 @@ Public Class Person
         Using CmdPartWorkedHour As New MySqlCommand(My.Resources.PersonCompressorPartSelect, Transaction.Connection)
             CmdPartWorkedHour.Transaction = Transaction
             CmdPartWorkedHour.Parameters.AddWithValue("@personcompressorid", PersonCompressorID)
-            CmdPartWorkedHour.Parameters.AddWithValue("@parttypeid", CompressorPartType.WorkedHour)
+            CmdPartWorkedHour.Parameters.AddWithValue("@parttypeid", CompressorSellableControlType.WorkedHour)
             Using Adp As New MySqlDataAdapter(CmdPartWorkedHour)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
@@ -695,7 +695,7 @@ Public Class Person
         Using CmdPartElapsedDay As New MySqlCommand(My.Resources.PersonCompressorPartSelect, Transaction.Connection)
             CmdPartElapsedDay.Transaction = Transaction
             CmdPartElapsedDay.Parameters.AddWithValue("@personcompressorid", PersonCompressorID)
-            CmdPartElapsedDay.Parameters.AddWithValue("@parttypeid", CompressorPartType.ElapsedDay)
+            CmdPartElapsedDay.Parameters.AddWithValue("@parttypeid", CompressorSellableControlType.ElapsedDay)
             Using Adp As New MySqlDataAdapter(CmdPartElapsedDay)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)

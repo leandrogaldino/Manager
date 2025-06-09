@@ -37,10 +37,10 @@ Public Class Evaluation
                     PartsWorkedHour.Clear()
                     PartsElapsedDay.Clear()
                     For Each p In value.PartsWorkedHour.Where(Function(x) x.Status = SimpleStatus.Active)
-                        PartsWorkedHour.Add(New EvaluationPart(CompressorPartType.WorkedHour) With {.Part = p})
+                        PartsWorkedHour.Add(New EvaluationPart(CompressorSellableControlType.WorkedHour) With {.Part = p})
                     Next p
                     For Each p In value.PartsElapsedDay.Where(Function(x) x.Status = SimpleStatus.Active)
-                        PartsElapsedDay.Add(New EvaluationPart(CompressorPartType.ElapsedDay) With {.Part = p})
+                        PartsElapsedDay.Add(New EvaluationPart(CompressorSellableControlType.ElapsedDay) With {.Part = p})
                     Next p
                 Else
                     For Each p In value.PartsWorkedHour
@@ -50,7 +50,7 @@ Public Class Evaluation
                             CurrentPart.Lost = False
                             CurrentPart.Sold = False
                         Else
-                            PartsWorkedHour.Add(New EvaluationPart(CompressorPartType.WorkedHour) With {.Part = p})
+                            PartsWorkedHour.Add(New EvaluationPart(CompressorSellableControlType.WorkedHour) With {.Part = p})
                         End If
                     Next p
                     For Each p In PartsWorkedHour.ToArray.Reverse
@@ -65,7 +65,7 @@ Public Class Evaluation
                             CurrentPart.Lost = False
                             CurrentPart.Sold = False
                         Else
-                            PartsElapsedDay.Add(New EvaluationPart(CompressorPartType.ElapsedDay) With {.Part = p})
+                            PartsElapsedDay.Add(New EvaluationPart(CompressorSellableControlType.ElapsedDay) With {.Part = p})
                         End If
                     Next p
                     For Each p In PartsElapsedDay.ToArray.Reverse
@@ -235,7 +235,7 @@ Public Class Evaluation
         Using CmdEvaluationPart As New MySqlCommand(My.Resources.EvaluationPartSelect, Transaction.Connection)
             CmdEvaluationPart.Transaction = Transaction
             CmdEvaluationPart.Parameters.AddWithValue("@evaluationid", ID)
-            CmdEvaluationPart.Parameters.AddWithValue("@parttypeid", CInt(CompressorPartType.WorkedHour))
+            CmdEvaluationPart.Parameters.AddWithValue("@parttypeid", CInt(CompressorSellableControlType.WorkedHour))
             Using Adp As New MySqlDataAdapter(CmdEvaluationPart)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
@@ -248,7 +248,7 @@ Public Class Evaluation
                         PartsWorkedHour.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).Sold = Row.Item("sold")
                         PartsWorkedHour.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).Lost = Row.Item("lost")
                     Else
-                        Part = New EvaluationPart(CompressorPartType.WorkedHour) With {
+                        Part = New EvaluationPart(CompressorSellableControlType.WorkedHour) With {
                             .Part = Compressor.PartsWorkedHour.Single(Function(x) x.ID = Row.Item("personcompressorpartid")),
                             .CurrentCapacity = Row.Item("currentcapacity"),
                             .Sold = Row.Item("sold"),
@@ -265,7 +265,7 @@ Public Class Evaluation
         Using CmdEvaluationPart As New MySqlCommand(My.Resources.EvaluationPartSelect, Transaction.Connection)
             CmdEvaluationPart.Transaction = Transaction
             CmdEvaluationPart.Parameters.AddWithValue("@evaluationid", ID)
-            CmdEvaluationPart.Parameters.AddWithValue("@parttypeid", CInt(CompressorPartType.ElapsedDay))
+            CmdEvaluationPart.Parameters.AddWithValue("@parttypeid", CInt(CompressorSellableControlType.ElapsedDay))
             Using Adp As New MySqlDataAdapter(CmdEvaluationPart)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
@@ -278,7 +278,7 @@ Public Class Evaluation
                         PartsElapsedDay.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).Sold = Row.Item("sold")
                         PartsElapsedDay.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).Lost = Row.Item("lost")
                     Else
-                        Part = New EvaluationPart(CompressorPartType.ElapsedDay) With {
+                        Part = New EvaluationPart(CompressorSellableControlType.ElapsedDay) With {
                             .Part = Compressor.PartsElapsedDay.Single(Function(x) x.ID = Row.Item("personcompressorpartid")),
                             .CurrentCapacity = Row.Item("currentcapacity"),
                             .Sold = Row.Item("sold"),
@@ -661,7 +661,7 @@ Public Class Evaluation
         End Using
     End Sub
 
-    Public Shared Sub FillPartDataGridView(EvaluationID As Long, Dgv As DataGridView, PartType As CompressorPartType)
+    Public Shared Sub FillPartDataGridView(EvaluationID As Long, Dgv As DataGridView, PartType As CompressorSellableControlType)
         Dim Session = Locator.GetInstance(Of Session)
         Dim TableResult As New DataTable
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())

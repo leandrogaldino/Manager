@@ -78,7 +78,7 @@ Public Class PersonReport
                     Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementPartFilter, Con)
                         Cmd.Transaction = Tra
                         Cmd.Parameters.AddWithValue("evaluationid", LastEvaluationID)
-                        Cmd.Parameters.AddWithValue("parttypeid", CompressorPartType.WorkedHour)
+                        Cmd.Parameters.AddWithValue("parttypeid", CompressorSellableControlType.WorkedHour)
                         Using Adp As New MySqlDataAdapter(Cmd)
                             TableWorkedHour = New DataTable
                             Adp.Fill(TableWorkedHour)
@@ -88,7 +88,7 @@ Public Class PersonReport
                         Using Adp As New MySqlDataAdapter(Cmd)
                             Cmd.Transaction = Tra
                             Cmd.Parameters.AddWithValue("evaluationid", LastEvaluationID)
-                            Cmd.Parameters.AddWithValue("parttypeid", CompressorPartType.ElapsedDay)
+                            Cmd.Parameters.AddWithValue("parttypeid", CompressorSellableControlType.ElapsedDay)
                             TableElapsedDay = New DataTable
                             Adp.Fill(TableElapsedDay)
                         End Using

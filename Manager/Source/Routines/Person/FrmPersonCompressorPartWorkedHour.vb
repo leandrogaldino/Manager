@@ -196,7 +196,7 @@ Public Class FrmPersonCompressorPartWorkedHour
                 _PersonCompressor.PartsWorkedHour.Single(Function(x) x.Guid = _PartWorkedHour.Guid).Quantity = DbxQuantity.Text
                 _PersonCompressor.PartsWorkedHour.Single(Function(x) x.Guid = _PartWorkedHour.Guid).Capacity = DbxCapacity.Text
             Else
-                _PartWorkedHour = New PersonCompressorPart(CompressorPartType.WorkedHour) With {
+                _PartWorkedHour = New PersonCompressorPart(CompressorSellableControlType.WorkedHour) With {
                     .Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text),
                     .PartBind = EnumHelper.GetEnumValue(Of CompressorPartBindType)(CbxPartBind.Text)
                 }
@@ -283,7 +283,7 @@ Public Class FrmPersonCompressorPartWorkedHour
                 If Not PreSave() Then Exit Sub
             End If
         End If
-        _PartWorkedHour = New PersonCompressorPart(CompressorPartType.WorkedHour)
+        _PartWorkedHour = New PersonCompressorPart(CompressorSellableControlType.WorkedHour)
         LoadForm()
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click

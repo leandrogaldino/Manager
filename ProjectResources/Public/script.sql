@@ -1,11 +1,13 @@
 /*Como a cryptokey foi alterada, a senha de todos os usuarios deve ser resetada
-/*Como a cryptokey foi alterada, a senha de todos os e-mails cadastradosuser
-/*No caixa reicol comercio no mes 02/2024 tem um registro do expresso vedações que está sem responsavel, colocar reicol
-/*No caixa reicol comercio no mes 08/2023 tem um registro da di napoli que está sem responsavel, colocar reicol
-/*No caixa reicol comercio no mes 08/2023 tem um registro da di napoli que está sem responsavel, colocar reicol
-/*No caixa aberto no mes 03/2024 tem um registro do almoço leandro que está sem responsavel, colocar leandro
-/*Tem alguma avaliação que está com ano muito errado
-/*Deletar UserPrivilege e UserPriuvilegePreset, PrivilegePreset  e PrivilegePresetPrivilege*/
+Como a cryptokey foi alterada, a senha de todos os e-mails cadastradosuser
+No caixa reicol comercio no mes 02/2024 tem um registro do expresso vedações que está sem responsavel, colocar reicol
+No caixa reicol comercio no mes 08/2023 tem um registro da di napoli que está sem responsavel, colocar reicol
+No caixa reicol comercio no mes 08/2023 tem um registro da di napoli que está sem responsavel, colocar reicol
+No caixa aberto no mes 03/2024 tem um registro do almoço que está sem responsavel, colocar leandro
+Tem alguma avaliação que está com ano muito errado
+Deletar UserPrivilege e UserPriuvilegePreset, PrivilegePreset  e PrivilegePresetPrivilege
+*/
+
 ALTER TABLE personcompressorpart ADD COLUMN partbindid INT NOT NULL AFTER statusid;
 ALTER TABLE `manager`.`agentevent` CHANGE COLUMN `description` `description` TEXT NULL DEFAULT NULL;
 ALTER TABLE `manager`.`evaluation` ADD COLUMN `signaturename` VARCHAR(255) NULL DEFAULT NULL AFTER `documentname`;
@@ -24,7 +26,7 @@ SET pcp.partbindid =
          AND LOWER(COALESCE(pcp.itemname, p.name)) NOT LIKE '%elemento%' THEN 4
     WHEN LOWER(COALESCE(pcp.itemname, p.name)) LIKE '%coalescente%' THEN 5
     ELSE pcp.partbindid
-  END;
+  END;  
 SET SQL_SAFE_UPDATES = 1;
 ALTER TABLE `manager`.`visitschedule` DROP FOREIGN KEY `visitschedule_ibfk_4`;
 ALTER TABLE `manager`.`visitschedule` DROP COLUMN `parentid`, DROP INDEX `parentid`;
@@ -335,3 +337,53 @@ DELIMITER ;
 INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 0, 1);
 INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 1, 1);
 INSERT INTO userprivilege VALUES (NULL, CURDATE(), 1, 1, 'Usuário', 2, 1);
+
+
+
+
+INSERT INTO service VALUES (NULL, CURDATE(), 0, 'ENGRAXAMENTO', '14.01.35', NULL, 1);
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE AR INGERSOLL', 'FILTRO DE AR INGERSOLL', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE OLEO INGERSOLL', 'FILTRO DE OLEO INGERSOLL', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO SEPARADOR INGERSOLL', 'FILTRO SEPARADOR INGERSOLL', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'OLEO ALIMENTICIO 19L', 'OLEO ALIMENTICIO 19L', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE AR ATLAS', 'FILTRO DE AR ATLAS', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE OLEO ATLAS', 'FILTRO DE OLEO ATLAS', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO SEPARADOR ATLAS', 'FILTRO SEPARADOR ATLAS', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
+
+ALTER TABLE `manager`.`compressorpart` ADD COLUMN `serviceid` INT NULL DEFAULT NULL AFTER `productid`,
+ADD INDEX `serviceid` (`serviceid` ASC) VISIBLE;
+ALTER TABLE `manager`.`compressorpart`  RENAME TO  `manager`.`compressorsellable`;
+ALTER TABLE `manager`.`compressorsellable` ADD CONSTRAINT `compressorsellable_service` FOREIGN KEY (`serviceid`) REFERENCES `manager`.`service` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `manager`.`compressorsellable` CHANGE COLUMN `parttypeid` `controltypeid` INT NOT NULL ;
+
+
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE compressorsellable SET serviceid = 1 WHERE compressorsellable.itemname = "REVITALIZACAO";
+UPDATE compressorsellable SET productid = 193 WHERE id = 408;
+UPDATE compressorsellable SET productid = 194 WHERE id = 409;
+UPDATE compressorsellable SET productid = 195 WHERE id = 410;
+UPDATE compressorsellable SET productid = 196 WHERE id = 411;
+UPDATE compressorsellable SET productid = 197 WHERE id = 431;
+UPDATE compressorsellable SET productid = 198 WHERE id = 432;
+UPDATE compressorsellable SET productid = 199 WHERE id = 433;
+UPDATE compressorsellable SET productid = 196 WHERE id = 434;
+SET SQL_SAFE_UPDATES = 1;
+
+/*
+---------------------------------------------------ATENCAO---------------------------------------------------
+---------------------------------------------------ATENCAO---------------------------------------------------
+---------------------------------------------------ATENCAO---------------------------------------------------
+---------------------------------------------------ATENCAO---------------------------------------------------
+---------------------------------------------------ATENCAO---------------------------------------------------
+---------------------------------------------------ATENCAO---------------------------------------------------
+---------------------------------------------------ATENCAO---------------------------------------------------
+---------------------------------------------------ATENCAO---------------------------------------------------
+ANTES DE EXECUTAR O PROXIMO ALTER TABLE, CERTIFICAR SE NAO HA MAIS NENUM ITEM NA TABELA compressorsellable
+QUE NAO TEM productid e serviceid SIMUNTANEAMENTE, USAR A itemname PARA CADASTRAR O ITEM OU SERVIÇO E ATUALIZAR
+A TABELA COM O productid ou serviceid CORRESPONDENTE, UTILIZAT A QUERY ABAIXO PARA CONSULTAR.
+select compressorsellable.id, compressorsellable.productid, compressorsellable.serviceid,  compressor.name, compressorsellable.itemname from compressorsellable join compressor on compressorsellable.compressorid = compressor.id where compressorsellable.productid is null;
+*/
+
+ALTER TABLE `manager`.`compressorsellable` DROP COLUMN `itemname`, DROP INDEX `compressorid` , ADD UNIQUE INDEX `compressorid` (`compressorid` ASC, `productid` ASC) VISIBLE;
+

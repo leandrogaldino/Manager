@@ -199,7 +199,7 @@ Public Class FrmPersonCompressorPartElapsedDay
                 _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Quantity = DbxQuantity.Text
                 _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Capacity = DbxCapacity.Text
             Else
-                _PartElapsedDay = New PersonCompressorPart(CompressorPartType.ElapsedDay)
+                _PartElapsedDay = New PersonCompressorPart(CompressorSellableControlType.ElapsedDay)
                 _PartElapsedDay.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
                 _PartElapsedDay.PartBind = EnumHelper.GetEnumValue(Of CompressorPartBindType)(CbxPartBind.Text)
                 If QbxItem.IsFreezed Then
@@ -285,7 +285,7 @@ Public Class FrmPersonCompressorPartElapsedDay
                 If Not PreSave() Then Exit Sub
             End If
         End If
-        _PartElapsedDay = New PersonCompressorPart(CompressorPartType.ElapsedDay)
+        _PartElapsedDay = New PersonCompressorPart(CompressorSellableControlType.ElapsedDay)
         LoadForm()
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click

@@ -3,7 +3,7 @@
 ''' </summary>
 Public Class EvaluationPart
     Inherits ChildModel
-    Private _PartType As CompressorPartType
+    Private _PartType As CompressorSellableControlType
     Public ReadOnly Property Code As String
         Get
             Return Part.Code
@@ -13,7 +13,7 @@ Public Class EvaluationPart
     Public Property CurrentCapacity As Integer
     Public Property Sold As Boolean
     Public Property Lost As Boolean
-    Public Sub New(PartType As CompressorPartType)
+    Public Sub New(PartType As CompressorSellableControlType)
         _PartType = PartType
         SetRoutine(Routine.EvaluationPart)
     End Sub

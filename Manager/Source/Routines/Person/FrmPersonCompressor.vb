@@ -405,7 +405,7 @@ Public Class FrmPersonCompressor
         QbxCompressor.Select()
     End Sub
     Private Sub BtnIncludeCompressorPartWorkedHour_Click(sender As Object, e As EventArgs) Handles BtnIncludeCompressorPartWorkedHour.Click
-        Dim Form As New FrmPersonCompressorPartWorkedHour(_PersonCompressor, New PersonCompressorPart(CompressorPartType.WorkedHour), Me)
+        Dim Form As New FrmPersonCompressorPartWorkedHour(_PersonCompressor, New PersonCompressorPart(CompressorSellableControlType.WorkedHour), Me)
         Form.ShowDialog()
     End Sub
     Private Sub BtnEditCompressorPartWorkedHour_Click(sender As Object, e As EventArgs) Handles BtnEditCompressorPartWorkedHour.Click
@@ -429,7 +429,7 @@ Public Class FrmPersonCompressor
         End If
     End Sub
     Private Sub BtnIncludePartElapsedDay_Click(sender As Object, e As EventArgs) Handles BtnIncludePartElapsedDay.Click
-        Dim Form As New FrmPersonCompressorPartElapsedDay(_PersonCompressor, New PersonCompressorPart(CompressorPartType.ElapsedDay), Me)
+        Dim Form As New FrmPersonCompressorPartElapsedDay(_PersonCompressor, New PersonCompressorPart(CompressorSellableControlType.ElapsedDay), Me)
         Form.ShowDialog()
     End Sub
     Private Sub BtnEditPartElapsedDay_Click(sender As Object, e As EventArgs) Handles BtnEditPartElapsedDay.Click
@@ -560,14 +560,14 @@ Public Class FrmPersonCompressor
             Cursor = Cursors.WaitCursor
             For Each Row As DataGridViewRow In Form.DgvPartWorkedHour.Rows
                 If Row.Cells("X").Value = True Then
-                    _PersonCompressor.PartsWorkedHour.Add(New PersonCompressorPart(CompressorPartType.WorkedHour) With {.Status = SimpleStatus.Active, .ItemName = Row.Cells("ItemName").Value, .Product = New Lazy(Of Product)(Function() Row.Cells("Product").Value), .Quantity = Row.Cells("Quantity").Value})
+                    _PersonCompressor.PartsWorkedHour.Add(New PersonCompressorPart(CompressorSellableControlType.WorkedHour) With {.Status = SimpleStatus.Active, .ItemName = Row.Cells("ItemName").Value, .Product = New Lazy(Of Product)(Function() Row.Cells("Product").Value), .Quantity = Row.Cells("Quantity").Value})
                     _PersonCompressor.PartsWorkedHour.Last.SetIsSaved(True)
                     BtnSave.Enabled = True
                 End If
             Next Row
             For Each Row As DataGridViewRow In Form.DgvPartElapsedDay.Rows
                 If Row.Cells("X").Value = True Then
-                    _PersonCompressor.PartsElapsedDay.Add(New PersonCompressorPart(CompressorPartType.ElapsedDay) With {.Status = SimpleStatus.Active, .ItemName = Row.Cells("ItemName").Value, .Product = New Lazy(Of Product)(Function() Row.Cells("Product").Value), .Quantity = Row.Cells("Quantity").Value})
+                    _PersonCompressor.PartsElapsedDay.Add(New PersonCompressorPart(CompressorSellableControlType.ElapsedDay) With {.Status = SimpleStatus.Active, .ItemName = Row.Cells("ItemName").Value, .Product = New Lazy(Of Product)(Function() Row.Cells("Product").Value), .Quantity = Row.Cells("Quantity").Value})
                     _PersonCompressor.PartsElapsedDay.Last.SetIsSaved(True)
                     BtnSave.Enabled = True
                 End If

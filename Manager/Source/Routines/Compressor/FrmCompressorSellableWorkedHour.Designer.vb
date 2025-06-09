@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class FrmCompressorPartElapsedDay
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class FrmCompressorSellableWorkedHour
     Inherits System.Windows.Forms.Form
 
     'Descartar substituições de formulário para limpar a lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -23,12 +23,12 @@ Partial Class FrmCompressorPartElapsedDay
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim OtherField1 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Relation1 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Condition7 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim OtherField4 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim Parameter7 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Parameter8 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Relation4 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Condition8 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
@@ -41,7 +41,6 @@ Partial Class FrmCompressorPartElapsedDay
         Me.BtnLast = New System.Windows.Forms.ToolStripButton()
         Me.BtnLog = New System.Windows.Forms.ToolStripButton()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.TmrQueriedBox = New System.Windows.Forms.Timer(Me.components)
         Me.TsData = New System.Windows.Forms.ToolStrip()
         Me.LblOrder = New System.Windows.Forms.ToolStripLabel()
@@ -54,10 +53,12 @@ Partial Class FrmCompressorPartElapsedDay
         Me.BtnFilter = New ControlLibrary.NoFocusCueButton()
         Me.BtnView = New ControlLibrary.NoFocusCueButton()
         Me.BtnNew = New ControlLibrary.NoFocusCueButton()
-        Me.LblItem = New System.Windows.Forms.Label()
+        Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.DbxQuantity = New ControlLibrary.DecimalBox()
         Me.LblQuantity = New System.Windows.Forms.Label()
         Me.QbxItem = New ControlLibrary.QueriedBox()
+        Me.RbtService = New System.Windows.Forms.RadioButton()
+        Me.RbtProduct = New System.Windows.Forms.RadioButton()
         Me.Panel1.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -71,16 +72,16 @@ Partial Class FrmCompressorPartElapsedDay
         Me.Panel1.Controls.Add(Me.BtnClose)
         Me.Panel1.Controls.Add(Me.BtnSave)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 107)
+        Me.Panel1.Location = New System.Drawing.Point(0, 114)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(384, 44)
+        Me.Panel1.Size = New System.Drawing.Size(515, 44)
         Me.Panel1.TabIndex = 7
         '
         'BtnClose
         '
         Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnClose.Location = New System.Drawing.Point(277, 7)
+        Me.BtnClose.Location = New System.Drawing.Point(408, 7)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(95, 30)
         Me.BtnClose.TabIndex = 1
@@ -90,7 +91,7 @@ Partial Class FrmCompressorPartElapsedDay
         'BtnSave
         '
         Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnSave.Location = New System.Drawing.Point(178, 7)
+        Me.BtnSave.Location = New System.Drawing.Point(307, 7)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(95, 30)
         Me.BtnSave.TabIndex = 0
@@ -107,7 +108,7 @@ Partial Class FrmCompressorPartElapsedDay
         Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsNavigation.Size = New System.Drawing.Size(384, 25)
+        Me.TsNavigation.Size = New System.Drawing.Size(515, 25)
         Me.TsNavigation.TabIndex = 0
         Me.TsNavigation.Text = "ToolStrip2"
         '
@@ -187,14 +188,6 @@ Partial Class FrmCompressorPartElapsedDay
         Me.EprValidation.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink
         Me.EprValidation.ContainerControl = Me
         '
-        'DgvNavigator
-        '
-        Me.DgvNavigator.CancelNextMove = False
-        Me.DgvNavigator.FirstButton = Me.BtnFirst
-        Me.DgvNavigator.LastButton = Me.BtnLast
-        Me.DgvNavigator.NextButton = Me.BtnNext
-        Me.DgvNavigator.PreviousButton = Me.BtnPrevious
-        '
         'TmrQueriedBox
         '
         Me.TmrQueriedBox.Enabled = True
@@ -210,7 +203,7 @@ Partial Class FrmCompressorPartElapsedDay
         Me.TsData.Location = New System.Drawing.Point(0, 25)
         Me.TsData.Name = "TsData"
         Me.TsData.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsData.Size = New System.Drawing.Size(384, 25)
+        Me.TsData.Size = New System.Drawing.Size(515, 25)
         Me.TsData.TabIndex = 1
         Me.TsData.Text = "ToolStrip1"
         '
@@ -269,7 +262,7 @@ Partial Class FrmCompressorPartElapsedDay
         Me.FlpProduct.Controls.Add(Me.BtnView)
         Me.FlpProduct.Controls.Add(Me.BtnNew)
         Me.FlpProduct.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-        Me.FlpProduct.Location = New System.Drawing.Point(206, 54)
+        Me.FlpProduct.Location = New System.Drawing.Point(327, 59)
         Me.FlpProduct.Name = "FlpProduct"
         Me.FlpProduct.Size = New System.Drawing.Size(69, 21)
         Me.FlpProduct.TabIndex = 4
@@ -322,23 +315,22 @@ Partial Class FrmCompressorPartElapsedDay
         Me.BtnNew.UseVisualStyleBackColor = False
         Me.BtnNew.Visible = False
         '
-        'LblItem
+        'DgvNavigator
         '
-        Me.LblItem.AutoSize = True
-        Me.LblItem.Location = New System.Drawing.Point(9, 55)
-        Me.LblItem.Name = "LblItem"
-        Me.LblItem.Size = New System.Drawing.Size(37, 17)
-        Me.LblItem.TabIndex = 2
-        Me.LblItem.Text = "Item"
+        Me.DgvNavigator.CancelNextMove = False
+        Me.DgvNavigator.FirstButton = Me.BtnFirst
+        Me.DgvNavigator.LastButton = Me.BtnLast
+        Me.DgvNavigator.NextButton = Me.BtnNext
+        Me.DgvNavigator.PreviousButton = Me.BtnPrevious
         '
         'DbxQuantity
         '
         Me.DbxQuantity.DecimalOnly = True
         Me.DbxQuantity.DecimalPlaces = 2
         Me.DbxQuantity.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxQuantity.Location = New System.Drawing.Point(281, 75)
+        Me.DbxQuantity.Location = New System.Drawing.Point(403, 80)
         Me.DbxQuantity.Name = "DbxQuantity"
-        Me.DbxQuantity.Size = New System.Drawing.Size(91, 23)
+        Me.DbxQuantity.Size = New System.Drawing.Size(100, 23)
         Me.DbxQuantity.TabIndex = 6
         Me.DbxQuantity.Text = "0,00"
         Me.DbxQuantity.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
@@ -346,7 +338,7 @@ Partial Class FrmCompressorPartElapsedDay
         'LblQuantity
         '
         Me.LblQuantity.AutoSize = True
-        Me.LblQuantity.Location = New System.Drawing.Point(278, 55)
+        Me.LblQuantity.Location = New System.Drawing.Point(403, 60)
         Me.LblQuantity.Name = "LblQuantity"
         Me.LblQuantity.Size = New System.Drawing.Size(37, 17)
         Me.LblQuantity.TabIndex = 5
@@ -356,13 +348,14 @@ Partial Class FrmCompressorPartElapsedDay
         '
         Me.QbxItem.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxItem.CharactersToQuery = 1
-        Condition1.FieldName = "statusid"
-        Condition1.Operator = "="
-        Condition1.TableNameOrAlias = "product"
-        Condition1.Value = "@statusid"
-        Me.QbxItem.Conditions.Add(Condition1)
+        Condition7.FieldName = "statusid"
+        Condition7.Operator = "="
+        Condition7.TableNameOrAlias = "product"
+        Condition7.Value = "@statusid"
+        Me.QbxItem.Conditions.Add(Condition7)
         Me.QbxItem.DebugOnTextChanged = True
         Me.QbxItem.DisplayFieldAlias = "Código"
+        Me.QbxItem.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         Me.QbxItem.DisplayFieldName = "code"
         Me.QbxItem.DisplayMainFieldName = "id"
         Me.QbxItem.DisplayTableAlias = ""
@@ -372,56 +365,80 @@ Partial Class FrmCompressorPartElapsedDay
         Me.QbxItem.DropDownStretchRight = 97
         Me.QbxItem.GridHeaderBackColor = System.Drawing.SystemColors.Window
         Me.QbxItem.IfNull = Nothing
-        Me.QbxItem.Location = New System.Drawing.Point(12, 75)
+        Me.QbxItem.Location = New System.Drawing.Point(12, 80)
         Me.QbxItem.MainReturnFieldName = "id"
         Me.QbxItem.MainTableAlias = Nothing
         Me.QbxItem.MainTableName = "product"
         Me.QbxItem.Name = "QbxItem"
-        OtherField1.DisplayFieldAlias = "Produto"
-        OtherField1.DisplayFieldName = "name"
-        OtherField1.DisplayMainFieldName = "id"
-        OtherField1.DisplayTableAlias = ""
-        OtherField1.DisplayTableName = "product"
-        OtherField1.Freeze = True
-        OtherField1.IfNull = Nothing
-        OtherField1.Prefix = Nothing
-        OtherField1.Suffix = Nothing
-        Me.QbxItem.OtherFields.Add(OtherField1)
-        Parameter1.ParameterName = "@statusid"
-        Parameter1.ParameterValue = "0"
-        Parameter2.ParameterName = "@ismainprovider"
-        Parameter2.ParameterValue = "1"
-        Me.QbxItem.Parameters.Add(Parameter1)
-        Me.QbxItem.Parameters.Add(Parameter2)
+        OtherField4.DisplayFieldAlias = "Produto"
+        OtherField4.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField4.DisplayFieldName = "name"
+        OtherField4.DisplayMainFieldName = "id"
+        OtherField4.DisplayTableAlias = ""
+        OtherField4.DisplayTableName = "product"
+        OtherField4.Freeze = True
+        OtherField4.IfNull = Nothing
+        OtherField4.Prefix = Nothing
+        OtherField4.Suffix = Nothing
+        Me.QbxItem.OtherFields.Add(OtherField4)
+        Parameter7.ParameterName = "@statusid"
+        Parameter7.ParameterValue = "0"
+        Parameter8.ParameterName = "@ismainprovider"
+        Parameter8.ParameterValue = "1"
+        Me.QbxItem.Parameters.Add(Parameter7)
+        Me.QbxItem.Parameters.Add(Parameter8)
         Me.QbxItem.Prefix = Nothing
-        Condition2.FieldName = "ismainprovider"
-        Condition2.Operator = "="
-        Condition2.TableNameOrAlias = "productprovidercode"
-        Condition2.Value = "@ismainprovider"
-        Relation1.Conditions.Add(Condition2)
-        Relation1.Operator = "="
-        Relation1.RelateFieldName = "productid"
-        Relation1.RelateTableAlias = Nothing
-        Relation1.RelateTableName = "productprovidercode"
-        Relation1.RelationType = "LEFT"
-        Relation1.WithFieldName = "id"
-        Relation1.WithTableAlias = Nothing
-        Relation1.WithTableName = "product"
-        Me.QbxItem.Relations.Add(Relation1)
-        Me.QbxItem.Size = New System.Drawing.Size(263, 23)
+        Condition8.FieldName = "ismainprovider"
+        Condition8.Operator = "="
+        Condition8.TableNameOrAlias = "productprovidercode"
+        Condition8.Value = "@ismainprovider"
+        Relation4.Conditions.Add(Condition8)
+        Relation4.Operator = "="
+        Relation4.RelateFieldName = "productid"
+        Relation4.RelateTableAlias = Nothing
+        Relation4.RelateTableName = "productprovidercode"
+        Relation4.RelationType = "LEFT"
+        Relation4.WithFieldName = "id"
+        Relation4.WithTableAlias = Nothing
+        Relation4.WithTableName = "product"
+        Me.QbxItem.Relations.Add(Relation4)
+        Me.QbxItem.Size = New System.Drawing.Size(385, 23)
         Me.QbxItem.Suffix = " - "
         Me.QbxItem.TabIndex = 8
         '
-        'FrmCompressorPartElapsedDay
+        'RbtService
+        '
+        Me.RbtService.AutoSize = True
+        Me.RbtService.Location = New System.Drawing.Point(96, 53)
+        Me.RbtService.Name = "RbtService"
+        Me.RbtService.Size = New System.Drawing.Size(72, 21)
+        Me.RbtService.TabIndex = 10
+        Me.RbtService.Text = "Serviço"
+        Me.RbtService.UseVisualStyleBackColor = True
+        '
+        'RbtProduct
+        '
+        Me.RbtProduct.AutoSize = True
+        Me.RbtProduct.Checked = True
+        Me.RbtProduct.Location = New System.Drawing.Point(12, 53)
+        Me.RbtProduct.Name = "RbtProduct"
+        Me.RbtProduct.Size = New System.Drawing.Size(78, 21)
+        Me.RbtProduct.TabIndex = 9
+        Me.RbtProduct.TabStop = True
+        Me.RbtProduct.Text = "Produto"
+        Me.RbtProduct.UseVisualStyleBackColor = True
+        '
+        'FrmCompressorSellableWorkedHour
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(384, 151)
+        Me.ClientSize = New System.Drawing.Size(515, 158)
+        Me.Controls.Add(Me.RbtService)
+        Me.Controls.Add(Me.RbtProduct)
         Me.Controls.Add(Me.QbxItem)
         Me.Controls.Add(Me.DbxQuantity)
-        Me.Controls.Add(Me.FlpProduct)
         Me.Controls.Add(Me.LblQuantity)
-        Me.Controls.Add(Me.LblItem)
+        Me.Controls.Add(Me.FlpProduct)
         Me.Controls.Add(Me.TsData)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.TsNavigation)
@@ -430,9 +447,9 @@ Partial Class FrmCompressorPartElapsedDay
         Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "FrmCompressorPartElapsedDay"
+        Me.Name = "FrmCompressorSellableWorkedHour"
         Me.ShowIcon = False
-        Me.Text = "Peça do Compressor (Controla Por Dia Corrido)"
+        Me.Text = "Produto/Serviço do Compressor (Hora Trabalhada)"
         Me.Panel1.ResumeLayout(False)
         Me.TsNavigation.ResumeLayout(False)
         Me.TsNavigation.PerformLayout()
@@ -455,6 +472,9 @@ Partial Class FrmCompressorPartElapsedDay
     Friend WithEvents EprValidation As ErrorProvider
     Friend WithEvents DgvNavigator As ControlLibrary.DataGridViewNavigator
     Friend WithEvents Panel1 As Panel
+    Friend WithEvents BtnNew As ControlLibrary.NoFocusCueButton
+    Friend WithEvents BtnView As ControlLibrary.NoFocusCueButton
+    Friend WithEvents BtnFilter As ControlLibrary.NoFocusCueButton
     Friend WithEvents TmrQueriedBox As Timer
     Friend WithEvents TsData As ToolStrip
     Friend WithEvents LblOrder As ToolStripLabel
@@ -466,11 +486,9 @@ Partial Class FrmCompressorPartElapsedDay
     Friend WithEvents BtnInclude As ToolStripButton
     Friend WithEvents BtnDelete As ToolStripButton
     Friend WithEvents FlpProduct As FlowLayoutPanel
-    Friend WithEvents BtnFilter As ControlLibrary.NoFocusCueButton
-    Friend WithEvents BtnNew As ControlLibrary.NoFocusCueButton
-    Friend WithEvents BtnView As ControlLibrary.NoFocusCueButton
-    Friend WithEvents LblItem As Label
     Friend WithEvents DbxQuantity As ControlLibrary.DecimalBox
     Friend WithEvents LblQuantity As Label
     Friend WithEvents QbxItem As ControlLibrary.QueriedBox
+    Friend WithEvents RbtService As RadioButton
+    Friend WithEvents RbtProduct As RadioButton
 End Class

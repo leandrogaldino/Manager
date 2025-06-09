@@ -177,7 +177,7 @@ Partial Class FrmPriceTableSellable
         '
         'Panel1
         '
-        Me.Panel1.BackColor = System.Drawing.Color.White
+        Me.Panel1.BackColor = System.Drawing.Color.WhiteSmoke
         Me.Panel1.Controls.Add(Me.BtnSave)
         Me.Panel1.Controls.Add(Me.BtnClose)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
@@ -243,7 +243,7 @@ Partial Class FrmPriceTableSellable
         Me.FlpSellable.Controls.Add(Me.BtnView)
         Me.FlpSellable.Controls.Add(Me.BtnNew)
         Me.FlpSellable.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-        Me.FlpSellable.Location = New System.Drawing.Point(328, 59)
+        Me.FlpSellable.Location = New System.Drawing.Point(327, 59)
         Me.FlpSellable.Name = "FlpSellable"
         Me.FlpSellable.Size = New System.Drawing.Size(69, 21)
         Me.FlpSellable.TabIndex = 5

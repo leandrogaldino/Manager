@@ -133,8 +133,8 @@ Public Class FrmEvaluationManagement
         If BtnDetails.Checked Then
             If DgvData.SelectedRows.Count = 1 Then
                 Try
-                    _Filter.FilterPart(DgvData.SelectedRows(0).Cells("evaluation").Value, DgvPartWorkedHour, CompressorPartType.WorkedHour)
-                    _Filter.FilterPart(DgvData.SelectedRows(0).Cells("evaluation").Value, DgvPartElapsedDay, CompressorPartType.ElapsedDay)
+                    _Filter.FilterPart(DgvData.SelectedRows(0).Cells("evaluation").Value, DgvPartWorkedHour, CompressorSellableControlType.WorkedHour)
+                    _Filter.FilterPart(DgvData.SelectedRows(0).Cells("evaluation").Value, DgvPartElapsedDay, CompressorSellableControlType.ElapsedDay)
                     LblUnit.Text = _Filter.GetUnitNextChange(DgvData.SelectedRows(0).Cells("evaluation").Value).ToString("dd/MM/yyyy")
                     If LblUnit.Text >= Today And LblUnit.Text <= Today.AddDays(_Session.Setting.General.Evaluation.DaysToAlertMaintenance) Then
                         LblUnit.ForeColor = Color.Orange

@@ -151,7 +151,6 @@ Public Class PriceTable
             Transaction.Complete()
         End Using
     End Sub
-
     Private Function GetSellables(Transaction As MySqlTransaction) As List(Of PriceTableSellable)
         Dim TableResult As DataTable
         Dim Sellables As List(Of PriceTableSellable)
@@ -165,9 +164,9 @@ Public Class PriceTable
                 Sellables = New List(Of PriceTableSellable)
                 For Each Row As DataRow In TableResult.Rows
                     Sellable = New PriceTableSellable With {
+                        .SellableID = If(Row.Item("productid") IsNot DBNull.Value, Row.Item("productid"), Row.Item("serviceid")),
                         .Code = Row.Item("code"),
                         .Name = Row.Item("name"),
-                        .SellableID = If(Row.Item("productid") IsNot DBNull.Value, Row.Item("productid"), Row.Item("serviceid")),
                         .Price = Row.Item("price"),
                         .Sellable = New Lazy(Of Sellable)(Function()
                                                               If Row.Item("productid") IsNot DBNull.Value Then
@@ -186,7 +185,6 @@ Public Class PriceTable
         End Using
         Return Sellables
     End Function
-
     Public Shared Sub FillISellablesDataGridView(PriceTableID As Long, Dgv As DataGridView)
         Dim TableResult As New DataTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
@@ -210,8 +208,6 @@ Public Class PriceTable
             End Using
         End Using
     End Function
-
-
     Public Shared Sub IncludeSellableInSystemPriceTables(Sellable As Sellable, Tra As MySqlTransaction)
         For i = 1 To 6
             If i = 6 And TypeOf Sellable Is Service Then Exit For
@@ -226,7 +222,6 @@ Public Class PriceTable
             End Using
         Next i
     End Sub
-
     Public Overrides Function ToString() As String
         Return If(Name, String.Empty)
     End Function

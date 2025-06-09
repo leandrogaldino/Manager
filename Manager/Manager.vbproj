@@ -628,7 +628,7 @@
     <Compile Include="Source\Routines\City\FrmCityRoute.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Compressor\CompressorPart.vb" />
+    <Compile Include="Source\Routines\Compressor\CompressorSellable.vb" />
     <Compile Include="Source\Routines\CRM\Crm.vb" />
     <Compile Include="Source\Routines\CRM\CrmFilter.vb" />
     <Compile Include="Source\Routines\CRM\CrmTreatment.vb" />
@@ -710,7 +710,7 @@
     <Compile Include="Source\Helper\Flags\CashStatus.vb" />
     <Compile Include="Source\Helper\Flags\CloudSyncStatus.vb" />
     <Compile Include="Source\Helper\Flags\CompressorPartBindType.vb" />
-    <Compile Include="Source\Helper\Flags\CompressorPartType.vb" />
+    <Compile Include="Source\Helper\Flags\CompressorSellableControlType.vb" />
     <Compile Include="Source\Helper\Flags\CrmStatus.vb" />
     <Compile Include="Source\Helper\Flags\CrmTreatmentContactType.vb" />
     <Compile Include="Source\Helper\Flags\EvaluationCreationType.vb" />
@@ -984,16 +984,16 @@
     <Compile Include="Source\Routines\Request\FrmRequest.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Compressor\FrmCompressorPartElapsedDay.Designer.vb">
-      <DependentUpon>FrmCompressorPartElapsedDay.vb</DependentUpon>
+    <Compile Include="Source\Routines\Compressor\FrmCompressorSellableElapsedDay.Designer.vb">
+      <DependentUpon>FrmCompressorSellableElapsedDay.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Routines\Compressor\FrmCompressorPartElapsedDay.vb">
+    <Compile Include="Source\Routines\Compressor\FrmCompressorSellableElapsedDay.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Compressor\FrmCompressorPartWorkedHour.Designer.vb">
-      <DependentUpon>FrmCompressorPartWorkedHour.vb</DependentUpon>
+    <Compile Include="Source\Routines\Compressor\FrmCompressorSellableWorkedHour.Designer.vb">
+      <DependentUpon>FrmCompressorSellableWorkedHour.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Routines\Compressor\FrmCompressorPartWorkedHour.vb">
+    <Compile Include="Source\Routines\Compressor\FrmCompressorSellableWorkedHour.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Routines\Compressor\Compressor.vb" />
@@ -1384,11 +1384,11 @@
     <EmbeddedResource Include="Source\Routines\City\FrmCityRoute.resx">
       <DependentUpon>FrmCityRoute.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Compressor\FrmCompressorPartElapsedDay.resx">
-      <DependentUpon>FrmCompressorPartElapsedDay.vb</DependentUpon>
+    <EmbeddedResource Include="Source\Routines\Compressor\FrmCompressorSellableElapsedDay.resx">
+      <DependentUpon>FrmCompressorSellableElapsedDay.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Compressor\FrmCompressorPartWorkedHour.resx">
-      <DependentUpon>FrmCompressorPartWorkedHour.vb</DependentUpon>
+    <EmbeddedResource Include="Source\Routines\Compressor\FrmCompressorSellableWorkedHour.resx">
+      <DependentUpon>FrmCompressorSellableWorkedHour.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Compressor\FrmCompressor.resx">
       <DependentUpon>FrmCompressor.vb</DependentUpon>

@@ -1,9 +1,9 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Extensions
-Public Class FrmCompressorPartElapsedDay
+Public Class FrmCompressorSellableWorkedHour
     Private _CompressorForm As FrmCompressor
     Private _Compressor As Compressor
-    Private _PartElapsedDay As CompressorPart
+    Private _PartWorkedHour As CompressorSellable
     Private _Deleting As Boolean
     Private _Loading As Boolean
     Private _User As User
@@ -19,17 +19,42 @@ Public Class FrmCompressorPartElapsedDay
         End If
         MyBase.DefWndProc(m)
     End Sub
-    Public Sub New(Compressor As Compressor, PartElapsedDay As CompressorPart, CompressorForm As FrmCompressor)
+    Public Sub New(Compressor As Compressor, PartWorkedHour As CompressorSellable, CompressorForm As FrmCompressor)
         InitializeComponent()
         _Compressor = Compressor
-        _PartElapsedDay = PartElapsedDay
+        _PartWorkedHour = PartWorkedHour
         _CompressorForm = CompressorForm
         _User = Locator.GetInstance(Of Session).User
         LoadForm()
-        DgvNavigator.DataGridView = _CompressorForm.DgvCompressorPartElapsedDay
+        DgvNavigator.DataGridView = _CompressorForm.DgvCompressorPartWorkedHour
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = _User.CanAccess(Routine.Log)
+    End Sub
+    Private Sub LoadForm()
+        _Loading = True
+        LblOrderValue.Text = If(_PartWorkedHour.IsSaved, _CompressorForm.DgvCompressorPartWorkedHour.SelectedRows(0).Cells("Order").Value, 0)
+        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_PartWorkedHour.Status)
+        LblCreationValue.Text = _PartWorkedHour.Creation
+        QbxItem.Unfreeze()
+        If _PartWorkedHour.ItemName = Nothing And _PartWorkedHour.Product.ID > 0 Then
+            QbxItem.Freeze(_PartWorkedHour.Product.ID)
+        ElseIf _PartWorkedHour.ItemName <> Nothing And _PartWorkedHour.Product.ID >= 0 Then
+            QbxItem.QueryEnabled = False
+            QbxItem.Text = _PartWorkedHour.ItemName
+            QbxItem.QueryEnabled = True
+        End If
+        DbxQuantity.Text = _PartWorkedHour.Quantity
+        If Not _PartWorkedHour.IsSaved Then
+            BtnSave.Text = "Incluir"
+            BtnDelete.Enabled = False
+        Else
+            BtnSave.Text = "Alterar"
+            BtnDelete.Enabled = True
+        End If
+        BtnSave.Enabled = False
+        QbxItem.Select()
+        _Loading = False
     End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then
@@ -41,9 +66,9 @@ Public Class FrmCompressorPartElapsedDay
         End If
     End Sub
     Private Sub AfterDataGridViewRowMove()
-        If _CompressorForm.DgvCompressorPartElapsedDay.SelectedRows.Count = 1 Then
+        If _CompressorForm.DgvCompressorPartWorkedHour.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _PartElapsedDay = _Compressor.PartsElapsedDay.Value.Single(Function(x) x.Guid = _CompressorForm.DgvCompressorPartElapsedDay.SelectedRows(0).Cells("Guid").Value)
+            _PartWorkedHour = _Compressor.WorkedHourSellables.Value.Single(Function(x) x.Guid = _CompressorForm.DgvCompressorPartWorkedHour.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -74,18 +99,18 @@ Public Class FrmCompressorPartElapsedDay
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.CompressorPartElapsedDay, _PartElapsedDay.ID)
+        Dim Frm As New FrmLog(Routine.CompressorPartWorkedHour, _PartWorkedHour.ID)
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
             BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
-            If _PartElapsedDay.Status = SimpleStatus.Active Then
+            If _PartWorkedHour.Status = SimpleStatus.Active Then
                 CMessageBox.Show("O registro foi marcado para ser inativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
         ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive) Then
             BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active)
-            If _PartElapsedDay.Status = SimpleStatus.Inactive Then
+            If _PartWorkedHour.Status = SimpleStatus.Inactive Then
                 CMessageBox.Show("O registro foi marcado para ser ativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
             End If
         End If
@@ -95,38 +120,12 @@ Public Class FrmCompressorPartElapsedDay
         EprValidation.Clear()
         BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
-    Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles QbxItem.TextChanged,
-                                                                         DbxQuantity.TextChanged
+    Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles DbxQuantity.TextChanged, QbxItem.TextChanged
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
         PreSave()
-    End Sub
-    Private Sub LoadForm()
-        _Loading = True
-        LblOrderValue.Text = If(_PartElapsedDay.IsSaved, _CompressorForm.DgvCompressorPartElapsedDay.SelectedRows(0).Cells("Order").Value, 0)
-        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_PartElapsedDay.Status)
-        LblCreationValue.Text = _PartElapsedDay.Creation
-        QbxItem.Unfreeze()
-        If _PartElapsedDay.ItemName = Nothing And _PartElapsedDay.Product.ID > 0 Then
-            QbxItem.Freeze(_PartElapsedDay.Product.ID)
-        ElseIf _PartElapsedDay.ItemName <> Nothing And _PartElapsedDay.Product.ID >= 0 Then
-            QbxItem.QueryEnabled = False
-            QbxItem.Text = _PartElapsedDay.ItemName
-            QbxItem.QueryEnabled = True
-        End If
-        DbxQuantity.Text = _PartElapsedDay.Quantity
-        If Not _PartElapsedDay.IsSaved Then
-            BtnSave.Text = "Incluir"
-            BtnDelete.Enabled = False
-        Else
-            BtnSave.Text = "Alterar"
-            BtnDelete.Enabled = True
-        End If
-        BtnSave.Enabled = False
-        QbxItem.Select()
-        _Loading = False
     End Sub
     Private Function IsValidFields() As Boolean
         If String.IsNullOrEmpty(QbxItem.Text) Then
@@ -134,24 +133,24 @@ Public Class FrmCompressorPartElapsedDay
             EprValidation.SetIconAlignment(LblItem, ErrorIconAlignment.MiddleRight)
             QbxItem.Select()
             Return False
-        ElseIf QbxItem.IsFreezed AndAlso _Compressor.PartsElapsedDay.Value.SingleOrDefault(Function(x) x.Product.ID = QbxItem.FreezedPrimaryKey) IsNot Nothing AndAlso
-            Not _PartElapsedDay.Equals(_Compressor.PartsElapsedDay.Value.SingleOrDefault(Function(x) x.Product.ID = QbxItem.FreezedPrimaryKey)) Then
+        ElseIf QbxItem.IsFreezed AndAlso _Compressor.WorkedHourSellables.Value.SingleOrDefault(Function(x) x.Product.ID = QbxItem.FreezedPrimaryKey) IsNot Nothing AndAlso
+            Not _PartWorkedHour.Equals(_Compressor.WorkedHourSellables.Value.SingleOrDefault(Function(x) x.Product.ID = QbxItem.FreezedPrimaryKey)) Then
             EprValidation.SetError(LblItem, "Um item com esse nome já foi adicionado para esse compressor.")
             EprValidation.SetIconAlignment(LblItem, ErrorIconAlignment.MiddleRight)
             QbxItem.Select()
             Return False
-        ElseIf QbxItem.IsFreezed AndAlso _Compressor.PartsWorkedHour.Value.SingleOrDefault(Function(x) x.Product.ID = QbxItem.FreezedPrimaryKey) IsNot Nothing Then
+        ElseIf QbxItem.IsFreezed AndAlso _Compressor.ElapsedDaySellables.Value.SingleOrDefault(Function(x) x.Product.ID = QbxItem.FreezedPrimaryKey) IsNot Nothing Then
             EprValidation.SetError(LblItem, "Um item com esse nome já foi adicionado para esse compressor.")
             EprValidation.SetIconAlignment(LblItem, ErrorIconAlignment.MiddleRight)
             QbxItem.Select()
             Return False
-        ElseIf Not QbxItem.IsFreezed AndAlso _Compressor.PartsElapsedDay.Value.SingleOrDefault(Function(x) x.ItemName = QbxItem.Text) IsNot Nothing AndAlso
-            Not _PartElapsedDay.Equals(_Compressor.PartsElapsedDay.Value.SingleOrDefault(Function(x) x.Product.ID = QbxItem.FreezedPrimaryKey)) Then
+        ElseIf Not QbxItem.IsFreezed AndAlso _Compressor.WorkedHourSellables.Value.SingleOrDefault(Function(x) x.ItemName = QbxItem.Text) IsNot Nothing AndAlso
+            Not _PartWorkedHour.Equals(_Compressor.WorkedHourSellables.Value.SingleOrDefault(Function(x) x.Product.ID = QbxItem.FreezedPrimaryKey)) Then
             EprValidation.SetError(LblItem, "Um item com esse nome já foi adicionado para esse compressor.")
             EprValidation.SetIconAlignment(LblItem, ErrorIconAlignment.MiddleRight)
             QbxItem.Select()
             Return False
-        ElseIf Not QbxItem.IsFreezed AndAlso _Compressor.PartsWorkedHour.Value.SingleOrDefault(Function(x) x.ItemName = QbxItem.Text) IsNot Nothing Then
+        ElseIf Not QbxItem.IsFreezed AndAlso _Compressor.ElapsedDaySellables.Value.SingleOrDefault(Function(x) x.ItemName = QbxItem.Text) IsNot Nothing Then
             EprValidation.SetError(LblItem, "Um item com esse nome já foi adicionado para esse compressor.")
             EprValidation.SetIconAlignment(LblItem, ErrorIconAlignment.MiddleRight)
             QbxItem.Select()
@@ -172,44 +171,45 @@ Public Class FrmCompressorPartElapsedDay
             QbxItem.QueryEnabled = True
         End If
         If IsValidFields() Then
-            If _PartElapsedDay.IsSaved Then
-                _Compressor.PartsElapsedDay.Value.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+            If _PartWorkedHour.IsSaved Then
+                _Compressor.WorkedHourSellables.Value.Single(Function(x) x.Guid = _PartWorkedHour.Guid).Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
                 If QbxItem.IsFreezed Then
-                    _Compressor.PartsElapsedDay.Value.Single(Function(x) x.Guid = _PartElapsedDay.Guid).ItemName = Nothing
-                    _Compressor.PartsElapsedDay.Value.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
+                    _Compressor.WorkedHourSellables.Value.Single(Function(x) x.Guid = _PartWorkedHour.Guid).ItemName = Nothing
+                    _Compressor.WorkedHourSellables.Value.Single(Function(x) x.Guid = _PartWorkedHour.Guid).Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
                 Else
-                    _Compressor.PartsElapsedDay.Value.Single(Function(x) x.Guid = _PartElapsedDay.Guid).ItemName = QbxItem.Text
-                    _Compressor.PartsElapsedDay.Value.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Product = New Product
+                    _Compressor.WorkedHourSellables.Value.Single(Function(x) x.Guid = _PartWorkedHour.Guid).ItemName = QbxItem.Text
+                    _Compressor.WorkedHourSellables.Value.Single(Function(x) x.Guid = _PartWorkedHour.Guid).Product = New Product
                 End If
-                _Compressor.PartsElapsedDay.Value.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Quantity = DbxQuantity.Text
+                _Compressor.WorkedHourSellables.Value.Single(Function(x) x.Guid = _PartWorkedHour.Guid).Quantity = DbxQuantity.Text
             Else
-                _PartElapsedDay = New CompressorPart(CompressorPartType.ElapsedDay)
-                _PartElapsedDay.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                _PartWorkedHour = New CompressorSellable(CompressorSellableControlType.WorkedHour) With {
+                    .Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                }
                 If QbxItem.IsFreezed Then
-                    _PartElapsedDay.ItemName = Nothing
-                    _PartElapsedDay.Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
+                    _PartWorkedHour.ItemName = Nothing
+                    _PartWorkedHour.Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
                 Else
-                    _PartElapsedDay.ItemName = QbxItem.Text
-                    _PartElapsedDay.Product = New Product
+                    _PartWorkedHour.ItemName = QbxItem.Text
+                    _PartWorkedHour.Product = New Product
                 End If
-                _PartElapsedDay.Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
-                _PartElapsedDay.Quantity = DbxQuantity.Text
-                _PartElapsedDay.SetIsSaved(True)
-                _Compressor.PartsElapsedDay.Value.Add(_PartElapsedDay)
+                _PartWorkedHour.Product = New Product().Load(QbxItem.FreezedPrimaryKey, False)
+                _PartWorkedHour.Quantity = DbxQuantity.Text
+                _PartWorkedHour.SetIsSaved(True)
+                _Compressor.WorkedHourSellables.Value.Add(_PartWorkedHour)
             End If
-            _CompressorForm.DgvCompressorPartElapsedDay.Fill(_Compressor.PartsElapsedDay.Value)
-            _CompressorForm.DgvCompressorPartElapsedDayLayout.Load()
+            _CompressorForm.DgvCompressorPartWorkedHour.Fill(_Compressor.WorkedHourSellables.Value)
+            _CompressorForm.DgvCompressorPartWorkedHourLayout.Load()
             BtnSave.Enabled = False
-            If Not _PartElapsedDay.IsSaved Then
+            If Not _PartWorkedHour.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _CompressorForm.DgvCompressorPartElapsedDay.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _PartElapsedDay.Guid)
+            Row = _CompressorForm.DgvCompressorPartWorkedHour.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _PartWorkedHour.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _CompressorForm.DgvCompressorPartElapsedDay.SelectedRows(0).Cells("Order").Value
+            LblOrderValue.Text = _CompressorForm.DgvCompressorPartWorkedHour.SelectedRows(0).Cells("Order").Value
             _CompressorForm.EprValidation.Clear()
             _CompressorForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()
@@ -268,16 +268,16 @@ Public Class FrmCompressorPartElapsedDay
                 If Not PreSave() Then Exit Sub
             End If
         End If
-        _PartElapsedDay = New CompressorPart(CompressorPartType.ElapsedDay)
+        _PartWorkedHour = New CompressorSellable(CompressorSellableControlType.WorkedHour)
         LoadForm()
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
-        If _CompressorForm.DgvCompressorPartElapsedDay.SelectedRows.Count = 1 Then
+        If _CompressorForm.DgvCompressorPartWorkedHour.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _PartElapsedDay = _Compressor.PartsElapsedDay.Value.Single(Function(x) x.Guid = _CompressorForm.DgvCompressorPartElapsedDay.SelectedRows(0).Cells("Guid").Value)
-                _Compressor.PartsElapsedDay.Value.Remove(_PartElapsedDay)
-                _CompressorForm.DgvCompressorPartElapsedDay.Fill(_Compressor.PartsElapsedDay.Value)
-                _CompressorForm.DgvCompressorPartElapsedDayLayout.Load()
+                _PartWorkedHour = _Compressor.WorkedHourSellables.Value.Single(Function(x) x.Guid = _CompressorForm.DgvCompressorPartWorkedHour.SelectedRows(0).Cells("Guid").Value)
+                _Compressor.WorkedHourSellables.Value.Remove(_PartWorkedHour)
+                _CompressorForm.DgvCompressorPartWorkedHour.Fill(_Compressor.WorkedHourSellables.Value)
+                _CompressorForm.DgvCompressorPartWorkedHourLayout.Load()
                 _Deleting = True
                 Dispose()
                 _CompressorForm.BtnSave.Enabled = True

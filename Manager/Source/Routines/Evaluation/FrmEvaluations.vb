@@ -44,7 +44,7 @@ Public Class FrmEvaluations
                 Cursor = Cursors.WaitCursor
                 _Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
                 EvaluationForm = New FrmEvaluation(_Evaluation, Me)
-                Evaluation.FillPartDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPartWorkedHour, CompressorPartType.WorkedHour)
+                Evaluation.FillPartDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPartWorkedHour, CompressorSellableControlType.WorkedHour)
                 EvaluationForm.ShowDialog()
             Catch ex As Exception
                 CMessageBox.Show("ERRO EV006", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -191,8 +191,8 @@ Public Class FrmEvaluations
         If BtnDetails.Checked Then
             If DgvData.SelectedRows.Count = 1 Then
                 Try
-                    Evaluation.FillPartDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPartWorkedHour, CompressorPartType.WorkedHour)
-                    Evaluation.FillPartDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPartElapsedDay, CompressorPartType.ElapsedDay)
+                    Evaluation.FillPartDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPartWorkedHour, CompressorSellableControlType.WorkedHour)
+                    Evaluation.FillPartDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPartElapsedDay, CompressorSellableControlType.ElapsedDay)
                 Catch ex As Exception
                     TmrLoadDetails.Stop()
                     CMessageBox.Show("ERRO EV009", "Ocorreu um erro ao consultar os detalhes do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

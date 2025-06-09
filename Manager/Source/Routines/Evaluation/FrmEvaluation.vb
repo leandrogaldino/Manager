@@ -1353,32 +1353,32 @@ Public Class FrmEvaluation
     Private Sub DgvPartWorkedHour_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvPartWorkedHour.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvPartWorkedHour.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
-            EditEvaluationPart(CompressorPartType.WorkedHour)
+            EditEvaluationPart(CompressorSellableControlType.WorkedHour)
         End If
     End Sub
     Private Sub DgvPartElapsedDay_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvPartElapsedDay.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvPartElapsedDay.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
-            EditEvaluationPart(CompressorPartType.ElapsedDay)
+            EditEvaluationPart(CompressorSellableControlType.ElapsedDay)
         End If
     End Sub
     Private Sub DgvPartWorkedHour_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvPartWorkedHour.KeyDown
         If e.KeyCode = Keys.Enter Then
-            EditEvaluationPart(CompressorPartType.WorkedHour)
+            EditEvaluationPart(CompressorSellableControlType.WorkedHour)
             e.Handled = True
         End If
     End Sub
     Private Sub DgvPartElapsedDay_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvPartElapsedDay.KeyDown
         If e.KeyCode = Keys.Enter Then
-            EditEvaluationPart(CompressorPartType.ElapsedDay)
+            EditEvaluationPart(CompressorSellableControlType.ElapsedDay)
             e.Handled = True
         End If
     End Sub
-    Private Sub EditEvaluationPart(PartType As CompressorPartType)
+    Private Sub EditEvaluationPart(PartType As CompressorSellableControlType)
         Dim Result As DialogResult
         Dim Part As EvaluationPart
         Dim RowIndex As Long
-        If PartType = CompressorPartType.ElapsedDay Then
+        If PartType = CompressorSellableControlType.ElapsedDay Then
             Part = _Evaluation.PartsElapsedDay.Single(Function(x) x.Part.ID = DgvPartElapsedDay.SelectedRows(0).Cells("Part").Value.ID)
             RowIndex = DgvPartElapsedDay.SelectedRows(0).Index
             Using Frm As New FrmEvaluationPart(Part)

@@ -4,10 +4,10 @@
 Public Class PersonCompressorPart
     Inherits ChildModel
     Private _ProductID As Long
-    Private _PartType As CompressorPartType
+    Private _PartType As CompressorSellableControlType
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property PartBind As CompressorPartBindType = CompressorPartBindType.None
-    Public ReadOnly Property PartType As CompressorPartType
+    Public ReadOnly Property PartType As CompressorSellableControlType
         Get
             Return _PartType
         End Get
@@ -39,9 +39,9 @@ Public Class PersonCompressorPart
     Public Overrides Function ToString() As String
         Return ItemName & Product.Value.Name
     End Function
-    Public Sub New(PartType As CompressorPartType)
+    Public Sub New(PartType As CompressorSellableControlType)
         _PartType = PartType
-        If _PartType = CompressorPartType.ElapsedDay Then
+        If _PartType = CompressorSellableControlType.ElapsedDay Then
             SetRoutine(Routine.PersonCompressorPartElapsedDay)
         Else
             SetRoutine(Routine.PersonCompressorPartWorkedHour)

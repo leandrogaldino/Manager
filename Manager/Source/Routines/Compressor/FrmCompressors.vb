@@ -37,8 +37,8 @@ Public Class FrmCompressors
                 Cursor = Cursors.WaitCursor
                 _Compressor = New Compressor().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
                 CompressorForm = New FrmCompressor(_Compressor, Me)
-                CompressorForm.DgvCompressorPartWorkedHour.Fill(_Compressor.PartsWorkedHour.Value)
-                CompressorForm.DgvCompressorPartElapsedDay.Fill(_Compressor.PartsElapsedDay.Value)
+                CompressorForm.DgvCompressorPartWorkedHour.Fill(_Compressor.WorkedHourSellables.Value)
+                CompressorForm.DgvCompressorPartElapsedDay.Fill(_Compressor.ElapsedDaySellables.Value)
                 CompressorForm.ShowDialog()
             Catch ex As Exception
                 CMessageBox.Show("ERRO CP004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -170,8 +170,8 @@ Public Class FrmCompressors
         If BtnDetails.Checked Then
             If DgvData.SelectedRows.Count = 1 Then
                 Try
-                    Compressor.FillDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPartWorkedHour, CompressorPartType.WorkedHour)
-                    Compressor.FillDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPartElapsedDay, CompressorPartType.ElapsedDay)
+                    Compressor.FillSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPartWorkedHour, CompressorSellableControlType.WorkedHour)
+                    Compressor.FillSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPartElapsedDay, CompressorSellableControlType.ElapsedDay)
                 Catch ex As Exception
                     TmrLoadDetails.Stop()
                     CMessageBox.Show("ERRO CP007", "Ocorreu um erro ao consultar os dados do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

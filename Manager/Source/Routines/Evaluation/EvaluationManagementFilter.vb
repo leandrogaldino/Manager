@@ -88,7 +88,7 @@ Public Class EvaluationManagementFilter
         End If
         Return Filtering
     End Function
-    Public Sub FilterPart(EvaluationID As Long, Dgv As DataGridView, PartType As CompressorPartType)
+    Public Sub FilterPart(EvaluationID As Long, Dgv As DataGridView, PartType As CompressorSellableControlType)
         Dim Table As New DataTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()

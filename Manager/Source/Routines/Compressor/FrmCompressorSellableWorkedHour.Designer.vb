@@ -23,12 +23,12 @@ Partial Class FrmCompressorSellableWorkedHour
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim Condition7 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim OtherField4 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim Parameter7 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Parameter8 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Relation4 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Condition8 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim OtherField1 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Relation1 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
@@ -75,7 +75,7 @@ Partial Class FrmCompressorSellableWorkedHour
         Me.Panel1.Location = New System.Drawing.Point(0, 114)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(515, 44)
-        Me.Panel1.TabIndex = 7
+        Me.Panel1.TabIndex = 8
         '
         'BtnClose
         '
@@ -265,7 +265,7 @@ Partial Class FrmCompressorSellableWorkedHour
         Me.FlpProduct.Location = New System.Drawing.Point(327, 59)
         Me.FlpProduct.Name = "FlpProduct"
         Me.FlpProduct.Size = New System.Drawing.Size(69, 21)
-        Me.FlpProduct.TabIndex = 4
+        Me.FlpProduct.TabIndex = 5
         '
         'BtnFilter
         '
@@ -331,7 +331,7 @@ Partial Class FrmCompressorSellableWorkedHour
         Me.DbxQuantity.Location = New System.Drawing.Point(403, 80)
         Me.DbxQuantity.Name = "DbxQuantity"
         Me.DbxQuantity.Size = New System.Drawing.Size(100, 23)
-        Me.DbxQuantity.TabIndex = 6
+        Me.DbxQuantity.TabIndex = 7
         Me.DbxQuantity.Text = "0,00"
         Me.DbxQuantity.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -341,18 +341,18 @@ Partial Class FrmCompressorSellableWorkedHour
         Me.LblQuantity.Location = New System.Drawing.Point(403, 60)
         Me.LblQuantity.Name = "LblQuantity"
         Me.LblQuantity.Size = New System.Drawing.Size(37, 17)
-        Me.LblQuantity.TabIndex = 5
+        Me.LblQuantity.TabIndex = 6
         Me.LblQuantity.Text = "Qtd."
         '
         'QbxItem
         '
         Me.QbxItem.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxItem.CharactersToQuery = 1
-        Condition7.FieldName = "statusid"
-        Condition7.Operator = "="
-        Condition7.TableNameOrAlias = "product"
-        Condition7.Value = "@statusid"
-        Me.QbxItem.Conditions.Add(Condition7)
+        Condition1.FieldName = "statusid"
+        Condition1.Operator = "="
+        Condition1.TableNameOrAlias = "product"
+        Condition1.Value = "@statusid"
+        Me.QbxItem.Conditions.Add(Condition1)
         Me.QbxItem.DebugOnTextChanged = True
         Me.QbxItem.DisplayFieldAlias = "Código"
         Me.QbxItem.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
@@ -370,41 +370,40 @@ Partial Class FrmCompressorSellableWorkedHour
         Me.QbxItem.MainTableAlias = Nothing
         Me.QbxItem.MainTableName = "product"
         Me.QbxItem.Name = "QbxItem"
-        OtherField4.DisplayFieldAlias = "Produto"
-        OtherField4.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField4.DisplayFieldName = "name"
-        OtherField4.DisplayMainFieldName = "id"
-        OtherField4.DisplayTableAlias = ""
-        OtherField4.DisplayTableName = "product"
-        OtherField4.Freeze = True
-        OtherField4.IfNull = Nothing
-        OtherField4.Prefix = Nothing
-        OtherField4.Suffix = Nothing
-        Me.QbxItem.OtherFields.Add(OtherField4)
-        Parameter7.ParameterName = "@statusid"
-        Parameter7.ParameterValue = "0"
-        Parameter8.ParameterName = "@ismainprovider"
-        Parameter8.ParameterValue = "1"
-        Me.QbxItem.Parameters.Add(Parameter7)
-        Me.QbxItem.Parameters.Add(Parameter8)
+        OtherField1.DisplayFieldAlias = "Produto"
+        OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField1.DisplayFieldName = "name"
+        OtherField1.DisplayMainFieldName = "id"
+        OtherField1.DisplayTableAlias = ""
+        OtherField1.DisplayTableName = "product"
+        OtherField1.Freeze = True
+        OtherField1.IfNull = Nothing
+        OtherField1.Prefix = Nothing
+        OtherField1.Suffix = Nothing
+        Me.QbxItem.OtherFields.Add(OtherField1)
+        Parameter1.ParameterName = "@statusid"
+        Parameter1.ParameterValue = "0"
+        Parameter2.ParameterName = "@ismainprovider"
+        Parameter2.ParameterValue = "1"
+        Me.QbxItem.Parameters.Add(Parameter1)
+        Me.QbxItem.Parameters.Add(Parameter2)
         Me.QbxItem.Prefix = Nothing
-        Condition8.FieldName = "ismainprovider"
-        Condition8.Operator = "="
-        Condition8.TableNameOrAlias = "productprovidercode"
-        Condition8.Value = "@ismainprovider"
-        Relation4.Conditions.Add(Condition8)
-        Relation4.Operator = "="
-        Relation4.RelateFieldName = "productid"
-        Relation4.RelateTableAlias = Nothing
-        Relation4.RelateTableName = "productprovidercode"
-        Relation4.RelationType = "LEFT"
-        Relation4.WithFieldName = "id"
-        Relation4.WithTableAlias = Nothing
-        Relation4.WithTableName = "product"
-        Me.QbxItem.Relations.Add(Relation4)
+        Condition2.FieldName = "ismainprovider"
+        Condition2.Operator = "="
+        Condition2.TableNameOrAlias = "productprovidercode"
+        Condition2.Value = "@ismainprovider"
+        Relation1.Conditions.Add(Condition2)
+        Relation1.Operator = "="
+        Relation1.RelateFieldName = "productid"
+        Relation1.RelateTableAlias = Nothing
+        Relation1.RelateTableName = "productprovidercode"
+        Relation1.RelationType = "LEFT"
+        Relation1.WithFieldName = "id"
+        Relation1.WithTableAlias = Nothing
+        Relation1.WithTableName = "product"
+        Me.QbxItem.Relations.Add(Relation1)
         Me.QbxItem.Size = New System.Drawing.Size(385, 23)
-        Me.QbxItem.Suffix = " - "
-        Me.QbxItem.TabIndex = 8
+        Me.QbxItem.TabIndex = 4
         '
         'RbtService
         '
@@ -412,7 +411,7 @@ Partial Class FrmCompressorSellableWorkedHour
         Me.RbtService.Location = New System.Drawing.Point(96, 53)
         Me.RbtService.Name = "RbtService"
         Me.RbtService.Size = New System.Drawing.Size(72, 21)
-        Me.RbtService.TabIndex = 10
+        Me.RbtService.TabIndex = 3
         Me.RbtService.Text = "Serviço"
         Me.RbtService.UseVisualStyleBackColor = True
         '
@@ -423,7 +422,7 @@ Partial Class FrmCompressorSellableWorkedHour
         Me.RbtProduct.Location = New System.Drawing.Point(12, 53)
         Me.RbtProduct.Name = "RbtProduct"
         Me.RbtProduct.Size = New System.Drawing.Size(78, 21)
-        Me.RbtProduct.TabIndex = 9
+        Me.RbtProduct.TabIndex = 2
         Me.RbtProduct.TabStop = True
         Me.RbtProduct.Text = "Produto"
         Me.RbtProduct.UseVisualStyleBackColor = True

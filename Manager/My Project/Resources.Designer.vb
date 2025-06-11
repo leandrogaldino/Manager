@@ -1100,33 +1100,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;CompressorPartElapsedDay&quot; Version=&quot;4&quot;&gt;
-        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
-        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
-        '''	&lt;Column Index=&quot;0&quot;&gt;
-        '''		&lt;Visible&gt;True&lt;/Visible&gt;
-        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
-        '''		&lt;Name&gt;Ordem&lt;/Name&gt;
-        '''		&lt;Width&gt;70&lt;/Width&gt;
-        '''	&lt;/Column&gt;
-        '''	&lt;Column Index=&quot;1&quot;&gt;
-        '''		&lt;Visible&gt;True&lt;/Visible&gt;
-        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''		&lt;Name&gt;Status&lt;/Name&gt;
-        '''		&lt;Width&gt;70&lt;/Width&gt;
-        '''	&lt;/Column&gt;
-        '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
-        '''		&lt;Visible&gt;False&lt;/Visible&gt;
-        '''		&lt;Di [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property CompressorPartElapsedDayGrid() As String
-            Get
-                Return ResourceManager.GetString("CompressorPartElapsedDayGrid", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO compressorpart
         '''(
         '''    compressorid,
@@ -1193,8 +1166,51 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	compressor.id,
+        '''	compressor.creation,
+        '''    compressor.statusid,
+        '''	compressor.manufacturerid,
+        '''	compressor.name
+        '''FROM compressor
+        '''WHERE compressor.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property CompressorSelect() As String
+            Get
+                Return ResourceManager.GetString("CompressorSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;CompressorPartWorkedHour&quot; Version=&quot;4&quot;&gt;
+        '''&lt;Routine Id=&quot;CompressorSellableElapsedDay&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''	&lt;Column Index=&quot;0&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Ordem&lt;/Name&gt;
+        '''		&lt;Width&gt;70&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;1&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Status&lt;/Name&gt;
+        '''		&lt;Width&gt;70&lt;/Width&gt;
+        '''	&lt;/Column&gt;	
+        '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''		&lt;Visible&gt;False&lt;/Visible&gt;
+        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property CompressorSellableElapsedDayGrid() As String
+            Get
+                Return ResourceManager.GetString("CompressorSellableElapsedDayGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;CompressorSellableWorkedHour&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''	&lt;Column Index=&quot;0&quot;&gt;
@@ -1211,27 +1227,11 @@ Namespace My.Resources
         '''	&lt;/Column&gt;
         '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
         '''		&lt;Visible&gt;False&lt;/Visible&gt;
-        '''		&lt;Di [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	 [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
-        Friend ReadOnly Property CompressorPartWorkedHourGrid() As String
+        Friend ReadOnly Property CompressorSellableWorkedHourGrid() As String
             Get
-                Return ResourceManager.GetString("CompressorPartWorkedHourGrid", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	compressor.id,
-        '''	compressor.creation,
-        '''    compressor.statusid,
-        '''	compressor.manufacturerid,
-        '''	compressor.name
-        '''FROM compressor
-        '''WHERE compressor.id = @id;.
-        '''</summary>
-        Friend ReadOnly Property CompressorSelect() As String
-            Get
-                Return ResourceManager.GetString("CompressorSelect", resourceCulture)
+                Return ResourceManager.GetString("CompressorSellableWorkedHourGrid", resourceCulture)
             End Get
         End Property
         
@@ -2610,15 +2610,15 @@ Namespace My.Resources
         '''        &lt;Visible&gt;True&lt;/Visible&gt;
         '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
         '''        &lt;Name&gt;Ordem&lt;/Name&gt;
-        '''        &lt;Width&gt;70&lt;/Width&gt;
-        '''    &lt;/Column&gt;        
-        '''    &lt;Column Index=&quot;1&quot;&gt;
-        '''        &lt;Visible&gt;True&lt;/Visible&gt;
-        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''        &lt;Name&gt;Status&lt;/Name&gt;
-        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''        &lt;Width&gt;AllCells&lt;/Width&gt;
         '''    &lt;/Column&gt;
-        '''	&lt;Column [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	&lt;Column Index=&quot;1&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''		&lt;Visible&gt;False&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;ID Produto&lt;/Name&gt;
+        '''		&lt;Width&gt;AllCells&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column  [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationReplacedPartGrid() As String
             Get
@@ -2631,7 +2631,6 @@ Namespace My.Resources
         '''(
         '''	evaluationid,
         '''	creation,
-        '''	itemname,
         '''	productid,
         '''	quantity,
         '''	userid
@@ -2640,7 +2639,6 @@ Namespace My.Resources
         '''(
         '''	@evaluationid,
         '''	@creation,
-        '''	@itemname,
         '''	@productid,
         '''	@quantity,
         '''	@userid
@@ -2657,8 +2655,7 @@ Namespace My.Resources
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	evaluationreplacedpart.id,
         '''	evaluationreplacedpart.creation,
-        '''	evaluationreplacedpart.itemname,
-        '''	IFNULL(evaluationreplacedpart.productid, 0) AS productid,
+        '''	evaluationreplacedpart.productid,
         '''	evaluationreplacedpart.quantity
         '''FROM evaluationreplacedpart
         '''WHERE evaluationreplacedpart.evaluationid = @evaluationid;.
@@ -2671,7 +2668,6 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluationreplacedpart SET
-        '''	itemname = @itemname,
         '''	productid = @productid,
         '''	quantity = @quantity,
         '''	userid = @userid
@@ -3958,10 +3954,10 @@ Namespace My.Resources
         '''	END AS &apos;Status&apos;,
         '''    pricetable.name AS &apos;Nome&apos;
         '''FROM pricetable
-        '''LEFT JOIN pricetableitem ON pricetableitem.pricetableid = pricetable.id
-        '''LEFT JOIN product ON product.id = pricetableitem.productid
-        '''LEFT JOIN service ON service.id = pricetableitem.serviceid
-        '''LEFT JOIN productprovidercode ON productprovidercode.productid = produ [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''LEFT JOIN pricetablesellable ON pricetablesellable.pricetableid = pricetable.id
+        '''LEFT JOIN product ON product.id = pricetablesellable.productid
+        '''LEFT JOIN service ON service.id = pricetablesellable.serviceid
+        '''LEFT JOIN productprovidercode ON productprovidercode.p [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PriceTableFilter() As String
             Get
@@ -4032,8 +4028,8 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM pricetableitem
-        '''WHERE pricetableitem.id = @id;.
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM pricetablesellable
+        '''WHERE pricetablesellable.id = @id;.
         '''</summary>
         Friend ReadOnly Property PriceTableItemDelete() As String
             Get
@@ -4045,13 +4041,13 @@ Namespace My.Resources
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''	IFNULL(productprovidercode.code, &apos;&apos;) &apos;Código&apos;,
         '''    IFNULL(product.name, service.name) &apos;Produto/Serviço&apos;,
-        '''    pricetableitem.price &apos;Preço&apos;
-        '''FROM pricetableitem
-        '''LEFT JOIN product ON product.id = pricetableitem.productid
-        '''LEFT JOIN service ON service.id = pricetableitem.serviceid
+        '''    pricetablesellable.price &apos;Preço&apos;
+        '''FROM pricetablesellable
+        '''LEFT JOIN product ON product.id = pricetablesellable.productid
+        '''LEFT JOIN service ON service.id = pricetablesellable.serviceid
         '''LEFT JOIN productprovidercode ON productprovidercode.productid = product.id AND productprovidercode.ismainprovider = 1
-        '''WHERE pricetableitem.pricetableid = @pricetableid
-        '''ORDER BY productprovidercode.code, IFNULL(product [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''WHERE pricetablesellable.pricetableid = @pricetableid
+        '''ORDER BY productprovidercode. [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PriceTableItemDetailSelect() As String
             Get
@@ -4086,7 +4082,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO pricetableitem
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO pricetablesellable
         '''(
         '''    pricetableid,
         '''    creation,
@@ -4113,18 +4109,18 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	pricetableitem.id,
-        '''	pricetableitem.pricetableid,
-        '''	pricetableitem.creation,
-        '''	pricetableitem.productid,
-        '''	pricetableitem.serviceid,
-        '''	pricetableitem.price,
+        '''	pricetablesellable.id,
+        '''	pricetablesellable.pricetableid,
+        '''	pricetablesellable.creation,
+        '''	pricetablesellable.productid,
+        '''	pricetablesellable.serviceid,
+        '''	pricetablesellable.price,
         '''	IFNULL(product.name, service.name) name,
         '''	IFNULL(productprovidercode.code, &apos;&apos;) code
-        '''FROM pricetableitem
-        '''LEFT JOIN product ON product.id = pricetableitem.productid
-        '''LEFT JOIN service ON service.id = pricetableitem.serviceid
-        '''LEFT JOIN productprovidercode ON productprovidercode.productid = product.id AND productprovidercode.ismainprovider =  [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''FROM pricetablesellable
+        '''LEFT JOIN product ON product.id = pricetablesellable.productid
+        '''LEFT JOIN service ON service.id = pricetablesellable.serviceid
+        '''LEFT JOIN productprovidercode ON productprovidercode.productid = product.id AND p [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PriceTableItemSelect() As String
             Get
@@ -4133,12 +4129,12 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE pricetableitem SET
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE pricetablesellable SET
         '''    productid = @productid,
         '''    serviceid = @serviceid,
         '''    price =  @price,
         '''    userid = @userid
-        '''WHERE pricetableitem.id = @id;.
+        '''WHERE pricetablesellable.id = @id;.
         '''</summary>
         Friend ReadOnly Property PriceTableItemUpdate() As String
             Get
@@ -4898,10 +4894,10 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	pricetable.name AS &apos;Tabela de Preços&apos;,
-        '''    pricetableitem.price AS &apos;Preço&apos;
+        '''    pricetablesellable.price AS &apos;Preço&apos;
         '''FROM pricetable
-        '''LEFT JOIN pricetableitem ON pricetableitem.pricetableid = pricetable.id
-        '''LEFT JOIN product ON product.id = pricetableitem.productid
+        '''LEFT JOIN pricetablesellable ON pricetablesellable.pricetableid = pricetable.id
+        '''LEFT JOIN product ON product.id = pricetablesellable.productid
         '''WHERE product.id = @productid;.
         '''</summary>
         Friend ReadOnly Property ProductPriceDetailSelect() As String
@@ -4994,15 +4990,15 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	pricetableitem.id,
-        '''	pricetableitem.creation,
+        '''	pricetablesellable.id,
+        '''	pricetablesellable.creation,
         '''	product.name product,
         '''    pricetable.id pricetableid,
         '''	pricetable.name pricetablename,
-        '''    pricetableitem.price
+        '''    pricetablesellable.price
         '''FROM pricetable
-        '''LEFT JOIN pricetableitem ON pricetableitem.pricetableid = pricetable.id
-        '''LEFT JOIN product ON product.id = pricetableitem.productid
+        '''LEFT JOIN pricetablesellable ON pricetablesellable.pricetableid = pricetable.id
+        '''LEFT JOIN product ON product.id = pricetablesellable.productid
         '''WHERE product.id = @productid;.
         '''</summary>
         Friend ReadOnly Property ProductPriceSelect() As String
@@ -6073,10 +6069,10 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	pricetable.name AS &apos;Tabela de Preços&apos;,
-        '''    pricetableitem.price AS &apos;Preço&apos;
+        '''    pricetablesellable.price AS &apos;Preço&apos;
         '''FROM pricetable
-        '''LEFT JOIN pricetableitem ON pricetableitem.pricetableid = pricetable.id
-        '''LEFT JOIN service ON service.id = pricetableitem.serviceid
+        '''LEFT JOIN pricetablesellable ON pricetablesellable.pricetableid = pricetable.id
+        '''LEFT JOIN service ON service.id = pricetablesellable.serviceid
         '''WHERE service.id = @serviceid;.
         '''</summary>
         Friend ReadOnly Property ServicePriceDetailSelect() As String
@@ -6169,15 +6165,15 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	pricetableitem.id,
-        '''	pricetableitem.creation,
+        '''	pricetablesellable.id,
+        '''	pricetablesellable.creation,
         '''	service.name service,
         '''    pricetable.id pricetableid,
         '''	pricetable.name pricetablename,
-        '''    pricetableitem.price
+        '''    pricetablesellable.price
         '''FROM pricetable
-        '''LEFT JOIN pricetableitem ON pricetableitem.pricetableid = pricetable.id
-        '''LEFT JOIN service ON service.id = pricetableitem.serviceid
+        '''LEFT JOIN pricetablesellable ON pricetablesellable.pricetableid = pricetable.id
+        '''LEFT JOIN service ON service.id = pricetablesellable.serviceid
         '''WHERE service.id = @serviceid;.
         '''</summary>
         Friend ReadOnly Property ServicePriceSelect() As String

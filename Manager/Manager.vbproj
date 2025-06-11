@@ -2092,8 +2092,8 @@
     <Content Include="Resources\XML\EvaluationGrid.xml" />
     <Content Include="Resources\XML\PersonCompressorPartElapsedDayGrid.xml" />
     <Content Include="Resources\XML\PersonCompressorPartWorkedHourGrid.xml" />
-    <Content Include="Resources\XML\CompressorPartElapsedDayGrid.xml" />
-    <Content Include="Resources\XML\CompressorPartWorkedHourGrid.xml" />
+    <Content Include="Resources\XML\CompressorSellableElapsedDayGrid.xml" />
+    <Content Include="Resources\XML\CompressorSellableWorkedHourGrid.xml" />
     <Content Include="Resources\XML\CashGrid.xml" />
     <Content Include="Resources\XML\CashItemGrid.xml" />
     <Content Include="Resources\XML\CashItemResponsibleGrid.xml" />

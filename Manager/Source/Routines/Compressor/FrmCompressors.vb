@@ -37,8 +37,8 @@ Public Class FrmCompressors
                 Cursor = Cursors.WaitCursor
                 _Compressor = New Compressor().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
                 CompressorForm = New FrmCompressor(_Compressor, Me)
-                CompressorForm.DgvCompressorPartWorkedHour.Fill(_Compressor.WorkedHourSellables.Value)
-                CompressorForm.DgvCompressorPartElapsedDay.Fill(_Compressor.ElapsedDaySellables.Value)
+                CompressorForm.DgvCompressorSellableWorkedHour.Fill(_Compressor.WorkedHourSellables)
+                CompressorForm.DgvCompressorSellableElapsedDay.Fill(_Compressor.ElapsedDaySellables)
                 CompressorForm.ShowDialog()
             Catch ex As Exception
                 CMessageBox.Show("ERRO CP004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

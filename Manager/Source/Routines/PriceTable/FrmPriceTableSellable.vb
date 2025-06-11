@@ -116,7 +116,7 @@ Public Class FrmPriceTableSellable
             QbxSellable.Select()
             Return False
         ElseIf RbtProduct.Checked And Not QbxSellable.IsFreezed Then
-            EprValidation.SetError(RbtService, "Peça não encontrada.")
+            EprValidation.SetError(RbtService, "Produto não encontrado.")
             EprValidation.SetIconAlignment(RbtService, ErrorIconAlignment.MiddleRight)
             QbxSellable.Select()
             Return False
@@ -126,7 +126,7 @@ Public Class FrmPriceTableSellable
             QbxSellable.Select()
             Return False
         ElseIf DbxPrice.DecimalValue < 0 Then
-            EprValidation.SetError(LblPrice, "O Preço não pode ser negativo.")
+            EprValidation.SetError(LblPrice, "O Preço deve ser maior que 0.")
             EprValidation.SetIconAlignment(LblPrice, ErrorIconAlignment.MiddleRight)
             DbxPrice.Select()
             Return False
@@ -196,8 +196,6 @@ Public Class FrmPriceTableSellable
             Return False
         End If
     End Function
-
-
     Private Function HasDuplicatedItem() As Boolean
         Dim TargetItems As List(Of PriceTableSellable)
         If RbtProduct.Checked Then
@@ -215,8 +213,6 @@ Public Class FrmPriceTableSellable
         End If
         Return False
     End Function
-
-
     Private Sub TmrQueriedBox_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBox.Tick
         BtnView.Visible = False
         BtnNew.Visible = False
@@ -285,8 +281,7 @@ Public Class FrmPriceTableSellable
         End If
         QbxSellable.Freeze(QbxSellable.FreezedPrimaryKey)
         QbxSellable.Select()
-    End Sub
-    '
+    End Sub    '
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
         Dim FilterForm As FrmFilter
         If RbtProduct.Checked Then

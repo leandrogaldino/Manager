@@ -35,7 +35,7 @@ Partial Class FrmCompressor
         Dim Relation1 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
         Dim Relation2 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
         Dim Relation3 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.PnButtons = New System.Windows.Forms.Panel()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
         Me.TsTitle = New System.Windows.Forms.ToolStrip()
@@ -69,25 +69,25 @@ Partial Class FrmCompressor
         Me.TabMaintenance = New System.Windows.Forms.TabPage()
         Me.TcMaintenance = New System.Windows.Forms.TabControl()
         Me.TabWorkedHour = New System.Windows.Forms.TabPage()
-        Me.DgvCompressorPartWorkedHour = New System.Windows.Forms.DataGridView()
+        Me.DgvCompressorSellableWorkedHour = New System.Windows.Forms.DataGridView()
         Me.TsMaintenanceHour = New System.Windows.Forms.ToolStrip()
-        Me.BtnIncludePartWorkedHour = New System.Windows.Forms.ToolStripButton()
-        Me.BtnEditPartWorkedHour = New System.Windows.Forms.ToolStripButton()
-        Me.BtnDeletePartWorkedHour = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel()
+        Me.BtnIncludeSellableWorkedHour = New System.Windows.Forms.ToolStripButton()
+        Me.BtnEditSellableWorkedHour = New System.Windows.Forms.ToolStripButton()
+        Me.BtnDeleteSellableWorkedHour = New System.Windows.Forms.ToolStripButton()
+        Me.LblFilterSellableWorkedHour = New System.Windows.Forms.ToolStripLabel()
         Me.TxtFilterPartWorkedHour = New System.Windows.Forms.ToolStripTextBox()
         Me.TabPassedDay = New System.Windows.Forms.TabPage()
-        Me.DgvCompressorPartElapsedDay = New System.Windows.Forms.DataGridView()
+        Me.DgvCompressorSellableElapsedDay = New System.Windows.Forms.DataGridView()
         Me.TsMaintenanceDay = New System.Windows.Forms.ToolStrip()
         Me.BtnIncludePartElapsedDay = New System.Windows.Forms.ToolStripButton()
         Me.BtnEditPartElapsedDay = New System.Windows.Forms.ToolStripButton()
         Me.BtnDeletePartElapsedDay = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripLabel4 = New System.Windows.Forms.ToolStripLabel()
         Me.TxtFilterElapsedDay = New System.Windows.Forms.ToolStripTextBox()
-        Me.DgvCompressorPartWorkedHourLayout = New Manager.DataGridViewLayout()
-        Me.DgvCompressorPartElapsedDayLayout = New Manager.DataGridViewLayout()
+        Me.DgvCompressorSellableWorkedHourLayout = New Manager.DataGridViewLayout()
+        Me.DgvCompressorSellableElapsedDayLayout = New Manager.DataGridViewLayout()
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.Panel1.SuspendLayout()
+        Me.PnButtons.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -97,24 +97,24 @@ Partial Class FrmCompressor
         Me.TabMaintenance.SuspendLayout()
         Me.TcMaintenance.SuspendLayout()
         Me.TabWorkedHour.SuspendLayout()
-        CType(Me.DgvCompressorPartWorkedHour, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DgvCompressorSellableWorkedHour, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsMaintenanceHour.SuspendLayout()
         Me.TabPassedDay.SuspendLayout()
-        CType(Me.DgvCompressorPartElapsedDay, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DgvCompressorSellableElapsedDay, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsMaintenanceDay.SuspendLayout()
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'Panel1
+        'PnButtons
         '
-        Me.Panel1.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.Panel1.Controls.Add(Me.BtnClose)
-        Me.Panel1.Controls.Add(Me.BtnSave)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 187)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(354, 44)
-        Me.Panel1.TabIndex = 3
+        Me.PnButtons.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.PnButtons.Controls.Add(Me.BtnClose)
+        Me.PnButtons.Controls.Add(Me.BtnSave)
+        Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.PnButtons.Location = New System.Drawing.Point(0, 187)
+        Me.PnButtons.Name = "PnButtons"
+        Me.PnButtons.Size = New System.Drawing.Size(354, 44)
+        Me.PnButtons.TabIndex = 3
         '
         'BtnClose
         '
@@ -368,6 +368,7 @@ Partial Class FrmCompressor
         Me.QbxManufacturer.Conditions.Add(Condition2)
         Me.QbxManufacturer.DebugOnTextChanged = False
         Me.QbxManufacturer.DisplayFieldAlias = "Nome Curto"
+        Me.QbxManufacturer.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         Me.QbxManufacturer.DisplayFieldName = "shortname"
         Me.QbxManufacturer.DisplayMainFieldName = "id"
         Me.QbxManufacturer.DisplayTableAlias = Nothing
@@ -382,6 +383,7 @@ Partial Class FrmCompressor
         Me.QbxManufacturer.MainTableName = "person"
         Me.QbxManufacturer.Name = "QbxManufacturer"
         OtherField1.DisplayFieldAlias = "Nome"
+        OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField1.DisplayFieldName = "name"
         OtherField1.DisplayMainFieldName = "id"
         OtherField1.DisplayTableAlias = Nothing
@@ -391,6 +393,7 @@ Partial Class FrmCompressor
         OtherField1.Prefix = Nothing
         OtherField1.Suffix = Nothing
         OtherField2.DisplayFieldAlias = "CNPJ/CPF"
+        OtherField2.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField2.DisplayFieldName = "document"
         OtherField2.DisplayMainFieldName = "id"
         OtherField2.DisplayTableAlias = Nothing
@@ -400,6 +403,7 @@ Partial Class FrmCompressor
         OtherField2.Prefix = Nothing
         OtherField2.Suffix = Nothing
         OtherField3.DisplayFieldAlias = "Cidade"
+        OtherField3.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField3.DisplayFieldName = "name"
         OtherField3.DisplayMainFieldName = "id"
         OtherField3.DisplayTableAlias = Nothing
@@ -409,6 +413,7 @@ Partial Class FrmCompressor
         OtherField3.Prefix = Nothing
         OtherField3.Suffix = Nothing
         OtherField4.DisplayFieldAlias = "Estado"
+        OtherField4.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField4.DisplayFieldName = "name"
         OtherField4.DisplayMainFieldName = "id"
         OtherField4.DisplayTableAlias = Nothing
@@ -531,10 +536,10 @@ Partial Class FrmCompressor
         'TabMaintenance
         '
         Me.TabMaintenance.Controls.Add(Me.TcMaintenance)
-        Me.TabMaintenance.Location = New System.Drawing.Point(4, 26)
+        Me.TabMaintenance.Location = New System.Drawing.Point(4, 22)
         Me.TabMaintenance.Name = "TabMaintenance"
         Me.TabMaintenance.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabMaintenance.Size = New System.Drawing.Size(346, 107)
+        Me.TabMaintenance.Size = New System.Drawing.Size(346, 111)
         Me.TabMaintenance.TabIndex = 9
         Me.TabMaintenance.Text = "Manutenção"
         Me.TabMaintenance.UseVisualStyleBackColor = True
@@ -549,48 +554,48 @@ Partial Class FrmCompressor
         Me.TcMaintenance.Multiline = True
         Me.TcMaintenance.Name = "TcMaintenance"
         Me.TcMaintenance.SelectedIndex = 0
-        Me.TcMaintenance.Size = New System.Drawing.Size(340, 101)
+        Me.TcMaintenance.Size = New System.Drawing.Size(340, 105)
         Me.TcMaintenance.TabIndex = 3
         '
         'TabWorkedHour
         '
-        Me.TabWorkedHour.Controls.Add(Me.DgvCompressorPartWorkedHour)
+        Me.TabWorkedHour.Controls.Add(Me.DgvCompressorSellableWorkedHour)
         Me.TabWorkedHour.Controls.Add(Me.TsMaintenanceHour)
         Me.TabWorkedHour.Location = New System.Drawing.Point(4, 26)
         Me.TabWorkedHour.Name = "TabWorkedHour"
         Me.TabWorkedHour.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabWorkedHour.Size = New System.Drawing.Size(332, 71)
+        Me.TabWorkedHour.Size = New System.Drawing.Size(332, 75)
         Me.TabWorkedHour.TabIndex = 7
         Me.TabWorkedHour.Text = "Hora Trabalhada"
         Me.TabWorkedHour.UseVisualStyleBackColor = True
         '
-        'DgvCompressorPartWorkedHour
+        'DgvCompressorSellableWorkedHour
         '
-        Me.DgvCompressorPartWorkedHour.AllowUserToAddRows = False
-        Me.DgvCompressorPartWorkedHour.AllowUserToDeleteRows = False
-        Me.DgvCompressorPartWorkedHour.AllowUserToOrderColumns = True
-        Me.DgvCompressorPartWorkedHour.AllowUserToResizeRows = False
-        Me.DgvCompressorPartWorkedHour.BackgroundColor = System.Drawing.Color.WhiteSmoke
-        Me.DgvCompressorPartWorkedHour.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DgvCompressorPartWorkedHour.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvCompressorPartWorkedHour.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvCompressorPartWorkedHour.Location = New System.Drawing.Point(3, 28)
-        Me.DgvCompressorPartWorkedHour.MultiSelect = False
-        Me.DgvCompressorPartWorkedHour.Name = "DgvCompressorPartWorkedHour"
-        Me.DgvCompressorPartWorkedHour.ReadOnly = True
-        Me.DgvCompressorPartWorkedHour.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvCompressorPartWorkedHour.RowHeadersVisible = False
-        Me.DgvCompressorPartWorkedHour.RowTemplate.Height = 26
-        Me.DgvCompressorPartWorkedHour.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvCompressorPartWorkedHour.Size = New System.Drawing.Size(326, 40)
-        Me.DgvCompressorPartWorkedHour.TabIndex = 7
+        Me.DgvCompressorSellableWorkedHour.AllowUserToAddRows = False
+        Me.DgvCompressorSellableWorkedHour.AllowUserToDeleteRows = False
+        Me.DgvCompressorSellableWorkedHour.AllowUserToOrderColumns = True
+        Me.DgvCompressorSellableWorkedHour.AllowUserToResizeRows = False
+        Me.DgvCompressorSellableWorkedHour.BackgroundColor = System.Drawing.Color.WhiteSmoke
+        Me.DgvCompressorSellableWorkedHour.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DgvCompressorSellableWorkedHour.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvCompressorSellableWorkedHour.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvCompressorSellableWorkedHour.Location = New System.Drawing.Point(3, 28)
+        Me.DgvCompressorSellableWorkedHour.MultiSelect = False
+        Me.DgvCompressorSellableWorkedHour.Name = "DgvCompressorSellableWorkedHour"
+        Me.DgvCompressorSellableWorkedHour.ReadOnly = True
+        Me.DgvCompressorSellableWorkedHour.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvCompressorSellableWorkedHour.RowHeadersVisible = False
+        Me.DgvCompressorSellableWorkedHour.RowTemplate.Height = 26
+        Me.DgvCompressorSellableWorkedHour.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvCompressorSellableWorkedHour.Size = New System.Drawing.Size(326, 44)
+        Me.DgvCompressorSellableWorkedHour.TabIndex = 7
         '
         'TsMaintenanceHour
         '
         Me.TsMaintenanceHour.BackColor = System.Drawing.Color.Transparent
         Me.TsMaintenanceHour.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsMaintenanceHour.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsMaintenanceHour.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludePartWorkedHour, Me.BtnEditPartWorkedHour, Me.BtnDeletePartWorkedHour, Me.ToolStripLabel2, Me.TxtFilterPartWorkedHour})
+        Me.TsMaintenanceHour.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludeSellableWorkedHour, Me.BtnEditSellableWorkedHour, Me.BtnDeleteSellableWorkedHour, Me.LblFilterSellableWorkedHour, Me.TxtFilterPartWorkedHour})
         Me.TsMaintenanceHour.Location = New System.Drawing.Point(3, 3)
         Me.TsMaintenanceHour.Name = "TsMaintenanceHour"
         Me.TsMaintenanceHour.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -598,44 +603,44 @@ Partial Class FrmCompressor
         Me.TsMaintenanceHour.TabIndex = 8
         Me.TsMaintenanceHour.Text = "ToolStrip2"
         '
-        'BtnIncludePartWorkedHour
+        'BtnIncludeSellableWorkedHour
         '
-        Me.BtnIncludePartWorkedHour.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnIncludePartWorkedHour.Image = Global.Manager.My.Resources.Resources.IncludeSmall
-        Me.BtnIncludePartWorkedHour.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnIncludePartWorkedHour.Name = "BtnIncludePartWorkedHour"
-        Me.BtnIncludePartWorkedHour.Size = New System.Drawing.Size(23, 22)
-        Me.BtnIncludePartWorkedHour.Text = "Incluir Item"
+        Me.BtnIncludeSellableWorkedHour.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnIncludeSellableWorkedHour.Image = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnIncludeSellableWorkedHour.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnIncludeSellableWorkedHour.Name = "BtnIncludeSellableWorkedHour"
+        Me.BtnIncludeSellableWorkedHour.Size = New System.Drawing.Size(23, 22)
+        Me.BtnIncludeSellableWorkedHour.Text = "Incluir Item"
         '
-        'BtnEditPartWorkedHour
+        'BtnEditSellableWorkedHour
         '
-        Me.BtnEditPartWorkedHour.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnEditPartWorkedHour.Enabled = False
-        Me.BtnEditPartWorkedHour.Image = CType(resources.GetObject("BtnEditPartWorkedHour.Image"), System.Drawing.Image)
-        Me.BtnEditPartWorkedHour.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnEditPartWorkedHour.Name = "BtnEditPartWorkedHour"
-        Me.BtnEditPartWorkedHour.Size = New System.Drawing.Size(23, 22)
-        Me.BtnEditPartWorkedHour.Text = "Editar Item"
-        Me.BtnEditPartWorkedHour.ToolTipText = "Editar"
+        Me.BtnEditSellableWorkedHour.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnEditSellableWorkedHour.Enabled = False
+        Me.BtnEditSellableWorkedHour.Image = CType(resources.GetObject("BtnEditSellableWorkedHour.Image"), System.Drawing.Image)
+        Me.BtnEditSellableWorkedHour.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnEditSellableWorkedHour.Name = "BtnEditSellableWorkedHour"
+        Me.BtnEditSellableWorkedHour.Size = New System.Drawing.Size(23, 22)
+        Me.BtnEditSellableWorkedHour.Text = "Editar Item"
+        Me.BtnEditSellableWorkedHour.ToolTipText = "Editar"
         '
-        'BtnDeletePartWorkedHour
+        'BtnDeleteSellableWorkedHour
         '
-        Me.BtnDeletePartWorkedHour.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnDeletePartWorkedHour.Enabled = False
-        Me.BtnDeletePartWorkedHour.Image = Global.Manager.My.Resources.Resources.DeleteSmall
-        Me.BtnDeletePartWorkedHour.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnDeletePartWorkedHour.Name = "BtnDeletePartWorkedHour"
-        Me.BtnDeletePartWorkedHour.Size = New System.Drawing.Size(23, 22)
-        Me.BtnDeletePartWorkedHour.Text = "Excluir Item"
+        Me.BtnDeleteSellableWorkedHour.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnDeleteSellableWorkedHour.Enabled = False
+        Me.BtnDeleteSellableWorkedHour.Image = Global.Manager.My.Resources.Resources.DeleteSmall
+        Me.BtnDeleteSellableWorkedHour.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnDeleteSellableWorkedHour.Name = "BtnDeleteSellableWorkedHour"
+        Me.BtnDeleteSellableWorkedHour.Size = New System.Drawing.Size(23, 22)
+        Me.BtnDeleteSellableWorkedHour.Text = "Excluir Item"
         '
-        'ToolStripLabel2
+        'LblFilterSellableWorkedHour
         '
-        Me.ToolStripLabel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.ToolStripLabel2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.ToolStripLabel2.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
-        Me.ToolStripLabel2.Name = "ToolStripLabel2"
-        Me.ToolStripLabel2.Size = New System.Drawing.Size(46, 25)
-        Me.ToolStripLabel2.Text = "Filtrar:"
+        Me.LblFilterSellableWorkedHour.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.LblFilterSellableWorkedHour.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.LblFilterSellableWorkedHour.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
+        Me.LblFilterSellableWorkedHour.Name = "LblFilterSellableWorkedHour"
+        Me.LblFilterSellableWorkedHour.Size = New System.Drawing.Size(46, 25)
+        Me.LblFilterSellableWorkedHour.Text = "Filtrar:"
         '
         'TxtFilterPartWorkedHour
         '
@@ -646,7 +651,7 @@ Partial Class FrmCompressor
         '
         'TabPassedDay
         '
-        Me.TabPassedDay.Controls.Add(Me.DgvCompressorPartElapsedDay)
+        Me.TabPassedDay.Controls.Add(Me.DgvCompressorSellableElapsedDay)
         Me.TabPassedDay.Controls.Add(Me.TsMaintenanceDay)
         Me.TabPassedDay.Location = New System.Drawing.Point(4, 22)
         Me.TabPassedDay.Name = "TabPassedDay"
@@ -656,26 +661,26 @@ Partial Class FrmCompressor
         Me.TabPassedDay.Text = "Dia Corrido"
         Me.TabPassedDay.UseVisualStyleBackColor = True
         '
-        'DgvCompressorPartElapsedDay
+        'DgvCompressorSellableElapsedDay
         '
-        Me.DgvCompressorPartElapsedDay.AllowUserToAddRows = False
-        Me.DgvCompressorPartElapsedDay.AllowUserToDeleteRows = False
-        Me.DgvCompressorPartElapsedDay.AllowUserToOrderColumns = True
-        Me.DgvCompressorPartElapsedDay.AllowUserToResizeRows = False
-        Me.DgvCompressorPartElapsedDay.BackgroundColor = System.Drawing.Color.WhiteSmoke
-        Me.DgvCompressorPartElapsedDay.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DgvCompressorPartElapsedDay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvCompressorPartElapsedDay.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvCompressorPartElapsedDay.Location = New System.Drawing.Point(3, 28)
-        Me.DgvCompressorPartElapsedDay.MultiSelect = False
-        Me.DgvCompressorPartElapsedDay.Name = "DgvCompressorPartElapsedDay"
-        Me.DgvCompressorPartElapsedDay.ReadOnly = True
-        Me.DgvCompressorPartElapsedDay.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvCompressorPartElapsedDay.RowHeadersVisible = False
-        Me.DgvCompressorPartElapsedDay.RowTemplate.Height = 26
-        Me.DgvCompressorPartElapsedDay.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvCompressorPartElapsedDay.Size = New System.Drawing.Size(326, 44)
-        Me.DgvCompressorPartElapsedDay.TabIndex = 11
+        Me.DgvCompressorSellableElapsedDay.AllowUserToAddRows = False
+        Me.DgvCompressorSellableElapsedDay.AllowUserToDeleteRows = False
+        Me.DgvCompressorSellableElapsedDay.AllowUserToOrderColumns = True
+        Me.DgvCompressorSellableElapsedDay.AllowUserToResizeRows = False
+        Me.DgvCompressorSellableElapsedDay.BackgroundColor = System.Drawing.Color.WhiteSmoke
+        Me.DgvCompressorSellableElapsedDay.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DgvCompressorSellableElapsedDay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvCompressorSellableElapsedDay.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvCompressorSellableElapsedDay.Location = New System.Drawing.Point(3, 28)
+        Me.DgvCompressorSellableElapsedDay.MultiSelect = False
+        Me.DgvCompressorSellableElapsedDay.Name = "DgvCompressorSellableElapsedDay"
+        Me.DgvCompressorSellableElapsedDay.ReadOnly = True
+        Me.DgvCompressorSellableElapsedDay.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvCompressorSellableElapsedDay.RowHeadersVisible = False
+        Me.DgvCompressorSellableElapsedDay.RowTemplate.Height = 26
+        Me.DgvCompressorSellableElapsedDay.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvCompressorSellableElapsedDay.Size = New System.Drawing.Size(326, 44)
+        Me.DgvCompressorSellableElapsedDay.TabIndex = 11
         '
         'TsMaintenanceDay
         '
@@ -736,15 +741,15 @@ Partial Class FrmCompressor
         Me.TxtFilterElapsedDay.Name = "TxtFilterElapsedDay"
         Me.TxtFilterElapsedDay.Size = New System.Drawing.Size(200, 23)
         '
-        'DgvCompressorPartWorkedHourLayout
+        'DgvCompressorSellableWorkedHourLayout
         '
-        Me.DgvCompressorPartWorkedHourLayout.DataGridView = Me.DgvCompressorPartWorkedHour
-        Me.DgvCompressorPartWorkedHourLayout.Routine = Manager.Routine.CompressorPartWorkedHour
+        Me.DgvCompressorSellableWorkedHourLayout.DataGridView = Me.DgvCompressorSellableWorkedHour
+        Me.DgvCompressorSellableWorkedHourLayout.Routine = Manager.Routine.CompressorSellableWorkedHour
         '
-        'DgvCompressorPartElapsedDayLayout
+        'DgvCompressorSellableElapsedDayLayout
         '
-        Me.DgvCompressorPartElapsedDayLayout.DataGridView = Me.DgvCompressorPartElapsedDay
-        Me.DgvCompressorPartElapsedDayLayout.Routine = Manager.Routine.CompressorPartElapsedDay
+        Me.DgvCompressorSellableElapsedDayLayout.DataGridView = Me.DgvCompressorSellableElapsedDay
+        Me.DgvCompressorSellableElapsedDayLayout.Routine = Manager.Routine.CompressorSellableElapsedDay
         '
         'EprInformation
         '
@@ -758,7 +763,7 @@ Partial Class FrmCompressor
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(354, 231)
         Me.Controls.Add(Me.TcCompressor)
-        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.PnButtons)
         Me.Controls.Add(Me.TsTitle)
         Me.Controls.Add(Me.TsNavigation)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!)
@@ -769,7 +774,7 @@ Partial Class FrmCompressor
         Me.Name = "FrmCompressor"
         Me.ShowIcon = false
         Me.Text = "Compressor"
-        Me.Panel1.ResumeLayout(false)
+        Me.PnButtons.ResumeLayout(false)
         Me.TsTitle.ResumeLayout(false)
         Me.TsTitle.PerformLayout
         Me.TsNavigation.ResumeLayout(false)
@@ -783,12 +788,12 @@ Partial Class FrmCompressor
         Me.TcMaintenance.ResumeLayout(false)
         Me.TabWorkedHour.ResumeLayout(false)
         Me.TabWorkedHour.PerformLayout
-        CType(Me.DgvCompressorPartWorkedHour,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.DgvCompressorSellableWorkedHour,System.ComponentModel.ISupportInitialize).EndInit
         Me.TsMaintenanceHour.ResumeLayout(false)
         Me.TsMaintenanceHour.PerformLayout
         Me.TabPassedDay.ResumeLayout(false)
         Me.TabPassedDay.PerformLayout
-        CType(Me.DgvCompressorPartElapsedDay,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.DgvCompressorSellableElapsedDay,System.ComponentModel.ISupportInitialize).EndInit
         Me.TsMaintenanceDay.ResumeLayout(false)
         Me.TsMaintenanceDay.PerformLayout
         CType(Me.EprInformation,System.ComponentModel.ISupportInitialize).EndInit
@@ -823,23 +828,23 @@ End Sub
     Friend WithEvents TmrQueriedBox As Timer
     Friend WithEvents TcCompressor As TabControl
     Friend WithEvents TabMain As TabPage
-    Friend WithEvents DgvCompressorPartWorkedHourLayout As DataGridViewLayout
-    Friend WithEvents Panel1 As Panel
-    Friend WithEvents DgvCompressorPartElapsedDayLayout As DataGridViewLayout
+    Friend WithEvents DgvCompressorSellableWorkedHourLayout As DataGridViewLayout
+    Friend WithEvents PnButtons As Panel
+    Friend WithEvents DgvCompressorSellableElapsedDayLayout As DataGridViewLayout
     Friend WithEvents FlpManufacturer As FlowLayoutPanel
     Friend WithEvents EprInformation As ErrorProvider
     Friend WithEvents TabMaintenance As TabPage
     Friend WithEvents TcMaintenance As TabControl
     Friend WithEvents TabWorkedHour As TabPage
-    Friend WithEvents DgvCompressorPartWorkedHour As DataGridView
+    Friend WithEvents DgvCompressorSellableWorkedHour As DataGridView
     Friend WithEvents TsMaintenanceHour As ToolStrip
-    Friend WithEvents BtnIncludePartWorkedHour As ToolStripButton
-    Friend WithEvents BtnEditPartWorkedHour As ToolStripButton
-    Friend WithEvents BtnDeletePartWorkedHour As ToolStripButton
-    Friend WithEvents ToolStripLabel2 As ToolStripLabel
+    Friend WithEvents BtnIncludeSellableWorkedHour As ToolStripButton
+    Friend WithEvents BtnEditSellableWorkedHour As ToolStripButton
+    Friend WithEvents BtnDeleteSellableWorkedHour As ToolStripButton
+    Friend WithEvents LblFilterSellableWorkedHour As ToolStripLabel
     Friend WithEvents TxtFilterPartWorkedHour As ToolStripTextBox
     Friend WithEvents TabPassedDay As TabPage
-    Friend WithEvents DgvCompressorPartElapsedDay As DataGridView
+    Friend WithEvents DgvCompressorSellableElapsedDay As DataGridView
     Friend WithEvents TsMaintenanceDay As ToolStrip
     Friend WithEvents BtnIncludePartElapsedDay As ToolStripButton
     Friend WithEvents BtnEditPartElapsedDay As ToolStripButton

@@ -42,9 +42,9 @@ Public Class CompressorSellable
     Public Sub New(ControlType As CompressorSellableControlType)
         _ControlType = ControlType
         If _ControlType = CompressorSellableControlType.ElapsedDay Then
-            SetRoutine(Routine.CompressorPartElapsedDay)
+            SetRoutine(Routine.CompressorSellableElapsedDay)
         Else
-            SetRoutine(Routine.CompressorPartWorkedHour)
+            SetRoutine(Routine.CompressorSellableWorkedHour)
         End If
     End Sub
 End Class

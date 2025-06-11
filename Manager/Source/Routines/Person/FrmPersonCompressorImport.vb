@@ -3,8 +3,8 @@ Public Class FrmPersonCompressorImport
     Public Sub New(Compressor As Compressor, PersonCompressor As PersonCompressor)
         InitializeComponent()
         Dim XColumn As DataGridViewCheckBoxColumn
-        Compressor.WorkedHourSellables.Value.Where(Function(x) x.Status = SimpleStatus.Inactive).ToList.ForEach(Sub(y) Compressor.WorkedHourSellables.Value.Remove(y))
-        DgvPartWorkedHour.Fill(Compressor.WorkedHourSellables.Value)
+        Compressor.WorkedHourSellables.Where(Function(x) x.Status = SimpleStatus.Inactive).ToList.ForEach(Sub(y) Compressor.WorkedHourSellables.Remove(y))
+        DgvPartWorkedHour.Fill(Compressor.WorkedHourSellables)
         For Each Column As DataGridViewColumn In DgvPartWorkedHour.Columns
             Column.ReadOnly = True
         Next Column
@@ -31,8 +31,8 @@ Public Class FrmPersonCompressorImport
         DgvPartWorkedHour.Columns("LinkedProduct").Visible = False
         DgvPartWorkedHour.Columns("ItemNameOrProduct").HeaderText = "Item"
         DgvPartWorkedHour.Columns("ItemNameOrProduct").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-        Compressor.ElapsedDaySellables.Value.Where(Function(x) x.Status = SimpleStatus.Inactive).ToList.ForEach(Sub(y) Compressor.ElapsedDaySellables.Value.Remove(y))
-        DgvPartElapsedDay.Fill(Compressor.ElapsedDaySellables.Value)
+        Compressor.ElapsedDaySellables.Where(Function(x) x.Status = SimpleStatus.Inactive).ToList.ForEach(Sub(y) Compressor.ElapsedDaySellables.Remove(y))
+        DgvPartElapsedDay.Fill(Compressor.ElapsedDaySellables)
         For Each Column As DataGridViewColumn In DgvPartElapsedDay.Columns
             Column.ReadOnly = True
         Next Column

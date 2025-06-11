@@ -52,8 +52,8 @@ Public Enum Routine
     CashItemResponsible = 1102
     <Description("Compressor")> <TriStatePrivilege> <RoutineDependency(Person)>
     Compressor = 12
-    CompressorPartWorkedHour = 1201
-    CompressorPartElapsedDay = 1202
+    CompressorSellableWorkedHour = 1201
+    CompressorSellableElapsedDay = 1202
     <Description("Avaliação de Compressor")> <TriStatePrivilege>
     Evaluation = 13
     <Description("Gerenciamento de Avaliações")> <BiStatePrivilege> <RoutineDependency(Evaluation)>

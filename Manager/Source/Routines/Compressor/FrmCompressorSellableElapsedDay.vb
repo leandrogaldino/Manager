@@ -19,10 +19,10 @@ Public Class FrmCompressorSellableElapsedDay
         End If
         MyBase.DefWndProc(m)
     End Sub
-    Public Sub New(Compressor As Compressor, PartElapsedDay As CompressorSellable, CompressorForm As FrmCompressor)
+    Public Sub New(Compressor As Compressor, ElapsedDaySellable As CompressorSellable, CompressorForm As FrmCompressor)
         InitializeComponent()
         _Compressor = Compressor
-        _ElapsedDaySellable = PartElapsedDay
+        _ElapsedDaySellable = ElapsedDaySellable
         _CompressorForm = CompressorForm
         _User = Locator.GetInstance(Of Session).User
         LoadForm()
@@ -117,8 +117,7 @@ Public Class FrmCompressorSellableElapsedDay
         EprValidation.Clear()
         BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
-    Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles QbxSellable.TextChanged,
-                                                                         DbxQuantity.TextChanged
+    Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles QbxSellable.TextChanged, DbxQuantity.TextChanged
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
@@ -236,17 +235,17 @@ Public Class FrmCompressorSellableElapsedDay
         BtnFilter.Visible = False
         TmrQueriedBox.Stop()
     End Sub
-    Private Sub QbxItem_Enter(sender As Object, e As EventArgs) Handles QbxSellable.Enter
+    Private Sub QbxSellable_Enter(sender As Object, e As EventArgs) Handles QbxSellable.Enter
         TmrQueriedBox.Stop()
         BtnView.Visible = QbxSellable.IsFreezed And _User.CanWrite(Routine.Product)
         BtnNew.Visible = _User.CanWrite(Routine.Product)
         BtnFilter.Visible = _User.CanAccess(Routine.Product)
     End Sub
-    Private Sub QbxItem_Leave(sender As Object, e As EventArgs) Handles QbxSellable.Leave
+    Private Sub QbxSellable_Leave(sender As Object, e As EventArgs) Handles QbxSellable.Leave
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
-    Private Sub QbxItem_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxSellable.FreezedPrimaryKeyChanged
+    Private Sub QbxSellable_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxSellable.FreezedPrimaryKeyChanged
         If Not _Loading Then BtnView.Visible = QbxSellable.IsFreezed And _User.CanWrite(Routine.Product)
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click

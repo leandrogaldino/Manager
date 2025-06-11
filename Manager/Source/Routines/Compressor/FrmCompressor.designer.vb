@@ -24,17 +24,17 @@ Partial Class FrmCompressor
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmCompressor))
-        Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim OtherField1 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField2 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField3 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField4 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Relation1 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Relation2 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Relation3 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Condition3 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Condition4 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim OtherField5 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField6 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField7 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField8 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim Parameter3 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Parameter4 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Relation4 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Relation5 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Relation6 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
         Me.PnButtons = New System.Windows.Forms.Panel()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
@@ -356,16 +356,16 @@ Partial Class FrmCompressor
         '
         Me.QbxManufacturer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxManufacturer.CharactersToQuery = 1
-        Condition1.FieldName = "isprovider"
-        Condition1.Operator = "="
-        Condition1.TableNameOrAlias = "person"
-        Condition1.Value = "@isprovider"
-        Condition2.FieldName = "statusid"
-        Condition2.Operator = "="
-        Condition2.TableNameOrAlias = "person"
-        Condition2.Value = "@statusid"
-        Me.QbxManufacturer.Conditions.Add(Condition1)
-        Me.QbxManufacturer.Conditions.Add(Condition2)
+        Condition3.FieldName = "isprovider"
+        Condition3.Operator = "="
+        Condition3.TableNameOrAlias = "person"
+        Condition3.Value = "@isprovider"
+        Condition4.FieldName = "statusid"
+        Condition4.Operator = "="
+        Condition4.TableNameOrAlias = "person"
+        Condition4.Value = "@statusid"
+        Me.QbxManufacturer.Conditions.Add(Condition3)
+        Me.QbxManufacturer.Conditions.Add(Condition4)
         Me.QbxManufacturer.DebugOnTextChanged = False
         Me.QbxManufacturer.DisplayFieldAlias = "Nome Curto"
         Me.QbxManufacturer.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
@@ -382,84 +382,84 @@ Partial Class FrmCompressor
         Me.QbxManufacturer.MainTableAlias = Nothing
         Me.QbxManufacturer.MainTableName = "person"
         Me.QbxManufacturer.Name = "QbxManufacturer"
-        OtherField1.DisplayFieldAlias = "Nome"
-        OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField1.DisplayFieldName = "name"
-        OtherField1.DisplayMainFieldName = "id"
-        OtherField1.DisplayTableAlias = Nothing
-        OtherField1.DisplayTableName = "person"
-        OtherField1.Freeze = False
-        OtherField1.IfNull = Nothing
-        OtherField1.Prefix = Nothing
-        OtherField1.Suffix = Nothing
-        OtherField2.DisplayFieldAlias = "CNPJ/CPF"
-        OtherField2.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField2.DisplayFieldName = "document"
-        OtherField2.DisplayMainFieldName = "id"
-        OtherField2.DisplayTableAlias = Nothing
-        OtherField2.DisplayTableName = "person"
-        OtherField2.Freeze = False
-        OtherField2.IfNull = Nothing
-        OtherField2.Prefix = Nothing
-        OtherField2.Suffix = Nothing
-        OtherField3.DisplayFieldAlias = "Cidade"
-        OtherField3.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField3.DisplayFieldName = "name"
-        OtherField3.DisplayMainFieldName = "id"
-        OtherField3.DisplayTableAlias = Nothing
-        OtherField3.DisplayTableName = "city"
-        OtherField3.Freeze = False
-        OtherField3.IfNull = Nothing
-        OtherField3.Prefix = Nothing
-        OtherField3.Suffix = Nothing
-        OtherField4.DisplayFieldAlias = "Estado"
-        OtherField4.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField4.DisplayFieldName = "name"
-        OtherField4.DisplayMainFieldName = "id"
-        OtherField4.DisplayTableAlias = Nothing
-        OtherField4.DisplayTableName = "state"
-        OtherField4.Freeze = False
-        OtherField4.IfNull = Nothing
-        OtherField4.Prefix = Nothing
-        OtherField4.Suffix = Nothing
-        Me.QbxManufacturer.OtherFields.Add(OtherField1)
-        Me.QbxManufacturer.OtherFields.Add(OtherField2)
-        Me.QbxManufacturer.OtherFields.Add(OtherField3)
-        Me.QbxManufacturer.OtherFields.Add(OtherField4)
-        Parameter1.ParameterName = "@isprovider"
-        Parameter1.ParameterValue = "1"
-        Parameter2.ParameterName = "@statusid"
-        Parameter2.ParameterValue = "0"
-        Me.QbxManufacturer.Parameters.Add(Parameter1)
-        Me.QbxManufacturer.Parameters.Add(Parameter2)
+        OtherField5.DisplayFieldAlias = "Nome"
+        OtherField5.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField5.DisplayFieldName = "name"
+        OtherField5.DisplayMainFieldName = "id"
+        OtherField5.DisplayTableAlias = Nothing
+        OtherField5.DisplayTableName = "person"
+        OtherField5.Freeze = False
+        OtherField5.IfNull = Nothing
+        OtherField5.Prefix = Nothing
+        OtherField5.Suffix = Nothing
+        OtherField6.DisplayFieldAlias = "CNPJ/CPF"
+        OtherField6.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField6.DisplayFieldName = "document"
+        OtherField6.DisplayMainFieldName = "id"
+        OtherField6.DisplayTableAlias = Nothing
+        OtherField6.DisplayTableName = "person"
+        OtherField6.Freeze = False
+        OtherField6.IfNull = Nothing
+        OtherField6.Prefix = Nothing
+        OtherField6.Suffix = Nothing
+        OtherField7.DisplayFieldAlias = "Cidade"
+        OtherField7.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField7.DisplayFieldName = "name"
+        OtherField7.DisplayMainFieldName = "id"
+        OtherField7.DisplayTableAlias = Nothing
+        OtherField7.DisplayTableName = "city"
+        OtherField7.Freeze = False
+        OtherField7.IfNull = Nothing
+        OtherField7.Prefix = Nothing
+        OtherField7.Suffix = Nothing
+        OtherField8.DisplayFieldAlias = "Estado"
+        OtherField8.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField8.DisplayFieldName = "name"
+        OtherField8.DisplayMainFieldName = "id"
+        OtherField8.DisplayTableAlias = Nothing
+        OtherField8.DisplayTableName = "state"
+        OtherField8.Freeze = False
+        OtherField8.IfNull = Nothing
+        OtherField8.Prefix = Nothing
+        OtherField8.Suffix = Nothing
+        Me.QbxManufacturer.OtherFields.Add(OtherField5)
+        Me.QbxManufacturer.OtherFields.Add(OtherField6)
+        Me.QbxManufacturer.OtherFields.Add(OtherField7)
+        Me.QbxManufacturer.OtherFields.Add(OtherField8)
+        Parameter3.ParameterName = "@isprovider"
+        Parameter3.ParameterValue = "1"
+        Parameter4.ParameterName = "@statusid"
+        Parameter4.ParameterValue = "0"
+        Me.QbxManufacturer.Parameters.Add(Parameter3)
+        Me.QbxManufacturer.Parameters.Add(Parameter4)
         Me.QbxManufacturer.Prefix = Nothing
-        Relation1.Operator = "="
-        Relation1.RelateFieldName = "personid"
-        Relation1.RelateTableAlias = Nothing
-        Relation1.RelateTableName = "personaddress"
-        Relation1.RelationType = "LEFT"
-        Relation1.WithFieldName = "id"
-        Relation1.WithTableAlias = Nothing
-        Relation1.WithTableName = "person"
-        Relation2.Operator = "="
-        Relation2.RelateFieldName = "id"
-        Relation2.RelateTableAlias = Nothing
-        Relation2.RelateTableName = "city"
-        Relation2.RelationType = "LEFT"
-        Relation2.WithFieldName = "cityid"
-        Relation2.WithTableAlias = Nothing
-        Relation2.WithTableName = "personaddress"
-        Relation3.Operator = "="
-        Relation3.RelateFieldName = "id"
-        Relation3.RelateTableAlias = Nothing
-        Relation3.RelateTableName = "state"
-        Relation3.RelationType = "LEFT"
-        Relation3.WithFieldName = "stateid"
-        Relation3.WithTableAlias = Nothing
-        Relation3.WithTableName = "city"
-        Me.QbxManufacturer.Relations.Add(Relation1)
-        Me.QbxManufacturer.Relations.Add(Relation2)
-        Me.QbxManufacturer.Relations.Add(Relation3)
+        Relation4.Operator = "="
+        Relation4.RelateFieldName = "personid"
+        Relation4.RelateTableAlias = Nothing
+        Relation4.RelateTableName = "personaddress"
+        Relation4.RelationType = "LEFT"
+        Relation4.WithFieldName = "id"
+        Relation4.WithTableAlias = Nothing
+        Relation4.WithTableName = "person"
+        Relation5.Operator = "="
+        Relation5.RelateFieldName = "id"
+        Relation5.RelateTableAlias = Nothing
+        Relation5.RelateTableName = "city"
+        Relation5.RelationType = "LEFT"
+        Relation5.WithFieldName = "cityid"
+        Relation5.WithTableAlias = Nothing
+        Relation5.WithTableName = "personaddress"
+        Relation6.Operator = "="
+        Relation6.RelateFieldName = "id"
+        Relation6.RelateTableAlias = Nothing
+        Relation6.RelateTableName = "state"
+        Relation6.RelationType = "LEFT"
+        Relation6.WithFieldName = "stateid"
+        Relation6.WithTableAlias = Nothing
+        Relation6.WithTableName = "city"
+        Me.QbxManufacturer.Relations.Add(Relation4)
+        Me.QbxManufacturer.Relations.Add(Relation5)
+        Me.QbxManufacturer.Relations.Add(Relation6)
         Me.QbxManufacturer.Size = New System.Drawing.Size(331, 23)
         Me.QbxManufacturer.Suffix = Nothing
         Me.QbxManufacturer.TabIndex = 3
@@ -536,10 +536,10 @@ Partial Class FrmCompressor
         'TabMaintenance
         '
         Me.TabMaintenance.Controls.Add(Me.TcMaintenance)
-        Me.TabMaintenance.Location = New System.Drawing.Point(4, 22)
+        Me.TabMaintenance.Location = New System.Drawing.Point(4, 26)
         Me.TabMaintenance.Name = "TabMaintenance"
         Me.TabMaintenance.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabMaintenance.Size = New System.Drawing.Size(346, 111)
+        Me.TabMaintenance.Size = New System.Drawing.Size(346, 107)
         Me.TabMaintenance.TabIndex = 9
         Me.TabMaintenance.Text = "Manutenção"
         Me.TabMaintenance.UseVisualStyleBackColor = True
@@ -554,7 +554,7 @@ Partial Class FrmCompressor
         Me.TcMaintenance.Multiline = True
         Me.TcMaintenance.Name = "TcMaintenance"
         Me.TcMaintenance.SelectedIndex = 0
-        Me.TcMaintenance.Size = New System.Drawing.Size(340, 105)
+        Me.TcMaintenance.Size = New System.Drawing.Size(340, 101)
         Me.TcMaintenance.TabIndex = 3
         '
         'TabWorkedHour
@@ -564,7 +564,7 @@ Partial Class FrmCompressor
         Me.TabWorkedHour.Location = New System.Drawing.Point(4, 26)
         Me.TabWorkedHour.Name = "TabWorkedHour"
         Me.TabWorkedHour.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabWorkedHour.Size = New System.Drawing.Size(332, 75)
+        Me.TabWorkedHour.Size = New System.Drawing.Size(332, 71)
         Me.TabWorkedHour.TabIndex = 7
         Me.TabWorkedHour.Text = "Hora Trabalhada"
         Me.TabWorkedHour.UseVisualStyleBackColor = True
@@ -587,7 +587,7 @@ Partial Class FrmCompressor
         Me.DgvCompressorSellableWorkedHour.RowHeadersVisible = False
         Me.DgvCompressorSellableWorkedHour.RowTemplate.Height = 26
         Me.DgvCompressorSellableWorkedHour.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvCompressorSellableWorkedHour.Size = New System.Drawing.Size(326, 44)
+        Me.DgvCompressorSellableWorkedHour.Size = New System.Drawing.Size(326, 40)
         Me.DgvCompressorSellableWorkedHour.TabIndex = 7
         '
         'TsMaintenanceHour
@@ -610,7 +610,7 @@ Partial Class FrmCompressor
         Me.BtnIncludeSellableWorkedHour.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnIncludeSellableWorkedHour.Name = "BtnIncludeSellableWorkedHour"
         Me.BtnIncludeSellableWorkedHour.Size = New System.Drawing.Size(23, 22)
-        Me.BtnIncludeSellableWorkedHour.Text = "Incluir Item"
+        Me.BtnIncludeSellableWorkedHour.Text = "Incluir Peça/Serviço"
         '
         'BtnEditSellableWorkedHour
         '
@@ -620,7 +620,7 @@ Partial Class FrmCompressor
         Me.BtnEditSellableWorkedHour.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnEditSellableWorkedHour.Name = "BtnEditSellableWorkedHour"
         Me.BtnEditSellableWorkedHour.Size = New System.Drawing.Size(23, 22)
-        Me.BtnEditSellableWorkedHour.Text = "Editar Item"
+        Me.BtnEditSellableWorkedHour.Text = "Editar Peça/Serviço"
         Me.BtnEditSellableWorkedHour.ToolTipText = "Editar"
         '
         'BtnDeleteSellableWorkedHour
@@ -631,7 +631,7 @@ Partial Class FrmCompressor
         Me.BtnDeleteSellableWorkedHour.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnDeleteSellableWorkedHour.Name = "BtnDeleteSellableWorkedHour"
         Me.BtnDeleteSellableWorkedHour.Size = New System.Drawing.Size(23, 22)
-        Me.BtnDeleteSellableWorkedHour.Text = "Excluir Item"
+        Me.BtnDeleteSellableWorkedHour.Text = "Excluir Peça/Serviço"
         '
         'LblFilterSellableWorkedHour
         '
@@ -653,10 +653,10 @@ Partial Class FrmCompressor
         '
         Me.TabPassedDay.Controls.Add(Me.DgvCompressorSellableElapsedDay)
         Me.TabPassedDay.Controls.Add(Me.TsMaintenanceDay)
-        Me.TabPassedDay.Location = New System.Drawing.Point(4, 22)
+        Me.TabPassedDay.Location = New System.Drawing.Point(4, 26)
         Me.TabPassedDay.Name = "TabPassedDay"
         Me.TabPassedDay.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPassedDay.Size = New System.Drawing.Size(332, 75)
+        Me.TabPassedDay.Size = New System.Drawing.Size(332, 71)
         Me.TabPassedDay.TabIndex = 8
         Me.TabPassedDay.Text = "Dia Corrido"
         Me.TabPassedDay.UseVisualStyleBackColor = True
@@ -679,7 +679,7 @@ Partial Class FrmCompressor
         Me.DgvCompressorSellableElapsedDay.RowHeadersVisible = False
         Me.DgvCompressorSellableElapsedDay.RowTemplate.Height = 26
         Me.DgvCompressorSellableElapsedDay.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvCompressorSellableElapsedDay.Size = New System.Drawing.Size(326, 44)
+        Me.DgvCompressorSellableElapsedDay.Size = New System.Drawing.Size(326, 40)
         Me.DgvCompressorSellableElapsedDay.TabIndex = 11
         '
         'TsMaintenanceDay
@@ -702,7 +702,7 @@ Partial Class FrmCompressor
         Me.BtnIncludePartElapsedDay.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnIncludePartElapsedDay.Name = "BtnIncludePartElapsedDay"
         Me.BtnIncludePartElapsedDay.Size = New System.Drawing.Size(23, 22)
-        Me.BtnIncludePartElapsedDay.Text = "Incluir Item"
+        Me.BtnIncludePartElapsedDay.Text = "Incluir Peça/Serviço"
         '
         'BtnEditPartElapsedDay
         '
@@ -712,7 +712,7 @@ Partial Class FrmCompressor
         Me.BtnEditPartElapsedDay.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnEditPartElapsedDay.Name = "BtnEditPartElapsedDay"
         Me.BtnEditPartElapsedDay.Size = New System.Drawing.Size(23, 22)
-        Me.BtnEditPartElapsedDay.Text = "Editar Item"
+        Me.BtnEditPartElapsedDay.Text = "Editar Peça/Serviço"
         Me.BtnEditPartElapsedDay.ToolTipText = "Editar"
         '
         'BtnDeletePartElapsedDay
@@ -723,7 +723,7 @@ Partial Class FrmCompressor
         Me.BtnDeletePartElapsedDay.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnDeletePartElapsedDay.Name = "BtnDeletePartElapsedDay"
         Me.BtnDeletePartElapsedDay.Size = New System.Drawing.Size(23, 22)
-        Me.BtnDeletePartElapsedDay.Text = "Excluir Item"
+        Me.BtnDeletePartElapsedDay.Text = "Excluir Peça/Serviço"
         '
         'ToolStripLabel4
         '

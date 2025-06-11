@@ -120,7 +120,7 @@ Partial Class FrmCompressorSellableElapsedDay
         Me.BtnInclude.Margin = New System.Windows.Forms.Padding(1, 1, 0, 2)
         Me.BtnInclude.Name = "BtnInclude"
         Me.BtnInclude.Size = New System.Drawing.Size(23, 22)
-        Me.BtnInclude.Text = "Incluir Peça"
+        Me.BtnInclude.Text = "Incluir Produto/Serviço"
         '
         'BtnDelete
         '
@@ -131,7 +131,7 @@ Partial Class FrmCompressorSellableElapsedDay
         Me.BtnDelete.Margin = New System.Windows.Forms.Padding(0, 1, 10, 2)
         Me.BtnDelete.Name = "BtnDelete"
         Me.BtnDelete.Size = New System.Drawing.Size(23, 22)
-        Me.BtnDelete.Text = "Excluir Peça"
+        Me.BtnDelete.Text = "Excluir Produto/Serviço"
         '
         'BtnFirst
         '
@@ -141,7 +141,7 @@ Partial Class FrmCompressorSellableElapsedDay
         Me.BtnFirst.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnFirst.Name = "BtnFirst"
         Me.BtnFirst.Size = New System.Drawing.Size(23, 22)
-        Me.BtnFirst.Text = "Primeira Peça"
+        Me.BtnFirst.Text = "Primeiro Produto/Serviço"
         '
         'BtnPrevious
         '
@@ -151,7 +151,7 @@ Partial Class FrmCompressorSellableElapsedDay
         Me.BtnPrevious.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnPrevious.Name = "BtnPrevious"
         Me.BtnPrevious.Size = New System.Drawing.Size(23, 22)
-        Me.BtnPrevious.Text = "Peça Anterior"
+        Me.BtnPrevious.Text = "Produto/Serviço Anterior"
         '
         'BtnNext
         '
@@ -161,7 +161,7 @@ Partial Class FrmCompressorSellableElapsedDay
         Me.BtnNext.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnNext.Name = "BtnNext"
         Me.BtnNext.Size = New System.Drawing.Size(23, 22)
-        Me.BtnNext.Text = "Próxima Peça"
+        Me.BtnNext.Text = "Próximo Produto/Serviço"
         '
         'BtnLast
         '
@@ -171,7 +171,7 @@ Partial Class FrmCompressorSellableElapsedDay
         Me.BtnLast.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnLast.Name = "BtnLast"
         Me.BtnLast.Size = New System.Drawing.Size(23, 22)
-        Me.BtnLast.Text = "Última Peça"
+        Me.BtnLast.Text = "Último Produto/Serviço"
         '
         'BtnLog
         '

@@ -236,39 +236,76 @@ Public Class FrmCompressorSellableWorkedHour
     End Sub
     Private Sub QbxSellable_Enter(sender As Object, e As EventArgs) Handles QbxSellable.Enter
         TmrQueriedBox.Stop()
-        BtnView.Visible = QbxSellable.IsFreezed And _User.CanWrite(Routine.Product)
-        BtnNew.Visible = _User.CanWrite(Routine.Product)
-        BtnFilter.Visible = _User.CanAccess(Routine.Product)
+        If RbtProduct.Checked Then
+            BtnView.Visible = QbxSellable.IsFreezed And _User.CanWrite(Routine.Product)
+            BtnNew.Visible = _User.CanWrite(Routine.Product)
+            BtnFilter.Visible = _User.CanAccess(Routine.Product)
+        Else
+            BtnView.Visible = QbxSellable.IsFreezed And _User.CanWrite(Routine.Service)
+            BtnNew.Visible = _User.CanWrite(Routine.Service)
+            BtnFilter.Visible = _User.CanAccess(Routine.Service)
+        End If
     End Sub
-    Private Sub QbxSellable_Leave(sender As Object, e As EventArgs) Handles QbxSellable.Leave
+    Private Sub QbxItem_Leave(sender As Object, e As EventArgs) Handles QbxSellable.Leave
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
-    Private Sub QbxSellable_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxSellable.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnView.Visible = QbxSellable.IsFreezed And _User.CanWrite(Routine.Product)
+    Private Sub QbxItem_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxSellable.FreezedPrimaryKeyChanged
+        If Not _Loading Then
+            If RbtProduct.Checked Then
+                BtnView.Visible = QbxSellable.IsFreezed And _User.CanWrite(Routine.Product)
+            Else
+                BtnView.Visible = QbxSellable.IsFreezed And _User.CanWrite(Routine.Service)
+            End If
+        End If
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Product As Product
-        Dim Form As FrmProduct
-        Product = New Product
-        Form = New FrmProduct(Product)
-        Form.ShowDialog()
-        EprValidation.Clear()
-        If Product.ID > 0 Then
-            QbxSellable.Freeze(Product.ID)
+        Dim Service As Service
+        Dim ProductForm As FrmProduct
+        Dim ServiceForm As FrmService
+        If RbtProduct.Checked Then
+            Product = New Product
+            ProductForm = New FrmProduct(Product)
+            ProductForm.ShowDialog()
+            If Product.ID > 0 Then
+                QbxSellable.Freeze(Product.ID)
+            End If
+        Else
+            Service = New Service
+            ServiceForm = New FrmService(Service)
+            ServiceForm.ShowDialog()
+            If Service.ID > 0 Then
+                QbxSellable.Freeze(Service.ID)
+            End If
         End If
+        EprValidation.Clear()
         QbxSellable.Select()
     End Sub
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
-        Dim Form As New FrmProduct(New Product().Load(QbxSellable.FreezedPrimaryKey, True))
-        Form.ShowDialog()
+        Dim ProductForm As FrmProduct
+        Dim ServiceForm As FrmService
+        If RbtProduct.Checked Then
+            ProductForm = New FrmProduct(New Product().Load(QbxSellable.FreezedPrimaryKey, True))
+            ProductForm.ShowDialog()
+        Else
+            ServiceForm = New FrmService(New Service().Load(QbxSellable.FreezedPrimaryKey, True))
+            ServiceForm.ShowDialog()
+        End If
         QbxSellable.Freeze(QbxSellable.FreezedPrimaryKey)
         QbxSellable.Select()
-    End Sub
+    End Sub    '
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
         Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New ProductQueriedBoxFilter(), QbxSellable)
-        FilterForm.Text = "Filtro de Produtos"
+        If RbtProduct.Checked Then
+            FilterForm = New FrmFilter(New ProductQueriedBoxFilter(), QbxSellable) With {
+                .Text = "Filtro de Produtos"
+            }
+        Else
+            FilterForm = New FrmFilter(New ServiceQueriedBoxFilter(), QbxSellable) With {
+                .Text = "Filtro de Serviços"
+            }
+        End If
         FilterForm.ShowDialog()
         QbxSellable.Select()
     End Sub

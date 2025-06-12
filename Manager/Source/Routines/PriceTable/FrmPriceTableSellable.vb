@@ -247,10 +247,8 @@ Public Class FrmPriceTableSellable
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Product As Product
         Dim Service As Service
-
         Dim ProductForm As FrmProduct
         Dim ServiceForm As FrmService
-
         If RbtProduct.Checked Then
             Product = New Product
             ProductForm = New FrmProduct(Product)

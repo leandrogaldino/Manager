@@ -32,6 +32,7 @@ ALTER TABLE `manager`.`visitschedule` DROP FOREIGN KEY `visitschedule_ibfk_4`;
 ALTER TABLE `manager`.`visitschedule` DROP COLUMN `parentid`, DROP INDEX `parentid`;
 DROP TABLE userprivilege;
 DROP TABLE userprivilegepreset;
+DROP TABLE privilegepresetprivilege;
 DROP TABLE privilegepreset;
 CREATE TABLE userprivilege (
 	id INT NOT NULL AUTO_INCREMENT,
@@ -45,7 +46,7 @@ CREATE TABLE userprivilege (
     FOREIGN KEY (granteduserid) REFERENCES user(id) ON DELETE CASCADE,
     FOREIGN KEY (userid) REFERENCES user(id) ON DELETE RESTRICT
 );
-
+criar privilegepreset
 CREATE TABLE privilegepresetprivilege (
 	id INT NOT NULL AUTO_INCREMENT,
     privilegepresetid INT NOT NULL,

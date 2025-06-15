@@ -23,12 +23,12 @@ Partial Class FrmCompressorSellableWorkedHour
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim Condition3 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim OtherField2 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim Parameter3 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Parameter4 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Relation2 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Condition4 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim OtherField1 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Relation1 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
@@ -226,6 +226,7 @@ Partial Class FrmCompressorSellableWorkedHour
         'LblStatus
         '
         Me.LblStatus.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblStatus.Margin = New System.Windows.Forms.Padding(10, 1, 0, 2)
         Me.LblStatus.Name = "LblStatus"
         Me.LblStatus.Size = New System.Drawing.Size(49, 22)
         Me.LblStatus.Text = "Status:"
@@ -348,11 +349,11 @@ Partial Class FrmCompressorSellableWorkedHour
         '
         Me.QbxSellable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxSellable.CharactersToQuery = 1
-        Condition3.FieldName = "statusid"
-        Condition3.Operator = "="
-        Condition3.TableNameOrAlias = "product"
-        Condition3.Value = "@statusid"
-        Me.QbxSellable.Conditions.Add(Condition3)
+        Condition1.FieldName = "statusid"
+        Condition1.Operator = "="
+        Condition1.TableNameOrAlias = "product"
+        Condition1.Value = "@statusid"
+        Me.QbxSellable.Conditions.Add(Condition1)
         Me.QbxSellable.DebugOnTextChanged = True
         Me.QbxSellable.DisplayFieldAlias = "Código"
         Me.QbxSellable.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
@@ -370,38 +371,38 @@ Partial Class FrmCompressorSellableWorkedHour
         Me.QbxSellable.MainTableAlias = Nothing
         Me.QbxSellable.MainTableName = "product"
         Me.QbxSellable.Name = "QbxSellable"
-        OtherField2.DisplayFieldAlias = "Produto"
-        OtherField2.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField2.DisplayFieldName = "name"
-        OtherField2.DisplayMainFieldName = "id"
-        OtherField2.DisplayTableAlias = ""
-        OtherField2.DisplayTableName = "product"
-        OtherField2.Freeze = True
-        OtherField2.IfNull = Nothing
-        OtherField2.Prefix = Nothing
-        OtherField2.Suffix = Nothing
-        Me.QbxSellable.OtherFields.Add(OtherField2)
-        Parameter3.ParameterName = "@statusid"
-        Parameter3.ParameterValue = "0"
-        Parameter4.ParameterName = "@ismainprovider"
-        Parameter4.ParameterValue = "1"
-        Me.QbxSellable.Parameters.Add(Parameter3)
-        Me.QbxSellable.Parameters.Add(Parameter4)
+        OtherField1.DisplayFieldAlias = "Produto"
+        OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField1.DisplayFieldName = "name"
+        OtherField1.DisplayMainFieldName = "id"
+        OtherField1.DisplayTableAlias = ""
+        OtherField1.DisplayTableName = "product"
+        OtherField1.Freeze = True
+        OtherField1.IfNull = Nothing
+        OtherField1.Prefix = Nothing
+        OtherField1.Suffix = Nothing
+        Me.QbxSellable.OtherFields.Add(OtherField1)
+        Parameter1.ParameterName = "@statusid"
+        Parameter1.ParameterValue = "0"
+        Parameter2.ParameterName = "@ismainprovider"
+        Parameter2.ParameterValue = "1"
+        Me.QbxSellable.Parameters.Add(Parameter1)
+        Me.QbxSellable.Parameters.Add(Parameter2)
         Me.QbxSellable.Prefix = Nothing
-        Condition4.FieldName = "ismainprovider"
-        Condition4.Operator = "="
-        Condition4.TableNameOrAlias = "productprovidercode"
-        Condition4.Value = "@ismainprovider"
-        Relation2.Conditions.Add(Condition4)
-        Relation2.Operator = "="
-        Relation2.RelateFieldName = "productid"
-        Relation2.RelateTableAlias = Nothing
-        Relation2.RelateTableName = "productprovidercode"
-        Relation2.RelationType = "LEFT"
-        Relation2.WithFieldName = "id"
-        Relation2.WithTableAlias = Nothing
-        Relation2.WithTableName = "product"
-        Me.QbxSellable.Relations.Add(Relation2)
+        Condition2.FieldName = "ismainprovider"
+        Condition2.Operator = "="
+        Condition2.TableNameOrAlias = "productprovidercode"
+        Condition2.Value = "@ismainprovider"
+        Relation1.Conditions.Add(Condition2)
+        Relation1.Operator = "="
+        Relation1.RelateFieldName = "productid"
+        Relation1.RelateTableAlias = Nothing
+        Relation1.RelateTableName = "productprovidercode"
+        Relation1.RelationType = "LEFT"
+        Relation1.WithFieldName = "id"
+        Relation1.WithTableAlias = Nothing
+        Relation1.WithTableName = "product"
+        Me.QbxSellable.Relations.Add(Relation1)
         Me.QbxSellable.Size = New System.Drawing.Size(385, 23)
         Me.QbxSellable.Suffix = Nothing
         Me.QbxSellable.TabIndex = 4

@@ -490,6 +490,23 @@
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
     <None Include="Resources\Image\PriceTable.png" />
+    <Content Include="Resources\SQL\Compressor\CompressorSellableDelete.sql" />
+    <Content Include="Resources\SQL\Compressor\CompressorSellableInsert.sql" />
+    <Content Include="Resources\SQL\Compressor\CompressorSellableSelect.sql" />
+    <Content Include="Resources\SQL\Compressor\CompressorSellableUpdate.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationControlledSellableDelete.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationControlledSellableInsert.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationControlledSellableSelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationControlledSellableUpdate.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationManagementControlledSellableFilter .sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableDelete.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableInsert.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableSelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableUpdate.sql" />
+    <Content Include="Resources\SQL\Person\PersonCompressorSellableDelete.sql" />
+    <Content Include="Resources\SQL\Person\PersonCompressorSellableInsert.sql" />
+    <Content Include="Resources\SQL\Person\PersonCompressorSellableSelect.sql" />
+    <Content Include="Resources\SQL\Person\PersonCompressorSellableUpdate.sql" />
     <Content Include="Resources\SQL\PriceTable\PriceTableDelete.sql" />
     <Content Include="Resources\SQL\PriceTable\PriceTableFilter.sql" />
     <Content Include="Resources\SQL\PriceTable\PriceTableGetPriceTableName.sql" />
@@ -499,17 +516,17 @@
     <Content Include="Resources\SQL\PriceTable\PriceTableItemSelect.sql" />
     <Content Include="Resources\SQL\PriceTable\PriceTableItemUpdate.sql" />
     <Content Include="Resources\SQL\PriceTable\PriceTableUpdate.sql" />
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Content Include="Resources\SQL\Product\ProductPriceDetailSelect.sql" />
     <Content Include="Resources\SQL\Product\ProductPriceIndicatorDetailSelect.sql" />
     <Content Include="Resources\SQL\Product\ProductPriceIndicatorSelect.sql" />
     <Content Include="Resources\SQL\Product\ProductPriceSelect.sql" />
     <Content Include="Resources\SQL\Service\ServicePriceIndicatorDetailSelect.sql" />
     <Content Include="Resources\SQL\Service\ServicePriceIndicatorSelect.sql" />
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Source\Controls\UcEvaluationCallTypeHasRepairNeedProposal.Designer.vb">
       <DependentUpon>UcEvaluationCallTypeHasRepairNeedProposal.vb</DependentUpon>
     </Compile>
@@ -529,6 +546,7 @@
     <Compile Include="Source\Helper\FilterQueriedBox\ServiceQueriedBoxFilter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\IntegerConverter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\VisitScheduleTypeConverter.vb" />
+    <Compile Include="Source\Helper\Flags\CompressorSellableBindType.vb" />
     <Compile Include="Source\Helper\Flags\ConfirmationType.vb" />
     <Compile Include="Source\Helper\Flags\PriceIndicator.vb" />
     <Compile Include="Source\Helper\Flags\SellableType.vb" />
@@ -709,7 +727,6 @@
     <Compile Include="Source\Helper\Flags\CashItemCategory.vb" />
     <Compile Include="Source\Helper\Flags\CashStatus.vb" />
     <Compile Include="Source\Helper\Flags\CloudSyncStatus.vb" />
-    <Compile Include="Source\Helper\Flags\CompressorPartBindType.vb" />
     <Compile Include="Source\Helper\Flags\CompressorSellableControlType.vb" />
     <Compile Include="Source\Helper\Flags\CrmStatus.vb" />
     <Compile Include="Source\Helper\Flags\CrmTreatmentContactType.vb" />
@@ -725,19 +742,39 @@
     <Compile Include="Source\Helper\Flags\Routine.vb" />
     <Compile Include="Source\Helper\Flags\SimpleStatus.vb" />
     <Compile Include="Source\Helper\Flags\VisitScheduleStatus.vb" />
-    <Compile Include="Source\Routines\Evaluation\EvaluationReplacedPart.vb" />
+    <Compile Include="Source\Routines\Evaluation\EvaluationControlledSellable.vb" />
+    <Compile Include="Source\Routines\Evaluation\EvaluationReplacedSellable.vb" />
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationControlledSellable.Designer.vb">
+      <DependentUpon>FrmEvaluationControlledSellable.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationControlledSellable.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationProvidedService.Designer.vb">
       <DependentUpon>FrmEvaluationProvidedService.vb</DependentUpon>
     </Compile>
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationProvidedService.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Evaluation\FrmEvaluationReplacedPart.Designer.vb">
-      <DependentUpon>FrmEvaluationReplacedPart.vb</DependentUpon>
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationReplacedSellable.Designer.vb">
+      <DependentUpon>FrmEvaluationReplacedSellable.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Routines\Evaluation\FrmEvaluationReplacedPart.vb">
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationReplacedSellable.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Source\Routines\Person\FrmPersonCompressorSellableElapsedDay.Designer.vb">
+      <DependentUpon>FrmPersonCompressorSellableElapsedDay.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Person\FrmPersonCompressorSellableElapsedDay.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\Person\FrmPersonCompressorSellableWorkedHour.Designer.vb">
+      <DependentUpon>FrmPersonCompressorSellableWorkedHour.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Person\FrmPersonCompressorSellableWorkedHour.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\Person\PersonCompressorSellable.vb" />
     <Compile Include="Source\Routines\PriceTable\FrmPriceTable.Designer.vb">
       <DependentUpon>FrmPriceTable.vb</DependentUpon>
     </Compile>
@@ -873,7 +910,6 @@
     <Compile Include="Source\Controls\UcEvaluationSourceHeader.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Evaluation\EvaluationPart.vb" />
     <Compile Include="Source\Routines\Evaluation\EvaluationPhoto.vb" />
     <Compile Include="Source\Routines\Evaluation\EvaluationTechnician.vb" />
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationImport.Designer.vb">
@@ -892,12 +928,6 @@
       <DependentUpon>FrmEvaluationManagementPanelExport.vb</DependentUpon>
     </Compile>
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationManagementPanelExport.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Routines\Evaluation\FrmEvaluationPart.Designer.vb">
-      <DependentUpon>FrmEvaluationPart.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\Evaluation\FrmEvaluationPart.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationRejectReason.Designer.vb">
@@ -976,7 +1006,6 @@
     <Compile Include="Source\Routines\Person\FrmPersonMaintenancePlan.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Person\PersonCompressorPart.vb" />
     <Compile Include="Source\Routines\Person\PersonReport.vb" />
     <Compile Include="Source\Routines\Request\FrmRequest.Designer.vb">
       <DependentUpon>FrmRequest.vb</DependentUpon>
@@ -1124,22 +1153,10 @@
     <Compile Include="Source\Routines\Person\FrmPersonCompressor.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Person\FrmPersonCompressorPartElapsedDay.Designer.vb">
-      <DependentUpon>FrmPersonCompressorPartElapsedDay.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\Person\FrmPersonCompressorPartElapsedDay.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Source\Routines\Person\FrmPersonCompressorImport.Designer.vb">
       <DependentUpon>FrmPersonCompressorImport.vb</DependentUpon>
     </Compile>
     <Compile Include="Source\Routines\Person\FrmPersonCompressorImport.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Routines\Person\FrmPersonCompressorPartWorkedHour.Designer.vb">
-      <DependentUpon>FrmPersonCompressorPartWorkedHour.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\Person\FrmPersonCompressorPartWorkedHour.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Routines\Person\FrmPersonContact.designer.vb">
@@ -1442,6 +1459,9 @@
       <DependentUpon>FrmEvaluation.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationControlledSellable.resx">
+      <DependentUpon>FrmEvaluationControlledSellable.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationImport.resx">
       <DependentUpon>FrmEvaluationImport.vb</DependentUpon>
     </EmbeddedResource>
@@ -1454,14 +1474,11 @@
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationManagementPanelExport.resx">
       <DependentUpon>FrmEvaluationManagementPanelExport.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationPart.resx">
-      <DependentUpon>FrmEvaluationPart.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationRejectReason.resx">
       <DependentUpon>FrmEvaluationRejectReason.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationReplacedPart.resx">
-      <DependentUpon>FrmEvaluationReplacedPart.vb</DependentUpon>
+    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationReplacedSellable.resx">
+      <DependentUpon>FrmEvaluationReplacedSellable.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluations.resx">
       <DependentUpon>FrmEvaluations.vb</DependentUpon>
@@ -1503,6 +1520,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Main\FrmUpdateNotes.resx">
       <DependentUpon>FrmUpdateNotes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Person\FrmPersonCompressorSellableElapsedDay.resx">
+      <DependentUpon>FrmPersonCompressorSellableElapsedDay.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Person\FrmPersonCompressorSellableWorkedHour.resx">
+      <DependentUpon>FrmPersonCompressorSellableWorkedHour.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Person\FrmPersonMaintenancePlan.resx">
       <DependentUpon>FrmPersonMaintenancePlan.vb</DependentUpon>
@@ -1546,14 +1569,8 @@
     <EmbeddedResource Include="Source\Routines\Person\FrmPersonCompressor.resx">
       <DependentUpon>FrmPersonCompressor.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Person\FrmPersonCompressorPartElapsedDay.resx">
-      <DependentUpon>FrmPersonCompressorPartElapsedDay.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Person\FrmPersonCompressorImport.resx">
       <DependentUpon>FrmPersonCompressorImport.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Person\FrmPersonCompressorPartWorkedHour.resx">
-      <DependentUpon>FrmPersonCompressorPartWorkedHour.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Person\FrmPersonContact.resx">
       <DependentUpon>FrmPersonContact.vb</DependentUpon>
@@ -1761,10 +1778,6 @@
     <Content Include="Resources\SQL\Cash\CashFlowAuthorizedInsert.sql" />
     <Content Include="Resources\SQL\Cash\CashFlowAuthorizedSelect.sql" />
     <Content Include="Resources\SQL\Cash\CashFlowAuthorizedUpdate.sql" />
-    <Content Include="Resources\SQL\Evaluation\EvaluationReplacedPartDelete.sql" />
-    <Content Include="Resources\SQL\Evaluation\EvaluationReplacedPartInsert.sql" />
-    <Content Include="Resources\SQL\Evaluation\EvaluationReplacedPartSelect.sql" />
-    <Content Include="Resources\SQL\Evaluation\EvaluationReplacedPartUpdate.sql" />
     <Content Include="Resources\SQL\PriceTable\PriceTableInsert.sql" />
     <Content Include="Resources\SQL\PriceTable\PriceTableSelect.sql" />
     <Content Include="Resources\SQL\PrivilegePreset\PrivilegePresetDelete.sql" />
@@ -1816,11 +1829,14 @@
     <Content Include="Resources\SQL\User\UserPersonShortNameSelect.sql" />
     <Content Include="Resources\XML\CashFlowAuthorizedGrid.xml" />
     <Content Include="Resources\XML\CashFlowGrid.xml" />
+    <Content Include="Resources\XML\EvaluationControlledSellableGrid.xml" />
+    <Content Include="Resources\XML\EvaluationReplacedSellableGrid.xml" />
+    <Content Include="Resources\XML\PersonCompressorSellableElapsedDayGrid.xml" />
+    <Content Include="Resources\XML\PersonCompressorSellableWorkedHourGrid.xml" />
     <Content Include="Resources\XML\PriceTableGrid.xml" />
     <Content Include="Resources\XML\PriceTableItemGrid.xml" />
     <Content Include="Resources\XML\ProductPriceGrid.xml" />
     <Content Include="Resources\XML\ProductPriceIndicatorGrid.xml" />
-    <Content Include="Resources\XML\EvaluationReplacedPartGrid.xml" />
     <Content Include="Resources\XML\ServiceCodeGrid.xml" />
     <Content Include="Resources\XML\ServiceGrid.xml" />
     <Content Include="Resources\XML\EvaluationTechnicianGrid.xml" />
@@ -1963,7 +1979,6 @@
     <Content Include="Resources\SQL\Request\RequestDelete.sql" />
     <Content Include="Resources\SQL\Request\RequestReportPendingItems.sql" />
     <Content Include="Resources\SQL\Request\RequestUpdate.sql" />
-    <Content Include="Resources\SQL\Evaluation\EvaluationManagementPartFilter .sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationManagementFilter.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationFilter.sql" />
     <Content Include="Resources\SQL\Cash\CashFilter.sql" />
@@ -1972,26 +1987,18 @@
     <Content Include="Resources\SQL\Cash\CashItemInsert.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationHasPreviousEvaluationSelect.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationPreviousEvaluationDateSelect.sql" />
-    <Content Include="Resources\SQL\Evaluation\EvaluationPartUpdate.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationPreviousEvaluationHorimeterSelect.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationUpdate.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationDelete.sql" />
-    <Content Include="Resources\SQL\Evaluation\EvaluationPartSelect.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationSelect.sql" />
-    <Content Include="Resources\SQL\Evaluation\EvaluationPartInsert.sql" />
-    <Content Include="Resources\SQL\Evaluation\EvaluationPartDelete.sql" />
     <Content Include="Resources\SQL\Request\RequestSelect.sql" />
     <Content Include="Resources\SQL\User\UserEmailInsert .sql" />
     <Content Include="Resources\SQL\User\UserHasPersonSelect.sql" />
     <Content Include="Resources\SQL\User\UserPrivilegeInsert.sql" />
     <Content Include="Resources\SQL\User\UserPrivilegeSelect.sql" />
-    <Content Include="Resources\SQL\Person\PersonCompressorPartDelete.sql" />
     <Content Include="Resources\SQL\Cash\CashItemResponsibleDelete.sql" />
-    <Content Include="Resources\SQL\Person\PersonCompressorPartInsert.sql" />
     <Content Include="Resources\SQL\Cash\CashItemResponsibleInsert.sql" />
-    <Content Include="Resources\SQL\Person\PersonCompressorPartSelect.sql" />
     <Content Include="Resources\SQL\Cash\CashItemResponsibleSelect.sql" />
-    <Content Include="Resources\SQL\Person\PersonCompressorPartUpdate.sql" />
     <Content Include="Resources\SQL\Cash\CashItemResponsibleUpdate.sql" />
     <Content Include="Resources\SQL\Cash\CashItemSelect.sql" />
     <Content Include="Resources\SQL\Cash\CashItemUpdate.sql" />
@@ -2007,17 +2014,13 @@
     <Content Include="Resources\SQL\City\CityUpdate.sql" />
     <Content Include="Resources\SQL\Compressor\CompressorDelete.sql" />
     <Content Include="Resources\SQL\Compressor\CompressorFilter.sql" />
-    <Content Include="Resources\SQL\Compressor\CompressorPartInsert.sql" />
     <Content Include="Resources\SQL\Compressor\CompressorInsert.sql" />
-    <Content Include="Resources\SQL\Compressor\CompressorPartSelect.sql" />
     <Content Include="Resources\SQL\Compressor\CompressorSelect.sql" />
     <Content Include="Resources\SQL\Compressor\CompressorUpdate.sql" />
     <Content Include="Resources\SQL\Log\LogSelect.sql" />
-    <Content Include="Resources\SQL\Compressor\CompressorPartDelete.sql" />
     <Content Include="Resources\SQL\Person\PersonAddressDelete .sql" />
     <Content Include="Resources\SQL\Person\PersonAddressInsert.sql" />
     <Content Include="Resources\SQL\Person\PersonAddressSelect.sql" />
-    <Content Include="Resources\SQL\Compressor\CompressorPartUpdate.sql" />
     <Content Include="Resources\SQL\Person\PersonAddressUpdate.sql" />
     <Content Include="Resources\SQL\Person\PersonCompressorDelete.sql" />
     <Content Include="Resources\SQL\Person\PersonCompressorInsert.sql" />
@@ -2082,7 +2085,6 @@
     <Content Include="Resources\SQL\User\UserSelect.sql" />
     <Content Include="Resources\SQL\User\UserEmailUpdate.sql" />
     <Content Include="Resources\SQL\User\UserUpdate.sql" />
-    <Content Include="Resources\XML\EvaluationPartGrid.xml" />
     <Content Include="Resources\XML\MaintenancePlan.xml" />
     <Content Include="Resources\XML\EmailModelGrid.xml" />
     <Content Include="Resources\XML\EmailSentGrid.xml" />
@@ -2090,8 +2092,6 @@
     <Content Include="Resources\XML\RequestItemGrid.xml" />
     <Content Include="Resources\XML\RequestGrid.xml" />
     <Content Include="Resources\XML\EvaluationGrid.xml" />
-    <Content Include="Resources\XML\PersonCompressorPartElapsedDayGrid.xml" />
-    <Content Include="Resources\XML\PersonCompressorPartWorkedHourGrid.xml" />
     <Content Include="Resources\XML\CompressorSellableElapsedDayGrid.xml" />
     <Content Include="Resources\XML\CompressorSellableWorkedHourGrid.xml" />
     <Content Include="Resources\XML\CashGrid.xml" />

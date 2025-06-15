@@ -206,13 +206,7 @@ Public Class FrmCompressor
             TcCompressor.SelectedTab = TabMain
             TxtName.Select()
             Return False
-        ElseIf String.IsNullOrWhiteSpace(QbxManufacturer.Text) Then
-            EprValidation.SetError(LblManufacturer, "Campo obrigatório.")
-            EprValidation.SetIconAlignment(LblManufacturer, ErrorIconAlignment.MiddleRight)
-            TcCompressor.SelectedTab = TabMain
-            QbxManufacturer.Select()
-            Return False
-        ElseIf Not QbxManufacturer.IsFreezed Then
+        ElseIf Not String.IsNullOrWhiteSpace(QbxManufacturer.Text) And Not QbxManufacturer.IsFreezed Then
             EprValidation.SetError(LblManufacturer, "Fabricante não encontrado.")
             EprValidation.SetIconAlignment(LblManufacturer, ErrorIconAlignment.MiddleRight)
             TcCompressor.SelectedTab = TabMain
@@ -231,6 +225,8 @@ Public Class FrmCompressor
             If IsValidFields() Then
                 _Compressor.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
                 _Compressor.Name = TxtName.Text
+                _Compressor.ManufacturerID = QbxManufacturer.FreezedPrimaryKey
+                _Compressor.ManufacturerName = QbxManufacturer.Text
                 _Compressor.Manufacturer = New Lazy(Of Person)(Function() New Person().Load(QbxManufacturer.FreezedPrimaryKey, False))
                 Try
                     Cursor = Cursors.WaitCursor

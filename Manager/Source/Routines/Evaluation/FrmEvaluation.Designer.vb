@@ -1733,12 +1733,12 @@ Partial Class FrmEvaluation
         'DgvlPartWorkedHourLayout
         '
         Me.DgvlPartWorkedHourLayout.DataGridView = Me.DgvPartWorkedHour
-        Me.DgvlPartWorkedHourLayout.Routine = Manager.Routine.EvaluationPart
+        Me.DgvlPartWorkedHourLayout.Routine = Manager.Routine.EvaluationControlledSellable
         '
         'DgvlPartElapsedDayLayout
         '
         Me.DgvlPartElapsedDayLayout.DataGridView = Me.DgvPartElapsedDay
-        Me.DgvlPartElapsedDayLayout.Routine = Manager.Routine.EvaluationPart
+        Me.DgvlPartElapsedDayLayout.Routine = Manager.Routine.EvaluationControlledSellable
         '
         'DgvPartElapsedDayNavigator
         '
@@ -1766,7 +1766,7 @@ Partial Class FrmEvaluation
         'DgvReplacedPartLayout
         '
         Me.DgvReplacedPartLayout.DataGridView = Me.DgvReplacedPart
-        Me.DgvReplacedPartLayout.Routine = Manager.Routine.EvaluationReplacedPart
+        Me.DgvReplacedPartLayout.Routine = Manager.Routine.EvaluationReplacedSellable
         '
         'FrmEvaluation
         '

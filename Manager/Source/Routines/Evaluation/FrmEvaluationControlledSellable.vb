@@ -1,8 +1,8 @@
 ﻿Imports ControlLibrary
-Public Class FrmEvaluationPart
-    Private _Part As EvaluationPart
+Public Class FrmEvaluationControlledSellable
+    Private _Part As EvaluationControlledSellable
     Private _Loading As Boolean
-    Public Sub New(Part As EvaluationPart)
+    Public Sub New(Part As EvaluationControlledSellable)
         InitializeComponent()
         _Loading = True
         _Part = Part

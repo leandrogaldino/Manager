@@ -9,8 +9,8 @@ Public Class PersonCompressor
     Public Property Patrimony As String
     Public Property Sector As String
     Public Property UnitCapacity As Integer = 20000
-    Public Property PartsWorkedHour As New List(Of PersonCompressorPart)
-    Public Property PartsElapsedDay As New List(Of PersonCompressorPart)
+    Public Property PartsWorkedHour As New List(Of PersonCompressorSellable)
+    Public Property PartsElapsedDay As New List(Of PersonCompressorSellable)
     Public Property Note As String
     Public Sub New()
         SetRoutine(Routine.PersonCompressor)

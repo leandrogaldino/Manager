@@ -1,9 +1,9 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Extensions
-Public Class FrmEvaluationReplacedPart
+Public Class FrmEvaluationReplacedSellable
     Private _EvaluationForm As FrmEvaluation
     Private _Evaluation As Evaluation
-    Private _ReplacedPart As EvaluationReplacedPart
+    Private _ReplacedPart As EvaluationReplacedSellable
     Private _Deleting As Boolean
     Private _Loading As Boolean
     Private _User As User
@@ -19,7 +19,7 @@ Public Class FrmEvaluationReplacedPart
         End If
         MyBase.DefWndProc(m)
     End Sub
-    Public Sub New(Evaluation As Evaluation, ReplacedPart As EvaluationReplacedPart, EvaluationForm As FrmEvaluation)
+    Public Sub New(Evaluation As Evaluation, ReplacedPart As EvaluationReplacedSellable, EvaluationForm As FrmEvaluation)
         InitializeComponent()
         _Evaluation = Evaluation
         _ReplacedPart = ReplacedPart
@@ -91,7 +91,7 @@ Public Class FrmEvaluationReplacedPart
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.EvaluationReplacedPart, _ReplacedPart.ID)
+        Dim Frm As New FrmLog(Routine.EvaluationReplacedSellable, _ReplacedPart.ID)
         Frm.ShowDialog()
     End Sub
     Private Sub QbxItem_TextChanged(sender As Object, e As EventArgs) Handles QbxItem.TextChanged
@@ -125,7 +125,7 @@ Public Class FrmEvaluationReplacedPart
         Return True
     End Function
     Private Function HasDuplicatedItem() As Boolean
-        Dim TargetItems As List(Of EvaluationReplacedPart)
+        Dim TargetItems As List(Of EvaluationReplacedSellable)
         TargetItems = _Evaluation.ReplacedParts.Where(Function(x) Not x.ProductID.Equals(_ReplacedPart.ProductID) AndAlso x.ProductID.Equals(QbxItem.FreezedPrimaryKey)).ToList()
         If TargetItems.Count > 0 Then
             CMessageBox.Show("Essa peça já foi incluida na avaliação.", CMessageBoxType.Information)
@@ -152,7 +152,7 @@ Public Class FrmEvaluationReplacedPart
                 _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _ReplacedPart.Guid).ProductName = QbxItem.GetRawFreezedValueOf("product", "name").ToString
                 _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _ReplacedPart.Guid).Quantity = DbxQuantity.DecimalValue
             Else
-                _ReplacedPart = New EvaluationReplacedPart With {
+                _ReplacedPart = New EvaluationReplacedSellable With {
                     .ProductID = QbxItem.FreezedPrimaryKey,
                     .Product = New Lazy(Of Product)(Function() New Product().Load(QbxItem.FreezedPrimaryKey, False)),
                     .ProductCode = QbxItem.GetRawFreezedValueOf("productprovidercode", "code").ToString,
@@ -233,7 +233,7 @@ Public Class FrmEvaluationReplacedPart
                 If Not PreSave() Then Exit Sub
             End If
         End If
-        _ReplacedPart = New EvaluationReplacedPart()
+        _ReplacedPart = New EvaluationReplacedSellable()
         LoadForm()
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click

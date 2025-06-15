@@ -562,20 +562,20 @@
   <data name="PersonSelectByDocument" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\Person\PersonSelectByDocument.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="CompressorPartInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Compressor\CompressorPartInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="CompressorSellableInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Compressor\CompressorSellableInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="CompressorPartSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Compressor\CompressorPartSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="CompressorSellableSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Compressor\CompressorSellableSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="CompressorSellableWorkedHourGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\CompressorSellableWorkedHourGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="CompressorPartDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Compressor\CompressorPartDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="CompressorSellableDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Compressor\CompressorSellableDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="CompressorPartUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Compressor\CompressorPartUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="CompressorSellableUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Compressor\CompressorSellableUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="information" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icon\information.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -583,32 +583,32 @@
   <data name="CompressorSellableElapsedDayGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\CompressorSellableElapsedDayGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="PersonCompressorPartDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Person\PersonCompressorPartDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="PersonCompressorSellableDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Person\PersonCompressorSellableDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="PersonCompressorPartInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Person\PersonCompressorPartInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="PersonCompressorSellableInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Person\PersonCompressorSellableInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="PersonCompressorPartSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Person\PersonCompressorPartSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="PersonCompressorSellableSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Person\PersonCompressorSellableSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="PersonCompressorPartUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Person\PersonCompressorPartUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="PersonCompressorSellableUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Person\PersonCompressorSellableUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="PersonCompressorPartWorkedHourGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML\PersonCompressorPartWorkedHourGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="PersonCompressorSellableWorkedHourGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XML\PersonCompressorSellableWorkedHourGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="ImportSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\ImportSmall.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="PersonCompressorPartElapsedDayGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML\PersonCompressorPartElapsedDayGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="PersonCompressorSellableElapsedDayGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XML\PersonCompressorSellableElapsedDayGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="EvaluationSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\Evaluation\EvaluationSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="EvaluationPartSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Evaluation\EvaluationPartSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="EvaluationControlledSellableSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Evaluation\EvaluationControlledSellableSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="EvaluationDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\Evaluation\EvaluationDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -616,11 +616,11 @@
   <data name="EvaluationInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\Evaluation\EvaluationInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="EvaluationPartInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Evaluation\EvaluationPartInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="EvaluationControlledSellableInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Evaluation\EvaluationControlledSellableInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="EvaluationPartDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Evaluation\EvaluationPartDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="EvaluationControlledSellableDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Evaluation\EvaluationControlledSellableDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="EvaluationUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\Evaluation\EvaluationUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -631,8 +631,8 @@
   <data name="Evaluation" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Evaluation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="EvaluationPartUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Evaluation\EvaluationPartUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="EvaluationControlledSellableUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Evaluation\EvaluationControlledSellableUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="EvaluationPreviousEvaluationHorimeterSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\Evaluation\EvaluationPreviousEvaluationHorimeterSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -652,8 +652,8 @@
   <data name="EvaluationManagement" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\EvaluationManagement.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="EvaluationManagementPartFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Evaluation\EvaluationManagementPartFilter .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="EvaluationManagementControlledSellableFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Evaluation\EvaluationManagementControlledSellableFilter .sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="EvaluationManagementGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\EvaluationManagementGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
@@ -1078,8 +1078,8 @@
   <data name="CashFlowAuthorizedGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\CashFlowAuthorizedGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="EvaluationPartGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML\EvaluationPartGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="EvaluationControlledSellableGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XML\EvaluationControlledSellableGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PrivilegePresetDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\PrivilegePreset\PrivilegePresetDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -1114,17 +1114,17 @@
   <data name="VisitScheduleGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\VisitScheduleGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="EvaluationReplacedPartDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Evaluation\EvaluationReplacedPartDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="EvaluationReplacedSellableDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Evaluation\EvaluationReplacedSellableDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="EvaluationReplacedPartInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Evaluation\EvaluationReplacedPartInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="EvaluationReplacedSellableInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Evaluation\EvaluationReplacedSellableInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="EvaluationReplacedPartSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Evaluation\EvaluationReplacedPartSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="EvaluationReplacedSellableSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Evaluation\EvaluationReplacedSellableSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="EvaluationReplacedPartUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Evaluation\EvaluationReplacedPartUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="EvaluationReplacedSellableUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Evaluation\EvaluationReplacedSellableUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="EvaluationTechnicianGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML\EvaluationTechnicianGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
@@ -1264,7 +1264,7 @@
   <data name="ProductPriceIndicatorDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\Product\ProductPriceIndicatorDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="EvaluationReplacedPartGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML\EvaluationReplacedPartGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="EvaluationReplacedSellableGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XML\EvaluationReplacedSellableGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

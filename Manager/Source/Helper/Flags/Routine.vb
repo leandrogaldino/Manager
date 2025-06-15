@@ -15,8 +15,8 @@ Public Enum Routine
     PersonAddress = 201
     PersonContact = 202
     PersonCompressor = 203
-    PersonCompressorPartWorkedHour = 204
-    PersonCompressorPartElapsedDay = 205
+    PersonCompressorSellableWorkedHour = 204
+    PersonCompressorSellableElapsedDay = 205
     <Description("Alterar o documento da Pessoa")> <BiStatePrivilege> <RoutineDependency(Person)>
     PersonChangeDocument = 206
     <Description("Gerar o relatório de ficha cadastral da pessoa")> <BiStatePrivilege> <RoutineDependency(Person)>
@@ -58,13 +58,13 @@ Public Enum Routine
     Evaluation = 13
     <Description("Gerenciamento de Avaliações")> <BiStatePrivilege> <RoutineDependency(Evaluation)>
     EvaluationManagement = 1301
-    EvaluationManagementPartWorkedHour = 1302
-    EvaluationManagementPartElapsedDay = 1303
+    EvaluationManagementSellableWorkedHour = 1302
+    EvaluationManagementSellableElapsedDay = 1303
     <Description("Painel de Compressores")> <BiStatePrivilege> <RoutineDependency(Evaluation)>
     EvaluationManagementPanel = 1304
     <Description("Exportar imagem do painel de compressores")> <BiStatePrivilege> <RoutineDependency(Evaluation)>
     EvaluationExportManagementPanel = 1305
-    EvaluationPart = 1306
+    EvaluationControlledSellable = 1306
     EvaluationTechnician = 1307
     EvaluationPhoto = 1308
     <Description("Aprovar e rejeitar uma avaliação")> <BiStatePrivilege> <RoutineDependency(Evaluation)>
@@ -73,7 +73,7 @@ Public Enum Routine
     EvaluationCreateAutomaticRecord = 1310
     <Description("Importar avaliações da núvem")> <BiStatePrivilege> <RoutineDependency(Evaluation)>
     EvaluationImport = 1311
-    EvaluationReplacedPart = 1312
+    EvaluationReplacedSellable = 1312
     EvaluationPerformedService = 1313
     <Description("Predefinição de Permissões")> <TriStatePrivilege> <RoutineDependency(User)>
     PrivilegePreset = 14

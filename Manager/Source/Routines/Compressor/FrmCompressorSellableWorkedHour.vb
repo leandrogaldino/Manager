@@ -1,4 +1,5 @@
-﻿Imports ControlLibrary
+﻿Imports CefSharp.DevTools.Emulation
+Imports ControlLibrary
 Imports ControlLibrary.Extensions
 Public Class FrmCompressorSellableWorkedHour
     Private _CompressorForm As FrmCompressor
@@ -33,7 +34,8 @@ Public Class FrmCompressorSellableWorkedHour
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = If(_WorkedHourSellable.IsSaved, _CompressorForm.DgvCompressorSellableElapsedDay.SelectedRows(0).Cells("Order").Value, 0)
+        LblOrderValue.Text = If(_WorkedHourSellable.IsSaved, _CompressorForm.DgvCompressorSellableWorkedHour.SelectedRows(0).Cells("Order").Value, 0)
+        BtnStatusValue.Text = EnumHelper.GetEnumDescription(_WorkedHourSellable.Status)
         LblCreationValue.Text = _WorkedHourSellable.Creation
         ClearQbxSellable()
         SetUpQbxSellableForProduct()
@@ -190,8 +192,8 @@ Public Class FrmCompressorSellableWorkedHour
                 _WorkedHourSellable.SetIsSaved(True)
                 _Compressor.WorkedHourSellables.Add(_WorkedHourSellable)
             End If
-            _CompressorForm.DgvCompressorSellableElapsedDay.Fill(_Compressor.WorkedHourSellables)
-            _CompressorForm.DgvCompressorSellableElapsedDayLayout.Load()
+            _CompressorForm.DgvCompressorSellableWorkedHour.Fill(_Compressor.WorkedHourSellables)
+            _CompressorForm.DgvCompressorSellableWorkedHourLayout.Load()
             BtnSave.Enabled = False
             If Not _WorkedHourSellable.IsSaved Then
                 BtnSave.Text = "Incluir"
@@ -200,9 +202,9 @@ Public Class FrmCompressorSellableWorkedHour
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _CompressorForm.DgvCompressorSellableElapsedDay.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _WorkedHourSellable.Guid)
+            Row = _CompressorForm.DgvCompressorSellableWorkedHour.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _WorkedHourSellable.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _CompressorForm.DgvCompressorSellableElapsedDay.SelectedRows(0).Cells("Order").Value
+            LblOrderValue.Text = _CompressorForm.DgvCompressorSellableWorkedHour.SelectedRows(0).Cells("Order").Value
             _CompressorForm.EprValidation.Clear()
             _CompressorForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()
@@ -212,17 +214,22 @@ Public Class FrmCompressorSellableWorkedHour
         End If
     End Function
     Private Function HasDuplicatedItem() As Boolean
+        Dim WorkedHourItems As List(Of CompressorSellable)
+        Dim ElapsedDayItems As List(Of CompressorSellable)
         Dim TargetItems As List(Of CompressorSellable)
         If RbtProduct.Checked Then
-            TargetItems = _Compressor.ElapsedDaySellables.Where(Function(x) Not x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.Product IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+            WorkedHourItems = _Compressor.WorkedHourSellables.Where(Function(x) Not x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.Product IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+            ElapsedDayItems = _Compressor.ElapsedDaySellables.Where(Function(x) Not x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.Product IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
         Else
-            TargetItems = _Compressor.ElapsedDaySellables.Where(Function(x) Not x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.Service IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+            WorkedHourItems = _Compressor.WorkedHourSellables.Where(Function(x) Not x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.Service IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+            ElapsedDayItems = _Compressor.ElapsedDaySellables.Where(Function(x) Not x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.Service IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
         End If
-        If TargetItems IsNot Nothing AndAlso TargetItems.Count > 0 Then
+        TargetItems = WorkedHourItems.Concat(ElapsedDayItems).ToList
+        If TargetItems.Any() Then
             If RbtProduct.Checked Then
-                CMessageBox.Show("Esse produto já foi incluido na tabela.", CMessageBoxType.Information)
+                CMessageBox.Show("Esse produto já foi incluído no compressor.", CMessageBoxType.Information)
             Else
-                CMessageBox.Show("Esse serviço já foi incluido na tabela.", CMessageBoxType.Information)
+                CMessageBox.Show("Esse serviço já foi incluído no compressor.", CMessageBoxType.Information)
             End If
             Return True
         End If

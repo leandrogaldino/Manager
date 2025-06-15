@@ -243,7 +243,7 @@ Public Class Person
                         CmdCompressor.ExecuteNonQuery()
                         PersonCompressor.SetID(CmdCompressor.LastInsertedId)
                         For Each PartWorkedHour In PersonCompressor.PartsWorkedHour
-                            Using CmdPartWorkedHour As New MySqlCommand(My.Resources.PersonCompressorPartInsert, Con)
+                            Using CmdPartWorkedHour As New MySqlCommand(My.Resources.PersonCompressorSellableInsert, Con)
                                 CmdPartWorkedHour.Transaction = Tra
                                 CmdPartWorkedHour.Parameters.AddWithValue("@personcompressorid", PersonCompressor.ID)
                                 CmdPartWorkedHour.Parameters.AddWithValue("@creation", PartWorkedHour.Creation)
@@ -260,7 +260,7 @@ Public Class Person
                             End Using
                         Next PartWorkedHour
                         For Each PartElapsedDay In PersonCompressor.PartsElapsedDay
-                            Using CmdPartElapsedDay As New MySqlCommand(My.Resources.PersonCompressorPartInsert, Con)
+                            Using CmdPartElapsedDay As New MySqlCommand(My.Resources.PersonCompressorSellableInsert, Con)
                                 CmdPartElapsedDay.Transaction = Tra
                                 CmdPartElapsedDay.Parameters.AddWithValue("@personcompressorid", PersonCompressor.ID)
                                 CmdPartElapsedDay.Parameters.AddWithValue("@creation", PartElapsedDay.Creation)
@@ -406,20 +406,20 @@ Public Class Person
                             CmdCashItem.ExecuteNonQuery()
                         End Using
                     End If
-                    For Each ShadowPartWorkedHour As PersonCompressorPart In ShadowCompressor.PartsWorkedHour
+                    For Each ShadowPartWorkedHour As PersonCompressorSellable In ShadowCompressor.PartsWorkedHour
                         Compressor = Compressors.SingleOrDefault(Function(x) x.ID = ShadowCompressor.ID)
                         If Compressor IsNot Nothing AndAlso (Not Compressor.PartsWorkedHour.Any(Function(x) x.ID = ShadowPartWorkedHour.ID And x.ID > 0)) Then
-                            Using CmdPartWorkedHour As New MySqlCommand(My.Resources.PersonCompressorPartDelete, Con)
+                            Using CmdPartWorkedHour As New MySqlCommand(My.Resources.PersonCompressorSellableDelete, Con)
                                 CmdPartWorkedHour.Transaction = Tra
                                 CmdPartWorkedHour.Parameters.AddWithValue("@id", ShadowPartWorkedHour.ID)
                                 CmdPartWorkedHour.ExecuteNonQuery()
                             End Using
                         End If
                     Next ShadowPartWorkedHour
-                    For Each ShadowPartElapsedDay As PersonCompressorPart In ShadowCompressor.PartsElapsedDay
+                    For Each ShadowPartElapsedDay As PersonCompressorSellable In ShadowCompressor.PartsElapsedDay
                         Compressor = Compressors.SingleOrDefault(Function(x) x.ID = ShadowCompressor.ID)
                         If Compressor IsNot Nothing AndAlso (Not Compressor.PartsElapsedDay.Any(Function(x) x.ID = ShadowPartElapsedDay.ID And x.ID > 0)) Then
-                            Using CmdPartElapsedDay As New MySqlCommand(My.Resources.PersonCompressorPartDelete, Con)
+                            Using CmdPartElapsedDay As New MySqlCommand(My.Resources.PersonCompressorSellableDelete, Con)
                                 CmdPartElapsedDay.Transaction = Tra
                                 CmdPartElapsedDay.Parameters.AddWithValue("@id", ShadowPartElapsedDay.ID)
                                 CmdPartElapsedDay.ExecuteNonQuery()
@@ -444,7 +444,7 @@ Public Class Person
                             CmdCompressor.ExecuteNonQuery()
                             PersonCompressor.SetID(CmdCompressor.LastInsertedId)
                             For Each PartWorkedHour In PersonCompressor.PartsWorkedHour
-                                Using CmdPartWorkedHour As New MySqlCommand(My.Resources.PersonCompressorPartInsert, Con)
+                                Using CmdPartWorkedHour As New MySqlCommand(My.Resources.PersonCompressorSellableInsert, Con)
                                     CmdPartWorkedHour.Transaction = Tra
                                     CmdPartWorkedHour.Parameters.AddWithValue("@personcompressorid", PersonCompressor.ID)
                                     CmdPartWorkedHour.Parameters.AddWithValue("@creation", PartWorkedHour.Creation)
@@ -461,7 +461,7 @@ Public Class Person
                                 End Using
                             Next PartWorkedHour
                             For Each PartElapsedDay In PersonCompressor.PartsElapsedDay
-                                Using CmdPartElapsedDay As New MySqlCommand(My.Resources.PersonCompressorPartInsert, Con)
+                                Using CmdPartElapsedDay As New MySqlCommand(My.Resources.PersonCompressorSellableInsert, Con)
                                     CmdPartElapsedDay.Transaction = Tra
                                     CmdPartElapsedDay.Parameters.AddWithValue("@personcompressorid", PersonCompressor.ID)
                                     CmdPartElapsedDay.Parameters.AddWithValue("@creation", PartElapsedDay.Creation)
@@ -491,9 +491,9 @@ Public Class Person
                             CmdCompressor.Parameters.AddWithValue("@note", If(String.IsNullOrEmpty(PersonCompressor.Note), DBNull.Value, PersonCompressor.Note))
                             CmdCompressor.Parameters.AddWithValue("@userid", PersonCompressor.User.ID)
                             CmdCompressor.ExecuteNonQuery()
-                            For Each PartWorkedHour As PersonCompressorPart In PersonCompressor.PartsWorkedHour
+                            For Each PartWorkedHour As PersonCompressorSellable In PersonCompressor.PartsWorkedHour
                                 If PartWorkedHour.ID = 0 Then
-                                    Using CmdPartWorkedHour As New MySqlCommand(My.Resources.PersonCompressorPartInsert, Con)
+                                    Using CmdPartWorkedHour As New MySqlCommand(My.Resources.PersonCompressorSellableInsert, Con)
                                         CmdPartWorkedHour.Transaction = Tra
                                         CmdPartWorkedHour.Parameters.AddWithValue("@personcompressorid", PersonCompressor.ID)
                                         CmdPartWorkedHour.Parameters.AddWithValue("@creation", PartWorkedHour.Creation)
@@ -509,7 +509,7 @@ Public Class Person
                                         PartWorkedHour.SetID(CmdPartWorkedHour.LastInsertedId)
                                     End Using
                                 Else
-                                    Using CmdPartWorkedHour As New MySqlCommand(My.Resources.PersonCompressorPartUpdate, Con)
+                                    Using CmdPartWorkedHour As New MySqlCommand(My.Resources.PersonCompressorSellableUpdate, Con)
                                         CmdPartWorkedHour.Transaction = Tra
                                         CmdPartWorkedHour.Parameters.AddWithValue("@id", PartWorkedHour.ID)
                                         CmdPartWorkedHour.Parameters.AddWithValue("@statusid", CInt(PartWorkedHour.Status))
@@ -525,7 +525,7 @@ Public Class Person
                             Next PartWorkedHour
                             For Each PartElapsedDay In PersonCompressor.PartsElapsedDay
                                 If PartElapsedDay.ID = 0 Then
-                                    Using CmdPartElapsedDay As New MySqlCommand(My.Resources.PersonCompressorPartInsert, Con)
+                                    Using CmdPartElapsedDay As New MySqlCommand(My.Resources.PersonCompressorSellableInsert, Con)
                                         CmdPartElapsedDay.Transaction = Tra
                                         CmdPartElapsedDay.Parameters.AddWithValue("@personcompressorid", PersonCompressor.ID)
                                         CmdPartElapsedDay.Parameters.AddWithValue("@creation", PartElapsedDay.Creation)
@@ -541,7 +541,7 @@ Public Class Person
                                         PartElapsedDay.SetID(CmdPartElapsedDay.LastInsertedId)
                                     End Using
                                 Else
-                                    Using CmdPartElapsedDay As New MySqlCommand(My.Resources.PersonCompressorPartUpdate, Con)
+                                    Using CmdPartElapsedDay As New MySqlCommand(My.Resources.PersonCompressorSellableUpdate, Con)
                                         CmdPartElapsedDay.Transaction = Tra
                                         CmdPartElapsedDay.Parameters.AddWithValue("@id", PartElapsedDay.ID)
                                         CmdPartElapsedDay.Parameters.AddWithValue("@statusid", CInt(PartElapsedDay.Status))
@@ -658,20 +658,20 @@ Public Class Person
         End Using
         Return Compressors
     End Function
-    Private Function GetCompressorPartsWorkedHour(Transaction As MySqlTransaction, PersonCompressorID As Long) As List(Of PersonCompressorPart)
+    Private Function GetCompressorPartsWorkedHour(Transaction As MySqlTransaction, PersonCompressorID As Long) As List(Of PersonCompressorSellable)
         Dim TableResult As DataTable
-        Dim PartsWorkedHour As List(Of PersonCompressorPart)
-        Dim PartWorkedHour As PersonCompressorPart
-        Using CmdPartWorkedHour As New MySqlCommand(My.Resources.PersonCompressorPartSelect, Transaction.Connection)
+        Dim PartsWorkedHour As List(Of PersonCompressorSellable)
+        Dim PartWorkedHour As PersonCompressorSellable
+        Using CmdPartWorkedHour As New MySqlCommand(My.Resources.PersonCompressorSellableSelect, Transaction.Connection)
             CmdPartWorkedHour.Transaction = Transaction
             CmdPartWorkedHour.Parameters.AddWithValue("@personcompressorid", PersonCompressorID)
             CmdPartWorkedHour.Parameters.AddWithValue("@parttypeid", CompressorSellableControlType.WorkedHour)
             Using Adp As New MySqlDataAdapter(CmdPartWorkedHour)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                PartsWorkedHour = New List(Of PersonCompressorPart)
+                PartsWorkedHour = New List(Of PersonCompressorSellable)
                 For Each Row As DataRow In TableResult.Rows
-                    PartWorkedHour = New PersonCompressorPart(Row.Item("parttypeid")) With {
+                    PartWorkedHour = New PersonCompressorSellable(Row.Item("parttypeid")) With {
                         .Status = Row.Item("statusid"),
                         .PartBind = Row.Item("partbindid"),
                         .ItemName = Row.Item("itemname").ToString,
@@ -688,20 +688,20 @@ Public Class Person
         End Using
         Return PartsWorkedHour
     End Function
-    Private Function GetCompressorPartsElapsedDay(Transaction As MySqlTransaction, PersonCompressorID As Long) As List(Of PersonCompressorPart)
+    Private Function GetCompressorPartsElapsedDay(Transaction As MySqlTransaction, PersonCompressorID As Long) As List(Of PersonCompressorSellable)
         Dim TableResult As DataTable
-        Dim PartsElapsedDay As List(Of PersonCompressorPart)
-        Dim PartElapsedDay As PersonCompressorPart
-        Using CmdPartElapsedDay As New MySqlCommand(My.Resources.PersonCompressorPartSelect, Transaction.Connection)
+        Dim PartsElapsedDay As List(Of PersonCompressorSellable)
+        Dim PartElapsedDay As PersonCompressorSellable
+        Using CmdPartElapsedDay As New MySqlCommand(My.Resources.PersonCompressorSellableSelect, Transaction.Connection)
             CmdPartElapsedDay.Transaction = Transaction
             CmdPartElapsedDay.Parameters.AddWithValue("@personcompressorid", PersonCompressorID)
             CmdPartElapsedDay.Parameters.AddWithValue("@parttypeid", CompressorSellableControlType.ElapsedDay)
             Using Adp As New MySqlDataAdapter(CmdPartElapsedDay)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                PartsElapsedDay = New List(Of PersonCompressorPart)
+                PartsElapsedDay = New List(Of PersonCompressorSellable)
                 For Each Row As DataRow In TableResult.Rows
-                    PartElapsedDay = New PersonCompressorPart(Row.Item("parttypeid")) With {
+                    PartElapsedDay = New PersonCompressorSellable(Row.Item("parttypeid")) With {
                         .Status = Row.Item("statusid"),
                         .PartBind = Row.Item("partbindid"),
                         .ItemName = Row.Item("itemname").ToString,

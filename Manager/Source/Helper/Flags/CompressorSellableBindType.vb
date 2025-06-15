@@ -1,6 +1,6 @@
 ﻿Imports System.ComponentModel
 
-Public Enum CompressorPartBindType
+Public Enum CompressorSellableBindType
     <Description("NENHUM")> None = 0
     <Description("FILTRO DE AR")> AirFilter = 1
     <Description("FILTRO DE OLEO")> OilFilter = 2

@@ -1,11 +1,12 @@
 SELECT 
 	productprovidercode.code AS 'Código',
-	IFNULL(compressorpart.itemname, product.name) AS 'Item',
-    compressorpart.quantity AS 'Qtd.'
+	IFNULL(product.name, service.name) AS 'Produto/Serviço',
+    compressorsellable.quantity AS 'Qtd.'
 FROM
-    compressorpart
-LEFT JOIN product ON product.id = compressorpart.productid
+    compressorsellable
+LEFT JOIN product ON product.id = compressorsellable.productid
+LEFT JOIN service ON service.id = compressorsellable.serviceid
 LEFT JOIN productprovidercode ON productprovidercode.productid = product.id AND productprovidercode.ismainprovider = 1
 WHERE
-    compressorpart.compressorid = @compressorid AND
-    compressorpart.parttypeid = @parttypeid;
+    compressorsellable.compressorid = @compressorid AND
+    compressorsellable.controltypeid = @controltypeid;

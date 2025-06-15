@@ -54,17 +54,17 @@
 
     Private Sub BtnAccept_Click(sender As Object, e As EventArgs) Handles BtnAccept.Click
 
-        For Each Part As EvaluationPart In ResultEvaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind)
+        For Each Part As EvaluationControlledSellable In ResultEvaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind)
             Dim Tile As UcEvaluationSourcePart = FlpContainer.Controls.OfType(Of UcEvaluationSourcePart).First(Function(x) x.Tag.Equals(Part))
-            Dim PartOnTile As EvaluationPart = Tile.Tag
+            Dim PartOnTile As EvaluationControlledSellable = Tile.Tag
             Part.CurrentCapacity = Tile.SelectedValue
             Part.Sold = Tile.UcSoldLost.IsSold
             Part.Lost = Tile.UcSoldLost.IsLost
         Next Part
 
-        For Each Part As EvaluationPart In ResultEvaluation.PartsElapsedDay.Where(Function(x) x.Part.PartBind)
+        For Each Part As EvaluationControlledSellable In ResultEvaluation.PartsElapsedDay.Where(Function(x) x.Part.PartBind)
             Dim Tile As UcEvaluationSourcePart = FlpContainer.Controls.OfType(Of UcEvaluationSourcePart).First(Function(x) x.Tag.Equals(Part))
-            Dim PartOnTile As EvaluationPart = Tile.Tag
+            Dim PartOnTile As EvaluationControlledSellable = Tile.Tag
             Part.CurrentCapacity = Tile.SelectedValue
             Part.Sold = Tile.UcSoldLost.IsSold
             Part.Lost = Tile.UcSoldLost.IsLost

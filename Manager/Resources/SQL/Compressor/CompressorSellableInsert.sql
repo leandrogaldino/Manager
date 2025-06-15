@@ -1,11 +1,11 @@
-INSERT INTO compressorpart
+INSERT INTO compressorsellable
 (
     compressorid,
     creation,
     statusid,
-    parttypeid,
-    itemname,
+    controltypeid,
     productid,
+    serviceid,
     quantity,
     userid
 )
@@ -14,9 +14,9 @@ VALUES
     @compressorid,
     @creation,
     @statusid,
-    @parttypeid,
-    @itemname,
+    @controltypeid,
     @productid,
+    @serviceid,
     @quantity,
     @userid
 );

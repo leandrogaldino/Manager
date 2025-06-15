@@ -1,7 +1,7 @@
 ﻿''' <summary>
 ''' Representa uma peça da avaliação do compressor.
 ''' </summary>
-Public Class EvaluationPart
+Public Class EvaluationControlledSellable
     Inherits ChildModel
     Private _PartType As CompressorSellableControlType
     Public ReadOnly Property Code As String
@@ -9,12 +9,12 @@ Public Class EvaluationPart
             Return Part.Code
         End Get
     End Property
-    Public Property Part As New PersonCompressorPart(_PartType)
+    Public Property Part As New PersonCompressorSellable(_PartType)
     Public Property CurrentCapacity As Integer
     Public Property Sold As Boolean
     Public Property Lost As Boolean
     Public Sub New(PartType As CompressorSellableControlType)
         _PartType = PartType
-        SetRoutine(Routine.EvaluationPart)
+        SetRoutine(Routine.EvaluationControlledSellable)
     End Sub
 End Class

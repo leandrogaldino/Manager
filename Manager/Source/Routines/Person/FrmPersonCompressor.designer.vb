@@ -757,12 +757,12 @@ Partial Class FrmPersonCompressor
         'DgvPartWorkedHourLayout
         '
         Me.DgvPartWorkedHourLayout.DataGridView = Me.DgvPartWorkedHour
-        Me.DgvPartWorkedHourLayout.Routine = Manager.Routine.PersonCompressorPartWorkedHour
+        Me.DgvPartWorkedHourLayout.Routine = Manager.Routine.PersonCompressorSellableWorkedHour
         '
         'DgvPartElapsedDayLayout
         '
         Me.DgvPartElapsedDayLayout.DataGridView = Me.DgvPartElapsedDay
-        Me.DgvPartElapsedDayLayout.Routine = Manager.Routine.PersonCompressorPartElapsedDay
+        Me.DgvPartElapsedDayLayout.Routine = Manager.Routine.PersonCompressorSellableElapsedDay
         '
         'EprInformation
         '

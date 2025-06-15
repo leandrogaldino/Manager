@@ -100,14 +100,14 @@ Public Class Compressor
                 Using CmdCompressor As New MySqlCommand(My.Resources.CompressorInsert, Con, Tra)
                     CmdCompressor.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     CmdCompressor.Parameters.AddWithValue("@statusid", CInt(Status))
-                    CmdCompressor.Parameters.AddWithValue("@manufacturerid", ManufacturerID)
+                    CmdCompressor.Parameters.AddWithValue("@manufacturerid", If(ManufacturerID > 0, ManufacturerID, DBNull.Value))
                     CmdCompressor.Parameters.AddWithValue("@name", Name)
                     CmdCompressor.Parameters.AddWithValue("@userid", User.ID)
                     CmdCompressor.ExecuteNonQuery()
                     SetID(CmdCompressor.LastInsertedId)
                 End Using
                 For Each WorkedHourSellable As CompressorSellable In WorkedHourSellables
-                    Using CmdWorkedHourSellable As New MySqlCommand(My.Resources.CompressorPartInsert, Con, Tra)
+                    Using CmdWorkedHourSellable As New MySqlCommand(My.Resources.CompressorSellableInsert, Con, Tra)
                         CmdWorkedHourSellable.Parameters.AddWithValue("@compressorid", ID)
                         CmdWorkedHourSellable.Parameters.AddWithValue("@creation", WorkedHourSellable.Creation)
                         CmdWorkedHourSellable.Parameters.AddWithValue("@statusid", CInt(WorkedHourSellable.Status))
@@ -121,7 +121,7 @@ Public Class Compressor
                     End Using
                 Next WorkedHourSellable
                 For Each ElapsedDaySellable As CompressorSellable In ElapsedDaySellables
-                    Using CmdElapsedDaySellable As New MySqlCommand(My.Resources.CompressorPartInsert, Con, Tra)
+                    Using CmdElapsedDaySellable As New MySqlCommand(My.Resources.CompressorSellableInsert, Con, Tra)
                         CmdElapsedDaySellable.Parameters.AddWithValue("@compressorid", ID)
                         CmdElapsedDaySellable.Parameters.AddWithValue("@creation", ElapsedDaySellable.Creation)
                         CmdElapsedDaySellable.Parameters.AddWithValue("@statusid", CInt(ElapsedDaySellable.Status))
@@ -146,14 +146,14 @@ Public Class Compressor
                 Using CmdCompressor As New MySqlCommand(My.Resources.CompressorUpdate, Con, Tra)
                     CmdCompressor.Parameters.AddWithValue("@id", ID)
                     CmdCompressor.Parameters.AddWithValue("@statusid", CInt(Status))
-                    CmdCompressor.Parameters.AddWithValue("@manufacturerid", ManufacturerID)
+                    CmdCompressor.Parameters.AddWithValue("@manufacturerid", If(ManufacturerID > 0, ManufacturerID, DBNull.Value))
                     CmdCompressor.Parameters.AddWithValue("@name", Name)
                     CmdCompressor.Parameters.AddWithValue("@userid", User.ID)
                     CmdCompressor.ExecuteNonQuery()
                 End Using
                 For Each WorkedHourSellable As CompressorSellable In _Shadow.WorkedHourSellables
                     If Not WorkedHourSellables.Any(Function(x) x.ID = WorkedHourSellable.ID And x.ID > 0) Then
-                        Using CmdWorkedHourSellable As New MySqlCommand(My.Resources.CompressorPartDelete, Con, Tra)
+                        Using CmdWorkedHourSellable As New MySqlCommand(My.Resources.CompressorSellableDelete, Con, Tra)
                             CmdWorkedHourSellable.Parameters.AddWithValue("@id", WorkedHourSellable.ID)
                             CmdWorkedHourSellable.ExecuteNonQuery()
                         End Using
@@ -161,7 +161,7 @@ Public Class Compressor
                 Next WorkedHourSellable
                 For Each WorkedHourSellable As CompressorSellable In WorkedHourSellables
                     If WorkedHourSellable.ID = 0 Then
-                        Using CmdWorkedHourSellable As New MySqlCommand(My.Resources.CompressorPartInsert, Con, Tra)
+                        Using CmdWorkedHourSellable As New MySqlCommand(My.Resources.CompressorSellableInsert, Con, Tra)
                             CmdWorkedHourSellable.Parameters.AddWithValue("@compressorid", ID)
                             CmdWorkedHourSellable.Parameters.AddWithValue("@creation", WorkedHourSellable.Creation)
                             CmdWorkedHourSellable.Parameters.AddWithValue("@statusid", CInt(WorkedHourSellable.Status))
@@ -174,7 +174,7 @@ Public Class Compressor
                             WorkedHourSellable.SetID(CmdWorkedHourSellable.LastInsertedId)
                         End Using
                     Else
-                        Using CmdWorkedHourSellable As New MySqlCommand(My.Resources.CompressorPartUpdate, Con, Tra)
+                        Using CmdWorkedHourSellable As New MySqlCommand(My.Resources.CompressorSellableUpdate, Con, Tra)
                             CmdWorkedHourSellable.Parameters.AddWithValue("@id", WorkedHourSellable.ID)
                             CmdWorkedHourSellable.Parameters.AddWithValue("@statusid", CInt(WorkedHourSellable.Status))
                             CmdWorkedHourSellable.Parameters.AddWithValue("@productid", If(WorkedHourSellable.SellableType = SellableType.Product, WorkedHourSellable.SellableID, DBNull.Value))
@@ -187,7 +187,7 @@ Public Class Compressor
                 Next WorkedHourSellable
                 For Each ElapsedDaySellable As CompressorSellable In _Shadow.ElapsedDaySellables
                     If Not ElapsedDaySellables.Any(Function(x) x.ID = ElapsedDaySellable.ID And x.ID > 0) Then
-                        Using CmdElapsedDaySellable As New MySqlCommand(My.Resources.CompressorPartDelete, Con, Tra)
+                        Using CmdElapsedDaySellable As New MySqlCommand(My.Resources.CompressorSellableDelete, Con, Tra)
                             CmdElapsedDaySellable.Parameters.AddWithValue("@id", ElapsedDaySellable.ID)
                             CmdElapsedDaySellable.ExecuteNonQuery()
                         End Using
@@ -195,7 +195,7 @@ Public Class Compressor
                 Next ElapsedDaySellable
                 For Each ElapsedDaySellable As CompressorSellable In ElapsedDaySellables
                     If ElapsedDaySellable.ID = 0 Then
-                        Using CmdElapsedDaySellable As New MySqlCommand(My.Resources.CompressorPartInsert, Con, Tra)
+                        Using CmdElapsedDaySellable As New MySqlCommand(My.Resources.CompressorSellableInsert, Con, Tra)
                             CmdElapsedDaySellable.Parameters.AddWithValue("@compressorid", ID)
                             CmdElapsedDaySellable.Parameters.AddWithValue("@creation", ElapsedDaySellable.Creation)
                             CmdElapsedDaySellable.Parameters.AddWithValue("@statusid", CInt(ElapsedDaySellable.Status))
@@ -208,7 +208,7 @@ Public Class Compressor
                             ElapsedDaySellable.SetID(CmdElapsedDaySellable.LastInsertedId)
                         End Using
                     Else
-                        Using CmdElapsedDaySellable As New MySqlCommand(My.Resources.CompressorPartUpdate, Con, Tra)
+                        Using CmdElapsedDaySellable As New MySqlCommand(My.Resources.CompressorSellableUpdate, Con, Tra)
                             CmdElapsedDaySellable.Parameters.AddWithValue("@id", ElapsedDaySellable.ID)
                             CmdElapsedDaySellable.Parameters.AddWithValue("@statusid", CInt(ElapsedDaySellable.Status))
                             CmdElapsedDaySellable.Parameters.AddWithValue("@productid", If(ElapsedDaySellable.SellableType = SellableType.Product, ElapsedDaySellable.SellableID, DBNull.Value))
@@ -231,7 +231,7 @@ Public Class Compressor
         Dim TableResult As DataTable
         Dim PartsWorkedHour As List(Of CompressorSellable)
         Dim PartWorkedHour As CompressorSellable
-        Using CmdPartWorkedHour As New MySqlCommand(My.Resources.CompressorPartSelect, Tra.Connection, Tra)
+        Using CmdPartWorkedHour As New MySqlCommand(My.Resources.CompressorSellableSelect, Tra.Connection, Tra)
             CmdPartWorkedHour.Parameters.AddWithValue("@compressorid", ID)
             CmdPartWorkedHour.Parameters.AddWithValue("@controltypeid", ControlType)
             Using Adp As New MySqlDataAdapter(CmdPartWorkedHour)

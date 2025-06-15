@@ -234,6 +234,7 @@ Partial Class FrmCompressorSellableElapsedDay
         'LblStatus
         '
         Me.LblStatus.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblStatus.Margin = New System.Windows.Forms.Padding(10, 1, 0, 2)
         Me.LblStatus.Name = "LblStatus"
         Me.LblStatus.Size = New System.Drawing.Size(49, 22)
         Me.LblStatus.Text = "Status:"

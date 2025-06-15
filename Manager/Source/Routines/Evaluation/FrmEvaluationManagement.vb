@@ -133,8 +133,8 @@ Public Class FrmEvaluationManagement
         If BtnDetails.Checked Then
             If DgvData.SelectedRows.Count = 1 Then
                 Try
-                    _Filter.FilterPart(DgvData.SelectedRows(0).Cells("evaluation").Value, DgvPartWorkedHour, CompressorSellableControlType.WorkedHour)
-                    _Filter.FilterPart(DgvData.SelectedRows(0).Cells("evaluation").Value, DgvPartElapsedDay, CompressorSellableControlType.ElapsedDay)
+                    _Filter.FilterControlledSellable(DgvData.SelectedRows(0).Cells("evaluation").Value, DgvPartWorkedHour, CompressorSellableControlType.WorkedHour)
+                    _Filter.FilterControlledSellable(DgvData.SelectedRows(0).Cells("evaluation").Value, DgvPartElapsedDay, CompressorSellableControlType.ElapsedDay)
                     LblUnit.Text = _Filter.GetUnitNextChange(DgvData.SelectedRows(0).Cells("evaluation").Value).ToString("dd/MM/yyyy")
                     If LblUnit.Text >= Today And LblUnit.Text <= Today.AddDays(_Session.Setting.General.Evaluation.DaysToAlertMaintenance) Then
                         LblUnit.ForeColor = Color.Orange
@@ -261,6 +261,7 @@ Public Class FrmEvaluationManagement
             End Try
         End Using
     End Function
+
     Private Sub DgvData_MouseDown(sender As Object, e As MouseEventArgs) Handles DgvData.MouseDown
         Dim Click As DataGridView.HitTestInfo = DgvData.HitTest(e.X, e.Y)
         If Click.Type = DataGridViewHitTestType.Cell And e.Button = MouseButtons.Right Then
@@ -270,8 +271,10 @@ Public Class FrmEvaluationManagement
         End If
     End Sub
     Private Sub DgvData_MouseUp(sender As Object, e As MouseEventArgs) Handles DgvData.MouseUp
-        CmsOptions.Show(DgvData.PointToScreen(_CmsPoint))
-        _ShowCms = False
+        If _ShowCms Then
+            CmsOptions.Show(DgvData.PointToScreen(_CmsPoint))
+            _ShowCms = False
+        End If
     End Sub
 
     Private Sub CmsOptions_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles CmsOptions.Opening

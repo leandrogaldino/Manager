@@ -75,7 +75,7 @@ Public Class PersonReport
                         Cmd.Parameters.AddWithValue("@personcompressorid", DgvRow.Cells("ID").Value)
                         LastEvaluationID = Cmd.ExecuteScalar()
                     End Using
-                    Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementPartFilter, Con)
+                    Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementControlledSellableFilter, Con)
                         Cmd.Transaction = Tra
                         Cmd.Parameters.AddWithValue("evaluationid", LastEvaluationID)
                         Cmd.Parameters.AddWithValue("parttypeid", CompressorSellableControlType.WorkedHour)
@@ -84,7 +84,7 @@ Public Class PersonReport
                             Adp.Fill(TableWorkedHour)
                         End Using
                     End Using
-                    Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementPartFilter, Con)
+                    Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementControlledSellableFilter, Con)
                         Using Adp As New MySqlDataAdapter(Cmd)
                             Cmd.Transaction = Tra
                             Cmd.Parameters.AddWithValue("evaluationid", LastEvaluationID)

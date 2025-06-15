@@ -88,11 +88,11 @@ Public Class EvaluationManagementFilter
         End If
         Return Filtering
     End Function
-    Public Sub FilterPart(EvaluationID As Long, Dgv As DataGridView, PartType As CompressorSellableControlType)
+    Public Sub FilterControlledSellable(EvaluationID As Long, Dgv As DataGridView, PartType As CompressorSellableControlType)
         Dim Table As New DataTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
-            Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementPartFilter, Con)
+            Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementControlledSellableFilter, Con)
                 Cmd.Parameters.AddWithValue("@evaluationid", EvaluationID)
                 Cmd.Parameters.AddWithValue("@parttypeid", PartType)
                 Using Adp As New MySqlDataAdapter(Cmd)

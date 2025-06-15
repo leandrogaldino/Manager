@@ -1000,15 +1000,16 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
         '''	productprovidercode.code AS &apos;Código&apos;,
-        '''	IFNULL(compressorpart.itemname, product.name) AS &apos;Item&apos;,
-        '''    compressorpart.quantity AS &apos;Qtd.&apos;
+        '''	IFNULL(product.name, service.name) AS &apos;Produto/Serviço&apos;,
+        '''    compressorsellable.quantity AS &apos;Qtd.&apos;
         '''FROM
-        '''    compressorpart
-        '''LEFT JOIN product ON product.id = compressorpart.productid
+        '''    compressorsellable
+        '''LEFT JOIN product ON product.id = compressorsellable.productid
+        '''LEFT JOIN service ON service.id = compressorsellable.serviceid
         '''LEFT JOIN productprovidercode ON productprovidercode.productid = product.id AND productprovidercode.ismainprovider = 1
         '''WHERE
-        '''    compressorpart.compressorid = @compressorid AND
-        '''    compressorpart.parttypeid = @parttypeid;.
+        '''    compressorsellable.compressorid = @compressorid AND
+        '''    compressorsella [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property CompressorDetailSelect() As String
             Get
@@ -1090,94 +1091,30 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM compressorpart
-        '''WHERE compressorpart.id = @id;.
-        '''</summary>
-        Friend ReadOnly Property CompressorPartDelete() As String
-            Get
-                Return ResourceManager.GetString("CompressorPartDelete", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO compressorpart
-        '''(
-        '''    compressorid,
-        '''    creation,
-        '''    statusid,
-        '''    parttypeid,
-        '''    itemname,
-        '''    productid,
-        '''    quantity,
-        '''    userid
-        ''')
-        '''VALUES
-        '''(
-        '''    @compressorid,
-        '''    @creation,
-        '''    @statusid,
-        '''    @parttypeid,
-        '''    @itemname,
-        '''    @productid,
-        '''    @quantity,
-        '''    @userid
-        ''');.
-        '''</summary>
-        Friend ReadOnly Property CompressorPartInsert() As String
-            Get
-                Return ResourceManager.GetString("CompressorPartInsert", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	compressorpart.id,
-        '''	compressorpart.creation,
-        '''	compressorpart.statusid,
-        '''	compressorpart.parttypeid,
-        '''    compressorpart.itemname,
-        '''	IFNULL(compressorpart.productid, 0) AS productid,
-        '''	compressorpart.quantity
-        '''FROM compressorpart
-        '''WHERE 
-        '''	compressorpart.compressorid = @compressorid AND
-        '''	compressorpart.parttypeid = @parttypeid
-        '''ORDER BY compressorpart.id;.
-        '''</summary>
-        Friend ReadOnly Property CompressorPartSelect() As String
-            Get
-                Return ResourceManager.GetString("CompressorPartSelect", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE compressorpart SET
-        '''	statusid = @statusid,
-        '''	itemname = @itemname,
-        '''    productid = @productid,
-        '''	quantity = @quantity,
-        '''	userid = @userid
-        '''WHERE compressorpart.id = @id;.
-        '''</summary>
-        Friend ReadOnly Property CompressorPartUpdate() As String
-            Get
-                Return ResourceManager.GetString("CompressorPartUpdate", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	compressor.id,
         '''	compressor.creation,
         '''    compressor.statusid,
-        '''	compressor.manufacturerid,
+        '''	IFNULL(compressor.manufacturerid, 0) manufacturerid,
+        '''	IFNULL(manufacturer.name, &apos;&apos;) manufacturername,
         '''	compressor.name
         '''FROM compressor
+        '''LEFT JOIN person manufacturer ON compressor.manufacturerid = manufacturer.id
         '''WHERE compressor.id = @id;.
         '''</summary>
         Friend ReadOnly Property CompressorSelect() As String
             Get
                 Return ResourceManager.GetString("CompressorSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM compressorsellable
+        '''WHERE compressorsellable.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property CompressorSellableDelete() As String
+            Get
+                Return ResourceManager.GetString("CompressorSellableDelete", resourceCulture)
             End Get
         End Property
         
@@ -1205,6 +1142,73 @@ Namespace My.Resources
         Friend ReadOnly Property CompressorSellableElapsedDayGrid() As String
             Get
                 Return ResourceManager.GetString("CompressorSellableElapsedDayGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO compressorsellable
+        '''(
+        '''    compressorid,
+        '''    creation,
+        '''    statusid,
+        '''    controltypeid,
+        '''    productid,
+        '''    serviceid,
+        '''    quantity,
+        '''    userid
+        ''')
+        '''VALUES
+        '''(
+        '''    @compressorid,
+        '''    @creation,
+        '''    @statusid,
+        '''    @controltypeid,
+        '''    @productid,
+        '''    @serviceid,
+        '''    @quantity,
+        '''    @userid
+        ''');.
+        '''</summary>
+        Friend ReadOnly Property CompressorSellableInsert() As String
+            Get
+                Return ResourceManager.GetString("CompressorSellableInsert", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	compressorsellable.id,
+        '''	compressorsellable.creation,
+        '''	compressorsellable.statusid,
+        '''	compressorsellable.controltypeid,
+        '''	compressorsellable.productid,
+        '''	compressorsellable.serviceid,
+        '''	compressorsellable.quantity,
+        '''	IFNULL(product.name, service.name) name,
+        '''	IFNULL(productprovidercode.code, &apos;&apos;) code
+        '''FROM compressorsellable
+        '''LEFT JOIN product ON product.id = compressorsellable.productid
+        '''LEFT JOIN service ON service.id = compressorsellable.serviceid
+        '''LEFT JOIN productprovidercode ON productprovid [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property CompressorSellableSelect() As String
+            Get
+                Return ResourceManager.GetString("CompressorSellableSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE compressorsellable SET
+        '''	statusid = @statusid,
+        '''    productid = @productid,
+        '''	serviceid = @serviceid,
+        '''	quantity = @quantity,
+        '''	userid = @userid
+        '''WHERE compressorsellable.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property CompressorSellableUpdate() As String
+            Get
+                Return ResourceManager.GetString("CompressorSellableUpdate", resourceCulture)
             End Get
         End Property
         
@@ -1953,6 +1957,109 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM evaluationpart
+        '''WHERE evaluationpart.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property EvaluationControlledSellableDelete() As String
+            Get
+                Return ResourceManager.GetString("EvaluationControlledSellableDelete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;EvaluationPart&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''	&lt;Column Index=&quot;0&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''		&lt;Visible&gt;False&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Ordem&lt;/Name&gt;
+        '''		&lt;Width&gt;ColumnHeader&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;1&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Código&lt;/Name&gt;
+        '''		&lt;Width&gt;AllCells&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property EvaluationControlledSellableGrid() As String
+            Get
+                Return ResourceManager.GetString("EvaluationControlledSellableGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO evaluationpart
+        '''(
+        '''	creation,
+        '''	evaluationid,
+        '''	personcompressorid,
+        '''	personcompressorpartid,
+        '''	currentcapacity,
+        '''	sold,
+        '''	lost,
+        '''	userid
+        ''')
+        '''VALUES
+        '''(
+        '''	@creation,
+        '''	@evaluationid,
+        '''	@personcompressorid,
+        '''	@personcompressorpartid,
+        '''	@currentcapacity,
+        '''	@sold,
+        '''	@lost,
+        '''	@userid
+        ''');
+        '''.
+        '''</summary>
+        Friend ReadOnly Property EvaluationControlledSellableInsert() As String
+            Get
+                Return ResourceManager.GetString("EvaluationControlledSellableInsert", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	evaluationpart.id,
+        '''	evaluationpart.creation,
+        '''	evaluationpart.personcompressorid,
+        '''	evaluationpart.personcompressorpartid,
+        '''	evaluationpart.currentcapacity,
+        '''	evaluationpart.sold,
+        '''	evaluationpart.lost,
+        '''	evaluationpart.userid
+        '''FROM evaluationpart
+        '''LEFT JOIN personcompressorpart ON personcompressorpart.id = evaluationpart.personcompressorpartid
+        '''WHERE 
+        '''	evaluationpart.evaluationid = @evaluationid AND
+        '''	personcompressorpart.parttypeid = @parttypeid;.
+        '''</summary>
+        Friend ReadOnly Property EvaluationControlledSellableSelect() As String
+            Get
+                Return ResourceManager.GetString("EvaluationControlledSellableSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluationpart SET
+        '''    currentcapacity = @currentcapacity,
+        '''    sold = @sold,
+        '''    lost = @lost,
+        '''    userid = @userid
+        '''WHERE evaluationpart.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property EvaluationControlledSellableUpdate() As String
+            Get
+                Return ResourceManager.GetString("EvaluationControlledSellableUpdate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	COUNT(evaluation.id)
         '''FROM evaluation 
@@ -2135,6 +2242,30 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("EvaluationManagement", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''    IFNULL(personcompressorpart.itemname, product.name) AS item,
+        '''	evaluationpart.currentcapacity,
+        '''	(
+        '''		SELECT 
+        '''			MAX(ev.evaluationdate)
+        '''		FROM evaluation ev
+        '''		LEFT JOIN evaluationpart ep ON ep.evaluationid = ev.id
+        '''		LEFT JOIN personcompressorpart pcp ON pcp.id = ep.personcompressorpartid
+        '''		WHERE 
+        '''			(ep.sold = 1 OR ep.lost = 1) AND 
+        '''			pcp.id = evaluationpart.personcompressorpartid
+        '''	) previousexchange,  
+        '''	CASE
+        '''		WHEN personcompressorpart.parttypeid = 0 THEN
+        '''			evaluation.evaluationdat [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property EvaluationManagementControlledSellableFilter() As String
+            Get
+                Return ResourceManager.GetString("EvaluationManagementControlledSellableFilter", resourceCulture)
             End Get
         End Property
         
@@ -2331,31 +2462,10 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''    IFNULL(personcompressorpart.itemname, product.name) AS item,
-        '''	evaluationpart.currentcapacity,
-        '''	(
-        '''		SELECT 
-        '''			MAX(ev.evaluationdate)
-        '''		FROM evaluation ev
-        '''		LEFT JOIN evaluationpart ep ON ep.evaluationid = ev.id
-        '''		LEFT JOIN personcompressorpart pcp ON pcp.id = ep.personcompressorpartid
-        '''		WHERE 
-        '''			(ep.sold = 1 OR ep.lost = 1) AND 
-        '''			pcp.id = evaluationpart.personcompressorpartid
-        '''	) previousexchange,  
-        '''	CASE
-        '''		WHEN personcompressorpart.parttypeid = 0 THEN
-        '''			evaluation.evaluationdat [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property EvaluationManagementPartFilter() As String
-            Get
-                Return ResourceManager.GetString("EvaluationManagementPartFilter", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	evaluation.evaluationdate + INTERVAL((personcompressor.unitcapacity - evaluation.horimeter) / evaluation.averageworkload) DAY AS nextchange
+        '''	IFNULL(
+        '''	  evaluation.evaluationdate + INTERVAL ((personcompressor.unitcapacity - evaluation.horimeter) / evaluation.averageworkload) DAY,
+        '''	  DATE(&apos;0001-01-01&apos;)
+        '''	) AS nextchange
         '''FROM evaluation
         '''INNER JOIN personcompressor ON personcompressor.id = evaluation.personcompressorid
         '''WHERE evaluation.id = @evaluationid;.
@@ -2363,109 +2473,6 @@ Namespace My.Resources
         Friend ReadOnly Property EvaluationManagementUnit() As String
             Get
                 Return ResourceManager.GetString("EvaluationManagementUnit", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM evaluationpart
-        '''WHERE evaluationpart.id = @id;.
-        '''</summary>
-        Friend ReadOnly Property EvaluationPartDelete() As String
-            Get
-                Return ResourceManager.GetString("EvaluationPartDelete", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;EvaluationPart&quot; Version=&quot;1&quot;&gt;
-        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
-        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
-        '''	&lt;Column Index=&quot;0&quot; ButtonState=&quot;Hidden&quot;&gt;
-        '''		&lt;Visible&gt;False&lt;/Visible&gt;
-        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
-        '''		&lt;Name&gt;Ordem&lt;/Name&gt;
-        '''		&lt;Width&gt;ColumnHeader&lt;/Width&gt;
-        '''	&lt;/Column&gt;
-        '''	&lt;Column Index=&quot;1&quot;&gt;
-        '''		&lt;Visible&gt;True&lt;/Visible&gt;
-        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''		&lt;Name&gt;Código&lt;/Name&gt;
-        '''		&lt;Width&gt;AllCells&lt;/Width&gt;
-        '''	&lt;/Column&gt;
-        '''	&lt;Column Index=&quot;2&quot;&gt;
-        '''		&lt;Visible&gt;True&lt;/Visible&gt;        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property EvaluationPartGrid() As String
-            Get
-                Return ResourceManager.GetString("EvaluationPartGrid", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO evaluationpart
-        '''(
-        '''	creation,
-        '''	evaluationid,
-        '''	personcompressorid,
-        '''	personcompressorpartid,
-        '''	currentcapacity,
-        '''	sold,
-        '''	lost,
-        '''	userid
-        ''')
-        '''VALUES
-        '''(
-        '''	@creation,
-        '''	@evaluationid,
-        '''	@personcompressorid,
-        '''	@personcompressorpartid,
-        '''	@currentcapacity,
-        '''	@sold,
-        '''	@lost,
-        '''	@userid
-        ''');
-        '''.
-        '''</summary>
-        Friend ReadOnly Property EvaluationPartInsert() As String
-            Get
-                Return ResourceManager.GetString("EvaluationPartInsert", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	evaluationpart.id,
-        '''	evaluationpart.creation,
-        '''	evaluationpart.personcompressorid,
-        '''	evaluationpart.personcompressorpartid,
-        '''	evaluationpart.currentcapacity,
-        '''	evaluationpart.sold,
-        '''	evaluationpart.lost,
-        '''	evaluationpart.userid
-        '''FROM evaluationpart
-        '''LEFT JOIN personcompressorpart ON personcompressorpart.id = evaluationpart.personcompressorpartid
-        '''WHERE 
-        '''	evaluationpart.evaluationid = @evaluationid AND
-        '''	personcompressorpart.parttypeid = @parttypeid;.
-        '''</summary>
-        Friend ReadOnly Property EvaluationPartSelect() As String
-            Get
-                Return ResourceManager.GetString("EvaluationPartSelect", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluationpart SET
-        '''    currentcapacity = @currentcapacity,
-        '''    sold = @sold,
-        '''    lost = @lost,
-        '''    userid = @userid
-        '''WHERE evaluationpart.id = @id;.
-        '''</summary>
-        Friend ReadOnly Property EvaluationPartUpdate() As String
-            Get
-                Return ResourceManager.GetString("EvaluationPartUpdate", resourceCulture)
             End Get
         End Property
         
@@ -2595,9 +2602,9 @@ Namespace My.Resources
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM evaluationreplacedpart
         '''WHERE evaluationreplacedpart.id = @id;.
         '''</summary>
-        Friend ReadOnly Property EvaluationReplacedPartDelete() As String
+        Friend ReadOnly Property EvaluationReplacedSellableDelete() As String
             Get
-                Return ResourceManager.GetString("EvaluationReplacedPartDelete", resourceCulture)
+                Return ResourceManager.GetString("EvaluationReplacedSellableDelete", resourceCulture)
             End Get
         End Property
         
@@ -2620,9 +2627,9 @@ Namespace My.Resources
         '''	&lt;/Column&gt;
         '''	&lt;Column  [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
-        Friend ReadOnly Property EvaluationReplacedPartGrid() As String
+        Friend ReadOnly Property EvaluationReplacedSellableGrid() As String
             Get
-                Return ResourceManager.GetString("EvaluationReplacedPartGrid", resourceCulture)
+                Return ResourceManager.GetString("EvaluationReplacedSellableGrid", resourceCulture)
             End Get
         End Property
         
@@ -2645,9 +2652,9 @@ Namespace My.Resources
         ''');
         '''.
         '''</summary>
-        Friend ReadOnly Property EvaluationReplacedPartInsert() As String
+        Friend ReadOnly Property EvaluationReplacedSellableInsert() As String
             Get
-                Return ResourceManager.GetString("EvaluationReplacedPartInsert", resourceCulture)
+                Return ResourceManager.GetString("EvaluationReplacedSellableInsert", resourceCulture)
             End Get
         End Property
         
@@ -2660,9 +2667,9 @@ Namespace My.Resources
         '''FROM evaluationreplacedpart
         '''WHERE evaluationreplacedpart.evaluationid = @evaluationid;.
         '''</summary>
-        Friend ReadOnly Property EvaluationReplacedPartSelect() As String
+        Friend ReadOnly Property EvaluationReplacedSellableSelect() As String
             Get
-                Return ResourceManager.GetString("EvaluationReplacedPartSelect", resourceCulture)
+                Return ResourceManager.GetString("EvaluationReplacedSellableSelect", resourceCulture)
             End Get
         End Property
         
@@ -2674,9 +2681,9 @@ Namespace My.Resources
         '''WHERE evaluationreplacedpart.id = @id;
         '''.
         '''</summary>
-        Friend ReadOnly Property EvaluationReplacedPartUpdate() As String
+        Friend ReadOnly Property EvaluationReplacedSellableUpdate() As String
             Get
-                Return ResourceManager.GetString("EvaluationReplacedPartUpdate", resourceCulture)
+                Return ResourceManager.GetString("EvaluationReplacedSellableUpdate", resourceCulture)
             End Get
         End Property
         
@@ -3455,12 +3462,32 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	personcompressor.id,
+        '''	personcompressor.creation,
+        '''	personcompressor.statusid,
+        '''	personcompressor.compressorid,
+        '''    personcompressor.serialnumber,
+        '''	personcompressor.patrimony,
+        '''	personcompressor.sector,
+        '''	personcompressor.unitcapacity,
+        '''	personcompressor.note
+        '''FROM personcompressor
+        '''WHERE personcompressor.personid = @personid;.
+        '''</summary>
+        Friend ReadOnly Property PersonCompressorSelect() As String
+            Get
+                Return ResourceManager.GetString("PersonCompressorSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM personcompressorpart
         '''WHERE personcompressorpart.id = @id;.
         '''</summary>
-        Friend ReadOnly Property PersonCompressorPartDelete() As String
+        Friend ReadOnly Property PersonCompressorSellableDelete() As String
             Get
-                Return ResourceManager.GetString("PersonCompressorPartDelete", resourceCulture)
+                Return ResourceManager.GetString("PersonCompressorSellableDelete", resourceCulture)
             End Get
         End Property
         
@@ -3484,9 +3511,9 @@ Namespace My.Resources
         '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
         '''		&lt;Visible&gt;False&lt;/Visible&gt;        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
-        Friend ReadOnly Property PersonCompressorPartElapsedDayGrid() As String
+        Friend ReadOnly Property PersonCompressorSellableElapsedDayGrid() As String
             Get
-                Return ResourceManager.GetString("PersonCompressorPartElapsedDayGrid", resourceCulture)
+                Return ResourceManager.GetString("PersonCompressorSellableElapsedDayGrid", resourceCulture)
             End Get
         End Property
         
@@ -3519,9 +3546,9 @@ Namespace My.Resources
         ''');
         '''.
         '''</summary>
-        Friend ReadOnly Property PersonCompressorPartInsert() As String
+        Friend ReadOnly Property PersonCompressorSellableInsert() As String
             Get
-                Return ResourceManager.GetString("PersonCompressorPartInsert", resourceCulture)
+                Return ResourceManager.GetString("PersonCompressorSellableInsert", resourceCulture)
             End Get
         End Property
         
@@ -3542,9 +3569,9 @@ Namespace My.Resources
         '''	personcompressorpart.parttypeid = @parttypeid
         '''ORDER BY personcompressorpart.id;        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
-        Friend ReadOnly Property PersonCompressorPartSelect() As String
+        Friend ReadOnly Property PersonCompressorSellableSelect() As String
             Get
-                Return ResourceManager.GetString("PersonCompressorPartSelect", resourceCulture)
+                Return ResourceManager.GetString("PersonCompressorSellableSelect", resourceCulture)
             End Get
         End Property
         
@@ -3559,9 +3586,9 @@ Namespace My.Resources
         '''	userid = @userid
         '''WHERE personcompressorpart.id = @id;.
         '''</summary>
-        Friend ReadOnly Property PersonCompressorPartUpdate() As String
+        Friend ReadOnly Property PersonCompressorSellableUpdate() As String
             Get
-                Return ResourceManager.GetString("PersonCompressorPartUpdate", resourceCulture)
+                Return ResourceManager.GetString("PersonCompressorSellableUpdate", resourceCulture)
             End Get
         End Property
         
@@ -3585,29 +3612,9 @@ Namespace My.Resources
         '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
         '''		&lt;Visible&gt;False&lt;/Visible&gt;        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
-        Friend ReadOnly Property PersonCompressorPartWorkedHourGrid() As String
+        Friend ReadOnly Property PersonCompressorSellableWorkedHourGrid() As String
             Get
-                Return ResourceManager.GetString("PersonCompressorPartWorkedHourGrid", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	personcompressor.id,
-        '''	personcompressor.creation,
-        '''	personcompressor.statusid,
-        '''	personcompressor.compressorid,
-        '''    personcompressor.serialnumber,
-        '''	personcompressor.patrimony,
-        '''	personcompressor.sector,
-        '''	personcompressor.unitcapacity,
-        '''	personcompressor.note
-        '''FROM personcompressor
-        '''WHERE personcompressor.personid = @personid;.
-        '''</summary>
-        Friend ReadOnly Property PersonCompressorSelect() As String
-            Get
-                Return ResourceManager.GetString("PersonCompressorSelect", resourceCulture)
+                Return ResourceManager.GetString("PersonCompressorSellableWorkedHourGrid", resourceCulture)
             End Get
         End Property
         

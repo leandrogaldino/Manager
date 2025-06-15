@@ -1,12 +1,12 @@
 ﻿''' <summary>
 ''' Representa uma peça de um compressor da pessoa.
 ''' </summary>
-Public Class PersonCompressorPart
+Public Class PersonCompressorSellable
     Inherits ChildModel
     Private _ProductID As Long
     Private _PartType As CompressorSellableControlType
     Public Property Status As SimpleStatus = SimpleStatus.Active
-    Public Property PartBind As CompressorPartBindType = CompressorPartBindType.None
+    Public Property PartBind As CompressorSellableBindType = CompressorSellableBindType.None
     Public ReadOnly Property PartType As CompressorSellableControlType
         Get
             Return _PartType
@@ -33,7 +33,7 @@ Public Class PersonCompressorPart
     Public Property Capacity As Integer
     Public ReadOnly Property PartBinded As Boolean
         Get
-            Return PartBind <> CompressorPartBindType.None
+            Return PartBind <> CompressorSellableBindType.None
         End Get
     End Property
     Public Overrides Function ToString() As String
@@ -42,9 +42,9 @@ Public Class PersonCompressorPart
     Public Sub New(PartType As CompressorSellableControlType)
         _PartType = PartType
         If _PartType = CompressorSellableControlType.ElapsedDay Then
-            SetRoutine(Routine.PersonCompressorPartElapsedDay)
+            SetRoutine(Routine.PersonCompressorSellableElapsedDay)
         Else
-            SetRoutine(Routine.PersonCompressorPartWorkedHour)
+            SetRoutine(Routine.PersonCompressorSellableWorkedHour)
         End If
     End Sub
 End Class

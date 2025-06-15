@@ -229,17 +229,17 @@ Public Class Compressor
     Private Function GetSellables(Tra As MySqlTransaction, ControlType As CompressorSellableControlType) As List(Of CompressorSellable)
         Dim Session = Locator.GetInstance(Of Session)
         Dim TableResult As DataTable
-        Dim PartsWorkedHour As List(Of CompressorSellable)
-        Dim PartWorkedHour As CompressorSellable
-        Using CmdPartWorkedHour As New MySqlCommand(My.Resources.CompressorSellableSelect, Tra.Connection, Tra)
-            CmdPartWorkedHour.Parameters.AddWithValue("@compressorid", ID)
-            CmdPartWorkedHour.Parameters.AddWithValue("@controltypeid", ControlType)
-            Using Adp As New MySqlDataAdapter(CmdPartWorkedHour)
+        Dim WorkedHourSellables As List(Of CompressorSellable)
+        Dim WorkedHourSellable As CompressorSellable
+        Using CmdWorkedHour As New MySqlCommand(My.Resources.CompressorSellableSelect, Tra.Connection, Tra)
+            CmdWorkedHour.Parameters.AddWithValue("@compressorid", ID)
+            CmdWorkedHour.Parameters.AddWithValue("@controltypeid", ControlType)
+            Using Adp As New MySqlDataAdapter(CmdWorkedHour)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
-                PartsWorkedHour = New List(Of CompressorSellable)
+                WorkedHourSellables = New List(Of CompressorSellable)
                 For Each Row As DataRow In TableResult.Rows
-                    PartWorkedHour = New CompressorSellable(Row.Item("controltypeid")) With {
+                    WorkedHourSellable = New CompressorSellable(Row.Item("controltypeid")) With {
                             .Status = Row.Item("statusid"),
                             .Code = Row.Item("code"),
                             .Name = Row.Item("name"),
@@ -253,17 +253,15 @@ Public Class Compressor
                                                               End Function),
                             .Quantity = Row.Item("quantity")
                         }
-                    PartWorkedHour.SetID(Row.Item("id"))
-                    PartWorkedHour.SetCreation(Row.Item("creation"))
-                    PartWorkedHour.SetIsSaved(True)
-                    PartsWorkedHour.Add(PartWorkedHour)
+                    WorkedHourSellable.SetID(Row.Item("id"))
+                    WorkedHourSellable.SetCreation(Row.Item("creation"))
+                    WorkedHourSellable.SetIsSaved(True)
+                    WorkedHourSellables.Add(WorkedHourSellable)
                 Next Row
             End Using
         End Using
-        Return PartsWorkedHour
+        Return WorkedHourSellables
     End Function
-
-
     Public Shared Sub FillSellableDataGridView(CompressorID As Long, Dgv As DataGridView, ControlType As CompressorSellableControlType)
         Dim Session = Locator.GetInstance(Of Session)
         Dim TableResult As New DataTable
@@ -288,5 +286,4 @@ Public Class Compressor
             End Using
         End Using
     End Sub
-
 End Class

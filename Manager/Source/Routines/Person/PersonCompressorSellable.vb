@@ -7,7 +7,7 @@ Public Class PersonCompressorSellable
     Inherits ChildModel
     Private ReadOnly _ControlType As CompressorSellableControlType
     Public Property Status As SimpleStatus = SimpleStatus.Active
-    Public Property PartBind As CompressorSellableBindType = CompressorSellableBindType.None
+    Public Property SellableBind As CompressorSellableBindType = CompressorSellableBindType.None
     <IgnoreInToTable>
     Public ReadOnly Property SellableType As SellableType
         Get
@@ -41,9 +41,9 @@ Public Class PersonCompressorSellable
     Public Property Name As String
     Public Property Quantity As Decimal
     Public Property Capacity As Integer
-    Public ReadOnly Property PartBinded As Boolean
+    Public ReadOnly Property IsSellableBinded As Boolean
         Get
-            Return PartBind <> CompressorSellableBindType.None
+            Return SellableBind <> CompressorSellableBindType.None
         End Get
     End Property
 

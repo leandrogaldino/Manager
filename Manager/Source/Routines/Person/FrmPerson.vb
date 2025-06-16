@@ -587,14 +587,14 @@ Public Class FrmPerson
                     ElseIf ex.Message.Contains("evaluationpart_personcompressorpart") Then
                         CMessageBox.Show("Existe avaliação para um ou mais itens excluídos. Todos os itens excluídos serão restaurados.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                         For Each Compressor As PersonCompressor In _CompressorsShadow
-                            For Each PartWorkedHour As PersonCompressorSellable In Compressor.PartsWorkedHour
-                                If Not _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).PartsWorkedHour.Any(Function(y) y.ID = PartWorkedHour.ID) Then
-                                    _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).PartsWorkedHour.Add(Compressor.PartsWorkedHour.Single(Function(y) y.ID = PartWorkedHour.ID))
+                            For Each PartWorkedHour As PersonCompressorSellable In Compressor.WorkedHourSellables
+                                If Not _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).WorkedHourSellables.Any(Function(y) y.ID = PartWorkedHour.ID) Then
+                                    _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).WorkedHourSellables.Add(Compressor.WorkedHourSellables.Single(Function(y) y.ID = PartWorkedHour.ID))
                                 End If
                             Next PartWorkedHour
-                            For Each PartElapsedDay As PersonCompressorSellable In Compressor.PartsElapsedDay
-                                If Not _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).PartsElapsedDay.Any(Function(y) y.ID = PartElapsedDay.ID) Then
-                                    _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).PartsElapsedDay.Add(Compressor.PartsElapsedDay.Single(Function(y) y.ID = PartElapsedDay.ID))
+                            For Each PartElapsedDay As PersonCompressorSellable In Compressor.ElapsedDaySellables
+                                If Not _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).ElapsedDaySellables.Any(Function(y) y.ID = PartElapsedDay.ID) Then
+                                    _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).ElapsedDaySellables.Add(Compressor.ElapsedDaySellables.Single(Function(y) y.ID = PartElapsedDay.ID))
                                 End If
                             Next PartElapsedDay
                         Next

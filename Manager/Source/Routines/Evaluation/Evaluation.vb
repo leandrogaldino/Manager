@@ -36,14 +36,14 @@ Public Class Evaluation
                 If value.ID <> _Compressor.ID Then
                     PartsWorkedHour.Clear()
                     PartsElapsedDay.Clear()
-                    For Each p In value.PartsWorkedHour.Where(Function(x) x.Status = SimpleStatus.Active)
+                    For Each p In value.WorkedHourSellables.Where(Function(x) x.Status = SimpleStatus.Active)
                         PartsWorkedHour.Add(New EvaluationControlledSellable(CompressorSellableControlType.WorkedHour) With {.Part = p})
                     Next p
-                    For Each p In value.PartsElapsedDay.Where(Function(x) x.Status = SimpleStatus.Active)
+                    For Each p In value.ElapsedDaySellables.Where(Function(x) x.Status = SimpleStatus.Active)
                         PartsElapsedDay.Add(New EvaluationControlledSellable(CompressorSellableControlType.ElapsedDay) With {.Part = p})
                     Next p
                 Else
-                    For Each p In value.PartsWorkedHour
+                    For Each p In value.WorkedHourSellables
                         CurrentPart = PartsWorkedHour.SingleOrDefault(Function(x) x.Part.ID = p.ID)
                         If CurrentPart IsNot Nothing Then
                             CurrentPart.Part = p
@@ -58,7 +58,7 @@ Public Class Evaluation
                             PartsWorkedHour.Remove(p)
                         End If
                     Next p
-                    For Each p In value.PartsElapsedDay
+                    For Each p In value.ElapsedDaySellables
                         CurrentPart = PartsElapsedDay.SingleOrDefault(Function(x) x.Part.ID = p.ID)
                         If CurrentPart IsNot Nothing Then
                             CurrentPart.Part = p
@@ -249,7 +249,7 @@ Public Class Evaluation
                         PartsWorkedHour.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).Lost = Row.Item("lost")
                     Else
                         Part = New EvaluationControlledSellable(CompressorSellableControlType.WorkedHour) With {
-                            .Part = Compressor.PartsWorkedHour.Single(Function(x) x.ID = Row.Item("personcompressorpartid")),
+                            .Part = Compressor.WorkedHourSellables.Single(Function(x) x.ID = Row.Item("personcompressorpartid")),
                             .CurrentCapacity = Row.Item("currentcapacity"),
                             .Sold = Row.Item("sold"),
                             .Lost = Row.Item("lost")
@@ -279,7 +279,7 @@ Public Class Evaluation
                         PartsElapsedDay.Single(Function(x) x.Part.ID = Row.Item("personcompressorpartid")).Lost = Row.Item("lost")
                     Else
                         Part = New EvaluationControlledSellable(CompressorSellableControlType.ElapsedDay) With {
-                            .Part = Compressor.PartsElapsedDay.Single(Function(x) x.ID = Row.Item("personcompressorpartid")),
+                            .Part = Compressor.ElapsedDaySellables.Single(Function(x) x.ID = Row.Item("personcompressorpartid")),
                             .CurrentCapacity = Row.Item("currentcapacity"),
                             .Sold = Row.Item("sold"),
                             .Lost = Row.Item("lost")
@@ -831,10 +831,10 @@ Public Class Evaluation
         Evaluation.StartTime = TimeSpan.ParseExact(Data("starttime"), "hh\:mm", Nothing)
         Evaluation.EndTime = TimeSpan.ParseExact(Data("endtime"), "hh\:mm", Nothing)
         Evaluation.Horimeter = Data("horimeter")
-        Dim AirFilter As List(Of EvaluationControlledSellable) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorSellableBindType.AirFilter).ToList
-        Dim OilFilter As List(Of EvaluationControlledSellable) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorSellableBindType.OilFilter).ToList
-        Dim Separator As List(Of EvaluationControlledSellable) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorSellableBindType.Separator).ToList
-        Dim Oil As List(Of EvaluationControlledSellable) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.PartBind = CompressorSellableBindType.Oil).ToList
+        Dim AirFilter As List(Of EvaluationControlledSellable) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.SellableBind = CompressorSellableBindType.AirFilter).ToList
+        Dim OilFilter As List(Of EvaluationControlledSellable) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.SellableBind = CompressorSellableBindType.OilFilter).ToList
+        Dim Separator As List(Of EvaluationControlledSellable) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.SellableBind = CompressorSellableBindType.Separator).ToList
+        Dim Oil As List(Of EvaluationControlledSellable) = Evaluation.PartsWorkedHour.Where(Function(x) x.Part.SellableBind = CompressorSellableBindType.Oil).ToList
 
         Evaluation.PartsWorkedHour.ToList.ForEach(Sub(x)
                                                       x.SetIsSaved(True)
@@ -865,7 +865,7 @@ Public Class Evaluation
                         x.SetIsSaved(True)
                     End Sub)
         For Each CoalescentData As Dictionary(Of String, Object) In Data("coalescents")
-            Coalescent = Evaluation.PartsElapsedDay.Where(Function(y) y.Part.PartBinded).FirstOrDefault(Function(x) x.Part.ID = CoalescentData("coalescentid"))
+            Coalescent = Evaluation.PartsElapsedDay.Where(Function(y) y.Part.IsSellableBinded).FirstOrDefault(Function(x) x.Part.ID = CoalescentData("coalescentid"))
             If Coalescent IsNot Nothing Then
                 Coalescent.CurrentCapacity = DateDiff(DateInterval.Day, Today, DateTimeHelper.DateFromMilliseconds((CoalescentData("nextchange"))))
                 Coalescent.Sold = False

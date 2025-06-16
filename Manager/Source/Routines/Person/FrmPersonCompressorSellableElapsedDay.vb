@@ -38,7 +38,7 @@ Public Class FrmPersonCompressorSellableElapsedDay
         LblOrderValue.Text = If(_PartElapsedDay.IsSaved, _PersonCompressorForm.DgvPartElapsedDay.SelectedRows(0).Cells("Order").Value, 0)
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_PartElapsedDay.Status)
         LblCreationValue.Text = _PartElapsedDay.Creation
-        CbxSellableBind.Text = EnumHelper.GetEnumDescription(_PartElapsedDay.PartBind)
+        CbxSellableBind.Text = EnumHelper.GetEnumDescription(_PartElapsedDay.SellableBind)
         QbxSellable.Unfreeze()
         If _PartElapsedDay.ItemName = Nothing And _PartElapsedDay.Product.Value.ID > 0 Then
             QbxSellable.Freeze(_PartElapsedDay.Product.Value.ID)
@@ -72,7 +72,7 @@ Public Class FrmPersonCompressorSellableElapsedDay
     Private Sub AfterDataGridViewRowMove()
         If _PersonCompressorForm.DgvPartElapsedDay.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _PartElapsedDay = _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PersonCompressorForm.DgvPartElapsedDay.SelectedRows(0).Cells("Guid").Value)
+            _PartElapsedDay = _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _PersonCompressorForm.DgvPartElapsedDay.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -143,24 +143,24 @@ Public Class FrmPersonCompressorSellableElapsedDay
             EprValidation.SetIconAlignment(LblItem, ErrorIconAlignment.MiddleRight)
             QbxSellable.Select()
             Return False
-        ElseIf QbxSellable.IsFreezed AndAlso _PersonCompressor.PartsElapsedDay.SingleOrDefault(Function(x) x.Product.Value.ID = QbxSellable.FreezedPrimaryKey) IsNot Nothing AndAlso
-            Not _PartElapsedDay.Equals(_PersonCompressor.PartsElapsedDay.SingleOrDefault(Function(x) x.Product.Value.ID = QbxSellable.FreezedPrimaryKey)) Then
+        ElseIf QbxSellable.IsFreezed AndAlso _PersonCompressor.ElapsedDaySellables.SingleOrDefault(Function(x) x.Product.Value.ID = QbxSellable.FreezedPrimaryKey) IsNot Nothing AndAlso
+            Not _PartElapsedDay.Equals(_PersonCompressor.ElapsedDaySellables.SingleOrDefault(Function(x) x.Product.Value.ID = QbxSellable.FreezedPrimaryKey)) Then
             EprValidation.SetError(LblItem, "Um item com esse nome já foi adicionado para esse compressor.")
             EprValidation.SetIconAlignment(LblItem, ErrorIconAlignment.MiddleRight)
             QbxSellable.Select()
             Return False
-        ElseIf QbxSellable.IsFreezed AndAlso _PersonCompressor.PartsWorkedHour.SingleOrDefault(Function(x) x.Product.Value.ID = QbxSellable.FreezedPrimaryKey) IsNot Nothing Then
+        ElseIf QbxSellable.IsFreezed AndAlso _PersonCompressor.WorkedHourSellables.SingleOrDefault(Function(x) x.Product.Value.ID = QbxSellable.FreezedPrimaryKey) IsNot Nothing Then
             EprValidation.SetError(LblItem, "Um item com esse nome já foi adicionado para esse compressor.")
             EprValidation.SetIconAlignment(LblItem, ErrorIconAlignment.MiddleRight)
             QbxSellable.Select()
             Return False
-        ElseIf Not QbxSellable.IsFreezed AndAlso _PersonCompressor.PartsElapsedDay.SingleOrDefault(Function(x) x.ItemName = QbxSellable.Text) IsNot Nothing AndAlso
-            Not _PartElapsedDay.Equals(_PersonCompressor.PartsElapsedDay.SingleOrDefault(Function(x) x.Product.Value.ID = QbxSellable.FreezedPrimaryKey)) Then
+        ElseIf Not QbxSellable.IsFreezed AndAlso _PersonCompressor.ElapsedDaySellables.SingleOrDefault(Function(x) x.ItemName = QbxSellable.Text) IsNot Nothing AndAlso
+            Not _PartElapsedDay.Equals(_PersonCompressor.ElapsedDaySellables.SingleOrDefault(Function(x) x.Product.Value.ID = QbxSellable.FreezedPrimaryKey)) Then
             EprValidation.SetError(LblItem, "Um item com esse nome já foi adicionado para esse compressor.")
             EprValidation.SetIconAlignment(LblItem, ErrorIconAlignment.MiddleRight)
             QbxSellable.Select()
             Return False
-        ElseIf Not QbxSellable.IsFreezed AndAlso _PersonCompressor.PartsWorkedHour.SingleOrDefault(Function(x) x.ItemName = QbxSellable.Text) IsNot Nothing Then
+        ElseIf Not QbxSellable.IsFreezed AndAlso _PersonCompressor.WorkedHourSellables.SingleOrDefault(Function(x) x.ItemName = QbxSellable.Text) IsNot Nothing Then
             EprValidation.SetError(LblItem, "Um item com esse nome já foi adicionado para esse compressor.")
             EprValidation.SetIconAlignment(LblItem, ErrorIconAlignment.MiddleRight)
             QbxSellable.Select()
@@ -187,21 +187,21 @@ Public Class FrmPersonCompressorSellableElapsedDay
         End If
         If IsValidFields() Then
             If _PartElapsedDay.IsSaved Then
-                _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
-                _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PartElapsedDay.Guid).PartBind = EnumHelper.GetEnumValue(Of CompressorSellableBindType)(CbxSellableBind.Text)
+                _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _PartElapsedDay.Guid).SellableBind = EnumHelper.GetEnumValue(Of CompressorSellableBindType)(CbxSellableBind.Text)
                 If QbxSellable.IsFreezed Then
-                    _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PartElapsedDay.Guid).ItemName = Nothing
-                    _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Product = New Lazy(Of Product)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
+                    _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _PartElapsedDay.Guid).ItemName = Nothing
+                    _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Product = New Lazy(Of Product)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
                 Else
-                    _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PartElapsedDay.Guid).ItemName = QbxSellable.Text
-                    _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Product = New Lazy(Of Product)()
+                    _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _PartElapsedDay.Guid).ItemName = QbxSellable.Text
+                    _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Product = New Lazy(Of Product)()
                 End If
-                _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Quantity = DbxQuantity.Text
-                _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Capacity = DbxCapacity.Text
+                _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Quantity = DbxQuantity.Text
+                _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _PartElapsedDay.Guid).Capacity = DbxCapacity.Text
             Else
                 _PartElapsedDay = New PersonCompressorSellable(CompressorSellableControlType.ElapsedDay)
                 _PartElapsedDay.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
-                _PartElapsedDay.PartBind = EnumHelper.GetEnumValue(Of CompressorSellableBindType)(CbxSellableBind.Text)
+                _PartElapsedDay.SellableBind = EnumHelper.GetEnumValue(Of CompressorSellableBindType)(CbxSellableBind.Text)
                 If QbxSellable.IsFreezed Then
                     _PartElapsedDay.ItemName = Nothing
                     _PartElapsedDay.Product = New Lazy(Of Product)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
@@ -212,9 +212,9 @@ Public Class FrmPersonCompressorSellableElapsedDay
                 _PartElapsedDay.Quantity = DbxQuantity.Text
                 _PartElapsedDay.Capacity = DbxCapacity.Text
                 _PartElapsedDay.SetIsSaved(True)
-                _PersonCompressor.PartsElapsedDay.Add(_PartElapsedDay)
+                _PersonCompressor.ElapsedDaySellables.Add(_PartElapsedDay)
             End If
-            _PersonCompressorForm.DgvPartElapsedDay.Fill(_PersonCompressor.PartsElapsedDay)
+            _PersonCompressorForm.DgvPartElapsedDay.Fill(_PersonCompressor.ElapsedDaySellables)
             _PersonCompressorForm.DgvPartElapsedDayLayout.Load()
             BtnSave.Enabled = False
             If Not _PartElapsedDay.IsSaved Then
@@ -291,9 +291,9 @@ Public Class FrmPersonCompressorSellableElapsedDay
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _PersonCompressorForm.DgvPartElapsedDay.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _PartElapsedDay = _PersonCompressor.PartsElapsedDay.Single(Function(x) x.Guid = _PersonCompressorForm.DgvPartElapsedDay.SelectedRows(0).Cells("Guid").Value)
-                _PersonCompressor.PartsElapsedDay.Remove(_PartElapsedDay)
-                _PersonCompressorForm.DgvPartElapsedDay.Fill(_PersonCompressor.PartsElapsedDay)
+                _PartElapsedDay = _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _PersonCompressorForm.DgvPartElapsedDay.SelectedRows(0).Cells("Guid").Value)
+                _PersonCompressor.ElapsedDaySellables.Remove(_PartElapsedDay)
+                _PersonCompressorForm.DgvPartElapsedDay.Fill(_PersonCompressor.ElapsedDaySellables)
                 _PersonCompressorForm.DgvPartElapsedDayLayout.Load()
                 _Deleting = True
                 Dispose()

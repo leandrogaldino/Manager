@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Routine Id="PersonContact" Version="2">
+<Routine Id="PersonContact" Version="1">
 	<SortedColumn>-1</SortedColumn>
 	<SortDirection>0</SortDirection>
     <Column Index="0">

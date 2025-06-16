@@ -25,7 +25,7 @@ Public Class FrmPersonCompressorSellableWorkedHour
         _PartWorkedHour = PersonCompressorPart
         _PersonCompressorForm = PersonCompressorForm
         _User = Locator.GetInstance(Of Session).User
-        CbxPartBind.Items.AddRange(EnumHelper.GetEnumDescriptions(Of CompressorSellableBindType).Where(Function(x) x <> "COALESCENTE").ToArray)
+        CbxSellableBind.Items.AddRange(EnumHelper.GetEnumDescriptions(Of CompressorSellableBindType).Where(Function(x) x <> "COALESCENTE").ToArray)
         LoadForm()
         DgvNavigator.DataGridView = _PersonCompressorForm.DgvPartWorkedHour
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
@@ -37,14 +37,14 @@ Public Class FrmPersonCompressorSellableWorkedHour
         LblOrderValue.Text = If(_PartWorkedHour.IsSaved, _PersonCompressorForm.DgvPartWorkedHour.SelectedRows(0).Cells("Order").Value, 0)
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_PartWorkedHour.Status)
         LblCreationValue.Text = _PartWorkedHour.Creation
-        CbxPartBind.Text = EnumHelper.GetEnumDescription(_PartWorkedHour.PartBind)
-        QbxItem.Unfreeze()
+        CbxSellableBind.Text = EnumHelper.GetEnumDescription(_PartWorkedHour.PartBind)
+        QbxSellable.Unfreeze()
         If _PartWorkedHour.ItemName = Nothing And _PartWorkedHour.Product.Value.ID > 0 Then
-            QbxItem.Freeze(_PartWorkedHour.Product.Value.ID)
+            QbxSellable.Freeze(_PartWorkedHour.Product.Value.ID)
         ElseIf _PartWorkedHour.ItemName <> Nothing And _PartWorkedHour.Product.Value.ID >= 0 Then
-            QbxItem.QueryEnabled = False
-            QbxItem.Text = _PartWorkedHour.ItemName
-            QbxItem.QueryEnabled = True
+            QbxSellable.QueryEnabled = False
+            QbxSellable.Text = _PartWorkedHour.ItemName
+            QbxSellable.QueryEnabled = True
         End If
         DbxQuantity.Text = _PartWorkedHour.Quantity
         DbxCapacity.Text = _PartWorkedHour.Capacity
@@ -56,7 +56,7 @@ Public Class FrmPersonCompressorSellableWorkedHour
             BtnDelete.Enabled = True
         End If
         BtnSave.Enabled = False
-        QbxItem.Select()
+        QbxSellable.Select()
         _Loading = False
     End Sub
     Private Sub BeforeDataGridViewRowMove()
@@ -123,11 +123,11 @@ Public Class FrmPersonCompressorSellableWorkedHour
         EprValidation.Clear()
         BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
-    Private Sub CbxPartBind_TextChanged(sender As Object, e As EventArgs) Handles CbxPartBind.SelectedIndexChanged
+    Private Sub CbxPartBind_TextChanged(sender As Object, e As EventArgs) Handles CbxSellableBind.SelectedIndexChanged
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
-    Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles DbxQuantity.TextChanged, DbxCapacity.TextChanged, QbxItem.TextChanged
+    Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles DbxQuantity.TextChanged, DbxCapacity.TextChanged, QbxSellable.TextChanged
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
@@ -135,32 +135,32 @@ Public Class FrmPersonCompressorSellableWorkedHour
         PreSave()
     End Sub
     Private Function IsValidFields() As Boolean
-        If String.IsNullOrEmpty(QbxItem.Text) Then
+        If String.IsNullOrEmpty(QbxSellable.Text) Then
             EprValidation.SetError(LblItem, "Campo Obrigatório.")
             EprValidation.SetIconAlignment(LblItem, ErrorIconAlignment.MiddleRight)
-            QbxItem.Select()
+            QbxSellable.Select()
             Return False
-        ElseIf QbxItem.IsFreezed AndAlso _PersonCompressor.PartsWorkedHour.SingleOrDefault(Function(x) x.Product.Value.ID = QbxItem.FreezedPrimaryKey) IsNot Nothing AndAlso
-            Not _PartWorkedHour.Equals(_PersonCompressor.PartsWorkedHour.SingleOrDefault(Function(x) x.Product.Value.ID = QbxItem.FreezedPrimaryKey)) Then
+        ElseIf QbxSellable.IsFreezed AndAlso _PersonCompressor.PartsWorkedHour.SingleOrDefault(Function(x) x.Product.Value.ID = QbxSellable.FreezedPrimaryKey) IsNot Nothing AndAlso
+            Not _PartWorkedHour.Equals(_PersonCompressor.PartsWorkedHour.SingleOrDefault(Function(x) x.Product.Value.ID = QbxSellable.FreezedPrimaryKey)) Then
             EprValidation.SetError(LblItem, "Um item com esse nome já foi adicionado para esse compressor.")
             EprValidation.SetIconAlignment(LblItem, ErrorIconAlignment.MiddleRight)
-            QbxItem.Select()
+            QbxSellable.Select()
             Return False
-        ElseIf QbxItem.IsFreezed AndAlso _PersonCompressor.PartsElapsedDay.SingleOrDefault(Function(x) x.Product.Value.ID = QbxItem.FreezedPrimaryKey) IsNot Nothing Then
+        ElseIf QbxSellable.IsFreezed AndAlso _PersonCompressor.PartsElapsedDay.SingleOrDefault(Function(x) x.Product.Value.ID = QbxSellable.FreezedPrimaryKey) IsNot Nothing Then
             EprValidation.SetError(LblItem, "Um item com esse nome já foi adicionado para esse compressor.")
             EprValidation.SetIconAlignment(LblItem, ErrorIconAlignment.MiddleRight)
-            QbxItem.Select()
+            QbxSellable.Select()
             Return False
-        ElseIf Not QbxItem.IsFreezed AndAlso _PersonCompressor.PartsWorkedHour.SingleOrDefault(Function(x) x.ItemName = QbxItem.Text) IsNot Nothing AndAlso
-            Not _PartWorkedHour.Equals(_PersonCompressor.PartsWorkedHour.SingleOrDefault(Function(x) x.ItemName = QbxItem.Text)) Then
+        ElseIf Not QbxSellable.IsFreezed AndAlso _PersonCompressor.PartsWorkedHour.SingleOrDefault(Function(x) x.ItemName = QbxSellable.Text) IsNot Nothing AndAlso
+            Not _PartWorkedHour.Equals(_PersonCompressor.PartsWorkedHour.SingleOrDefault(Function(x) x.ItemName = QbxSellable.Text)) Then
             EprValidation.SetError(LblItem, "Um item com esse nome já foi adicionado para esse compressor.")
             EprValidation.SetIconAlignment(LblItem, ErrorIconAlignment.MiddleRight)
-            QbxItem.Select()
+            QbxSellable.Select()
             Return False
-        ElseIf Not QbxItem.IsFreezed AndAlso _PersonCompressor.PartsElapsedDay.SingleOrDefault(Function(x) x.ItemName = QbxItem.Text) IsNot Nothing Then
+        ElseIf Not QbxSellable.IsFreezed AndAlso _PersonCompressor.PartsElapsedDay.SingleOrDefault(Function(x) x.ItemName = QbxSellable.Text) IsNot Nothing Then
             EprValidation.SetError(LblItem, "Um item com esse nome já foi adicionado para esse compressor.")
             EprValidation.SetIconAlignment(LblItem, ErrorIconAlignment.MiddleRight)
-            QbxItem.Select()
+            QbxSellable.Select()
             Return False
         ElseIf DbxQuantity.DecimalValue <= 0 Then
             EprValidation.SetError(LblQuantity, "A quantidade deve ser maior que 0.")
@@ -177,20 +177,20 @@ Public Class FrmPersonCompressorSellableWorkedHour
     End Function
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
-        If Not QbxItem.IsFreezed Then
-            QbxItem.QueryEnabled = False
-            QbxItem.Text = QbxItem.Text.Trim.ToUnaccented()
-            QbxItem.QueryEnabled = True
+        If Not QbxSellable.IsFreezed Then
+            QbxSellable.QueryEnabled = False
+            QbxSellable.Text = QbxSellable.Text.Trim.ToUnaccented()
+            QbxSellable.QueryEnabled = True
         End If
         If IsValidFields() Then
             If _PartWorkedHour.IsSaved Then
                 _PersonCompressor.PartsWorkedHour.Single(Function(x) x.Guid = _PartWorkedHour.Guid).Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
-                _PersonCompressor.PartsWorkedHour.Single(Function(x) x.Guid = _PartWorkedHour.Guid).PartBind = EnumHelper.GetEnumValue(Of CompressorSellableBindType)(CbxPartBind.Text)
-                If QbxItem.IsFreezed Then
+                _PersonCompressor.PartsWorkedHour.Single(Function(x) x.Guid = _PartWorkedHour.Guid).PartBind = EnumHelper.GetEnumValue(Of CompressorSellableBindType)(CbxSellableBind.Text)
+                If QbxSellable.IsFreezed Then
                     _PersonCompressor.PartsWorkedHour.Single(Function(x) x.Guid = _PartWorkedHour.Guid).ItemName = Nothing
-                    _PersonCompressor.PartsWorkedHour.Single(Function(x) x.Guid = _PartWorkedHour.Guid).Product = New Lazy(Of Product)(Function() New Product().Load(QbxItem.FreezedPrimaryKey, False))
+                    _PersonCompressor.PartsWorkedHour.Single(Function(x) x.Guid = _PartWorkedHour.Guid).Product = New Lazy(Of Product)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
                 Else
-                    _PersonCompressor.PartsWorkedHour.Single(Function(x) x.Guid = _PartWorkedHour.Guid).ItemName = QbxItem.Text
+                    _PersonCompressor.PartsWorkedHour.Single(Function(x) x.Guid = _PartWorkedHour.Guid).ItemName = QbxSellable.Text
                     _PersonCompressor.PartsWorkedHour.Single(Function(x) x.Guid = _PartWorkedHour.Guid).Product = New Lazy(Of Product)()
                 End If
                 _PersonCompressor.PartsWorkedHour.Single(Function(x) x.Guid = _PartWorkedHour.Guid).Quantity = DbxQuantity.Text
@@ -198,13 +198,13 @@ Public Class FrmPersonCompressorSellableWorkedHour
             Else
                 _PartWorkedHour = New PersonCompressorSellable(CompressorSellableControlType.WorkedHour) With {
                     .Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text),
-                    .PartBind = EnumHelper.GetEnumValue(Of CompressorSellableBindType)(CbxPartBind.Text)
+                    .PartBind = EnumHelper.GetEnumValue(Of CompressorSellableBindType)(CbxSellableBind.Text)
                 }
-                If QbxItem.IsFreezed Then
+                If QbxSellable.IsFreezed Then
                     _PartWorkedHour.ItemName = Nothing
-                    _PartWorkedHour.Product = New Lazy(Of Product)(Function() New Product().Load(QbxItem.FreezedPrimaryKey, False))
+                    _PartWorkedHour.Product = New Lazy(Of Product)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
                 Else
-                    _PartWorkedHour.ItemName = QbxItem.Text
+                    _PartWorkedHour.ItemName = QbxSellable.Text
                     _PartWorkedHour.Product = New Lazy(Of Product)()
                 End If
                 _PartWorkedHour.Quantity = DbxQuantity.Text
@@ -239,18 +239,18 @@ Public Class FrmPersonCompressorSellableWorkedHour
         BtnFilter.Visible = False
         TmrQueriedBox.Stop()
     End Sub
-    Private Sub QbxItem_Enter(sender As Object, e As EventArgs) Handles QbxItem.Enter
+    Private Sub QbxItem_Enter(sender As Object, e As EventArgs) Handles QbxSellable.Enter
         TmrQueriedBox.Stop()
-        BtnView.Visible = QbxItem.IsFreezed And _User.CanWrite(Routine.Product)
+        BtnView.Visible = QbxSellable.IsFreezed And _User.CanWrite(Routine.Product)
         BtnNew.Visible = _User.CanWrite(Routine.Product)
         BtnFilter.Visible = _User.CanAccess(Routine.Product)
     End Sub
-    Private Sub QbxItem_Leave(sender As Object, e As EventArgs) Handles QbxItem.Leave
+    Private Sub QbxItem_Leave(sender As Object, e As EventArgs) Handles QbxSellable.Leave
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
-    Private Sub QbxItem_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxItem.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnView.Visible = QbxItem.IsFreezed And _User.CanWrite(Routine.Product)
+    Private Sub QbxItem_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxSellable.FreezedPrimaryKeyChanged
+        If Not _Loading Then BtnView.Visible = QbxSellable.IsFreezed And _User.CanWrite(Routine.Product)
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Product As Product
@@ -260,22 +260,22 @@ Public Class FrmPersonCompressorSellableWorkedHour
         Form.ShowDialog()
         EprValidation.Clear()
         If Product.ID > 0 Then
-            QbxItem.Freeze(Product.ID)
+            QbxSellable.Freeze(Product.ID)
         End If
-        QbxItem.Select()
+        QbxSellable.Select()
     End Sub
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
-        Dim Form As New FrmProduct(New Product().Load(QbxItem.FreezedPrimaryKey, True))
+        Dim Form As New FrmProduct(New Product().Load(QbxSellable.FreezedPrimaryKey, True))
         Form.ShowDialog()
-        QbxItem.Freeze(QbxItem.FreezedPrimaryKey)
-        QbxItem.Select()
+        QbxSellable.Freeze(QbxSellable.FreezedPrimaryKey)
+        QbxSellable.Select()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
         Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New ProductQueriedBoxFilter(), QbxItem)
+        FilterForm = New FrmFilter(New ProductQueriedBoxFilter(), QbxSellable)
         FilterForm.Text = "Filtro de Produtos"
         FilterForm.ShowDialog()
-        QbxItem.Select()
+        QbxSellable.Select()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         If BtnSave.Enabled Then

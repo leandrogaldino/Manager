@@ -42,7 +42,6 @@ Partial Class FrmPersonCompressorSellableWorkedHour
         Me.BtnLog = New System.Windows.Forms.ToolStripButton()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.LblQuantity = New System.Windows.Forms.Label()
-        Me.LblItem = New System.Windows.Forms.Label()
         Me.DbxQuantity = New ControlLibrary.DecimalBox()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.TmrQueriedBox = New System.Windows.Forms.Timer(Me.components)
@@ -54,19 +53,21 @@ Partial Class FrmPersonCompressorSellableWorkedHour
         Me.LblCreation = New System.Windows.Forms.ToolStripLabel()
         Me.LblCreationValue = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
-        Me.CbxPartBind = New System.Windows.Forms.ToolStripComboBox()
+        Me.CbxSellableBind = New System.Windows.Forms.ToolStripComboBox()
         Me.LblCapacity = New System.Windows.Forms.Label()
         Me.DbxCapacity = New ControlLibrary.DecimalBox()
         Me.BtnNew = New ControlLibrary.NoFocusCueButton()
         Me.BtnView = New ControlLibrary.NoFocusCueButton()
         Me.BtnFilter = New ControlLibrary.NoFocusCueButton()
-        Me.FlpProduct = New System.Windows.Forms.FlowLayoutPanel()
-        Me.QbxItem = New ControlLibrary.QueriedBox()
+        Me.FlpSellable = New System.Windows.Forms.FlowLayoutPanel()
+        Me.QbxSellable = New ControlLibrary.QueriedBox()
+        Me.RbtService = New System.Windows.Forms.RadioButton()
+        Me.RbtProduct = New System.Windows.Forms.RadioButton()
         Me.Panel1.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsData.SuspendLayout()
-        Me.FlpProduct.SuspendLayout()
+        Me.FlpSellable.SuspendLayout()
         Me.SuspendLayout()
         '
         'Panel1
@@ -123,7 +124,7 @@ Partial Class FrmPersonCompressorSellableWorkedHour
         Me.BtnInclude.Margin = New System.Windows.Forms.Padding(1, 1, 0, 2)
         Me.BtnInclude.Name = "BtnInclude"
         Me.BtnInclude.Size = New System.Drawing.Size(23, 22)
-        Me.BtnInclude.Text = "Incluir Peça"
+        Me.BtnInclude.Text = "Incluir Produto/Serviço"
         '
         'BtnDelete
         '
@@ -134,7 +135,7 @@ Partial Class FrmPersonCompressorSellableWorkedHour
         Me.BtnDelete.Margin = New System.Windows.Forms.Padding(0, 1, 10, 2)
         Me.BtnDelete.Name = "BtnDelete"
         Me.BtnDelete.Size = New System.Drawing.Size(23, 22)
-        Me.BtnDelete.Text = "Excluir Peça"
+        Me.BtnDelete.Text = "Excluir Produto/Serviço"
         '
         'BtnFirst
         '
@@ -144,7 +145,7 @@ Partial Class FrmPersonCompressorSellableWorkedHour
         Me.BtnFirst.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnFirst.Name = "BtnFirst"
         Me.BtnFirst.Size = New System.Drawing.Size(23, 22)
-        Me.BtnFirst.Text = "Primeira Peça"
+        Me.BtnFirst.Text = "Primeiro Produto/Serviço"
         '
         'BtnPrevious
         '
@@ -154,7 +155,7 @@ Partial Class FrmPersonCompressorSellableWorkedHour
         Me.BtnPrevious.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnPrevious.Name = "BtnPrevious"
         Me.BtnPrevious.Size = New System.Drawing.Size(23, 22)
-        Me.BtnPrevious.Text = "Peça Anterior"
+        Me.BtnPrevious.Text = "Produto/Serviço Anterior"
         '
         'BtnNext
         '
@@ -164,7 +165,7 @@ Partial Class FrmPersonCompressorSellableWorkedHour
         Me.BtnNext.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnNext.Name = "BtnNext"
         Me.BtnNext.Size = New System.Drawing.Size(23, 22)
-        Me.BtnNext.Text = "Próxima Peça"
+        Me.BtnNext.Text = "Próximo Produto/Serviço"
         '
         'BtnLast
         '
@@ -174,7 +175,7 @@ Partial Class FrmPersonCompressorSellableWorkedHour
         Me.BtnLast.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnLast.Name = "BtnLast"
         Me.BtnLast.Size = New System.Drawing.Size(23, 22)
-        Me.BtnLast.Text = "Última Peça"
+        Me.BtnLast.Text = "Último Produto/Serviço"
         '
         'BtnLog
         '
@@ -199,15 +200,6 @@ Partial Class FrmPersonCompressorSellableWorkedHour
         Me.LblQuantity.Size = New System.Drawing.Size(37, 17)
         Me.LblQuantity.TabIndex = 7
         Me.LblQuantity.Text = "Qtd."
-        '
-        'LblItem
-        '
-        Me.LblItem.AutoSize = True
-        Me.LblItem.Location = New System.Drawing.Point(9, 55)
-        Me.LblItem.Name = "LblItem"
-        Me.LblItem.Size = New System.Drawing.Size(37, 17)
-        Me.LblItem.TabIndex = 4
-        Me.LblItem.Text = "Item"
         '
         'DbxQuantity
         '
@@ -240,7 +232,7 @@ Partial Class FrmPersonCompressorSellableWorkedHour
         Me.TsData.BackColor = System.Drawing.Color.White
         Me.TsData.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsData.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsData.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblOrder, Me.LblOrderValue, Me.LblStatus, Me.BtnStatusValue, Me.LblCreation, Me.LblCreationValue, Me.ToolStripLabel1, Me.CbxPartBind})
+        Me.TsData.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblOrder, Me.LblOrderValue, Me.LblStatus, Me.BtnStatusValue, Me.LblCreation, Me.LblCreationValue, Me.ToolStripLabel1, Me.CbxSellableBind})
         Me.TsData.Location = New System.Drawing.Point(0, 25)
         Me.TsData.Name = "TsData"
         Me.TsData.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -305,11 +297,11 @@ Partial Class FrmPersonCompressorSellableWorkedHour
         Me.ToolStripLabel1.Size = New System.Drawing.Size(60, 22)
         Me.ToolStripLabel1.Text = "Vinculo:"
         '
-        'CbxPartBind
+        'CbxSellableBind
         '
-        Me.CbxPartBind.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.CbxPartBind.Name = "CbxPartBind"
-        Me.CbxPartBind.Size = New System.Drawing.Size(160, 25)
+        Me.CbxSellableBind.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CbxSellableBind.Name = "CbxSellableBind"
+        Me.CbxSellableBind.Size = New System.Drawing.Size(160, 25)
         '
         'LblCapacity
         '
@@ -380,43 +372,45 @@ Partial Class FrmPersonCompressorSellableWorkedHour
         Me.BtnFilter.UseVisualStyleBackColor = False
         Me.BtnFilter.Visible = False
         '
-        'FlpProduct
+        'FlpSellable
         '
-        Me.FlpProduct.Controls.Add(Me.BtnFilter)
-        Me.FlpProduct.Controls.Add(Me.BtnView)
-        Me.FlpProduct.Controls.Add(Me.BtnNew)
-        Me.FlpProduct.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-        Me.FlpProduct.Location = New System.Drawing.Point(311, 54)
-        Me.FlpProduct.Name = "FlpProduct"
-        Me.FlpProduct.Size = New System.Drawing.Size(69, 21)
-        Me.FlpProduct.TabIndex = 6
+        Me.FlpSellable.Controls.Add(Me.BtnFilter)
+        Me.FlpSellable.Controls.Add(Me.BtnView)
+        Me.FlpSellable.Controls.Add(Me.BtnNew)
+        Me.FlpSellable.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
+        Me.FlpSellable.Location = New System.Drawing.Point(311, 54)
+        Me.FlpSellable.Name = "FlpSellable"
+        Me.FlpSellable.Size = New System.Drawing.Size(69, 21)
+        Me.FlpSellable.TabIndex = 6
         '
-        'QbxItem
+        'QbxSellable
         '
-        Me.QbxItem.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.QbxItem.CharactersToQuery = 1
+        Me.QbxSellable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.QbxSellable.CharactersToQuery = 1
         Condition1.FieldName = "statusid"
         Condition1.Operator = "="
         Condition1.TableNameOrAlias = "product"
         Condition1.Value = "@statusid"
-        Me.QbxItem.Conditions.Add(Condition1)
-        Me.QbxItem.DebugOnTextChanged = False
-        Me.QbxItem.DisplayFieldAlias = "Código"
-        Me.QbxItem.DisplayFieldName = "code"
-        Me.QbxItem.DisplayMainFieldName = "id"
-        Me.QbxItem.DisplayTableAlias = ""
-        Me.QbxItem.DisplayTableName = "productprovidercode"
-        Me.QbxItem.Distinct = False
-        Me.QbxItem.DropDownAutoStretchRight = False
-        Me.QbxItem.DropDownStretchRight = 182
-        Me.QbxItem.GridHeaderBackColor = System.Drawing.SystemColors.Window
-        Me.QbxItem.IfNull = Nothing
-        Me.QbxItem.Location = New System.Drawing.Point(12, 75)
-        Me.QbxItem.MainReturnFieldName = "id"
-        Me.QbxItem.MainTableAlias = Nothing
-        Me.QbxItem.MainTableName = "product"
-        Me.QbxItem.Name = "QbxItem"
+        Me.QbxSellable.Conditions.Add(Condition1)
+        Me.QbxSellable.DebugOnTextChanged = False
+        Me.QbxSellable.DisplayFieldAlias = "Código"
+        Me.QbxSellable.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        Me.QbxSellable.DisplayFieldName = "code"
+        Me.QbxSellable.DisplayMainFieldName = "id"
+        Me.QbxSellable.DisplayTableAlias = ""
+        Me.QbxSellable.DisplayTableName = "productprovidercode"
+        Me.QbxSellable.Distinct = False
+        Me.QbxSellable.DropDownAutoStretchRight = False
+        Me.QbxSellable.DropDownStretchRight = 182
+        Me.QbxSellable.GridHeaderBackColor = System.Drawing.SystemColors.Window
+        Me.QbxSellable.IfNull = Nothing
+        Me.QbxSellable.Location = New System.Drawing.Point(12, 75)
+        Me.QbxSellable.MainReturnFieldName = "id"
+        Me.QbxSellable.MainTableAlias = Nothing
+        Me.QbxSellable.MainTableName = "product"
+        Me.QbxSellable.Name = "QbxSellable"
         OtherField1.DisplayFieldAlias = "Produto"
+        OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField1.DisplayFieldName = "name"
         OtherField1.DisplayMainFieldName = "id"
         OtherField1.DisplayTableAlias = ""
@@ -425,14 +419,14 @@ Partial Class FrmPersonCompressorSellableWorkedHour
         OtherField1.IfNull = Nothing
         OtherField1.Prefix = Nothing
         OtherField1.Suffix = Nothing
-        Me.QbxItem.OtherFields.Add(OtherField1)
+        Me.QbxSellable.OtherFields.Add(OtherField1)
         Parameter1.ParameterName = "@statusid"
         Parameter1.ParameterValue = "0"
         Parameter2.ParameterName = "@ismainprovider"
         Parameter2.ParameterValue = "1"
-        Me.QbxItem.Parameters.Add(Parameter1)
-        Me.QbxItem.Parameters.Add(Parameter2)
-        Me.QbxItem.Prefix = Nothing
+        Me.QbxSellable.Parameters.Add(Parameter1)
+        Me.QbxSellable.Parameters.Add(Parameter2)
+        Me.QbxSellable.Prefix = Nothing
         Condition2.FieldName = "ismainprovider"
         Condition2.Operator = "="
         Condition2.TableNameOrAlias = "productprovidercode"
@@ -446,24 +440,47 @@ Partial Class FrmPersonCompressorSellableWorkedHour
         Relation1.WithFieldName = "id"
         Relation1.WithTableAlias = Nothing
         Relation1.WithTableName = "product"
-        Me.QbxItem.Relations.Add(Relation1)
-        Me.QbxItem.Size = New System.Drawing.Size(368, 23)
-        Me.QbxItem.Suffix = " - "
-        Me.QbxItem.TabIndex = 5
+        Me.QbxSellable.Relations.Add(Relation1)
+        Me.QbxSellable.Size = New System.Drawing.Size(368, 23)
+        Me.QbxSellable.Suffix = " - "
+        Me.QbxSellable.TabIndex = 5
         '
-        'FrmPersonCompressorPartWorkedHour
+        'RbtService
+        '
+        Me.RbtService.AutoSize = True
+        Me.RbtService.Location = New System.Drawing.Point(96, 48)
+        Me.RbtService.Name = "RbtService"
+        Me.RbtService.Size = New System.Drawing.Size(72, 21)
+        Me.RbtService.TabIndex = 13
+        Me.RbtService.Text = "Serviço"
+        Me.RbtService.UseVisualStyleBackColor = True
+        '
+        'RbtProduct
+        '
+        Me.RbtProduct.AutoSize = True
+        Me.RbtProduct.Checked = True
+        Me.RbtProduct.Location = New System.Drawing.Point(12, 48)
+        Me.RbtProduct.Name = "RbtProduct"
+        Me.RbtProduct.Size = New System.Drawing.Size(78, 21)
+        Me.RbtProduct.TabIndex = 12
+        Me.RbtProduct.TabStop = True
+        Me.RbtProduct.Text = "Produto"
+        Me.RbtProduct.UseVisualStyleBackColor = True
+        '
+        'FrmPersonCompressorSellableWorkedHour
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(574, 153)
-        Me.Controls.Add(Me.FlpProduct)
+        Me.Controls.Add(Me.RbtService)
+        Me.Controls.Add(Me.RbtProduct)
+        Me.Controls.Add(Me.FlpSellable)
         Me.Controls.Add(Me.TsData)
         Me.Controls.Add(Me.DbxCapacity)
-        Me.Controls.Add(Me.QbxItem)
+        Me.Controls.Add(Me.QbxSellable)
         Me.Controls.Add(Me.LblCapacity)
         Me.Controls.Add(Me.DbxQuantity)
         Me.Controls.Add(Me.LblQuantity)
-        Me.Controls.Add(Me.LblItem)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.TsNavigation)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!)
@@ -471,16 +488,16 @@ Partial Class FrmPersonCompressorSellableWorkedHour
         Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "FrmPersonCompressorPartWorkedHour"
+        Me.Name = "FrmPersonCompressorSellableWorkedHour"
         Me.ShowIcon = False
-        Me.Text = "Peça do Compressor (Controla Por Hora Trabalhada)"
+        Me.Text = "Peça do Compressor (Hora Trabalhada)"
         Me.Panel1.ResumeLayout(False)
         Me.TsNavigation.ResumeLayout(False)
         Me.TsNavigation.PerformLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsData.ResumeLayout(False)
         Me.TsData.PerformLayout()
-        Me.FlpProduct.ResumeLayout(False)
+        Me.FlpSellable.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -498,7 +515,6 @@ Partial Class FrmPersonCompressorSellableWorkedHour
     Friend WithEvents Panel1 As Panel
     Friend WithEvents DbxQuantity As ControlLibrary.DecimalBox
     Friend WithEvents LblQuantity As Label
-    Friend WithEvents LblItem As Label
     Friend WithEvents BtnNew As ControlLibrary.NoFocusCueButton
     Friend WithEvents BtnView As ControlLibrary.NoFocusCueButton
     Friend WithEvents BtnFilter As ControlLibrary.NoFocusCueButton
@@ -514,8 +530,10 @@ Partial Class FrmPersonCompressorSellableWorkedHour
     Friend WithEvents BtnDelete As ToolStripButton
     Friend WithEvents DbxCapacity As ControlLibrary.DecimalBox
     Friend WithEvents LblCapacity As Label
-    Friend WithEvents FlpProduct As FlowLayoutPanel
-    Friend WithEvents QbxItem As ControlLibrary.QueriedBox
+    Friend WithEvents FlpSellable As FlowLayoutPanel
+    Friend WithEvents QbxSellable As ControlLibrary.QueriedBox
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
-    Friend WithEvents CbxPartBind As ToolStripComboBox
+    Friend WithEvents CbxSellableBind As ToolStripComboBox
+    Friend WithEvents RbtService As RadioButton
+    Friend WithEvents RbtProduct As RadioButton
 End Class

@@ -1,34 +1,44 @@
-﻿''' <summary>
+﻿Imports ControlLibrary
+
+''' <summary>
 ''' Representa uma peça de um compressor da pessoa.
 ''' </summary>
 Public Class PersonCompressorSellable
     Inherits ChildModel
-    Private _ProductID As Long
-    Private _PartType As CompressorSellableControlType
+    Private ReadOnly _ControlType As CompressorSellableControlType
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property PartBind As CompressorSellableBindType = CompressorSellableBindType.None
-    Public ReadOnly Property PartType As CompressorSellableControlType
+    <IgnoreInToTable>
+    Public ReadOnly Property SellableType As SellableType
         Get
-            Return _PartType
-        End Get
-    End Property
-    Public ReadOnly Property Code As String
-        Get
-            Dim ProviderCode As ProductProviderCode = Product.Value.ProviderCodes.FirstOrDefault(Function(x) x.IsMainProvider = True)
-            If ProviderCode IsNot Nothing Then
-                Return ProviderCode.Code
-            Else
-                Return Nothing
+            If Sellable.Value IsNot Nothing Then
+                If TypeOf Sellable.Value Is Product Then Return SellableType.Product
+                If TypeOf Sellable.Value Is Service Then Return SellableType.Service
             End If
+            Return SellableType.None
         End Get
     End Property
-    Public Property ItemName As String
-    Public Property Product As New Lazy(Of Product)(Function() New Product().Load(_ProductID, False))
-    Public ReadOnly Property ItemNameOrProduct As String
+    <IgnoreInToTable>
+    Public ReadOnly Property Product As Product
         Get
-            Return ItemName & Product.ToString
+            Return TryCast(Sellable.Value, Product)
         End Get
     End Property
+    <IgnoreInToTable>
+    Public ReadOnly Property Service As Service
+        Get
+            Return TryCast(Sellable.Value, Service)
+        End Get
+    End Property
+    Public ReadOnly Property SellableControlType As CompressorSellableControlType
+        Get
+            Return _ControlType
+        End Get
+    End Property
+    Public Property Sellable As Lazy(Of Sellable)
+    Public Property SellableID As Long
+    Public Property Code As String
+    Public Property Name As String
     Public Property Quantity As Decimal
     Public Property Capacity As Integer
     Public ReadOnly Property PartBinded As Boolean
@@ -36,12 +46,10 @@ Public Class PersonCompressorSellable
             Return PartBind <> CompressorSellableBindType.None
         End Get
     End Property
-    Public Overrides Function ToString() As String
-        Return ItemName & Product.Value.Name
-    End Function
+
     Public Sub New(PartType As CompressorSellableControlType)
-        _PartType = PartType
-        If _PartType = CompressorSellableControlType.ElapsedDay Then
+        _ControlType = PartType
+        If _ControlType = CompressorSellableControlType.ElapsedDay Then
             SetRoutine(Routine.PersonCompressorSellableElapsedDay)
         Else
             SetRoutine(Routine.PersonCompressorSellableWorkedHour)

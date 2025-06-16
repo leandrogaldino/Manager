@@ -4,7 +4,9 @@
 Public Class PersonCompressor
     Inherits ChildModel
     Public Property Status As SimpleStatus = SimpleStatus.Active
-    Public Property Compressor As New Compressor
+    Public Property Compressor As New Lazy(Of Compressor)
+    Public Property CompressorID As Long
+    Public Property CompressorName As String
     Public Property SerialNumber As String
     Public Property Patrimony As String
     Public Property Sector As String
@@ -16,6 +18,6 @@ Public Class PersonCompressor
         SetRoutine(Routine.PersonCompressor)
     End Sub
     Public Overrides Function ToString() As String
-        Return Compressor.Name & If(String.IsNullOrEmpty(SerialNumber), Nothing, " NS: " & SerialNumber) & If(String.IsNullOrEmpty(Patrimony), Nothing, " PAT: " & Patrimony) & If(String.IsNullOrEmpty(Sector), Nothing, " - " & Sector)
+        Return CompressorName & If(String.IsNullOrEmpty(SerialNumber), Nothing, " NS: " & SerialNumber) & If(String.IsNullOrEmpty(Patrimony), Nothing, " PAT: " & Patrimony) & If(String.IsNullOrEmpty(Sector), Nothing, " - " & Sector)
     End Function
 End Class

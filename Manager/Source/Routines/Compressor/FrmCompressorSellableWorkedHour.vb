@@ -1,5 +1,4 @@
-﻿Imports CefSharp.DevTools.Emulation
-Imports ControlLibrary
+﻿Imports ControlLibrary
 Imports ControlLibrary.Extensions
 Public Class FrmCompressorSellableWorkedHour
     Private _CompressorForm As FrmCompressor
@@ -169,7 +168,6 @@ Public Class FrmCompressorSellableWorkedHour
                     _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Name = Sellable.Name
                     _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Code = String.Empty
                 End If
-
             Else
                 _WorkedHourSellable = New CompressorSellable(CompressorSellableControlType.WorkedHour) With {
                     .Quantity = DbxQuantity.DecimalValue

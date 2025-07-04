@@ -6,7 +6,7 @@ Public Class FrmEvaluationControlledSellable
         InitializeComponent()
         _Loading = True
         _Part = Part
-        TxtItem.Text = _Part.Part.ItemNameOrProduct
+        TxtItem.Text = _Part.Part.Name
         DbxCapacity.Text = _Part.CurrentCapacity
         CbxSold.Checked = _Part.Sold
         CbxLost.Checked = _Part.Lost

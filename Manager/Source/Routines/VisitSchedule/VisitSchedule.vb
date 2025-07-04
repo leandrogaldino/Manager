@@ -133,6 +133,6 @@ Public Class VisitSchedule
     End Sub
 
     Public Overrides Function ToString() As String
-        Return $"{Customer.Name}: {Compressor.Compressor.Name}{If(Not String.IsNullOrEmpty(Compressor.SerialNumber), $" {Compressor.SerialNumber}", {String.Empty})}"
+        Return $"{Customer.Name}: {Compressor.CompressorName}{If(Not String.IsNullOrEmpty(Compressor.SerialNumber), $" {Compressor.SerialNumber}", {String.Empty})}"
     End Function
 End Class

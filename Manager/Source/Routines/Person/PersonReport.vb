@@ -98,7 +98,7 @@ Public Class PersonReport
             End Using
             If TableWorkedHour.Rows.Cast(Of DataRow).Count(Function(x) x.Item("nextexchange").ToString <> Nothing) + TableElapsedDay.Rows.Cast(Of DataRow).Count(Function(x) x.Item("nextexchange").ToString <> Nothing) > 0 Then
                 ReportingEvaluation = New Evaluation().Load(LastEvaluationID, False)
-                CompressorsDataChart.Add(New Tuple(Of String, Decimal)($"{ReportingEvaluation.Compressor.Compressor.Name} {If(Not String.IsNullOrEmpty(ReportingEvaluation.Compressor.SerialNumber), $"NS {ReportingEvaluation.Compressor.SerialNumber}", "")}", ReportingEvaluation.AverageWorkLoad))
+                CompressorsDataChart.Add(New Tuple(Of String, Decimal)($"{ReportingEvaluation.Compressor.CompressorName} {If(Not String.IsNullOrEmpty(ReportingEvaluation.Compressor.SerialNumber), $"NS {ReportingEvaluation.Compressor.SerialNumber}", "")}", ReportingEvaluation.AverageWorkLoad))
                 If Not String.IsNullOrEmpty(ReportingEvaluation.Document.CurrentFile) AndAlso File.Exists(ReportingEvaluation.Document.CurrentFile) Then
                     Result.Attachments.Add(New ReportResult.ReportAttachment(ReportingEvaluation.Document.CurrentFile, ReportingEvaluation.Compressor.ToString & ".pdf"))
                 End If
@@ -138,7 +138,7 @@ Public Class PersonReport
                 Row += 1
                 WsReport.Rows(Row, Row).Height = 20
                 'VALOR DE COMPRESSOR
-                WsReport.Range(Row, 2, Row, 2).Value = String.Format("{0} {1} {2} {3}", ReportingEvaluation.Compressor.Compressor.Name, If(String.IsNullOrEmpty(ReportingEvaluation.Compressor.SerialNumber), Nothing, "NS: " & ReportingEvaluation.Compressor.SerialNumber), If(String.IsNullOrEmpty(ReportingEvaluation.Compressor.Patrimony), Nothing, "PAT: " & ReportingEvaluation.Compressor.Patrimony), If(String.IsNullOrEmpty(ReportingEvaluation.Compressor.Sector), Nothing, "- " & ReportingEvaluation.Compressor.Sector))
+                WsReport.Range(Row, 2, Row, 2).Value = String.Format("{0} {1} {2} {3}", ReportingEvaluation.Compressor.CompressorName, If(String.IsNullOrEmpty(ReportingEvaluation.Compressor.SerialNumber), Nothing, "NS: " & ReportingEvaluation.Compressor.SerialNumber), If(String.IsNullOrEmpty(ReportingEvaluation.Compressor.Patrimony), Nothing, "PAT: " & ReportingEvaluation.Compressor.Patrimony), If(String.IsNullOrEmpty(ReportingEvaluation.Compressor.Sector), Nothing, "- " & ReportingEvaluation.Compressor.Sector))
                 WsReport.Range(Row, 2, Row, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center
                 WsReport.Range(Row, 2, Row, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin
                 WsReport.Range(Row, 2, Row, 2).Style.Border.BottomBorderColor = XLColor.Black
@@ -675,7 +675,7 @@ Public Class PersonReport
                 WsReport.Rows(Row).Height = 20
                 WsReport.Range(Row, 1, Row, 8).Merge.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left
                 WsReport.Range(Row, 1, Row, 8).Style.Border.BottomBorder = XLBorderStyleValues.Thin
-                WsReport.Range(Row, 1, Row, 8).Value = Compressor.Compressor.Name
+                WsReport.Range(Row, 1, Row, 8).Value = Compressor.CompressorName
                 WsReport.Range(Row, 10, Row, 13).Merge.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center
                 WsReport.Range(Row, 10, Row, 13).Style.Border.BottomBorder = XLBorderStyleValues.Thin
                 WsReport.Range(Row, 10, Row, 13).Value = Compressor.SerialNumber

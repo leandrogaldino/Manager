@@ -6,7 +6,6 @@ No caixa reicol comercio no mes 08/2023 tem um registro da di napoli que está s
 No caixa reicol comercio no mes 08/2023 tem um registro da di napoli que está sem responsavel, colocar reicol
 No caixa aberto no mes 03/2024 tem um registro do almoço que está sem responsavel, colocar leandro
 Tem alguma avaliação que está com ano muito errado
-Deletar UserPrivilege e UserPriuvilegePreset, PrivilegePreset  e PrivilegePresetPrivilege
 */
 
 /*
@@ -14,6 +13,7 @@ CREATE USER 'root'@'%' IDENTIFIED BY '123456';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 */
+
 ALTER TABLE personcompressorpart ADD COLUMN partbindid INT NOT NULL AFTER statusid;
 
 SET SQL_SAFE_UPDATES = 0;
@@ -537,46 +537,70 @@ INSERT INTO `userprivilege` VALUES
     (NULL,'2025-06-15',1,1304,'Painel de Compressores',0,1),
     (NULL,'2025-06-15',1,102,'Permite Resetar Senha',0,1),
     (NULL,'2025-06-15',1,1904,'Reabrir um caixa',0,1);
-
-
-
-INSERT INTO service VALUES (NULL, CURDATE(), 0, 'ENGRAXAMENTO', NULL, 1);
-INSERT INTO servicecode VALUES (NULL, 1, CURDATE(), 'Cód. da Lista de Serviços', '14.01.35', 1);
-INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE AR INGERSOLL', 'FILTRO DE AR INGERSOLL', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
-INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE OLEO INGERSOLL', 'FILTRO DE OLEO INGERSOLL', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
-INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO SEPARADOR INGERSOLL', 'FILTRO SEPARADOR INGERSOLL', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
-INSERT INTO product VALUES (NULL, CURDATE(), 0, 'OLEO ALIMENTICIO 19L', 'OLEO ALIMENTICIO 19L', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
-INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE AR ATLAS', 'FILTRO DE AR ATLAS', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
-INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE OLEO ATLAS', 'FILTRO DE OLEO ATLAS', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
-INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO SEPARADOR ATLAS', 'FILTRO SEPARADOR ATLAS', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
-
-INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE AR ZHEJIANG LEADWAY', 'FILTRO DE AR  ZHEJIANG LEADWAY', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
-INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE OLEO  ZHEJIANG LEADWAY', 'FILTRO DE OLEO  ZHEJIANG LEADWAY', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
-INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO SEPARADOR  ZHEJIANG LEADWAY', 'FILTRO SEPARADOR  ZHEJIANG LEADWAY', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
-
-
-
-
+    
+    
 
 
 
 SET SQL_SAFE_UPDATES = 0;
-UPDATE compressorsellable SET serviceid = 1 WHERE compressorsellable.itemname = "REVITALIZACAO";
-UPDATE compressorsellable SET productid = 193 WHERE id = 408;
-UPDATE compressorsellable SET productid = 194 WHERE id = 409;
-UPDATE compressorsellable SET productid = 195 WHERE id = 410;
-UPDATE compressorsellable SET productid = 196 WHERE id = 411;
-UPDATE compressorsellable SET productid = 197 WHERE id = 431;
-UPDATE compressorsellable SET productid = 198 WHERE id = 432;
-UPDATE compressorsellable SET productid = 199 WHERE id = 433;
-UPDATE compressorsellable SET productid = 216 WHERE id = 457;
-UPDATE compressorsellable SET productid = 216 WHERE id = 461;
-UPDATE compressorsellable SET productid = 217 WHERE id = 458;
-UPDATE compressorsellable SET productid = 217 WHERE id = 462;
-UPDATE compressorsellable SET productid = 218 WHERE id = 459;
-UPDATE compressorsellable SET productid = 218 WHERE id = 463;
+INSERT INTO service VALUES (NULL, CURDATE(), 0, 'ENGRAXAMENTO', NULL, 1);
+SET @idengraxamento = LAST_INSERT_ID();
+INSERT INTO servicecode VALUES (NULL, 1, CURDATE(), 'Cód. da Lista de Serviços', '14.01.35', 1);
+UPDATE compressorsellable SET serviceid = @idengraxamento WHERE compressorsellable.itemname = "REVITALIZACAO";
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE AR INGERSOLL', 'FILTRO DE AR INGERSOLL', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1); #209
+SET @faringersoll = LAST_INSERT_ID();
+UPDATE compressorsellable SET productid = @faringersoll WHERE id = 408;
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE OLEO INGERSOLL', 'FILTRO DE OLEO INGERSOLL', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1); #210
+SET @foleoingersoll = LAST_INSERT_ID();
+UPDATE compressorsellable SET productid = @foleoingersoll WHERE id = 409;
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO SEPARADOR INGERSOLL', 'FILTRO SEPARADOR INGERSOLL', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1); #211
+SET @fseparadoringersoll = LAST_INSERT_ID();
+UPDATE compressorsellable SET productid = @fseparadoringersoll WHERE id = 410;
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'OLEO ALIMENTICIO 19L', 'OLEO ALIMENTICIO 19L', NULL, 1, 1, 7, 0, 0, 0, 0, NULL, 1); #213
+SET @oleoalimenticio = LAST_INSERT_ID();
+UPDATE compressorsellable SET productid = @oleoalimenticio WHERE id = 411;
+UPDATE compressorsellable SET productid = @oleoalimenticio WHERE id = 434;
+
+
 UPDATE compressorsellable SET productid = 34 WHERE id = 460;
 UPDATE compressorsellable SET productid = 34 WHERE id = 464;
+
+
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE AR ATLAS', 'FILTRO DE AR ATLAS', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1); #213
+SET @faratlas = LAST_INSERT_ID();
+UPDATE compressorsellable SET productid = @faratlas WHERE id = 431;
+
+
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE OLEO ATLAS', 'FILTRO DE OLEO ATLAS', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1); #214
+SET @foleoatlas = LAST_INSERT_ID();
+UPDATE compressorsellable SET productid = @foleoatlas WHERE id = 432; #AQUI: Error Code: 1062. Duplicate entry '54-213' for key 'compressorsellable.compressorid_productid'
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO SEPARADOR ATLAS', 'FILTRO SEPARADOR ATLAS', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1); #215
+SET @fseparadoratlas = LAST_INSERT_ID();
+UPDATE compressorsellable SET productid = @fseparadoratlas WHERE id = 433;
+
+
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE AR ZHEJIANG LEADWAY', 'FILTRO DE AR ZHEJIANG LEADWAY', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1); #216
+SET @farchines = LAST_INSERT_ID();
+UPDATE compressorsellable SET productid = @farchines WHERE id = 457;
+UPDATE compressorsellable SET productid = @farchines WHERE id = 461;
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE OLEO ZHEJIANG LEADWAY', 'FILTRO DE OLEO ZHEJIANG LEADWAY', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1); #217
+SET @foleochines = LAST_INSERT_ID();
+UPDATE compressorsellable SET productid = @foleochines WHERE id = 458;
+UPDATE compressorsellable SET productid = @foleochines WHERE id = 462;
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO SEPARADOR ZHEJIANG LEADWAY', 'FILTRO SEPARADOR ZHEJIANG LEADWAY', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1); #218
+SET @fseparadorchines = LAST_INSERT_ID();
+UPDATE compressorsellable SET productid = @fseparadorchines WHERE id = 459;
+UPDATE compressorsellable SET productid = @fseparadorchines WHERE id = 463;
 
 UPDATE compressor SET manufacturerid = NULL WHERE id = 60;
 UPDATE compressor SET manufacturerid = NULL WHERE id = 61;
@@ -619,3 +643,386 @@ WHERE
 
 ALTER TABLE `manager`.`compressorsellable` DROP COLUMN `itemname`;
 
+
+ALTER TABLE `manager`.`compressorsellable` ADD INDEX `serviceid` (`serviceid` ASC) VISIBLE;
+ALTER TABLE `manager`.`compressorsellable` ADD CONSTRAINT `compressorsellable_service`  FOREIGN KEY (`serviceid`)  REFERENCES `manager`.`service` (`id`)  ON DELETE RESTRICT  ON UPDATE RESTRICT;
+
+DELETE FROM evaluationpart WHERE id = 10729;
+DELETE FROM evaluationpart WHERE id = 10730;
+DELETE FROM evaluationpart WHERE id = 23194;
+DELETE FROM evaluationpart WHERE id = 23195;
+DELETE FROM personcompressorpart where id = 3960;
+DELETE FROM personcompressorpart where id = 3961;
+
+
+ALTER TABLE `manager`.`personcompressorpart` 
+ADD COLUMN `serviceid` INT NULL DEFAULT NULL AFTER `productid`,
+CHANGE COLUMN `parttypeid` `controltypeid` INT NOT NULL ,
+ADD INDEX `productid` (`productid` ASC) VISIBLE,
+ADD INDEX `serviceid` (`serviceid` ASC) VISIBLE;
+
+ALTER TABLE `manager`.`personcompressorpart` 
+ADD CONSTRAINT `personcompressorpart_product`
+  FOREIGN KEY (`productid`)
+  REFERENCES `manager`.`product` (`id`)
+  ON DELETE RESTRICT
+  ON UPDATE RESTRICT,
+ADD CONSTRAINT `personcompressorpart_service`
+  FOREIGN KEY (`serviceid`)
+  REFERENCES `manager`.`service` (`id`)
+  ON DELETE RESTRICT
+  ON UPDATE RESTRICT;  
+  ALTER TABLE `manager`.`personcompressorpart` 
+RENAME TO  `manager`.`personcompressorsellable` ;
+ALTER TABLE `manager`.`compressorsellable` ALTER INDEX `serviceid` VISIBLE;
+ALTER TABLE `manager`.`personcompressorsellable` 
+DROP FOREIGN KEY `personcompressorpart_personcompressor`,
+DROP FOREIGN KEY `personcompressorpart_product`,
+DROP FOREIGN KEY `personcompressorpart_service`,
+DROP FOREIGN KEY `personcompressorpart_user`;
+ALTER TABLE `manager`.`personcompressorsellable`;
+ALTER TABLE `manager`.`personcompressorsellable` ALTER INDEX `productid` VISIBLE;
+ALTER TABLE `manager`.`personcompressorsellable` ALTER INDEX `serviceid` VISIBLE;
+ALTER TABLE `manager`.`personcompressorsellable` 
+ADD CONSTRAINT `personcompressorsellable_personcompressor`
+  FOREIGN KEY (`personcompressorid`)
+  REFERENCES `manager`.`personcompressor` (`id`)
+  ON DELETE CASCADE,
+ADD CONSTRAINT `personcompressorsellable_product`
+  FOREIGN KEY (`productid`)
+  REFERENCES `manager`.`product` (`id`)
+  ON DELETE RESTRICT
+  ON UPDATE RESTRICT,
+ADD CONSTRAINT `personcompressorsellable_service`
+  FOREIGN KEY (`serviceid`)
+  REFERENCES `manager`.`service` (`id`)
+  ON DELETE RESTRICT
+  ON UPDATE RESTRICT,
+ADD CONSTRAINT `personcompressorsellable_user`
+  FOREIGN KEY (`userid`)
+  REFERENCES `manager`.`user` (`id`)
+  ON DELETE RESTRICT;
+
+
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE personcompressorsellable SET serviceid = @idengraxamento WHERE personcompressorsellable.itemname = "REVITALIZACAO";
+UPDATE personcompressorsellable SET serviceid = @idengraxamento WHERE personcompressorsellable.itemname = "REVITALIAZACAO";
+UPDATE personcompressorsellable SET serviceid = @idengraxamento WHERE personcompressorsellable.itemname = "REVITALIAZAO";
+UPDATE personcompressorsellable SET productid = 67 WHERE personcompressorsellable.id = 1853;
+UPDATE personcompressorsellable SET productid = 16 WHERE personcompressorsellable.id = 4274;
+UPDATE personcompressorsellable SET productid = 47 WHERE personcompressorsellable.id = 3513;
+UPDATE personcompressorsellable SET productid = 19 WHERE personcompressorsellable.id = 3501;
+UPDATE personcompressorsellable SET productid = 49 WHERE personcompressorsellable.id = 3505;
+UPDATE personcompressorsellable SET productid = 46 WHERE personcompressorsellable.id = 3504;
+UPDATE personcompressorsellable SET productid = 6 WHERE personcompressorsellable.id = 3431;
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'CORREIA PL1613', 'CORREIA PL1613', NULL, 1, 1, 8, 0, 0, 0, 0, NULL, 1);
+UPDATE personcompressorsellable SET productid = LAST_INSERT_ID() WHERE personcompressorsellable.id = 231;
+
+UPDATE personcompressorsellable SET productid = @faringersoll WHERE personcompressorsellable.id = 3448;
+UPDATE personcompressorsellable SET productid = @faringersoll WHERE personcompressorsellable.id = 3452;
+UPDATE personcompressorsellable SET productid = @faringersoll WHERE personcompressorsellable.id = 3456;
+
+UPDATE personcompressorsellable SET productid = @foleoingersoll WHERE personcompressorsellable.id = 3449;
+UPDATE personcompressorsellable SET productid = @foleoingersoll WHERE personcompressorsellable.id = 3453;
+UPDATE personcompressorsellable SET productid = @foleoingersoll WHERE personcompressorsellable.id = 3457;
+
+UPDATE personcompressorsellable SET productid = @fseparadoringersoll WHERE personcompressorsellable.id = 3450;
+UPDATE personcompressorsellable SET productid = @fseparadoringersoll WHERE personcompressorsellable.id = 3454;
+UPDATE personcompressorsellable SET productid = @fseparadoringersoll WHERE personcompressorsellable.id = 3458;
+
+UPDATE personcompressorsellable SET productid = @oleoalimenticio WHERE personcompressorsellable.id = 3455;
+UPDATE personcompressorsellable SET productid = @oleoalimenticio WHERE personcompressorsellable.id = 3459;
+
+
+UPDATE personcompressorsellable SET productid = @faratlas WHERE personcompressorsellable.id = 423;
+UPDATE personcompressorsellable SET productid = @faratlas WHERE personcompressorsellable.id = 2505;
+UPDATE personcompressorsellable SET productid = @faratlas WHERE personcompressorsellable.id = 3113;
+UPDATE personcompressorsellable SET productid = @faratlas WHERE personcompressorsellable.id = 2772;
+UPDATE personcompressorsellable SET productid = @faratlas WHERE personcompressorsellable.id = 3828;
+UPDATE personcompressorsellable SET productid = @faratlas WHERE personcompressorsellable.id = 4660;
+UPDATE personcompressorsellable SET productid = @faratlas WHERE personcompressorsellable.id = 4331;
+UPDATE personcompressorsellable SET productid = @faratlas WHERE personcompressorsellable.id = 4940;
+UPDATE personcompressorsellable SET productid = @faratlas WHERE personcompressorsellable.id = 500;
+
+UPDATE personcompressorsellable SET productid = @foleoatlas WHERE personcompressorsellable.id = 424;
+UPDATE personcompressorsellable SET productid = @foleoatlas WHERE personcompressorsellable.id = 2506;
+UPDATE personcompressorsellable SET productid = @foleoatlas WHERE personcompressorsellable.id = 3114;
+UPDATE personcompressorsellable SET productid = @foleoatlas WHERE personcompressorsellable.id = 2773;
+UPDATE personcompressorsellable SET productid = @foleoatlas WHERE personcompressorsellable.id = 3829;
+UPDATE personcompressorsellable SET productid = @foleoatlas WHERE personcompressorsellable.id = 4661;
+UPDATE personcompressorsellable SET productid = @foleoatlas WHERE personcompressorsellable.id = 4328;
+UPDATE personcompressorsellable SET productid = @foleoatlas WHERE personcompressorsellable.id = 4941;
+UPDATE personcompressorsellable SET productid = @foleoatlas WHERE personcompressorsellable.id = 501;
+
+
+UPDATE personcompressorsellable SET productid = @fseparadoratlas WHERE personcompressorsellable.id = 4662;
+UPDATE personcompressorsellable SET productid = @fseparadoratlas WHERE personcompressorsellable.id = 4329;
+UPDATE personcompressorsellable SET productid = @fseparadoratlas WHERE personcompressorsellable.id = 4942;
+UPDATE personcompressorsellable SET productid = @fseparadoratlas WHERE personcompressorsellable.id = 425;
+UPDATE personcompressorsellable SET productid = @fseparadoratlas WHERE personcompressorsellable.id = 2507;
+UPDATE personcompressorsellable SET productid = @fseparadoratlas WHERE personcompressorsellable.id = 3115;
+UPDATE personcompressorsellable SET productid = @fseparadoratlas WHERE personcompressorsellable.id = 2774;
+UPDATE personcompressorsellable SET productid = @fseparadoratlas WHERE personcompressorsellable.id = 3830;
+UPDATE personcompressorsellable SET productid = @fseparadoratlas WHERE personcompressorsellable.id = 502;
+
+UPDATE personcompressorsellable SET productid = 29 WHERE personcompressorsellable.id = 426;
+UPDATE personcompressorsellable SET productid = 34 WHERE personcompressorsellable.id = 503;
+UPDATE personcompressorsellable SET productid = 34 WHERE personcompressorsellable.id = 2775;
+UPDATE personcompressorsellable SET productid = 58 WHERE personcompressorsellable.id = 2508;
+UPDATE personcompressorsellable SET productid = @oleoalimenticio WHERE personcompressorsellable.id = 4330;
+
+UPDATE personcompressorsellable SET productid = @farchines WHERE personcompressorsellable.id = 4815;
+UPDATE personcompressorsellable SET productid = @farchines WHERE personcompressorsellable.id = 4811;
+UPDATE personcompressorsellable SET productid = @foleochines WHERE personcompressorsellable.id = 4812;
+UPDATE personcompressorsellable SET productid = @foleochines WHERE personcompressorsellable.id = 4816;
+UPDATE personcompressorsellable SET productid = @fseparadorchines WHERE personcompressorsellable.id = 4817;
+UPDATE personcompressorsellable SET productid = @fseparadorchines WHERE personcompressorsellable.id = 4813;
+
+UPDATE personcompressorsellable SET productid = 34 WHERE personcompressorsellable.id = 4814;
+UPDATE personcompressorsellable SET productid = 34 WHERE personcompressorsellable.id = 4818;
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE AR CHICAGO', 'FILTRO DE AR CHICAGO', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
+SET @farchicago = LAST_INSERT_ID();
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE OLEO CHICAGO', 'FILTRO DE OLEO CHICAGO', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
+SET @foleochicago = LAST_INSERT_ID();
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO SEPARADOR CHICAGO', 'FILTRO SEPARADOR CHICAGO', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
+SET @fseparadorchicago = LAST_INSERT_ID();
+
+UPDATE personcompressorsellable SET productid = @farchicago WHERE personcompressorsellable.id = 496;
+UPDATE personcompressorsellable SET productid = @farchicago WHERE personcompressorsellable.id = 2131;
+UPDATE personcompressorsellable SET productid = @farchicago WHERE personcompressorsellable.id = 4826;
+
+UPDATE personcompressorsellable SET productid = @foleochicago WHERE personcompressorsellable.id = 497;
+UPDATE personcompressorsellable SET productid = @foleochicago WHERE personcompressorsellable.id = 2132;
+UPDATE personcompressorsellable SET productid = @foleochicago WHERE personcompressorsellable.id = 4827;
+
+UPDATE personcompressorsellable SET productid = @fseparadorchicago WHERE personcompressorsellable.id = 2133;
+UPDATE personcompressorsellable SET productid = @fseparadorchicago WHERE personcompressorsellable.id = 498;
+UPDATE personcompressorsellable SET productid = @fseparadorchicago WHERE personcompressorsellable.id = 4828;
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'KIT REPARO CHICAGO', 'KIT REPARO CHICAGO', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
+SET @kitreparochicago = LAST_INSERT_ID();
+UPDATE personcompressorsellable SET productid = @kitreparochicago WHERE personcompressorsellable.id = 2135;
+
+UPDATE personcompressorsellable SET productid = 34 WHERE personcompressorsellable.id = 499;
+UPDATE personcompressorsellable SET productid = 34 WHERE personcompressorsellable.id = 4829;
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'OLEO BOOSTER 4L', 'OLEO BOOSTER 4L', NULL, 1, 1, 7, 0, 0, 0, 0, NULL, 1);
+SET @oleobooster = LAST_INSERT_ID();
+UPDATE personcompressorsellable SET productid = @oleobooster WHERE personcompressorsellable.id = 2788;
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE AR BOOSTER', 'FILTRO DE AR BOOSTER', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
+SET @farbooster = LAST_INSERT_ID();
+UPDATE personcompressorsellable SET productid = @farbooster WHERE personcompressorsellable.id = 2787;
+
+UPDATE personcompressorsellable SET productid = 92 WHERE personcompressorsellable.id = 1910;
+UPDATE personcompressorsellable SET productid = 92 WHERE personcompressorsellable.id = 1907;
+
+UPDATE personcompressorsellable SET productid = 91 WHERE personcompressorsellable.id = 1911;
+UPDATE personcompressorsellable SET productid = 91 WHERE personcompressorsellable.id = 1908;
+
+UPDATE personcompressorsellable SET productid = 124 WHERE personcompressorsellable.id = 1909;
+
+UPDATE personcompressorsellable SET productid = 127 WHERE personcompressorsellable.id = 2874;
+UPDATE personcompressorsellable SET productid = 128 WHERE personcompressorsellable.id = 2875;
+
+UPDATE personcompressorsellable SET productid = @oleoalimenticio WHERE personcompressorsellable.id = 3700;
+UPDATE personcompressorsellable SET productid = @oleoalimenticio WHERE personcompressorsellable.id = 3701;
+
+UPDATE personcompressorsellable SET productid = 34 WHERE personcompressorsellable.id = 2966;
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'ELEMENTO COALESCENTE 25130 PRE', 'ELEMENTO COALESCENTE 25130 PRE', NULL, 1, 1, 6, 0, 0, 0, 0, NULL, 1);
+SET @coalpre = LAST_INSERT_ID();
+UPDATE personcompressorsellable SET productid = @coalpre WHERE personcompressorsellable.id = 4464;
+UPDATE personcompressorsellable SET productid = @coalpre WHERE personcompressorsellable.id = 4466;
+UPDATE personcompressorsellable SET productid = @coalpre WHERE personcompressorsellable.id = 4468;
+
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'ELEMENTO COALESCENTE 25130 POS', 'ELEMENTO COALESCENTE 25130 POS', NULL, 1, 1, 6, 0, 0, 0, 0, NULL, 1);
+SET @coalpos = LAST_INSERT_ID();
+UPDATE personcompressorsellable SET productid = @coalpos WHERE personcompressorsellable.id = 4465;
+UPDATE personcompressorsellable SET productid = @coalpos WHERE personcompressorsellable.id = 4467;
+
+UPDATE personcompressorsellable SET productid = 44 WHERE personcompressorsellable.id = 333;
+UPDATE personcompressorsellable SET productid = 44 WHERE personcompressorsellable.id = 334;
+UPDATE personcompressorsellable SET productid = 44 WHERE personcompressorsellable.id = 367;
+
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'CORREIA PL1715', 'CORREIA PL1715', NULL, 1, 1, 8, 0, 0, 0, 0, NULL, 1);
+SET @correia1715 = LAST_INSERT_ID();
+UPDATE personcompressorsellable SET productid = @correia1715 WHERE personcompressorsellable.id = 594;
+UPDATE personcompressorsellable SET productid = @correia1715 WHERE personcompressorsellable.id = 595;
+UPDATE personcompressorsellable SET productid = @correia1715 WHERE personcompressorsellable.id = 241;
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO DE AR', 'ELEMENTO FILTRO AR 10 MICRONS LOGAN CFA 037 P -AT', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
+UPDATE personcompressorsellable SET productid = LAST_INSERT_ID() WHERE personcompressorsellable.id = 2576;
+INSERT INTO productprovidercode VALUES (NULL, LAST_INSERT_ID(), CURDATE(), '007.0044-4/AT', 2, 1, 1);
+
+UPDATE personcompressorsellable SET productid = 113 WHERE personcompressorsellable.id = 2577;
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'FILTRO SEPARADOR', 'ELEMENTO SEPARADOR AR/OLEO 60/75CV', NULL, 1, 1, 1, 0, 0, 0, 0, NULL, 1);
+UPDATE personcompressorsellable SET productid = LAST_INSERT_ID() WHERE personcompressorsellable.id = 2578;
+INSERT INTO productprovidercode VALUES (NULL, LAST_INSERT_ID(), CURDATE(), '021.0011-9', 2, 1, 1);
+
+UPDATE personcompressorsellable SET productid = 50 WHERE personcompressorsellable.id = 2963;
+UPDATE personcompressorsellable SET productid = 113 WHERE personcompressorsellable.id = 2964;
+UPDATE personcompressorsellable SET productid = 75 WHERE personcompressorsellable.id = 2965;
+
+
+UPDATE personcompressorsellable SET productid = 1 WHERE personcompressorsellable.id = 2870;
+UPDATE personcompressorsellable SET productid = 2 WHERE personcompressorsellable.id = 2871;
+UPDATE personcompressorsellable SET productid = 3 WHERE personcompressorsellable.id = 2872;
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'ELEMENTO COALESCENTE FAPS 80U', 'ELEMENTO COALESCENTE FAPS 80U', NULL, 1, 1, 6, 0, 0, 0, 0, NULL, 1);
+UPDATE personcompressorsellable SET productid = LAST_INSERT_ID() WHERE personcompressorsellable.id = 3655;
+INSERT INTO productprovidercode VALUES (NULL, LAST_INSERT_ID(), CURDATE(), '007.0496-0', 2, 1, 1);
+
+INSERT INTO product VALUES (NULL, CURDATE(), 0, 'ELEMENTO COALESCENTE FAPS 80H', 'ELEMENTO COALESCENTE FAPS 80H', NULL, 1, 1, 6, 0, 0, 0, 0, NULL, 1);
+UPDATE personcompressorsellable SET productid = LAST_INSERT_ID() WHERE personcompressorsellable.id = 3656;
+INSERT INTO productprovidercode VALUES (NULL, LAST_INSERT_ID(), CURDATE(), '007.0500-0', 2, 1, 1);
+
+UPDATE personcompressorsellable SET productid = 115 WHERE personcompressorsellable.id = 2957;
+UPDATE personcompressorsellable SET productid = 116 WHERE personcompressorsellable.id = 2958;
+UPDATE personcompressorsellable SET productid = 15 WHERE personcompressorsellable.id = 2959;
+UPDATE personcompressorsellable SET productid = 152 WHERE personcompressorsellable.id = 2960;
+
+SET SQL_SAFE_UPDATES = 1;
+
+
+/*
+---------------------------------------------------ATENCAO---------------------------------------------------
+---------------------------------------------------ATENCAO---------------------------------------------------
+---------------------------------------------------ATENCAO---------------------------------------------------
+---------------------------------------------------ATENCAO---------------------------------------------------
+---------------------------------------------------ATENCAO---------------------------------------------------
+---------------------------------------------------ATENCAO---------------------------------------------------
+---------------------------------------------------ATENCAO---------------------------------------------------
+---------------------------------------------------ATENCAO---------------------------------------------------
+ANTES DE EXECUTAR O PROXIMO ALTER TABLE, CERTIFICAR SE NAO HA MAIS NENUM ITEM NA TABELA personcompressorsellable
+QUE NAO TEM productid e serviceid SIMUNTANEAMENTE, USAR A itemname PARA CADASTRAR O ITEM OU SERVIÇO E ATUALIZAR
+A TABELA COM O productid ou serviceid CORRESPONDENTE, UTILIZAT A QUERY ABAIXO PARA CONSULTAR.
+
+SELECT 
+	pcs.id,
+    p.shortname,
+    c.name,
+	pcs.itemname,
+    pcs.productid,
+    pcs.serviceid
+FROM personcompressorsellable pcs
+JOIN personcompressor pc ON pc.id = pcs.personcompressorid
+JOIN compressor c ON c.id = pc.compressorid
+JOIN person p ON p.id = pc.personid
+WHERE
+    pcs.productid IS NULL AND
+	pcs.serviceid IS NULL
+order by  itemname;       
+        
+*/
+
+
+#REFAZER AS TRIGGERS DO COMPRESSORSELLABLE E PERSONCOMPRESSORSELLABLE AQUI
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS `manager`.`personcompressorpartinsert` $$
+DROP TRIGGER IF EXISTS `manager`.`personcompressorsellableinsert`$$
+CREATE TRIGGER `personcompressorsellableinsert` AFTER INSERT ON `personcompressorsellable` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, CASE WHEN new.controltypeid = 0 THEN 204 WHEN new.controltypeid = 1 THEN 205 END, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END$$
+DROP TRIGGER IF EXISTS `manager`.`personcompressorpartupdate`$$
+DROP TRIGGER IF EXISTS `manager`.`personcompressorsellableupdate`$$
+CREATE TRIGGER `personcompressorsellableupdate` AFTER UPDATE ON `personcompressorsellable` FOR EACH ROW BEGIN
+IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, CASE WHEN old.controltypeid = 0 THEN 204 WHEN old.controltypeid = 1 THEN 205 END, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'ATIVO' WHEN OLD.statusid = 1 THEN 'INATIVO' END, CASE WHEN NEW.statusid = 0 THEN 'ATIVO' WHEN NEW.statusid = 1 THEN 'INATIVO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.partbindid <> NEW.partbindid THEN INSERT INTO log VALUES (NULL, CASE WHEN old.controltypeid = 0 THEN 204 WHEN old.controltypeid = 1 THEN 205 END, NEW.id, 'Vínculo', CASE WHEN OLD.partbindid = 0 THEN 'NENHUM' WHEN OLD.partbindid = 1 THEN 'FILTRO DE AR' WHEN OLD.partbindid = 2 THEN 'FILTRO DE OLEO' WHEN OLD.partbindid = 3 THEN 'ELEMENTO SEPARADOR' WHEN OLD.partbindid = 4 THEN 'OLEO' WHEN OLD.partbindid = 5 THEN 'COALESCENTE' END, CASE WHEN NEW.partbindid = 0 THEN 'NENHUM' WHEN NEW.partbindid = 1 THEN 'FILTRO DE AR' WHEN NEW.partbindid = 2 THEN 'FILTRO DE OLEO' WHEN NEW.partbindid = 3 THEN 'ELEMENTO SEPARADOR' WHEN NEW.partbindid = 4 THEN 'OLEO' WHEN NEW.partbindid = 5 THEN 'COALESCENTE' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF (
+    (OLD.productid IS NOT NULL AND NEW.productid IS NULL AND OLD.serviceid IS NULL AND NEW.serviceid IS NOT NULL) OR
+    (OLD.serviceid IS NOT NULL AND NEW.serviceid IS NULL AND OLD.productid IS NULL AND NEW.productid IS NOT NULL) OR
+    (OLD.productid <> NEW.productid) OR (OLD.serviceid <> NEW.serviceid)
+) THEN
+	INSERT INTO log VALUES (
+		NULL,
+        CASE WHEN old.controltypeid = 0 THEN 204 WHEN old.controltypeid = 1 THEN 205 END,
+        NEW.id,
+        'Produto/Serviço', 
+        CASE
+			WHEN OLD.productid IS NOT NULL
+				THEN (SELECT CONCAT(product.id, ' - ', product.name) FROM product WHERE product.id = OLD.productid)
+			WHEN OLD.serviceid IS NOT NULL
+				THEN (SELECT CONCAT(service.id, ' - ', service.name) FROM service WHERE service.id = OLD.serviceid)
+		END,
+        CASE
+			WHEN NEW.productid IS NOT NULL
+				THEN (SELECT CONCAT(product.id, ' - ', product.name) FROM product WHERE product.id = NEW.productid)
+			WHEN NEW.serviceid IS NOT NULL
+				THEN (SELECT CONCAT(service.id, ' - ', service.name) FROM service WHERE service.id = NEW.serviceid)
+		END,
+        NOW(),
+        CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END IF;
+IF OLD.quantity <> NEW.quantity THEN INSERT INTO log VALUES (NULL, CASE WHEN old.controltypeid = 0 THEN 204 WHEN old.controltypeid = 1 THEN 205 END, NEW.id, 'Qtd.', FORMAT(OLD.quantity, 2, 'pt_BR'), FORMAT(NEW.quantity, 2, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.capacity <> NEW.capacity THEN INSERT INTO log VALUES (NULL, CASE WHEN old.controltypeid = 0 THEN 204 WHEN old.controltypeid = 1 THEN 205 END, NEW.id, 'Cap.', FORMAT(OLD.capacity, 0, 'pt_BR'), FORMAT(NEW.capacity, 0, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+END$$
+DROP TRIGGER IF EXISTS `manager`.`personcompressorpartdelete` $$
+DROP TRIGGER IF EXISTS `manager`.`personcompressorsellabledelete` $$
+CREATE TRIGGER `personcompressorsellabledelete` AFTER DELETE ON `personcompressorsellable` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, CASE WHEN old.controltypeid = 0 THEN 204 WHEN old.controltypeid = 1 THEN 205 END, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
+END$$
+DROP TRIGGER IF EXISTS `manager`.`compressorsellableupdate`$$
+CREATE TRIGGER `compressorsellableupdate` AFTER UPDATE ON `compressorsellable` FOR EACH ROW BEGIN
+IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, CASE WHEN old.controltypeid = 0 THEN 1201 WHEN old.controltypeid = 1 THEN 1202 END, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'ATIVO' WHEN OLD.statusid = 1 THEN 'INATIVO' END, CASE WHEN NEW.statusid = 0 THEN 'ATIVO' WHEN NEW.statusid = 1 THEN 'INATIVO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF (
+    (OLD.productid IS NOT NULL AND NEW.productid IS NULL AND OLD.serviceid IS NULL AND NEW.serviceid IS NOT NULL) OR
+    (OLD.serviceid IS NOT NULL AND NEW.serviceid IS NULL AND OLD.productid IS NULL AND NEW.productid IS NOT NULL) OR
+    (OLD.productid <> NEW.productid) OR (OLD.serviceid <> NEW.serviceid)
+) THEN
+	INSERT INTO log VALUES (
+		NULL,
+        CASE WHEN old.controltypeid = 0 THEN 1201 WHEN old.controltypeid = 1 THEN 1202 END,
+        NEW.id,
+        'Produto/Serviço', 
+        CASE
+			WHEN OLD.productid IS NOT NULL
+				THEN (SELECT CONCAT(product.id, ' - ', product.name) FROM product WHERE product.id = OLD.productid)
+			WHEN OLD.serviceid IS NOT NULL
+				THEN (SELECT CONCAT(service.id, ' - ', service.name) FROM service WHERE service.id = OLD.serviceid)
+		END,
+        CASE
+			WHEN NEW.productid IS NOT NULL
+				THEN (SELECT CONCAT(product.id, ' - ', product.name) FROM product WHERE product.id = NEW.productid)
+			WHEN NEW.serviceid IS NOT NULL
+				THEN (SELECT CONCAT(service.id, ' - ', service.name) FROM service WHERE service.id = NEW.serviceid)
+		END,
+        NOW(),
+        CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END IF;
+IF OLD.quantity <> NEW.quantity THEN INSERT INTO log VALUES (NULL, CASE WHEN old.controltypeid = 0 THEN 1201 WHEN old.controltypeid = 1 THEN 1202 END, NEW.id, 'Qtd.', FORMAT(OLD.quantity, 2, 'pt_BR'), FORMAT(NEW.quantity, 2, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+END$$
+DELIMITER ;
+
+DELETE FROM evaluationpart WHERE personcompressorpartid = 3431;
+DELETE FROM evaluationpart WHERE personcompressorpartid = 3501;
+DELETE FROM evaluationpart WHERE personcompressorpartid = 3504;
+DELETE FROM evaluationpart WHERE personcompressorpartid = 3505;
+
+DELETE FROM personcompressorsellable WHERE id = '3431';
+DELETE FROM personcompressorsellable WHERE id = '3501';
+DELETE FROM personcompressorsellable WHERE id = '3504';
+DELETE FROM personcompressorsellable WHERE id = '3505';
+
+ALTER TABLE `manager`.`personcompressorsellable` DROP COLUMN `itemname`;
+ALTER TABLE `manager`.`personcompressorsellable` DROP FOREIGN KEY `personcompressorsellable_personcompressor`;
+ALTER TABLE `manager`.`personcompressorsellable` DROP INDEX `personcompressorid` ;
+ALTER TABLE `manager`.`personcompressorsellable` ADD INDEX `personcompressor` (`personcompressorid` ASC) VISIBLE;
+ALTER TABLE `manager`.`personcompressorsellable` ADD CONSTRAINT `personcompressorsellable_personcompressor` FOREIGN KEY (`personcompressorid`) REFERENCES `manager`.`personcompressor` (`id`)  ON DELETE CASCADE  ON UPDATE RESTRICT;
+ALTER TABLE `manager`.`personcompressorsellable` ADD UNIQUE INDEX `personcompressor_product` (`personcompressorid` ASC, `productid` ASC) VISIBLE;
+ALTER TABLE `manager`.`personcompressorsellable` ALTER INDEX `productid` INVISIBLE;
+ALTER TABLE `manager`.`personcompressorsellable` ADD UNIQUE INDEX `personcompressor_service` (`personcompressorid` ASC, `serviceid` ASC) VISIBLE;
+ALTER TABLE `manager`.`personcompressorsellable` ALTER INDEX `serviceid` INVISIBLE;
+
+
+ALTER TABLE `manager`.`evaluationpart` DROP FOREIGN KEY `evaluationpart_personcompressorpart`;
+ALTER TABLE `manager`.`evaluationpart` CHANGE COLUMN `personcompressorpartid` `personcompressorsellableid` INT NOT NULL;
+ALTER TABLE `manager`.`evaluationpart` ADD CONSTRAINT `evaluationpart_personcompressorsellable` FOREIGN KEY (`personcompressorsellableid`) REFERENCES `manager`.`personcompressorsellable` (`id`)  ON DELETE RESTRICT;
+ALTER TABLE `manager`.`evaluationpart` RENAME TO  `manager`.`evaluationcontrolledsellable`;

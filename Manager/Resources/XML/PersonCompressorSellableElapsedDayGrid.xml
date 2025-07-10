@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Routine Id="PersonCompressorPartElapsedDay" Version="1">
+<Routine Id="PersonCompressorSellableElapsedDay" Version="1">
 	<SortedColumn>-1</SortedColumn>
 	<SortDirection>0</SortDirection>
 	<Column Index="0">
@@ -23,33 +23,39 @@
 	<Column Index="3" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>3</DisplayIndex>
-		<Name>Tipo Peça</Name>
+		<Name>Tipo Controle</Name>
 		<Width>100</Width>
 	</Column>
+
+
 	<Column Index="4">
 		<Visible>True</Visible>
 		<DisplayIndex>4</DisplayIndex>
+		<Name>Produto/Serviço Obj</Name>
+		<Width>100</Width>
+	</Column>
+
+
+	<Column Index="5">
+		<Visible>True</Visible>
+		<DisplayIndex>5</DisplayIndex>
+		<Name>ID Produto/Serviço</Name>
+		<Width>100</Width>
+	</Column>
+
+	<Column Index="6">
+		<Visible>True</Visible>
+		<DisplayIndex>6</DisplayIndex>
 		<Name>Código</Name>
 		<Width>100</Width>
 	</Column>
-	<Column Index="5" ButtonState="Hidden">
+	<Column Index="7" ButtonState="Hidden">
 		<Visible>False</Visible>
-		<DisplayIndex>5</DisplayIndex>
-		<Name>Nome</Name>
+		<DisplayIndex>7</DisplayIndex>
+		<Name>Produto/Serviço</Name>
 		<Width>120</Width>
 	</Column>
-	<Column Index="6" ButtonState="Hidden">
-		<Visible>False</Visible>
-		<DisplayIndex>6</DisplayIndex>
-		<Name>Produto</Name>
-		<Width>200</Width>
-	</Column>
-	<Column Index="7">
-		<Visible>True</Visible>
-		<DisplayIndex>7</DisplayIndex>
-		<Name>Item</Name>
-		<Width>100</Width>
-	</Column>
+	
 	<Column Index="8">
 		<Visible>True</Visible>
 		<DisplayIndex>8</DisplayIndex>
@@ -65,7 +71,7 @@
 	<Column Index="10">
 		<Visible>True</Visible>
 		<DisplayIndex>10</DisplayIndex>
-		<Name>Peça Vinculada</Name>
+		<Name>Produto/Serviço Vinculado</Name>
 		<Width>100</Width>
 	</Column>
 	<Column Index="11" ButtonState="Hidden">

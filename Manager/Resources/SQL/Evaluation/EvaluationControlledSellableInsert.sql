@@ -1,9 +1,9 @@
-INSERT INTO evaluationpart
+INSERT INTO evaluationcontrolledsellable
 (
 	creation,
 	evaluationid,
 	personcompressorid,
-	personcompressorpartid,
+	personcompressorsellableid,
 	currentcapacity,
 	sold,
 	lost,
@@ -14,7 +14,7 @@ VALUES
 	@creation,
 	@evaluationid,
 	@personcompressorid,
-	@personcompressorpartid,
+	@personcompressorsellableid,
 	@currentcapacity,
 	@sold,
 	@lost,

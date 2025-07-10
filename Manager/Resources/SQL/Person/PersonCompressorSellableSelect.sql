@@ -1,15 +1,20 @@
 SELECT
-	personcompressorpart.id,
-	personcompressorpart.creation,
-	personcompressorpart.statusid,
-	personcompressorpart.partbindid,
-	personcompressorpart.parttypeid,
-	personcompressorpart.itemname,
-	IFNULL(personcompressorpart.productid, 0) AS productid,
-	personcompressorpart.quantity,
-	personcompressorpart.capacity
-FROM personcompressorpart
+	personcompressorsellable.id,
+	personcompressorsellable.creation,
+	personcompressorsellable.statusid,
+	personcompressorsellable.sellablebindid,
+	personcompressorsellable.controltypeid,
+	personcompressorsellable.productid,
+	personcompressorsellable.serviceid,
+	IFNULL(product.name, service.name) name,
+	IFNULL(productprovidercode.code, '') code,
+	personcompressorsellable.quantity,
+	personcompressorsellable.capacity
+FROM personcompressorsellable
+LEFT JOIN product ON product.id = personcompressorsellable.productid
+LEFT JOIN service ON service.id = personcompressorsellable.serviceid
+LEFT JOIN productprovidercode ON productprovidercode.productid = product.id AND productprovidercode.ismainprovider = 1
 WHERE 
-	personcompressorpart.personcompressorid = @personcompressorid AND
-	personcompressorpart.parttypeid = @parttypeid
-ORDER BY personcompressorpart.id;
+	personcompressorsellable.personcompressorid = @personcompressorid AND
+	personcompressorsellable.controltypeid = @controltypeid
+ORDER BY personcompressorsellable.id;

@@ -1,4 +1,6 @@
-﻿''' <summary>
+﻿Imports ControlLibrary
+
+''' <summary>
 ''' Representa um compressor de uma pessoa.
 ''' </summary>
 Public Class PersonCompressor

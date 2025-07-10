@@ -1,2 +1,2 @@
-DELETE FROM personcompressorpart
-WHERE personcompressorpart.id = @id;
+DELETE FROM personcompressorsellable
+WHERE personcompressorsellable.id = @id;

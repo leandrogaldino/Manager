@@ -1,14 +1,14 @@
 SELECT
-	evaluationpart.id,
-	evaluationpart.creation,
-	evaluationpart.personcompressorid,
-	evaluationpart.personcompressorpartid,
-	evaluationpart.currentcapacity,
-	evaluationpart.sold,
-	evaluationpart.lost,
-	evaluationpart.userid
-FROM evaluationpart
-LEFT JOIN personcompressorpart ON personcompressorpart.id = evaluationpart.personcompressorpartid
+	evaluationcontrolledsellable.id,
+	evaluationcontrolledsellable.creation,
+	evaluationcontrolledsellable.personcompressorid,
+	evaluationcontrolledsellable.personcompressorsellableid,
+	evaluationcontrolledsellable.currentcapacity,
+	evaluationcontrolledsellable.sold,
+	evaluationcontrolledsellable.lost,
+	evaluationcontrolledsellable.userid
+FROM evaluationcontrolledsellable
+LEFT JOIN personcompressorsellable ON personcompressorsellable.id = evaluationcontrolledsellable.personcompressorsellableid
 WHERE 
-	evaluationpart.evaluationid = @evaluationid AND
-	personcompressorpart.parttypeid = @parttypeid;
+	evaluationcontrolledsellable.evaluationid = @evaluationid AND
+	personcompressorsellable.controltypeid = @controltypeid;

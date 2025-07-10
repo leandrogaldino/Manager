@@ -1,2 +1,2 @@
-DELETE FROM evaluationpart
-WHERE evaluationpart.id = @id;
+DELETE FROM evaluationcontrolledsellable
+WHERE evaluationcontrolledsellable.id = @id;

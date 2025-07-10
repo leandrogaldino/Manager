@@ -1026,3 +1026,4 @@ ALTER TABLE `manager`.`evaluationpart` DROP FOREIGN KEY `evaluationpart_personco
 ALTER TABLE `manager`.`evaluationpart` CHANGE COLUMN `personcompressorpartid` `personcompressorsellableid` INT NOT NULL;
 ALTER TABLE `manager`.`evaluationpart` ADD CONSTRAINT `evaluationpart_personcompressorsellable` FOREIGN KEY (`personcompressorsellableid`) REFERENCES `manager`.`personcompressorsellable` (`id`)  ON DELETE RESTRICT;
 ALTER TABLE `manager`.`evaluationpart` RENAME TO  `manager`.`evaluationcontrolledsellable`;
+ALTER TABLE `manager`.`personcompressorsellable` CHANGE COLUMN `partbindid` `sellablebindid` INT NOT NULL ;

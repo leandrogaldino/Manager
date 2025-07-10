@@ -294,8 +294,8 @@ Partial Class FrmPersonCompressorSellableWorkedHour
         Me.ToolStripLabel1.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ToolStripLabel1.Margin = New System.Windows.Forms.Padding(10, 1, 0, 2)
         Me.ToolStripLabel1.Name = "ToolStripLabel1"
-        Me.ToolStripLabel1.Size = New System.Drawing.Size(60, 22)
-        Me.ToolStripLabel1.Text = "Vinculo:"
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(59, 22)
+        Me.ToolStripLabel1.Text = "Vínculo:"
         '
         'CbxSellableBind
         '

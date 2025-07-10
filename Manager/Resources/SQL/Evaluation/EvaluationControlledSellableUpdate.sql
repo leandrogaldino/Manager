@@ -1,6 +1,6 @@
-UPDATE evaluationpart SET
+UPDATE evaluationcontrolledsellable SET
     currentcapacity = @currentcapacity,
     sold = @sold,
     lost = @lost,
     userid = @userid
-WHERE evaluationpart.id = @id;
+WHERE evaluationcontrolledsellable.id = @id;

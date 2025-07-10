@@ -1,9 +1,9 @@
-UPDATE personcompressorpart SET
+UPDATE personcompressorsellable SET
 	statusid = @statusid,
-	partbindid = @partbindid,
+	sellablebindid = @sellablebindid,
 	itemname = @itemname,
 	productid = @productid,
 	quantity = @quantity,
 	capacity = @capacity,
 	userid = @userid
-WHERE personcompressorpart.id = @id;
+WHERE personcompressorsellable.id = @id;

@@ -1,10 +1,10 @@
-INSERT INTO personcompressorpart
+INSERT INTO personcompressorsellable
 (
 	personcompressorid,
 	creation,
 	statusid,
-	partbindid,
-	parttypeid,
+	sellablebindid,
+	controltypeid,
 	itemname,
 	productid,
 	quantity,
@@ -16,8 +16,8 @@ VALUES
 	@personcompressorid,
 	@creation,
 	@statusid,
-	@partbindid,
-	@parttypeid,
+	@sellablebindid,
+	@controltypeid,
 	@itemname,
 	@productid,
 	@quantity,

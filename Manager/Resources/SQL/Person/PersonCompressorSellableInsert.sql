@@ -5,8 +5,8 @@ INSERT INTO personcompressorsellable
 	statusid,
 	sellablebindid,
 	controltypeid,
-	itemname,
 	productid,
+	serviceid,
 	quantity,
 	capacity,
 	userid
@@ -18,8 +18,8 @@ VALUES
 	@statusid,
 	@sellablebindid,
 	@controltypeid,
-	@itemname,
 	@productid,
+	@serviceid
 	@quantity,
 	@capacity,
 	@userid

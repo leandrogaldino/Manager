@@ -400,10 +400,10 @@ Public Class Person
                 Next Contact
                 For Each ShadowCompressor As PersonCompressor In _Shadow.Compressors
                     If Not Compressors.Any(Function(x) x.ID = ShadowCompressor.ID And x.ID > 0) Then
-                        Using CmdCashItem As New MySqlCommand(My.Resources.PersonCompressorDelete, Con)
-                            CmdCashItem.Transaction = Tra
-                            CmdCashItem.Parameters.AddWithValue("@id", ShadowCompressor.ID)
-                            CmdCashItem.ExecuteNonQuery()
+                        Using CmdCmdPersonCompressor As New MySqlCommand(My.Resources.PersonCompressorDelete, Con)
+                            CmdCmdPersonCompressor.Transaction = Tra
+                            CmdCmdPersonCompressor.Parameters.AddWithValue("@id", ShadowCompressor.ID)
+                            CmdCmdPersonCompressor.ExecuteNonQuery()
                         End Using
                     End If
                     For Each ShadowWorkedHourSellable As PersonCompressorSellable In ShadowCompressor.WorkedHourSellables

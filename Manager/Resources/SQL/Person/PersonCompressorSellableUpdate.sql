@@ -1,8 +1,8 @@
 UPDATE personcompressorsellable SET
 	statusid = @statusid,
 	sellablebindid = @sellablebindid,
-	itemname = @itemname,
 	productid = @productid,
+	serviceid = @serviceid,
 	quantity = @quantity,
 	capacity = @capacity,
 	userid = @userid

@@ -23,39 +23,33 @@
 	<Column Index="3" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>3</DisplayIndex>
-		<Name>Tipo Controle</Name>
+		<Name>Tipo Peça</Name>
 		<Width>100</Width>
 	</Column>
-
-
-	<Column Index="4">
-		<Visible>True</Visible>
+	<Column Index="4" ButtonState="Hidden">
+		<Visible>False</Visible>
 		<DisplayIndex>4</DisplayIndex>
 		<Name>Produto/Serviço Obj</Name>
 		<Width>100</Width>
 	</Column>
-
-
-	<Column Index="5">
-		<Visible>True</Visible>
+	<Column Index="5" ButtonState="Hidden">
+		<Visible>False</Visible>
 		<DisplayIndex>5</DisplayIndex>
 		<Name>ID Produto/Serviço</Name>
-		<Width>100</Width>
+		<Width>120</Width>
 	</Column>
-
 	<Column Index="6">
 		<Visible>True</Visible>
 		<DisplayIndex>6</DisplayIndex>
 		<Name>Código</Name>
-		<Width>100</Width>
-	</Column>
-	<Column Index="7" ButtonState="Hidden">
-		<Visible>False</Visible>
-		<DisplayIndex>7</DisplayIndex>
-		<Name>Produto/Serviço</Name>
 		<Width>120</Width>
 	</Column>
-	
+	<Column Index="7">
+		<Visible>True</Visible>
+		<DisplayIndex>7</DisplayIndex>
+		<Name>Produto/Serviço</Name>
+		<Width>250</Width>
+	</Column>
 	<Column Index="8">
 		<Visible>True</Visible>
 		<DisplayIndex>8</DisplayIndex>
@@ -71,7 +65,7 @@
 	<Column Index="10">
 		<Visible>True</Visible>
 		<DisplayIndex>10</DisplayIndex>
-		<Name>Produto/Serviço Vinculado</Name>
+		<Name>Peça Vinculada</Name>
 		<Width>100</Width>
 	</Column>
 	<Column Index="11" ButtonState="Hidden">

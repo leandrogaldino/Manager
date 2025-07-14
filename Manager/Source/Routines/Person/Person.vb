@@ -283,11 +283,6 @@ Public Class Person
         End Using
     End Sub
     Private Sub Update()
-
-
-
-        Dim poooo = My.Resources.PersonCompressorSellableUpdate
-
         Dim Session = Locator.GetInstance(Of Session)
         Dim Compressor As PersonCompressor
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())

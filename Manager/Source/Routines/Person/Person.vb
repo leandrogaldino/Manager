@@ -696,7 +696,15 @@ Public Class Person
                 Next Row
             End Using
         End Using
-        Return Sellables
+        Dim OrdenedSellables = Sellables.OrderBy(Function(c)
+                                                     If c.SellableBind = CompressorSellableBindType.AirFilter Then Return 1
+                                                     If c.SellableBind = CompressorSellableBindType.OilFilter Then Return 2
+                                                     If c.SellableBind = CompressorSellableBindType.Separator Then Return 3
+                                                     If c.SellableBind = CompressorSellableBindType.Coalescent Then Return 4
+                                                     If c.SellableBind = CompressorSellableBindType.Oil Then Return 5
+                                                     Return 5
+                                                 End Function).ToList()
+        Return OrdenedSellables
     End Function
 
     Public Shared Sub FillAddressDataGridView(PersonID As Long, Dgv As DataGridView)

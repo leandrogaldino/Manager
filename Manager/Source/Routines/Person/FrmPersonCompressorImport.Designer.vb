@@ -26,17 +26,17 @@ Partial Class FrmPersonCompressorImport
         Me.BtnImport = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.DgvPartWorkedHour = New System.Windows.Forms.DataGridView()
+        Me.DgvWorkedHourSellable = New System.Windows.Forms.DataGridView()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.DgvPartElapsedDay = New System.Windows.Forms.DataGridView()
+        Me.DgvElapsedDaySellable = New System.Windows.Forms.DataGridView()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
-        CType(Me.DgvPartWorkedHour, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DgvPartElapsedDay, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DgvWorkedHourSellable, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DgvElapsedDaySellable, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'BtnClose
@@ -81,36 +81,36 @@ Partial Class FrmPersonCompressorImport
         '
         'SplitContainer1.Panel1
         '
-        Me.SplitContainer1.Panel1.Controls.Add(Me.DgvPartWorkedHour)
+        Me.SplitContainer1.Panel1.Controls.Add(Me.DgvWorkedHourSellable)
         Me.SplitContainer1.Panel1.Controls.Add(Me.Label1)
         '
         'SplitContainer1.Panel2
         '
-        Me.SplitContainer1.Panel2.Controls.Add(Me.DgvPartElapsedDay)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.DgvElapsedDaySellable)
         Me.SplitContainer1.Panel2.Controls.Add(Me.Label2)
         Me.SplitContainer1.Size = New System.Drawing.Size(884, 517)
         Me.SplitContainer1.SplitterDistance = 254
         Me.SplitContainer1.TabIndex = 34
         '
-        'DgvPartWorkedHour
+        'DgvWorkedHourSellable
         '
-        Me.DgvPartWorkedHour.AllowUserToAddRows = False
-        Me.DgvPartWorkedHour.AllowUserToDeleteRows = False
-        Me.DgvPartWorkedHour.AllowUserToOrderColumns = True
-        Me.DgvPartWorkedHour.AllowUserToResizeRows = False
-        Me.DgvPartWorkedHour.BackgroundColor = System.Drawing.Color.WhiteSmoke
-        Me.DgvPartWorkedHour.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DgvPartWorkedHour.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvPartWorkedHour.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvPartWorkedHour.Location = New System.Drawing.Point(0, 26)
-        Me.DgvPartWorkedHour.MultiSelect = False
-        Me.DgvPartWorkedHour.Name = "DgvPartWorkedHour"
-        Me.DgvPartWorkedHour.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvPartWorkedHour.RowHeadersVisible = False
-        Me.DgvPartWorkedHour.RowTemplate.Height = 26
-        Me.DgvPartWorkedHour.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPartWorkedHour.Size = New System.Drawing.Size(884, 228)
-        Me.DgvPartWorkedHour.TabIndex = 1
+        Me.DgvWorkedHourSellable.AllowUserToAddRows = False
+        Me.DgvWorkedHourSellable.AllowUserToDeleteRows = False
+        Me.DgvWorkedHourSellable.AllowUserToOrderColumns = True
+        Me.DgvWorkedHourSellable.AllowUserToResizeRows = False
+        Me.DgvWorkedHourSellable.BackgroundColor = System.Drawing.Color.WhiteSmoke
+        Me.DgvWorkedHourSellable.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DgvWorkedHourSellable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvWorkedHourSellable.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvWorkedHourSellable.Location = New System.Drawing.Point(0, 26)
+        Me.DgvWorkedHourSellable.MultiSelect = False
+        Me.DgvWorkedHourSellable.Name = "DgvWorkedHourSellable"
+        Me.DgvWorkedHourSellable.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvWorkedHourSellable.RowHeadersVisible = False
+        Me.DgvWorkedHourSellable.RowTemplate.Height = 26
+        Me.DgvWorkedHourSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvWorkedHourSellable.Size = New System.Drawing.Size(884, 228)
+        Me.DgvWorkedHourSellable.TabIndex = 1
         '
         'Label1
         '
@@ -124,25 +124,25 @@ Partial Class FrmPersonCompressorImport
         Me.Label1.Text = "Por Hora Trabalhada"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'DgvPartElapsedDay
+        'DgvElapsedDaySellable
         '
-        Me.DgvPartElapsedDay.AllowUserToAddRows = False
-        Me.DgvPartElapsedDay.AllowUserToDeleteRows = False
-        Me.DgvPartElapsedDay.AllowUserToOrderColumns = True
-        Me.DgvPartElapsedDay.AllowUserToResizeRows = False
-        Me.DgvPartElapsedDay.BackgroundColor = System.Drawing.Color.WhiteSmoke
-        Me.DgvPartElapsedDay.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DgvPartElapsedDay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvPartElapsedDay.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvPartElapsedDay.Location = New System.Drawing.Point(0, 26)
-        Me.DgvPartElapsedDay.MultiSelect = False
-        Me.DgvPartElapsedDay.Name = "DgvPartElapsedDay"
-        Me.DgvPartElapsedDay.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvPartElapsedDay.RowHeadersVisible = False
-        Me.DgvPartElapsedDay.RowTemplate.Height = 26
-        Me.DgvPartElapsedDay.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPartElapsedDay.Size = New System.Drawing.Size(884, 233)
-        Me.DgvPartElapsedDay.TabIndex = 1
+        Me.DgvElapsedDaySellable.AllowUserToAddRows = False
+        Me.DgvElapsedDaySellable.AllowUserToDeleteRows = False
+        Me.DgvElapsedDaySellable.AllowUserToOrderColumns = True
+        Me.DgvElapsedDaySellable.AllowUserToResizeRows = False
+        Me.DgvElapsedDaySellable.BackgroundColor = System.Drawing.Color.WhiteSmoke
+        Me.DgvElapsedDaySellable.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DgvElapsedDaySellable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvElapsedDaySellable.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvElapsedDaySellable.Location = New System.Drawing.Point(0, 26)
+        Me.DgvElapsedDaySellable.MultiSelect = False
+        Me.DgvElapsedDaySellable.Name = "DgvElapsedDaySellable"
+        Me.DgvElapsedDaySellable.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvElapsedDaySellable.RowHeadersVisible = False
+        Me.DgvElapsedDaySellable.RowTemplate.Height = 26
+        Me.DgvElapsedDaySellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(884, 233)
+        Me.DgvElapsedDaySellable.TabIndex = 1
         '
         'Label2
         '
@@ -177,8 +177,8 @@ Partial Class FrmPersonCompressorImport
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.ResumeLayout(False)
-        CType(Me.DgvPartWorkedHour, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DgvPartElapsedDay, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DgvWorkedHourSellable, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DgvElapsedDaySellable, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -188,6 +188,6 @@ Partial Class FrmPersonCompressorImport
     Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
-    Friend WithEvents DgvPartWorkedHour As DataGridView
-    Friend WithEvents DgvPartElapsedDay As DataGridView
+    Friend WithEvents DgvWorkedHourSellable As DataGridView
+    Friend WithEvents DgvElapsedDaySellable As DataGridView
 End Class

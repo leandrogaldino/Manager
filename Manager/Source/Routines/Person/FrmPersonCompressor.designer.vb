@@ -23,8 +23,8 @@ Partial Class FrmPersonCompressor
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmPersonCompressor))
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
@@ -66,15 +66,15 @@ Partial Class FrmPersonCompressor
         Me.LblUnitCapacity = New System.Windows.Forms.Label()
         Me.TabMaintenance = New System.Windows.Forms.TabPage()
         Me.TcMaintenance = New System.Windows.Forms.TabControl()
-        Me.TabPartWorkedHour = New System.Windows.Forms.TabPage()
+        Me.TabWorkedHourSellable = New System.Windows.Forms.TabPage()
         Me.DgvWorkedHourSellable = New System.Windows.Forms.DataGridView()
         Me.TsWorkedHourSellable = New System.Windows.Forms.ToolStrip()
-        Me.BtnWorkedHourSellable = New System.Windows.Forms.ToolStripButton()
+        Me.BtnIncludeWorkedHourSellable = New System.Windows.Forms.ToolStripButton()
         Me.BtnEditWorkedHourSellable = New System.Windows.Forms.ToolStripButton()
         Me.BtnDeleteWorkedHourSellable = New System.Windows.Forms.ToolStripButton()
         Me.LblFilterWorkedHourSellable = New System.Windows.Forms.ToolStripLabel()
         Me.TxtFilterWorkedHourSellable = New System.Windows.Forms.ToolStripTextBox()
-        Me.TabPartElapsedDay = New System.Windows.Forms.TabPage()
+        Me.TabElapsedDaySellable = New System.Windows.Forms.TabPage()
         Me.DgvElapsedDaySellable = New System.Windows.Forms.DataGridView()
         Me.TsElapsedDaySellable = New System.Windows.Forms.ToolStrip()
         Me.BtnIncludeElapsedDaySellable = New System.Windows.Forms.ToolStripButton()
@@ -98,10 +98,10 @@ Partial Class FrmPersonCompressor
         Me.FlpCompressor.SuspendLayout()
         Me.TabMaintenance.SuspendLayout()
         Me.TcMaintenance.SuspendLayout()
-        Me.TabPartWorkedHour.SuspendLayout()
+        Me.TabWorkedHourSellable.SuspendLayout()
         CType(Me.DgvWorkedHourSellable, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsWorkedHourSellable.SuspendLayout()
-        Me.TabPartElapsedDay.SuspendLayout()
+        Me.TabElapsedDaySellable.SuspendLayout()
         CType(Me.DgvElapsedDaySellable, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsElapsedDaySellable.SuspendLayout()
         Me.TabNote.SuspendLayout()
@@ -352,11 +352,11 @@ Partial Class FrmPersonCompressor
         '
         Me.QbxCompressor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxCompressor.CharactersToQuery = 1
-        Condition1.FieldName = "statusid"
-        Condition1.Operator = "="
-        Condition1.TableNameOrAlias = "compressor"
-        Condition1.Value = "@statusid"
-        Me.QbxCompressor.Conditions.Add(Condition1)
+        Condition2.FieldName = "statusid"
+        Condition2.Operator = "="
+        Condition2.TableNameOrAlias = "compressor"
+        Condition2.Value = "@statusid"
+        Me.QbxCompressor.Conditions.Add(Condition2)
         Me.QbxCompressor.DebugOnTextChanged = False
         Me.QbxCompressor.DisplayFieldAlias = "NOME"
         Me.QbxCompressor.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
@@ -373,9 +373,9 @@ Partial Class FrmPersonCompressor
         Me.QbxCompressor.MainTableAlias = Nothing
         Me.QbxCompressor.MainTableName = "compressor"
         Me.QbxCompressor.Name = "QbxCompressor"
-        Parameter1.ParameterName = "@statusid"
-        Parameter1.ParameterValue = "0"
-        Me.QbxCompressor.Parameters.Add(Parameter1)
+        Parameter2.ParameterName = "@statusid"
+        Parameter2.ParameterValue = "0"
+        Me.QbxCompressor.Parameters.Add(Parameter2)
         Me.QbxCompressor.Prefix = Nothing
         Me.QbxCompressor.Size = New System.Drawing.Size(433, 23)
         Me.QbxCompressor.Suffix = Nothing
@@ -544,8 +544,8 @@ Partial Class FrmPersonCompressor
         '
         'TcMaintenance
         '
-        Me.TcMaintenance.Controls.Add(Me.TabPartWorkedHour)
-        Me.TcMaintenance.Controls.Add(Me.TabPartElapsedDay)
+        Me.TcMaintenance.Controls.Add(Me.TabWorkedHourSellable)
+        Me.TcMaintenance.Controls.Add(Me.TabElapsedDaySellable)
         Me.TcMaintenance.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TcMaintenance.Location = New System.Drawing.Point(3, 3)
         Me.TcMaintenance.Name = "TcMaintenance"
@@ -553,17 +553,17 @@ Partial Class FrmPersonCompressor
         Me.TcMaintenance.Size = New System.Drawing.Size(445, 96)
         Me.TcMaintenance.TabIndex = 0
         '
-        'TabPartWorkedHour
+        'TabWorkedHourSellable
         '
-        Me.TabPartWorkedHour.Controls.Add(Me.DgvWorkedHourSellable)
-        Me.TabPartWorkedHour.Controls.Add(Me.TsWorkedHourSellable)
-        Me.TabPartWorkedHour.Location = New System.Drawing.Point(4, 26)
-        Me.TabPartWorkedHour.Name = "TabPartWorkedHour"
-        Me.TabPartWorkedHour.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPartWorkedHour.Size = New System.Drawing.Size(437, 66)
-        Me.TabPartWorkedHour.TabIndex = 6
-        Me.TabPartWorkedHour.Text = "Hora Trabalhada"
-        Me.TabPartWorkedHour.UseVisualStyleBackColor = True
+        Me.TabWorkedHourSellable.Controls.Add(Me.DgvWorkedHourSellable)
+        Me.TabWorkedHourSellable.Controls.Add(Me.TsWorkedHourSellable)
+        Me.TabWorkedHourSellable.Location = New System.Drawing.Point(4, 26)
+        Me.TabWorkedHourSellable.Name = "TabWorkedHourSellable"
+        Me.TabWorkedHourSellable.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabWorkedHourSellable.Size = New System.Drawing.Size(437, 66)
+        Me.TabWorkedHourSellable.TabIndex = 6
+        Me.TabWorkedHourSellable.Text = "Hora Trabalhada"
+        Me.TabWorkedHourSellable.UseVisualStyleBackColor = True
         '
         'DgvWorkedHourSellable
         '
@@ -591,7 +591,7 @@ Partial Class FrmPersonCompressor
         Me.TsWorkedHourSellable.BackColor = System.Drawing.Color.Transparent
         Me.TsWorkedHourSellable.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsWorkedHourSellable.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsWorkedHourSellable.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnWorkedHourSellable, Me.BtnEditWorkedHourSellable, Me.BtnDeleteWorkedHourSellable, Me.LblFilterWorkedHourSellable, Me.TxtFilterWorkedHourSellable})
+        Me.TsWorkedHourSellable.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludeWorkedHourSellable, Me.BtnEditWorkedHourSellable, Me.BtnDeleteWorkedHourSellable, Me.LblFilterWorkedHourSellable, Me.TxtFilterWorkedHourSellable})
         Me.TsWorkedHourSellable.Location = New System.Drawing.Point(3, 3)
         Me.TsWorkedHourSellable.Name = "TsWorkedHourSellable"
         Me.TsWorkedHourSellable.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -599,14 +599,14 @@ Partial Class FrmPersonCompressor
         Me.TsWorkedHourSellable.TabIndex = 2
         Me.TsWorkedHourSellable.Text = "ToolStrip2"
         '
-        'BtnWorkedHourSellable
+        'BtnIncludeWorkedHourSellable
         '
-        Me.BtnWorkedHourSellable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnWorkedHourSellable.Image = Global.Manager.My.Resources.Resources.IncludeSmall
-        Me.BtnWorkedHourSellable.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnWorkedHourSellable.Name = "BtnWorkedHourSellable"
-        Me.BtnWorkedHourSellable.Size = New System.Drawing.Size(23, 22)
-        Me.BtnWorkedHourSellable.Text = "Incluir Produto/Serviço"
+        Me.BtnIncludeWorkedHourSellable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnIncludeWorkedHourSellable.Image = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnIncludeWorkedHourSellable.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnIncludeWorkedHourSellable.Name = "BtnIncludeWorkedHourSellable"
+        Me.BtnIncludeWorkedHourSellable.Size = New System.Drawing.Size(23, 22)
+        Me.BtnIncludeWorkedHourSellable.Text = "Incluir Produto/Serviço"
         '
         'BtnEditWorkedHourSellable
         '
@@ -643,17 +643,17 @@ Partial Class FrmPersonCompressor
         Me.TxtFilterWorkedHourSellable.Name = "TxtFilterWorkedHourSellable"
         Me.TxtFilterWorkedHourSellable.Size = New System.Drawing.Size(200, 25)
         '
-        'TabPartElapsedDay
+        'TabElapsedDaySellable
         '
-        Me.TabPartElapsedDay.Controls.Add(Me.DgvElapsedDaySellable)
-        Me.TabPartElapsedDay.Controls.Add(Me.TsElapsedDaySellable)
-        Me.TabPartElapsedDay.Location = New System.Drawing.Point(4, 26)
-        Me.TabPartElapsedDay.Name = "TabPartElapsedDay"
-        Me.TabPartElapsedDay.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPartElapsedDay.Size = New System.Drawing.Size(437, 66)
-        Me.TabPartElapsedDay.TabIndex = 7
-        Me.TabPartElapsedDay.Text = "Dia Corrido"
-        Me.TabPartElapsedDay.UseVisualStyleBackColor = True
+        Me.TabElapsedDaySellable.Controls.Add(Me.DgvElapsedDaySellable)
+        Me.TabElapsedDaySellable.Controls.Add(Me.TsElapsedDaySellable)
+        Me.TabElapsedDaySellable.Location = New System.Drawing.Point(4, 22)
+        Me.TabElapsedDaySellable.Name = "TabElapsedDaySellable"
+        Me.TabElapsedDaySellable.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabElapsedDaySellable.Size = New System.Drawing.Size(437, 70)
+        Me.TabElapsedDaySellable.TabIndex = 7
+        Me.TabElapsedDaySellable.Text = "Dia Corrido"
+        Me.TabElapsedDaySellable.UseVisualStyleBackColor = True
         '
         'DgvElapsedDaySellable
         '
@@ -673,7 +673,7 @@ Partial Class FrmPersonCompressor
         Me.DgvElapsedDaySellable.RowHeadersVisible = False
         Me.DgvElapsedDaySellable.RowTemplate.Height = 26
         Me.DgvElapsedDaySellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(431, 35)
+        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(431, 39)
         Me.DgvElapsedDaySellable.TabIndex = 5
         '
         'TsElapsedDaySellable
@@ -821,13 +821,13 @@ Partial Class FrmPersonCompressor
         Me.FlpCompressor.ResumeLayout(False)
         Me.TabMaintenance.ResumeLayout(False)
         Me.TcMaintenance.ResumeLayout(False)
-        Me.TabPartWorkedHour.ResumeLayout(False)
-        Me.TabPartWorkedHour.PerformLayout()
+        Me.TabWorkedHourSellable.ResumeLayout(False)
+        Me.TabWorkedHourSellable.PerformLayout()
         CType(Me.DgvWorkedHourSellable, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsWorkedHourSellable.ResumeLayout(False)
         Me.TsWorkedHourSellable.PerformLayout()
-        Me.TabPartElapsedDay.ResumeLayout(False)
-        Me.TabPartElapsedDay.PerformLayout()
+        Me.TabElapsedDaySellable.ResumeLayout(False)
+        Me.TabElapsedDaySellable.PerformLayout()
         CType(Me.DgvElapsedDaySellable, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsElapsedDaySellable.ResumeLayout(False)
         Me.TsElapsedDaySellable.PerformLayout()
@@ -870,16 +870,16 @@ Partial Class FrmPersonCompressor
     Friend WithEvents BtnFilter As ControlLibrary.NoFocusCueButton
     Friend WithEvents TcPersonCompressor As TabControl
     Friend WithEvents TabMain As TabPage
-    Friend WithEvents TabPartWorkedHour As TabPage
+    Friend WithEvents TabWorkedHourSellable As TabPage
     Friend WithEvents TsWorkedHourSellable As ToolStrip
-    Friend WithEvents BtnWorkedHourSellable As ToolStripButton
+    Friend WithEvents BtnIncludeWorkedHourSellable As ToolStripButton
     Friend WithEvents BtnEditWorkedHourSellable As ToolStripButton
     Friend WithEvents BtnDeleteWorkedHourSellable As ToolStripButton
     Friend WithEvents LblFilterWorkedHourSellable As ToolStripLabel
     Friend WithEvents TxtFilterWorkedHourSellable As ToolStripTextBox
     Friend WithEvents TabNote As TabPage
     Friend WithEvents TxtNote As RichTextBox
-    Friend WithEvents TabPartElapsedDay As TabPage
+    Friend WithEvents TabElapsedDaySellable As TabPage
     Friend WithEvents TsElapsedDaySellable As ToolStrip
     Friend WithEvents BtnIncludeElapsedDaySellable As ToolStripButton
     Friend WithEvents BtnEditElapsedDaySellable As ToolStripButton

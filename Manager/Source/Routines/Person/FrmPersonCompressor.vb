@@ -66,11 +66,11 @@ Public Class FrmPersonCompressor
                         _PersonCompressor.ElapsedDaySellables.Remove(PersonCompressorSellable)
                     End If
                 Next PersonCompressorSellable
-                For Each ShadowPersonCompressorPart As PersonCompressorSellable In _PersonCompressorShadow.ElapsedDaySellables
-                    If Not _PersonCompressor.ElapsedDaySellables.Any(Function(x) x.Equals(ShadowPersonCompressorPart)) Then
-                        _PersonCompressor.ElapsedDaySellables.Add(ShadowPersonCompressorPart)
+                For Each ShadowPersonCompressorSellable As PersonCompressorSellable In _PersonCompressorShadow.ElapsedDaySellables
+                    If Not _PersonCompressor.ElapsedDaySellables.Any(Function(x) x.Equals(ShadowPersonCompressorSellable)) Then
+                        _PersonCompressor.ElapsedDaySellables.Add(ShadowPersonCompressorSellable)
                     End If
-                Next ShadowPersonCompressorPart
+                Next ShadowPersonCompressorSellable
             End If
         End If
     End Sub
@@ -98,26 +98,26 @@ Public Class FrmPersonCompressor
                     End If
                 End If
                 If Revert Then
-                    For Each PersonCompressorPart As PersonCompressorSellable In _PersonCompressor.WorkedHourSellables.ToArray.Reverse
-                        If Not _PersonCompressorShadow.WorkedHourSellables.Any(Function(x) x.Equals(PersonCompressorPart)) Then
-                            _PersonCompressor.WorkedHourSellables.Remove(PersonCompressorPart)
+                    For Each PersonCompressorSellable As PersonCompressorSellable In _PersonCompressor.WorkedHourSellables.ToArray.Reverse
+                        If Not _PersonCompressorShadow.WorkedHourSellables.Any(Function(x) x.Equals(PersonCompressorSellable)) Then
+                            _PersonCompressor.WorkedHourSellables.Remove(PersonCompressorSellable)
                         End If
-                    Next PersonCompressorPart
-                    For Each ShadowPersonCompressorPart As PersonCompressorSellable In _PersonCompressorShadow.WorkedHourSellables
-                        If Not _PersonCompressor.WorkedHourSellables.Any(Function(x) x.Equals(ShadowPersonCompressorPart)) Then
-                            _PersonCompressor.WorkedHourSellables.Add(ShadowPersonCompressorPart)
+                    Next PersonCompressorSellable
+                    For Each ShadowPersonCompressorSellable As PersonCompressorSellable In _PersonCompressorShadow.WorkedHourSellables
+                        If Not _PersonCompressor.WorkedHourSellables.Any(Function(x) x.Equals(ShadowPersonCompressorSellable)) Then
+                            _PersonCompressor.WorkedHourSellables.Add(ShadowPersonCompressorSellable)
                         End If
-                    Next ShadowPersonCompressorPart
-                    For Each PersonCompressorPart As PersonCompressorSellable In _PersonCompressor.ElapsedDaySellables.ToArray.Reverse
-                        If Not _PersonCompressorShadow.ElapsedDaySellables.Any(Function(x) x.Equals(PersonCompressorPart)) Then
-                            _PersonCompressor.ElapsedDaySellables.Remove(PersonCompressorPart)
+                    Next ShadowPersonCompressorSellable
+                    For Each PersonCompressorSellable As PersonCompressorSellable In _PersonCompressor.ElapsedDaySellables.ToArray.Reverse
+                        If Not _PersonCompressorShadow.ElapsedDaySellables.Any(Function(x) x.Equals(PersonCompressorSellable)) Then
+                            _PersonCompressor.ElapsedDaySellables.Remove(PersonCompressorSellable)
                         End If
-                    Next PersonCompressorPart
-                    For Each ShadowPersonCompressorPart As PersonCompressorSellable In _PersonCompressorShadow.ElapsedDaySellables
-                        If Not _PersonCompressor.ElapsedDaySellables.Any(Function(x) x.Equals(ShadowPersonCompressorPart)) Then
-                            _PersonCompressor.ElapsedDaySellables.Add(ShadowPersonCompressorPart)
+                    Next PersonCompressorSellable
+                    For Each ShadowPersonCompressorSellable As PersonCompressorSellable In _PersonCompressorShadow.ElapsedDaySellables
+                        If Not _PersonCompressor.ElapsedDaySellables.Any(Function(x) x.Equals(ShadowPersonCompressorSellable)) Then
+                            _PersonCompressor.ElapsedDaySellables.Add(ShadowPersonCompressorSellable)
                         End If
-                    Next ShadowPersonCompressorPart
+                    Next ShadowPersonCompressorSellable
                 End If
             End If
             _Deleting = False
@@ -142,16 +142,16 @@ Public Class FrmPersonCompressor
         If BtnSave.Enabled Then
             If CMessageBox.Show("Houve alterações que ainda não foram salvas. Deseja salvar antes de continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                 If Not PreSave() Then
-                    For Each PersonCompressorPart As PersonCompressorSellable In _PersonCompressor.WorkedHourSellables.ToArray.Reverse
-                        If Not _PersonCompressorShadow.WorkedHourSellables.Any(Function(x) x.Equals(PersonCompressorPart)) Then
-                            _PersonCompressor.WorkedHourSellables.Remove(PersonCompressorPart)
+                    For Each PersonCompressorSellable As PersonCompressorSellable In _PersonCompressor.WorkedHourSellables.ToArray.Reverse
+                        If Not _PersonCompressorShadow.WorkedHourSellables.Any(Function(x) x.Equals(PersonCompressorSellable)) Then
+                            _PersonCompressor.WorkedHourSellables.Remove(PersonCompressorSellable)
                         End If
-                    Next PersonCompressorPart
-                    For Each ShadowPersonCompressorPart As PersonCompressorSellable In _PersonCompressorShadow.WorkedHourSellables
-                        If Not _PersonCompressor.WorkedHourSellables.Any(Function(x) x.Equals(ShadowPersonCompressorPart)) Then
-                            _PersonCompressor.WorkedHourSellables.Add(ShadowPersonCompressorPart)
+                    Next PersonCompressorSellable
+                    For Each ShadowPersonCompressorSellable As PersonCompressorSellable In _PersonCompressorShadow.WorkedHourSellables
+                        If Not _PersonCompressor.WorkedHourSellables.Any(Function(x) x.Equals(ShadowPersonCompressorSellable)) Then
+                            _PersonCompressor.WorkedHourSellables.Add(ShadowPersonCompressorSellable)
                         End If
-                    Next ShadowPersonCompressorPart
+                    Next ShadowPersonCompressorSellable
                 End If
             End If
         End If
@@ -218,7 +218,7 @@ Public Class FrmPersonCompressor
     Private Sub LoadForm()
         _Loading = True
         TcPersonCompressor.SelectedTab = TabMain
-        TcMaintenance.SelectedTab = TabPartWorkedHour
+        TcMaintenance.SelectedTab = TabWorkedHourSellable
         LblOrderValue.Text = If(_PersonCompressor.IsSaved, _PersonForm.DgvCompressor.SelectedRows(0).Cells("Order").Value, 0)
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_PersonCompressor.Status)
         LblCreationValue.Text = _PersonCompressor.Creation
@@ -263,7 +263,7 @@ Public Class FrmPersonCompressor
             Return False
         ElseIf _PersonCompressor.WorkedHourSellables.Any(Function(x) x.Capacity = 0) Then
             TcPersonCompressor.SelectedTab = TabMaintenance
-            TcMaintenance.SelectedTab = TabPartWorkedHour
+            TcMaintenance.SelectedTab = TabWorkedHourSellable
             EprValidation.SetError(TsWorkedHourSellable, "Informe a capacidade de todos os itens controlados por hora trabalhada.")
             EprValidation.SetIconAlignment(TsWorkedHourSellable, ErrorIconAlignment.MiddleLeft)
             EprValidation.SetIconPadding(TsWorkedHourSellable, -90)
@@ -271,7 +271,7 @@ Public Class FrmPersonCompressor
             Return False
         ElseIf _PersonCompressor.ElapsedDaySellables.Any(Function(x) x.Capacity = 0) Then
             TcPersonCompressor.SelectedTab = TabMaintenance
-            TcMaintenance.SelectedTab = TabPartElapsedDay
+            TcMaintenance.SelectedTab = TabElapsedDaySellable
             EprValidation.SetError(TsElapsedDaySellable, "Informe a capacidade de todos os itens controlados por dias corridos.")
             EprValidation.SetIconAlignment(TsElapsedDaySellable, ErrorIconAlignment.MiddleLeft)
             EprValidation.SetIconPadding(TsElapsedDaySellable, -90)
@@ -279,7 +279,7 @@ Public Class FrmPersonCompressor
             Return False
         ElseIf Not _PersonCompressor.WorkedHourSellables.Any(Function(x) x.SellableBind = CompressorSellableBindType.AirFilter) Then
             TcPersonCompressor.SelectedTab = TabMaintenance
-            TcMaintenance.SelectedTab = TabPartWorkedHour
+            TcMaintenance.SelectedTab = TabWorkedHourSellable
             EprValidation.SetError(TsWorkedHourSellable, "Pelo menos um item precisa estar vinculado com filtro de ar.")
             EprValidation.SetIconAlignment(TsWorkedHourSellable, ErrorIconAlignment.MiddleLeft)
             EprValidation.SetIconPadding(TsWorkedHourSellable, -90)
@@ -287,7 +287,7 @@ Public Class FrmPersonCompressor
             Return False
         ElseIf Not _PersonCompressor.WorkedHourSellables.Any(Function(x) x.SellableBind = CompressorSellableBindType.OilFilter) Then
             TcPersonCompressor.SelectedTab = TabMaintenance
-            TcMaintenance.SelectedTab = TabPartWorkedHour
+            TcMaintenance.SelectedTab = TabWorkedHourSellable
             EprValidation.SetError(TsWorkedHourSellable, "Pelo menos um item precisa estar vinculado com filtro de óleo.")
             EprValidation.SetIconAlignment(TsWorkedHourSellable, ErrorIconAlignment.MiddleLeft)
             EprValidation.SetIconPadding(TsWorkedHourSellable, -90)
@@ -295,7 +295,7 @@ Public Class FrmPersonCompressor
             Return False
         ElseIf Not _PersonCompressor.WorkedHourSellables.Any(Function(x) x.SellableBind = CompressorSellableBindType.Separator) Then
             TcPersonCompressor.SelectedTab = TabMaintenance
-            TcMaintenance.SelectedTab = TabPartWorkedHour
+            TcMaintenance.SelectedTab = TabWorkedHourSellable
             EprValidation.SetError(TsWorkedHourSellable, "Pelo menos um item precisa estar vinculado com separador.")
             EprValidation.SetIconAlignment(TsWorkedHourSellable, ErrorIconAlignment.MiddleLeft)
             EprValidation.SetIconPadding(TsWorkedHourSellable, -90)
@@ -303,7 +303,7 @@ Public Class FrmPersonCompressor
             Return False
         ElseIf Not _PersonCompressor.WorkedHourSellables.Any(Function(x) x.SellableBind = CompressorSellableBindType.Oil) Then
             TcPersonCompressor.SelectedTab = TabMaintenance
-            TcMaintenance.SelectedTab = TabPartWorkedHour
+            TcMaintenance.SelectedTab = TabWorkedHourSellable
             EprValidation.SetError(TsWorkedHourSellable, "Pelo menos um item precisa estar vinculado com óleo")
             EprValidation.SetIconAlignment(TsWorkedHourSellable, ErrorIconAlignment.MiddleLeft)
             EprValidation.SetIconPadding(TsWorkedHourSellable, -90)
@@ -410,56 +410,56 @@ Public Class FrmPersonCompressor
         FilterForm.ShowDialog()
         QbxCompressor.Select()
     End Sub
-    Private Sub BtnIncludeCompressorPartWorkedHour_Click(sender As Object, e As EventArgs) Handles BtnWorkedHourSellable.Click
+    Private Sub BtnIncludeWorkedHourSellable_Click(sender As Object, e As EventArgs) Handles BtnIncludeWorkedHourSellable.Click
         Dim Form As New FrmPersonCompressorSellableWorkedHour(_PersonCompressor, New PersonCompressorSellable(CompressorSellableControlType.WorkedHour), Me)
         Form.ShowDialog()
     End Sub
-    Private Sub BtnEditCompressorPartWorkedHour_Click(sender As Object, e As EventArgs) Handles BtnEditWorkedHourSellable.Click
+    Private Sub BtnEditWorkedHourSellable_Click(sender As Object, e As EventArgs) Handles BtnEditWorkedHourSellable.Click
         Dim Form As FrmPersonCompressorSellableWorkedHour
-        Dim PersonCompressorPartWorkedHour As PersonCompressorSellable
+        Dim PersonCompressorWorkedHourSellable As PersonCompressorSellable
         If DgvWorkedHourSellable.SelectedRows.Count = 1 Then
-            PersonCompressorPartWorkedHour = _PersonCompressor.WorkedHourSellables.Single(Function(X) X.Guid = DgvWorkedHourSellable.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmPersonCompressorSellableWorkedHour(_PersonCompressor, PersonCompressorPartWorkedHour, Me)
+            PersonCompressorWorkedHourSellable = _PersonCompressor.WorkedHourSellables.Single(Function(X) X.Guid = DgvWorkedHourSellable.SelectedRows(0).Cells("Guid").Value)
+            Form = New FrmPersonCompressorSellableWorkedHour(_PersonCompressor, PersonCompressorWorkedHourSellable, Me)
             Form.ShowDialog()
         End If
     End Sub
-    Private Sub BtnDeleteCompressorPartWorkedHour_Click(sender As Object, e As EventArgs) Handles BtnDeleteWorkedHourSellable.Click
-        Dim PartWorkedHour As PersonCompressorSellable
+    Private Sub BtnDeleteWorkedHourSellable_Click(sender As Object, e As EventArgs) Handles BtnDeleteWorkedHourSellable.Click
+        Dim WorkedHourSellable As PersonCompressorSellable
         If DgvWorkedHourSellable.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                PartWorkedHour = _PersonCompressor.WorkedHourSellables.Single(Function(X) X.Guid = DgvWorkedHourSellable.SelectedRows(0).Cells("Guid").Value)
-                _PersonCompressor.WorkedHourSellables.Remove(PartWorkedHour)
+                WorkedHourSellable = _PersonCompressor.WorkedHourSellables.Single(Function(X) X.Guid = DgvWorkedHourSellable.SelectedRows(0).Cells("Guid").Value)
+                _PersonCompressor.WorkedHourSellables.Remove(WorkedHourSellable)
                 DgvWorkedHourSellable.Fill(_PersonCompressor.WorkedHourSellables)
                 BtnSave.Enabled = True
             End If
         End If
     End Sub
-    Private Sub BtnIncludePartElapsedDay_Click(sender As Object, e As EventArgs) Handles BtnIncludeElapsedDaySellable.Click
+    Private Sub BtnIncludeElapsedDaySellable_Click(sender As Object, e As EventArgs) Handles BtnIncludeElapsedDaySellable.Click
         Dim Form As New FrmPersonCompressorSellableElapsedDay(_PersonCompressor, New PersonCompressorSellable(CompressorSellableControlType.ElapsedDay), Me)
         Form.ShowDialog()
     End Sub
-    Private Sub BtnEditPartElapsedDay_Click(sender As Object, e As EventArgs) Handles BtnEditElapsedDaySellable.Click
+    Private Sub BtnEditElapsedDaySellable_Click(sender As Object, e As EventArgs) Handles BtnEditElapsedDaySellable.Click
         Dim Form As FrmPersonCompressorSellableElapsedDay
-        Dim PartElapsedDay As PersonCompressorSellable
+        Dim ElapsedDaySellable As PersonCompressorSellable
         If DgvElapsedDaySellable.SelectedRows.Count = 1 Then
-            PartElapsedDay = _PersonCompressor.ElapsedDaySellables.Single(Function(X) X.Guid = DgvElapsedDaySellable.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmPersonCompressorSellableElapsedDay(_PersonCompressor, PartElapsedDay, Me)
+            ElapsedDaySellable = _PersonCompressor.ElapsedDaySellables.Single(Function(X) X.Guid = DgvElapsedDaySellable.SelectedRows(0).Cells("Guid").Value)
+            Form = New FrmPersonCompressorSellableElapsedDay(_PersonCompressor, ElapsedDaySellable, Me)
             Form.ShowDialog()
         End If
     End Sub
-    Private Sub BtnDeletePartElapsedDay_Click(sender As Object, e As EventArgs) Handles BtnDeleteElapsedDaySellable.Click
-        Dim PartElapsedDay As PersonCompressorSellable
+    Private Sub BtnDeleteElapsedDaySellable_Click(sender As Object, e As EventArgs) Handles BtnDeleteElapsedDaySellable.Click
+        Dim ElapsedDaySellable As PersonCompressorSellable
         If DgvElapsedDaySellable.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                PartElapsedDay = _PersonCompressor.ElapsedDaySellables.Single(Function(X) X.Guid = DgvElapsedDaySellable.SelectedRows(0).Cells("Guid").Value)
-                _PersonCompressor.ElapsedDaySellables.Remove(PartElapsedDay)
+                ElapsedDaySellable = _PersonCompressor.ElapsedDaySellables.Single(Function(X) X.Guid = DgvElapsedDaySellable.SelectedRows(0).Cells("Guid").Value)
+                _PersonCompressor.ElapsedDaySellables.Remove(ElapsedDaySellable)
                 DgvElapsedDaySellable.Fill(_PersonCompressor.ElapsedDaySellables)
                 BtnSave.Enabled = True
             End If
         End If
     End Sub
     <DebuggerStepThrough>
-    Private Sub DgvPart_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvWorkedHourSellable.CellFormatting, DgvElapsedDaySellable.CellFormatting
+    Private Sub DgvSellable_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvWorkedHourSellable.CellFormatting, DgvElapsedDaySellable.CellFormatting
         Dim Dgv As DataGridView = sender
         If e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
@@ -478,13 +478,13 @@ Public Class FrmPersonCompressor
             e.CellStyle.Format = "N0"
         End If
     End Sub
-    Private Sub DgvPartWorkedHour_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvWorkedHourSellable.MouseDoubleClick
+    Private Sub DgvWorkedHourSellable_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvWorkedHourSellable.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvWorkedHourSellable.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
             BtnEditWorkedHourSellable.PerformClick()
         End If
     End Sub
-    Private Sub DgvPartElapsedDay_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvElapsedDaySellable.MouseDoubleClick
+    Private Sub DgvElapsedDaySellable_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvElapsedDaySellable.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvElapsedDaySellable.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
             BtnEditElapsedDaySellable.PerformClick()
@@ -496,14 +496,14 @@ Public Class FrmPersonCompressor
             e.Handled = True
         End If
     End Sub
-    Private Sub TxtFilterPartWorkedHour_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterWorkedHourSellable.TextChanged
-        FilterPartWorkedHour()
+    Private Sub TxtFilterWorkedHourSellable_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterWorkedHourSellable.TextChanged
+        FilterWorkedHourSellable()
     End Sub
-    Private Sub FilterPartWorkedHour()
+    Private Sub FilterWorkedHourSellable()
         Dim Table As DataTable
         Dim View As DataView
         Dim Filter As String = String.Format("{0} OR {1} OR {2}",
-                                                 "ItemNameOrProduct LIKE '%@VALUE%'",
+                                                 "Name LIKE '%@VALUE%'",
                                                  "Code LIKE '%@VALUE%'",
                                                  "Convert([Product], 'System.String') LIKE '%@VALUE%'"
                                             )
@@ -518,14 +518,14 @@ Public Class FrmPersonCompressor
             End If
         End If
     End Sub
-    Private Sub TxtFilterPartElapsedDay_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterElapsedDaySellable.TextChanged
-        FilterPartElapsedDay()
+    Private Sub TxtFilterElapsedDaySellable_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterElapsedDaySellable.TextChanged
+        FilterElapsedDaySellable()
     End Sub
-    Private Sub FilterPartElapsedDay()
+    Private Sub FilterElapsedDaySellable()
         Dim Table As DataTable
         Dim View As DataView
         Dim Filter As String = String.Format("{0} OR {1} OR {2}",
-                                                 "ItemNameOrProduct LIKE '%@VALUE%'",
+                                                 "Name LIKE '%@VALUE%'",
                                                  "Code LIKE '%@VALUE%'",
                                                  "Convert([Product], 'System.String') LIKE '%@VALUE%'"
                                             )
@@ -540,7 +540,7 @@ Public Class FrmPersonCompressor
             End If
         End If
     End Sub
-    Private Sub DgvPartWorkedHour_SelectionChanged(sender As Object, e As EventArgs) Handles DgvWorkedHourSellable.SelectionChanged
+    Private Sub DgvWorkedHourSellable_SelectionChanged(sender As Object, e As EventArgs) Handles DgvWorkedHourSellable.SelectionChanged
         If DgvWorkedHourSellable.SelectedRows.Count = 0 Then
             BtnEditWorkedHourSellable.Enabled = False
             BtnDeleteWorkedHourSellable.Enabled = False
@@ -549,7 +549,7 @@ Public Class FrmPersonCompressor
             BtnDeleteWorkedHourSellable.Enabled = True
         End If
     End Sub
-    Private Sub DgvPartElapsedDay_SelectionChanged(sender As Object, e As EventArgs) Handles DgvElapsedDaySellable.SelectionChanged
+    Private Sub DgvElapsedDaySellable_SelectionChanged(sender As Object, e As EventArgs) Handles DgvElapsedDaySellable.SelectionChanged
         If DgvElapsedDaySellable.SelectedRows.Count = 0 Then
             BtnEditElapsedDaySellable.Enabled = False
             BtnDeleteElapsedDaySellable.Enabled = False
@@ -558,52 +558,52 @@ Public Class FrmPersonCompressor
             BtnDeleteElapsedDaySellable.Enabled = True
         End If
     End Sub
-    'Private Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
-    '    Dim Form As FrmPersonCompressorImport
-    '    Cursor = Cursors.WaitCursor
-    '    Form = New FrmPersonCompressorImport(New Compressor().Load(QbxCompressor.FreezedPrimaryKey, False), _PersonCompressor)
-    '    If Form.ShowDialog() = DialogResult.OK Then
-    '        Cursor = Cursors.WaitCursor
-    '        For Each Row As DataGridViewRow In Form.DgvPartWorkedHour.Rows
-    '            If Row.Cells("X").Value = True Then
-    '                _PersonCompressor.WorkedHourSellables.Add(New PersonCompressorSellable(CompressorSellableControlType.WorkedHour) With {.Status = SimpleStatus.Active, .Product = New Lazy(Of Product)(Function() Row.Cells("Product").Value), .Quantity = Row.Cells("Quantity").Value})
-    '                _PersonCompressor.WorkedHourSellables.Last.SetIsSaved(True)
-    '                BtnSave.Enabled = True
-    '            End If
-    '        Next Row
-    '        For Each Row As DataGridViewRow In Form.DgvPartElapsedDay.Rows
-    '            If Row.Cells("X").Value = True Then
-    '                _PersonCompressor.ElapsedDaySellables.Add(New PersonCompressorSellable(CompressorSellableControlType.ElapsedDay) With {.Status = SimpleStatus.Active, .Product = New Lazy(Of Product)(Function() Row.Cells("Product").Value), .Quantity = Row.Cells("Quantity").Value})
-    '                _PersonCompressor.ElapsedDaySellables.Last.SetIsSaved(True)
-    '                BtnSave.Enabled = True
-    '            End If
-    '        Next Row
-    '    End If
-    '    DgvPartWorkedHour.Fill(_PersonCompressor.WorkedHourSellables)
-    '    DgvPartElapsedDay.Fill(_PersonCompressor.ElapsedDaySellables)
-    '    EprValidation.Clear()
-    '    Cursor = Cursors.Default
-    'End Sub
-    Private Sub TxtFilterPartWorkedHour_Enter(sender As Object, e As EventArgs) Handles TxtFilterWorkedHourSellable.Enter
-        EprInformation.SetError(TsWorkedHourSellable, "Filtrando os campos: Código e Item.")
+    Private Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
+        Dim Form As FrmPersonCompressorImport
+        Cursor = Cursors.WaitCursor
+        Form = New FrmPersonCompressorImport(New Compressor().Load(QbxCompressor.FreezedPrimaryKey, False), _PersonCompressor)
+        If Form.ShowDialog() = DialogResult.OK Then
+            Cursor = Cursors.WaitCursor
+            For Each Row As DataGridViewRow In Form.DgvWorkedHourSellable.Rows
+                If Row.Cells("X").Value = True Then
+                    '_PersonCompressor.WorkedHourSellables.Add(New PersonCompressorSellable(CompressorSellableControlType.WorkedHour) With {.Status = SimpleStatus.Active, .Sellable = New Lazy(Of Product)(Function() Row.Cells("Product").Value), .Quantity = Row.Cells("Quantity").Value})
+                    _PersonCompressor.WorkedHourSellables.Last.SetIsSaved(True)
+                    BtnSave.Enabled = True
+                End If
+            Next Row
+            For Each Row As DataGridViewRow In Form.DgvElapsedDaySellable.Rows
+                If Row.Cells("X").Value = True Then
+                    '_PersonCompressor.ElapsedDaySellables.Add(New PersonCompressorSellable(CompressorSellableControlType.ElapsedDay) With {.Status = SimpleStatus.Active, .Product = New Lazy(Of Product)(Function() Row.Cells("Product").Value), .Quantity = Row.Cells("Quantity").Value})
+                    _PersonCompressor.ElapsedDaySellables.Last.SetIsSaved(True)
+                    BtnSave.Enabled = True
+                End If
+            Next Row
+        End If
+        DgvWorkedHourSellable.Fill(_PersonCompressor.WorkedHourSellables)
+        DgvElapsedDaySellable.Fill(_PersonCompressor.ElapsedDaySellables)
+        EprValidation.Clear()
+        Cursor = Cursors.Default
+    End Sub
+    Private Sub TxtFilterWorkedHourSellable_Enter(sender As Object, e As EventArgs) Handles TxtFilterWorkedHourSellable.Enter
+        EprInformation.SetError(TsWorkedHourSellable, "Filtrando os campos: Código e Produto/Serviço.")
         EprInformation.SetIconAlignment(TsWorkedHourSellable, ErrorIconAlignment.MiddleLeft)
         EprInformation.SetIconPadding(TsWorkedHourSellable, -365)
     End Sub
-    Private Sub TxtFilterPartWorkedHour_Leave(sender As Object, e As EventArgs) Handles TxtFilterWorkedHourSellable.Leave
+    Private Sub TxtFilterWorkedHourSellable_Leave(sender As Object, e As EventArgs) Handles TxtFilterWorkedHourSellable.Leave
         EprInformation.Clear()
     End Sub
-    Private Sub TxtFilterPartElapsedDay_Enter(sender As Object, e As EventArgs) Handles TxtFilterElapsedDaySellable.Enter
-        EprInformation.SetError(TsElapsedDaySellable, "Filtrando os campos: Código e Item.")
+    Private Sub TxtFilterElapsedDaySellable_Enter(sender As Object, e As EventArgs) Handles TxtFilterElapsedDaySellable.Enter
+        EprInformation.SetError(TsElapsedDaySellable, "Filtrando os campos: Código e Produto/Serviço.")
         EprInformation.SetIconAlignment(TsElapsedDaySellable, ErrorIconAlignment.MiddleLeft)
         EprInformation.SetIconPadding(TsElapsedDaySellable, -365)
     End Sub
-    Private Sub TxtFilterPartElapsedDay_Leave(sender As Object, e As EventArgs) Handles TxtFilterElapsedDaySellable.Leave
+    Private Sub TxtFilterElapsedDaySellable_Leave(sender As Object, e As EventArgs) Handles TxtFilterElapsedDaySellable.Leave
         EprInformation.Clear()
     End Sub
-    Private Sub DgvPartWorkedHour_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvWorkedHourSellable.DataSourceChanged
-        FilterPartWorkedHour()
+    Private Sub DgvWorkedHourSellable_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvWorkedHourSellable.DataSourceChanged
+        FilterWorkedHourSellable()
     End Sub
-    Private Sub DgvPartElapsedDay_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvElapsedDaySellable.DataSourceChanged
-        FilterPartElapsedDay()
+    Private Sub DgvElapsedDaySellable_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvElapsedDaySellable.DataSourceChanged
+        FilterElapsedDaySellable()
     End Sub
 End Class

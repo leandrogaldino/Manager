@@ -14,23 +14,26 @@ Public Class FrmPersonCompressorImport
         XColumn.DisplayIndex = 0
         DgvWorkedHourSellable.Columns.Add(XColumn)
         DgvWorkedHourSellable.Columns("Order").HeaderText = "Ordem"
-        DgvWorkedHourSellable.Columns("Order").Width = 70
-        DgvWorkedHourSellable.Columns("ID").Visible = False
-        DgvWorkedHourSellable.Columns("Creation").HeaderText = "Criação"
-        DgvWorkedHourSellable.Columns("Creation").Width = 100
+        DgvWorkedHourSellable.Columns("Order").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+        DgvWorkedHourSellable.Columns("Order").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
         DgvWorkedHourSellable.Columns("Status").Visible = False
-        DgvWorkedHourSellable.Columns("PartType").Visible = False
+        DgvWorkedHourSellable.Columns("SellableControlType").Visible = False
+        DgvWorkedHourSellable.Columns("Sellable").Visible = False
+        DgvWorkedHourSellable.Columns("SellableID").Visible = False
         DgvWorkedHourSellable.Columns("Code").HeaderText = "Código"
-        DgvWorkedHourSellable.Columns("Code").Width = 100
-        DgvWorkedHourSellable.Columns("ItemName").Visible = False
-        DgvWorkedHourSellable.Columns("Product").Visible = False
+        DgvWorkedHourSellable.Columns("Code").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+        DgvWorkedHourSellable.Columns("Name").HeaderText = "Produto/Serviço"
+        DgvWorkedHourSellable.Columns("Name").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         DgvWorkedHourSellable.Columns("Quantity").HeaderText = "Qtd."
         DgvWorkedHourSellable.Columns("Quantity").Width = 70
         DgvWorkedHourSellable.Columns("Quantity").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
         DgvWorkedHourSellable.Columns("Quantity").DefaultCellStyle.Format = "N2"
-        DgvWorkedHourSellable.Columns("LinkedProduct").Visible = False
-        DgvWorkedHourSellable.Columns("ItemNameOrProduct").HeaderText = "Item"
-        DgvWorkedHourSellable.Columns("ItemNameOrProduct").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+        DgvWorkedHourSellable.Columns("Guid").Visible = False
+        DgvWorkedHourSellable.Columns("ID").Visible = False
+        DgvWorkedHourSellable.Columns("Creation").Visible = False
+        DgvWorkedHourSellable.Columns("Routine").Visible = False
+        DgvWorkedHourSellable.Columns("IsSaved").Visible = False
+        DgvWorkedHourSellable.Columns("User").Visible = False
         Compressor.ElapsedDaySellables.Where(Function(x) x.Status = SimpleStatus.Inactive).ToList.ForEach(Sub(y) Compressor.ElapsedDaySellables.Remove(y))
         DgvElapsedDaySellable.Fill(Compressor.ElapsedDaySellables)
         For Each Column As DataGridViewColumn In DgvElapsedDaySellable.Columns
@@ -42,23 +45,26 @@ Public Class FrmPersonCompressorImport
         XColumn.DisplayIndex = 0
         DgvElapsedDaySellable.Columns.Add(XColumn)
         DgvElapsedDaySellable.Columns("Order").HeaderText = "Ordem"
-        DgvElapsedDaySellable.Columns("Order").Width = 70
-        DgvElapsedDaySellable.Columns("ID").Visible = False
-        DgvElapsedDaySellable.Columns("Creation").HeaderText = "Criação"
-        DgvElapsedDaySellable.Columns("Creation").Width = 100
+        DgvElapsedDaySellable.Columns("Order").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+        DgvElapsedDaySellable.Columns("Order").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
         DgvElapsedDaySellable.Columns("Status").Visible = False
-        DgvElapsedDaySellable.Columns("PartType").Visible = False
+        DgvElapsedDaySellable.Columns("SellableControlType").Visible = False
+        DgvElapsedDaySellable.Columns("Sellable").Visible = False
+        DgvElapsedDaySellable.Columns("SellableID").Visible = False
         DgvElapsedDaySellable.Columns("Code").HeaderText = "Código"
-        DgvElapsedDaySellable.Columns("Code").Width = 100
-        DgvElapsedDaySellable.Columns("ItemName").Visible = False
-        DgvElapsedDaySellable.Columns("Product").Visible = False
+        DgvElapsedDaySellable.Columns("Code").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+        DgvElapsedDaySellable.Columns("Name").HeaderText = "Produto/Serviço"
+        DgvElapsedDaySellable.Columns("Name").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         DgvElapsedDaySellable.Columns("Quantity").HeaderText = "Qtd."
         DgvElapsedDaySellable.Columns("Quantity").Width = 70
         DgvElapsedDaySellable.Columns("Quantity").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
         DgvElapsedDaySellable.Columns("Quantity").DefaultCellStyle.Format = "N2"
-        DgvElapsedDaySellable.Columns("LinkedProduct").Visible = False
-        DgvElapsedDaySellable.Columns("ItemNameOrProduct").HeaderText = "Item"
-        DgvElapsedDaySellable.Columns("ItemNameOrProduct").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+        DgvElapsedDaySellable.Columns("Guid").Visible = False
+        DgvElapsedDaySellable.Columns("ID").Visible = False
+        DgvElapsedDaySellable.Columns("Creation").Visible = False
+        DgvElapsedDaySellable.Columns("Routine").Visible = False
+        DgvElapsedDaySellable.Columns("IsSaved").Visible = False
+        DgvElapsedDaySellable.Columns("User").Visible = False
     End Sub
     Private Sub DgvWorkedHourSellable_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvWorkedHourSellable.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvWorkedHourSellable.HitTest(e.X, e.Y)

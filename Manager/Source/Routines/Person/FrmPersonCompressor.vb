@@ -566,8 +566,14 @@ Public Class FrmPersonCompressor
             Cursor = Cursors.WaitCursor
             For Each Row As DataGridViewRow In Form.DgvWorkedHourSellable.Rows
                 If Row.Cells("X").Value = True Then
+                    Dim Sellable As New PersonCompressorSellable(CompressorSellableControlType.WorkedHour) With {
+                        .Status = SimpleStatus.Active,
+                        .Sellable = New Lazy(Of Sellable)(Function() Row.Cells("SellableID").Value)
+                    }
+                    ??
+                    MsgBox(Row.Cells("SellableControlType").Value)
                     '_PersonCompressor.WorkedHourSellables.Add(New PersonCompressorSellable(CompressorSellableControlType.WorkedHour) With {.Status = SimpleStatus.Active, .Sellable = New Lazy(Of Product)(Function() Row.Cells("Product").Value), .Quantity = Row.Cells("Quantity").Value})
-                    _PersonCompressor.WorkedHourSellables.Last.SetIsSaved(True)
+                    '_PersonCompressor.WorkedHourSellables.Last.SetIsSaved(True)
                     BtnSave.Enabled = True
                 End If
             Next Row

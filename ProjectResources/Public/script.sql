@@ -924,7 +924,7 @@ order by  itemname;
 
 
 #REFAZER AS TRIGGERS DO COMPRESSORSELLABLE E PERSONCOMPRESSORSELLABLE AQUI
-
+ALTER TABLE `manager`.`personcompressorsellable` CHANGE COLUMN `partbindid` `sellablebindid` INT NOT NULL ;
 DELIMITER $$
 DROP TRIGGER IF EXISTS `manager`.`personcompressorpartinsert` $$
 DROP TRIGGER IF EXISTS `manager`.`personcompressorsellableinsert`$$
@@ -935,7 +935,7 @@ DROP TRIGGER IF EXISTS `manager`.`personcompressorpartupdate`$$
 DROP TRIGGER IF EXISTS `manager`.`personcompressorsellableupdate`$$
 CREATE TRIGGER `personcompressorsellableupdate` AFTER UPDATE ON `personcompressorsellable` FOR EACH ROW BEGIN
 IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, CASE WHEN old.controltypeid = 0 THEN 204 WHEN old.controltypeid = 1 THEN 205 END, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'ATIVO' WHEN OLD.statusid = 1 THEN 'INATIVO' END, CASE WHEN NEW.statusid = 0 THEN 'ATIVO' WHEN NEW.statusid = 1 THEN 'INATIVO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-IF OLD.partbindid <> NEW.partbindid THEN INSERT INTO log VALUES (NULL, CASE WHEN old.controltypeid = 0 THEN 204 WHEN old.controltypeid = 1 THEN 205 END, NEW.id, 'Vínculo', CASE WHEN OLD.partbindid = 0 THEN 'NENHUM' WHEN OLD.partbindid = 1 THEN 'FILTRO DE AR' WHEN OLD.partbindid = 2 THEN 'FILTRO DE OLEO' WHEN OLD.partbindid = 3 THEN 'ELEMENTO SEPARADOR' WHEN OLD.partbindid = 4 THEN 'OLEO' WHEN OLD.partbindid = 5 THEN 'COALESCENTE' END, CASE WHEN NEW.partbindid = 0 THEN 'NENHUM' WHEN NEW.partbindid = 1 THEN 'FILTRO DE AR' WHEN NEW.partbindid = 2 THEN 'FILTRO DE OLEO' WHEN NEW.partbindid = 3 THEN 'ELEMENTO SEPARADOR' WHEN NEW.partbindid = 4 THEN 'OLEO' WHEN NEW.partbindid = 5 THEN 'COALESCENTE' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.sellablebindid <> NEW.sellablebindid THEN INSERT INTO log VALUES (NULL, CASE WHEN old.sellablebindid = 0 THEN 204 WHEN old.sellablebindid = 1 THEN 205 END, NEW.id, 'Vínculo', CASE WHEN OLD.sellablebindid = 0 THEN 'NENHUM' WHEN OLD.sellablebindid = 1 THEN 'FILTRO DE AR' WHEN OLD.sellablebindid = 2 THEN 'FILTRO DE OLEO' WHEN OLD.sellablebindid = 3 THEN 'ELEMENTO SEPARADOR' WHEN OLD.sellablebindid = 4 THEN 'OLEO' WHEN OLD.sellablebindid = 5 THEN 'COALESCENTE' END, CASE WHEN NEW.sellablebindid = 0 THEN 'NENHUM' WHEN NEW.sellablebindid = 1 THEN 'FILTRO DE AR' WHEN NEW.sellablebindid = 2 THEN 'FILTRO DE OLEO' WHEN NEW.sellablebindid = 3 THEN 'ELEMENTO SEPARADOR' WHEN NEW.sellablebindid = 4 THEN 'OLEO' WHEN NEW.sellablebindid = 5 THEN 'COALESCENTE' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF (
     (OLD.productid IS NOT NULL AND NEW.productid IS NULL AND OLD.serviceid IS NULL AND NEW.serviceid IS NOT NULL) OR
     (OLD.serviceid IS NOT NULL AND NEW.serviceid IS NULL AND OLD.productid IS NULL AND NEW.productid IS NOT NULL) OR
@@ -1026,4 +1026,4 @@ ALTER TABLE `manager`.`evaluationpart` DROP FOREIGN KEY `evaluationpart_personco
 ALTER TABLE `manager`.`evaluationpart` CHANGE COLUMN `personcompressorpartid` `personcompressorsellableid` INT NOT NULL;
 ALTER TABLE `manager`.`evaluationpart` ADD CONSTRAINT `evaluationpart_personcompressorsellable` FOREIGN KEY (`personcompressorsellableid`) REFERENCES `manager`.`personcompressorsellable` (`id`)  ON DELETE RESTRICT;
 ALTER TABLE `manager`.`evaluationpart` RENAME TO  `manager`.`evaluationcontrolledsellable`;
-ALTER TABLE `manager`.`personcompressorsellable` CHANGE COLUMN `partbindid` `sellablebindid` INT NOT NULL ;
+

@@ -566,7 +566,7 @@ Public Class FrmPersonCompressor
             Cursor = Cursors.WaitCursor
 
 
-            colocar a coluna productid e serviceid no datagridview
+            'TODO: colocar a coluna productid e serviceid no datagridview
 
             Dim tb As DataTable = CType(Form.DgvWorkedHourSellable.DataSource, DataTable)
 

@@ -1,8 +1,0 @@
-[] As colunas do grid de tecnicos no FrmEvaluation não está configurada
-[] Mudar a tabela config para o xml
-[] Corrigir o UcCallType
-[] Se excluir uma schedule, e ela existir na nuvem, entao mudar o visible dela na nuvem pra false
-[X] A avaliação deve ter uma flag, informando se a avaliação irá gerar uma proposta.
-[] Ao manipular envio e download agendamento e avaliação na núvem, não enviar status mas sim campo visible booleano.
-[] O tipo de avaliacao e tipo de visita devem ser compartilhados em um enum chamado CallTypes (Levantamento, Corretiva, Preventiva, Contrato, Nada).
-[] Fazer o ViewModel da Main do Agent.

@@ -16,7 +16,7 @@ Public Class FrmMain
         UcSplash.Visible = False
         If File.Exists(_AgentLocationFile) Then
             _AgentDirectory = File.ReadAllText(_AgentLocationFile)
-            If Not String.IsNullOrEmpty(_AgentDirectory) AndAlso File.Exists(_AgentDirectory) Then
+            If Not String.IsNullOrEmpty(_AgentDirectory) AndAlso File.Exists(_AgentLocationFile) Then
                 _DeployDirectory = Path.Combine(_AgentDirectory, "Files", "Deploy")
                 BtnClose.Visible = False
                 If Util.HasUpdate(_DeployDirectory, _ManagerDirectory) Then

@@ -2148,4 +2148,8 @@
   <Import Project="..\packages\Grpc.Core.2.46.6\build\net45\Grpc.Core.targets" Condition="Exists('..\packages\Grpc.Core.2.46.6\build\net45\Grpc.Core.targets')" />
   <Import Project="..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
   <Import Project="..\packages\CefSharp.Common.135.0.220\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.135.0.220\build\CefSharp.Common.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(TargetDir)*.*" "$(SolutionDir)ManagerAgent\bin\$(Configuration)\Files\Deploy\" /Y /E /I
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>

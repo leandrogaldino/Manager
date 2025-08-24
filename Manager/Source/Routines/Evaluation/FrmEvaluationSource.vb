@@ -21,14 +21,14 @@
         CalculatedEvaluation.Calculate()
 
         ResultEvaluation = CalculatedEvaluation
-        For Each p In CalculatedEvaluation.PartsWorkedHour.Where(Function(x) x.Part.SellableBind)
-            PartTile = New UcEvaluationSourcePart(p.Part.ToString, ImportedEvaluation.PartsWorkedHour.First(Function(x) x.Part.ID = p.Part.ID).CurrentCapacity, p.CurrentCapacity)
+        For Each p In CalculatedEvaluation.PartsWorkedHour.Where(Function(x) x.Sellable.SellableBind)
+            PartTile = New UcEvaluationSourcePart(p.Sellable.ToString, ImportedEvaluation.PartsWorkedHour.First(Function(x) x.Sellable.ID = p.Sellable.ID).CurrentCapacity, p.CurrentCapacity)
             PartTile.Tag = p
             AddHandler PartTile.ValidateRequired, AddressOf Control_Click
             FlpContainer.Controls.Add(PartTile)
         Next p
-        For Each p In CalculatedEvaluation.PartsElapsedDay.Where(Function(x) x.Part.SellableBind)
-            PartTile = New UcEvaluationSourcePart(p.Part.ToString, ImportedEvaluation.PartsElapsedDay.First(Function(x) x.Part.ID = p.Part.ID).CurrentCapacity, p.CurrentCapacity)
+        For Each p In CalculatedEvaluation.PartsElapsedDay.Where(Function(x) x.Sellable.SellableBind)
+            PartTile = New UcEvaluationSourcePart(p.Sellable.ToString, ImportedEvaluation.PartsElapsedDay.First(Function(x) x.Sellable.ID = p.Sellable.ID).CurrentCapacity, p.CurrentCapacity)
             PartTile.Tag = p
             AddHandler PartTile.ValidateRequired, AddressOf Control_Click
             FlpContainer.Controls.Add(PartTile)
@@ -54,7 +54,7 @@
 
     Private Sub BtnAccept_Click(sender As Object, e As EventArgs) Handles BtnAccept.Click
 
-        For Each Part As EvaluationControlledSellable In ResultEvaluation.PartsWorkedHour.Where(Function(x) x.Part.SellableBind)
+        For Each Part As EvaluationControlledSellable In ResultEvaluation.PartsWorkedHour.Where(Function(x) x.Sellable.SellableBind)
             Dim Tile As UcEvaluationSourcePart = FlpContainer.Controls.OfType(Of UcEvaluationSourcePart).First(Function(x) x.Tag.Equals(Part))
             Dim PartOnTile As EvaluationControlledSellable = Tile.Tag
             Part.CurrentCapacity = Tile.SelectedValue
@@ -62,7 +62,7 @@
             Part.Lost = Tile.UcSoldLost.IsLost
         Next Part
 
-        For Each Part As EvaluationControlledSellable In ResultEvaluation.PartsElapsedDay.Where(Function(x) x.Part.SellableBind)
+        For Each Part As EvaluationControlledSellable In ResultEvaluation.PartsElapsedDay.Where(Function(x) x.Sellable.SellableBind)
             Dim Tile As UcEvaluationSourcePart = FlpContainer.Controls.OfType(Of UcEvaluationSourcePart).First(Function(x) x.Tag.Equals(Part))
             Dim PartOnTile As EvaluationControlledSellable = Tile.Tag
             Part.CurrentCapacity = Tile.SelectedValue

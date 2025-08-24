@@ -793,14 +793,14 @@ Public Class FrmEvaluation
             '    TcEvaluation.SelectedTab = TabDocument
             '    BtnAttachPDF.Select()
             '    Return False
-        ElseIf _Evaluation.PartsWorkedHour.Any(Function(x) x.CurrentCapacity > x.Part.Capacity) Then
+        ElseIf _Evaluation.PartsWorkedHour.Any(Function(x) x.CurrentCapacity > x.Sellable.Capacity) Then
             EprValidation.SetError(GbxPartWorkedHour, "Existe um ou mais itens com a capacidade atual superior a capacidade total.")
             EprValidation.SetIconAlignment(GbxPartWorkedHour, ErrorIconAlignment.TopRight)
             EprValidation.SetIconPadding(GbxPartWorkedHour, -15)
             TcEvaluation.SelectedTab = TabMain
             DgvPartWorkedHour.Select()
             Return False
-        ElseIf _Evaluation.PartsElapsedDay.Any(Function(x) x.CurrentCapacity > x.Part.Capacity) Then
+        ElseIf _Evaluation.PartsElapsedDay.Any(Function(x) x.CurrentCapacity > x.Sellable.Capacity) Then
             EprValidation.SetError(GbxPartElapsedDay, "Existe um ou mais itens com a capacidade atual superior a capacidade total.")
             EprValidation.SetIconAlignment(GbxPartElapsedDay, ErrorIconAlignment.TopRight)
             EprValidation.SetIconPadding(GbxPartElapsedDay, -15)
@@ -1225,12 +1225,12 @@ Public Class FrmEvaluation
                 PreviousEvaluationID = Evaluation.GetPreviousEvaluationID(_Evaluation.Compressor, CDate(DbxEvaluationDate.Text), _Evaluation.ID)
                 PreviousEvaluation = New Evaluation().Load(PreviousEvaluationID, False)
                 For Each CurrentPart As EvaluationControlledSellable In _Evaluation.PartsWorkedHour.ToArray.Reverse
-                    If CurrentPart.Part.Status = SimpleStatus.Inactive Then
+                    If CurrentPart.Sellable.Status = SimpleStatus.Inactive Then
                         _Evaluation.PartsWorkedHour.Remove(CurrentPart)
                     End If
                 Next CurrentPart
                 For Each CurrentPart As EvaluationControlledSellable In _Evaluation.PartsElapsedDay.ToArray.Reverse
-                    If CurrentPart.Part.Status = SimpleStatus.Inactive Then
+                    If CurrentPart.Sellable.Status = SimpleStatus.Inactive Then
                         _Evaluation.PartsElapsedDay.Remove(CurrentPart)
                     End If
                 Next CurrentPart
@@ -1240,21 +1240,21 @@ Public Class FrmEvaluation
                     For Each CurrentPart As EvaluationControlledSellable In _Evaluation.PartsWorkedHour
                         CurrentPart.Sold = False
                         CurrentPart.Lost = False
-                        PreviousPart = PreviousEvaluation.PartsWorkedHour.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
+                        PreviousPart = PreviousEvaluation.PartsWorkedHour.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
                         If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
                             CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity
                         Else
-                            CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
+                            CurrentPart.CurrentCapacity = CurrentPart.Sellable.Capacity
                         End If
                     Next CurrentPart
                     For Each CurrentPart As EvaluationControlledSellable In _Evaluation.PartsElapsedDay
                         CurrentPart.Sold = False
                         CurrentPart.Lost = False
-                        PreviousPart = PreviousEvaluation.PartsElapsedDay.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
+                        PreviousPart = PreviousEvaluation.PartsElapsedDay.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
                         If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
                             CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity
                         Else
-                            CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
+                            CurrentPart.CurrentCapacity = CurrentPart.Sellable.Capacity
                         End If
                     Next CurrentPart
                     If Not CbxManualAverageWorkLoad.Checked Then DbxAverageWorkLoad.Text = PreviousEvaluation.AverageWorkLoad
@@ -1262,21 +1262,21 @@ Public Class FrmEvaluation
                     For Each CurrentPart As EvaluationControlledSellable In _Evaluation.PartsWorkedHour
                         CurrentPart.Sold = False
                         CurrentPart.Lost = False
-                        PreviousPart = PreviousEvaluation.PartsWorkedHour.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
+                        PreviousPart = PreviousEvaluation.PartsWorkedHour.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
                         If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
                             CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity - (DbxHorimeter.DecimalValue - PreviousEvaluation.Horimeter)
                         Else
-                            CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
+                            CurrentPart.CurrentCapacity = CurrentPart.Sellable.Capacity
                         End If
                     Next CurrentPart
                     For Each CurrentPart As EvaluationControlledSellable In _Evaluation.PartsElapsedDay
                         CurrentPart.Sold = False
                         CurrentPart.Lost = False
-                        PreviousPart = PreviousEvaluation.PartsElapsedDay.FirstOrDefault(Function(x) x.Part.ID = CurrentPart.Part.ID)
+                        PreviousPart = PreviousEvaluation.PartsElapsedDay.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
                         If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
                             CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity - (CDate(DbxEvaluationDate.Text).Subtract(PreviousEvaluation.EvaluationDate).Days)
                         Else
-                            CurrentPart.CurrentCapacity = CurrentPart.Part.Capacity
+                            CurrentPart.CurrentCapacity = CurrentPart.Sellable.Capacity
                         End If
                     Next CurrentPart
                     If Not CbxManualAverageWorkLoad.Checked Then DbxAverageWorkLoad.Text = GetCMT()
@@ -1379,7 +1379,7 @@ Public Class FrmEvaluation
         Dim Part As EvaluationControlledSellable
         Dim RowIndex As Long
         If PartType = CompressorSellableControlType.ElapsedDay Then
-            Part = _Evaluation.PartsElapsedDay.Single(Function(x) x.Part.ID = DgvPartElapsedDay.SelectedRows(0).Cells("Part").Value.ID)
+            Part = _Evaluation.PartsElapsedDay.Single(Function(x) x.Sellable.ID = DgvPartElapsedDay.SelectedRows(0).Cells("Part").Value.ID)
             RowIndex = DgvPartElapsedDay.SelectedRows(0).Index
             Using Frm As New FrmEvaluationControlledSellable(Part)
                 Result = Frm.ShowDialog()
@@ -1390,7 +1390,7 @@ Public Class FrmEvaluation
 
             End Using
         Else
-            Part = _Evaluation.PartsWorkedHour.Single(Function(x) x.Part.ID = DgvPartWorkedHour.SelectedRows(0).Cells("Part").Value.ID)
+            Part = _Evaluation.PartsWorkedHour.Single(Function(x) x.Sellable.ID = DgvPartWorkedHour.SelectedRows(0).Cells("Part").Value.ID)
             RowIndex = DgvPartWorkedHour.SelectedRows(0).Index
             Using Frm As New FrmEvaluationControlledSellable(Part)
                 Result = Frm.ShowDialog()

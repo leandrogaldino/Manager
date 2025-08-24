@@ -64,7 +64,7 @@ Public Enum Routine
     EvaluationManagementPanel = 1304
     <Description("Exportar imagem do painel de compressores")> <BiStatePrivilege> <RoutineDependency(Evaluation)>
     EvaluationExportManagementPanel = 1305
-    EvaluationControlledSellable = 1306
+    EvaluationControlledSellableWorkedHour = 1306
     EvaluationTechnician = 1307
     EvaluationPhoto = 1308
     <Description("Aprovar e rejeitar uma avaliação")> <BiStatePrivilege> <RoutineDependency(Evaluation)>
@@ -73,8 +73,10 @@ Public Enum Routine
     EvaluationCreateAutomaticRecord = 1310
     <Description("Importar avaliações da núvem")> <BiStatePrivilege> <RoutineDependency(Evaluation)>
     EvaluationImport = 1311
-    EvaluationReplacedSellable = 1312
+    EvaluationReplacedSellableWorkedHour = 1312
     EvaluationPerformedService = 1313
+    EvaluationControlledSellableElapsedDay = 1314
+    EvaluationReplacedSellableElapsedDay = 1315
     <Description("Predefinição de Permissões")> <TriStatePrivilege> <RoutineDependency(User)>
     PrivilegePreset = 14
     PrivilegePresetPrivilege = 1401

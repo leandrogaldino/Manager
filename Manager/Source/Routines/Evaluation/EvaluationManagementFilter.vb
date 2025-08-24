@@ -94,7 +94,7 @@ Public Class EvaluationManagementFilter
             Con.Open()
             Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementControlledSellableFilter, Con)
                 Cmd.Parameters.AddWithValue("@evaluationid", EvaluationID)
-                Cmd.Parameters.AddWithValue("@parttypeid", PartType)
+                Cmd.Parameters.AddWithValue("@controltypeid", PartType)
                 Using Adp As New MySqlDataAdapter(Cmd)
                     Adp.Fill(Table)
                     Dgv.DataSource = Table

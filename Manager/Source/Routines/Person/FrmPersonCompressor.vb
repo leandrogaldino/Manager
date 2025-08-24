@@ -560,46 +560,40 @@ Public Class FrmPersonCompressor
     End Sub
     Private Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
         Dim Form As FrmPersonCompressorImport
+        Dim Compressor As Compressor = New Compressor().Load(QbxCompressor.FreezedPrimaryKey, False)
         Cursor = Cursors.WaitCursor
-        Form = New FrmPersonCompressorImport(New Compressor().Load(QbxCompressor.FreezedPrimaryKey, False), _PersonCompressor)
+        Form = New FrmPersonCompressorImport(Compressor, _PersonCompressor)
         If Form.ShowDialog() = DialogResult.OK Then
             Cursor = Cursors.WaitCursor
-
-
-            'TODO: colocar a coluna productid e serviceid no datagridview
-
-            Dim tb As DataTable = CType(Form.DgvWorkedHourSellable.DataSource, DataTable)
-
             For Each Row As DataGridViewRow In Form.DgvWorkedHourSellable.Rows
+                Dim WhSellable = Compressor.WorkedHourSellables.SingleOrDefault(Function(x) x.ID = Row.Cells("ID").Value)
                 If Row.Cells("X").Value = True Then
                     Dim Sellable As New PersonCompressorSellable(CompressorSellableControlType.WorkedHour) With {
                         .Status = SimpleStatus.Active,
-                        .Sellable = New Lazy(Of Sellable)(Function()
-                                                              If Row.Cells("productid") IsNot DBNull.Value Then
-                                                                  Return New Product().Load(Row.Cells("productid").Value, False)
-                                                              Else
-                                                                  Return New Service().Load(Row.Cells("serviceid").Value, False)
-                                                              End If
-                                                          End Function),
-                        .SellableID = Row.Cells("SellableID").Value,
-                        .Code = Row.Cells("Code").Value,
-                        .Name = Row.Cells("Name").Value,
-                        .Quantity = Row.Cells("Quantity").Value
+                        .Sellable = WhSellable.Sellable,
+                        .SellableID = WhSellable.SellableID,
+                        .Code = WhSellable.Code,
+                        .Name = WhSellable.Name,
+                        .Quantity = WhSellable.Quantity
                     }
                     _PersonCompressor.WorkedHourSellables.Add(Sellable)
                     _PersonCompressor.WorkedHourSellables.Last.SetIsSaved(True)
                     BtnSave.Enabled = True
                 End If
             Next Row
+
+
             For Each Row As DataGridViewRow In Form.DgvElapsedDaySellable.Rows
+                Dim EdSellable = Compressor.ElapsedDaySellables.SingleOrDefault(Function(x) x.ID = Row.Cells("ID").Value)
+
                 If Row.Cells("X").Value = True Then
                     Dim Sellable As New PersonCompressorSellable(CompressorSellableControlType.ElapsedDay) With {
                         .Status = SimpleStatus.Active,
-                        .Sellable = New Lazy(Of Sellable)(Function() Row.Cells("SellableID").Value),
-                        .SellableID = Row.Cells("SellableID").Value,
-                        .Code = Row.Cells("Code").Value,
-                        .Name = Row.Cells("Name").Value,
-                        .Quantity = Row.Cells("Quantity").Value
+                        .Sellable = EdSellable.Sellable,
+                        .SellableID = EdSellable.SellableID,
+                        .Code = EdSellable.Code,
+                        .Name = EdSellable.Name,
+                        .Quantity = EdSellable.Quantity
                     }
                     _PersonCompressor.ElapsedDaySellables.Add(Sellable)
                     _PersonCompressor.ElapsedDaySellables.Last.SetIsSaved(True)

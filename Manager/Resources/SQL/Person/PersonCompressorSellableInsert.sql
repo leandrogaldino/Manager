@@ -19,7 +19,7 @@ VALUES
 	@sellablebindid,
 	@controltypeid,
 	@productid,
-	@serviceid
+	@serviceid,
 	@quantity,
 	@capacity,
 	@userid

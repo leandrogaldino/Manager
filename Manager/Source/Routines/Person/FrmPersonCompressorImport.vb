@@ -4,7 +4,6 @@ Public Class FrmPersonCompressorImport
         InitializeComponent()
         Dim XColumn As DataGridViewCheckBoxColumn
         Compressor.WorkedHourSellables.Where(Function(x) x.Status = SimpleStatus.Inactive).ToList.ForEach(Sub(y) Compressor.WorkedHourSellables.Remove(y))
-        'TODO o metodo Fill, deveria aceitar mais um argumento para validar os lazy loadings, pois nesse caso eu vou precisar dos resultados.
         DgvWorkedHourSellable.Fill(Compressor.WorkedHourSellables)
         For Each Column As DataGridViewColumn In DgvWorkedHourSellable.Columns
             Column.ReadOnly = True

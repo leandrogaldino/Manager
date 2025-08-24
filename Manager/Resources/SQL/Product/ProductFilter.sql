@@ -1,10 +1,10 @@
-SELECT 
-	product.id AS 'ID',
+SELECT DISTINCT
+    product.id AS 'ID',
     product.creation AS 'Criação',
     CASE 
-		WHEN product.statusid = 0 THEN "ATIVO"
+        WHEN product.statusid = 0 THEN "ATIVO"
         WHEN product.statusid = 1 THEN "INATIVO"
-	END AS 'Status',
+    END AS 'Status',
     code.code AS 'Código',
     product.name AS 'Nome',
     product.internalname AS 'Nome Interno',
@@ -23,7 +23,7 @@ LEFT JOIN productprovidercode ON productprovidercode.productid = product.id
 LEFT JOIN productprovidercode AS code ON code.productid = product.id AND code.ismainprovider = 1
 LEFT JOIN productcode ON productcode.productid = product.id
 WHERE
-	IFNULL(product.id, '') LIKE @id AND
+    IFNULL(product.id, '') LIKE @id AND
     IFNULL(product.statusid, '') LIKE @statusid AND
     (
         IFNULL(product.name, '') LIKE CONCAT('%', @name, '%') OR 
@@ -37,5 +37,4 @@ WHERE
     IFNULL(product.note, '') LIKE CONCAT('%', @note, '%') AND
     IFNULL(productfamily.name, '') LIKE CONCAT('%', @family, '%') AND
     IFNULL(productgroup.name, '') LIKE CONCAT('%', @group, '%')
-GROUP BY product.id
 ORDER BY product.id;

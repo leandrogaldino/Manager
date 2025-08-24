@@ -195,8 +195,6 @@ Public Class FrmPersonCompressorSellableWorkedHour
                     .Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text),
                     .SellableBind = EnumHelper.GetEnumValue(Of CompressorSellableBindType)(CbxSellableBind.Text),
                     .Quantity = DbxQuantity.Text,
-                    .Code = QbxSellable.GetRawFreezedValueOf("productprovidercode", "code"),
-                    .Name = QbxSellable.GetRawFreezedValueOf("product", "name"),
                     .Capacity = DbxCapacity.Text
                 }
                 If RbtProduct.Checked Then

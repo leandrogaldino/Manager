@@ -170,6 +170,7 @@ Public Class FrmCompressorSellableWorkedHour
                 End If
             Else
                 _WorkedHourSellable = New CompressorSellable(CompressorSellableControlType.WorkedHour) With {
+                    .Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text),
                     .Quantity = DbxQuantity.DecimalValue
                 }
                 If RbtProduct.Checked Then

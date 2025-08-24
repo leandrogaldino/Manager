@@ -41,7 +41,7 @@ Public Class EvaluationReplacedSellable
         If _ControlType = CompressorSellableControlType.ElapsedDay Then
             SetRoutine(Routine.EvaluationReplacedSellableElapsedDay)
         Else
-            SetRoutine(Routine.EvaluationReplacedSellableWorkedHour)
+            SetRoutine(Routine.EvaluationReplacedSellable)
         End If
     End Sub
 End Class

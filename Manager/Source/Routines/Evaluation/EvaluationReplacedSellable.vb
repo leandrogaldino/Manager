@@ -1,8 +1,6 @@
 ﻿Imports ControlLibrary
 Public Class EvaluationReplacedSellable
     Inherits ChildModel
-    Private ReadOnly _ControlType As CompressorSellableControlType
-
     <IgnoreInToTable>
     Public ReadOnly Property SellableType As SellableType
         Get
@@ -25,23 +23,12 @@ Public Class EvaluationReplacedSellable
             Return TryCast(Sellable.Value, Service)
         End Get
     End Property
-
-    Public ReadOnly Property SellableControlType As CompressorSellableControlType
-        Get
-            Return _ControlType
-        End Get
-    End Property
     Public Property Sellable As Lazy(Of Sellable)
     Public Property SellableID As Long
     Public Property Code As String
     Public Property Name As String
     Public Property Quantity As Decimal
-    Public Sub New(ControlType As CompressorSellableControlType)
-        _ControlType = ControlType
-        If _ControlType = CompressorSellableControlType.ElapsedDay Then
-            SetRoutine(Routine.EvaluationReplacedSellableElapsedDay)
-        Else
-            SetRoutine(Routine.EvaluationReplacedSellable)
-        End If
+    Public Sub New()
+        SetRoutine(Routine.EvaluationReplacedSellable)
     End Sub
 End Class

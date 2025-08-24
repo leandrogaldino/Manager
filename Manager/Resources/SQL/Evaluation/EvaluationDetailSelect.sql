@@ -1,12 +1,13 @@
 SELECT 
-	IFNULL(personcompressorpart.itemname, product.name) AS 'Item',
-    evaluationpart.currentcapacity AS 'Cap. Atual',
-    evaluationpart.sold AS 'Vendido',
-    evaluationpart.lost AS 'Perdido'
+	IFNULL(product.name, service.name) AS 'Produto/Serviço',
+    evaluationcontrolledsellable.currentcapacity AS 'Cap. Atual',
+    evaluationcontrolledsellable.sold AS 'Vendido',
+    evaluationcontrolledsellable.lost AS 'Perdido'
 FROM
-    evaluationpart
-INNER JOIN personcompressorpart ON personcompressorpart.id = evaluationpart.personcompressorpartid
-LEFT JOIN product ON product.id = personcompressorpart.productid
+    evaluationcontrolledsellable
+INNER JOIN personcompressorsellable ON personcompressorsellable.id = evaluationcontrolledsellable.personcompressorsellableid
+LEFT JOIN product ON product.id = personcompressorsellable.productid
+LEFT JOIN service ON service.id = personcompressorsellable.serviceid
 WHERE
-    evaluationpart.evaluationid = @evaluationid AND
-    personcompressorpart.parttypeid = @parttypeid;
+    evaluationcontrolledsellable.evaluationid = @evaluationid AND
+    personcompressorsellable.controltypeid = @controltypeid;

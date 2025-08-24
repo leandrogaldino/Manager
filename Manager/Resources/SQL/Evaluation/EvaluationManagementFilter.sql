@@ -8,20 +8,20 @@ SELECT
 		(
 			(
 				SELECT
-					MIN(evaluationpart.currentcapacity)
-				FROM evaluationpart 
-				LEFT JOIN personcompressorpart ON personcompressorpart.id = evaluationpart.personcompressorpartid
-				WHERE evaluationpart.evaluationid = evaluation.id and personcompressorpart.parttypeid = 0
+					MIN(evaluationcontrolledsellable.currentcapacity)
+				FROM evaluationcontrolledsellable 
+				LEFT JOIN personcompressorsellable ON personcompressorsellable.id = evaluationcontrolledsellable.personcompressorsellableid
+				WHERE evaluationcontrolledsellable.evaluationid = evaluation.id and personcompressorsellable.controltypeid = 0
 			) / evaluation.averageworkload
 		) DAY workedhourexchangeday,        
 	evaluation.evaluationdate + INTERVAL
 		(
 			(
 				SELECT
-					MIN(evaluationpart.currentcapacity)
-				FROM evaluationpart 
-				LEFT JOIN personcompressorpart ON personcompressorpart.id = evaluationpart.personcompressorpartid
-				WHERE evaluationpart.evaluationid = evaluation.id and personcompressorpart.parttypeid = 1
+					MIN(evaluationcontrolledsellable.currentcapacity)
+				FROM evaluationcontrolledsellable 
+				LEFT JOIN personcompressorsellable ON personcompressorsellable.id = evaluationcontrolledsellable.personcompressorsellableid
+				WHERE evaluationcontrolledsellable.evaluationid = evaluation.id and personcompressorsellable.controltypeid = 1
 			)
 		) DAY elapseddayexchangeday,
     IFNULL(LEAST((SELECT workedhourexchangeday), (SELECT elapseddayexchangeday)), IFNULL((SELECT workedhourexchangeday), (SELECT elapseddayexchangeday))) nextexchange	
@@ -34,8 +34,8 @@ INNER JOIN city ON city.id = personaddress.cityid
 INNER JOIN state ON state.id = city.stateid
 LEFT JOIN cityroute ON cityroute.cityid = city.id
 LEFT JOIN route ON route.id = cityroute.routeid
-LEFT JOIN evaluationpart ON evaluationpart.evaluationid = evaluation.id
-LEFT JOIN personcompressorpart ON personcompressorpart.id = evaluationpart.personcompressorpartid
+LEFT JOIN evaluationcontrolledsellable ON evaluationcontrolledsellable.evaluationid = evaluation.id
+LEFT JOIN personcompressorsellable ON personcompressorsellable.id = evaluationcontrolledsellable.personcompressorsellableid
 WHERE
 	evaluation.evaluationdate = (
 									SELECT

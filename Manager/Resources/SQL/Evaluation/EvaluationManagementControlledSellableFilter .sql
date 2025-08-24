@@ -1,28 +1,29 @@
 SELECT
-    IFNULL(personcompressorpart.itemname, product.name) AS item,
-	evaluationpart.currentcapacity,
+    IFNULL(product.name, service.name) AS 'Produto/Serviço',
+	evaluationcontrolledsellable.currentcapacity,
 	(
 		SELECT 
 			MAX(ev.evaluationdate)
 		FROM evaluation ev
-		LEFT JOIN evaluationpart ep ON ep.evaluationid = ev.id
-		LEFT JOIN personcompressorpart pcp ON pcp.id = ep.personcompressorpartid
+		LEFT JOIN evaluationcontrolledsellable ep ON ep.evaluationid = ev.id
+		LEFT JOIN personcompressorsellable pcp ON pcp.id = ep.personcompressorsellableid
 		WHERE 
 			(ep.sold = 1 OR ep.lost = 1) AND 
-			pcp.id = evaluationpart.personcompressorpartid
+			pcp.id = evaluationcontrolledsellable.personcompressorsellableid
 	) previousexchange,  
 	CASE
-		WHEN personcompressorpart.parttypeid = 0 THEN
-			evaluation.evaluationdate + INTERVAL(evaluationpart.currentcapacity / evaluation.averageworkload) DAY
-        WHEN personcompressorpart.parttypeid = 1 THEN
-			evaluation.evaluationdate + INTERVAL(evaluationpart.currentcapacity) DAY
+		WHEN personcompressorsellable.controltypeid = 0 THEN
+			evaluation.evaluationdate + INTERVAL(evaluationcontrolledsellable.currentcapacity / evaluation.averageworkload) DAY
+        WHEN personcompressorsellable.controltypeid = 1 THEN
+			evaluation.evaluationdate + INTERVAL(evaluationcontrolledsellable.currentcapacity) DAY
 	END nextexchange
-FROM evaluationpart
-INNER JOIN personcompressorpart ON personcompressorpart.id = evaluationpart.personcompressorpartid
-INNER JOIN evaluation ON evaluation.id = evaluationpart.evaluationid
-LEFT JOIN product ON product.id = personcompressorpart.productid
+FROM evaluationcontrolledsellable
+INNER JOIN personcompressorsellable ON personcompressorsellable.id = evaluationcontrolledsellable.personcompressorsellableid
+INNER JOIN evaluation ON evaluation.id = evaluationcontrolledsellable.evaluationid
+LEFT JOIN product ON product.id = personcompressorsellable.productid
+LEFT JOIN service ON service.id = personcompressorsellable.serviceid
 WHERE
 	evaluation.id = @evaluationid AND
-    personcompressorpart.parttypeid = @parttypeid
-GROUP BY personcompressorpart.id
+    personcompressorsellable.controltypeid = @controltypeid
+GROUP BY personcompressorsellable.id
 ORDER BY nextexchange ASC;

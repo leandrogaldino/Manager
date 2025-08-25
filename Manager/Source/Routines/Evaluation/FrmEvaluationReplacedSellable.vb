@@ -62,7 +62,7 @@ Public Class FrmEvaluationReplacedSellable
     Private Sub AfterDataGridViewRowMove()
         If _EvaluationForm.DgvReplacedPart.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _ReplacedPart = _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _EvaluationForm.DgvReplacedPart.SelectedRows(0).Cells("Guid").Value)
+            _ReplacedPart = _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _EvaluationForm.DgvReplacedPart.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -126,7 +126,7 @@ Public Class FrmEvaluationReplacedSellable
     End Function
     Private Function HasDuplicatedItem() As Boolean
         Dim TargetItems As List(Of EvaluationReplacedSellable)
-        TargetItems = _Evaluation.ReplacedParts.Where(Function(x) Not x.ProductID.Equals(_ReplacedPart.ProductID) AndAlso x.ProductID.Equals(QbxItem.FreezedPrimaryKey)).ToList()
+        TargetItems = _Evaluation.ReplacedSellables.Where(Function(x) Not x.ProductID.Equals(_ReplacedPart.ProductID) AndAlso x.ProductID.Equals(QbxItem.FreezedPrimaryKey)).ToList()
         If TargetItems.Count > 0 Then
             CMessageBox.Show("Essa peça já foi incluida na avaliação.", CMessageBoxType.Information)
             QbxItem.Freeze(_ReplacedPart.ProductID)
@@ -146,11 +146,11 @@ Public Class FrmEvaluationReplacedSellable
         If IsValidFields() Then
             If HasDuplicatedItem() Then Return False
             If _ReplacedPart.IsSaved Then
-                _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _ReplacedPart.Guid).ProductID = QbxItem.FreezedPrimaryKey
-                _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _ReplacedPart.Guid).Product = New Lazy(Of Product)(Function() New Product().Load(QbxItem.FreezedPrimaryKey, False))
-                _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _ReplacedPart.Guid).ProductCode = QbxItem.GetRawFreezedValueOf("productprovidercode", "code").ToString
-                _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _ReplacedPart.Guid).ProductName = QbxItem.GetRawFreezedValueOf("product", "name").ToString
-                _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _ReplacedPart.Guid).Quantity = DbxQuantity.DecimalValue
+                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).ProductID = QbxItem.FreezedPrimaryKey
+                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).Product = New Lazy(Of Product)(Function() New Product().Load(QbxItem.FreezedPrimaryKey, False))
+                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).ProductCode = QbxItem.GetRawFreezedValueOf("productprovidercode", "code").ToString
+                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).ProductName = QbxItem.GetRawFreezedValueOf("product", "name").ToString
+                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).Quantity = DbxQuantity.DecimalValue
             Else
                 _ReplacedPart = New EvaluationReplacedSellable With {
                     .ProductID = QbxItem.FreezedPrimaryKey,
@@ -160,9 +160,9 @@ Public Class FrmEvaluationReplacedSellable
                     .Quantity = DbxQuantity.DecimalValue
                 }
                 _ReplacedPart.SetIsSaved(True)
-                _Evaluation.ReplacedParts.Add(_ReplacedPart)
+                _Evaluation.ReplacedSellables.Add(_ReplacedPart)
             End If
-            _EvaluationForm.DgvReplacedPart.Fill(_Evaluation.ReplacedParts)
+            _EvaluationForm.DgvReplacedPart.Fill(_Evaluation.ReplacedSellables)
             _EvaluationForm.DgvReplacedPartLayout.Load()
             BtnSave.Enabled = False
             If Not _ReplacedPart.IsSaved Then
@@ -239,9 +239,9 @@ Public Class FrmEvaluationReplacedSellable
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _EvaluationForm.DgvReplacedPart.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _ReplacedPart = _Evaluation.ReplacedParts.Single(Function(x) x.Guid = _EvaluationForm.DgvReplacedPart.SelectedRows(0).Cells("Guid").Value)
-                _Evaluation.ReplacedParts.Remove(_ReplacedPart)
-                _EvaluationForm.DgvReplacedPart.Fill(_Evaluation.ReplacedParts)
+                _ReplacedPart = _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _EvaluationForm.DgvReplacedPart.SelectedRows(0).Cells("Guid").Value)
+                _Evaluation.ReplacedSellables.Remove(_ReplacedPart)
+                _EvaluationForm.DgvReplacedPart.Fill(_Evaluation.ReplacedSellables)
                 _EvaluationForm.DgvReplacedPartLayout.Load()
                 _Deleting = True
                 Dispose()

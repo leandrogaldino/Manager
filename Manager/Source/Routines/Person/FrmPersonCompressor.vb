@@ -581,11 +581,8 @@ Public Class FrmPersonCompressor
                     BtnSave.Enabled = True
                 End If
             Next Row
-
-
             For Each Row As DataGridViewRow In Form.DgvElapsedDaySellable.Rows
                 Dim EdSellable = Compressor.ElapsedDaySellables.SingleOrDefault(Function(x) x.ID = Row.Cells("ID").Value)
-
                 If Row.Cells("X").Value = True Then
                     Dim Sellable As New PersonCompressorSellable(CompressorSellableControlType.ElapsedDay) With {
                         .Status = SimpleStatus.Active,

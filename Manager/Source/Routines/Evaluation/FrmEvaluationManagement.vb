@@ -305,13 +305,13 @@ Public Class FrmEvaluationManagement
 
 
 
-                    NewEvaluation.PartsWorkedHour.ToList().ForEach(Sub(x)
+                    NewEvaluation.WorkedHourControlledSelable.ToList().ForEach(Sub(x)
                                                                        x.Lost = False
                                                                        x.Sold = False
                                                                        x.CurrentCapacity = x.Sellable.Capacity
                                                                    End Sub
                                                                    )
-                    NewEvaluation.PartsElapsedDay.ToList().ForEach(Sub(x)
+                    NewEvaluation.ElapsedDayControlledSellable.ToList().ForEach(Sub(x)
                                                                        x.Lost = False
                                                                        x.Sold = False
                                                                        x.CurrentCapacity = x.Sellable.Capacity

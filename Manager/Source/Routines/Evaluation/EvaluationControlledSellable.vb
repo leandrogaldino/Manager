@@ -35,6 +35,7 @@ Public Class EvaluationControlledSellable
     End Property
     Public Property Sellable As Lazy(Of Sellable)
     Public Property SellableID As Long
+    Public Property SellableStatus As SimpleStatus = SimpleStatus.Active
     Public Property Code As String
     Public Property Name As String
     Public Property Quantity As Decimal

@@ -34,43 +34,43 @@ Public Class Evaluation
             Dim CurrentPart As EvaluationControlledSellable
             If value IsNot Nothing Then
                 If value.ID <> _Compressor.ID Then
-                    PartsWorkedHour.Clear()
-                    PartsElapsedDay.Clear()
+                    WorkedHourControlledSelable.Clear()
+                    ElapsedDayControlledSellable.Clear()
                     For Each p In value.WorkedHourSellables.Where(Function(x) x.Status = SimpleStatus.Active)
-                        PartsWorkedHour.Add(New EvaluationControlledSellable(CompressorSellableControlType.WorkedHour) With {.Sellable = p})
+                        WorkedHourControlledSelable.Add(New EvaluationControlledSellable(CompressorSellableControlType.WorkedHour) With {.Sellable = p.Sellable})
                     Next p
                     For Each p In value.ElapsedDaySellables.Where(Function(x) x.Status = SimpleStatus.Active)
-                        PartsElapsedDay.Add(New EvaluationControlledSellable(CompressorSellableControlType.ElapsedDay) With {.Sellable = p})
+                        ElapsedDayControlledSellable.Add(New EvaluationControlledSellable(CompressorSellableControlType.ElapsedDay) With {.Sellable = p.Sellable})
                     Next p
                 Else
                     For Each p In value.WorkedHourSellables
-                        CurrentPart = PartsWorkedHour.SingleOrDefault(Function(x) x.Sellable.ID = p.ID)
+                        CurrentPart = WorkedHourControlledSelable.SingleOrDefault(Function(x) x.SellableID = p.ID)
                         If CurrentPart IsNot Nothing Then
-                            CurrentPart.Sellable = p
+                            CurrentPart.Sellable = p.Sellable
                             CurrentPart.Lost = False
                             CurrentPart.Sold = False
                         Else
-                            PartsWorkedHour.Add(New EvaluationControlledSellable(CompressorSellableControlType.WorkedHour) With {.Sellable = p})
+                            WorkedHourControlledSelable.Add(New EvaluationControlledSellable(CompressorSellableControlType.WorkedHour) With {.Sellable = p.Sellable})
                         End If
                     Next p
-                    For Each p In PartsWorkedHour.ToArray.Reverse
-                        If p.Sellable.Status = SimpleStatus.Inactive Then
-                            PartsWorkedHour.Remove(p)
+                    For Each p In WorkedHourControlledSelable.ToArray.Reverse
+                        If p.SellableStatus = SimpleStatus.Inactive Then
+                            WorkedHourControlledSelable.Remove(p)
                         End If
                     Next p
                     For Each p In value.ElapsedDaySellables
-                        CurrentPart = PartsElapsedDay.SingleOrDefault(Function(x) x.Sellable.ID = p.ID)
+                        CurrentPart = ElapsedDayControlledSellable.SingleOrDefault(Function(x) x.SellableID = p.ID)
                         If CurrentPart IsNot Nothing Then
-                            CurrentPart.Sellable = p
+                            CurrentPart.Sellable = p.Sellable
                             CurrentPart.Lost = False
                             CurrentPart.Sold = False
                         Else
-                            PartsElapsedDay.Add(New EvaluationControlledSellable(CompressorSellableControlType.ElapsedDay) With {.Sellable = p})
+                            ElapsedDayControlledSellable.Add(New EvaluationControlledSellable(CompressorSellableControlType.ElapsedDay) With {.Sellable = p.Sellable})
                         End If
                     Next p
-                    For Each p In PartsElapsedDay.ToArray.Reverse
-                        If p.Sellable.Status = SimpleStatus.Inactive Then
-                            PartsElapsedDay.Remove(p)
+                    For Each p In ElapsedDayControlledSellable.ToArray.Reverse
+                        If p.SellableStatus = SimpleStatus.Inactive Then
+                            ElapsedDayControlledSellable.Remove(p)
                         End If
                     Next p
                 End If
@@ -81,9 +81,9 @@ Public Class Evaluation
     Public Property Horimeter As Integer
     Public Property ManualAverageWorkLoad As Boolean
     Public Property AverageWorkLoad As Decimal = 5.71
-    Public Property PartsWorkedHour As New List(Of EvaluationControlledSellable)
-    Public Property PartsElapsedDay As New List(Of EvaluationControlledSellable)
-    Public Property ReplacedParts As New List(Of EvaluationReplacedSellable)
+    Public Property WorkedHourControlledSelable As New List(Of EvaluationControlledSellable)
+    Public Property ElapsedDayControlledSellable As New List(Of EvaluationControlledSellable)
+    Public Property ReplacedSellables As New List(Of EvaluationReplacedSellable)
     Public Property TechnicalAdvice As String
     Public Property Document As New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
     Public Property Signature As New FileManager(ApplicationPaths.EvaluationSignatureDirectory)
@@ -116,9 +116,9 @@ Public Class Evaluation
         Horimeter = 0
         ManualAverageWorkLoad = False
         AverageWorkLoad = 0
-        PartsWorkedHour = New List(Of EvaluationControlledSellable)
-        PartsElapsedDay = New List(Of EvaluationControlledSellable)
-        ReplacedParts = New List(Of EvaluationReplacedSellable)
+        WorkedHourControlledSelable = New List(Of EvaluationControlledSellable)
+        ElapsedDayControlledSellable = New List(Of EvaluationControlledSellable)
+        ReplacedSellables = New List(Of EvaluationReplacedSellable)
         TechnicalAdvice = Nothing
         Document = New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
         Signature = New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
@@ -170,7 +170,7 @@ Public Class Evaluation
                         Photos = GetPhotos(Tra)
                         _RejectReason = TableResult.Rows(0).Item("rejectreason").ToString
                         Technicians = GetTechnicians(Tra)
-                        GetParts(Tra)
+                        GetControlledSellables(Tra)
                         GetReplacedSellables(Tra)
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
@@ -229,35 +229,35 @@ Public Class Evaluation
         End Using
         Return Technicians
     End Function
-    Private Sub GetParts(Transaction As MySqlTransaction)
+    Private Sub GetControlledSellables(Transaction As MySqlTransaction)
         Dim TableResult As DataTable
-        Dim Part As EvaluationControlledSellable
-        Using CmdEvaluationPart As New MySqlCommand(My.Resources.EvaluationReplacedSellableSelect, Transaction.Connection)
-            CmdEvaluationPart.Transaction = Transaction
-            CmdEvaluationPart.Parameters.AddWithValue("@evaluationid", ID)
-            CmdEvaluationPart.Parameters.AddWithValue("@parttypeid", CInt(CompressorSellableControlType.WorkedHour))
-            Using Adp As New MySqlDataAdapter(CmdEvaluationPart)
+        Dim Sellable As EvaluationControlledSellable
+        Using CmdEvaluationSellable As New MySqlCommand(My.Resources.EvaluationReplacedSellableSelect, Transaction.Connection)
+            CmdEvaluationSellable.Transaction = Transaction
+            CmdEvaluationSellable.Parameters.AddWithValue("@evaluationid", ID)
+            CmdEvaluationSellable.Parameters.AddWithValue("@parttypeid", CInt(CompressorSellableControlType.WorkedHour))
+            Using Adp As New MySqlDataAdapter(CmdEvaluationSellable)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
                 For Each Row As DataRow In TableResult.Rows
-                    If PartsWorkedHour.Any(Function(x) x.Sellable.ID = Row.Item("personcompressorpartid")) Then
-                        PartsWorkedHour.Single(Function(x) x.Sellable.ID = Row.Item("personcompressorpartid")).SetID(Row.Item("id"))
-                        PartsWorkedHour.Single(Function(x) x.Sellable.ID = Row.Item("personcompressorpartid")).SetCreation(Row.Item("creation"))
-                        PartsWorkedHour.Single(Function(x) x.Sellable.ID = Row.Item("personcompressorpartid")).SetIsSaved(True)
-                        PartsWorkedHour.Single(Function(x) x.Sellable.ID = Row.Item("personcompressorpartid")).CurrentCapacity = Row.Item("currentcapacity")
-                        PartsWorkedHour.Single(Function(x) x.Sellable.ID = Row.Item("personcompressorpartid")).Sold = Row.Item("sold")
-                        PartsWorkedHour.Single(Function(x) x.Sellable.ID = Row.Item("personcompressorpartid")).Lost = Row.Item("lost")
+                    If WorkedHourControlledSelable.Any(Function(x) x.SellableID = Row.Item("personcompressorsellableid")) Then
+                        WorkedHourControlledSelable.Single(Function(x) x.SellableID = Row.Item("personcompressorsellableid")).SetID(Row.Item("id"))
+                        WorkedHourControlledSelable.Single(Function(x) x.SellableID = Row.Item("personcompressorsellableid")).SetCreation(Row.Item("creation"))
+                        WorkedHourControlledSelable.Single(Function(x) x.SellableID = Row.Item("personcompressorsellableid")).SetIsSaved(True)
+                        WorkedHourControlledSelable.Single(Function(x) x.SellableID = Row.Item("personcompressorsellableid")).CurrentCapacity = Row.Item("currentcapacity")
+                        WorkedHourControlledSelable.Single(Function(x) x.SellableID = Row.Item("personcompressorsellableid")).Sold = Row.Item("sold")
+                        WorkedHourControlledSelable.Single(Function(x) x.SellableID = Row.Item("personcompressorsellableid")).Lost = Row.Item("lost")
                     Else
-                        Part = New EvaluationControlledSellable(CompressorSellableControlType.WorkedHour) With {
-                            .Sellable = Compressor.WorkedHourSellables.Single(Function(x) x.ID = Row.Item("personcompressorpartid")),
+                        Sellable = New EvaluationControlledSellable(CompressorSellableControlType.WorkedHour) With {
+                            .Sellable = Compressor.WorkedHourSellables.Single(Function(x) x.ID = Row.Item("personcompressorsellableid")).Sellable,
                             .CurrentCapacity = Row.Item("currentcapacity"),
                             .Sold = Row.Item("sold"),
                             .Lost = Row.Item("lost")
                         }
-                        Part.SetID(Row.Item("id"))
-                        Part.SetCreation(Row.Item("creation"))
-                        Part.SetIsSaved(True)
-                        PartsWorkedHour.Add(Part)
+                        Sellable.SetID(Row.Item("id"))
+                        Sellable.SetCreation(Row.Item("creation"))
+                        Sellable.SetIsSaved(True)
+                        WorkedHourControlledSelable.Add(Sellable)
                     End If
                 Next Row
             End Using
@@ -270,24 +270,24 @@ Public Class Evaluation
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
                 For Each Row As DataRow In TableResult.Rows
-                    If PartsElapsedDay.Any(Function(x) x.Sellable.ID = Row.Item("personcompressorpartid")) Then
-                        PartsElapsedDay.Single(Function(x) x.Sellable.ID = Row.Item("personcompressorpartid")).SetIsSaved(True)
-                        PartsElapsedDay.Single(Function(x) x.Sellable.ID = Row.Item("personcompressorpartid")).SetID(Row.Item("id"))
-                        PartsElapsedDay.Single(Function(x) x.Sellable.ID = Row.Item("personcompressorpartid")).SetCreation(Row.Item("creation"))
-                        PartsElapsedDay.Single(Function(x) x.Sellable.ID = Row.Item("personcompressorpartid")).CurrentCapacity = Row.Item("currentcapacity")
-                        PartsElapsedDay.Single(Function(x) x.Sellable.ID = Row.Item("personcompressorpartid")).Sold = Row.Item("sold")
-                        PartsElapsedDay.Single(Function(x) x.Sellable.ID = Row.Item("personcompressorpartid")).Lost = Row.Item("lost")
+                    If ElapsedDayControlledSellable.Any(Function(x) x.SellableID = Row.Item("personcompressorsellableid")) Then
+                        ElapsedDayControlledSellable.Single(Function(x) x.SellableID = Row.Item("personcompressorsellableid")).SetIsSaved(True)
+                        ElapsedDayControlledSellable.Single(Function(x) x.SellableID = Row.Item("personcompressorsellableid")).SetID(Row.Item("id"))
+                        ElapsedDayControlledSellable.Single(Function(x) x.SellableID = Row.Item("personcompressorsellableid")).SetCreation(Row.Item("creation"))
+                        ElapsedDayControlledSellable.Single(Function(x) x.SellableID = Row.Item("personcompressorsellableid")).CurrentCapacity = Row.Item("currentcapacity")
+                        ElapsedDayControlledSellable.Single(Function(x) x.SellableID = Row.Item("personcompressorsellableid")).Sold = Row.Item("sold")
+                        ElapsedDayControlledSellable.Single(Function(x) x.SellableID = Row.Item("personcompressorsellableid")).Lost = Row.Item("lost")
                     Else
-                        Part = New EvaluationControlledSellable(CompressorSellableControlType.ElapsedDay) With {
-                            .Sellable = Compressor.ElapsedDaySellables.Single(Function(x) x.ID = Row.Item("personcompressorpartid")),
+                        Sellable = New EvaluationControlledSellable(CompressorSellableControlType.ElapsedDay) With {
+                            .Sellable = Compressor.ElapsedDaySellables.Single(Function(x) x.ID = Row.Item("personcompressorsellableid")).Sellable,
                             .CurrentCapacity = Row.Item("currentcapacity"),
                             .Sold = Row.Item("sold"),
                             .Lost = Row.Item("lost")
                         }
-                        Part.SetIsSaved(True)
-                        Part.SetID(Row.Item("id"))
-                        Part.SetCreation(Row.Item("creation"))
-                        PartsElapsedDay.Add(Part)
+                        Sellable.SetIsSaved(True)
+                        Sellable.SetID(Row.Item("id"))
+                        Sellable.SetCreation(Row.Item("creation"))
+                        ElapsedDayControlledSellable.Add(Sellable)
                     End If
                 Next Row
             End Using
@@ -313,7 +313,7 @@ Public Class Evaluation
                     Sellable.SetIsSaved(True)
                     Sellable.SetID(Row.Item("id"))
                     Sellable.SetCreation(Row.Item("creation"))
-                    ReplacedParts.Add(Sellable)
+                    ReplacedSellables.Add(Sellable)
                 Next Row
             End Using
         End Using
@@ -326,9 +326,9 @@ Public Class Evaluation
         End If
         SetIsSaved(True)
         Technicians.ToList().ForEach(Sub(x) x.SetIsSaved(True))
-        PartsWorkedHour.ToList().ForEach(Sub(x) x.SetIsSaved(True))
-        PartsElapsedDay.ToList().ForEach(Sub(x) x.SetIsSaved(True))
-        ReplacedParts.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        WorkedHourControlledSelable.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        ElapsedDayControlledSellable.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        ReplacedSellables.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         Photos.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         _Shadow = Clone()
     End Sub
@@ -371,35 +371,35 @@ Public Class Evaluation
                         Technician.SetID(CmdTechnician.LastInsertedId)
                     End Using
                 Next Technician
-                For Each PartWorkedHour As EvaluationControlledSellable In PartsWorkedHour
-                    Using CmdPartWorkedHour As New MySqlCommand(My.Resources.EvaluationControlledSellableInsert, Con)
-                        CmdPartWorkedHour.Parameters.AddWithValue("@creation", PartWorkedHour.Creation)
-                        CmdPartWorkedHour.Parameters.AddWithValue("@evaluationid", ID)
-                        CmdPartWorkedHour.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
-                        CmdPartWorkedHour.Parameters.AddWithValue("@personcompressorpartid", PartWorkedHour.Sellable.ID)
-                        CmdPartWorkedHour.Parameters.AddWithValue("@currentcapacity", PartWorkedHour.CurrentCapacity)
-                        CmdPartWorkedHour.Parameters.AddWithValue("@sold", PartWorkedHour.Sold)
-                        CmdPartWorkedHour.Parameters.AddWithValue("@lost", PartWorkedHour.Lost)
-                        CmdPartWorkedHour.Parameters.AddWithValue("@userid", PartWorkedHour.User.ID)
-                        CmdPartWorkedHour.ExecuteNonQuery()
-                        PartWorkedHour.SetID(CmdPartWorkedHour.LastInsertedId)
+                For Each WorkedHourSellable As EvaluationControlledSellable In WorkedHourControlledSelable
+                    Using CmdWorkedHourSellable As New MySqlCommand(My.Resources.EvaluationControlledSellableInsert, Con)
+                        CmdWorkedHourSellable.Parameters.AddWithValue("@creation", WorkedHourSellable.Creation)
+                        CmdWorkedHourSellable.Parameters.AddWithValue("@evaluationid", ID)
+                        CmdWorkedHourSellable.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
+                        CmdWorkedHourSellable.Parameters.AddWithValue("@personcompressorsellableid", WorkedHourSellable.SellableID)
+                        CmdWorkedHourSellable.Parameters.AddWithValue("@currentcapacity", WorkedHourSellable.CurrentCapacity)
+                        CmdWorkedHourSellable.Parameters.AddWithValue("@sold", WorkedHourSellable.Sold)
+                        CmdWorkedHourSellable.Parameters.AddWithValue("@lost", WorkedHourSellable.Lost)
+                        CmdWorkedHourSellable.Parameters.AddWithValue("@userid", WorkedHourSellable.User.ID)
+                        CmdWorkedHourSellable.ExecuteNonQuery()
+                        WorkedHourSellable.SetID(CmdWorkedHourSellable.LastInsertedId)
                     End Using
-                Next PartWorkedHour
-                For Each PartElapsedDay As EvaluationControlledSellable In PartsElapsedDay
-                    Using CmdPartElapsedDay As New MySqlCommand(My.Resources.EvaluationControlledSellableInsert, Con)
-                        CmdPartElapsedDay.Parameters.AddWithValue("@creation", PartElapsedDay.Creation)
-                        CmdPartElapsedDay.Parameters.AddWithValue("@evaluationid", ID)
-                        CmdPartElapsedDay.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
-                        CmdPartElapsedDay.Parameters.AddWithValue("@personcompressorpartid", PartElapsedDay.Sellable.ID)
-                        CmdPartElapsedDay.Parameters.AddWithValue("@currentcapacity", PartElapsedDay.CurrentCapacity)
-                        CmdPartElapsedDay.Parameters.AddWithValue("@sold", PartElapsedDay.Sold)
-                        CmdPartElapsedDay.Parameters.AddWithValue("@lost", PartElapsedDay.Lost)
-                        CmdPartElapsedDay.Parameters.AddWithValue("@userid", PartElapsedDay.User.ID)
-                        CmdPartElapsedDay.ExecuteNonQuery()
-                        PartElapsedDay.SetID(CmdPartElapsedDay.LastInsertedId)
+                Next WorkedHourSellable
+                For Each ElapsedDaySellable As EvaluationControlledSellable In ElapsedDayControlledSellable
+                    Using CmdElapsedDaySellable As New MySqlCommand(My.Resources.EvaluationControlledSellableInsert, Con)
+                        CmdElapsedDaySellable.Parameters.AddWithValue("@creation", ElapsedDaySellable.Creation)
+                        CmdElapsedDaySellable.Parameters.AddWithValue("@evaluationid", ID)
+                        CmdElapsedDaySellable.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
+                        CmdElapsedDaySellable.Parameters.AddWithValue("@personcompressorsellableid", ElapsedDaySellable.SellableID)
+                        CmdElapsedDaySellable.Parameters.AddWithValue("@currentcapacity", ElapsedDaySellable.CurrentCapacity)
+                        CmdElapsedDaySellable.Parameters.AddWithValue("@sold", ElapsedDaySellable.Sold)
+                        CmdElapsedDaySellable.Parameters.AddWithValue("@lost", ElapsedDaySellable.Lost)
+                        CmdElapsedDaySellable.Parameters.AddWithValue("@userid", ElapsedDaySellable.User.ID)
+                        CmdElapsedDaySellable.ExecuteNonQuery()
+                        ElapsedDaySellable.SetID(CmdElapsedDaySellable.LastInsertedId)
                     End Using
-                Next PartElapsedDay
-                For Each Item As EvaluationReplacedSellable In ReplacedParts
+                Next ElapsedDaySellable
+                For Each Item As EvaluationReplacedSellable In ReplacedSellables
                     Using CmdItem As New MySqlCommand(My.Resources.EvaluationReplacedSellableInsert, Con)
                         CmdItem.Parameters.AddWithValue("@evaluationid", ID)
                         CmdItem.Parameters.AddWithValue("@creation", Item.Creation)
@@ -483,143 +483,143 @@ Public Class Evaluation
                     End If
                 Next Technician
                 If Compressor.ID <> _Shadow.Compressor.ID Then
-                    For Each ShadowPartWorkedHour As EvaluationControlledSellable In _Shadow.PartsWorkedHour.Where(Function(x) x.ID <> 0)
-                        Using CmdPartWorkedHour As New MySqlCommand(My.Resources.EvaluationControlledSellableDelete, Con)
-                            CmdPartWorkedHour.Parameters.AddWithValue("@id", ShadowPartWorkedHour.ID)
-                            CmdPartWorkedHour.ExecuteNonQuery()
+                    For Each ShadowWorkedHourSellable As EvaluationControlledSellable In _Shadow.WorkedHourControlledSelable.Where(Function(x) x.ID <> 0)
+                        Using CmdWorkedHourSellable As New MySqlCommand(My.Resources.EvaluationControlledSellableDelete, Con)
+                            CmdWorkedHourSellable.Parameters.AddWithValue("@id", ShadowWorkedHourSellable.ID)
+                            CmdWorkedHourSellable.ExecuteNonQuery()
                         End Using
-                    Next ShadowPartWorkedHour
-                    For Each PartWorkedHour As EvaluationControlledSellable In PartsWorkedHour.Where(Function(x) x.ID = 0)
-                        Using CmdPartWorkedHour As New MySqlCommand(My.Resources.EvaluationControlledSellableInsert, Con)
-                            CmdPartWorkedHour.Parameters.AddWithValue("@creation", PartWorkedHour.Creation)
-                            CmdPartWorkedHour.Parameters.AddWithValue("@evaluationid", ID)
-                            CmdPartWorkedHour.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
-                            CmdPartWorkedHour.Parameters.AddWithValue("@personcompressorpartid", PartWorkedHour.Sellable.ID)
-                            CmdPartWorkedHour.Parameters.AddWithValue("@currentcapacity", PartWorkedHour.CurrentCapacity)
-                            CmdPartWorkedHour.Parameters.AddWithValue("@sold", PartWorkedHour.Sold)
-                            CmdPartWorkedHour.Parameters.AddWithValue("@lost", PartWorkedHour.Lost)
-                            CmdPartWorkedHour.Parameters.AddWithValue("@userid", PartWorkedHour.User.ID)
-                            CmdPartWorkedHour.ExecuteNonQuery()
-                            PartWorkedHour.SetID(CmdPartWorkedHour.LastInsertedId)
+                    Next ShadowWorkedHourSellable
+                    For Each WorkedHourSellable As EvaluationControlledSellable In WorkedHourControlledSelable.Where(Function(x) x.ID = 0)
+                        Using CmdWorkedHourSellable As New MySqlCommand(My.Resources.EvaluationControlledSellableInsert, Con)
+                            CmdWorkedHourSellable.Parameters.AddWithValue("@creation", WorkedHourSellable.Creation)
+                            CmdWorkedHourSellable.Parameters.AddWithValue("@evaluationid", ID)
+                            CmdWorkedHourSellable.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
+                            CmdWorkedHourSellable.Parameters.AddWithValue("@personcompressorsellableid", WorkedHourSellable.Sellable.ID)
+                            CmdWorkedHourSellable.Parameters.AddWithValue("@currentcapacity", WorkedHourSellable.CurrentCapacity)
+                            CmdWorkedHourSellable.Parameters.AddWithValue("@sold", WorkedHourSellable.Sold)
+                            CmdWorkedHourSellable.Parameters.AddWithValue("@lost", WorkedHourSellable.Lost)
+                            CmdWorkedHourSellable.Parameters.AddWithValue("@userid", WorkedHourSellable.User.ID)
+                            CmdWorkedHourSellable.ExecuteNonQuery()
+                            WorkedHourSellable.SetID(CmdWorkedHourSellable.LastInsertedId)
                         End Using
-                    Next PartWorkedHour
-                    For Each ShadowPartElapsedDay As EvaluationControlledSellable In _Shadow.PartsElapsedDay.Where(Function(x) x.ID <> 0)
-                        Using CmdPartElapsedDay As New MySqlCommand(My.Resources.EvaluationControlledSellableDelete, Con)
-                            CmdPartElapsedDay.Parameters.AddWithValue("@id", ShadowPartElapsedDay.ID)
-                            CmdPartElapsedDay.ExecuteNonQuery()
+                    Next WorkedHourSellable
+                    For Each ShadowElapsedDaySellable As EvaluationControlledSellable In _Shadow.ElapsedDayControlledSellable.Where(Function(x) x.ID <> 0)
+                        Using CmdElapsedDaySellable As New MySqlCommand(My.Resources.EvaluationControlledSellableDelete, Con)
+                            CmdElapsedDaySellable.Parameters.AddWithValue("@id", ShadowElapsedDaySellable.ID)
+                            CmdElapsedDaySellable.ExecuteNonQuery()
                         End Using
-                    Next ShadowPartElapsedDay
-                    For Each PartElapsedDay As EvaluationControlledSellable In PartsElapsedDay.Where(Function(x) x.ID = 0)
-                        Using CmdPartElapsedDay As New MySqlCommand(My.Resources.EvaluationControlledSellableInsert, Con)
-                            CmdPartElapsedDay.Parameters.AddWithValue("@creation", PartElapsedDay.Creation)
-                            CmdPartElapsedDay.Parameters.AddWithValue("@evaluationid", ID)
-                            CmdPartElapsedDay.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
-                            CmdPartElapsedDay.Parameters.AddWithValue("@personcompressorpartid", PartElapsedDay.Sellable.ID)
-                            CmdPartElapsedDay.Parameters.AddWithValue("@currentcapacity", PartElapsedDay.CurrentCapacity)
-                            CmdPartElapsedDay.Parameters.AddWithValue("@sold", PartElapsedDay.Sold)
-                            CmdPartElapsedDay.Parameters.AddWithValue("@lost", PartElapsedDay.Lost)
-                            CmdPartElapsedDay.Parameters.AddWithValue("@userid", PartElapsedDay.User.ID)
-                            CmdPartElapsedDay.ExecuteNonQuery()
-                            PartElapsedDay.SetID(CmdPartElapsedDay.LastInsertedId)
+                    Next ShadowElapsedDaySellable
+                    For Each ElapsedDaySellable As EvaluationControlledSellable In ElapsedDayControlledSellable.Where(Function(x) x.ID = 0)
+                        Using CmdElapsedDaySellable As New MySqlCommand(My.Resources.EvaluationControlledSellableInsert, Con)
+                            CmdElapsedDaySellable.Parameters.AddWithValue("@creation", ElapsedDaySellable.Creation)
+                            CmdElapsedDaySellable.Parameters.AddWithValue("@evaluationid", ID)
+                            CmdElapsedDaySellable.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
+                            CmdElapsedDaySellable.Parameters.AddWithValue("@personcompressorsellableid", ElapsedDaySellable.Sellable.ID)
+                            CmdElapsedDaySellable.Parameters.AddWithValue("@currentcapacity", ElapsedDaySellable.CurrentCapacity)
+                            CmdElapsedDaySellable.Parameters.AddWithValue("@sold", ElapsedDaySellable.Sold)
+                            CmdElapsedDaySellable.Parameters.AddWithValue("@lost", ElapsedDaySellable.Lost)
+                            CmdElapsedDaySellable.Parameters.AddWithValue("@userid", ElapsedDaySellable.User.ID)
+                            CmdElapsedDaySellable.ExecuteNonQuery()
+                            ElapsedDaySellable.SetID(CmdElapsedDaySellable.LastInsertedId)
                         End Using
-                    Next PartElapsedDay
+                    Next ElapsedDaySellable
                 Else
-                    For Each PartWorkedHour As EvaluationControlledSellable In _Shadow.PartsWorkedHour
-                        If Not PartsWorkedHour.Any(Function(x) x.ID = PartWorkedHour.ID And x.ID > 0) Then
-                            Using CmdPartWorkedHour As New MySqlCommand(My.Resources.EvaluationControlledSellableDelete, Con)
-                                CmdPartWorkedHour.Parameters.AddWithValue("@id", PartWorkedHour.ID)
-                                CmdPartWorkedHour.ExecuteNonQuery()
+                    For Each WorkedHourSellable As EvaluationControlledSellable In _Shadow.WorkedHourControlledSelable
+                        If Not WorkedHourControlledSelable.Any(Function(x) x.ID = WorkedHourSellable.ID And x.ID > 0) Then
+                            Using CmdWorkedHourSellable As New MySqlCommand(My.Resources.EvaluationControlledSellableDelete, Con)
+                                CmdWorkedHourSellable.Parameters.AddWithValue("@id", WorkedHourSellable.ID)
+                                CmdWorkedHourSellable.ExecuteNonQuery()
                             End Using
                         End If
-                    Next PartWorkedHour
-                    For Each PartWorkedHour As EvaluationControlledSellable In PartsWorkedHour
-                        If PartWorkedHour.ID = 0 Then
-                            Using CmdPartWorkedHour As New MySqlCommand(My.Resources.EvaluationControlledSellableInsert, Con)
-                                CmdPartWorkedHour.Parameters.AddWithValue("@creation", PartWorkedHour.Creation)
-                                CmdPartWorkedHour.Parameters.AddWithValue("@evaluationid", ID)
-                                CmdPartWorkedHour.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
-                                CmdPartWorkedHour.Parameters.AddWithValue("@personcompressorpartid", PartWorkedHour.Sellable.ID)
-                                CmdPartWorkedHour.Parameters.AddWithValue("@currentcapacity", PartWorkedHour.CurrentCapacity)
-                                CmdPartWorkedHour.Parameters.AddWithValue("@sold", PartWorkedHour.Sold)
-                                CmdPartWorkedHour.Parameters.AddWithValue("@lost", PartWorkedHour.Lost)
-                                CmdPartWorkedHour.Parameters.AddWithValue("@userid", PartWorkedHour.User.ID)
-                                CmdPartWorkedHour.ExecuteNonQuery()
-                                PartWorkedHour.SetID(CmdPartWorkedHour.LastInsertedId)
+                    Next WorkedHourSellable
+                    For Each WorkedHourSellable As EvaluationControlledSellable In WorkedHourControlledSelable
+                        If WorkedHourSellable.ID = 0 Then
+                            Using CmdWorkedHourSellable As New MySqlCommand(My.Resources.EvaluationControlledSellableInsert, Con)
+                                CmdWorkedHourSellable.Parameters.AddWithValue("@creation", WorkedHourSellable.Creation)
+                                CmdWorkedHourSellable.Parameters.AddWithValue("@evaluationid", ID)
+                                CmdWorkedHourSellable.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
+                                CmdWorkedHourSellable.Parameters.AddWithValue("@personcompressorsellableid", WorkedHourSellable.Sellable.ID)
+                                CmdWorkedHourSellable.Parameters.AddWithValue("@currentcapacity", WorkedHourSellable.CurrentCapacity)
+                                CmdWorkedHourSellable.Parameters.AddWithValue("@sold", WorkedHourSellable.Sold)
+                                CmdWorkedHourSellable.Parameters.AddWithValue("@lost", WorkedHourSellable.Lost)
+                                CmdWorkedHourSellable.Parameters.AddWithValue("@userid", WorkedHourSellable.User.ID)
+                                CmdWorkedHourSellable.ExecuteNonQuery()
+                                WorkedHourSellable.SetID(CmdWorkedHourSellable.LastInsertedId)
                             End Using
                         Else
-                            Using CmdPartWorkedHour As New MySqlCommand(My.Resources.EvaluationControlledSellableUpdate, Con)
-                                CmdPartWorkedHour.Parameters.AddWithValue("@id", _Shadow.PartsWorkedHour.First(Function(x) x.Guid = PartWorkedHour.Guid).ID)
-                                CmdPartWorkedHour.Parameters.AddWithValue("@currentcapacity", PartWorkedHour.CurrentCapacity)
-                                CmdPartWorkedHour.Parameters.AddWithValue("@sold", PartWorkedHour.Sold)
-                                CmdPartWorkedHour.Parameters.AddWithValue("@lost", PartWorkedHour.Lost)
-                                CmdPartWorkedHour.Parameters.AddWithValue("@userid", PartWorkedHour.User.ID)
-                                CmdPartWorkedHour.ExecuteNonQuery()
+                            Using CmdWorkedHourSellable As New MySqlCommand(My.Resources.EvaluationControlledSellableUpdate, Con)
+                                CmdWorkedHourSellable.Parameters.AddWithValue("@id", _Shadow.WorkedHourControlledSelable.First(Function(x) x.Guid = WorkedHourSellable.Guid).ID)
+                                CmdWorkedHourSellable.Parameters.AddWithValue("@currentcapacity", WorkedHourSellable.CurrentCapacity)
+                                CmdWorkedHourSellable.Parameters.AddWithValue("@sold", WorkedHourSellable.Sold)
+                                CmdWorkedHourSellable.Parameters.AddWithValue("@lost", WorkedHourSellable.Lost)
+                                CmdWorkedHourSellable.Parameters.AddWithValue("@userid", WorkedHourSellable.User.ID)
+                                CmdWorkedHourSellable.ExecuteNonQuery()
                             End Using
                         End If
-                    Next PartWorkedHour
-                    For Each PartElapsedDay As EvaluationControlledSellable In _Shadow.PartsElapsedDay
-                        If Not PartsElapsedDay.Any(Function(x) x.ID = PartElapsedDay.ID And x.ID > 0) Then
-                            Using CmdPartElapsedDay As New MySqlCommand(My.Resources.EvaluationControlledSellableDelete, Con)
-                                CmdPartElapsedDay.Parameters.AddWithValue("@id", PartElapsedDay.ID)
-                                CmdPartElapsedDay.ExecuteNonQuery()
+                    Next WorkedHourSellable
+                    For Each ElapsedDaySellable As EvaluationControlledSellable In _Shadow.ElapsedDayControlledSellable
+                        If Not ElapsedDayControlledSellable.Any(Function(x) x.ID = ElapsedDaySellable.ID And x.ID > 0) Then
+                            Using CmdElapsedDaySellable As New MySqlCommand(My.Resources.EvaluationControlledSellableDelete, Con)
+                                CmdElapsedDaySellable.Parameters.AddWithValue("@id", ElapsedDaySellable.ID)
+                                CmdElapsedDaySellable.ExecuteNonQuery()
                             End Using
                         End If
-                    Next PartElapsedDay
-                    For Each PartElapsedDay As EvaluationControlledSellable In PartsElapsedDay
-                        If PartElapsedDay.ID = 0 Then
-                            Using CmdPartElapsedDay As New MySqlCommand(My.Resources.EvaluationControlledSellableInsert, Con)
-                                CmdPartElapsedDay.Parameters.AddWithValue("@creation", PartElapsedDay.Creation)
-                                CmdPartElapsedDay.Parameters.AddWithValue("@evaluationid", ID)
-                                CmdPartElapsedDay.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
-                                CmdPartElapsedDay.Parameters.AddWithValue("@personcompressorpartid", PartElapsedDay.Sellable.ID)
-                                CmdPartElapsedDay.Parameters.AddWithValue("@currentcapacity", PartElapsedDay.CurrentCapacity)
-                                CmdPartElapsedDay.Parameters.AddWithValue("@sold", PartElapsedDay.Sold)
-                                CmdPartElapsedDay.Parameters.AddWithValue("@lost", PartElapsedDay.Lost)
-                                CmdPartElapsedDay.Parameters.AddWithValue("@userid", PartElapsedDay.User.ID)
-                                CmdPartElapsedDay.ExecuteNonQuery()
-                                PartElapsedDay.SetID(CmdPartElapsedDay.LastInsertedId)
+                    Next ElapsedDaySellable
+                    For Each ElapsedDaySellable As EvaluationControlledSellable In ElapsedDayControlledSellable
+                        If ElapsedDaySellable.ID = 0 Then
+                            Using CmdElapsedDaySellable As New MySqlCommand(My.Resources.EvaluationControlledSellableInsert, Con)
+                                CmdElapsedDaySellable.Parameters.AddWithValue("@creation", ElapsedDaySellable.Creation)
+                                CmdElapsedDaySellable.Parameters.AddWithValue("@evaluationid", ID)
+                                CmdElapsedDaySellable.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
+                                CmdElapsedDaySellable.Parameters.AddWithValue("@personcompressorsellableid", ElapsedDaySellable.Sellable.ID)
+                                CmdElapsedDaySellable.Parameters.AddWithValue("@currentcapacity", ElapsedDaySellable.CurrentCapacity)
+                                CmdElapsedDaySellable.Parameters.AddWithValue("@sold", ElapsedDaySellable.Sold)
+                                CmdElapsedDaySellable.Parameters.AddWithValue("@lost", ElapsedDaySellable.Lost)
+                                CmdElapsedDaySellable.Parameters.AddWithValue("@userid", ElapsedDaySellable.User.ID)
+                                CmdElapsedDaySellable.ExecuteNonQuery()
+                                ElapsedDaySellable.SetID(CmdElapsedDaySellable.LastInsertedId)
                             End Using
                         Else
-                            Using CmdPartElapsedDay As New MySqlCommand(My.Resources.EvaluationcontrolledsellableUpdate, Con)
-                                CmdPartElapsedDay.Parameters.AddWithValue("@id", _Shadow.PartsElapsedDay.First(Function(x) x.Guid = PartElapsedDay.Guid).ID)
-                                CmdPartElapsedDay.Parameters.AddWithValue("@currentcapacity", PartElapsedDay.CurrentCapacity)
-                                CmdPartElapsedDay.Parameters.AddWithValue("@sold", PartElapsedDay.Sold)
-                                CmdPartElapsedDay.Parameters.AddWithValue("@lost", PartElapsedDay.Lost)
-                                CmdPartElapsedDay.Parameters.AddWithValue("@userid", PartElapsedDay.User.ID)
-                                CmdPartElapsedDay.ExecuteNonQuery()
+                            Using CmdElapsedDaySellable As New MySqlCommand(My.Resources.EvaluationControlledSellableUpdate, Con)
+                                CmdElapsedDaySellable.Parameters.AddWithValue("@id", _Shadow.ElapsedDayControlledSellable.First(Function(x) x.Guid = ElapsedDaySellable.Guid).ID)
+                                CmdElapsedDaySellable.Parameters.AddWithValue("@currentcapacity", ElapsedDaySellable.CurrentCapacity)
+                                CmdElapsedDaySellable.Parameters.AddWithValue("@sold", ElapsedDaySellable.Sold)
+                                CmdElapsedDaySellable.Parameters.AddWithValue("@lost", ElapsedDaySellable.Lost)
+                                CmdElapsedDaySellable.Parameters.AddWithValue("@userid", ElapsedDaySellable.User.ID)
+                                CmdElapsedDaySellable.ExecuteNonQuery()
                             End Using
                         End If
-                    Next PartElapsedDay
+                    Next ElapsedDaySellable
                 End If
-                For Each ReplacedPart As EvaluationReplacedSellable In _Shadow.ReplacedParts
-                    If Not ReplacedParts.Any(Function(x) x.ID = ReplacedPart.ID And x.ID > 0) Then
-                        Using CmdReplacedPart As New MySqlCommand(My.Resources.EvaluationReplacedSellableDelete, Con)
-                            CmdReplacedPart.Parameters.AddWithValue("@id", ReplacedPart.ID)
-                            CmdReplacedPart.ExecuteNonQuery()
+                For Each ReplacedSellable As EvaluationReplacedSellable In _Shadow.ReplacedSellables
+                    If Not ReplacedSellables.Any(Function(x) x.ID = ReplacedSellable.ID And x.ID > 0) Then
+                        Using CmdReplacedSellable As New MySqlCommand(My.Resources.EvaluationReplacedSellableDelete, Con)
+                            CmdReplacedSellable.Parameters.AddWithValue("@id", ReplacedSellable.ID)
+                            CmdReplacedSellable.ExecuteNonQuery()
                         End Using
                     End If
-                Next ReplacedPart
-                For Each ReplacedPart As EvaluationReplacedSellable In ReplacedParts
-                    If ReplacedPart.ID = 0 Then
-                        Using CmdReplacedPart As New MySqlCommand(My.Resources.EvaluationReplacedSellableInsert, Con)
-                            CmdReplacedPart.Parameters.AddWithValue("@evaluationid", ID)
-                            CmdReplacedPart.Parameters.AddWithValue("@creation", ReplacedPart.Creation)
-                            CmdReplacedPart.Parameters.AddWithValue("@productid", ReplacedPart.ProductID)
-                            CmdReplacedPart.Parameters.AddWithValue("@quantity", ReplacedPart.Quantity)
-                            CmdReplacedPart.Parameters.AddWithValue("@userid", ReplacedPart.User.ID)
-                            CmdReplacedPart.ExecuteNonQuery()
-                            ReplacedPart.SetID(CmdReplacedPart.LastInsertedId)
+                Next ReplacedSellable
+                For Each ReplacedSellable As EvaluationReplacedSellable In ReplacedSellables
+                    If ReplacedSellable.ID = 0 Then
+                        Using CmdReplacedSellable As New MySqlCommand(My.Resources.EvaluationReplacedSellableInsert, Con)
+                            CmdReplacedSellable.Parameters.AddWithValue("@evaluationid", ID)
+                            CmdReplacedSellable.Parameters.AddWithValue("@creation", ReplacedSellable.Creation)
+                            CmdReplacedSellable.Parameters.AddWithValue("@productid", ReplacedSellable.ProductID)
+                            CmdReplacedSellable.Parameters.AddWithValue("@quantity", ReplacedSellable.Quantity)
+                            CmdReplacedSellable.Parameters.AddWithValue("@userid", ReplacedSellable.User.ID)
+                            CmdReplacedSellable.ExecuteNonQuery()
+                            ReplacedSellable.SetID(CmdReplacedSellable.LastInsertedId)
                         End Using
                     Else
-                        Using CmdReplacedPart As New MySqlCommand(My.Resources.EvaluationReplacedSellableUpdate, Con)
-                            CmdReplacedPart.Parameters.AddWithValue("@id", ReplacedPart.ID)
-                            CmdReplacedPart.Parameters.AddWithValue("@productid", ReplacedPart.ProductID)
-                            CmdReplacedPart.Parameters.AddWithValue("@quantity", ReplacedPart.Quantity)
-                            CmdReplacedPart.Parameters.AddWithValue("@userid", ReplacedPart.User.ID)
-                            CmdReplacedPart.ExecuteNonQuery()
+                        Using CmdReplacedSellable As New MySqlCommand(My.Resources.EvaluationReplacedSellableUpdate, Con)
+                            CmdReplacedSellable.Parameters.AddWithValue("@id", ReplacedSellable.ID)
+                            CmdReplacedSellable.Parameters.AddWithValue("@productid", ReplacedSellable.ProductID)
+                            CmdReplacedSellable.Parameters.AddWithValue("@quantity", ReplacedSellable.Quantity)
+                            CmdReplacedSellable.Parameters.AddWithValue("@userid", ReplacedSellable.User.ID)
+                            CmdReplacedSellable.ExecuteNonQuery()
                         End Using
                     End If
-                Next ReplacedPart
+                Next ReplacedSellable
                 For Each Photo As EvaluationPhoto In _Shadow.Photos
                     If Not Photos.Any(Function(x) x.ID = Photo.ID And x.ID > 0) Then
                         Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoDelete, Con)
@@ -661,7 +661,7 @@ Public Class Evaluation
         End Using
     End Sub
 
-    Public Shared Sub FillPartDataGridView(EvaluationID As Long, Dgv As DataGridView, PartType As CompressorSellableControlType)
+    Public Shared Sub FillControlledSellableDataGridView(EvaluationID As Long, Dgv As DataGridView, PartType As CompressorSellableControlType)
         Dim Session = Locator.GetInstance(Of Session)
         Dim TableResult As New DataTable
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
@@ -723,98 +723,6 @@ Public Class Evaluation
         Clear()
     End Sub
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     Public Shared Function FromCloud(Data As Dictionary(Of String, Object), Signature As String, Photos As List(Of String)) As Evaluation
         Dim Evaluation As New Evaluation
         Dim EvaluationTechnician As EvaluationTechnician
@@ -831,14 +739,14 @@ Public Class Evaluation
         Evaluation.StartTime = TimeSpan.ParseExact(Data("starttime"), "hh\:mm", Nothing)
         Evaluation.EndTime = TimeSpan.ParseExact(Data("endtime"), "hh\:mm", Nothing)
         Evaluation.Horimeter = Data("horimeter")
-        Dim AirFilter As List(Of EvaluationControlledSellable) = Evaluation.PartsWorkedHour.Where(Function(x) x.Sellable.SellableBind = CompressorSellableBindType.AirFilter).ToList
-        Dim OilFilter As List(Of EvaluationControlledSellable) = Evaluation.PartsWorkedHour.Where(Function(x) x.Sellable.SellableBind = CompressorSellableBindType.OilFilter).ToList
-        Dim Separator As List(Of EvaluationControlledSellable) = Evaluation.PartsWorkedHour.Where(Function(x) x.Sellable.SellableBind = CompressorSellableBindType.Separator).ToList
-        Dim Oil As List(Of EvaluationControlledSellable) = Evaluation.PartsWorkedHour.Where(Function(x) x.Sellable.SellableBind = CompressorSellableBindType.Oil).ToList
+        Dim AirFilter As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelable.Where(Function(x) x.Sellable.SellableBind = CompressorSellableBindType.AirFilter).ToList
+        Dim OilFilter As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelable.Where(Function(x) x.Sellable.SellableBind = CompressorSellableBindType.OilFilter).ToList
+        Dim Separator As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelable.Where(Function(x) x.Sellable.SellableBind = CompressorSellableBindType.Separator).ToList
+        Dim Oil As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelable.Where(Function(x) x.Sellable.SellableBind = CompressorSellableBindType.Oil).ToList
 
-        Evaluation.PartsWorkedHour.ToList.ForEach(Sub(x)
-                                                      x.SetIsSaved(True)
-                                                  End Sub)
+        Evaluation.WorkedHourControlledSelable.ToList.ForEach(Sub(x)
+                                                                  x.SetIsSaved(True)
+                                                              End Sub)
 
         AirFilter.ForEach(Sub(x)
                               x.CurrentCapacity = Data("airfilter")
@@ -865,14 +773,14 @@ Public Class Evaluation
                         x.SetIsSaved(True)
                     End Sub)
         For Each CoalescentData As Dictionary(Of String, Object) In Data("coalescents")
-            Coalescent = Evaluation.PartsElapsedDay.Where(Function(y) y.Sellable.IsSellableBinded).FirstOrDefault(Function(x) x.Sellable.ID = CoalescentData("coalescentid"))
+            Coalescent = Evaluation.ElapsedDayControlledSellable.Where(Function(y) y.Sellable.IsSellableBinded).FirstOrDefault(Function(x) x.Sellable.ID = CoalescentData("coalescentid"))
             If Coalescent IsNot Nothing Then
                 Coalescent.CurrentCapacity = DateDiff(DateInterval.Day, Today, DateTimeHelper.DateFromMilliseconds((CoalescentData("nextchange"))))
                 Coalescent.Sold = False
                 Coalescent.Lost = False
             End If
         Next CoalescentData
-        Evaluation.PartsElapsedDay.ForEach(Sub(x) x.SetIsSaved(True))
+        Evaluation.ElapsedDayControlledSellable.ForEach(Sub(x) x.SetIsSaved(True))
         Evaluation.Responsible = Data("responsible")
         Evaluation.StartTime = TimeSpan.ParseExact(Data("starttime"), "hh\:mm", Nothing)
         For Each TechnicianData In Data("technicians")
@@ -1009,20 +917,20 @@ Public Class Evaluation
         PreviousEvaluation = New Evaluation().Load(PreviousEvaluationID, False)
         Dim PreviousPart As EvaluationControlledSellable
         If Horimeter < PreviousEvaluation.Horimeter Then
-            For Each CurrentPart As EvaluationControlledSellable In PartsWorkedHour
+            For Each CurrentPart As EvaluationControlledSellable In WorkedHourControlledSelable
                 CurrentPart.Sold = False
                 CurrentPart.Lost = False
-                PreviousPart = PreviousEvaluation.PartsWorkedHour.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
+                PreviousPart = PreviousEvaluation.WorkedHourControlledSelable.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
                 If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
                     CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity
                 Else
                     CurrentPart.CurrentCapacity = CurrentPart.Sellable.Capacity
                 End If
             Next CurrentPart
-            For Each CurrentPart As EvaluationControlledSellable In PartsElapsedDay
+            For Each CurrentPart As EvaluationControlledSellable In ElapsedDayControlledSellable
                 CurrentPart.Sold = False
                 CurrentPart.Lost = False
-                PreviousPart = PreviousEvaluation.PartsElapsedDay.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
+                PreviousPart = PreviousEvaluation.ElapsedDayControlledSellable.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
                 If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
                     CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity
                 Else
@@ -1032,20 +940,20 @@ Public Class Evaluation
             If Not ManualAverageWorkLoad Then AverageWorkLoad = PreviousEvaluation.AverageWorkLoad
             Return True
         Else
-            For Each CurrentPart As EvaluationControlledSellable In PartsWorkedHour
+            For Each CurrentPart As EvaluationControlledSellable In WorkedHourControlledSelable
                 CurrentPart.Sold = False
                 CurrentPart.Lost = False
-                PreviousPart = PreviousEvaluation.PartsWorkedHour.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
+                PreviousPart = PreviousEvaluation.WorkedHourControlledSelable.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
                 If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
                     CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity - (Horimeter - PreviousEvaluation.Horimeter)
                 Else
                     CurrentPart.CurrentCapacity = CurrentPart.Sellable.Capacity
                 End If
             Next CurrentPart
-            For Each CurrentPart As EvaluationControlledSellable In PartsElapsedDay
+            For Each CurrentPart As EvaluationControlledSellable In ElapsedDayControlledSellable
                 CurrentPart.Sold = False
                 CurrentPart.Lost = False
-                PreviousPart = PreviousEvaluation.PartsElapsedDay.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
+                PreviousPart = PreviousEvaluation.ElapsedDayControlledSellable.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
                 If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
                     CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity - (EvaluationDate).Subtract(PreviousEvaluation.EvaluationDate).Days
                 Else

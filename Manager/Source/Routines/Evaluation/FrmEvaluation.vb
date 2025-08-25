@@ -373,14 +373,14 @@ Public Class FrmEvaluation
         'FillDataGridViewTechnician()
         DgvTechnician.Fill(_Evaluation.Technicians)
         If _Evaluation.EvaluationCreationType = EvaluationCreationType.Imported Or (_Evaluation.EvaluationCreationType = EvaluationCreationType.Manual And _Evaluation.ID > 0) Then
-            For Each p As EvaluationControlledSellable In _Evaluation.PartsWorkedHour.ToArray.Reverse()
+            For Each p As EvaluationControlledSellable In _Evaluation.WorkedHourControlledSelable.ToArray.Reverse()
                 If Not p.IsSaved Then
-                    _Evaluation.PartsWorkedHour.Remove(p)
+                    _Evaluation.WorkedHourControlledSelable.Remove(p)
                 End If
             Next p
-            For Each p As EvaluationControlledSellable In _Evaluation.PartsElapsedDay.ToArray.Reverse()
+            For Each p As EvaluationControlledSellable In _Evaluation.ElapsedDayControlledSellable.ToArray.Reverse()
                 If Not p.IsSaved Then
-                    _Evaluation.PartsElapsedDay.Remove(p)
+                    _Evaluation.ElapsedDayControlledSellable.Remove(p)
                 End If
             Next p
             '   DgvPartWorkedHour.Fill(_Evaluation.PartsWorkedHour)
@@ -401,9 +401,9 @@ Public Class FrmEvaluation
             Decalculate()
             BtnCalculate.Text = "Calcular"
         End If
-        DgvPartWorkedHour.Fill(_Evaluation.PartsWorkedHour)
-        DgvPartElapsedDay.Fill(_Evaluation.PartsElapsedDay)
-        DgvReplacedPart.Fill(_Evaluation.ReplacedParts)
+        DgvPartWorkedHour.Fill(_Evaluation.WorkedHourControlledSelable)
+        DgvPartElapsedDay.Fill(_Evaluation.ElapsedDayControlledSellable)
+        DgvReplacedPart.Fill(_Evaluation.ReplacedSellables)
         DgvlPartElapsedDayLayout.Load()
         DgvlPartWorkedHourLayout.Load()
         DgvReplacedPartLayout.Load()
@@ -779,7 +779,7 @@ Public Class FrmEvaluation
             TcEvaluation.SelectedTab = TabMain
             BtnCalculate.Select()
             Return False
-        ElseIf _Evaluation.PartsWorkedHour.Count + _Evaluation.PartsElapsedDay.Count = 0 Then
+        ElseIf _Evaluation.WorkedHourControlledSelable.Count + _Evaluation.ElapsedDayControlledSellable.Count = 0 Then
             EprValidation.SetError(GbxPartWorkedHour, "A avaliação precisa ter pelo menos um item.")
             EprValidation.SetIconAlignment(GbxPartWorkedHour, ErrorIconAlignment.TopRight)
             EprValidation.SetIconPadding(GbxPartWorkedHour, -15)
@@ -793,14 +793,14 @@ Public Class FrmEvaluation
             '    TcEvaluation.SelectedTab = TabDocument
             '    BtnAttachPDF.Select()
             '    Return False
-        ElseIf _Evaluation.PartsWorkedHour.Any(Function(x) x.CurrentCapacity > x.Sellable.Capacity) Then
+        ElseIf _Evaluation.WorkedHourControlledSelable.Any(Function(x) x.CurrentCapacity > x.Sellable.Capacity) Then
             EprValidation.SetError(GbxPartWorkedHour, "Existe um ou mais itens com a capacidade atual superior a capacidade total.")
             EprValidation.SetIconAlignment(GbxPartWorkedHour, ErrorIconAlignment.TopRight)
             EprValidation.SetIconPadding(GbxPartWorkedHour, -15)
             TcEvaluation.SelectedTab = TabMain
             DgvPartWorkedHour.Select()
             Return False
-        ElseIf _Evaluation.PartsElapsedDay.Any(Function(x) x.CurrentCapacity > x.Sellable.Capacity) Then
+        ElseIf _Evaluation.ElapsedDayControlledSellable.Any(Function(x) x.CurrentCapacity > x.Sellable.Capacity) Then
             EprValidation.SetError(GbxPartElapsedDay, "Existe um ou mais itens com a capacidade atual superior a capacidade total.")
             EprValidation.SetIconAlignment(GbxPartElapsedDay, ErrorIconAlignment.TopRight)
             EprValidation.SetIconPadding(GbxPartElapsedDay, -15)
@@ -860,9 +860,9 @@ Public Class FrmEvaluation
                     LblIDValue.Text = _Evaluation.ID
                     'FillDataGridViewTechnician()
                     DgvTechnician.Fill(_Evaluation.Technicians)
-                    DgvPartWorkedHour.Fill(_Evaluation.PartsWorkedHour)
-                    DgvPartElapsedDay.Fill(_Evaluation.PartsElapsedDay)
-                    DgvReplacedPart.Fill(_Evaluation.ReplacedParts)
+                    DgvPartWorkedHour.Fill(_Evaluation.WorkedHourControlledSelable)
+                    DgvPartElapsedDay.Fill(_Evaluation.ElapsedDayControlledSellable)
+                    DgvReplacedPart.Fill(_Evaluation.ReplacedSellables)
                     DgvlPartElapsedDayLayout.Load()
                     DgvlPartWorkedHourLayout.Load()
                     DgvReplacedPartLayout.Load()
@@ -1224,33 +1224,33 @@ Public Class FrmEvaluation
                 _Evaluation.Compressor = Customer.Compressors.Single(Function(x) x.ID = QbxCompressor.FreezedPrimaryKey)
                 PreviousEvaluationID = Evaluation.GetPreviousEvaluationID(_Evaluation.Compressor, CDate(DbxEvaluationDate.Text), _Evaluation.ID)
                 PreviousEvaluation = New Evaluation().Load(PreviousEvaluationID, False)
-                For Each CurrentPart As EvaluationControlledSellable In _Evaluation.PartsWorkedHour.ToArray.Reverse
+                For Each CurrentPart As EvaluationControlledSellable In _Evaluation.WorkedHourControlledSelable.ToArray.Reverse
                     If CurrentPart.Sellable.Status = SimpleStatus.Inactive Then
-                        _Evaluation.PartsWorkedHour.Remove(CurrentPart)
+                        _Evaluation.WorkedHourControlledSelable.Remove(CurrentPart)
                     End If
                 Next CurrentPart
-                For Each CurrentPart As EvaluationControlledSellable In _Evaluation.PartsElapsedDay.ToArray.Reverse
+                For Each CurrentPart As EvaluationControlledSellable In _Evaluation.ElapsedDayControlledSellable.ToArray.Reverse
                     If CurrentPart.Sellable.Status = SimpleStatus.Inactive Then
-                        _Evaluation.PartsElapsedDay.Remove(CurrentPart)
+                        _Evaluation.ElapsedDayControlledSellable.Remove(CurrentPart)
                     End If
                 Next CurrentPart
                 If DbxHorimeter.DecimalValue < PreviousEvaluation.Horimeter Then
                     CMessageBox.Show("O horímetro digitado é menor do que o horímetro da última avalição desse compressor, só mantenha esse valor caso a unidade tenha sido reconstruída. A capacidade atual dos itens será a mesma da última avaliação.", CMessageBoxType.Warning)
                     Cursor = Cursors.WaitCursor
-                    For Each CurrentPart As EvaluationControlledSellable In _Evaluation.PartsWorkedHour
+                    For Each CurrentPart As EvaluationControlledSellable In _Evaluation.WorkedHourControlledSelable
                         CurrentPart.Sold = False
                         CurrentPart.Lost = False
-                        PreviousPart = PreviousEvaluation.PartsWorkedHour.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
+                        PreviousPart = PreviousEvaluation.WorkedHourControlledSelable.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
                         If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
                             CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity
                         Else
                             CurrentPart.CurrentCapacity = CurrentPart.Sellable.Capacity
                         End If
                     Next CurrentPart
-                    For Each CurrentPart As EvaluationControlledSellable In _Evaluation.PartsElapsedDay
+                    For Each CurrentPart As EvaluationControlledSellable In _Evaluation.ElapsedDayControlledSellable
                         CurrentPart.Sold = False
                         CurrentPart.Lost = False
-                        PreviousPart = PreviousEvaluation.PartsElapsedDay.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
+                        PreviousPart = PreviousEvaluation.ElapsedDayControlledSellable.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
                         If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
                             CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity
                         Else
@@ -1259,20 +1259,20 @@ Public Class FrmEvaluation
                     Next CurrentPart
                     If Not CbxManualAverageWorkLoad.Checked Then DbxAverageWorkLoad.Text = PreviousEvaluation.AverageWorkLoad
                 Else
-                    For Each CurrentPart As EvaluationControlledSellable In _Evaluation.PartsWorkedHour
+                    For Each CurrentPart As EvaluationControlledSellable In _Evaluation.WorkedHourControlledSelable
                         CurrentPart.Sold = False
                         CurrentPart.Lost = False
-                        PreviousPart = PreviousEvaluation.PartsWorkedHour.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
+                        PreviousPart = PreviousEvaluation.WorkedHourControlledSelable.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
                         If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
                             CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity - (DbxHorimeter.DecimalValue - PreviousEvaluation.Horimeter)
                         Else
                             CurrentPart.CurrentCapacity = CurrentPart.Sellable.Capacity
                         End If
                     Next CurrentPart
-                    For Each CurrentPart As EvaluationControlledSellable In _Evaluation.PartsElapsedDay
+                    For Each CurrentPart As EvaluationControlledSellable In _Evaluation.ElapsedDayControlledSellable
                         CurrentPart.Sold = False
                         CurrentPart.Lost = False
-                        PreviousPart = PreviousEvaluation.PartsElapsedDay.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
+                        PreviousPart = PreviousEvaluation.ElapsedDayControlledSellable.FirstOrDefault(Function(x) x.Sellable.ID = CurrentPart.Sellable.ID)
                         If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
                             CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity - (CDate(DbxEvaluationDate.Text).Subtract(PreviousEvaluation.EvaluationDate).Days)
                         Else
@@ -1281,8 +1281,8 @@ Public Class FrmEvaluation
                     Next CurrentPart
                     If Not CbxManualAverageWorkLoad.Checked Then DbxAverageWorkLoad.Text = GetCMT()
                 End If
-                DgvPartWorkedHour.Fill(_Evaluation.PartsWorkedHour)
-                DgvPartElapsedDay.Fill(_Evaluation.PartsElapsedDay)
+                DgvPartWorkedHour.Fill(_Evaluation.WorkedHourControlledSelable)
+                DgvPartElapsedDay.Fill(_Evaluation.ElapsedDayControlledSellable)
                 DgvlPartElapsedDayLayout.Load()
                 DgvlPartWorkedHourLayout.Load()
                 'FillDataGridViewPart(DgvPartWorkedHour, _Evaluation.PartsWorkedHour)
@@ -1379,28 +1379,28 @@ Public Class FrmEvaluation
         Dim Part As EvaluationControlledSellable
         Dim RowIndex As Long
         If PartType = CompressorSellableControlType.ElapsedDay Then
-            Part = _Evaluation.PartsElapsedDay.Single(Function(x) x.Sellable.ID = DgvPartElapsedDay.SelectedRows(0).Cells("Part").Value.ID)
+            Part = _Evaluation.ElapsedDayControlledSellable.Single(Function(x) x.Sellable.ID = DgvPartElapsedDay.SelectedRows(0).Cells("Part").Value.ID)
             RowIndex = DgvPartElapsedDay.SelectedRows(0).Index
             Using Frm As New FrmEvaluationControlledSellable(Part)
                 Result = Frm.ShowDialog()
                 'FillDataGridViewPart(DgvPartElapsedDay, _Evaluation.PartsElapsedDay)
-                DgvPartElapsedDay.Fill(_Evaluation.PartsElapsedDay)
+                DgvPartElapsedDay.Fill(_Evaluation.ElapsedDayControlledSellable)
                 DgvlPartElapsedDayLayout.Load()
                 DgvPartElapsedDayNavigator.EnsureVisibleRow(RowIndex)
 
             End Using
         Else
-            Part = _Evaluation.PartsWorkedHour.Single(Function(x) x.Sellable.ID = DgvPartWorkedHour.SelectedRows(0).Cells("Part").Value.ID)
+            Part = _Evaluation.WorkedHourControlledSelable.Single(Function(x) x.Sellable.ID = DgvPartWorkedHour.SelectedRows(0).Cells("Part").Value.ID)
             RowIndex = DgvPartWorkedHour.SelectedRows(0).Index
             Using Frm As New FrmEvaluationControlledSellable(Part)
                 Result = Frm.ShowDialog()
-                DgvPartWorkedHour.Fill(_Evaluation.PartsWorkedHour)
+                DgvPartWorkedHour.Fill(_Evaluation.WorkedHourControlledSelable)
                 DgvlPartWorkedHourLayout.Load()
                 'FillDataGridViewPart(DgvPartWorkedHour, _Evaluation.PartsWorkedHour)
                 DgvPartWorkedHourNavigator.EnsureVisibleRow(RowIndex)
             End Using
         End If
-        If _Evaluation.PartsWorkedHour.Any(Function(x) x.Sold) Or _Evaluation.PartsElapsedDay.Any(Function(x) x.Sold) Then
+        If _Evaluation.WorkedHourControlledSelable.Any(Function(x) x.Sold) Or _Evaluation.ElapsedDayControlledSellable.Any(Function(x) x.Sold) Then
             _UcCallTypeHasRepairNeedProposal.HasRepair = ConfirmationType.Yes
         Else
             If _UcCallTypeHasRepairNeedProposal.HasRepair = ConfirmationType.Yes Then
@@ -1472,7 +1472,7 @@ Public Class FrmEvaluation
         Dim Form As FrmEvaluationReplacedSellable
         Dim Item As EvaluationReplacedSellable
         If DgvReplacedPart.SelectedRows.Count = 1 Then
-            Item = _Evaluation.ReplacedParts.Single(Function(x) x.Guid = DgvReplacedPart.SelectedRows(0).Cells("Guid").Value)
+            Item = _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = DgvReplacedPart.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmEvaluationReplacedSellable(_Evaluation, Item, Me)
             Form.ShowDialog()
         End If
@@ -1481,9 +1481,9 @@ Public Class FrmEvaluation
         Dim Item As EvaluationReplacedSellable
         If DgvReplacedPart.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Item = _Evaluation.ReplacedParts.Single(Function(x) x.Guid = DgvReplacedPart.SelectedRows(0).Cells("Guid").Value)
-                _Evaluation.ReplacedParts.Remove(Item)
-                DgvReplacedPart.Fill(_Evaluation.ReplacedParts)
+                Item = _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = DgvReplacedPart.SelectedRows(0).Cells("Guid").Value)
+                _Evaluation.ReplacedSellables.Remove(Item)
+                DgvReplacedPart.Fill(_Evaluation.ReplacedSellables)
                 BtnSave.Enabled = True
             End If
         End If

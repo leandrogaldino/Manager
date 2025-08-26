@@ -308,13 +308,13 @@ Public Class FrmEvaluationManagement
                     NewEvaluation.WorkedHourControlledSelable.ToList().ForEach(Sub(x)
                                                                        x.Lost = False
                                                                        x.Sold = False
-                                                                       x.CurrentCapacity = x.Sellable.Capacity
+                                                                       x.CurrentCapacity = x.PersonCompressorSellable.Capacity
                                                                    End Sub
                                                                    )
                     NewEvaluation.ElapsedDayControlledSellable.ToList().ForEach(Sub(x)
                                                                        x.Lost = False
                                                                        x.Sold = False
-                                                                       x.CurrentCapacity = x.Sellable.Capacity
+                                                                       x.CurrentCapacity = x.PersonCompressorSellable.Capacity
                                                                    End Sub
                                                                    )
                     NewEvaluation.SaveChanges()

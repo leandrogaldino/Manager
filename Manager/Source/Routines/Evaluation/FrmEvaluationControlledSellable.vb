@@ -6,7 +6,7 @@ Public Class FrmEvaluationControlledSellable
         InitializeComponent()
         _Loading = True
         _Part = Part
-        TxtItem.Text = _Part.Sellable.Name
+        TxtItem.Text = _Part.PersonCompressorSellable.Name
         DbxCapacity.Text = _Part.CurrentCapacity
         CbxSold.Checked = _Part.Sold
         CbxLost.Checked = _Part.Lost
@@ -28,9 +28,9 @@ Public Class FrmEvaluationControlledSellable
     Private Sub CbxSold_CheckedChanged(sender As Object, e As EventArgs) Handles CbxSold.CheckedChanged
         If CbxSold.Checked Then
             CbxLost.Checked = False
-            If DbxCapacity.DecimalValue <> _Part.Sellable.Capacity And Not _Loading Then
+            If DbxCapacity.DecimalValue <> _Part.PersonCompressorSellable.Capacity And Not _Loading Then
                 If CMessageBox.Show("Deseja resetar a capacidade?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                    DbxCapacity.Text = _Part.Sellable.Capacity
+                    DbxCapacity.Text = _Part.PersonCompressorSellable.Capacity
                 End If
             End If
         End If
@@ -38,9 +38,9 @@ Public Class FrmEvaluationControlledSellable
     Private Sub CbxLost_CheckedChanged(sender As Object, e As EventArgs) Handles CbxLost.CheckedChanged
         If CbxLost.Checked Then
             CbxSold.Checked = False
-            If DbxCapacity.DecimalValue <> _Part.Sellable.Capacity And Not _Loading Then
+            If DbxCapacity.DecimalValue <> _Part.PersonCompressorSellable.Capacity And Not _Loading Then
                 If CMessageBox.Show("Deseja resetar a capacidade?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                    DbxCapacity.Text = _Part.Sellable.Capacity
+                    DbxCapacity.Text = _Part.PersonCompressorSellable.Capacity
                 End If
             End If
         End If

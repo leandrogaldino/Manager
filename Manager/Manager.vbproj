@@ -750,12 +750,6 @@
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationControlledSellable.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Evaluation\FrmEvaluationProvidedService.Designer.vb">
-      <DependentUpon>FrmEvaluationProvidedService.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\Evaluation\FrmEvaluationProvidedService.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationReplacedSellable.Designer.vb">
       <DependentUpon>FrmEvaluationReplacedSellable.vb</DependentUpon>
     </Compile>

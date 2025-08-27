@@ -1112,7 +1112,7 @@ Public Class FrmEvaluation
         Dim Customer As Person
         Dim PreviousEvaluation As Evaluation
         Dim PreviousEvaluationID As Long
-        Dim PreviousPart As EvaluationControlledSellable
+        Dim PreviousSellable As EvaluationControlledSellable
         If IsValidFieldsToCalculate() Then
             EprValidation.Clear()
             If Not Calculated And DbxHorimeter.DecimalValue = 0 Then
@@ -1147,9 +1147,9 @@ Public Class FrmEvaluation
                     For Each CurrentSellable As EvaluationControlledSellable In _Evaluation.WorkedHourControlledSelable
                         CurrentSellable.Sold = False
                         CurrentSellable.Lost = False
-                        PreviousPart = PreviousEvaluation.WorkedHourControlledSelable.FirstOrDefault(Function(x) x.PersonCompressorSellable.ID = CurrentSellable.PersonCompressorSellable.ID)
-                        If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
-                            CurrentSellable.CurrentCapacity = PreviousPart.CurrentCapacity
+                        PreviousSellable = PreviousEvaluation.WorkedHourControlledSelable.FirstOrDefault(Function(x) x.PersonCompressorSellable.ID = CurrentSellable.PersonCompressorSellable.ID)
+                        If PreviousSellable IsNot Nothing AndAlso PreviousSellable.IsSaved Then
+                            CurrentSellable.CurrentCapacity = PreviousSellable.CurrentCapacity
                         Else
                             CurrentSellable.CurrentCapacity = CurrentSellable.PersonCompressorSellable.Capacity
                         End If
@@ -1157,9 +1157,9 @@ Public Class FrmEvaluation
                     For Each CurrentSellable As EvaluationControlledSellable In _Evaluation.ElapsedDayControlledSellable
                         CurrentSellable.Sold = False
                         CurrentSellable.Lost = False
-                        PreviousPart = PreviousEvaluation.ElapsedDayControlledSellable.FirstOrDefault(Function(x) x.PersonCompressorSellable.ID = CurrentSellable.PersonCompressorSellable.ID)
-                        If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
-                            CurrentSellable.CurrentCapacity = PreviousPart.CurrentCapacity
+                        PreviousSellable = PreviousEvaluation.ElapsedDayControlledSellable.FirstOrDefault(Function(x) x.PersonCompressorSellable.ID = CurrentSellable.PersonCompressorSellable.ID)
+                        If PreviousSellable IsNot Nothing AndAlso PreviousSellable.IsSaved Then
+                            CurrentSellable.CurrentCapacity = PreviousSellable.CurrentCapacity
                         Else
                             CurrentSellable.CurrentCapacity = CurrentSellable.PersonCompressorSellable.Capacity
                         End If
@@ -1169,9 +1169,9 @@ Public Class FrmEvaluation
                     For Each CurrentSellable As EvaluationControlledSellable In _Evaluation.WorkedHourControlledSelable
                         CurrentSellable.Sold = False
                         CurrentSellable.Lost = False
-                        PreviousPart = PreviousEvaluation.WorkedHourControlledSelable.FirstOrDefault(Function(x) x.PersonCompressorSellable.ID = CurrentSellable.PersonCompressorSellable.ID)
-                        If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
-                            CurrentSellable.CurrentCapacity = PreviousPart.CurrentCapacity - (DbxHorimeter.DecimalValue - PreviousEvaluation.Horimeter)
+                        PreviousSellable = PreviousEvaluation.WorkedHourControlledSelable.FirstOrDefault(Function(x) x.PersonCompressorSellable.ID = CurrentSellable.PersonCompressorSellable.ID)
+                        If PreviousSellable IsNot Nothing AndAlso PreviousSellable.IsSaved Then
+                            CurrentSellable.CurrentCapacity = PreviousSellable.CurrentCapacity - (DbxHorimeter.DecimalValue - PreviousEvaluation.Horimeter)
                         Else
                             CurrentSellable.CurrentCapacity = CurrentSellable.PersonCompressorSellable.Capacity
                         End If
@@ -1179,9 +1179,9 @@ Public Class FrmEvaluation
                     For Each CurrentSellable As EvaluationControlledSellable In _Evaluation.ElapsedDayControlledSellable
                         CurrentSellable.Sold = False
                         CurrentSellable.Lost = False
-                        PreviousPart = PreviousEvaluation.ElapsedDayControlledSellable.FirstOrDefault(Function(x) x.PersonCompressorSellable.ID = CurrentSellable.PersonCompressorSellable.ID)
-                        If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
-                            CurrentSellable.CurrentCapacity = PreviousPart.CurrentCapacity - (CDate(DbxEvaluationDate.Text).Subtract(PreviousEvaluation.EvaluationDate).Days)
+                        PreviousSellable = PreviousEvaluation.ElapsedDayControlledSellable.FirstOrDefault(Function(x) x.PersonCompressorSellable.ID = CurrentSellable.PersonCompressorSellable.ID)
+                        If PreviousSellable IsNot Nothing AndAlso PreviousSellable.IsSaved Then
+                            CurrentSellable.CurrentCapacity = PreviousSellable.CurrentCapacity - (CDate(DbxEvaluationDate.Text).Subtract(PreviousEvaluation.EvaluationDate).Days)
                         Else
                             CurrentSellable.CurrentCapacity = CurrentSellable.PersonCompressorSellable.Capacity
                         End If
@@ -1255,36 +1255,36 @@ Public Class FrmEvaluation
         End If
         Return True
     End Function
-    Private Sub DgvPartWorkedHour_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvWorkedHourSellable.MouseDoubleClick
+    Private Sub DgvWorkedHourSellable_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvWorkedHourSellable.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvWorkedHourSellable.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
-            EditEvaluationPart(CompressorSellableControlType.WorkedHour)
+            EditEvaluationControlledSellable(CompressorSellableControlType.WorkedHour)
         End If
     End Sub
-    Private Sub DgvPartElapsedDay_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvElapsedDaySellable.MouseDoubleClick
+    Private Sub DgvElapsedDaySellable_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvElapsedDaySellable.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvElapsedDaySellable.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
-            EditEvaluationPart(CompressorSellableControlType.ElapsedDay)
+            EditEvaluationControlledSellable(CompressorSellableControlType.ElapsedDay)
         End If
     End Sub
-    Private Sub DgvPartWorkedHour_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvWorkedHourSellable.KeyDown
+    Private Sub DgvWorkedHourSellable_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvWorkedHourSellable.KeyDown
         If e.KeyCode = Keys.Enter Then
-            EditEvaluationPart(CompressorSellableControlType.WorkedHour)
+            EditEvaluationControlledSellable(CompressorSellableControlType.WorkedHour)
             e.Handled = True
         End If
     End Sub
-    Private Sub DgvPartElapsedDay_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvElapsedDaySellable.KeyDown
+    Private Sub DgvElapsedDaySellable_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvElapsedDaySellable.KeyDown
         If e.KeyCode = Keys.Enter Then
-            EditEvaluationPart(CompressorSellableControlType.ElapsedDay)
+            EditEvaluationControlledSellable(CompressorSellableControlType.ElapsedDay)
             e.Handled = True
         End If
     End Sub
-    Private Sub EditEvaluationPart(ControlType As CompressorSellableControlType)
+    Private Sub EditEvaluationControlledSellable(ControlType As CompressorSellableControlType)
         Dim Result As DialogResult
         Dim Sellable As EvaluationControlledSellable
         Dim RowIndex As Long
         If ControlType = CompressorSellableControlType.ElapsedDay Then
-            Sellable = _Evaluation.ElapsedDayControlledSellable.Single(Function(x) x.PersonCompressorSellable.ID = DgvElapsedDaySellable.SelectedRows(0).Cells("Part").Value.ID)
+            Sellable = _Evaluation.ElapsedDayControlledSellable.Single(Function(x) x.PersonCompressorSellable.ID = DgvElapsedDaySellable.SelectedRows(0).Cells("PersonCompressorSellable").Value.ID)
             RowIndex = DgvElapsedDaySellable.SelectedRows(0).Index
             Using Frm As New FrmEvaluationControlledSellable(Sellable)
                 Result = Frm.ShowDialog()
@@ -1294,7 +1294,7 @@ Public Class FrmEvaluation
 
             End Using
         Else
-            Sellable = _Evaluation.WorkedHourControlledSelable.Single(Function(x) x.PersonCompressorSellable.ID = DgvWorkedHourSellable.SelectedRows(0).Cells("Part").Value.ID)
+            Sellable = _Evaluation.WorkedHourControlledSelable.Single(Function(x) x.PersonCompressorSellable.ID = DgvWorkedHourSellable.SelectedRows(0).Cells("PersonCompressorSellable").Value.ID)
             RowIndex = DgvWorkedHourSellable.SelectedRows(0).Index
             Using Frm As New FrmEvaluationControlledSellable(Sellable)
                 Result = Frm.ShowDialog()
@@ -1371,7 +1371,7 @@ Public Class FrmEvaluation
         Dim Form As New FrmEvaluationReplacedSellable(_Evaluation, New EvaluationReplacedSellable(), Me)
         Form.ShowDialog()
     End Sub
-    Private Sub BtnEditReplacedPart_Click(sender As Object, e As EventArgs) Handles BtnEditReplacedSellable.Click
+    Private Sub BtnEditReplacedSellable_Click(sender As Object, e As EventArgs) Handles BtnEditReplacedSellable.Click
         Dim Form As FrmEvaluationReplacedSellable
         Dim Item As EvaluationReplacedSellable
         If DgvReplacedSellable.SelectedRows.Count = 1 Then
@@ -1380,7 +1380,7 @@ Public Class FrmEvaluation
             Form.ShowDialog()
         End If
     End Sub
-    Private Sub BtnDeleteReplacedPart_Click(sender As Object, e As EventArgs) Handles BtnDeleteReplacedSellable.Click
+    Private Sub BtnDeleteReplacedSellable_Click(sender As Object, e As EventArgs) Handles BtnDeleteReplacedSellable.Click
         Dim Item As EvaluationReplacedSellable
         If DgvReplacedSellable.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
@@ -1392,7 +1392,7 @@ Public Class FrmEvaluation
         End If
     End Sub
 
-    Private Sub DgvReplacedPart_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvReplacedSellable.MouseDoubleClick
+    Private Sub DgvReplacedSellable_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvReplacedSellable.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvReplacedSellable.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
             BtnEditReplacedSellable.PerformClick()
@@ -1407,7 +1407,7 @@ Public Class FrmEvaluation
         End If
     End Sub
 
-    Private Sub TxtFilterReplacedParts_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterReplacedSellable.TextChanged
+    Private Sub TxtFilterReplacedSellable_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterReplacedSellable.TextChanged
         FilterComplement()
     End Sub
     Private Sub FilterComplement()
@@ -1425,18 +1425,18 @@ Public Class FrmEvaluation
             End If
         End If
     End Sub
-    Private Sub TxtFilterReplacedParts_Enter(sender As Object, e As EventArgs) Handles TxtFilterReplacedSellable.Enter
+    Private Sub TxtFilterReplacedSellable_Enter(sender As Object, e As EventArgs) Handles TxtFilterReplacedSellable.Enter
         EprInformation.SetError(TsReplacedSellable, "Filtrando os campos: Código e Item.")
         EprInformation.SetIconAlignment(TsReplacedSellable, ErrorIconAlignment.MiddleLeft)
         EprInformation.SetIconPadding(TsReplacedSellable, -365)
     End Sub
-    Private Sub TxtFilterReplacedParts_Leave(sender As Object, e As EventArgs) Handles TxtFilterReplacedSellable.Leave
+    Private Sub TxtFilterReplacedSellable_Leave(sender As Object, e As EventArgs) Handles TxtFilterReplacedSellable.Leave
         EprInformation.Clear()
     End Sub
-    Private Sub DgvReplacedPart_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvReplacedSellable.DataSourceChanged
+    Private Sub DgvReplacedSellable_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvReplacedSellable.DataSourceChanged
         FilterComplement()
     End Sub
-    Private Sub DgvReplacedPart_SelectionChanged(sender As Object, e As EventArgs) Handles DgvReplacedSellable.SelectionChanged
+    Private Sub DgvReplacedSellable_SelectionChanged(sender As Object, e As EventArgs) Handles DgvReplacedSellable.SelectionChanged
         If DgvReplacedSellable.SelectedRows.Count = 0 Then
             BtnEditReplacedSellable.Enabled = False
             BtnDeleteReplacedSellable.Enabled = False

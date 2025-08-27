@@ -17,7 +17,7 @@
 	<Column Index="2" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>2</DisplayIndex>
-		<Name>Produto/Serviço</Name>
+		<Name>Produto/Serviço Obj</Name>
 		<Width>ColumnHeader</Width>
 	</Column>	
 	<Column Index="3">

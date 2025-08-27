@@ -925,7 +925,7 @@ Partial Class FrmEvaluation
         'CbxManualAverageWorkLoad
         '
         Me.CbxManualAverageWorkLoad.AutoSize = True
-        Me.CbxManualAverageWorkLoad.Location = New System.Drawing.Point(373, 198)
+        Me.CbxManualAverageWorkLoad.Location = New System.Drawing.Point(373, 222)
         Me.CbxManualAverageWorkLoad.Name = "CbxManualAverageWorkLoad"
         Me.CbxManualAverageWorkLoad.Size = New System.Drawing.Size(15, 14)
         Me.CbxManualAverageWorkLoad.TabIndex = 22
@@ -1301,6 +1301,7 @@ Partial Class FrmEvaluation
         'TxtFilterReplacedSellable
         '
         Me.TxtFilterReplacedSellable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtFilterReplacedSellable.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.TxtFilterReplacedSellable.Name = "TxtFilterReplacedSellable"
         Me.TxtFilterReplacedSellable.Size = New System.Drawing.Size(200, 25)
         '

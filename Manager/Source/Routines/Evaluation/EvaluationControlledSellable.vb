@@ -9,9 +9,9 @@ Public Class EvaluationControlledSellable
     <IgnoreInToTable>
     Public ReadOnly Property SellableType As SellableType
         Get
-            If PersonCompressorSellable.Value IsNot Nothing Then
-                If TypeOf PersonCompressorSellable.Value.Sellable.Value Is Product Then Return SellableType.Product
-                If TypeOf PersonCompressorSellable.Value.Sellable.Value Is Service Then Return SellableType.Service
+            If PersonCompressorSellable IsNot Nothing Then
+                If TypeOf PersonCompressorSellable.Sellable.Value Is Product Then Return SellableType.Product
+                If TypeOf PersonCompressorSellable.Sellable.Value Is Service Then Return SellableType.Service
             End If
             Return SellableType.None
         End Get
@@ -19,13 +19,13 @@ Public Class EvaluationControlledSellable
     <IgnoreInToTable>
     Public ReadOnly Property Product As Product
         Get
-            Return TryCast(PersonCompressorSellable.Value.Sellable.Value, Product)
+            Return TryCast(PersonCompressorSellable.Sellable.Value, Product)
         End Get
     End Property
     <IgnoreInToTable>
     Public ReadOnly Property Service As Service
         Get
-            Return TryCast(PersonCompressorSellable.Value.Sellable.Value, Service)
+            Return TryCast(PersonCompressorSellable.Sellable.Value, Service)
         End Get
     End Property
     Public ReadOnly Property SellableControlType As CompressorSellableControlType
@@ -33,7 +33,7 @@ Public Class EvaluationControlledSellable
             Return _ControlType
         End Get
     End Property
-    Public Property PersonCompressorSellable As Lazy(Of PersonCompressorSellable)
+    Public Property PersonCompressorSellable As PersonCompressorSellable
     Public Property PersonCompressorSellableID As Long
     Public Property SellableStatus As SimpleStatus = SimpleStatus.Active
     Public Property Code As String

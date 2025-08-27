@@ -2,7 +2,7 @@ SELECT
 	evaluationreplacedsellable.id,
 	evaluationreplacedsellable.creation,
 	evaluationreplacedsellable.productid,
-	evaluationreplacedsellable.serviceid
+	evaluationreplacedsellable.serviceid,
 	evaluationreplacedsellable.quantity
 FROM evaluationreplacedsellable
 WHERE evaluationreplacedsellable.evaluationid = @evaluationid;

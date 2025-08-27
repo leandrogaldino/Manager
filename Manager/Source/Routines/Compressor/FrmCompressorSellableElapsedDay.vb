@@ -154,10 +154,8 @@ Public Class FrmCompressorSellableElapsedDay
         Dim Row As DataGridViewRow
         If IsValidFields() Then
             If HasDuplicatedItem() Then Return False
-
             If _ElapsedDaySellable.IsSaved Then
                 _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Quantity = DbxQuantity.DecimalValue
-
                 If RbtProduct.Checked Then
                     _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
                     Dim Sellable As Sellable = _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Sellable.Value
@@ -171,7 +169,6 @@ Public Class FrmCompressorSellableElapsedDay
                     _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Name = Sellable.Name
                     _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Code = String.Empty
                 End If
-
             Else
                 _ElapsedDaySellable = New CompressorSellable(CompressorSellableControlType.ElapsedDay) With {
                     .Quantity = DbxQuantity.DecimalValue

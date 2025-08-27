@@ -31,48 +31,48 @@ Public Class Evaluation
             Return _Compressor
         End Get
         Set(value As PersonCompressor)
-            Dim CurrentPart As EvaluationControlledSellable
+            Dim CurrentSellable As EvaluationControlledSellable
             If value IsNot Nothing Then
                 If value.ID <> _Compressor.ID Then
                     WorkedHourControlledSelable.Clear()
                     ElapsedDayControlledSellable.Clear()
-                    For Each p In value.WorkedHourSellables.Where(Function(x) x.Status = SimpleStatus.Active)
-                        WorkedHourControlledSelable.Add(New EvaluationControlledSellable(CompressorSellableControlType.WorkedHour) With {.PersonCompressorSellable = p.Sellable})
-                    Next p
-                    For Each p In value.ElapsedDaySellables.Where(Function(x) x.Status = SimpleStatus.Active)
-                        ElapsedDayControlledSellable.Add(New EvaluationControlledSellable(CompressorSellableControlType.ElapsedDay) With {.PersonCompressorSellable = p.Sellable})
-                    Next p
+                    For Each Sellable In value.WorkedHourSellables.Where(Function(x) x.Status = SimpleStatus.Active)
+                        WorkedHourControlledSelable.Add(New EvaluationControlledSellable(CompressorSellableControlType.WorkedHour) With {.PersonCompressorSellable = Sellable})
+                    Next Sellable
+                    For Each Sellable In value.ElapsedDaySellables.Where(Function(x) x.Status = SimpleStatus.Active)
+                        ElapsedDayControlledSellable.Add(New EvaluationControlledSellable(CompressorSellableControlType.ElapsedDay) With {.PersonCompressorSellable = Sellable})
+                    Next Sellable
                 Else
-                    For Each p In value.WorkedHourSellables
-                        CurrentPart = WorkedHourControlledSelable.SingleOrDefault(Function(x) x.PersonCompressorSellableID = p.ID)
-                        If CurrentPart IsNot Nothing Then
-                            CurrentPart.PersonCompressorSellable = p.Sellable
-                            CurrentPart.Lost = False
-                            CurrentPart.Sold = False
+                    For Each Sellable In value.WorkedHourSellables
+                        CurrentSellable = WorkedHourControlledSelable.SingleOrDefault(Function(x) x.PersonCompressorSellableID = Sellable.ID)
+                        If CurrentSellable IsNot Nothing Then
+                            CurrentSellable.PersonCompressorSellable = Sellable
+                            CurrentSellable.Lost = False
+                            CurrentSellable.Sold = False
                         Else
-                            WorkedHourControlledSelable.Add(New EvaluationControlledSellable(CompressorSellableControlType.WorkedHour) With {.PersonCompressorSellable = p.Sellable})
+                            WorkedHourControlledSelable.Add(New EvaluationControlledSellable(CompressorSellableControlType.WorkedHour) With {.PersonCompressorSellable = Sellable})
                         End If
-                    Next p
-                    For Each p In WorkedHourControlledSelable.ToArray.Reverse
-                        If p.SellableStatus = SimpleStatus.Inactive Then
-                            WorkedHourControlledSelable.Remove(p)
+                    Next Sellable
+                    For Each Sellable In WorkedHourControlledSelable.ToArray.Reverse
+                        If Sellable.SellableStatus = SimpleStatus.Inactive Then
+                            WorkedHourControlledSelable.Remove(Sellable)
                         End If
-                    Next p
-                    For Each p In value.ElapsedDaySellables
-                        CurrentPart = ElapsedDayControlledSellable.SingleOrDefault(Function(x) x.PersonCompressorSellableID = p.ID)
-                        If CurrentPart IsNot Nothing Then
-                            CurrentPart.PersonCompressorSellable = p.Sellable
-                            CurrentPart.Lost = False
-                            CurrentPart.Sold = False
+                    Next Sellable
+                    For Each Sellable In value.ElapsedDaySellables
+                        CurrentSellable = ElapsedDayControlledSellable.SingleOrDefault(Function(x) x.PersonCompressorSellableID = Sellable.ID)
+                        If CurrentSellable IsNot Nothing Then
+                            CurrentSellable.PersonCompressorSellable = Sellable
+                            CurrentSellable.Lost = False
+                            CurrentSellable.Sold = False
                         Else
-                            ElapsedDayControlledSellable.Add(New EvaluationControlledSellable(CompressorSellableControlType.ElapsedDay) With {.PersonCompressorSellable = p.Sellable})
+                            ElapsedDayControlledSellable.Add(New EvaluationControlledSellable(CompressorSellableControlType.ElapsedDay) With {.PersonCompressorSellable = Sellable})
                         End If
-                    Next p
-                    For Each p In ElapsedDayControlledSellable.ToArray.Reverse
-                        If p.SellableStatus = SimpleStatus.Inactive Then
-                            ElapsedDayControlledSellable.Remove(p)
+                    Next Sellable
+                    For Each Sellable In ElapsedDayControlledSellable.ToArray.Reverse
+                        If Sellable.SellableStatus = SimpleStatus.Inactive Then
+                            ElapsedDayControlledSellable.Remove(Sellable)
                         End If
-                    Next p
+                    Next Sellable
                 End If
             End If
             _Compressor = value
@@ -232,10 +232,10 @@ Public Class Evaluation
     Private Sub GetControlledSellables(Transaction As MySqlTransaction)
         Dim TableResult As DataTable
         Dim Sellable As EvaluationControlledSellable
-        Using CmdEvaluationSellable As New MySqlCommand(My.Resources.EvaluationReplacedSellableSelect, Transaction.Connection)
+        Using CmdEvaluationSellable As New MySqlCommand(My.Resources.EvaluationControlledSellableSelect, Transaction.Connection)
             CmdEvaluationSellable.Transaction = Transaction
             CmdEvaluationSellable.Parameters.AddWithValue("@evaluationid", ID)
-            CmdEvaluationSellable.Parameters.AddWithValue("@parttypeid", CInt(CompressorSellableControlType.WorkedHour))
+            CmdEvaluationSellable.Parameters.AddWithValue("@controltypeid", CInt(CompressorSellableControlType.WorkedHour))
             Using Adp As New MySqlDataAdapter(CmdEvaluationSellable)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
@@ -249,7 +249,7 @@ Public Class Evaluation
                         WorkedHourControlledSelable.Single(Function(x) x.PersonCompressorSellableID = Row.Item("personcompressorsellableid")).Lost = Row.Item("lost")
                     Else
                         Sellable = New EvaluationControlledSellable(CompressorSellableControlType.WorkedHour) With {
-                            .PersonCompressorSellable = Compressor.WorkedHourSellables.Single(Function(x) x.ID = Row.Item("personcompressorsellableid")).Sellable,
+                            .PersonCompressorSellable = Compressor.WorkedHourSellables.Single(Function(x) x.ID = Row.Item("personcompressorsellableid")),
                             .CurrentCapacity = Row.Item("currentcapacity"),
                             .Sold = Row.Item("sold"),
                             .Lost = Row.Item("lost")
@@ -262,11 +262,11 @@ Public Class Evaluation
                 Next Row
             End Using
         End Using
-        Using CmdEvaluationPart As New MySqlCommand(My.Resources.EvaluationReplacedSellableSelect, Transaction.Connection)
-            CmdEvaluationPart.Transaction = Transaction
-            CmdEvaluationPart.Parameters.AddWithValue("@evaluationid", ID)
-            CmdEvaluationPart.Parameters.AddWithValue("@parttypeid", CInt(CompressorSellableControlType.ElapsedDay))
-            Using Adp As New MySqlDataAdapter(CmdEvaluationPart)
+        Using CmdEvaluationReplacedSellable As New MySqlCommand(My.Resources.EvaluationControlledSellableSelect, Transaction.Connection)
+            CmdEvaluationReplacedSellable.Transaction = Transaction
+            CmdEvaluationReplacedSellable.Parameters.AddWithValue("@evaluationid", ID)
+            CmdEvaluationReplacedSellable.Parameters.AddWithValue("@controltypeid", CInt(CompressorSellableControlType.ElapsedDay))
+            Using Adp As New MySqlDataAdapter(CmdEvaluationReplacedSellable)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
                 For Each Row As DataRow In TableResult.Rows
@@ -279,7 +279,7 @@ Public Class Evaluation
                         ElapsedDayControlledSellable.Single(Function(x) x.PersonCompressorSellableID = Row.Item("personcompressorsellableid")).Lost = Row.Item("lost")
                     Else
                         Sellable = New EvaluationControlledSellable(CompressorSellableControlType.ElapsedDay) With {
-                            .PersonCompressorSellable = Compressor.ElapsedDaySellables.Single(Function(x) x.ID = Row.Item("personcompressorsellableid")).Sellable,
+                            .PersonCompressorSellable = Compressor.ElapsedDaySellables.Single(Function(x) x.ID = Row.Item("personcompressorsellableid")),
                             .CurrentCapacity = Row.Item("currentcapacity"),
                             .Sold = Row.Item("sold"),
                             .Lost = Row.Item("lost")
@@ -670,13 +670,13 @@ Public Class Evaluation
         End Using
     End Sub
 
-    Public Shared Sub FillControlledSellableDataGridView(EvaluationID As Long, Dgv As DataGridView, PartType As CompressorSellableControlType)
+    Public Shared Sub FillControlledSellableDataGridView(EvaluationID As Long, Dgv As DataGridView, ControlType As CompressorSellableControlType)
         Dim Session = Locator.GetInstance(Of Session)
         Dim TableResult As New DataTable
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Using Cmd As New MySqlCommand(My.Resources.EvaluationDetailSelect, Con)
                 Cmd.Parameters.AddWithValue("@evaluationid", EvaluationID)
-                Cmd.Parameters.AddWithValue("@parttypeid", CInt(PartType))
+                Cmd.Parameters.AddWithValue("@controltypeid", CInt(ControlType))
                 Using Adp As New MySqlDataAdapter(Cmd)
                     Adp.Fill(TableResult)
                     Dgv.AutoGenerateColumns = False
@@ -748,10 +748,10 @@ Public Class Evaluation
         Evaluation.StartTime = TimeSpan.ParseExact(Data("starttime"), "hh\:mm", Nothing)
         Evaluation.EndTime = TimeSpan.ParseExact(Data("endtime"), "hh\:mm", Nothing)
         Evaluation.Horimeter = Data("horimeter")
-        Dim AirFilter As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelable.Where(Function(x) x.PersonCompressorSellable.Value.SellableBind = CompressorSellableBindType.AirFilter).ToList
-        Dim OilFilter As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelable.Where(Function(x) x.PersonCompressorSellable.Value.SellableBind = CompressorSellableBindType.OilFilter).ToList
-        Dim Separator As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelable.Where(Function(x) x.PersonCompressorSellable.Value.SellableBind = CompressorSellableBindType.Separator).ToList
-        Dim Oil As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelable.Where(Function(x) x.PersonCompressorSellable.Value.SellableBind = CompressorSellableBindType.Oil).ToList
+        Dim AirFilter As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelable.Where(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.AirFilter).ToList
+        Dim OilFilter As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelable.Where(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.OilFilter).ToList
+        Dim Separator As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelable.Where(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Separator).ToList
+        Dim Oil As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelable.Where(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Oil).ToList
 
         Evaluation.WorkedHourControlledSelable.ToList.ForEach(Sub(x)
                                                                   x.SetIsSaved(True)
@@ -782,7 +782,7 @@ Public Class Evaluation
                         x.SetIsSaved(True)
                     End Sub)
         For Each CoalescentData As Dictionary(Of String, Object) In Data("coalescents")
-            Coalescent = Evaluation.ElapsedDayControlledSellable.Where(Function(y) y.PersonCompressorSellable.Value.IsSellableBinded).FirstOrDefault(Function(x) x.PersonCompressorSellableID = CoalescentData("coalescentid"))
+            Coalescent = Evaluation.ElapsedDayControlledSellable.Where(Function(y) y.PersonCompressorSellable.IsSellableBinded).FirstOrDefault(Function(x) x.PersonCompressorSellableID = CoalescentData("coalescentid"))
             If Coalescent IsNot Nothing Then
                 Coalescent.CurrentCapacity = DateDiff(DateInterval.Day, Today, DateTimeHelper.DateFromMilliseconds((CoalescentData("nextchange"))))
                 Coalescent.Sold = False
@@ -924,51 +924,51 @@ Public Class Evaluation
         Dim PreviousEvaluation As Evaluation
         PreviousEvaluationID = GetPreviousEvaluationID(Compressor, CDate(EvaluationDate), ID)
         PreviousEvaluation = New Evaluation().Load(PreviousEvaluationID, False)
-        Dim PreviousPart As EvaluationControlledSellable
+        Dim PreviousSellable As EvaluationControlledSellable
         If Horimeter < PreviousEvaluation.Horimeter Then
-            For Each CurrentPart As EvaluationControlledSellable In WorkedHourControlledSelable
-                CurrentPart.Sold = False
-                CurrentPart.Lost = False
-                PreviousPart = PreviousEvaluation.WorkedHourControlledSelable.FirstOrDefault(Function(x) x.PersonCompressorSellableID = CurrentPart.PersonCompressorSellableID)
-                If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
-                    CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity
+            For Each CurrentSellable As EvaluationControlledSellable In WorkedHourControlledSelable
+                CurrentSellable.Sold = False
+                CurrentSellable.Lost = False
+                PreviousSellable = PreviousEvaluation.WorkedHourControlledSelable.FirstOrDefault(Function(x) x.PersonCompressorSellableID = CurrentSellable.PersonCompressorSellableID)
+                If PreviousSellable IsNot Nothing AndAlso PreviousSellable.IsSaved Then
+                    CurrentSellable.CurrentCapacity = PreviousSellable.CurrentCapacity
                 Else
-                    CurrentPart.CurrentCapacity = CurrentPart.PersonCompressorSellable.Value.Capacity
+                    CurrentSellable.CurrentCapacity = CurrentSellable.PersonCompressorSellable.Capacity
                 End If
-            Next CurrentPart
-            For Each CurrentPart As EvaluationControlledSellable In ElapsedDayControlledSellable
-                CurrentPart.Sold = False
-                CurrentPart.Lost = False
-                PreviousPart = PreviousEvaluation.ElapsedDayControlledSellable.FirstOrDefault(Function(x) x.PersonCompressorSellableID = CurrentPart.PersonCompressorSellableID)
-                If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
-                    CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity
+            Next CurrentSellable
+            For Each CurrentSellable As EvaluationControlledSellable In ElapsedDayControlledSellable
+                CurrentSellable.Sold = False
+                CurrentSellable.Lost = False
+                PreviousSellable = PreviousEvaluation.ElapsedDayControlledSellable.FirstOrDefault(Function(x) x.PersonCompressorSellableID = CurrentSellable.PersonCompressorSellableID)
+                If PreviousSellable IsNot Nothing AndAlso PreviousSellable.IsSaved Then
+                    CurrentSellable.CurrentCapacity = PreviousSellable.CurrentCapacity
                 Else
-                    CurrentPart.CurrentCapacity = CurrentPart.PersonCompressorSellable.Value.Capacity
+                    CurrentSellable.CurrentCapacity = CurrentSellable.PersonCompressorSellable.Capacity
                 End If
-            Next CurrentPart
+            Next CurrentSellable
             If Not ManualAverageWorkLoad Then AverageWorkLoad = PreviousEvaluation.AverageWorkLoad
             Return True
         Else
-            For Each CurrentPart As EvaluationControlledSellable In WorkedHourControlledSelable
-                CurrentPart.Sold = False
-                CurrentPart.Lost = False
-                PreviousPart = PreviousEvaluation.WorkedHourControlledSelable.FirstOrDefault(Function(x) x.PersonCompressorSellableID = CurrentPart.PersonCompressorSellableID)
-                If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
-                    CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity - (Horimeter - PreviousEvaluation.Horimeter)
+            For Each CurrentSellable As EvaluationControlledSellable In WorkedHourControlledSelable
+                CurrentSellable.Sold = False
+                CurrentSellable.Lost = False
+                PreviousSellable = PreviousEvaluation.WorkedHourControlledSelable.FirstOrDefault(Function(x) x.PersonCompressorSellableID = CurrentSellable.PersonCompressorSellableID)
+                If PreviousSellable IsNot Nothing AndAlso PreviousSellable.IsSaved Then
+                    CurrentSellable.CurrentCapacity = PreviousSellable.CurrentCapacity - (Horimeter - PreviousEvaluation.Horimeter)
                 Else
-                    CurrentPart.CurrentCapacity = CurrentPart.PersonCompressorSellable.Value.Capacity
+                    CurrentSellable.CurrentCapacity = CurrentSellable.PersonCompressorSellable.Capacity
                 End If
-            Next CurrentPart
-            For Each CurrentPart As EvaluationControlledSellable In ElapsedDayControlledSellable
-                CurrentPart.Sold = False
-                CurrentPart.Lost = False
-                PreviousPart = PreviousEvaluation.ElapsedDayControlledSellable.FirstOrDefault(Function(x) x.PersonCompressorSellableID = CurrentPart.PersonCompressorSellableID)
-                If PreviousPart IsNot Nothing AndAlso PreviousPart.IsSaved Then
-                    CurrentPart.CurrentCapacity = PreviousPart.CurrentCapacity - (EvaluationDate).Subtract(PreviousEvaluation.EvaluationDate).Days
+            Next CurrentSellable
+            For Each CurrentSellable As EvaluationControlledSellable In ElapsedDayControlledSellable
+                CurrentSellable.Sold = False
+                CurrentSellable.Lost = False
+                PreviousSellable = PreviousEvaluation.ElapsedDayControlledSellable.FirstOrDefault(Function(x) x.PersonCompressorSellableID = CurrentSellable.PersonCompressorSellableID)
+                If PreviousSellable IsNot Nothing AndAlso PreviousSellable.IsSaved Then
+                    CurrentSellable.CurrentCapacity = PreviousSellable.CurrentCapacity - (EvaluationDate).Subtract(PreviousEvaluation.EvaluationDate).Days
                 Else
-                    CurrentPart.CurrentCapacity = CurrentPart.PersonCompressorSellable.Value.Capacity
+                    CurrentSellable.CurrentCapacity = CurrentSellable.PersonCompressorSellable.Capacity
                 End If
-            Next CurrentPart
+            Next CurrentSellable
             If Not ManualAverageWorkLoad Then AverageWorkLoad = GetCMT()
             Return False
         End If
@@ -977,9 +977,9 @@ Public Class Evaluation
         Dim Value As Decimal
         Value = 5.71
         If Horimeter >= 0 Then
-            If Evaluation.HasPreviousEvaluation(Compressor, EvaluationDate, ID) Then
-                If Evaluation.GetPreviousEvaluationDate(Compressor, EvaluationDate, ID) <= EvaluationDate Then
-                    Value = Evaluation.GetAverageWorkLoad(Compressor, Horimeter, EvaluationDate, ID)
+            If HasPreviousEvaluation(Compressor, EvaluationDate, ID) Then
+                If GetPreviousEvaluationDate(Compressor, EvaluationDate, ID) <= EvaluationDate Then
+                    Value = GetAverageWorkLoad(Compressor, Horimeter, EvaluationDate, ID)
                     If Value = 0 Then Value = 0.01
                     If Value < 0 Then Value = 5.71
                     If Value > 24 And Value < 25 Then Value = 24

@@ -37,7 +37,7 @@ Public Class FrmEvaluationReplacedSellable
         LblOrderValue.Text = If(_ReplacedPart.IsSaved, _EvaluationForm.DgvReplacedPart.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _ReplacedPart.Creation
         QbxItem.Unfreeze()
-        QbxItem.Freeze(_ReplacedPart.ProductID)
+        QbxItem.Freeze(_ReplacedPart.SellableID)
         DbxQuantity.Text = _ReplacedPart.Quantity
         If Not _ReplacedPart.IsSaved Then
             BtnSave.Text = "Incluir"
@@ -126,10 +126,10 @@ Public Class FrmEvaluationReplacedSellable
     End Function
     Private Function HasDuplicatedItem() As Boolean
         Dim TargetItems As List(Of EvaluationReplacedSellable)
-        TargetItems = _Evaluation.ReplacedSellables.Where(Function(x) Not x.ProductID.Equals(_ReplacedPart.ProductID) AndAlso x.ProductID.Equals(QbxItem.FreezedPrimaryKey)).ToList()
+        TargetItems = _Evaluation.ReplacedSellables.Where(Function(x) Not x.SellableID.Equals(_ReplacedPart.SellableID) AndAlso x.SellableID.Equals(QbxItem.FreezedPrimaryKey)).ToList()
         If TargetItems.Count > 0 Then
             CMessageBox.Show("Essa peça já foi incluida na avaliação.", CMessageBoxType.Information)
-            QbxItem.Freeze(_ReplacedPart.ProductID)
+            QbxItem.Freeze(_ReplacedPart.SellableID)
             DbxQuantity.Text = 0
             QbxItem.Select()
             Return True
@@ -146,17 +146,17 @@ Public Class FrmEvaluationReplacedSellable
         If IsValidFields() Then
             If HasDuplicatedItem() Then Return False
             If _ReplacedPart.IsSaved Then
-                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).ProductID = QbxItem.FreezedPrimaryKey
-                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).Product = New Lazy(Of Product)(Function() New Product().Load(QbxItem.FreezedPrimaryKey, False))
-                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).ProductCode = QbxItem.GetRawFreezedValueOf("productprovidercode", "code").ToString
-                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).ProductName = QbxItem.GetRawFreezedValueOf("product", "name").ToString
+                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).SellableID = QbxItem.FreezedPrimaryKey
+                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxItem.FreezedPrimaryKey, False))
+                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).Code = QbxItem.GetRawFreezedValueOf("productprovidercode", "code").ToString
+                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).Name = QbxItem.GetRawFreezedValueOf("product", "name").ToString
                 _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).Quantity = DbxQuantity.DecimalValue
             Else
                 _ReplacedPart = New EvaluationReplacedSellable With {
-                    .ProductID = QbxItem.FreezedPrimaryKey,
-                    .Product = New Lazy(Of Product)(Function() New Product().Load(QbxItem.FreezedPrimaryKey, False)),
-                    .ProductCode = QbxItem.GetRawFreezedValueOf("productprovidercode", "code").ToString,
-                    .ProductName = QbxItem.GetRawFreezedValueOf("product", "name").ToString,
+                    .SellableID = QbxItem.FreezedPrimaryKey,
+                    .Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxItem.FreezedPrimaryKey, False)),
+                    .Code = QbxItem.GetRawFreezedValueOf("productprovidercode", "code").ToString,
+                    .Name = QbxItem.GetRawFreezedValueOf("product", "name").ToString,
                     .Quantity = DbxQuantity.DecimalValue
                 }
                 _ReplacedPart.SetIsSaved(True)

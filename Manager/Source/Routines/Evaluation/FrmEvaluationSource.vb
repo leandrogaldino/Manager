@@ -22,13 +22,13 @@
 
         ResultEvaluation = CalculatedEvaluation
         For Each p In CalculatedEvaluation.WorkedHourControlledSelable.Where(Function(x) x.PersonCompressorSellable.SellableBind)
-            PartTile = New UcEvaluationSourcePart(p.Sellable.ToString, ImportedEvaluation.WorkedHourControlledSelable.First(Function(x) x.PersonCompressorSellable.ID = p.Sellable.ID).CurrentCapacity, p.CurrentCapacity)
+            PartTile = New UcEvaluationSourcePart(p.PersonCompressorSellable.ToString, ImportedEvaluation.WorkedHourControlledSelable.First(Function(x) x.PersonCompressorSellable.ID = p.PersonCompressorSellable.ID).CurrentCapacity, p.CurrentCapacity)
             PartTile.Tag = p
             AddHandler PartTile.ValidateRequired, AddressOf Control_Click
             FlpContainer.Controls.Add(PartTile)
         Next p
         For Each p In CalculatedEvaluation.ElapsedDayControlledSellable.Where(Function(x) x.PersonCompressorSellable.SellableBind)
-            PartTile = New UcEvaluationSourcePart(p.Sellable.ToString, ImportedEvaluation.ElapsedDayControlledSellable.First(Function(x) x.PersonCompressorSellable.ID = p.Sellable.ID).CurrentCapacity, p.CurrentCapacity)
+            PartTile = New UcEvaluationSourcePart(p.PersonCompressorSellable.ToString, ImportedEvaluation.ElapsedDayControlledSellable.First(Function(x) x.PersonCompressorSellable.ID = p.PersonCompressorSellable.ID).CurrentCapacity, p.CurrentCapacity)
             PartTile.Tag = p
             AddHandler PartTile.ValidateRequired, AddressOf Control_Click
             FlpContainer.Controls.Add(PartTile)

@@ -95,10 +95,10 @@ Partial Class FrmEvaluation
         Me.BtnIncludeTechnician = New System.Windows.Forms.ToolStripButton()
         Me.BtnEditTechnician = New System.Windows.Forms.ToolStripButton()
         Me.BtnDeleteTechnician = New System.Windows.Forms.ToolStripButton()
-        Me.GbxPartElapsedDay = New System.Windows.Forms.GroupBox()
-        Me.DgvPartElapsedDay = New System.Windows.Forms.DataGridView()
-        Me.GbxPartWorkedHour = New System.Windows.Forms.GroupBox()
-        Me.DgvPartWorkedHour = New System.Windows.Forms.DataGridView()
+        Me.GbxElapsedDaySellable = New System.Windows.Forms.GroupBox()
+        Me.DgvElapsedDaySellable = New System.Windows.Forms.DataGridView()
+        Me.GbxWorkedHourSellable = New System.Windows.Forms.GroupBox()
+        Me.DgvWorkedHourSellable = New System.Windows.Forms.DataGridView()
         Me.GbxMain = New System.Windows.Forms.GroupBox()
         Me.BtnCallTypeHasRepairNeedProposal = New ControlLibrary.RichTextButton()
         Me.BtnUnitTemperaturePressure = New ControlLibrary.RichTextButton()
@@ -128,14 +128,14 @@ Partial Class FrmEvaluation
         Me.TabTechnicalAdvice = New System.Windows.Forms.TabPage()
         Me.TlpAdvice = New System.Windows.Forms.TableLayoutPanel()
         Me.TlpReplaced = New System.Windows.Forms.TableLayoutPanel()
-        Me.GbxReplacedItems = New System.Windows.Forms.GroupBox()
-        Me.DgvReplacedPart = New System.Windows.Forms.DataGridView()
-        Me.TsReplacedPart = New System.Windows.Forms.ToolStrip()
-        Me.BtnIncludeReplacedPart = New System.Windows.Forms.ToolStripButton()
-        Me.BtnEditReplacedPart = New System.Windows.Forms.ToolStripButton()
-        Me.BtnDeleteReplacedPart = New System.Windows.Forms.ToolStripButton()
-        Me.LblFilterReplacedParts = New System.Windows.Forms.ToolStripLabel()
-        Me.TxtFilterReplacedParts = New System.Windows.Forms.ToolStripTextBox()
+        Me.GbxReplacedSellable = New System.Windows.Forms.GroupBox()
+        Me.DgvReplacedSellable = New System.Windows.Forms.DataGridView()
+        Me.TsReplacedSellable = New System.Windows.Forms.ToolStrip()
+        Me.BtnIncludeReplacedSellable = New System.Windows.Forms.ToolStripButton()
+        Me.BtnEditReplacedSellable = New System.Windows.Forms.ToolStripButton()
+        Me.BtnDeleteReplacedSellable = New System.Windows.Forms.ToolStripButton()
+        Me.LblFilterReplacedSellable = New System.Windows.Forms.ToolStripLabel()
+        Me.TxtFilterReplacedSellable = New System.Windows.Forms.ToolStripTextBox()
         Me.GbxAdvice = New System.Windows.Forms.GroupBox()
         Me.TxtTechnicalAdvice = New System.Windows.Forms.RichTextBox()
         Me.TabDocument = New System.Windows.Forms.TabPage()
@@ -172,14 +172,14 @@ Partial Class FrmEvaluation
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.Tip = New System.Windows.Forms.ToolTip(Me.components)
         Me.TmrResize = New System.Windows.Forms.Timer(Me.components)
-        Me.DgvPartWorkedHourNavigator = New ControlLibrary.DataGridViewNavigator()
+        Me.NavWorkedHourSellable = New ControlLibrary.DataGridViewNavigator()
         Me.DgvlTechnicianLayout = New Manager.DataGridViewLayout()
-        Me.DgvlPartWorkedHourLayout = New Manager.DataGridViewLayout()
-        Me.DgvlPartElapsedDayLayout = New Manager.DataGridViewLayout()
-        Me.DgvPartElapsedDayNavigator = New ControlLibrary.DataGridViewNavigator()
+        Me.DgvlWorkedHourSellable = New Manager.DataGridViewLayout()
+        Me.DgvlElapsedDaySellable = New Manager.DataGridViewLayout()
+        Me.NavElapsedDaySellable = New ControlLibrary.DataGridViewNavigator()
         Me.CcoCallTypeHasRepairNeedProposal = New ControlLibrary.ControlContainer()
         Me.CcoUnitTemperaturePressure = New ControlLibrary.ControlContainer()
-        Me.DgvReplacedPartLayout = New Manager.DataGridViewLayout()
+        Me.DgvlReplacedSellable = New Manager.DataGridViewLayout()
         Me.PnBottom.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -189,18 +189,18 @@ Partial Class FrmEvaluation
         Me.GbxTechnicians.SuspendLayout()
         CType(Me.DgvTechnician, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsTechnician.SuspendLayout()
-        Me.GbxPartElapsedDay.SuspendLayout()
-        CType(Me.DgvPartElapsedDay, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GbxPartWorkedHour.SuspendLayout()
-        CType(Me.DgvPartWorkedHour, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GbxElapsedDaySellable.SuspendLayout()
+        CType(Me.DgvElapsedDaySellable, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GbxWorkedHourSellable.SuspendLayout()
+        CType(Me.DgvWorkedHourSellable, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GbxMain.SuspendLayout()
         Me.FlpCustomer.SuspendLayout()
         Me.TabTechnicalAdvice.SuspendLayout()
         Me.TlpAdvice.SuspendLayout()
         Me.TlpReplaced.SuspendLayout()
-        Me.GbxReplacedItems.SuspendLayout()
-        CType(Me.DgvReplacedPart, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TsReplacedPart.SuspendLayout()
+        Me.GbxReplacedSellable.SuspendLayout()
+        CType(Me.DgvReplacedSellable, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TsReplacedSellable.SuspendLayout()
         Me.GbxAdvice.SuspendLayout()
         Me.TabDocument.SuspendLayout()
         Me.TsDocument.SuspendLayout()
@@ -224,14 +224,14 @@ Partial Class FrmEvaluation
         Me.PnBottom.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.PnBottom.Location = New System.Drawing.Point(0, 487)
         Me.PnBottom.Name = "PnBottom"
-        Me.PnBottom.Size = New System.Drawing.Size(1040, 44)
+        Me.PnBottom.Size = New System.Drawing.Size(1039, 44)
         Me.PnBottom.TabIndex = 3
         '
         'BtnClose
         '
         Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnClose.Location = New System.Drawing.Point(933, 7)
+        Me.BtnClose.Location = New System.Drawing.Point(932, 7)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(95, 30)
         Me.BtnClose.TabIndex = 2
@@ -252,7 +252,7 @@ Partial Class FrmEvaluation
         '
         Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnSave.Enabled = False
-        Me.BtnSave.Location = New System.Drawing.Point(832, 7)
+        Me.BtnSave.Location = New System.Drawing.Point(831, 7)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(95, 30)
         Me.BtnSave.TabIndex = 1
@@ -269,7 +269,7 @@ Partial Class FrmEvaluation
         Me.TsTitle.Location = New System.Drawing.Point(0, 25)
         Me.TsTitle.Name = "TsTitle"
         Me.TsTitle.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsTitle.Size = New System.Drawing.Size(1040, 25)
+        Me.TsTitle.Size = New System.Drawing.Size(1039, 25)
         Me.TsTitle.TabIndex = 1
         Me.TsTitle.Text = "ToolStrip1"
         '
@@ -366,7 +366,7 @@ Partial Class FrmEvaluation
         Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsNavigation.Size = New System.Drawing.Size(1040, 25)
+        Me.TsNavigation.Size = New System.Drawing.Size(1039, 25)
         Me.TsNavigation.TabIndex = 0
         Me.TsNavigation.Text = "ToolStrip2"
         '
@@ -464,21 +464,21 @@ Partial Class FrmEvaluation
         Me.TcEvaluation.Multiline = True
         Me.TcEvaluation.Name = "TcEvaluation"
         Me.TcEvaluation.SelectedIndex = 0
-        Me.TcEvaluation.Size = New System.Drawing.Size(1040, 437)
+        Me.TcEvaluation.Size = New System.Drawing.Size(1039, 437)
         Me.TcEvaluation.TabIndex = 2
         '
         'TabMain
         '
         Me.TabMain.BackColor = System.Drawing.Color.White
         Me.TabMain.Controls.Add(Me.GbxTechnicians)
-        Me.TabMain.Controls.Add(Me.GbxPartElapsedDay)
-        Me.TabMain.Controls.Add(Me.GbxPartWorkedHour)
+        Me.TabMain.Controls.Add(Me.GbxElapsedDaySellable)
+        Me.TabMain.Controls.Add(Me.GbxWorkedHourSellable)
         Me.TabMain.Controls.Add(Me.GbxMain)
         Me.TabMain.Location = New System.Drawing.Point(4, 26)
         Me.TabMain.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabMain.Name = "TabMain"
         Me.TabMain.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabMain.Size = New System.Drawing.Size(1032, 407)
+        Me.TabMain.Size = New System.Drawing.Size(1031, 407)
         Me.TabMain.TabIndex = 0
         Me.TabMain.Text = "Leitura"
         '
@@ -564,71 +564,71 @@ Partial Class FrmEvaluation
         Me.BtnDeleteTechnician.Text = "Excluir Avaliação"
         Me.BtnDeleteTechnician.ToolTipText = "Excluir Técnico"
         '
-        'GbxPartElapsedDay
+        'GbxElapsedDaySellable
         '
-        Me.GbxPartElapsedDay.Controls.Add(Me.DgvPartElapsedDay)
-        Me.GbxPartElapsedDay.Location = New System.Drawing.Point(410, 282)
-        Me.GbxPartElapsedDay.Name = "GbxPartElapsedDay"
-        Me.GbxPartElapsedDay.Size = New System.Drawing.Size(610, 120)
-        Me.GbxPartElapsedDay.TabIndex = 3
-        Me.GbxPartElapsedDay.TabStop = False
-        Me.GbxPartElapsedDay.Text = "Controla Por Dia Corrido"
+        Me.GbxElapsedDaySellable.Controls.Add(Me.DgvElapsedDaySellable)
+        Me.GbxElapsedDaySellable.Location = New System.Drawing.Point(410, 282)
+        Me.GbxElapsedDaySellable.Name = "GbxElapsedDaySellable"
+        Me.GbxElapsedDaySellable.Size = New System.Drawing.Size(610, 120)
+        Me.GbxElapsedDaySellable.TabIndex = 3
+        Me.GbxElapsedDaySellable.TabStop = False
+        Me.GbxElapsedDaySellable.Text = "Controla Por Dia Corrido"
         '
-        'DgvPartElapsedDay
+        'DgvElapsedDaySellable
         '
-        Me.DgvPartElapsedDay.AllowUserToAddRows = False
-        Me.DgvPartElapsedDay.AllowUserToDeleteRows = False
-        Me.DgvPartElapsedDay.AllowUserToResizeColumns = False
-        Me.DgvPartElapsedDay.AllowUserToResizeRows = False
-        Me.DgvPartElapsedDay.BackgroundColor = System.Drawing.Color.White
-        Me.DgvPartElapsedDay.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DgvPartElapsedDay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvPartElapsedDay.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvPartElapsedDay.GridColor = System.Drawing.Color.Gainsboro
-        Me.DgvPartElapsedDay.Location = New System.Drawing.Point(3, 19)
-        Me.DgvPartElapsedDay.MultiSelect = False
-        Me.DgvPartElapsedDay.Name = "DgvPartElapsedDay"
-        Me.DgvPartElapsedDay.ReadOnly = True
-        Me.DgvPartElapsedDay.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvPartElapsedDay.RowHeadersVisible = False
-        Me.DgvPartElapsedDay.RowTemplate.Height = 26
-        Me.DgvPartElapsedDay.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPartElapsedDay.Size = New System.Drawing.Size(604, 98)
-        Me.DgvPartElapsedDay.TabIndex = 0
-        Me.DgvPartElapsedDay.TabStop = False
+        Me.DgvElapsedDaySellable.AllowUserToAddRows = False
+        Me.DgvElapsedDaySellable.AllowUserToDeleteRows = False
+        Me.DgvElapsedDaySellable.AllowUserToResizeColumns = False
+        Me.DgvElapsedDaySellable.AllowUserToResizeRows = False
+        Me.DgvElapsedDaySellable.BackgroundColor = System.Drawing.Color.White
+        Me.DgvElapsedDaySellable.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DgvElapsedDaySellable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvElapsedDaySellable.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvElapsedDaySellable.GridColor = System.Drawing.Color.Gainsboro
+        Me.DgvElapsedDaySellable.Location = New System.Drawing.Point(3, 19)
+        Me.DgvElapsedDaySellable.MultiSelect = False
+        Me.DgvElapsedDaySellable.Name = "DgvElapsedDaySellable"
+        Me.DgvElapsedDaySellable.ReadOnly = True
+        Me.DgvElapsedDaySellable.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvElapsedDaySellable.RowHeadersVisible = False
+        Me.DgvElapsedDaySellable.RowTemplate.Height = 26
+        Me.DgvElapsedDaySellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(604, 98)
+        Me.DgvElapsedDaySellable.TabIndex = 0
+        Me.DgvElapsedDaySellable.TabStop = False
         '
-        'GbxPartWorkedHour
+        'GbxWorkedHourSellable
         '
-        Me.GbxPartWorkedHour.Controls.Add(Me.DgvPartWorkedHour)
-        Me.GbxPartWorkedHour.Location = New System.Drawing.Point(410, 7)
-        Me.GbxPartWorkedHour.Name = "GbxPartWorkedHour"
-        Me.GbxPartWorkedHour.Size = New System.Drawing.Size(610, 269)
-        Me.GbxPartWorkedHour.TabIndex = 2
-        Me.GbxPartWorkedHour.TabStop = False
-        Me.GbxPartWorkedHour.Text = "Controla Por Hora Trabalhada"
+        Me.GbxWorkedHourSellable.Controls.Add(Me.DgvWorkedHourSellable)
+        Me.GbxWorkedHourSellable.Location = New System.Drawing.Point(410, 7)
+        Me.GbxWorkedHourSellable.Name = "GbxWorkedHourSellable"
+        Me.GbxWorkedHourSellable.Size = New System.Drawing.Size(610, 269)
+        Me.GbxWorkedHourSellable.TabIndex = 2
+        Me.GbxWorkedHourSellable.TabStop = False
+        Me.GbxWorkedHourSellable.Text = "Controla Por Hora Trabalhada"
         '
-        'DgvPartWorkedHour
+        'DgvWorkedHourSellable
         '
-        Me.DgvPartWorkedHour.AllowUserToAddRows = False
-        Me.DgvPartWorkedHour.AllowUserToDeleteRows = False
-        Me.DgvPartWorkedHour.AllowUserToResizeColumns = False
-        Me.DgvPartWorkedHour.AllowUserToResizeRows = False
-        Me.DgvPartWorkedHour.BackgroundColor = System.Drawing.Color.White
-        Me.DgvPartWorkedHour.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DgvPartWorkedHour.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvPartWorkedHour.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvPartWorkedHour.GridColor = System.Drawing.Color.Gainsboro
-        Me.DgvPartWorkedHour.Location = New System.Drawing.Point(3, 19)
-        Me.DgvPartWorkedHour.MultiSelect = False
-        Me.DgvPartWorkedHour.Name = "DgvPartWorkedHour"
-        Me.DgvPartWorkedHour.ReadOnly = True
-        Me.DgvPartWorkedHour.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvPartWorkedHour.RowHeadersVisible = False
-        Me.DgvPartWorkedHour.RowTemplate.Height = 26
-        Me.DgvPartWorkedHour.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPartWorkedHour.Size = New System.Drawing.Size(604, 247)
-        Me.DgvPartWorkedHour.TabIndex = 0
-        Me.DgvPartWorkedHour.TabStop = False
+        Me.DgvWorkedHourSellable.AllowUserToAddRows = False
+        Me.DgvWorkedHourSellable.AllowUserToDeleteRows = False
+        Me.DgvWorkedHourSellable.AllowUserToResizeColumns = False
+        Me.DgvWorkedHourSellable.AllowUserToResizeRows = False
+        Me.DgvWorkedHourSellable.BackgroundColor = System.Drawing.Color.White
+        Me.DgvWorkedHourSellable.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DgvWorkedHourSellable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvWorkedHourSellable.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvWorkedHourSellable.GridColor = System.Drawing.Color.Gainsboro
+        Me.DgvWorkedHourSellable.Location = New System.Drawing.Point(3, 19)
+        Me.DgvWorkedHourSellable.MultiSelect = False
+        Me.DgvWorkedHourSellable.Name = "DgvWorkedHourSellable"
+        Me.DgvWorkedHourSellable.ReadOnly = True
+        Me.DgvWorkedHourSellable.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvWorkedHourSellable.RowHeadersVisible = False
+        Me.DgvWorkedHourSellable.RowTemplate.Height = 26
+        Me.DgvWorkedHourSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvWorkedHourSellable.Size = New System.Drawing.Size(604, 247)
+        Me.DgvWorkedHourSellable.TabIndex = 0
+        Me.DgvWorkedHourSellable.TabStop = False
         '
         'GbxMain
         '
@@ -1177,10 +1177,10 @@ Partial Class FrmEvaluation
         '
         Me.TabTechnicalAdvice.BackColor = System.Drawing.Color.White
         Me.TabTechnicalAdvice.Controls.Add(Me.TlpAdvice)
-        Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 26)
+        Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 22)
         Me.TabTechnicalAdvice.Name = "TabTechnicalAdvice"
         Me.TabTechnicalAdvice.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1032, 407)
+        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1031, 411)
         Me.TabTechnicalAdvice.TabIndex = 6
         Me.TabTechnicalAdvice.Text = "Parecer Técnico"
         '
@@ -1196,7 +1196,7 @@ Partial Class FrmEvaluation
         Me.TlpAdvice.RowCount = 2
         Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.0!))
         Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.0!))
-        Me.TlpAdvice.Size = New System.Drawing.Size(1026, 401)
+        Me.TlpAdvice.Size = New System.Drawing.Size(1025, 405)
         Me.TlpAdvice.TabIndex = 2
         '
         'TlpReplaced
@@ -1204,114 +1204,113 @@ Partial Class FrmEvaluation
         Me.TlpReplaced.ColumnCount = 1
         Me.TlpReplaced.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TlpReplaced.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TlpReplaced.Controls.Add(Me.GbxReplacedItems, 0, 0)
+        Me.TlpReplaced.Controls.Add(Me.GbxReplacedSellable, 0, 0)
         Me.TlpReplaced.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TlpReplaced.Location = New System.Drawing.Point(3, 3)
         Me.TlpReplaced.Name = "TlpReplaced"
         Me.TlpReplaced.RowCount = 1
         Me.TlpReplaced.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TlpReplaced.Size = New System.Drawing.Size(1020, 234)
+        Me.TlpReplaced.Size = New System.Drawing.Size(1019, 237)
         Me.TlpReplaced.TabIndex = 1
         '
-        'GbxReplacedItems
+        'GbxReplacedSellable
         '
-        Me.GbxReplacedItems.Controls.Add(Me.DgvReplacedPart)
-        Me.GbxReplacedItems.Controls.Add(Me.TsReplacedPart)
-        Me.GbxReplacedItems.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GbxReplacedItems.Location = New System.Drawing.Point(3, 3)
-        Me.GbxReplacedItems.Name = "GbxReplacedItems"
-        Me.GbxReplacedItems.Size = New System.Drawing.Size(1014, 228)
-        Me.GbxReplacedItems.TabIndex = 2
-        Me.GbxReplacedItems.TabStop = False
-        Me.GbxReplacedItems.Text = "Peças Substituídas/Serviços Executados"
+        Me.GbxReplacedSellable.Controls.Add(Me.DgvReplacedSellable)
+        Me.GbxReplacedSellable.Controls.Add(Me.TsReplacedSellable)
+        Me.GbxReplacedSellable.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GbxReplacedSellable.Location = New System.Drawing.Point(3, 3)
+        Me.GbxReplacedSellable.Name = "GbxReplacedSellable"
+        Me.GbxReplacedSellable.Size = New System.Drawing.Size(1013, 231)
+        Me.GbxReplacedSellable.TabIndex = 2
+        Me.GbxReplacedSellable.TabStop = False
+        Me.GbxReplacedSellable.Text = "Peças Substituídas/Serviços Executados"
         '
-        'DgvReplacedPart
+        'DgvReplacedSellable
         '
-        Me.DgvReplacedPart.AllowUserToAddRows = False
-        Me.DgvReplacedPart.AllowUserToDeleteRows = False
-        Me.DgvReplacedPart.AllowUserToResizeColumns = False
-        Me.DgvReplacedPart.AllowUserToResizeRows = False
-        Me.DgvReplacedPart.BackgroundColor = System.Drawing.Color.White
-        Me.DgvReplacedPart.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DgvReplacedPart.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvReplacedPart.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvReplacedPart.GridColor = System.Drawing.Color.Gainsboro
-        Me.DgvReplacedPart.Location = New System.Drawing.Point(3, 44)
-        Me.DgvReplacedPart.MultiSelect = False
-        Me.DgvReplacedPart.Name = "DgvReplacedPart"
-        Me.DgvReplacedPart.ReadOnly = True
-        Me.DgvReplacedPart.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvReplacedPart.RowHeadersVisible = False
-        Me.DgvReplacedPart.RowTemplate.Height = 26
-        Me.DgvReplacedPart.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvReplacedPart.Size = New System.Drawing.Size(1008, 181)
-        Me.DgvReplacedPart.TabIndex = 1
-        Me.DgvReplacedPart.TabStop = False
+        Me.DgvReplacedSellable.AllowUserToAddRows = False
+        Me.DgvReplacedSellable.AllowUserToDeleteRows = False
+        Me.DgvReplacedSellable.AllowUserToResizeColumns = False
+        Me.DgvReplacedSellable.AllowUserToResizeRows = False
+        Me.DgvReplacedSellable.BackgroundColor = System.Drawing.Color.White
+        Me.DgvReplacedSellable.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DgvReplacedSellable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvReplacedSellable.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvReplacedSellable.GridColor = System.Drawing.Color.Gainsboro
+        Me.DgvReplacedSellable.Location = New System.Drawing.Point(3, 44)
+        Me.DgvReplacedSellable.MultiSelect = False
+        Me.DgvReplacedSellable.Name = "DgvReplacedSellable"
+        Me.DgvReplacedSellable.ReadOnly = True
+        Me.DgvReplacedSellable.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvReplacedSellable.RowHeadersVisible = False
+        Me.DgvReplacedSellable.RowTemplate.Height = 26
+        Me.DgvReplacedSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvReplacedSellable.Size = New System.Drawing.Size(1007, 184)
+        Me.DgvReplacedSellable.TabIndex = 1
+        Me.DgvReplacedSellable.TabStop = False
         '
-        'TsReplacedPart
+        'TsReplacedSellable
         '
-        Me.TsReplacedPart.BackColor = System.Drawing.Color.Transparent
-        Me.TsReplacedPart.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TsReplacedPart.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsReplacedPart.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludeReplacedPart, Me.BtnEditReplacedPart, Me.BtnDeleteReplacedPart, Me.LblFilterReplacedParts, Me.TxtFilterReplacedParts})
-        Me.TsReplacedPart.Location = New System.Drawing.Point(3, 19)
-        Me.TsReplacedPart.Name = "TsReplacedPart"
-        Me.TsReplacedPart.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsReplacedPart.Size = New System.Drawing.Size(1008, 25)
-        Me.TsReplacedPart.TabIndex = 2
-        Me.TsReplacedPart.Text = "ToolStrip2"
+        Me.TsReplacedSellable.BackColor = System.Drawing.Color.Transparent
+        Me.TsReplacedSellable.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TsReplacedSellable.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.TsReplacedSellable.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludeReplacedSellable, Me.BtnEditReplacedSellable, Me.BtnDeleteReplacedSellable, Me.LblFilterReplacedSellable, Me.TxtFilterReplacedSellable})
+        Me.TsReplacedSellable.Location = New System.Drawing.Point(3, 19)
+        Me.TsReplacedSellable.Name = "TsReplacedSellable"
+        Me.TsReplacedSellable.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.TsReplacedSellable.Size = New System.Drawing.Size(1007, 25)
+        Me.TsReplacedSellable.TabIndex = 2
+        Me.TsReplacedSellable.Text = "ToolStrip2"
         '
-        'BtnIncludeReplacedPart
+        'BtnIncludeReplacedSellable
         '
-        Me.BtnIncludeReplacedPart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnIncludeReplacedPart.Image = Global.Manager.My.Resources.Resources.IncludeSmall
-        Me.BtnIncludeReplacedPart.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnIncludeReplacedPart.Name = "BtnIncludeReplacedPart"
-        Me.BtnIncludeReplacedPart.Size = New System.Drawing.Size(23, 22)
-        Me.BtnIncludeReplacedPart.Text = "Incluir Peça"
+        Me.BtnIncludeReplacedSellable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnIncludeReplacedSellable.Image = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnIncludeReplacedSellable.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnIncludeReplacedSellable.Name = "BtnIncludeReplacedSellable"
+        Me.BtnIncludeReplacedSellable.Size = New System.Drawing.Size(23, 22)
+        Me.BtnIncludeReplacedSellable.Text = "Incluir Produto/Serviço"
         '
-        'BtnEditReplacedPart
+        'BtnEditReplacedSellable
         '
-        Me.BtnEditReplacedPart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnEditReplacedPart.Image = CType(resources.GetObject("BtnEditReplacedPart.Image"), System.Drawing.Image)
-        Me.BtnEditReplacedPart.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnEditReplacedPart.Name = "BtnEditReplacedPart"
-        Me.BtnEditReplacedPart.Size = New System.Drawing.Size(23, 22)
-        Me.BtnEditReplacedPart.Text = "Editar Peça"
-        Me.BtnEditReplacedPart.ToolTipText = "Editar"
+        Me.BtnEditReplacedSellable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnEditReplacedSellable.Image = CType(resources.GetObject("BtnEditReplacedSellable.Image"), System.Drawing.Image)
+        Me.BtnEditReplacedSellable.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnEditReplacedSellable.Name = "BtnEditReplacedSellable"
+        Me.BtnEditReplacedSellable.Size = New System.Drawing.Size(23, 22)
+        Me.BtnEditReplacedSellable.Text = "Editar Produto/Serviço"
+        Me.BtnEditReplacedSellable.ToolTipText = "Editar"
         '
-        'BtnDeleteReplacedPart
+        'BtnDeleteReplacedSellable
         '
-        Me.BtnDeleteReplacedPart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnDeleteReplacedPart.Image = Global.Manager.My.Resources.Resources.DeleteSmall
-        Me.BtnDeleteReplacedPart.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnDeleteReplacedPart.Name = "BtnDeleteReplacedPart"
-        Me.BtnDeleteReplacedPart.Size = New System.Drawing.Size(23, 22)
-        Me.BtnDeleteReplacedPart.Text = "Excluir Peça"
+        Me.BtnDeleteReplacedSellable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnDeleteReplacedSellable.Image = Global.Manager.My.Resources.Resources.DeleteSmall
+        Me.BtnDeleteReplacedSellable.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnDeleteReplacedSellable.Name = "BtnDeleteReplacedSellable"
+        Me.BtnDeleteReplacedSellable.Size = New System.Drawing.Size(23, 22)
+        Me.BtnDeleteReplacedSellable.Text = "Excluir Produto/Serviço"
         '
-        'LblFilterReplacedParts
+        'LblFilterReplacedSellable
         '
-        Me.LblFilterReplacedParts.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.LblFilterReplacedParts.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.LblFilterReplacedParts.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
-        Me.LblFilterReplacedParts.Name = "LblFilterReplacedParts"
-        Me.LblFilterReplacedParts.Size = New System.Drawing.Size(46, 25)
-        Me.LblFilterReplacedParts.Text = "Filtrar:"
+        Me.LblFilterReplacedSellable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.LblFilterReplacedSellable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.LblFilterReplacedSellable.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
+        Me.LblFilterReplacedSellable.Name = "LblFilterReplacedSellable"
+        Me.LblFilterReplacedSellable.Size = New System.Drawing.Size(46, 25)
+        Me.LblFilterReplacedSellable.Text = "Filtrar:"
         '
-        'TxtFilterReplacedParts
+        'TxtFilterReplacedSellable
         '
-        Me.TxtFilterReplacedParts.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtFilterReplacedParts.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.TxtFilterReplacedParts.Name = "TxtFilterReplacedParts"
-        Me.TxtFilterReplacedParts.Size = New System.Drawing.Size(200, 25)
+        Me.TxtFilterReplacedSellable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtFilterReplacedSellable.Name = "TxtFilterReplacedSellable"
+        Me.TxtFilterReplacedSellable.Size = New System.Drawing.Size(200, 25)
         '
         'GbxAdvice
         '
         Me.GbxAdvice.Controls.Add(Me.TxtTechnicalAdvice)
         Me.GbxAdvice.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GbxAdvice.Location = New System.Drawing.Point(3, 243)
+        Me.GbxAdvice.Location = New System.Drawing.Point(3, 246)
         Me.GbxAdvice.Name = "GbxAdvice"
-        Me.GbxAdvice.Size = New System.Drawing.Size(1020, 155)
+        Me.GbxAdvice.Size = New System.Drawing.Size(1019, 156)
         Me.GbxAdvice.TabIndex = 0
         Me.GbxAdvice.TabStop = False
         Me.GbxAdvice.Text = "Observação"
@@ -1323,7 +1322,7 @@ Partial Class FrmEvaluation
         Me.TxtTechnicalAdvice.Location = New System.Drawing.Point(3, 19)
         Me.TxtTechnicalAdvice.MaxLength = 1000000
         Me.TxtTechnicalAdvice.Name = "TxtTechnicalAdvice"
-        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1014, 133)
+        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1013, 134)
         Me.TxtTechnicalAdvice.TabIndex = 1
         Me.TxtTechnicalAdvice.Text = ""
         '
@@ -1335,7 +1334,7 @@ Partial Class FrmEvaluation
         Me.TabDocument.Location = New System.Drawing.Point(4, 22)
         Me.TabDocument.Name = "TabDocument"
         Me.TabDocument.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabDocument.Size = New System.Drawing.Size(1032, 411)
+        Me.TabDocument.Size = New System.Drawing.Size(1031, 411)
         Me.TabDocument.TabIndex = 7
         Me.TabDocument.Text = "Documento"
         Me.TabDocument.UseVisualStyleBackColor = True
@@ -1365,7 +1364,7 @@ Partial Class FrmEvaluation
         Me.PdfDocumentViewer.ScrollDisplacementValue = 0
         Me.PdfDocumentViewer.ShowHorizontalScrollBar = True
         Me.PdfDocumentViewer.ShowVerticalScrollBar = True
-        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1026, 380)
+        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1025, 380)
         Me.PdfDocumentViewer.SpaceBetweenPages = 8
         Me.PdfDocumentViewer.TabIndex = 1
         TextSearchSettings1.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -1387,7 +1386,7 @@ Partial Class FrmEvaluation
         Me.TsDocument.Location = New System.Drawing.Point(3, 3)
         Me.TsDocument.Name = "TsDocument"
         Me.TsDocument.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsDocument.Size = New System.Drawing.Size(1026, 25)
+        Me.TsDocument.Size = New System.Drawing.Size(1025, 25)
         Me.TsDocument.TabIndex = 0
         Me.TsDocument.Text = "ToolStrip2"
         '
@@ -1461,7 +1460,7 @@ Partial Class FrmEvaluation
         Me.TabPhoto.Location = New System.Drawing.Point(4, 22)
         Me.TabPhoto.Name = "TabPhoto"
         Me.TabPhoto.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPhoto.Size = New System.Drawing.Size(1032, 411)
+        Me.TabPhoto.Size = New System.Drawing.Size(1031, 411)
         Me.TabPhoto.TabIndex = 8
         Me.TabPhoto.Text = "Fotos"
         Me.TabPhoto.UseVisualStyleBackColor = True
@@ -1475,7 +1474,7 @@ Partial Class FrmEvaluation
         Me.PnPhoto.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PnPhoto.Location = New System.Drawing.Point(3, 3)
         Me.PnPhoto.Name = "PnPhoto"
-        Me.PnPhoto.Size = New System.Drawing.Size(1026, 405)
+        Me.PnPhoto.Size = New System.Drawing.Size(1025, 405)
         Me.PnPhoto.TabIndex = 17
         '
         'PbxPhoto
@@ -1484,7 +1483,7 @@ Partial Class FrmEvaluation
         Me.PbxPhoto.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PbxPhoto.Location = New System.Drawing.Point(0, 28)
         Me.PbxPhoto.Name = "PbxPhoto"
-        Me.PbxPhoto.Size = New System.Drawing.Size(1024, 352)
+        Me.PbxPhoto.Size = New System.Drawing.Size(1023, 352)
         Me.PbxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PbxPhoto.TabIndex = 11
         Me.PbxPhoto.TabStop = False
@@ -1514,7 +1513,7 @@ Partial Class FrmEvaluation
         Me.TlpControls.Name = "TlpControls"
         Me.TlpControls.RowCount = 1
         Me.TlpControls.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TlpControls.Size = New System.Drawing.Size(1024, 28)
+        Me.TlpControls.Size = New System.Drawing.Size(1023, 28)
         Me.TlpControls.TabIndex = 13
         '
         'BtnLastPhoto
@@ -1525,7 +1524,7 @@ Partial Class FrmEvaluation
         Me.BtnLastPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.BtnLastPhoto.FlatAppearance.BorderSize = 0
         Me.BtnLastPhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnLastPhoto.Location = New System.Drawing.Point(593, 5)
+        Me.BtnLastPhoto.Location = New System.Drawing.Point(592, 5)
         Me.BtnLastPhoto.Name = "BtnLastPhoto"
         Me.BtnLastPhoto.Size = New System.Drawing.Size(17, 17)
         Me.BtnLastPhoto.TabIndex = 14
@@ -1540,7 +1539,7 @@ Partial Class FrmEvaluation
         Me.BtnNextPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.BtnNextPhoto.FlatAppearance.BorderSize = 0
         Me.BtnNextPhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnNextPhoto.Location = New System.Drawing.Point(563, 5)
+        Me.BtnNextPhoto.Location = New System.Drawing.Point(562, 5)
         Me.BtnNextPhoto.Name = "BtnNextPhoto"
         Me.BtnNextPhoto.Size = New System.Drawing.Size(17, 17)
         Me.BtnNextPhoto.TabIndex = 14
@@ -1555,7 +1554,7 @@ Partial Class FrmEvaluation
         Me.BtnSavePhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.BtnSavePhoto.FlatAppearance.BorderSize = 0
         Me.BtnSavePhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnSavePhoto.Location = New System.Drawing.Point(533, 5)
+        Me.BtnSavePhoto.Location = New System.Drawing.Point(532, 5)
         Me.BtnSavePhoto.Name = "BtnSavePhoto"
         Me.BtnSavePhoto.Size = New System.Drawing.Size(17, 17)
         Me.BtnSavePhoto.TabIndex = 2
@@ -1570,7 +1569,7 @@ Partial Class FrmEvaluation
         Me.BtnRemovePhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.BtnRemovePhoto.FlatAppearance.BorderSize = 0
         Me.BtnRemovePhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnRemovePhoto.Location = New System.Drawing.Point(503, 5)
+        Me.BtnRemovePhoto.Location = New System.Drawing.Point(502, 5)
         Me.BtnRemovePhoto.Name = "BtnRemovePhoto"
         Me.BtnRemovePhoto.Size = New System.Drawing.Size(17, 17)
         Me.BtnRemovePhoto.TabIndex = 1
@@ -1585,7 +1584,7 @@ Partial Class FrmEvaluation
         Me.BtnIncludePhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.BtnIncludePhoto.FlatAppearance.BorderSize = 0
         Me.BtnIncludePhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnIncludePhoto.Location = New System.Drawing.Point(473, 5)
+        Me.BtnIncludePhoto.Location = New System.Drawing.Point(472, 5)
         Me.BtnIncludePhoto.Name = "BtnIncludePhoto"
         Me.BtnIncludePhoto.Size = New System.Drawing.Size(17, 17)
         Me.BtnIncludePhoto.TabIndex = 0
@@ -1600,7 +1599,7 @@ Partial Class FrmEvaluation
         Me.BtnPreviousPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.BtnPreviousPhoto.FlatAppearance.BorderSize = 0
         Me.BtnPreviousPhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnPreviousPhoto.Location = New System.Drawing.Point(443, 5)
+        Me.BtnPreviousPhoto.Location = New System.Drawing.Point(442, 5)
         Me.BtnPreviousPhoto.Name = "BtnPreviousPhoto"
         Me.BtnPreviousPhoto.Size = New System.Drawing.Size(17, 17)
         Me.BtnPreviousPhoto.TabIndex = 14
@@ -1615,7 +1614,7 @@ Partial Class FrmEvaluation
         Me.BtnFirstPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.BtnFirstPhoto.FlatAppearance.BorderSize = 0
         Me.BtnFirstPhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnFirstPhoto.Location = New System.Drawing.Point(413, 5)
+        Me.BtnFirstPhoto.Location = New System.Drawing.Point(412, 5)
         Me.BtnFirstPhoto.Name = "BtnFirstPhoto"
         Me.BtnFirstPhoto.Size = New System.Drawing.Size(17, 17)
         Me.BtnFirstPhoto.TabIndex = 14
@@ -1629,7 +1628,7 @@ Partial Class FrmEvaluation
         Me.LblPhotoCount.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblPhotoCount.Location = New System.Drawing.Point(0, 380)
         Me.LblPhotoCount.Name = "LblPhotoCount"
-        Me.LblPhotoCount.Size = New System.Drawing.Size(1024, 23)
+        Me.LblPhotoCount.Size = New System.Drawing.Size(1023, 23)
         Me.LblPhotoCount.TabIndex = 14
         Me.LblPhotoCount.Text = "Foto 0 de 0"
         Me.LblPhotoCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -1640,7 +1639,7 @@ Partial Class FrmEvaluation
         Me.TabSignature.Location = New System.Drawing.Point(4, 22)
         Me.TabSignature.Name = "TabSignature"
         Me.TabSignature.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabSignature.Size = New System.Drawing.Size(1032, 411)
+        Me.TabSignature.Size = New System.Drawing.Size(1031, 411)
         Me.TabSignature.TabIndex = 9
         Me.TabSignature.Text = "Assinatura"
         Me.TabSignature.UseVisualStyleBackColor = True
@@ -1652,7 +1651,7 @@ Partial Class FrmEvaluation
         Me.PnSignature.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PnSignature.Location = New System.Drawing.Point(3, 3)
         Me.PnSignature.Name = "PnSignature"
-        Me.PnSignature.Size = New System.Drawing.Size(1026, 405)
+        Me.PnSignature.Size = New System.Drawing.Size(1025, 405)
         Me.PnSignature.TabIndex = 18
         '
         'PbxSignature
@@ -1661,7 +1660,7 @@ Partial Class FrmEvaluation
         Me.PbxSignature.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PbxSignature.Location = New System.Drawing.Point(0, 0)
         Me.PbxSignature.Name = "PbxSignature"
-        Me.PbxSignature.Size = New System.Drawing.Size(1024, 403)
+        Me.PbxSignature.Size = New System.Drawing.Size(1023, 403)
         Me.PbxSignature.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PbxSignature.TabIndex = 11
         Me.PbxSignature.TabStop = False
@@ -1716,38 +1715,38 @@ Partial Class FrmEvaluation
         '
         Me.TmrResize.Interval = 10
         '
-        'DgvPartWorkedHourNavigator
+        'NavWorkedHourSellable
         '
-        Me.DgvPartWorkedHourNavigator.CancelNextMove = False
-        Me.DgvPartWorkedHourNavigator.DataGridView = Me.DgvPartWorkedHour
-        Me.DgvPartWorkedHourNavigator.FirstButton = Nothing
-        Me.DgvPartWorkedHourNavigator.LastButton = Nothing
-        Me.DgvPartWorkedHourNavigator.NextButton = Nothing
-        Me.DgvPartWorkedHourNavigator.PreviousButton = Nothing
+        Me.NavWorkedHourSellable.CancelNextMove = False
+        Me.NavWorkedHourSellable.DataGridView = Me.DgvWorkedHourSellable
+        Me.NavWorkedHourSellable.FirstButton = Nothing
+        Me.NavWorkedHourSellable.LastButton = Nothing
+        Me.NavWorkedHourSellable.NextButton = Nothing
+        Me.NavWorkedHourSellable.PreviousButton = Nothing
         '
         'DgvlTechnicianLayout
         '
         Me.DgvlTechnicianLayout.DataGridView = Me.DgvTechnician
         Me.DgvlTechnicianLayout.Routine = Manager.Routine.EvaluationTechnician
         '
-        'DgvlPartWorkedHourLayout
+        'DgvlWorkedHourSellable
         '
-        Me.DgvlPartWorkedHourLayout.DataGridView = Me.DgvPartWorkedHour
-        Me.DgvlPartWorkedHourLayout.Routine = Manager.Routine.EvaluationControlledSellableWorkedHour
+        Me.DgvlWorkedHourSellable.DataGridView = Me.DgvWorkedHourSellable
+        Me.DgvlWorkedHourSellable.Routine = Manager.Routine.EvaluationControlledSellable
         '
-        'DgvlPartElapsedDayLayout
+        'DgvlElapsedDaySellable
         '
-        Me.DgvlPartElapsedDayLayout.DataGridView = Me.DgvPartElapsedDay
-        Me.DgvlPartElapsedDayLayout.Routine = Manager.Routine.EvaluationControlledSellableElapsedDay
+        Me.DgvlElapsedDaySellable.DataGridView = Me.DgvElapsedDaySellable
+        Me.DgvlElapsedDaySellable.Routine = Manager.Routine.EvaluationControlledSellable
         '
-        'DgvPartElapsedDayNavigator
+        'NavElapsedDaySellable
         '
-        Me.DgvPartElapsedDayNavigator.CancelNextMove = False
-        Me.DgvPartElapsedDayNavigator.DataGridView = Me.DgvPartElapsedDay
-        Me.DgvPartElapsedDayNavigator.FirstButton = Nothing
-        Me.DgvPartElapsedDayNavigator.LastButton = Nothing
-        Me.DgvPartElapsedDayNavigator.NextButton = Nothing
-        Me.DgvPartElapsedDayNavigator.PreviousButton = Nothing
+        Me.NavElapsedDaySellable.CancelNextMove = False
+        Me.NavElapsedDaySellable.DataGridView = Me.DgvElapsedDaySellable
+        Me.NavElapsedDaySellable.FirstButton = Nothing
+        Me.NavElapsedDaySellable.LastButton = Nothing
+        Me.NavElapsedDaySellable.NextButton = Nothing
+        Me.NavElapsedDaySellable.PreviousButton = Nothing
         '
         'CcoCallTypeHasRepairNeedProposal
         '
@@ -1763,16 +1762,16 @@ Partial Class FrmEvaluation
         Me.CcoUnitTemperaturePressure.DropDownEnabled = True
         Me.CcoUnitTemperaturePressure.HostControl = Me.BtnUnitTemperaturePressure
         '
-        'DgvReplacedPartLayout
+        'DgvlReplacedSellable
         '
-        Me.DgvReplacedPartLayout.DataGridView = Me.DgvReplacedPart
-        Me.DgvReplacedPartLayout.Routine = Manager.Routine.EvaluationReplacedSellable
+        Me.DgvlReplacedSellable.DataGridView = Me.DgvReplacedSellable
+        Me.DgvlReplacedSellable.Routine = Manager.Routine.EvaluationReplacedSellable
         '
         'FrmEvaluation
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1040, 531)
+        Me.ClientSize = New System.Drawing.Size(1039, 531)
         Me.Controls.Add(Me.TcEvaluation)
         Me.Controls.Add(Me.PnBottom)
         Me.Controls.Add(Me.TsTitle)
@@ -1797,21 +1796,21 @@ Partial Class FrmEvaluation
         CType(Me.DgvTechnician, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsTechnician.ResumeLayout(False)
         Me.TsTechnician.PerformLayout()
-        Me.GbxPartElapsedDay.ResumeLayout(False)
-        CType(Me.DgvPartElapsedDay, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GbxPartWorkedHour.ResumeLayout(False)
-        CType(Me.DgvPartWorkedHour, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GbxElapsedDaySellable.ResumeLayout(False)
+        CType(Me.DgvElapsedDaySellable, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GbxWorkedHourSellable.ResumeLayout(False)
+        CType(Me.DgvWorkedHourSellable, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GbxMain.ResumeLayout(False)
         Me.GbxMain.PerformLayout()
         Me.FlpCustomer.ResumeLayout(False)
         Me.TabTechnicalAdvice.ResumeLayout(False)
         Me.TlpAdvice.ResumeLayout(False)
         Me.TlpReplaced.ResumeLayout(False)
-        Me.GbxReplacedItems.ResumeLayout(False)
-        Me.GbxReplacedItems.PerformLayout()
-        CType(Me.DgvReplacedPart, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TsReplacedPart.ResumeLayout(False)
-        Me.TsReplacedPart.PerformLayout()
+        Me.GbxReplacedSellable.ResumeLayout(False)
+        Me.GbxReplacedSellable.PerformLayout()
+        CType(Me.DgvReplacedSellable, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TsReplacedSellable.ResumeLayout(False)
+        Me.TsReplacedSellable.PerformLayout()
         Me.GbxAdvice.ResumeLayout(False)
         Me.TabDocument.ResumeLayout(False)
         Me.TsDocument.ResumeLayout(False)
@@ -1892,10 +1891,10 @@ Partial Class FrmEvaluation
     Friend WithEvents LblStartTime As Label
     Friend WithEvents TxtEndTime As MaskedTextBox
     Friend WithEvents TxtStartTime As MaskedTextBox
-    Friend WithEvents GbxPartElapsedDay As GroupBox
-    Friend WithEvents DgvPartElapsedDay As DataGridView
-    Friend WithEvents GbxPartWorkedHour As GroupBox
-    Friend WithEvents DgvPartWorkedHour As DataGridView
+    Friend WithEvents GbxElapsedDaySellable As GroupBox
+    Friend WithEvents DgvElapsedDaySellable As DataGridView
+    Friend WithEvents GbxWorkedHourSellable As GroupBox
+    Friend WithEvents DgvWorkedHourSellable As DataGridView
     Friend WithEvents PnBottom As Panel
     Friend WithEvents BtnCalculate As Button
     Friend WithEvents EprInformation As ErrorProvider
@@ -1926,10 +1925,10 @@ Partial Class FrmEvaluation
     Private WithEvents PnSignature As Panel
     Private WithEvents PbxSignature As PictureBox
     Friend WithEvents DgvlTechnicianLayout As DataGridViewLayout
-    Friend WithEvents DgvlPartWorkedHourLayout As DataGridViewLayout
-    Friend WithEvents DgvlPartElapsedDayLayout As DataGridViewLayout
-    Friend WithEvents DgvPartWorkedHourNavigator As ControlLibrary.DataGridViewNavigator
-    Friend WithEvents DgvPartElapsedDayNavigator As ControlLibrary.DataGridViewNavigator
+    Friend WithEvents DgvlWorkedHourSellable As DataGridViewLayout
+    Friend WithEvents DgvlElapsedDaySellable As DataGridViewLayout
+    Friend WithEvents NavWorkedHourSellable As ControlLibrary.DataGridViewNavigator
+    Friend WithEvents NavElapsedDaySellable As ControlLibrary.DataGridViewNavigator
     Friend WithEvents CcoCallTypeHasRepairNeedProposal As ControlLibrary.ControlContainer
     Friend WithEvents TlpAdvice As TableLayoutPanel
     Friend WithEvents GbxAdvice As GroupBox
@@ -1937,13 +1936,13 @@ Partial Class FrmEvaluation
     Friend WithEvents BtnUnitTemperaturePressure As ControlLibrary.RichTextButton
     Friend WithEvents BtnCallTypeHasRepairNeedProposal As ControlLibrary.RichTextButton
     Friend WithEvents TlpReplaced As TableLayoutPanel
-    Friend WithEvents GbxReplacedItems As GroupBox
-    Friend WithEvents DgvReplacedPart As DataGridView
-    Friend WithEvents TsReplacedPart As ToolStrip
-    Friend WithEvents BtnIncludeReplacedPart As ToolStripButton
-    Friend WithEvents BtnEditReplacedPart As ToolStripButton
-    Friend WithEvents BtnDeleteReplacedPart As ToolStripButton
-    Friend WithEvents LblFilterReplacedParts As ToolStripLabel
-    Friend WithEvents TxtFilterReplacedParts As ToolStripTextBox
-    Friend WithEvents DgvReplacedPartLayout As DataGridViewLayout
+    Friend WithEvents GbxReplacedSellable As GroupBox
+    Friend WithEvents DgvReplacedSellable As DataGridView
+    Friend WithEvents TsReplacedSellable As ToolStrip
+    Friend WithEvents BtnIncludeReplacedSellable As ToolStripButton
+    Friend WithEvents BtnEditReplacedSellable As ToolStripButton
+    Friend WithEvents BtnDeleteReplacedSellable As ToolStripButton
+    Friend WithEvents LblFilterReplacedSellable As ToolStripLabel
+    Friend WithEvents TxtFilterReplacedSellable As ToolStripTextBox
+    Friend WithEvents DgvlReplacedSellable As DataGridViewLayout
 End Class

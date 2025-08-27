@@ -46,9 +46,8 @@ Public Class PersonCompressorSellable
             Return SellableBind <> CompressorSellableBindType.None
         End Get
     End Property
-
-    Public Sub New(PartType As CompressorSellableControlType)
-        _ControlType = PartType
+    Public Sub New(ControlType As CompressorSellableControlType)
+        _ControlType = ControlType
         If _ControlType = CompressorSellableControlType.ElapsedDay Then
             SetRoutine(Routine.PersonCompressorSellableElapsedDay)
         Else

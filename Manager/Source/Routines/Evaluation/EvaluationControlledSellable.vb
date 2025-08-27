@@ -1,53 +1,30 @@
-﻿Imports ControlLibrary
-
-''' <summary>
+﻿''' <summary>
 ''' Representa uma peça da avaliação do compressor.
 ''' </summary>
 Public Class EvaluationControlledSellable
     Inherits ChildModel
-    Private ReadOnly _ControlType As CompressorSellableControlType
-    <IgnoreInToTable>
-    Public ReadOnly Property SellableType As SellableType
+    Public Property SellableStatus As SimpleStatus = SimpleStatus.Active
+    Public Property PersonCompressorSellable As PersonCompressorSellable
+    Public ReadOnly Property Code As String
         Get
             If PersonCompressorSellable IsNot Nothing Then
-                If TypeOf PersonCompressorSellable.Sellable.Value Is Product Then Return SellableType.Product
-                If TypeOf PersonCompressorSellable.Sellable.Value Is Service Then Return SellableType.Service
+                Return PersonCompressorSellable.Code
             End If
-            Return SellableType.None
+            Return String.Empty
         End Get
     End Property
-    <IgnoreInToTable>
-    Public ReadOnly Property Product As Product
+    Public ReadOnly Property Name As String
         Get
-            Return TryCast(PersonCompressorSellable.Sellable.Value, Product)
+            If PersonCompressorSellable IsNot Nothing Then
+                Return PersonCompressorSellable.Name
+            End If
+            Return String.Empty
         End Get
     End Property
-    <IgnoreInToTable>
-    Public ReadOnly Property Service As Service
-        Get
-            Return TryCast(PersonCompressorSellable.Sellable.Value, Service)
-        End Get
-    End Property
-    Public ReadOnly Property SellableControlType As CompressorSellableControlType
-        Get
-            Return _ControlType
-        End Get
-    End Property
-    Public Property PersonCompressorSellable As PersonCompressorSellable
-    Public Property PersonCompressorSellableID As Long
-    Public Property SellableStatus As SimpleStatus = SimpleStatus.Active
-    Public Property Code As String
-    Public Property Name As String
-    Public Property Quantity As Decimal
     Public Property CurrentCapacity As Integer
     Public Property Sold As Boolean
     Public Property Lost As Boolean
-    Public Sub New(ControlType As CompressorSellableControlType)
-        _ControlType = ControlType
-        If _ControlType = CompressorSellableControlType.ElapsedDay Then
-            SetRoutine(Routine.EvaluationControlledSellableElapsedDay)
-        Else
-            SetRoutine(Routine.EvaluationControlledSellableWorkedHour)
-        End If
+    Public Sub New()
+        SetRoutine(Routine.EvaluationControlledSellable)
     End Sub
 End Class

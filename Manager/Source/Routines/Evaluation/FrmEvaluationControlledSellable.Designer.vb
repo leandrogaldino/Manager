@@ -126,7 +126,7 @@ Partial Class FrmEvaluationControlledSellable
         Me.TxtItem.TabIndex = 1
         Me.TxtItem.TabStop = False
         '
-        'FrmEvaluationPart
+        'FrmEvaluationControlledSellable
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
@@ -143,10 +143,10 @@ Partial Class FrmEvaluationControlledSellable
         Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "FrmEvaluationPart"
+        Me.Name = "FrmEvaluationControlledSellable"
         Me.ShowIcon = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Item da Avaliação"
+        Me.Text = "Peça/Serviço Controlado"
         Me.Panel1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()

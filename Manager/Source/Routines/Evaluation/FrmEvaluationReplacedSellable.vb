@@ -27,14 +27,14 @@ Public Class FrmEvaluationReplacedSellable
         _User = Locator.GetInstance(Of Session).User
         Height = 235
         LoadForm()
-        DgvNavigator.DataGridView = _EvaluationForm.DgvReplacedPart
+        DgvNavigator.DataGridView = _EvaluationForm.DgvReplacedSellable
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = _User.CanAccess(Routine.Log)
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = If(_ReplacedPart.IsSaved, _EvaluationForm.DgvReplacedPart.SelectedRows(0).Cells("Order").Value, 0)
+        LblOrderValue.Text = If(_ReplacedPart.IsSaved, _EvaluationForm.DgvReplacedSellable.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _ReplacedPart.Creation
         QbxItem.Unfreeze()
         QbxItem.Freeze(_ReplacedPart.SellableID)
@@ -60,9 +60,9 @@ Public Class FrmEvaluationReplacedSellable
         End If
     End Sub
     Private Sub AfterDataGridViewRowMove()
-        If _EvaluationForm.DgvReplacedPart.SelectedRows.Count = 1 Then
+        If _EvaluationForm.DgvReplacedSellable.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _ReplacedPart = _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _EvaluationForm.DgvReplacedPart.SelectedRows(0).Cells("Guid").Value)
+            _ReplacedPart = _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _EvaluationForm.DgvReplacedSellable.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -162,8 +162,8 @@ Public Class FrmEvaluationReplacedSellable
                 _ReplacedPart.SetIsSaved(True)
                 _Evaluation.ReplacedSellables.Add(_ReplacedPart)
             End If
-            _EvaluationForm.DgvReplacedPart.Fill(_Evaluation.ReplacedSellables)
-            _EvaluationForm.DgvReplacedPartLayout.Load()
+            _EvaluationForm.DgvReplacedSellable.Fill(_Evaluation.ReplacedSellables)
+            _EvaluationForm.DgvlReplacedSellable.Load()
             BtnSave.Enabled = False
             If Not _ReplacedPart.IsSaved Then
                 BtnSave.Text = "Incluir"
@@ -172,9 +172,9 @@ Public Class FrmEvaluationReplacedSellable
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _EvaluationForm.DgvReplacedPart.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ReplacedPart.Guid)
+            Row = _EvaluationForm.DgvReplacedSellable.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ReplacedPart.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _EvaluationForm.DgvReplacedPart.SelectedRows(0).Cells("Order").Value
+            LblOrderValue.Text = _EvaluationForm.DgvReplacedSellable.SelectedRows(0).Cells("Order").Value
             _EvaluationForm.EprValidation.Clear()
             _EvaluationForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()
@@ -237,12 +237,12 @@ Public Class FrmEvaluationReplacedSellable
         LoadForm()
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
-        If _EvaluationForm.DgvReplacedPart.SelectedRows.Count = 1 Then
+        If _EvaluationForm.DgvReplacedSellable.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _ReplacedPart = _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _EvaluationForm.DgvReplacedPart.SelectedRows(0).Cells("Guid").Value)
+                _ReplacedPart = _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _EvaluationForm.DgvReplacedSellable.SelectedRows(0).Cells("Guid").Value)
                 _Evaluation.ReplacedSellables.Remove(_ReplacedPart)
-                _EvaluationForm.DgvReplacedPart.Fill(_Evaluation.ReplacedSellables)
-                _EvaluationForm.DgvReplacedPartLayout.Load()
+                _EvaluationForm.DgvReplacedSellable.Fill(_Evaluation.ReplacedSellables)
+                _EvaluationForm.DgvlReplacedSellable.Load()
                 _Deleting = True
                 Dispose()
                 _EvaluationForm.BtnSave.Enabled = True

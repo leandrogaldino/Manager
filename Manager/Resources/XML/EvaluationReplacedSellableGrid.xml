@@ -22,19 +22,19 @@
 	</Column>
 	<Column Index="3">
 		<Visible>True</Visible>
-		<DisplayIndex>3</DisplayIndex>
+		<DisplayIndex>4</DisplayIndex>
 		<Name>Código</Name>
 		<Width>AllCells</Width>
 	</Column>
     <Column Index="4">
         <Visible>True</Visible>
-        <DisplayIndex>4</DisplayIndex>
+        <DisplayIndex>5</DisplayIndex>
         <Name>Produto/Serviço</Name>
         <Width>Fill</Width>
     </Column>
-    <Column Index="5" Format="N2">
+    <Column Index="5" Format="N2" CellAlignment="MiddleCenter" HeaderAlignment="MiddleCenter">
         <Visible>True</Visible>
-        <DisplayIndex>5</DisplayIndex>
+        <DisplayIndex>3</DisplayIndex>
         <Name>Qtd.</Name>
         <Width>AllCells</Width>
     </Column>	

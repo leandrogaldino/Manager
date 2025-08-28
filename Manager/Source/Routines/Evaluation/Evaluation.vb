@@ -304,12 +304,12 @@ Public Class Evaluation
                 Adp.Fill(TableResult)
                 For Each Row As DataRow In TableResult.Rows
                     Sellable = New EvaluationReplacedSellable With {
-                        .SellableID = Convert.ToInt32(Row.Item("productid")),
-                        .Code = Row.Item("productcode").ToString,
-                        .Name = Row.Item("productname").ToString,
+                        .SellableID = If(Row.Item("productid") IsNot DBNull.Value, Convert.ToInt32(Row.Item("productid")), Convert.ToInt32(Row.Item("serviceid"))),
+                        .Code = Row.Item("code").ToString,
+                        .Name = Row.Item("name").ToString,
                         .Sellable = New Lazy(Of Sellable)(Function()
                                                               If Row.Item("productid") IsNot DBNull.Value Then
-                                                                  Return New Product().Load(Row.Item("productid"), False)
+                                                                  Return New Product().Load(Row.Item("productid"), False) testar passar transaction aqui
                                                               Else
                                                                   Return New Service().Load(Row.Item("serviceid"), False)
                                                               End If

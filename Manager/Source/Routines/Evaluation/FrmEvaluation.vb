@@ -739,7 +739,7 @@ Public Class FrmEvaluation
             CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Evaluation.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Success = False
         ElseIf _Evaluation.Status = EvaluationStatus.Approved AndAlso Not _User.CanAccess(Routine.EvaluationApproveOrReject) Then
-            CMessageBox.Show("Essa avaliação não pode ser alterada pois já foi aprovada.", CMessageBoxType.Information)
+            CMessageBox.Show("Esta avaliação já foi aprovada e não pode mais ser alterada.", CMessageBoxType.Information)
             Success = False
         Else
             If IsValidFieldsToSave() Then
@@ -1041,7 +1041,7 @@ Public Class FrmEvaluation
                 Cursor = Cursors.Default
             End Try
         Else
-            CMessageBox.Show("Essa avaliação não pode ser aprovada, pois ainda não foi salva.")
+            CMessageBox.Show("Esta avaliação ainda não foi salva e, por isso, não pode ser aprovada.")
         End If
     End Sub
     Private Sub BtnReject_Click(sender As Object, e As EventArgs) Handles BtnReject.Click

@@ -39,8 +39,8 @@ VALUES
 	@manualaverageworkload,
 	@averageworkload,
 	@technicaladvice,
-	@documentpath,
-	@signaturepath,
+	@documentname,
+	@signaturename,
 	@rejectreason,
 	@userid
 );

@@ -3,6 +3,11 @@ SELECT
 	evaluationreplacedsellable.creation,
 	evaluationreplacedsellable.productid,
 	evaluationreplacedsellable.serviceid,
-	evaluationreplacedsellable.quantity
+	evaluationreplacedsellable.quantity,
+	IFNULL(product.name, service.name) name,
+	IFNULL(productprovidercode.code, '') code
 FROM evaluationreplacedsellable
+LEFT JOIN product ON product.id = evaluationreplacedsellable.productid
+LEFT JOIN service ON service.id = evaluationreplacedsellable.serviceid
+LEFT JOIN productprovidercode ON productprovidercode.productid = product.id AND productprovidercode.ismainprovider = 1
 WHERE evaluationreplacedsellable.evaluationid = @evaluationid;

@@ -892,7 +892,9 @@ UPDATE personcompressorsellable SET productid = @fseparadoratlas where personcom
 UPDATE personcompressorsellable SET productid = 29 where personcompressorsellable.id = 5012;
 
 
-
+UPDATE personcompressorsellable SET productid = @farchicago where personcompressorsellable.id = 5035;
+UPDATE personcompressorsellable SET productid = @foleochicago where personcompressorsellable.id = 5036;
+UPDATE personcompressorsellable SET productid = @fseparadorchicago where personcompressorsellable.id = 5037;
 
 
 SET SQL_SAFE_UPDATES = 1;

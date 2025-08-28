@@ -82,7 +82,6 @@ Public Class TaskRestoreBackup
             Await BackupComprerssion.Decompress(BackupLocation, RestoreDirectory, _SessionModel.ZipPassword, IntProgress)
 
 
-
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
             Response.Text = "Restaurando Backup: Excluindo arquivos da versão atual"
@@ -162,7 +161,7 @@ Public Class TaskRestoreBackup
 
             AddHandler IntProgress.ProgressChanged, Sub(sender As Object, Percent As Integer)
                                                         Response.Percent = Percent
-                                                        Response.Text = $"Criando Backup: Restaurando o banco de dados ({Percent}%)"
+                                                        Response.Text = $"Restaurando Backup: Restaurando o banco de dados ({Percent}%)"
                                                         If Progress IsNot Nothing Then Progress.Report(Response)
                                                     End Sub
 

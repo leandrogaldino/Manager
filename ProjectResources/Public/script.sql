@@ -886,6 +886,15 @@ UPDATE personcompressorsellable SET productid = 116 WHERE personcompressorsellab
 UPDATE personcompressorsellable SET productid = 15 WHERE personcompressorsellable.id = 2959;
 UPDATE personcompressorsellable SET productid = 152 WHERE personcompressorsellable.id = 2960;
 
+UPDATE personcompressorsellable SET productid = @faratlas where personcompressorsellable.id = 5009;
+UPDATE personcompressorsellable SET productid = @foleoatlas where personcompressorsellable.id = 5010;
+UPDATE personcompressorsellable SET productid = @fseparadoratlas where personcompressorsellable.id = 5011;
+UPDATE personcompressorsellable SET productid = 29 where personcompressorsellable.id = 5012;
+
+
+
+
+
 SET SQL_SAFE_UPDATES = 1;
 
 

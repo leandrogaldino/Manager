@@ -6,7 +6,7 @@ Imports System.Reflection
 Public Class FrmLogin
 
     Private Sub FrmLogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Locator.GetInstance(Of Session).ManagerVersion = $"Versão: {FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileMajorPart}.{FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileMinorPart}"
+        Locator.GetInstance(Of Session).ManagerVersion = $"Versão: {FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileMajorPart}.{FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileMinorPart}.{FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileBuildPart}"
         LblVersion.Text = Locator.GetInstance(Of Session).ManagerVersion
         BtnLogin.Enabled = False
     End Sub

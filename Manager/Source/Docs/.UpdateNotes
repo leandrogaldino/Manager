@@ -4,36 +4,36 @@
 • Inclusão da opção de lançar visitas diretamente na tela do gerenciamento de avaliações.
 • Inclusão do módulo de Serviços.
 • Reestruturação da tabela de preços, com acesso pelo produto, serviço ou pelo módulo Tabela de Preços.
-• O módulo Avaliações foi reestruturado para conter os documentos recebidos pela núvem.
-• Motor de integração entre o Gerenciador e o Agente reestruturado.
+• Reestruturação do módulo Avaliações para conter os documentos recebidos da nuvem (fotos, assinaturas, peças substituídas, serviços executados).
+• Reestruturação do motor de integração entre o Gerenciador e o Agente.
 • Correções na tela de alteração de capacidades das peças da avaliação.
-#1.3.1
+• Possibilidade de incluir produtos e serviços como itens dos compressores.
+• Criação de vínculo dos itens do compressor da pessoa para recebimento de dados da nuvem.
+#1.1.6
 • Corrigido um bug que fazia a avaliação automática vencer no mesmo dia em que era criada.
-#1.3.0
+#1.1.5
 • Adicionada a opção de realizar avaliação automática diretamente na interface de gerenciamento.
 • O plano de manutenção agora exibe datas com precisão, sem variação superior ou inferior a 1 ano.
 • Introduzido o recurso de geração de relatórios em lote para a folha de caixa.
-#1.2.4
+#1.1.4
 • Incluída a coluna "A Acertar" no relatório da requisição.
 • Foi inserido um aviso ao tentar adicionar itens duplicados à requisição.
-#1.2.3
+#1.1.3
 • Agora é possível liberar e/ou restringir os fluxos de caixa para os usuários de acordo com a necessidade.
-#1.2.2
+#1.1.2
 • O problema que causava a geração incorreta do plano de manutenção, incluindo a repetição de compressores ou a inclusão de compressores que não pertenciam ao cliente selecionado, foi devidamente corrigida.
 • Incluída a coluna "A Acertar" na grade dos itens da Requisição.
 • O problema relacionado ao salvamento incorreto do histórico quando o status de um item da Requisição era modificado foi resolvido.
 • Clientes que não controlam manutenção agora não aparecem mais na caixa de busca de clientes da Avaliação.
-#1.2.1
+#1.1.1
 • Corrigido um problema que fazia com que o mês de março no gráfico do painel de visitas aparecesse como "MMARÇO".
 • Corrigido um problema que fazia com que o sistema apresentasse um erro caso o caminho do Gerenciador não fosse encontrado.
 • Corrigido um problema que fazia com que o plano de manutenção fosse gerado com base na última avaliação lançada, e não com base na última data de avaliação.
-#1.2.0
+#1.1.0
 • Inclusão do módulo CRM.
 • Corrigido problema que permitia que usuários sem permissão excluísse registros.
 • Correção de erro ao exportar grades.
-#1.1.1
-• Alteração de ícone do sistema.
-#1.1.0
+#1.0.1
 • Inclusão de gráfico no plano de manutenção.
 • Inclusão de documentos no caixa.
 • Correção de erro no relatório de peças pendentes na requisição, agora os campos de data inicial e final não ficam em branco.

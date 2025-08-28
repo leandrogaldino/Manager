@@ -64,10 +64,11 @@ Partial Class FrmUpdateNotes
         Me.TxtUpdates.Multiline = True
         Me.TxtUpdates.Name = "TxtUpdates"
         Me.TxtUpdates.ReadOnly = True
+        Me.TxtUpdates.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.TxtUpdates.Size = New System.Drawing.Size(396, 336)
         Me.TxtUpdates.TabIndex = 2
         '
-        'FrmUpdateInfo
+        'FrmUpdateNotes
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -81,7 +82,7 @@ Partial Class FrmUpdateNotes
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "FrmUpdateInfo"
+        Me.Name = "FrmUpdateNotes"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.Text = "Gerenciador"

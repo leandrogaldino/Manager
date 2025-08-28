@@ -3,7 +3,7 @@ Imports System.Text
 Public Class FrmUpdateNotes
     Private _Updates As New List(Of List(Of String))
     Private Sub FrmUpdateInfo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim FilePath As String = Path.Combine(Application.StartupPath, "Docs/.UpdateNotes")
+        Dim FilePath As String = Path.Combine(Application.StartupPath, "Source\Docs\.UpdateNotes")
         Dim Update As New List(Of String)
         Dim Line As String
         If File.Exists(FilePath) Then

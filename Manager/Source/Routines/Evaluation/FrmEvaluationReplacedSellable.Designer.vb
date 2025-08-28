@@ -47,16 +47,17 @@ Partial Class FrmEvaluationReplacedSellable
         Me.LblOrderValue = New System.Windows.Forms.ToolStripLabel()
         Me.LblCreation = New System.Windows.Forms.ToolStripLabel()
         Me.LblCreationValue = New System.Windows.Forms.ToolStripLabel()
-        Me.LblItem = New System.Windows.Forms.Label()
-        Me.LblTaked = New System.Windows.Forms.Label()
+        Me.LblQuantity = New System.Windows.Forms.Label()
         Me.FlpProduct = New System.Windows.Forms.FlowLayoutPanel()
         Me.BtnFilter = New ControlLibrary.NoFocusCueButton()
         Me.BtnView = New ControlLibrary.NoFocusCueButton()
         Me.BtnNew = New ControlLibrary.NoFocusCueButton()
         Me.TmrQueriedBox = New System.Windows.Forms.Timer(Me.components)
-        Me.QbxItem = New ControlLibrary.QueriedBox()
         Me.DbxQuantity = New ControlLibrary.DecimalBox()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
+        Me.RbtService = New System.Windows.Forms.RadioButton()
+        Me.RbtProduct = New System.Windows.Forms.RadioButton()
+        Me.QbxSellable = New ControlLibrary.QueriedBox()
         Me.TsMain.SuspendLayout()
         Me.Panel1.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -242,24 +243,14 @@ Partial Class FrmEvaluationReplacedSellable
         Me.LblCreationValue.Size = New System.Drawing.Size(32, 22)
         Me.LblCreationValue.Text = "      "
         '
-        'LblItem
+        'LblQuantity
         '
-        Me.LblItem.AutoSize = True
-        Me.LblItem.Location = New System.Drawing.Point(12, 60)
-        Me.LblItem.Margin = New System.Windows.Forms.Padding(3, 10, 3, 0)
-        Me.LblItem.Name = "LblItem"
-        Me.LblItem.Size = New System.Drawing.Size(41, 17)
-        Me.LblItem.TabIndex = 2
-        Me.LblItem.Text = "Peça"
-        '
-        'LblTaked
-        '
-        Me.LblTaked.AutoSize = True
-        Me.LblTaked.Location = New System.Drawing.Point(400, 60)
-        Me.LblTaked.Name = "LblTaked"
-        Me.LblTaked.Size = New System.Drawing.Size(37, 17)
-        Me.LblTaked.TabIndex = 5
-        Me.LblTaked.Text = "Qtd."
+        Me.LblQuantity.AutoSize = True
+        Me.LblQuantity.Location = New System.Drawing.Point(403, 60)
+        Me.LblQuantity.Name = "LblQuantity"
+        Me.LblQuantity.Size = New System.Drawing.Size(37, 17)
+        Me.LblQuantity.TabIndex = 5
+        Me.LblQuantity.Text = "Qtd."
         '
         'FlpProduct
         '
@@ -267,7 +258,7 @@ Partial Class FrmEvaluationReplacedSellable
         Me.FlpProduct.Controls.Add(Me.BtnView)
         Me.FlpProduct.Controls.Add(Me.BtnNew)
         Me.FlpProduct.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-        Me.FlpProduct.Location = New System.Drawing.Point(328, 60)
+        Me.FlpProduct.Location = New System.Drawing.Point(327, 59)
         Me.FlpProduct.Name = "FlpProduct"
         Me.FlpProduct.Size = New System.Drawing.Size(69, 21)
         Me.FlpProduct.TabIndex = 4
@@ -325,31 +316,74 @@ Partial Class FrmEvaluationReplacedSellable
         Me.TmrQueriedBox.Enabled = True
         Me.TmrQueriedBox.Interval = 300
         '
-        'QbxItem
+        'DbxQuantity
         '
-        Me.QbxItem.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.QbxItem.CharactersToQuery = 1
+        Me.DbxQuantity.DecimalOnly = True
+        Me.DbxQuantity.DecimalPlaces = 2
+        Me.DbxQuantity.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
+        Me.DbxQuantity.Location = New System.Drawing.Point(403, 80)
+        Me.DbxQuantity.Name = "DbxQuantity"
+        Me.DbxQuantity.Size = New System.Drawing.Size(100, 23)
+        Me.DbxQuantity.TabIndex = 6
+        Me.DbxQuantity.Text = "0,00"
+        Me.DbxQuantity.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'DgvNavigator
+        '
+        Me.DgvNavigator.CancelNextMove = False
+        Me.DgvNavigator.FirstButton = Me.BtnFirst
+        Me.DgvNavigator.LastButton = Me.BtnLast
+        Me.DgvNavigator.NextButton = Me.BtnNext
+        Me.DgvNavigator.PreviousButton = Me.BtnPrevious
+        '
+        'RbtService
+        '
+        Me.RbtService.AutoSize = True
+        Me.RbtService.Location = New System.Drawing.Point(96, 53)
+        Me.RbtService.Name = "RbtService"
+        Me.RbtService.Size = New System.Drawing.Size(72, 21)
+        Me.RbtService.TabIndex = 19
+        Me.RbtService.Text = "Serviço"
+        Me.RbtService.UseVisualStyleBackColor = True
+        '
+        'RbtProduct
+        '
+        Me.RbtProduct.AutoSize = True
+        Me.RbtProduct.Checked = True
+        Me.RbtProduct.Location = New System.Drawing.Point(12, 53)
+        Me.RbtProduct.Name = "RbtProduct"
+        Me.RbtProduct.Size = New System.Drawing.Size(78, 21)
+        Me.RbtProduct.TabIndex = 18
+        Me.RbtProduct.TabStop = True
+        Me.RbtProduct.Text = "Produto"
+        Me.RbtProduct.UseVisualStyleBackColor = True
+        '
+        'QbxSellable
+        '
+        Me.QbxSellable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.QbxSellable.CharactersToQuery = 1
         Condition1.FieldName = "statusid"
         Condition1.Operator = "="
         Condition1.TableNameOrAlias = "product"
         Condition1.Value = "@statusid"
-        Me.QbxItem.Conditions.Add(Condition1)
-        Me.QbxItem.DebugOnTextChanged = True
-        Me.QbxItem.DisplayFieldAlias = "Código"
-        Me.QbxItem.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        Me.QbxItem.DisplayFieldName = "code"
-        Me.QbxItem.DisplayMainFieldName = "id"
-        Me.QbxItem.DisplayTableAlias = ""
-        Me.QbxItem.DisplayTableName = "productprovidercode"
-        Me.QbxItem.Distinct = False
-        Me.QbxItem.DropDownAutoStretchRight = False
-        Me.QbxItem.GridHeaderBackColor = System.Drawing.SystemColors.Window
-        Me.QbxItem.IfNull = Nothing
-        Me.QbxItem.Location = New System.Drawing.Point(12, 80)
-        Me.QbxItem.MainReturnFieldName = "id"
-        Me.QbxItem.MainTableAlias = Nothing
-        Me.QbxItem.MainTableName = "product"
-        Me.QbxItem.Name = "QbxItem"
+        Me.QbxSellable.Conditions.Add(Condition1)
+        Me.QbxSellable.DebugOnTextChanged = True
+        Me.QbxSellable.DisplayFieldAlias = "Código"
+        Me.QbxSellable.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        Me.QbxSellable.DisplayFieldName = "code"
+        Me.QbxSellable.DisplayMainFieldName = "id"
+        Me.QbxSellable.DisplayTableAlias = ""
+        Me.QbxSellable.DisplayTableName = "productprovidercode"
+        Me.QbxSellable.Distinct = False
+        Me.QbxSellable.DropDownAutoStretchRight = False
+        Me.QbxSellable.DropDownStretchRight = 97
+        Me.QbxSellable.GridHeaderBackColor = System.Drawing.SystemColors.Window
+        Me.QbxSellable.IfNull = Nothing
+        Me.QbxSellable.Location = New System.Drawing.Point(12, 80)
+        Me.QbxSellable.MainReturnFieldName = "id"
+        Me.QbxSellable.MainTableAlias = Nothing
+        Me.QbxSellable.MainTableName = "product"
+        Me.QbxSellable.Name = "QbxSellable"
         OtherField1.DisplayFieldAlias = "Produto"
         OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField1.DisplayFieldName = "name"
@@ -360,14 +394,14 @@ Partial Class FrmEvaluationReplacedSellable
         OtherField1.IfNull = Nothing
         OtherField1.Prefix = Nothing
         OtherField1.Suffix = Nothing
-        Me.QbxItem.OtherFields.Add(OtherField1)
+        Me.QbxSellable.OtherFields.Add(OtherField1)
         Parameter1.ParameterName = "@statusid"
         Parameter1.ParameterValue = "0"
         Parameter2.ParameterName = "@ismainprovider"
         Parameter2.ParameterValue = "1"
-        Me.QbxItem.Parameters.Add(Parameter1)
-        Me.QbxItem.Parameters.Add(Parameter2)
-        Me.QbxItem.Prefix = Nothing
+        Me.QbxSellable.Parameters.Add(Parameter1)
+        Me.QbxSellable.Parameters.Add(Parameter2)
+        Me.QbxSellable.Prefix = Nothing
         Condition2.FieldName = "ismainprovider"
         Condition2.Operator = "="
         Condition2.TableNameOrAlias = "productprovidercode"
@@ -381,41 +415,22 @@ Partial Class FrmEvaluationReplacedSellable
         Relation1.WithFieldName = "id"
         Relation1.WithTableAlias = Nothing
         Relation1.WithTableName = "product"
-        Me.QbxItem.Relations.Add(Relation1)
-        Me.QbxItem.Size = New System.Drawing.Size(385, 23)
-        Me.QbxItem.Suffix = " - "
-        Me.QbxItem.TabIndex = 3
+        Me.QbxSellable.Relations.Add(Relation1)
+        Me.QbxSellable.Size = New System.Drawing.Size(385, 23)
+        Me.QbxSellable.Suffix = Nothing
+        Me.QbxSellable.TabIndex = 20
         '
-        'DbxQuantity
-        '
-        Me.DbxQuantity.DecimalOnly = True
-        Me.DbxQuantity.DecimalPlaces = 2
-        Me.DbxQuantity.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxQuantity.Location = New System.Drawing.Point(403, 80)
-        Me.DbxQuantity.Name = "DbxQuantity"
-        Me.DbxQuantity.Size = New System.Drawing.Size(104, 23)
-        Me.DbxQuantity.TabIndex = 6
-        Me.DbxQuantity.Text = "0,00"
-        Me.DbxQuantity.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'DgvNavigator
-        '
-        Me.DgvNavigator.CancelNextMove = False
-        Me.DgvNavigator.FirstButton = Me.BtnFirst
-        Me.DgvNavigator.LastButton = Me.BtnLast
-        Me.DgvNavigator.NextButton = Me.BtnNext
-        Me.DgvNavigator.PreviousButton = Me.BtnPrevious
-        '
-        'FrmEvaluationReplacedPart
+        'FrmEvaluationReplacedSellable
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(515, 158)
+        Me.Controls.Add(Me.QbxSellable)
+        Me.Controls.Add(Me.RbtService)
+        Me.Controls.Add(Me.RbtProduct)
         Me.Controls.Add(Me.FlpProduct)
-        Me.Controls.Add(Me.QbxItem)
-        Me.Controls.Add(Me.LblTaked)
+        Me.Controls.Add(Me.LblQuantity)
         Me.Controls.Add(Me.DbxQuantity)
-        Me.Controls.Add(Me.LblItem)
         Me.Controls.Add(Me.TsData)
         Me.Controls.Add(Me.TsMain)
         Me.Controls.Add(Me.Panel1)
@@ -425,7 +440,7 @@ Partial Class FrmEvaluationReplacedSellable
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "FrmEvaluationReplacedPart"
+        Me.Name = "FrmEvaluationReplacedSellable"
         Me.ShowIcon = False
         Me.Text = "Peça Substituída"
         Me.TsMain.ResumeLayout(False)
@@ -459,12 +474,13 @@ Partial Class FrmEvaluationReplacedSellable
     Friend WithEvents LblCreation As ToolStripLabel
     Friend WithEvents LblCreationValue As ToolStripLabel
     Friend WithEvents DbxQuantity As ControlLibrary.DecimalBox
-    Friend WithEvents LblItem As Label
-    Friend WithEvents LblTaked As Label
+    Friend WithEvents LblQuantity As Label
     Friend WithEvents FlpProduct As FlowLayoutPanel
     Friend WithEvents BtnFilter As ControlLibrary.NoFocusCueButton
     Friend WithEvents BtnNew As ControlLibrary.NoFocusCueButton
     Friend WithEvents BtnView As ControlLibrary.NoFocusCueButton
     Friend WithEvents TmrQueriedBox As Timer
-    Friend WithEvents QbxItem As ControlLibrary.QueriedBox
+    Friend WithEvents RbtService As RadioButton
+    Friend WithEvents RbtProduct As RadioButton
+    Friend WithEvents QbxSellable As ControlLibrary.QueriedBox
 End Class

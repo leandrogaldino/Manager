@@ -3,7 +3,7 @@ Imports ControlLibrary.Extensions
 Public Class FrmEvaluationReplacedSellable
     Private _EvaluationForm As FrmEvaluation
     Private _Evaluation As Evaluation
-    Private _ReplacedPart As EvaluationReplacedSellable
+    Private _ReplacedSellable As EvaluationReplacedSellable
     Private _Deleting As Boolean
     Private _Loading As Boolean
     Private _User As User
@@ -19,13 +19,12 @@ Public Class FrmEvaluationReplacedSellable
         End If
         MyBase.DefWndProc(m)
     End Sub
-    Public Sub New(Evaluation As Evaluation, ReplacedPart As EvaluationReplacedSellable, EvaluationForm As FrmEvaluation)
+    Public Sub New(Evaluation As Evaluation, ReplacedSellable As EvaluationReplacedSellable, EvaluationForm As FrmEvaluation)
         InitializeComponent()
         _Evaluation = Evaluation
-        _ReplacedPart = ReplacedPart
+        _ReplacedSellable = ReplacedSellable
         _EvaluationForm = EvaluationForm
         _User = Locator.GetInstance(Of Session).User
-        Height = 235
         LoadForm()
         DgvNavigator.DataGridView = _EvaluationForm.DgvReplacedSellable
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
@@ -34,12 +33,16 @@ Public Class FrmEvaluationReplacedSellable
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = If(_ReplacedPart.IsSaved, _EvaluationForm.DgvReplacedSellable.SelectedRows(0).Cells("Order").Value, 0)
-        LblCreationValue.Text = _ReplacedPart.Creation
-        QbxItem.Unfreeze()
-        QbxItem.Freeze(_ReplacedPart.SellableID)
-        DbxQuantity.Text = _ReplacedPart.Quantity
-        If Not _ReplacedPart.IsSaved Then
+        LblOrderValue.Text = If(_ReplacedSellable.IsSaved, _EvaluationForm.DgvReplacedSellable.SelectedRows(0).Cells("Order").Value, 0)
+        LblCreationValue.Text = _ReplacedSellable.Creation
+        ClearQbxSellable()
+        SetUpQbxSellableForProduct()
+        If _ReplacedSellable.Sellable Is Nothing Then RbtProduct.Checked = True
+        If _ReplacedSellable.Sellable IsNot Nothing AndAlso _ReplacedSellable.SellableType = SellableType.Product Then RbtProduct.Checked = True
+        If _ReplacedSellable.Sellable IsNot Nothing AndAlso _ReplacedSellable.SellableType = SellableType.Service Then RbtService.Checked = True
+        If _ReplacedSellable.Sellable IsNot Nothing AndAlso _ReplacedSellable.SellableID > 0 Then QbxSellable.Freeze(_ReplacedSellable.SellableID)
+        DbxQuantity.Text = _ReplacedSellable.Quantity
+        If Not _ReplacedSellable.IsSaved Then
             BtnSave.Text = "Incluir"
             BtnDelete.Enabled = False
         Else
@@ -47,7 +50,7 @@ Public Class FrmEvaluationReplacedSellable
             BtnDelete.Enabled = True
         End If
         BtnSave.Enabled = False
-        QbxItem.Select()
+        QbxSellable.Select()
         _Loading = False
     End Sub
     Private Sub BeforeDataGridViewRowMove()
@@ -62,20 +65,22 @@ Public Class FrmEvaluationReplacedSellable
     Private Sub AfterDataGridViewRowMove()
         If _EvaluationForm.DgvReplacedSellable.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _ReplacedPart = _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _EvaluationForm.DgvReplacedSellable.SelectedRows(0).Cells("Guid").Value)
+            _ReplacedSellable = _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _EvaluationForm.DgvReplacedSellable.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
     End Sub
-    Private Sub Form_Closing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        If Not _Deleting AndAlso BtnSave.Enabled Then
-            If CMessageBox.Show("Houve alterações que ainda não foram salvas. Deseja salvar antes de continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                If Not PreSave() Then e.Cancel = True
+    Private Sub Form_Closing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        If Not Locator.GetInstance(Of Session).AutoCloseApp Then
+            If Not _Deleting AndAlso BtnSave.Enabled Then
+                If CMessageBox.Show("Houve alterações que ainda não foram salvas. Deseja salvar antes de continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+                    If Not PreSave() Then e.Cancel = True
+                End If
             End If
+            _Deleting = False
         End If
-        _Deleting = False
     End Sub
-    Private Sub Form_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Form_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If e.KeyCode = Keys.Insert And e.Control Then
             If BtnInclude.Enabled Then BtnInclude.PerformClick()
             e.SuppressKeyPress = True
@@ -91,14 +96,10 @@ Public Class FrmEvaluationReplacedSellable
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.EvaluationReplacedSellable, _ReplacedPart.ID)
+        Dim Frm As New FrmLog(Routine.EvaluationReplacedSellable, _ReplacedSellable.ID)
         Frm.ShowDialog()
     End Sub
-    Private Sub QbxItem_TextChanged(sender As Object, e As EventArgs) Handles QbxItem.TextChanged
-        EprValidation.Clear()
-        If Not _Loading Then BtnSave.Enabled = True
-    End Sub
-    Private Sub Dbx_TextChanged(sender As Object, e As EventArgs) Handles DbxQuantity.TextChanged
+    Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles DbxQuantity.TextChanged
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
@@ -106,73 +107,81 @@ Public Class FrmEvaluationReplacedSellable
         PreSave()
     End Sub
     Private Function IsValidFields() As Boolean
-        If String.IsNullOrWhiteSpace(QbxItem.Text) Then
-            EprValidation.SetError(LblItem, "Campo obrigatório")
-            EprValidation.SetIconAlignment(LblItem, ErrorIconAlignment.MiddleRight)
-            QbxItem.Select()
+        If String.IsNullOrEmpty(QbxSellable.Text) Then
+            EprValidation.SetError(RbtService, "Campo Obrigatório.")
+            EprValidation.SetIconAlignment(RbtService, ErrorIconAlignment.MiddleRight)
+            QbxSellable.Select()
             Return False
-        ElseIf Not QbxItem.IsFreezed Then
-            EprValidation.SetError(LblItem, "Produto não encontrado.")
-            EprValidation.SetIconAlignment(LblItem, ErrorIconAlignment.MiddleRight)
-            QbxItem.Select()
+        ElseIf RbtProduct.Checked And Not QbxSellable.IsFreezed Then
+            EprValidation.SetError(RbtService, "Produto não encontrado.")
+            EprValidation.SetIconAlignment(RbtService, ErrorIconAlignment.MiddleRight)
+            QbxSellable.Select()
+            Return False
+        ElseIf RbtService.Checked And Not QbxSellable.IsFreezed Then
+            EprValidation.SetError(RbtService, "Serviço não encontrado.")
+            EprValidation.SetIconAlignment(RbtService, ErrorIconAlignment.MiddleRight)
+            QbxSellable.Select()
             Return False
         ElseIf DbxQuantity.DecimalValue <= 0 Then
-            EprValidation.SetError(LblTaked, "A quantidade retirada deve ser maior que 0.")
-            EprValidation.SetIconAlignment(LblTaked, ErrorIconAlignment.MiddleRight)
+            EprValidation.SetError(LblQuantity, "A quantidade deve ser maior que 0.")
+            EprValidation.SetIconAlignment(LblQuantity, ErrorIconAlignment.MiddleRight)
             DbxQuantity.Select()
             Return False
         End If
         Return True
     End Function
-    Private Function HasDuplicatedItem() As Boolean
-        Dim TargetItems As List(Of EvaluationReplacedSellable)
-        TargetItems = _Evaluation.ReplacedSellables.Where(Function(x) Not x.SellableID.Equals(_ReplacedPart.SellableID) AndAlso x.SellableID.Equals(QbxItem.FreezedPrimaryKey)).ToList()
-        If TargetItems.Count > 0 Then
-            CMessageBox.Show("Essa peça já foi incluida na avaliação.", CMessageBoxType.Information)
-            QbxItem.Freeze(_ReplacedPart.SellableID)
-            DbxQuantity.Text = 0
-            QbxItem.Select()
-            Return True
-        End If
-        Return False
-    End Function
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
-        If Not QbxItem.IsFreezed Then
-            QbxItem.QueryEnabled = False
-            QbxItem.Text = QbxItem.Text.Trim.ToUnaccented()
-            QbxItem.QueryEnabled = True
-        End If
         If IsValidFields() Then
             If HasDuplicatedItem() Then Return False
-            If _ReplacedPart.IsSaved Then
-                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).SellableID = QbxItem.FreezedPrimaryKey
-                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxItem.FreezedPrimaryKey, False))
-                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).Code = QbxItem.GetRawFreezedValueOf("productprovidercode", "code").ToString
-                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).Name = QbxItem.GetRawFreezedValueOf("product", "name").ToString
-                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedPart.Guid).Quantity = DbxQuantity.DecimalValue
+            If _ReplacedSellable.IsSaved Then
+                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).Quantity = DbxQuantity.DecimalValue
+                If RbtProduct.Checked Then
+                    _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
+                    Dim Sellable As Sellable = _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).Sellable.Value
+                    _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).SellableID = Sellable.ID
+                    _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).Name = Sellable.Name
+                    _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).Code = CType(Sellable, Product).ProviderCodes.FirstOrNew(Function(x) x.IsMainProvider = True).Code
+                Else
+                    _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
+                    Dim Sellable As Sellable = _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).Sellable.Value
+                    _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).SellableID = Sellable.ID
+                    _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).Name = Sellable.Name
+                    _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).Code = String.Empty
+                End If
             Else
-                _ReplacedPart = New EvaluationReplacedSellable With {
-                    .SellableID = QbxItem.FreezedPrimaryKey,
-                    .Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxItem.FreezedPrimaryKey, False)),
-                    .Code = QbxItem.GetRawFreezedValueOf("productprovidercode", "code").ToString,
-                    .Name = QbxItem.GetRawFreezedValueOf("product", "name").ToString,
+                _ReplacedSellable = New EvaluationReplacedSellable() With {
                     .Quantity = DbxQuantity.DecimalValue
                 }
-                _ReplacedPart.SetIsSaved(True)
-                _Evaluation.ReplacedSellables.Add(_ReplacedPart)
+                If RbtProduct.Checked Then
+                    _ReplacedSellable.Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
+                    Dim Sellable As Sellable = _ReplacedSellable.Sellable.Value
+                    _ReplacedSellable.SellableID = Sellable.ID
+                    _ReplacedSellable.Name = Sellable.Name
+                    _ReplacedSellable.Code = CType(Sellable, Product).ProviderCodes.FirstOrNew(Function(x) x.IsMainProvider = True).Code
+                    _ReplacedSellable.Quantity = DbxQuantity.DecimalValue
+                Else
+                    _ReplacedSellable.Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
+                    Dim Sellable As Sellable = _ReplacedSellable.Sellable.Value
+                    _ReplacedSellable.SellableID = Sellable.ID
+                    _ReplacedSellable.Name = Sellable.Name
+                    _ReplacedSellable.Code = String.Empty
+                    _ReplacedSellable.Quantity = DbxQuantity.DecimalValue
+                End If
+                _ReplacedSellable.SetIsSaved(True)
+                _Evaluation.ReplacedSellables.Add(_ReplacedSellable)
             End If
             _EvaluationForm.DgvReplacedSellable.Fill(_Evaluation.ReplacedSellables)
             _EvaluationForm.DgvlReplacedSellable.Load()
             BtnSave.Enabled = False
-            If Not _ReplacedPart.IsSaved Then
+            If Not _ReplacedSellable.IsSaved Then
                 BtnSave.Text = "Incluir"
                 BtnDelete.Enabled = False
             Else
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _EvaluationForm.DgvReplacedSellable.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ReplacedPart.Guid)
+            Row = _EvaluationForm.DgvReplacedSellable.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ReplacedSellable.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
             LblOrderValue.Text = _EvaluationForm.DgvReplacedSellable.SelectedRows(0).Cells("Order").Value
             _EvaluationForm.EprValidation.Clear()
@@ -183,49 +192,88 @@ Public Class FrmEvaluationReplacedSellable
             Return False
         End If
     End Function
+    Private Function HasDuplicatedItem() As Boolean
+        Dim WorkedHourItems As List(Of EvaluationReplacedSellable)
+        If RbtProduct.Checked Then
+            WorkedHourItems = _Evaluation.ReplacedSellables.Where(Function(x) Not x.SellableID.Equals(_ReplacedSellable.SellableID) AndAlso x.Product IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+        Else
+            WorkedHourItems = _Evaluation.ReplacedSellables.Where(Function(x) Not x.SellableID.Equals(_ReplacedSellable.SellableID) AndAlso x.Service IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+        End If
+        If WorkedHourItems.Any() Then
+            If RbtProduct.Checked Then
+                CMessageBox.Show("Esse produto já foi incluído no compressor.", CMessageBoxType.Information)
+            Else
+                CMessageBox.Show("Esse serviço já foi incluído no compressor.", CMessageBoxType.Information)
+            End If
+            Return True
+        End If
+        Return False
+    End Function
     Private Sub TmrQueriedBox_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBox.Tick
         BtnView.Visible = False
         BtnNew.Visible = False
         BtnFilter.Visible = False
         TmrQueriedBox.Stop()
     End Sub
-    Private Sub QbxItem_Enter(sender As Object, e As EventArgs) Handles QbxItem.Enter
-        TmrQueriedBox.Stop()
-        BtnView.Visible = QbxItem.IsFreezed And _User.CanWrite(Routine.Product)
-        BtnNew.Visible = _User.CanWrite(Routine.Product)
-        BtnFilter.Visible = _User.CanAccess(Routine.Product)
+    Private Sub QbxSellable_Enter(sender As Object, e As EventArgs)
+
     End Sub
-    Private Sub QbxItem_Leave(sender As Object, e As EventArgs) Handles QbxItem.Leave
+    Private Sub QbxItem_Leave(sender As Object, e As EventArgs)
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
-    Private Sub QbxItem_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxItem.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnView.Visible = QbxItem.IsFreezed And _User.CanWrite(Routine.Product)
+    Private Sub QbxItem_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs)
+
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Product As Product
-        Dim Form As FrmProduct
-        Product = New Product
-        Form = New FrmProduct(Product)
-        Form.ShowDialog()
-        EprValidation.Clear()
-        If Product.ID > 0 Then
-            QbxItem.Freeze(Product.ID)
+        Dim Service As Service
+        Dim ProductForm As FrmProduct
+        Dim ServiceForm As FrmService
+        If RbtProduct.Checked Then
+            Product = New Product
+            ProductForm = New FrmProduct(Product)
+            ProductForm.ShowDialog()
+            If Product.ID > 0 Then
+                QbxSellable.Freeze(Product.ID)
+            End If
+        Else
+            Service = New Service
+            ServiceForm = New FrmService(Service)
+            ServiceForm.ShowDialog()
+            If Service.ID > 0 Then
+                QbxSellable.Freeze(Service.ID)
+            End If
         End If
-        QbxItem.Select()
+        EprValidation.Clear()
+        QbxSellable.Select()
     End Sub
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
-        Dim Form As New FrmProduct(New Product().Load(QbxItem.FreezedPrimaryKey, True))
-        Form.ShowDialog()
-        QbxItem.Freeze(QbxItem.FreezedPrimaryKey)
-        QbxItem.Select()
-    End Sub
+        Dim ProductForm As FrmProduct
+        Dim ServiceForm As FrmService
+        If RbtProduct.Checked Then
+            ProductForm = New FrmProduct(New Product().Load(QbxSellable.FreezedPrimaryKey, True))
+            ProductForm.ShowDialog()
+        Else
+            ServiceForm = New FrmService(New Service().Load(QbxSellable.FreezedPrimaryKey, True))
+            ServiceForm.ShowDialog()
+        End If
+        QbxSellable.Freeze(QbxSellable.FreezedPrimaryKey)
+        QbxSellable.Select()
+    End Sub    '
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
         Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New ProductQueriedBoxFilter(), QbxItem)
-        FilterForm.Text = "Filtro de Produtos"
+        If RbtProduct.Checked Then
+            FilterForm = New FrmFilter(New ProductQueriedBoxFilter(), QbxSellable) With {
+                .Text = "Filtro de Produtos"
+            }
+        Else
+            FilterForm = New FrmFilter(New ServiceQueriedBoxFilter(), QbxSellable) With {
+                .Text = "Filtro de Serviços"
+            }
+        End If
         FilterForm.ShowDialog()
-        QbxItem.Select()
+        QbxSellable.Select()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         If BtnSave.Enabled Then
@@ -233,14 +281,14 @@ Public Class FrmEvaluationReplacedSellable
                 If Not PreSave() Then Exit Sub
             End If
         End If
-        _ReplacedPart = New EvaluationReplacedSellable()
+        _ReplacedSellable = New EvaluationReplacedSellable()
         LoadForm()
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _EvaluationForm.DgvReplacedSellable.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _ReplacedPart = _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _EvaluationForm.DgvReplacedSellable.SelectedRows(0).Cells("Guid").Value)
-                _Evaluation.ReplacedSellables.Remove(_ReplacedPart)
+                _ReplacedSellable = _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _EvaluationForm.DgvReplacedSellable.SelectedRows(0).Cells("Guid").Value)
+                _Evaluation.ReplacedSellables.Remove(_ReplacedSellable)
                 _EvaluationForm.DgvReplacedSellable.Fill(_Evaluation.ReplacedSellables)
                 _EvaluationForm.DgvlReplacedSellable.Load()
                 _Deleting = True
@@ -249,5 +297,91 @@ Public Class FrmEvaluationReplacedSellable
             End If
         End If
     End Sub
-
+    Private Sub RbtPart_CheckedChanged(sender As Object, e As EventArgs) Handles RbtProduct.CheckedChanged
+        ClearQbxSellable()
+        If RbtProduct.Checked Then
+            SetUpQbxSellableForProduct()
+        Else
+            SetUpQbxSellableForService()
+        End If
+    End Sub
+    Private Sub ClearQbxSellable()
+        QbxSellable.Unfreeze()
+        QbxSellable.MainTableName = Nothing
+        QbxSellable.DisplayFieldName = Nothing
+        QbxSellable.DisplayFieldAlias = Nothing
+        QbxSellable.MainReturnFieldName = Nothing
+        QbxSellable.DisplayMainFieldName = Nothing
+        QbxSellable.DisplayTableName = Nothing
+        QbxSellable.Parameters.Clear()
+        QbxSellable.Conditions.Clear()
+        QbxSellable.OtherFields.Clear()
+        QbxSellable.Relations.Clear()
+    End Sub
+    Private Sub SetUpQbxSellableForService()
+        QbxSellable.MainTableName = "service"
+        QbxSellable.MainReturnFieldName = "id"
+        QbxSellable.DisplayTableName = "service"
+        QbxSellable.DisplayFieldName = "name"
+        QbxSellable.DisplayFieldAlias = "Serviço"
+        QbxSellable.DisplayFieldAutoSizeColumnMode = DataGridViewAutoSizeColumnMode.Fill
+        QbxSellable.DisplayMainFieldName = "id"
+        QbxSellable.Conditions.Add(New QueriedBox.Condition() With {
+            .FieldName = "statusid",
+            .[Operator] = "=",
+            .TableNameOrAlias = "service",
+            .Value = "@statusid"
+        })
+        QbxSellable.Parameters.Add(New QueriedBox.Parameter() With {
+            .ParameterName = "@statusid",
+            .ParameterValue = 0
+        })
+    End Sub
+    Private Sub SetUpQbxSellableForProduct()
+        QbxSellable.MainTableName = "product"
+        QbxSellable.DisplayFieldName = "code"
+        QbxSellable.DisplayFieldAlias = "Código"
+        QbxSellable.DisplayFieldAutoSizeColumnMode = DataGridViewAutoSizeColumnMode.AllCells
+        QbxSellable.MainReturnFieldName = "id"
+        QbxSellable.DisplayMainFieldName = "id"
+        QbxSellable.DisplayTableName = "productprovidercode"
+        QbxSellable.Relations.Add(New QueriedBox.Relation() With {
+            .[Operator] = "=",
+            .RelateFieldName = "productid",
+            .RelateTableName = "productprovidercode",
+            .RelationType = "LEFT",
+            .WithFieldName = "id",
+            .WithTableName = "product",
+            .Conditions = New ObjectModel.Collection(Of QueriedBox.Condition) From {
+            New QueriedBox.Condition() With {
+                .FieldName = "ismainprovider",
+                .[Operator] = "=",
+                .TableNameOrAlias = "productprovidercode",
+                .Value = "@ismainprovider"
+                }
+            }
+        })
+        QbxSellable.Parameters.Add(New QueriedBox.Parameter() With {
+            .ParameterName = "@statusid",
+            .ParameterValue = 0
+        })
+        QbxSellable.Parameters.Add(New QueriedBox.Parameter() With {
+            .ParameterName = "@ismainprovider",
+            .ParameterValue = 1
+        })
+        QbxSellable.OtherFields.Add(New QueriedBox.OtherField() With {
+            .Freeze = True,
+            .DisplayFieldAlias = "Peça",
+            .DisplayFieldName = "name",
+            .DisplayMainFieldName = "id",
+            .DisplayTableName = "product",
+            .DisplayFieldAutoSizeColumnMode = DataGridViewAutoSizeColumnMode.Fill
+        })
+        QbxSellable.Conditions.Add(New QueriedBox.Condition() With {
+            .FieldName = "statusid",
+            .[Operator] = "=",
+            .TableNameOrAlias = "product",
+            .Value = "@statusid"
+        })
+    End Sub
 End Class

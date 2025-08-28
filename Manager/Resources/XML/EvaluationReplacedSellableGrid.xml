@@ -11,60 +11,66 @@
 	<Column Index="1" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>1</DisplayIndex>
-		<Name>ID Produto</Name>
+		<Name>Produto/Serviço OBJ</Name>
 		<Width>AllCells</Width>
 	</Column>
-	<Column Index="2">
-		<Visible>True</Visible>
+	<Column Index="2" ButtonState="Hidden">
+		<Visible>False</Visible>
 		<DisplayIndex>2</DisplayIndex>
+		<Name>ID Produto/Serviço</Name>
+		<Width>AllCells</Width>
+	</Column>
+	<Column Index="3">
+		<Visible>True</Visible>
+		<DisplayIndex>3</DisplayIndex>
 		<Name>Código</Name>
 		<Width>AllCells</Width>
 	</Column>
-    <Column Index="3">
-        <Visible>True</Visible>
-        <DisplayIndex>3</DisplayIndex>
-        <Name>Produto</Name>
-        <Width>Fill</Width>
-    </Column>
-    <Column Index="4" Format="N2">
+    <Column Index="4">
         <Visible>True</Visible>
         <DisplayIndex>4</DisplayIndex>
+        <Name>Produto/Serviço</Name>
+        <Width>Fill</Width>
+    </Column>
+    <Column Index="5" Format="N2">
+        <Visible>True</Visible>
+        <DisplayIndex>5</DisplayIndex>
         <Name>Qtd.</Name>
         <Width>AllCells</Width>
     </Column>	
-	<Column Index="5" ButtonState="Hidden">
-		<Visible>False</Visible>
-		<DisplayIndex>5</DisplayIndex>
-		<Name>Guid</Name>
-		<Width>AllCells</Width>
-	</Column>
 	<Column Index="6" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>6</DisplayIndex>
-		<Name>ID</Name>
+		<Name>Guid</Name>
 		<Width>AllCells</Width>
 	</Column>
 	<Column Index="7" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>7</DisplayIndex>
-		<Name>Criação</Name>
+		<Name>ID</Name>
 		<Width>AllCells</Width>
 	</Column>
 	<Column Index="8" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>8</DisplayIndex>
-		<Name>Rotina</Name>
+		<Name>Criação</Name>
 		<Width>AllCells</Width>
 	</Column>
 	<Column Index="9" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>9</DisplayIndex>
-		<Name>Salvo</Name>
+		<Name>Rotina</Name>
 		<Width>AllCells</Width>
 	</Column>
 	<Column Index="10" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>10</DisplayIndex>
+		<Name>Salvo</Name>
+		<Width>AllCells</Width>
+	</Column>
+	<Column Index="11" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>11</DisplayIndex>
 		<Name>Usuário</Name>
 		<Width>AllCells</Width>
 	</Column>

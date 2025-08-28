@@ -236,6 +236,7 @@ Public Class FrmEvaluation
         _Filter = CType(_EvaluationsForm.PgFilter.SelectedObject, EvaluationFilter)
         LoadForm()
         LoadData()
+        RefreshPhotoControls()
     End Sub
     Public Sub New(Evaluation As Evaluation)
         InitializeComponent()
@@ -249,6 +250,7 @@ Public Class FrmEvaluation
         BtnStatusValue.Visible = False
         LoadForm()
         LoadData()
+        RefreshPhotoControls()
     End Sub
     Private Sub LoadForm()
         ControlHelper.EnableControlDoubleBuffer(DgvWorkedHourSellable, True)
@@ -272,7 +274,7 @@ Public Class FrmEvaluation
         CcoUnitTemperaturePressure.DropDownControl = _UcUnitTemperaturePressure
 
 
-        RefreshPhotoControls()
+
 
         AddHandler _UcCallTypeHasRepairNeedProposal.ValueChanged, AddressOf CallTypeHasRepairNeedProposalChanged
         AddHandler _UcUnitTemperaturePressure.ValueChanged, AddressOf UnitTemperaturePressureChanged

@@ -4,6 +4,7 @@ SELECT
 	personcompressorsellable.statusid,
 	personcompressorsellable.sellablebindid,
 	personcompressorsellable.controltypeid,
+	CASE WHEN personcompressorsellable.productid IS NULL THEN 2 WHEN personcompressorsellable.serviceid IS NULL THEN 1 END sellabletypeid,
 	personcompressorsellable.productid,
 	personcompressorsellable.serviceid,
 	IFNULL(product.name, service.name) name,

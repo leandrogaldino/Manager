@@ -344,6 +344,8 @@ Public Class FrmCompressorSellableWorkedHour
         Else
             SetUpQbxSellableForService()
         End If
+        EprValidation.Clear()
+        If Not _Loading Then BtnSave.Enabled = True
     End Sub
     Private Sub ClearQbxSellable()
         QbxSellable.Unfreeze()

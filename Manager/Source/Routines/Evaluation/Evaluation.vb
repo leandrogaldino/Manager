@@ -307,9 +307,10 @@ Public Class Evaluation
                         .SellableID = If(Row.Item("productid") IsNot DBNull.Value, Convert.ToInt32(Row.Item("productid")), Convert.ToInt32(Row.Item("serviceid"))),
                         .Code = Row.Item("code").ToString,
                         .Name = Row.Item("name").ToString,
+                        .SellableType = Row.Item("sellabletypeid"),
                         .Sellable = New Lazy(Of Sellable)(Function()
-                                                              If Row.Item("productid") IsNot DBNull.Value Then
-                                                                  Return New Product().Load(Row.Item("productid"), False) testar passar transaction aqui
+                                                              If .SellableType = SellableType.Product Then
+                                                                  Return New Product().Load(Row.Item("productid"), False)
                                                               Else
                                                                   Return New Service().Load(Row.Item("serviceid"), False)
                                                               End If

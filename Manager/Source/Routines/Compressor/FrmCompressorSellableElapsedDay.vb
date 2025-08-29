@@ -125,7 +125,6 @@ Public Class FrmCompressorSellableElapsedDay
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
         PreSave()
     End Sub
-
     Private Function IsValidFields() As Boolean
         If String.IsNullOrEmpty(QbxSellable.Text) Then
             EprValidation.SetError(RbtService, "Campo Obrigatório.")
@@ -150,6 +149,7 @@ Public Class FrmCompressorSellableElapsedDay
         End If
         Return True
     End Function
+    aqui
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
         If IsValidFields() Then
@@ -212,6 +212,7 @@ Public Class FrmCompressorSellableElapsedDay
             Return False
         End If
     End Function
+    aqui avalia os itens, refatorar
     Private Function HasDuplicatedItem() As Boolean
         Dim WorkedHourItems As List(Of CompressorSellable)
         Dim ElapsedDayItems As List(Of CompressorSellable)
@@ -252,11 +253,11 @@ Public Class FrmCompressorSellableElapsedDay
             BtnFilter.Visible = _User.CanAccess(Routine.Service)
         End If
     End Sub
-    Private Sub QbxItem_Leave(sender As Object, e As EventArgs) Handles QbxSellable.Leave
+    Private Sub QbxSellable_Leave(sender As Object, e As EventArgs) Handles QbxSellable.Leave
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
-    Private Sub QbxItem_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxSellable.FreezedPrimaryKeyChanged
+    Private Sub QbxSellable_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxSellable.FreezedPrimaryKeyChanged
         If Not _Loading Then
             If RbtProduct.Checked Then
                 BtnView.Visible = QbxSellable.IsFreezed And _User.CanWrite(Routine.Product)

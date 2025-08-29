@@ -50,6 +50,9 @@ Public Class Product
         Note = Nothing
         If LockInfo.IsLocked Then Unlock()
     End Sub
+
+
+
     Public Function Load(Identity As Long, LockMe As Boolean) As Product
         Dim TableResult As DataTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())

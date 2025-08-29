@@ -174,43 +174,48 @@ Public Class FrmPersonCompressorSellableWorkedHour
                 With _PersonCompressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid)
                     .Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
                     .SellableBind = EnumHelper.GetEnumValue(Of CompressorSellableBindType)(CbxSellableBind.Text)
+                    .SellableID = QbxSellable.FreezedPrimaryKey
                     .Quantity = DbxQuantity.Text
                     .Capacity = DbxCapacity.Text
                 End With
                 If RbtProduct.Checked Then
-                    _PersonCompressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _PersonCompressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Sellable.Value
-                    _PersonCompressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).SellableID = Sellable.ID
-                    _PersonCompressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Name = Sellable.Name
-                    _PersonCompressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Code = CType(Sellable, Product).ProviderCodes.FirstOrNew(Function(x) x.IsMainProvider = True).Code
+                    With _PersonCompressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid)
+                        .Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .SellableType = SellableType.Product
+                        .Name = QbxSellable.GetRawFreezedValueOf("product", "name")
+                        .Code = QbxSellable.GetRawFreezedValueOf("productprovidercode", "code")
+                    End With
                 Else
-                    _PersonCompressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _PersonCompressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Sellable.Value
-                    _PersonCompressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).SellableID = Sellable.ID
-                    _PersonCompressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Name = Sellable.Name
-                    _PersonCompressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Code = String.Empty
+                    With _PersonCompressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid)
+                        .Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .SellableType = SellableType.Service
+                        .Name = QbxSellable.GetRawFreezedValueOf("service", "name")
+                        .Code = String.Empty
+                    End With
                 End If
             Else
-                _WorkedHourSellable = New PersonCompressorSellable(CompressorSellableControlType.WorkedHour) With {
-                    .Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text),
-                    .SellableBind = EnumHelper.GetEnumValue(Of CompressorSellableBindType)(CbxSellableBind.Text),
-                    .Quantity = DbxQuantity.Text,
+                _WorkedHourSellable = New PersonCompressorSellable(CompressorSellableControlType.WorkedHour)
+                With _WorkedHourSellable
+                    .Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                    .SellableBind = EnumHelper.GetEnumValue(Of CompressorSellableBindType)(CbxSellableBind.Text)
+                    .SellableID = QbxSellable.FreezedPrimaryKey
+                    .Quantity = DbxQuantity.Text
                     .Capacity = DbxCapacity.Text
-                }
+                End With
                 If RbtProduct.Checked Then
-                    _WorkedHourSellable.Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _WorkedHourSellable.Sellable.Value
-                    _WorkedHourSellable.SellableID = Sellable.ID
-                    _WorkedHourSellable.Name = Sellable.Name
-                    _WorkedHourSellable.Code = CType(Sellable, Product).ProviderCodes.FirstOrNew(Function(x) x.IsMainProvider = True).Code
-                    _WorkedHourSellable.Quantity = DbxQuantity.DecimalValue
+                    With _WorkedHourSellable
+                        .Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .SellableType = SellableType.Product
+                        .Name = QbxSellable.GetRawFreezedValueOf("product", "name")
+                        .Code = QbxSellable.GetRawFreezedValueOf("productprovidercode", "code")
+                    End With
                 Else
-                    _WorkedHourSellable.Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _WorkedHourSellable.Sellable.Value
-                    _WorkedHourSellable.SellableID = Sellable.ID
-                    _WorkedHourSellable.Name = Sellable.Name
-                    _WorkedHourSellable.Code = String.Empty
-                    _WorkedHourSellable.Quantity = DbxQuantity.DecimalValue
+                    With _WorkedHourSellable
+                        .Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .SellableType = SellableType.Service
+                        .Name = QbxSellable.GetRawFreezedValueOf("service", "name")
+                        .Code = String.Empty
+                    End With
                 End If
                 _WorkedHourSellable.SetIsSaved(True)
                 _PersonCompressor.WorkedHourSellables.Add(_WorkedHourSellable)
@@ -276,11 +281,11 @@ Public Class FrmPersonCompressorSellableWorkedHour
             BtnFilter.Visible = _User.CanAccess(Routine.Service)
         End If
     End Sub
-    Private Sub QbxItem_Leave(sender As Object, e As EventArgs) Handles QbxSellable.Leave
+    Private Sub QbxSellable_Leave(sender As Object, e As EventArgs) Handles QbxSellable.Leave
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
-    Private Sub QbxItem_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxSellable.FreezedPrimaryKeyChanged
+    Private Sub QbxSellable_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxSellable.FreezedPrimaryKeyChanged
         If Not _Loading Then
             If RbtProduct.Checked Then
                 BtnView.Visible = QbxSellable.IsFreezed And _User.CanWrite(Routine.Product)

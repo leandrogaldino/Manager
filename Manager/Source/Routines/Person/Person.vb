@@ -677,8 +677,9 @@ Public Class Person
                         .Status = Convert.ToInt32(Row.Item("statusid")),
                         .SellableBind = Convert.ToInt32(Row.Item("sellablebindid")),
                         .SellableID = If(Row.Item("productid") IsNot DBNull.Value, Convert.ToInt32(Row.Item("productid")), Convert.ToInt32(Row.Item("serviceid"))),
+                        .SellableType = Row.Item("sellabletypeid"),
                         .Sellable = New Lazy(Of Sellable)(Function()
-                                                              If Row.Item("productid") IsNot DBNull.Value Then
+                                                              If .SellableType = SellableType.Product Then
                                                                   Return New Product().Load(Convert.ToInt32(Row.Item("productid")), False)
                                                               Else
                                                                   Return New Service().Load(Convert.ToInt32(Row.Item("serviceid")), False)

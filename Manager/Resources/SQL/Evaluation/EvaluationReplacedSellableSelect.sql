@@ -1,6 +1,7 @@
 SELECT
 	evaluationreplacedsellable.id,
 	evaluationreplacedsellable.creation,
+	CASE WHEN evaluationreplacedsellable.productid IS NULL THEN 2 WHEN evaluationreplacedsellable.serviceid IS NULL THEN 1 END sellabletypeid,
 	evaluationreplacedsellable.productid,
 	evaluationreplacedsellable.serviceid,
 	evaluationreplacedsellable.quantity,

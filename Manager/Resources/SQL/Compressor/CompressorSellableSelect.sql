@@ -3,6 +3,7 @@ SELECT
 	compressorsellable.creation,
 	compressorsellable.statusid,
 	compressorsellable.controltypeid,
+	CASE WHEN compressorsellable.productid IS NULL THEN 2 WHEN compressorsellable.serviceid IS NULL THEN 1 END sellabletypeid,
 	compressorsellable.productid,
 	compressorsellable.serviceid,
 	compressorsellable.quantity,

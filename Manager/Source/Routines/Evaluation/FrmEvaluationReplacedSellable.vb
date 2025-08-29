@@ -99,7 +99,7 @@ Public Class FrmEvaluationReplacedSellable
         Dim Frm As New FrmLog(Routine.EvaluationReplacedSellable, _ReplacedSellable.ID)
         Frm.ShowDialog()
     End Sub
-    Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles DbxQuantity.TextChanged
+    Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles QbxSellable.TextChanged, DbxQuantity.TextChanged
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
@@ -135,38 +135,45 @@ Public Class FrmEvaluationReplacedSellable
         If IsValidFields() Then
             If HasDuplicatedItem() Then Return False
             If _ReplacedSellable.IsSaved Then
-                _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).Quantity = DbxQuantity.DecimalValue
+                With _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid)
+                    .Quantity = DbxQuantity.DecimalValue
+                    .SellableID = QbxSellable.FreezedPrimaryKey
+                End With
                 If RbtProduct.Checked Then
-                    _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).Sellable.Value
-                    _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).SellableID = Sellable.ID
-                    _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).Name = Sellable.Name
-                    _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).Code = CType(Sellable, Product).ProviderCodes.FirstOrNew(Function(x) x.IsMainProvider = True).Code
+                    With _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid)
+                        .Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .SellableType = SellableType.Product
+                        .Name = QbxSellable.GetRawFreezedValueOf("product", "name")
+                        .Code = QbxSellable.GetRawFreezedValueOf("productprovidercode", "code")
+                    End With
                 Else
-                    _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).Sellable.Value
-                    _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).SellableID = Sellable.ID
-                    _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).Name = Sellable.Name
-                    _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid).Code = String.Empty
+                    With _Evaluation.ReplacedSellables.Single(Function(x) x.Guid)
+                        .Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .SellableType = SellableType.Service
+                        .Name = QbxSellable.GetRawFreezedValueOf("service", "name")
+                        .Code = String.Empty
+                    End With
                 End If
             Else
-                _ReplacedSellable = New EvaluationReplacedSellable() With {
+                _ReplacedSellable = New EvaluationReplacedSellable()
+                With _ReplacedSellable
+                    .SellableID = QbxSellable.FreezedPrimaryKey
                     .Quantity = DbxQuantity.DecimalValue
-                }
+                End With
                 If RbtProduct.Checked Then
-                    _ReplacedSellable.Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _ReplacedSellable.Sellable.Value
-                    _ReplacedSellable.SellableID = Sellable.ID
-                    _ReplacedSellable.Name = Sellable.Name
-                    _ReplacedSellable.Code = CType(Sellable, Product).ProviderCodes.FirstOrNew(Function(x) x.IsMainProvider = True).Code
-                    _ReplacedSellable.Quantity = DbxQuantity.DecimalValue
+                    With _ReplacedSellable
+                        .Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .SellableType = SellableType.Product
+                        .Name = QbxSellable.GetRawFreezedValueOf("product", "name")
+                        .Code = QbxSellable.GetRawFreezedValueOf("productprovidercode", "code")
+                    End With
                 Else
-                    _ReplacedSellable.Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _ReplacedSellable.Sellable.Value
-                    _ReplacedSellable.SellableID = Sellable.ID
-                    _ReplacedSellable.Name = Sellable.Name
-                    _ReplacedSellable.Code = String.Empty
-                    _ReplacedSellable.Quantity = DbxQuantity.DecimalValue
+                    With _ReplacedSellable
+                        .Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .SellableType = SellableType.Service
+                        .Name = QbxSellable.GetRawFreezedValueOf("service", "name")
+                        .Code = String.Empty
+                    End With
                 End If
                 _ReplacedSellable.SetIsSaved(True)
                 _Evaluation.ReplacedSellables.Add(_ReplacedSellable)
@@ -215,16 +222,33 @@ Public Class FrmEvaluationReplacedSellable
         BtnFilter.Visible = False
         TmrQueriedBox.Stop()
     End Sub
-    Private Sub QbxSellable_Enter(sender As Object, e As EventArgs)
 
+    Private Sub QbxSellable_Enter(sender As Object, e As EventArgs) Handles QbxSellable.Enter
+        TmrQueriedBox.Stop()
+        If RbtProduct.Checked Then
+            BtnView.Visible = QbxSellable.IsFreezed And _User.CanWrite(Routine.Product)
+            BtnNew.Visible = _User.CanWrite(Routine.Product)
+            BtnFilter.Visible = _User.CanAccess(Routine.Product)
+        Else
+            BtnView.Visible = QbxSellable.IsFreezed And _User.CanWrite(Routine.Service)
+            BtnNew.Visible = _User.CanWrite(Routine.Service)
+            BtnFilter.Visible = _User.CanAccess(Routine.Service)
+        End If
     End Sub
-    Private Sub QbxItem_Leave(sender As Object, e As EventArgs)
+    Private Sub QbxSellable_Leave(sender As Object, e As EventArgs) Handles QbxSellable.Leave
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
-    Private Sub QbxItem_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs)
-
+    Private Sub QbxSellable_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxSellable.FreezedPrimaryKeyChanged
+        If Not _Loading Then
+            If RbtProduct.Checked Then
+                BtnView.Visible = QbxSellable.IsFreezed And _User.CanWrite(Routine.Product)
+            Else
+                BtnView.Visible = QbxSellable.IsFreezed And _User.CanWrite(Routine.Service)
+            End If
+        End If
     End Sub
+
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Product As Product
         Dim Service As Service
@@ -304,6 +328,8 @@ Public Class FrmEvaluationReplacedSellable
         Else
             SetUpQbxSellableForService()
         End If
+        EprValidation.Clear()
+        If Not _Loading Then BtnSave.Enabled = True
     End Sub
     Private Sub ClearQbxSellable()
         QbxSellable.Unfreeze()
@@ -384,4 +410,5 @@ Public Class FrmEvaluationReplacedSellable
             .Value = "@statusid"
         })
     End Sub
+
 End Class

@@ -39,18 +39,12 @@ Public Class FrmPersonCompressorSellableElapsedDay
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_ElapsedDaySellable.Status)
         LblCreationValue.Text = _ElapsedDaySellable.Creation
         CbxSellableBind.Text = EnumHelper.GetEnumDescription(_ElapsedDaySellable.SellableBind)
-
-
-
         ClearQbxSellable()
         SetUpQbxSellableForProduct()
         If _ElapsedDaySellable.Sellable Is Nothing Then RbtProduct.Checked = True
         If _ElapsedDaySellable.Sellable IsNot Nothing AndAlso _ElapsedDaySellable.SellableType = SellableType.Product Then RbtProduct.Checked = True
         If _ElapsedDaySellable.Sellable IsNot Nothing AndAlso _ElapsedDaySellable.SellableType = SellableType.Service Then RbtService.Checked = True
         If _ElapsedDaySellable.Sellable IsNot Nothing AndAlso _ElapsedDaySellable.SellableID > 0 Then QbxSellable.Freeze(_ElapsedDaySellable.SellableID)
-
-
-
         DbxQuantity.Text = _ElapsedDaySellable.Quantity
         DbxCapacity.Text = _ElapsedDaySellable.Capacity
         If Not _ElapsedDaySellable.IsSaved Then
@@ -179,49 +173,52 @@ Public Class FrmPersonCompressorSellableElapsedDay
         End If
         If IsValidFields() Then
             If HasDuplicatedItem() Then Return False
-
             If _ElapsedDaySellable.IsSaved Then
                 With _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid)
                     .Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
                     .SellableBind = EnumHelper.GetEnumValue(Of CompressorSellableBindType)(CbxSellableBind.Text)
+                    .SellableID = QbxSellable.FreezedPrimaryKey
                     .Quantity = DbxQuantity.Text
                     .Capacity = DbxCapacity.Text
                 End With
                 If RbtProduct.Checked Then
-                    _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Sellable.Value
-                    _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).SellableID = Sellable.ID
-                    _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Name = Sellable.Name
-                    _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Code = CType(Sellable, Product).ProviderCodes.FirstOrNew(Function(x) x.IsMainProvider = True).Code
+                    With _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid)
+                        .Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .SellableType = SellableType.Product
+                        .Name = QbxSellable.GetRawFreezedValueOf("product", "name")
+                        .Code = QbxSellable.GetRawFreezedValueOf("productprovidercode", "code")
+                    End With
                 Else
-                    _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Sellable.Value
-                    _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).SellableID = Sellable.ID
-                    _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Name = Sellable.Name
-                    _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Code = String.Empty
+                    With _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid)
+                        .Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .SellableType = SellableType.Service
+                        .Name = QbxSellable.GetRawFreezedValueOf("service", "name")
+                        .Code = String.Empty
+                    End With
                 End If
-
             Else
-                _ElapsedDaySellable = New PersonCompressorSellable(CompressorSellableControlType.ElapsedDay) With {
-                    .Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text),
-                    .SellableBind = EnumHelper.GetEnumValue(Of CompressorSellableBindType)(CbxSellableBind.Text),
-                    .Quantity = DbxQuantity.Text,
+                _ElapsedDaySellable = New PersonCompressorSellable(CompressorSellableControlType.ElapsedDay)
+                With _ElapsedDaySellable
+                    .Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                    .SellableBind = EnumHelper.GetEnumValue(Of CompressorSellableBindType)(CbxSellableBind.Text)
+                    .SellableID = QbxSellable.FreezedPrimaryKey
+                    .Quantity = DbxQuantity.Text
                     .Capacity = DbxCapacity.Text
-                }
+                End With
                 If RbtProduct.Checked Then
-                    _ElapsedDaySellable.Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _ElapsedDaySellable.Sellable.Value
-                    _ElapsedDaySellable.SellableID = Sellable.ID
-                    _ElapsedDaySellable.Name = Sellable.Name
-                    _ElapsedDaySellable.Code = CType(Sellable, Product).ProviderCodes.FirstOrNew(Function(x) x.IsMainProvider = True).Code
-                    _ElapsedDaySellable.Quantity = DbxQuantity.DecimalValue
+                    With _ElapsedDaySellable
+                        .Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .SellableType = SellableType.Product
+                        .Name = QbxSellable.GetRawFreezedValueOf("product", "name")
+                        .Code = QbxSellable.GetRawFreezedValueOf("productprovidercode", "code")
+                    End With
                 Else
-                    _ElapsedDaySellable.Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _ElapsedDaySellable.Sellable.Value
-                    _ElapsedDaySellable.SellableID = Sellable.ID
-                    _ElapsedDaySellable.Name = Sellable.Name
-                    _ElapsedDaySellable.Code = String.Empty
-                    _ElapsedDaySellable.Quantity = DbxQuantity.DecimalValue
+                    With _ElapsedDaySellable
+                        .Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .SellableType = SellableType.Service
+                        .Name = QbxSellable.GetRawFreezedValueOf("service", "name")
+                        .Code = String.Empty
+                    End With
                 End If
                 _ElapsedDaySellable.SetIsSaved(True)
                 _PersonCompressor.ElapsedDaySellables.Add(_ElapsedDaySellable)

@@ -2,15 +2,7 @@
 Public Class EvaluationReplacedSellable
     Inherits ChildModel
     <IgnoreInToTable>
-    Public ReadOnly Property SellableType As SellableType
-        Get
-            If Sellable.Value IsNot Nothing Then
-                If TypeOf Sellable.Value Is Product Then Return SellableType.Product
-                If TypeOf Sellable.Value Is Service Then Return SellableType.Service
-            End If
-            Return SellableType.None
-        End Get
-    End Property
+    Public Property SellableType As SellableType = SellableType.None
     <IgnoreInToTable>
     Public ReadOnly Property Product As Product
         Get

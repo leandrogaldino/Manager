@@ -244,8 +244,9 @@ Public Class Compressor
                             .Code = Row.Item("code"),
                             .Name = Row.Item("name"),
                             .SellableID = If(Row.Item("productid") IsNot DBNull.Value, Row.Item("productid"), Row.Item("serviceid")),
+                            .SellableType = Row.Item("sellabletypeid"),
                             .Sellable = New Lazy(Of Sellable)(Function()
-                                                                  If Row.Item("productid") IsNot DBNull.Value Then
+                                                                  If .SellableType = SellableType.Product Then
                                                                       Return New Product().Load(Row.Item("productid"), False)
                                                                   Else
                                                                       Return New Service().Load(Row.Item("serviceid"), False)

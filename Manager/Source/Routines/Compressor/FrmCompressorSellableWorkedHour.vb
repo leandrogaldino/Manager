@@ -152,42 +152,48 @@ Public Class FrmCompressorSellableWorkedHour
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
         If IsValidFields() Then
-            If HasDuplicatedItem() Then Return False
             If _WorkedHourSellable.IsSaved Then
-                _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Quantity = DbxQuantity.DecimalValue
+                With _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid)
+                    .SellableID = QbxSellable.FreezedPrimaryKey
+                    .Quantity = DbxQuantity.DecimalValue
+                End With
                 If RbtProduct.Checked Then
-                    _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Sellable.Value
-                    _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).SellableID = Sellable.ID
-                    _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Name = Sellable.Name
-                    _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Code = CType(Sellable, Product).ProviderCodes.FirstOrNew(Function(x) x.IsMainProvider = True).Code
+                    With _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid)
+                        .SellableType = SellableType.Product
+                        .Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .Name = QbxSellable.GetRawFreezedValueOf("product", "name")
+                        .Code = QbxSellable.GetRawFreezedValueOf("productprovidercode", "code")
+                    End With
                 Else
-                    _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Sellable.Value
-                    _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).SellableID = Sellable.ID
-                    _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Name = Sellable.Name
-                    _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid).Code = String.Empty
+                    With _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid)
+                        .SellableType = SellableType.Service
+                        .Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .Name = QbxSellable.GetRawFreezedValueOf("service", "name")
+                        .Code = String.Empty
+                    End With
                 End If
             Else
-                _WorkedHourSellable = New CompressorSellable(CompressorSellableControlType.WorkedHour) With {
-                    .Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text),
+                _WorkedHourSellable = New CompressorSellable(CompressorSellableControlType.WorkedHour)
+                With _WorkedHourSellable
+                    .SellableID = QbxSellable.FreezedPrimaryKey
                     .Quantity = DbxQuantity.DecimalValue
-                }
+                End With
                 If RbtProduct.Checked Then
-                    _WorkedHourSellable.Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _WorkedHourSellable.Sellable.Value
-                    _WorkedHourSellable.SellableID = Sellable.ID
-                    _WorkedHourSellable.Name = Sellable.Name
-                    _WorkedHourSellable.Code = CType(Sellable, Product).ProviderCodes.FirstOrNew(Function(x) x.IsMainProvider = True).Code
-                    _WorkedHourSellable.Quantity = DbxQuantity.DecimalValue
+                    With _WorkedHourSellable
+                        .SellableType = SellableType.Product
+                        .Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .Name = QbxSellable.GetRawFreezedValueOf("product", "name")
+                        .Code = QbxSellable.GetRawFreezedValueOf("productprovidercode", "code")
+                    End With
                 Else
-                    _WorkedHourSellable.Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _WorkedHourSellable.Sellable.Value
-                    _WorkedHourSellable.SellableID = Sellable.ID
-                    _WorkedHourSellable.Name = Sellable.Name
-                    _WorkedHourSellable.Code = String.Empty
-                    _WorkedHourSellable.Quantity = DbxQuantity.DecimalValue
+                    With _WorkedHourSellable
+                        .SellableType = SellableType.Service
+                        .Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .Name = QbxSellable.GetRawFreezedValueOf("service", "name")
+                        .Code = String.Empty
+                    End With
                 End If
+                If HasDuplicatedItem() Then Return False
                 _WorkedHourSellable.SetIsSaved(True)
                 _Compressor.WorkedHourSellables.Add(_WorkedHourSellable)
             End If
@@ -212,16 +218,17 @@ Public Class FrmCompressorSellableWorkedHour
             Return False
         End If
     End Function
+
     Private Function HasDuplicatedItem() As Boolean
         Dim WorkedHourItems As List(Of CompressorSellable)
         Dim ElapsedDayItems As List(Of CompressorSellable)
         Dim TargetItems As List(Of CompressorSellable)
         If RbtProduct.Checked Then
-            WorkedHourItems = _Compressor.WorkedHourSellables.Where(Function(x) Not x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.Product IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
-            ElapsedDayItems = _Compressor.ElapsedDaySellables.Where(Function(x) Not x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.Product IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+            WorkedHourItems = _Compressor.WorkedHourSellables.Where(Function(x) x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.SellableType = SellableType.Product AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+            ElapsedDayItems = _Compressor.ElapsedDaySellables.Where(Function(x) x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.SellableType = SellableType.Product AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
         Else
-            WorkedHourItems = _Compressor.WorkedHourSellables.Where(Function(x) Not x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.Service IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
-            ElapsedDayItems = _Compressor.ElapsedDaySellables.Where(Function(x) Not x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.Service IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+            WorkedHourItems = _Compressor.WorkedHourSellables.Where(Function(x) x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.SellableType = SellableType.Service AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+            ElapsedDayItems = _Compressor.ElapsedDaySellables.Where(Function(x) x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.SellableType = SellableType.Service AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
         End If
         TargetItems = WorkedHourItems.Concat(ElapsedDayItems).ToList
         If TargetItems.Any() Then

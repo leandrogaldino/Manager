@@ -149,45 +149,51 @@ Public Class FrmCompressorSellableElapsedDay
         End If
         Return True
     End Function
-    aqui
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
         If IsValidFields() Then
-            If HasDuplicatedItem() Then Return False
             If _ElapsedDaySellable.IsSaved Then
-                _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Quantity = DbxQuantity.DecimalValue
+                With _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid)
+                    .SellableID = QbxSellable.FreezedPrimaryKey
+                    .Quantity = DbxQuantity.DecimalValue
+                End With
                 If RbtProduct.Checked Then
-                    _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Sellable.Value
-                    _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).SellableID = Sellable.ID
-                    _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Name = Sellable.Name
-                    _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Code = CType(Sellable, Product).ProviderCodes.FirstOrNew(Function(x) x.IsMainProvider = True).Code
+                    With _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid)
+                        .SellableType = SellableType.Product
+                        .Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .Name = QbxSellable.GetRawFreezedValueOf("product", "name")
+                        .Code = QbxSellable.GetRawFreezedValueOf("productprovidercode", "code")
+                    End With
                 Else
-                    _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Sellable.Value
-                    _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).SellableID = Sellable.ID
-                    _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Name = Sellable.Name
-                    _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid).Code = String.Empty
+                    With _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid)
+                        .SellableType = SellableType.Service
+                        .Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .Name = QbxSellable.GetRawFreezedValueOf("service", "name")
+                        .Code = String.Empty
+                    End With
                 End If
             Else
-                _ElapsedDaySellable = New CompressorSellable(CompressorSellableControlType.ElapsedDay) With {
+                _ElapsedDaySellable = New CompressorSellable(CompressorSellableControlType.ElapsedDay)
+                With _ElapsedDaySellable
+                    .SellableID = QbxSellable.FreezedPrimaryKey
                     .Quantity = DbxQuantity.DecimalValue
-                }
+                End With
                 If RbtProduct.Checked Then
-                    _ElapsedDaySellable.Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _ElapsedDaySellable.Sellable.Value
-                    _ElapsedDaySellable.SellableID = Sellable.ID
-                    _ElapsedDaySellable.Name = Sellable.Name
-                    _ElapsedDaySellable.Code = CType(Sellable, Product).ProviderCodes.FirstOrNew(Function(x) x.IsMainProvider = True).Code
-                    _ElapsedDaySellable.Quantity = DbxQuantity.DecimalValue
+                    With _ElapsedDaySellable
+                        .SellableType = SellableType.Product
+                        .Sellable = New Lazy(Of Sellable)(Function() New Product().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .Name = QbxSellable.GetRawFreezedValueOf("product", "name")
+                        .Code = QbxSellable.GetRawFreezedValueOf("productprovidercode", "code")
+                    End With
                 Else
-                    _ElapsedDaySellable.Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
-                    Dim Sellable As Sellable = _ElapsedDaySellable.Sellable.Value
-                    _ElapsedDaySellable.SellableID = Sellable.ID
-                    _ElapsedDaySellable.Name = Sellable.Name
-                    _ElapsedDaySellable.Code = String.Empty
-                    _ElapsedDaySellable.Quantity = DbxQuantity.DecimalValue
+                    With _ElapsedDaySellable
+                        .SellableType = SellableType.Service
+                        .Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
+                        .Name = QbxSellable.GetRawFreezedValueOf("service", "name")
+                        .Code = String.Empty
+                    End With
                 End If
+                If HasDuplicatedItem() Then Return False
                 _ElapsedDaySellable.SetIsSaved(True)
                 _Compressor.ElapsedDaySellables.Add(_ElapsedDaySellable)
             End If
@@ -212,17 +218,17 @@ Public Class FrmCompressorSellableElapsedDay
             Return False
         End If
     End Function
-    aqui avalia os itens, refatorar
+
     Private Function HasDuplicatedItem() As Boolean
         Dim WorkedHourItems As List(Of CompressorSellable)
         Dim ElapsedDayItems As List(Of CompressorSellable)
         Dim TargetItems As List(Of CompressorSellable)
         If RbtProduct.Checked Then
-            WorkedHourItems = _Compressor.WorkedHourSellables.Where(Function(x) Not x.SellableID.Equals(_ElapsedDaySellable.SellableID) AndAlso x.Product IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
-            ElapsedDayItems = _Compressor.ElapsedDaySellables.Where(Function(x) Not x.SellableID.Equals(_ElapsedDaySellable.SellableID) AndAlso x.Product IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+            WorkedHourItems = _Compressor.WorkedHourSellables.Where(Function(x) x.SellableID.Equals(_ElapsedDaySellable.SellableID) AndAlso x.SellableType = SellableType.Product AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+            ElapsedDayItems = _Compressor.ElapsedDaySellables.Where(Function(x) x.SellableID.Equals(_ElapsedDaySellable.SellableID) AndAlso x.SellableType = SellableType.Product AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
         Else
-            WorkedHourItems = _Compressor.WorkedHourSellables.Where(Function(x) Not x.SellableID.Equals(_ElapsedDaySellable.SellableID) AndAlso x.Service IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
-            ElapsedDayItems = _Compressor.ElapsedDaySellables.Where(Function(x) Not x.SellableID.Equals(_ElapsedDaySellable.SellableID) AndAlso x.Service IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+            WorkedHourItems = _Compressor.WorkedHourSellables.Where(Function(x) x.SellableID.Equals(_ElapsedDaySellable.SellableID) AndAlso x.SellableType = SellableType.Service AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+            ElapsedDayItems = _Compressor.ElapsedDaySellables.Where(Function(x) x.SellableID.Equals(_ElapsedDaySellable.SellableID) AndAlso x.SellableType = SellableType.Service AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
         End If
         TargetItems = WorkedHourItems.Concat(ElapsedDayItems).ToList
         If TargetItems.Any() Then
@@ -235,6 +241,7 @@ Public Class FrmCompressorSellableElapsedDay
         End If
         Return False
     End Function
+
     Private Sub TmrQueriedBox_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBox.Tick
         BtnView.Visible = False
         BtnNew.Visible = False

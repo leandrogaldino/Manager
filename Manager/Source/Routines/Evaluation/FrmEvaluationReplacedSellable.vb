@@ -133,7 +133,6 @@ Public Class FrmEvaluationReplacedSellable
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
         If IsValidFields() Then
-            If HasDuplicatedItem() Then Return False
             If _ReplacedSellable.IsSaved Then
                 With _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid)
                     .Quantity = DbxQuantity.DecimalValue
@@ -175,6 +174,7 @@ Public Class FrmEvaluationReplacedSellable
                         .Code = String.Empty
                     End With
                 End If
+                If HasDuplicatedItem() Then Return False
                 _ReplacedSellable.SetIsSaved(True)
                 _Evaluation.ReplacedSellables.Add(_ReplacedSellable)
             End If
@@ -202,9 +202,9 @@ Public Class FrmEvaluationReplacedSellable
     Private Function HasDuplicatedItem() As Boolean
         Dim WorkedHourItems As List(Of EvaluationReplacedSellable)
         If RbtProduct.Checked Then
-            WorkedHourItems = _Evaluation.ReplacedSellables.Where(Function(x) Not x.SellableID.Equals(_ReplacedSellable.SellableID) AndAlso x.Product IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+            WorkedHourItems = _Evaluation.ReplacedSellables.Where(Function(x) x.SellableID.Equals(_ReplacedSellable.SellableID) AndAlso x.SellableType = SellableType.Product AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
         Else
-            WorkedHourItems = _Evaluation.ReplacedSellables.Where(Function(x) Not x.SellableID.Equals(_ReplacedSellable.SellableID) AndAlso x.Service IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+            WorkedHourItems = _Evaluation.ReplacedSellables.Where(Function(x) x.SellableID.Equals(_ReplacedSellable.SellableID) AndAlso x.SellableType = SellableType.Service AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
         End If
         If WorkedHourItems.Any() Then
             If RbtProduct.Checked Then

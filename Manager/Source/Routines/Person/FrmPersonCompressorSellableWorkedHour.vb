@@ -169,7 +169,6 @@ Public Class FrmPersonCompressorSellableWorkedHour
             QbxSellable.QueryEnabled = True
         End If
         If IsValidFields() Then
-            If HasDuplicatedItem() Then Return False
             If _WorkedHourSellable.IsSaved Then
                 With _PersonCompressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid)
                     .Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
@@ -217,6 +216,7 @@ Public Class FrmPersonCompressorSellableWorkedHour
                         .Code = String.Empty
                     End With
                 End If
+                If HasDuplicatedItem() Then Return False
                 _WorkedHourSellable.SetIsSaved(True)
                 _PersonCompressor.WorkedHourSellables.Add(_WorkedHourSellable)
             End If
@@ -246,11 +246,11 @@ Public Class FrmPersonCompressorSellableWorkedHour
         Dim ElapsedDayItems As List(Of PersonCompressorSellable)
         Dim TargetItems As List(Of PersonCompressorSellable)
         If RbtProduct.Checked Then
-            WorkedHourItems = _PersonCompressor.WorkedHourSellables.Where(Function(x) Not x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.Product IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
-            ElapsedDayItems = _PersonCompressor.ElapsedDaySellables.Where(Function(x) Not x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.Product IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+            WorkedHourItems = _PersonCompressor.WorkedHourSellables.Where(Function(x) x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.SellableType = SellableType.Product AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+            ElapsedDayItems = _PersonCompressor.ElapsedDaySellables.Where(Function(x) x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.SellableType = SellableType.Product AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
         Else
-            WorkedHourItems = _PersonCompressor.WorkedHourSellables.Where(Function(x) Not x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.Service IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
-            ElapsedDayItems = _PersonCompressor.ElapsedDaySellables.Where(Function(x) Not x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.Service IsNot Nothing AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+            WorkedHourItems = _PersonCompressor.WorkedHourSellables.Where(Function(x) x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.SellableType = SellableType.Service AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
+            ElapsedDayItems = _PersonCompressor.ElapsedDaySellables.Where(Function(x) x.SellableID.Equals(_WorkedHourSellable.SellableID) AndAlso x.SellableType = SellableType.Service AndAlso x.SellableID.Equals(QbxSellable.FreezedPrimaryKey)).ToList
         End If
         TargetItems = WorkedHourItems.Concat(ElapsedDayItems).ToList
         If TargetItems.Any() Then

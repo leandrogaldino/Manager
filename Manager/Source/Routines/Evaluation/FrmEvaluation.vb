@@ -113,6 +113,8 @@ Public Class FrmEvaluation
         Dim PhotoCount As Integer = ValidPhotos.Count
         Dim PhotoIndex As Integer = ValidPhotos.IndexOf(SelectedPhoto)
 
+
+
         ' Se não houver fotos
         If PhotoCount < 1 Then
             LblPhotoCount.Visible = False
@@ -122,6 +124,7 @@ Public Class FrmEvaluation
             BtnPreviousPhoto.Enabled = False
             BtnNextPhoto.Enabled = False
             BtnLastPhoto.Enabled = False
+            PbxPhoto.Image = Nothing
         Else
             ' Se há fotos
             LblPhotoCount.Visible = True
@@ -250,7 +253,6 @@ Public Class FrmEvaluation
         BtnStatusValue.Visible = False
         LoadForm()
         LoadData()
-        RefreshPhotoControls()
     End Sub
     Private Sub LoadForm()
         ControlHelper.EnableControlDoubleBuffer(DgvWorkedHourSellable, True)
@@ -278,7 +280,7 @@ Public Class FrmEvaluation
 
         AddHandler _UcCallTypeHasRepairNeedProposal.ValueChanged, AddressOf CallTypeHasRepairNeedProposalChanged
         AddHandler _UcUnitTemperaturePressure.ValueChanged, AddressOf UnitTemperaturePressureChanged
-
+        RefreshPhotoControls()
     End Sub
 
     Private Sub CallTypeHasRepairNeedProposalChanged(sender As Object, e As EventArgs)
@@ -405,7 +407,7 @@ Public Class FrmEvaluation
         If _Evaluation.Photos.Count > 0 Then
             SelectedPhoto = _Evaluation.Photos(0)
         End If
-
+        RefreshPhotoControls()
 
         If File.Exists(_Evaluation.Signature.CurrentFile) Then
             PbxSignature.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_Evaluation.Signature.CurrentFile)))

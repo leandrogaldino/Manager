@@ -94,11 +94,9 @@ Public Class FrmVisitSchedule
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _VisitSchedule.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Text = "Agendamento de Visita - SOMENTE LEITURA"
         End If
-
         If _VisitSchedule.Status = VisitScheduleStatus.Finished Then
             Text = "Agendamento de Visita - SOMENTE LEITURA"
         End If
-
         BtnSave.Enabled = False
         DbxEvaluationDate.Select()
         _Loading = False

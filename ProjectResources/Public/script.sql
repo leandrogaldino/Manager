@@ -1,14 +1,4 @@
 /*
-Como a cryptokey foi alterada, a senha de todos os usuarios deve ser resetada
-Como a cryptokey foi alterada, a senha de todos os e-mails cadastradosuser
-No caixa reicol comercio no mes 02/2024 tem um registro do expresso vedações que está sem responsavel, colocar reicol
-No caixa reicol comercio no mes 08/2023 tem um registro da di napoli que está sem responsavel, colocar reicol
-No caixa reicol comercio no mes 08/2023 tem um registro da di napoli que está sem responsavel, colocar reicol
-No caixa aberto no mes 03/2024 tem um registro do almoço que está sem responsavel, colocar leandro
-Tem alguma avaliação que está com ano muito errado
-*/
-
-/*
 CREATE USER 'root'@'%' IDENTIFIED BY '123456';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
@@ -1036,3 +1026,4 @@ ALTER TABLE `manager`.`evaluationpart` CHANGE COLUMN `personcompressorpartid` `p
 ALTER TABLE `manager`.`evaluationpart` ADD CONSTRAINT `evaluationpart_personcompressorsellable` FOREIGN KEY (`personcompressorsellableid`) REFERENCES `manager`.`personcompressorsellable` (`id`)  ON DELETE RESTRICT;
 ALTER TABLE `manager`.`evaluationpart` RENAME TO  `manager`.`evaluationcontrolledsellable`;
 
+DROP table config;

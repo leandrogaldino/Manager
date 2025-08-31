@@ -70,6 +70,9 @@ Public Class SettingService
             Model.Cloud.CustomerDB.SyncInterval = XmlDoc.SelectSingleNode("Setting/Cloud/CustomerCloud/SyncInterval").InnerText
             Model.Cloud.Storage.BucketName = XmlDoc.SelectSingleNode("Setting/Cloud/Storage/BucketName").InnerText
             Model.Cloud.Storage.JsonCredentials = XmlDoc.SelectSingleNode("Setting/Cloud/Storage/JsonCredentials").InnerText
+            Model.Cloud.Synchronization.CloudMaxOperation = CLng(XmlDoc.SelectSingleNode("Setting/Cloud/Synchronization/CloudMaxOperation").InnerText)
+            Model.Cloud.Synchronization.CloudOperationCount = CLng(XmlDoc.SelectSingleNode("Setting/Cloud/Synchronization/CloudOperationCount").InnerText)
+            Model.Cloud.Synchronization.CloudLastSyncID = CLng(XmlDoc.SelectSingleNode("Setting/Cloud/Synchronization/CloudLastSyncID").InnerText)
             Model.LastExecution.Backup = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Backup").InnerText)
             Model.LastExecution.Clean = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Clean").InnerText)
             Model.LastExecution.Release = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Release").InnerText)
@@ -141,6 +144,9 @@ Public Class SettingService
         XmlDoc.SelectSingleNode("Setting/Cloud/CustomerCloud/SyncInterval").InnerText = Model.Cloud.CustomerDB.SyncInterval
         XmlDoc.SelectSingleNode("Setting/Cloud/Storage/BucketName").InnerText = Model.Cloud.Storage.BucketName
         XmlDoc.SelectSingleNode("Setting/Cloud/Storage/JsonCredentials").InnerText = Model.Cloud.Storage.JsonCredentials
+        XmlDoc.SelectSingleNode("Setting/Cloud/Synchronization/CloudMaxOperation").InnerText = CLng(Model.Cloud.Synchronization.CloudMaxOperation).ToString
+        XmlDoc.SelectSingleNode("Setting/Cloud/Synchronization/CloudOperationCount").InnerText = CLng(Model.Cloud.Synchronization.CloudOperationCount).ToString
+        XmlDoc.SelectSingleNode("Setting/Cloud/Synchronization/CloudLastSyncID").InnerText = CLng(Model.Cloud.Synchronization.CloudLastSyncID).ToString
         XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Backup").InnerText = Model.LastExecution.Backup.ToString("yyyy-MM-dd HH:mm:ss")
         XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Clean").InnerText = Model.LastExecution.Clean.ToString("yyyy-MM-dd HH:mm:ss")
         XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Release").InnerText = Model.LastExecution.Release.ToString("yyyy-MM-dd HH:mm:ss")

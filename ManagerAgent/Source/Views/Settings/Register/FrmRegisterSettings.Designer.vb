@@ -526,7 +526,6 @@ Partial Class FrmRegisterSettings
         Me.TxtPhone1.Name = "TxtPhone1"
         Me.TxtPhone1.Size = New System.Drawing.Size(185, 23)
         Me.TxtPhone1.TabIndex = 40
-        Me.TxtPhone1.Text = "(62) 9 9171-7968"
         '
         'LblPhone1
         '

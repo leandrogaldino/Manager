@@ -69,6 +69,7 @@ Partial Class FrmMain
         Me.Label2 = New System.Windows.Forms.Label()
         Me.DgvWarnings = New System.Windows.Forms.DataGridView()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.BtnSettingsCloudSynchronization = New System.Windows.Forms.ToolStripMenuItem()
         Me.CmsNotifyIcon.SuspendLayout()
         CType(Me.DgvEvents, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsTitle.SuspendLayout()
@@ -250,7 +251,7 @@ Partial Class FrmMain
         '
         'BtnSettingsCloud
         '
-        Me.BtnSettingsCloud.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnSettingsCloudStorage, Me.BtnSettingsCloudDatabase})
+        Me.BtnSettingsCloud.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnSettingsCloudStorage, Me.BtnSettingsCloudDatabase, Me.BtnSettingsCloudSynchronization})
         Me.BtnSettingsCloud.Name = "BtnSettingsCloud"
         Me.BtnSettingsCloud.Size = New System.Drawing.Size(223, 22)
         Me.BtnSettingsCloud.Text = "Núvem"
@@ -533,6 +534,12 @@ Partial Class FrmMain
         Me.Label1.Text = "Avisos"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'BtnSettingsCloudSynchronization
+        '
+        Me.BtnSettingsCloudSynchronization.Name = "BtnSettingsCloudSynchronization"
+        Me.BtnSettingsCloudSynchronization.Size = New System.Drawing.Size(185, 22)
+        Me.BtnSettingsCloudSynchronization.Text = "Sincronização"
+        '
         'FrmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
@@ -612,4 +619,5 @@ Partial Class FrmMain
     Friend WithEvents BtnSettingsClean As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
     Friend WithEvents BtnCleanEventLog As ToolStripMenuItem
+    Friend WithEvents BtnSettingsCloudSynchronization As ToolStripMenuItem
 End Class

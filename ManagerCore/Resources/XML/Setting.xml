@@ -83,6 +83,11 @@
 			<BucketName></BucketName>
 			<JsonCredentials></JsonCredentials>
 		</Storage>
+		<Synchronization>
+			<CloudMaxOperation>1000</CloudMaxOperation>
+			<CloudLastSyncID>0</CloudLastSyncID>
+			<CloudOperationCount>0</CloudOperationCount>
+		</Synchronization>
 	</Cloud>
 	<LastExecutionDates>
 		<Backup>0001-01-01 00:00:00</Backup>

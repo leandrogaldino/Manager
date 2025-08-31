@@ -250,6 +250,7 @@
     <Compile Include="Source\Model\Setting\SettingCloudModel.vb" />
     <Compile Include="Source\Model\Setting\SettingCloudStorageModel.vb" />
     <Compile Include="Source\Model\Setting\SettingCloudManagerDatabaseModel.vb" />
+    <Compile Include="Source\Model\Setting\SettingCloudSynchronizationModel.vb" />
     <Compile Include="Source\Model\Setting\SettingLastExecutionDates.vb" />
     <Compile Include="Source\Model\Setting\SettingModel.vb" />
     <Compile Include="Source\Model\Setting\SettingBackupModel.vb" />

@@ -27,10 +27,7 @@ Public Class FrmMain
         ControlHelper.EnableControlDoubleBuffer(DgvEvents, True)
         TsTitle.Renderer = New CustomToolstripRender()
     End Sub
-
-
     Private Async Sub FrmMain_Load(sender As Object, e As EventArgs) Handles Me.Load
-
         AddHandler _StackTaskService.TaskProgress.ProgressChanged, AddressOf OnTaskProgressChanged
         AddHandler _StackTaskService.TaskWillRun, AddressOf OnTaskWillRun
         AddHandler _StackTaskService.TaskRunned, AddressOf OnTaskRunned
@@ -39,10 +36,7 @@ Public Class FrmMain
         Await ValidateState()
         FillDgvTasks()
         If Not _HasDatabasePending Then DgvEvents.DataSource = Await _EventService.Read()
-
     End Sub
-
-
     Private Sub OnStatePendingsChanged(sender As Object, e As EventArgs)
         DgvWarnings.Rows.Clear()
         DgvWarnings.Columns.Clear()
@@ -59,10 +53,7 @@ Public Class FrmMain
             BtnAgentState.Checked = False
         End If
     End Sub
-
-
     Private Async Sub OnTaskRunned(sender As Object, Task As TaskBase)
-
         Invoke(Sub()
                    LblProgress.Visible = False
                    TpbProgress.Visible = False
@@ -71,12 +62,7 @@ Public Class FrmMain
                    BtnCleanEventLog.Enabled = True
                    OnTask()
                End Sub)
-
-
         Await _EventService.Save(DgvEvents.DataSource)
-
-
-
     End Sub
     Private Sub OnTaskWillRun(sender As Object, Task As TaskBase)
         Invoke(Sub()
@@ -85,7 +71,6 @@ Public Class FrmMain
                    OnTask()
                End Sub)
     End Sub
-
     Private Sub OnTask()
         FillDgvTasks()
         BtnExecuteBackup.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.BackupManual And Not x.IsRunning) And _StateWarnings.Count = 0
@@ -94,7 +79,6 @@ Public Class FrmMain
         BtnRelease.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.ReleaseManual And Not x.IsRunning) And _StateWarnings.Count = 0
         BtnCloudSync.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.CloudSyncManual And Not x.IsRunning) And _StateWarnings.Count = 0
     End Sub
-
     Private Sub OnTaskProgressChanged(sender As Object, Response As AsyncResponseModel)
         LblProgress.Visible = True
         TpbProgress.Visible = True
@@ -104,7 +88,6 @@ Public Class FrmMain
             _EventService.Write(Response.Event, DgvEvents.DataSource)
         End If
     End Sub
-
     Private Function RequestLogin(Optional Force As Boolean = False) As Boolean
         Dim Minutes As Long = DateDiff(DateInterval.Minute, _LastLoginRequest, Now)
         Dim ShowFormLogin As Boolean
@@ -179,13 +162,11 @@ Public Class FrmMain
         Dim ManagerDatabasePending As List(Of String) = Await _AppService.ValidateLocalDB()
         Dim CustomerStoragePending As List(Of String) = Await _AppService.ValidateStorage()
         Dim BackupPending As List(Of String) = _AppService.ValidateBackup()
-
         If ManagerDatabasePending.Count = 0 Then
             _HasDatabasePending = False
         Else
             _HasDatabasePending = True
         End If
-
         If ManagerCloudPending.Count = 0 Then
             _SessionModel.ManagerLicenseResult = Await _LicenseService.GetOnlineLicense()
             _HasManagerCloudPending = False
@@ -233,7 +214,6 @@ Public Class FrmMain
         _SessionModel.ForceAgentExit = True
         Application.Exit()
     End Sub
-
     Private Sub NotifyIcon_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon.MouseDoubleClick
         If RequestLogin(True) Then
             NotifyIcon.Visible = False
@@ -361,6 +341,14 @@ Public Class FrmMain
             End Using
         End If
     End Sub
+    Private Async Sub BtnSettingsCloudSynchronization_Click(sender As Object, e As EventArgs) Handles BtnSettingsCloudSynchronization.Click
+        If RequestLogin() Then
+            Using Frm As New FrmCloudSynchronization()
+                Frm.ShowDialog()
+                Await ValidateState()
+            End Using
+        End If
+    End Sub
     Private Async Sub BtnSettingsRegister_Click(sender As Object, e As EventArgs) Handles BtnSettingsRegister.Click
         If RequestLogin() Then
             Using Frm As New FrmRegisterSettings()
@@ -369,7 +357,6 @@ Public Class FrmMain
             End Using
         End If
     End Sub
-
     Private Async Sub BtnSettingsUser_Click(sender As Object, e As EventArgs) Handles BtnSettingsUser.Click
         If RequestLogin() Then
             Using Frm As New FrmUserSettings()
@@ -378,7 +365,6 @@ Public Class FrmMain
             End Using
         End If
     End Sub
-
     Private Async Sub BtnSettingsRelease_Click(sender As Object, e As EventArgs) Handles BtnSettingsRelease.Click
         If RequestLogin() Then
             Using Frm As New FrmReleaseSettings()
@@ -403,7 +389,6 @@ Public Class FrmMain
             End Using
         End If
     End Sub
-
     Private Async Sub BtnSettingsSupport_Click(sender As Object, e As EventArgs) Handles BtnSettingsSupport.Click
         If RequestLogin() Then
             Using Frm As New FrmSuportSettings()
@@ -412,7 +397,6 @@ Public Class FrmMain
             End Using
         End If
     End Sub
-
     Private Async Sub BtnSettingsChangePassword_Click(sender As Object, e As EventArgs) Handles BtnSettingsChangePassword.Click
         If RequestLogin() Then
             Using Frm As New FrmChangePassword()
@@ -435,7 +419,6 @@ Public Class FrmMain
             Await ValidateState()
         End Using
     End Sub
-
     Private Sub BtnRelease_Click(sender As Object, e As EventArgs) Handles BtnRelease.Click
         BtnRelease.Enabled = False
         Dim Task = Locator.GetInstance(Of TaskBase)(TaskName.ReleaseManual)
@@ -443,7 +426,6 @@ Public Class FrmMain
         Task.IsRunNeeded = True
         FillDgvTasks()
     End Sub
-
     Private Sub BtnClean_Click(sender As Object, e As EventArgs) Handles BtnClean.Click
         BtnClean.Enabled = False
         Dim Task = Locator.GetInstance(Of TaskBase)(TaskName.CleanManual)
@@ -451,7 +433,6 @@ Public Class FrmMain
         Task.IsRunNeeded = True
         FillDgvTasks()
     End Sub
-
     Private Sub BtnExecuteBackup_Click(sender As Object, e As EventArgs) Handles BtnExecuteBackup.Click
         BtnExecuteBackup.Enabled = False
         BtnRestoreBackup.Enabled = False
@@ -460,7 +441,6 @@ Public Class FrmMain
         Task.IsRunNeeded = True
         FillDgvTasks()
     End Sub
-
     Private Sub BtnCloudSync_Click(sender As Object, e As EventArgs) Handles BtnCloudSync.Click
         BtnCloudSync.Enabled = False
         Dim Task = Locator.GetInstance(Of TaskBase)(TaskName.CloudSyncManual)
@@ -468,7 +448,6 @@ Public Class FrmMain
         Task.IsRunNeeded = True
         FillDgvTasks()
     End Sub
-
     Private Sub BtnRestoreBackup_Click(sender As Object, e As EventArgs) Handles BtnRestoreBackup.Click
         _StackTaskService.Stop()
         BtnExecuteBackup.Enabled = False
@@ -487,7 +466,6 @@ Public Class FrmMain
         _StackTaskService.Start()
         FillDgvTasks()
     End Sub
-
     Private Async Sub BtnCleanEventLog_Click(sender As Object, e As EventArgs) Handles BtnCleanEventLog.Click
         If CMessageBox.Show("Todos os eventos serão apagados permanentemente. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
             Dim Database = Locator.GetInstance(Of LocalDB)

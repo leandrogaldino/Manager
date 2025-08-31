@@ -88,12 +88,16 @@ Public Class FrmPersonAddress
         If _PersonForm.DgvAddress.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                 _PersonAddress = _Person.Addresses.Single(Function(x) x.Guid = _PersonForm.DgvAddress.SelectedRows(0).Cells("Guid").Value)
-                _Person.Addresses.Remove(_PersonAddress)
-                _PersonForm.DgvAddress.Fill(_Person.Addresses)
-                _PersonForm.DgvAddressLayout.Load()
-                _Deleting = True
-                Dispose()
-                _PersonForm.BtnSave.Enabled = True
+                If Not _PersonAddress.IsMainAddress Then
+                    _Person.Addresses.Remove(_PersonAddress)
+                    _PersonForm.DgvAddress.Fill(_Person.Addresses)
+                    _PersonForm.DgvAddressLayout.Load()
+                    _Deleting = True
+                    Dispose()
+                    _PersonForm.BtnSave.Enabled = True
+                Else
+                    CMessageBox.Show("O endereço principal não pode ser excluido.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
+                End If
             End If
         End If
     End Sub

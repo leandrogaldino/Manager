@@ -86,12 +86,16 @@ Public Class FrmProductProviderCode
         If _ProductForm.DgvProviderCode.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                 _ProductProviderCode = _Product.ProviderCodes.Single(Function(x) x.Guid = _ProductForm.DgvProviderCode.SelectedRows(0).Cells("Guid").Value)
-                _Product.ProviderCodes.Remove(_ProductProviderCode)
-                _ProductForm.DgvProviderCode.Fill(_Product.ProviderCodes)
-                _ProductForm.DgvProviderCodeLayout.Load()
-                _Deleting = True
-                Dispose()
-                _ProductForm.BtnSave.Enabled = True
+                If Not _ProductProviderCode.IsMainProvider Then
+                    _Product.ProviderCodes.Remove(_ProductProviderCode)
+                    _ProductForm.DgvProviderCode.Fill(_Product.ProviderCodes)
+                    _ProductForm.DgvProviderCodeLayout.Load()
+                    _Deleting = True
+                    Dispose()
+                    _ProductForm.BtnSave.Enabled = True
+                Else
+                    CMessageBox.Show("O código principal não pode ser excluido.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
+                End If
             End If
         End If
     End Sub

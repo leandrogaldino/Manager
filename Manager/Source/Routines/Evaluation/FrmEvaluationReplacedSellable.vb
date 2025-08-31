@@ -345,6 +345,7 @@ Public Class FrmEvaluationReplacedSellable
         QbxSellable.Relations.Clear()
     End Sub
     Private Sub SetUpQbxSellableForService()
+        QbxSellable.Suffix = String.Empty
         QbxSellable.MainTableName = "service"
         QbxSellable.MainReturnFieldName = "id"
         QbxSellable.DisplayTableName = "service"
@@ -364,6 +365,7 @@ Public Class FrmEvaluationReplacedSellable
         })
     End Sub
     Private Sub SetUpQbxSellableForProduct()
+        QbxSellable.Suffix = " - "
         QbxSellable.MainTableName = "product"
         QbxSellable.DisplayFieldName = "code"
         QbxSellable.DisplayFieldAlias = "Código"

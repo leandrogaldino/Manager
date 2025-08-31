@@ -158,6 +158,11 @@ Public Class FrmPersonCompressorSellableWorkedHour
             EprValidation.SetIconAlignment(LblCapacity, ErrorIconAlignment.MiddleRight)
             DbxQuantity.Select()
             Return False
+        ElseIf CbxSellableBind.SelectedIndex <> 0 Then
+            EprValidation.SetError(RbtService, $"Não é possível vincular um {CbxSellableBind.Text} a um serviço.")
+            EprValidation.SetIconAlignment(RbtService, ErrorIconAlignment.MiddleRight)
+            QbxSellable.Select()
+            Return False
         End If
         Return True
     End Function
@@ -388,6 +393,7 @@ Public Class FrmPersonCompressorSellableWorkedHour
         QbxSellable.Relations.Clear()
     End Sub
     Private Sub SetUpQbxSellableForService()
+        QbxSellable.Suffix = String.Empty
         QbxSellable.MainTableName = "service"
         QbxSellable.MainReturnFieldName = "id"
         QbxSellable.DisplayTableName = "service"
@@ -407,6 +413,7 @@ Public Class FrmPersonCompressorSellableWorkedHour
         })
     End Sub
     Private Sub SetUpQbxSellableForProduct()
+        QbxSellable.Suffix = " - "
         QbxSellable.MainTableName = "product"
         QbxSellable.DisplayFieldName = "code"
         QbxSellable.DisplayFieldAlias = "Código"

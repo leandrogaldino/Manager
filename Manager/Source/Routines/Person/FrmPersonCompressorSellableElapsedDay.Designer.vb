@@ -442,7 +442,6 @@ Partial Class FrmPersonCompressorSellableElapsedDay
         Relation1.WithTableName = "product"
         Me.QbxSellable.Relations.Add(Relation1)
         Me.QbxSellable.Size = New System.Drawing.Size(368, 23)
-        Me.QbxSellable.Suffix = " - "
         Me.QbxSellable.TabIndex = 4
         '
         'RbtService

@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FrmVisitSchedule
     Inherits System.Windows.Forms.Form
 
     'Descartar substituições de formulário para limpar a lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -61,7 +61,6 @@ Partial Class FrmVisitSchedule
         Me.BtnPrevious = New System.Windows.Forms.ToolStripButton()
         Me.BtnNext = New System.Windows.Forms.ToolStripButton()
         Me.BtnLast = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TxtInstructions = New System.Windows.Forms.TextBox()
         Me.LblInstructions = New System.Windows.Forms.Label()
@@ -200,7 +199,7 @@ Partial Class FrmVisitSchedule
         Me.TsNavigation.BackColor = System.Drawing.Color.White
         Me.TsNavigation.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsNavigation.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsNavigation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnDelete, Me.BtnFirst, Me.BtnPrevious, Me.BtnNext, Me.BtnLast, Me.ToolStripButton1})
+        Me.TsNavigation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnDelete, Me.BtnFirst, Me.BtnPrevious, Me.BtnNext, Me.BtnLast})
         Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -268,15 +267,6 @@ Partial Class FrmVisitSchedule
         Me.BtnLast.Size = New System.Drawing.Size(23, 22)
         Me.BtnLast.Text = "Último Agendamento de Visita"
         '
-        'ToolStripButton1
-        '
-        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.ToolStripButton1.Image = CType(resources.GetObject("ToolStripButton1.Image"), System.Drawing.Image)
-        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton1.Name = "ToolStripButton1"
-        Me.ToolStripButton1.Size = New System.Drawing.Size(80, 22)
-        Me.ToolStripButton1.Text = "Sincronizar"
-        '
         'EprValidation
         '
         Me.EprValidation.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink
@@ -290,7 +280,7 @@ Partial Class FrmVisitSchedule
         Me.TxtInstructions.MaxLength = 100
         Me.TxtInstructions.Multiline = True
         Me.TxtInstructions.Name = "TxtInstructions"
-        Me.TxtInstructions.Size = New System.Drawing.Size(591, 136)
+        Me.TxtInstructions.Size = New System.Drawing.Size(594, 136)
         Me.TxtInstructions.TabIndex = 15
         '
         'LblInstructions
@@ -311,10 +301,10 @@ Partial Class FrmVisitSchedule
         Me.RbtGathering.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver
         Me.RbtGathering.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gainsboro
         Me.RbtGathering.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.RbtGathering.Location = New System.Drawing.Point(12, 70)
+        Me.RbtGathering.Location = New System.Drawing.Point(12, 68)
         Me.RbtGathering.Margin = New System.Windows.Forms.Padding(3, 3, 0, 10)
         Me.RbtGathering.Name = "RbtGathering"
-        Me.RbtGathering.Size = New System.Drawing.Size(120, 25)
+        Me.RbtGathering.Size = New System.Drawing.Size(120, 23)
         Me.RbtGathering.TabIndex = 3
         Me.RbtGathering.Text = "Levantamento"
         Me.RbtGathering.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -329,10 +319,10 @@ Partial Class FrmVisitSchedule
         Me.RbtPreventive.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver
         Me.RbtPreventive.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gainsboro
         Me.RbtPreventive.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.RbtPreventive.Location = New System.Drawing.Point(131, 70)
+        Me.RbtPreventive.Location = New System.Drawing.Point(131, 68)
         Me.RbtPreventive.Margin = New System.Windows.Forms.Padding(0, 3, 0, 3)
         Me.RbtPreventive.Name = "RbtPreventive"
-        Me.RbtPreventive.Size = New System.Drawing.Size(120, 25)
+        Me.RbtPreventive.Size = New System.Drawing.Size(120, 23)
         Me.RbtPreventive.TabIndex = 4
         Me.RbtPreventive.Text = "Preventiva"
         Me.RbtPreventive.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -347,10 +337,10 @@ Partial Class FrmVisitSchedule
         Me.RbtCalled.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver
         Me.RbtCalled.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gainsboro
         Me.RbtCalled.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.RbtCalled.Location = New System.Drawing.Point(250, 70)
+        Me.RbtCalled.Location = New System.Drawing.Point(250, 68)
         Me.RbtCalled.Margin = New System.Windows.Forms.Padding(0, 3, 0, 3)
         Me.RbtCalled.Name = "RbtCalled"
-        Me.RbtCalled.Size = New System.Drawing.Size(120, 25)
+        Me.RbtCalled.Size = New System.Drawing.Size(120, 23)
         Me.RbtCalled.TabIndex = 5
         Me.RbtCalled.Text = "Chamado"
         Me.RbtCalled.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -365,10 +355,10 @@ Partial Class FrmVisitSchedule
         Me.RbtContract.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver
         Me.RbtContract.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gainsboro
         Me.RbtContract.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.RbtContract.Location = New System.Drawing.Point(369, 70)
+        Me.RbtContract.Location = New System.Drawing.Point(369, 68)
         Me.RbtContract.Margin = New System.Windows.Forms.Padding(0, 3, 3, 3)
         Me.RbtContract.Name = "RbtContract"
-        Me.RbtContract.Size = New System.Drawing.Size(120, 25)
+        Me.RbtContract.Size = New System.Drawing.Size(120, 23)
         Me.RbtContract.TabIndex = 6
         Me.RbtContract.Text = "Contrato"
         Me.RbtContract.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -380,7 +370,7 @@ Partial Class FrmVisitSchedule
         Me.FlpCustomer.Controls.Add(Me.BtnViewCustomer)
         Me.FlpCustomer.Controls.Add(Me.BtnNewCustomer)
         Me.FlpCustomer.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-        Me.FlpCustomer.Location = New System.Drawing.Point(235, 102)
+        Me.FlpCustomer.Location = New System.Drawing.Point(235, 101)
         Me.FlpCustomer.Name = "FlpCustomer"
         Me.FlpCustomer.Size = New System.Drawing.Size(69, 21)
         Me.FlpCustomer.TabIndex = 11
@@ -436,7 +426,7 @@ Partial Class FrmVisitSchedule
         'LblCustomer
         '
         Me.LblCustomer.AutoSize = True
-        Me.LblCustomer.Location = New System.Drawing.Point(9, 102)
+        Me.LblCustomer.Location = New System.Drawing.Point(9, 101)
         Me.LblCustomer.Name = "LblCustomer"
         Me.LblCustomer.Size = New System.Drawing.Size(54, 17)
         Me.LblCustomer.TabIndex = 9
@@ -445,7 +435,7 @@ Partial Class FrmVisitSchedule
         'LblCompressor
         '
         Me.LblCompressor.AutoSize = True
-        Me.LblCompressor.Location = New System.Drawing.Point(308, 103)
+        Me.LblCompressor.Location = New System.Drawing.Point(308, 102)
         Me.LblCompressor.Name = "LblCompressor"
         Me.LblCompressor.Size = New System.Drawing.Size(85, 17)
         Me.LblCompressor.TabIndex = 12
@@ -479,7 +469,7 @@ Partial Class FrmVisitSchedule
         Me.DbxEvaluationDate.ButtonImage = CType(resources.GetObject("DbxEvaluationDate.ButtonImage"), System.Drawing.Image)
         Me.DbxEvaluationDate.Location = New System.Drawing.Point(497, 68)
         Me.DbxEvaluationDate.Name = "DbxEvaluationDate"
-        Me.DbxEvaluationDate.Size = New System.Drawing.Size(109, 23)
+        Me.DbxEvaluationDate.Size = New System.Drawing.Size(106, 23)
         Me.DbxEvaluationDate.TabIndex = 8
         '
         'QbxCustomer
@@ -514,7 +504,7 @@ Partial Class FrmVisitSchedule
         Me.QbxCustomer.DropDownStretchRight = 298
         Me.QbxCustomer.GridHeaderBackColor = System.Drawing.SystemColors.Window
         Me.QbxCustomer.IfNull = Nothing
-        Me.QbxCustomer.Location = New System.Drawing.Point(12, 123)
+        Me.QbxCustomer.Location = New System.Drawing.Point(12, 122)
         Me.QbxCustomer.MainReturnFieldName = "id"
         Me.QbxCustomer.MainTableAlias = Nothing
         Me.QbxCustomer.MainTableName = "person"
@@ -627,7 +617,7 @@ Partial Class FrmVisitSchedule
         Me.QbxCompressor.Enabled = False
         Me.QbxCompressor.GridHeaderBackColor = System.Drawing.SystemColors.Window
         Me.QbxCompressor.IfNull = Nothing
-        Me.QbxCompressor.Location = New System.Drawing.Point(311, 123)
+        Me.QbxCompressor.Location = New System.Drawing.Point(311, 122)
         Me.QbxCompressor.MainReturnFieldName = "id"
         Me.QbxCompressor.MainTableAlias = Nothing
         Me.QbxCompressor.MainTableName = "personcompressor"
@@ -770,5 +760,4 @@ Partial Class FrmVisitSchedule
     Friend WithEvents LblEvaluationDate As Label
     Friend WithEvents DbxEvaluationDate As ControlLibrary.DateBox
     Friend WithEvents LblVisitType As Label
-    Friend WithEvents ToolStripButton1 As ToolStripButton
 End Class

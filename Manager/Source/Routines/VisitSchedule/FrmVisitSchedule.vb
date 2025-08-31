@@ -386,4 +386,5 @@ Public Class FrmVisitSchedule
     Private Sub FrmRoute_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         _VisitSchedule.Unlock()
     End Sub
+
 End Class

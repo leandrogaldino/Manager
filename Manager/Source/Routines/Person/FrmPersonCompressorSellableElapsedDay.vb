@@ -160,7 +160,7 @@ Public Class FrmPersonCompressorSellableElapsedDay
             DbxQuantity.Select()
             Return False
         ElseIf CbxSellableBind.SelectedIndex <> 0 And RbtService.Checked Then
-            EprValidation.SetError(RbtService, $"Não é possível vincular um {CbxSellableBind.Text} a um serviço.")
+            EprValidation.SetError(RbtService, $"Não é possível vincular um { LCase(CbxSellableBind.Text)} a um serviço.")
             EprValidation.SetIconAlignment(RbtService, ErrorIconAlignment.MiddleRight)
             QbxSellable.Select()
             Return False

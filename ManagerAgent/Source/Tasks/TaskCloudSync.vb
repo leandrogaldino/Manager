@@ -27,7 +27,7 @@ Public Class TaskCloudSync
     End Property
     Public Overrides ReadOnly Property LastRun As Date
         Get
-            Return _SessionModel.ManagerSetting.LastExecution.CloudDataSync
+            Return _SessionModel.ManagerSetting.LastExecution.Cloud
         End Get
     End Property
     Public Overrides ReadOnly Property IsManual As Boolean
@@ -36,24 +36,33 @@ Public Class TaskCloudSync
         End Get
     End Property
     Public Overrides Async Function Run(Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task
-        Dim LastSyncDate As Date
-        Dim OperationCount As Integer
-        Dim Response As New AsyncResponseModel
-        Dim Exception As Exception = Nothing
+        Dim OperationCount As Long
         Dim MaxOperation As Long
         Dim RemainingOperations As Long
+        Dim Exception As Exception = Nothing
+        Dim Response As New AsyncResponseModel
         Await Task.Delay(Constants.WaitForStart)
         Try
-            ConfigOperations()
-            LastSyncDate = _SessionModel.ManagerSetting.LastExecution.CloudDataSync
-            OperationCount = _SessionModel.ManagerSetting.Cloud.Synchronization.CloudOperationCount
-            If (Date.Now - LastSyncDate).TotalHours >= 24 Then
-                OperationCount = 0
+            If (Now - _SessionModel.ManagerSetting.LastExecution.CloudDataSended).TotalHours >= 24 Then
+                _SessionModel.ManagerSetting.Cloud.Synchronization.CloudOperationCount = 0
+                _SettingsService.Save(_SessionModel.ManagerSetting)
             End If
+
+            OperationCount = _SessionModel.ManagerSetting.Cloud.Synchronization.CloudOperationCount
             MaxOperation = _SessionModel.ManagerSetting.Cloud.Synchronization.CloudMaxOperation
             RemainingOperations = MaxOperation - OperationCount
             RemainingOperations = Await SyncTables(OperationCount, RemainingOperations, Response, Progress)
+
+
+
+
+
+
+
+
+
             Await Task.Delay(Constants.WaitForJob)
+
             Await SyncSchedules(RemainingOperations, Response, Progress)
             If Response.Event.IsInitialized Then
                 Await Task.Delay(Constants.WaitForFinish)
@@ -64,8 +73,7 @@ Public Class TaskCloudSync
         Catch ex As Exception
             Exception = ex
         Finally
-            _SessionModel.ManagerSetting.LastExecution.CloudVisitScheduleSync = Now
-            If Not IsManual Then _SessionModel.ManagerSetting.LastExecution.CloudDataSync = Now
+            If Not IsManual Then _SessionModel.ManagerSetting.LastExecution.Cloud = Now.ToString("yyyy-MM-dd HH:mm:ss")
             _SettingsService.Save(_SessionModel.ManagerSetting)
         End Try
         If Exception IsNot Nothing Then
@@ -140,12 +148,16 @@ Public Class TaskCloudSync
                         Exit For
                     End If
                 Next Change
-                SaveCloudConfig(LastSyncID, PerformedOperations + OperationCount)
+                _SessionModel.ManagerSetting.Cloud.Synchronization.CloudLastSyncID = LastSyncID
+                _SessionModel.ManagerSetting.Cloud.Synchronization.CloudOperationCount = PerformedOperations + OperationCount
+                _SessionModel.ManagerSetting.LastExecution.CloudDataSended = Now.ToString("yyyy-MM-dd HH:mm:ss")
+                _SettingsService.Save(_SessionModel.ManagerSetting)
             End If
         End If
-
         Return RemainingOperations - PerformedOperations
     End Function
+
+
 
     Private Async Function SyncSchedules(RemainingOperations As Long, Response As AsyncResponseModel, Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task
         Dim TotalChanges As Integer
@@ -154,10 +166,10 @@ Public Class TaskCloudSync
             Dim Result = Await _LocalDB.ExecuteSelect("visitschedule",
                                                   New List(Of String) From {"id", "creation", "statusid", "visitdate", "calltypeid", "customerid", "personcompressorid", "instructions", "lastupdate", "userid"},
                                                   "lastupdate > @lastupdate",
-                                                  New Dictionary(Of String, Object) From {{"@lastupdate", _SessionModel.ManagerSetting.LastExecution.CloudVisitScheduleSync}},
+                                                  New Dictionary(Of String, Object) From {{"@lastupdate", _SessionModel.ManagerSetting.LastExecution.Cloud}},
                                                   "id ASC")
             Dim LocalResult As List(Of Dictionary(Of String, Object)) = Result.Data
-            Dim Conditions As New List(Of Condition) From {New WhereGreaterThanCondition("lastupdate", DateTimeHelper.MillisecondsFromDate(_SessionModel.ManagerSetting.LastExecution.CloudVisitScheduleSync))}
+            Dim Conditions As New List(Of Condition) From {New WhereGreaterThanCondition("lastupdate", DateTimeHelper.MillisecondsFromDate(_SessionModel.ManagerSetting.LastExecution.Cloud))}
             Dim RemoteResult As List(Of Dictionary(Of String, Object)) = Await _RemoteDB.ExecuteGet("schedules", Conditions)
             Dim LocalIds As New HashSet(Of String)(LocalResult.Select(Function(item) item("id").ToString()))
             Dim CommonResult As List(Of Dictionary(Of String, Object)) = RemoteResult.Where(Function(item) LocalIds.Contains(item("id").ToString())).ToList()
@@ -178,6 +190,8 @@ Public Class TaskCloudSync
                 If Progress IsNot Nothing Then Progress.Report(Response)
                 Await Task.Delay(Constants.WaitForJob)
                 PerformedOperations = 0
+
+
                 For Each Schedule In CommonResult
                     Await _LocalDB.ExecuteUpdate("visitschedule",
                                                  New Dictionary(Of String, String) From {
@@ -188,7 +202,7 @@ Public Class TaskCloudSync
                                                  },
                                                  "id = @id",
                                                  New Dictionary(Of String, Object) From {
-                                                    {"@statusid", RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("statusid")},
+                                                    {"@statusid", If(RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("visible"), 0, ?)},
                                                     {"@visitdate", DateTimeHelper.DateFromMilliseconds(RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("visitdate"))},
                                                     {"@lastupdate", DateTimeHelper.DateFromMilliseconds(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds())},
                                                     {"@id", RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("id")}
@@ -203,6 +217,8 @@ Public Class TaskCloudSync
                 LocalResult.RemoveAll(Function(item) item.ContainsKey("id") AndAlso CommonIds.Contains(item("id").ToString()))
                 RemoteResult.RemoveAll(Function(item) item.ContainsKey("id") AndAlso CommonIds.Contains(item("id").ToString()))
                 PerformedOperations = 0
+
+
                 For Each Schedule In RemoteResult
                     Await _LocalDB.ExecuteUpdate("visitschedule",
                                                  New Dictionary(Of String, String) From {
@@ -246,6 +262,10 @@ Public Class TaskCloudSync
             End If
         End If
     End Function
+
+
+
+
     Private Async Function FetchCompressor(Change As Dictionary(Of String, Object)) As Task
         Dim Result = Await _LocalDB.ExecuteSelect("compressor",
                                                   New List(Of String) From {"id", "name"},
@@ -393,17 +413,6 @@ Public Class TaskCloudSync
                                           New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
         End If
     End Function
-    Private Sub ConfigOperations()
-        If (Now - _SessionModel.ManagerSetting.LastExecution.CloudDataSync).TotalHours >= 24 Then
-            _SessionModel.ManagerSetting.LastExecution.CloudDataSync = Now.ToString("yyyy-MM-dd HH:mm:ss")
-            _SessionModel.ManagerSetting.Cloud.Synchronization.CloudOperationCount = 0
-            _SettingsService.Save(_SessionModel.ManagerSetting)
-        End If
-    End Sub
-    Private Sub SaveCloudConfig(CloudLastSyncID As Integer, CloudOperationCount As Integer)
-        _SessionModel.ManagerSetting.Cloud.Synchronization.CloudLastSyncID = CloudLastSyncID
-        _SessionModel.ManagerSetting.Cloud.Synchronization.CloudOperationCount = CloudOperationCount
-        _SessionModel.ManagerSetting.LastExecution.CloudDataSync = Now
-        _SettingsService.Save(_SessionModel.ManagerSetting)
-    End Sub
+
+
 End Class

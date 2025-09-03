@@ -123,6 +123,7 @@ Partial Class FrmMain
         Me.TxtFileContent.Location = New System.Drawing.Point(7, 32)
         Me.TxtFileContent.Multiline = True
         Me.TxtFileContent.Name = "TxtFileContent"
+        Me.TxtFileContent.ScrollBars = System.Windows.Forms.ScrollBars.Both
         Me.TxtFileContent.Size = New System.Drawing.Size(661, 360)
         Me.TxtFileContent.TabIndex = 6
         Me.TxtFileContent.WordWrap = False

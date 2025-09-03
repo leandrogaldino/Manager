@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Text
 Imports System.Xml
 Imports ControlLibrary
 Public Class SettingService
@@ -76,8 +77,8 @@ Public Class SettingService
             Model.LastExecution.Backup = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Backup").InnerText)
             Model.LastExecution.Clean = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Clean").InnerText)
             Model.LastExecution.Release = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Release").InnerText)
-            Model.LastExecution.CloudDataSync = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/CloudDataSync").InnerText)
-            Model.LastExecution.CloudVisitScheduleSync = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/CloudVisitScheduleSync").InnerText)
+            Model.LastExecution.Cloud = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Cloud").InnerText)
+            Model.LastExecution.CloudDataSended = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/CloudDataSended").InnerText)
             Return Model
         Else
             Throw New Exception("Setting File Not Found, Run ManagerAgent to create.")
@@ -150,10 +151,17 @@ Public Class SettingService
         XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Backup").InnerText = Model.LastExecution.Backup.ToString("yyyy-MM-dd HH:mm:ss")
         XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Clean").InnerText = Model.LastExecution.Clean.ToString("yyyy-MM-dd HH:mm:ss")
         XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Release").InnerText = Model.LastExecution.Release.ToString("yyyy-MM-dd HH:mm:ss")
-        XmlDoc.SelectSingleNode("Setting/LastExecutionDates/CloudDataSync").InnerText = Model.LastExecution.CloudDataSync.ToString("yyyy-MM-dd HH:mm:ss")
-        XmlDoc.SelectSingleNode("Setting/LastExecutionDates/CloudVisitScheduleSync").InnerText = Model.LastExecution.CloudVisitScheduleSync.ToString("yyyy-MM-dd HH:mm:ss")
-        XmlStr = XmlDoc.OuterXml()
-        XmlStr = Cryptography.Encrypt(XmlStr, _Key)
+        XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Cloud").InnerText = Model.LastExecution.Cloud.ToString("yyyy-MM-dd HH:mm:ss")
+        XmlDoc.SelectSingleNode("Setting/LastExecutionDates/CloudDataSended").InnerText = Model.LastExecution.CloudDataSended.ToString("yyyy-MM-dd HH:mm:ss")
+        Dim Builder As New StringBuilder()
+        Dim Settings As New XmlWriterSettings()
+        Settings.Indent = True
+        Settings.IndentChars = vbTab
+        Settings.NewLineOnAttributes = False
+        Using writer As XmlWriter = XmlWriter.Create(Builder, Settings)
+            XmlDoc.Save(writer)
+        End Using
+        XmlStr = Cryptography.Encrypt(Builder.ToString(), _Key)
         File.WriteAllText(ApplicationPaths.SettingFile, XmlStr)
         Return Model
     End Function

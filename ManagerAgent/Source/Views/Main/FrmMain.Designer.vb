@@ -48,6 +48,7 @@ Partial Class FrmMain
         Me.BtnSettingsCloud = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnSettingsCloudStorage = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnSettingsCloudDatabase = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnSettingsCloudSynchronization = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnSettingsSupport = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.BtnSettingsChangePassword = New System.Windows.Forms.ToolStripMenuItem()
@@ -69,7 +70,6 @@ Partial Class FrmMain
         Me.Label2 = New System.Windows.Forms.Label()
         Me.DgvWarnings = New System.Windows.Forms.DataGridView()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.BtnSettingsCloudSynchronization = New System.Windows.Forms.ToolStripMenuItem()
         Me.CmsNotifyIcon.SuspendLayout()
         CType(Me.DgvEvents, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsTitle.SuspendLayout()
@@ -267,6 +267,12 @@ Partial Class FrmMain
         Me.BtnSettingsCloudDatabase.Name = "BtnSettingsCloudDatabase"
         Me.BtnSettingsCloudDatabase.Size = New System.Drawing.Size(185, 22)
         Me.BtnSettingsCloudDatabase.Text = "Banco de Dados"
+        '
+        'BtnSettingsCloudSynchronization
+        '
+        Me.BtnSettingsCloudSynchronization.Name = "BtnSettingsCloudSynchronization"
+        Me.BtnSettingsCloudSynchronization.Size = New System.Drawing.Size(185, 22)
+        Me.BtnSettingsCloudSynchronization.Text = "Sincronização"
         '
         'BtnSettingsSupport
         '
@@ -533,12 +539,6 @@ Partial Class FrmMain
         Me.Label1.TabIndex = 19
         Me.Label1.Text = "Avisos"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'BtnSettingsCloudSynchronization
-        '
-        Me.BtnSettingsCloudSynchronization.Name = "BtnSettingsCloudSynchronization"
-        Me.BtnSettingsCloudSynchronization.Size = New System.Drawing.Size(185, 22)
-        Me.BtnSettingsCloudSynchronization.Text = "Sincronização"
         '
         'FrmMain
         '

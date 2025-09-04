@@ -473,4 +473,5 @@ Public Class FrmMain
             DgvEvents.DataSource = Await _EventService.Read()
         End If
     End Sub
+
 End Class

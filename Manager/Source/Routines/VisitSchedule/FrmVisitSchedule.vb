@@ -203,7 +203,7 @@ Public Class FrmVisitSchedule
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
-    Private Sub Rbt_TextChanged(sender As Object, e As EventArgs) Handles RbtPreventive.CheckedChanged, RbtGathering.CheckedChanged, RbtContract.CheckedChanged, RbtCalled.CheckedChanged
+    Private Sub Rbt_TextChanged(sender As Object, e As EventArgs) Handles RbtPreventive.CheckedChanged, RbtGathering.CheckedChanged, RbtContract.CheckedChanged, RbtCalled.CheckedChanged, RadioButton2.CheckedChanged, RadioButton1.CheckedChanged
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub

@@ -6,7 +6,8 @@ SELECT
         WHEN visitschedule.statusid = 1 THEN "FINALIZADA"
         WHEN visitschedule.statusid = 2 THEN "CANCELADA"
 	END AS 'Status',
-    visitschedule.visitdate As 'Data Visita',
+    visitschedule.scheduleddate As 'Data Agendada',
+    visitschedule.performeddate As 'Data Realizada',
     CASE
         WHEN visitschedule.calltypeid = 0 THEN "LEVANTAMENTO"
         WHEN visitschedule.calltypeid = 1 THEN "PREVENTIVA"
@@ -36,6 +37,6 @@ WHERE
     IFNULL(personcompressor.patrimony, '') LIKE CONCAT('%', @patrimony, '%') AND
     IFNULL(personcompressor.sector, '') LIKE CONCAT('%', @sector, '%') AND
     visitschedule.creation BETWEEN @creationi AND @creationf AND
-    visitschedule.visitdate BETWEEN @visitdatei AND @visitdatef
-GROUP BY visitschedule.id
+    visitschedule.scheduleddate BETWEEN @scheduleddatei AND @scheduleddatef AND
+    visitschedule.performeddate BETWEEN @performeddatei AND @performeddatef
 ORDER BY visitschedule.id;

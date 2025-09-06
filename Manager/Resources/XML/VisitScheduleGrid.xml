@@ -23,30 +23,36 @@
     <Column Index="3">
         <Visible>True</Visible>
         <DisplayIndex>3</DisplayIndex>
-        <Name>Data Visita</Name>
+        <Name>Data Agendada</Name>
         <Width>110</Width>
     </Column>
-    <Column Index="4">
-        <Visible>True</Visible>
-        <DisplayIndex>4</DisplayIndex>
-        <Name>Tipo</Name>
-        <Width>100</Width>
-    </Column>
+	<Column Index="4">
+		<Visible>True</Visible>
+		<DisplayIndex>4</DisplayIndex>
+		<Name>Data Realizada</Name>
+		<Width>110</Width>
+	</Column>
     <Column Index="5">
         <Visible>True</Visible>
         <DisplayIndex>5</DisplayIndex>
-        <Name>Cliente</Name>
-        <Width>300</Width>
+        <Name>Tipo</Name>
+        <Width>100</Width>
     </Column>
     <Column Index="6">
         <Visible>True</Visible>
         <DisplayIndex>6</DisplayIndex>
-        <Name>Compressor</Name>
-        <Width>250</Width>
+        <Name>Cliente</Name>
+        <Width>300</Width>
     </Column>
     <Column Index="7">
         <Visible>True</Visible>
         <DisplayIndex>7</DisplayIndex>
+        <Name>Compressor</Name>
+        <Width>250</Width>
+    </Column>
+    <Column Index="8">
+        <Visible>True</Visible>
+        <DisplayIndex>8</DisplayIndex>
         <Name>Instruções</Name>
         <Width>400</Width>
     </Column>

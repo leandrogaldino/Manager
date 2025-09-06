@@ -2,12 +2,14 @@ INSERT INTO visitschedule
 (
     creation,
     statusid,
-    visitdate,
+    scheduleddate,
+    performeddate,
     calltypeid,
     customerid,
     personcompressorid,
     instructions,
     evaluationid,
+    overridedvisitscheduleid,
     lastupdate,
     userid
 )
@@ -15,12 +17,14 @@ VALUES
 (
     @creation,
     @statusid,
-    @visitdate,
+    @scheduleddate,
+    @performeddate,
     @calltypeid,
     @customerid,
     @personcompressorid,
     @instructions,
     @evaluationid,
+    @overridedvisitscheduleid,
     @lastupdate,
     @userid
 );

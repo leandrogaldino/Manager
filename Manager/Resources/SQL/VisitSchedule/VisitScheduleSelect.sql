@@ -2,12 +2,14 @@ SELECT
 	visitschedule.id,
 	visitschedule.creation,
     visitschedule.statusid,
-	visitschedule.visitdate,
+	visitschedule.scheduleddate,
+	visitschedule.performeddate,
 	visitschedule.calltypeid,
 	visitschedule.customerid,
 	visitschedule.personcompressorid,
 	visitschedule.instructions,
 	visitschedule.evaluationid,
+	visitschedule.overridedvisitscheduleid,
 	visitschedule.lastupdate
 FROM visitschedule
 WHERE visitschedule.id = @id;

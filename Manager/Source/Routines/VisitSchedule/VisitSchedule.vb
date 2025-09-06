@@ -5,32 +5,35 @@ Imports MySql.Data.MySqlClient
 Public Class VisitSchedule
     Inherits ParentModel
     Private ReadOnly _RemoteDB As RemoteDB
-    Private ReadOnly _Evaluation As Lazy(Of Evaluation)
     Public Property Status As VisitScheduleStatus = VisitScheduleStatus.Pending
     Public Property CallType As CallType = CallType.None
-    Public Property VisitDate As Date = Today
+    Public Property ScheduledDate As Date = Now
+    Public Property PerformedDate As Date? = Nothing
     Public Property Customer As New Person
     Public Property Compressor As New PersonCompressor
     Public Property Instructions As String
+    Public Property EvaluationID As Long
+    Public Property Evaluation As New Lazy(Of Evaluation)
+    Public Property OverridedVisitScheduleID As Long
+    Public Property OverridedVisitSchedule As New Lazy(Of VisitSchedule)
     Public Property LastUpdate As Date = Now
-
-
     Public Sub New()
         _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
         SetRoutine(Routine.VisitSchedule)
     End Sub
-
-
     Public Sub Clear()
         Unlock()
         SetIsSaved(False)
         SetID(0)
         SetCreation(Today)
         Status = VisitScheduleStatus.Pending
-        VisitDate = Today
+        ScheduledDate = Now
+        PerformedDate = Nothing
         Customer = New Person()
         Compressor = New PersonCompressor()
         Instructions = Nothing
+        Evaluation = Nothing
+        OverridedVisitSchedule = Nothing
         LastUpdate = Now
         If LockInfo.IsLocked Then Unlock()
     End Sub
@@ -54,11 +57,16 @@ Public Class VisitSchedule
                         SetCreation(Convert.ToDateTime(TableResult.Rows(0).Item("creation")))
                         SetIsSaved(True)
                         Status = Convert.ToInt32(TableResult.Rows(0).Item("statusid"))
-                        VisitDate = Convert.ToDateTime(TableResult.Rows(0).Item("visitdate"))
+                        ScheduledDate = Convert.ToDateTime(TableResult.Rows(0).Item("scheduleddate"))
+                        PerformedDate = If(IsDBNull(TableResult.Rows(0).Item("performeddate")), Nothing, Convert.ToDateTime(TableResult.Rows(0).Item("performeddate")))
                         CallType = Convert.ToInt32(TableResult.Rows(0).Item("calltypeid"))
                         Customer = New Person().Load(Convert.ToInt64(TableResult.Rows(0).Item("customerid")), False)
                         Compressor = Customer.Compressors.SingleOrDefault(Function(x) x.ID = Convert.ToInt64(TableResult.Rows(0).Item("personcompressorid")))
                         Instructions = Convert.ToString(TableResult.Rows(0).Item("instructions"))
+                        EvaluationID = If(Not IsDBNull(TableResult.Rows(0).Item("evaluationid")), Convert.ToInt64(TableResult.Rows(0).Item("evaluationid")), 0)
+                        Evaluation = New Lazy(Of Evaluation)(Function() If(Not IsDBNull(TableResult.Rows(0).Item("evaluationid")), New Evaluation().Load(Convert.ToInt64(TableResult.Rows(0).Item("evaluationid")), False), Nothing))
+                        OverridedVisitScheduleID = If(Not IsDBNull(TableResult.Rows(0).Item("overridedvisitscheduleid")), Convert.ToInt64(TableResult.Rows(0).Item("overridedvisitscheduleid")), 0)
+                        OverridedVisitSchedule = New Lazy(Of VisitSchedule)(Function() If(Not IsDBNull(TableResult.Rows(0).Item("overridedvisitscheduleid")), New VisitSchedule().Load(Convert.ToInt64(TableResult.Rows(0).Item("overridedvisitscheduleid")), False), Nothing))
                         LastUpdate = Convert.ToDateTime(TableResult.Rows(0).Item("lastupdate"))
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
@@ -98,14 +106,16 @@ Public Class VisitSchedule
                     Cmd.Transaction = Tra
                     Cmd.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     Cmd.Parameters.AddWithValue("@statusid", Convert.ToInt32(Status))
-                    Cmd.Parameters.AddWithValue("@visitdate", VisitDate.ToString("yyyy-MM-dd"))
+                    Cmd.Parameters.AddWithValue("@scheduleddate", ScheduledDate.ToString("yyyy-MM-dd HH:mm"))
+                    Cmd.Parameters.AddWithValue("@performeddate", If(PerformedDate.HasValue, PerformedDate.Value.ToString("yyyy-MM-dd HH:mm"), DBNull.Value))
                     Cmd.Parameters.AddWithValue("@calltypeid", Convert.ToInt32(CallType))
                     Cmd.Parameters.AddWithValue("@customerid", Customer.ID)
                     Cmd.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
                     Cmd.Parameters.AddWithValue("@instructions", If(String.IsNullOrEmpty(Instructions), DBNull.Value, Instructions))
+                    Cmd.Parameters.AddWithValue("@evaluationid", DBNull.Value)
+                    Cmd.Parameters.AddWithValue("@overridedvisitscheduleid", DBNull.Value)
                     Cmd.Parameters.AddWithValue("@lastupdate", LastUpdate.ToString("yyyy-MM-dd HH:mm:ss"))
                     Cmd.Parameters.AddWithValue("@userid", User.ID)
-                    Cmd.Parameters.AddWithValue("@evaluationid", DBNull.Value)
                     Cmd.ExecuteNonQuery()
                     SetID(Cmd.LastInsertedId)
                 End Using
@@ -119,14 +129,16 @@ Public Class VisitSchedule
             Using Cmd As New MySqlCommand(My.Resources.VisitScheduleUpdate, Con)
                 Cmd.Parameters.AddWithValue("@id", ID)
                 Cmd.Parameters.AddWithValue("@statusid", CInt(Status))
-                Cmd.Parameters.AddWithValue("@visitdate", VisitDate.ToString("yyyy-MM-dd"))
+                Cmd.Parameters.AddWithValue("@scheduleddate", ScheduledDate.ToString("yyyy-MM-dd HH:mm"))
+                Cmd.Parameters.AddWithValue("@performeddate", If(PerformedDate.HasValue, PerformedDate.Value.ToString("yyyy-MM-dd HH:mm"), DBNull.Value))
                 Cmd.Parameters.AddWithValue("@calltypeid", Convert.ToInt32(CallType))
                 Cmd.Parameters.AddWithValue("@customerid", Customer.ID)
                 Cmd.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
                 Cmd.Parameters.AddWithValue("@instructions", If(String.IsNullOrEmpty(Instructions), DBNull.Value, Instructions))
                 Cmd.Parameters.AddWithValue("@lastupdate", LastUpdate.ToString("yyyy-MM-dd HH:mm:ss"))
                 Cmd.Parameters.AddWithValue("@userid", User.ID)
-                Cmd.Parameters.AddWithValue("@evaluationid", If(_Evaluation IsNot Nothing, _Evaluation.Value.ID, DBNull.Value))
+                Cmd.Parameters.AddWithValue("@evaluationid", If(EvaluationID = 0, DBNull.Value, EvaluationID))
+                Cmd.Parameters.AddWithValue("@overridedvisitscheduleid", If(OverridedVisitScheduleID = 0, DBNull.Value, OverridedVisitScheduleID))
                 Cmd.ExecuteNonQuery()
             End Using
         End Using

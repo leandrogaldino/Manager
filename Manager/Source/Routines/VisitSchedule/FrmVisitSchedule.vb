@@ -9,6 +9,8 @@ Public Class FrmVisitSchedule
     Private _Deleting As Boolean
     Private _Loading As Boolean
     Private _LoggedUser As User
+    Private _UcVisitScheduleGeneratedItems As UcVisitScheduleGeneratedItems
+
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -42,11 +44,16 @@ Public Class FrmVisitSchedule
         _VisitSchedule = VisitSchedule
         _LoggedUser = Locator.GetInstance(Of Session).User
         Height -= TsNavigation.Height
-        LblVisitType.Top -= TsNavigation.Height
-        RbtGathering.Top -= TsNavigation.Height
-        RbtPreventive.Top -= TsNavigation.Height
-        RbtCalled.Top -= TsNavigation.Height
-        RbtContract.Top -= TsNavigation.Height
+        LblCallType.Top -= TsNavigation.Height
+        CbxCallType.Top -= TsNavigation.Height
+        LblScheduledDate.Top -= TsNavigation.Height
+        DbxScheduledDate.Top -= TsNavigation.Height
+        TbxScheduledTime.Top -= TsNavigation.Height
+        LblPerformedDate.Top -= TsNavigation.Height
+        TxtPerformedDate.Top -= TsNavigation.Height
+        TxtPerformedTime.Top -= TsNavigation.Height
+        LblGeneratedItems.Top -= TsNavigation.Height
+        BtnGeneratedItems.Top -= TsNavigation.Height
         FlpCustomer.Top -= TsNavigation.Height
         LblCustomer.Top -= TsNavigation.Height
         QbxCustomer.Top -= TsNavigation.Height
@@ -66,17 +73,22 @@ Public Class FrmVisitSchedule
         DgvNavigator.DataGridView = _VisitSchedulesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
+        CbxCallType.DataSource = EnumHelper.GetEnumDescriptions(Of CallType)()
+        _UcVisitScheduleGeneratedItems = New UcVisitScheduleGeneratedItems()
+        _CcoGeneratedItems.DropDownControl = _UcVisitScheduleGeneratedItems
     End Sub
     Private Sub LoadData()
         _Loading = True
         LblIDValue.Text = _VisitSchedule.ID
+        CbxCallType.Text = EnumHelper.GetEnumDescription(_VisitSchedule.CallType)
+        DbxScheduledDate.Date = _VisitSchedule.ScheduledDate
+        TbxScheduledTime.FromDateTime(_VisitSchedule.ScheduledDate)
+        TxtPerformedDate.Text = If(_VisitSchedule.PerformedDate.HasValue, _VisitSchedule.PerformedDate.Value.ToString("dd/MM/yyyy"), String.Empty)
+        TxtPerformedTime.Text = If(_VisitSchedule.PerformedDate.HasValue, _VisitSchedule.PerformedDate.Value.ToString("HH:mm"), String.Empty)
+        _UcVisitScheduleGeneratedItems.EvaluationID = _VisitSchedule.EvaluationID
+        _UcVisitScheduleGeneratedItems.ScheduleID = _VisitSchedule.OverridedVisitScheduleID
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_VisitSchedule.Status)
         LblCreationValue.Text = _VisitSchedule.Creation.ToString("dd/MM/yyyy")
-        RbtGathering.Checked = _VisitSchedule.CallType = CallType.Gathering
-        RbtPreventive.Checked = _VisitSchedule.CallType = CallType.Preventive
-        RbtCalled.Checked = _VisitSchedule.CallType = CallType.Called
-        RbtContract.Checked = _VisitSchedule.CallType = CallType.Contract
-        DbxEvaluationDate.Text = _VisitSchedule.VisitDate
         QbxCompressor.Conditions.Clear()
         QbxCompressor.Parameters.Clear()
         QbxCompressor.Conditions.Add(New QueriedBox.Condition With {.TableNameOrAlias = "personcompressor", .FieldName = "statusid", .[Operator] = "=", .Value = "@statusid"})
@@ -98,7 +110,7 @@ Public Class FrmVisitSchedule
             Text = "Agendamento de Visita - SOMENTE LEITURA"
         End If
         BtnSave.Enabled = False
-        DbxEvaluationDate.Select()
+        CbxCallType.Select()
         _Loading = False
     End Sub
     Private Sub BeforeDataGridViewRowMove()
@@ -199,11 +211,11 @@ Public Class FrmVisitSchedule
         BtnStatusValue.Visible = (BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Pending) Or (BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled)))
         LblStatusValue.Visible = (BtnStatusValue.Text <> EnumHelper.GetEnumDescription(VisitScheduleStatus.Pending) And (BtnStatusValue.Text <> EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled)))
     End Sub
-    Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtInstructions.TextChanged, QbxCustomer.TextChanged, QbxCompressor.TextChanged, DbxEvaluationDate.TextChanged
+    Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtInstructions.TextChanged, QbxCustomer.TextChanged, QbxCompressor.TextChanged, CbxCallType.SelectedIndexChanged, DbxScheduledDate.TextChanged, TbxScheduledTime.TextChanged
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
-    Private Sub Rbt_TextChanged(sender As Object, e As EventArgs) Handles RbtPreventive.CheckedChanged, RbtGathering.CheckedChanged, RbtContract.CheckedChanged, RbtCalled.CheckedChanged, RadioButton2.CheckedChanged, RadioButton1.CheckedChanged
+    Private Sub Rbt_TextChanged(sender As Object, e As EventArgs)
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
@@ -226,20 +238,30 @@ Public Class FrmVisitSchedule
         Save()
     End Sub
     Private Function IsValidFields() As Boolean
-        Dim AnyChecked As Boolean = RbtGathering.Checked Or RbtPreventive.Checked Or RbtCalled.Checked Or RbtContract.Checked
-        If Not AnyChecked Then
-            EprValidation.SetError(LblVisitType, "Marque qual é o tipo da visita.")
-            EprValidation.SetIconAlignment(LblVisitType, ErrorIconAlignment.MiddleRight)
+        If CbxCallType.Text = "" Then
+            EprValidation.SetError(LblCallType, "Selecione um tipo de visita.")
+            EprValidation.SetIconAlignment(LblCallType, ErrorIconAlignment.MiddleRight)
+            LblCallType.Select()
             Return False
-        ElseIf Not IsDate(DbxEvaluationDate.Text) Then
-            EprValidation.SetError(LblEvaluationDate, "Data inválida")
-            EprValidation.SetIconAlignment(LblEvaluationDate, ErrorIconAlignment.MiddleRight)
-            DbxEvaluationDate.Select()
+        ElseIf Not IsDate(DbxScheduledDate.Text) Then
+            EprValidation.SetError(LblScheduledDate, "Data inválida")
+            EprValidation.SetIconAlignment(LblScheduledDate, ErrorIconAlignment.MiddleRight)
+            DbxScheduledDate.Select()
             Return False
-        ElseIf IsDate(DbxEvaluationDate.Text) AndAlso CDate(DbxEvaluationDate.Text) < Today Then
-            EprValidation.SetError(LblEvaluationDate, "A data da visita precisa ser maior que hoje.")
-            EprValidation.SetIconAlignment(LblEvaluationDate, ErrorIconAlignment.MiddleRight)
-            DbxEvaluationDate.Select()
+        ElseIf IsDate(DbxScheduledDate.Text) AndAlso CDate(DbxScheduledDate.Date) < Today Then
+            EprValidation.SetError(LblScheduledDate, "A data da visita precisa ser maior que hoje.")
+            EprValidation.SetIconAlignment(LblScheduledDate, ErrorIconAlignment.MiddleRight)
+            DbxScheduledDate.Select()
+            Return False
+        ElseIf Not TbxScheduledTime.Time.HasValue Then
+            EprValidation.SetError(LblScheduledDate, "Hora inválida.")
+            EprValidation.SetIconAlignment(LblScheduledDate, ErrorIconAlignment.MiddleRight)
+            TbxScheduledTime.Select()
+            Return False
+        ElseIf DbxScheduledDate.Date = Today And Not TbxScheduledTime.Time > Now.TimeOfDay Then
+            EprValidation.SetError(LblScheduledDate, "A hora da visita deve ser posterior ao momento atual.")
+            EprValidation.SetIconAlignment(LblScheduledDate, ErrorIconAlignment.MiddleRight)
+            TbxScheduledTime.Select()
             Return False
         ElseIf String.IsNullOrWhiteSpace(QbxCustomer.Text) Then
             EprValidation.SetError(LblCustomer, "Campo obrigatório.")
@@ -266,7 +288,6 @@ Public Class FrmVisitSchedule
     End Function
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
-        Cursor = Cursors.WaitCursor
         TxtInstructions.Text = TxtInstructions.Text.Trim().ToUnaccented()
         If _VisitSchedule.LockInfo.IsLocked AndAlso _VisitSchedule.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show($"Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {_VisitSchedule.LockInfo.LockedBy.Value.Username.ToTitle()}.", CMessageBoxType.Information)
@@ -278,8 +299,9 @@ Public Class FrmVisitSchedule
         End If
         If Not IsValidFields() Then Return False
         _VisitSchedule.Status = EnumHelper.GetEnumValue(Of VisitScheduleStatus)(BtnStatusValue.Text)
-        _VisitSchedule.CallType = EnumHelper.GetEnumValue(Of CallType)(Controls.OfType(Of RadioButton)().FirstOrDefault(Function(r) r.Checked).Text.ToUpper())
-        _VisitSchedule.VisitDate = DbxEvaluationDate.Text
+        _VisitSchedule.CallType = EnumHelper.GetEnumValue(Of CallType)(CbxCallType.SelectedItem)
+        _VisitSchedule.ScheduledDate = DbxScheduledDate.Date
+        _VisitSchedule.PerformedDate = If(Not String.IsNullOrEmpty(TxtPerformedDate.Text) And IsDate(TxtPerformedDate.Text), CDate(TxtPerformedDate.Text), Nothing)
         _VisitSchedule.Customer = New Person().Load(QbxCustomer.FreezedPrimaryKey, False)
         _VisitSchedule.Compressor = _VisitSchedule.Customer.Compressors.Single(Function(x) x.ID = QbxCompressor.FreezedPrimaryKey)
         _VisitSchedule.Instructions = TxtInstructions.Text
@@ -290,7 +312,6 @@ Public Class FrmVisitSchedule
             LblIDValue.Text = _VisitSchedule.ID
             BtnSave.Enabled = False
             BtnDelete.Enabled = _LoggedUser.CanDelete(Routine.Route)
-
             If _VisitSchedulesForm IsNot Nothing Then
                 _Filter.Filter()
                 _VisitSchedulesForm.DgvlVisitScheduleLayout.Load()

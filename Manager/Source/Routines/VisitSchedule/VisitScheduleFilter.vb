@@ -37,9 +37,12 @@ Public Class VisitScheduleFilter
     <DisplayName("Criação")>
     <TypeConverter(GetType(ExpandableObjectConverter))>
     Public Property Creation As New DateExpandable
-    <DisplayName("Data da Visita")>
+    <DisplayName("Data Agendada")>
     <TypeConverter(GetType(ExpandableObjectConverter))>
-    Public Property VisitDate As New DateExpandable
+    Public Property ScheduledDate As New DateExpandable
+    <DisplayName("Data Realizada")>
+    <TypeConverter(GetType(ExpandableObjectConverter))>
+    Public Property PerformedDate As New DateExpandable
     Public Sub New(Dgv As DataGridView, Pg As PropertyGrid)
         DataGridView = Dgv
         PropertyGrid = Pg
@@ -78,8 +81,10 @@ Public Class VisitScheduleFilter
                 If Compressor.Sector <> Nothing Then Cmd.Parameters.AddWithValue("@sector", Compressor.Sector) : Filtering = True Else Cmd.Parameters.AddWithValue("@sector", "%")
                 If Creation.InitialDate <> Nothing Then Cmd.Parameters.AddWithValue("@creationi", Creation.InitialDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@creationi", "0001-01-01")
                 If Creation.FinalDate <> Nothing Then Cmd.Parameters.AddWithValue("@creationf", Creation.FinalDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@creationf", "9999-12-31")
-                If VisitDate.InitialDate <> Nothing Then Cmd.Parameters.AddWithValue("@visitdatei", VisitDate.InitialDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@visitdatei", "0001-01-01")
-                If VisitDate.FinalDate <> Nothing Then Cmd.Parameters.AddWithValue("@visitdatef", VisitDate.FinalDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@visitdatef", "9999-12-31")
+                If ScheduledDate.InitialDate <> Nothing Then Cmd.Parameters.AddWithValue("@scheduleddatei", ScheduledDate.InitialDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@scheduleddatei", "0001-01-01")
+                If ScheduledDate.FinalDate <> Nothing Then Cmd.Parameters.AddWithValue("@scheduleddatef", ScheduledDate.FinalDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@scheduleddatef", "9999-12-31")
+                If PerformedDate.InitialDate <> Nothing Then Cmd.Parameters.AddWithValue("@performeddatei", PerformedDate.InitialDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@performeddatei", "0001-01-01")
+                If PerformedDate.FinalDate <> Nothing Then Cmd.Parameters.AddWithValue("@performeddatef", PerformedDate.FinalDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@performeddatef", "9999-12-31")
                 Using Adp As New MySqlDataAdapter(Cmd)
                     Adp.Fill(Table)
                     DataGridView.DataSource = Nothing
@@ -115,6 +120,7 @@ Public Class VisitScheduleFilter
         Customer = New PersonExpandable
         Compressor = New PersonCompressorExpandable
         Creation = New DateExpandable
-        VisitDate = New DateExpandable
+        ScheduledDate = New DateExpandable
+        PerformedDate = New DateExpandable
     End Sub
 End Class

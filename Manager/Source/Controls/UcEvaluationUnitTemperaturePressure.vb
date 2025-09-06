@@ -48,5 +48,4 @@
     Private Sub OnValueChanged(s)
         RaiseEvent ValueChanged(s, EventArgs.Empty)
     End Sub
-
 End Class

@@ -76,7 +76,49 @@ Public Class FrmVisitSchedule
         CbxCallType.DataSource = EnumHelper.GetEnumDescriptions(Of CallType)()
         _UcVisitScheduleGeneratedItems = New UcVisitScheduleGeneratedItems()
         _CcoGeneratedItems.DropDownControl = _UcVisitScheduleGeneratedItems
+        AddHandler _UcVisitScheduleGeneratedItems.ValueChanged, AddressOf UcVisitScheduleGeneratedItems_ValueChanged
+        AddHandler _UcVisitScheduleGeneratedItems.EvaluationClick, AddressOf UcVisitScheduleGeneratedItems_EvaluationClick
+        AddHandler _UcVisitScheduleGeneratedItems.VisitScheduleClick, AddressOf UcVisitScheduleGeneratedItems_VisitScheduleClick
+
     End Sub
+
+
+    Private Sub UcVisitScheduleGeneratedItems_EvaluationClick(sender As Object, e As EventArgs)
+        Dim Evaluation As Evaluation = If(sender, Nothing)
+        Dim Frm As FrmEvaluation
+        If Evaluation IsNot Nothing Then
+            If Evaluation.ID > 0 Then
+                CcoGeneratedItems.CloseDropDown()
+                Frm = New FrmEvaluation(Evaluation)
+                Frm.ShowDialog()
+            Else
+                CMessageBox.Show("Essa avaliação não existe mais.", CMessageBoxType.Information)
+            End If
+        End If
+    End Sub
+
+    Private Sub UcVisitScheduleGeneratedItems_VisitScheduleClick(sender As Object, e As EventArgs)
+        Dim VisitSchedule As VisitSchedule = If(sender, Nothing)
+        Dim Frm As FrmVisitSchedule
+        If VisitSchedule IsNot Nothing Then
+            If VisitSchedule.ID > 0 Then
+                CcoGeneratedItems.CloseDropDown()
+                Frm = New FrmVisitSchedule(VisitSchedule)
+                Frm.ShowDialog()
+            Else
+                CMessageBox.Show("Esse agendamento não existe mais.", CMessageBoxType.Information)
+            End If
+        End If
+    End Sub
+
+    Private Sub UcVisitScheduleGeneratedItems_ValueChanged(sender As Object, e As EventArgs)
+        Dim HasEvaluation As String
+        Dim HasSchedule As String
+        HasEvaluation = If(_UcVisitScheduleGeneratedItems.EvaluationID > 0, "Sim", "Não")
+        HasSchedule = If(_UcVisitScheduleGeneratedItems.ScheduleID > 0, "Sim", "Não")
+        BtnGeneratedItems.Text = $"{HasEvaluation} | {HasSchedule}"
+    End Sub
+
     Private Sub LoadData()
         _Loading = True
         LblIDValue.Text = _VisitSchedule.ID
@@ -112,6 +154,8 @@ Public Class FrmVisitSchedule
         BtnSave.Enabled = False
         CbxCallType.Select()
         _Loading = False
+        _UcVisitScheduleGeneratedItems.EvaluationID = 15
+        _UcVisitScheduleGeneratedItems.ScheduleID = 15
     End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then
@@ -327,7 +371,6 @@ Public Class FrmVisitSchedule
             Cursor = Cursors.Default
         End Try
     End Function
-
     Private Sub TmrCustomer_Tick(sender As Object, e As EventArgs) Handles TmrCustomer.Tick
         BtnViewCustomer.Visible = False
         BtnNewCustomer.Visible = False

@@ -247,9 +247,6 @@
   <data name="Filter" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Filter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icon\icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Include" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Include.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -954,9 +951,6 @@
   </data>
   <data name="EmailSignaturesSelectByUser" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\EmailSignature\EmailSignaturesSelectByUser.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="icon_i" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icon\icon-i.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CrmDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\CRM\CrmDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>

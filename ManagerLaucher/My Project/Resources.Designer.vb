@@ -71,16 +71,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta um recurso localizado do tipo System.Drawing.Icon semelhante a (Ícone).
-        '''</summary>
-        Friend ReadOnly Property icon() As System.Drawing.Icon
-            Get
-                Dim obj As Object = ResourceManager.GetObject("icon", resourceCulture)
-                Return CType(obj,System.Drawing.Icon)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property Logo() As System.Drawing.Bitmap

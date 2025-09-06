@@ -363,7 +363,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;Cash&quot; Version=&quot;3&quot;&gt;
+        '''&lt;Routine Id=&quot;Cash&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -426,7 +426,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;CashItem&quot; Version=&quot;3&quot;&gt;
+        '''&lt;Routine Id=&quot;CashItem&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -496,7 +496,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;CashItemResponsible&quot; Version=&quot;2&quot;&gt;
+        '''&lt;Routine Id=&quot;CashItemResponsible&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot; ButtonState=&quot;Hidden&quot;&gt;
@@ -780,7 +780,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;City&quot; Version=&quot;2&quot;&gt;
+        '''&lt;Routine Id=&quot;City&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -842,7 +842,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;CityRoute&quot; Version=&quot;2&quot;&gt;
+        '''&lt;Routine Id=&quot;CityRoute&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''	&lt;Column Index=&quot;0&quot; ButtonState=&quot;Hidden&quot;&gt;
@@ -1181,15 +1181,14 @@ Namespace My.Resources
         '''	compressorsellable.creation,
         '''	compressorsellable.statusid,
         '''	compressorsellable.controltypeid,
+        '''	CASE WHEN compressorsellable.productid IS NULL THEN 2 WHEN compressorsellable.serviceid IS NULL THEN 1 END sellabletypeid,
         '''	compressorsellable.productid,
         '''	compressorsellable.serviceid,
         '''	compressorsellable.quantity,
         '''	IFNULL(product.name, service.name) name,
         '''	IFNULL(productprovidercode.code, &apos;&apos;) code
         '''FROM compressorsellable
-        '''LEFT JOIN product ON product.id = compressorsellable.productid
-        '''LEFT JOIN service ON service.id = compressorsellable.serviceid
-        '''LEFT JOIN productprovidercode ON productprovid [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''LEFT JOIN product ON product.id = compressorsella [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property CompressorSellableSelect() As String
             Get
@@ -1957,8 +1956,8 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM evaluationpart
-        '''WHERE evaluationpart.id = @id;.
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM evaluationcontrolledsellable
+        '''WHERE evaluationcontrolledsellable.id = @id;.
         '''</summary>
         Friend ReadOnly Property EvaluationControlledSellableDelete() As String
             Get
@@ -1968,7 +1967,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;EvaluationPart&quot; Version=&quot;1&quot;&gt;
+        '''&lt;Routine Id=&quot;EvaluationControlledSellable&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''	&lt;Column Index=&quot;0&quot; ButtonState=&quot;Hidden&quot;&gt;
@@ -1977,14 +1976,13 @@ Namespace My.Resources
         '''		&lt;Name&gt;Ordem&lt;/Name&gt;
         '''		&lt;Width&gt;ColumnHeader&lt;/Width&gt;
         '''	&lt;/Column&gt;
-        '''	&lt;Column Index=&quot;1&quot;&gt;
-        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''	&lt;Column Index=&quot;1&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''		&lt;Visible&gt;False&lt;/Visible&gt;
         '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''		&lt;Name&gt;Código&lt;/Name&gt;
-        '''		&lt;Width&gt;AllCells&lt;/Width&gt;
+        '''		&lt;Name&gt;Status&lt;/Name&gt;
+        '''		&lt;Width&gt;ColumnHeader&lt;/Width&gt;
         '''	&lt;/Column&gt;
-        '''	&lt;Column Index=&quot;2&quot;&gt;
-        '''		&lt;Visible&gt;True&lt;/Visible&gt;        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	&lt;Colum [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationControlledSellableGrid() As String
             Get
@@ -1993,12 +1991,12 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO evaluationpart
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO evaluationcontrolledsellable
         '''(
         '''	creation,
         '''	evaluationid,
         '''	personcompressorid,
-        '''	personcompressorpartid,
+        '''	personcompressorsellableid,
         '''	currentcapacity,
         '''	sold,
         '''	lost,
@@ -2009,7 +2007,7 @@ Namespace My.Resources
         '''	@creation,
         '''	@evaluationid,
         '''	@personcompressorid,
-        '''	@personcompressorpartid,
+        '''	@personcompressorsellableid,
         '''	@currentcapacity,
         '''	@sold,
         '''	@lost,
@@ -2025,19 +2023,16 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	evaluationpart.id,
-        '''	evaluationpart.creation,
-        '''	evaluationpart.personcompressorid,
-        '''	evaluationpart.personcompressorpartid,
-        '''	evaluationpart.currentcapacity,
-        '''	evaluationpart.sold,
-        '''	evaluationpart.lost,
-        '''	evaluationpart.userid
-        '''FROM evaluationpart
-        '''LEFT JOIN personcompressorpart ON personcompressorpart.id = evaluationpart.personcompressorpartid
-        '''WHERE 
-        '''	evaluationpart.evaluationid = @evaluationid AND
-        '''	personcompressorpart.parttypeid = @parttypeid;.
+        '''	evaluationcontrolledsellable.id,
+        '''	evaluationcontrolledsellable.creation,
+        '''	evaluationcontrolledsellable.personcompressorid,
+        '''	evaluationcontrolledsellable.personcompressorsellableid,
+        '''	evaluationcontrolledsellable.currentcapacity,
+        '''	evaluationcontrolledsellable.sold,
+        '''	evaluationcontrolledsellable.lost,
+        '''	evaluationcontrolledsellable.userid
+        '''FROM evaluationcontrolledsellable
+        '''LEFT JOIN personcompressorsellable ON personcompressorsellable.id = evaluationcontrolledsellable.personcompressorsellableid [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationControlledSellableSelect() As String
             Get
@@ -2046,12 +2041,12 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluationpart SET
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluationcontrolledsellable SET
         '''    currentcapacity = @currentcapacity,
         '''    sold = @sold,
         '''    lost = @lost,
         '''    userid = @userid
-        '''WHERE evaluationpart.id = @id;.
+        '''WHERE evaluationcontrolledsellable.id = @id;.
         '''</summary>
         Friend ReadOnly Property EvaluationControlledSellableUpdate() As String
             Get
@@ -2086,17 +2081,15 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
-        '''	IFNULL(personcompressorpart.itemname, product.name) AS &apos;Item&apos;,
-        '''    evaluationpart.currentcapacity AS &apos;Cap. Atual&apos;,
-        '''    evaluationpart.sold AS &apos;Vendido&apos;,
-        '''    evaluationpart.lost AS &apos;Perdido&apos;
+        '''	IFNULL(product.name, service.name) AS &apos;Produto/Serviço&apos;,
+        '''    evaluationcontrolledsellable.currentcapacity AS &apos;Cap. Atual&apos;,
+        '''    evaluationcontrolledsellable.sold AS &apos;Vendido&apos;,
+        '''    evaluationcontrolledsellable.lost AS &apos;Perdido&apos;
         '''FROM
-        '''    evaluationpart
-        '''INNER JOIN personcompressorpart ON personcompressorpart.id = evaluationpart.personcompressorpartid
-        '''LEFT JOIN product ON product.id = personcompressorpart.productid
-        '''WHERE
-        '''    evaluationpart.evaluationid = @evaluationid AND
-        '''    personcompressorpart.parttypeid = @parttypeid;.
+        '''    evaluationcontrolledsellable
+        '''INNER JOIN personcompressorsellable ON personcompressorsellable.id = evaluationcontrolledsellable.personcompressorsellableid
+        '''LEFT JOIN product ON product.id = personcompressorsellable.productid
+        '''LEFT JOIN service ON service.id = pe [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationDetailSelect() As String
             Get
@@ -2128,7 +2121,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;Evaluation&quot; Version=&quot;10&quot;&gt;
+        '''&lt;Routine Id=&quot;Evaluation&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -2144,7 +2137,7 @@ Namespace My.Resources
         '''        &lt;Width&gt;100&lt;/Width&gt;
         '''    &lt;/Column&gt;
         '''    &lt;Column Index=&quot;2&quot;&gt;
-        '''  [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''   [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationGrid() As String
             Get
@@ -2247,21 +2240,20 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''    IFNULL(personcompressorpart.itemname, product.name) AS item,
-        '''	evaluationpart.currentcapacity,
+        '''    IFNULL(product.name, service.name) AS &apos;Produto/Servi�o&apos;,
+        '''	evaluationcontrolledsellable.currentcapacity,
         '''	(
         '''		SELECT 
         '''			MAX(ev.evaluationdate)
         '''		FROM evaluation ev
-        '''		LEFT JOIN evaluationpart ep ON ep.evaluationid = ev.id
-        '''		LEFT JOIN personcompressorpart pcp ON pcp.id = ep.personcompressorpartid
+        '''		LEFT JOIN evaluationcontrolledsellable ep ON ep.evaluationid = ev.id
+        '''		LEFT JOIN personcompressorsellable pcp ON pcp.id = ep.personcompressorsellableid
         '''		WHERE 
         '''			(ep.sold = 1 OR ep.lost = 1) AND 
-        '''			pcp.id = evaluationpart.personcompressorpartid
+        '''			pcp.id = evaluationcontrolledsellable.personcompressorsellableid
         '''	) previousexchange,  
         '''	CASE
-        '''		WHEN personcompressorpart.parttypeid = 0 THEN
-        '''			evaluation.evaluationdat [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''		WHEN personcompressorsel [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationManagementControlledSellableFilter() As String
             Get
@@ -2280,11 +2272,10 @@ Namespace My.Resources
         '''		(
         '''			(
         '''				SELECT
-        '''					MIN(evaluationpart.currentcapacity)
-        '''				FROM evaluationpart 
-        '''				LEFT JOIN personcompressorpart ON personcompressorpart.id = evaluationpart.personcompressorpartid
-        '''				WHERE evaluationpart.evaluationid = evaluation.id and personcompressorpart.parttypeid = 0
-        '''		 [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''					MIN(evaluationcontrolledsellable.currentcapacity)
+        '''				FROM evaluationcontrolledsellable 
+        '''				LEFT JOIN personcompressorsellable ON personcompressorsellable.id = evaluationcontrolledsellable.personcompressorsellableid
+        '''				WHERE evaluationcontrolledsellable.eval [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationManagementFilter() As String
             Get
@@ -2294,7 +2285,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;EvaluationManagement&quot; Version=&quot;5&quot;&gt;
+        '''&lt;Routine Id=&quot;EvaluationManagement&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''	&lt;Column Index=&quot;0&quot; ButtonState=&quot;Hidden&quot;&gt;
@@ -2599,8 +2590,8 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM evaluationreplacedpart
-        '''WHERE evaluationreplacedpart.id = @id;.
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM evaluationreplacedsellable
+        '''WHERE evaluationreplacedsellable.id = @id;.
         '''</summary>
         Friend ReadOnly Property EvaluationReplacedSellableDelete() As String
             Get
@@ -2610,7 +2601,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;EvaluationReplacedPart&quot; Version=&quot;1&quot;&gt;
+        '''&lt;Routine Id=&quot;EvaluationReplacedSellable&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -2622,10 +2613,9 @@ Namespace My.Resources
         '''	&lt;Column Index=&quot;1&quot; ButtonState=&quot;Hidden&quot;&gt;
         '''		&lt;Visible&gt;False&lt;/Visible&gt;
         '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''		&lt;Name&gt;ID Produto&lt;/Name&gt;
+        '''		&lt;Name&gt;Produto/Serviço OBJ&lt;/Name&gt;
         '''		&lt;Width&gt;AllCells&lt;/Width&gt;
-        '''	&lt;/Column&gt;
-        '''	&lt;Column  [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	&lt;/Colum [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationReplacedSellableGrid() As String
             Get
@@ -2634,11 +2624,12 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO evaluationreplacedpart
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO evaluationreplacedsellable
         '''(
         '''	evaluationid,
         '''	creation,
         '''	productid,
+        '''	serviceid,
         '''	quantity,
         '''	userid
         ''')
@@ -2647,6 +2638,7 @@ Namespace My.Resources
         '''	@evaluationid,
         '''	@creation,
         '''	@productid,
+        '''	@serviceid,
         '''	@quantity,
         '''	@userid
         ''');
@@ -2660,12 +2652,16 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	evaluationreplacedpart.id,
-        '''	evaluationreplacedpart.creation,
-        '''	evaluationreplacedpart.productid,
-        '''	evaluationreplacedpart.quantity
-        '''FROM evaluationreplacedpart
-        '''WHERE evaluationreplacedpart.evaluationid = @evaluationid;.
+        '''	evaluationreplacedsellable.id,
+        '''	evaluationreplacedsellable.creation,
+        '''	CASE WHEN evaluationreplacedsellable.productid IS NULL THEN 2 WHEN evaluationreplacedsellable.serviceid IS NULL THEN 1 END sellabletypeid,
+        '''	evaluationreplacedsellable.productid,
+        '''	evaluationreplacedsellable.serviceid,
+        '''	evaluationreplacedsellable.quantity,
+        '''	IFNULL(product.name, service.name) name,
+        '''	IFNULL(productprovidercode.code, &apos;&apos;) code
+        '''FROM evaluationreplacedsellable
+        '''LEFT JOIN product ON product.id = evaluationreplaced [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationReplacedSellableSelect() As String
             Get
@@ -2674,11 +2670,12 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluationreplacedpart SET
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluationreplacedsellable SET
         '''	productid = @productid,
+        '''	serviceid = @serviceid,
         '''	quantity = @quantity,
         '''	userid = @userid
-        '''WHERE evaluationreplacedpart.id = @id;
+        '''WHERE evaluationreplacedsellable.id = @id;
         '''.
         '''</summary>
         Friend ReadOnly Property EvaluationReplacedSellableUpdate() As String
@@ -2863,26 +2860,6 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("Filter", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta um recurso localizado do tipo System.Drawing.Icon semelhante a (Ícone).
-        '''</summary>
-        Friend ReadOnly Property icon() As System.Drawing.Icon
-            Get
-                Dim obj As Object = ResourceManager.GetObject("icon", resourceCulture)
-                Return CType(obj,System.Drawing.Icon)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta um recurso localizado do tipo System.Drawing.Icon semelhante a (Ícone).
-        '''</summary>
-        Friend ReadOnly Property icon_i() As System.Drawing.Icon
-            Get
-                Dim obj As Object = ResourceManager.GetObject("icon_i", resourceCulture)
-                Return CType(obj,System.Drawing.Icon)
             End Get
         End Property
         
@@ -3254,7 +3231,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;PersonAddress&quot; Version=&quot;3&quot;&gt;
+        '''&lt;Routine Id=&quot;PersonAddress&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -3403,7 +3380,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;PersonCompressor&quot; Version=&quot;3&quot;&gt;
+        '''&lt;Routine Id=&quot;PersonCompressor&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -3467,12 +3444,14 @@ Namespace My.Resources
         '''	personcompressor.creation,
         '''	personcompressor.statusid,
         '''	personcompressor.compressorid,
+        '''	compressor.name AS compressorname,
         '''    personcompressor.serialnumber,
         '''	personcompressor.patrimony,
         '''	personcompressor.sector,
         '''	personcompressor.unitcapacity,
         '''	personcompressor.note
         '''FROM personcompressor
+        '''LEFT JOIN compressor ON compressor.id = personcompressor.compressorid
         '''WHERE personcompressor.personid = @personid;.
         '''</summary>
         Friend ReadOnly Property PersonCompressorSelect() As String
@@ -3482,8 +3461,8 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM personcompressorpart
-        '''WHERE personcompressorpart.id = @id;.
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM personcompressorsellable
+        '''WHERE personcompressorsellable.id = @id;.
         '''</summary>
         Friend ReadOnly Property PersonCompressorSellableDelete() As String
             Get
@@ -3493,7 +3472,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;PersonCompressorPartElapsedDay&quot; Version=&quot;5&quot;&gt;
+        '''&lt;Routine Id=&quot;PersonCompressorSellableElapsedDay&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''	&lt;Column Index=&quot;0&quot;&gt;
@@ -3509,7 +3488,7 @@ Namespace My.Resources
         '''		&lt;Width&gt;70&lt;/Width&gt;
         '''	&lt;/Column&gt;
         '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
-        '''		&lt;Visible&gt;False&lt;/Visible&gt;        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''		&lt;Visible&gt;False&lt;/Visib [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PersonCompressorSellableElapsedDayGrid() As String
             Get
@@ -3518,15 +3497,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO personcompressorpart
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO personcompressorsellable
         '''(
         '''	personcompressorid,
         '''	creation,
         '''	statusid,
-        '''	partbindid,
-        '''	parttypeid,
-        '''	itemname,
+        '''	sellablebindid,
+        '''	controltypeid,
         '''	productid,
+        '''	serviceid,
         '''	quantity,
         '''	capacity,
         '''	userid
@@ -3536,10 +3515,10 @@ Namespace My.Resources
         '''	@personcompressorid,
         '''	@creation,
         '''	@statusid,
-        '''	@partbindid,
-        '''	@parttypeid,
-        '''	@itemname,
+        '''	@sellablebindid,
+        '''	@controltypeid,
         '''	@productid,
+        '''	@serviceid,
         '''	@quantity,
         '''	@capacity,
         '''	@userid
@@ -3554,20 +3533,17 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	personcompressorpart.id,
-        '''	personcompressorpart.creation,
-        '''	personcompressorpart.statusid,
-        '''	personcompressorpart.partbindid,
-        '''	personcompressorpart.parttypeid,
-        '''	personcompressorpart.itemname,
-        '''	IFNULL(personcompressorpart.productid, 0) AS productid,
-        '''	personcompressorpart.quantity,
-        '''	personcompressorpart.capacity
-        '''FROM personcompressorpart
-        '''WHERE 
-        '''	personcompressorpart.personcompressorid = @personcompressorid AND
-        '''	personcompressorpart.parttypeid = @parttypeid
-        '''ORDER BY personcompressorpart.id;        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	personcompressorsellable.id,
+        '''	personcompressorsellable.creation,
+        '''	personcompressorsellable.statusid,
+        '''	personcompressorsellable.sellablebindid,
+        '''	personcompressorsellable.controltypeid,
+        '''	CASE WHEN personcompressorsellable.productid IS NULL THEN 2 WHEN personcompressorsellable.serviceid IS NULL THEN 1 END sellabletypeid,
+        '''	personcompressorsellable.productid,
+        '''	personcompressorsellable.serviceid,
+        '''	IFNULL(product.name, service.name) name,
+        '''	IFNULL(productprovidercode.code, &apos;&apos;) code,
+        '''	personcompre [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PersonCompressorSellableSelect() As String
             Get
@@ -3576,15 +3552,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE personcompressorpart SET
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE personcompressorsellable SET
         '''	statusid = @statusid,
-        '''	partbindid = @partbindid,
-        '''	itemname = @itemname,
+        '''	sellablebindid = @sellablebindid,
         '''	productid = @productid,
+        '''	serviceid = @serviceid,
         '''	quantity = @quantity,
         '''	capacity = @capacity,
         '''	userid = @userid
-        '''WHERE personcompressorpart.id = @id;.
+        '''WHERE personcompressorsellable.id = @id;.
         '''</summary>
         Friend ReadOnly Property PersonCompressorSellableUpdate() As String
             Get
@@ -3594,7 +3570,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;PersonCompressorPartWorkedHour&quot; Version=&quot;5&quot;&gt;
+        '''&lt;Routine Id=&quot;PersonCompressorSellableWorkedHour&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''	&lt;Column Index=&quot;0&quot;&gt;
@@ -3610,7 +3586,7 @@ Namespace My.Resources
         '''		&lt;Width&gt;70&lt;/Width&gt;
         '''	&lt;/Column&gt;
         '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
-        '''		&lt;Visible&gt;False&lt;/Visible&gt;        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''		&lt;Visible&gt;False&lt;/Visib [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PersonCompressorSellableWorkedHourGrid() As String
             Get
@@ -3664,7 +3640,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;PersonContact&quot; Version=&quot;2&quot;&gt;
+        '''&lt;Routine Id=&quot;PersonContact&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -3986,7 +3962,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;PriceTable&quot; Version=&quot;2&quot;&gt;
+        '''&lt;Routine Id=&quot;PriceTable&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''	&lt;Column Index=&quot;0&quot;&gt;
@@ -4394,7 +4370,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;ProductCode&quot; Version=&quot;2&quot;&gt;
+        '''&lt;Routine Id=&quot;ProductCode&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -4599,13 +4575,13 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
-        '''	product.id AS &apos;ID&apos;,
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT DISTINCT
+        '''    product.id AS &apos;ID&apos;,
         '''    product.creation AS &apos;Criação&apos;,
         '''    CASE 
-        '''		WHEN product.statusid = 0 THEN &quot;ATIVO&quot;
+        '''        WHEN product.statusid = 0 THEN &quot;ATIVO&quot;
         '''        WHEN product.statusid = 1 THEN &quot;INATIVO&quot;
-        '''	END AS &apos;Status&apos;,
+        '''    END AS &apos;Status&apos;,
         '''    code.code AS &apos;Código&apos;,
         '''    product.name AS &apos;Nome&apos;,
         '''    product.internalname AS &apos;Nome Interno&apos;,
@@ -4613,8 +4589,7 @@ Namespace My.Resources
         '''    productgroup.name AS &apos;Grupo&apos;,
         '''    product.location AS &apos;Localização&apos;,
         '''    product.minimumquantity AS &apos;Qtd. Min.&apos;,
-        '''    product.maximumquantity AS &apos;Qtd. Max.&apos;,
-        '''    product.grossw [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''    product.maximumquantity AS &apos;Qtd. Max.&apos;, [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property ProductFilter() As String
             Get
@@ -4624,7 +4599,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;Product&quot; Version=&quot;2&quot;&gt;
+        '''&lt;Routine Id=&quot;Product&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -4821,7 +4796,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;ProductPicture&quot; Version=&quot;3&quot;&gt;
+        '''&lt;Routine Id=&quot;ProductPicture&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -5041,7 +5016,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;ProductProviderCode&quot; Version=&quot;3&quot;&gt;
+        '''&lt;Routine Id=&quot;ProductProviderCode&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''	&lt;Column Index=&quot;0&quot;&gt;
@@ -5463,7 +5438,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;RequestItem&quot; Version=&quot;6&quot;&gt;
+        '''&lt;Routine Id=&quot;RequestItem&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -6286,7 +6261,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;UserEmail&quot; Version=&quot;2&quot;&gt;
+        '''&lt;Routine Id=&quot;UserEmail&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''	&lt;Column Index=&quot;0&quot;&gt;
@@ -6641,12 +6616,12 @@ Namespace My.Resources
         '''        WHEN visitschedule.statusid = 1 THEN &quot;FINALIZADA&quot;
         '''        WHEN visitschedule.statusid = 2 THEN &quot;CANCELADA&quot;
         '''	END AS &apos;Status&apos;,
-        '''    visitschedule.visitdate As &apos;Data Visita&apos;,
+        '''    visitschedule.scheduleddate As &apos;Data Agendada&apos;,
+        '''    visitschedule.performeddate As &apos;Data Realizada&apos;,
         '''    CASE
         '''        WHEN visitschedule.calltypeid = 0 THEN &quot;LEVANTAMENTO&quot;
         '''        WHEN visitschedule.calltypeid = 1 THEN &quot;PREVENTIVA&quot;
-        '''        WHEN visitschedule.calltypeid = 2 THEN &quot;CHAMADO&quot;
-        '''   [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property VisitScheduleFilter() As String
             Get
@@ -6656,7 +6631,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;VisitSchedule&quot; Version=&quot;2&quot;&gt;
+        '''&lt;Routine Id=&quot;VisitSchedule&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -6685,12 +6660,14 @@ Namespace My.Resources
         '''(
         '''    creation,
         '''    statusid,
-        '''    visitdate,
+        '''    scheduleddate,
+        '''    performeddate,
         '''    calltypeid,
         '''    customerid,
         '''    personcompressorid,
         '''    instructions,
         '''    evaluationid,
+        '''    overridedvisitscheduleid,
         '''    lastupdate,
         '''    userid
         ''')
@@ -6698,12 +6675,14 @@ Namespace My.Resources
         '''(
         '''    @creation,
         '''    @statusid,
-        '''    @visitdate,
+        '''    @scheduleddate,
+        '''    @performeddate,
         '''    @calltypeid,
         '''    @customerid,
         '''    @personcompressorid,
         '''    @instructions,
         '''    @evaluationid,
+        '''    @overridedvisitscheduleid,
         '''    @lastupdate,
         '''    @userid
         ''');.
@@ -6719,12 +6698,14 @@ Namespace My.Resources
         '''	visitschedule.id,
         '''	visitschedule.creation,
         '''    visitschedule.statusid,
-        '''	visitschedule.visitdate,
+        '''	visitschedule.scheduleddate,
+        '''	visitschedule.performeddate,
         '''	visitschedule.calltypeid,
         '''	visitschedule.customerid,
         '''	visitschedule.personcompressorid,
         '''	visitschedule.instructions,
         '''	visitschedule.evaluationid,
+        '''	visitschedule.overridedvisitscheduleid,
         '''	visitschedule.lastupdate
         '''FROM visitschedule
         '''WHERE visitschedule.id = @id;.
@@ -6744,6 +6725,7 @@ Namespace My.Resources
         '''    personcompressorid = @personcompressorid,
         '''    instructions = @instructions,
         '''    evaluationid = @evaluationid,
+        '''    overridedvisitscheduleid = @overridedvisitscheduleid,
         '''    lastupdate = @lastupdate,
         '''    userid = @userid
         '''WHERE visitschedule.id = @id;.

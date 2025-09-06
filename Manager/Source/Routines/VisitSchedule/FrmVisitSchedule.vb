@@ -79,16 +79,13 @@ Public Class FrmVisitSchedule
         AddHandler _UcVisitScheduleGeneratedItems.ValueChanged, AddressOf UcVisitScheduleGeneratedItems_ValueChanged
         AddHandler _UcVisitScheduleGeneratedItems.EvaluationClick, AddressOf UcVisitScheduleGeneratedItems_EvaluationClick
         AddHandler _UcVisitScheduleGeneratedItems.VisitScheduleClick, AddressOf UcVisitScheduleGeneratedItems_VisitScheduleClick
-
     End Sub
-
-
     Private Sub UcVisitScheduleGeneratedItems_EvaluationClick(sender As Object, e As EventArgs)
         Dim Evaluation As Evaluation = If(sender, Nothing)
         Dim Frm As FrmEvaluation
         If Evaluation IsNot Nothing Then
+            CcoGeneratedItems.CloseDropDown()
             If Evaluation.ID > 0 Then
-                CcoGeneratedItems.CloseDropDown()
                 Frm = New FrmEvaluation(Evaluation)
                 Frm.ShowDialog()
             Else
@@ -96,13 +93,12 @@ Public Class FrmVisitSchedule
             End If
         End If
     End Sub
-
     Private Sub UcVisitScheduleGeneratedItems_VisitScheduleClick(sender As Object, e As EventArgs)
         Dim VisitSchedule As VisitSchedule = If(sender, Nothing)
         Dim Frm As FrmVisitSchedule
         If VisitSchedule IsNot Nothing Then
+            CcoGeneratedItems.CloseDropDown()
             If VisitSchedule.ID > 0 Then
-                CcoGeneratedItems.CloseDropDown()
                 Frm = New FrmVisitSchedule(VisitSchedule)
                 Frm.ShowDialog()
             Else
@@ -110,7 +106,6 @@ Public Class FrmVisitSchedule
             End If
         End If
     End Sub
-
     Private Sub UcVisitScheduleGeneratedItems_ValueChanged(sender As Object, e As EventArgs)
         Dim HasEvaluation As String
         Dim HasSchedule As String

@@ -23,7 +23,6 @@ Namespace My
                         FrmEvaluationManagementPanel.ShowInTaskbar = True
                         FrmEvaluationManagementPanel.WindowState = FormWindowState.Maximized
                         FrmEvaluationManagementPanel.FormBorderStyle = FormBorderStyle.FixedSingle
-                        FrmEvaluationManagementPanel.Icon = Resources.icon
                         FrmEvaluationManagementPanel.Text = "Painel de Gerenciamento de Compressores"
                         FrmEvaluationManagementPanel.BtnExport.Visible = False
                         FrmEvaluationManagementPanel.ShowDialog()

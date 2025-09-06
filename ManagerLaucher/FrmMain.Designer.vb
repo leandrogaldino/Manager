@@ -23,6 +23,7 @@ Partial Class FrmMain
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmMain))
         Me.PnContent = New System.Windows.Forms.Panel()
         Me.UcSplash = New ManagerLaucher.UcSplash()
         Me.TimerRun = New System.Windows.Forms.Timer(Me.components)
@@ -48,7 +49,7 @@ Partial Class FrmMain
         Me.UcSplash.Dock = System.Windows.Forms.DockStyle.Fill
         Me.UcSplash.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.UcSplash.Location = New System.Drawing.Point(0, 0)
-        Me.UcSplash.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.UcSplash.Margin = New System.Windows.Forms.Padding(4)
         Me.UcSplash.Name = "UcSplash"
         Me.UcSplash.Size = New System.Drawing.Size(400, 99)
         Me.UcSplash.TabIndex = 0
@@ -127,6 +128,7 @@ Partial Class FrmMain
         Me.Controls.Add(Me.PictureBox1)
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FrmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Form1"

@@ -130,12 +130,6 @@
   <data name="Garbage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\Garbage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icon\icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_i" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icon\icon-i.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ImageDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\ImageDelete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

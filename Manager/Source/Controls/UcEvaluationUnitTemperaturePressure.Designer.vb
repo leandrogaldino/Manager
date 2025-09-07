@@ -93,6 +93,7 @@ Partial Class UcEvaluationUnitTemperaturePressure
         Me.DbxTemperature.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
         Me.DbxTemperature.Location = New System.Drawing.Point(265, 7)
         Me.DbxTemperature.Margin = New System.Windows.Forms.Padding(7)
+        Me.DbxTemperature.MaxLength = 3
         Me.DbxTemperature.Name = "DbxTemperature"
         Me.DbxTemperature.Size = New System.Drawing.Size(100, 23)
         Me.DbxTemperature.TabIndex = 1
@@ -126,13 +127,14 @@ Partial Class UcEvaluationUnitTemperaturePressure
         Me.DbxPressure.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
         Me.DbxPressure.Location = New System.Drawing.Point(265, 7)
         Me.DbxPressure.Margin = New System.Windows.Forms.Padding(7)
+        Me.DbxPressure.MaxLength = 4
         Me.DbxPressure.Name = "DbxPressure"
         Me.DbxPressure.Size = New System.Drawing.Size(100, 23)
         Me.DbxPressure.TabIndex = 1
         Me.DbxPressure.Text = "0,0"
         Me.DbxPressure.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'UcEvaluationAditionalInfo
+        'UcEvaluationUnitTemperaturePressure
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -142,7 +144,7 @@ Partial Class UcEvaluationUnitTemperaturePressure
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "UcEvaluationAditionalInfo"
+        Me.Name = "UcEvaluationUnitTemperaturePressure"
         Me.Size = New System.Drawing.Size(380, 138)
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()

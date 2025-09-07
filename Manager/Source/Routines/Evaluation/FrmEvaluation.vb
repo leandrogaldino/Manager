@@ -4,195 +4,23 @@ Imports ControlLibrary.Extensions
 Imports ManagerCore
 Imports MySql.Data.MySqlClient
 Public Class FrmEvaluation
-    Private _Evaluation As Evaluation
+#Region "Fields"
+
+    Private _UcCallTypeHasRepairNeedProposal As UcEvaluationCallTypeHasRepairNeedProposal
+    Private _UcUnitTemperaturePressure As UcEvaluationUnitTemperaturePressure
     Private _EvaluationsForm As FrmEvaluations
+    Private _SelectedPhoto As EvaluationPhoto
     Private _EvaluationsGrid As DataGridView
     Private _Filter As EvaluationFilter
+    Private _Evaluation As Evaluation
+    Private _Resizer As FluidResizer
+    Private _Calculated As Boolean
     Private _Deleting As Boolean
     Private _Loading As Boolean
-    Private _Calculated As Boolean
     Private _TargetSize As Size
-    Private _SelectedPhoto As EvaluationPhoto
-    Private _Resizer As FluidResizer
     Private _User As User
-
-    Private _UcUnitTemperaturePressure As UcEvaluationUnitTemperaturePressure
-    Private _UcCallTypeHasRepairNeedProposal As UcEvaluationCallTypeHasRepairNeedProposal
-
-    Private Property SelectedPhoto As EvaluationPhoto
-        Get
-            Return _SelectedPhoto
-        End Get
-        Set(value As EvaluationPhoto)
-            _SelectedPhoto = value
-            If _SelectedPhoto IsNot Nothing Then
-                PbxPhoto.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_SelectedPhoto.Photo.CurrentFile)))
-            Else
-                PbxPhoto.Image = Nothing
-            End If
-        End Set
-    End Property
-
-
-
-    Private Sub BtnRemovePhoto_Click(sender As Object, e As EventArgs) Handles BtnRemovePhoto.Click
-        Dim Photos As List(Of EvaluationPhoto) = _Evaluation.Photos.ToList()
-
-        If CMessageBox.Show("A foto será excluída permanentemente quando essa avaliação for salva. Confirma a exclusão?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-            SelectedPhoto.Photo.SetCurrentFile(Nothing)
-
-            ' Definir o SelectedPhoto para o item anterior com CurrentFile diferente de Nothing
-            Dim index As Integer = Photos.IndexOf(SelectedPhoto)
-            Dim found As Boolean = False
-
-            ' Tenta encontrar um item anterior com CurrentFile diferente de Nothing
-            For i As Integer = index - 1 To 0 Step -1
-                If Photos(i).Photo.CurrentFile IsNot Nothing Then
-                    SelectedPhoto = Photos(i)
-                    found = True
-                    Exit For
-                End If
-            Next
-
-            ' Se não encontrou um anterior, tenta encontrar um posterior
-            If Not found Then
-                For i As Integer = index + 1 To Photos.Count - 1
-                    If Photos(i).Photo.CurrentFile IsNot Nothing Then
-                        SelectedPhoto = Photos(i)
-                        found = True
-                        Exit For
-                    End If
-                Next
-            End If
-
-            ' Se não encontrou nenhum, define como Nothing
-            If Not found Then
-                SelectedPhoto = Nothing
-            End If
-
-            RefreshPhotoControls()
-            EprValidation.Clear()
-            BtnSave.Enabled = True
-        End If
-    End Sub
-
-    Private Sub BtnSavePhoto_Click(sender As Object, e As EventArgs) Handles BtnSavePhoto.Click
-        ' Verifica se há uma imagem no PictureBox
-        ' Cria e configura o SaveFileDialog
-        Using Sfd As New SaveFileDialog()
-            Sfd.Filter = "JPEG Image|*.jpg|PNG Image|*.png|BMP Image|*.bmp"
-            Sfd.Title = "Salvar Imagem"
-            Sfd.FileName = "Foto"
-            ' Exibe o diálogo e verifica se o usuário clicou em 'Salvar'
-            If Sfd.ShowDialog() = DialogResult.OK Then
-                ' Obtém a extensão do arquivo selecionado
-                Dim FileExtension As String = IO.Path.GetExtension(Sfd.FileName).ToLower()
-                Dim ImageFormat As Imaging.ImageFormat
-
-                ' Define o formato da imagem com base na extensão do arquivo
-                Select Case FileExtension
-                    Case ".jpg"
-                        ImageFormat = Imaging.ImageFormat.Jpeg
-                    Case ".png"
-                        ImageFormat = Imaging.ImageFormat.Png
-                    Case ".bmp"
-                        ImageFormat = Imaging.ImageFormat.Bmp
-                    Case Else
-                        MessageBox.Show("Formato de arquivo não suportado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        Exit Sub
-                End Select
-                ' Salva a imagem no caminho especificado
-                PbxPhoto.Image.Save(Sfd.FileName, ImageFormat)
-            End If
-        End Using
-    End Sub
-
-    Private Sub RefreshPhotoControls()
-
-        Dim ValidPhotos As List(Of EvaluationPhoto) = _Evaluation.Photos.Where(Function(x) x.Photo.CurrentFile IsNot Nothing).ToList
-        Dim PhotoCount As Integer = ValidPhotos.Count
-        Dim PhotoIndex As Integer = ValidPhotos.IndexOf(SelectedPhoto)
-
-
-
-        ' Se não houver fotos
-        If PhotoCount < 1 Then
-            LblPhotoCount.Visible = False
-            BtnSavePhoto.Enabled = False
-            BtnRemovePhoto.Enabled = False
-            BtnFirstPhoto.Enabled = False
-            BtnPreviousPhoto.Enabled = False
-            BtnNextPhoto.Enabled = False
-            BtnLastPhoto.Enabled = False
-            PbxPhoto.Image = Nothing
-        Else
-            ' Se há fotos
-            LblPhotoCount.Visible = True
-            LblPhotoCount.Text = $"Foto {PhotoIndex + 1} de {PhotoCount}"
-            BtnRemovePhoto.Enabled = True
-            BtnSavePhoto.Enabled = True
-
-            ' Habilitar ou desabilitar os botões de navegação
-            BtnFirstPhoto.Enabled = (PhotoIndex > 0)
-            BtnPreviousPhoto.Enabled = (PhotoIndex > 0)
-            BtnNextPhoto.Enabled = (PhotoIndex < PhotoCount - 1)
-            BtnLastPhoto.Enabled = (PhotoIndex < PhotoCount - 1)
-        End If
-    End Sub
-
-
-
-    Private Sub BtnPreviousPhoto_Click(sender As Object, e As EventArgs) Handles BtnPreviousPhoto.Click
-        Dim ValidPhotos As List(Of EvaluationPhoto) = _Evaluation.Photos.Where(Function(x) x.Photo.CurrentFile IsNot Nothing).ToList
-        SelectedPhoto = ValidPhotos(ValidPhotos.IndexOf(SelectedPhoto) - 1)
-        RefreshPhotoControls()
-    End Sub
-
-    Private Sub BtnNextPhoto_Click(sender As Object, e As EventArgs) Handles BtnNextPhoto.Click
-        Dim ValidPhotos As List(Of EvaluationPhoto) = _Evaluation.Photos.Where(Function(x) x.Photo.CurrentFile IsNot Nothing).ToList
-        SelectedPhoto = ValidPhotos(ValidPhotos.IndexOf(SelectedPhoto) + 1)
-        RefreshPhotoControls()
-    End Sub
-
-    Private Sub BtnFirstPhoto_Click(sender As Object, e As EventArgs) Handles BtnFirstPhoto.Click
-        Dim ValidPhotos As List(Of EvaluationPhoto) = _Evaluation.Photos.Where(Function(x) x.Photo.CurrentFile IsNot Nothing).ToList
-        SelectedPhoto = ValidPhotos(0)
-        RefreshPhotoControls()
-    End Sub
-
-    Private Sub BtnLastPhoto_Click(sender As Object, e As EventArgs) Handles BtnLastPhoto.Click
-        Dim ValidPhotos As List(Of EvaluationPhoto) = _Evaluation.Photos.Where(Function(x) x.Photo.CurrentFile IsNot Nothing).ToList
-        SelectedPhoto = ValidPhotos(ValidPhotos.Count - 1)
-        RefreshPhotoControls()
-    End Sub
-
-    Private Sub BtnPhoto_EnabledChanged(sender As Object, e As EventArgs) Handles BtnSavePhoto.EnabledChanged, BtnRemovePhoto.EnabledChanged, BtnPreviousPhoto.EnabledChanged, BtnNextPhoto.EnabledChanged, BtnLastPhoto.EnabledChanged, BtnIncludePhoto.EnabledChanged, BtnFirstPhoto.EnabledChanged
-        Dim Button As NoFocusCueButton = sender
-        If Button.Enabled Then
-            Select Case True
-                Case Button Is BtnFirstPhoto
-                    Button.BackgroundImage = My.Resources.NavFirst
-                Case Button Is BtnPreviousPhoto
-                    Button.BackgroundImage = My.Resources.NavPrevious
-                Case Button Is BtnNextPhoto
-                    Button.BackgroundImage = My.Resources.NavNext
-                Case Button Is BtnLastPhoto
-                    Button.BackgroundImage = My.Resources.NavLast
-                Case Button Is BtnIncludePhoto
-                    Button.BackgroundImage = My.Resources.ImageInclude
-                Case Button Is BtnRemovePhoto
-                    Button.BackgroundImage = My.Resources.ImageDelete
-                Case Button Is BtnSavePhoto
-                    Button.BackgroundImage = My.Resources.ImageSave
-            End Select
-        Else
-            Dim Img As Image = Button.BackgroundImage
-            Dim Colors As List(Of Color) = ImageHelper.GetImageColors(Img)
-            Img = ImageHelper.GetRecoloredImage(Img, Color.Gray)
-            Button.BackgroundImage = Img
-        End If
-    End Sub
-
+#End Region
+#Region "Properties"
     Private Property Calculated As Boolean
         Get
             Return _Calculated
@@ -213,6 +41,46 @@ Public Class FrmEvaluation
             End If
         End Set
     End Property
+    Private Property SelectedPhoto As EvaluationPhoto
+        Get
+            Return _SelectedPhoto
+        End Get
+        Set(value As EvaluationPhoto)
+            _SelectedPhoto = value
+            If _SelectedPhoto IsNot Nothing Then
+                PbxPhoto.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_SelectedPhoto.Photo.CurrentFile)))
+            Else
+                PbxPhoto.Image = Nothing
+            End If
+        End Set
+    End Property
+#End Region
+#Region "Constructors"
+    Public Sub New(Evaluation As Evaluation, EvaluationsForm As FrmEvaluations)
+        InitializeComponent()
+        _Evaluation = Evaluation
+        _EvaluationsForm = EvaluationsForm
+        _EvaluationsGrid = _EvaluationsForm.DgvData
+        _Filter = CType(_EvaluationsForm.PgFilter.SelectedObject, EvaluationFilter)
+        ConfigureControls()
+        LoadData()
+        RefreshPhotoControls()
+    End Sub
+    Public Sub New(Evaluation As Evaluation)
+        InitializeComponent()
+        _Evaluation = Evaluation
+        TsNavigation.Visible = False
+        TsNavigation.Enabled = False
+        TcEvaluation.Height -= TsNavigation.Height
+        Height -= TsNavigation.Height
+        LblStatus.Visible = True
+        LblStatusValue.Visible = True
+        BtnStatusValue.Visible = False
+        ConfigureControls()
+        LoadData()
+    End Sub
+#End Region
+#Region "Overrides"
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -231,30 +99,47 @@ Public Class FrmEvaluation
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(Evaluation As Evaluation, EvaluationsForm As FrmEvaluations)
-        InitializeComponent()
-        _Evaluation = Evaluation
-        _EvaluationsForm = EvaluationsForm
-        _EvaluationsGrid = _EvaluationsForm.DgvData
-        _Filter = CType(_EvaluationsForm.PgFilter.SelectedObject, EvaluationFilter)
-        LoadForm()
-        LoadData()
-        RefreshPhotoControls()
+#End Region
+#Region "Form Events"
+    Private Sub Form_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        DgvlTechnicianLayout.Load()
+        DgvlElapsedDaySellable.Load()
+        DgvlWorkedHourSellable.Load()
+        DgvlReplacedSellable.Load()
     End Sub
-    Public Sub New(Evaluation As Evaluation)
-        InitializeComponent()
-        _Evaluation = Evaluation
-        TsNavigation.Visible = False
-        TsNavigation.Enabled = False
-        TcEvaluation.Height -= TsNavigation.Height
-        Height -= TsNavigation.Height
-        LblStatus.Visible = True
-        LblStatusValue.Visible = True
-        BtnStatusValue.Visible = False
-        LoadForm()
-        LoadData()
+    Private Sub Form_Closing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        If Not Locator.GetInstance(Of Session).AutoCloseApp Then
+            If Not _Deleting AndAlso BtnSave.Enabled Then
+                If BtnSave.Enabled Then
+                    If CMessageBox.Show("Houve alterações que ainda não foram salvas. Deseja salvar antes de continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+                        If Not Save() Then e.Cancel = True
+                    End If
+                End If
+            End If
+            _Deleting = False
+        End If
     End Sub
-    Private Sub LoadForm()
+    Private Sub Form_Closed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        _Evaluation.Unlock()
+    End Sub
+    Private Sub Form_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If e.KeyCode = Keys.Insert And e.Control Then
+            If BtnInclude.Enabled Then BtnInclude.PerformClick()
+            e.SuppressKeyPress = True
+        ElseIf e.KeyCode = Keys.Delete And e.Control Then
+            If BtnDelete.Enabled Then BtnDelete.PerformClick()
+            e.SuppressKeyPress = True
+        ElseIf e.KeyCode = Keys.S And e.Control Then
+            If BtnSave.Enabled Then BtnSave.PerformClick()
+            e.SuppressKeyPress = True
+        ElseIf e.KeyCode = Keys.F And e.Control Then
+            BtnClose.PerformClick()
+            e.SuppressKeyPress = True
+        End If
+    End Sub
+#End Region
+#Region "Configuration & Initialization"
+    Private Sub ConfigureControls()
         ControlHelper.EnableControlDoubleBuffer(DgvWorkedHourSellable, True)
         ControlHelper.EnableControlDoubleBuffer(DgvElapsedDaySellable, True)
         _Resizer = New FluidResizer(Me)
@@ -268,46 +153,14 @@ Public Class FrmEvaluation
         LblDocumentPage.Text = Nothing
         TxtEvaluationNumber.ReadOnly = _Evaluation.EvaluationCreationType <> EvaluationCreationType.Manual
         Tip.SetToolTip(LblAverageWorkLoad, "Carga Média de Trabalho")
-
         _UcCallTypeHasRepairNeedProposal = New UcEvaluationCallTypeHasRepairNeedProposal()
         CcoCallTypeHasRepairNeedProposal.DropDownControl = _UcCallTypeHasRepairNeedProposal
-
         _UcUnitTemperaturePressure = New UcEvaluationUnitTemperaturePressure()
         CcoUnitTemperaturePressure.DropDownControl = _UcUnitTemperaturePressure
-
-
-
-
         AddHandler _UcCallTypeHasRepairNeedProposal.ValueChanged, AddressOf CallTypeHasRepairNeedProposalChanged
         AddHandler _UcUnitTemperaturePressure.ValueChanged, AddressOf UnitTemperaturePressureChanged
         RefreshPhotoControls()
     End Sub
-
-    Private Sub CallTypeHasRepairNeedProposalChanged(sender As Object, e As EventArgs)
-        Dim VisitType As String = If(String.IsNullOrEmpty(EnumHelper.GetEnumDescription(_UcCallTypeHasRepairNeedProposal.CallType)), "N/A", EnumHelper.GetEnumDescription(_UcCallTypeHasRepairNeedProposal.CallType).ToTitle)
-        Dim HasRepair As String = If(String.IsNullOrEmpty(EnumHelper.GetEnumDescription(_UcCallTypeHasRepairNeedProposal.HasRepair)), "N/A", EnumHelper.GetEnumDescription(_UcCallTypeHasRepairNeedProposal.HasRepair).ToTitle)
-        Dim NeedProposal As String = If(String.IsNullOrEmpty(EnumHelper.GetEnumDescription(_UcCallTypeHasRepairNeedProposal.NeedProposal)), "N/A", EnumHelper.GetEnumDescription(_UcCallTypeHasRepairNeedProposal.NeedProposal).ToTitle)
-        BtnCallTypeHasRepairNeedProposal.TextParts(1).Text = VisitType
-        BtnCallTypeHasRepairNeedProposal.TextParts(4).Text = HasRepair
-        BtnCallTypeHasRepairNeedProposal.TextParts(7).Text = NeedProposal
-        EprValidation.Clear()
-        If Not _Loading Then BtnSave.Enabled = True
-        BtnCallTypeHasRepairNeedProposal.Invalidate()
-    End Sub
-
-    Private Sub UnitTemperaturePressureChanged(sender As Object, e As EventArgs)
-        Dim Unit As String = If(String.IsNullOrEmpty(_UcUnitTemperaturePressure.Unit), "N/A", $"{ _UcUnitTemperaturePressure.Unit}")
-        Dim Temperature As String = If(_UcUnitTemperaturePressure.Temperature <= 0, "N/A", $"{ _UcUnitTemperaturePressure.Temperature}ºC ")
-        Dim Pressure As String = If(_UcUnitTemperaturePressure.Pressure <= 0, "N/A", $"{ _UcUnitTemperaturePressure.Pressure}BAR ")
-        BtnUnitTemperaturePressure.TextParts(1).Text = Unit
-        BtnUnitTemperaturePressure.TextParts(4).Text = Temperature
-        BtnUnitTemperaturePressure.TextParts(7).Text = Pressure
-        EprValidation.Clear()
-        If Not _Loading Then BtnSave.Enabled = True
-        BtnUnitTemperaturePressure.Invalidate()
-    End Sub
-
-
     Private Sub LoadData()
         _Loading = True
         TcEvaluation.SelectedTab = TabMain
@@ -320,14 +173,12 @@ Public Class FrmEvaluation
         BtnApprove.Visible = _Evaluation.Status <> EvaluationStatus.Approved
         BtnReject.Visible = _Evaluation.Status <> EvaluationStatus.Rejected
         BtnDisapprove.Visible = _Evaluation.Status <> EvaluationStatus.Disapproved
-
-
         _UcCallTypeHasRepairNeedProposal.CallType = _Evaluation.CallType
         _UcCallTypeHasRepairNeedProposal.HasRepair = _Evaluation.HasRepair
         _UcCallTypeHasRepairNeedProposal.NeedProposal = _Evaluation.NeedProposal
-
-
-
+        _UcUnitTemperaturePressure.Unit = _Evaluation.UnitName
+        _UcUnitTemperaturePressure.Temperature = _Evaluation.Temperature
+        _UcUnitTemperaturePressure.Pressure = _Evaluation.Pressure
         DbxEvaluationDate.Text = _Evaluation.EvaluationDate
         TxtStartTime.Text = _Evaluation.StartTime.ToString("hh\:mm")
         TxtEndTime.Text = _Evaluation.EndTime.ToString("hh\:mm")
@@ -347,7 +198,6 @@ Public Class FrmEvaluation
         CbxManualAverageWorkLoad.Checked = _Evaluation.ManualAverageWorkLoad
         DbxAverageWorkLoad.Text = _Evaluation.AverageWorkLoad
         TxtTechnicalAdvice.Text = _Evaluation.TechnicalAdvice
-
         DgvTechnician.Fill(_Evaluation.Technicians)
         If _Evaluation.EvaluationCreationType = EvaluationCreationType.Imported Or (_Evaluation.EvaluationCreationType = EvaluationCreationType.Manual And _Evaluation.ID > 0) Then
             For Each p As EvaluationControlledSellable In _Evaluation.WorkedHourControlledSelable.ToArray.Reverse()
@@ -382,8 +232,6 @@ Public Class FrmEvaluation
         DgvlElapsedDaySellable.Load()
         DgvlWorkedHourSellable.Load()
         DgvlReplacedSellable.Load()
-
-
         If Not String.IsNullOrEmpty(_Evaluation.Document.CurrentFile) AndAlso File.Exists(_Evaluation.Document.CurrentFile) Then
             PdfDocumentViewer.Load(New MemoryStream(File.ReadAllBytes(_Evaluation.Document.CurrentFile)))
             LblDocumentPage.Text = "Página " & PdfDocumentViewer.CurrentPageIndex & " de " & PdfDocumentViewer.PageCount
@@ -401,19 +249,13 @@ Public Class FrmEvaluation
             BtnZoomIn.Enabled = False
             BtnZoomOut.Enabled = False
         End If
-
-
-
         If _Evaluation.Photos.Count > 0 Then
             SelectedPhoto = _Evaluation.Photos(0)
         End If
         RefreshPhotoControls()
-
         If File.Exists(_Evaluation.Signature.CurrentFile) Then
             PbxSignature.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_Evaluation.Signature.CurrentFile)))
         End If
-
-
         BtnDelete.Enabled = _Evaluation.ID > 0 And _User.CanDelete(Routine.Evaluation)
         Text = "Avaliação de Compressor"
         If _Evaluation.LockInfo.IsLocked And Not _Evaluation.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Evaluation.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
@@ -424,149 +266,8 @@ Public Class FrmEvaluation
         TxtEvaluationNumber.Select()
         _Loading = False
     End Sub
-    Private Sub BeforeDataGridViewRowMove()
-        If BtnSave.Enabled Then
-            If CMessageBox.Show("Houve alterações que ainda não foram salvas. Deseja salvar antes de continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                If Not Save() Then
-                    DgvNavigator.CancelNextMove = True
-                End If
-            End If
-        End If
-    End Sub
-    Private Sub AfterDataGridViewRowMove()
-        Try
-            Cursor = Cursors.WaitCursor
-            _Evaluation.Load(_EvaluationsGrid.SelectedRows(0).Cells("id").Value, True)
-            LoadData()
-        Catch ex As Exception
-            CMessageBox.Show("ERRO EV001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
-        Finally
-            Cursor = Cursors.Default
-        End Try
-    End Sub
-    Private Sub Form_Closing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        If Not Locator.GetInstance(Of Session).AutoCloseApp Then
-            If Not _Deleting AndAlso BtnSave.Enabled Then
-                If BtnSave.Enabled Then
-                    If CMessageBox.Show("Houve alterações que ainda não foram salvas. Deseja salvar antes de continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                        If Not Save() Then e.Cancel = True
-                    End If
-                End If
-            End If
-            _Deleting = False
-        End If
-    End Sub
-    Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
-        If BtnSave.Enabled Then
-            If CMessageBox.Show("Houve alterações que ainda não foram salvas. Deseja salvar antes de continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                If Not Save() Then Exit Sub
-            End If
-        End If
-        _Evaluation = New Evaluation
-        LoadData()
-    End Sub
-    Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
-        If _Evaluation.ID <> 0 Then
-            Try
-                Cursor = Cursors.WaitCursor
-                If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                    If Not _Evaluation.LockInfo.IsLocked Or (_Evaluation.LockInfo.IsLocked And Locator.GetInstance(Of Session).Token = _Evaluation.LockInfo.SessionToken) Then
-                        _Evaluation.Delete()
-                        If _EvaluationsGrid IsNot Nothing Then
-                            _Filter.Filter()
-                            _EvaluationsForm.DgvEvaluationLayout.Load()
-                            _EvaluationsGrid.ClearSelection()
-                        End If
-                        _Deleting = True
-                        Dispose()
-                    Else
-                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Evaluation.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
-                    End If
-                End If
-            Catch ex As MySqlException
-                CMessageBox.Show("ERRO EV002", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
-            Finally
-                Cursor = Cursors.Default
-            End Try
-        End If
-    End Sub
-    Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.Evaluation, _Evaluation.ID)
-        Frm.ShowDialog()
-    End Sub
-    Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
-        EprValidation.Clear()
-        If BtnStatusValue.Text = EnumHelper.GetEnumDescription(EvaluationStatus.Approved) Then
-            BtnStatusValue.ForeColor = Color.DarkBlue
-            LblStatusValue.ForeColor = Color.DarkBlue
-        ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(EvaluationStatus.Rejected) Then
-            BtnStatusValue.ForeColor = Color.DarkRed
-            LblStatusValue.ForeColor = Color.DarkRed
-        Else
-            BtnStatusValue.ForeColor = Color.Chocolate
-            LblStatusValue.ForeColor = Color.Chocolate
-        End If
-    End Sub
-    Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles TxtTechnicalAdvice.TextChanged,
-                                                                         TxtResponsible.TextChanged,
-                                                                         TxtEvaluationNumber.TextChanged,
-                                                                         TxtEndTime.TextChanged,
-                                                                         TxtStartTime.TextChanged,
-                                                                         QbxCustomer.TextChanged,
-                                                                         DbxAverageWorkLoad.TextChanged
-        EprValidation.Clear()
-        If Not _Loading Then BtnSave.Enabled = True
-    End Sub
-    Private Sub Txt2TextChanged(sender As Object, e As EventArgs) Handles QbxCompressor.TextChanged,
-                                                                          DbxHorimeter.TextChanged,
-                                                                          DbxEvaluationDate.TextChanged
-        EprValidation.Clear()
-        If Not _Loading Then
-            Decalculate()
-            BtnCalculate.Text = "Calcular"
-            BtnSave.Enabled = True
-        End If
-    End Sub
-    Private Sub TxtTechnicalAdvice_LinkClicked(sender As Object, e As LinkClickedEventArgs) Handles TxtTechnicalAdvice.LinkClicked
-        Process.Start(e.LinkText)
-    End Sub
-    Private Sub Form_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
-        If e.KeyCode = Keys.Insert And e.Control Then
-            If BtnInclude.Enabled Then BtnInclude.PerformClick()
-            e.SuppressKeyPress = True
-        ElseIf e.KeyCode = Keys.Delete And e.Control Then
-            If BtnDelete.Enabled Then BtnDelete.PerformClick()
-            e.SuppressKeyPress = True
-        ElseIf e.KeyCode = Keys.S And e.Control Then
-            If BtnSave.Enabled Then BtnSave.PerformClick()
-            e.SuppressKeyPress = True
-        ElseIf e.KeyCode = Keys.F And e.Control Then
-            BtnClose.PerformClick()
-            e.SuppressKeyPress = True
-        End If
-    End Sub
-    Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
-        Save()
-    End Sub
-    Private Sub TcEvaluation_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcEvaluation.SelectedIndexChanged
-        If TcEvaluation.SelectedTab Is TabMain Then
-            If Calculated Then
-                FormBorderStyle = FormBorderStyle.FixedSingle
-                WindowState = FormWindowState.Normal
-                MaximizeBox = False
-                Size = New Size(1055, 570 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
-            Else
-                FormBorderStyle = FormBorderStyle.FixedSingle
-                WindowState = FormWindowState.Normal
-                MaximizeBox = False
-                Size = New Size(433, 570 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
-            End If
-        Else
-            FormBorderStyle = FormBorderStyle.Sizable
-            WindowState = FormWindowState.Maximized
-            MaximizeBox = True
-        End If
-    End Sub
+#End Region
+#Region "Validation & Calculation"
     Private Function IsValidFieldsToSave() As Boolean
         If _UcCallTypeHasRepairNeedProposal.CallType = CallType.None Then
             EprValidation.SetError(BtnCallTypeHasRepairNeedProposal, "Selecione um tipo de visita.")
@@ -703,13 +404,6 @@ Public Class FrmEvaluation
             TcEvaluation.SelectedTab = TabMain
             DgvWorkedHourSellable.Select()
             Return False
-            'ElseIf Not PdfDocumentViewer.IsDocumentLoaded Then
-            '    EprValidation.SetError(TsDocument, "Anexar um documento é obrigatório.")
-            '    EprValidation.SetIconAlignment(TsDocument, ErrorIconAlignment.MiddleLeft)
-            '    EprValidation.SetIconPadding(TsDocument, -180)
-            '    TcEvaluation.SelectedTab = TabDocument
-            '    BtnAttachPDF.Select()
-            '    Return False
         ElseIf _Evaluation.WorkedHourControlledSelable.Any(Function(x) x.CurrentCapacity > x.PersonCompressorSellable.Capacity) Then
             EprValidation.SetError(GbxWorkedHourSellable, "Existe um ou mais itens com a capacidade atual superior a capacidade total.")
             EprValidation.SetIconAlignment(GbxWorkedHourSellable, ErrorIconAlignment.TopRight)
@@ -729,10 +423,7 @@ Public Class FrmEvaluation
     End Function
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
-        'Dim DocumentPath As String = String.Empty
         Dim Success As Boolean
-        ' Dim CurrentDocument As String = _Evaluation.Document.CurrentFile
-        'Dim OriginalDocument As String = _Evaluation.Document.OriginalFile
         QbxCustomer.Text = QbxCustomer.Text.Trim.ToUnaccented()
         TxtResponsible.Text = TxtResponsible.Text.Trim.ToUnaccented()
         QbxCompressor.Text = QbxCompressor.Text.Trim.ToUnaccented()
@@ -747,11 +438,12 @@ Public Class FrmEvaluation
             If IsValidFieldsToSave() Then
                 Try
                     Cursor = Cursors.WaitCursor
-
                     _Evaluation.CallType = _UcCallTypeHasRepairNeedProposal.CallType
                     _Evaluation.HasRepair = _UcCallTypeHasRepairNeedProposal.HasRepair
                     _Evaluation.NeedProposal = _UcCallTypeHasRepairNeedProposal.NeedProposal
-
+                    _Evaluation.UnitName = _Evaluation.UnitName
+                    _Evaluation.Temperature = _Evaluation.Temperature
+                    _Evaluation.Pressure = _Evaluation.Pressure
                     _Evaluation.EvaluationDate = DbxEvaluationDate.Text
                     _Evaluation.StartTime = TimeSpan.Parse(TxtStartTime.Text.Insert(2, ":"))
                     _Evaluation.EndTime = TimeSpan.Parse(TxtEndTime.Text.Insert(2, ":"))
@@ -762,8 +454,6 @@ Public Class FrmEvaluation
                     _Evaluation.ManualAverageWorkLoad = CbxManualAverageWorkLoad.Checked
                     _Evaluation.AverageWorkLoad = DbxAverageWorkLoad.Text
                     _Evaluation.TechnicalAdvice = TxtTechnicalAdvice.Text
-
-
                     If _Evaluation.ID = 0 AndAlso _User.CanAccess(Routine.EvaluationApproveOrReject) Then
                         _Evaluation.SaveChanges()
                         BtnApprove.PerformClick()
@@ -809,9 +499,6 @@ Public Class FrmEvaluation
                     End If
                     Success = False
                 Catch ex As Exception
-                    'If Not String.IsNullOrEmpty(DocumentPath) AndAlso File.Exists(DocumentPath) Then
-                    '    File.Delete(DocumentPath)
-                    'End If
                     CMessageBox.Show("ERRO EV020", "Ocorreu um erro salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                     Success = False
                 Finally
@@ -821,117 +508,177 @@ Public Class FrmEvaluation
                 Success = False
             End If
         End If
-
-        'If Not Success Then
-        '    If Not File.Exists(_Evaluation.Document.OriginalFile) Then
-        '        _Evaluation.Document.SetCurrentFile(OriginalDocument, True)
-        '        _Evaluation.Document.SetCurrentFile(CurrentDocument)
-        '    End If
-        'End If
-
         Return Success
     End Function
-
-    Private Sub TmrCustomer_Tick(sender As Object, e As EventArgs) Handles TmrCustomer.Tick
-        BtnViewCustomer.Visible = False
-        BtnNewCustomer.Visible = False
-        BtnFilterCustomer.Visible = False
-        TmrCustomer.Stop()
-    End Sub
-    Private Sub QbxCustomer_Enter(sender As Object, e As EventArgs) Handles QbxCustomer.Enter
-        TmrCustomer.Stop()
-        BtnViewCustomer.Visible = QbxCustomer.IsFreezed And _User.CanWrite(Routine.Person)
-        BtnNewCustomer.Visible = _User.CanWrite(Routine.Person)
-        BtnFilterCustomer.Visible = _User.CanAccess(Routine.Person)
-    End Sub
-    Private Sub QbxCustomer_Leave(sender As Object, e As EventArgs) Handles QbxCustomer.Leave
-        TmrCustomer.Stop()
-        TmrCustomer.Start()
-    End Sub
-    Private Sub QbxCustomer_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxCustomer.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnViewCustomer.Visible = QbxCustomer.IsFreezed And _User.CanWrite(Routine.Person)
-        QbxCompressor.Unfreeze()
-        If QbxCompressor.Conditions.Count = 2 Then QbxCompressor.Conditions.RemoveAt(1)
-        If QbxCompressor.Parameters.Count = 2 Then QbxCompressor.Parameters.RemoveAt(1)
-        QbxCompressor.Conditions.Clear()
-        QbxCompressor.Parameters.Clear()
-        QbxCompressor.Conditions.Add(New QueriedBox.Condition With {.TableNameOrAlias = "personcompressor", .FieldName = "statusid", .[Operator] = "=", .Value = "@statusid"})
-        QbxCompressor.Parameters.Add(New QueriedBox.Parameter With {.ParameterName = "@statusid", .ParameterValue = 0})
-        QbxCompressor.Conditions.Add(New QueriedBox.Condition With {.TableNameOrAlias = "personcompressor", .FieldName = "personid", .[Operator] = "=", .Value = "@personid"})
-        QbxCompressor.Parameters.Add(New QueriedBox.Parameter With {.ParameterName = "@personid", .ParameterValue = QbxCustomer.FreezedPrimaryKey})
-        If QbxCustomer.IsFreezed Then
-            QbxCompressor.Enabled = True
-        Else
-            QbxCompressor.Enabled = False
-        End If
-    End Sub
-    Private Sub BtnNewCustomer_Click(sender As Object, e As EventArgs) Handles BtnNewCustomer.Click
-        Dim Customer As Person
-        Dim Form As FrmPerson
-        Customer = New Person With {
-            .IsCustomer = True,
-            .ControlMaintenance = True
-        }
-        Form = New FrmPerson(Customer)
-        Form.CbxIsCustomer.Enabled = False
-        Form.CbxMaintenance.Enabled = False
-        Form.ShowDialog()
-        EprValidation.Clear()
-        If Customer.ID > 0 Then
-            QbxCustomer.Freeze(Customer.ID)
-            Decalculate()
-            BtnCalculate.Text = "Calcular"
-        End If
-        QbxCustomer.Select()
-    End Sub
-    Private Sub BtnViewCustomer_Click(sender As Object, e As EventArgs) Handles BtnViewCustomer.Click
-        Dim Form As New FrmPerson(New Person().Load(QbxCustomer.FreezedPrimaryKey, True))
-        Dim FreezedCustomerID As Long = QbxCustomer.FreezedPrimaryKey
-        Dim FreezedCompressorID As Long = QbxCompressor.FreezedPrimaryKey
-        Form.CbxIsCustomer.Enabled = False
-        Form.CbxMaintenance.Enabled = False
-        Form.ShowDialog()
-        _Loading = True
-        QbxCustomer.Unfreeze()
-        QbxCustomer.Freeze(FreezedCustomerID)
-        QbxCompressor.Unfreeze()
-        QbxCompressor.Freeze(FreezedCompressorID)
-        QbxCustomer.Select()
-        _Loading = False
-    End Sub
-    Private Sub BtnFilterCustomer_Click(sender As Object, e As EventArgs) Handles BtnFilterCustomer.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New PersonCustomerQueriedBoxFilter("Sim"), QbxCustomer) With {
-            .Text = "Filtro de Clientes"
-        }
-        FilterForm.ShowDialog()
-        QbxCustomer.Select()
-    End Sub
-    Private Sub BtnZoomOut_Click(sender As Object, e As EventArgs) Handles BtnZoomOut.Click
-        PdfDocumentViewer.ZoomTo(PdfDocumentViewer.ZoomPercentage - 10)
-    End Sub
-    Private Sub BtnZoomIn_Click(sender As Object, e As EventArgs) Handles BtnZoomIn.Click
-        PdfDocumentViewer.ZoomTo(PdfDocumentViewer.ZoomPercentage + 10)
-    End Sub
-    Private Sub BtnIncludePhoto_Click(sender As Object, e As EventArgs) Handles BtnIncludePhoto.Click
-        Dim Filename As String
-        Dim Photo As EvaluationPhoto
-        Using Ofd As New OpenFileDialog()
-            Ofd.Filter = "Imagens|*.jpg;*.jpeg;*.png;*.bmp|Todos os arquivos|*.*"
-            Ofd.Title = "Selecionar Imagem"
-            If Ofd.ShowDialog() = DialogResult.OK Then
-                Filename = Util.GetFilename(Path.GetExtension(Ofd.FileName))
-                File.Copy(Ofd.FileName, Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
-                Photo = New EvaluationPhoto()
-                Photo.Photo.SetCurrentFile(Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
-                _Evaluation.Photos.Add(Photo)
-                SelectedPhoto = Photo
-                EprValidation.Clear()
-                BtnSave.Enabled = True
+    Private Function GetCMT() As Decimal
+        Dim Value As Decimal
+        Value = 5.71
+        If IsDate(DbxEvaluationDate.Text) Then
+            If QbxCompressor.IsFreezed Then
+                If DbxHorimeter.DecimalValue >= 0 Then
+                    If Evaluation.HasPreviousEvaluation(_Evaluation.Compressor, DbxEvaluationDate.Text, LblIDValue.Text) Then
+                        If Evaluation.GetPreviousEvaluationDate(_Evaluation.Compressor, DbxEvaluationDate.Text, LblIDValue.Text) <= CDate(DbxEvaluationDate.Text) Then
+                            Value = Evaluation.GetAverageWorkLoad(_Evaluation.Compressor, DbxHorimeter.DecimalValue, DbxEvaluationDate.Text, LblIDValue.Text)
+                            If Value = 0 Then Value = 0.01
+                            If Value < 0 Then Value = 5.71
+                            If Value > 24 And Value < 25 Then Value = 24
+                        End If
+                    Else
+                        EprInformation.SetError(LblAverageWorkLoad, String.Format("Não existe avaliação anterior a essa para esse compressor, foi utilizado o CMT padrão (5,71)."))
+                    End If
+                End If
             End If
-        End Using
-        RefreshPhotoControls()
+        End If
+        Return Value
+    End Function
+    Private Function IsValidFieldsToCalculate() As Boolean
+        If Not IsDate(DbxEvaluationDate.Text) Then
+            EprValidation.SetError(LblEvaluationDate, "Data inválida")
+            EprValidation.SetIconAlignment(LblEvaluationDate, ErrorIconAlignment.MiddleRight)
+            TcEvaluation.SelectedTab = TabMain
+            DbxEvaluationDate.Select()
+            Return False
+        ElseIf String.IsNullOrWhiteSpace(QbxCustomer.Text) Then
+            EprValidation.SetError(LblCustomer, "Campo obrigatório.")
+            EprValidation.SetIconAlignment(LblCustomer, ErrorIconAlignment.MiddleRight)
+            TcEvaluation.SelectedTab = TabMain
+            QbxCustomer.Select()
+            Return False
+        ElseIf Not QbxCustomer.IsFreezed Then
+            EprValidation.SetError(LblCustomer, "Cliente não encontrado.")
+            EprValidation.SetIconAlignment(LblCustomer, ErrorIconAlignment.MiddleRight)
+            TcEvaluation.SelectedTab = TabMain
+            QbxCustomer.Select()
+            Return False
+        ElseIf String.IsNullOrWhiteSpace(QbxCompressor.Text) Then
+            EprValidation.SetError(LblCompressor, "Campo obrigatório.")
+            EprValidation.SetIconAlignment(LblCompressor, ErrorIconAlignment.MiddleRight)
+            TcEvaluation.SelectedTab = TabMain
+            QbxCompressor.Select()
+            Return False
+        ElseIf Not QbxCompressor.IsFreezed Then
+            EprValidation.SetError(LblCompressor, "Compressor não encontrado.")
+            EprValidation.SetIconAlignment(LblCompressor, ErrorIconAlignment.MiddleRight)
+            TcEvaluation.SelectedTab = TabMain
+            QbxCompressor.Select()
+            Return False
+        ElseIf DbxHorimeter.DecimalValue < 0 Then
+            EprValidation.SetError(LblCompressor, "O horímero não pode ser menor que 0.")
+            EprValidation.SetIconAlignment(LblCompressor, ErrorIconAlignment.MiddleRight)
+            TcEvaluation.SelectedTab = TabMain
+            QbxCompressor.Select()
+            Return False
+        ElseIf Evaluation.CountEvaluation(QbxCompressor.FreezedPrimaryKey, {EvaluationStatus.Disapproved, EvaluationStatus.Rejected, EvaluationStatus.Reviewed}.ToList, _Evaluation.ID) > 0 Then
+            EprValidation.SetError(BtnCalculate, "Não foi possível calcular pois há avaliação não aprovada para esse compressor.")
+            EprValidation.SetIconAlignment(BtnCalculate, ErrorIconAlignment.MiddleLeft)
+            EprValidation.SetIconPadding(BtnCalculate, -125)
+            TcEvaluation.SelectedTab = TabMain
+            BtnCalculate.Select()
+            Return False
+        End If
+        Return True
+    End Function
+    Private Sub Decalculate()
+        Calculated = False
+        DgvWorkedHourSellable.DataSource = Nothing
+        DgvElapsedDaySellable.DataSource = Nothing
     End Sub
+    Private Sub EditEvaluationControlledSellable(ControlType As CompressorSellableControlType)
+        Dim Result As DialogResult
+        Dim Sellable As EvaluationControlledSellable
+        Dim RowIndex As Long
+        If ControlType = CompressorSellableControlType.ElapsedDay Then
+            Sellable = _Evaluation.ElapsedDayControlledSellable.Single(Function(x) x.PersonCompressorSellable.ID = DgvElapsedDaySellable.SelectedRows(0).Cells("PersonCompressorSellable").Value.ID)
+            RowIndex = DgvElapsedDaySellable.SelectedRows(0).Index
+            Using Frm As New FrmEvaluationControlledSellable(Sellable)
+                Result = Frm.ShowDialog()
+                DgvElapsedDaySellable.Fill(_Evaluation.ElapsedDayControlledSellable)
+                DgvlElapsedDaySellable.Load()
+                NavElapsedDaySellable.EnsureVisibleRow(RowIndex)
+
+            End Using
+        Else
+            Sellable = _Evaluation.WorkedHourControlledSelable.Single(Function(x) x.PersonCompressorSellable.ID = DgvWorkedHourSellable.SelectedRows(0).Cells("PersonCompressorSellable").Value.ID)
+            RowIndex = DgvWorkedHourSellable.SelectedRows(0).Index
+            Using Frm As New FrmEvaluationControlledSellable(Sellable)
+                Result = Frm.ShowDialog()
+                DgvWorkedHourSellable.Fill(_Evaluation.WorkedHourControlledSelable)
+                DgvlWorkedHourSellable.Load()
+                NavWorkedHourSellable.EnsureVisibleRow(RowIndex)
+            End Using
+        End If
+        If _Evaluation.WorkedHourControlledSelable.Any(Function(x) x.Sold) Or _Evaluation.ElapsedDayControlledSellable.Any(Function(x) x.Sold) Then
+            _UcCallTypeHasRepairNeedProposal.HasRepair = ConfirmationType.Yes
+        Else
+            If _UcCallTypeHasRepairNeedProposal.HasRepair = ConfirmationType.Yes Then
+                _UcCallTypeHasRepairNeedProposal.HasRepair = ConfirmationType.No
+            End If
+        End If
+        If Not BtnSave.Enabled Then
+            BtnSave.Enabled = Result = DialogResult.OK
+        End If
+    End Sub
+    Private Sub FilterComplement()
+        Dim Table As DataTable
+        Dim View As DataView
+        Dim Filter As String = "ItemNameOrProduct LIKE '%@VALUE%' OR Code LIKE '%@VALUE%'"
+        If DgvReplacedSellable.DataSource IsNot Nothing Then
+            Table = DgvReplacedSellable.DataSource
+            View = Table.DefaultView
+            If TxtFilterReplacedSellable.Text <> Nothing Then
+                Filter = Filter.Replace("@VALUE", TxtFilterReplacedSellable.Text.Replace("%", Nothing).Replace("*", Nothing))
+                View.RowFilter = Filter
+            Else
+                View.RowFilter = Nothing
+            End If
+        End If
+    End Sub
+#End Region
+#Region "Aux Events"
+    Private Sub BeforeDataGridViewRowMove()
+        If BtnSave.Enabled Then
+            If CMessageBox.Show("Houve alterações que ainda não foram salvas. Deseja salvar antes de continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+                If Not Save() Then
+                    DgvNavigator.CancelNextMove = True
+                End If
+            End If
+        End If
+    End Sub
+    Private Sub AfterDataGridViewRowMove()
+        Try
+            Cursor = Cursors.WaitCursor
+            _Evaluation.Load(_EvaluationsGrid.SelectedRows(0).Cells("id").Value, True)
+            LoadData()
+        Catch ex As Exception
+            CMessageBox.Show("ERRO EV001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+        Finally
+            Cursor = Cursors.Default
+        End Try
+    End Sub
+    Private Sub CallTypeHasRepairNeedProposalChanged(sender As Object, e As EventArgs)
+        Dim VisitType As String = If(String.IsNullOrEmpty(EnumHelper.GetEnumDescription(_UcCallTypeHasRepairNeedProposal.CallType)), "N/A", EnumHelper.GetEnumDescription(_UcCallTypeHasRepairNeedProposal.CallType).ToTitle)
+        Dim HasRepair As String = If(String.IsNullOrEmpty(EnumHelper.GetEnumDescription(_UcCallTypeHasRepairNeedProposal.HasRepair)), "N/A", EnumHelper.GetEnumDescription(_UcCallTypeHasRepairNeedProposal.HasRepair).ToTitle)
+        Dim NeedProposal As String = If(String.IsNullOrEmpty(EnumHelper.GetEnumDescription(_UcCallTypeHasRepairNeedProposal.NeedProposal)), "N/A", EnumHelper.GetEnumDescription(_UcCallTypeHasRepairNeedProposal.NeedProposal).ToTitle)
+        BtnCallTypeHasRepairNeedProposal.TextParts(1).Text = VisitType
+        BtnCallTypeHasRepairNeedProposal.TextParts(4).Text = HasRepair
+        BtnCallTypeHasRepairNeedProposal.TextParts(7).Text = NeedProposal
+        EprValidation.Clear()
+        If Not _Loading Then BtnSave.Enabled = True
+        BtnCallTypeHasRepairNeedProposal.Invalidate()
+    End Sub
+    Private Sub UnitTemperaturePressureChanged(sender As Object, e As EventArgs)
+        Dim Unit As String = If(String.IsNullOrEmpty(_UcUnitTemperaturePressure.Unit), "N/A", $"{ _UcUnitTemperaturePressure.Unit}")
+        Dim Temperature As String = If(_UcUnitTemperaturePressure.Temperature <= 0, "N/A", $"{ _UcUnitTemperaturePressure.Temperature}ºC ")
+        Dim Pressure As String = If(_UcUnitTemperaturePressure.Pressure <= 0, "N/A", $"{ _UcUnitTemperaturePressure.Pressure}BAR ")
+        BtnUnitTemperaturePressure.TextParts(1).Text = Unit
+        BtnUnitTemperaturePressure.TextParts(4).Text = Temperature
+        BtnUnitTemperaturePressure.TextParts(7).Text = Pressure
+        EprValidation.Clear()
+        If Not _Loading Then BtnSave.Enabled = True
+        BtnUnitTemperaturePressure.Invalidate()
+    End Sub
+#End Region
+#Region "Document"
     Private Sub BtnAttachPDF_Click(sender As Object, e As EventArgs) Handles BtnAttachPDF.Click
         Dim Filename As String
         If OfdDocument.ShowDialog = DialogResult.OK Then
@@ -955,23 +702,6 @@ Public Class FrmEvaluation
             End If
         End If
     End Sub
-    Private Sub PdfDocumentViewer_CurrentPageChanged(sender As Object, args As EventArgs) Handles PdfDocumentViewer.CurrentPageChanged
-        LblDocumentPage.Text = "Página " & PdfDocumentViewer.CurrentPageIndex & " de " & PdfDocumentViewer.PageCount
-    End Sub
-    Private Sub BtnDeletePDF_Click(sender As Object, e As EventArgs) Handles BtnDeletePDF.Click
-        If CMessageBox.Show("O documento será excluído permanentemente quando essa avaliação for salva. Confirma a exclusão?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-            _Evaluation.Document.SetCurrentFile(Nothing)
-            PdfDocumentViewer.Unload()
-            LblDocumentPage.Text = Nothing
-            BtnDeletePDF.Enabled = False
-            BtnSavePDF.Enabled = False
-            BtnPrintPDF.Enabled = False
-            BtnZoomIn.Enabled = False
-            BtnZoomOut.Enabled = False
-            EprValidation.Clear()
-            BtnSave.Enabled = True
-        End If
-    End Sub
     Private Sub BtnSavePDF_Click(sender As Object, e As EventArgs) Handles BtnSavePDF.Click
         SfdDocument.FileName = Path.GetFileName("Avaliação " & _Evaluation.EvaluationNumber)
         SfdDocument.Filter = "Documento PDF|*.pdf"
@@ -987,35 +717,218 @@ Public Class FrmEvaluation
             End If
         End Using
     End Sub
-    Private Function GetCMT() As Decimal
-        Dim Value As Decimal
-        Value = 5.71
-        If IsDate(DbxEvaluationDate.Text) Then
-            If QbxCompressor.IsFreezed Then
-                If DbxHorimeter.DecimalValue >= 0 Then
-                    If Evaluation.HasPreviousEvaluation(_Evaluation.Compressor, DbxEvaluationDate.Text, LblIDValue.Text) Then
-                        If Evaluation.GetPreviousEvaluationDate(_Evaluation.Compressor, DbxEvaluationDate.Text, LblIDValue.Text) <= CDate(DbxEvaluationDate.Text) Then
-                            Value = Evaluation.GetAverageWorkLoad(_Evaluation.Compressor, DbxHorimeter.DecimalValue, DbxEvaluationDate.Text, LblIDValue.Text)
-                            If Value = 0 Then Value = 0.01
-                            If Value < 0 Then Value = 5.71
-                            If Value > 24 And Value < 25 Then Value = 24
-                        End If
-                    Else
-                        EprInformation.SetError(LblAverageWorkLoad, String.Format("Não existe avaliação anterior a essa para esse compressor, foi utilizado o CMT padrão (5,71)."))
-                    End If
+    Private Sub BtnDeletePDF_Click(sender As Object, e As EventArgs) Handles BtnDeletePDF.Click
+        If CMessageBox.Show("O documento será excluído permanentemente quando essa avaliação for salva. Confirma a exclusão?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+            _Evaluation.Document.SetCurrentFile(Nothing)
+            PdfDocumentViewer.Unload()
+            LblDocumentPage.Text = Nothing
+            BtnDeletePDF.Enabled = False
+            BtnSavePDF.Enabled = False
+            BtnPrintPDF.Enabled = False
+            BtnZoomIn.Enabled = False
+            BtnZoomOut.Enabled = False
+            EprValidation.Clear()
+            BtnSave.Enabled = True
+        End If
+    End Sub
+    Private Sub BtnZoomOut_Click(sender As Object, e As EventArgs) Handles BtnZoomOut.Click
+        PdfDocumentViewer.ZoomTo(PdfDocumentViewer.ZoomPercentage - 10)
+    End Sub
+    Private Sub BtnZoomIn_Click(sender As Object, e As EventArgs) Handles BtnZoomIn.Click
+        PdfDocumentViewer.ZoomTo(PdfDocumentViewer.ZoomPercentage + 10)
+    End Sub
+    Private Sub PdfDocumentViewer_CurrentPageChanged(sender As Object, args As EventArgs) Handles PdfDocumentViewer.CurrentPageChanged
+        LblDocumentPage.Text = "Página " & PdfDocumentViewer.CurrentPageIndex & " de " & PdfDocumentViewer.PageCount
+    End Sub
+#End Region
+#Region "Photo"
+    Private Sub BtnSavePhoto_Click(sender As Object, e As EventArgs) Handles BtnSavePhoto.Click
+        Using Sfd As New SaveFileDialog()
+            Sfd.Filter = "JPEG Image|*.jpg|PNG Image|*.png|BMP Image|*.bmp"
+            Sfd.Title = "Salvar Imagem"
+            Sfd.FileName = "Foto"
+            If Sfd.ShowDialog() = DialogResult.OK Then
+                Dim FileExtension As String = IO.Path.GetExtension(Sfd.FileName).ToLower()
+                Dim ImageFormat As Imaging.ImageFormat
+                Select Case FileExtension
+                    Case ".jpg"
+                        ImageFormat = Imaging.ImageFormat.Jpeg
+                    Case ".png"
+                        ImageFormat = Imaging.ImageFormat.Png
+                    Case ".bmp"
+                        ImageFormat = Imaging.ImageFormat.Bmp
+                    Case Else
+                        MessageBox.Show("Formato de arquivo não suportado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Exit Sub
+                End Select
+                PbxPhoto.Image.Save(Sfd.FileName, ImageFormat)
+            End If
+        End Using
+    End Sub
+    Private Sub BtnIncludePhoto_Click(sender As Object, e As EventArgs) Handles BtnIncludePhoto.Click
+        Dim Filename As String
+        Dim Photo As EvaluationPhoto
+        Using Ofd As New OpenFileDialog()
+            Ofd.Filter = "Imagens|*.jpg;*.jpeg;*.png;*.bmp|Todos os arquivos|*.*"
+            Ofd.Title = "Selecionar Imagem"
+            If Ofd.ShowDialog() = DialogResult.OK Then
+                Filename = Util.GetFilename(Path.GetExtension(Ofd.FileName))
+                File.Copy(Ofd.FileName, Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
+                Photo = New EvaluationPhoto()
+                Photo.Photo.SetCurrentFile(Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
+                _Evaluation.Photos.Add(Photo)
+                SelectedPhoto = Photo
+                EprValidation.Clear()
+                BtnSave.Enabled = True
+            End If
+        End Using
+        RefreshPhotoControls()
+    End Sub
+    Private Sub BtnRemovePhoto_Click(sender As Object, e As EventArgs) Handles BtnRemovePhoto.Click
+        Dim Photos As List(Of EvaluationPhoto) = _Evaluation.Photos.ToList()
+        If CMessageBox.Show("A foto será excluída permanentemente quando essa avaliação for salva. Confirma a exclusão?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+            SelectedPhoto.Photo.SetCurrentFile(Nothing)
+            Dim Index As Integer = Photos.IndexOf(SelectedPhoto)
+            Dim Found As Boolean = False
+            For i As Integer = Index - 1 To 0 Step -1
+                If Photos(i).Photo.CurrentFile IsNot Nothing Then
+                    SelectedPhoto = Photos(i)
+                    Found = True
+                    Exit For
                 End If
+            Next
+            If Not Found Then
+                For i As Integer = Index + 1 To Photos.Count - 1
+                    If Photos(i).Photo.CurrentFile IsNot Nothing Then
+                        SelectedPhoto = Photos(i)
+                        Found = True
+                        Exit For
+                    End If
+                Next
+            End If
+            If Not Found Then
+                SelectedPhoto = Nothing
+            End If
+            RefreshPhotoControls()
+            EprValidation.Clear()
+            BtnSave.Enabled = True
+        End If
+    End Sub
+    Private Sub BtnPreviousPhoto_Click(sender As Object, e As EventArgs) Handles BtnPreviousPhoto.Click
+        Dim ValidPhotos As List(Of EvaluationPhoto) = _Evaluation.Photos.Where(Function(x) x.Photo.CurrentFile IsNot Nothing).ToList
+        SelectedPhoto = ValidPhotos(ValidPhotos.IndexOf(SelectedPhoto) - 1)
+        RefreshPhotoControls()
+    End Sub
+
+    Private Sub BtnNextPhoto_Click(sender As Object, e As EventArgs) Handles BtnNextPhoto.Click
+        Dim ValidPhotos As List(Of EvaluationPhoto) = _Evaluation.Photos.Where(Function(x) x.Photo.CurrentFile IsNot Nothing).ToList
+        SelectedPhoto = ValidPhotos(ValidPhotos.IndexOf(SelectedPhoto) + 1)
+        RefreshPhotoControls()
+    End Sub
+
+    Private Sub BtnFirstPhoto_Click(sender As Object, e As EventArgs) Handles BtnFirstPhoto.Click
+        Dim ValidPhotos As List(Of EvaluationPhoto) = _Evaluation.Photos.Where(Function(x) x.Photo.CurrentFile IsNot Nothing).ToList
+        SelectedPhoto = ValidPhotos(0)
+        RefreshPhotoControls()
+    End Sub
+
+    Private Sub BtnLastPhoto_Click(sender As Object, e As EventArgs) Handles BtnLastPhoto.Click
+        Dim ValidPhotos As List(Of EvaluationPhoto) = _Evaluation.Photos.Where(Function(x) x.Photo.CurrentFile IsNot Nothing).ToList
+        SelectedPhoto = ValidPhotos(ValidPhotos.Count - 1)
+        RefreshPhotoControls()
+    End Sub
+    Private Sub RefreshPhotoControls()
+        Dim ValidPhotos As List(Of EvaluationPhoto) = _Evaluation.Photos.Where(Function(x) x.Photo.CurrentFile IsNot Nothing).ToList
+        Dim PhotoCount As Integer = ValidPhotos.Count
+        Dim PhotoIndex As Integer = ValidPhotos.IndexOf(SelectedPhoto)
+        If PhotoCount < 1 Then
+            LblPhotoCount.Visible = False
+            BtnSavePhoto.Enabled = False
+            BtnRemovePhoto.Enabled = False
+            BtnFirstPhoto.Enabled = False
+            BtnPreviousPhoto.Enabled = False
+            BtnNextPhoto.Enabled = False
+            BtnLastPhoto.Enabled = False
+            PbxPhoto.Image = Nothing
+        Else
+            LblPhotoCount.Visible = True
+            LblPhotoCount.Text = $"Foto {PhotoIndex + 1} de {PhotoCount}"
+            BtnRemovePhoto.Enabled = True
+            BtnSavePhoto.Enabled = True
+            BtnFirstPhoto.Enabled = (PhotoIndex > 0)
+            BtnPreviousPhoto.Enabled = (PhotoIndex > 0)
+            BtnNextPhoto.Enabled = (PhotoIndex < PhotoCount - 1)
+            BtnLastPhoto.Enabled = (PhotoIndex < PhotoCount - 1)
+        End If
+    End Sub
+    Private Sub BtnPhoto_EnabledChanged(sender As Object, e As EventArgs) Handles BtnSavePhoto.EnabledChanged, BtnRemovePhoto.EnabledChanged, BtnPreviousPhoto.EnabledChanged, BtnNextPhoto.EnabledChanged, BtnLastPhoto.EnabledChanged, BtnIncludePhoto.EnabledChanged, BtnFirstPhoto.EnabledChanged
+        Dim Button As NoFocusCueButton = sender
+        If Button.Enabled Then
+            Select Case True
+                Case Button Is BtnFirstPhoto
+                    Button.BackgroundImage = My.Resources.NavFirst
+                Case Button Is BtnPreviousPhoto
+                    Button.BackgroundImage = My.Resources.NavPrevious
+                Case Button Is BtnNextPhoto
+                    Button.BackgroundImage = My.Resources.NavNext
+                Case Button Is BtnLastPhoto
+                    Button.BackgroundImage = My.Resources.NavLast
+                Case Button Is BtnIncludePhoto
+                    Button.BackgroundImage = My.Resources.ImageInclude
+                Case Button Is BtnRemovePhoto
+                    Button.BackgroundImage = My.Resources.ImageDelete
+                Case Button Is BtnSavePhoto
+                    Button.BackgroundImage = My.Resources.ImageSave
+            End Select
+        Else
+            Dim Img As Image = Button.BackgroundImage
+            Dim Colors As List(Of Color) = ImageHelper.GetImageColors(Img)
+            Img = ImageHelper.GetRecoloredImage(Img, Color.Gray)
+            Button.BackgroundImage = Img
+        End If
+    End Sub
+#End Region
+#Region "Button Events"
+    Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
+        If BtnSave.Enabled Then
+            If CMessageBox.Show("Houve alterações que ainda não foram salvas. Deseja salvar antes de continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+                If Not Save() Then Exit Sub
             End If
         End If
-        Return Value
-    End Function
-    Private Sub CbxManualAverageWorkLoad_CheckedChanged(sender As Object, e As EventArgs) Handles CbxManualAverageWorkLoad.CheckedChanged
-        If CbxManualAverageWorkLoad.Checked Then
-            DbxAverageWorkLoad.ReadOnly = False
-        Else
-            DbxAverageWorkLoad.ReadOnly = True
+        _Evaluation = New Evaluation
+        LoadData()
+    End Sub
+    Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
+        If _Evaluation.ID <> 0 Then
+            Try
+                Cursor = Cursors.WaitCursor
+                If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+                    If Not _Evaluation.LockInfo.IsLocked Or (_Evaluation.LockInfo.IsLocked And Locator.GetInstance(Of Session).Token = _Evaluation.LockInfo.SessionToken) Then
+                        _Evaluation.Delete()
+                        If _EvaluationsGrid IsNot Nothing Then
+                            _Filter.Filter()
+                            _EvaluationsForm.DgvEvaluationLayout.Load()
+                            _EvaluationsGrid.ClearSelection()
+                        End If
+                        _Deleting = True
+                        Dispose()
+                    Else
+                        CMessageBox.Show(String.Format("Não foi possível excluir, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Evaluation.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
+                    End If
+                End If
+            Catch ex As MySqlException
+                CMessageBox.Show("ERRO EV002", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+            Finally
+                Cursor = Cursors.Default
+            End Try
         End If
-        EprValidation.Clear()
-        BtnSave.Enabled = True
+    End Sub
+    Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
+        Dim Frm As New FrmLog(Routine.Evaluation, _Evaluation.ID)
+        Frm.ShowDialog()
+    End Sub
+    Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
+        Save()
     End Sub
     Private Sub BtnApprove_Click(sender As Object, e As EventArgs) Handles BtnApprove.Click
         Dim Row As DataGridViewRow
@@ -1045,6 +958,31 @@ Public Class FrmEvaluation
         Else
             CMessageBox.Show("Esta avaliação ainda não foi salva e, por isso, não pode ser aprovada.")
         End If
+    End Sub
+    Private Sub BtnDisapprove_Click(sender As Object, e As EventArgs) Handles BtnDisapprove.Click
+        Dim Row As DataGridViewRow
+        Try
+            Cursor = Cursors.WaitCursor
+            _Evaluation.SetStatus(EvaluationStatus.Disapproved)
+            BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
+            BtnStatusValue.ToolTipText = If(String.IsNullOrEmpty(_Evaluation.RejectReason), Nothing, "MOTIVO:" & vbNewLine & _Evaluation.RejectReason)
+            LblStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
+            LblStatusValue.ToolTipText = If(String.IsNullOrEmpty(_Evaluation.RejectReason), Nothing, "MOTIVO:" & vbNewLine & _Evaluation.RejectReason)
+            BtnApprove.Visible = _Evaluation.Status <> EvaluationStatus.Approved
+            BtnReject.Visible = _Evaluation.Status <> EvaluationStatus.Rejected
+            BtnDisapprove.Visible = _Evaluation.Status <> EvaluationStatus.Disapproved
+            If _EvaluationsForm IsNot Nothing Then
+                _Filter.Filter()
+                _EvaluationsForm.DgvEvaluationLayout.Load()
+                Row = _EvaluationsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
+                If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
+                DgvNavigator.RefreshButtons()
+            End If
+        Catch ex As Exception
+            CMessageBox.Show("ERRO EV019", "Ocorreu um erro ao desaprovar a avaliação.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+        Finally
+            Cursor = Cursors.Default
+        End Try
     End Sub
     Private Sub BtnReject_Click(sender As Object, e As EventArgs) Handles BtnReject.Click
         Dim Row As DataGridViewRow
@@ -1078,39 +1016,6 @@ Public Class FrmEvaluation
         Else
             CMessageBox.Show("Essa avaliação não pode ser rejeitada, pois ainda não foi salva.")
         End If
-    End Sub
-    Private Sub BtnDisapprove_Click(sender As Object, e As EventArgs) Handles BtnDisapprove.Click
-        Dim Row As DataGridViewRow
-        Try
-            Cursor = Cursors.WaitCursor
-            _Evaluation.SetStatus(EvaluationStatus.Disapproved)
-            BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
-            BtnStatusValue.ToolTipText = If(String.IsNullOrEmpty(_Evaluation.RejectReason), Nothing, "MOTIVO:" & vbNewLine & _Evaluation.RejectReason)
-            LblStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
-            LblStatusValue.ToolTipText = If(String.IsNullOrEmpty(_Evaluation.RejectReason), Nothing, "MOTIVO:" & vbNewLine & _Evaluation.RejectReason)
-            BtnApprove.Visible = _Evaluation.Status <> EvaluationStatus.Approved
-            BtnReject.Visible = _Evaluation.Status <> EvaluationStatus.Rejected
-            BtnDisapprove.Visible = _Evaluation.Status <> EvaluationStatus.Disapproved
-            If _EvaluationsForm IsNot Nothing Then
-                _Filter.Filter()
-                _EvaluationsForm.DgvEvaluationLayout.Load()
-                Row = _EvaluationsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
-                If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-                DgvNavigator.RefreshButtons()
-            End If
-        Catch ex As Exception
-            CMessageBox.Show("ERRO EV019", "Ocorreu um erro ao desaprovar a avaliação.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
-        Finally
-            Cursor = Cursors.Default
-        End Try
-    End Sub
-    Private Sub FrmEvaluation_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
-        _Evaluation.Unlock()
-    End Sub
-    Private Sub TxtTime_Enter(sender As Object, e As EventArgs) Handles TxtEndTime.Enter, TxtStartTime.Enter
-        BeginInvoke(CType(Sub()
-                              sender.SelectAll()
-                          End Sub, Action))
     End Sub
     Private Sub BtnCalculate_Click(sender As Object, e As EventArgs) Handles BtnCalculate.Click
         Dim Customer As Person
@@ -1146,7 +1051,7 @@ Public Class FrmEvaluation
                     End If
                 Next CurrentSellable
                 If DbxHorimeter.DecimalValue < PreviousEvaluation.Horimeter Then
-                    CMessageBox.Show("O horímetro digitado é menor do que o horímetro da última avalição desse compressor, só mantenha esse valor caso a unidade tenha sido reconstruída. A capacidade atual dos itens será a mesma da última avaliação.", CMessageBoxType.Warning)
+                    CMessageBox.Show("O horímetro informado é menor que o da última avaliação deste compressor. Só mantenha esse valor caso a unidade tenha sido reconstruída. Nesse caso, a capacidade atual dos itens e a carga média de trabalho (CMT) serão mantidas conforme a última avaliação.", CMessageBoxType.Warning)
                     Cursor = Cursors.WaitCursor
                     For Each CurrentSellable As EvaluationControlledSellable In _Evaluation.WorkedHourControlledSelable
                         CurrentSellable.Sold = False
@@ -1209,119 +1114,60 @@ Public Class FrmEvaluation
             End Try
         End If
     End Sub
-
-
-
-    Private Function IsValidFieldsToCalculate() As Boolean
-        If Not IsDate(DbxEvaluationDate.Text) Then
-            EprValidation.SetError(LblEvaluationDate, "Data inválida")
-            EprValidation.SetIconAlignment(LblEvaluationDate, ErrorIconAlignment.MiddleRight)
-            TcEvaluation.SelectedTab = TabMain
-            DbxEvaluationDate.Select()
-            Return False
-        ElseIf String.IsNullOrWhiteSpace(QbxCustomer.Text) Then
-            EprValidation.SetError(LblCustomer, "Campo obrigatório.")
-            EprValidation.SetIconAlignment(LblCustomer, ErrorIconAlignment.MiddleRight)
-            TcEvaluation.SelectedTab = TabMain
-            QbxCustomer.Select()
-            Return False
-        ElseIf Not QbxCustomer.IsFreezed Then
-            EprValidation.SetError(LblCustomer, "Cliente não encontrado.")
-            EprValidation.SetIconAlignment(LblCustomer, ErrorIconAlignment.MiddleRight)
-            TcEvaluation.SelectedTab = TabMain
-            QbxCustomer.Select()
-            Return False
-        ElseIf String.IsNullOrWhiteSpace(QbxCompressor.Text) Then
-            EprValidation.SetError(LblCompressor, "Campo obrigatório.")
-            EprValidation.SetIconAlignment(LblCompressor, ErrorIconAlignment.MiddleRight)
-            TcEvaluation.SelectedTab = TabMain
-            QbxCompressor.Select()
-            Return False
-        ElseIf Not QbxCompressor.IsFreezed Then
-            EprValidation.SetError(LblCompressor, "Compressor não encontrado.")
-            EprValidation.SetIconAlignment(LblCompressor, ErrorIconAlignment.MiddleRight)
-            TcEvaluation.SelectedTab = TabMain
-            QbxCompressor.Select()
-            Return False
-        ElseIf DbxHorimeter.DecimalValue < 0 Then
-            EprValidation.SetError(LblCompressor, "O horímero não pode ser menor que 0.")
-            EprValidation.SetIconAlignment(LblCompressor, ErrorIconAlignment.MiddleRight)
-            TcEvaluation.SelectedTab = TabMain
-            QbxCompressor.Select()
-            Return False
-        ElseIf Evaluation.CountEvaluation(QbxCompressor.FreezedPrimaryKey, {EvaluationStatus.Disapproved, EvaluationStatus.Rejected, EvaluationStatus.Reviewed}.ToList, _Evaluation.ID) > 0 Then
-            EprValidation.SetError(BtnCalculate, "Não foi possível calcular pois há avaliação não aprovada para esse compressor.")
-            EprValidation.SetIconAlignment(BtnCalculate, ErrorIconAlignment.MiddleLeft)
-            EprValidation.SetIconPadding(BtnCalculate, -125)
-            TcEvaluation.SelectedTab = TabMain
-            BtnCalculate.Select()
-            Return False
-        End If
-        Return True
-    End Function
-    Private Sub DgvWorkedHourSellable_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvWorkedHourSellable.MouseDoubleClick
-        Dim ClickPlace As DataGridView.HitTestInfo = DgvWorkedHourSellable.HitTest(e.X, e.Y)
-        If ClickPlace.Type = DataGridViewHitTestType.Cell Then
-            EditEvaluationControlledSellable(CompressorSellableControlType.WorkedHour)
-        End If
-    End Sub
-    Private Sub DgvElapsedDaySellable_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvElapsedDaySellable.MouseDoubleClick
-        Dim ClickPlace As DataGridView.HitTestInfo = DgvElapsedDaySellable.HitTest(e.X, e.Y)
-        If ClickPlace.Type = DataGridViewHitTestType.Cell Then
-            EditEvaluationControlledSellable(CompressorSellableControlType.ElapsedDay)
-        End If
-    End Sub
-    Private Sub DgvWorkedHourSellable_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvWorkedHourSellable.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            EditEvaluationControlledSellable(CompressorSellableControlType.WorkedHour)
-            e.Handled = True
-        End If
-    End Sub
-    Private Sub DgvElapsedDaySellable_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvElapsedDaySellable.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            EditEvaluationControlledSellable(CompressorSellableControlType.ElapsedDay)
-            e.Handled = True
-        End If
-    End Sub
-    Private Sub EditEvaluationControlledSellable(ControlType As CompressorSellableControlType)
-        Dim Result As DialogResult
-        Dim Sellable As EvaluationControlledSellable
-        Dim RowIndex As Long
-        If ControlType = CompressorSellableControlType.ElapsedDay Then
-            Sellable = _Evaluation.ElapsedDayControlledSellable.Single(Function(x) x.PersonCompressorSellable.ID = DgvElapsedDaySellable.SelectedRows(0).Cells("PersonCompressorSellable").Value.ID)
-            RowIndex = DgvElapsedDaySellable.SelectedRows(0).Index
-            Using Frm As New FrmEvaluationControlledSellable(Sellable)
-                Result = Frm.ShowDialog()
-                DgvElapsedDaySellable.Fill(_Evaluation.ElapsedDayControlledSellable)
-                DgvlElapsedDaySellable.Load()
-                NavElapsedDaySellable.EnsureVisibleRow(RowIndex)
-
-            End Using
+    Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
+        EprValidation.Clear()
+        If BtnStatusValue.Text = EnumHelper.GetEnumDescription(EvaluationStatus.Approved) Then
+            BtnStatusValue.ForeColor = Color.DarkBlue
+            LblStatusValue.ForeColor = Color.DarkBlue
+        ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(EvaluationStatus.Rejected) Then
+            BtnStatusValue.ForeColor = Color.DarkRed
+            LblStatusValue.ForeColor = Color.DarkRed
         Else
-            Sellable = _Evaluation.WorkedHourControlledSelable.Single(Function(x) x.PersonCompressorSellable.ID = DgvWorkedHourSellable.SelectedRows(0).Cells("PersonCompressorSellable").Value.ID)
-            RowIndex = DgvWorkedHourSellable.SelectedRows(0).Index
-            Using Frm As New FrmEvaluationControlledSellable(Sellable)
-                Result = Frm.ShowDialog()
-                DgvWorkedHourSellable.Fill(_Evaluation.WorkedHourControlledSelable)
-                DgvlWorkedHourSellable.Load()
-                NavWorkedHourSellable.EnsureVisibleRow(RowIndex)
-            End Using
-        End If
-        If _Evaluation.WorkedHourControlledSelable.Any(Function(x) x.Sold) Or _Evaluation.ElapsedDayControlledSellable.Any(Function(x) x.Sold) Then
-            _UcCallTypeHasRepairNeedProposal.HasRepair = ConfirmationType.Yes
-        Else
-            If _UcCallTypeHasRepairNeedProposal.HasRepair = ConfirmationType.Yes Then
-                _UcCallTypeHasRepairNeedProposal.HasRepair = ConfirmationType.No
-            End If
-        End If
-        If Not BtnSave.Enabled Then
-            BtnSave.Enabled = Result = DialogResult.OK
+            BtnStatusValue.ForeColor = Color.Chocolate
+            LblStatusValue.ForeColor = Color.Chocolate
         End If
     End Sub
-    Private Sub Decalculate()
-        Calculated = False
-        DgvWorkedHourSellable.DataSource = Nothing
-        DgvElapsedDaySellable.DataSource = Nothing
+    Private Sub BtnNewCustomer_Click(sender As Object, e As EventArgs) Handles BtnNewCustomer.Click
+        Dim Customer As Person
+        Dim Form As FrmPerson
+        Customer = New Person With {
+            .IsCustomer = True,
+            .ControlMaintenance = True
+        }
+        Form = New FrmPerson(Customer)
+        Form.CbxIsCustomer.Enabled = False
+        Form.CbxMaintenance.Enabled = False
+        Form.ShowDialog()
+        EprValidation.Clear()
+        If Customer.ID > 0 Then
+            QbxCustomer.Freeze(Customer.ID)
+            Decalculate()
+            BtnCalculate.Text = "Calcular"
+        End If
+        QbxCustomer.Select()
+    End Sub
+    Private Sub BtnViewCustomer_Click(sender As Object, e As EventArgs) Handles BtnViewCustomer.Click
+        Dim Form As New FrmPerson(New Person().Load(QbxCustomer.FreezedPrimaryKey, True))
+        Dim FreezedCustomerID As Long = QbxCustomer.FreezedPrimaryKey
+        Dim FreezedCompressorID As Long = QbxCompressor.FreezedPrimaryKey
+        Form.CbxIsCustomer.Enabled = False
+        Form.CbxMaintenance.Enabled = False
+        Form.ShowDialog()
+        _Loading = True
+        QbxCustomer.Unfreeze()
+        QbxCustomer.Freeze(FreezedCustomerID)
+        QbxCompressor.Unfreeze()
+        QbxCompressor.Freeze(FreezedCompressorID)
+        QbxCustomer.Select()
+        _Loading = False
+    End Sub
+    Private Sub BtnFilterCustomer_Click(sender As Object, e As EventArgs) Handles BtnFilterCustomer.Click
+        Dim FilterForm As FrmFilter
+        FilterForm = New FrmFilter(New PersonCustomerQueriedBoxFilter("Sim"), QbxCustomer) With {
+            .Text = "Filtro de Clientes"
+        }
+        FilterForm.ShowDialog()
+        QbxCustomer.Select()
     End Sub
     Private Sub BtnIncludetechnician_Click(sender As Object, e As EventArgs) Handles BtnIncludeTechnician.Click
         Dim Form As New FrmEvaluationTechnician(_Evaluation, New EvaluationTechnician(), Me)
@@ -1342,35 +1188,11 @@ Public Class FrmEvaluation
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                 Technician = _Evaluation.Technicians.Single(Function(x) x.Guid = DgvTechnician.SelectedRows(0).Cells("Guid").Value)
                 _Evaluation.Technicians.Remove(Technician)
-                'FillDataGridViewTechnician()
                 DgvTechnician.Fill(_Evaluation.Technicians)
                 BtnSave.Enabled = True
             End If
         End If
     End Sub
-    Private Sub DgvTechnician_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvTechnician.MouseDoubleClick
-        Dim ClickPlace As DataGridView.HitTestInfo = DgvTechnician.HitTest(e.X, e.Y)
-        If ClickPlace.Type = DataGridViewHitTestType.Cell Then
-            BtnEditTechnician.PerformClick()
-        End If
-    End Sub
-
-    Private Sub FrmEvaluation_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvlTechnicianLayout.Load()
-        DgvlElapsedDaySellable.Load()
-        DgvlWorkedHourSellable.Load()
-        DgvlReplacedSellable.Load()
-    End Sub
-
-
-
-
-
-
-
-
-
-
     Private Sub BtnIncludeReplacedSellable_Click(sender As Object, e As EventArgs) Handles BtnIncludeReplacedSellable.Click
         Dim Form As New FrmEvaluationReplacedSellable(_Evaluation, New EvaluationReplacedSellable(), Me)
         Form.ShowDialog()
@@ -1395,39 +1217,39 @@ Public Class FrmEvaluation
             End If
         End If
     End Sub
-
-    Private Sub DgvReplacedSellable_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvReplacedSellable.MouseDoubleClick
-        Dim ClickPlace As DataGridView.HitTestInfo = DgvReplacedSellable.HitTest(e.X, e.Y)
-        If ClickPlace.Type = DataGridViewHitTestType.Cell Then
-            BtnEditReplacedSellable.PerformClick()
+#End Region
+#Region "Textbox Events"
+    Private Sub TxtTechnicalAdvice_LinkClicked(sender As Object, e As LinkClickedEventArgs) Handles TxtTechnicalAdvice.LinkClicked
+        Process.Start(e.LinkText)
+    End Sub
+    Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles TxtTechnicalAdvice.TextChanged,
+                                                                         TxtResponsible.TextChanged,
+                                                                         TxtEvaluationNumber.TextChanged,
+                                                                         TxtEndTime.TextChanged,
+                                                                         TxtStartTime.TextChanged,
+                                                                         QbxCustomer.TextChanged,
+                                                                         DbxAverageWorkLoad.TextChanged
+        EprValidation.Clear()
+        If Not _Loading Then BtnSave.Enabled = True
+    End Sub
+    Private Sub Txt2TextChanged(sender As Object, e As EventArgs) Handles QbxCompressor.TextChanged,
+                                                                          DbxHorimeter.TextChanged,
+                                                                          DbxEvaluationDate.TextChanged
+        EprValidation.Clear()
+        If Not _Loading Then
+            Decalculate()
+            BtnCalculate.Text = "Calcular"
+            BtnSave.Enabled = True
         End If
     End Sub
-
-
     Private Sub TxtKeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtFilterReplacedSellable.KeyPress
         Dim LstChar As New List(Of Char) From {" ", ".", ",", "-", "/", "(", ")", "+", "*", "%", "&", "@", "#", "$", "<", ">", "\"}
         If Not Char.IsLetter(e.KeyChar) And Not Char.IsNumber(e.KeyChar) And Not LstChar.Contains(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
             e.Handled = True
         End If
     End Sub
-
     Private Sub TxtFilterReplacedSellable_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterReplacedSellable.TextChanged
         FilterComplement()
-    End Sub
-    Private Sub FilterComplement()
-        Dim Table As DataTable
-        Dim View As DataView
-        Dim Filter As String = "ItemNameOrProduct LIKE '%@VALUE%' OR Code LIKE '%@VALUE%'"
-        If DgvReplacedSellable.DataSource IsNot Nothing Then
-            Table = DgvReplacedSellable.DataSource
-            View = Table.DefaultView
-            If TxtFilterReplacedSellable.Text <> Nothing Then
-                Filter = Filter.Replace("@VALUE", TxtFilterReplacedSellable.Text.Replace("%", Nothing).Replace("*", Nothing))
-                View.RowFilter = Filter
-            Else
-                View.RowFilter = Nothing
-            End If
-        End If
     End Sub
     Private Sub TxtFilterReplacedSellable_Enter(sender As Object, e As EventArgs) Handles TxtFilterReplacedSellable.Enter
         EprInformation.SetError(TsReplacedSellable, "Filtrando os campos: Código e Item.")
@@ -1436,6 +1258,60 @@ Public Class FrmEvaluation
     End Sub
     Private Sub TxtFilterReplacedSellable_Leave(sender As Object, e As EventArgs) Handles TxtFilterReplacedSellable.Leave
         EprInformation.Clear()
+    End Sub
+    Private Sub TxtTime_Enter(sender As Object, e As EventArgs) Handles TxtEndTime.Enter, TxtStartTime.Enter
+        BeginInvoke(CType(Sub()
+                              sender.SelectAll()
+                          End Sub, Action))
+    End Sub
+#End Region
+#Region "CheckBox Events"
+    Private Sub CbxManualAverageWorkLoad_CheckedChanged(sender As Object, e As EventArgs) Handles CbxManualAverageWorkLoad.CheckedChanged
+        If CbxManualAverageWorkLoad.Checked Then
+            DbxAverageWorkLoad.ReadOnly = False
+        Else
+            DbxAverageWorkLoad.ReadOnly = True
+        End If
+        EprValidation.Clear()
+        BtnSave.Enabled = True
+    End Sub
+#End Region
+#Region "DataGridView Events"
+    Private Sub DgvWorkedHourSellable_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvWorkedHourSellable.MouseDoubleClick
+        Dim ClickPlace As DataGridView.HitTestInfo = DgvWorkedHourSellable.HitTest(e.X, e.Y)
+        If ClickPlace.Type = DataGridViewHitTestType.Cell Then
+            EditEvaluationControlledSellable(CompressorSellableControlType.WorkedHour)
+        End If
+    End Sub
+    Private Sub DgvElapsedDaySellable_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvElapsedDaySellable.MouseDoubleClick
+        Dim ClickPlace As DataGridView.HitTestInfo = DgvElapsedDaySellable.HitTest(e.X, e.Y)
+        If ClickPlace.Type = DataGridViewHitTestType.Cell Then
+            EditEvaluationControlledSellable(CompressorSellableControlType.ElapsedDay)
+        End If
+    End Sub
+    Private Sub DgvWorkedHourSellable_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvWorkedHourSellable.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            EditEvaluationControlledSellable(CompressorSellableControlType.WorkedHour)
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub DgvElapsedDaySellable_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvElapsedDaySellable.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            EditEvaluationControlledSellable(CompressorSellableControlType.ElapsedDay)
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub DgvTechnician_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvTechnician.MouseDoubleClick
+        Dim ClickPlace As DataGridView.HitTestInfo = DgvTechnician.HitTest(e.X, e.Y)
+        If ClickPlace.Type = DataGridViewHitTestType.Cell Then
+            BtnEditTechnician.PerformClick()
+        End If
+    End Sub
+    Private Sub DgvReplacedSellable_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvReplacedSellable.MouseDoubleClick
+        Dim ClickPlace As DataGridView.HitTestInfo = DgvReplacedSellable.HitTest(e.X, e.Y)
+        If ClickPlace.Type = DataGridViewHitTestType.Cell Then
+            BtnEditReplacedSellable.PerformClick()
+        End If
     End Sub
     Private Sub DgvReplacedSellable_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvReplacedSellable.DataSourceChanged
         FilterComplement()
@@ -1449,4 +1325,63 @@ Public Class FrmEvaluation
             BtnDeleteReplacedSellable.Enabled = True
         End If
     End Sub
+#End Region
+#Region "TabControl Events"
+    Private Sub TcEvaluation_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcEvaluation.SelectedIndexChanged
+        If TcEvaluation.SelectedTab Is TabMain Then
+            If Calculated Then
+                FormBorderStyle = FormBorderStyle.FixedSingle
+                WindowState = FormWindowState.Normal
+                MaximizeBox = False
+                Size = New Size(1055, 570 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
+            Else
+                FormBorderStyle = FormBorderStyle.FixedSingle
+                WindowState = FormWindowState.Normal
+                MaximizeBox = False
+                Size = New Size(433, 570 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
+            End If
+        Else
+            FormBorderStyle = FormBorderStyle.Sizable
+            WindowState = FormWindowState.Maximized
+            MaximizeBox = True
+        End If
+    End Sub
+#End Region
+#Region "QueriedBox Events"
+    Private Sub QbxCustomer_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxCustomer.FreezedPrimaryKeyChanged
+        If Not _Loading Then BtnViewCustomer.Visible = QbxCustomer.IsFreezed And _User.CanWrite(Routine.Person)
+        QbxCompressor.Unfreeze()
+        If QbxCompressor.Conditions.Count = 2 Then QbxCompressor.Conditions.RemoveAt(1)
+        If QbxCompressor.Parameters.Count = 2 Then QbxCompressor.Parameters.RemoveAt(1)
+        QbxCompressor.Conditions.Clear()
+        QbxCompressor.Parameters.Clear()
+        QbxCompressor.Conditions.Add(New QueriedBox.Condition With {.TableNameOrAlias = "personcompressor", .FieldName = "statusid", .[Operator] = "=", .Value = "@statusid"})
+        QbxCompressor.Parameters.Add(New QueriedBox.Parameter With {.ParameterName = "@statusid", .ParameterValue = 0})
+        QbxCompressor.Conditions.Add(New QueriedBox.Condition With {.TableNameOrAlias = "personcompressor", .FieldName = "personid", .[Operator] = "=", .Value = "@personid"})
+        QbxCompressor.Parameters.Add(New QueriedBox.Parameter With {.ParameterName = "@personid", .ParameterValue = QbxCustomer.FreezedPrimaryKey})
+        If QbxCustomer.IsFreezed Then
+            QbxCompressor.Enabled = True
+        Else
+            QbxCompressor.Enabled = False
+        End If
+    End Sub
+    Private Sub QbxCustomer_Enter(sender As Object, e As EventArgs) Handles QbxCustomer.Enter
+        TmrCustomer.Stop()
+        BtnViewCustomer.Visible = QbxCustomer.IsFreezed And _User.CanWrite(Routine.Person)
+        BtnNewCustomer.Visible = _User.CanWrite(Routine.Person)
+        BtnFilterCustomer.Visible = _User.CanAccess(Routine.Person)
+    End Sub
+    Private Sub QbxCustomer_Leave(sender As Object, e As EventArgs) Handles QbxCustomer.Leave
+        TmrCustomer.Stop()
+        TmrCustomer.Start()
+    End Sub
+#End Region
+#Region "Timer Events"
+    Private Sub TmrCustomer_Tick(sender As Object, e As EventArgs) Handles TmrCustomer.Tick
+        BtnViewCustomer.Visible = False
+        BtnNewCustomer.Visible = False
+        BtnFilterCustomer.Visible = False
+        TmrCustomer.Stop()
+    End Sub
+#End Region
 End Class

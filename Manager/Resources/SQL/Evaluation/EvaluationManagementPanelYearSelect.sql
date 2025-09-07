@@ -4,4 +4,4 @@ FROM evaluation
 WHERE 
 	evaluation.statusid = 1
 GROUP BY evaluationyear
-ORDER BY evaluation.evaluationdate DESC
+ORDER BY evaluationyear DESC

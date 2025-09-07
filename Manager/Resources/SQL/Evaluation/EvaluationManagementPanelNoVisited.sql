@@ -28,6 +28,6 @@ INNER JOIN state ON state.id = city.stateid
 WHERE
 	person.controlmaintenance = 1 AND
 	personaddress.ismainaddress = 1
-GROUP BY personcompressor.id
+GROUP BY personcompressor.id, city
 HAVING hasevaluation = 0
 ORDER BY person.name ASC;

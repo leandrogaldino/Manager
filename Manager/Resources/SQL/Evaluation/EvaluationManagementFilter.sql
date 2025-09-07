@@ -1,4 +1,4 @@
-SELECT
+SELECT DISTINCT
 	evaluation.id evaluation,
 	person.shortname customer,
 	CONCAT(city.name, '-', state.shortname) city,
@@ -67,6 +67,5 @@ WHERE
     IFNULL(city.name, '') LIKE CONCAT('%', @city, '%') AND
     IFNULL(state.name, '') LIKE CONCAT('%', @state, '%') AND
     IFNULL(route.name, '') LIKE CONCAT('%', @route, '%')
-GROUP BY personcompressor.id
 HAVING nextexchange BETWEEN @nextexchangei AND @nextexchangef
 ORDER BY nextexchange ASC;

@@ -100,14 +100,14 @@ Partial Class FrmEvaluation
         Me.GbxWorkedHourSellable = New System.Windows.Forms.GroupBox()
         Me.DgvWorkedHourSellable = New System.Windows.Forms.DataGridView()
         Me.GbxMain = New System.Windows.Forms.GroupBox()
+        Me.TbxEndTime = New ControlLibrary.TimeBox()
+        Me.TbxStartTime = New ControlLibrary.TimeBox()
         Me.BtnCallTypeHasRepairNeedProposal = New ControlLibrary.RichTextButton()
         Me.BtnUnitTemperaturePressure = New ControlLibrary.RichTextButton()
         Me.QbxCustomer = New ControlLibrary.QueriedBox()
         Me.TxtEvaluationNumber = New System.Windows.Forms.TextBox()
         Me.LblEndTime = New System.Windows.Forms.Label()
         Me.LblStartTime = New System.Windows.Forms.Label()
-        Me.TxtEndTime = New System.Windows.Forms.MaskedTextBox()
-        Me.TxtStartTime = New System.Windows.Forms.MaskedTextBox()
         Me.CbxManualAverageWorkLoad = New System.Windows.Forms.CheckBox()
         Me.FlpCustomer = New System.Windows.Forms.FlowLayoutPanel()
         Me.BtnFilterCustomer = New ControlLibrary.NoFocusCueButton()
@@ -632,14 +632,14 @@ Partial Class FrmEvaluation
         '
         'GbxMain
         '
+        Me.GbxMain.Controls.Add(Me.TbxEndTime)
+        Me.GbxMain.Controls.Add(Me.TbxStartTime)
         Me.GbxMain.Controls.Add(Me.BtnCallTypeHasRepairNeedProposal)
         Me.GbxMain.Controls.Add(Me.BtnUnitTemperaturePressure)
         Me.GbxMain.Controls.Add(Me.QbxCustomer)
         Me.GbxMain.Controls.Add(Me.TxtEvaluationNumber)
         Me.GbxMain.Controls.Add(Me.LblEndTime)
         Me.GbxMain.Controls.Add(Me.LblStartTime)
-        Me.GbxMain.Controls.Add(Me.TxtEndTime)
-        Me.GbxMain.Controls.Add(Me.TxtStartTime)
         Me.GbxMain.Controls.Add(Me.CbxManualAverageWorkLoad)
         Me.GbxMain.Controls.Add(Me.FlpCustomer)
         Me.GbxMain.Controls.Add(Me.DbxAverageWorkLoad)
@@ -661,6 +661,30 @@ Partial Class FrmEvaluation
         Me.GbxMain.TabIndex = 0
         Me.GbxMain.TabStop = False
         Me.GbxMain.Text = "Identificação"
+        '
+        'TbxEndTime
+        '
+        Me.TbxEndTime.Location = New System.Drawing.Point(313, 101)
+        Me.TbxEndTime.MinimumSize = New System.Drawing.Size(50, 0)
+        Me.TbxEndTime.Name = "TbxEndTime"
+        Me.TbxEndTime.ShowSecconds = False
+        Me.TbxEndTime.Size = New System.Drawing.Size(75, 23)
+        Me.TbxEndTime.TabIndex = 24
+        Me.TbxEndTime.Text = "  :"
+        Me.TbxEndTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.TbxEndTime.Time = Nothing
+        '
+        'TbxStartTime
+        '
+        Me.TbxStartTime.Location = New System.Drawing.Point(232, 101)
+        Me.TbxStartTime.MinimumSize = New System.Drawing.Size(50, 0)
+        Me.TbxStartTime.Name = "TbxStartTime"
+        Me.TbxStartTime.ShowSecconds = False
+        Me.TbxStartTime.Size = New System.Drawing.Size(75, 23)
+        Me.TbxStartTime.TabIndex = 24
+        Me.TbxStartTime.Text = "  :"
+        Me.TbxStartTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.TbxStartTime.Time = Nothing
         '
         'BtnCallTypeHasRepairNeedProposal
         '
@@ -899,29 +923,6 @@ Partial Class FrmEvaluation
         Me.LblStartTime.TabIndex = 7
         Me.LblStartTime.Text = "Inicio"
         '
-        'TxtEndTime
-        '
-        Me.TxtEndTime.Location = New System.Drawing.Point(313, 101)
-        Me.TxtEndTime.Mask = "00:00"
-        Me.TxtEndTime.Name = "TxtEndTime"
-        Me.TxtEndTime.Size = New System.Drawing.Size(75, 23)
-        Me.TxtEndTime.TabIndex = 10
-        Me.TxtEndTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.TxtEndTime.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals
-        Me.TxtEndTime.ValidatingType = GetType(Date)
-        '
-        'TxtStartTime
-        '
-        Me.TxtStartTime.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.IncludePrompt
-        Me.TxtStartTime.Location = New System.Drawing.Point(232, 101)
-        Me.TxtStartTime.Mask = "00:00"
-        Me.TxtStartTime.Name = "TxtStartTime"
-        Me.TxtStartTime.Size = New System.Drawing.Size(75, 23)
-        Me.TxtStartTime.TabIndex = 8
-        Me.TxtStartTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.TxtStartTime.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals
-        Me.TxtStartTime.ValidatingType = GetType(Date)
-        '
         'CbxManualAverageWorkLoad
         '
         Me.CbxManualAverageWorkLoad.AutoSize = True
@@ -1074,10 +1075,13 @@ Partial Class FrmEvaluation
         'DbxEvaluationDate
         '
         Me.DbxEvaluationDate.ButtonImage = CType(resources.GetObject("DbxEvaluationDate.ButtonImage"), System.Drawing.Image)
+        Me.DbxEvaluationDate.Date = Nothing
         Me.DbxEvaluationDate.Location = New System.Drawing.Point(117, 101)
+        Me.DbxEvaluationDate.MinimumSize = New System.Drawing.Size(100, 0)
         Me.DbxEvaluationDate.Name = "DbxEvaluationDate"
         Me.DbxEvaluationDate.Size = New System.Drawing.Size(109, 23)
         Me.DbxEvaluationDate.TabIndex = 6
+        Me.DbxEvaluationDate.Text = "  /  /"
         '
         'LblHorimeter
         '
@@ -1177,10 +1181,10 @@ Partial Class FrmEvaluation
         '
         Me.TabTechnicalAdvice.BackColor = System.Drawing.Color.White
         Me.TabTechnicalAdvice.Controls.Add(Me.TlpAdvice)
-        Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 26)
+        Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 22)
         Me.TabTechnicalAdvice.Name = "TabTechnicalAdvice"
         Me.TabTechnicalAdvice.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1031, 407)
+        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1031, 411)
         Me.TabTechnicalAdvice.TabIndex = 6
         Me.TabTechnicalAdvice.Text = "Parecer Técnico"
         '
@@ -1196,7 +1200,7 @@ Partial Class FrmEvaluation
         Me.TlpAdvice.RowCount = 2
         Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.0!))
         Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.0!))
-        Me.TlpAdvice.Size = New System.Drawing.Size(1025, 401)
+        Me.TlpAdvice.Size = New System.Drawing.Size(1025, 405)
         Me.TlpAdvice.TabIndex = 2
         '
         'TlpReplaced
@@ -1210,7 +1214,7 @@ Partial Class FrmEvaluation
         Me.TlpReplaced.Name = "TlpReplaced"
         Me.TlpReplaced.RowCount = 1
         Me.TlpReplaced.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TlpReplaced.Size = New System.Drawing.Size(1019, 234)
+        Me.TlpReplaced.Size = New System.Drawing.Size(1019, 237)
         Me.TlpReplaced.TabIndex = 1
         '
         'GbxReplacedSellable
@@ -1220,7 +1224,7 @@ Partial Class FrmEvaluation
         Me.GbxReplacedSellable.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GbxReplacedSellable.Location = New System.Drawing.Point(3, 3)
         Me.GbxReplacedSellable.Name = "GbxReplacedSellable"
-        Me.GbxReplacedSellable.Size = New System.Drawing.Size(1013, 228)
+        Me.GbxReplacedSellable.Size = New System.Drawing.Size(1013, 231)
         Me.GbxReplacedSellable.TabIndex = 2
         Me.GbxReplacedSellable.TabStop = False
         Me.GbxReplacedSellable.Text = "Peças Substituídas/Serviços Executados"
@@ -1244,7 +1248,7 @@ Partial Class FrmEvaluation
         Me.DgvReplacedSellable.RowHeadersVisible = False
         Me.DgvReplacedSellable.RowTemplate.Height = 26
         Me.DgvReplacedSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvReplacedSellable.Size = New System.Drawing.Size(1007, 181)
+        Me.DgvReplacedSellable.Size = New System.Drawing.Size(1007, 184)
         Me.DgvReplacedSellable.TabIndex = 1
         Me.DgvReplacedSellable.TabStop = False
         '
@@ -1309,9 +1313,9 @@ Partial Class FrmEvaluation
         '
         Me.GbxAdvice.Controls.Add(Me.TxtTechnicalAdvice)
         Me.GbxAdvice.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GbxAdvice.Location = New System.Drawing.Point(3, 243)
+        Me.GbxAdvice.Location = New System.Drawing.Point(3, 246)
         Me.GbxAdvice.Name = "GbxAdvice"
-        Me.GbxAdvice.Size = New System.Drawing.Size(1019, 155)
+        Me.GbxAdvice.Size = New System.Drawing.Size(1019, 156)
         Me.GbxAdvice.TabIndex = 0
         Me.GbxAdvice.TabStop = False
         Me.GbxAdvice.Text = "Observação"
@@ -1323,7 +1327,7 @@ Partial Class FrmEvaluation
         Me.TxtTechnicalAdvice.Location = New System.Drawing.Point(3, 19)
         Me.TxtTechnicalAdvice.MaxLength = 1000000
         Me.TxtTechnicalAdvice.Name = "TxtTechnicalAdvice"
-        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1013, 133)
+        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1013, 134)
         Me.TxtTechnicalAdvice.TabIndex = 1
         Me.TxtTechnicalAdvice.Text = ""
         '
@@ -1890,8 +1894,6 @@ Partial Class FrmEvaluation
     Friend WithEvents LblStatusValue As ToolStripLabel
     Friend WithEvents LblEndTime As Label
     Friend WithEvents LblStartTime As Label
-    Friend WithEvents TxtEndTime As MaskedTextBox
-    Friend WithEvents TxtStartTime As MaskedTextBox
     Friend WithEvents GbxElapsedDaySellable As GroupBox
     Friend WithEvents DgvElapsedDaySellable As DataGridView
     Friend WithEvents GbxWorkedHourSellable As GroupBox
@@ -1946,4 +1948,6 @@ Partial Class FrmEvaluation
     Friend WithEvents LblFilterReplacedSellable As ToolStripLabel
     Friend WithEvents TxtFilterReplacedSellable As ToolStripTextBox
     Friend WithEvents DgvlReplacedSellable As DataGridViewLayout
+    Friend WithEvents TbxEndTime As ControlLibrary.TimeBox
+    Friend WithEvents TbxStartTime As ControlLibrary.TimeBox
 End Class

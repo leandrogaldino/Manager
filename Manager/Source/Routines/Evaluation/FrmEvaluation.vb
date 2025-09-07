@@ -180,8 +180,8 @@ Public Class FrmEvaluation
         _UcUnitTemperaturePressure.Temperature = _Evaluation.Temperature
         _UcUnitTemperaturePressure.Pressure = _Evaluation.Pressure
         DbxEvaluationDate.Text = _Evaluation.EvaluationDate
-        TxtStartTime.Text = _Evaluation.StartTime.ToString("hh\:mm")
-        TxtEndTime.Text = _Evaluation.EndTime.ToString("hh\:mm")
+        TbxStartTime.Time = _Evaluation.StartTime
+        TbxEndTime.Time = _Evaluation.EndTime
         TxtEvaluationNumber.Text = _Evaluation.EvaluationNumber
         TxtResponsible.Text = _Evaluation.Responsible
         QbxCompressor.Conditions.Clear()
@@ -302,45 +302,27 @@ Public Class FrmEvaluation
             TcEvaluation.SelectedTab = TabMain
             DbxEvaluationDate.Select()
             Return False
-        ElseIf Not IsNumeric(TxtStartTime.Text) Then
-            EprValidation.SetError(LblStartTime, "Formato inválido.")
+        ElseIf Not TbxStartTime.Time.HasValue Then
+            EprValidation.SetError(LblStartTime, "Hora inválida.")
             EprValidation.SetIconAlignment(LblStartTime, ErrorIconAlignment.MiddleRight)
-            TcEvaluation.SelectedTab = TabMain
-            TxtStartTime.Select()
+            TbxStartTime.Select()
             Return False
-        ElseIf TxtStartTime.Text.Length < 4 Or
-            (Strings.Left(TxtStartTime.Text, 2) < 0 Or Strings.Left(TxtStartTime.Text, 2) > 23) Or
-            (Strings.Right(TxtStartTime.Text, 2) < 0 Or Strings.Right(TxtStartTime.Text, 2) > 59) Then
-            EprValidation.SetError(LblStartTime, "Formato inválido.")
-            EprValidation.SetIconAlignment(LblStartTime, ErrorIconAlignment.MiddleRight)
-            TcEvaluation.SelectedTab = TabMain
-            TxtStartTime.Select()
-            Return False
-        ElseIf Not IsNumeric(TxtEndTime.Text) Then
-            EprValidation.SetError(LblEndTime, "Formato inválido.")
+        ElseIf Not TbxEndTime.Time.HasValue Then
+            EprValidation.SetError(LblEndTime, "Hora inválida.")
             EprValidation.SetIconAlignment(LblEndTime, ErrorIconAlignment.MiddleRight)
-            TcEvaluation.SelectedTab = TabMain
-            TxtEndTime.Select()
+            TbxEndTime.Select()
             Return False
-        ElseIf TxtEndTime.Text.Length < 4 Or
-            (Strings.Left(TxtEndTime.Text, 2) < 0 Or Strings.Left(TxtEndTime.Text, 2) > 23) Or
-            (Strings.Right(TxtEndTime.Text, 2) < 0 Or Strings.Right(TxtEndTime.Text, 2) > 59) Then
-            EprValidation.SetError(LblEndTime, "Formato inválido.")
-            EprValidation.SetIconAlignment(LblEndTime, ErrorIconAlignment.MiddleRight)
-            TcEvaluation.SelectedTab = TabMain
-            TxtEndTime.Select()
-            Return False
-        ElseIf TimeSpan.Compare(TimeSpan.Parse(TxtStartTime.Text), TimeSpan.Parse(TxtEndTime.Text)) = 0 Then
+        ElseIf TbxStartTime.Time = TbxEndTime.Time Then
             EprValidation.SetError(LblEndTime, "Os horários de chegada e saída não podem ser iguais.")
             EprValidation.SetIconAlignment(LblEndTime, ErrorIconAlignment.MiddleRight)
             TcEvaluation.SelectedTab = TabMain
-            TxtEndTime.Select()
+            TbxEndTime.Select()
             Return False
-        ElseIf TimeSpan.Compare(TimeSpan.Parse(TxtStartTime.Text), TimeSpan.Parse(TxtEndTime.Text)) = 1 Then
-            EprValidation.SetError(LblEndTime, "O horário de chegada deve ser menor que o de saída.")
+        ElseIf TbxStartTime.Time > TbxEndTime.Time Then
+            EprValidation.SetError(LblEndTime, "O horário de saída deve ser maior que o de chegada.")
             EprValidation.SetIconAlignment(LblEndTime, ErrorIconAlignment.MiddleRight)
             TcEvaluation.SelectedTab = TabMain
-            TxtEndTime.Select()
+            TbxEndTime.Select()
             Return False
         ElseIf DgvTechnician.Rows.Count = 0 Then
             EprValidation.SetError(TsTechnician, "A avaliação deve ter pelo menos um técnico.")
@@ -445,8 +427,8 @@ Public Class FrmEvaluation
                     _Evaluation.Temperature = _Evaluation.Temperature
                     _Evaluation.Pressure = _Evaluation.Pressure
                     _Evaluation.EvaluationDate = DbxEvaluationDate.Text
-                    _Evaluation.StartTime = TimeSpan.Parse(TxtStartTime.Text.Insert(2, ":"))
-                    _Evaluation.EndTime = TimeSpan.Parse(TxtEndTime.Text.Insert(2, ":"))
+                    _Evaluation.StartTime = TbxStartTime.Time
+                    _Evaluation.EndTime = TbxEndTime.Time
                     _Evaluation.EvaluationNumber = TxtEvaluationNumber.Text
                     _Evaluation.Customer = New Person().Load(QbxCustomer.FreezedPrimaryKey, False)
                     _Evaluation.Responsible = TxtResponsible.Text
@@ -1225,10 +1207,10 @@ Public Class FrmEvaluation
     Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles TxtTechnicalAdvice.TextChanged,
                                                                          TxtResponsible.TextChanged,
                                                                          TxtEvaluationNumber.TextChanged,
-                                                                         TxtEndTime.TextChanged,
-                                                                         TxtStartTime.TextChanged,
                                                                          QbxCustomer.TextChanged,
-                                                                         DbxAverageWorkLoad.TextChanged
+                                                                         DbxAverageWorkLoad.TextChanged,
+                                                                         TbxStartTime.TextChanged,
+                                                                         TbxEndTime.TextChanged
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
@@ -1258,11 +1240,6 @@ Public Class FrmEvaluation
     End Sub
     Private Sub TxtFilterReplacedSellable_Leave(sender As Object, e As EventArgs) Handles TxtFilterReplacedSellable.Leave
         EprInformation.Clear()
-    End Sub
-    Private Sub TxtTime_Enter(sender As Object, e As EventArgs) Handles TxtEndTime.Enter, TxtStartTime.Enter
-        BeginInvoke(CType(Sub()
-                              sender.SelectAll()
-                          End Sub, Action))
     End Sub
 #End Region
 #Region "CheckBox Events"

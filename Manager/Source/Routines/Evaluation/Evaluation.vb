@@ -113,7 +113,7 @@ Public Class Evaluation
                         HasRepair = Convert.ToInt32(TableResult.Rows(0).Item("hasrepairid"))
                         UnitName = Convert.ToString(TableResult.Rows(0).Item("unitname"))
                         Temperature = Convert.ToInt32(TableResult.Rows(0).Item("temperature"))
-                        Pressure = Pressure = Convert.ToDecimal(TableResult.Rows(0).Item("pressure"))
+                        Pressure = Convert.ToDecimal(TableResult.Rows(0).Item("pressure"))
                         EvaluationDate = Convert.ToDateTime(TableResult.Rows(0).Item("evaluationdate"))
                         StartTime = TimeSpan.Parse(TableResult.Rows(0).Item("starttime"))
                         EndTime = TimeSpan.Parse(TableResult.Rows(0).Item("endtime"))

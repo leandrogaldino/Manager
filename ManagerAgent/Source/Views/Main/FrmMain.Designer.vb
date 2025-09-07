@@ -553,12 +553,12 @@ Partial Class FrmMain
         Me.Controls.Add(Me.TsTitle)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FrmMain"
-        Me.Text = "Gerenciador"
+        Me.ShowIcon = False
+        Me.Text = "Agente Gerenciador"
         Me.CmsNotifyIcon.ResumeLayout(False)
         CType(Me.DgvEvents, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsTitle.ResumeLayout(False)

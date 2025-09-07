@@ -68,8 +68,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Resources\Icon\icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
@@ -491,6 +490,7 @@
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
     <None Include="Resources\Image\PriceTable.png" />
+    <None Include="Resources\Icon\icon.ico" />
     <Content Include="Resources\SQL\Compressor\CompressorSellableDelete.sql" />
     <Content Include="Resources\SQL\Compressor\CompressorSellableInsert.sql" />
     <Content Include="Resources\SQL\Compressor\CompressorSellableSelect.sql" />
@@ -1765,7 +1765,6 @@
     <None Include="protos\google\type\postal_address.proto" />
     <None Include="protos\google\type\quaternion.proto" />
     <None Include="protos\google\type\timeofday.proto" />
-    <None Include="Resources\Icon\icon-i.ico" />
     <None Include="Resources\Image\CRM.png" />
     <None Include="Resources\Image\ContactEmail.png" />
     <None Include="Resources\Image\ContactPhone.png" />
@@ -1853,7 +1852,6 @@
     <None Include="Source\Docs\.UpdateNotes">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="Resources\Icon\icon.ico" />
     <None Include="Resources\Icon\information.ico" />
     <Content Include="Resources\Image\Approve.png" />
     <Content Include="Resources\Image\Cash.png" />

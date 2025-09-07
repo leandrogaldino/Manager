@@ -99,7 +99,6 @@ Partial Class FrmMain
         '
         'TxtCryptoKey
         '
-        Me.TxtCryptoKey.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.TxtCryptoKey.Name = "TxtCryptoKey"
         Me.TxtCryptoKey.Size = New System.Drawing.Size(300, 25)
         '

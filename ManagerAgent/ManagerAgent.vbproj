@@ -50,8 +50,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Resources\Icon\icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
@@ -424,8 +423,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Resources\Icon\icon-i.ico" />
-    <Content Include="Resources\Icon\icon.ico" />
+    <None Include="Resources\Icon\icon.ico" />
     <Content Include="Resources\Images\Backup.png" />
     <None Include="Resources\Images\ValidKey.png" />
     <None Include="Resources\Images\Garbage.png" />

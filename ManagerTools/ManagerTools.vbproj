@@ -135,8 +135,5 @@
   <ItemGroup>
     <None Include="Resources\Icon\icon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Icon\icon-i.ico" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

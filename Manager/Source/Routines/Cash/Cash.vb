@@ -85,6 +85,7 @@ Public Class Cash
         Using Transaction As New Transactions.TransactionScope()
             Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
                 Con.Open()
+                UpdateUser(Con)
                 Using CmdCash As New MySqlCommand(My.Resources.CashDelete, Con)
                     CmdCash.Parameters.AddWithValue("@id", ID)
                     CmdCash.ExecuteNonQuery()

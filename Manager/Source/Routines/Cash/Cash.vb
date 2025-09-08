@@ -85,9 +85,9 @@ Public Class Cash
         Using Transaction As New Transactions.TransactionScope()
             Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
                 Con.Open()
-                Using CmdRequest As New MySqlCommand(My.Resources.CashDelete, Con)
-                    CmdRequest.Parameters.AddWithValue("@id", ID)
-                    CmdRequest.ExecuteNonQuery()
+                Using CmdCash As New MySqlCommand(My.Resources.CashDelete, Con)
+                    CmdCash.Parameters.AddWithValue("@id", ID)
+                    CmdCash.ExecuteNonQuery()
                     If File.Exists(Document.OriginalFile) Then FileManager.Delete(Document.OriginalFile)
                 End Using
             End Using

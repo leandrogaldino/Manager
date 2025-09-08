@@ -1,4 +1,6 @@
 ﻿Imports ControlLibrary
+Imports ManagerCore
+Imports MySql.Data.MySqlClient
 
 Public MustInherit Class BaseModel
     Inherits CloneableModel

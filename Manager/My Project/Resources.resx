@@ -832,8 +832,8 @@
   <data name="EvaluationDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\Evaluation\EvaluationDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="EvaluationManagementPanelYearSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Evaluation\EvaluationManagementPanelYearSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="EvaluationManagementPanelDatesSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Evaluation\EvaluationManagementPanelDatesSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Disapprove" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Disapprove.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -864,9 +864,6 @@
   </data>
   <data name="ProductProviderCodeDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\Product\ProductProviderCodeDetailSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="EvaluationManagementPanelMonthSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Evaluation\EvaluationManagementPanelMonthSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="EvaluationManagementPanelFillChartProductivityChartSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\Evaluation\EvaluationManagementPanelFillChartProductivityChartSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>

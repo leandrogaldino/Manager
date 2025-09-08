@@ -505,6 +505,7 @@ Public Class Evaluation
         Using Transaction As New Transactions.TransactionScope()
             Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
                 Con.Open()
+                UpdateUser(Con)
                 Using CmdEvaluation As New MySqlCommand(My.Resources.EvaluationDelete, Con)
                     CmdEvaluation.Parameters.AddWithValue("@id", ID)
                     CmdEvaluation.ExecuteNonQuery()

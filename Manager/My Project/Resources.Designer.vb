@@ -2176,6 +2176,9 @@ Namespace My.Resources
         '''	calltypeid,
         '''	needproposalid,
         '''	hasrepairid,
+        '''	unitname,
+        '''	temperature,
+        '''	pressure,
         '''	evaluationdate,
         '''	starttime,
         '''	endtime,
@@ -2199,11 +2202,9 @@ Namespace My.Resources
         '''	@calltypeid,
         '''	@needproposalid,
         '''	@hasrepairid,
-        '''	@evaluationdate,
-        '''	@starttime,
-        '''	@endtime,
-        '''	@evaluationnumber,
-        '''	@custom [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	@unitname,
+        '''	@temperature,
+        '''	@pres [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationInsert() As String
             Get
@@ -2262,7 +2263,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT DISTINCT
         '''	evaluation.id evaluation,
         '''	person.shortname customer,
         '''	CONCAT(city.name, &apos;-&apos;, state.shortname) city,
@@ -2275,7 +2276,7 @@ Namespace My.Resources
         '''					MIN(evaluationcontrolledsellable.currentcapacity)
         '''				FROM evaluationcontrolledsellable 
         '''				LEFT JOIN personcompressorsellable ON personcompressorsellable.id = evaluationcontrolledsellable.personcompressorsellableid
-        '''				WHERE evaluationcontrolledsellable.eval [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''				WHERE evaluationcontrolledsell [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationManagementFilter() As String
             Get
@@ -2310,22 +2311,42 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT  
-        '''	evaluation.id AS evaluationid,
-        '''	personcompressor.id AS personcompressorid,
-        '''    person.shortname AS customer,
-        '''	CONCAT(city.name, &apos;-&apos;, state.shortname) AS city,
-        '''    compressor.name AS compressor,
-        '''    personcompressor.serialnumber,
-        '''    MAX(evaluation.evaluationdate) evaluationdate
-        '''FROM personcompressor
-        '''INNER JOIN person on person.id = personcompressor.personid
-        '''LEFT JOIN evaluation on evaluation.personcompressorid = personcompressor.id
-        '''INNER JOIN compressor on compressor.id = personcompress [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
+        '''    pc.id AS personcompressorid,
+        '''    p.shortname AS customer,
+        '''    CONCAT(c.name,&apos;-&apos;,s.shortname) AS city,
+        '''    comp.name AS compressor,
+        '''    pc.serialnumber,
+        '''    ev.maxdate AS evaluationdate
+        '''FROM personcompressor pc
+        '''JOIN person p ON p.id = pc.personid
+        '''JOIN compressor comp ON comp.id = pc.compressorid
+        '''JOIN personaddress pa ON pa.personid = p.id
+        '''JOIN city c ON c.id = pa.cityid
+        '''JOIN state s ON s.id = c.stateid
+        '''LEFT JOIN (
+        '''    SELECT personcompressorid, MAX(evaluationdate) AS maxdate
+        '''    FR [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationManagementPanelCustomerToVisit() As String
             Get
                 Return ResourceManager.GetString("EvaluationManagementPanelCustomerToVisit", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
+        '''    YEAR(evaluation.evaluationdate) AS yearnumber,
+        '''    UCASE(MONTHNAME(evaluation.evaluationdate)) AS monthname
+        '''FROM evaluation
+        '''WHERE evaluation.statusid = 1
+        '''GROUP BY yearnumber, MONTH(evaluation.evaluationdate), monthname
+        '''ORDER BY yearnumber DESC, MONTH(evaluation.evaluationdate) ASC;
+        '''.
+        '''</summary>
+        Friend ReadOnly Property EvaluationManagementPanelDatesSelect() As String
+            Get
+                Return ResourceManager.GetString("EvaluationManagementPanelDatesSelect", resourceCulture)
             End Get
         End Property
         
@@ -2346,22 +2367,6 @@ Namespace My.Resources
         Friend ReadOnly Property EvaluationManagementPanelFillChartProductivityChartSelect() As String
             Get
                 Return ResourceManager.GetString("EvaluationManagementPanelFillChartProductivityChartSelect", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	UCASE(MONTHNAME(evaluation.evaluationdate)) AS evaluationmonth
-        '''FROM evaluation
-        '''WHERE
-        '''	YEAR(evaluation.evaluationdate) = @year AND
-        '''	evaluation.statusid = 1
-        '''GROUP BY MONTHNAME(evaluation.evaluationdate)
-        '''ORDER BY evaluation.evaluationdate DESC;.
-        '''</summary>
-        Friend ReadOnly Property EvaluationManagementPanelMonthSelect() As String
-            Get
-                Return ResourceManager.GetString("EvaluationManagementPanelMonthSelect", resourceCulture)
             End Get
         End Property
         
@@ -2433,21 +2438,6 @@ Namespace My.Resources
         Friend ReadOnly Property EvaluationManagementPanelVisitsChartSelect() As String
             Get
                 Return ResourceManager.GetString("EvaluationManagementPanelVisitsChartSelect", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
-        '''	YEAR(evaluation.evaluationdate) AS evaluationyear
-        '''FROM evaluation
-        '''WHERE 
-        '''	evaluation.statusid = 1
-        '''GROUP BY evaluationyear
-        '''ORDER BY evaluation.evaluationdate DESC.
-        '''</summary>
-        Friend ReadOnly Property EvaluationManagementPanelYearSelect() As String
-            Get
-                Return ResourceManager.GetString("EvaluationManagementPanelYearSelect", resourceCulture)
             End Get
         End Property
         
@@ -2692,6 +2682,9 @@ Namespace My.Resources
         '''	evaluation.calltypeid,
         '''	evaluation.needproposalid,
         '''	evaluation.hasrepairid,
+        '''	evaluation.unitname,
+        '''	evaluation.temperature,
+        '''	evaluation.pressure,
         '''	evaluation.evaluationdate,
         '''	evaluation.starttime,
         '''	evaluation.endtime,
@@ -2702,9 +2695,7 @@ Namespace My.Resources
         '''	evaluation.horimeter,
         '''	evaluation.manualaverageworkload,
         '''	evaluation.averageworkload,
-        '''	evaluation.technicaladvice,
-        '''	evaluation.documentname,
-        '''	evaluation.signature [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	evalu [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationSelect() As String
             Get
@@ -2826,6 +2817,9 @@ Namespace My.Resources
         '''    calltypeid = @calltypeid,
         '''    needproposalid = @needproposalid,
         '''    hasrepairid = @hasrepairid,
+        '''    unitname = @unitname,
+        '''    temperature = @temperature,
+        '''    pressure = @pressure,
         '''    evaluationdate = @evaluationdate,
         '''    starttime = @starttime,
         '''    endtime = @endtime,
@@ -2833,9 +2827,7 @@ Namespace My.Resources
         '''    customerid = @customerid,
         '''    responsible = @responsible,
         '''    personcompressorid = @personcompressorid,
-        '''    horimeter = @horimeter,
-        '''    manualaverageworkload = @manualaverageworkload,
-        '''    averageworkload = @averag [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''    horimeter = @horimet [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationUpdate() As String
             Get

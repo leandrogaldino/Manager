@@ -1929,7 +1929,6 @@
     <Content Include="Resources\SQL\Evaluation\EvaluationTechnicianUpdate.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationTechnicianDelete.sql" />
     <Content Include="Resources\SQL\Compressor\CompressorDetailSelect.sql" />
-    <Content Include="Resources\SQL\Evaluation\EvaluationManagementPanelMonthSelect.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationManagementPanelFillChartProductivityChartSelect.sql" />
     <Content Include="Resources\SQL\Cash\CashFlowDelete.sql" />
     <Content Include="Resources\SQL\Cash\CashFlowFilter.sql" />
@@ -1949,7 +1948,7 @@
     <Content Include="Resources\SQL\Evaluation\EvaluationManagementPanelCustomerToVisit.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationManagementPanelNoVisited.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationDetailSelect.sql" />
-    <Content Include="Resources\SQL\Evaluation\EvaluationManagementPanelYearSelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationManagementPanelDatesSelect.sql" />
     <Content Include="Resources\SQL\LockedRegistry\LockedRegistryUpdate.sql" />
     <Content Include="Resources\SQL\LockedRegistry\LockedRegistryDelete.sql" />
     <Content Include="Resources\SQL\LockedRegistry\LockedRegistryInsert.sql" />

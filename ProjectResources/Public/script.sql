@@ -81,6 +81,9 @@ ALTER TABLE `manager`.`evaluation` ADD COLUMN `signaturename` VARCHAR(255) NULL 
 ALTER TABLE `manager`.`evaluation` ADD COLUMN `unitname` VARCHAR(10) NULL AFTER `hasrepairid`;
 ALTER TABLE `manager`.`evaluation` ADD COLUMN `temperature` INT DEFAULT 0 AFTER `unitname`;
 ALTER TABLE `manager`.`evaluation` ADD COLUMN `pressure` DECIMAL(4,1) DEFAULT 0 AFTER `temperature`;
+ALTER TABLE `manager`.`evaluation` CHANGE COLUMN `evaluationnumber` `evaluationnumber` VARCHAR(20) NOT NULL ;
+
+
 
 ALTER TABLE `manager`.`evaluation` CHANGE COLUMN `evaluationtypeid` `calltypeid` INT NOT NULL ;
 ALTER TABLE `manager`.`visitschedule` CHANGE COLUMN `visittypeid` `calltypeid` INT NOT NULL ;
@@ -1065,3 +1068,30 @@ IF OLD.personcompressorid <> NEW.personcompressorid THEN INSERT INTO log VALUES 
 IF IFNULL(OLD.instructions, '') <> IFNULL(NEW.instructions, '') THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Instruções', OLD.instructions, NEW.instructions, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DELIMITER ;
+
+
+DROP procedure IF EXISTS `manager`.`UpdateUserID`;
+
+DELIMITER $$
+
+CREATE PROCEDURE `UpdateUserID`(
+    IN tablename VARCHAR(64),
+    IN userid INT,
+    IN id INT
+)
+BEGIN
+    -- Monta o SQL dinâmico, fixando a coluna 'userid'
+    SET @sql = CONCAT(
+        'UPDATE `', tablename, '` SET `userid` = ? WHERE `id` = ?'
+    );
+
+    -- Prepara e executa o SQL
+    PREPARE stmt FROM @sql;
+    SET @param1 = userid;
+    SET @param2 = id;
+    EXECUTE stmt USING @param1, @param2;
+    DEALLOCATE PREPARE stmt;
+END$$
+DELIMITER ;
+
+

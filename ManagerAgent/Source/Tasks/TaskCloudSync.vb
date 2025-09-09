@@ -48,22 +48,11 @@ Public Class TaskCloudSync
                 _SessionModel.ManagerSetting.Cloud.Synchronization.CloudOperationCount = 0
                 _SettingsService.Save(_SessionModel.ManagerSetting)
             End If
-
             OperationCount = _SessionModel.ManagerSetting.Cloud.Synchronization.CloudOperationCount
             MaxOperation = _SessionModel.ManagerSetting.Cloud.Synchronization.CloudMaxOperation
             RemainingOperations = MaxOperation - OperationCount
             RemainingOperations = Await SyncTables(OperationCount, RemainingOperations, Response, Progress)
-
-
-
-
-
-
-
-
-
             Await Task.Delay(Constants.WaitForJob)
-
             Await SyncSchedules(RemainingOperations, Response, Progress)
             If Response.Event.IsInitialized Then
                 Await Task.Delay(Constants.WaitForFinish)
@@ -171,7 +160,7 @@ Public Class TaskCloudSync
         Dim PerformedOperations As Integer
         If RemainingOperations > 0 Then
             Dim Result = Await _LocalDB.ExecuteSelect("visitschedule",
-                                                  New List(Of String) From {"id", "creation", "statusid", "visitdate", "calltypeid", "customerid", "personcompressorid", "instructions", "lastupdate", "userid"},
+                                                  New List(Of String) From {"id", "creation", "statusid", "scheduleddate", "calltypeid", "customerid", "personcompressorid", "instructions", "lastupdate", "userid"},
                                                   "lastupdate > @lastupdate",
                                                   New Dictionary(Of String, Object) From {{"@lastupdate", _SessionModel.ManagerSetting.LastExecution.Cloud}},
                                                   "id ASC")
@@ -207,14 +196,14 @@ Public Class TaskCloudSync
                     Await _LocalDB.ExecuteUpdate("visitschedule",
                                                  New Dictionary(Of String, String) From {
                                                     {"statusid", "@statusid"},
-                                                    {"visitdate", "@visitdate"},
+                                                    {"scheduleddate", "@scheduleddate"},
                                                     {"lastupdate", "@lastupdate"},
                                                     {"id", "@id"}
                                                  },
                                                  "id = @id",
                                                  New Dictionary(Of String, Object) From {
                                                     {"@statusid", RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("statusid")},
-                                                    {"@visitdate", DateTimeHelper.DateFromMilliseconds(RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("visitdate"))},
+                                                    {"@scheduleddate", DateTimeHelper.DateFromMilliseconds(RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("scheduleddate"))},
                                                     {"@lastupdate", DateTimeHelper.DateFromMilliseconds(RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("lastupdate"))},
                                                     {"@id", RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("id")}
                                                 })
@@ -238,14 +227,14 @@ Public Class TaskCloudSync
                     Await _LocalDB.ExecuteUpdate("visitschedule",
                                                  New Dictionary(Of String, String) From {
                                                     {"statusid", "@statusid"},
-                                                    {"visitdate", "@visitdate"},
+                                                    {"scheduleddate", "@scheduleddate"},
                                                     {"lastupdate", "@lastupdate"},
                                                     {"id", "@id"}
                                                  },
                                                  "id = @id",
                                                  New Dictionary(Of String, Object) From {
                                                     {"@statusid", Schedule("statusid")},
-                                                    {"@visitdate", DateTimeHelper.DateFromMilliseconds(Schedule("visitdate"))},
+                                                    {"@scheduleddate", DateTimeHelper.DateFromMilliseconds(Schedule("scheduleddate"))},
                                                     {"@lastupdate", DateTimeHelper.DateFromMilliseconds(Schedule("lastupdate"))},
                                                     {"@id", Schedule("id")}
                                                 })
@@ -263,7 +252,7 @@ Public Class TaskCloudSync
                     Schedule.Remove("creation")
                     Schedule.Remove("customerid")
                     Schedule("lastupdate") = DateTimeHelper.MillisecondsFromDate(Schedule("lastupdate"))
-                    Schedule("visitdate") = DateTimeHelper.MillisecondsFromDate(Schedule("visitdate"))
+                    Schedule("scheduleddate") = DateTimeHelper.MillisecondsFromDate(Schedule("scheduleddate"))
                     Await _RemoteDB.ExecutePut("visitschedules", Schedule, Schedule("id"))
                     PerformedOperations += 1
                     Response.Percent = CInt((PerformedOperations / TotalChanges) * 100)

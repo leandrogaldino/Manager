@@ -150,7 +150,7 @@ Public Class FrmVisitSchedule
         CbxCallType.Select()
         _Loading = False
         _UcVisitScheduleGeneratedItems.EvaluationID = 15
-        _UcVisitScheduleGeneratedItems.ScheduleID = 15
+        _UcVisitScheduleGeneratedItems.ScheduleID = 1
     End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then
@@ -339,7 +339,7 @@ Public Class FrmVisitSchedule
         If Not IsValidFields() Then Return False
         _VisitSchedule.Status = EnumHelper.GetEnumValue(Of VisitScheduleStatus)(BtnStatusValue.Text)
         _VisitSchedule.CallType = EnumHelper.GetEnumValue(Of CallType)(CbxCallType.SelectedItem)
-        _VisitSchedule.ScheduledDate = DbxScheduledDate.Date
+        _VisitSchedule.ScheduledDate = DbxScheduledDate.Date.Value + TbxScheduledTime.Time.Value
         _VisitSchedule.PerformedDate = If(Not String.IsNullOrEmpty(TxtPerformedDate.Text) And IsDate(TxtPerformedDate.Text), CDate(TxtPerformedDate.Text), Nothing)
         _VisitSchedule.Customer = New Person().Load(QbxCustomer.FreezedPrimaryKey, False)
         _VisitSchedule.Compressor = _VisitSchedule.Customer.Compressors.Single(Function(x) x.ID = QbxCompressor.FreezedPrimaryKey)

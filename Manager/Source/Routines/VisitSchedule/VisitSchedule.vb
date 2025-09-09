@@ -58,7 +58,7 @@ Public Class VisitSchedule
                         SetIsSaved(True)
                         Status = Convert.ToInt32(TableResult.Rows(0).Item("statusid"))
                         ScheduledDate = Convert.ToDateTime(TableResult.Rows(0).Item("scheduleddate"))
-                        PerformedDate = If(IsDBNull(TableResult.Rows(0).Item("performeddate")), Nothing, Convert.ToDateTime(TableResult.Rows(0).Item("performeddate")))
+                        PerformedDate = If(IsDBNull(TableResult.Rows(0).Item("performeddate")), Nothing, CType((TableResult.Rows(0).Item("performeddate")), Date?))
                         CallType = Convert.ToInt32(TableResult.Rows(0).Item("calltypeid"))
                         Customer = New Person().Load(Convert.ToInt64(TableResult.Rows(0).Item("customerid")), False)
                         Compressor = Customer.Compressors.SingleOrDefault(Function(x) x.ID = Convert.ToInt64(TableResult.Rows(0).Item("personcompressorid")))

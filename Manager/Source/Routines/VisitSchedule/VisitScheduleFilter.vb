@@ -56,6 +56,8 @@ Public Class VisitScheduleFilter
         Dim SelectedRow As Long = 0
         Dim FirstRow As Long = 0
         Dim StatusList As New List(Of String)
+        Dim Initial As Date
+        Dim Final As Date
         If DataGridView IsNot Nothing Then
             If DataGridView.SelectedRows.Count = 1 Then
                 SelectedRow = DataGridView.SelectedRows(0).Index
@@ -81,10 +83,11 @@ Public Class VisitScheduleFilter
                 If Compressor.Sector <> Nothing Then Cmd.Parameters.AddWithValue("@sector", Compressor.Sector) : Filtering = True Else Cmd.Parameters.AddWithValue("@sector", "%")
                 If Creation.InitialDate <> Nothing Then Cmd.Parameters.AddWithValue("@creationi", Creation.InitialDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@creationi", "0001-01-01")
                 If Creation.FinalDate <> Nothing Then Cmd.Parameters.AddWithValue("@creationf", Creation.FinalDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@creationf", "9999-12-31")
-                If ScheduledDate.InitialDate <> Nothing Then Cmd.Parameters.AddWithValue("@scheduleddatei", ScheduledDate.InitialDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@scheduleddatei", "0001-01-01")
-                If ScheduledDate.FinalDate <> Nothing Then Cmd.Parameters.AddWithValue("@scheduleddatef", ScheduledDate.FinalDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@scheduleddatef", "9999-12-31")
-                If PerformedDate.InitialDate <> Nothing Then Cmd.Parameters.AddWithValue("@performeddatei", PerformedDate.InitialDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@performeddatei", "0001-01-01")
-                If PerformedDate.FinalDate <> Nothing Then Cmd.Parameters.AddWithValue("@performeddatef", PerformedDate.FinalDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@performeddatef", "9999-12-31")
+                If ScheduledDate.InitialDate <> Nothing Then Initial = ScheduledDate.InitialDate + New TimeSpan(0, 0, 0) : Cmd.Parameters.AddWithValue("@scheduleddatei", Initial.ToString("yyyy-MM-dd HH:mm:ss")) : Filtering = True Else Cmd.Parameters.AddWithValue("@scheduleddatei", "0001-01-01 00:00:00")
+                If ScheduledDate.FinalDate <> Nothing Then Final = ScheduledDate.FinalDate + New TimeSpan(23, 59, 59) : Cmd.Parameters.AddWithValue("@scheduleddatef", Final.ToString("yyyy-MM-dd HH:mm:ss")) : Filtering = True Else Cmd.Parameters.AddWithValue("@scheduleddatef", "9999-12-31 23:59:59")
+                If PerformedDate.InitialDate <> Nothing Then Initial = PerformedDate.InitialDate + New TimeSpan(0, 0, 0) : Cmd.Parameters.AddWithValue("@performeddatei", Initial.ToString("yyyy-MM-dd HH:mm:ss")) : Filtering = True Else Cmd.Parameters.AddWithValue("@performeddatei", "0001-01-01 00:00:00")
+                If PerformedDate.FinalDate <> Nothing Then Final = PerformedDate.FinalDate + New TimeSpan(23, 59, 59) : Cmd.Parameters.AddWithValue("@performeddatef", Final.ToString("yyyy-MM-dd HH:mm:ss")) : Filtering = True Else Cmd.Parameters.AddWithValue("@performeddatef", "9999-12-31 23:59:59")
+                Cmd.Parameters.AddWithValue("@performed", PerformedDate.InitialDate = Nothing AndAlso PerformedDate.FinalDate = Nothing)
                 Using Adp As New MySqlDataAdapter(Cmd)
                     Adp.Fill(Table)
                     DataGridView.DataSource = Nothing

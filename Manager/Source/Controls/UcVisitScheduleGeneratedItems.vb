@@ -37,7 +37,7 @@
             End If
             If value > 0 Then
                 BtnSchedule.Enabled = True
-                _Schedule = New Lazy(Of VisitSchedule)(Function() New VisitSchedule().Load(_EvaluationID, True))
+                _Schedule = New Lazy(Of VisitSchedule)(Function() New VisitSchedule().Load(_ScheduleID, True))
             Else
                 BtnSchedule.Enabled = False
                 _Schedule = Nothing

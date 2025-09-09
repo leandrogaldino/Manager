@@ -49,7 +49,7 @@ Partial Class UcVisitScheduleGeneratedItems
         Me.BtnSchedule.Location = New System.Drawing.Point(3, 115)
         Me.BtnSchedule.Name = "BtnSchedule"
         Me.BtnSchedule.Size = New System.Drawing.Size(117, 88)
-        Me.BtnSchedule.TabIndex = 0
+        Me.BtnSchedule.TabIndex = 3
         Me.BtnSchedule.Text = "Sobrescrito"
         Me.BtnSchedule.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.BtnSchedule.UseVisualStyleBackColor = True
@@ -71,7 +71,7 @@ Partial Class UcVisitScheduleGeneratedItems
         Me.Label2.Location = New System.Drawing.Point(129, 115)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(320, 88)
-        Me.Label2.TabIndex = 1
+        Me.Label2.TabIndex = 4
         Me.Label2.Text = resources.GetString("Label2.Text")
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -82,6 +82,7 @@ Partial Class UcVisitScheduleGeneratedItems
         Me.Separator1.Name = "Separator1"
         Me.Separator1.Size = New System.Drawing.Size(443, 18)
         Me.Separator1.TabIndex = 2
+        Me.Separator1.TabStop = False
         Me.Separator1.Text = "Separator1"
         '
         'UcVisitScheduleGeneratedItems

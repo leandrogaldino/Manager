@@ -1,5 +1,6 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Extensions
+Imports DocumentFormat.OpenXml.Presentation
 Imports MySql.Data.MySqlClient
 Public Class FrmVisitSchedule
     Private _VisitSchedule As VisitSchedule
@@ -73,7 +74,7 @@ Public Class FrmVisitSchedule
         DgvNavigator.DataGridView = _VisitSchedulesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        CbxCallType.DataSource = EnumHelper.GetEnumDescriptions(Of CallType)()
+        CbxCallType.DataSource = EnumHelper.GetEnumDescriptions(Of CallType).OrderBy(Function(x) x).ToList()
         _UcVisitScheduleGeneratedItems = New UcVisitScheduleGeneratedItems()
         _CcoGeneratedItems.DropDownControl = _UcVisitScheduleGeneratedItems
         AddHandler _UcVisitScheduleGeneratedItems.ValueChanged, AddressOf UcVisitScheduleGeneratedItems_ValueChanged
@@ -99,7 +100,35 @@ Public Class FrmVisitSchedule
         If VisitSchedule IsNot Nothing Then
             CcoGeneratedItems.CloseDropDown()
             If VisitSchedule.ID > 0 Then
+
+
+
                 Frm = New FrmVisitSchedule(VisitSchedule)
+                ControlHelper.GetAllControls(Frm, False).ToList.ForEach(Sub(c) c.Enabled = False)
+
+
+                Frm.PnButtons.Visible = False
+                Frm.Height -= PnButtons.Height
+                Frm.TsTitle.Visible = False
+                Frm.LblCallType.Top -= TsTitle.Height
+                Frm.CbxCallType.Top -= TsTitle.Height
+                Frm.LblScheduledDate.Top -= TsTitle.Height
+                Frm.DbxScheduledDate.Top -= TsTitle.Height
+                Frm.TbxScheduledTime.Top -= TsTitle.Height
+                Frm.LblPerformedDate.Top -= TsTitle.Height
+                Frm.TxtPerformedDate.Top -= TsTitle.Height
+                Frm.TxtPerformedTime.Top -= TsTitle.Height
+                Frm.LblGeneratedItems.Top -= TsTitle.Height
+                Frm.BtnGeneratedItems.Top -= TsTitle.Height
+                Frm.FlpCustomer.Top -= TsTitle.Height
+                Frm.LblCustomer.Top -= TsTitle.Height
+                Frm.QbxCustomer.Top -= TsTitle.Height
+                Frm.LblCompressor.Top -= TsTitle.Height
+                Frm.QbxCompressor.Top -= TsTitle.Height
+                Frm.LblInstructions.Top -= TsTitle.Height
+                Frm.TxtInstructions.Top -= TsTitle.Height
+
+
                 Frm.ShowDialog()
             Else
                 CMessageBox.Show("Esse agendamento não existe mais.", CMessageBoxType.Information)
@@ -113,7 +142,6 @@ Public Class FrmVisitSchedule
         HasSchedule = If(_UcVisitScheduleGeneratedItems.ScheduleID > 0, "Sim", "Não")
         BtnGeneratedItems.Text = $"{HasEvaluation} | {HasSchedule}"
     End Sub
-
     Private Sub LoadData()
         _Loading = True
         LblIDValue.Text = _VisitSchedule.ID
@@ -340,8 +368,7 @@ Public Class FrmVisitSchedule
         _VisitSchedule.Status = EnumHelper.GetEnumValue(Of VisitScheduleStatus)(BtnStatusValue.Text)
         _VisitSchedule.CallType = EnumHelper.GetEnumValue(Of CallType)(CbxCallType.SelectedItem)
         _VisitSchedule.ScheduledDate = DbxScheduledDate.Date.Value + TbxScheduledTime.Time.Value
-        _VisitSchedule.PerformedDate = If(Not String.IsNullOrEmpty(TxtPerformedDate.Text) AndAlso IsDate(TxtPerformedDate.Text), CType(CDate(TxtPerformedDate.Text) + New TimeSpan., Date?),
-       Nothing)
+        _VisitSchedule.PerformedDate = If(Not String.IsNullOrEmpty(TxtPerformedDate.Text) AndAlso IsDate(TxtPerformedDate.Text), CType(CDate(TxtPerformedDate.Text) + TimeSpan.Parse(TxtPerformedTime.Text), Date?), Nothing)
         _VisitSchedule.Customer = New Person().Load(QbxCustomer.FreezedPrimaryKey, False)
         _VisitSchedule.Compressor = _VisitSchedule.Customer.Compressors.Single(Function(x) x.ID = QbxCompressor.FreezedPrimaryKey)
         _VisitSchedule.Instructions = TxtInstructions.Text
@@ -441,7 +468,7 @@ Public Class FrmVisitSchedule
         QbxCustomer.Select()
     End Sub
 
-    Private Sub FrmRoute_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+    Private Sub Form_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         _VisitSchedule.Unlock()
     End Sub
 

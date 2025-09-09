@@ -38,5 +38,9 @@ WHERE
     IFNULL(personcompressor.sector, '') LIKE CONCAT('%', @sector, '%') AND
     visitschedule.creation BETWEEN @creationi AND @creationf AND
     visitschedule.scheduleddate BETWEEN @scheduleddatei AND @scheduleddatef AND
-    visitschedule.performeddate BETWEEN @performeddatei AND @performeddatef
+(
+    (visitschedule.performeddate IS NOT NULL 
+     AND visitschedule.performeddate BETWEEN @performeddatei AND @performeddatef)
+    OR (@performed = TRUE AND visitschedule.performeddate IS NULL)
+)
 ORDER BY visitschedule.id;

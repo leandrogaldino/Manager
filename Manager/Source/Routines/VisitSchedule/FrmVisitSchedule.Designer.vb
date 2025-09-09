@@ -24,26 +24,26 @@ Partial Class FrmVisitSchedule
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmVisitSchedule))
-        Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Condition3 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim OtherField1 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField2 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField3 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField4 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Parameter3 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Relation1 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Relation2 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Relation3 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Condition4 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim OtherField5 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField6 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField7 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim Parameter4 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Relation4 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Me.Panel1 = New System.Windows.Forms.Panel()
+        Dim Condition5 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Condition6 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Condition7 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim OtherField8 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField9 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField10 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField11 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim Parameter5 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Parameter6 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Parameter7 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Relation5 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Relation6 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Relation7 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Condition8 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim OtherField12 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField13 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField14 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim Parameter8 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Relation8 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Me.PnButtons = New System.Windows.Forms.Panel()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
         Me.TsTitle = New System.Windows.Forms.ToolStrip()
@@ -65,6 +65,9 @@ Partial Class FrmVisitSchedule
         Me.TxtInstructions = New System.Windows.Forms.TextBox()
         Me.LblInstructions = New System.Windows.Forms.Label()
         Me.FlpCustomer = New System.Windows.Forms.FlowLayoutPanel()
+        Me.BtnFilterCustomer = New ControlLibrary.NoFocusCueButton()
+        Me.BtnViewCustomer = New ControlLibrary.NoFocusCueButton()
+        Me.BtnNewCustomer = New ControlLibrary.NoFocusCueButton()
         Me.LblCustomer = New System.Windows.Forms.Label()
         Me.LblCompressor = New System.Windows.Forms.Label()
         Me.TmrCustomer = New System.Windows.Forms.Timer(Me.components)
@@ -79,29 +82,26 @@ Partial Class FrmVisitSchedule
         Me.TbxScheduledTime = New ControlLibrary.TimeBox()
         Me.DbxScheduledDate = New ControlLibrary.DateBox()
         Me.QbxCustomer = New ControlLibrary.QueriedBox()
-        Me.BtnFilterCustomer = New ControlLibrary.NoFocusCueButton()
-        Me.BtnViewCustomer = New ControlLibrary.NoFocusCueButton()
-        Me.BtnNewCustomer = New ControlLibrary.NoFocusCueButton()
         Me.QbxCompressor = New ControlLibrary.QueriedBox()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.CcoGeneratedItems = New ControlLibrary.ControlContainer()
-        Me.Panel1.SuspendLayout()
+        Me.PnButtons.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FlpCustomer.SuspendLayout()
         Me.SuspendLayout()
         '
-        'Panel1
+        'PnButtons
         '
-        Me.Panel1.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.Panel1.Controls.Add(Me.BtnClose)
-        Me.Panel1.Controls.Add(Me.BtnSave)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 315)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(639, 44)
-        Me.Panel1.TabIndex = 16
+        Me.PnButtons.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.PnButtons.Controls.Add(Me.BtnClose)
+        Me.PnButtons.Controls.Add(Me.BtnSave)
+        Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.PnButtons.Location = New System.Drawing.Point(0, 315)
+        Me.PnButtons.Name = "PnButtons"
+        Me.PnButtons.Size = New System.Drawing.Size(639, 44)
+        Me.PnButtons.TabIndex = 16
         '
         'BtnClose
         '
@@ -307,6 +307,54 @@ Partial Class FrmVisitSchedule
         Me.FlpCustomer.Size = New System.Drawing.Size(69, 21)
         Me.FlpCustomer.TabIndex = 11
         '
+        'BtnFilterCustomer
+        '
+        Me.BtnFilterCustomer.BackColor = System.Drawing.Color.Transparent
+        Me.BtnFilterCustomer.BackgroundImage = Global.Manager.My.Resources.Resources.Magnifier
+        Me.BtnFilterCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnFilterCustomer.FlatAppearance.BorderSize = 0
+        Me.BtnFilterCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnFilterCustomer.Location = New System.Drawing.Point(49, 3)
+        Me.BtnFilterCustomer.Name = "BtnFilterCustomer"
+        Me.BtnFilterCustomer.Size = New System.Drawing.Size(17, 17)
+        Me.BtnFilterCustomer.TabIndex = 2
+        Me.BtnFilterCustomer.TabStop = False
+        Me.BtnFilterCustomer.TooltipText = ""
+        Me.BtnFilterCustomer.UseVisualStyleBackColor = False
+        Me.BtnFilterCustomer.Visible = False
+        '
+        'BtnViewCustomer
+        '
+        Me.BtnViewCustomer.BackColor = System.Drawing.Color.Transparent
+        Me.BtnViewCustomer.BackgroundImage = Global.Manager.My.Resources.Resources.View
+        Me.BtnViewCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnViewCustomer.FlatAppearance.BorderSize = 0
+        Me.BtnViewCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnViewCustomer.Location = New System.Drawing.Point(26, 3)
+        Me.BtnViewCustomer.Name = "BtnViewCustomer"
+        Me.BtnViewCustomer.Size = New System.Drawing.Size(17, 17)
+        Me.BtnViewCustomer.TabIndex = 1
+        Me.BtnViewCustomer.TabStop = False
+        Me.BtnViewCustomer.TooltipText = ""
+        Me.BtnViewCustomer.UseVisualStyleBackColor = False
+        Me.BtnViewCustomer.Visible = False
+        '
+        'BtnNewCustomer
+        '
+        Me.BtnNewCustomer.BackColor = System.Drawing.Color.Transparent
+        Me.BtnNewCustomer.BackgroundImage = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnNewCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnNewCustomer.FlatAppearance.BorderSize = 0
+        Me.BtnNewCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnNewCustomer.Location = New System.Drawing.Point(3, 3)
+        Me.BtnNewCustomer.Name = "BtnNewCustomer"
+        Me.BtnNewCustomer.Size = New System.Drawing.Size(17, 17)
+        Me.BtnNewCustomer.TabIndex = 0
+        Me.BtnNewCustomer.TabStop = False
+        Me.BtnNewCustomer.TooltipText = ""
+        Me.BtnNewCustomer.UseVisualStyleBackColor = False
+        Me.BtnNewCustomer.Visible = False
+        '
         'LblCustomer
         '
         Me.LblCustomer.AutoSize = True
@@ -347,6 +395,7 @@ Partial Class FrmVisitSchedule
         Me.TxtPerformedTime.ReadOnly = True
         Me.TxtPerformedTime.Size = New System.Drawing.Size(50, 23)
         Me.TxtPerformedTime.TabIndex = 21
+        Me.TxtPerformedTime.TabStop = False
         Me.TxtPerformedTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.TxtPerformedTime.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals
         Me.TxtPerformedTime.ValidatingType = GetType(Date)
@@ -358,6 +407,7 @@ Partial Class FrmVisitSchedule
         Me.TxtPerformedDate.ReadOnly = True
         Me.TxtPerformedDate.Size = New System.Drawing.Size(100, 23)
         Me.TxtPerformedDate.TabIndex = 20
+        Me.TxtPerformedDate.TabStop = False
         Me.TxtPerformedDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'LblPerformedDate
@@ -438,21 +488,21 @@ Partial Class FrmVisitSchedule
         '
         Me.QbxCustomer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxCustomer.CharactersToQuery = 1
-        Condition1.FieldName = "iscustomer"
-        Condition1.Operator = "="
-        Condition1.TableNameOrAlias = "person"
-        Condition1.Value = "@iscustomer"
-        Condition2.FieldName = "statusid"
-        Condition2.Operator = "="
-        Condition2.TableNameOrAlias = "person"
-        Condition2.Value = "@statusid"
-        Condition3.FieldName = "controlmaintenance"
-        Condition3.Operator = "="
-        Condition3.TableNameOrAlias = "person"
-        Condition3.Value = "@controlmaintenance"
-        Me.QbxCustomer.Conditions.Add(Condition1)
-        Me.QbxCustomer.Conditions.Add(Condition2)
-        Me.QbxCustomer.Conditions.Add(Condition3)
+        Condition5.FieldName = "iscustomer"
+        Condition5.Operator = "="
+        Condition5.TableNameOrAlias = "person"
+        Condition5.Value = "@iscustomer"
+        Condition6.FieldName = "statusid"
+        Condition6.Operator = "="
+        Condition6.TableNameOrAlias = "person"
+        Condition6.Value = "@statusid"
+        Condition7.FieldName = "controlmaintenance"
+        Condition7.Operator = "="
+        Condition7.TableNameOrAlias = "person"
+        Condition7.Value = "@controlmaintenance"
+        Me.QbxCustomer.Conditions.Add(Condition5)
+        Me.QbxCustomer.Conditions.Add(Condition6)
+        Me.QbxCustomer.Conditions.Add(Condition7)
         Me.QbxCustomer.DebugOnTextChanged = False
         Me.QbxCustomer.DisplayFieldAlias = "Nome Curto"
         Me.QbxCustomer.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
@@ -471,148 +521,100 @@ Partial Class FrmVisitSchedule
         Me.QbxCustomer.MainTableAlias = Nothing
         Me.QbxCustomer.MainTableName = "person"
         Me.QbxCustomer.Name = "QbxCustomer"
-        OtherField1.DisplayFieldAlias = "Nome"
-        OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField1.DisplayFieldName = "name"
-        OtherField1.DisplayMainFieldName = "id"
-        OtherField1.DisplayTableAlias = Nothing
-        OtherField1.DisplayTableName = "person"
-        OtherField1.Freeze = False
-        OtherField1.IfNull = Nothing
-        OtherField1.Prefix = Nothing
-        OtherField1.Suffix = Nothing
-        OtherField2.DisplayFieldAlias = "CNPJ/CPF"
-        OtherField2.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField2.DisplayFieldName = "document"
-        OtherField2.DisplayMainFieldName = "id"
-        OtherField2.DisplayTableAlias = Nothing
-        OtherField2.DisplayTableName = "person"
-        OtherField2.Freeze = False
-        OtherField2.IfNull = Nothing
-        OtherField2.Prefix = Nothing
-        OtherField2.Suffix = Nothing
-        OtherField3.DisplayFieldAlias = "Cidade"
-        OtherField3.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField3.DisplayFieldName = "name"
-        OtherField3.DisplayMainFieldName = "id"
-        OtherField3.DisplayTableAlias = Nothing
-        OtherField3.DisplayTableName = "city"
-        OtherField3.Freeze = False
-        OtherField3.IfNull = Nothing
-        OtherField3.Prefix = Nothing
-        OtherField3.Suffix = Nothing
-        OtherField4.DisplayFieldAlias = "Estado"
-        OtherField4.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField4.DisplayFieldName = "name"
-        OtherField4.DisplayMainFieldName = "id"
-        OtherField4.DisplayTableAlias = Nothing
-        OtherField4.DisplayTableName = "state"
-        OtherField4.Freeze = False
-        OtherField4.IfNull = Nothing
-        OtherField4.Prefix = Nothing
-        OtherField4.Suffix = Nothing
-        Me.QbxCustomer.OtherFields.Add(OtherField1)
-        Me.QbxCustomer.OtherFields.Add(OtherField2)
-        Me.QbxCustomer.OtherFields.Add(OtherField3)
-        Me.QbxCustomer.OtherFields.Add(OtherField4)
-        Parameter1.ParameterName = "@iscustomer"
-        Parameter1.ParameterValue = "1"
-        Parameter2.ParameterName = "@statusid"
-        Parameter2.ParameterValue = "0"
-        Parameter3.ParameterName = "@controlmaintenance"
-        Parameter3.ParameterValue = "1"
-        Me.QbxCustomer.Parameters.Add(Parameter1)
-        Me.QbxCustomer.Parameters.Add(Parameter2)
-        Me.QbxCustomer.Parameters.Add(Parameter3)
+        OtherField8.DisplayFieldAlias = "Nome"
+        OtherField8.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField8.DisplayFieldName = "name"
+        OtherField8.DisplayMainFieldName = "id"
+        OtherField8.DisplayTableAlias = Nothing
+        OtherField8.DisplayTableName = "person"
+        OtherField8.Freeze = False
+        OtherField8.IfNull = Nothing
+        OtherField8.Prefix = Nothing
+        OtherField8.Suffix = Nothing
+        OtherField9.DisplayFieldAlias = "CNPJ/CPF"
+        OtherField9.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField9.DisplayFieldName = "document"
+        OtherField9.DisplayMainFieldName = "id"
+        OtherField9.DisplayTableAlias = Nothing
+        OtherField9.DisplayTableName = "person"
+        OtherField9.Freeze = False
+        OtherField9.IfNull = Nothing
+        OtherField9.Prefix = Nothing
+        OtherField9.Suffix = Nothing
+        OtherField10.DisplayFieldAlias = "Cidade"
+        OtherField10.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField10.DisplayFieldName = "name"
+        OtherField10.DisplayMainFieldName = "id"
+        OtherField10.DisplayTableAlias = Nothing
+        OtherField10.DisplayTableName = "city"
+        OtherField10.Freeze = False
+        OtherField10.IfNull = Nothing
+        OtherField10.Prefix = Nothing
+        OtherField10.Suffix = Nothing
+        OtherField11.DisplayFieldAlias = "Estado"
+        OtherField11.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField11.DisplayFieldName = "name"
+        OtherField11.DisplayMainFieldName = "id"
+        OtherField11.DisplayTableAlias = Nothing
+        OtherField11.DisplayTableName = "state"
+        OtherField11.Freeze = False
+        OtherField11.IfNull = Nothing
+        OtherField11.Prefix = Nothing
+        OtherField11.Suffix = Nothing
+        Me.QbxCustomer.OtherFields.Add(OtherField8)
+        Me.QbxCustomer.OtherFields.Add(OtherField9)
+        Me.QbxCustomer.OtherFields.Add(OtherField10)
+        Me.QbxCustomer.OtherFields.Add(OtherField11)
+        Parameter5.ParameterName = "@iscustomer"
+        Parameter5.ParameterValue = "1"
+        Parameter6.ParameterName = "@statusid"
+        Parameter6.ParameterValue = "0"
+        Parameter7.ParameterName = "@controlmaintenance"
+        Parameter7.ParameterValue = "1"
+        Me.QbxCustomer.Parameters.Add(Parameter5)
+        Me.QbxCustomer.Parameters.Add(Parameter6)
+        Me.QbxCustomer.Parameters.Add(Parameter7)
         Me.QbxCustomer.Prefix = Nothing
-        Relation1.Operator = "="
-        Relation1.RelateFieldName = "personid"
-        Relation1.RelateTableAlias = Nothing
-        Relation1.RelateTableName = "personaddress"
-        Relation1.RelationType = "LEFT"
-        Relation1.WithFieldName = "id"
-        Relation1.WithTableAlias = Nothing
-        Relation1.WithTableName = "person"
-        Relation2.Operator = "="
-        Relation2.RelateFieldName = "id"
-        Relation2.RelateTableAlias = Nothing
-        Relation2.RelateTableName = "city"
-        Relation2.RelationType = "LEFT"
-        Relation2.WithFieldName = "cityid"
-        Relation2.WithTableAlias = Nothing
-        Relation2.WithTableName = "personaddress"
-        Relation3.Operator = "="
-        Relation3.RelateFieldName = "id"
-        Relation3.RelateTableAlias = Nothing
-        Relation3.RelateTableName = "state"
-        Relation3.RelationType = "LEFT"
-        Relation3.WithFieldName = "stateid"
-        Relation3.WithTableAlias = Nothing
-        Relation3.WithTableName = "city"
-        Me.QbxCustomer.Relations.Add(Relation1)
-        Me.QbxCustomer.Relations.Add(Relation2)
-        Me.QbxCustomer.Relations.Add(Relation3)
+        Relation5.Operator = "="
+        Relation5.RelateFieldName = "personid"
+        Relation5.RelateTableAlias = Nothing
+        Relation5.RelateTableName = "personaddress"
+        Relation5.RelationType = "LEFT"
+        Relation5.WithFieldName = "id"
+        Relation5.WithTableAlias = Nothing
+        Relation5.WithTableName = "person"
+        Relation6.Operator = "="
+        Relation6.RelateFieldName = "id"
+        Relation6.RelateTableAlias = Nothing
+        Relation6.RelateTableName = "city"
+        Relation6.RelationType = "LEFT"
+        Relation6.WithFieldName = "cityid"
+        Relation6.WithTableAlias = Nothing
+        Relation6.WithTableName = "personaddress"
+        Relation7.Operator = "="
+        Relation7.RelateFieldName = "id"
+        Relation7.RelateTableAlias = Nothing
+        Relation7.RelateTableName = "state"
+        Relation7.RelationType = "LEFT"
+        Relation7.WithFieldName = "stateid"
+        Relation7.WithTableAlias = Nothing
+        Relation7.WithTableName = "city"
+        Me.QbxCustomer.Relations.Add(Relation5)
+        Me.QbxCustomer.Relations.Add(Relation6)
+        Me.QbxCustomer.Relations.Add(Relation7)
         Me.QbxCustomer.Size = New System.Drawing.Size(317, 23)
         Me.QbxCustomer.Suffix = Nothing
         Me.QbxCustomer.TabIndex = 10
-        '
-        'BtnFilterCustomer
-        '
-        Me.BtnFilterCustomer.BackColor = System.Drawing.Color.Transparent
-        Me.BtnFilterCustomer.BackgroundImage = Global.Manager.My.Resources.Resources.Magnifier
-        Me.BtnFilterCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnFilterCustomer.FlatAppearance.BorderSize = 0
-        Me.BtnFilterCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnFilterCustomer.Location = New System.Drawing.Point(49, 3)
-        Me.BtnFilterCustomer.Name = "BtnFilterCustomer"
-        Me.BtnFilterCustomer.Size = New System.Drawing.Size(17, 17)
-        Me.BtnFilterCustomer.TabIndex = 2
-        Me.BtnFilterCustomer.TabStop = False
-        Me.BtnFilterCustomer.TooltipText = ""
-        Me.BtnFilterCustomer.UseVisualStyleBackColor = False
-        Me.BtnFilterCustomer.Visible = False
-        '
-        'BtnViewCustomer
-        '
-        Me.BtnViewCustomer.BackColor = System.Drawing.Color.Transparent
-        Me.BtnViewCustomer.BackgroundImage = Global.Manager.My.Resources.Resources.View
-        Me.BtnViewCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnViewCustomer.FlatAppearance.BorderSize = 0
-        Me.BtnViewCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnViewCustomer.Location = New System.Drawing.Point(26, 3)
-        Me.BtnViewCustomer.Name = "BtnViewCustomer"
-        Me.BtnViewCustomer.Size = New System.Drawing.Size(17, 17)
-        Me.BtnViewCustomer.TabIndex = 1
-        Me.BtnViewCustomer.TabStop = False
-        Me.BtnViewCustomer.TooltipText = ""
-        Me.BtnViewCustomer.UseVisualStyleBackColor = False
-        Me.BtnViewCustomer.Visible = False
-        '
-        'BtnNewCustomer
-        '
-        Me.BtnNewCustomer.BackColor = System.Drawing.Color.Transparent
-        Me.BtnNewCustomer.BackgroundImage = Global.Manager.My.Resources.Resources.IncludeSmall
-        Me.BtnNewCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnNewCustomer.FlatAppearance.BorderSize = 0
-        Me.BtnNewCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnNewCustomer.Location = New System.Drawing.Point(3, 3)
-        Me.BtnNewCustomer.Name = "BtnNewCustomer"
-        Me.BtnNewCustomer.Size = New System.Drawing.Size(17, 17)
-        Me.BtnNewCustomer.TabIndex = 0
-        Me.BtnNewCustomer.TabStop = False
-        Me.BtnNewCustomer.TooltipText = ""
-        Me.BtnNewCustomer.UseVisualStyleBackColor = False
-        Me.BtnNewCustomer.Visible = False
         '
         'QbxCompressor
         '
         Me.QbxCompressor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxCompressor.CharactersToQuery = 1
-        Condition4.FieldName = "statusid"
-        Condition4.Operator = "="
-        Condition4.TableNameOrAlias = "personcompressor"
-        Condition4.Value = "@statusid"
-        Me.QbxCompressor.Conditions.Add(Condition4)
+        Condition8.FieldName = "statusid"
+        Condition8.Operator = "="
+        Condition8.TableNameOrAlias = "personcompressor"
+        Condition8.Value = "@statusid"
+        Me.QbxCompressor.Conditions.Add(Condition8)
         Me.QbxCompressor.DebugOnTextChanged = False
         Me.QbxCompressor.DisplayFieldAlias = "Compressor"
         Me.QbxCompressor.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
@@ -632,52 +634,52 @@ Partial Class FrmVisitSchedule
         Me.QbxCompressor.MainTableAlias = Nothing
         Me.QbxCompressor.MainTableName = "personcompressor"
         Me.QbxCompressor.Name = "QbxCompressor"
-        OtherField5.DisplayFieldAlias = "Nº de Série"
-        OtherField5.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField5.DisplayFieldName = "serialnumber"
-        OtherField5.DisplayMainFieldName = "id"
-        OtherField5.DisplayTableAlias = Nothing
-        OtherField5.DisplayTableName = "personcompressor"
-        OtherField5.Freeze = True
-        OtherField5.IfNull = Nothing
-        OtherField5.Prefix = " NS: "
-        OtherField5.Suffix = Nothing
-        OtherField6.DisplayFieldAlias = "Patrimônio"
-        OtherField6.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField6.DisplayFieldName = "patrimony"
-        OtherField6.DisplayMainFieldName = "id"
-        OtherField6.DisplayTableAlias = Nothing
-        OtherField6.DisplayTableName = "personcompressor"
-        OtherField6.Freeze = True
-        OtherField6.IfNull = Nothing
-        OtherField6.Prefix = " PAT: "
-        OtherField6.Suffix = Nothing
-        OtherField7.DisplayFieldAlias = "Setor"
-        OtherField7.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField7.DisplayFieldName = "sector"
-        OtherField7.DisplayMainFieldName = "id"
-        OtherField7.DisplayTableAlias = Nothing
-        OtherField7.DisplayTableName = "personcompressor"
-        OtherField7.Freeze = True
-        OtherField7.IfNull = Nothing
-        OtherField7.Prefix = " SETOR: "
-        OtherField7.Suffix = Nothing
-        Me.QbxCompressor.OtherFields.Add(OtherField5)
-        Me.QbxCompressor.OtherFields.Add(OtherField6)
-        Me.QbxCompressor.OtherFields.Add(OtherField7)
-        Parameter4.ParameterName = "@statusid"
-        Parameter4.ParameterValue = "0"
-        Me.QbxCompressor.Parameters.Add(Parameter4)
+        OtherField12.DisplayFieldAlias = "Nº de Série"
+        OtherField12.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField12.DisplayFieldName = "serialnumber"
+        OtherField12.DisplayMainFieldName = "id"
+        OtherField12.DisplayTableAlias = Nothing
+        OtherField12.DisplayTableName = "personcompressor"
+        OtherField12.Freeze = True
+        OtherField12.IfNull = Nothing
+        OtherField12.Prefix = " NS: "
+        OtherField12.Suffix = Nothing
+        OtherField13.DisplayFieldAlias = "Patrimônio"
+        OtherField13.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField13.DisplayFieldName = "patrimony"
+        OtherField13.DisplayMainFieldName = "id"
+        OtherField13.DisplayTableAlias = Nothing
+        OtherField13.DisplayTableName = "personcompressor"
+        OtherField13.Freeze = True
+        OtherField13.IfNull = Nothing
+        OtherField13.Prefix = " PAT: "
+        OtherField13.Suffix = Nothing
+        OtherField14.DisplayFieldAlias = "Setor"
+        OtherField14.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField14.DisplayFieldName = "sector"
+        OtherField14.DisplayMainFieldName = "id"
+        OtherField14.DisplayTableAlias = Nothing
+        OtherField14.DisplayTableName = "personcompressor"
+        OtherField14.Freeze = True
+        OtherField14.IfNull = Nothing
+        OtherField14.Prefix = " SETOR: "
+        OtherField14.Suffix = Nothing
+        Me.QbxCompressor.OtherFields.Add(OtherField12)
+        Me.QbxCompressor.OtherFields.Add(OtherField13)
+        Me.QbxCompressor.OtherFields.Add(OtherField14)
+        Parameter8.ParameterName = "@statusid"
+        Parameter8.ParameterValue = "0"
+        Me.QbxCompressor.Parameters.Add(Parameter8)
         Me.QbxCompressor.Prefix = Nothing
-        Relation4.Operator = "="
-        Relation4.RelateFieldName = "id"
-        Relation4.RelateTableAlias = Nothing
-        Relation4.RelateTableName = "compressor"
-        Relation4.RelationType = "INNER"
-        Relation4.WithFieldName = "compressorid"
-        Relation4.WithTableAlias = Nothing
-        Relation4.WithTableName = "personcompressor"
-        Me.QbxCompressor.Relations.Add(Relation4)
+        Relation8.Operator = "="
+        Relation8.RelateFieldName = "id"
+        Relation8.RelateTableAlias = Nothing
+        Relation8.RelateTableName = "compressor"
+        Relation8.RelationType = "INNER"
+        Relation8.WithFieldName = "compressorid"
+        Relation8.WithTableAlias = Nothing
+        Relation8.WithTableName = "personcompressor"
+        Me.QbxCompressor.Relations.Add(Relation8)
         Me.QbxCompressor.Size = New System.Drawing.Size(292, 23)
         Me.QbxCompressor.Suffix = Nothing
         Me.QbxCompressor.TabIndex = 13
@@ -719,7 +721,7 @@ Partial Class FrmVisitSchedule
         Me.Controls.Add(Me.QbxCompressor)
         Me.Controls.Add(Me.TxtInstructions)
         Me.Controls.Add(Me.LblInstructions)
-        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.PnButtons)
         Me.Controls.Add(Me.TsTitle)
         Me.Controls.Add(Me.TsNavigation)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!)
@@ -730,7 +732,7 @@ Partial Class FrmVisitSchedule
         Me.Name = "FrmVisitSchedule"
         Me.ShowIcon = False
         Me.Text = "Agenda de Visita"
-        Me.Panel1.ResumeLayout(False)
+        Me.PnButtons.ResumeLayout(False)
         Me.TsTitle.ResumeLayout(False)
         Me.TsTitle.PerformLayout()
         Me.TsNavigation.ResumeLayout(False)
@@ -742,7 +744,7 @@ Partial Class FrmVisitSchedule
 
     End Sub
 
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents PnButtons As Panel
     Friend WithEvents BtnClose As Button
     Friend WithEvents BtnSave As Button
     Friend WithEvents TsTitle As ToolStrip

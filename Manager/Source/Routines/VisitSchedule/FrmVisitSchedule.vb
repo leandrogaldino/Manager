@@ -340,7 +340,8 @@ Public Class FrmVisitSchedule
         _VisitSchedule.Status = EnumHelper.GetEnumValue(Of VisitScheduleStatus)(BtnStatusValue.Text)
         _VisitSchedule.CallType = EnumHelper.GetEnumValue(Of CallType)(CbxCallType.SelectedItem)
         _VisitSchedule.ScheduledDate = DbxScheduledDate.Date.Value + TbxScheduledTime.Time.Value
-        _VisitSchedule.PerformedDate = If(Not String.IsNullOrEmpty(TxtPerformedDate.Text) And IsDate(TxtPerformedDate.Text), CDate(TxtPerformedDate.Text), Nothing)
+        _VisitSchedule.PerformedDate = If(Not String.IsNullOrEmpty(TxtPerformedDate.Text) AndAlso IsDate(TxtPerformedDate.Text), CType(CDate(TxtPerformedDate.Text) + New TimeSpan., Date?),
+       Nothing)
         _VisitSchedule.Customer = New Person().Load(QbxCustomer.FreezedPrimaryKey, False)
         _VisitSchedule.Compressor = _VisitSchedule.Customer.Compressors.Single(Function(x) x.ID = QbxCompressor.FreezedPrimaryKey)
         _VisitSchedule.Instructions = TxtInstructions.Text

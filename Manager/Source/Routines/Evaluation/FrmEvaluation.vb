@@ -603,7 +603,7 @@ Public Class FrmEvaluation
     Private Sub FilterComplement()
         Dim Table As DataTable
         Dim View As DataView
-        Dim Filter As String = "ItemNameOrProduct LIKE '%@VALUE%' OR Code LIKE '%@VALUE%'"
+        Dim Filter As String = "Name LIKE '%@VALUE%' OR Code LIKE '%@VALUE%'"
         If DgvReplacedSellable.DataSource IsNot Nothing Then
             Table = DgvReplacedSellable.DataSource
             View = Table.DefaultView
@@ -1234,7 +1234,7 @@ Public Class FrmEvaluation
         FilterComplement()
     End Sub
     Private Sub TxtFilterReplacedSellable_Enter(sender As Object, e As EventArgs) Handles TxtFilterReplacedSellable.Enter
-        EprInformation.SetError(TsReplacedSellable, "Filtrando os campos: Código e Item.")
+        EprInformation.SetError(TsReplacedSellable, "Filtrando os campos: Produto/Serviço")
         EprInformation.SetIconAlignment(TsReplacedSellable, ErrorIconAlignment.MiddleLeft)
         EprInformation.SetIconPadding(TsReplacedSellable, -365)
     End Sub

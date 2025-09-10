@@ -502,10 +502,9 @@ Public Class FrmPersonCompressor
     Private Sub FilterWorkedHourSellable()
         Dim Table As DataTable
         Dim View As DataView
-        Dim Filter As String = String.Format("{0} OR {1} OR {2}",
+        Dim Filter As String = String.Format("{0} OR {1}",
                                                  "Name LIKE '%@VALUE%'",
-                                                 "Code LIKE '%@VALUE%'",
-                                                 "Convert([Product], 'System.String') LIKE '%@VALUE%'"
+                                                 "Code LIKE '%@VALUE%'"
                                             )
         If DgvWorkedHourSellable.DataSource IsNot Nothing Then
             Table = DgvWorkedHourSellable.DataSource
@@ -524,10 +523,9 @@ Public Class FrmPersonCompressor
     Private Sub FilterElapsedDaySellable()
         Dim Table As DataTable
         Dim View As DataView
-        Dim Filter As String = String.Format("{0} OR {1} OR {2}",
+        Dim Filter As String = String.Format("{0} OR {1}",
                                                  "Name LIKE '%@VALUE%'",
-                                                 "Code LIKE '%@VALUE%'",
-                                                 "Convert([Product], 'System.String') LIKE '%@VALUE%'"
+                                                 "Code LIKE '%@VALUE%'"
                                             )
         If DgvElapsedDaySellable.DataSource IsNot Nothing Then
             Table = DgvElapsedDaySellable.DataSource

@@ -1,6 +1,5 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Extensions
-Imports DocumentFormat.OpenXml.Presentation
 Imports MySql.Data.MySqlClient
 Public Class FrmVisitSchedule
     Private _VisitSchedule As VisitSchedule
@@ -9,7 +8,7 @@ Public Class FrmVisitSchedule
     Private _Filter As VisitScheduleFilter
     Private _Deleting As Boolean
     Private _Loading As Boolean
-    Private _LoggedUser As User
+    Private _User As User
     Private _UcVisitScheduleGeneratedItems As UcVisitScheduleGeneratedItems
 
     <DebuggerStepThrough>
@@ -36,14 +35,14 @@ Public Class FrmVisitSchedule
         _VisitSchedulesForm = VisitSchedulesForm
         _VisitSchedulesGrid = _VisitSchedulesForm.DgvData
         _Filter = CType(_VisitSchedulesForm.PgFilter.SelectedObject, VisitScheduleFilter)
-        _LoggedUser = Locator.GetInstance(Of Session).User
+        _User = Locator.GetInstance(Of Session).User
         LoadForm()
         LoadData()
     End Sub
     Public Sub New(VisitSchedule As VisitSchedule)
         InitializeComponent()
         _VisitSchedule = VisitSchedule
-        _LoggedUser = Locator.GetInstance(Of Session).User
+        _User = Locator.GetInstance(Of Session).User
         Height -= TsNavigation.Height
         LblCallType.Top -= TsNavigation.Height
         CbxCallType.Top -= TsNavigation.Height
@@ -167,9 +166,12 @@ Public Class FrmVisitSchedule
         QbxCompressor.Freeze(_VisitSchedule.Compressor.ID)
 
 
+        QbxTechnician.Unfreeze()
+        QbxTechnician.Freeze(_VisitSchedule.Technician.ID)
+
 
         TxtInstructions.Text = _VisitSchedule.Instructions
-        BtnDelete.Enabled = Not String.IsNullOrEmpty(_VisitSchedule.ID) > 0 And _LoggedUser.CanDelete(Routine.VisitSchedule)
+        BtnDelete.Enabled = Not String.IsNullOrEmpty(_VisitSchedule.ID) > 0 And _User.CanDelete(Routine.VisitSchedule)
         Text = "Agendamento de Visita"
         If _VisitSchedule.LockInfo.IsLocked And Not _VisitSchedule.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _VisitSchedule.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _VisitSchedule.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
@@ -282,7 +284,7 @@ Public Class FrmVisitSchedule
         BtnStatusValue.Visible = (BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Pending) Or (BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled)))
         LblStatusValue.Visible = (BtnStatusValue.Text <> EnumHelper.GetEnumDescription(VisitScheduleStatus.Pending) And (BtnStatusValue.Text <> EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled)))
     End Sub
-    Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtInstructions.TextChanged, QbxCustomer.TextChanged, QbxCompressor.TextChanged, CbxCallType.SelectedIndexChanged, DbxScheduledDate.TextChanged, TbxScheduledTime.TextChanged
+    Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtInstructions.TextChanged, QbxCustomer.TextChanged, QbxCompressor.TextChanged, QbxTechnician.TextChanged, CbxCallType.SelectedIndexChanged, DbxScheduledDate.TextChanged, TbxScheduledTime.TextChanged
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
@@ -354,6 +356,16 @@ Public Class FrmVisitSchedule
             EprValidation.SetIconAlignment(LblCompressor, ErrorIconAlignment.MiddleRight)
             QbxCompressor.Select()
             Return False
+        ElseIf String.IsNullOrWhiteSpace(QbxTechnician.Text) Then
+            EprValidation.SetError(LblTechnician, "Campo obrigatório.")
+            EprValidation.SetIconAlignment(LblTechnician, ErrorIconAlignment.MiddleRight)
+            QbxTechnician.Select()
+            Return False
+        ElseIf Not QbxTechnician.IsFreezed Then
+            EprValidation.SetError(LblTechnician, "Técnico não encontrado.")
+            EprValidation.SetIconAlignment(LblTechnician, ErrorIconAlignment.MiddleRight)
+            QbxTechnician.Select()
+            Return False
         End If
         Return True
     End Function
@@ -375,6 +387,7 @@ Public Class FrmVisitSchedule
         _VisitSchedule.PerformedDate = If(Not String.IsNullOrEmpty(TxtPerformedDate.Text) AndAlso IsDate(TxtPerformedDate.Text), CType(CDate(TxtPerformedDate.Text) + TimeSpan.Parse(TxtPerformedTime.Text), Date?), Nothing)
         _VisitSchedule.Customer = New Person().Load(QbxCustomer.FreezedPrimaryKey, False)
         _VisitSchedule.Compressor = _VisitSchedule.Customer.Compressors.Single(Function(x) x.ID = QbxCompressor.FreezedPrimaryKey)
+        _VisitSchedule.Technician = New Person().Load(QbxTechnician.FreezedPrimaryKey, False)
         _VisitSchedule.Instructions = TxtInstructions.Text
         Try
             Cursor = Cursors.WaitCursor
@@ -382,7 +395,7 @@ Public Class FrmVisitSchedule
             _VisitSchedule.Lock()
             LblIDValue.Text = _VisitSchedule.ID
             BtnSave.Enabled = False
-            BtnDelete.Enabled = _LoggedUser.CanDelete(Routine.Route)
+            BtnDelete.Enabled = _User.CanDelete(Routine.Route)
             If _VisitSchedulesForm IsNot Nothing Then
                 _Filter.Filter()
                 _VisitSchedulesForm.DgvlVisitScheduleLayout.Load()
@@ -406,16 +419,16 @@ Public Class FrmVisitSchedule
     End Sub
     Private Sub QbxCustomer_Enter(sender As Object, e As EventArgs) Handles QbxCustomer.Enter
         TmrCustomer.Stop()
-        BtnViewCustomer.Visible = QbxCustomer.IsFreezed And _LoggedUser.CanWrite(Routine.Person)
-        BtnNewCustomer.Visible = _LoggedUser.CanWrite(Routine.Person)
-        BtnFilterCustomer.Visible = _LoggedUser.CanAccess(Routine.Person)
+        BtnViewCustomer.Visible = QbxCustomer.IsFreezed And _User.CanWrite(Routine.Person)
+        BtnNewCustomer.Visible = _User.CanWrite(Routine.Person)
+        BtnFilterCustomer.Visible = _User.CanAccess(Routine.Person)
     End Sub
     Private Sub QbxCustomer_Leave(sender As Object, e As EventArgs) Handles QbxCustomer.Leave
         TmrCustomer.Stop()
         TmrCustomer.Start()
     End Sub
     Private Sub QbxCustomer_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxCustomer.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnViewCustomer.Visible = QbxCustomer.IsFreezed And _LoggedUser.CanWrite(Routine.Person)
+        If Not _Loading Then BtnViewCustomer.Visible = QbxCustomer.IsFreezed And _User.CanWrite(Routine.Person)
         QbxCompressor.Unfreeze()
         If QbxCompressor.Conditions.Count = 2 Then QbxCompressor.Conditions.RemoveAt(1)
         If QbxCompressor.Parameters.Count = 2 Then QbxCompressor.Parameters.RemoveAt(1)
@@ -471,6 +484,60 @@ Public Class FrmVisitSchedule
         FilterForm.ShowDialog()
         QbxCustomer.Select()
     End Sub
+
+
+
+
+
+
+    Private Sub TmrQueriedBox_Tick(sender As Object, e As EventArgs) Handles TmrTechnician.Tick
+        BtnViewTechnician.Visible = False
+        BtnNewTechnician.Visible = False
+        BtnFilterTechnician.Visible = False
+        TmrTechnician.Stop()
+    End Sub
+    Private Sub QbxTechnician_Enter(sender As Object, e As EventArgs) Handles QbxTechnician.Enter
+        TmrTechnician.Stop()
+        BtnViewTechnician.Visible = QbxTechnician.IsFreezed And _User.CanWrite(Routine.Person)
+        BtnNewTechnician.Visible = _User.CanWrite(Routine.Person)
+        BtnFilterTechnician.Visible = _User.CanAccess(Routine.Person)
+    End Sub
+    Private Sub QbxTechnician_Leave(sender As Object, e As EventArgs) Handles QbxTechnician.Leave
+        TmrTechnician.Stop()
+        TmrTechnician.Start()
+    End Sub
+    Private Sub QbxTechnician_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxTechnician.FreezedPrimaryKeyChanged
+        If Not _Loading Then BtnViewTechnician.Visible = QbxTechnician.IsFreezed And _User.CanWrite(Routine.Person)
+    End Sub
+    Private Sub BtnNewTechnician_Click(sender As Object, e As EventArgs) Handles BtnNewTechnician.Click
+        Dim Technician As Person
+        Dim Form As FrmPerson
+        Technician = New Person
+        Technician.IsTechnician = True
+        Form = New FrmPerson(Technician)
+        Form.CbxIsTechnician.Enabled = False
+        Form.ShowDialog()
+        EprValidation.Clear()
+        If Technician.ID > 0 Then
+            QbxTechnician.Freeze(Technician.ID)
+        End If
+        QbxTechnician.Select()
+    End Sub
+    Private Sub BtnViewTechnician_Click(sender As Object, e As EventArgs) Handles BtnViewTechnician.Click
+        Dim Form As New FrmPerson(New Person().Load(QbxTechnician.FreezedPrimaryKey, True))
+        Form.CbxIsTechnician.Enabled = False
+        Form.ShowDialog()
+        QbxTechnician.Freeze(QbxTechnician.FreezedPrimaryKey)
+        QbxTechnician.Select()
+    End Sub
+    Private Sub BtnFilterTechnician_Click(sender As Object, e As EventArgs) Handles BtnFilterTechnician.Click
+        Dim FilterForm As FrmFilter
+        FilterForm = New FrmFilter(New PersonTechnicianQueriedBoxFilter(), QbxTechnician)
+        FilterForm.Text = "Filtro de Técnicos"
+        FilterForm.ShowDialog()
+        QbxTechnician.Select()
+    End Sub
+
 
     Private Sub Form_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         _VisitSchedule.Unlock()

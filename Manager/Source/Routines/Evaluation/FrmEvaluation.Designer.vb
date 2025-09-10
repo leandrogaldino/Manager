@@ -166,7 +166,6 @@ Partial Class FrmEvaluation
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.NudHourPerDay = New System.Windows.Forms.NumericUpDown()
         Me.TmrCustomer = New System.Windows.Forms.Timer(Me.components)
-        Me.TmrCompressor = New System.Windows.Forms.Timer(Me.components)
         Me.OfdDocument = New System.Windows.Forms.OpenFileDialog()
         Me.SfdDocument = New System.Windows.Forms.SaveFileDialog()
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
@@ -1181,10 +1180,10 @@ Partial Class FrmEvaluation
         '
         Me.TabTechnicalAdvice.BackColor = System.Drawing.Color.White
         Me.TabTechnicalAdvice.Controls.Add(Me.TlpAdvice)
-        Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 22)
+        Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 26)
         Me.TabTechnicalAdvice.Name = "TabTechnicalAdvice"
         Me.TabTechnicalAdvice.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1031, 411)
+        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1031, 407)
         Me.TabTechnicalAdvice.TabIndex = 6
         Me.TabTechnicalAdvice.Text = "Parecer Técnico"
         '
@@ -1200,7 +1199,7 @@ Partial Class FrmEvaluation
         Me.TlpAdvice.RowCount = 2
         Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.0!))
         Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.0!))
-        Me.TlpAdvice.Size = New System.Drawing.Size(1025, 405)
+        Me.TlpAdvice.Size = New System.Drawing.Size(1025, 401)
         Me.TlpAdvice.TabIndex = 2
         '
         'TlpReplaced
@@ -1214,7 +1213,7 @@ Partial Class FrmEvaluation
         Me.TlpReplaced.Name = "TlpReplaced"
         Me.TlpReplaced.RowCount = 1
         Me.TlpReplaced.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TlpReplaced.Size = New System.Drawing.Size(1019, 237)
+        Me.TlpReplaced.Size = New System.Drawing.Size(1019, 234)
         Me.TlpReplaced.TabIndex = 1
         '
         'GbxReplacedSellable
@@ -1224,7 +1223,7 @@ Partial Class FrmEvaluation
         Me.GbxReplacedSellable.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GbxReplacedSellable.Location = New System.Drawing.Point(3, 3)
         Me.GbxReplacedSellable.Name = "GbxReplacedSellable"
-        Me.GbxReplacedSellable.Size = New System.Drawing.Size(1013, 231)
+        Me.GbxReplacedSellable.Size = New System.Drawing.Size(1013, 228)
         Me.GbxReplacedSellable.TabIndex = 2
         Me.GbxReplacedSellable.TabStop = False
         Me.GbxReplacedSellable.Text = "Peças Substituídas/Serviços Executados"
@@ -1248,7 +1247,7 @@ Partial Class FrmEvaluation
         Me.DgvReplacedSellable.RowHeadersVisible = False
         Me.DgvReplacedSellable.RowTemplate.Height = 26
         Me.DgvReplacedSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvReplacedSellable.Size = New System.Drawing.Size(1007, 184)
+        Me.DgvReplacedSellable.Size = New System.Drawing.Size(1007, 181)
         Me.DgvReplacedSellable.TabIndex = 1
         Me.DgvReplacedSellable.TabStop = False
         '
@@ -1313,9 +1312,9 @@ Partial Class FrmEvaluation
         '
         Me.GbxAdvice.Controls.Add(Me.TxtTechnicalAdvice)
         Me.GbxAdvice.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GbxAdvice.Location = New System.Drawing.Point(3, 246)
+        Me.GbxAdvice.Location = New System.Drawing.Point(3, 243)
         Me.GbxAdvice.Name = "GbxAdvice"
-        Me.GbxAdvice.Size = New System.Drawing.Size(1019, 156)
+        Me.GbxAdvice.Size = New System.Drawing.Size(1019, 155)
         Me.GbxAdvice.TabIndex = 0
         Me.GbxAdvice.TabStop = False
         Me.GbxAdvice.Text = "Observação"
@@ -1327,7 +1326,7 @@ Partial Class FrmEvaluation
         Me.TxtTechnicalAdvice.Location = New System.Drawing.Point(3, 19)
         Me.TxtTechnicalAdvice.MaxLength = 1000000
         Me.TxtTechnicalAdvice.Name = "TxtTechnicalAdvice"
-        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1013, 134)
+        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1013, 133)
         Me.TxtTechnicalAdvice.TabIndex = 1
         Me.TxtTechnicalAdvice.Text = ""
         '
@@ -1336,10 +1335,10 @@ Partial Class FrmEvaluation
         Me.TabDocument.AutoScroll = True
         Me.TabDocument.Controls.Add(Me.PdfDocumentViewer)
         Me.TabDocument.Controls.Add(Me.TsDocument)
-        Me.TabDocument.Location = New System.Drawing.Point(4, 22)
+        Me.TabDocument.Location = New System.Drawing.Point(4, 26)
         Me.TabDocument.Name = "TabDocument"
         Me.TabDocument.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabDocument.Size = New System.Drawing.Size(1031, 411)
+        Me.TabDocument.Size = New System.Drawing.Size(1031, 407)
         Me.TabDocument.TabIndex = 7
         Me.TabDocument.Text = "Documento"
         Me.TabDocument.UseVisualStyleBackColor = True
@@ -1369,7 +1368,7 @@ Partial Class FrmEvaluation
         Me.PdfDocumentViewer.ScrollDisplacementValue = 0
         Me.PdfDocumentViewer.ShowHorizontalScrollBar = True
         Me.PdfDocumentViewer.ShowVerticalScrollBar = True
-        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1025, 380)
+        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1025, 376)
         Me.PdfDocumentViewer.SpaceBetweenPages = 8
         Me.PdfDocumentViewer.TabIndex = 1
         TextSearchSettings1.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -1462,10 +1461,10 @@ Partial Class FrmEvaluation
         'TabPhoto
         '
         Me.TabPhoto.Controls.Add(Me.PnPhoto)
-        Me.TabPhoto.Location = New System.Drawing.Point(4, 22)
+        Me.TabPhoto.Location = New System.Drawing.Point(4, 26)
         Me.TabPhoto.Name = "TabPhoto"
         Me.TabPhoto.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPhoto.Size = New System.Drawing.Size(1031, 411)
+        Me.TabPhoto.Size = New System.Drawing.Size(1031, 407)
         Me.TabPhoto.TabIndex = 8
         Me.TabPhoto.Text = "Fotos"
         Me.TabPhoto.UseVisualStyleBackColor = True
@@ -1479,7 +1478,7 @@ Partial Class FrmEvaluation
         Me.PnPhoto.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PnPhoto.Location = New System.Drawing.Point(3, 3)
         Me.PnPhoto.Name = "PnPhoto"
-        Me.PnPhoto.Size = New System.Drawing.Size(1025, 405)
+        Me.PnPhoto.Size = New System.Drawing.Size(1025, 401)
         Me.PnPhoto.TabIndex = 17
         '
         'PbxPhoto
@@ -1488,7 +1487,7 @@ Partial Class FrmEvaluation
         Me.PbxPhoto.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PbxPhoto.Location = New System.Drawing.Point(0, 28)
         Me.PbxPhoto.Name = "PbxPhoto"
-        Me.PbxPhoto.Size = New System.Drawing.Size(1023, 352)
+        Me.PbxPhoto.Size = New System.Drawing.Size(1023, 348)
         Me.PbxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PbxPhoto.TabIndex = 11
         Me.PbxPhoto.TabStop = False
@@ -1631,7 +1630,7 @@ Partial Class FrmEvaluation
         Me.LblPhotoCount.BackColor = System.Drawing.Color.White
         Me.LblPhotoCount.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.LblPhotoCount.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblPhotoCount.Location = New System.Drawing.Point(0, 380)
+        Me.LblPhotoCount.Location = New System.Drawing.Point(0, 376)
         Me.LblPhotoCount.Name = "LblPhotoCount"
         Me.LblPhotoCount.Size = New System.Drawing.Size(1023, 23)
         Me.LblPhotoCount.TabIndex = 14
@@ -1695,11 +1694,6 @@ Partial Class FrmEvaluation
         '
         Me.TmrCustomer.Enabled = True
         Me.TmrCustomer.Interval = 300
-        '
-        'TmrCompressor
-        '
-        Me.TmrCompressor.Enabled = True
-        Me.TmrCompressor.Interval = 300
         '
         'OfdDocument
         '
@@ -1872,7 +1866,6 @@ Partial Class FrmEvaluation
     Friend WithEvents BtnViewCustomer As ControlLibrary.NoFocusCueButton
     Friend WithEvents BtnFilterCustomer As ControlLibrary.NoFocusCueButton
     Friend WithEvents TmrCustomer As Timer
-    Friend WithEvents TmrCompressor As Timer
     Friend WithEvents TabDocument As TabPage
     Friend WithEvents TsDocument As ToolStrip
     Friend WithEvents BtnAttachPDF As ToolStripButton

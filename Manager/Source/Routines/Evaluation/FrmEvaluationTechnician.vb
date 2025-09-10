@@ -159,20 +159,20 @@ Public Class FrmEvaluationTechnician
         BtnFilterTechnician.Visible = False
         TmrQueriedBox.Stop()
     End Sub
-    Private Sub QbxTechnician_Enter(sender As Object, e As EventArgs)
+    Private Sub QbxTechnician_Enter(sender As Object, e As EventArgs) Handles QbxTechnician.Enter
         TmrQueriedBox.Stop()
         BtnViewTechnician.Visible = QbxTechnician.IsFreezed And _User.CanWrite(Routine.Person)
         BtnNewTechnician.Visible = _User.CanWrite(Routine.Person)
         BtnFilterTechnician.Visible = _User.CanAccess(Routine.Person)
     End Sub
-    Private Sub QbxTechnician_Leave(sender As Object, e As EventArgs)
+    Private Sub QbxTechnician_Leave(sender As Object, e As EventArgs) Handles QbxTechnician.Leave
         TmrQueriedBox.Stop()
         TmrQueriedBox.Start()
     End Sub
-    Private Sub QbxTechnician_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs)
+    Private Sub QbxTechnician_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxTechnician.FreezedPrimaryKeyChanged
         If Not _Loading Then BtnViewTechnician.Visible = QbxTechnician.IsFreezed And _User.CanWrite(Routine.Person)
     End Sub
-    Private Sub BtnNewTechnician_Click(sender As Object, e As EventArgs)
+    Private Sub BtnNewTechnician_Click(sender As Object, e As EventArgs) Handles BtnNewTechnician.Click
         Dim Technician As Person
         Dim Form As FrmPerson
         Technician = New Person
@@ -186,22 +186,20 @@ Public Class FrmEvaluationTechnician
         End If
         QbxTechnician.Select()
     End Sub
-    Private Sub BtnViewTechnician_Click(sender As Object, e As EventArgs)
+    Private Sub BtnViewTechnician_Click(sender As Object, e As EventArgs) Handles BtnViewTechnician.Click
         Dim Form As New FrmPerson(New Person().Load(QbxTechnician.FreezedPrimaryKey, True))
         Form.CbxIsTechnician.Enabled = False
         Form.ShowDialog()
         QbxTechnician.Freeze(QbxTechnician.FreezedPrimaryKey)
         QbxTechnician.Select()
     End Sub
-    Private Sub BtnFilterTechnician_Click(sender As Object, e As EventArgs)
+    Private Sub BtnFilterTechnician_Click(sender As Object, e As EventArgs) Handles BtnFilterTechnician.Click
         Dim FilterForm As FrmFilter
         FilterForm = New FrmFilter(New PersonTechnicianQueriedBoxFilter(), QbxTechnician)
         FilterForm.Text = "Filtro de Técnicos"
         FilterForm.ShowDialog()
         QbxTechnician.Select()
     End Sub
-
-
 
 
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click

@@ -322,11 +322,11 @@ Partial Class FrmPerson
         '
         Me.TabCompressor.Controls.Add(Me.DgvCompressor)
         Me.TabCompressor.Controls.Add(Me.TsCompressor)
-        Me.TabCompressor.Location = New System.Drawing.Point(4, 22)
+        Me.TabCompressor.Location = New System.Drawing.Point(4, 26)
         Me.TabCompressor.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabCompressor.Name = "TabCompressor"
         Me.TabCompressor.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabCompressor.Size = New System.Drawing.Size(629, 111)
+        Me.TabCompressor.Size = New System.Drawing.Size(629, 107)
         Me.TabCompressor.TabIndex = 1
         Me.TabCompressor.Text = "Compressores"
         Me.TabCompressor.UseVisualStyleBackColor = True
@@ -349,7 +349,7 @@ Partial Class FrmPerson
         Me.DgvCompressor.RowHeadersVisible = False
         Me.DgvCompressor.RowTemplate.Height = 26
         Me.DgvCompressor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvCompressor.Size = New System.Drawing.Size(623, 78)
+        Me.DgvCompressor.Size = New System.Drawing.Size(623, 74)
         Me.DgvCompressor.TabIndex = 1
         '
         'TsCompressor
@@ -415,10 +415,10 @@ Partial Class FrmPerson
         '
         Me.TabContact.Controls.Add(Me.DgvContact)
         Me.TabContact.Controls.Add(Me.TsContact)
-        Me.TabContact.Location = New System.Drawing.Point(4, 26)
+        Me.TabContact.Location = New System.Drawing.Point(4, 22)
         Me.TabContact.Name = "TabContact"
         Me.TabContact.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabContact.Size = New System.Drawing.Size(629, 107)
+        Me.TabContact.Size = New System.Drawing.Size(629, 111)
         Me.TabContact.TabIndex = 7
         Me.TabContact.Text = "Contatos"
         Me.TabContact.UseVisualStyleBackColor = True
@@ -441,7 +441,7 @@ Partial Class FrmPerson
         Me.DgvContact.RowHeadersVisible = False
         Me.DgvContact.RowTemplate.Height = 26
         Me.DgvContact.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvContact.Size = New System.Drawing.Size(623, 76)
+        Me.DgvContact.Size = New System.Drawing.Size(623, 80)
         Me.DgvContact.TabIndex = 1
         '
         'TsContact

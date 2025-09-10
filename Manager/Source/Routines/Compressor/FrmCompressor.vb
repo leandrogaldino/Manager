@@ -381,10 +381,9 @@ Public Class FrmCompressor
     Private Sub FilterPartWorkedHour()
         Dim Table As DataTable
         Dim View As DataView
-        Dim Filter As String = String.Format("{0} OR {1} OR {2}",
-                                                 "ItemNameOrProduct LIKE '%@VALUE%'",
-                                                 "Code LIKE '%@VALUE%'",
-                                                 "Convert([Product], 'System.String') LIKE '%@VALUE%'"
+        Dim Filter As String = String.Format("{0} OR {1}",
+                                                 "Name LIKE '%@VALUE%'",
+                                                 "Code LIKE '%@VALUE%'"
                                             )
         If DgvCompressorSellableWorkedHour.DataSource IsNot Nothing Then
             Table = DgvCompressorSellableWorkedHour.DataSource
@@ -459,10 +458,9 @@ Public Class FrmCompressor
     Private Sub FilterPartElapsedDay()
         Dim Table As DataTable
         Dim View As DataView
-        Dim Filter As String = String.Format("{0} OR {1} OR {2}",
-                                                 "ItemNameOrProduct LIKE '%@VALUE%'",
-                                                 "Code LIKE '%@VALUE%'",
-                                                 "Convert([Product], 'System.String') LIKE '%@VALUE%'"
+        Dim Filter As String = String.Format("{0} OR {1}",
+                                                 "Name LIKE '%@VALUE%'",
+                                                 "Code LIKE '%@VALUE%'"
                                             )
         If DgvCompressorSellableElapsedDay.DataSource IsNot Nothing Then
             Table = DgvCompressorSellableElapsedDay.DataSource
@@ -485,7 +483,7 @@ Public Class FrmCompressor
         End If
     End Sub
     Private Sub TxtFilterPartWorkedHour_Enter(sender As Object, e As EventArgs) Handles TxtFilterPartWorkedHour.Enter
-        EprInformation.SetError(TsMaintenanceHour, "Filtrando os campos: Código e Item.")
+        EprInformation.SetError(TsMaintenanceHour, "Filtrando os campos: Código e Produto/Serviço.")
         EprInformation.SetIconAlignment(TsMaintenanceHour, ErrorIconAlignment.MiddleLeft)
         EprInformation.SetIconPadding(TsMaintenanceHour, -365)
     End Sub
@@ -493,7 +491,7 @@ Public Class FrmCompressor
         EprInformation.Clear()
     End Sub
     Private Sub TxtFilterElapsedDay_Enter(sender As Object, e As EventArgs) Handles TxtFilterElapsedDay.Enter
-        EprInformation.SetError(TsMaintenanceDay, "Filtrando os campos: Código e Item.")
+        EprInformation.SetError(TsMaintenanceDay, "Filtrando os campos: Código e Produto/Serviço.")
         EprInformation.SetIconAlignment(TsMaintenanceDay, ErrorIconAlignment.MiddleLeft)
         EprInformation.SetIconPadding(TsMaintenanceDay, -365)
     End Sub

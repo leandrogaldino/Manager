@@ -46,14 +46,14 @@ Partial Class FrmEvaluationTechnician
         Me.TsData = New System.Windows.Forms.ToolStrip()
         Me.LblOrder = New System.Windows.Forms.ToolStripLabel()
         Me.LblOrderValue = New System.Windows.Forms.ToolStripLabel()
+        Me.LblCreation = New System.Windows.Forms.ToolStripLabel()
+        Me.LblCreationValue = New System.Windows.Forms.ToolStripLabel()
         Me.FlpTechnician = New System.Windows.Forms.FlowLayoutPanel()
         Me.BtnFilterTechnician = New ControlLibrary.NoFocusCueButton()
         Me.BtnViewTechnician = New ControlLibrary.NoFocusCueButton()
         Me.BtnNewTechnician = New ControlLibrary.NoFocusCueButton()
         Me.QbxTechnician = New ControlLibrary.QueriedBox()
         Me.LblTechnician = New System.Windows.Forms.Label()
-        Me.LblCreation = New System.Windows.Forms.ToolStripLabel()
-        Me.LblCreationValue = New System.Windows.Forms.ToolStripLabel()
         Me.Panel1.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -226,6 +226,22 @@ Partial Class FrmEvaluationTechnician
         Me.LblOrderValue.Size = New System.Drawing.Size(40, 22)
         Me.LblOrderValue.Text = "        "
         '
+        'LblCreation
+        '
+        Me.LblCreation.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblCreation.Margin = New System.Windows.Forms.Padding(10, 1, 0, 2)
+        Me.LblCreation.Name = "LblCreation"
+        Me.LblCreation.Size = New System.Drawing.Size(64, 22)
+        Me.LblCreation.Text = "Criação:"
+        '
+        'LblCreationValue
+        '
+        Me.LblCreationValue.BackColor = System.Drawing.Color.White
+        Me.LblCreationValue.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblCreationValue.Name = "LblCreationValue"
+        Me.LblCreationValue.Size = New System.Drawing.Size(32, 22)
+        Me.LblCreationValue.Text = "      "
+        '
         'FlpTechnician
         '
         Me.FlpTechnician.Controls.Add(Me.BtnFilterTechnician)
@@ -299,7 +315,9 @@ Partial Class FrmEvaluationTechnician
         Condition2.Value = "@istechnician"
         Me.QbxTechnician.Conditions.Add(Condition1)
         Me.QbxTechnician.Conditions.Add(Condition2)
+        Me.QbxTechnician.DebugOnTextChanged = False
         Me.QbxTechnician.DisplayFieldAlias = "Nome"
+        Me.QbxTechnician.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         Me.QbxTechnician.DisplayFieldName = "name"
         Me.QbxTechnician.DisplayMainFieldName = "id"
         Me.QbxTechnician.DisplayTableAlias = Nothing
@@ -314,6 +332,7 @@ Partial Class FrmEvaluationTechnician
         Me.QbxTechnician.MainTableName = "person"
         Me.QbxTechnician.Name = "QbxTechnician"
         OtherField1.DisplayFieldAlias = "Nome Curto"
+        OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField1.DisplayFieldName = "shortname"
         OtherField1.DisplayMainFieldName = "id"
         OtherField1.DisplayTableAlias = Nothing
@@ -323,6 +342,7 @@ Partial Class FrmEvaluationTechnician
         OtherField1.Prefix = Nothing
         OtherField1.Suffix = Nothing
         OtherField2.DisplayFieldAlias = "CPF/CNPJ"
+        OtherField2.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField2.DisplayFieldName = "document"
         OtherField2.DisplayMainFieldName = "id"
         OtherField2.DisplayTableAlias = Nothing
@@ -352,22 +372,6 @@ Partial Class FrmEvaluationTechnician
         Me.LblTechnician.Size = New System.Drawing.Size(57, 17)
         Me.LblTechnician.TabIndex = 13
         Me.LblTechnician.Text = "Técnico"
-        '
-        'LblCreation
-        '
-        Me.LblCreation.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblCreation.Margin = New System.Windows.Forms.Padding(10, 1, 0, 2)
-        Me.LblCreation.Name = "LblCreation"
-        Me.LblCreation.Size = New System.Drawing.Size(64, 22)
-        Me.LblCreation.Text = "Criação:"
-        '
-        'LblCreationValue
-        '
-        Me.LblCreationValue.BackColor = System.Drawing.Color.White
-        Me.LblCreationValue.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblCreationValue.Name = "LblCreationValue"
-        Me.LblCreationValue.Size = New System.Drawing.Size(32, 22)
-        Me.LblCreationValue.Text = "      "
         '
         'FrmEvaluationTechnician
         '

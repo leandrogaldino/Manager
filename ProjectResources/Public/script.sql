@@ -1042,18 +1042,16 @@ ALTER TABLE `manager`.`evaluationpart` RENAME TO  `manager`.`evaluationcontrolle
 DROP table config;
 
 
-ALTER TABLE `manager`.`visitschedule` 
-ADD COLUMN `scheduleddate` DATETIME NULL AFTER `statusid`,
-ADD COLUMN `overridedvisitscheduleid` INT NULL DEFAULT NULL AFTER `evaluationid`,
-CHANGE COLUMN `visitdate` `performeddate` DATETIME DEFAULT NULL ,
-ADD INDEX `visitschedile_ibfk_4_idx` (`overridedvisitscheduleid` ASC) VISIBLE;
-;
-ALTER TABLE `manager`.`visitschedule` 
-ADD CONSTRAINT `visitschedile_ibfk_4`
-  FOREIGN KEY (`overridedvisitscheduleid`)
-  REFERENCES `manager`.`visitschedule` (`id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION;
+ALTER TABLE `manager`.`visitschedule` ADD COLUMN `scheduleddate` DATETIME NULL AFTER `statusid`;
+ALTER TABLE `manager`.`visitschedule` ADD COLUMN `overridedvisitscheduleid` INT NULL DEFAULT NULL AFTER `evaluationid`;
+ALTER TABLE `manager`.`visitschedule` CHANGE COLUMN `visitdate` `performeddate` DATETIME DEFAULT NULL;
+ALTER TABLE `manager`.`visitschedule` ADD INDEX `visitschedile_ibfk_4_idx` (`overridedvisitscheduleid` ASC) VISIBLE;
+ALTER TABLE `manager`.`visitschedule` ADD CONSTRAINT `visitschedile_ibfk_4` FOREIGN KEY (`overridedvisitscheduleid`) REFERENCES `manager`.`visitschedule` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+ALTER TABLE `manager`.`visitschedule` ADD COLUMN `technicianid` INT NOT NULL AFTER `personcompressorid`;
+ALTER TABLE `manager`.`visitschedule` ADD INDEX `visitschedile_ibfk_5_idx` (`technicianid` ASC) VISIBLE;
+ALTER TABLE `manager`.`visitschedule` ADD CONSTRAINT `visitschedile_ibfk_5` FOREIGN KEY (`technicianid`) REFERENCES `manager`.`person` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 DROP TRIGGER IF EXISTS `manager`.`visitscheduleupdate`;
 
@@ -1064,6 +1062,7 @@ IF OLD.scheduleddate <> NEW.scheduleddate THEN INSERT INTO log VALUES (NULL, 22,
 IF OLD.performeddate <> NEW.performeddate THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Data Realizada', OLD.performeddate, NEW.performeddate, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.calltypeid <> NEW.calltypeid THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Tipo de Chamado', CASE WHEN OLD.calltypeid = 0 THEN 'LEVANTAMENTO' WHEN OLD.calltypeid = 1 THEN 'PREVENTIVA' WHEN OLD.calltypeid = 2 THEN 'CHAMADO' WHEN OLD.calltypeid = 3 THEN 'CONTRATO'END, CASE WHEN NEW.calltypeid = 0 THEN 'LEVANTAMENTO' WHEN NEW.calltypeid = 1 THEN 'PREVENTIVA' WHEN NEW.calltypeid = 2 THEN 'CHAMADO' WHEN NEW.calltypeid = 3 THEN 'CONTRATO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.customerid <> NEW.customerid THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Cliente', CONCAT(OLD.customerid, ' - ', (SELECT person.name FROM person WHERE person.id = OLD.customerid)), CONCAT(NEW.customerid, ' - ', (SELECT person.name FROM person WHERE person.id = NEW.customerid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.technicianid <> NEW.technicianid THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Técnico', CONCAT(OLD.technicianid, ' - ', (SELECT person.name FROM person WHERE person.id = OLD.technicianid)), CONCAT(NEW.technicianid, ' - ', (SELECT person.name FROM person WHERE person.id = NEW.technicianid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.personcompressorid <> NEW.personcompressorid THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Compressor', CONCAT(OLD.personcompressorid, ' - ', (SELECT compressor.name FROM personcompressor LEFT JOIN compressor ON compressor.id = personcompressor.compressorid WHERE personcompressor.id = OLD.personcompressorid)), CONCAT(NEW.personcompressorid, ' - ', (SELECT compressor.name FROM personcompressor LEFT JOIN compressor ON compressor.id = personcompressor.compressorid WHERE personcompressor.id = NEW.personcompressorid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF IFNULL(OLD.instructions, '') <> IFNULL(NEW.instructions, '') THEN INSERT INTO log VALUES (NULL, 22, NEW.id, 'Instruções', OLD.instructions, NEW.instructions, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$

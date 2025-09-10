@@ -164,12 +164,8 @@ Public Class FrmVisitSchedule
         QbxCustomer.Freeze(_VisitSchedule.Customer.ID)
         QbxCompressor.Unfreeze()
         QbxCompressor.Freeze(_VisitSchedule.Compressor.ID)
-
-
         QbxTechnician.Unfreeze()
         QbxTechnician.Freeze(_VisitSchedule.Technician.ID)
-
-
         TxtInstructions.Text = _VisitSchedule.Instructions
         BtnDelete.Enabled = Not String.IsNullOrEmpty(_VisitSchedule.ID) > 0 And _User.CanDelete(Routine.VisitSchedule)
         Text = "Agendamento de Visita"
@@ -183,8 +179,6 @@ Public Class FrmVisitSchedule
         BtnSave.Enabled = False
         CbxCallType.Select()
         _Loading = False
-        _UcVisitScheduleGeneratedItems.EvaluationID = 15
-        _UcVisitScheduleGeneratedItems.ScheduleID = 1
     End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then

@@ -1045,7 +1045,7 @@ DROP table config;
 ALTER TABLE `manager`.`visitschedule` 
 ADD COLUMN `scheduleddate` DATETIME NULL AFTER `statusid`,
 ADD COLUMN `overridedvisitscheduleid` INT NULL DEFAULT NULL AFTER `evaluationid`,
-CHANGE COLUMN `visitdate` `performeddate` DATETIME NOT NULL ,
+CHANGE COLUMN `visitdate` `performeddate` DATETIME DEFAULT NULL ,
 ADD INDEX `visitschedile_ibfk_4_idx` (`overridedvisitscheduleid` ASC) VISIBLE;
 ;
 ALTER TABLE `manager`.`visitschedule` 

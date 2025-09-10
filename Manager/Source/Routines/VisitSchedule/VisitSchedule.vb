@@ -11,6 +11,7 @@ Public Class VisitSchedule
     Public Property PerformedDate As Date? = Nothing
     Public Property Customer As New Person
     Public Property Compressor As New PersonCompressor
+    Public Property Technician As New Person
     Public Property Instructions As String
     Public Property EvaluationID As Long
     Public Property Evaluation As New Lazy(Of Evaluation)
@@ -31,6 +32,7 @@ Public Class VisitSchedule
         PerformedDate = Nothing
         Customer = New Person()
         Compressor = New PersonCompressor()
+        Technician = New Person()
         Instructions = Nothing
         Evaluation = Nothing
         OverridedVisitSchedule = Nothing
@@ -62,6 +64,7 @@ Public Class VisitSchedule
                         CallType = Convert.ToInt32(TableResult.Rows(0).Item("calltypeid"))
                         Customer = New Person().Load(Convert.ToInt64(TableResult.Rows(0).Item("customerid")), False)
                         Compressor = Customer.Compressors.SingleOrDefault(Function(x) x.ID = Convert.ToInt64(TableResult.Rows(0).Item("personcompressorid")))
+                        Technician = New Person().Load(Convert.ToInt64(TableResult.Rows(0).Item("technicianid")), False)
                         Instructions = Convert.ToString(TableResult.Rows(0).Item("instructions"))
                         EvaluationID = If(Not IsDBNull(TableResult.Rows(0).Item("evaluationid")), Convert.ToInt64(TableResult.Rows(0).Item("evaluationid")), 0)
                         Evaluation = New Lazy(Of Evaluation)(Function() If(Not IsDBNull(TableResult.Rows(0).Item("evaluationid")), New Evaluation().Load(Convert.ToInt64(TableResult.Rows(0).Item("evaluationid")), False), Nothing))
@@ -111,6 +114,7 @@ Public Class VisitSchedule
                     Cmd.Parameters.AddWithValue("@calltypeid", Convert.ToInt32(CallType))
                     Cmd.Parameters.AddWithValue("@customerid", Customer.ID)
                     Cmd.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
+                    Cmd.Parameters.AddWithValue("@technicianid", Technician.ID)
                     Cmd.Parameters.AddWithValue("@instructions", If(String.IsNullOrEmpty(Instructions), DBNull.Value, Instructions))
                     Cmd.Parameters.AddWithValue("@evaluationid", DBNull.Value)
                     Cmd.Parameters.AddWithValue("@overridedvisitscheduleid", DBNull.Value)
@@ -134,6 +138,7 @@ Public Class VisitSchedule
                 Cmd.Parameters.AddWithValue("@calltypeid", Convert.ToInt32(CallType))
                 Cmd.Parameters.AddWithValue("@customerid", Customer.ID)
                 Cmd.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
+                Cmd.Parameters.AddWithValue("@technicianid", Technician.ID)
                 Cmd.Parameters.AddWithValue("@instructions", If(String.IsNullOrEmpty(Instructions), DBNull.Value, Instructions))
                 Cmd.Parameters.AddWithValue("@lastupdate", LastUpdate.ToString("yyyy-MM-dd HH:mm:ss"))
                 Cmd.Parameters.AddWithValue("@userid", User.ID)

@@ -60,6 +60,9 @@ Public Class FrmVisitSchedule
         QbxCustomer.Top -= TsNavigation.Height
         LblCompressor.Top -= TsNavigation.Height
         QbxCompressor.Top -= TsNavigation.Height
+        FlpTechnician.Top -= TsNavigation.Height
+        LblTechnician.Top -= TsNavigation.Height
+        QbxTechnician.Top -= TsNavigation.Height
         LblInstructions.Top -= TsNavigation.Height
         TxtInstructions.Top -= TsNavigation.Height
         TsNavigation.Visible = False
@@ -100,13 +103,8 @@ Public Class FrmVisitSchedule
         If VisitSchedule IsNot Nothing Then
             CcoGeneratedItems.CloseDropDown()
             If VisitSchedule.ID > 0 Then
-
-
-
                 Frm = New FrmVisitSchedule(VisitSchedule)
                 ControlHelper.GetAllControls(Frm, False).ToList.ForEach(Sub(c) c.Enabled = False)
-
-
                 Frm.PnButtons.Visible = False
                 Frm.Height -= PnButtons.Height
                 Frm.TsTitle.Visible = False
@@ -125,10 +123,13 @@ Public Class FrmVisitSchedule
                 Frm.QbxCustomer.Top -= TsTitle.Height
                 Frm.LblCompressor.Top -= TsTitle.Height
                 Frm.QbxCompressor.Top -= TsTitle.Height
+                Frm.FlpTechnician.Top -= TsTitle.Height
+                Frm.LblTechnician.Top -= TsTitle.Height
+                Frm.QbxTechnician.Top -= TsTitle.Height
                 Frm.LblInstructions.Top -= TsTitle.Height
                 Frm.TxtInstructions.Top -= TsTitle.Height
-
-
+                Frm.LblGeneratedItems.Visible = False
+                Frm.BtnGeneratedItems.Visible = False
                 Frm.ShowDialog()
             Else
                 CMessageBox.Show("Esse agendamento não existe mais.", CMessageBoxType.Information)
@@ -164,6 +165,9 @@ Public Class FrmVisitSchedule
         QbxCustomer.Freeze(_VisitSchedule.Customer.ID)
         QbxCompressor.Unfreeze()
         QbxCompressor.Freeze(_VisitSchedule.Compressor.ID)
+
+
+
         TxtInstructions.Text = _VisitSchedule.Instructions
         BtnDelete.Enabled = Not String.IsNullOrEmpty(_VisitSchedule.ID) > 0 And _LoggedUser.CanDelete(Routine.VisitSchedule)
         Text = "Agendamento de Visita"

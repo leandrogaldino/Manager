@@ -50,9 +50,15 @@
         <Name>Compressor</Name>
         <Width>250</Width>
     </Column>
-    <Column Index="8">
+	<Column Index="8">
+		<Visible>True</Visible>
+		<DisplayIndex>8</DisplayIndex>
+		<Name>Técnico</Name>
+		<Width>250</Width>
+	</Column>
+    <Column Index="9">
         <Visible>True</Visible>
-        <DisplayIndex>8</DisplayIndex>
+        <DisplayIndex>9</DisplayIndex>
         <Name>Instruções</Name>
         <Width>400</Width>
     </Column>

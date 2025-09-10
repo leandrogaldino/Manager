@@ -16,11 +16,13 @@ SELECT
     END AS 'Tipo',
     customer.shortname AS 'Cliente',    
     CONCAT(compressor.name, IF(personcompressor.serialnumber IS NOT NULL AND personcompressor.serialnumber <> '', CONCAT(' NS: ', personcompressor.serialnumber), '')) AS 'Compressor',
+    technician.shortname AS 'Técnico',
     REPLACE(visitschedule.instructions, '\n', ' ') AS 'Instruções'
 FROM visitschedule
-LEFT JOIN personcompressor ON personcompressor.id = visitschedule.personcompressorid
-LEFT JOIN compressor ON compressor.id = personcompressor.compressorid
-LEFT JOIN person AS customer ON customer.id = visitschedule.customerid
+JOIN personcompressor ON personcompressor.id = visitschedule.personcompressorid
+JOIN compressor ON compressor.id = personcompressor.compressorid
+JOIN person AS customer ON customer.id = visitschedule.customerid
+JOIN person AS technician ON technician.id = visitschedule.technicianid
 WHERE
     IFNULL(visitschedule.id, '') LIKE @id AND
     FIND_IN_SET(visitschedule.statusid, @statusid) AND
@@ -36,11 +38,17 @@ WHERE
     IFNULL(personcompressor.serialnumber, '') LIKE CONCAT('%', @serialnumber, '%') AND
     IFNULL(personcompressor.patrimony, '') LIKE CONCAT('%', @patrimony, '%') AND
     IFNULL(personcompressor.sector, '') LIKE CONCAT('%', @sector, '%') AND
+    IFNULL(technician.id,'') LIKE @technicianid AND
+    IFNULL(technician.document,'') LIKE CONCAT('%', @techniciandocument, '%') AND
+    (
+        IFNULL(technician.name, '') LIKE CONCAT('%', @technicianname, '%') OR 
+        IFNULL(technician.shortname, '') LIKE CONCAT('%', @technicianname, '%')
+    ) AND
     visitschedule.creation BETWEEN @creationi AND @creationf AND
     visitschedule.scheduleddate BETWEEN @scheduleddatei AND @scheduleddatef AND
-(
-    (visitschedule.performeddate IS NOT NULL 
-     AND visitschedule.performeddate BETWEEN @performeddatei AND @performeddatef)
-    OR (@performed = TRUE AND visitschedule.performeddate IS NULL)
-)
+    (
+        (visitschedule.performeddate IS NOT NULL 
+         AND visitschedule.performeddate BETWEEN @performeddatei AND @performeddatef)
+        OR (@performed = TRUE AND visitschedule.performeddate IS NULL)
+    )
 ORDER BY visitschedule.id;

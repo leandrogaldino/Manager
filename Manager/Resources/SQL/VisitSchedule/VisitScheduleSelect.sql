@@ -7,6 +7,7 @@ SELECT
 	visitschedule.calltypeid,
 	visitschedule.customerid,
 	visitschedule.personcompressorid,
+	visitschedule.technicianid,
 	visitschedule.instructions,
 	visitschedule.evaluationid,
 	visitschedule.overridedvisitscheduleid,

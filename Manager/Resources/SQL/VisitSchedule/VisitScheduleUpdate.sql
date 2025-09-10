@@ -5,6 +5,7 @@ UPDATE visitschedule SET
     calltypeid = @calltypeid,
     customerid = @customerid,
     personcompressorid = @personcompressorid,
+    technicianid = @technicianid,
     instructions = @instructions,
     evaluationid = @evaluationid,
     overridedvisitscheduleid = @overridedvisitscheduleid,

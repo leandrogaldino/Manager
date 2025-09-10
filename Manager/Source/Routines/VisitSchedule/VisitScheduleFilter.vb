@@ -34,6 +34,12 @@ Public Class VisitScheduleFilter
     <DisplayName("Compressor")>
     <TypeConverter(GetType(ExpandableObjectConverter))>
     Public Property Compressor As New PersonCompressorExpandable
+
+
+    <DisplayName("Técnico")>
+    <TypeConverter(GetType(ExpandableObjectConverter))>
+    Public Property Technician As New PersonExpandable
+
     <DisplayName("Criação")>
     <TypeConverter(GetType(ExpandableObjectConverter))>
     Public Property Creation As New DateExpandable
@@ -81,6 +87,9 @@ Public Class VisitScheduleFilter
                 If Compressor.SerialNumber <> Nothing Then Cmd.Parameters.AddWithValue("@serialnumber", Compressor.SerialNumber) : Filtering = True Else Cmd.Parameters.AddWithValue("@serialnumber", "%")
                 If Compressor.Patrimony <> Nothing Then Cmd.Parameters.AddWithValue("@patrimony", Compressor.Patrimony) : Filtering = True Else Cmd.Parameters.AddWithValue("@patrimony", "%")
                 If Compressor.Sector <> Nothing Then Cmd.Parameters.AddWithValue("@sector", Compressor.Sector) : Filtering = True Else Cmd.Parameters.AddWithValue("@sector", "%")
+                If Technician.ID <> Nothing Then Cmd.Parameters.AddWithValue("@technicianid", Technician.ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@technicianid", "%")
+                If Technician.Document <> Nothing Then Cmd.Parameters.AddWithValue("@techniciandocument", Technician.Document) : Filtering = True Else Cmd.Parameters.AddWithValue("@techniciandocument", "%")
+                If Technician.Name <> Nothing Then Cmd.Parameters.AddWithValue("@technicianname", Technician.Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@technicianname", "%")
                 If Creation.InitialDate <> Nothing Then Cmd.Parameters.AddWithValue("@creationi", Creation.InitialDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@creationi", "0001-01-01")
                 If Creation.FinalDate <> Nothing Then Cmd.Parameters.AddWithValue("@creationf", Creation.FinalDate.ToString("yyyy-MM-dd")) : Filtering = True Else Cmd.Parameters.AddWithValue("@creationf", "9999-12-31")
                 If ScheduledDate.InitialDate <> Nothing Then Initial = ScheduledDate.InitialDate + New TimeSpan(0, 0, 0) : Cmd.Parameters.AddWithValue("@scheduleddatei", Initial.ToString("yyyy-MM-dd HH:mm:ss")) : Filtering = True Else Cmd.Parameters.AddWithValue("@scheduleddatei", "0001-01-01 00:00:00")

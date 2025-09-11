@@ -169,11 +169,6 @@ Public Class FrmPersonCompressorSellableElapsedDay
     End Function
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
-        If Not QbxSellable.IsFreezed Then
-            QbxSellable.QueryEnabled = False
-            QbxSellable.Text = QbxSellable.Text.Trim.ToUnaccented()
-            QbxSellable.QueryEnabled = True
-        End If
         If IsValidFields() Then
             If _ElapsedDaySellable.IsSaved Then
                 With _PersonCompressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid)

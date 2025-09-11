@@ -168,11 +168,6 @@ Public Class FrmPersonCompressorSellableWorkedHour
     End Function
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
-        If Not QbxSellable.IsFreezed Then
-            QbxSellable.QueryEnabled = False
-            QbxSellable.Text = QbxSellable.Text.Trim.ToUnaccented()
-            QbxSellable.QueryEnabled = True
-        End If
         If IsValidFields() Then
             If _WorkedHourSellable.IsSaved Then
                 With _PersonCompressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid)

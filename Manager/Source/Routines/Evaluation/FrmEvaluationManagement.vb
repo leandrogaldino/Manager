@@ -14,8 +14,8 @@ Public Class FrmEvaluationManagement
         InitializeComponent()
         _Filter = New EvaluationManagementFilter(DgvData, PgFilter)
         ControlHelper.EnableControlDoubleBuffer(DgvData, True)
-        ControlHelper.EnableControlDoubleBuffer(DgvPartWorkedHour, True)
-        ControlHelper.EnableControlDoubleBuffer(DgvPartElapsedDay, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvWorkedHourSellable, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvElapsedDaySellable, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Filter.Filter()
@@ -94,7 +94,7 @@ Public Class FrmEvaluationManagement
         End If
     End Sub
     <DebuggerStepThrough>
-    Private Sub DgvPartWorkedHour_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvPartWorkedHour.CellFormatting, DgvPartElapsedDay.CellFormatting
+    Private Sub Dgv_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvWorkedHourSellable.CellFormatting, DgvElapsedDaySellable.CellFormatting
         Dim Dgv As DataGridView = sender
         If Dgv.Rows(e.RowIndex).Cells("nextexchange").Value >= Today And Dgv.Rows(e.RowIndex).Cells("nextexchange").Value <= Today.AddDays(_Session.Setting.General.Evaluation.DaysToAlertMaintenance) Then
             Dgv.Rows(e.RowIndex).DefaultCellStyle.SelectionBackColor = Color.Bisque
@@ -133,8 +133,8 @@ Public Class FrmEvaluationManagement
         If BtnDetails.Checked Then
             If DgvData.SelectedRows.Count = 1 Then
                 Try
-                    _Filter.FilterControlledSellable(DgvData.SelectedRows(0).Cells("evaluation").Value, DgvPartWorkedHour, CompressorSellableControlType.WorkedHour)
-                    _Filter.FilterControlledSellable(DgvData.SelectedRows(0).Cells("evaluation").Value, DgvPartElapsedDay, CompressorSellableControlType.ElapsedDay)
+                    _Filter.FilterControlledSellable(DgvData.SelectedRows(0).Cells("evaluation").Value, DgvWorkedHourSellable, CompressorSellableControlType.WorkedHour)
+                    _Filter.FilterControlledSellable(DgvData.SelectedRows(0).Cells("evaluation").Value, DgvElapsedDaySellable, CompressorSellableControlType.ElapsedDay)
                     LblUnit.Text = _Filter.GetUnitNextChange(DgvData.SelectedRows(0).Cells("evaluation").Value).ToString("dd/MM/yyyy")
                     If LblUnit.Text >= Today And LblUnit.Text <= Today.AddDays(_Session.Setting.General.Evaluation.DaysToAlertMaintenance) Then
                         LblUnit.ForeColor = Color.Orange
@@ -148,8 +148,8 @@ Public Class FrmEvaluationManagement
                     CMessageBox.Show("ERRO EV005", "Ocorreu um erro ao consultar os dados do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                 End Try
             Else
-                DgvPartWorkedHour.DataSource = Nothing
-                DgvPartElapsedDay.DataSource = Nothing
+                DgvWorkedHourSellable.DataSource = Nothing
+                DgvElapsedDaySellable.DataSource = Nothing
             End If
         End If
     End Sub
@@ -160,12 +160,12 @@ Public Class FrmEvaluationManagement
             LblCounter.Font = New Font(LblCounter.Font, FontStyle.Bold)
         End If
     End Sub
-    Private Sub DgvPartWorkedHour_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvPartWorkedHour.MouseDoubleClick
+    Private Sub DgvWorkedHourSellable_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvWorkedHourSellable.MouseDoubleClick
         Dim Form As FrmEvaluation
         Dim Evaluation As Evaluation
-        Dim ClickPlace As DataGridView.HitTestInfo = DgvPartWorkedHour.HitTest(e.X, e.Y)
+        Dim ClickPlace As DataGridView.HitTestInfo = DgvWorkedHourSellable.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
-            Evaluation = New Evaluation().Load(DgvPartWorkedHour.SelectedRows(0).Cells("lastchangeevaluation").Value, False)
+            Evaluation = New Evaluation().Load(DgvWorkedHourSellable.SelectedRows(0).Cells("lastchangeevaluation").Value, False)
             Form = New FrmEvaluation(Evaluation)
             Form.ShowDialog()
             _Filter.Filter()
@@ -173,12 +173,12 @@ Public Class FrmEvaluationManagement
             LoadDetails()
         End If
     End Sub
-    Private Sub DgvPartElapsedDay_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvPartElapsedDay.MouseDoubleClick
+    Private Sub DgvElapsedDaySellableMouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvElapsedDaySellable.MouseDoubleClick
         Dim Form As FrmEvaluation
         Dim Evaluation As Evaluation
-        Dim ClickPlace As DataGridView.HitTestInfo = DgvPartElapsedDay.HitTest(e.X, e.Y)
+        Dim ClickPlace As DataGridView.HitTestInfo = DgvElapsedDaySellable.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
-            Evaluation = New Evaluation().Load(DgvPartElapsedDay.SelectedRows(0).Cells("lastchangeevaluation").Value, False)
+            Evaluation = New Evaluation().Load(DgvElapsedDaySellable.SelectedRows(0).Cells("lastchangeevaluation").Value, False)
             Form = New FrmEvaluation(Evaluation)
             Form.ShowDialog()
             _Filter.Filter()

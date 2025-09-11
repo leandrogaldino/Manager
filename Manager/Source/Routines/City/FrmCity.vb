@@ -312,7 +312,7 @@ Public Class FrmCity
             e.Handled = True
         End If
     End Sub
-    Private Sub TxtFilterPartWorkedHour_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterRoute.TextChanged
+    Private Sub TxtFilterRoute_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterRoute.TextChanged
         FilterRoute()
     End Sub
     Private Sub FilterRoute()
@@ -339,7 +339,7 @@ Public Class FrmCity
             BtnDeleteRoute.Enabled = True
         End If
     End Sub
-    Private Sub TxtFilterPartWorkedHour_Enter(sender As Object, e As EventArgs) Handles TxtFilterRoute.Enter
+    Private Sub TxtFilterRoute_Enter(sender As Object, e As EventArgs) Handles TxtFilterRoute.Enter
         EprInformation.SetError(TsRoute, "Filtrando os campos: Rota.")
         EprInformation.SetIconAlignment(TsRoute, ErrorIconAlignment.MiddleLeft)
         EprInformation.SetIconPadding(TsRoute, -365)

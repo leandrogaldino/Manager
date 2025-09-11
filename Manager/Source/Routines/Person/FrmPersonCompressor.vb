@@ -277,38 +277,6 @@ Public Class FrmPersonCompressor
             EprValidation.SetIconPadding(TsElapsedDaySellable, -90)
             DgvElapsedDaySellable.Select()
             Return False
-        ElseIf Not _PersonCompressor.WorkedHourSellables.Any(Function(x) x.SellableBind = CompressorSellableBindType.AirFilter) Then
-            TcPersonCompressor.SelectedTab = TabMaintenance
-            TcMaintenance.SelectedTab = TabWorkedHourSellable
-            EprValidation.SetError(TsWorkedHourSellable, "Pelo menos um item precisa estar vinculado com filtro de ar.")
-            EprValidation.SetIconAlignment(TsWorkedHourSellable, ErrorIconAlignment.MiddleLeft)
-            EprValidation.SetIconPadding(TsWorkedHourSellable, -90)
-            DgvWorkedHourSellable.Select()
-            Return False
-        ElseIf Not _PersonCompressor.WorkedHourSellables.Any(Function(x) x.SellableBind = CompressorSellableBindType.OilFilter) Then
-            TcPersonCompressor.SelectedTab = TabMaintenance
-            TcMaintenance.SelectedTab = TabWorkedHourSellable
-            EprValidation.SetError(TsWorkedHourSellable, "Pelo menos um item precisa estar vinculado com filtro de óleo.")
-            EprValidation.SetIconAlignment(TsWorkedHourSellable, ErrorIconAlignment.MiddleLeft)
-            EprValidation.SetIconPadding(TsWorkedHourSellable, -90)
-            DgvWorkedHourSellable.Select()
-            Return False
-        ElseIf Not _PersonCompressor.WorkedHourSellables.Any(Function(x) x.SellableBind = CompressorSellableBindType.Separator) Then
-            TcPersonCompressor.SelectedTab = TabMaintenance
-            TcMaintenance.SelectedTab = TabWorkedHourSellable
-            EprValidation.SetError(TsWorkedHourSellable, "Pelo menos um item precisa estar vinculado com separador.")
-            EprValidation.SetIconAlignment(TsWorkedHourSellable, ErrorIconAlignment.MiddleLeft)
-            EprValidation.SetIconPadding(TsWorkedHourSellable, -90)
-            DgvWorkedHourSellable.Select()
-            Return False
-        ElseIf Not _PersonCompressor.WorkedHourSellables.Any(Function(x) x.SellableBind = CompressorSellableBindType.Oil) Then
-            TcPersonCompressor.SelectedTab = TabMaintenance
-            TcMaintenance.SelectedTab = TabWorkedHourSellable
-            EprValidation.SetError(TsWorkedHourSellable, "Pelo menos um item precisa estar vinculado com óleo")
-            EprValidation.SetIconAlignment(TsWorkedHourSellable, ErrorIconAlignment.MiddleLeft)
-            EprValidation.SetIconPadding(TsWorkedHourSellable, -90)
-            DgvWorkedHourSellable.Select()
-            Return False
         End If
         Return True
     End Function

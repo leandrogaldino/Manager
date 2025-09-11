@@ -11,8 +11,8 @@ Public Class FrmEvaluations
     Public Sub New()
         InitializeComponent()
         ControlHelper.EnableControlDoubleBuffer(DgvData, True)
-        ControlHelper.EnableControlDoubleBuffer(DgvPartWorkedHour, True)
-        ControlHelper.EnableControlDoubleBuffer(DgvPartElapsedDay, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvWorkedHourSellable, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvElapsedDaySellable, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Filter = New EvaluationFilter(DgvData, PgFilter)
@@ -44,7 +44,7 @@ Public Class FrmEvaluations
                 Cursor = Cursors.WaitCursor
                 _Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
                 EvaluationForm = New FrmEvaluation(_Evaluation, Me)
-                Evaluation.FillControlledSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPartWorkedHour, CompressorSellableControlType.WorkedHour)
+                Evaluation.FillControlledSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvWorkedHourSellable, CompressorSellableControlType.WorkedHour)
                 EvaluationForm.ShowDialog()
             Catch ex As Exception
                 CMessageBox.Show("ERRO EV006", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -153,7 +153,7 @@ Public Class FrmEvaluations
         End If
     End Sub
     <DebuggerStepThrough>
-    Private Sub DgvDetail_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvPartWorkedHour.CellFormatting, DgvPartElapsedDay.CellFormatting
+    Private Sub DgvDetail_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvWorkedHourSellable.CellFormatting, DgvElapsedDaySellable.CellFormatting
         Dim Dgv As DataGridView = sender
         If Dgv.Columns.Cast(Of DataGridViewColumn).Any(Function(x) x.Name = "Cap. Atual") Then
             If e.ColumnIndex = Dgv.Columns("Cap. Atual").Index Then
@@ -191,15 +191,15 @@ Public Class FrmEvaluations
         If BtnDetails.Checked Then
             If DgvData.SelectedRows.Count = 1 Then
                 Try
-                    Evaluation.FillControlledSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPartWorkedHour, CompressorSellableControlType.WorkedHour)
-                    Evaluation.FillControlledSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPartElapsedDay, CompressorSellableControlType.ElapsedDay)
+                    Evaluation.FillControlledSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvWorkedHourSellable, CompressorSellableControlType.WorkedHour)
+                    Evaluation.FillControlledSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvElapsedDaySellable, CompressorSellableControlType.ElapsedDay)
                 Catch ex As Exception
                     TmrLoadDetails.Stop()
                     CMessageBox.Show("ERRO EV009", "Ocorreu um erro ao consultar os detalhes do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                 End Try
             Else
-                DgvPartWorkedHour.DataSource = Nothing
-                DgvPartElapsedDay.DataSource = Nothing
+                DgvWorkedHourSellable.DataSource = Nothing
+                DgvElapsedDaySellable.DataSource = Nothing
             End If
         End If
     End Sub

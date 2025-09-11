@@ -71,9 +71,9 @@ Public Class FrmCompressor
         TxtName.Text = _Compressor.Name
         QbxManufacturer.Unfreeze()
         QbxManufacturer.Freeze(_Compressor.Manufacturer.Value.ID)
-        TxtFilterPartWorkedHour.Clear()
+        TxtFilterWorkedHourSellable.Clear()
         If _Compressor.WorkedHourSellables IsNot Nothing Then DgvCompressorSellableWorkedHour.Fill(_Compressor.WorkedHourSellables)
-        TxtFilterPartWorkedHour.Clear()
+        TxtFilterWorkedHourSellable.Clear()
         If _Compressor.ElapsedDaySellables IsNot Nothing Then DgvCompressorSellableElapsedDay.Fill(_Compressor.ElapsedDaySellables)
         BtnDelete.Enabled = _Compressor.ID > 0 And _User.CanDelete(Routine.Compressor)
         Text = "Compressor"
@@ -321,32 +321,32 @@ Public Class FrmCompressor
             MaximizeBox = True
         End If
     End Sub
-    Private Sub BtnIncludePartWorkedHour_Click(sender As Object, e As EventArgs) Handles BtnIncludeSellableWorkedHour.Click
+    Private Sub BtnIncludeWorkedHourSellable_Click(sender As Object, e As EventArgs) Handles BtnIncludeWorkedHourSellable.Click
         Dim Form As New FrmCompressorSellableWorkedHour(_Compressor, New CompressorSellable(CompressorSellableControlType.WorkedHour), Me)
         Form.ShowDialog()
     End Sub
-    Private Sub BtnEditPartWorkedHour_Click(sender As Object, e As EventArgs) Handles BtnEditSellableWorkedHour.Click
+    Private Sub BtnEditWorkedHourSellable_Click(sender As Object, e As EventArgs) Handles BtnEditWorkedHourSellable.Click
         Dim Form As FrmCompressorSellableWorkedHour
-        Dim PartWorkedHour As CompressorSellable
+        Dim WorkedHourSellable As CompressorSellable
         If DgvCompressorSellableWorkedHour.SelectedRows.Count = 1 Then
-            PartWorkedHour = _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = DgvCompressorSellableWorkedHour.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmCompressorSellableWorkedHour(_Compressor, PartWorkedHour, Me)
+            WorkedHourSellable = _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = DgvCompressorSellableWorkedHour.SelectedRows(0).Cells("Guid").Value)
+            Form = New FrmCompressorSellableWorkedHour(_Compressor, WorkedHourSellable, Me)
             Form.ShowDialog()
         End If
     End Sub
-    Private Sub BtnDeletePartWorkedHour_Click(sender As Object, e As EventArgs) Handles BtnDeleteSellableWorkedHour.Click
-        Dim PartWorkedHour As CompressorSellable
+    Private Sub BtnDeleteWorkedHourSellable_Click(sender As Object, e As EventArgs) Handles BtnDeleteWorkedHourSellable.Click
+        Dim WorkedHourSellable As CompressorSellable
         If DgvCompressorSellableWorkedHour.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                PartWorkedHour = _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = DgvCompressorSellableWorkedHour.SelectedRows(0).Cells("Guid").Value)
-                _Compressor.WorkedHourSellables.Remove(PartWorkedHour)
+                WorkedHourSellable = _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = DgvCompressorSellableWorkedHour.SelectedRows(0).Cells("Guid").Value)
+                _Compressor.WorkedHourSellables.Remove(WorkedHourSellable)
                 DgvCompressorSellableWorkedHour.Fill(_Compressor.WorkedHourSellables)
                 BtnSave.Enabled = True
             End If
         End If
     End Sub
     <DebuggerStepThrough>
-    Private Sub DgvCompressorPartWorkedHour_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvCompressorSellableWorkedHour.CellFormatting
+    Private Sub DgvCompressorSellableWorkedHour_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvCompressorSellableWorkedHour.CellFormatting
         Dim Dgv As DataGridView = sender
         If e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
@@ -362,23 +362,23 @@ Public Class FrmCompressor
             e.CellStyle.Format = "N2"
         End If
     End Sub
-    Private Sub DgvCompressorPartWorkedHour_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvCompressorSellableWorkedHour.MouseDoubleClick
+    Private Sub DgvCompressorSellableWorkedHour_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvCompressorSellableWorkedHour.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvCompressorSellableWorkedHour.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
-            BtnEditSellableWorkedHour.PerformClick()
+            BtnEditWorkedHourSellable.PerformClick()
         End If
     End Sub
-    Private Sub TxtFilter_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtFilterPartWorkedHour.KeyPress,
-                                                                                     TxtFilterElapsedDay.KeyPress
+    Private Sub TxtFilter_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtFilterWorkedHourSellable.KeyPress,
+                                                                                     TxtFilterElapsedDaySellable.KeyPress
         Dim LstChar As New List(Of Char) From {" ", ".", ",", "-", "/", "(", ")", "+", "*", "%", "&", "@", "#", "$", "<", ">", "\"}
         If Not Char.IsLetter(e.KeyChar) And Not Char.IsNumber(e.KeyChar) And Not LstChar.Contains(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
             e.Handled = True
         End If
     End Sub
-    Private Sub TxtFilterPartWorkedHour_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterPartWorkedHour.TextChanged
-        FilterPartWorkedHour()
+    Private Sub TxtFilterWorkedHourSellable_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterWorkedHourSellable.TextChanged
+        FilterWorkedHourSellable()
     End Sub
-    Private Sub FilterPartWorkedHour()
+    Private Sub FilterWorkedHourSellable()
         Dim Table As DataTable
         Dim View As DataView
         Dim Filter As String = String.Format("{0} OR {1}",
@@ -388,49 +388,49 @@ Public Class FrmCompressor
         If DgvCompressorSellableWorkedHour.DataSource IsNot Nothing Then
             Table = DgvCompressorSellableWorkedHour.DataSource
             View = Table.DefaultView
-            If TxtFilterPartWorkedHour.Text <> Nothing Then
-                Filter = Filter.Replace("@VALUE", TxtFilterPartWorkedHour.Text.Replace("%", Nothing).Replace("*", Nothing))
+            If TxtFilterWorkedHourSellable.Text <> Nothing Then
+                Filter = Filter.Replace("@VALUE", TxtFilterWorkedHourSellable.Text.Replace("%", Nothing).Replace("*", Nothing))
                 View.RowFilter = Filter
             Else
                 View.RowFilter = Nothing
             End If
         End If
     End Sub
-    Private Sub DgvCompressorPart_SelectionChanged(sender As Object, e As EventArgs) Handles DgvCompressorSellableWorkedHour.SelectionChanged
+    Private Sub DgvCompressorSellableWorkedHour_SelectionChanged(sender As Object, e As EventArgs) Handles DgvCompressorSellableWorkedHour.SelectionChanged
         If DgvCompressorSellableWorkedHour.SelectedRows.Count = 0 Then
-            BtnEditSellableWorkedHour.Enabled = False
-            BtnDeleteSellableWorkedHour.Enabled = False
+            BtnEditWorkedHourSellable.Enabled = False
+            BtnDeleteWorkedHourSellable.Enabled = False
         Else
-            BtnEditSellableWorkedHour.Enabled = True
-            BtnDeleteSellableWorkedHour.Enabled = True
+            BtnEditWorkedHourSellable.Enabled = True
+            BtnDeleteWorkedHourSellable.Enabled = True
         End If
     End Sub
-    Private Sub BtnIncludePartElapsedDay_Click(sender As Object, e As EventArgs) Handles BtnIncludePartElapsedDay.Click
+    Private Sub BtnIncludeElapsedDaySellable_Click(sender As Object, e As EventArgs) Handles BtnIncludeElapsedDaySellable.Click
         Dim Form As New FrmCompressorSellableElapsedDay(_Compressor, New CompressorSellable(CompressorSellableControlType.ElapsedDay), Me)
         Form.ShowDialog()
     End Sub
-    Private Sub BtnEditPartElapsedDay_Click(sender As Object, e As EventArgs) Handles BtnEditPartElapsedDay.Click
+    Private Sub BBtnEditElapsedDaySellable_Click(sender As Object, e As EventArgs) Handles BtnEditElapsedDaySellable.Click
         Dim Form As FrmCompressorSellableElapsedDay
-        Dim PartElapsedDay As CompressorSellable
+        Dim ElapsedDaySellable As CompressorSellable
         If DgvCompressorSellableElapsedDay.SelectedRows.Count = 1 Then
-            PartElapsedDay = _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = DgvCompressorSellableElapsedDay.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmCompressorSellableElapsedDay(_Compressor, PartElapsedDay, Me)
+            ElapsedDaySellable = _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = DgvCompressorSellableElapsedDay.SelectedRows(0).Cells("Guid").Value)
+            Form = New FrmCompressorSellableElapsedDay(_Compressor, ElapsedDaySellable, Me)
             Form.ShowDialog()
         End If
     End Sub
-    Private Sub BtnDeletePartElapsedDay_Click(sender As Object, e As EventArgs) Handles BtnDeletePartElapsedDay.Click
-        Dim PartElapsedDay As CompressorSellable
+    Private Sub BtnDeleteElapsedDaySellable_Click(sender As Object, e As EventArgs) Handles BtnDeleteElapsedDaySellable.Click
+        Dim ElapsedDaySellable As CompressorSellable
         If DgvCompressorSellableElapsedDay.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                PartElapsedDay = _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = DgvCompressorSellableElapsedDay.SelectedRows(0).Cells("Guid").Value)
-                _Compressor.ElapsedDaySellables.Remove(PartElapsedDay)
+                ElapsedDaySellable = _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = DgvCompressorSellableElapsedDay.SelectedRows(0).Cells("Guid").Value)
+                _Compressor.ElapsedDaySellables.Remove(ElapsedDaySellable)
                 DgvCompressorSellableElapsedDay.Fill(_Compressor.ElapsedDaySellables)
                 BtnSave.Enabled = True
             End If
         End If
     End Sub
     <DebuggerStepThrough>
-    Private Sub DgvCompressorPartElapsedDay_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvCompressorSellableElapsedDay.CellFormatting
+    Private Sub DgvCompressorSellableElapsedDay_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvCompressorSellableElapsedDay.CellFormatting
         Dim Dgv As DataGridView = sender
         If e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
@@ -446,16 +446,16 @@ Public Class FrmCompressor
             e.CellStyle.Format = "N2"
         End If
     End Sub
-    Private Sub DgvCompressorPartElapsedDay_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvCompressorSellableElapsedDay.MouseDoubleClick
+    Private Sub DgvCompressorSellableElapsedDay_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvCompressorSellableElapsedDay.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvCompressorSellableElapsedDay.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
-            BtnEditPartElapsedDay.PerformClick()
+            BtnEditElapsedDaySellable.PerformClick()
         End If
     End Sub
-    Private Sub TxtFilterElapsedDay_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterElapsedDay.TextChanged
-        FilterPartElapsedDay()
+    Private Sub TxtFilterElapsedDaySellable_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterElapsedDaySellable.TextChanged
+        FilterElapsedDaySellable()
     End Sub
-    Private Sub FilterPartElapsedDay()
+    Private Sub FilterElapsedDaySellable()
         Dim Table As DataTable
         Dim View As DataView
         Dim Filter As String = String.Format("{0} OR {1}",
@@ -465,46 +465,46 @@ Public Class FrmCompressor
         If DgvCompressorSellableElapsedDay.DataSource IsNot Nothing Then
             Table = DgvCompressorSellableElapsedDay.DataSource
             View = Table.DefaultView
-            If TxtFilterElapsedDay.Text <> Nothing Then
-                Filter = Filter.Replace("@VALUE", TxtFilterElapsedDay.Text.Replace("%", Nothing).Replace("*", Nothing))
+            If TxtFilterElapsedDaySellable.Text <> Nothing Then
+                Filter = Filter.Replace("@VALUE", TxtFilterElapsedDaySellable.Text.Replace("%", Nothing).Replace("*", Nothing))
                 View.RowFilter = Filter
             Else
                 View.RowFilter = Nothing
             End If
         End If
     End Sub
-    Private Sub DgvCompressorPartElapsedDay_SelectionChanged(sender As Object, e As EventArgs) Handles DgvCompressorSellableElapsedDay.SelectionChanged
+    Private Sub DgvCompressorSellableElapsedDay_SelectionChanged(sender As Object, e As EventArgs) Handles DgvCompressorSellableElapsedDay.SelectionChanged
         If DgvCompressorSellableElapsedDay.SelectedRows.Count = 0 Then
-            BtnEditPartElapsedDay.Enabled = False
-            BtnDeletePartElapsedDay.Enabled = False
+            BtnEditElapsedDaySellable.Enabled = False
+            BtnDeleteElapsedDaySellable.Enabled = False
         Else
-            BtnEditPartElapsedDay.Enabled = True
-            BtnDeletePartElapsedDay.Enabled = True
+            BtnEditElapsedDaySellable.Enabled = True
+            BtnDeleteElapsedDaySellable.Enabled = True
         End If
     End Sub
-    Private Sub TxtFilterPartWorkedHour_Enter(sender As Object, e As EventArgs) Handles TxtFilterPartWorkedHour.Enter
+    Private Sub TxtFilterWorkedHourSellable_Enter(sender As Object, e As EventArgs) Handles TxtFilterWorkedHourSellable.Enter
         EprInformation.SetError(TsMaintenanceHour, "Filtrando os campos: Código e Produto/Serviço.")
         EprInformation.SetIconAlignment(TsMaintenanceHour, ErrorIconAlignment.MiddleLeft)
         EprInformation.SetIconPadding(TsMaintenanceHour, -365)
     End Sub
-    Private Sub TxtFilterPartWorkedHour_Leave(sender As Object, e As EventArgs) Handles TxtFilterPartWorkedHour.Leave
+    Private Sub TxtFilterWorkedHourSellableLeave(sender As Object, e As EventArgs) Handles TxtFilterWorkedHourSellable.Leave
         EprInformation.Clear()
     End Sub
-    Private Sub TxtFilterElapsedDay_Enter(sender As Object, e As EventArgs) Handles TxtFilterElapsedDay.Enter
+    Private Sub TxtFilterElapsedDay_Enter(sender As Object, e As EventArgs) Handles TxtFilterElapsedDaySellable.Enter
         EprInformation.SetError(TsMaintenanceDay, "Filtrando os campos: Código e Produto/Serviço.")
         EprInformation.SetIconAlignment(TsMaintenanceDay, ErrorIconAlignment.MiddleLeft)
         EprInformation.SetIconPadding(TsMaintenanceDay, -365)
     End Sub
-    Private Sub TxtFilterElapsedDay_Leave(sender As Object, e As EventArgs) Handles TxtFilterElapsedDay.Leave
+    Private Sub TxtFilterElapsedDay_Leave(sender As Object, e As EventArgs) Handles TxtFilterElapsedDaySellable.Leave
         EprInformation.Clear()
     End Sub
     Private Sub FrmCompressor_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         _Compressor.Unlock()
     End Sub
-    Private Sub DgvCompressorPartWorkedHour_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvCompressorSellableWorkedHour.DataSourceChanged
-        FilterPartWorkedHour()
+    Private Sub DgvCompressorSellableWorkedHour_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvCompressorSellableWorkedHour.DataSourceChanged
+        FilterWorkedHourSellable()
     End Sub
-    Private Sub DgvCompressorPartElapsedDay_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvCompressorSellableElapsedDay.DataSourceChanged
-        FilterPartElapsedDay()
+    Private Sub DgvCompressorSellableElapsedDay_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvCompressorSellableElapsedDay.DataSourceChanged
+        FilterElapsedDaySellable()
     End Sub
 End Class

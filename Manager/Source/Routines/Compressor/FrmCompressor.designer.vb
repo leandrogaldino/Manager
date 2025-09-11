@@ -68,22 +68,22 @@ Partial Class FrmCompressor
         Me.TxtName = New System.Windows.Forms.TextBox()
         Me.TabMaintenance = New System.Windows.Forms.TabPage()
         Me.TcMaintenance = New System.Windows.Forms.TabControl()
-        Me.TabWorkedHour = New System.Windows.Forms.TabPage()
+        Me.TabWorkedHourSellable = New System.Windows.Forms.TabPage()
         Me.DgvCompressorSellableWorkedHour = New System.Windows.Forms.DataGridView()
         Me.TsMaintenanceHour = New System.Windows.Forms.ToolStrip()
-        Me.BtnIncludeSellableWorkedHour = New System.Windows.Forms.ToolStripButton()
-        Me.BtnEditSellableWorkedHour = New System.Windows.Forms.ToolStripButton()
-        Me.BtnDeleteSellableWorkedHour = New System.Windows.Forms.ToolStripButton()
-        Me.LblFilterSellableWorkedHour = New System.Windows.Forms.ToolStripLabel()
-        Me.TxtFilterPartWorkedHour = New System.Windows.Forms.ToolStripTextBox()
-        Me.TabPassedDay = New System.Windows.Forms.TabPage()
+        Me.BtnIncludeWorkedHourSellable = New System.Windows.Forms.ToolStripButton()
+        Me.BtnEditWorkedHourSellable = New System.Windows.Forms.ToolStripButton()
+        Me.BtnDeleteWorkedHourSellable = New System.Windows.Forms.ToolStripButton()
+        Me.LblFilterWorkedHourSellable = New System.Windows.Forms.ToolStripLabel()
+        Me.TxtFilterWorkedHourSellable = New System.Windows.Forms.ToolStripTextBox()
+        Me.TabElapsedDaySellable = New System.Windows.Forms.TabPage()
         Me.DgvCompressorSellableElapsedDay = New System.Windows.Forms.DataGridView()
         Me.TsMaintenanceDay = New System.Windows.Forms.ToolStrip()
-        Me.BtnIncludePartElapsedDay = New System.Windows.Forms.ToolStripButton()
-        Me.BtnEditPartElapsedDay = New System.Windows.Forms.ToolStripButton()
-        Me.BtnDeletePartElapsedDay = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripLabel4 = New System.Windows.Forms.ToolStripLabel()
-        Me.TxtFilterElapsedDay = New System.Windows.Forms.ToolStripTextBox()
+        Me.BtnIncludeElapsedDaySellable = New System.Windows.Forms.ToolStripButton()
+        Me.BtnEditElapsedDaySellable = New System.Windows.Forms.ToolStripButton()
+        Me.BtnDeleteElapsedDaySellable = New System.Windows.Forms.ToolStripButton()
+        Me.LblFilterElapsedDaySellable = New System.Windows.Forms.ToolStripLabel()
+        Me.TxtFilterElapsedDaySellable = New System.Windows.Forms.ToolStripTextBox()
         Me.DgvCompressorSellableWorkedHourLayout = New Manager.DataGridViewLayout()
         Me.DgvCompressorSellableElapsedDayLayout = New Manager.DataGridViewLayout()
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
@@ -96,10 +96,10 @@ Partial Class FrmCompressor
         Me.FlpManufacturer.SuspendLayout()
         Me.TabMaintenance.SuspendLayout()
         Me.TcMaintenance.SuspendLayout()
-        Me.TabWorkedHour.SuspendLayout()
+        Me.TabWorkedHourSellable.SuspendLayout()
         CType(Me.DgvCompressorSellableWorkedHour, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsMaintenanceHour.SuspendLayout()
-        Me.TabPassedDay.SuspendLayout()
+        Me.TabElapsedDaySellable.SuspendLayout()
         CType(Me.DgvCompressorSellableElapsedDay, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsMaintenanceDay.SuspendLayout()
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -546,8 +546,8 @@ Partial Class FrmCompressor
         '
         'TcMaintenance
         '
-        Me.TcMaintenance.Controls.Add(Me.TabWorkedHour)
-        Me.TcMaintenance.Controls.Add(Me.TabPassedDay)
+        Me.TcMaintenance.Controls.Add(Me.TabWorkedHourSellable)
+        Me.TcMaintenance.Controls.Add(Me.TabElapsedDaySellable)
         Me.TcMaintenance.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TcMaintenance.Location = New System.Drawing.Point(3, 3)
         Me.TcMaintenance.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
@@ -557,17 +557,17 @@ Partial Class FrmCompressor
         Me.TcMaintenance.Size = New System.Drawing.Size(340, 101)
         Me.TcMaintenance.TabIndex = 3
         '
-        'TabWorkedHour
+        'TabWorkedHourSellable
         '
-        Me.TabWorkedHour.Controls.Add(Me.DgvCompressorSellableWorkedHour)
-        Me.TabWorkedHour.Controls.Add(Me.TsMaintenanceHour)
-        Me.TabWorkedHour.Location = New System.Drawing.Point(4, 26)
-        Me.TabWorkedHour.Name = "TabWorkedHour"
-        Me.TabWorkedHour.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabWorkedHour.Size = New System.Drawing.Size(332, 71)
-        Me.TabWorkedHour.TabIndex = 7
-        Me.TabWorkedHour.Text = "Hora Trabalhada"
-        Me.TabWorkedHour.UseVisualStyleBackColor = True
+        Me.TabWorkedHourSellable.Controls.Add(Me.DgvCompressorSellableWorkedHour)
+        Me.TabWorkedHourSellable.Controls.Add(Me.TsMaintenanceHour)
+        Me.TabWorkedHourSellable.Location = New System.Drawing.Point(4, 26)
+        Me.TabWorkedHourSellable.Name = "TabWorkedHourSellable"
+        Me.TabWorkedHourSellable.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabWorkedHourSellable.Size = New System.Drawing.Size(332, 71)
+        Me.TabWorkedHourSellable.TabIndex = 7
+        Me.TabWorkedHourSellable.Text = "Hora Trabalhada"
+        Me.TabWorkedHourSellable.UseVisualStyleBackColor = True
         '
         'DgvCompressorSellableWorkedHour
         '
@@ -595,7 +595,7 @@ Partial Class FrmCompressor
         Me.TsMaintenanceHour.BackColor = System.Drawing.Color.Transparent
         Me.TsMaintenanceHour.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsMaintenanceHour.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsMaintenanceHour.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludeSellableWorkedHour, Me.BtnEditSellableWorkedHour, Me.BtnDeleteSellableWorkedHour, Me.LblFilterSellableWorkedHour, Me.TxtFilterPartWorkedHour})
+        Me.TsMaintenanceHour.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludeWorkedHourSellable, Me.BtnEditWorkedHourSellable, Me.BtnDeleteWorkedHourSellable, Me.LblFilterWorkedHourSellable, Me.TxtFilterWorkedHourSellable})
         Me.TsMaintenanceHour.Location = New System.Drawing.Point(3, 3)
         Me.TsMaintenanceHour.Name = "TsMaintenanceHour"
         Me.TsMaintenanceHour.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -603,63 +603,63 @@ Partial Class FrmCompressor
         Me.TsMaintenanceHour.TabIndex = 8
         Me.TsMaintenanceHour.Text = "ToolStrip2"
         '
-        'BtnIncludeSellableWorkedHour
+        'BtnIncludeWorkedHourSellable
         '
-        Me.BtnIncludeSellableWorkedHour.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnIncludeSellableWorkedHour.Image = Global.Manager.My.Resources.Resources.IncludeSmall
-        Me.BtnIncludeSellableWorkedHour.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnIncludeSellableWorkedHour.Name = "BtnIncludeSellableWorkedHour"
-        Me.BtnIncludeSellableWorkedHour.Size = New System.Drawing.Size(23, 22)
-        Me.BtnIncludeSellableWorkedHour.Text = "Incluir Peça/Serviço"
+        Me.BtnIncludeWorkedHourSellable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnIncludeWorkedHourSellable.Image = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnIncludeWorkedHourSellable.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnIncludeWorkedHourSellable.Name = "BtnIncludeWorkedHourSellable"
+        Me.BtnIncludeWorkedHourSellable.Size = New System.Drawing.Size(23, 22)
+        Me.BtnIncludeWorkedHourSellable.Text = "Incluir Peça/Serviço"
         '
-        'BtnEditSellableWorkedHour
+        'BtnEditWorkedHourSellable
         '
-        Me.BtnEditSellableWorkedHour.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnEditSellableWorkedHour.Enabled = False
-        Me.BtnEditSellableWorkedHour.Image = CType(resources.GetObject("BtnEditSellableWorkedHour.Image"), System.Drawing.Image)
-        Me.BtnEditSellableWorkedHour.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnEditSellableWorkedHour.Name = "BtnEditSellableWorkedHour"
-        Me.BtnEditSellableWorkedHour.Size = New System.Drawing.Size(23, 22)
-        Me.BtnEditSellableWorkedHour.Text = "Editar Peça/Serviço"
-        Me.BtnEditSellableWorkedHour.ToolTipText = "Editar"
+        Me.BtnEditWorkedHourSellable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnEditWorkedHourSellable.Enabled = False
+        Me.BtnEditWorkedHourSellable.Image = CType(resources.GetObject("BtnEditWorkedHourSellable.Image"), System.Drawing.Image)
+        Me.BtnEditWorkedHourSellable.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnEditWorkedHourSellable.Name = "BtnEditWorkedHourSellable"
+        Me.BtnEditWorkedHourSellable.Size = New System.Drawing.Size(23, 22)
+        Me.BtnEditWorkedHourSellable.Text = "Editar Peça/Serviço"
+        Me.BtnEditWorkedHourSellable.ToolTipText = "Editar"
         '
-        'BtnDeleteSellableWorkedHour
+        'BtnDeleteWorkedHourSellable
         '
-        Me.BtnDeleteSellableWorkedHour.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnDeleteSellableWorkedHour.Enabled = False
-        Me.BtnDeleteSellableWorkedHour.Image = Global.Manager.My.Resources.Resources.DeleteSmall
-        Me.BtnDeleteSellableWorkedHour.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnDeleteSellableWorkedHour.Name = "BtnDeleteSellableWorkedHour"
-        Me.BtnDeleteSellableWorkedHour.Size = New System.Drawing.Size(23, 22)
-        Me.BtnDeleteSellableWorkedHour.Text = "Excluir Peça/Serviço"
+        Me.BtnDeleteWorkedHourSellable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnDeleteWorkedHourSellable.Enabled = False
+        Me.BtnDeleteWorkedHourSellable.Image = Global.Manager.My.Resources.Resources.DeleteSmall
+        Me.BtnDeleteWorkedHourSellable.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnDeleteWorkedHourSellable.Name = "BtnDeleteWorkedHourSellable"
+        Me.BtnDeleteWorkedHourSellable.Size = New System.Drawing.Size(23, 22)
+        Me.BtnDeleteWorkedHourSellable.Text = "Excluir Peça/Serviço"
         '
-        'LblFilterSellableWorkedHour
+        'LblFilterWorkedHourSellable
         '
-        Me.LblFilterSellableWorkedHour.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.LblFilterSellableWorkedHour.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.LblFilterSellableWorkedHour.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
-        Me.LblFilterSellableWorkedHour.Name = "LblFilterSellableWorkedHour"
-        Me.LblFilterSellableWorkedHour.Size = New System.Drawing.Size(46, 25)
-        Me.LblFilterSellableWorkedHour.Text = "Filtrar:"
+        Me.LblFilterWorkedHourSellable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.LblFilterWorkedHourSellable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.LblFilterWorkedHourSellable.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
+        Me.LblFilterWorkedHourSellable.Name = "LblFilterWorkedHourSellable"
+        Me.LblFilterWorkedHourSellable.Size = New System.Drawing.Size(46, 25)
+        Me.LblFilterWorkedHourSellable.Text = "Filtrar:"
         '
-        'TxtFilterPartWorkedHour
+        'TxtFilterWorkedHourSellable
         '
-        Me.TxtFilterPartWorkedHour.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtFilterPartWorkedHour.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.TxtFilterPartWorkedHour.Name = "TxtFilterPartWorkedHour"
-        Me.TxtFilterPartWorkedHour.Size = New System.Drawing.Size(200, 23)
+        Me.TxtFilterWorkedHourSellable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtFilterWorkedHourSellable.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.TxtFilterWorkedHourSellable.Name = "TxtFilterWorkedHourSellable"
+        Me.TxtFilterWorkedHourSellable.Size = New System.Drawing.Size(200, 23)
         '
-        'TabPassedDay
+        'TabElapsedDaySellable
         '
-        Me.TabPassedDay.Controls.Add(Me.DgvCompressorSellableElapsedDay)
-        Me.TabPassedDay.Controls.Add(Me.TsMaintenanceDay)
-        Me.TabPassedDay.Location = New System.Drawing.Point(4, 22)
-        Me.TabPassedDay.Name = "TabPassedDay"
-        Me.TabPassedDay.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPassedDay.Size = New System.Drawing.Size(332, 75)
-        Me.TabPassedDay.TabIndex = 8
-        Me.TabPassedDay.Text = "Dia Corrido"
-        Me.TabPassedDay.UseVisualStyleBackColor = True
+        Me.TabElapsedDaySellable.Controls.Add(Me.DgvCompressorSellableElapsedDay)
+        Me.TabElapsedDaySellable.Controls.Add(Me.TsMaintenanceDay)
+        Me.TabElapsedDaySellable.Location = New System.Drawing.Point(4, 26)
+        Me.TabElapsedDaySellable.Name = "TabElapsedDaySellable"
+        Me.TabElapsedDaySellable.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabElapsedDaySellable.Size = New System.Drawing.Size(332, 71)
+        Me.TabElapsedDaySellable.TabIndex = 8
+        Me.TabElapsedDaySellable.Text = "Dia Corrido"
+        Me.TabElapsedDaySellable.UseVisualStyleBackColor = True
         '
         'DgvCompressorSellableElapsedDay
         '
@@ -679,7 +679,7 @@ Partial Class FrmCompressor
         Me.DgvCompressorSellableElapsedDay.RowHeadersVisible = False
         Me.DgvCompressorSellableElapsedDay.RowTemplate.Height = 26
         Me.DgvCompressorSellableElapsedDay.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvCompressorSellableElapsedDay.Size = New System.Drawing.Size(326, 44)
+        Me.DgvCompressorSellableElapsedDay.Size = New System.Drawing.Size(326, 40)
         Me.DgvCompressorSellableElapsedDay.TabIndex = 11
         '
         'TsMaintenanceDay
@@ -687,7 +687,7 @@ Partial Class FrmCompressor
         Me.TsMaintenanceDay.BackColor = System.Drawing.Color.Transparent
         Me.TsMaintenanceDay.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsMaintenanceDay.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsMaintenanceDay.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludePartElapsedDay, Me.BtnEditPartElapsedDay, Me.BtnDeletePartElapsedDay, Me.ToolStripLabel4, Me.TxtFilterElapsedDay})
+        Me.TsMaintenanceDay.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludeElapsedDaySellable, Me.BtnEditElapsedDaySellable, Me.BtnDeleteElapsedDaySellable, Me.LblFilterElapsedDaySellable, Me.TxtFilterElapsedDaySellable})
         Me.TsMaintenanceDay.Location = New System.Drawing.Point(3, 3)
         Me.TsMaintenanceDay.Name = "TsMaintenanceDay"
         Me.TsMaintenanceDay.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -695,51 +695,51 @@ Partial Class FrmCompressor
         Me.TsMaintenanceDay.TabIndex = 10
         Me.TsMaintenanceDay.Text = "ToolStrip2"
         '
-        'BtnIncludePartElapsedDay
+        'BtnIncludeElapsedDaySellable
         '
-        Me.BtnIncludePartElapsedDay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnIncludePartElapsedDay.Image = Global.Manager.My.Resources.Resources.IncludeSmall
-        Me.BtnIncludePartElapsedDay.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnIncludePartElapsedDay.Name = "BtnIncludePartElapsedDay"
-        Me.BtnIncludePartElapsedDay.Size = New System.Drawing.Size(23, 22)
-        Me.BtnIncludePartElapsedDay.Text = "Incluir Peça/Serviço"
+        Me.BtnIncludeElapsedDaySellable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnIncludeElapsedDaySellable.Image = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnIncludeElapsedDaySellable.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnIncludeElapsedDaySellable.Name = "BtnIncludeElapsedDaySellable"
+        Me.BtnIncludeElapsedDaySellable.Size = New System.Drawing.Size(23, 22)
+        Me.BtnIncludeElapsedDaySellable.Text = "Incluir Peça/Serviço"
         '
-        'BtnEditPartElapsedDay
+        'BtnEditElapsedDaySellable
         '
-        Me.BtnEditPartElapsedDay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnEditPartElapsedDay.Enabled = False
-        Me.BtnEditPartElapsedDay.Image = CType(resources.GetObject("BtnEditPartElapsedDay.Image"), System.Drawing.Image)
-        Me.BtnEditPartElapsedDay.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnEditPartElapsedDay.Name = "BtnEditPartElapsedDay"
-        Me.BtnEditPartElapsedDay.Size = New System.Drawing.Size(23, 22)
-        Me.BtnEditPartElapsedDay.Text = "Editar Peça/Serviço"
-        Me.BtnEditPartElapsedDay.ToolTipText = "Editar"
+        Me.BtnEditElapsedDaySellable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnEditElapsedDaySellable.Enabled = False
+        Me.BtnEditElapsedDaySellable.Image = CType(resources.GetObject("BtnEditElapsedDaySellable.Image"), System.Drawing.Image)
+        Me.BtnEditElapsedDaySellable.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnEditElapsedDaySellable.Name = "BtnEditElapsedDaySellable"
+        Me.BtnEditElapsedDaySellable.Size = New System.Drawing.Size(23, 22)
+        Me.BtnEditElapsedDaySellable.Text = "Editar Peça/Serviço"
+        Me.BtnEditElapsedDaySellable.ToolTipText = "Editar"
         '
-        'BtnDeletePartElapsedDay
+        'BtnDeleteElapsedDaySellable
         '
-        Me.BtnDeletePartElapsedDay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnDeletePartElapsedDay.Enabled = False
-        Me.BtnDeletePartElapsedDay.Image = Global.Manager.My.Resources.Resources.DeleteSmall
-        Me.BtnDeletePartElapsedDay.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnDeletePartElapsedDay.Name = "BtnDeletePartElapsedDay"
-        Me.BtnDeletePartElapsedDay.Size = New System.Drawing.Size(23, 22)
-        Me.BtnDeletePartElapsedDay.Text = "Excluir Peça/Serviço"
+        Me.BtnDeleteElapsedDaySellable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnDeleteElapsedDaySellable.Enabled = False
+        Me.BtnDeleteElapsedDaySellable.Image = Global.Manager.My.Resources.Resources.DeleteSmall
+        Me.BtnDeleteElapsedDaySellable.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnDeleteElapsedDaySellable.Name = "BtnDeleteElapsedDaySellable"
+        Me.BtnDeleteElapsedDaySellable.Size = New System.Drawing.Size(23, 22)
+        Me.BtnDeleteElapsedDaySellable.Text = "Excluir Peça/Serviço"
         '
-        'ToolStripLabel4
+        'LblFilterElapsedDaySellable
         '
-        Me.ToolStripLabel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.ToolStripLabel4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.ToolStripLabel4.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
-        Me.ToolStripLabel4.Name = "ToolStripLabel4"
-        Me.ToolStripLabel4.Size = New System.Drawing.Size(46, 25)
-        Me.ToolStripLabel4.Text = "Filtrar:"
+        Me.LblFilterElapsedDaySellable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.LblFilterElapsedDaySellable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.LblFilterElapsedDaySellable.Margin = New System.Windows.Forms.Padding(30, 0, 0, 0)
+        Me.LblFilterElapsedDaySellable.Name = "LblFilterElapsedDaySellable"
+        Me.LblFilterElapsedDaySellable.Size = New System.Drawing.Size(46, 25)
+        Me.LblFilterElapsedDaySellable.Text = "Filtrar:"
         '
-        'TxtFilterElapsedDay
+        'TxtFilterElapsedDaySellable
         '
-        Me.TxtFilterElapsedDay.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtFilterElapsedDay.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.TxtFilterElapsedDay.Name = "TxtFilterElapsedDay"
-        Me.TxtFilterElapsedDay.Size = New System.Drawing.Size(200, 23)
+        Me.TxtFilterElapsedDaySellable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtFilterElapsedDaySellable.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.TxtFilterElapsedDaySellable.Name = "TxtFilterElapsedDaySellable"
+        Me.TxtFilterElapsedDaySellable.Size = New System.Drawing.Size(200, 23)
         '
         'DgvCompressorSellableWorkedHourLayout
         '
@@ -768,38 +768,38 @@ Partial Class FrmCompressor
         Me.Controls.Add(Me.TsNavigation)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
-        Me.KeyPreview = true
-        Me.MaximizeBox = false
-        Me.MinimizeBox = false
+        Me.KeyPreview = True
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "FrmCompressor"
-        Me.ShowIcon = false
+        Me.ShowIcon = False
         Me.Text = "Compressor"
-        Me.PnButtons.ResumeLayout(false)
-        Me.TsTitle.ResumeLayout(false)
-        Me.TsTitle.PerformLayout
-        Me.TsNavigation.ResumeLayout(false)
-        Me.TsNavigation.PerformLayout
-        CType(Me.EprValidation,System.ComponentModel.ISupportInitialize).EndInit
-        Me.TcCompressor.ResumeLayout(false)
-        Me.TabMain.ResumeLayout(false)
-        Me.TabMain.PerformLayout
-        Me.FlpManufacturer.ResumeLayout(false)
-        Me.TabMaintenance.ResumeLayout(false)
-        Me.TcMaintenance.ResumeLayout(false)
-        Me.TabWorkedHour.ResumeLayout(false)
-        Me.TabWorkedHour.PerformLayout
-        CType(Me.DgvCompressorSellableWorkedHour,System.ComponentModel.ISupportInitialize).EndInit
-        Me.TsMaintenanceHour.ResumeLayout(false)
-        Me.TsMaintenanceHour.PerformLayout
-        Me.TabPassedDay.ResumeLayout(false)
-        Me.TabPassedDay.PerformLayout
-        CType(Me.DgvCompressorSellableElapsedDay,System.ComponentModel.ISupportInitialize).EndInit
-        Me.TsMaintenanceDay.ResumeLayout(false)
-        Me.TsMaintenanceDay.PerformLayout
-        CType(Me.EprInformation,System.ComponentModel.ISupportInitialize).EndInit
-        Me.ResumeLayout(false)
+        Me.PnButtons.ResumeLayout(False)
+        Me.TsTitle.ResumeLayout(False)
+        Me.TsTitle.PerformLayout()
+        Me.TsNavigation.ResumeLayout(False)
+        Me.TsNavigation.PerformLayout()
+        CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TcCompressor.ResumeLayout(False)
+        Me.TabMain.ResumeLayout(False)
+        Me.TabMain.PerformLayout()
+        Me.FlpManufacturer.ResumeLayout(False)
+        Me.TabMaintenance.ResumeLayout(False)
+        Me.TcMaintenance.ResumeLayout(False)
+        Me.TabWorkedHourSellable.ResumeLayout(False)
+        Me.TabWorkedHourSellable.PerformLayout()
+        CType(Me.DgvCompressorSellableWorkedHour, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TsMaintenanceHour.ResumeLayout(False)
+        Me.TsMaintenanceHour.PerformLayout()
+        Me.TabElapsedDaySellable.ResumeLayout(False)
+        Me.TabElapsedDaySellable.PerformLayout()
+        CType(Me.DgvCompressorSellableElapsedDay, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TsMaintenanceDay.ResumeLayout(False)
+        Me.TsMaintenanceDay.PerformLayout()
+        CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
 
-End Sub
+    End Sub
     Friend WithEvents BtnClose As Button
     Friend WithEvents BtnSave As Button
     Friend WithEvents TsTitle As ToolStrip
@@ -835,21 +835,21 @@ End Sub
     Friend WithEvents EprInformation As ErrorProvider
     Friend WithEvents TabMaintenance As TabPage
     Friend WithEvents TcMaintenance As TabControl
-    Friend WithEvents TabWorkedHour As TabPage
+    Friend WithEvents TabWorkedHourSellable As TabPage
     Friend WithEvents DgvCompressorSellableWorkedHour As DataGridView
     Friend WithEvents TsMaintenanceHour As ToolStrip
-    Friend WithEvents BtnIncludeSellableWorkedHour As ToolStripButton
-    Friend WithEvents BtnEditSellableWorkedHour As ToolStripButton
-    Friend WithEvents BtnDeleteSellableWorkedHour As ToolStripButton
-    Friend WithEvents LblFilterSellableWorkedHour As ToolStripLabel
-    Friend WithEvents TxtFilterPartWorkedHour As ToolStripTextBox
-    Friend WithEvents TabPassedDay As TabPage
+    Friend WithEvents BtnIncludeWorkedHourSellable As ToolStripButton
+    Friend WithEvents BtnEditWorkedHourSellable As ToolStripButton
+    Friend WithEvents BtnDeleteWorkedHourSellable As ToolStripButton
+    Friend WithEvents LblFilterWorkedHourSellable As ToolStripLabel
+    Friend WithEvents TxtFilterWorkedHourSellable As ToolStripTextBox
+    Friend WithEvents TabElapsedDaySellable As TabPage
     Friend WithEvents DgvCompressorSellableElapsedDay As DataGridView
     Friend WithEvents TsMaintenanceDay As ToolStrip
-    Friend WithEvents BtnIncludePartElapsedDay As ToolStripButton
-    Friend WithEvents BtnEditPartElapsedDay As ToolStripButton
-    Friend WithEvents BtnDeletePartElapsedDay As ToolStripButton
-    Friend WithEvents ToolStripLabel4 As ToolStripLabel
-    Friend WithEvents TxtFilterElapsedDay As ToolStripTextBox
+    Friend WithEvents BtnIncludeElapsedDaySellable As ToolStripButton
+    Friend WithEvents BtnEditElapsedDaySellable As ToolStripButton
+    Friend WithEvents BtnDeleteElapsedDaySellable As ToolStripButton
+    Friend WithEvents LblFilterElapsedDaySellable As ToolStripLabel
+    Friend WithEvents TxtFilterElapsedDaySellable As ToolStripTextBox
     Friend WithEvents QbxManufacturer As ControlLibrary.QueriedBox
 End Class

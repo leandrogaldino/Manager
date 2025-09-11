@@ -7,8 +7,8 @@ Public Class FrmCompressors
     Public Sub New()
         InitializeComponent()
         ControlHelper.EnableControlDoubleBuffer(DgvData, True)
-        ControlHelper.EnableControlDoubleBuffer(DgvPartWorkedHour, True)
-        ControlHelper.EnableControlDoubleBuffer(DgvPartElapsedDay, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvWorkedHourSellable, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvElapsedDaySellable, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer2.Panel1Collapsed = True
         _Filter = New CompressorFilter(DgvData, PgFilter)
@@ -170,15 +170,15 @@ Public Class FrmCompressors
         If BtnDetails.Checked Then
             If DgvData.SelectedRows.Count = 1 Then
                 Try
-                    Compressor.FillSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPartWorkedHour, CompressorSellableControlType.WorkedHour)
-                    Compressor.FillSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvPartElapsedDay, CompressorSellableControlType.ElapsedDay)
+                    Compressor.FillSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvWorkedHourSellable, CompressorSellableControlType.WorkedHour)
+                    Compressor.FillSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvElapsedDaySellable, CompressorSellableControlType.ElapsedDay)
                 Catch ex As Exception
                     TmrLoadDetails.Stop()
                     CMessageBox.Show("ERRO CP007", "Ocorreu um erro ao consultar os dados do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                 End Try
             Else
-                DgvPartWorkedHour.DataSource = Nothing
-                DgvPartElapsedDay.DataSource = Nothing
+                DgvWorkedHourSellable.DataSource = Nothing
+                DgvElapsedDaySellable.DataSource = Nothing
             End If
         End If
     End Sub

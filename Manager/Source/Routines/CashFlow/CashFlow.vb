@@ -143,15 +143,15 @@ Public Class CashFlow
                     Cmd.Parameters.AddWithValue("@userid", User.ID)
                     Cmd.ExecuteNonQuery()
                 End Using
-                For Each FlowAuhorized As CashFlowAuthorized In _Shadow.Authorizeds
-                    If Not Authorizeds.Any(Function(x) x.ID = FlowAuhorized.ID And x.ID > 0) Then
-                        Using CmdCompressorPart As New MySqlCommand(My.Resources.CashFlowAuthorizedDelete, Con)
-                            CmdCompressorPart.Transaction = Tra
-                            CmdCompressorPart.Parameters.AddWithValue("@id", FlowAuhorized.ID)
-                            CmdCompressorPart.ExecuteNonQuery()
+                For Each FlowAuthorized As CashFlowAuthorized In _Shadow.Authorizeds
+                    If Not Authorizeds.Any(Function(x) x.ID = FlowAuthorized.ID And x.ID > 0) Then
+                        Using Cmd As New MySqlCommand(My.Resources.CashFlowAuthorizedDelete, Con)
+                            Cmd.Transaction = Tra
+                            Cmd.Parameters.AddWithValue("@id", FlowAuthorized.ID)
+                            Cmd.ExecuteNonQuery()
                         End Using
                     End If
-                Next FlowAuhorized
+                Next FlowAuthorized
                 For Each FlowAuhorized As CashFlowAuthorized In Authorizeds
                     If FlowAuhorized.ID = 0 Then
                         Using Cmd As New MySqlCommand(My.Resources.CashFlowAuthorizedInsert, Con)

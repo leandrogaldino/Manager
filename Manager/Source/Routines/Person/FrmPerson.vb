@@ -576,7 +576,7 @@ Public Class FrmPerson
                         Else
                             CMessageBox.Show("Já existe uma pessoa cadastrada com esse CNPJ. Caso o cadastro tenha sido importado será necessário excluir o endereço e contato manualmente", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                         End If
-                    ElseIf ex.Message.Contains("evaluation_personcompressor") Then
+                    ElseIf ex.Number = MysqlError.ForeignKey AndAlso ex.Message.Contains("evaluation_personcompressor") Then
                         CMessageBox.Show("Existe avaliação para um ou mais compressores excluídos. Todos os compressores excluídos serão restaurados.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                         For Each Compressor As PersonCompressor In _CompressorsShadow
                             If Not _Person.Compressors.Any(Function(x) x.ID = Compressor.ID) Then
@@ -584,19 +584,19 @@ Public Class FrmPerson
                             End If
                         Next
                         DgvCompressor.Fill(_Person.Compressors)
-                    ElseIf ex.Message.Contains("evaluationpart_personcompressorpart") Then
+                    ElseIf ex.Number = MysqlError.ForeignKey AndAlso ex.Message.Contains("evaluationsellable_personcompressorsellable") Then
                         CMessageBox.Show("Existe avaliação para um ou mais itens excluídos. Todos os itens excluídos serão restaurados.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                         For Each Compressor As PersonCompressor In _CompressorsShadow
-                            For Each PartWorkedHour As PersonCompressorSellable In Compressor.WorkedHourSellables
-                                If Not _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).WorkedHourSellables.Any(Function(y) y.ID = PartWorkedHour.ID) Then
-                                    _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).WorkedHourSellables.Add(Compressor.WorkedHourSellables.Single(Function(y) y.ID = PartWorkedHour.ID))
+                            For Each WorkedHourSellable As PersonCompressorSellable In Compressor.WorkedHourSellables
+                                If Not _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).WorkedHourSellables.Any(Function(y) y.ID = WorkedHourSellable.ID) Then
+                                    _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).WorkedHourSellables.Add(Compressor.WorkedHourSellables.Single(Function(y) y.ID = WorkedHourSellable.ID))
                                 End If
-                            Next PartWorkedHour
-                            For Each PartElapsedDay As PersonCompressorSellable In Compressor.ElapsedDaySellables
-                                If Not _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).ElapsedDaySellables.Any(Function(y) y.ID = PartElapsedDay.ID) Then
-                                    _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).ElapsedDaySellables.Add(Compressor.ElapsedDaySellables.Single(Function(y) y.ID = PartElapsedDay.ID))
+                            Next WorkedHourSellable
+                            For Each ElapsedDaySellable As PersonCompressorSellable In Compressor.ElapsedDaySellables
+                                If Not _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).ElapsedDaySellables.Any(Function(y) y.ID = ElapsedDaySellable.ID) Then
+                                    _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).ElapsedDaySellables.Add(Compressor.ElapsedDaySellables.Single(Function(y) y.ID = ElapsedDaySellable.ID))
                                 End If
-                            Next PartElapsedDay
+                            Next ElapsedDaySellable
                         Next
                         DgvCompressor.Fill(_Person.Compressors)
                     Else

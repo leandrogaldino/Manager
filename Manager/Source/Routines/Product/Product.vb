@@ -159,7 +159,6 @@ Public Class Product
                         CmdPicture.Parameters.AddWithValue("@productid", ID)
                         CmdPicture.Parameters.AddWithValue("@creation", Picture.Creation)
                         CmdPicture.Parameters.AddWithValue("@picturename", Path.GetFileName(Picture.Picture.CurrentFile))
-                        CmdPicture.Parameters.AddWithValue("@caption", Picture.Caption)
                         CmdPicture.Parameters.AddWithValue("@userid", Picture.User.ID)
                         CmdPicture.ExecuteNonQuery()
                         Picture.SetID(CmdPicture.LastInsertedId)
@@ -246,7 +245,6 @@ Public Class Product
                             CmdPicture.Parameters.AddWithValue("@productid", ID)
                             CmdPicture.Parameters.AddWithValue("@creation", Picture.Creation)
                             CmdPicture.Parameters.AddWithValue("@picturename", Path.GetFileName(Picture.Picture.CurrentFile))
-                            CmdPicture.Parameters.AddWithValue("@caption", Picture.Caption)
                             CmdPicture.Parameters.AddWithValue("@userid", Picture.User.ID)
                             CmdPicture.ExecuteNonQuery()
                             Picture.SetID(CmdPicture.LastInsertedId)
@@ -255,7 +253,6 @@ Public Class Product
                         Using CmdPicture As New MySqlCommand(My.Resources.ProductPictureUpdate, Con)
                             CmdPicture.Parameters.AddWithValue("@id", Picture.ID)
                             CmdPicture.Parameters.AddWithValue("@picturename", Path.GetFileName(Picture.Picture.CurrentFile))
-                            CmdPicture.Parameters.AddWithValue("@caption", Picture.Caption)
                             CmdPicture.Parameters.AddWithValue("@userid", Picture.User.ID)
                             CmdPicture.ExecuteNonQuery()
                         End Using
@@ -375,12 +372,8 @@ Public Class Product
                 Adp.Fill(TableResult)
                 Pictures = New List(Of ProductPicture)
                 For Each Row As DataRow In TableResult.Rows
-                    Picture = New ProductPicture With {
-                        .Caption = Row.Item("caption").ToString
-                    }
-                    If Row.Item("picturename").ToString IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("picturename")) Then
-                        Picture.Picture.SetCurrentFile(Path.Combine(ApplicationPaths.ProductPictureDirectory, Row.Item("picturename").ToString), True)
-                    End If
+                    Picture = New ProductPicture
+                    Picture.Picture.SetCurrentFile(Path.Combine(ApplicationPaths.ProductPictureDirectory, Row.Item("picturename").ToString), True)
                     Picture.SetIsSaved(True)
                     Picture.SetID(Row.Item("id"))
                     Picture.SetCreation(Row.Item("creation"))

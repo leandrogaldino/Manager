@@ -1,5 +1,7 @@
-﻿Imports ControlLibrary
+﻿Imports System.IO
+Imports ControlLibrary
 Imports ControlLibrary.Extensions
+Imports ManagerCore
 Imports MySql.Data.MySqlClient
 Public Class FrmProduct
     Private _Product As Product
@@ -9,6 +11,20 @@ Public Class FrmProduct
     Private _Deleting As Boolean
     Private _Loading As Boolean
     Private _User As User
+    Private _SelectedPicture As ProductPicture
+    Private Property SelectedPicture As ProductPicture
+        Get
+            Return _SelectedPicture
+        End Get
+        Set(value As ProductPicture)
+            _SelectedPicture = value
+            If _SelectedPicture IsNot Nothing Then
+                PbxPhoto.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_SelectedPicture.Picture.CurrentFile)))
+            Else
+                PbxPhoto.Image = Nothing
+            End If
+        End Set
+    End Property
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)
         Const _MouseButtonDown As Long = &HA1
@@ -34,8 +50,9 @@ Public Class FrmProduct
         _ProductsGrid = _ProductsForm.DgvData
         _Filter = CType(_ProductsForm.PgFilter.SelectedObject, ProductFilter)
         _User = Locator.GetInstance(Of Session).User
+        ConfigureControls()
         LoadData()
-        LoadForm()
+        RefreshPhotoControls()
     End Sub
     Public Sub New(Product As Product)
         InitializeComponent()
@@ -49,26 +66,25 @@ Public Class FrmProduct
         TcProduct.Height -= TsNavigation.Height
         MinimumSize = Nothing
         Height -= TsNavigation.Height
+        ConfigureControls()
         LoadData()
-        LoadForm()
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvProviderCodeLayout.Load()
         DgvCodeLayout.Load()
-        DgvPictureLayout.Load()
         DgvPriceLayout.Load()
         DgvIndicatorLayout.Load()
     End Sub
-    Private Sub LoadForm()
+    Private Sub ConfigureControls()
         ControlHelper.EnableControlDoubleBuffer(DgvProviderCode, True)
         ControlHelper.EnableControlDoubleBuffer(DgvCode, True)
-        ControlHelper.EnableControlDoubleBuffer(DgvPicture, True)
         ControlHelper.EnableControlDoubleBuffer(DgvPrice, True)
         ControlHelper.EnableControlDoubleBuffer(DgvIndicator, True)
         DgvNavigator.DataGridView = _ProductsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = _User.CanAccess(Routine.Log)
+        RefreshPhotoControls()
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -94,9 +110,12 @@ Public Class FrmProduct
         TxtFilterCode.Clear()
         If _Product.ProviderCodes IsNot Nothing Then DgvProviderCode.Fill(_Product.ProviderCodes)
         If _Product.Codes IsNot Nothing Then DgvCode.Fill(_Product.Codes)
-        If _Product.Pictures IsNot Nothing Then DgvPicture.Fill(_Product.Pictures)
         If _Product.Prices IsNot Nothing Then DgvPrice.Fill(_Product.Prices)
         If _Product.Indicators IsNot Nothing Then DgvIndicator.Fill(_Product.Indicators)
+        If _Product.Pictures.Count > 0 Then
+            SelectedPicture = _Product.Pictures(0)
+        End If
+        RefreshPhotoControls()
         BtnDelete.Enabled = _Product.ID > 0 And _User.CanDelete(Routine.Product)
         Text = "Produto"
         If _Product.LockInfo.IsLocked And Not _Product.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Product.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
@@ -106,6 +125,103 @@ Public Class FrmProduct
         BtnSave.Enabled = False
         TxtName.Select()
         _Loading = False
+    End Sub
+    Private Sub BtnIncludePhoto_Click(sender As Object, e As EventArgs) Handles BtnIncludePhoto.Click
+        Dim Filename As String
+        Dim Picture As ProductPicture
+        Using Ofd As New OpenFileDialog()
+            Ofd.Filter = "Imagens|*.jpg;*.jpeg;*.png;*.bmp|Todos os arquivos|*.*"
+            Ofd.Title = "Selecionar Imagem"
+            If Ofd.ShowDialog() = DialogResult.OK Then
+                Filename = Util.GetFilename(Path.GetExtension(Ofd.FileName))
+                File.Copy(Ofd.FileName, Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
+                Picture = New ProductPicture()
+                Picture.Picture.SetCurrentFile(Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
+                _Product.Pictures.Add(Picture)
+                SelectedPicture = Picture
+                EprValidation.Clear()
+                BtnSave.Enabled = True
+            End If
+        End Using
+        RefreshPhotoControls()
+    End Sub
+    Private Sub BtnRemovePhoto_Click(sender As Object, e As EventArgs) Handles BtnRemovePhoto.Click
+        Dim Pictures As List(Of ProductPicture) = _Product.Pictures.ToList()
+        If CMessageBox.Show("A foto será excluída permanentemente quando essa avaliação for salva. Confirma a exclusão?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+            SelectedPicture.Picture.SetCurrentFile(Nothing)
+            Dim Index As Integer = Pictures.IndexOf(SelectedPicture)
+            Dim Found As Boolean = False
+            For i As Integer = Index - 1 To 0 Step -1
+                If Pictures(i).Picture.CurrentFile IsNot Nothing Then
+                    SelectedPicture = Pictures(i)
+                    Found = True
+                    Exit For
+                End If
+            Next
+            If Not Found Then
+                For i As Integer = Index + 1 To Pictures.Count - 1
+                    If Pictures(i).Picture.CurrentFile IsNot Nothing Then
+                        SelectedPicture = Pictures(i)
+                        Found = True
+                        Exit For
+                    End If
+                Next
+            End If
+            If Not Found Then
+                SelectedPicture = Nothing
+            End If
+            RefreshPhotoControls()
+            EprValidation.Clear()
+            BtnSave.Enabled = True
+        End If
+    End Sub
+    Private Sub BtnPreviousPhoto_Click(sender As Object, e As EventArgs) Handles BtnPreviousPhoto.Click
+        Dim ValidPictures As List(Of ProductPicture) = _Product.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
+        SelectedPicture = ValidPictures(ValidPictures.IndexOf(SelectedPicture) - 1)
+        RefreshPhotoControls()
+    End Sub
+
+    Private Sub BtnNextPhoto_Click(sender As Object, e As EventArgs) Handles BtnNextPhoto.Click
+        Dim ValidPhotos As List(Of ProductPicture) = _Product.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
+        SelectedPicture = ValidPhotos(ValidPhotos.IndexOf(SelectedPicture) + 1)
+        RefreshPhotoControls()
+    End Sub
+
+    Private Sub BtnFirstPhoto_Click(sender As Object, e As EventArgs) Handles BtnFirstPhoto.Click
+        Dim ValidPhotos As List(Of ProductPicture) = _Product.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
+        SelectedPicture = ValidPhotos(0)
+        RefreshPhotoControls()
+    End Sub
+
+    Private Sub BtnLastPhoto_Click(sender As Object, e As EventArgs) Handles BtnLastPhoto.Click
+        Dim ValidPhotos As List(Of ProductPicture) = _Product.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
+        SelectedPicture = ValidPhotos(ValidPhotos.Count - 1)
+        RefreshPhotoControls()
+    End Sub
+
+    Private Sub RefreshPhotoControls()
+        Dim ValidPhotos As List(Of ProductPicture) = _Product.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
+        Dim PhotoCount As Integer = ValidPhotos.Count
+        Dim PhotoIndex As Integer = ValidPhotos.IndexOf(SelectedPicture)
+        If PhotoCount < 1 Then
+            LblPhotoCount.Visible = False
+            BtnSavePhoto.Enabled = False
+            BtnRemovePhoto.Enabled = False
+            BtnFirstPhoto.Enabled = False
+            BtnPreviousPhoto.Enabled = False
+            BtnNextPhoto.Enabled = False
+            BtnLastPhoto.Enabled = False
+            PbxPhoto.Image = Nothing
+        Else
+            LblPhotoCount.Visible = True
+            LblPhotoCount.Text = $"Foto {PhotoIndex + 1} de {PhotoCount}"
+            BtnRemovePhoto.Enabled = True
+            BtnSavePhoto.Enabled = True
+            BtnFirstPhoto.Enabled = (PhotoIndex > 0)
+            BtnPreviousPhoto.Enabled = (PhotoIndex > 0)
+            BtnNextPhoto.Enabled = (PhotoIndex < PhotoCount - 1)
+            BtnLastPhoto.Enabled = (PhotoIndex < PhotoCount - 1)
+        End If
     End Sub
     Private Sub BeforeDataGridViewRowMove()
         If BtnSave.Enabled Then
@@ -120,11 +236,11 @@ Public Class FrmProduct
         Try
             Cursor = Cursors.WaitCursor
             _Product.Load(_ProductsGrid.SelectedRows(0).Cells("id").Value, True)
-            For Each p In _Product.Pictures.ToArray.Reverse
-                If Not IO.File.Exists(p.Picture.OriginalFile) Then
-                    _Product.Pictures.Remove(p)
-                End If
-            Next p
+            'For Each p In _Product.Pictures.ToArray.Reverse
+            '    If Not IO.File.Exists(p.Picture.OriginalFile) Then
+            '        _Product.Pictures.Remove(p)
+            '    End If
+            'Next p
             LoadData()
         Catch ex As Exception
             CMessageBox.Show("ERRO PD001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -144,7 +260,6 @@ Public Class FrmProduct
             If _ProductsForm IsNot Nothing Then
                 DgvProviderCode.Fill(_Product.ProviderCodes)
                 DgvCode.Fill(_Product.Codes)
-                DgvPicture.Fill(_Product.Pictures)
                 DgvPrice.Fill(_Product.Prices)
                 DgvIndicator.Fill(_Product.Indicators)
             End If
@@ -321,13 +436,6 @@ Public Class FrmProduct
             e.CellStyle.Format = "N2"
         End If
     End Sub
-    Private Sub DgvPicture_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvPicture.CellFormatting
-        Dim Dgv As DataGridView = sender
-        Dgv.Rows(e.RowIndex).Height = 60
-        If e.ColumnIndex = Dgv.Columns("Picture").Index Then
-            CType(Dgv.Columns(e.ColumnIndex), DataGridViewImageColumn).ImageLayout = DataGridViewImageCellLayout.Zoom
-        End If
-    End Sub
     Private Sub DgvProviderCode_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvProviderCode.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvProviderCode.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
@@ -338,13 +446,6 @@ Public Class FrmProduct
         Dim ClickPlace As DataGridView.HitTestInfo = DgvCode.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
             BtnEditCode.PerformClick()
-        End If
-    End Sub
-
-    Private Sub DgvPicture_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvPicture.MouseDoubleClick
-        Dim ClickPlace As DataGridView.HitTestInfo = DgvPicture.HitTest(e.X, e.Y)
-        If ClickPlace.Type = DataGridViewHitTestType.Cell Then
-            BtnEditPicture.PerformClick()
         End If
     End Sub
     Private Function IsValidFields() As Boolean
@@ -443,7 +544,6 @@ Public Class FrmProduct
                     LblIDValue.Text = _Product.ID
                     DgvProviderCode.Fill(_Product.ProviderCodes)
                     DgvCode.Fill(_Product.Codes)
-                    DgvPicture.Fill(_Product.Pictures)
                     DgvPrice.Fill(_Product.Prices)
                     DgvIndicator.Fill(_Product.Indicators)
                     BtnSave.Enabled = False
@@ -511,24 +611,6 @@ Public Class FrmProduct
             View = Table.DefaultView
             If TxtFilterCode.Text <> Nothing Then
                 Filter = Filter.Replace("@VALUE", TxtFilterCode.Text.Replace("%", Nothing).Replace("*", Nothing))
-                View.RowFilter = Filter
-            Else
-                View.RowFilter = Nothing
-            End If
-        End If
-    End Sub
-    Private Sub TxtFilterPicture_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterPicture.TextChanged
-        FilterPicture()
-    End Sub
-    Private Sub FilterPicture()
-        Dim Table As DataTable
-        Dim View As DataView
-        Dim Filter As String = String.Format("{0}", "Caption LIKE '%@VALUE%'")
-        If DgvPicture.DataSource IsNot Nothing Then
-            Table = DgvPicture.DataSource
-            View = Table.DefaultView
-            If TxtFilterPicture.Text <> Nothing Then
-                Filter = Filter.Replace("@VALUE", TxtFilterPicture.Text.Replace("%", Nothing).Replace("*", Nothing))
                 View.RowFilter = Filter
             Else
                 View.RowFilter = Nothing
@@ -623,46 +705,6 @@ Public Class FrmProduct
         FilterForm.ShowDialog()
         QbxGroup.Select()
     End Sub
-    Private Sub BtnIncludePicture_Click(sender As Object, e As EventArgs) Handles BtnIncludePicture.Click
-        Dim Form As New FrmProductPicture(_Product, New ProductPicture(), Me)
-        Form.ShowDialog()
-    End Sub
-    Private Sub BtnEditPicture_Click(sender As Object, e As EventArgs) Handles BtnEditPicture.Click
-        Dim Form As FrmProductPicture
-        Dim Picture As ProductPicture
-        If DgvPicture.SelectedRows.Count = 1 Then
-            Picture = _Product.Pictures.Single(Function(x) x.Guid = DgvPicture.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmProductPicture(_Product, Picture, Me)
-            Form.ShowDialog()
-        End If
-    End Sub
-    Private Sub BtnDeletePicture_Click(sender As Object, e As EventArgs) Handles BtnDeletePicture.Click
-        Dim Picture As ProductPicture
-        If DgvPicture.SelectedRows.Count = 1 Then
-            If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Picture = _Product.Pictures.Single(Function(x) x.Guid = DgvPicture.SelectedRows(0).Cells("Guid").Value)
-                _Product.Pictures.Remove(Picture)
-                DgvPicture.Fill(_Product.Pictures)
-                BtnSave.Enabled = True
-            End If
-        End If
-    End Sub
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     Private Sub BtnIncludePrice_Click(sender As Object, e As EventArgs) Handles BtnIncludePrice.Click
@@ -734,7 +776,32 @@ Public Class FrmProduct
             BtnDeletePrice.Enabled = True
         End If
     End Sub
-
+    Private Sub BtnPhoto_EnabledChanged(sender As Object, e As EventArgs) Handles BtnSavePhoto.EnabledChanged, BtnRemovePhoto.EnabledChanged, BtnPreviousPhoto.EnabledChanged, BtnNextPhoto.EnabledChanged, BtnLastPhoto.EnabledChanged, BtnIncludePhoto.EnabledChanged, BtnFirstPhoto.EnabledChanged
+        Dim Button As NoFocusCueButton = sender
+        If Button.Enabled Then
+            Select Case True
+                Case Button Is BtnFirstPhoto
+                    Button.BackgroundImage = My.Resources.NavFirst
+                Case Button Is BtnPreviousPhoto
+                    Button.BackgroundImage = My.Resources.NavPrevious
+                Case Button Is BtnNextPhoto
+                    Button.BackgroundImage = My.Resources.NavNext
+                Case Button Is BtnLastPhoto
+                    Button.BackgroundImage = My.Resources.NavLast
+                Case Button Is BtnIncludePhoto
+                    Button.BackgroundImage = My.Resources.ImageInclude
+                Case Button Is BtnRemovePhoto
+                    Button.BackgroundImage = My.Resources.ImageDelete
+                Case Button Is BtnSavePhoto
+                    Button.BackgroundImage = My.Resources.ImageSave
+            End Select
+        Else
+            Dim Img As Image = Button.BackgroundImage
+            Dim Colors As List(Of Color) = ImageHelper.GetImageColors(Img)
+            Img = ImageHelper.GetRecoloredImage(Img, Color.Gray)
+            Button.BackgroundImage = Img
+        End If
+    End Sub
 
 
 
@@ -777,15 +844,6 @@ Public Class FrmProduct
     Private Sub TxtFilterProviderCode_Leave(sender As Object, e As EventArgs) Handles TxtFilterProviderCode.Leave
         EprInformation.Clear()
     End Sub
-
-    Private Sub TxtFilterPicture_Enter(sender As Object, e As EventArgs) Handles TxtFilterPicture.Enter
-        EprInformation.SetError(TsPicture, "Filtrando o campo: Legenda")
-        EprInformation.SetIconAlignment(TsPicture, ErrorIconAlignment.MiddleLeft)
-        EprInformation.SetIconPadding(TsPicture, -365)
-    End Sub
-    Private Sub TxtFilterPicture_Leave(sender As Object, e As EventArgs) Handles TxtFilterPicture.Leave
-        EprInformation.Clear()
-    End Sub
     Private Sub FrmProduct_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         _Product.Unlock()
     End Sub
@@ -795,18 +853,7 @@ Public Class FrmProduct
     Private Sub DgvCode_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvCode.DataSourceChanged
         FilterCode()
     End Sub
-    Private Sub DgvPicture_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvPicture.DataSourceChanged
-        FilterPicture()
-    End Sub
-    Private Sub DgvPicture_SelectionChanged(sender As Object, e As EventArgs) Handles DgvPicture.SelectionChanged
-        If DgvPicture.SelectedRows.Count = 0 Then
-            BtnEditPicture.Enabled = False
-            BtnDeletePicture.Enabled = False
-        Else
-            BtnEditPicture.Enabled = True
-            BtnDeletePicture.Enabled = True
-        End If
-    End Sub
+
     Private Sub DgvCode_SelectionChanged(sender As Object, e As EventArgs) Handles DgvCode.SelectionChanged
         If DgvCode.SelectedRows.Count = 0 Then
             BtnEditCode.Enabled = False

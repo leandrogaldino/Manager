@@ -1180,9 +1180,10 @@ DROP TRIGGER IF EXISTS `manager`.`privilegepresetupdate`;
 DROP TRIGGER IF EXISTS `manager`.`privilegepresetbeforedelete`;
 DROP TRIGGER IF EXISTS `manager`.`privilegepresetprivilegeinsert`;
 DROP TRIGGER IF EXISTS `manager`.`privilegepresetprivilegedelete`;
-
 DROP TRIGGER IF EXISTS `manager`.`productbeforedelete`;
-
+DROP TRIGGER IF EXISTS `manager`.`productpictureinsert`;
+DROP TRIGGER IF EXISTS `manager`.`productpictureupdate`;
+DROP TRIGGER IF EXISTS `manager`.`productpicturedelete`;
 
 
 
@@ -1306,7 +1307,10 @@ ADD CONSTRAINT `pricetablesellable_ibfk_4`
   FOREIGN KEY (`serviceid`)
   REFERENCES `manager`.`service` (`id`)
   ON DELETE NO ACTION;
-
+ALTER TABLE `manager`.`productpicture` ;
+ALTER TABLE `manager`.`productpicture` RENAME INDEX `picturelocation` TO `picturename`;
+ALTER TABLE `manager`.`productpicture` ALTER INDEX `picturename` VISIBLE;
+ALTER TABLE `manager`.`productpicture` DROP COLUMN `caption`,DROP INDEX `caption` ;
 
 
  
@@ -1459,6 +1463,17 @@ DELETE FROM productcode WHERE productid = OLD.id;
 DELETE FROM productprovidercode WHERE productid = OLD.id;
 DELETE FROM productpicture WHERE productid = OLD.id;
 END$$
+CREATE TRIGGER `productpictureinsert` AFTER INSERT ON `productpicture` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 6, NEW.productid, 'Foto Incluída', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END$$
+CREATE TRIGGER `productpictureupdate` AFTER UPDATE ON `productpicture` FOR EACH ROW BEGIN
+IF OLD.picturename <> NEW.picturename THEN INSERT INTO log VALUES (NULL, 6, NEW.productid, 'Foto Alterada', NULL, NULL, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+END$$
+CREATE TRIGGER `productpicturedelete` AFTER DELETE ON `productpicture` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 6, OLD.productid, 'Foto Excluída', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
+END$$
+
+
 
 DELIMITER ;
 SET SQL_SAFE_UPDATES = 0;
@@ -1467,6 +1482,12 @@ update log set routineid = 204 where routineid = 205;
 delete from log where routineid = 14;
 delete from log where routineid = 1401;
 SET SQL_SAFE_UPDATES = 1;
+
+
+
+
+
+
 
 
 

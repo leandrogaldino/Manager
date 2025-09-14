@@ -1243,12 +1243,6 @@
     <Compile Include="Source\Routines\Product\FrmProduct.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Product\FrmProductPicture.Designer.vb">
-      <DependentUpon>FrmProductPicture.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\Product\FrmProductPicture.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Source\Routines\Product\FrmProductProviderCode.Designer.vb">
       <DependentUpon>FrmProductProviderCode.vb</DependentUpon>
     </Compile>
@@ -1611,9 +1605,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Product\FrmProduct.resx">
       <DependentUpon>FrmProduct.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Product\FrmProductPicture.resx">
-      <DependentUpon>FrmProductPicture.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Product\FrmProductProviderCode.resx">
       <DependentUpon>FrmProductProviderCode.vb</DependentUpon>
@@ -2102,7 +2093,6 @@
     <Content Include="Resources\XML\PersonCompressorGrid.xml" />
     <Content Include="Resources\XML\PersonContactGrid.xml" />
     <Content Include="Resources\XML\EvaluationManagementGrid.xml" />
-    <Content Include="Resources\XML\ProductPictureGrid.xml" />
     <Content Include="Resources\XML\ProductProviderCodeGrid.xml" />
     <Content Include="Resources\XML\ProductCodeGrid.xml" />
     <Content Include="Resources\XML\ProductGrid.xml" />

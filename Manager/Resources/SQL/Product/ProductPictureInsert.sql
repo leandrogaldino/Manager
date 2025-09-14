@@ -3,7 +3,6 @@ INSERT INTO productpicture
 	productid,
 	creation,
 	picturename,
-	caption,
 	userid
 )
 VALUES
@@ -11,6 +10,5 @@ VALUES
 	@productid,
 	@creation,
 	@picturename,
-	@caption,
 	@userid
 );

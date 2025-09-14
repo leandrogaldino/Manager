@@ -3447,7 +3447,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;PersonCompressorSellableWorkedHour&quot; Version=&quot;1&quot;&gt;
+        '''&lt;Routine Id=&quot;PersonCompressorSellable&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''	&lt;Column Index=&quot;0&quot;&gt;
@@ -3463,7 +3463,8 @@ Namespace My.Resources
         '''		&lt;Width&gt;70&lt;/Width&gt;
         '''	&lt;/Column&gt;
         '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
-        '''		&lt;Visible&gt;False&lt;/Visib [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''		&lt;Visible&gt;False&lt;/Visible&gt;
+        '''		&lt;Di [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PersonCompressorSellableGrid() As String
             Get
@@ -4744,38 +4745,11 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;ProductPicture&quot; Version=&quot;1&quot;&gt;
-        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
-        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
-        '''    &lt;Column Index=&quot;0&quot;&gt;
-        '''        &lt;Visible&gt;True&lt;/Visible&gt;
-        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
-        '''        &lt;Name&gt;Ordem&lt;/Name&gt;
-        '''        &lt;Width&gt;70&lt;/Width&gt;
-        '''    &lt;/Column&gt;    
-        '''	&lt;Column Index=&quot;1&quot; ButtonState=&quot;Hidden&quot;&gt;
-        '''		&lt;Visible&gt;False&lt;/Visible&gt;
-        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''		&lt;Name&gt;Local Foto&lt;/Name&gt;
-        '''		&lt;Width&gt;100&lt;/Width&gt;
-        '''	&lt;/Column&gt;
-        '''    &lt;Column Index=&quot;2&quot;&gt;
-        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property ProductPictureGrid() As String
-            Get
-                Return ResourceManager.GetString("ProductPictureGrid", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO productpicture
         '''(
         '''	productid,
         '''	creation,
         '''	picturename,
-        '''	caption,
         '''	userid
         ''')
         '''VALUES
@@ -4783,7 +4757,6 @@ Namespace My.Resources
         '''	@productid,
         '''	@creation,
         '''	@picturename,
-        '''	@caption,
         '''	@userid
         ''');
         '''.
@@ -4798,8 +4771,7 @@ Namespace My.Resources
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	productpicture.id,
         '''	productpicture.creation,
-        '''	productpicture.picturename,
-        '''	productpicture.caption
+        '''	productpicture.picturename
         '''FROM productpicture
         '''WHERE productpicture.productid = @productid;.
         '''</summary>
@@ -4812,7 +4784,6 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE productpicture SET
         '''    picturename = @picturename,
-        '''    caption = @caption,
         '''    userid = @userid
         '''WHERE productpicture.id = @id;.
         '''</summary>

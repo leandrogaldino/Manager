@@ -63,7 +63,6 @@ Public Class FrmEvaluation
         _Filter = CType(_EvaluationsForm.PgFilter.SelectedObject, EvaluationFilter)
         ConfigureControls()
         LoadData()
-        RefreshPhotoControls()
     End Sub
     Public Sub New(Evaluation As Evaluation)
         InitializeComponent()
@@ -209,12 +208,10 @@ Public Class FrmEvaluation
                     _Evaluation.ElapsedDayControlledSellable.Remove(p)
                 End If
             Next p
-
             If DgvWorkedHourSellable.Rows.Count > 0 Then
                 DgvWorkedHourSellable.Rows(0).Selected = True
                 DgvWorkedHourSellable.FirstDisplayedScrollingRowIndex = 0
             End If
-
             If DgvElapsedDaySellable.Rows.Count > 0 Then
                 DgvElapsedDaySellable.Rows(0).Selected = True
                 DgvElapsedDaySellable.FirstDisplayedScrollingRowIndex = 0

@@ -1098,8 +1098,7 @@ DROP FOREIGN KEY `evaluationpart_evaluation`,
 DROP FOREIGN KEY `evaluationpart_personcompressor`,
 DROP FOREIGN KEY `evaluationpart_personcompressorsellable`,
 DROP FOREIGN KEY `evaluationpart_user`;
-ALTER TABLE `manager`.`evaluationcontrolledsellable` 
-;
+ALTER TABLE `manager`.`evaluationcontrolledsellable`;
 ALTER TABLE `manager`.`evaluationcontrolledsellable` RENAME INDEX `evaluationpart_evaluation` TO `evaluationsellable_evaluation`;
 ALTER TABLE `manager`.`evaluationcontrolledsellable` ALTER INDEX `evaluationsellable_evaluation` VISIBLE;
 ALTER TABLE `manager`.`evaluationcontrolledsellable` RENAME INDEX `evaluationpart_personcompressor` TO `evaluationsellable_personcompressor`;
@@ -1149,4 +1148,53 @@ ADD CONSTRAINT `compressorsellable_compressor`
   FOREIGN KEY (`compressorid`)
   REFERENCES `manager`.`compressor` (`id`)
   ON DELETE NO ACTION;
+
+DROP TRIGGER IF EXISTS `manager`.`compressordelete`;
+DROP TRIGGER IF EXISTS `manager`.`compressordeforedelete`;
+DROP TRIGGER IF EXISTS `manager`.`cashflowbeforedelete`;
+DROP TRIGGER IF EXISTS `manager`.`cashbeforedelete`;
+DROP TRIGGER IF EXISTS `manager`.`cashitembeforedelete`;
+
+ALTER TABLE `manager`.`cashflowauthorized` 
+DROP FOREIGN KEY `cashflowauthorized_ibfk_1`;
+ALTER TABLE `manager`.`cashflowauthorized` 
+ADD CONSTRAINT `cashflowauthorized_ibfk_1`
+  FOREIGN KEY (`cashflowid`)
+  REFERENCES `manager`.`cashflow` (`id`)
+  ON DELETE NO ACTION;
+ ALTER TABLE `manager`.`cashitem` 
+DROP FOREIGN KEY `cashitem_cash`;
+ALTER TABLE `manager`.`cashitem` 
+ADD CONSTRAINT `cashitem_cash`
+  FOREIGN KEY (`cashid`)
+  REFERENCES `manager`.`cash` (`id`)
+  ON DELETE NO ACTION;
+ 
+  
+
+DELIMITER $$
+CREATE TRIGGER `compressordelete` AFTER DELETE ON `compressor` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 12, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
+END$$
+CREATE TRIGGER `manager`.`compressordeforedelete` BEFORE DELETE ON `compressor` FOR EACH ROW
+BEGIN
+DELETE FROM compressorsellable WHERE compressorid = OLD.id;
+END$$
+CREATE TRIGGER `manager`.`cashflowbeforedelete` BEFORE DELETE ON `cashflow` FOR EACH ROW
+BEGIN
+DELETE FROM cashflowauthorized WHERE cashflowid = OLD.id;
+END$$
+CREATE TRIGGER `manager`.`cashbeforedelete` BEFORE DELETE ON `cash` FOR EACH ROW
+BEGIN
+DELETE FROM cashitem WHERE cashid = OLD.id;
+END$$
+DELIMITER ;
+CREATE TRIGGER `manager`.`cashitembeforedelete` BEFORE DELETE ON `cashitem` FOR EACH ROW
+BEGIN
+DELETE FROM cashitemresponsible WHERE cashitemid = OLD.id;
+END$$
+DELIMITER ;
+
+
+
 

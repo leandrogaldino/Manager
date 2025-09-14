@@ -145,15 +145,6 @@ Public MustInherit Class ParentModel
             End If
         End If
     End Sub
-    Public Sub UpdateUser(Connection As MySqlConnection)
-        Using CmdUpdateUser As New MySqlCommand("UpdateUserID", Connection)
-            CmdUpdateUser.CommandType = CommandType.StoredProcedure
-            CmdUpdateUser.Parameters.AddWithValue("@tablename", "evaluation")
-            CmdUpdateUser.Parameters.AddWithValue("@userid", User.ID)
-            CmdUpdateUser.Parameters.AddWithValue("@id", ID)
-            CmdUpdateUser.ExecuteNonQuery()
-        End Using
-    End Sub
     Private Async Sub Timer_Elapsed(sender As Object, e As EventArgs) Handles Timer.Elapsed
         Dim Time As String = Now.ToString("yyyy-MM-dd HH:mm:ss")
         Dim ConnectionString As String = _Session.Setting.Database.GetConnectionString()

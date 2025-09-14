@@ -94,10 +94,15 @@ Public Class CashFlow
         Dim Session = Locator.GetInstance(Of Session)
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
-            Using Cmd As New MySqlCommand(My.Resources.CashFlowDelete, Con)
-                Cmd.Parameters.AddWithValue("@id", ID)
-                Cmd.ExecuteNonQuery()
-                Clear()
+            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
+                UpdateUser(Con, Tra)
+                Authorizeds.ForEach(Sub(a) a.UpdateUser(Con, Tra))
+                Using Cmd As New MySqlCommand(My.Resources.CashFlowDelete, Con, Tra)
+                    Cmd.Parameters.AddWithValue("@id", ID)
+                    Cmd.ExecuteNonQuery()
+                    Clear()
+                End Using
+                Tra.Commit()
             End Using
         End Using
     End Sub

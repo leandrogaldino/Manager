@@ -84,10 +84,16 @@ Public Class Compressor
         Dim Session = Locator.GetInstance(Of Session)
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
-            Using CmdCompressor As New MySqlCommand(My.Resources.CompressorDelete, Con)
-                CmdCompressor.Parameters.AddWithValue("@id", ID)
-                CmdCompressor.ExecuteNonQuery()
-                Clear()
+            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
+                UpdateUser(Con, Tra)
+                WorkedHourSellables.ForEach(Sub(x) x.UpdateUser(Con, Tra))
+                ElapsedDaySellables.ForEach(Sub(x) x.UpdateUser(Con, Tra))
+                Using CmdCompressor As New MySqlCommand(My.Resources.CompressorDelete, Con, Tra)
+                    CmdCompressor.Parameters.AddWithValue("@id", ID)
+                    CmdCompressor.ExecuteNonQuery()
+                    Clear()
+                End Using
+                Tra.Commit()
             End Using
         End Using
     End Sub

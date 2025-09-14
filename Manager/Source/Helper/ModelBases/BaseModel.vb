@@ -1,4 +1,5 @@
 ﻿Imports ControlLibrary
+Imports MySql.Data.MySqlClient
 Public MustInherit Class BaseModel
     Inherits CloneableModel
     Implements IEquatable(Of BaseModel)
@@ -46,7 +47,25 @@ Public MustInherit Class BaseModel
     Public Sub SetIsSaved(IsSaved As Boolean)
         _IsSaved = IsSaved
     End Sub
-
+    Public Sub UpdateUser(Connection As MySqlConnection)
+        Using CmdUpdateUser As New MySqlCommand("UpdateUserID", Connection)
+            CmdUpdateUser.CommandType = CommandType.StoredProcedure
+            CmdUpdateUser.Parameters.AddWithValue("@tablename", "evaluation")
+            CmdUpdateUser.Parameters.AddWithValue("@userid", User.ID)
+            CmdUpdateUser.Parameters.AddWithValue("@id", ID)
+            CmdUpdateUser.ExecuteNonQuery()
+        End Using
+    End Sub
+    Public Sub UpdateUser(Connection As MySqlConnection, Transaction As MySqlTransaction)
+        Using CmdUpdateUser As New MySqlCommand("UpdateUserID", Connection)
+            CmdUpdateUser.Transaction = Transaction
+            CmdUpdateUser.CommandType = CommandType.StoredProcedure
+            CmdUpdateUser.Parameters.AddWithValue("@tablename", "evaluation")
+            CmdUpdateUser.Parameters.AddWithValue("@userid", User.ID)
+            CmdUpdateUser.Parameters.AddWithValue("@id", ID)
+            CmdUpdateUser.ExecuteNonQuery()
+        End Using
+    End Sub
     Public Overrides Function Equals(obj As Object) As Boolean
         If obj Is Nothing Then Return False
         If TypeOf obj IsNot BaseModel Then Return False

@@ -86,6 +86,8 @@ Public Class Cash
             Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
                 Con.Open()
                 UpdateUser(Con)
+                CashItems.ForEach(Sub(ci) ci.UpdateUser(Con))
+                CashItems.ForEach(Sub(ci) ci.Responsibles.ForEach(Sub(r) r.UpdateUser(Con)))
                 Using CmdCash As New MySqlCommand(My.Resources.CashDelete, Con)
                     CmdCash.Parameters.AddWithValue("@id", ID)
                     CmdCash.ExecuteNonQuery()

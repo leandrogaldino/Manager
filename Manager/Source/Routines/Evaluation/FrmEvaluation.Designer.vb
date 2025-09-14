@@ -668,7 +668,7 @@ Partial Class FrmEvaluation
         Me.TbxEndTime.Name = "TbxEndTime"
         Me.TbxEndTime.ShowSecconds = False
         Me.TbxEndTime.Size = New System.Drawing.Size(75, 23)
-        Me.TbxEndTime.TabIndex = 24
+        Me.TbxEndTime.TabIndex = 9
         Me.TbxEndTime.Text = "  :"
         Me.TbxEndTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.TbxEndTime.Time = Nothing
@@ -680,7 +680,7 @@ Partial Class FrmEvaluation
         Me.TbxStartTime.Name = "TbxStartTime"
         Me.TbxStartTime.ShowSecconds = False
         Me.TbxStartTime.Size = New System.Drawing.Size(75, 23)
-        Me.TbxStartTime.TabIndex = 24
+        Me.TbxStartTime.TabIndex = 7
         Me.TbxStartTime.Text = "  :"
         Me.TbxStartTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.TbxStartTime.Time = Nothing
@@ -693,7 +693,7 @@ Partial Class FrmEvaluation
         Me.BtnCallTypeHasRepairNeedProposal.Location = New System.Drawing.Point(6, 22)
         Me.BtnCallTypeHasRepairNeedProposal.Name = "BtnCallTypeHasRepairNeedProposal"
         Me.BtnCallTypeHasRepairNeedProposal.Size = New System.Drawing.Size(382, 25)
-        Me.BtnCallTypeHasRepairNeedProposal.TabIndex = 23
+        Me.BtnCallTypeHasRepairNeedProposal.TabIndex = 0
         RichTextPart1.Color = System.Drawing.SystemColors.WindowText
         RichTextPart1.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         RichTextPart1.Text = "Tipo:"
@@ -737,7 +737,7 @@ Partial Class FrmEvaluation
         Me.BtnUnitTemperaturePressure.Location = New System.Drawing.Point(6, 53)
         Me.BtnUnitTemperaturePressure.Name = "BtnUnitTemperaturePressure"
         Me.BtnUnitTemperaturePressure.Size = New System.Drawing.Size(382, 25)
-        Me.BtnUnitTemperaturePressure.TabIndex = 23
+        Me.BtnUnitTemperaturePressure.TabIndex = 1
         RichTextPart9.Color = System.Drawing.SystemColors.WindowText
         RichTextPart9.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         RichTextPart9.Text = "Unidade:"
@@ -892,7 +892,7 @@ Partial Class FrmEvaluation
         Me.QbxCustomer.Relations.Add(Relation3)
         Me.QbxCustomer.Size = New System.Drawing.Size(382, 23)
         Me.QbxCustomer.Suffix = Nothing
-        Me.QbxCustomer.TabIndex = 12
+        Me.QbxCustomer.TabIndex = 11
         '
         'TxtEvaluationNumber
         '
@@ -901,7 +901,7 @@ Partial Class FrmEvaluation
         Me.TxtEvaluationNumber.MaxLength = 10
         Me.TxtEvaluationNumber.Name = "TxtEvaluationNumber"
         Me.TxtEvaluationNumber.Size = New System.Drawing.Size(105, 23)
-        Me.TxtEvaluationNumber.TabIndex = 4
+        Me.TxtEvaluationNumber.TabIndex = 3
         Me.TxtEvaluationNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'LblEndTime
@@ -910,7 +910,7 @@ Partial Class FrmEvaluation
         Me.LblEndTime.Location = New System.Drawing.Point(310, 81)
         Me.LblEndTime.Name = "LblEndTime"
         Me.LblEndTime.Size = New System.Drawing.Size(30, 17)
-        Me.LblEndTime.TabIndex = 9
+        Me.LblEndTime.TabIndex = 8
         Me.LblEndTime.Text = "Fim"
         '
         'LblStartTime
@@ -919,7 +919,7 @@ Partial Class FrmEvaluation
         Me.LblStartTime.Location = New System.Drawing.Point(229, 81)
         Me.LblStartTime.Name = "LblStartTime"
         Me.LblStartTime.Size = New System.Drawing.Size(42, 17)
-        Me.LblStartTime.TabIndex = 7
+        Me.LblStartTime.TabIndex = 6
         Me.LblStartTime.Text = "Inicio"
         '
         'CbxManualAverageWorkLoad
@@ -928,7 +928,7 @@ Partial Class FrmEvaluation
         Me.CbxManualAverageWorkLoad.Location = New System.Drawing.Point(373, 222)
         Me.CbxManualAverageWorkLoad.Name = "CbxManualAverageWorkLoad"
         Me.CbxManualAverageWorkLoad.Size = New System.Drawing.Size(15, 14)
-        Me.CbxManualAverageWorkLoad.TabIndex = 22
+        Me.CbxManualAverageWorkLoad.TabIndex = 21
         Me.CbxManualAverageWorkLoad.UseVisualStyleBackColor = True
         '
         'FlpCustomer
@@ -940,7 +940,7 @@ Partial Class FrmEvaluation
         Me.FlpCustomer.Location = New System.Drawing.Point(319, 126)
         Me.FlpCustomer.Name = "FlpCustomer"
         Me.FlpCustomer.Size = New System.Drawing.Size(69, 21)
-        Me.FlpCustomer.TabIndex = 13
+        Me.FlpCustomer.TabIndex = 12
         '
         'BtnFilterCustomer
         '
@@ -1000,7 +1000,7 @@ Partial Class FrmEvaluation
         Me.DbxAverageWorkLoad.Name = "DbxAverageWorkLoad"
         Me.DbxAverageWorkLoad.ReadOnly = True
         Me.DbxAverageWorkLoad.Size = New System.Drawing.Size(82, 23)
-        Me.DbxAverageWorkLoad.TabIndex = 21
+        Me.DbxAverageWorkLoad.TabIndex = 20
         Me.DbxAverageWorkLoad.Text = "0,00"
         Me.DbxAverageWorkLoad.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -1013,7 +1013,7 @@ Partial Class FrmEvaluation
         Me.DbxHorimeter.Location = New System.Drawing.Point(200, 239)
         Me.DbxHorimeter.Name = "DbxHorimeter"
         Me.DbxHorimeter.Size = New System.Drawing.Size(100, 23)
-        Me.DbxHorimeter.TabIndex = 19
+        Me.DbxHorimeter.TabIndex = 18
         Me.DbxHorimeter.Text = "0"
         Me.DbxHorimeter.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -1023,7 +1023,7 @@ Partial Class FrmEvaluation
         Me.LblEvaluationDate.Location = New System.Drawing.Point(114, 81)
         Me.LblEvaluationDate.Name = "LblEvaluationDate"
         Me.LblEvaluationDate.Size = New System.Drawing.Size(98, 17)
-        Me.LblEvaluationDate.TabIndex = 5
+        Me.LblEvaluationDate.TabIndex = 4
         Me.LblEvaluationDate.Text = "Dt. Avaliação"
         '
         'LblCustomer
@@ -1032,7 +1032,7 @@ Partial Class FrmEvaluation
         Me.LblCustomer.Location = New System.Drawing.Point(3, 127)
         Me.LblCustomer.Name = "LblCustomer"
         Me.LblCustomer.Size = New System.Drawing.Size(54, 17)
-        Me.LblCustomer.TabIndex = 11
+        Me.LblCustomer.TabIndex = 10
         Me.LblCustomer.Text = "Cliente"
         '
         'LblAverageWorkLoad
@@ -1041,7 +1041,7 @@ Partial Class FrmEvaluation
         Me.LblAverageWorkLoad.Location = New System.Drawing.Point(303, 219)
         Me.LblAverageWorkLoad.Name = "LblAverageWorkLoad"
         Me.LblAverageWorkLoad.Size = New System.Drawing.Size(35, 17)
-        Me.LblAverageWorkLoad.TabIndex = 20
+        Me.LblAverageWorkLoad.TabIndex = 19
         Me.LblAverageWorkLoad.Text = "CMT"
         Me.Tip.SetToolTip(Me.LblAverageWorkLoad, "Carga Média de Trabalho")
         '
@@ -1051,7 +1051,7 @@ Partial Class FrmEvaluation
         Me.LblEvaluationNumber.Location = New System.Drawing.Point(6, 81)
         Me.LblEvaluationNumber.Name = "LblEvaluationNumber"
         Me.LblEvaluationNumber.Size = New System.Drawing.Size(94, 17)
-        Me.LblEvaluationNumber.TabIndex = 3
+        Me.LblEvaluationNumber.TabIndex = 2
         Me.LblEvaluationNumber.Text = "Nº Avaliação"
         '
         'LblResponsible
@@ -1060,7 +1060,7 @@ Partial Class FrmEvaluation
         Me.LblResponsible.Location = New System.Drawing.Point(6, 219)
         Me.LblResponsible.Name = "LblResponsible"
         Me.LblResponsible.Size = New System.Drawing.Size(88, 17)
-        Me.LblResponsible.TabIndex = 16
+        Me.LblResponsible.TabIndex = 15
         Me.LblResponsible.Text = "Responsável"
         '
         'TxtResponsible
@@ -1069,7 +1069,7 @@ Partial Class FrmEvaluation
         Me.TxtResponsible.Location = New System.Drawing.Point(6, 238)
         Me.TxtResponsible.Name = "TxtResponsible"
         Me.TxtResponsible.Size = New System.Drawing.Size(188, 23)
-        Me.TxtResponsible.TabIndex = 17
+        Me.TxtResponsible.TabIndex = 16
         '
         'DbxEvaluationDate
         '
@@ -1079,7 +1079,7 @@ Partial Class FrmEvaluation
         Me.DbxEvaluationDate.MinimumSize = New System.Drawing.Size(100, 0)
         Me.DbxEvaluationDate.Name = "DbxEvaluationDate"
         Me.DbxEvaluationDate.Size = New System.Drawing.Size(109, 23)
-        Me.DbxEvaluationDate.TabIndex = 6
+        Me.DbxEvaluationDate.TabIndex = 5
         Me.DbxEvaluationDate.Text = "  /  /"
         '
         'LblHorimeter
@@ -1088,7 +1088,7 @@ Partial Class FrmEvaluation
         Me.LblHorimeter.Location = New System.Drawing.Point(197, 219)
         Me.LblHorimeter.Name = "LblHorimeter"
         Me.LblHorimeter.Size = New System.Drawing.Size(72, 17)
-        Me.LblHorimeter.TabIndex = 18
+        Me.LblHorimeter.TabIndex = 17
         Me.LblHorimeter.Text = "Horímetro"
         '
         'LblCompressor
@@ -1097,7 +1097,7 @@ Partial Class FrmEvaluation
         Me.LblCompressor.Location = New System.Drawing.Point(6, 173)
         Me.LblCompressor.Name = "LblCompressor"
         Me.LblCompressor.Size = New System.Drawing.Size(85, 17)
-        Me.LblCompressor.TabIndex = 14
+        Me.LblCompressor.TabIndex = 13
         Me.LblCompressor.Text = "Compressor"
         '
         'QbxCompressor
@@ -1174,16 +1174,16 @@ Partial Class FrmEvaluation
         Me.QbxCompressor.Relations.Add(Relation4)
         Me.QbxCompressor.Size = New System.Drawing.Size(382, 23)
         Me.QbxCompressor.Suffix = Nothing
-        Me.QbxCompressor.TabIndex = 15
+        Me.QbxCompressor.TabIndex = 14
         '
         'TabTechnicalAdvice
         '
         Me.TabTechnicalAdvice.BackColor = System.Drawing.Color.White
         Me.TabTechnicalAdvice.Controls.Add(Me.TlpAdvice)
-        Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 26)
+        Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 22)
         Me.TabTechnicalAdvice.Name = "TabTechnicalAdvice"
         Me.TabTechnicalAdvice.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1031, 407)
+        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1031, 411)
         Me.TabTechnicalAdvice.TabIndex = 6
         Me.TabTechnicalAdvice.Text = "Parecer Técnico"
         '
@@ -1199,7 +1199,7 @@ Partial Class FrmEvaluation
         Me.TlpAdvice.RowCount = 2
         Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.0!))
         Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.0!))
-        Me.TlpAdvice.Size = New System.Drawing.Size(1025, 401)
+        Me.TlpAdvice.Size = New System.Drawing.Size(1025, 405)
         Me.TlpAdvice.TabIndex = 2
         '
         'TlpReplaced
@@ -1213,7 +1213,7 @@ Partial Class FrmEvaluation
         Me.TlpReplaced.Name = "TlpReplaced"
         Me.TlpReplaced.RowCount = 1
         Me.TlpReplaced.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TlpReplaced.Size = New System.Drawing.Size(1019, 234)
+        Me.TlpReplaced.Size = New System.Drawing.Size(1019, 237)
         Me.TlpReplaced.TabIndex = 1
         '
         'GbxReplacedSellable
@@ -1223,7 +1223,7 @@ Partial Class FrmEvaluation
         Me.GbxReplacedSellable.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GbxReplacedSellable.Location = New System.Drawing.Point(3, 3)
         Me.GbxReplacedSellable.Name = "GbxReplacedSellable"
-        Me.GbxReplacedSellable.Size = New System.Drawing.Size(1013, 228)
+        Me.GbxReplacedSellable.Size = New System.Drawing.Size(1013, 231)
         Me.GbxReplacedSellable.TabIndex = 2
         Me.GbxReplacedSellable.TabStop = False
         Me.GbxReplacedSellable.Text = "Peças Substituídas/Serviços Executados"
@@ -1247,7 +1247,7 @@ Partial Class FrmEvaluation
         Me.DgvReplacedSellable.RowHeadersVisible = False
         Me.DgvReplacedSellable.RowTemplate.Height = 26
         Me.DgvReplacedSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvReplacedSellable.Size = New System.Drawing.Size(1007, 181)
+        Me.DgvReplacedSellable.Size = New System.Drawing.Size(1007, 184)
         Me.DgvReplacedSellable.TabIndex = 1
         Me.DgvReplacedSellable.TabStop = False
         '
@@ -1312,9 +1312,9 @@ Partial Class FrmEvaluation
         '
         Me.GbxAdvice.Controls.Add(Me.TxtTechnicalAdvice)
         Me.GbxAdvice.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GbxAdvice.Location = New System.Drawing.Point(3, 243)
+        Me.GbxAdvice.Location = New System.Drawing.Point(3, 246)
         Me.GbxAdvice.Name = "GbxAdvice"
-        Me.GbxAdvice.Size = New System.Drawing.Size(1019, 155)
+        Me.GbxAdvice.Size = New System.Drawing.Size(1019, 156)
         Me.GbxAdvice.TabIndex = 0
         Me.GbxAdvice.TabStop = False
         Me.GbxAdvice.Text = "Observação"
@@ -1326,7 +1326,7 @@ Partial Class FrmEvaluation
         Me.TxtTechnicalAdvice.Location = New System.Drawing.Point(3, 19)
         Me.TxtTechnicalAdvice.MaxLength = 1000000
         Me.TxtTechnicalAdvice.Name = "TxtTechnicalAdvice"
-        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1013, 133)
+        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1013, 134)
         Me.TxtTechnicalAdvice.TabIndex = 1
         Me.TxtTechnicalAdvice.Text = ""
         '
@@ -1335,10 +1335,10 @@ Partial Class FrmEvaluation
         Me.TabDocument.AutoScroll = True
         Me.TabDocument.Controls.Add(Me.PdfDocumentViewer)
         Me.TabDocument.Controls.Add(Me.TsDocument)
-        Me.TabDocument.Location = New System.Drawing.Point(4, 26)
+        Me.TabDocument.Location = New System.Drawing.Point(4, 22)
         Me.TabDocument.Name = "TabDocument"
         Me.TabDocument.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabDocument.Size = New System.Drawing.Size(1031, 407)
+        Me.TabDocument.Size = New System.Drawing.Size(1031, 411)
         Me.TabDocument.TabIndex = 7
         Me.TabDocument.Text = "Documento"
         Me.TabDocument.UseVisualStyleBackColor = True
@@ -1368,7 +1368,7 @@ Partial Class FrmEvaluation
         Me.PdfDocumentViewer.ScrollDisplacementValue = 0
         Me.PdfDocumentViewer.ShowHorizontalScrollBar = True
         Me.PdfDocumentViewer.ShowVerticalScrollBar = True
-        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1025, 376)
+        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1025, 380)
         Me.PdfDocumentViewer.SpaceBetweenPages = 8
         Me.PdfDocumentViewer.TabIndex = 1
         TextSearchSettings1.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -1461,10 +1461,10 @@ Partial Class FrmEvaluation
         'TabPhoto
         '
         Me.TabPhoto.Controls.Add(Me.PnPhoto)
-        Me.TabPhoto.Location = New System.Drawing.Point(4, 26)
+        Me.TabPhoto.Location = New System.Drawing.Point(4, 22)
         Me.TabPhoto.Name = "TabPhoto"
         Me.TabPhoto.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPhoto.Size = New System.Drawing.Size(1031, 407)
+        Me.TabPhoto.Size = New System.Drawing.Size(1031, 411)
         Me.TabPhoto.TabIndex = 8
         Me.TabPhoto.Text = "Fotos"
         Me.TabPhoto.UseVisualStyleBackColor = True
@@ -1478,7 +1478,7 @@ Partial Class FrmEvaluation
         Me.PnPhoto.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PnPhoto.Location = New System.Drawing.Point(3, 3)
         Me.PnPhoto.Name = "PnPhoto"
-        Me.PnPhoto.Size = New System.Drawing.Size(1025, 401)
+        Me.PnPhoto.Size = New System.Drawing.Size(1025, 405)
         Me.PnPhoto.TabIndex = 17
         '
         'PbxPhoto
@@ -1487,7 +1487,7 @@ Partial Class FrmEvaluation
         Me.PbxPhoto.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PbxPhoto.Location = New System.Drawing.Point(0, 28)
         Me.PbxPhoto.Name = "PbxPhoto"
-        Me.PbxPhoto.Size = New System.Drawing.Size(1023, 348)
+        Me.PbxPhoto.Size = New System.Drawing.Size(1023, 352)
         Me.PbxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PbxPhoto.TabIndex = 11
         Me.PbxPhoto.TabStop = False
@@ -1630,7 +1630,7 @@ Partial Class FrmEvaluation
         Me.LblPhotoCount.BackColor = System.Drawing.Color.White
         Me.LblPhotoCount.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.LblPhotoCount.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblPhotoCount.Location = New System.Drawing.Point(0, 376)
+        Me.LblPhotoCount.Location = New System.Drawing.Point(0, 380)
         Me.LblPhotoCount.Name = "LblPhotoCount"
         Me.LblPhotoCount.Size = New System.Drawing.Size(1023, 23)
         Me.LblPhotoCount.TabIndex = 14

@@ -26,14 +26,14 @@ Public Class FrmCompressorSellableElapsedDay
         _CompressorForm = CompressorForm
         _User = Locator.GetInstance(Of Session).User
         LoadForm()
-        DgvNavigator.DataGridView = _CompressorForm.DgvCompressorSellableElapsedDay
+        DgvNavigator.DataGridView = _CompressorForm.DgvCompressorElapsedDaySellable
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = _User.CanAccess(Routine.Log)
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = If(_ElapsedDaySellable.IsSaved, _CompressorForm.DgvCompressorSellableElapsedDay.SelectedRows(0).Cells("Order").Value, 0)
+        LblOrderValue.Text = If(_ElapsedDaySellable.IsSaved, _CompressorForm.DgvCompressorElapsedDaySellable.SelectedRows(0).Cells("Order").Value, 0)
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_ElapsedDaySellable.Status)
         LblCreationValue.Text = _ElapsedDaySellable.Creation
         ClearQbxSellable()
@@ -64,9 +64,9 @@ Public Class FrmCompressorSellableElapsedDay
         End If
     End Sub
     Private Sub AfterDataGridViewRowMove()
-        If _CompressorForm.DgvCompressorSellableElapsedDay.SelectedRows.Count = 1 Then
+        If _CompressorForm.DgvCompressorElapsedDaySellable.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _ElapsedDaySellable = _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _CompressorForm.DgvCompressorSellableElapsedDay.SelectedRows(0).Cells("Guid").Value)
+            _ElapsedDaySellable = _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _CompressorForm.DgvCompressorElapsedDaySellable.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -97,7 +97,7 @@ Public Class FrmCompressorSellableElapsedDay
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.CompressorSellableElapsedDay, _ElapsedDaySellable.ID)
+        Dim Frm As New FrmLog(Routine.CompressorSellable, _ElapsedDaySellable.ID)
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
@@ -197,8 +197,8 @@ Public Class FrmCompressorSellableElapsedDay
                 _ElapsedDaySellable.SetIsSaved(True)
                 _Compressor.ElapsedDaySellables.Add(_ElapsedDaySellable)
             End If
-            _CompressorForm.DgvCompressorSellableElapsedDay.Fill(_Compressor.ElapsedDaySellables)
-            _CompressorForm.DgvCompressorSellableElapsedDayLayout.Load()
+            _CompressorForm.DgvCompressorElapsedDaySellable.Fill(_Compressor.ElapsedDaySellables)
+            _CompressorForm.DgvlCompressorElapsedDaySellable.Load()
             BtnSave.Enabled = False
             If Not _ElapsedDaySellable.IsSaved Then
                 BtnSave.Text = "Incluir"
@@ -207,9 +207,9 @@ Public Class FrmCompressorSellableElapsedDay
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _CompressorForm.DgvCompressorSellableElapsedDay.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ElapsedDaySellable.Guid)
+            Row = _CompressorForm.DgvCompressorElapsedDaySellable.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ElapsedDaySellable.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _CompressorForm.DgvCompressorSellableElapsedDay.SelectedRows(0).Cells("Order").Value
+            LblOrderValue.Text = _CompressorForm.DgvCompressorElapsedDaySellable.SelectedRows(0).Cells("Order").Value
             _CompressorForm.EprValidation.Clear()
             _CompressorForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()
@@ -333,12 +333,12 @@ Public Class FrmCompressorSellableElapsedDay
         LoadForm()
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
-        If _CompressorForm.DgvCompressorSellableElapsedDay.SelectedRows.Count = 1 Then
+        If _CompressorForm.DgvCompressorElapsedDaySellable.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _ElapsedDaySellable = _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _CompressorForm.DgvCompressorSellableElapsedDay.SelectedRows(0).Cells("Guid").Value)
+                _ElapsedDaySellable = _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _CompressorForm.DgvCompressorElapsedDaySellable.SelectedRows(0).Cells("Guid").Value)
                 _Compressor.ElapsedDaySellables.Remove(_ElapsedDaySellable)
-                _CompressorForm.DgvCompressorSellableElapsedDay.Fill(_Compressor.ElapsedDaySellables)
-                _CompressorForm.DgvCompressorSellableElapsedDayLayout.Load()
+                _CompressorForm.DgvCompressorElapsedDaySellable.Fill(_Compressor.ElapsedDaySellables)
+                _CompressorForm.DgvlCompressorElapsedDaySellable.Load()
                 _Deleting = True
                 Dispose()
                 _CompressorForm.BtnSave.Enabled = True

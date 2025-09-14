@@ -1120,7 +1120,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;CompressorSellableElapsedDay&quot; Version=&quot;1&quot;&gt;
+        '''&lt;Routine Id=&quot;CompressorSellable&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''	&lt;Column Index=&quot;0&quot;&gt;
@@ -1134,14 +1134,14 @@ Namespace My.Resources
         '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
         '''		&lt;Name&gt;Status&lt;/Name&gt;
         '''		&lt;Width&gt;70&lt;/Width&gt;
-        '''	&lt;/Column&gt;	
+        '''	&lt;/Column&gt;
         '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
         '''		&lt;Visible&gt;False&lt;/Visible&gt;
-        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''		&lt;DisplayI [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
-        Friend ReadOnly Property CompressorSellableElapsedDayGrid() As String
+        Friend ReadOnly Property CompressorSellableGrid() As String
             Get
-                Return ResourceManager.GetString("CompressorSellableElapsedDayGrid", resourceCulture)
+                Return ResourceManager.GetString("CompressorSellableGrid", resourceCulture)
             End Get
         End Property
         
@@ -1208,33 +1208,6 @@ Namespace My.Resources
         Friend ReadOnly Property CompressorSellableUpdate() As String
             Get
                 Return ResourceManager.GetString("CompressorSellableUpdate", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;CompressorSellableWorkedHour&quot; Version=&quot;1&quot;&gt;
-        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
-        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
-        '''	&lt;Column Index=&quot;0&quot;&gt;
-        '''		&lt;Visible&gt;True&lt;/Visible&gt;
-        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
-        '''		&lt;Name&gt;Ordem&lt;/Name&gt;
-        '''		&lt;Width&gt;70&lt;/Width&gt;
-        '''	&lt;/Column&gt;
-        '''	&lt;Column Index=&quot;1&quot;&gt;
-        '''		&lt;Visible&gt;True&lt;/Visible&gt;
-        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''		&lt;Name&gt;Status&lt;/Name&gt;
-        '''		&lt;Width&gt;70&lt;/Width&gt;
-        '''	&lt;/Column&gt;
-        '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
-        '''		&lt;Visible&gt;False&lt;/Visible&gt;
-        '''	 [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property CompressorSellableWorkedHourGrid() As String
-            Get
-                Return ResourceManager.GetString("CompressorSellableWorkedHourGrid", resourceCulture)
             End Get
         End Property
         
@@ -3474,7 +3447,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;PersonCompressorSellableElapsedDay&quot; Version=&quot;1&quot;&gt;
+        '''&lt;Routine Id=&quot;PersonCompressorSellableWorkedHour&quot; Version=&quot;1&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''	&lt;Column Index=&quot;0&quot;&gt;
@@ -3492,9 +3465,9 @@ Namespace My.Resources
         '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
         '''		&lt;Visible&gt;False&lt;/Visib [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
-        Friend ReadOnly Property PersonCompressorSellableElapsedDayGrid() As String
+        Friend ReadOnly Property PersonCompressorSellableGrid() As String
             Get
-                Return ResourceManager.GetString("PersonCompressorSellableElapsedDayGrid", resourceCulture)
+                Return ResourceManager.GetString("PersonCompressorSellableGrid", resourceCulture)
             End Get
         End Property
         
@@ -3567,32 +3540,6 @@ Namespace My.Resources
         Friend ReadOnly Property PersonCompressorSellableUpdate() As String
             Get
                 Return ResourceManager.GetString("PersonCompressorSellableUpdate", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;PersonCompressorSellableWorkedHour&quot; Version=&quot;1&quot;&gt;
-        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
-        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
-        '''	&lt;Column Index=&quot;0&quot;&gt;
-        '''		&lt;Visible&gt;True&lt;/Visible&gt;
-        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
-        '''		&lt;Name&gt;Ordem&lt;/Name&gt;
-        '''		&lt;Width&gt;60&lt;/Width&gt;
-        '''	&lt;/Column&gt;
-        '''	&lt;Column Index=&quot;1&quot;&gt;
-        '''		&lt;Visible&gt;True&lt;/Visible&gt;
-        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''		&lt;Name&gt;Status&lt;/Name&gt;
-        '''		&lt;Width&gt;70&lt;/Width&gt;
-        '''	&lt;/Column&gt;
-        '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
-        '''		&lt;Visible&gt;False&lt;/Visib [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property PersonCompressorSellableWorkedHourGrid() As String
-            Get
-                Return ResourceManager.GetString("PersonCompressorSellableWorkedHourGrid", resourceCulture)
             End Get
         End Property
         
@@ -6667,6 +6614,7 @@ Namespace My.Resources
         '''    calltypeid,
         '''    customerid,
         '''    personcompressorid,
+        '''    technicianid,
         '''    instructions,
         '''    evaluationid,
         '''    overridedvisitscheduleid,
@@ -6682,12 +6630,10 @@ Namespace My.Resources
         '''    @calltypeid,
         '''    @customerid,
         '''    @personcompressorid,
+        '''    @technicianid,
         '''    @instructions,
         '''    @evaluationid,
-        '''    @overridedvisitscheduleid,
-        '''    @lastupdate,
-        '''    @userid
-        ''');.
+        '''    @overridedvisitschedul [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property VisitScheduleInsert() As String
             Get
@@ -6705,6 +6651,7 @@ Namespace My.Resources
         '''	visitschedule.calltypeid,
         '''	visitschedule.customerid,
         '''	visitschedule.personcompressorid,
+        '''	visitschedule.technicianid,
         '''	visitschedule.instructions,
         '''	visitschedule.evaluationid,
         '''	visitschedule.overridedvisitscheduleid,
@@ -6721,10 +6668,12 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE visitschedule SET
         '''    statusid =  @statusid,
-        '''    visitdate = @visitdate,
+        '''    scheduleddate = @scheduleddate,
+        '''    performeddate = @performeddate,
         '''    calltypeid = @calltypeid,
         '''    customerid = @customerid,
         '''    personcompressorid = @personcompressorid,
+        '''    technicianid = @technicianid,
         '''    instructions = @instructions,
         '''    evaluationid = @evaluationid,
         '''    overridedvisitscheduleid = @overridedvisitscheduleid,

@@ -565,8 +565,8 @@
   <data name="CompressorSellableSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\Compressor\CompressorSellableSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="CompressorSellableWorkedHourGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML\CompressorSellableWorkedHourGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="CompressorSellableGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XML\CompressorSellableGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="CompressorSellableDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\Compressor\CompressorSellableDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
@@ -576,9 +576,6 @@
   </data>
   <data name="information" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icon\information.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CompressorSellableElapsedDayGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML\CompressorSellableElapsedDayGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PersonCompressorSellableDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\Person\PersonCompressorSellableDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
@@ -592,14 +589,11 @@
   <data name="PersonCompressorSellableUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\Person\PersonCompressorSellableUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="PersonCompressorSellableWorkedHourGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML\PersonCompressorSellableWorkedHourGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="PersonCompressorSellableGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XML\PersonCompressorSellableGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="ImportSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\ImportSmall.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PersonCompressorSellableElapsedDayGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML\PersonCompressorSellableElapsedDayGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="EvaluationSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\Evaluation\EvaluationSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>

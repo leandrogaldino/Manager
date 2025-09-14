@@ -90,7 +90,7 @@ Public Class FrmPerson
         If _Person.Addresses IsNot Nothing Then DgvAddress.Fill(_Person.Addresses)
         If _Person.Contacts IsNot Nothing Then DgvContact.Fill(_Person.Contacts)
         If _Person.Compressors IsNot Nothing Then DgvCompressor.Fill(_Person.Compressors)
-        BtnDelete.Enabled = _Person.ID < 0 And _User.CanDelete(Routine.Person)
+        BtnDelete.Enabled = _Person.ID > 0 And _User.CanDelete(Routine.Person)
         _CompressorsShadow.Clear()
         For Each Compressor As PersonCompressor In _Person.Compressors
             _CompressorsShadow.Add(Compressor.Clone)

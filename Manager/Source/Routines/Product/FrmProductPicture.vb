@@ -7,6 +7,22 @@ Public Class FrmProductPicture
     Private _ProductForm As FrmProduct
     Private _Product As Product
     Private _ProductPicture As ProductPicture
+
+    Private _SelectedPicture As ProductPicture
+    Private Property SelectedPicture As ProductPicture
+        Get
+            Return _SelectedPicture
+        End Get
+        Set(value As ProductPicture)
+            _SelectedPicture = value
+            If _SelectedPicture IsNot Nothing Then
+                PbxPicture.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_SelectedPicture.Picture.CurrentFile)))
+            Else
+                PbxPicture.Image = Nothing
+            End If
+        End Set
+    End Property
+
     Private _Deleting As Boolean
     Private _Loading As Boolean
     Private _User As User
@@ -154,6 +170,8 @@ Public Class FrmProductPicture
         Dim Row As DataGridViewRow
         TxtCaption.Text = TxtCaption.Text.Trim.ToUnaccented()
         If IsValidFields() Then
+
+
             If _ProductPicture.IsSaved Then
                 _Product.Pictures.Single(Function(x) x.Guid = _ProductPicture.Guid).Caption = TxtCaption.Text
             Else
@@ -163,6 +181,11 @@ Public Class FrmProductPicture
                 _ProductPicture.SetIsSaved(True)
                 _Product.Pictures.Add(_ProductPicture)
             End If
+
+
+
+
+
             _ProductForm.DgvPicture.Fill(_Product.Pictures)
             _ProductForm.DgvPictureLayout.Load()
             BtnSave.Enabled = False

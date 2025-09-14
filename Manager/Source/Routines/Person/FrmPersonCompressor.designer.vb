@@ -23,8 +23,8 @@ Partial Class FrmPersonCompressor
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmPersonCompressor))
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
@@ -352,11 +352,11 @@ Partial Class FrmPersonCompressor
         '
         Me.QbxCompressor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxCompressor.CharactersToQuery = 1
-        Condition1.FieldName = "statusid"
-        Condition1.Operator = "="
-        Condition1.TableNameOrAlias = "compressor"
-        Condition1.Value = "@statusid"
-        Me.QbxCompressor.Conditions.Add(Condition1)
+        Condition2.FieldName = "statusid"
+        Condition2.Operator = "="
+        Condition2.TableNameOrAlias = "compressor"
+        Condition2.Value = "@statusid"
+        Me.QbxCompressor.Conditions.Add(Condition2)
         Me.QbxCompressor.DebugOnTextChanged = False
         Me.QbxCompressor.DisplayFieldAlias = "NOME"
         Me.QbxCompressor.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
@@ -373,9 +373,9 @@ Partial Class FrmPersonCompressor
         Me.QbxCompressor.MainTableAlias = Nothing
         Me.QbxCompressor.MainTableName = "compressor"
         Me.QbxCompressor.Name = "QbxCompressor"
-        Parameter1.ParameterName = "@statusid"
-        Parameter1.ParameterValue = "0"
-        Me.QbxCompressor.Parameters.Add(Parameter1)
+        Parameter2.ParameterName = "@statusid"
+        Parameter2.ParameterValue = "0"
+        Me.QbxCompressor.Parameters.Add(Parameter2)
         Me.QbxCompressor.Prefix = Nothing
         Me.QbxCompressor.Size = New System.Drawing.Size(433, 23)
         Me.QbxCompressor.Suffix = Nothing
@@ -758,12 +758,12 @@ Partial Class FrmPersonCompressor
         'DgvlWorkedHourSellable
         '
         Me.DgvlWorkedHourSellable.DataGridView = Me.DgvWorkedHourSellable
-        Me.DgvlWorkedHourSellable.Routine = Manager.Routine.PersonCompressorSellableWorkedHour
+        Me.DgvlWorkedHourSellable.Routine = Manager.Routine.PersonCompressorSellable
         '
         'DgvlElapsedDaySellable
         '
         Me.DgvlElapsedDaySellable.DataGridView = Me.DgvElapsedDaySellable
-        Me.DgvlElapsedDaySellable.Routine = Manager.Routine.PersonCompressorSellableElapsedDay
+        Me.DgvlElapsedDaySellable.Routine = Manager.Routine.PersonCompressorSellable
         '
         'EprInformation
         '

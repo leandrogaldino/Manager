@@ -591,4 +591,12 @@ Public Class FrmPersonCompressor
     Private Sub DgvElapsedDaySellable_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvElapsedDaySellable.DataSourceChanged
         FilterElapsedDaySellable()
     End Sub
+
+    Private Sub TcMaintenance_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcMaintenance.SelectedIndexChanged
+        If TcMaintenance.SelectedTab Is TabWorkedHourSellable Then
+            DgvlWorkedHourSellable.Load()
+        Else
+            DgvlElapsedDaySellable.Load()
+        End If
+    End Sub
 End Class

@@ -468,7 +468,7 @@ Partial Class FrmPriceTable
         'DgvPriceTableItemLayout
         '
         Me.DgvPriceTableItemLayout.DataGridView = Me.DgvPriceTableSellable
-        Me.DgvPriceTableItemLayout.Routine = Manager.Routine.PriceTableItem
+        Me.DgvPriceTableItemLayout.Routine = Manager.Routine.PriceTableSellable
         '
         'FrmPriceTable
         '

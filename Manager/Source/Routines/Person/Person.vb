@@ -158,10 +158,19 @@ Public Class Person
         Dim Session = Locator.GetInstance(Of Session)
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
-            Using CmdPerson As New MySqlCommand(My.Resources.PersonDelete, Con)
-                CmdPerson.Parameters.AddWithValue("@id", ID)
-                CmdPerson.ExecuteNonQuery()
-                Clear()
+            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
+                UpdateUser(Con, Tra)
+                Addresses.ForEach(Sub(a) a.UpdateUser(Con, Tra))
+                Contacts.ForEach(Sub(c) c.UpdateUser(Con, Tra))
+                Compressors.ForEach(Sub(c) c.UpdateUser(Con, Tra))
+                Compressors.ForEach(Sub(c) c.WorkedHourSellables.ForEach(Sub(s) s.UpdateUser(Con, Tra)))
+                Compressors.ForEach(Sub(c) c.ElapsedDaySellables.ForEach(Sub(s) s.UpdateUser(Con, Tra)))
+                Using CmdPerson As New MySqlCommand(My.Resources.PersonDelete, Con)
+                    CmdPerson.Parameters.AddWithValue("@id", ID)
+                    CmdPerson.ExecuteNonQuery()
+                    Clear()
+                End Using
+                Tra.Commit()
             End Using
         End Using
     End Sub

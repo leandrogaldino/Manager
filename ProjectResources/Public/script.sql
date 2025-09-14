@@ -1148,12 +1148,43 @@ ADD CONSTRAINT `compressorsellable_compressor`
   FOREIGN KEY (`compressorid`)
   REFERENCES `manager`.`compressor` (`id`)
   ON DELETE NO ACTION;
+  
+  ALTER TABLE `manager`.`cityroute` 
+DROP FOREIGN KEY `cityroute_city`;
+ALTER TABLE `manager`.`cityroute` 
+ADD CONSTRAINT `cityroute_city`
+  FOREIGN KEY (`cityid`)
+  REFERENCES `manager`.`city` (`id`)
+  ON DELETE NO ACTION;
+
 
 DROP TRIGGER IF EXISTS `manager`.`compressordelete`;
 DROP TRIGGER IF EXISTS `manager`.`compressordeforedelete`;
 DROP TRIGGER IF EXISTS `manager`.`cashflowbeforedelete`;
 DROP TRIGGER IF EXISTS `manager`.`cashbeforedelete`;
 DROP TRIGGER IF EXISTS `manager`.`cashitembeforedelete`;
+DROP TRIGGER IF EXISTS `manager`.`compressorsellableupdate`;
+DROP TRIGGER IF EXISTS `manager`.`compressorsellableinsert`;
+DROP TRIGGER IF EXISTS `manager`.`compressorsellabledelete`;
+DROP TRIGGER IF EXISTS `manager`.`personcompressorsellableupdate`;
+DROP TRIGGER IF EXISTS `manager`.`personcompressorsellableinsert`;
+DROP TRIGGER IF EXISTS `manager`.`personcompressorsellabledelete`;
+DROP TRIGGER IF EXISTS `manager`.`citybeforedelete`;
+DROP TRIGGER IF EXISTS `manager`.`evaluationbeforedelete`;
+DROP TRIGGER IF EXISTS `manager`.`personbeforedelete`;
+DROP TRIGGER IF EXISTS `manager`.`personcompressorbeforedelete`;
+DROP TRIGGER IF EXISTS `manager`.`pricetablebeforedelete`;
+DROP TRIGGER IF EXISTS `manager`.`privilegepresetinsert`;
+DROP TRIGGER IF EXISTS `manager`.`privilegepresetdelete`;
+DROP TRIGGER IF EXISTS `manager`.`privilegepresetupdate`;
+DROP TRIGGER IF EXISTS `manager`.`privilegepresetbeforedelete`;
+DROP TRIGGER IF EXISTS `manager`.`privilegepresetprivilegeinsert`;
+DROP TRIGGER IF EXISTS `manager`.`privilegepresetprivilegedelete`;
+
+DROP TRIGGER IF EXISTS `manager`.`productbeforedelete`;
+
+
+
 
 ALTER TABLE `manager`.`cashflowauthorized` 
 DROP FOREIGN KEY `cashflowauthorized_ibfk_1`;
@@ -1169,7 +1200,117 @@ ADD CONSTRAINT `cashitem_cash`
   FOREIGN KEY (`cashid`)
   REFERENCES `manager`.`cash` (`id`)
   ON DELETE NO ACTION;
+ ALTER TABLE `manager`.`evaluationtechnician` 
+DROP FOREIGN KEY `evaluationtechnician_ibfk_1`;
+ALTER TABLE `manager`.`evaluationtechnician` 
+ADD CONSTRAINT `evaluationtechnician_ibfk_1`
+  FOREIGN KEY (`evaluationid`)
+  REFERENCES `manager`.`evaluation` (`id`)
+  ON DELETE NO ACTION;
+ALTER TABLE `manager`.`evaluationcontrolledsellable` 
+DROP FOREIGN KEY `evaluationsellable_evaluation`;
+ALTER TABLE `manager`.`evaluationcontrolledsellable` 
+ADD CONSTRAINT `evaluationsellable_evaluation`
+  FOREIGN KEY (`evaluationid`)
+  REFERENCES `manager`.`evaluation` (`id`)
+  ON DELETE NO ACTION;
+ALTER TABLE `manager`.`evaluationreplacedsellable` 
+DROP FOREIGN KEY `evaluationreplacedsellable_evaluation`;
+ALTER TABLE `manager`.`evaluationreplacedsellable` 
+ADD CONSTRAINT `evaluationreplacedsellable_evaluation`
+  FOREIGN KEY (`evaluationid`)
+  REFERENCES `manager`.`evaluation` (`id`)
+  ON DELETE NO ACTION;
+ALTER TABLE `manager`.`evaluationphoto` 
+DROP FOREIGN KEY `evaluationphoto_ibfk_1`;
+ALTER TABLE `manager`.`evaluationphoto` 
+ADD CONSTRAINT `evaluationphoto_ibfk_1`
+  FOREIGN KEY (`evaluationid`)
+  REFERENCES `manager`.`evaluation` (`id`)
+  ON DELETE NO ACTION;
+ALTER TABLE `manager`.`personcompressor` 
+DROP FOREIGN KEY `personcompressor_person`;
+ALTER TABLE `manager`.`personcompressor` 
+ADD CONSTRAINT `personcompressor_person`
+  FOREIGN KEY (`personid`)
+  REFERENCES `manager`.`person` (`id`)
+  ON DELETE NO ACTION;
+ALTER TABLE `manager`.`personcompressorsellable` 
+DROP FOREIGN KEY `personcompressorsellable_personcompressor`;
+ALTER TABLE `manager`.`personcompressorsellable` 
+ADD CONSTRAINT `personcompressorsellable_personcompressor`
+  FOREIGN KEY (`personcompressorid`)
+  REFERENCES `manager`.`personcompressor` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE RESTRICT;
+ALTER TABLE `manager`.`personcontact` 
+DROP FOREIGN KEY `personcontact_person`;
+ALTER TABLE `manager`.`personcontact` 
+ADD CONSTRAINT `personcontact_person`
+  FOREIGN KEY (`personid`)
+  REFERENCES `manager`.`person` (`id`)
+  ON DELETE NO ACTION;
+ALTER TABLE `manager`.`personaddress` 
+DROP FOREIGN KEY `personaddress_person`;
+ALTER TABLE `manager`.`personaddress` 
+ADD CONSTRAINT `personaddress_person`
+  FOREIGN KEY (`personid`)
+  REFERENCES `manager`.`person` (`id`)
+  ON DELETE NO ACTION;
+ALTER TABLE `manager`.`pricetablesellable` 
+DROP FOREIGN KEY `pricetablesellable_ibfk_1`;
+ALTER TABLE `manager`.`pricetablesellable` 
+ADD CONSTRAINT `pricetablesellable_ibfk_1`
+  FOREIGN KEY (`pricetableid`)
+  REFERENCES `manager`.`pricetable` (`id`)
+  ON DELETE NO ACTION;
+ALTER TABLE `manager`.`privilegepresetprivilege` 
+DROP FOREIGN KEY `privilegepresetprivilege_ibfk_1`;
+ALTER TABLE `manager`.`privilegepresetprivilege` 
+ADD CONSTRAINT `privilegepresetprivilege_ibfk_1`
+  FOREIGN KEY (`privilegepresetid`)
+  REFERENCES `manager`.`privilegepreset` (`id`)
+  ON DELETE NO ACTION;
+ALTER TABLE `manager`.`productcode` 
+DROP FOREIGN KEY `productcode_product`;
+ALTER TABLE `manager`.`productcode` 
+ADD CONSTRAINT `productcode_product`
+  FOREIGN KEY (`productid`)
+  REFERENCES `manager`.`product` (`id`)
+  ON DELETE NO ACTION;
+ALTER TABLE `manager`.`productpicture` 
+DROP FOREIGN KEY `productpicture_product`;
+ALTER TABLE `manager`.`productpicture` 
+ADD CONSTRAINT `productpicture_product`
+  FOREIGN KEY (`productid`)
+  REFERENCES `manager`.`product` (`id`)
+  ON DELETE NO ACTION;
+ALTER TABLE `manager`.`productprovidercode` 
+DROP FOREIGN KEY `productprovidercode_product`;
+ALTER TABLE `manager`.`productprovidercode` 
+ADD CONSTRAINT `productprovidercode_product`
+  FOREIGN KEY (`productid`)
+  REFERENCES `manager`.`product` (`id`)
+  ON DELETE NO ACTION;
+
+
+ALTER TABLE `manager`.`pricetablesellable` 
+DROP FOREIGN KEY `pricetablesellable_ibfk_3`,
+DROP FOREIGN KEY `pricetablesellable_ibfk_4`;
+ALTER TABLE `manager`.`pricetablesellable` 
+ADD CONSTRAINT `pricetablesellable_ibfk_3`
+  FOREIGN KEY (`productid`)
+  REFERENCES `manager`.`product` (`id`)
+  ON DELETE NO ACTION,
+ADD CONSTRAINT `pricetablesellable_ibfk_4`
+  FOREIGN KEY (`serviceid`)
+  REFERENCES `manager`.`service` (`id`)
+  ON DELETE NO ACTION;
+
+
+
  
+
   
 
 DELIMITER $$
@@ -1188,12 +1329,175 @@ CREATE TRIGGER `manager`.`cashbeforedelete` BEFORE DELETE ON `cash` FOR EACH ROW
 BEGIN
 DELETE FROM cashitem WHERE cashid = OLD.id;
 END$$
-DELIMITER ;
 CREATE TRIGGER `manager`.`cashitembeforedelete` BEFORE DELETE ON `cashitem` FOR EACH ROW
 BEGIN
 DELETE FROM cashitemresponsible WHERE cashitemid = OLD.id;
 END$$
+CREATE TRIGGER `compressorsellableupdate` AFTER UPDATE ON `compressorsellable` FOR EACH ROW BEGIN
+IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 1201, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'ATIVO' WHEN OLD.statusid = 1 THEN 'INATIVO' END, CASE WHEN NEW.statusid = 0 THEN 'ATIVO' WHEN NEW.statusid = 1 THEN 'INATIVO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF (
+    (OLD.productid IS NOT NULL AND NEW.productid IS NULL AND OLD.serviceid IS NULL AND NEW.serviceid IS NOT NULL) OR
+    (OLD.serviceid IS NOT NULL AND NEW.serviceid IS NULL AND OLD.productid IS NULL AND NEW.productid IS NOT NULL) OR
+    (OLD.productid <> NEW.productid) OR (OLD.serviceid <> NEW.serviceid)
+) THEN
+	INSERT INTO log VALUES (
+		NULL,
+        1201,
+        NEW.id,
+        'Produto/Serviço', 
+        CASE
+			WHEN OLD.productid IS NOT NULL
+				THEN (SELECT CONCAT(product.id, ' - ', product.name) FROM product WHERE product.id = OLD.productid)
+			WHEN OLD.serviceid IS NOT NULL
+				THEN (SELECT CONCAT(service.id, ' - ', service.name) FROM service WHERE service.id = OLD.serviceid)
+		END,
+        CASE
+			WHEN NEW.productid IS NOT NULL
+				THEN (SELECT CONCAT(product.id, ' - ', product.name) FROM product WHERE product.id = NEW.productid)
+			WHEN NEW.serviceid IS NOT NULL
+				THEN (SELECT CONCAT(service.id, ' - ', service.name) FROM service WHERE service.id = NEW.serviceid)
+		END,
+        NOW(),
+        CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END IF;
+IF OLD.quantity <> NEW.quantity THEN INSERT INTO log VALUES (NULL, 1201, NEW.id, 'Qtd.', FORMAT(OLD.quantity, 2, 'pt_BR'), FORMAT(NEW.quantity, 2, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+END$$
+CREATE TRIGGER `compressorsellableinsert` AFTER INSERT ON `compressorsellable` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 1201, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END$$
+CREATE TRIGGER `compressorsellabledelete` AFTER DELETE ON `compressorsellable` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 1201, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
+END$$
+CREATE TRIGGER `personcompressorsellableupdate` AFTER UPDATE ON `personcompressorsellable` FOR EACH ROW BEGIN
+IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 204, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'ATIVO' WHEN OLD.statusid = 1 THEN 'INATIVO' END, CASE WHEN NEW.statusid = 0 THEN 'ATIVO' WHEN NEW.statusid = 1 THEN 'INATIVO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.sellablebindid <> NEW.sellablebindid THEN INSERT INTO log VALUES (NULL, 204, NEW.id, 'Vínculo', CASE WHEN OLD.sellablebindid = 0 THEN 'NENHUM' WHEN OLD.sellablebindid = 1 THEN 'FILTRO DE AR' WHEN OLD.sellablebindid = 2 THEN 'FILTRO DE OLEO' WHEN OLD.sellablebindid = 3 THEN 'ELEMENTO SEPARADOR' WHEN OLD.sellablebindid = 4 THEN 'OLEO' WHEN OLD.sellablebindid = 5 THEN 'COALESCENTE' END, CASE WHEN NEW.sellablebindid = 0 THEN 'NENHUM' WHEN NEW.sellablebindid = 1 THEN 'FILTRO DE AR' WHEN NEW.sellablebindid = 2 THEN 'FILTRO DE OLEO' WHEN NEW.sellablebindid = 3 THEN 'ELEMENTO SEPARADOR' WHEN NEW.sellablebindid = 4 THEN 'OLEO' WHEN NEW.sellablebindid = 5 THEN 'COALESCENTE' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF (
+    (OLD.productid IS NOT NULL AND NEW.productid IS NULL AND OLD.serviceid IS NULL AND NEW.serviceid IS NOT NULL) OR
+    (OLD.serviceid IS NOT NULL AND NEW.serviceid IS NULL AND OLD.productid IS NULL AND NEW.productid IS NOT NULL) OR
+    (OLD.productid <> NEW.productid) OR (OLD.serviceid <> NEW.serviceid)
+) THEN
+	INSERT INTO log VALUES (
+		NULL,
+        204,
+        NEW.id,
+        'Produto/Serviço', 
+        CASE
+			WHEN OLD.productid IS NOT NULL
+				THEN (SELECT CONCAT(product.id, ' - ', product.name) FROM product WHERE product.id = OLD.productid)
+			WHEN OLD.serviceid IS NOT NULL
+				THEN (SELECT CONCAT(service.id, ' - ', service.name) FROM service WHERE service.id = OLD.serviceid)
+		END,
+        CASE
+			WHEN NEW.productid IS NOT NULL
+				THEN (SELECT CONCAT(product.id, ' - ', product.name) FROM product WHERE product.id = NEW.productid)
+			WHEN NEW.serviceid IS NOT NULL
+				THEN (SELECT CONCAT(service.id, ' - ', service.name) FROM service WHERE service.id = NEW.serviceid)
+		END,
+        NOW(),
+        CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END IF;
+IF OLD.quantity <> NEW.quantity THEN INSERT INTO log VALUES (NULL, 204, NEW.id, 'Qtd.', FORMAT(OLD.quantity, 2, 'pt_BR'), FORMAT(NEW.quantity, 2, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.capacity <> NEW.capacity THEN INSERT INTO log VALUES (NULL, 204, NEW.id, 'Cap.', FORMAT(OLD.capacity, 0, 'pt_BR'), FORMAT(NEW.capacity, 0, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+END$$
+CREATE TRIGGER `personcompressorsellableinsert` AFTER INSERT ON `personcompressorsellable` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 204, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END$$
+CREATE TRIGGER `personcompressorsellabledelete` AFTER DELETE ON `personcompressorsellable` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 204, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
+END$$
+CREATE TRIGGER `manager`.`citybeforedelete` BEFORE DELETE ON `city` FOR EACH ROW
+BEGIN
+DELETE FROM cityroute WHERE cityid = OLD.id;
+END$$
+CREATE TRIGGER `manager`.`evaluationbeforedelete` BEFORE DELETE ON `evaluation` FOR EACH ROW
+BEGIN
+DELETE FROM evaluationtechnician WHERE evaluationid = OLD.id;
+DELETE FROM evaluationcontrolledsellable WHERE evaluationid = OLD.id;
+DELETE FROM evaluationreplacedsellable WHERE evaluationid = OLD.id;
+DELETE FROM evaluationphoto WHERE evaluationid = OLD.id;
+END$$
+CREATE TRIGGER `personbeforedelete` BEFORE DELETE ON `person` FOR EACH ROW BEGIN
+DELETE FROM personaddress WHERE personid = OLD.id;
+DELETE FROM personcontact WHERE personid = OLD.id;
+DELETE FROM personcompressor WHERE personid = OLD.id;
+END$$
+CREATE TRIGGER `manager`.`personcompressorbeforedelete` BEFORE DELETE ON `personcompressor` FOR EACH ROW
+BEGIN
+DELETE FROM personcompressorsellable WHERE personcompressorid = OLD.id;
+END$$
+CREATE TRIGGER `manager`.`pricetablebeforedelete` BEFORE DELETE ON `pricetable` FOR EACH ROW
+BEGIN
+DELETE FROM pricetablesellable WHERE pricetableid = OLD.id;
+END$$
+CREATE TRIGGER `manager`.`privilegepresetinsert` AFTER INSERT ON `privilegepreset` FOR EACH ROW
+BEGIN
+INSERT INTO log VALUES (NULL, 14, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END$$
+CREATE TRIGGER `manager`.`privilegepresetdelete` AFTER DELETE ON `privilegepreset` FOR EACH ROW
+BEGIN
+INSERT INTO log VALUES (NULL, 14, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
+END$$
+CREATE TRIGGER `manager`.`privilegepresetupdate` AFTER UPDATE ON `privilegepreset` FOR EACH ROW
+BEGIN
+IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 14, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'ATIVO' WHEN OLD.statusid = 1 THEN 'INATIVO' END, CASE WHEN NEW.statusid = 0 THEN 'ATIVO' WHEN NEW.statusid = 1 THEN 'INATIVO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.name <> NEW.name THEN INSERT INTO log VALUES (NULL, 14, NEW.id, 'Nome', OLD.name, NEW.name, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+END$$
+CREATE TRIGGER `manager`.`privilegepresetbeforedelete` BEFORE DELETE ON `privilegepreset` FOR EACH ROW
+BEGIN
+DELETE FROM privilegepresetprivilege WHERE privilegepresetid = OLD.id;
+END$$
+CREATE TRIGGER `privilegepresetprivilegeinsert` AFTER INSERT ON `privilegepresetprivilege` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 14, NEW.privilegepresetid, 'Permissão Incluída', NULL,CONCAT( NEW.routinename, ' - ', CASE WHEN NEW.privilegelevelid = 0 THEN 'Acessar' WHEN NEW.privilegelevelid = 1 THEN 'Escrever' WHEN NEW.privilegelevelid = 2 THEN 'Excluir' END), NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END$$
+CREATE TRIGGER `privilegepresetprivilegedelete` AFTER DELETE ON `privilegepresetprivilege` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 14, OLD.privilegepresetid, 'Permissão Excluída', NULL, CONCAT( OLD.routinename, ' - ', CASE WHEN OLD.privilegelevelid = 0 THEN 'Acessar' WHEN OLD.privilegelevelid = 1 THEN 'Escrever' WHEN OLD.privilegelevelid = 2 THEN 'Excluir' END), NOW(), CONCAT(OLD.userid , ' - ', (SELECT user.username FROM user WHERE user.id = OLD.userid)));
+END$$
+CREATE TRIGGER `manager`.`productbeforedelete` BEFORE DELETE ON `product` FOR EACH ROW
+BEGIN
+DELETE FROM pricetablesellable WHERE productid = OLD.id;
+DELETE FROM productcode WHERE productid = OLD.id;
+DELETE FROM productprovidercode WHERE productid = OLD.id;
+DELETE FROM productpicture WHERE productid = OLD.id;
+END$$
+
 DELIMITER ;
+SET SQL_SAFE_UPDATES = 0;
+update log set routineid = 1201 where routineid = 1202;
+update log set routineid = 204 where routineid = 205;
+delete from log where routineid = 14;
+delete from log where routineid = 1401;
+SET SQL_SAFE_UPDATES = 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

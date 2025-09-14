@@ -100,7 +100,7 @@ Public Class FrmPersonCompressorSellableWorkedHour
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.PersonCompressorSellableWorkedHour, _WorkedHourSellable.ID)
+        Dim Frm As New FrmLog(Routine.PersonCompressorSellable, _WorkedHourSellable.ID)
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click

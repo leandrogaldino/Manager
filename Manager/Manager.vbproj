@@ -1834,8 +1834,7 @@
     <Content Include="Resources\XML\CashFlowGrid.xml" />
     <Content Include="Resources\XML\EvaluationControlledSellableGrid.xml" />
     <Content Include="Resources\XML\EvaluationReplacedSellableGrid.xml" />
-    <Content Include="Resources\XML\PersonCompressorSellableElapsedDayGrid.xml" />
-    <Content Include="Resources\XML\PersonCompressorSellableWorkedHourGrid.xml" />
+    <Content Include="Resources\XML\PersonCompressorSellableGrid.xml" />
     <Content Include="Resources\XML\PriceTableGrid.xml" />
     <Content Include="Resources\XML\PriceTableItemGrid.xml" />
     <Content Include="Resources\XML\ProductPriceGrid.xml" />
@@ -2093,8 +2092,7 @@
     <Content Include="Resources\XML\RequestItemGrid.xml" />
     <Content Include="Resources\XML\RequestGrid.xml" />
     <Content Include="Resources\XML\EvaluationGrid.xml" />
-    <Content Include="Resources\XML\CompressorSellableElapsedDayGrid.xml" />
-    <Content Include="Resources\XML\CompressorSellableWorkedHourGrid.xml" />
+    <Content Include="Resources\XML\CompressorSellableGrid.xml" />
     <Content Include="Resources\XML\CashGrid.xml" />
     <Content Include="Resources\XML\CashItemGrid.xml" />
     <Content Include="Resources\XML\CashItemResponsibleGrid.xml" />

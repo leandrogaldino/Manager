@@ -2,6 +2,7 @@
 
 ''' <summary>
 ''' Utilizado para sinalizar as rotinas do sistema (Rotinas que tem DataGridView).
+''' O nome aqui precisa ser exatamente o mesmo nome da tabela no banco de dados.
 ''' </summary>
 Public Enum Routine
     <Description("Usuário")> <TriStatePrivilege>
@@ -15,8 +16,7 @@ Public Enum Routine
     PersonAddress = 201
     PersonContact = 202
     PersonCompressor = 203
-    PersonCompressorSellableWorkedHour = 204
-    PersonCompressorSellableElapsedDay = 205
+    PersonCompressorSellable = 204
     <Description("Alterar o documento da Pessoa")> <BiStatePrivilege> <RoutineDependency(Person)>
     PersonChangeDocument = 206
     <Description("Gerar o relatório de ficha cadastral da pessoa")> <BiStatePrivilege> <RoutineDependency(Person)>
@@ -41,7 +41,7 @@ Public Enum Routine
     ProductUnit = 7
     <Description("Tabela de Preços")> <TriStatePrivilege> <RoutineDependency(Product)>
     PriceTable = 8
-    PriceTableItem = 801
+    PriceTableSellable = 801
     <Description("Família de Produtos")> <TriStatePrivilege> <RoutineDependency(Product)>
     ProductFamily = 9
     <Description("Grupo de Produtos")> <TriStatePrivilege> <RoutineDependency(Product)>
@@ -52,14 +52,12 @@ Public Enum Routine
     CashItemResponsible = 1102
     <Description("Compressor")> <TriStatePrivilege> <RoutineDependency(Person)>
     Compressor = 12
-    CompressorSellableWorkedHour = 1201
-    CompressorSellableElapsedDay = 1202
+    CompressorSellable = 1201
     <Description("Avaliação de Compressor")> <TriStatePrivilege>
     Evaluation = 13
     <Description("Gerenciamento de Avaliações")> <BiStatePrivilege> <RoutineDependency(Evaluation)>
     EvaluationManagement = 1301
-    EvaluationManagementSellableWorkedHour = 1302
-    EvaluationManagementSellableElapsedDay = 1303
+    EvaluationManagementSellable = 1302
     <Description("Painel de Compressores")> <BiStatePrivilege> <RoutineDependency(Evaluation)>
     EvaluationManagementPanel = 1304
     <Description("Exportar imagem do painel de compressores")> <BiStatePrivilege> <RoutineDependency(Evaluation)>
@@ -74,7 +72,6 @@ Public Enum Routine
     <Description("Importar avaliações da núvem")> <BiStatePrivilege> <RoutineDependency(Evaluation)>
     EvaluationImport = 1311
     EvaluationReplacedSellable = 1312
-    EvaluationPerformedService = 1313
     <Description("Predefinição de Permissões")> <TriStatePrivilege> <RoutineDependency(User)>
     PrivilegePreset = 14
     PrivilegePresetPrivilege = 1401

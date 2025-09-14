@@ -148,6 +148,40 @@ Public Class Evaluation
         _Shadow = Clone()
         Return Me
     End Function
+    Public Sub Delete()
+        Dim Session = Locator.GetInstance(Of Session)
+        Dim FileManager As New TxFileManager(ApplicationPaths.ManagerTempDirectory)
+        Using Transaction As New Transactions.TransactionScope()
+            Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
+                Con.Open()
+                UpdateUser(Con)
+                Technicians.ForEach(Sub(t) t.UpdateUser(Con))
+                WorkedHourControlledSelable.ForEach(Sub(w) w.UpdateUser(Con))
+                ElapsedDayControlledSellable.ForEach(Sub(e) e.UpdateUser(Con))
+                ReplacedSellables.ForEach(Sub(r) r.UpdateUser(Con))
+                Photos.ForEach(Sub(p) p.UpdateUser(Con))
+                Using CmdEvaluation As New MySqlCommand(My.Resources.EvaluationDelete, Con)
+                    CmdEvaluation.Parameters.AddWithValue("@id", ID)
+                    CmdEvaluation.ExecuteNonQuery()
+                    If File.Exists(Document.OriginalFile) Then FileManager.Delete(Document.OriginalFile)
+                    If File.Exists(Signature.OriginalFile) Then FileManager.Delete(Signature.OriginalFile)
+                    For Each ShadowPhoto In _Shadow.Photos
+                        If File.Exists(ShadowPhoto.Photo.OriginalFile) Then
+                            FileManager.Delete(ShadowPhoto.Photo.OriginalFile)
+                        End If
+                    Next ShadowPhoto
+                    Photos.ToList.ForEach(Sub(x)
+                                              If File.Exists(x.Photo.OriginalFile) Then
+                                                  FileManager.Delete(x.Photo.OriginalFile)
+                                              End If
+                                          End Sub)
+
+                End Using
+            End Using
+            Transaction.Complete()
+        End Using
+        Clear()
+    End Sub
     Public Sub SaveChanges()
         If Not IsSaved Then
             Insert()
@@ -498,35 +532,6 @@ Public Class Evaluation
             Photos.ToList.ForEach(Sub(x) x.Photo.Execute())
             Transaction.Complete()
         End Using
-    End Sub
-    Public Sub Delete()
-        Dim Session = Locator.GetInstance(Of Session)
-        Dim FileManager As New TxFileManager(ApplicationPaths.ManagerTempDirectory)
-        Using Transaction As New Transactions.TransactionScope()
-            Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
-                Con.Open()
-                UpdateUser(Con)
-                Using CmdEvaluation As New MySqlCommand(My.Resources.EvaluationDelete, Con)
-                    CmdEvaluation.Parameters.AddWithValue("@id", ID)
-                    CmdEvaluation.ExecuteNonQuery()
-                    If File.Exists(Document.OriginalFile) Then FileManager.Delete(Document.OriginalFile)
-                    If File.Exists(Signature.OriginalFile) Then FileManager.Delete(Signature.OriginalFile)
-                    For Each ShadowPhoto In _Shadow.Photos
-                        If File.Exists(ShadowPhoto.Photo.OriginalFile) Then
-                            FileManager.Delete(ShadowPhoto.Photo.OriginalFile)
-                        End If
-                    Next ShadowPhoto
-                    Photos.ToList.ForEach(Sub(x)
-                                              If File.Exists(x.Photo.OriginalFile) Then
-                                                  FileManager.Delete(x.Photo.OriginalFile)
-                                              End If
-                                          End Sub)
-
-                End Using
-            End Using
-            Transaction.Complete()
-        End Using
-        Clear()
     End Sub
     Public Sub SetStatus(Status As EvaluationStatus, Optional Reason As String = Nothing)
         Dim Session = Locator.GetInstance(Of Session)

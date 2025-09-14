@@ -65,6 +65,7 @@ Partial Class UcEvaluationUnitTemperaturePressure
         Me.TxtUnit.Name = "TxtUnit"
         Me.TxtUnit.Size = New System.Drawing.Size(100, 23)
         Me.TxtUnit.TabIndex = 2
+        Me.TxtUnit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Panel2
         '
@@ -98,7 +99,7 @@ Partial Class UcEvaluationUnitTemperaturePressure
         Me.DbxTemperature.Size = New System.Drawing.Size(100, 23)
         Me.DbxTemperature.TabIndex = 1
         Me.DbxTemperature.Text = "0"
-        Me.DbxTemperature.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.DbxTemperature.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Panel3
         '
@@ -132,7 +133,7 @@ Partial Class UcEvaluationUnitTemperaturePressure
         Me.DbxPressure.Size = New System.Drawing.Size(100, 23)
         Me.DbxPressure.TabIndex = 1
         Me.DbxPressure.Text = "0,0"
-        Me.DbxPressure.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.DbxPressure.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'UcEvaluationUnitTemperaturePressure
         '

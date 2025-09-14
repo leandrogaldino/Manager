@@ -43,7 +43,7 @@ Public Class FrmCityRoute
     Private Sub AfterDataGridViewRowMove()
         If _CityForm.DgvRoute.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _CityRoute = _City.Routes.Value.Single(Function(x) x.Guid = _CityForm.DgvRoute.SelectedRows(0).Cells("Guid").Value)
+            _CityRoute = _City.Routes.Single(Function(x) x.Guid = _CityForm.DgvRoute.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -113,7 +113,7 @@ Public Class FrmCityRoute
             EprValidation.SetIconAlignment(LblRoute, ErrorIconAlignment.MiddleRight)
             QbxRoute.Select()
             Return False
-        ElseIf _City.Routes.Value.Any(Function(x) x.Route.ID = QbxRoute.FreezedPrimaryKey) Then
+        ElseIf _City.Routes.Any(Function(x) x.Route.ID = QbxRoute.FreezedPrimaryKey) Then
             EprValidation.SetError(LblRoute, "Essa rota já faz parte dessa cidade.")
             EprValidation.SetIconAlignment(LblRoute, ErrorIconAlignment.MiddleRight)
             QbxRoute.Select()
@@ -125,15 +125,15 @@ Public Class FrmCityRoute
         Dim Row As DataGridViewRow
         If IsValidFields() Then
             If _CityRoute.IsSaved Then
-                _City.Routes.Value.Single(Function(x) x.Guid = _CityRoute.Guid).Route = New Route().Load(QbxRoute.FreezedPrimaryKey, False)
+                _City.Routes.Single(Function(x) x.Guid = _CityRoute.Guid).Route = New Route().Load(QbxRoute.FreezedPrimaryKey, False)
             Else
                 _CityRoute = New CityRoute With {
                     .Route = New Route().Load(QbxRoute.FreezedPrimaryKey, False)
                 }
                 _CityRoute.SetIsSaved(True)
-                _City.Routes.Value.Add(_CityRoute)
+                _City.Routes.Add(_CityRoute)
             End If
-            _CityForm.DgvRoute.Fill(_City.Routes.Value)
+            _CityForm.DgvRoute.Fill(_City.Routes)
             BtnSave.Enabled = False
             If Not _CityRoute.IsSaved Then
                 BtnSave.Text = "Incluir"
@@ -209,9 +209,9 @@ Public Class FrmCityRoute
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
         If _CityForm.DgvRoute.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _CityRoute = _City.Routes.Value.Single(Function(x) x.Guid = _CityForm.DgvRoute.SelectedRows(0).Cells("Guid").Value)
-                _City.Routes.Value.Remove(_CityRoute)
-                _CityForm.DgvRoute.Fill(_City.Routes.Value)
+                _CityRoute = _City.Routes.Single(Function(x) x.Guid = _CityForm.DgvRoute.SelectedRows(0).Cells("Guid").Value)
+                _City.Routes.Remove(_CityRoute)
+                _CityForm.DgvRoute.Fill(_City.Routes)
                 _Deleting = True
                 Dispose()
                 _CityForm.BtnSave.Enabled = True

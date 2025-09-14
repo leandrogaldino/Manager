@@ -26,14 +26,14 @@ Public Class FrmCompressorSellableWorkedHour
         _CompressorForm = CompressorForm
         _User = Locator.GetInstance(Of Session).User
         LoadForm()
-        DgvNavigator.DataGridView = _CompressorForm.DgvCompressorSellableWorkedHour
+        DgvNavigator.DataGridView = _CompressorForm.DgvCompressorWorkedHourSellable
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = _User.CanAccess(Routine.Log)
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = If(_WorkedHourSellable.IsSaved, _CompressorForm.DgvCompressorSellableWorkedHour.SelectedRows(0).Cells("Order").Value, 0)
+        LblOrderValue.Text = If(_WorkedHourSellable.IsSaved, _CompressorForm.DgvCompressorWorkedHourSellable.SelectedRows(0).Cells("Order").Value, 0)
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_WorkedHourSellable.Status)
         LblCreationValue.Text = _WorkedHourSellable.Creation
         ClearQbxSellable()
@@ -64,9 +64,9 @@ Public Class FrmCompressorSellableWorkedHour
         End If
     End Sub
     Private Sub AfterDataGridViewRowMove()
-        If _CompressorForm.DgvCompressorSellableWorkedHour.SelectedRows.Count = 1 Then
+        If _CompressorForm.DgvCompressorWorkedHourSellable.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _WorkedHourSellable = _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _CompressorForm.DgvCompressorSellableWorkedHour.SelectedRows(0).Cells("Guid").Value)
+            _WorkedHourSellable = _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _CompressorForm.DgvCompressorWorkedHourSellable.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -97,7 +97,7 @@ Public Class FrmCompressorSellableWorkedHour
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.CompressorSellableWorkedHour, _WorkedHourSellable.ID)
+        Dim Frm As New FrmLog(Routine.CompressorSellable, _WorkedHourSellable.ID)
         Frm.ShowDialog()
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
@@ -197,8 +197,8 @@ Public Class FrmCompressorSellableWorkedHour
                 _WorkedHourSellable.SetIsSaved(True)
                 _Compressor.WorkedHourSellables.Add(_WorkedHourSellable)
             End If
-            _CompressorForm.DgvCompressorSellableWorkedHour.Fill(_Compressor.WorkedHourSellables)
-            _CompressorForm.DgvCompressorSellableWorkedHourLayout.Load()
+            _CompressorForm.DgvCompressorWorkedHourSellable.Fill(_Compressor.WorkedHourSellables)
+            _CompressorForm.DgvlCompressorWorkedHourSellable.Load()
             BtnSave.Enabled = False
             If Not _WorkedHourSellable.IsSaved Then
                 BtnSave.Text = "Incluir"
@@ -207,9 +207,9 @@ Public Class FrmCompressorSellableWorkedHour
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _CompressorForm.DgvCompressorSellableWorkedHour.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _WorkedHourSellable.Guid)
+            Row = _CompressorForm.DgvCompressorWorkedHourSellable.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _WorkedHourSellable.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _CompressorForm.DgvCompressorSellableWorkedHour.SelectedRows(0).Cells("Order").Value
+            LblOrderValue.Text = _CompressorForm.DgvCompressorWorkedHourSellable.SelectedRows(0).Cells("Order").Value
             _CompressorForm.EprValidation.Clear()
             _CompressorForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()
@@ -332,12 +332,12 @@ Public Class FrmCompressorSellableWorkedHour
         LoadForm()
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
-        If _CompressorForm.DgvCompressorSellableWorkedHour.SelectedRows.Count = 1 Then
+        If _CompressorForm.DgvCompressorWorkedHourSellable.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _WorkedHourSellable = _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _CompressorForm.DgvCompressorSellableWorkedHour.SelectedRows(0).Cells("Guid").Value)
+                _WorkedHourSellable = _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _CompressorForm.DgvCompressorWorkedHourSellable.SelectedRows(0).Cells("Guid").Value)
                 _Compressor.WorkedHourSellables.Remove(_WorkedHourSellable)
-                _CompressorForm.DgvCompressorSellableWorkedHour.Fill(_Compressor.WorkedHourSellables)
-                _CompressorForm.DgvCompressorSellableWorkedHourLayout.Load()
+                _CompressorForm.DgvCompressorWorkedHourSellable.Fill(_Compressor.WorkedHourSellables)
+                _CompressorForm.DgvlCompressorWorkedHourSellable.Load()
                 _Deleting = True
                 Dispose()
                 _CompressorForm.BtnSave.Enabled = True

@@ -41,10 +41,6 @@ Public Class PersonCompressorSellable
     End Property
     Public Sub New(ControlType As CompressorSellableControlType)
         _ControlType = ControlType
-        If _ControlType = CompressorSellableControlType.ElapsedDay Then
-            SetRoutine(Routine.PersonCompressorSellableElapsedDay)
-        Else
-            SetRoutine(Routine.PersonCompressorSellableWorkedHour)
-        End If
+        SetRoutine(Routine.PersonCompressorSellable)
     End Sub
 End Class

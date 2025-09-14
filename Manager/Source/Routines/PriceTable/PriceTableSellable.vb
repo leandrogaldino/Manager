@@ -29,6 +29,6 @@ Public Class PriceTableSellable
     Public Property Name As String
     Public Property Price As Decimal
     Public Sub New()
-        SetRoutine(Routine.PriceTableItem)
+        SetRoutine(Routine.PriceTableSellable)
     End Sub
 End Class

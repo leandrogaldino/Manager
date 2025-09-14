@@ -353,6 +353,7 @@ Partial Class FrmPriceTableSellable
         '
         'QbxSellable
         '
+        Me.QbxSellable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxSellable.CharactersToQuery = 2
         Me.QbxSellable.DebugOnTextChanged = False
         Me.QbxSellable.DisplayFieldAlias = ""

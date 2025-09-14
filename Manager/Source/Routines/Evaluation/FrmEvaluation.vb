@@ -5,7 +5,6 @@ Imports ManagerCore
 Imports MySql.Data.MySqlClient
 Public Class FrmEvaluation
 #Region "Fields"
-
     Private _UcCallTypeHasRepairNeedProposal As UcEvaluationCallTypeHasRepairNeedProposal
     Private _UcUnitTemperaturePressure As UcEvaluationUnitTemperaturePressure
     Private _EvaluationsForm As FrmEvaluations

@@ -50,9 +50,6 @@ Public Class Product
         Note = Nothing
         If LockInfo.IsLocked Then Unlock()
     End Sub
-
-
-
     Public Function Load(Identity As Long, LockMe As Boolean) As Product
         Dim TableResult As DataTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
@@ -101,23 +98,16 @@ Public Class Product
         _Shadow = Clone()
         Return Me
     End Function
-    Public Sub SaveChanges()
-        If Not IsSaved Then
-            Insert()
-        Else
-            Update()
-        End If
-        SetIsSaved(True)
-        Pictures.ToList().ForEach(Sub(x) x.SetIsSaved(True))
-        ProviderCodes.ToList().ForEach(Sub(x) x.SetIsSaved(True))
-        Codes.ToList().ForEach(Sub(x) x.SetIsSaved(True))
-        _Shadow = Clone()
-    End Sub
     Public Sub Delete()
         Dim FileManager As New TxFileManager(ApplicationPaths.ManagerTempDirectory)
         Using Transaction As New Transactions.TransactionScope()
             Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
                 Con.Open()
+                UpdateUser(Con)
+                Pictures.ForEach(Sub(p) p.UpdateUser(Con))
+                ProviderCodes.ForEach(Sub(p) p.UpdateUser(Con))
+                Codes.ForEach(Sub(c) c.UpdateUser(Con))
+                Prices.ForEach(Sub(p) p.UpdateUser(Con, Routine.PriceTableSellable))
                 Using CmdProduct As New MySqlCommand(My.Resources.ProductDelete, Con)
                     CmdProduct.Parameters.AddWithValue("@id", ID)
                     CmdProduct.ExecuteNonQuery()
@@ -129,6 +119,18 @@ Public Class Product
             Transaction.Complete()
         End Using
         Clear()
+    End Sub
+    Public Sub SaveChanges()
+        If Not IsSaved Then
+            Insert()
+        Else
+            Update()
+        End If
+        SetIsSaved(True)
+        Pictures.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        ProviderCodes.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        Codes.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        _Shadow = Clone()
     End Sub
     Private Sub Insert()
         Using Transaction As New Transactions.TransactionScope()

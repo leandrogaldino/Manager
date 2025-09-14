@@ -10,7 +10,7 @@ Public Class City
     Public Property Name As String
     Public Property BIGSCode As String
     Public Property State As New State
-    Public Property Routes As New Lazy(Of List(Of CityRoute))(Function() GetRoutes())
+    Public Property Routes As New List(Of CityRoute)
     Public Sub New()
         SetRoutine(Routine.City)
     End Sub
@@ -21,7 +21,7 @@ Public Class City
         SetCreation(Today)
         Status = SimpleStatus.Active
         Name = Nothing
-        Routes = New Lazy(Of List(Of CityRoute))(Function() GetRoutes())
+        Routes = New List(Of CityRoute)
         If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As City
@@ -49,6 +49,7 @@ Public Class City
                         Name = TableResult.Rows(0).Item("name").ToString
                         BIGSCode = TableResult.Rows(0).Item("bigscode").ToString
                         State = New State().Load(TableResult.Rows(0).Item("stateid"))
+                        Routes = GetRoutes(Tra)
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
                     Else
@@ -91,17 +92,22 @@ Public Class City
             Update()
         End If
         SetIsSaved(True)
-        Routes.Value.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        Routes.ForEach(Sub(x) x.SetIsSaved(True))
         _Shadow = Clone()
     End Sub
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
-            Using CmdCityDelete As New MySqlCommand(My.Resources.CityDelete, Con)
-                CmdCityDelete.Parameters.AddWithValue("@id", ID)
-                CmdCityDelete.ExecuteNonQuery()
-                Clear()
+            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
+                UpdateUser(Con, Tra)
+                Routes.ForEach(Sub(x) x.UpdateUser(Con, Tra))
+                Using CmdCityDelete As New MySqlCommand(My.Resources.CityDelete, Con, Tra)
+                    CmdCityDelete.Parameters.AddWithValue("@id", ID)
+                    CmdCityDelete.ExecuteNonQuery()
+                    Clear()
+                End Using
+                Tra.Commit()
             End Using
         End Using
     End Sub
@@ -121,7 +127,7 @@ Public Class City
                     CmdCity.ExecuteNonQuery()
                     SetID(CmdCity.LastInsertedId)
                 End Using
-                For Each Route In Routes.Value
+                For Each Route In Routes
                     Using CmdRoute As New MySqlCommand(My.Resources.CityRouteInsert, Con)
                         CmdRoute.Transaction = Tra
                         CmdRoute.Parameters.AddWithValue("@cityid", ID)
@@ -152,8 +158,8 @@ Public Class City
                     CmdCity.Parameters.AddWithValue("@userid", User.ID)
                     CmdCity.ExecuteNonQuery()
                 End Using
-                For Each CityRoute As CityRoute In Shadow.Routes.Value
-                    If Not Routes.Value.Any(Function(x) x.ID = CityRoute.ID And x.ID > 0) Then
+                For Each CityRoute As CityRoute In Shadow.Routes
+                    If Not Routes.Any(Function(x) x.ID = CityRoute.ID And x.ID > 0) Then
                         Using CmdCityRoute As New MySqlCommand(My.Resources.CityRouteDelete, Con)
                             CmdCityRoute.Transaction = Tra
                             CmdCityRoute.Parameters.AddWithValue("@id", CityRoute.ID)
@@ -161,7 +167,7 @@ Public Class City
                         End Using
                     End If
                 Next CityRoute
-                For Each Route As CityRoute In Routes.Value
+                For Each Route As CityRoute In Routes
                     If Route.ID = 0 Then
                         Using CmdRoute As New MySqlCommand(My.Resources.CityRouteInsert, Con)
                             CmdRoute.Transaction = Tra
@@ -186,28 +192,25 @@ Public Class City
             End Using
         End Using
     End Sub
-    Private Function GetRoutes() As List(Of CityRoute)
+    Private Function GetRoutes(Tra As MySqlTransaction) As List(Of CityRoute)
         Dim Session = Locator.GetInstance(Of Session)
         Dim TableResult As DataTable
         Dim Routes As List(Of CityRoute)
         Dim Route As CityRoute
-        Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
-            Con.Open()
-            Using CmdCityRoute As New MySqlCommand(My.Resources.CityRouteSelect, Con)
-                CmdCityRoute.Parameters.AddWithValue("@cityid", ID)
-                Using Adp As New MySqlDataAdapter(CmdCityRoute)
-                    TableResult = New DataTable
-                    Adp.Fill(TableResult)
-                    Routes = New List(Of CityRoute)
-                    For Each Row As DataRow In TableResult.Rows
-                        Route = New CityRoute()
-                        Route.Route = New Route().Load(Row.Item("routeid"), False)
-                        Route.SetID(Row.Item("id"))
-                        Route.SetCreation(Row.Item("creation"))
-                        Route.SetIsSaved(True)
-                        Routes.Add(Route)
-                    Next Row
-                End Using
+        Using CmdCityRoute As New MySqlCommand(My.Resources.CityRouteSelect, Tra.Connection, Tra)
+            CmdCityRoute.Parameters.AddWithValue("@cityid", ID)
+            Using Adp As New MySqlDataAdapter(CmdCityRoute)
+                TableResult = New DataTable
+                Adp.Fill(TableResult)
+                Routes = New List(Of CityRoute)
+                For Each Row As DataRow In TableResult.Rows
+                    Route = New CityRoute()
+                    Route.Route = New Route().Load(Row.Item("routeid"), False)
+                    Route.SetID(Row.Item("id"))
+                    Route.SetCreation(Row.Item("creation"))
+                    Route.SetIsSaved(True)
+                    Routes.Add(Route)
+                Next Row
             End Using
         End Using
         Return Routes

@@ -32,10 +32,6 @@ Public Class CompressorSellable
     Public Property Quantity As Decimal
     Public Sub New(ControlType As CompressorSellableControlType)
         _ControlType = ControlType
-        If _ControlType = CompressorSellableControlType.ElapsedDay Then
-            SetRoutine(Routine.CompressorSellableElapsedDay)
-        Else
-            SetRoutine(Routine.CompressorSellableWorkedHour)
-        End If
+        SetRoutine(Routine.CompressorSellable)
     End Sub
 End Class

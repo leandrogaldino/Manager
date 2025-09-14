@@ -76,7 +76,7 @@ Public Class FrmCity
         TxtBIGSCode.Text = _City.BIGSCode
         CbxStateName.Text = _City.State.Name
         CbxStateShortName.Text = _City.State.ShortName
-        DgvRoute.Fill(_City.Routes.Value)
+        DgvRoute.Fill(_City.Routes)
         Text = "Cidade"
         BtnDelete.Enabled = _City.ID > 0 And _User.CanDelete(Routine.City)
         If _City.LockInfo.IsLocked And Not _City.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _City.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
@@ -117,7 +117,7 @@ Public Class FrmCity
                 End If
             End If
             If _CitiesForm IsNot Nothing Then
-                DgvRoute.Fill(_City.Routes.Value)
+                DgvRoute.Fill(_City.Routes)
             End If
             _Deleting = False
         End If
@@ -246,7 +246,7 @@ Public Class FrmCity
                     _City.SaveChanges()
                     _City.Lock()
                     LblIDValue.Text = _City.ID
-                    DgvRoute.Fill(_City.Routes.Value)
+                    DgvRoute.Fill(_City.Routes)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.City)
                     If _CitiesForm IsNot Nothing Then
@@ -283,7 +283,7 @@ Public Class FrmCity
         Dim Form As FrmCityRoute
         Dim Route As CityRoute
         If DgvRoute.SelectedRows.Count = 1 Then
-            Route = _City.Routes.Value.Single(Function(x) x.Guid = DgvRoute.SelectedRows(0).Cells("Guid").Value)
+            Route = _City.Routes.Single(Function(x) x.Guid = DgvRoute.SelectedRows(0).Cells("Guid").Value)
             Form = New FrmCityRoute(_City, Route, Me)
             Form.ShowDialog()
         End If
@@ -292,9 +292,9 @@ Public Class FrmCity
         Dim Route As CityRoute
         If DgvRoute.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Route = _City.Routes.Value.Single(Function(x) x.Guid = DgvRoute.SelectedRows(0).Cells("Guid").Value)
-                _City.Routes.Value.Remove(Route)
-                DgvRoute.Fill(_City.Routes.Value)
+                Route = _City.Routes.Single(Function(x) x.Guid = DgvRoute.SelectedRows(0).Cells("Guid").Value)
+                _City.Routes.Remove(Route)
+                DgvRoute.Fill(_City.Routes)
                 BtnSave.Enabled = True
             End If
         End If

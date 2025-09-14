@@ -54,7 +54,21 @@ Public Class PrivilegePreset
         _Shadow = Clone()
         Return Me
     End Function
-
+    Public Sub Delete()
+        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+            Con.Open()
+            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
+                UpdateUser(Con, Tra)
+                Privileges.ForEach(Sub(p) p.UpdateUser(Con, Tra))
+                Using Cmd As New MySqlCommand(My.Resources.PrivilegePresetDelete, Con)
+                    Cmd.Parameters.AddWithValue("@id", ID)
+                    Cmd.ExecuteNonQuery()
+                    Clear()
+                End Using
+                Tra.Commit()
+            End Using
+        End Using
+    End Sub
     Public Sub SaveChanges()
         If Not IsSaved Then
             Insert()
@@ -63,16 +77,6 @@ Public Class PrivilegePreset
         End If
         SetIsSaved(True)
         _Shadow = Clone()
-    End Sub
-    Public Sub Delete()
-        Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
-            Con.Open()
-            Using Cmd As New MySqlCommand(My.Resources.PrivilegePresetDelete, Con)
-                Cmd.Parameters.AddWithValue("@id", ID)
-                Cmd.ExecuteNonQuery()
-                Clear()
-            End Using
-        End Using
     End Sub
     Private Sub Insert()
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())

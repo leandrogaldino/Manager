@@ -47,20 +47,19 @@ Public MustInherit Class BaseModel
     Public Sub SetIsSaved(IsSaved As Boolean)
         _IsSaved = IsSaved
     End Sub
-    Public Sub UpdateUser(Connection As MySqlConnection)
+    Public Sub UpdateUser(Connection As MySqlConnection, Optional Routine As Routine? = Nothing)
         Using CmdUpdateUser As New MySqlCommand("UpdateUserID", Connection)
             CmdUpdateUser.CommandType = CommandType.StoredProcedure
-            CmdUpdateUser.Parameters.AddWithValue("@tablename", "evaluation")
+            CmdUpdateUser.Parameters.AddWithValue("@tablename", If(Routine.HasValue, Routine.ToString().ToLower(), _Routine.ToString().ToLower()))
             CmdUpdateUser.Parameters.AddWithValue("@userid", User.ID)
             CmdUpdateUser.Parameters.AddWithValue("@id", ID)
             CmdUpdateUser.ExecuteNonQuery()
         End Using
     End Sub
-    Public Sub UpdateUser(Connection As MySqlConnection, Transaction As MySqlTransaction)
-        Using CmdUpdateUser As New MySqlCommand("UpdateUserID", Connection)
-            CmdUpdateUser.Transaction = Transaction
+    Public Sub UpdateUser(Connection As MySqlConnection, Transaction As MySqlTransaction, Optional Routine As Routine? = Nothing)
+        Using CmdUpdateUser As New MySqlCommand("UpdateUserID", Connection, Transaction)
             CmdUpdateUser.CommandType = CommandType.StoredProcedure
-            CmdUpdateUser.Parameters.AddWithValue("@tablename", "evaluation")
+            CmdUpdateUser.Parameters.AddWithValue("@tablename", If(Routine.HasValue, Routine.ToString().ToLower(), _Routine.ToString().ToLower()))
             CmdUpdateUser.Parameters.AddWithValue("@userid", User.ID)
             CmdUpdateUser.Parameters.AddWithValue("@id", ID)
             CmdUpdateUser.ExecuteNonQuery()

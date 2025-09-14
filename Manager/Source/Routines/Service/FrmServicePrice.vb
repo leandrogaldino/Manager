@@ -90,7 +90,7 @@ Public Class FrmServicePrice
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.PriceTableItem, _ServicePrice.ID)
+        Dim Frm As New FrmLog(Routine.PriceTableSellable, _ServicePrice.ID)
         Frm.ShowDialog()
     End Sub
     Private Sub QbxPriceTable_TextChanged(sender As Object, e As EventArgs) Handles QbxPriceTable.TextChanged

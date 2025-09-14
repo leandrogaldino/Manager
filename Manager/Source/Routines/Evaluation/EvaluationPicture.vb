@@ -2,10 +2,10 @@
 ''' <summary>
 ''' Representa o caminho de uma foto de uma avaliação.
 ''' </summary>
-Public Class EvaluationPhoto
+Public Class EvaluationPicture
     Inherits ChildModel
-    Public Property Photo As New FileManager(ApplicationPaths.EvaluationPhotoDirectory)
+    Public Property Picture As New FileManager(ApplicationPaths.EvaluationPictureDirectory)
     Public Sub New()
-        SetRoutine(Routine.EvaluationPhoto)
+        SetRoutine(Routine.EvaluationPicture)
     End Sub
 End Class

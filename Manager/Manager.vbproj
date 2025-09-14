@@ -893,10 +893,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Routines\VisitSchedule\VisitSchedule.vb" />
-    <Compile Include="Source\Controls\UcEvaluationPhotos.Designer.vb">
-      <DependentUpon>UcEvaluationPhotos.vb</DependentUpon>
+    <Compile Include="Source\Controls\UcPictureViewer.Designer.vb">
+      <DependentUpon>UcPictureViewer.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\UcEvaluationPhotos.vb">
+    <Compile Include="Source\Controls\UcPictureViewer.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Controls\UcEvaluationSoldLost.Designer.vb">
@@ -911,7 +911,7 @@
     <Compile Include="Source\Controls\UcEvaluationSourceHeader.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Evaluation\EvaluationPhoto.vb" />
+    <Compile Include="Source\Routines\Evaluation\EvaluationPicture.vb" />
     <Compile Include="Source\Routines\Evaluation\EvaluationTechnician.vb" />
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationImport.Designer.vb">
       <DependentUpon>FrmEvaluationImport.vb</DependentUpon>
@@ -1444,8 +1444,8 @@
     <EmbeddedResource Include="Source\Routines\Email\FrmEmailImportEmailModel.resx">
       <DependentUpon>FrmEmailImportEmailModel.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Controls\UcEvaluationPhotos.resx">
-      <DependentUpon>UcEvaluationPhotos.vb</DependentUpon>
+    <EmbeddedResource Include="Source\Controls\UcPictureViewer.resx">
+      <DependentUpon>UcPictureViewer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Controls\UcEvaluationSoldLost.resx">
       <DependentUpon>UcEvaluationSoldLost.vb</DependentUpon>
@@ -1816,10 +1816,10 @@
     <Content Include="Resources\SQL\CRM\CrmTreatmentSelect.sql" />
     <Content Include="Resources\SQL\CRM\CrmTreatmentUpdate.sql" />
     <Content Include="Resources\SQL\CRM\CrmFilter.sql" />
-    <Content Include="Resources\SQL\Evaluation\EvaluationPhotoDelete.sql" />
-    <Content Include="Resources\SQL\Evaluation\EvaluationPhotoInsert.sql" />
-    <Content Include="Resources\SQL\Evaluation\EvaluationPhotoSelect .sql" />
-    <Content Include="Resources\SQL\Evaluation\EvaluationPhotoUpdate .sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationPictureDelete.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationPictureInsert.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationPictureSelect .sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationPictureUpdate .sql" />
     <Content Include="Resources\SQL\User\UserPersonShortNameSelect.sql" />
     <Content Include="Resources\XML\CashFlowAuthorizedGrid.xml" />
     <Content Include="Resources\XML\CashFlowGrid.xml" />
@@ -1827,7 +1827,7 @@
     <Content Include="Resources\XML\EvaluationReplacedSellableGrid.xml" />
     <Content Include="Resources\XML\PersonCompressorSellableGrid.xml" />
     <Content Include="Resources\XML\PriceTableGrid.xml" />
-    <Content Include="Resources\XML\PriceTableItemGrid.xml" />
+    <Content Include="Resources\XML\PriceTableSellableGrid.xml" />
     <Content Include="Resources\XML\ProductPriceGrid.xml" />
     <Content Include="Resources\XML\ProductPriceIndicatorGrid.xml" />
     <Content Include="Resources\XML\ServiceCodeGrid.xml" />

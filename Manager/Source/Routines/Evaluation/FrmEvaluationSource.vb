@@ -1,7 +1,7 @@
 ﻿Public Class FrmEvaluationSource
 
     Public Property ResultEvaluation As Evaluation
-    Public Sub New(EvaluationData As Dictionary(Of String, Object), Signature As String, Photos As List(Of String))
+    Public Sub New(EvaluationData As Dictionary(Of String, Object), Signature As String, Pictures As List(Of String))
         InitializeComponent()
         Dim HeaderTile As New UcEvaluationSourceHeader()
 
@@ -16,8 +16,8 @@
 
 
 
-        ImportedEvaluation = Evaluation.FromCloud(EvaluationData, Signature, Photos)
-        CalculatedEvaluation = Evaluation.FromCloud(EvaluationData, Signature, Photos)
+        ImportedEvaluation = Evaluation.FromCloud(EvaluationData, Signature, Pictures)
+        CalculatedEvaluation = Evaluation.FromCloud(EvaluationData, Signature, Pictures)
         CalculatedEvaluation.Calculate()
 
         ResultEvaluation = CalculatedEvaluation

@@ -45,7 +45,7 @@ Public Class Evaluation
     Public Property TechnicalAdvice As String
     Public Property Document As New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
     Public Property Signature As New FileManager(ApplicationPaths.EvaluationSignatureDirectory)
-    Public Property Photos As New List(Of EvaluationPhoto)
+    Public Property Pictures As New List(Of EvaluationPicture)
     Public ReadOnly Property RejectReason As String
         Get
             Return _RejectReason
@@ -83,7 +83,7 @@ Public Class Evaluation
         TechnicalAdvice = Nothing
         Document = New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
         Signature = New FileManager(ApplicationPaths.EvaluationDocumentDirectory)
-        Photos = New List(Of EvaluationPhoto)
+        Pictures = New List(Of EvaluationPicture)
         _RejectReason = Nothing
         If LockInfo.IsLocked Then Unlock()
     End Sub
@@ -131,7 +131,7 @@ Public Class Evaluation
                         If TableResult.Rows(0).Item("signaturename") IsNot DBNull.Value AndAlso Not String.IsNullOrEmpty(TableResult.Rows(0).Item("signaturename")) Then
                             Signature.SetCurrentFile(Path.Combine(ApplicationPaths.EvaluationSignatureDirectory, TableResult.Rows(0).Item("signaturename").ToString), True)
                         End If
-                        Photos = GetPhotos(Tra)
+                        Pictures = GetPictures(Tra)
                         _RejectReason = TableResult.Rows(0).Item("rejectreason").ToString
                         Technicians = GetTechnicians(Tra)
                         GetControlledSellables(Tra)
@@ -159,22 +159,22 @@ Public Class Evaluation
                 WorkedHourControlledSelable.ForEach(Sub(w) w.UpdateUser(Con))
                 ElapsedDayControlledSellable.ForEach(Sub(e) e.UpdateUser(Con))
                 ReplacedSellables.ForEach(Sub(r) r.UpdateUser(Con))
-                Photos.ForEach(Sub(p) p.UpdateUser(Con))
+                Pictures.ForEach(Sub(p) p.UpdateUser(Con))
                 Using CmdEvaluation As New MySqlCommand(My.Resources.EvaluationDelete, Con)
                     CmdEvaluation.Parameters.AddWithValue("@id", ID)
                     CmdEvaluation.ExecuteNonQuery()
                     If File.Exists(Document.OriginalFile) Then FileManager.Delete(Document.OriginalFile)
                     If File.Exists(Signature.OriginalFile) Then FileManager.Delete(Signature.OriginalFile)
-                    For Each ShadowPhoto In _Shadow.Photos
-                        If File.Exists(ShadowPhoto.Photo.OriginalFile) Then
-                            FileManager.Delete(ShadowPhoto.Photo.OriginalFile)
+                    For Each ShadowPicture In _Shadow.Pictures
+                        If File.Exists(ShadowPicture.Picture.OriginalFile) Then
+                            FileManager.Delete(ShadowPicture.Picture.OriginalFile)
                         End If
-                    Next ShadowPhoto
-                    Photos.ToList.ForEach(Sub(x)
-                                              If File.Exists(x.Photo.OriginalFile) Then
-                                                  FileManager.Delete(x.Photo.OriginalFile)
-                                              End If
-                                          End Sub)
+                    Next ShadowPicture
+                    Pictures.ToList.ForEach(Sub(x)
+                                                If File.Exists(x.Picture.OriginalFile) Then
+                                                    FileManager.Delete(x.Picture.OriginalFile)
+                                                End If
+                                            End Sub)
 
                 End Using
             End Using
@@ -193,7 +193,7 @@ Public Class Evaluation
         WorkedHourControlledSelable.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         ElapsedDayControlledSellable.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         ReplacedSellables.ToList().ForEach(Sub(x) x.SetIsSaved(True))
-        Photos.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        Pictures.ToList().ForEach(Sub(x) x.SetIsSaved(True))
         _Shadow = Clone()
     End Sub
     Private Sub Insert()
@@ -278,20 +278,20 @@ Public Class Evaluation
                         ReplacedSellable.SetID(CmdReplacedSellable.LastInsertedId)
                     End Using
                 Next ReplacedSellable
-                For Each Photo As EvaluationPhoto In Photos
-                    Using CmdPhoto As New MySqlCommand(My.Resources.EvaluationPhotoInsert, Con)
-                        CmdPhoto.Parameters.AddWithValue("@creation", Photo.Creation)
-                        CmdPhoto.Parameters.AddWithValue("@evaluationid", ID)
-                        CmdPhoto.Parameters.AddWithValue("@photoname", Path.GetFileName(Photo.Photo.CurrentFile))
-                        CmdPhoto.Parameters.AddWithValue("@userid", Photo.User.ID)
-                        CmdPhoto.ExecuteNonQuery()
-                        Photo.SetID(CmdPhoto.LastInsertedId)
+                For Each Picture As EvaluationPicture In Pictures
+                    Using CmdPicture As New MySqlCommand(My.Resources.EvaluationPictureInsert, Con)
+                        CmdPicture.Parameters.AddWithValue("@creation", Picture.Creation)
+                        CmdPicture.Parameters.AddWithValue("@evaluationid", ID)
+                        CmdPicture.Parameters.AddWithValue("@picturenamename", Path.GetFileName(Picture.Picture.CurrentFile))
+                        CmdPicture.Parameters.AddWithValue("@userid", Picture.User.ID)
+                        CmdPicture.ExecuteNonQuery()
+                        Picture.SetID(CmdPicture.LastInsertedId)
                     End Using
-                Next Photo
+                Next Picture
             End Using
             Document.Execute()
             Signature.Execute()
-            Photos.ToList.ForEach(Sub(x) x.Photo.Execute())
+            Pictures.ToList.ForEach(Sub(x) x.Picture.Execute())
             Transaction.Complete()
         End Using
     End Sub
@@ -493,43 +493,43 @@ Public Class Evaluation
                         End Using
                     End If
                 Next ReplacedSellable
-                For Each Photo As EvaluationPhoto In _Shadow.Photos
-                    If Not Photos.Any(Function(x) x.ID = Photo.ID And x.ID > 0) Then
-                        Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoDelete, Con)
-                            Cmd.Parameters.AddWithValue("@id", Photo.ID)
-                            Cmd.ExecuteNonQuery()
+                For Each Picture As EvaluationPicture In _Shadow.Pictures
+                    If Not Pictures.Any(Function(x) x.ID = Picture.ID And x.ID > 0) Then
+                        Using CmdPicture As New MySqlCommand(My.Resources.EvaluationPictureDelete, Con)
+                            CmdPicture.Parameters.AddWithValue("@id", Picture.ID)
+                            CmdPicture.ExecuteNonQuery()
                         End Using
                     End If
-                Next Photo
-                For Each Photo As EvaluationPhoto In Photos.Where(Function(x) x.Photo.CurrentFile Is Nothing)
-                    Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoDelete, Con)
-                        Cmd.Parameters.AddWithValue("@id", Photo.ID)
-                        Cmd.ExecuteNonQuery()
+                Next Picture
+                For Each Picture As EvaluationPicture In Pictures.Where(Function(x) x.Picture.CurrentFile Is Nothing)
+                    Using CmdPicture As New MySqlCommand(My.Resources.EvaluationPictureDelete, Con)
+                        CmdPicture.Parameters.AddWithValue("@id", Picture.ID)
+                        CmdPicture.ExecuteNonQuery()
                     End Using
                 Next
-                For Each Photo As EvaluationPhoto In Photos.Where(Function(x) x.Photo.CurrentFile IsNot Nothing)
-                    If Photo.ID = 0 Then
-                        Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoInsert, Con)
-                            Cmd.Parameters.AddWithValue("@creation", Photo.Creation)
-                            Cmd.Parameters.AddWithValue("@evaluationid", ID)
-                            Cmd.Parameters.AddWithValue("@photoname", Path.GetFileName(Photo.Photo.CurrentFile))
-                            Cmd.Parameters.AddWithValue("@userid", Photo.User.ID)
-                            Cmd.ExecuteNonQuery()
-                            Photo.SetID(Cmd.LastInsertedId)
+                For Each Picture As EvaluationPicture In Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing)
+                    If Picture.ID = 0 Then
+                        Using CmdPicture As New MySqlCommand(My.Resources.EvaluationPictureInsert, Con)
+                            CmdPicture.Parameters.AddWithValue("@creation", Picture.Creation)
+                            CmdPicture.Parameters.AddWithValue("@evaluationid", ID)
+                            CmdPicture.Parameters.AddWithValue("@picturename", Path.GetFileName(Picture.Picture.CurrentFile))
+                            CmdPicture.Parameters.AddWithValue("@userid", Picture.User.ID)
+                            CmdPicture.ExecuteNonQuery()
+                            Picture.SetID(CmdPicture.LastInsertedId)
                         End Using
                     Else
-                        Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoUpdate, Con)
-                            Cmd.Parameters.AddWithValue("@id", Photo.ID)
-                            Cmd.Parameters.AddWithValue("@photoname", Path.GetFileName(Photo.Photo.CurrentFile))
-                            Cmd.Parameters.AddWithValue("@userid", Photo.User.ID)
-                            Cmd.ExecuteNonQuery()
+                        Using CmdPicture As New MySqlCommand(My.Resources.EvaluationPictureUpdate, Con)
+                            CmdPicture.Parameters.AddWithValue("@id", Picture.ID)
+                            CmdPicture.Parameters.AddWithValue("@picturename", Path.GetFileName(Picture.Picture.CurrentFile))
+                            CmdPicture.Parameters.AddWithValue("@userid", Picture.User.ID)
+                            CmdPicture.ExecuteNonQuery()
                         End Using
                     End If
-                Next Photo
+                Next Picture
             End Using
             Document.Execute()
             Signature.Execute()
-            Photos.ToList.ForEach(Sub(x) x.Photo.Execute())
+            Pictures.ToList.ForEach(Sub(x) x.Picture.Execute())
             Transaction.Complete()
         End Using
     End Sub
@@ -651,27 +651,27 @@ Public Class Evaluation
         _Compressor = Compressor
     End Sub
 
-    Private Function GetPhotos(Transaction As MySqlTransaction) As List(Of EvaluationPhoto)
+    Private Function GetPictures(Transaction As MySqlTransaction) As List(Of EvaluationPicture)
         Dim TableResult As DataTable
-        Dim Photo As EvaluationPhoto
-        Dim Photos As New List(Of EvaluationPhoto)
-        Using Cmd As New MySqlCommand(My.Resources.EvaluationPhotoSelect, Transaction.Connection)
+        Dim Picture As EvaluationPicture
+        Dim Pictures As New List(Of EvaluationPicture)
+        Using Cmd As New MySqlCommand(My.Resources.EvaluationPictureSelect, Transaction.Connection)
             Cmd.Transaction = Transaction
             Cmd.Parameters.AddWithValue("@evaluationid", ID)
             Using Adp As New MySqlDataAdapter(Cmd)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
                 For Each Row As DataRow In TableResult.Rows
-                    Photo = New EvaluationPhoto
-                    Photo.Photo.SetCurrentFile((Path.Combine(ApplicationPaths.EvaluationPhotoDirectory, Row.Item("photoname").ToString)), True)
-                    Photo.SetID(Row.Item("id"))
-                    Photo.SetCreation(Row.Item("creation"))
-                    Photo.SetIsSaved(True)
-                    Photos.Add(Photo)
+                    Picture = New EvaluationPicture
+                    Picture.Picture.SetCurrentFile((Path.Combine(ApplicationPaths.EvaluationPictureDirectory, Row.Item("picturename").ToString)), True)
+                    Picture.SetID(Row.Item("id"))
+                    Picture.SetCreation(Row.Item("creation"))
+                    Picture.SetIsSaved(True)
+                    Pictures.Add(Picture)
                 Next Row
             End Using
         End Using
-        Return Photos
+        Return Pictures
     End Function
     Private Function GetTechnicians(Transaction As MySqlTransaction) As List(Of EvaluationTechnician)
         Dim TableResult As DataTable
@@ -928,7 +928,7 @@ Public Class Evaluation
             End Using
         End Using
     End Function
-    Public Shared Function FromCloud(Data As Dictionary(Of String, Object), Signature As String, Photos As List(Of String)) As Evaluation
+    Public Shared Function FromCloud(Data As Dictionary(Of String, Object), Signature As String, Pictures As List(Of String)) As Evaluation
         Dim Evaluation As New Evaluation
         Dim EvaluationTechnician As EvaluationTechnician
         Dim Coalescent As EvaluationControlledSellable
@@ -996,13 +996,13 @@ Public Class Evaluation
             Evaluation.Technicians.Add(EvaluationTechnician)
         Next TechnicianData
         Evaluation.Signature.SetCurrentFile(Signature)
-        For Each p In Photos
-            Dim Photo As New EvaluationPhoto With {
-                .Photo = New FileManager(ApplicationPaths.EvaluationPhotoDirectory)
+        For Each p In Pictures
+            Dim Picture As New EvaluationPicture With {
+                .Picture = New FileManager(ApplicationPaths.EvaluationPictureDirectory)
             }
-            Photo.SetIsSaved(True)
-            Photo.Photo.SetCurrentFile(p)
-            Evaluation.Photos.Add(Photo)
+            Picture.SetIsSaved(True)
+            Picture.Picture.SetCurrentFile(p)
+            Evaluation.Pictures.Add(Picture)
         Next p
         Return Evaluation
     End Function

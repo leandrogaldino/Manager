@@ -1,14 +1,14 @@
-INSERT INTO evaluationphoto
+INSERT INTO evaluationpicture
 (
     creation,
     evaluationid,
-    photoname,
+    picturename,
     userid
 )
 VALUES
 (
     @creation,
     @evaluationid,
-    @photoname,
+    @picturename,
     @userid
 );

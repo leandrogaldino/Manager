@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class UcEvaluationPhotos
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class UcPictureViewer
     Inherits System.Windows.Forms.UserControl
 
     'O UserControl substitui o descarte para limpar a lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,10 +20,10 @@ Partial Class UcEvaluationPhotos
     'OBSERVAÇÃO: o procedimento a seguir é exigido pelo Windows Form Designer
     'Pode ser modificado usando o Windows Form Designer.  
     'Não o modifique usando o editor de códigos.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.PnContainer = New System.Windows.Forms.Panel()
-        Me.PbxPhoto = New System.Windows.Forms.PictureBox()
+        Me.PbxPicture = New System.Windows.Forms.PictureBox()
         Me.TlpControls = New System.Windows.Forms.TableLayoutPanel()
         Me.BtnLast = New ControlLibrary.NoFocusCueButton()
         Me.BtnNext = New ControlLibrary.NoFocusCueButton()
@@ -32,34 +32,34 @@ Partial Class UcEvaluationPhotos
         Me.BtnInclude = New ControlLibrary.NoFocusCueButton()
         Me.BtnPrevious = New ControlLibrary.NoFocusCueButton()
         Me.BtnFirst = New ControlLibrary.NoFocusCueButton()
-        Me.LblPhotoCount = New System.Windows.Forms.Label()
+        Me.LblCount = New System.Windows.Forms.Label()
         Me.PnContainer.SuspendLayout()
-        CType(Me.PbxPhoto, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PbxPicture, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TlpControls.SuspendLayout()
         Me.SuspendLayout()
         '
         'PnContainer
         '
         Me.PnContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PnContainer.Controls.Add(Me.PbxPhoto)
+        Me.PnContainer.Controls.Add(Me.PbxPicture)
         Me.PnContainer.Controls.Add(Me.TlpControls)
-        Me.PnContainer.Controls.Add(Me.LblPhotoCount)
+        Me.PnContainer.Controls.Add(Me.LblCount)
         Me.PnContainer.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PnContainer.Location = New System.Drawing.Point(0, 0)
         Me.PnContainer.Name = "PnContainer"
         Me.PnContainer.Size = New System.Drawing.Size(250, 250)
         Me.PnContainer.TabIndex = 15
         '
-        'PbxPhoto
+        'PbxPicture
         '
-        Me.PbxPhoto.BackColor = System.Drawing.Color.White
-        Me.PbxPhoto.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PbxPhoto.Location = New System.Drawing.Point(0, 28)
-        Me.PbxPhoto.Name = "PbxPhoto"
-        Me.PbxPhoto.Size = New System.Drawing.Size(248, 197)
-        Me.PbxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PbxPhoto.TabIndex = 11
-        Me.PbxPhoto.TabStop = False
+        Me.PbxPicture.BackColor = System.Drawing.Color.White
+        Me.PbxPicture.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PbxPicture.Location = New System.Drawing.Point(0, 28)
+        Me.PbxPicture.Name = "PbxPicture"
+        Me.PbxPicture.Size = New System.Drawing.Size(248, 197)
+        Me.PbxPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PbxPicture.TabIndex = 11
+        Me.PbxPicture.TabStop = False
         '
         'TlpControls
         '
@@ -194,19 +194,19 @@ Partial Class UcEvaluationPhotos
         Me.BtnFirst.TooltipText = "Primeira Imagem"
         Me.BtnFirst.UseVisualStyleBackColor = False
         '
-        'LblPhotoCount
+        'LblCount
         '
-        Me.LblPhotoCount.BackColor = System.Drawing.Color.White
-        Me.LblPhotoCount.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.LblPhotoCount.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblPhotoCount.Location = New System.Drawing.Point(0, 225)
-        Me.LblPhotoCount.Name = "LblPhotoCount"
-        Me.LblPhotoCount.Size = New System.Drawing.Size(248, 23)
-        Me.LblPhotoCount.TabIndex = 14
-        Me.LblPhotoCount.Text = "Foto 1 de 3"
-        Me.LblPhotoCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.LblCount.BackColor = System.Drawing.Color.White
+        Me.LblCount.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.LblCount.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblCount.Location = New System.Drawing.Point(0, 225)
+        Me.LblCount.Name = "LblCount"
+        Me.LblCount.Size = New System.Drawing.Size(248, 23)
+        Me.LblCount.TabIndex = 14
+        Me.LblCount.Text = "Foto 1 de 3"
+        Me.LblCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'UcEvaluationPhotos
+        'UcPictureViewer
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
@@ -214,17 +214,17 @@ Partial Class UcEvaluationPhotos
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MinimumSize = New System.Drawing.Size(250, 250)
-        Me.Name = "UcEvaluationPhotos"
+        Me.Name = "UcPictureViewer"
         Me.Size = New System.Drawing.Size(250, 250)
         Me.PnContainer.ResumeLayout(False)
-        CType(Me.PbxPhoto, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PbxPicture, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TlpControls.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
 
     Private WithEvents PnContainer As Panel
-    Private WithEvents PbxPhoto As PictureBox
+    Private WithEvents PbxPicture As PictureBox
     Private WithEvents TlpControls As TableLayoutPanel
     Private WithEvents BtnLast As ControlLibrary.NoFocusCueButton
     Private WithEvents BtnNext As ControlLibrary.NoFocusCueButton
@@ -233,5 +233,5 @@ Partial Class UcEvaluationPhotos
     Private WithEvents BtnInclude As ControlLibrary.NoFocusCueButton
     Private WithEvents BtnPrevious As ControlLibrary.NoFocusCueButton
     Private WithEvents BtnFirst As ControlLibrary.NoFocusCueButton
-    Private WithEvents LblPhotoCount As Label
+    Private WithEvents LblCount As Label
 End Class

@@ -64,7 +64,7 @@ Public Enum Routine
     EvaluationExportManagementPanel = 1305
     EvaluationControlledSellable = 1306
     EvaluationTechnician = 1307
-    EvaluationPhoto = 1308
+    EvaluationPicture = 1308
     <Description("Aprovar e rejeitar uma avaliação")> <BiStatePrivilege> <RoutineDependency(Evaluation)>
     EvaluationApproveOrReject = 1309
     <Description("Criar avaliações automáticas")> <BiStatePrivilege> <RoutineDependency(Evaluation)>

@@ -54,7 +54,7 @@ Public Class FrmPriceTable
         LoadForm()
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvPriceTableItemLayout.Load()
+        DgvlPriceTableItem.Load()
     End Sub
     Private Sub LoadForm()
         ControlHelper.EnableControlDoubleBuffer(DgvPriceTableSellable, True)

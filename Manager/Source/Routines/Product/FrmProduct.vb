@@ -19,9 +19,9 @@ Public Class FrmProduct
         Set(value As ProductPicture)
             _SelectedPicture = value
             If _SelectedPicture IsNot Nothing Then
-                PbxPhoto.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_SelectedPicture.Picture.CurrentFile)))
+                PbxPicture.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_SelectedPicture.Picture.CurrentFile)))
             Else
-                PbxPhoto.Image = Nothing
+                PbxPicture.Image = Nothing
             End If
         End Set
     End Property
@@ -52,7 +52,7 @@ Public Class FrmProduct
         _User = Locator.GetInstance(Of Session).User
         ConfigureControls()
         LoadData()
-        RefreshPhotoControls()
+        RefreshPictureControls()
     End Sub
     Public Sub New(Product As Product)
         InitializeComponent()
@@ -84,7 +84,7 @@ Public Class FrmProduct
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = _User.CanAccess(Routine.Log)
-        RefreshPhotoControls()
+        RefreshPictureControls()
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -115,7 +115,7 @@ Public Class FrmProduct
         If _Product.Pictures.Count > 0 Then
             SelectedPicture = _Product.Pictures(0)
         End If
-        RefreshPhotoControls()
+        RefreshPictureControls()
         BtnDelete.Enabled = _Product.ID > 0 And _User.CanDelete(Routine.Product)
         Text = "Produto"
         If _Product.LockInfo.IsLocked And Not _Product.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Product.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
@@ -126,7 +126,7 @@ Public Class FrmProduct
         TxtName.Select()
         _Loading = False
     End Sub
-    Private Sub BtnIncludePhoto_Click(sender As Object, e As EventArgs) Handles BtnIncludePhoto.Click
+    Private Sub BtnIncludePicture_Click(sender As Object, e As EventArgs) Handles BtnIncludePicture.Click
         Dim Filename As String
         Dim Picture As ProductPicture
         Using Ofd As New OpenFileDialog()
@@ -143,9 +143,9 @@ Public Class FrmProduct
                 BtnSave.Enabled = True
             End If
         End Using
-        RefreshPhotoControls()
+        RefreshPictureControls()
     End Sub
-    Private Sub BtnRemovePhoto_Click(sender As Object, e As EventArgs) Handles BtnRemovePhoto.Click
+    Private Sub BtnRemovePicture_Click(sender As Object, e As EventArgs) Handles BtnRemovePicture.Click
         Dim Pictures As List(Of ProductPicture) = _Product.Pictures.ToList()
         If CMessageBox.Show("A foto será excluída permanentemente quando essa avaliação for salva. Confirma a exclusão?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
             SelectedPicture.Picture.SetCurrentFile(Nothing)
@@ -170,57 +170,57 @@ Public Class FrmProduct
             If Not Found Then
                 SelectedPicture = Nothing
             End If
-            RefreshPhotoControls()
+            RefreshPictureControls()
             EprValidation.Clear()
             BtnSave.Enabled = True
         End If
     End Sub
-    Private Sub BtnPreviousPhoto_Click(sender As Object, e As EventArgs) Handles BtnPreviousPhoto.Click
+    Private Sub BtnPreviousPicture_Click(sender As Object, e As EventArgs) Handles BtnPreviousPicture.Click
         Dim ValidPictures As List(Of ProductPicture) = _Product.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
         SelectedPicture = ValidPictures(ValidPictures.IndexOf(SelectedPicture) - 1)
-        RefreshPhotoControls()
+        RefreshPictureControls()
     End Sub
 
-    Private Sub BtnNextPhoto_Click(sender As Object, e As EventArgs) Handles BtnNextPhoto.Click
-        Dim ValidPhotos As List(Of ProductPicture) = _Product.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
-        SelectedPicture = ValidPhotos(ValidPhotos.IndexOf(SelectedPicture) + 1)
-        RefreshPhotoControls()
+    Private Sub BtnNextPicture_Click(sender As Object, e As EventArgs) Handles BtnNextPicture.Click
+        Dim ValidPictures As List(Of ProductPicture) = _Product.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
+        SelectedPicture = ValidPictures(ValidPictures.IndexOf(SelectedPicture) + 1)
+        RefreshPictureControls()
     End Sub
 
-    Private Sub BtnFirstPhoto_Click(sender As Object, e As EventArgs) Handles BtnFirstPhoto.Click
-        Dim ValidPhotos As List(Of ProductPicture) = _Product.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
-        SelectedPicture = ValidPhotos(0)
-        RefreshPhotoControls()
+    Private Sub BtnFirstPicture_Click(sender As Object, e As EventArgs) Handles BtnFirstPicture.Click
+        Dim ValidPictures As List(Of ProductPicture) = _Product.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
+        SelectedPicture = ValidPictures(0)
+        RefreshPictureControls()
     End Sub
 
-    Private Sub BtnLastPhoto_Click(sender As Object, e As EventArgs) Handles BtnLastPhoto.Click
-        Dim ValidPhotos As List(Of ProductPicture) = _Product.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
-        SelectedPicture = ValidPhotos(ValidPhotos.Count - 1)
-        RefreshPhotoControls()
+    Private Sub BtnLastPicture_Click(sender As Object, e As EventArgs) Handles BtnLastPicture.Click
+        Dim ValidPictures As List(Of ProductPicture) = _Product.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
+        SelectedPicture = ValidPictures(ValidPictures.Count - 1)
+        RefreshPictureControls()
     End Sub
 
-    Private Sub RefreshPhotoControls()
-        Dim ValidPhotos As List(Of ProductPicture) = _Product.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
-        Dim PhotoCount As Integer = ValidPhotos.Count
-        Dim PhotoIndex As Integer = ValidPhotos.IndexOf(SelectedPicture)
-        If PhotoCount < 1 Then
-            LblPhotoCount.Visible = False
-            BtnSavePhoto.Enabled = False
-            BtnRemovePhoto.Enabled = False
-            BtnFirstPhoto.Enabled = False
-            BtnPreviousPhoto.Enabled = False
-            BtnNextPhoto.Enabled = False
-            BtnLastPhoto.Enabled = False
-            PbxPhoto.Image = Nothing
+    Private Sub RefreshPictureControls()
+        Dim ValidPictures As List(Of ProductPicture) = _Product.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
+        Dim PictureCount As Integer = ValidPictures.Count
+        Dim PictureIndex As Integer = ValidPictures.IndexOf(SelectedPicture)
+        If PictureCount < 1 Then
+            LblPictureCount.Visible = False
+            BtnSavePicture.Enabled = False
+            BtnRemovePicture.Enabled = False
+            BtnFirstPicture.Enabled = False
+            BtnPreviousPicture.Enabled = False
+            BtnNextPicture.Enabled = False
+            BtnLastPicture.Enabled = False
+            PbxPicture.Image = Nothing
         Else
-            LblPhotoCount.Visible = True
-            LblPhotoCount.Text = $"Foto {PhotoIndex + 1} de {PhotoCount}"
-            BtnRemovePhoto.Enabled = True
-            BtnSavePhoto.Enabled = True
-            BtnFirstPhoto.Enabled = (PhotoIndex > 0)
-            BtnPreviousPhoto.Enabled = (PhotoIndex > 0)
-            BtnNextPhoto.Enabled = (PhotoIndex < PhotoCount - 1)
-            BtnLastPhoto.Enabled = (PhotoIndex < PhotoCount - 1)
+            LblPictureCount.Visible = True
+            LblPictureCount.Text = $"Foto {PictureIndex + 1} de {PictureCount}"
+            BtnRemovePicture.Enabled = True
+            BtnSavePicture.Enabled = True
+            BtnFirstPicture.Enabled = (PictureIndex > 0)
+            BtnPreviousPicture.Enabled = (PictureIndex > 0)
+            BtnNextPicture.Enabled = (PictureIndex < PictureCount - 1)
+            BtnLastPicture.Enabled = (PictureIndex < PictureCount - 1)
         End If
     End Sub
     Private Sub BeforeDataGridViewRowMove()
@@ -776,23 +776,23 @@ Public Class FrmProduct
             BtnDeletePrice.Enabled = True
         End If
     End Sub
-    Private Sub BtnPhoto_EnabledChanged(sender As Object, e As EventArgs) Handles BtnSavePhoto.EnabledChanged, BtnRemovePhoto.EnabledChanged, BtnPreviousPhoto.EnabledChanged, BtnNextPhoto.EnabledChanged, BtnLastPhoto.EnabledChanged, BtnIncludePhoto.EnabledChanged, BtnFirstPhoto.EnabledChanged
+    Private Sub BtnPicture_EnabledChanged(sender As Object, e As EventArgs) Handles BtnSavePicture.EnabledChanged, BtnRemovePicture.EnabledChanged, BtnPreviousPicture.EnabledChanged, BtnNextPicture.EnabledChanged, BtnLastPicture.EnabledChanged, BtnIncludePicture.EnabledChanged, BtnFirstPicture.EnabledChanged
         Dim Button As NoFocusCueButton = sender
         If Button.Enabled Then
             Select Case True
-                Case Button Is BtnFirstPhoto
+                Case Button Is BtnFirstPicture
                     Button.BackgroundImage = My.Resources.NavFirst
-                Case Button Is BtnPreviousPhoto
+                Case Button Is BtnPreviousPicture
                     Button.BackgroundImage = My.Resources.NavPrevious
-                Case Button Is BtnNextPhoto
+                Case Button Is BtnNextPicture
                     Button.BackgroundImage = My.Resources.NavNext
-                Case Button Is BtnLastPhoto
+                Case Button Is BtnLastPicture
                     Button.BackgroundImage = My.Resources.NavLast
-                Case Button Is BtnIncludePhoto
+                Case Button Is BtnIncludePicture
                     Button.BackgroundImage = My.Resources.ImageInclude
-                Case Button Is BtnRemovePhoto
+                Case Button Is BtnRemovePicture
                     Button.BackgroundImage = My.Resources.ImageDelete
-                Case Button Is BtnSavePhoto
+                Case Button Is BtnSavePicture
                     Button.BackgroundImage = My.Resources.ImageSave
             End Select
         Else

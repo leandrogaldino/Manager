@@ -176,7 +176,7 @@ Public Class FrmPriceTableSellable
                 _PriceTable.Sellables.Add(_PriceTableItem)
             End If
             _PriceTableForm.DgvPriceTableSellable.Fill(_PriceTable.Sellables)
-            _PriceTableForm.DgvPriceTableItemLayout.Load()
+            _PriceTableForm.DgvlPriceTableItem.Load()
             BtnSave.Enabled = False
             If Not _PriceTableItem.IsSaved Then
                 BtnSave.Text = "Incluir"
@@ -309,7 +309,7 @@ Public Class FrmPriceTableSellable
                 _PriceTableItem = _PriceTable.Sellables.Single(Function(x) x.Guid = _PriceTableForm.DgvPriceTableSellable.SelectedRows(0).Cells("Guid").Value)
                 _PriceTable.Sellables.Remove(_PriceTableItem)
                 _PriceTableForm.DgvPriceTableSellable.Fill(_PriceTable.Sellables)
-                _PriceTableForm.DgvPriceTableItemLayout.Load()
+                _PriceTableForm.DgvlPriceTableItem.Load()
                 _Deleting = True
                 Dispose()
                 _PriceTableForm.BtnSave.Enabled = True

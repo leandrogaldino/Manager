@@ -1560,3 +1560,22 @@ update log set routineid = 204 where routineid = 205;
 delete from log where routineid = 14;
 delete from log where routineid = 1401;
 SET SQL_SAFE_UPDATES = 1;
+ALTER TABLE `manager`.`evaluationphoto` CHANGE COLUMN `photoname` `picturename` VARCHAR(255) NOT NULL , RENAME TO  `manager`.`evaluationpicture` ;
+
+
+
+DROP TRIGGER IF EXISTS `manager`.`evaluationphotoinsert`;
+DROP TRIGGER IF EXISTS `manager`.`evaluationphotoupdate`;
+DROP TRIGGER IF EXISTS `manager`.`evaluationphotodelete`;
+
+DELIMITER $$
+CREATE TRIGGER `evaluationpictureinsert` AFTER INSERT ON `evaluationpicture` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 1308, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END$$
+CREATE TRIGGER `evaluationpictureupdate` AFTER UPDATE ON `evaluationpicture` FOR EACH ROW BEGIN
+IF OLD.picturename <> NEW.picturename THEN INSERT INTO log VALUES (NULL, 1308, NEW.id, 'Foto', NULL, 'Alterado', NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+END$$
+CREATE TRIGGER `evaluationpicturedelete` AFTER DELETE ON `evaluationpicture` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 1308, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
+END$$
+DELIMITER ;

@@ -2431,61 +2431,61 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM evaluationphoto
-        '''WHERE evaluationphoto.id = @id;.
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM evaluationpicture
+        '''WHERE evaluationpicture.id = @id;.
         '''</summary>
-        Friend ReadOnly Property EvaluationPhotoDelete() As String
+        Friend ReadOnly Property EvaluationPictureDelete() As String
             Get
-                Return ResourceManager.GetString("EvaluationPhotoDelete", resourceCulture)
+                Return ResourceManager.GetString("EvaluationPictureDelete", resourceCulture)
             End Get
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO evaluationphoto
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO evaluationpicture
         '''(
         '''    creation,
         '''    evaluationid,
-        '''    photoname,
+        '''    picturename,
         '''    userid
         ''')
         '''VALUES
         '''(
         '''    @creation,
         '''    @evaluationid,
-        '''    @photoname,
+        '''    @picturename,
         '''    @userid
         ''');.
         '''</summary>
-        Friend ReadOnly Property EvaluationPhotoInsert() As String
+        Friend ReadOnly Property EvaluationPictureInsert() As String
             Get
-                Return ResourceManager.GetString("EvaluationPhotoInsert", resourceCulture)
+                Return ResourceManager.GetString("EvaluationPictureInsert", resourceCulture)
             End Get
         End Property
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	evaluationphoto.id,
-        '''	evaluationphoto.creation,
-        '''	evaluationphoto.evaluationid,
-        '''	evaluationphoto.photoname
-        '''FROM evaluationphoto
-        '''WHERE evaluationphoto.evaluationid = @evaluationid;.
+        '''	evaluationpicture.id,
+        '''	evaluationpicture.creation,
+        '''	evaluationpicture.evaluationid,
+        '''	evaluationpicture.picturename
+        '''FROM evaluationpicture
+        '''WHERE evaluationpicture.evaluationid = @evaluationid;.
         '''</summary>
-        Friend ReadOnly Property EvaluationPhotoSelect() As String
+        Friend ReadOnly Property EvaluationPictureSelect() As String
             Get
-                Return ResourceManager.GetString("EvaluationPhotoSelect", resourceCulture)
+                Return ResourceManager.GetString("EvaluationPictureSelect", resourceCulture)
             End Get
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluationphoto SET
-        '''    photoname =  @photoname,
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluationpicture SET
+        '''    picturename =  @picturename,
         '''    userid = @userid
-        '''WHERE evaluationphoto.id = @id;.
+        '''WHERE evaluationpicture.id = @id;.
         '''</summary>
-        Friend ReadOnly Property EvaluationPhotoUpdate() As String
+        Friend ReadOnly Property EvaluationPictureUpdate() As String
             Get
-                Return ResourceManager.GetString("EvaluationPhotoUpdate", resourceCulture)
+                Return ResourceManager.GetString("EvaluationPictureUpdate", resourceCulture)
             End Get
         End Property
         
@@ -3989,32 +3989,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;PriceTableItem&quot; Version=&quot;1&quot;&gt;
-        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
-        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
-        '''	&lt;Column Index=&quot;0&quot;&gt;
-        '''		&lt;Visible&gt;True&lt;/Visible&gt;
-        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
-        '''		&lt;Name&gt;Ordem&lt;/Name&gt;
-        '''		&lt;Width&gt;70&lt;/Width&gt;
-        '''	&lt;/Column&gt;
-        '''	&lt;Column Index=&quot;1&quot; ButtonState=&quot;Hidden&quot;&gt;
-        '''		&lt;Visible&gt;False&lt;/Visible&gt;
-        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''		&lt;Name&gt;Vendável&lt;/Name&gt;
-        '''		&lt;Width&gt;70&lt;/Width&gt;
-        '''	&lt;/Column&gt;
-        '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
-        '''		&lt;Visible&gt;False&lt;/V [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property PriceTableItemGrid() As String
-            Get
-                Return ResourceManager.GetString("PriceTableItemGrid", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO pricetablesellable
         '''(
         '''    pricetableid,
@@ -4087,6 +4061,32 @@ Namespace My.Resources
         Friend ReadOnly Property PriceTableSelect() As String
             Get
                 Return ResourceManager.GetString("PriceTableSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;PriceTableSellable&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''	&lt;Column Index=&quot;0&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Ordem&lt;/Name&gt;
+        '''		&lt;Width&gt;70&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;1&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''		&lt;Visible&gt;False&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Vendável&lt;/Name&gt;
+        '''		&lt;Width&gt;70&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;2&quot; ButtonState=&quot;Hidden&quot;&gt;
+        '''		&lt;Visible&gt;Fals [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property PriceTableSellableGrid() As String
+            Get
+                Return ResourceManager.GetString("PriceTableSellableGrid", resourceCulture)
             End Get
         End Property
         

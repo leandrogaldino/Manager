@@ -155,12 +155,12 @@ Public Class FrmEvaluationImport
         Cursor = Cursors.WaitCursor
         Dim TempPath As String
         Dim TempSignature As String
-        Dim TempPhotos As New List(Of String)
+        Dim TempPictures As New List(Of String)
         Dim EvaluationForm As FrmEvaluation
         Dim EvaluationSourceForm As FrmEvaluationSource = Nothing
         Dim SelectedRow As DataGridViewRow
         Dim SignatureData As Byte()
-        Dim PhotoData As Byte()
+        Dim PictureData As Byte()
         If Await InternetHelper.IsInternetAvailableAsync() Then
             Try
                 If DgvEvaluations.InvokeRequired Then
@@ -185,18 +185,18 @@ Public Class FrmEvaluationImport
                         Await SignatureStream.WriteAsync(SignatureData, 0, SignatureData.Length)
                     End Using
                     TempSignature = TempPath
-                    For Each Photo As Dictionary(Of String, Object) In _EvaluationData("photos")
+                    For Each Picture As Dictionary(Of String, Object) In _EvaluationData("pictures")
 
-                        PhotoData = Await _Storage.DownloadFile(Photo("path"))
+                        PictureData = Await _Storage.DownloadFile(Picture("path"))
 
                         TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, Util.GetFilename(".jpg"))
-                        Using PhotoStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)
-                            Await PhotoStream.WriteAsync(PhotoData, 0, PhotoData.Length)
+                        Using PictureStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)
+                            Await PictureStream.WriteAsync(PictureData, 0, PictureData.Length)
                         End Using
-                        TempPhotos.Add(TempPath)
-                    Next Photo
+                        TempPictures.Add(TempPath)
+                    Next Picture
 
-                    EvaluationSourceForm = New FrmEvaluationSource(_EvaluationData, TempSignature, TempPhotos)
+                    EvaluationSourceForm = New FrmEvaluationSource(_EvaluationData, TempSignature, TempPictures)
                     If EvaluationSourceForm.ShowDialog() = DialogResult.OK Then
                         If _EvaluationsForm IsNot Nothing Then
                             EvaluationForm = New FrmEvaluation(EvaluationSourceForm.ResultEvaluation, _EvaluationsForm)

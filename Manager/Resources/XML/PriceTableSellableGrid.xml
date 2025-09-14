@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Routine Id="PriceTableItem" Version="1">
+<Routine Id="PriceTableSellable" Version="1">
 	<SortedColumn>-1</SortedColumn>
 	<SortDirection>0</SortDirection>
 	<Column Index="0">

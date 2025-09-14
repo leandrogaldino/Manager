@@ -148,18 +148,18 @@ Partial Class FrmEvaluation
         Me.BtnZoomIn = New System.Windows.Forms.ToolStripButton()
         Me.BtnZoomOut = New System.Windows.Forms.ToolStripButton()
         Me.LblDocumentPage = New System.Windows.Forms.ToolStripLabel()
-        Me.TabPhoto = New System.Windows.Forms.TabPage()
-        Me.PnPhoto = New System.Windows.Forms.Panel()
-        Me.PbxPhoto = New System.Windows.Forms.PictureBox()
-        Me.TlpControls = New System.Windows.Forms.TableLayoutPanel()
-        Me.BtnLastPhoto = New ControlLibrary.NoFocusCueButton()
-        Me.BtnNextPhoto = New ControlLibrary.NoFocusCueButton()
-        Me.BtnSavePhoto = New ControlLibrary.NoFocusCueButton()
-        Me.BtnRemovePhoto = New ControlLibrary.NoFocusCueButton()
-        Me.BtnIncludePhoto = New ControlLibrary.NoFocusCueButton()
-        Me.BtnPreviousPhoto = New ControlLibrary.NoFocusCueButton()
-        Me.BtnFirstPhoto = New ControlLibrary.NoFocusCueButton()
-        Me.LblPhotoCount = New System.Windows.Forms.Label()
+        Me.TabPicture = New System.Windows.Forms.TabPage()
+        Me.PnPicture = New System.Windows.Forms.Panel()
+        Me.PbxPicture = New System.Windows.Forms.PictureBox()
+        Me.TlpPictureControls = New System.Windows.Forms.TableLayoutPanel()
+        Me.BtnLastPicture = New ControlLibrary.NoFocusCueButton()
+        Me.BtnNextPicture = New ControlLibrary.NoFocusCueButton()
+        Me.BtnSavePicture = New ControlLibrary.NoFocusCueButton()
+        Me.BtnRemovePicture = New ControlLibrary.NoFocusCueButton()
+        Me.BtnIncludePicture = New ControlLibrary.NoFocusCueButton()
+        Me.BtnPreviousPicture = New ControlLibrary.NoFocusCueButton()
+        Me.BtnFirstPicture = New ControlLibrary.NoFocusCueButton()
+        Me.LblPictureCount = New System.Windows.Forms.Label()
         Me.TabSignature = New System.Windows.Forms.TabPage()
         Me.PnSignature = New System.Windows.Forms.Panel()
         Me.PbxSignature = New System.Windows.Forms.PictureBox()
@@ -203,10 +203,10 @@ Partial Class FrmEvaluation
         Me.GbxAdvice.SuspendLayout()
         Me.TabDocument.SuspendLayout()
         Me.TsDocument.SuspendLayout()
-        Me.TabPhoto.SuspendLayout()
-        Me.PnPhoto.SuspendLayout()
-        CType(Me.PbxPhoto, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TlpControls.SuspendLayout()
+        Me.TabPicture.SuspendLayout()
+        Me.PnPicture.SuspendLayout()
+        CType(Me.PbxPicture, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TlpPictureControls.SuspendLayout()
         Me.TabSignature.SuspendLayout()
         Me.PnSignature.SuspendLayout()
         CType(Me.PbxSignature, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -455,7 +455,7 @@ Partial Class FrmEvaluation
         Me.TcEvaluation.Controls.Add(Me.TabMain)
         Me.TcEvaluation.Controls.Add(Me.TabTechnicalAdvice)
         Me.TcEvaluation.Controls.Add(Me.TabDocument)
-        Me.TcEvaluation.Controls.Add(Me.TabPhoto)
+        Me.TcEvaluation.Controls.Add(Me.TabPicture)
         Me.TcEvaluation.Controls.Add(Me.TabSignature)
         Me.TcEvaluation.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TcEvaluation.Location = New System.Drawing.Point(0, 50)
@@ -1180,10 +1180,10 @@ Partial Class FrmEvaluation
         '
         Me.TabTechnicalAdvice.BackColor = System.Drawing.Color.White
         Me.TabTechnicalAdvice.Controls.Add(Me.TlpAdvice)
-        Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 22)
+        Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 26)
         Me.TabTechnicalAdvice.Name = "TabTechnicalAdvice"
         Me.TabTechnicalAdvice.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1031, 411)
+        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1031, 407)
         Me.TabTechnicalAdvice.TabIndex = 6
         Me.TabTechnicalAdvice.Text = "Parecer Técnico"
         '
@@ -1199,7 +1199,7 @@ Partial Class FrmEvaluation
         Me.TlpAdvice.RowCount = 2
         Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.0!))
         Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.0!))
-        Me.TlpAdvice.Size = New System.Drawing.Size(1025, 405)
+        Me.TlpAdvice.Size = New System.Drawing.Size(1025, 401)
         Me.TlpAdvice.TabIndex = 2
         '
         'TlpReplaced
@@ -1213,7 +1213,7 @@ Partial Class FrmEvaluation
         Me.TlpReplaced.Name = "TlpReplaced"
         Me.TlpReplaced.RowCount = 1
         Me.TlpReplaced.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TlpReplaced.Size = New System.Drawing.Size(1019, 237)
+        Me.TlpReplaced.Size = New System.Drawing.Size(1019, 234)
         Me.TlpReplaced.TabIndex = 1
         '
         'GbxReplacedSellable
@@ -1223,7 +1223,7 @@ Partial Class FrmEvaluation
         Me.GbxReplacedSellable.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GbxReplacedSellable.Location = New System.Drawing.Point(3, 3)
         Me.GbxReplacedSellable.Name = "GbxReplacedSellable"
-        Me.GbxReplacedSellable.Size = New System.Drawing.Size(1013, 231)
+        Me.GbxReplacedSellable.Size = New System.Drawing.Size(1013, 228)
         Me.GbxReplacedSellable.TabIndex = 2
         Me.GbxReplacedSellable.TabStop = False
         Me.GbxReplacedSellable.Text = "Peças Substituídas/Serviços Executados"
@@ -1247,7 +1247,7 @@ Partial Class FrmEvaluation
         Me.DgvReplacedSellable.RowHeadersVisible = False
         Me.DgvReplacedSellable.RowTemplate.Height = 26
         Me.DgvReplacedSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvReplacedSellable.Size = New System.Drawing.Size(1007, 184)
+        Me.DgvReplacedSellable.Size = New System.Drawing.Size(1007, 181)
         Me.DgvReplacedSellable.TabIndex = 1
         Me.DgvReplacedSellable.TabStop = False
         '
@@ -1312,9 +1312,9 @@ Partial Class FrmEvaluation
         '
         Me.GbxAdvice.Controls.Add(Me.TxtTechnicalAdvice)
         Me.GbxAdvice.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GbxAdvice.Location = New System.Drawing.Point(3, 246)
+        Me.GbxAdvice.Location = New System.Drawing.Point(3, 243)
         Me.GbxAdvice.Name = "GbxAdvice"
-        Me.GbxAdvice.Size = New System.Drawing.Size(1019, 156)
+        Me.GbxAdvice.Size = New System.Drawing.Size(1019, 155)
         Me.GbxAdvice.TabIndex = 0
         Me.GbxAdvice.TabStop = False
         Me.GbxAdvice.Text = "Observação"
@@ -1326,7 +1326,7 @@ Partial Class FrmEvaluation
         Me.TxtTechnicalAdvice.Location = New System.Drawing.Point(3, 19)
         Me.TxtTechnicalAdvice.MaxLength = 1000000
         Me.TxtTechnicalAdvice.Name = "TxtTechnicalAdvice"
-        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1013, 134)
+        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1013, 133)
         Me.TxtTechnicalAdvice.TabIndex = 1
         Me.TxtTechnicalAdvice.Text = ""
         '
@@ -1335,10 +1335,10 @@ Partial Class FrmEvaluation
         Me.TabDocument.AutoScroll = True
         Me.TabDocument.Controls.Add(Me.PdfDocumentViewer)
         Me.TabDocument.Controls.Add(Me.TsDocument)
-        Me.TabDocument.Location = New System.Drawing.Point(4, 22)
+        Me.TabDocument.Location = New System.Drawing.Point(4, 26)
         Me.TabDocument.Name = "TabDocument"
         Me.TabDocument.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabDocument.Size = New System.Drawing.Size(1031, 411)
+        Me.TabDocument.Size = New System.Drawing.Size(1031, 407)
         Me.TabDocument.TabIndex = 7
         Me.TabDocument.Text = "Documento"
         Me.TabDocument.UseVisualStyleBackColor = True
@@ -1368,7 +1368,7 @@ Partial Class FrmEvaluation
         Me.PdfDocumentViewer.ScrollDisplacementValue = 0
         Me.PdfDocumentViewer.ShowHorizontalScrollBar = True
         Me.PdfDocumentViewer.ShowVerticalScrollBar = True
-        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1025, 380)
+        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1025, 376)
         Me.PdfDocumentViewer.SpaceBetweenPages = 8
         Me.PdfDocumentViewer.TabIndex = 1
         TextSearchSettings1.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -1458,192 +1458,192 @@ Partial Class FrmEvaluation
         Me.LblDocumentPage.Size = New System.Drawing.Size(101, 22)
         Me.LblDocumentPage.Text = "Pagina # de #"
         '
-        'TabPhoto
+        'TabPicture
         '
-        Me.TabPhoto.Controls.Add(Me.PnPhoto)
-        Me.TabPhoto.Location = New System.Drawing.Point(4, 26)
-        Me.TabPhoto.Name = "TabPhoto"
-        Me.TabPhoto.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPhoto.Size = New System.Drawing.Size(1031, 407)
-        Me.TabPhoto.TabIndex = 8
-        Me.TabPhoto.Text = "Fotos"
-        Me.TabPhoto.UseVisualStyleBackColor = True
+        Me.TabPicture.Controls.Add(Me.PnPicture)
+        Me.TabPicture.Location = New System.Drawing.Point(4, 26)
+        Me.TabPicture.Name = "TabPicture"
+        Me.TabPicture.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPicture.Size = New System.Drawing.Size(1031, 407)
+        Me.TabPicture.TabIndex = 8
+        Me.TabPicture.Text = "Fotos"
+        Me.TabPicture.UseVisualStyleBackColor = True
         '
-        'PnPhoto
+        'PnPicture
         '
-        Me.PnPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PnPhoto.Controls.Add(Me.PbxPhoto)
-        Me.PnPhoto.Controls.Add(Me.TlpControls)
-        Me.PnPhoto.Controls.Add(Me.LblPhotoCount)
-        Me.PnPhoto.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PnPhoto.Location = New System.Drawing.Point(3, 3)
-        Me.PnPhoto.Name = "PnPhoto"
-        Me.PnPhoto.Size = New System.Drawing.Size(1025, 401)
-        Me.PnPhoto.TabIndex = 17
+        Me.PnPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.PnPicture.Controls.Add(Me.PbxPicture)
+        Me.PnPicture.Controls.Add(Me.TlpPictureControls)
+        Me.PnPicture.Controls.Add(Me.LblPictureCount)
+        Me.PnPicture.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PnPicture.Location = New System.Drawing.Point(3, 3)
+        Me.PnPicture.Name = "PnPicture"
+        Me.PnPicture.Size = New System.Drawing.Size(1025, 401)
+        Me.PnPicture.TabIndex = 17
         '
-        'PbxPhoto
+        'PbxPicture
         '
-        Me.PbxPhoto.BackColor = System.Drawing.Color.White
-        Me.PbxPhoto.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PbxPhoto.Location = New System.Drawing.Point(0, 28)
-        Me.PbxPhoto.Name = "PbxPhoto"
-        Me.PbxPhoto.Size = New System.Drawing.Size(1023, 348)
-        Me.PbxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PbxPhoto.TabIndex = 11
-        Me.PbxPhoto.TabStop = False
+        Me.PbxPicture.BackColor = System.Drawing.Color.White
+        Me.PbxPicture.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PbxPicture.Location = New System.Drawing.Point(0, 28)
+        Me.PbxPicture.Name = "PbxPicture"
+        Me.PbxPicture.Size = New System.Drawing.Size(1023, 348)
+        Me.PbxPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PbxPicture.TabIndex = 11
+        Me.PbxPicture.TabStop = False
         '
-        'TlpControls
+        'TlpPictureControls
         '
-        Me.TlpControls.BackColor = System.Drawing.Color.White
-        Me.TlpControls.ColumnCount = 9
-        Me.TlpControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TlpControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TlpControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TlpControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TlpControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TlpControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TlpControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TlpControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TlpControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TlpControls.Controls.Add(Me.BtnLastPhoto, 7, 0)
-        Me.TlpControls.Controls.Add(Me.BtnNextPhoto, 6, 0)
-        Me.TlpControls.Controls.Add(Me.BtnSavePhoto, 5, 0)
-        Me.TlpControls.Controls.Add(Me.BtnRemovePhoto, 4, 0)
-        Me.TlpControls.Controls.Add(Me.BtnIncludePhoto, 3, 0)
-        Me.TlpControls.Controls.Add(Me.BtnPreviousPhoto, 2, 0)
-        Me.TlpControls.Controls.Add(Me.BtnFirstPhoto, 1, 0)
-        Me.TlpControls.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TlpControls.Location = New System.Drawing.Point(0, 0)
-        Me.TlpControls.Name = "TlpControls"
-        Me.TlpControls.RowCount = 1
-        Me.TlpControls.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TlpControls.Size = New System.Drawing.Size(1023, 28)
-        Me.TlpControls.TabIndex = 13
+        Me.TlpPictureControls.BackColor = System.Drawing.Color.White
+        Me.TlpPictureControls.ColumnCount = 9
+        Me.TlpPictureControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TlpPictureControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TlpPictureControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TlpPictureControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TlpPictureControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TlpPictureControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TlpPictureControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TlpPictureControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TlpPictureControls.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TlpPictureControls.Controls.Add(Me.BtnLastPicture, 7, 0)
+        Me.TlpPictureControls.Controls.Add(Me.BtnNextPicture, 6, 0)
+        Me.TlpPictureControls.Controls.Add(Me.BtnSavePicture, 5, 0)
+        Me.TlpPictureControls.Controls.Add(Me.BtnRemovePicture, 4, 0)
+        Me.TlpPictureControls.Controls.Add(Me.BtnIncludePicture, 3, 0)
+        Me.TlpPictureControls.Controls.Add(Me.BtnPreviousPicture, 2, 0)
+        Me.TlpPictureControls.Controls.Add(Me.BtnFirstPicture, 1, 0)
+        Me.TlpPictureControls.Dock = System.Windows.Forms.DockStyle.Top
+        Me.TlpPictureControls.Location = New System.Drawing.Point(0, 0)
+        Me.TlpPictureControls.Name = "TlpPictureControls"
+        Me.TlpPictureControls.RowCount = 1
+        Me.TlpPictureControls.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TlpPictureControls.Size = New System.Drawing.Size(1023, 28)
+        Me.TlpPictureControls.TabIndex = 13
         '
-        'BtnLastPhoto
+        'BtnLastPicture
         '
-        Me.BtnLastPhoto.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.BtnLastPhoto.BackColor = System.Drawing.Color.Transparent
-        Me.BtnLastPhoto.BackgroundImage = Global.Manager.My.Resources.Resources.NavLast
-        Me.BtnLastPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnLastPhoto.FlatAppearance.BorderSize = 0
-        Me.BtnLastPhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnLastPhoto.Location = New System.Drawing.Point(592, 5)
-        Me.BtnLastPhoto.Name = "BtnLastPhoto"
-        Me.BtnLastPhoto.Size = New System.Drawing.Size(17, 17)
-        Me.BtnLastPhoto.TabIndex = 14
-        Me.BtnLastPhoto.TooltipText = "Última Imagem"
-        Me.BtnLastPhoto.UseVisualStyleBackColor = False
+        Me.BtnLastPicture.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.BtnLastPicture.BackColor = System.Drawing.Color.Transparent
+        Me.BtnLastPicture.BackgroundImage = Global.Manager.My.Resources.Resources.NavLast
+        Me.BtnLastPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnLastPicture.FlatAppearance.BorderSize = 0
+        Me.BtnLastPicture.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnLastPicture.Location = New System.Drawing.Point(592, 5)
+        Me.BtnLastPicture.Name = "BtnLastPicture"
+        Me.BtnLastPicture.Size = New System.Drawing.Size(17, 17)
+        Me.BtnLastPicture.TabIndex = 14
+        Me.BtnLastPicture.TooltipText = "Última Imagem"
+        Me.BtnLastPicture.UseVisualStyleBackColor = False
         '
-        'BtnNextPhoto
+        'BtnNextPicture
         '
-        Me.BtnNextPhoto.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.BtnNextPhoto.BackColor = System.Drawing.Color.Transparent
-        Me.BtnNextPhoto.BackgroundImage = Global.Manager.My.Resources.Resources.NavNext
-        Me.BtnNextPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnNextPhoto.FlatAppearance.BorderSize = 0
-        Me.BtnNextPhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnNextPhoto.Location = New System.Drawing.Point(562, 5)
-        Me.BtnNextPhoto.Name = "BtnNextPhoto"
-        Me.BtnNextPhoto.Size = New System.Drawing.Size(17, 17)
-        Me.BtnNextPhoto.TabIndex = 14
-        Me.BtnNextPhoto.TooltipText = "Próxima Imagem"
-        Me.BtnNextPhoto.UseVisualStyleBackColor = False
+        Me.BtnNextPicture.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.BtnNextPicture.BackColor = System.Drawing.Color.Transparent
+        Me.BtnNextPicture.BackgroundImage = Global.Manager.My.Resources.Resources.NavNext
+        Me.BtnNextPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnNextPicture.FlatAppearance.BorderSize = 0
+        Me.BtnNextPicture.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnNextPicture.Location = New System.Drawing.Point(562, 5)
+        Me.BtnNextPicture.Name = "BtnNextPicture"
+        Me.BtnNextPicture.Size = New System.Drawing.Size(17, 17)
+        Me.BtnNextPicture.TabIndex = 14
+        Me.BtnNextPicture.TooltipText = "Próxima Imagem"
+        Me.BtnNextPicture.UseVisualStyleBackColor = False
         '
-        'BtnSavePhoto
+        'BtnSavePicture
         '
-        Me.BtnSavePhoto.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.BtnSavePhoto.BackColor = System.Drawing.Color.Transparent
-        Me.BtnSavePhoto.BackgroundImage = Global.Manager.My.Resources.Resources.ImageSave
-        Me.BtnSavePhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnSavePhoto.FlatAppearance.BorderSize = 0
-        Me.BtnSavePhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnSavePhoto.Location = New System.Drawing.Point(532, 5)
-        Me.BtnSavePhoto.Name = "BtnSavePhoto"
-        Me.BtnSavePhoto.Size = New System.Drawing.Size(17, 17)
-        Me.BtnSavePhoto.TabIndex = 2
-        Me.BtnSavePhoto.TooltipText = "Salvar Imagem"
-        Me.BtnSavePhoto.UseVisualStyleBackColor = False
+        Me.BtnSavePicture.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.BtnSavePicture.BackColor = System.Drawing.Color.Transparent
+        Me.BtnSavePicture.BackgroundImage = Global.Manager.My.Resources.Resources.ImageSave
+        Me.BtnSavePicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnSavePicture.FlatAppearance.BorderSize = 0
+        Me.BtnSavePicture.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnSavePicture.Location = New System.Drawing.Point(532, 5)
+        Me.BtnSavePicture.Name = "BtnSavePicture"
+        Me.BtnSavePicture.Size = New System.Drawing.Size(17, 17)
+        Me.BtnSavePicture.TabIndex = 2
+        Me.BtnSavePicture.TooltipText = "Salvar Imagem"
+        Me.BtnSavePicture.UseVisualStyleBackColor = False
         '
-        'BtnRemovePhoto
+        'BtnRemovePicture
         '
-        Me.BtnRemovePhoto.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.BtnRemovePhoto.BackColor = System.Drawing.Color.Transparent
-        Me.BtnRemovePhoto.BackgroundImage = Global.Manager.My.Resources.Resources.ImageDelete
-        Me.BtnRemovePhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnRemovePhoto.FlatAppearance.BorderSize = 0
-        Me.BtnRemovePhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnRemovePhoto.Location = New System.Drawing.Point(502, 5)
-        Me.BtnRemovePhoto.Name = "BtnRemovePhoto"
-        Me.BtnRemovePhoto.Size = New System.Drawing.Size(17, 17)
-        Me.BtnRemovePhoto.TabIndex = 1
-        Me.BtnRemovePhoto.TooltipText = "Excluir Imagem"
-        Me.BtnRemovePhoto.UseVisualStyleBackColor = False
+        Me.BtnRemovePicture.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.BtnRemovePicture.BackColor = System.Drawing.Color.Transparent
+        Me.BtnRemovePicture.BackgroundImage = Global.Manager.My.Resources.Resources.ImageDelete
+        Me.BtnRemovePicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnRemovePicture.FlatAppearance.BorderSize = 0
+        Me.BtnRemovePicture.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnRemovePicture.Location = New System.Drawing.Point(502, 5)
+        Me.BtnRemovePicture.Name = "BtnRemovePicture"
+        Me.BtnRemovePicture.Size = New System.Drawing.Size(17, 17)
+        Me.BtnRemovePicture.TabIndex = 1
+        Me.BtnRemovePicture.TooltipText = "Excluir Imagem"
+        Me.BtnRemovePicture.UseVisualStyleBackColor = False
         '
-        'BtnIncludePhoto
+        'BtnIncludePicture
         '
-        Me.BtnIncludePhoto.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.BtnIncludePhoto.BackColor = System.Drawing.Color.Transparent
-        Me.BtnIncludePhoto.BackgroundImage = Global.Manager.My.Resources.Resources.ImageInclude
-        Me.BtnIncludePhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnIncludePhoto.FlatAppearance.BorderSize = 0
-        Me.BtnIncludePhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnIncludePhoto.Location = New System.Drawing.Point(472, 5)
-        Me.BtnIncludePhoto.Name = "BtnIncludePhoto"
-        Me.BtnIncludePhoto.Size = New System.Drawing.Size(17, 17)
-        Me.BtnIncludePhoto.TabIndex = 0
-        Me.BtnIncludePhoto.TooltipText = "Incluir Imagem"
-        Me.BtnIncludePhoto.UseVisualStyleBackColor = False
+        Me.BtnIncludePicture.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.BtnIncludePicture.BackColor = System.Drawing.Color.Transparent
+        Me.BtnIncludePicture.BackgroundImage = Global.Manager.My.Resources.Resources.ImageInclude
+        Me.BtnIncludePicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnIncludePicture.FlatAppearance.BorderSize = 0
+        Me.BtnIncludePicture.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnIncludePicture.Location = New System.Drawing.Point(472, 5)
+        Me.BtnIncludePicture.Name = "BtnIncludePicture"
+        Me.BtnIncludePicture.Size = New System.Drawing.Size(17, 17)
+        Me.BtnIncludePicture.TabIndex = 0
+        Me.BtnIncludePicture.TooltipText = "Incluir Imagem"
+        Me.BtnIncludePicture.UseVisualStyleBackColor = False
         '
-        'BtnPreviousPhoto
+        'BtnPreviousPicture
         '
-        Me.BtnPreviousPhoto.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.BtnPreviousPhoto.BackColor = System.Drawing.Color.Transparent
-        Me.BtnPreviousPhoto.BackgroundImage = Global.Manager.My.Resources.Resources.NavPrevious
-        Me.BtnPreviousPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnPreviousPhoto.FlatAppearance.BorderSize = 0
-        Me.BtnPreviousPhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnPreviousPhoto.Location = New System.Drawing.Point(442, 5)
-        Me.BtnPreviousPhoto.Name = "BtnPreviousPhoto"
-        Me.BtnPreviousPhoto.Size = New System.Drawing.Size(17, 17)
-        Me.BtnPreviousPhoto.TabIndex = 14
-        Me.BtnPreviousPhoto.TooltipText = "Imagem Anterior"
-        Me.BtnPreviousPhoto.UseVisualStyleBackColor = False
+        Me.BtnPreviousPicture.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.BtnPreviousPicture.BackColor = System.Drawing.Color.Transparent
+        Me.BtnPreviousPicture.BackgroundImage = Global.Manager.My.Resources.Resources.NavPrevious
+        Me.BtnPreviousPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnPreviousPicture.FlatAppearance.BorderSize = 0
+        Me.BtnPreviousPicture.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnPreviousPicture.Location = New System.Drawing.Point(442, 5)
+        Me.BtnPreviousPicture.Name = "BtnPreviousPicture"
+        Me.BtnPreviousPicture.Size = New System.Drawing.Size(17, 17)
+        Me.BtnPreviousPicture.TabIndex = 14
+        Me.BtnPreviousPicture.TooltipText = "Imagem Anterior"
+        Me.BtnPreviousPicture.UseVisualStyleBackColor = False
         '
-        'BtnFirstPhoto
+        'BtnFirstPicture
         '
-        Me.BtnFirstPhoto.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.BtnFirstPhoto.BackColor = System.Drawing.Color.Transparent
-        Me.BtnFirstPhoto.BackgroundImage = Global.Manager.My.Resources.Resources.NavFirst
-        Me.BtnFirstPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnFirstPhoto.FlatAppearance.BorderSize = 0
-        Me.BtnFirstPhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnFirstPhoto.Location = New System.Drawing.Point(412, 5)
-        Me.BtnFirstPhoto.Name = "BtnFirstPhoto"
-        Me.BtnFirstPhoto.Size = New System.Drawing.Size(17, 17)
-        Me.BtnFirstPhoto.TabIndex = 14
-        Me.BtnFirstPhoto.TooltipText = "Primeira Imagem"
-        Me.BtnFirstPhoto.UseVisualStyleBackColor = False
+        Me.BtnFirstPicture.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.BtnFirstPicture.BackColor = System.Drawing.Color.Transparent
+        Me.BtnFirstPicture.BackgroundImage = Global.Manager.My.Resources.Resources.NavFirst
+        Me.BtnFirstPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnFirstPicture.FlatAppearance.BorderSize = 0
+        Me.BtnFirstPicture.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnFirstPicture.Location = New System.Drawing.Point(412, 5)
+        Me.BtnFirstPicture.Name = "BtnFirstPicture"
+        Me.BtnFirstPicture.Size = New System.Drawing.Size(17, 17)
+        Me.BtnFirstPicture.TabIndex = 14
+        Me.BtnFirstPicture.TooltipText = "Primeira Imagem"
+        Me.BtnFirstPicture.UseVisualStyleBackColor = False
         '
-        'LblPhotoCount
+        'LblPictureCount
         '
-        Me.LblPhotoCount.BackColor = System.Drawing.Color.White
-        Me.LblPhotoCount.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.LblPhotoCount.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblPhotoCount.Location = New System.Drawing.Point(0, 376)
-        Me.LblPhotoCount.Name = "LblPhotoCount"
-        Me.LblPhotoCount.Size = New System.Drawing.Size(1023, 23)
-        Me.LblPhotoCount.TabIndex = 14
-        Me.LblPhotoCount.Text = "Foto 0 de 0"
-        Me.LblPhotoCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.LblPictureCount.BackColor = System.Drawing.Color.White
+        Me.LblPictureCount.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.LblPictureCount.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblPictureCount.Location = New System.Drawing.Point(0, 376)
+        Me.LblPictureCount.Name = "LblPictureCount"
+        Me.LblPictureCount.Size = New System.Drawing.Size(1023, 23)
+        Me.LblPictureCount.TabIndex = 14
+        Me.LblPictureCount.Text = "Foto 0 de 0"
+        Me.LblPictureCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'TabSignature
         '
         Me.TabSignature.Controls.Add(Me.PnSignature)
-        Me.TabSignature.Location = New System.Drawing.Point(4, 22)
+        Me.TabSignature.Location = New System.Drawing.Point(4, 26)
         Me.TabSignature.Name = "TabSignature"
         Me.TabSignature.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabSignature.Size = New System.Drawing.Size(1031, 411)
+        Me.TabSignature.Size = New System.Drawing.Size(1031, 407)
         Me.TabSignature.TabIndex = 9
         Me.TabSignature.Text = "Assinatura"
         Me.TabSignature.UseVisualStyleBackColor = True
@@ -1655,7 +1655,7 @@ Partial Class FrmEvaluation
         Me.PnSignature.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PnSignature.Location = New System.Drawing.Point(3, 3)
         Me.PnSignature.Name = "PnSignature"
-        Me.PnSignature.Size = New System.Drawing.Size(1025, 405)
+        Me.PnSignature.Size = New System.Drawing.Size(1025, 401)
         Me.PnSignature.TabIndex = 18
         '
         'PbxSignature
@@ -1664,7 +1664,7 @@ Partial Class FrmEvaluation
         Me.PbxSignature.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PbxSignature.Location = New System.Drawing.Point(0, 0)
         Me.PbxSignature.Name = "PbxSignature"
-        Me.PbxSignature.Size = New System.Drawing.Size(1023, 403)
+        Me.PbxSignature.Size = New System.Drawing.Size(1023, 399)
         Me.PbxSignature.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PbxSignature.TabIndex = 11
         Me.PbxSignature.TabStop = False
@@ -1814,10 +1814,10 @@ Partial Class FrmEvaluation
         Me.TabDocument.ResumeLayout(False)
         Me.TsDocument.ResumeLayout(False)
         Me.TsDocument.PerformLayout()
-        Me.TabPhoto.ResumeLayout(False)
-        Me.PnPhoto.ResumeLayout(False)
-        CType(Me.PbxPhoto, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TlpControls.ResumeLayout(False)
+        Me.TabPicture.ResumeLayout(False)
+        Me.PnPicture.ResumeLayout(False)
+        CType(Me.PbxPicture, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TlpPictureControls.ResumeLayout(False)
         Me.TabSignature.ResumeLayout(False)
         Me.PnSignature.ResumeLayout(False)
         CType(Me.PbxSignature, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1904,20 +1904,20 @@ Partial Class FrmEvaluation
     Friend WithEvents BtnIncludeTechnician As ToolStripButton
     Friend WithEvents BtnDeleteTechnician As ToolStripButton
     Friend WithEvents BtnEditTechnician As ToolStripButton
-    Friend WithEvents TabPhoto As TabPage
+    Friend WithEvents TabPicture As TabPage
     Friend WithEvents TabSignature As TabPage
     Friend WithEvents TmrResize As Timer
-    Private WithEvents PnPhoto As Panel
-    Private WithEvents PbxPhoto As PictureBox
-    Private WithEvents TlpControls As TableLayoutPanel
-    Private WithEvents BtnLastPhoto As ControlLibrary.NoFocusCueButton
-    Private WithEvents BtnNextPhoto As ControlLibrary.NoFocusCueButton
-    Private WithEvents BtnSavePhoto As ControlLibrary.NoFocusCueButton
-    Private WithEvents BtnRemovePhoto As ControlLibrary.NoFocusCueButton
-    Private WithEvents BtnIncludePhoto As ControlLibrary.NoFocusCueButton
-    Private WithEvents BtnPreviousPhoto As ControlLibrary.NoFocusCueButton
-    Private WithEvents BtnFirstPhoto As ControlLibrary.NoFocusCueButton
-    Private WithEvents LblPhotoCount As Label
+    Private WithEvents PnPicture As Panel
+    Private WithEvents PbxPicture As PictureBox
+    Private WithEvents TlpPictureControls As TableLayoutPanel
+    Private WithEvents BtnLastPicture As ControlLibrary.NoFocusCueButton
+    Private WithEvents BtnNextPicture As ControlLibrary.NoFocusCueButton
+    Private WithEvents BtnSavePicture As ControlLibrary.NoFocusCueButton
+    Private WithEvents BtnRemovePicture As ControlLibrary.NoFocusCueButton
+    Private WithEvents BtnIncludePicture As ControlLibrary.NoFocusCueButton
+    Private WithEvents BtnPreviousPicture As ControlLibrary.NoFocusCueButton
+    Private WithEvents BtnFirstPicture As ControlLibrary.NoFocusCueButton
+    Private WithEvents LblPictureCount As Label
     Private WithEvents PnSignature As Panel
     Private WithEvents PbxSignature As PictureBox
     Friend WithEvents DgvlTechnicianLayout As DataGridViewLayout

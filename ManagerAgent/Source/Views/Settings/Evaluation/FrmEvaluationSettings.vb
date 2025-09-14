@@ -1,7 +1,5 @@
 ﻿Imports ControlLibrary
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports System.ComponentModel
-Imports System.Xml
 
 Public Class FrmEvaluationSettings
     Private _ViewModel As EvaluationSettingsViewModel
@@ -14,15 +12,20 @@ Public Class FrmEvaluationSettings
     End Sub
 
     Private Function IsValidFields() As Boolean
-        If DbxEvaluationDaysToAlertMaintenance.DecimalValue < 1 Then
-            EprValidation.SetError(LblEvaluationDaysToAlertMaintenance, "Informe um valor maior que 0")
-            EprValidation.SetIconAlignment(LblEvaluationDaysToAlertMaintenance, ErrorIconAlignment.MiddleRight)
-            DbxEvaluationDaysToAlertMaintenance.Select()
+        If DbxEvaluationDaysBeforeMaintenanceAlert.DecimalValue < 1 Then
+            EprValidation.SetError(LblEvaluationDaysBeforeMaintenanceAlert, "Informe um valor maior que 0")
+            EprValidation.SetIconAlignment(LblEvaluationDaysBeforeMaintenanceAlert, ErrorIconAlignment.MiddleRight)
+            DbxEvaluationDaysBeforeMaintenanceAlert.Select()
             Return False
-        ElseIf DbxEvaluationDaysToAlertVisit.DecimalValue < 1 Then
-            EprValidation.SetError(LblEvaluationDaysToAlertVisit, "Informe um valor maior que 0")
-            EprValidation.SetIconAlignment(LblEvaluationDaysToAlertVisit, ErrorIconAlignment.MiddleRight)
-            DbxEvaluationDaysToAlertVisit.Select()
+        ElseIf DbxEvaluationDaysBeforeVisitAlert.DecimalValue < 1 Then
+            EprValidation.SetError(LblEvaluationDaysBeforeVisitAlert, "Informe um valor maior que 0")
+            EprValidation.SetIconAlignment(LblEvaluationDaysBeforeVisitAlert, ErrorIconAlignment.MiddleRight)
+            DbxEvaluationDaysBeforeVisitAlert.Select()
+            Return False
+        ElseIf DbxEvaluationMonthsBeforeRecordDeletion.DecimalValue < 1 Then
+            EprValidation.SetError(LblEvaluationMonthsBeforeRecordDeletion, "Informe um valor maior que 0")
+            EprValidation.SetIconAlignment(LblEvaluationMonthsBeforeRecordDeletion, ErrorIconAlignment.MiddleRight)
+            DbxEvaluationMonthsBeforeRecordDeletion.Select()
             Return False
         End If
         Return True
@@ -34,7 +37,7 @@ Public Class FrmEvaluationSettings
     Private Sub InitializeBindings()
 
         Dim Binding As Binding
-        Binding = New Binding("Text", _ViewModel, "AlertMaintenance", False, DataSourceUpdateMode.OnPropertyChanged)
+        Binding = New Binding("Text", _ViewModel, "DaysBeforeMaintenanceAlert", False, DataSourceUpdateMode.OnPropertyChanged)
         AddHandler Binding.Format, Sub(sender, e)
                                        If TypeOf e.Value Is String Then
                                            If (String.IsNullOrEmpty(e.Value)) Then
@@ -49,10 +52,10 @@ Public Class FrmEvaluationSettings
                                           End If
                                       End If
                                   End Sub
-        DbxEvaluationDaysToAlertMaintenance.DataBindings.Add(Binding)
+        DbxEvaluationDaysBeforeMaintenanceAlert.DataBindings.Add(Binding)
 
 
-        Binding = New Binding("Text", _ViewModel, "AlertVisit", False, DataSourceUpdateMode.OnPropertyChanged)
+        Binding = New Binding("Text", _ViewModel, "DaysBeforeVisitAlert", False, DataSourceUpdateMode.OnPropertyChanged)
         AddHandler Binding.Format, Sub(sender, e)
                                        If TypeOf e.Value Is String Then
                                            If (String.IsNullOrEmpty(e.Value)) Then
@@ -67,9 +70,24 @@ Public Class FrmEvaluationSettings
                                           End If
                                       End If
                                   End Sub
-        DbxEvaluationDaysToAlertVisit.DataBindings.Add(Binding)
+        DbxEvaluationDaysBeforeVisitAlert.DataBindings.Add(Binding)
 
-
+        Binding = New Binding("Text", _ViewModel, "MonthsBeforeRecordDeletion", False, DataSourceUpdateMode.OnPropertyChanged)
+        AddHandler Binding.Format, Sub(sender, e)
+                                       If TypeOf e.Value Is String Then
+                                           If (String.IsNullOrEmpty(e.Value)) Then
+                                               e.Value = 0
+                                           End If
+                                       End If
+                                   End Sub
+        AddHandler Binding.Parse, Sub(sender, e)
+                                      If TypeOf e.Value Is String Then
+                                          If e.Value = "" Then
+                                              e.Value = 0
+                                          End If
+                                      End If
+                                  End Sub
+        DbxEvaluationMonthsBeforeRecordDeletion.DataBindings.Add(Binding)
     End Sub
     Private Sub Form_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If e.KeyCode = Keys.S And e.Control Then

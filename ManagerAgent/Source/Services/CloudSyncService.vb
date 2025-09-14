@@ -11,7 +11,7 @@ Public Class CloudSyncService
         _RemoteDB = RemoteDB
     End Sub
     Private Async Function ConfigOperations() As Task
-        Dim Result As QueryResult = Await _LocalDB.ExecuteSelect("config", {"value"}.ToList, "name = @name", New Dictionary(Of String, Object) From {{"@name", "CloudLastSyncDate"}})
+        Dim Result As QueryResult = Await _LocalDB.ExecuteSelectAsync("config", {"value"}.ToList, "name = @name", New Dictionary(Of String, Object) From {{"@name", "CloudLastSyncDate"}})
         Dim LastSyncDate As Date = If(String.IsNullOrEmpty(Result.Data(0)("value")), Nothing, Result.Data(0)("value"))
         Dim Values As Dictionary(Of String, String)
         Dim Args As Dictionary(Of String, Object)
@@ -20,14 +20,14 @@ Public Class CloudSyncService
             Values = New Dictionary(Of String, String) From {{"value", "@value"}}
             Where = "name = @name"
             Args = New Dictionary(Of String, Object) From {{"@value", Now.ToString("yyyy-MM-dd HH:mm:ss")}, {"@name", "CloudLastSyncDate"}}
-            Await _LocalDB.ExecuteUpdate("config", Values, Where, Args)
+            Await _LocalDB.ExecuteUpdateAsync("config", Values, Where, Args)
             Args = New Dictionary(Of String, Object) From {{"@value", 0}, {"@name", "CloudOperationCount"}}
-            Await _LocalDB.ExecuteUpdate("config", Values, Where, Args)
+            Await _LocalDB.ExecuteUpdateAsync("config", Values, Where, Args)
         End If
     End Function
 
     Private Async Function GetLastSyncID() As Task(Of Integer)
-        Dim Result As QueryResult = Await _LocalDB.ExecuteSelect("config", {"value"}.ToList, "name = @name", New Dictionary(Of String, Object) From {{"@name", "CloudLastSyncID"}})
+        Dim Result As QueryResult = Await _LocalDB.ExecuteSelectAsync("config", {"value"}.ToList, "name = @name", New Dictionary(Of String, Object) From {{"@name", "CloudLastSyncID"}})
         Dim LastSyncID As Integer = Result.Data(0)("value")
         Return LastSyncID
     End Function
@@ -38,7 +38,7 @@ Public Class CloudSyncService
         Dim OrderBy As String = "id ASC"
         Dim Where As String = "id > @id AND routineid IN (@person, @personcompressor, @personcompressorpartelapsedday)"
         Dim WhereArgs As New Dictionary(Of String, Object) From {{"@id", LastSyncID}, {"@person", 2}, {"@personcompressor", 203}, {"@personcompressorpartelapsedday", 205}}
-        Dim Result As QueryResult = Await _LocalDB.ExecuteSelect("log", Columns, Where, WhereArgs, OrderBy)
+        Dim Result As QueryResult = Await _LocalDB.ExecuteSelectAsync("log", Columns, Where, WhereArgs, OrderBy)
         Await FetchCloudByRoutine(Result.Data, LastSyncID, Progress)
     End Function
 
@@ -54,7 +54,7 @@ Public Class CloudSyncService
         Dim Columns As New List(Of String) From {"name", "value"}
         Dim Where As String = "name LIKE @name"
         Dim WhereArgs As New Dictionary(Of String, Object) From {{"@name", "Cloud%"}}
-        Dim Result As QueryResult = Await _LocalDB.ExecuteSelect("config", Columns, Where, WhereArgs)
+        Dim Result As QueryResult = Await _LocalDB.ExecuteSelectAsync("config", Columns, Where, WhereArgs)
         Dim LastSyncDateDictionary As Dictionary(Of String, Object) = Result.Data.First(Function(x) x("name") = "CloudLastSyncDate")
         Dim LastSyncDate As Date = If(String.IsNullOrEmpty(LastSyncDateDictionary("value")), Nothing, LastSyncDateDictionary("value"))
         Dim OperationCountDictionary As Dictionary(Of String, Object) = Result.Data.First(Function(x) x("name") = "CloudOperationCount")
@@ -94,7 +94,7 @@ Public Class CloudSyncService
     End Function
     Private Async Function FetchPersonCompressorCoalescent(Change As Dictionary(Of String, Object)) As Task
         Dim Args As New Dictionary(Of String, Object) From {{"@id", Change("registryid")}, {"@parttypeid", 1}}
-        Dim Result = Await _LocalDB.ExecuteRawQuery("SELECT pcp.id, pcp.personcompressorid, pcp.statusid, pcp.partbindid, IFNULL(pcp.itemname, p.name) coalescentname  FROM personcompressorpart pcp  LEFT JOIN product p ON pcp.productid = p.id WHERE pcp.parttypeid = @parttypeid AND pcp.id = @id LIMIT 1", Args)
+        Dim Result = Await _LocalDB.ExecuteRawQueryAsync("SELECT pcp.id, pcp.personcompressorid, pcp.statusid, pcp.partbindid, IFNULL(pcp.itemname, p.name) coalescentname  FROM personcompressorpart pcp  LEFT JOIN product p ON pcp.productid = p.id WHERE pcp.parttypeid = @parttypeid AND pcp.id = @id LIMIT 1", Args)
         Dim CoalescentData As Dictionary(Of String, Object) = Nothing
         Dim MustMaintain As Boolean
         If Result.Data Is Nothing OrElse Result.Data.Count = 0 Then
@@ -124,7 +124,7 @@ Public Class CloudSyncService
     End Function
     Private Async Function FetchPersonCompressor(Change As Dictionary(Of String, Object)) As Task
         Dim Args As New Dictionary(Of String, Object) From {{"@id", Change("registryid")}}
-        Dim Result = Await _LocalDB.ExecuteRawQuery("SELECT pc.id, pc.statusid, pc.personid, pc.compressorid, c.name compressorname,  IFNULL(pc.serialnumber, '') serialnumber  FROM personcompressor pc LEFT JOIN compressor c ON pc.compressorid = c.id WHERE pc.id = @id LIMIT 1", Args)
+        Dim Result = Await _LocalDB.ExecuteRawQueryAsync("SELECT pc.id, pc.statusid, pc.personid, pc.compressorid, c.name compressorname,  IFNULL(pc.serialnumber, '') serialnumber  FROM personcompressor pc LEFT JOIN compressor c ON pc.compressorid = c.id WHERE pc.id = @id LIMIT 1", Args)
         Dim MustMaintain As Boolean
         Dim CompressorData As Dictionary(Of String, Object) = Nothing
         If Result.Data Is Nothing OrElse Result.Data.Count = 0 Then
@@ -158,7 +158,7 @@ Public Class CloudSyncService
         Dim Columns As New List(Of String) From {"id", "statusid", "document", "shortname", "iscustomer", "istechnician"}
         Dim Where As String = "id = @id"
         Dim WhereArgs As New Dictionary(Of String, Object) From {{"@id", Change("registryid")}}
-        Dim Result = Await _LocalDB.ExecuteSelect("person", Columns, Where, WhereArgs, Limit:=1)
+        Dim Result = Await _LocalDB.ExecuteSelectAsync("person", Columns, Where, WhereArgs, Limit:=1)
         Dim MustMaintain As Boolean
         Dim PersonData As Dictionary(Of String, Object) = Nothing
         If Result.Data Is Nothing OrElse Result.Data.Count = 0 Then
@@ -221,10 +221,10 @@ Public Class CloudSyncService
         Values = New Dictionary(Of String, String) From {{"value", "@value"}}
         Where = "name = @name"
         WhereArgs = New Dictionary(Of String, Object) From {{"@value", CloudLastSyncID}, {"@name", "CloudLastSyncID"}}
-        Await _LocalDB.ExecuteUpdate("config", Values, Where, WhereArgs)
+        Await _LocalDB.ExecuteUpdateAsync("config", Values, Where, WhereArgs)
         WhereArgs = New Dictionary(Of String, Object) From {{"@value", CloudOperationCount}, {"@name", "CloudOperationCount"}}
-        Await _LocalDB.ExecuteUpdate("config", Values, Where, WhereArgs)
+        Await _LocalDB.ExecuteUpdateAsync("config", Values, Where, WhereArgs)
         WhereArgs = New Dictionary(Of String, Object) From {{"@value", Now.ToString("yyyy-MM-dd HH:MM:ss")}, {"@name", "CloudLastSyncDate"}}
-        Await _LocalDB.ExecuteUpdate("config", Values, Where, WhereArgs)
+        Await _LocalDB.ExecuteUpdateAsync("config", Values, Where, WhereArgs)
     End Function
 End Class

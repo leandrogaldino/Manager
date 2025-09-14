@@ -8,8 +8,9 @@ Public Class EvaluationSettingsViewModel
     Private ReadOnly _SettingService As SettingService
     Private ReadOnly _SessionModel As SessionModel
 
-    Private _AlertMaintenance As Integer
-    Private _AlertVisit As Integer
+    Private _DaysBeforeMaintenanceAlert As Integer
+    Private _DaysBeforeVisitAlert As Integer
+    Private _MonthsBeforeRecordDeletion As Integer
 
     Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
 
@@ -19,32 +20,43 @@ Public Class EvaluationSettingsViewModel
         LoadData()
     End Sub
 
-    Public Property AlertMaintenance As Integer
+    Public Property DaysBeforeMaintenanceAlert As Integer
         Get
-            Return _AlertMaintenance
+            Return _DaysBeforeMaintenanceAlert
         End Get
         Set(value As Integer)
-            _AlertMaintenance = value
+            _DaysBeforeMaintenanceAlert = value
             OnPropertyChanged()
         End Set
     End Property
-    Public Property AlertVisit As Integer
+    Public Property DaysBeforeVisitAlert As Integer
         Get
-            Return _AlertVisit
+            Return _DaysBeforeVisitAlert
         End Get
         Set(value As Integer)
-            _AlertVisit = value
+            _DaysBeforeVisitAlert = value
+            OnPropertyChanged()
+        End Set
+    End Property
+    Public Property MonthsBeforeRecordDeletion As Integer
+        Get
+            Return _MonthsBeforeRecordDeletion
+        End Get
+        Set(value As Integer)
+            _MonthsBeforeRecordDeletion = value
             OnPropertyChanged()
         End Set
     End Property
     Private Sub LoadData()
-        AlertMaintenance = _SessionModel.ManagerSetting.General.Evaluation.DaysToAlertMaintenance
-        AlertVisit = _SessionModel.ManagerSetting.General.Evaluation.DaysToAlertVisit
+        DaysBeforeMaintenanceAlert = _SessionModel.ManagerSetting.General.Evaluation.DaysBeforeMaintenanceAlert
+        DaysBeforeVisitAlert = _SessionModel.ManagerSetting.General.Evaluation.DaysBeforeVisitAlert
+        MonthsBeforeRecordDeletion = _SessionModel.ManagerSetting.General.Evaluation.MonthsBeforeRecordDeletion
     End Sub
 
     Public Function Save() As Boolean
-        _SessionModel.ManagerSetting.General.Evaluation.DaysToAlertMaintenance = AlertMaintenance
-        _SessionModel.ManagerSetting.General.Evaluation.DaysToAlertVisit = AlertVisit
+        _SessionModel.ManagerSetting.General.Evaluation.DaysBeforeMaintenanceAlert = DaysBeforeMaintenanceAlert
+        _SessionModel.ManagerSetting.General.Evaluation.DaysBeforeVisitAlert = DaysBeforeVisitAlert
+        _SessionModel.ManagerSetting.General.Evaluation.MonthsBeforeRecordDeletion = MonthsBeforeRecordDeletion
         _SettingService.Save(_SessionModel.ManagerSetting)
         Return True
     End Function

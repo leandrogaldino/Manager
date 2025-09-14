@@ -57,12 +57,12 @@ Public Class FrmEvaluationManagementPanel
         CcoToVisit.HostControl = LblToVisitValue
         CcoTotal.DropDownControl = _TotalDetail
         CcoTotal.HostControl = LblTotalValue
-        Tip.SetToolTip(LblInDayValue, "Compressores sem itens vencidos.")
-        Tip.SetToolTip(LblToOverdueValue, String.Format("Compressores com itens vencendo em até {0} dias", _Session.Setting.General.Evaluation.DaysToAlertMaintenance))
+        Tip.SetToolTip(LblInDayValue, "Compressores sem itens vencidos")
+        Tip.SetToolTip(LblToOverdueValue, String.Format("Compressores com itens vencendo em até {0} dias", _Session.Setting.General.Evaluation.DaysBeforeMaintenanceAlert))
         Tip.SetToolTip(LblOverdueValue, "Compressores com itens vencidos")
         Tip.SetToolTip(LblOverdueUnit, "Compressores com manutenção da unidade compressora vencida.")
-        Tip.SetToolTip(LblNeverVisitedValue, "Compressores sem avaliação lançada e/ou aprovada.")
-        Tip.SetToolTip(LblToVisitValue, String.Format("Compressores com avaliação lançada mas não visitados há mais de {0} dias.", _Session.Setting.General.Evaluation.DaysToAlertVisit))
+        Tip.SetToolTip(LblNeverVisitedValue, "Compressores sem avaliação lançada e/ou aprovada")
+        Tip.SetToolTip(LblToVisitValue, String.Format("Compressores com avaliação lançada mas não visitados há mais de {0} dias", _Session.Setting.General.Evaluation.DaysBeforeVisitAlert))
         Tip.SetToolTip(LblTotalValue, "Todos os compressores cadastrados.")
         BtnExport.Visible = _User.CanAccess(Routine.EvaluationExportManagementPanel) Or _User.CanAccess(Routine.ExportGrid)
         BtnExportPanelImage.Visible = _User.CanAccess(Routine.EvaluationExportManagementPanel)
@@ -72,8 +72,8 @@ Public Class FrmEvaluationManagementPanel
         Dim Db As LocalDB = Locator.GetInstance(Of LocalDB)
         Dim Result As QueryResult
         Dim Years As List(Of Integer)
-        ManagerCore.Util.AsyncLock(Function() Db.ExecuteRawQuery(My.Resources.SetBrazilianDatabaseMonthNames))
-        Result = ManagerCore.Util.AsyncLock(Function() Db.ExecuteRawQuery(My.Resources.EvaluationManagementPanelDatesSelect))
+        ManagerCore.Util.AsyncLock(Function() Db.ExecuteRawQueryAsync(My.Resources.SetBrazilianDatabaseMonthNames))
+        Result = ManagerCore.Util.AsyncLock(Function() Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelDatesSelect))
         _Dates = Result.Data
         Years = _Dates.Select(Of Integer)(Function(d) d("yearnumber")).Distinct().OrderByDescending(Function(y) y).ToList()
         CbxYear.DataSource = Years
@@ -187,7 +187,7 @@ Public Class FrmEvaluationManagementPanel
                 ' Preenche TableToVisit
                 Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementPanelCustomerToVisit, Con)
                     Cmd.Transaction = Tra
-                    Cmd.Parameters.AddWithValue("@days", Session.Setting.General.Evaluation.DaysToAlertVisit)
+                    Cmd.Parameters.AddWithValue("@days", Session.Setting.General.Evaluation.DaysBeforeVisitAlert)
                     Using Adp As New MySqlDataAdapter(Cmd)
                         Adp.Fill(TableToVisit)
                     End Using
@@ -222,7 +222,7 @@ Public Class FrmEvaluationManagementPanel
     Private Sub FillCardInDay(tableResult As DataTable, session As Session)
         Dim tableInDay = tableResult.Clone()
         Dim rows = tableResult.AsEnumerable().Where(Function(x) x.Item("nextexchange") IsNot DBNull.Value AndAlso
-                                                 CDate(x.Item("nextexchange")) > Today.AddDays(session.Setting.General.Evaluation.DaysToAlertMaintenance)).ToList()
+                                                 CDate(x.Item("nextexchange")) > Today.AddDays(session.Setting.General.Evaluation.DaysBeforeMaintenanceAlert)).ToList()
         rows.ForEach(Sub(x) tableInDay.ImportRow(x))
         FillDataGridView(_InDayDetail.DgvCardDetail, tableInDay)
         LblInDayValue.Text = If(tableInDay.Rows.Count > 0, tableInDay.Rows.Count.ToString(), "-")
@@ -231,7 +231,7 @@ Public Class FrmEvaluationManagementPanel
     Private Sub FillCardToOverdue(tableResult As DataTable, session As Session)
         Dim tableToOverdue = tableResult.Clone()
         Dim rows = tableResult.AsEnumerable().Where(Function(x) x.Item("nextexchange") IsNot DBNull.Value AndAlso
-                                                 (CDate(x.Item("nextexchange")) >= Today AndAlso CDate(x.Item("nextexchange")) <= Today.AddDays(session.Setting.General.Evaluation.DaysToAlertMaintenance))).ToList()
+                                                 (CDate(x.Item("nextexchange")) >= Today AndAlso CDate(x.Item("nextexchange")) <= Today.AddDays(session.Setting.General.Evaluation.DaysBeforeMaintenanceAlert))).ToList()
         rows.ForEach(Sub(x) tableToOverdue.ImportRow(x))
         FillDataGridView(_ToOverdueDetail.DgvCardDetail, tableToOverdue)
         LblToOverdueValue.Text = If(tableToOverdue.Rows.Count > 0, tableToOverdue.Rows.Count.ToString(), "-")

@@ -161,7 +161,7 @@ Public Class TaskBackup
                                                         If Progress IsNot Nothing Then Progress.Report(Response)
                                                     End Sub
 
-            Await _DatabaseService.ExecuteBackup(Path.Combine(TempBackupDirectory, "Database.sql"), IntProgress)
+            Await _DatabaseService.ExecuteBackupAsync(Path.Combine(TempBackupDirectory, "Database.sql"), IntProgress)
 
             Await Task.Delay(Constants.WaitForJob)
 

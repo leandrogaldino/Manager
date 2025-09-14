@@ -28,15 +28,19 @@ Partial Class FrmEvaluationSettings
         Me.BtnSave = New System.Windows.Forms.Button()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.Panel26 = New System.Windows.Forms.Panel()
-        Me.LblEvaluationDaysToAlertVisit = New System.Windows.Forms.Label()
-        Me.DbxEvaluationDaysToAlertVisit = New ControlLibrary.DecimalBox()
+        Me.LblEvaluationDaysBeforeVisitAlert = New System.Windows.Forms.Label()
+        Me.DbxEvaluationDaysBeforeVisitAlert = New ControlLibrary.DecimalBox()
         Me.Panel23 = New System.Windows.Forms.Panel()
-        Me.LblEvaluationDaysToAlertMaintenance = New System.Windows.Forms.Label()
-        Me.DbxEvaluationDaysToAlertMaintenance = New ControlLibrary.DecimalBox()
+        Me.LblEvaluationDaysBeforeMaintenanceAlert = New System.Windows.Forms.Label()
+        Me.DbxEvaluationDaysBeforeMaintenanceAlert = New ControlLibrary.DecimalBox()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.LblEvaluationMonthsBeforeRecordDeletion = New System.Windows.Forms.Label()
+        Me.DbxEvaluationMonthsBeforeRecordDeletion = New ControlLibrary.DecimalBox()
         Me.PnButtons.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel26.SuspendLayout()
         Me.Panel23.SuspendLayout()
+        Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'PnButtons
@@ -45,7 +49,7 @@ Partial Class FrmEvaluationSettings
         Me.PnButtons.Controls.Add(Me.BtnClose)
         Me.PnButtons.Controls.Add(Me.BtnSave)
         Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PnButtons.Location = New System.Drawing.Point(0, 104)
+        Me.PnButtons.Location = New System.Drawing.Point(0, 147)
         Me.PnButtons.Name = "PnButtons"
         Me.PnButtons.Size = New System.Drawing.Size(474, 44)
         Me.PnButtons.TabIndex = 8
@@ -81,8 +85,8 @@ Partial Class FrmEvaluationSettings
         '
         Me.Panel26.BackColor = System.Drawing.Color.White
         Me.Panel26.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel26.Controls.Add(Me.LblEvaluationDaysToAlertVisit)
-        Me.Panel26.Controls.Add(Me.DbxEvaluationDaysToAlertVisit)
+        Me.Panel26.Controls.Add(Me.LblEvaluationDaysBeforeVisitAlert)
+        Me.Panel26.Controls.Add(Me.DbxEvaluationDaysBeforeVisitAlert)
         Me.Panel26.Location = New System.Drawing.Point(12, 63)
         Me.Panel26.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
         Me.Panel26.Name = "Panel26"
@@ -90,35 +94,36 @@ Partial Class FrmEvaluationSettings
         Me.Panel26.Size = New System.Drawing.Size(450, 31)
         Me.Panel26.TabIndex = 10
         '
-        'LblEvaluationDaysToAlertVisit
+        'LblEvaluationDaysBeforeVisitAlert
         '
-        Me.LblEvaluationDaysToAlertVisit.Dock = System.Windows.Forms.DockStyle.Left
-        Me.LblEvaluationDaysToAlertVisit.Location = New System.Drawing.Point(4, 0)
-        Me.LblEvaluationDaysToAlertVisit.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.LblEvaluationDaysToAlertVisit.Name = "LblEvaluationDaysToAlertVisit"
-        Me.LblEvaluationDaysToAlertVisit.Size = New System.Drawing.Size(154, 29)
-        Me.LblEvaluationDaysToAlertVisit.TabIndex = 0
-        Me.LblEvaluationDaysToAlertVisit.Text = "Dias para alertar visita"
-        Me.LblEvaluationDaysToAlertVisit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.LblEvaluationDaysBeforeVisitAlert.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LblEvaluationDaysBeforeVisitAlert.Location = New System.Drawing.Point(4, 0)
+        Me.LblEvaluationDaysBeforeVisitAlert.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.LblEvaluationDaysBeforeVisitAlert.Name = "LblEvaluationDaysBeforeVisitAlert"
+        Me.LblEvaluationDaysBeforeVisitAlert.Size = New System.Drawing.Size(157, 29)
+        Me.LblEvaluationDaysBeforeVisitAlert.TabIndex = 0
+        Me.LblEvaluationDaysBeforeVisitAlert.Text = "Dias para alertar visita"
+        Me.LblEvaluationDaysBeforeVisitAlert.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'DbxEvaluationDaysToAlertVisit
+        'DbxEvaluationDaysBeforeVisitAlert
         '
-        Me.DbxEvaluationDaysToAlertVisit.DecimalOnly = True
-        Me.DbxEvaluationDaysToAlertVisit.DecimalPlaces = 0
-        Me.DbxEvaluationDaysToAlertVisit.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxEvaluationDaysToAlertVisit.Location = New System.Drawing.Point(241, 3)
-        Me.DbxEvaluationDaysToAlertVisit.Name = "DbxEvaluationDaysToAlertVisit"
-        Me.DbxEvaluationDaysToAlertVisit.Size = New System.Drawing.Size(204, 23)
-        Me.DbxEvaluationDaysToAlertVisit.TabIndex = 1
-        Me.DbxEvaluationDaysToAlertVisit.Text = "0"
-        Me.DbxEvaluationDaysToAlertVisit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.DbxEvaluationDaysBeforeVisitAlert.DecimalOnly = True
+        Me.DbxEvaluationDaysBeforeVisitAlert.DecimalPlaces = 0
+        Me.DbxEvaluationDaysBeforeVisitAlert.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
+        Me.DbxEvaluationDaysBeforeVisitAlert.Location = New System.Drawing.Point(274, 3)
+        Me.DbxEvaluationDaysBeforeVisitAlert.MaxLength = 3
+        Me.DbxEvaluationDaysBeforeVisitAlert.Name = "DbxEvaluationDaysBeforeVisitAlert"
+        Me.DbxEvaluationDaysBeforeVisitAlert.Size = New System.Drawing.Size(171, 23)
+        Me.DbxEvaluationDaysBeforeVisitAlert.TabIndex = 1
+        Me.DbxEvaluationDaysBeforeVisitAlert.Text = "0"
+        Me.DbxEvaluationDaysBeforeVisitAlert.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Panel23
         '
         Me.Panel23.BackColor = System.Drawing.Color.White
         Me.Panel23.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel23.Controls.Add(Me.LblEvaluationDaysToAlertMaintenance)
-        Me.Panel23.Controls.Add(Me.DbxEvaluationDaysToAlertMaintenance)
+        Me.Panel23.Controls.Add(Me.LblEvaluationDaysBeforeMaintenanceAlert)
+        Me.Panel23.Controls.Add(Me.DbxEvaluationDaysBeforeMaintenanceAlert)
         Me.Panel23.Location = New System.Drawing.Point(12, 19)
         Me.Panel23.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
         Me.Panel23.Name = "Panel23"
@@ -126,34 +131,73 @@ Partial Class FrmEvaluationSettings
         Me.Panel23.Size = New System.Drawing.Size(450, 31)
         Me.Panel23.TabIndex = 9
         '
-        'LblEvaluationDaysToAlertMaintenance
+        'LblEvaluationDaysBeforeMaintenanceAlert
         '
-        Me.LblEvaluationDaysToAlertMaintenance.Dock = System.Windows.Forms.DockStyle.Left
-        Me.LblEvaluationDaysToAlertMaintenance.Location = New System.Drawing.Point(4, 0)
-        Me.LblEvaluationDaysToAlertMaintenance.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.LblEvaluationDaysToAlertMaintenance.Name = "LblEvaluationDaysToAlertMaintenance"
-        Me.LblEvaluationDaysToAlertMaintenance.Size = New System.Drawing.Size(206, 29)
-        Me.LblEvaluationDaysToAlertMaintenance.TabIndex = 0
-        Me.LblEvaluationDaysToAlertMaintenance.Text = "Dias para alertar manutenção"
-        Me.LblEvaluationDaysToAlertMaintenance.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.LblEvaluationDaysBeforeMaintenanceAlert.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LblEvaluationDaysBeforeMaintenanceAlert.Location = New System.Drawing.Point(4, 0)
+        Me.LblEvaluationDaysBeforeMaintenanceAlert.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.LblEvaluationDaysBeforeMaintenanceAlert.Name = "LblEvaluationDaysBeforeMaintenanceAlert"
+        Me.LblEvaluationDaysBeforeMaintenanceAlert.Size = New System.Drawing.Size(207, 29)
+        Me.LblEvaluationDaysBeforeMaintenanceAlert.TabIndex = 0
+        Me.LblEvaluationDaysBeforeMaintenanceAlert.Text = "Dias para alertar manutenção"
+        Me.LblEvaluationDaysBeforeMaintenanceAlert.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'DbxEvaluationDaysToAlertMaintenance
+        'DbxEvaluationDaysBeforeMaintenanceAlert
         '
-        Me.DbxEvaluationDaysToAlertMaintenance.DecimalOnly = True
-        Me.DbxEvaluationDaysToAlertMaintenance.DecimalPlaces = 0
-        Me.DbxEvaluationDaysToAlertMaintenance.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxEvaluationDaysToAlertMaintenance.Location = New System.Drawing.Point(241, 3)
-        Me.DbxEvaluationDaysToAlertMaintenance.Name = "DbxEvaluationDaysToAlertMaintenance"
-        Me.DbxEvaluationDaysToAlertMaintenance.Size = New System.Drawing.Size(204, 23)
-        Me.DbxEvaluationDaysToAlertMaintenance.TabIndex = 1
-        Me.DbxEvaluationDaysToAlertMaintenance.Text = "0"
-        Me.DbxEvaluationDaysToAlertMaintenance.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.DbxEvaluationDaysBeforeMaintenanceAlert.DecimalOnly = True
+        Me.DbxEvaluationDaysBeforeMaintenanceAlert.DecimalPlaces = 0
+        Me.DbxEvaluationDaysBeforeMaintenanceAlert.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
+        Me.DbxEvaluationDaysBeforeMaintenanceAlert.Location = New System.Drawing.Point(274, 3)
+        Me.DbxEvaluationDaysBeforeMaintenanceAlert.MaxLength = 3
+        Me.DbxEvaluationDaysBeforeMaintenanceAlert.Name = "DbxEvaluationDaysBeforeMaintenanceAlert"
+        Me.DbxEvaluationDaysBeforeMaintenanceAlert.Size = New System.Drawing.Size(171, 23)
+        Me.DbxEvaluationDaysBeforeMaintenanceAlert.TabIndex = 1
+        Me.DbxEvaluationDaysBeforeMaintenanceAlert.Text = "0"
+        Me.DbxEvaluationDaysBeforeMaintenanceAlert.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.Color.White
+        Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel1.Controls.Add(Me.LblEvaluationMonthsBeforeRecordDeletion)
+        Me.Panel1.Controls.Add(Me.DbxEvaluationMonthsBeforeRecordDeletion)
+        Me.Panel1.Location = New System.Drawing.Point(12, 107)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
+        Me.Panel1.Size = New System.Drawing.Size(450, 31)
+        Me.Panel1.TabIndex = 10
+        '
+        'LblEvaluationMonthsBeforeRecordDeletion
+        '
+        Me.LblEvaluationMonthsBeforeRecordDeletion.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LblEvaluationMonthsBeforeRecordDeletion.Location = New System.Drawing.Point(4, 0)
+        Me.LblEvaluationMonthsBeforeRecordDeletion.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.LblEvaluationMonthsBeforeRecordDeletion.Name = "LblEvaluationMonthsBeforeRecordDeletion"
+        Me.LblEvaluationMonthsBeforeRecordDeletion.Size = New System.Drawing.Size(213, 29)
+        Me.LblEvaluationMonthsBeforeRecordDeletion.TabIndex = 0
+        Me.LblEvaluationMonthsBeforeRecordDeletion.Text = "Meses de retenção dos registros"
+        Me.LblEvaluationMonthsBeforeRecordDeletion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'DbxEvaluationMonthsBeforeRecordDeletion
+        '
+        Me.DbxEvaluationMonthsBeforeRecordDeletion.DecimalOnly = True
+        Me.DbxEvaluationMonthsBeforeRecordDeletion.DecimalPlaces = 0
+        Me.DbxEvaluationMonthsBeforeRecordDeletion.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
+        Me.DbxEvaluationMonthsBeforeRecordDeletion.Location = New System.Drawing.Point(274, 3)
+        Me.DbxEvaluationMonthsBeforeRecordDeletion.MaxLength = 3
+        Me.DbxEvaluationMonthsBeforeRecordDeletion.Name = "DbxEvaluationMonthsBeforeRecordDeletion"
+        Me.DbxEvaluationMonthsBeforeRecordDeletion.Size = New System.Drawing.Size(171, 23)
+        Me.DbxEvaluationMonthsBeforeRecordDeletion.TabIndex = 1
+        Me.DbxEvaluationMonthsBeforeRecordDeletion.Text = "0"
+        Me.DbxEvaluationMonthsBeforeRecordDeletion.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'FrmEvaluationSettings
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(474, 148)
+        Me.ClientSize = New System.Drawing.Size(474, 191)
+        Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.Panel26)
         Me.Controls.Add(Me.Panel23)
         Me.Controls.Add(Me.PnButtons)
@@ -170,6 +214,8 @@ Partial Class FrmEvaluationSettings
         Me.Panel26.PerformLayout()
         Me.Panel23.ResumeLayout(False)
         Me.Panel23.PerformLayout()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -178,9 +224,12 @@ Partial Class FrmEvaluationSettings
     Friend WithEvents BtnSave As Button
     Friend WithEvents EprValidation As ErrorProvider
     Friend WithEvents Panel26 As Panel
-    Friend WithEvents LblEvaluationDaysToAlertVisit As Label
-    Friend WithEvents DbxEvaluationDaysToAlertVisit As ControlLibrary.DecimalBox
+    Friend WithEvents LblEvaluationDaysBeforeVisitAlert As Label
+    Friend WithEvents DbxEvaluationDaysBeforeVisitAlert As ControlLibrary.DecimalBox
     Friend WithEvents Panel23 As Panel
-    Friend WithEvents LblEvaluationDaysToAlertMaintenance As Label
-    Friend WithEvents DbxEvaluationDaysToAlertMaintenance As ControlLibrary.DecimalBox
+    Friend WithEvents LblEvaluationDaysBeforeMaintenanceAlert As Label
+    Friend WithEvents DbxEvaluationDaysBeforeMaintenanceAlert As ControlLibrary.DecimalBox
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents LblEvaluationMonthsBeforeRecordDeletion As Label
+    Friend WithEvents DbxEvaluationMonthsBeforeRecordDeletion As ControlLibrary.DecimalBox
 End Class

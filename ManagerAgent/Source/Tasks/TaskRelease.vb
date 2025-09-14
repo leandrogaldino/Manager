@@ -45,7 +45,7 @@ Public Class TaskRelease
         Columns = New List(Of String) From {"session", "locktime", "routineid", "registryid", "userid"}
         Where = "NOW() > DATE_ADD(lockedregistry.locktime, INTERVAL @min MINUTE);"
         Args = New Dictionary(Of String, Object) From {{"@min", _SessionModel.ManagerSetting.General.Release.ReleaseBlockedRegisterInterval}}
-        Dim Result As QueryResult = Await _DatabaseService.ExecuteSelect("lockedregistry", Columns, Where, Args)
+        Dim Result As QueryResult = Await _DatabaseService.ExecuteSelectAsync("lockedregistry", Columns, Where, Args)
         If Result.HasData Then
             ReleasedList = New List(Of RegistryModel)
             For Each Item In Result.Data
@@ -71,7 +71,7 @@ Public Class TaskRelease
             {"@userid", Registry.UserID},
             {"@min", _SessionModel.ManagerSetting.General.Release.ReleaseBlockedRegisterInterval}
         }
-        Await _DatabaseService.ExecuteDelete("lockedregistry", Where, Args)
+        Await _DatabaseService.ExecuteDeleteAsync("lockedregistry", Where, Args)
         Await Task.Delay(Constants.WaitForJob)
     End Function
     Public Overrides Async Function Run(Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task
@@ -80,7 +80,7 @@ Public Class TaskRelease
         Dim Response As New AsyncResponseModel
         Try
             Await Task.Delay(Constants.WaitForStart)
-            Await _DatabaseService.BeginTransaction()
+            Await _DatabaseService.BeginTransactionAsync()
             Dim BloquedList As List(Of RegistryModel) = Await GetBloquedList()
             If BloquedList IsNot Nothing Then
                 Response.Text = "Desbloqueador de registros iniciado"
@@ -106,7 +106,7 @@ Public Class TaskRelease
                 If Progress IsNot Nothing Then Progress.Report(Response)
                 Await Threading.Tasks.Task.Delay(Constants.WaitForFinish)
             End If
-            Await _DatabaseService.CommitTransaction()
+            Await _DatabaseService.CommitTransactionAsync()
             If Not IsManual Then _SessionModel.ManagerSetting.LastExecution.Release = Now
             If Not IsManual Then _SettingsService.Save(_SessionModel.ManagerSetting)
         Catch ex As Exception

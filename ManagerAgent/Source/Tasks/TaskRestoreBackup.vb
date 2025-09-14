@@ -165,7 +165,7 @@ Public Class TaskRestoreBackup
                                                         If Progress IsNot Nothing Then Progress.Report(Response)
                                                     End Sub
 
-            Await _DatabaseService.ExecuteRestore(Path.Combine(RestoreDirectory, "Database", "Database.sql"), IntProgress)
+            Await _DatabaseService.ExecuteRestoreAsync(Path.Combine(RestoreDirectory, "Database", "Database.sql"), IntProgress)
 
 
             Await Task.Delay(Constants.WaitForJob)

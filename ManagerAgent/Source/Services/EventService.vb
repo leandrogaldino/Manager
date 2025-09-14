@@ -54,7 +54,7 @@ Public Class EventService
         If Data Is Nothing OrElse Data.Columns.Count = 0 Then Exit Function
         If Data.Rows.Cast(Of DataRow).Any(Function(x) Not CBool(x("issaved"))) Then
             Try
-                Await _Database.BeginTransaction()
+                Await _Database.BeginTransactionAsync()
                 For Each Row As DataRow In Data.Rows.Cast(Of DataRow).Where(Function(x) Not CBool(x("issaved"))).Reverse()
                     Values = New Dictionary(Of String, String) From {
                         {"id", "@id"},
@@ -70,7 +70,7 @@ Public Class EventService
                         {"@time", CDate(Row("time")).ToString("yyyy-MM-dd HH:mm:ss")},
                         {"@description", Row("description").ToString.Replace($"{Constants.SubItemSymbol} ", Nothing)}
                     }
-                    Dim Result = Await _Database.ExecuteInsert("agentevent", Values, Args)
+                    Dim Result = Await _Database.ExecuteInsertAsync("agentevent", Values, Args)
                     Row("id") = Result.LastInsertedID
                     If Row("eventtype") = EventTypes.Initial Then
                         For Each r As DataRow In Data.Rows.Cast(Of DataRow).Where(Function(x) x("tempid") IsNot DBNull.Value AndAlso x("tempid") = Row("tempid") And x("eventtype") <> EventTypes.Initial)
@@ -82,11 +82,11 @@ Public Class EventService
                                 {"@parentid", r("parentid")},
                                 {"@id", r("id")}
                             }
-                            Await _Database.ExecuteUpdate("agentevent", Values, "id = @id", Args)
+                            Await _Database.ExecuteUpdateAsync("agentevent", Values, "id = @id", Args)
                         Next r
                     End If
                 Next Row
-                Await _Database.CommitTransaction()
+                Await _Database.CommitTransactionAsync()
                 For Each Row As DataRow In Data.Rows.Cast(Of DataRow).Where(Function(x) Not CBool(x("issaved")))
                     Row("issaved") = True
                 Next
@@ -106,10 +106,10 @@ Public Class EventService
 
 
         Try
-            Await _Database.BeginTransaction()
+            Await _Database.BeginTransactionAsync()
             Columns = New List(Of String) From {"id", "parentid", "eventtype", "time", "description"}
             Args = New Dictionary(Of String, Object) From {{"@eventtype", EventTypes.Initial}}
-            Dim Result = Await _Database.ExecuteSelect("agentevent", Columns, " eventtype = @eventtype", Args, "id DESC", 20)
+            Dim Result = Await _Database.ExecuteSelectAsync("agentevent", Columns, " eventtype = @eventtype", Args, "id DESC", 20)
             TableParent = Util.DictionariesToDataTable(Result.Data)
             For Each Column As String In Columns
                 TableAll.Columns.Add(Column)
@@ -118,7 +118,7 @@ Public Class EventService
             TableAll.Columns.Add("tempid")
             For Each ParentRow As DataRow In TableParent.Rows
                 Args = New Dictionary(Of String, Object) From {{"@parentid", ParentRow.Item("id")}}
-                Result = Await _Database.ExecuteSelect("agentevent", Columns, "parentid = @parentid", Args, "id DESC")
+                Result = Await _Database.ExecuteSelectAsync("agentevent", Columns, "parentid = @parentid", Args, "id DESC")
                 TableChild = Util.DictionariesToDataTable(Result.Data)
                 For Each ChildRow As DataRow In TableChild.Rows
                     If ChildRow.Item("eventtype") = EventTypes.Child Then
@@ -142,7 +142,7 @@ Public Class EventService
                 NewRow.Item("issaved") = True
                 TableAll.Rows.Add(NewRow)
             Next ParentRow
-            Await _Database.CommitTransaction()
+            Await _Database.CommitTransactionAsync()
             Return TableAll
         Catch ex As Exception
             CMessageBox.Show("Erro ao ler", "Ocorreu um erro ao ler os eventos.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

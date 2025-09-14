@@ -84,7 +84,7 @@ Public Class TaskCloudSync
         Dim PerformedOperations As Long
         If RemainingOperations > 0 Then
             Dim LastSyncID As Long = _SessionModel.ManagerSetting.Cloud.Synchronization.CloudLastSyncID
-            Dim Result As QueryResult = Await _LocalDB.ExecuteSelect("log",
+            Dim Result As QueryResult = Await _LocalDB.ExecuteSelectAsync("log",
                                                   New List(Of String) From {"id", "routineid", "registryid", "fieldname", "oldvalue", "newvalue", "changedate"},
                                                   "id > @id AND routineid IN (@person, @personcompressor, @personcompressorsellableelapsedday, @product, @productprovidercode, @service, @visitschedule)",
                                                   New Dictionary(Of String, Object) From {{"@id", LastSyncID}, {"@person", 2}, {"@personcompressor", 203}, {"@personcompressorsellableelapsedday", 205}, {"@product", 6}, {"@productprovidercode", 601}, {"@service", 23}, {"@visitschedule", 22}},
@@ -159,8 +159,8 @@ Public Class TaskCloudSync
         Dim TotalChanges As Integer
         Dim PerformedOperations As Integer
         If RemainingOperations > 0 Then
-            Dim Result = Await _LocalDB.ExecuteSelect("visitschedule",
-                                                  New List(Of String) From {"id", "creation", "statusid", "scheduleddate", "calltypeid", "customerid", "personcompressorid", "instructions", "lastupdate", "userid"},
+            Dim Result = Await _LocalDB.ExecuteSelectAsync("visitschedule",
+                                                  New List(Of String) From {"id", "creation", "statusid", "scheduleddate", "calltypeid", "customerid", "personcompressorid", "technicianid", "instructions", "lastupdate", "userid"},
                                                   "lastupdate > @lastupdate",
                                                   New Dictionary(Of String, Object) From {{"@lastupdate", _SessionModel.ManagerSetting.LastExecution.Cloud}},
                                                   "id ASC")
@@ -193,18 +193,17 @@ Public Class TaskCloudSync
                 For Each Schedule In CommonResult
 
 
-                    Await _LocalDB.ExecuteUpdate("visitschedule",
+                    Await _LocalDB.ExecuteUpdateAsync("visitschedule",
                                                  New Dictionary(Of String, String) From {
                                                     {"statusid", "@statusid"},
-                                                    {"scheduleddate", "@scheduleddate"},
+                                                    {"performeddate", "@performeddate"},
                                                     {"lastupdate", "@lastupdate"},
                                                     {"id", "@id"}
                                                  },
                                                  "id = @id",
                                                  New Dictionary(Of String, Object) From {
                                                     {"@statusid", RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("statusid")},
-                                                    {"@scheduleddate", DateTimeHelper.DateFromMilliseconds(RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("scheduleddate"))},
-                                                    {"@lastupdate", DateTimeHelper.DateFromMilliseconds(RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("lastupdate"))},
+                                                    {"@performeddate", DateTimeHelper.DateFromMilliseconds(RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("performeddate"))}, {"@lastupdate", DateTimeHelper.DateFromMilliseconds(RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("lastupdate"))},
                                                     {"@id", RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("id")}
                                                 })
                     Response.Percent = CInt((PerformedOperations / TotalChanges) * 100)
@@ -224,17 +223,17 @@ Public Class TaskCloudSync
 
 
                 For Each Schedule In RemoteResult
-                    Await _LocalDB.ExecuteUpdate("visitschedule",
+                    Await _LocalDB.ExecuteUpdateAsync("visitschedule",
                                                  New Dictionary(Of String, String) From {
                                                     {"statusid", "@statusid"},
-                                                    {"scheduleddate", "@scheduleddate"},
+                                                    {"performeddate", "@performeddate"},
                                                     {"lastupdate", "@lastupdate"},
                                                     {"id", "@id"}
                                                  },
                                                  "id = @id",
                                                  New Dictionary(Of String, Object) From {
                                                     {"@statusid", Schedule("statusid")},
-                                                    {"@scheduleddate", DateTimeHelper.DateFromMilliseconds(Schedule("scheduleddate"))},
+                                                    {"@performeddate", DateTimeHelper.DateFromMilliseconds(Schedule("performeddate"))},
                                                     {"@lastupdate", DateTimeHelper.DateFromMilliseconds(Schedule("lastupdate"))},
                                                     {"@id", Schedule("id")}
                                                 })
@@ -274,7 +273,7 @@ Public Class TaskCloudSync
 
     End Function
     Private Async Function FetchCompressor(Change As Dictionary(Of String, Object)) As Task
-        Dim Result = Await _LocalDB.ExecuteSelect("compressor",
+        Dim Result = Await _LocalDB.ExecuteSelectAsync("compressor",
                                                   New List(Of String) From {"id", "name"},
                                                   "id = @id",
                                                   New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
@@ -294,7 +293,7 @@ Public Class TaskCloudSync
         End If
     End Function
     Private Async Function FetchPersonCompressorCoalescent(Change As Dictionary(Of String, Object)) As Task
-        Dim Result = Await _LocalDB.ExecuteSelect("personcompressorsellable",
+        Dim Result = Await _LocalDB.ExecuteSelectAsync("personcompressorsellable",
                                                   New List(Of String) From {"id", "personcompressorid", "productid", "statusid", "sellablebindid"},
                                                   "id = @id AND controltypeid = @controltypeid",
                                                   New Dictionary(Of String, Object) From {{"@id", Change("registryid")}, {"@controltypeid", 1}},
@@ -318,7 +317,7 @@ Public Class TaskCloudSync
     End Function
     Private Async Function FetchPersonCompressor(Change As Dictionary(Of String, Object)) As Task
 
-        Dim Result = Await _LocalDB.ExecuteSelect("personcompressor",
+        Dim Result = Await _LocalDB.ExecuteSelectAsync("personcompressor",
                                                  New List(Of String) From {"id", "statusid", "personid", "compressorid", "serialnumber", "patrimony", "sector"},
                                                  "id = @id",
                                                  New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
@@ -343,7 +342,7 @@ Public Class TaskCloudSync
 
     End Function
     Private Async Function FetchPerson(Change As Dictionary(Of String, Object)) As Task
-        Dim Result = Await _LocalDB.ExecuteSelect("person",
+        Dim Result = Await _LocalDB.ExecuteSelectAsync("person",
                                                   New List(Of String) From {"id", "statusid", "document", "shortname", "iscustomer", "istechnician"},
                                                   "id = @id",
                                                   New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
@@ -364,7 +363,7 @@ Public Class TaskCloudSync
         End If
     End Function
     Private Async Function FetchProduct(Change As Dictionary(Of String, Object)) As Task
-        Dim Result = Await _LocalDB.ExecuteSelect("product",
+        Dim Result = Await _LocalDB.ExecuteSelectAsync("product",
                                                   New List(Of String) From {"id", "statusid", "name"},
                                                   "id = @id",
                                                   New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
@@ -384,7 +383,7 @@ Public Class TaskCloudSync
         End If
     End Function
     Private Async Function FetchProductProviderCode(Change As Dictionary(Of String, Object)) As Task
-        Dim Result = Await _LocalDB.ExecuteSelect("productprovidercode",
+        Dim Result = Await _LocalDB.ExecuteSelectAsync("productprovidercode",
                                                   New List(Of String) From {"id", "productid", "code", "ismainprovider"},
                                                   "id = @id",
                                                   New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
@@ -401,7 +400,7 @@ Public Class TaskCloudSync
         End If
     End Function
     Private Async Function FetchService(Change As Dictionary(Of String, Object)) As Task
-        Dim Result = Await _LocalDB.ExecuteSelect("service",
+        Dim Result = Await _LocalDB.ExecuteSelectAsync("service",
                                                   New List(Of String) From {"id", "statusid", "name"},
                                                   "id = @id",
                                                   New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},

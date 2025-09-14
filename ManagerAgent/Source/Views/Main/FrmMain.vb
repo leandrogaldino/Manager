@@ -469,9 +469,12 @@ Public Class FrmMain
     Private Async Sub BtnCleanEventLog_Click(sender As Object, e As EventArgs) Handles BtnCleanEventLog.Click
         If CMessageBox.Show("Todos os eventos serão apagados permanentemente. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
             Dim Database = Locator.GetInstance(Of LocalDB)
-            Await Database.ExecuteDelete("agentevent")
+            Await Database.ExecuteDeleteAsync("agentevent")
             DgvEvents.DataSource = Await _EventService.Read()
         End If
     End Sub
 
+    Private Sub DgvEvents_RowsAdded(sender As Object, e As DataGridViewRowsAddedEventArgs) Handles DgvEvents.RowsAdded
+        DgvEvents.FirstDisplayedScrollingRowIndex = 0
+    End Sub
 End Class

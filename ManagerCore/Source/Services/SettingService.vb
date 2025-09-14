@@ -56,8 +56,9 @@ Public Class SettingService
             Model.General.Clean.Interval = CInt(XmlDoc.SelectSingleNode("Setting/General/Clean/Interval").InnerText)
             Model.General.Release.RefreshBlockedRegistryInterval = CInt(XmlDoc.SelectSingleNode("Setting/General/Release/RefreshBlockedRegistryInterval").InnerText)
             Model.General.Release.ReleaseBlockedRegisterInterval = CInt(XmlDoc.SelectSingleNode("Setting/General/Release/ReleaseBlockedRegisterInterval").InnerText)
-            Model.General.Evaluation.DaysToAlertMaintenance = CInt(XmlDoc.SelectSingleNode("Setting/General/Evaluation/DaysToAlertMaintenance").InnerText)
-            Model.General.Evaluation.DaysToAlertVisit = CInt(XmlDoc.SelectSingleNode("Setting/General/Evaluation/DaysToAlertVisit").InnerText)
+            Model.General.Evaluation.DaysBeforeMaintenanceAlert = CInt(XmlDoc.SelectSingleNode("Setting/General/Evaluation/DaysBeforeMaintenanceAlert").InnerText)
+            Model.General.Evaluation.DaysBeforeVisitAlert = CInt(XmlDoc.SelectSingleNode("Setting/General/Evaluation/DaysBeforeVisitAlert").InnerText)
+            Model.General.Evaluation.MonthsBeforeRecordDeletion = CInt(XmlDoc.SelectSingleNode("Setting/General/Evaluation/MonthsBeforeRecordDeletion").InnerText)
             Model.General.User.DefaultPassword = XmlDoc.SelectSingleNode("Setting/General/User/DefaultPassword").InnerText
             Model.Support.EnableSSL = CBool(XmlDoc.SelectSingleNode("Setting/Support/EnableSSL").InnerText)
             Model.Support.Email = XmlDoc.SelectSingleNode("Setting/Support/Email").InnerText
@@ -130,8 +131,9 @@ Public Class SettingService
         XmlDoc.SelectSingleNode("Setting/General/Clean/Interval").InnerText = CStr(Model.General.Clean.Interval)
         XmlDoc.SelectSingleNode("Setting/General/Release/RefreshBlockedRegistryInterval").InnerText = CStr(Model.General.Release.RefreshBlockedRegistryInterval)
         XmlDoc.SelectSingleNode("Setting/General/Release/ReleaseBlockedRegisterInterval").InnerText = CStr(Model.General.Release.ReleaseBlockedRegisterInterval)
-        XmlDoc.SelectSingleNode("Setting/General/Evaluation/DaysToAlertMaintenance").InnerText = CStr(Model.General.Evaluation.DaysToAlertMaintenance)
-        XmlDoc.SelectSingleNode("Setting/General/Evaluation/DaysToAlertVisit").InnerText = CStr(Model.General.Evaluation.DaysToAlertVisit)
+        XmlDoc.SelectSingleNode("Setting/General/Evaluation/DaysBeforeMaintenanceAlert").InnerText = CStr(Model.General.Evaluation.DaysBeforeMaintenanceAlert)
+        XmlDoc.SelectSingleNode("Setting/General/Evaluation/DaysBeforeVisitAlert").InnerText = CStr(Model.General.Evaluation.DaysBeforeVisitAlert)
+        XmlDoc.SelectSingleNode("Setting/General/Evaluation/MonthsBeforeRecordDeletion").InnerText = CStr(Model.General.Evaluation.MonthsBeforeRecordDeletion)
         XmlDoc.SelectSingleNode("Setting/General/User/DefaultPassword").InnerText = Model.General.User.DefaultPassword
         XmlDoc.SelectSingleNode("Setting/Support/EnableSSL").InnerText = CStr(Model.Support.EnableSSL)
         XmlDoc.SelectSingleNode("Setting/Support/Email").InnerText = Model.Support.Email

@@ -79,7 +79,7 @@ Public Class FrmEvaluationManagement
     <DebuggerStepThrough>
     Private Sub DgvData_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvData.CellFormatting
         Dim Dgv As DataGridView = sender
-        If Dgv.Rows(e.RowIndex).Cells("nextexchange").Value >= Today And Dgv.Rows(e.RowIndex).Cells("nextexchange").Value <= Today.AddDays(_Session.Setting.General.Evaluation.DaysToAlertMaintenance) Then
+        If Dgv.Rows(e.RowIndex).Cells("nextexchange").Value >= Today And Dgv.Rows(e.RowIndex).Cells("nextexchange").Value <= Today.AddDays(_Session.Setting.General.Evaluation.DaysBeforeMaintenanceAlert) Then
             Dgv.Rows(e.RowIndex).DefaultCellStyle.SelectionBackColor = Color.Bisque
             Dgv.Rows(e.RowIndex).DefaultCellStyle.SelectionForeColor = Color.DarkOrange
             Dgv.Rows(e.RowIndex).DefaultCellStyle.ForeColor = Color.Orange
@@ -96,7 +96,7 @@ Public Class FrmEvaluationManagement
     <DebuggerStepThrough>
     Private Sub Dgv_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvWorkedHourSellable.CellFormatting, DgvElapsedDaySellable.CellFormatting
         Dim Dgv As DataGridView = sender
-        If Dgv.Rows(e.RowIndex).Cells("nextexchange").Value >= Today And Dgv.Rows(e.RowIndex).Cells("nextexchange").Value <= Today.AddDays(_Session.Setting.General.Evaluation.DaysToAlertMaintenance) Then
+        If Dgv.Rows(e.RowIndex).Cells("nextexchange").Value >= Today And Dgv.Rows(e.RowIndex).Cells("nextexchange").Value <= Today.AddDays(_Session.Setting.General.Evaluation.DaysBeforeMaintenanceAlert) Then
             Dgv.Rows(e.RowIndex).DefaultCellStyle.SelectionBackColor = Color.Bisque
             Dgv.Rows(e.RowIndex).DefaultCellStyle.SelectionForeColor = Color.DarkOrange
             Dgv.Rows(e.RowIndex).DefaultCellStyle.ForeColor = Color.Orange
@@ -136,7 +136,7 @@ Public Class FrmEvaluationManagement
                     _Filter.FilterControlledSellable(DgvData.SelectedRows(0).Cells("evaluation").Value, DgvWorkedHourSellable, CompressorSellableControlType.WorkedHour)
                     _Filter.FilterControlledSellable(DgvData.SelectedRows(0).Cells("evaluation").Value, DgvElapsedDaySellable, CompressorSellableControlType.ElapsedDay)
                     LblUnit.Text = _Filter.GetUnitNextChange(DgvData.SelectedRows(0).Cells("evaluation").Value).ToString("dd/MM/yyyy")
-                    If LblUnit.Text >= Today And LblUnit.Text <= Today.AddDays(_Session.Setting.General.Evaluation.DaysToAlertMaintenance) Then
+                    If LblUnit.Text >= Today And LblUnit.Text <= Today.AddDays(_Session.Setting.General.Evaluation.DaysBeforeMaintenanceAlert) Then
                         LblUnit.ForeColor = Color.Orange
                     ElseIf CDate(LblUnit.Text) < Today Then
                         LblUnit.ForeColor = Color.Red

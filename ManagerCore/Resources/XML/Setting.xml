@@ -55,8 +55,9 @@
 			<ReleaseBlockedRegisterInterval>7</ReleaseBlockedRegisterInterval>
 		</Release>
 		<Evaluation>
-			<DaysToAlertMaintenance>15</DaysToAlertMaintenance>
-			<DaysToAlertVisit>90</DaysToAlertVisit>
+			<DaysBeforeMaintenanceAlert>15</DaysBeforeMaintenanceAlert>
+			<DaysBeforeVisitAlert>90</DaysBeforeVisitAlert>
+			<MonthsBeforeRecordDeletion>48</MonthsBeforeRecordDeletion>
 		</Evaluation>
 		<User>
 			<DefaultPassword>123456</DefaultPassword>

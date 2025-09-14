@@ -1,17 +1,27 @@
 ﻿Imports System.Data.Common
-
 Public MustInherit Class LocalDB
     MustOverride Sub Initialize(DatabaseSettings As SettingDatabaseModel)
     MustOverride Function GetConnection() As DbConnection
-    MustOverride Async Function BeginTransaction() As Task
-    MustOverride Async Function CommitTransaction() As Task
-    MustOverride Async Function ExecuteRawQuery(Query As String, Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As Task(Of QueryResult)
-    MustOverride Async Function ExecuteSelect(Table As String, Optional Columns As List(Of String) = Nothing, Optional Where As String = Nothing, Optional QueryArgs As Dictionary(Of String, Object) = Nothing, Optional OrderBy As String = Nothing, Optional Limit As Integer = Nothing) As Task(Of QueryResult)
-    MustOverride Async Function ExecuteInsert(Table As String, Values As Dictionary(Of String, String), Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As Task(Of QueryResult)
-    MustOverride Async Function ExecuteDelete(Table As String, Optional Where As String = Nothing, Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As Task(Of QueryResult)
-    MustOverride Async Function ExecuteUpdate(Table As String, Values As Dictionary(Of String, String), Optional Where As String = Nothing, Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As Task(Of QueryResult)
-    MustOverride Async Function ExecuteBackup(FilePath As String, Optional Progress As IProgress(Of Integer) = Nothing) As Task
-    MustOverride Async Function ExecuteRestore(FilePath As String, Optional Progress As IProgress(Of Integer) = Nothing) As Task
+    MustOverride Async Function BeginTransactionAsync() As Task
+    MustOverride Sub BeginTransaction()
+    MustOverride Async Function CommitTransactionAsync() As Task
+    MustOverride Sub CommitTransaction()
+    MustOverride Async Function ExecuteRawQueryAsync(Query As String, Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As Task(Of QueryResult)
+    MustOverride Function ExecuteRawQuery(Query As String, Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As QueryResult
+    MustOverride Async Function ExecuteSelectAsync(Table As String, Optional Columns As List(Of String) = Nothing, Optional Where As String = Nothing, Optional QueryArgs As Dictionary(Of String, Object) = Nothing, Optional OrderBy As String = Nothing, Optional Limit As Integer = Nothing) As Task(Of QueryResult)
+    MustOverride Function ExecuteSelect(Table As String, Optional Columns As List(Of String) = Nothing, Optional Where As String = Nothing, Optional QueryArgs As Dictionary(Of String, Object) = Nothing, Optional OrderBy As String = Nothing, Optional Limit As Integer = Nothing) As QueryResult
+    MustOverride Async Function ExecuteInsertAsync(Table As String, Values As Dictionary(Of String, String), Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As Task(Of QueryResult)
+    MustOverride Function ExecuteInsert(Table As String, Values As Dictionary(Of String, String), Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As QueryResult
+    MustOverride Async Function ExecuteDeleteAsync(Table As String, Optional Where As String = Nothing, Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As Task(Of QueryResult)
+    MustOverride Function ExecuteDelete(Table As String, Optional Where As String = Nothing, Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As QueryResult
+    MustOverride Async Function ExecuteUpdateAsync(Table As String, Values As Dictionary(Of String, String), Optional Where As String = Nothing, Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As Task(Of QueryResult)
+    MustOverride Function ExecuteUpdate(Table As String, Values As Dictionary(Of String, String), Optional Where As String = Nothing, Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As QueryResult
+    MustOverride Async Function ExecuteBackupAsync(FilePath As String, Optional Progress As IProgress(Of Integer) = Nothing) As Task
+    MustOverride Sub ExecuteBackup(FilePath As String)
+    MustOverride Async Function ExecuteRestoreAsync(FilePath As String, Optional Progress As IProgress(Of Integer) = Nothing) As Task
+    MustOverride Sub ExecuteRestore(FilePath As String)
+
+
     Public Class QueryResult
         Private _Data As List(Of Dictionary(Of String, Object))
         Private _AffectedRows As Long

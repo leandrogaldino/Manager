@@ -98,7 +98,7 @@ Public Class DatabaseSettingsViewModel
         Dim Database As LocalDB = Locator.GetInstance(Of LocalDB)
         Database.Initialize(DatabaseSettings)
         Try
-            Await Database.ExecuteRawQuery("SELECT 1;")
+            Await Database.ExecuteRawQueryAsync("SELECT 1;")
             Pass = True
         Catch ex As Exception
             Pass = False

@@ -74,7 +74,7 @@ Public Class AppService
         If String.IsNullOrEmpty(DbSettings.Password) Then Validations.Add("A senha do banco de dados não foi definida;")
         Dim LocalDB As LocalDB = Locator.GetInstance(Of LocalDB)
         Try
-            Await LocalDB.ExecuteRawQuery("SELECT 1")
+            Await LocalDB.ExecuteRawQueryAsync("SELECT 1")
         Catch ex As Exception
             If Validations.Count = 0 Then Validations.Add($"Erro ao conectar ou executar consulta no banco de dados: {ex.Message};")
         End Try

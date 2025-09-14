@@ -1,4 +1,5 @@
 ﻿Public Class SettingEvaluationModel
-    Public Property DaysToAlertMaintenance As Integer
-    Public Property DaysToAlertVisit As Integer
+    Public Property DaysBeforeMaintenanceAlert As Integer
+    Public Property DaysBeforeVisitAlert As Integer
+    Public Property MonthsBeforeRecordDeletion As Integer
 End Class

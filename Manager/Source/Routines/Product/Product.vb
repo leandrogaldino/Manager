@@ -234,16 +234,19 @@ Public Class Product
                             CmdPicture.Parameters.AddWithValue("@id", Picture.ID)
                             CmdPicture.ExecuteNonQuery()
                         End Using
-                        If File.Exists(Picture.Picture.OriginalFile) Then
-                            FileManager.Delete(Picture.Picture.OriginalFile)
-                        End If
                     End If
                 Next Picture
-                For Each Picture As ProductPicture In Pictures
+                For Each Picture As ProductPicture In Pictures.Where(Function(x) x.Picture.CurrentFile Is Nothing)
+                    Using CmdPicture As New MySqlCommand(My.Resources.ProductPictureDelete, Con)
+                        CmdPicture.Parameters.AddWithValue("@id", Picture.ID)
+                        CmdPicture.ExecuteNonQuery()
+                    End Using
+                Next
+                For Each Picture As ProductPicture In Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing)
                     If Picture.ID = 0 Then
                         Using CmdPicture As New MySqlCommand(My.Resources.ProductPictureInsert, Con)
-                            CmdPicture.Parameters.AddWithValue("@productid", ID)
                             CmdPicture.Parameters.AddWithValue("@creation", Picture.Creation)
+                            CmdPicture.Parameters.AddWithValue("@productid", ID)
                             CmdPicture.Parameters.AddWithValue("@picturename", Path.GetFileName(Picture.Picture.CurrentFile))
                             CmdPicture.Parameters.AddWithValue("@userid", Picture.User.ID)
                             CmdPicture.ExecuteNonQuery()
@@ -318,9 +321,6 @@ Public Class Product
                         End Using
                     End If
                 Next Code
-
-
-
                 For Each Price As SellablePrice In _Shadow.Prices
                     If Not Prices.Any(Function(x) x.ID = Price.ID And x.ID > 0) Then
                         Using CmdPrice As New MySqlCommand(My.Resources.PriceTableItemDelete, Con)
@@ -352,11 +352,8 @@ Public Class Product
                         End Using
                     End If
                 Next Price
-
             End Using
-            For Each Picture As ProductPicture In Pictures
-                Picture.Picture.Execute()
-            Next Picture
+            Pictures.ToList.ForEach(Sub(x) x.Picture.Execute())
             Transaction.Complete()
         End Using
     End Sub

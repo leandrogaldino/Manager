@@ -285,7 +285,8 @@ Public Class FrmPerson
                         .Complement = SearchResult.Complemento,
                         .District = SearchResult.Bairro,
                         .City = New City().Load(City.GetID(SearchResult.Municipio.ToUnaccented(), SearchResult.Uf), False),
-                        .IsMainAddress = _Person.Addresses.Count = 0
+                        .IsMainAddress = _Person.Addresses.Count = 0,
+                        .ContributionType = PersonContributionType.NonTaxPayer
                     })
                     Person.Addresses.Last.SetIsSaved(True)
                     FormGet = New FrmPersonGetDocument(Person, SearchResult)

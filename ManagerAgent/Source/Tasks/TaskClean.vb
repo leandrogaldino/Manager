@@ -80,6 +80,12 @@ Public Class TaskClean
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             For Each Entry In Result.Data
+                criar agente
+                Dim AgentID As Long = obteriddoagente
+                Await _DatabaseService.BeginTransactionAsync()
+                Await _DatabaseService.ExecuteUpdateAsync("evaluation", New Dictionary(Of String, String) From {{"userid", criaridproagente}}, "id = @id", New Dictionary(Of String, Object) From {{"@id", Entry("id")}})
+                'fazer o mesmo para todos os dependentes de evaluation antes de deletar
+
                 Await _DatabaseService.ExecuteDeleteAsync("evaluation", $"id = {Entry("id")}")
                 CurrentRow += 1
                 Response.Percent = CurrentRow / AllRows * 100

@@ -9,7 +9,8 @@ SELECT
     REPLACE(user.note, '\n', ' ') AS 'Observação'
 FROM user
 WHERE
-    user.id > 1 AND
+    user.username <> 'ADMIN' AND
+    user.username <> 'AGENTE' AND
 	IFNULL(user.id, '') LIKE @id AND
     IFNULL(user.statusid, '') LIKE @statusid
 GROUP BY user.id;

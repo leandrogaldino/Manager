@@ -52,7 +52,6 @@ Public Class FrmProduct
         _User = Locator.GetInstance(Of Session).User
         ConfigureControls()
         LoadData()
-        RefreshPictureControls()
     End Sub
     Public Sub New(Product As Product)
         InitializeComponent()
@@ -198,7 +197,6 @@ Public Class FrmProduct
         SelectedPicture = ValidPictures(ValidPictures.Count - 1)
         RefreshPictureControls()
     End Sub
-
     Private Sub RefreshPictureControls()
         Dim ValidPictures As List(Of ProductPicture) = _Product.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
         Dim PictureCount As Integer = ValidPictures.Count
@@ -236,11 +234,6 @@ Public Class FrmProduct
         Try
             Cursor = Cursors.WaitCursor
             _Product.Load(_ProductsGrid.SelectedRows(0).Cells("id").Value, True)
-            'For Each p In _Product.Pictures.ToArray.Reverse
-            '    If Not IO.File.Exists(p.Picture.OriginalFile) Then
-            '        _Product.Pictures.Remove(p)
-            '    End If
-            'Next p
             LoadData()
         Catch ex As Exception
             CMessageBox.Show("ERRO PD001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -514,7 +507,6 @@ Public Class FrmProduct
     End Function
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
-        Dim DocumentPath As String = String.Empty
         Dim Success As Boolean
         TxtName.Text = TxtName.Text.Trim.ToUnaccented()
         TxtInternalName.Text = TxtInternalName.Text.Trim.ToUnaccented()

@@ -1093,4 +1093,60 @@ BEGIN
 END$$
 DELIMITER ;
 
+ALTER TABLE `manager`.`evaluationcontrolledsellable` 
+DROP FOREIGN KEY `evaluationpart_evaluation`,
+DROP FOREIGN KEY `evaluationpart_personcompressor`,
+DROP FOREIGN KEY `evaluationpart_personcompressorsellable`,
+DROP FOREIGN KEY `evaluationpart_user`;
+ALTER TABLE `manager`.`evaluationcontrolledsellable` 
+;
+ALTER TABLE `manager`.`evaluationcontrolledsellable` RENAME INDEX `evaluationpart_evaluation` TO `evaluationsellable_evaluation`;
+ALTER TABLE `manager`.`evaluationcontrolledsellable` ALTER INDEX `evaluationsellable_evaluation` VISIBLE;
+ALTER TABLE `manager`.`evaluationcontrolledsellable` RENAME INDEX `evaluationpart_personcompressor` TO `evaluationsellable_personcompressor`;
+ALTER TABLE `manager`.`evaluationcontrolledsellable` ALTER INDEX `evaluationsellable_personcompressor` VISIBLE;
+ALTER TABLE `manager`.`evaluationcontrolledsellable` RENAME INDEX `evaluationpart_user` TO `evaluationsellable_user`;
+ALTER TABLE `manager`.`evaluationcontrolledsellable` ALTER INDEX `evaluationsellable_user` VISIBLE;
+ALTER TABLE `manager`.`evaluationcontrolledsellable` 
+ADD CONSTRAINT `evaluationsellable_evaluation`
+  FOREIGN KEY (`evaluationid`)
+  REFERENCES `manager`.`evaluation` (`id`)
+  ON DELETE CASCADE,
+ADD CONSTRAINT `evaluationsellable_personcompressor`
+  FOREIGN KEY (`personcompressorid`)
+  REFERENCES `manager`.`personcompressor` (`id`)
+  ON DELETE RESTRICT,
+ADD CONSTRAINT `evaluationsellable_personcompressorsellable`
+  FOREIGN KEY (`personcompressorsellableid`)
+  REFERENCES `manager`.`personcompressorsellable` (`id`)
+  ON DELETE RESTRICT,
+ADD CONSTRAINT `evaluationsellable_user`
+  FOREIGN KEY (`userid`)
+  REFERENCES `manager`.`user` (`id`)
+  ON DELETE RESTRICT;
+  
+  ALTER TABLE `manager`.`compressorsellable` 
+DROP FOREIGN KEY `compressorpart_compressor`,
+DROP FOREIGN KEY `compressorpart_product`,
+DROP FOREIGN KEY `compressorpart_user`;
+ALTER TABLE `manager`.`compressorsellable` 
+ADD CONSTRAINT `compressorsellable_compressor`
+  FOREIGN KEY (`compressorid`)
+  REFERENCES `manager`.`compressor` (`id`)
+  ON DELETE CASCADE,
+ADD CONSTRAINT `compressorsellable_product`
+  FOREIGN KEY (`productid`)
+  REFERENCES `manager`.`product` (`id`)
+  ON DELETE RESTRICT,
+ADD CONSTRAINT `compressorsellable_user`
+  FOREIGN KEY (`userid`)
+  REFERENCES `manager`.`user` (`id`)
+  ON DELETE RESTRICT;
+
+  ALTER TABLE `manager`.`compressorsellable` 
+DROP FOREIGN KEY `compressorsellable_compressor`;
+ALTER TABLE `manager`.`compressorsellable` 
+ADD CONSTRAINT `compressorsellable_compressor`
+  FOREIGN KEY (`compressorid`)
+  REFERENCES `manager`.`compressor` (`id`)
+  ON DELETE NO ACTION;
 

@@ -83,6 +83,7 @@ Public Class EmailSignature
         Using Transaction As New Transactions.TransactionScope()
             Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
                 Con.Open()
+                UpdateUser(Con)
                 Using CmdEmailSignature As New MySqlCommand(My.Resources.EmailSignatureDelete, Con)
                     CmdEmailSignature.Parameters.AddWithValue("@id", ID)
                     CmdEmailSignature.ExecuteNonQuery()

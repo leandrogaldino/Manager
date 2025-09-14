@@ -21,30 +21,6 @@ Public Class CashFlow
         Name = Nothing
         If LockInfo.IsLocked Then Unlock()
     End Sub
-
-    Public Function GetAuthorized(Transaction As MySqlTransaction) As List(Of CashFlowAuthorized)
-        Dim TableResult As DataTable
-        Dim AuthorizedList As List(Of CashFlowAuthorized)
-        Dim FlowAuthorized As CashFlowAuthorized
-        Using CmdAuthorized As New MySqlCommand(My.Resources.CashFlowAuthorizedSelect, Transaction.Connection)
-            CmdAuthorized.Transaction = Transaction
-            CmdAuthorized.Parameters.AddWithValue("@cashflowid", ID)
-            Using Adp As New MySqlDataAdapter(CmdAuthorized)
-                TableResult = New DataTable
-                Adp.Fill(TableResult)
-                AuthorizedList = New List(Of CashFlowAuthorized)
-                For Each Row As DataRow In TableResult.Rows
-                    FlowAuthorized = New CashFlowAuthorized()
-                    FlowAuthorized.SetID(Row.Item("id"))
-                    FlowAuthorized.SetCreation(Row.Item("creation"))
-                    FlowAuthorized.SetIsSaved(True)
-                    FlowAuthorized.Authorized = New Person().Load(Row.Item("authorizedid"), False)
-                    AuthorizedList.Add(FlowAuthorized)
-                Next Row
-            End Using
-        End Using
-        Return AuthorizedList
-    End Function
     Public Function Load(Identity As Long, LockMe As Boolean) As CashFlow
         Dim Session = Locator.GetInstance(Of Session)
         Dim TableResult As DataTable
@@ -67,7 +43,7 @@ Public Class CashFlow
                         SetIsSaved(True)
                         Status = TableResult.Rows(0).Item("statusid")
                         Name = TableResult.Rows(0).Item("name").ToString
-                        Authorizeds = GetAuthorized(Tra)
+                        Authorizeds = GetAuthorizeds(Tra)
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
                     Else
@@ -80,16 +56,6 @@ Public Class CashFlow
         _Shadow = Clone()
         Return Me
     End Function
-    Public Sub SaveChanges()
-        If Not IsSaved Then
-            Insert()
-        Else
-            Update()
-        End If
-        SetIsSaved(True)
-        Authorizeds.ToList().ForEach(Sub(x) x.SetIsSaved(True))
-        _Shadow = Clone()
-    End Sub
     Public Sub Delete()
         Dim Session = Locator.GetInstance(Of Session)
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
@@ -105,6 +71,16 @@ Public Class CashFlow
                 Tra.Commit()
             End Using
         End Using
+    End Sub
+    Public Sub SaveChanges()
+        If Not IsSaved Then
+            Insert()
+        Else
+            Update()
+        End If
+        SetIsSaved(True)
+        Authorizeds.ToList().ForEach(Sub(x) x.SetIsSaved(True))
+        _Shadow = Clone()
     End Sub
     Private Sub Insert()
         Dim Session = Locator.GetInstance(Of Session)
@@ -182,6 +158,30 @@ Public Class CashFlow
             End Using
         End Using
     End Sub
+
+    Public Function GetAuthorizeds(Transaction As MySqlTransaction) As List(Of CashFlowAuthorized)
+        Dim TableResult As DataTable
+        Dim AuthorizedList As List(Of CashFlowAuthorized)
+        Dim FlowAuthorized As CashFlowAuthorized
+        Using CmdAuthorized As New MySqlCommand(My.Resources.CashFlowAuthorizedSelect, Transaction.Connection)
+            CmdAuthorized.Transaction = Transaction
+            CmdAuthorized.Parameters.AddWithValue("@cashflowid", ID)
+            Using Adp As New MySqlDataAdapter(CmdAuthorized)
+                TableResult = New DataTable
+                Adp.Fill(TableResult)
+                AuthorizedList = New List(Of CashFlowAuthorized)
+                For Each Row As DataRow In TableResult.Rows
+                    FlowAuthorized = New CashFlowAuthorized()
+                    FlowAuthorized.SetID(Row.Item("id"))
+                    FlowAuthorized.SetCreation(Row.Item("creation"))
+                    FlowAuthorized.SetIsSaved(True)
+                    FlowAuthorized.Authorized = New Person().Load(Row.Item("authorizedid"), False)
+                    AuthorizedList.Add(FlowAuthorized)
+                Next Row
+            End Using
+        End Using
+        Return AuthorizedList
+    End Function
     Public Shared Function GetCashFlows() As List(Of CashFlow)
         Dim Session = Locator.GetInstance(Of Session)
         Dim Table As New DataTable

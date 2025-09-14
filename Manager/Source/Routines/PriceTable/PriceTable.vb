@@ -209,20 +209,6 @@ Public Class PriceTable
             End Using
         End Using
     End Function
-    Public Shared Sub IncludeSellableInSystemPriceTables(Sellable As Sellable, Tra As MySqlTransaction)
-        For i = 1 To 6
-            If i = 6 And TypeOf Sellable Is Service Then Exit For
-            Using CmdItem As New MySqlCommand(My.Resources.PriceTableItemInsert, Tra.Connection, Tra)
-                CmdItem.Parameters.AddWithValue("@pricetableid", i)
-                CmdItem.Parameters.AddWithValue("@creation", Today)
-                CmdItem.Parameters.AddWithValue("@productid", If(TypeOf Sellable Is Product, Sellable.ID, DBNull.Value))
-                CmdItem.Parameters.AddWithValue("@serviceid", If(TypeOf Sellable Is Service, Sellable.ID, DBNull.Value))
-                CmdItem.Parameters.AddWithValue("@price", 0)
-                CmdItem.Parameters.AddWithValue("@userid", Locator.GetInstance(Of Session).User.ID)
-                CmdItem.ExecuteNonQuery()
-            End Using
-        Next i
-    End Sub
     Public Overrides Function ToString() As String
         Return If(Name, String.Empty)
     End Function

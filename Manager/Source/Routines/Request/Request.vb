@@ -94,6 +94,23 @@ Public Class Request
         _Shadow = Clone()
         Return Me
     End Function
+    Public Sub Delete()
+        Dim FileManager As New TxFileManager(ApplicationPaths.ManagerTempDirectory)
+        Using Transaction As New Transactions.TransactionScope()
+            Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
+                Con.Open()
+                UpdateUser(Con)
+                Items.ForEach(Sub(i) i.UpdateUser(Con))
+                Using CmdRequest As New MySqlCommand(My.Resources.RequestDelete, Con)
+                    CmdRequest.Parameters.AddWithValue("@id", ID)
+                    CmdRequest.ExecuteNonQuery()
+                    If File.Exists(Document.OriginalFile) Then FileManager.Delete(Document.OriginalFile)
+                End Using
+            End Using
+            Transaction.Complete()
+        End Using
+        Clear()
+    End Sub
     Public Sub SaveChanges()
         If Not IsSaved Then
             Insert()
@@ -200,21 +217,6 @@ Public Class Request
             Document.Execute()
             Transaction.Complete()
         End Using
-    End Sub
-    Public Sub Delete()
-        Dim FileManager As New TxFileManager(ApplicationPaths.ManagerTempDirectory)
-        Using Transaction As New Transactions.TransactionScope()
-            Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
-                Con.Open()
-                Using CmdRequest As New MySqlCommand(My.Resources.RequestDelete, Con)
-                    CmdRequest.Parameters.AddWithValue("@id", ID)
-                    CmdRequest.ExecuteNonQuery()
-                    If File.Exists(Document.OriginalFile) Then FileManager.Delete(Document.OriginalFile)
-                End Using
-            End Using
-            Transaction.Complete()
-        End Using
-        Clear()
     End Sub
     Public Shared Sub FillDataGridView(RequestID As Long, Dgv As DataGridView)
         Dim TableResult As New DataTable

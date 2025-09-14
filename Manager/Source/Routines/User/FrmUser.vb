@@ -108,7 +108,7 @@ Public Class FrmUser
         TxtFilterEmail.Clear()
         TxtFilterPrivileges.Clear()
         If _User.Emails IsNot Nothing Then DgvEmail.Fill(_User.Emails)
-        BtnDelete.Enabled = _User.ID > 0 And _User.CanDelete(Routine.User)
+        BtnDelete.Enabled = _User.ID > 0 And _LoggedUser.CanDelete(Routine.User)
         UpdatePrivileges()
         Text = "Usuário"
         If _User.LockInfo.IsLocked And Not _User.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _User.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
@@ -438,7 +438,7 @@ Public Class FrmUser
                     LblIDValue.Text = _User.ID
                     DgvEmail.Fill(_User.Emails)
                     BtnSave.Enabled = False
-                    BtnDelete.Enabled = _User.CanDelete(Routine.User)
+                    BtnDelete.Enabled = _LoggedUser.CanDelete(Routine.User)
                     If _UsersForm IsNot Nothing Then
                         _Filter.Filter()
                         _UsersForm.DgvUserLayout.Load()

@@ -93,11 +93,16 @@ Public Class ProductUnit
     Public Sub Delete()
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
-            Using CmdProductUnitDelete As New MySqlCommand(My.Resources.ProductUnitDelete, Con)
-                CmdProductUnitDelete.Parameters.AddWithValue("@id", ID)
-                CmdProductUnitDelete.ExecuteNonQuery()
-                Clear()
+            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
+                UpdateUser(Con, Tra)
+                Using CmdProductUnitDelete As New MySqlCommand(My.Resources.ProductUnitDelete, Con, Tra)
+                    CmdProductUnitDelete.Parameters.AddWithValue("@id", ID)
+                    CmdProductUnitDelete.ExecuteNonQuery()
+                    Clear()
+                End Using
+                Tra.Commit()
             End Using
+
         End Using
     End Sub
     Private Sub Insert()

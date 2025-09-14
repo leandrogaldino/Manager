@@ -113,12 +113,16 @@ Public Class EmailModel
     Public Sub Delete()
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
-            Using CmdRequest As New MySqlCommand(My.Resources.EmailModelDelete, Con)
-                CmdRequest.Parameters.AddWithValue("@id", ID)
-                CmdRequest.ExecuteNonQuery()
+            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
+                UpdateUser(Con, Tra)
+                Using CmdRequest As New MySqlCommand(My.Resources.EmailModelDelete, Con, Tra)
+                    CmdRequest.Parameters.AddWithValue("@id", ID)
+                    CmdRequest.ExecuteNonQuery()
+                End Using
+                Tra.Commit()
             End Using
         End Using
-        Clear()
+            Clear()
     End Sub
     Private Sub Insert()
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())

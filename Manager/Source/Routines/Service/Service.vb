@@ -81,6 +81,10 @@ Public Class Service
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
+                UpdateUser(Con, Tra)
+                Complements.ForEach(Sub(c) c.UpdateUser(Con, Tra))
+                Codes.ForEach(Sub(c) c.UpdateUser(Con, Tra))
+                Prices.ForEach(Sub(p) p.UpdateUser(Con, Tra, Routine.PriceTableSellable))
                 Using CmdService As New MySqlCommand(My.Resources.ServiceDelete, Con, Tra)
                     CmdService.Parameters.AddWithValue("@id", ID)
                     CmdService.ExecuteNonQuery()
@@ -136,7 +140,6 @@ Public Class Service
                         Code.SetID(CmdCode.LastInsertedId)
                     End Using
                 Next Code
-                PriceTable.IncludeSellableInSystemPriceTables(Me, Tra)
                 Tra.Commit()
             End Using
         End Using

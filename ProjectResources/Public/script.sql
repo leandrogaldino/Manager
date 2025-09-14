@@ -1121,8 +1121,7 @@ ADD CONSTRAINT `evaluationsellable_personcompressorsellable`
 ADD CONSTRAINT `evaluationsellable_user`
   FOREIGN KEY (`userid`)
   REFERENCES `manager`.`user` (`id`)
-  ON DELETE RESTRICT;
-  
+  ON DELETE RESTRICT;  
   ALTER TABLE `manager`.`compressorsellable` 
 DROP FOREIGN KEY `compressorpart_compressor`,
 DROP FOREIGN KEY `compressorpart_product`,
@@ -1140,21 +1139,33 @@ ADD CONSTRAINT `compressorsellable_user`
   FOREIGN KEY (`userid`)
   REFERENCES `manager`.`user` (`id`)
   ON DELETE RESTRICT;
-
   ALTER TABLE `manager`.`compressorsellable` 
 DROP FOREIGN KEY `compressorsellable_compressor`;
 ALTER TABLE `manager`.`compressorsellable` 
 ADD CONSTRAINT `compressorsellable_compressor`
   FOREIGN KEY (`compressorid`)
   REFERENCES `manager`.`compressor` (`id`)
-  ON DELETE NO ACTION;
-  
+  ON DELETE NO ACTION;  
   ALTER TABLE `manager`.`cityroute` 
 DROP FOREIGN KEY `cityroute_city`;
 ALTER TABLE `manager`.`cityroute` 
 ADD CONSTRAINT `cityroute_city`
   FOREIGN KEY (`cityid`)
   REFERENCES `manager`.`city` (`id`)
+  ON DELETE NO ACTION;
+ALTER TABLE `manager`.`useremail` 
+DROP FOREIGN KEY `useremail_ofuser`;
+ALTER TABLE `manager`.`useremail` 
+ADD CONSTRAINT `useremail_ofuser`
+  FOREIGN KEY (`ofuserid`)
+  REFERENCES `manager`.`user` (`id`)
+  ON DELETE NO ACTION;
+ALTER TABLE `manager`.`userprivilege` 
+DROP FOREIGN KEY `userprivilege_ibfk_1`;
+ALTER TABLE `manager`.`userprivilege` 
+ADD CONSTRAINT `userprivilege_ibfk_1`
+  FOREIGN KEY (`granteduserid`)
+  REFERENCES `manager`.`user` (`id`)
   ON DELETE NO ACTION;
 
 
@@ -1184,6 +1195,19 @@ DROP TRIGGER IF EXISTS `manager`.`productbeforedelete`;
 DROP TRIGGER IF EXISTS `manager`.`productpictureinsert`;
 DROP TRIGGER IF EXISTS `manager`.`productpictureupdate`;
 DROP TRIGGER IF EXISTS `manager`.`productpicturedelete`;
+DROP TRIGGER IF EXISTS `manager`.`requestbeforedelete`;
+DROP TRIGGER IF EXISTS `manager`.`servicebeforedelete`;
+DROP TRIGGER IF EXISTS `manager`.`userbeforedelete`;
+DROP TRIGGER IF EXISTS `manager`.`useremailupdate`;
+DROP TRIGGER IF EXISTS `manager`.`useremailinsert`;
+DROP TRIGGER IF EXISTS `manager`.`useremaildelete`;
+
+
+
+
+
+
+
 
 
 
@@ -1293,8 +1317,6 @@ ADD CONSTRAINT `productprovidercode_product`
   FOREIGN KEY (`productid`)
   REFERENCES `manager`.`product` (`id`)
   ON DELETE NO ACTION;
-
-
 ALTER TABLE `manager`.`pricetablesellable` 
 DROP FOREIGN KEY `pricetablesellable_ibfk_3`,
 DROP FOREIGN KEY `pricetablesellable_ibfk_4`;
@@ -1311,6 +1333,34 @@ ALTER TABLE `manager`.`productpicture` ;
 ALTER TABLE `manager`.`productpicture` RENAME INDEX `picturelocation` TO `picturename`;
 ALTER TABLE `manager`.`productpicture` ALTER INDEX `picturename` VISIBLE;
 ALTER TABLE `manager`.`productpicture` DROP COLUMN `caption`,DROP INDEX `caption` ;
+ALTER TABLE `manager`.`requestitem` 
+DROP FOREIGN KEY `requestitem_request`;
+ALTER TABLE `manager`.`requestitem` 
+ADD CONSTRAINT `requestitem_request`
+  FOREIGN KEY (`requestid`)
+  REFERENCES `manager`.`request` (`id`)
+  ON DELETE NO ACTION;
+ALTER TABLE `manager`.`servicecode` 
+DROP FOREIGN KEY `servicecode_service`;
+ALTER TABLE `manager`.`servicecode` 
+ADD CONSTRAINT `servicecode_service`
+  FOREIGN KEY (`serviceid`)
+  REFERENCES `manager`.`service` (`id`)
+  ON DELETE NO ACTION;
+ALTER TABLE `manager`.`servicecomplement` 
+DROP FOREIGN KEY `servicecomplement_ibfk_1`;
+ALTER TABLE `manager`.`servicecomplement` 
+ADD CONSTRAINT `servicecomplement_ibfk_1`
+  FOREIGN KEY (`serviceid`)
+  REFERENCES `manager`.`service` (`id`)
+  ON DELETE NO ACTION;
+
+
+
+
+
+
+
 
 
  
@@ -1451,10 +1501,10 @@ BEGIN
 DELETE FROM privilegepresetprivilege WHERE privilegepresetid = OLD.id;
 END$$
 CREATE TRIGGER `privilegepresetprivilegeinsert` AFTER INSERT ON `privilegepresetprivilege` FOR EACH ROW BEGIN
-INSERT INTO log VALUES (NULL, 14, NEW.privilegepresetid, 'Permissão Incluída', NULL,CONCAT( NEW.routinename, ' - ', CASE WHEN NEW.privilegelevelid = 0 THEN 'Acessar' WHEN NEW.privilegelevelid = 1 THEN 'Escrever' WHEN NEW.privilegelevelid = 2 THEN 'Excluir' END), NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+INSERT INTO log VALUES (NULL, 14, NEW.privilegepresetid, CONCAT('Permissão: ', NEW.routinename), CASE WHEN NEW.privilegelevelid = 0 THEN 'Acesso Negado' WHEN NEW.privilegelevelid = 1 THEN 'Escrita Negada' WHEN NEW.privilegelevelid = 2 THEN 'Deleção Negada' END, CASE WHEN NEW.privilegelevelid = 0 THEN 'Acesso Permitido' WHEN NEW.privilegelevelid = 1 THEN 'Escrita Permitida' WHEN NEW.privilegelevelid = 2 THEN 'Deleção Permitida' END, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
 END$$
 CREATE TRIGGER `privilegepresetprivilegedelete` AFTER DELETE ON `privilegepresetprivilege` FOR EACH ROW BEGIN
-INSERT INTO log VALUES (NULL, 14, OLD.privilegepresetid, 'Permissão Excluída', NULL, CONCAT( OLD.routinename, ' - ', CASE WHEN OLD.privilegelevelid = 0 THEN 'Acessar' WHEN OLD.privilegelevelid = 1 THEN 'Escrever' WHEN OLD.privilegelevelid = 2 THEN 'Excluir' END), NOW(), CONCAT(OLD.userid , ' - ', (SELECT user.username FROM user WHERE user.id = OLD.userid)));
+INSERT INTO log VALUES (NULL, 14, OLD.privilegepresetid, CONCAT('Permissão: ', OLD.routinename), CASE WHEN OLD.privilegelevelid = 0 THEN 'Acesso Permitido' WHEN OLD.privilegelevelid = 1 THEN 'Escrita Permitida' WHEN OLD.privilegelevelid = 2 THEN 'Deleção Permitida' END, CASE WHEN OLD.privilegelevelid = 0 THEN 'Acesso Negado' WHEN OLD.privilegelevelid = 1 THEN 'Escrita Negada' WHEN OLD.privilegelevelid = 2 THEN 'Deleção Negada' END, NOW(), CONCAT(OLD.userid , ' - ', (SELECT user.username FROM user WHERE user.id = OLD.userid)));
 END$$
 CREATE TRIGGER `manager`.`productbeforedelete` BEFORE DELETE ON `product` FOR EACH ROW
 BEGIN
@@ -1472,9 +1522,37 @@ END$$
 CREATE TRIGGER `productpicturedelete` AFTER DELETE ON `productpicture` FOR EACH ROW BEGIN
 INSERT INTO log VALUES (NULL, 6, OLD.productid, 'Foto Excluída', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
 END$$
-
-
-
+CREATE TRIGGER `manager`.`requestbeforedelete` BEFORE DELETE ON `request` FOR EACH ROW
+BEGIN
+DELETE FROM requestitem WHERE requestid = OLD.id;
+END$$
+CREATE TRIGGER `manager`.`servicebeforedelete` BEFORE DELETE ON `service` FOR EACH ROW
+BEGIN
+DELETE FROM pricetablesellable WHERE serviceid = OLD.id;
+DELETE FROM servicecomplement WHERE serviceid = OLD.id;
+DELETE FROM servicecode WHERE serviceid = OLD.id;
+END$$
+CREATE TRIGGER `manager`.`userbeforedelete` BEFORE DELETE ON `user` FOR EACH ROW
+BEGIN
+DELETE FROM useremail WHERE ofuserid = OLD.id;
+DELETE FROM userprivilege WHERE granteduserid = OLD.ID;
+END$$
+CREATE TRIGGER `useremailupdate` AFTER UPDATE ON `useremail` FOR EACH ROW BEGIN
+IF OLD.ismainemail <> NEW.ismainemail THEN INSERT INTO log VALUES (NULL, 101, NEW.id, 'E-Mail Principal', CASE WHEN OLD.ismainemail = TRUE THEN 'SIM' WHEN OLD.ismainemail = FALSE THEN 'NÃO' END, CASE WHEN NEW.ismainemail = TRUE THEN 'SIM' WHEN NEW.ismainemail = FALSE THEN 'NÃO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF IFNULL(OLD.host, '') <> IFNULL(NEW.host, '') THEN INSERT INTO log VALUES (NULL, 101, NEW.id, 'Servidor E-mail', OLD.host, NEW.host, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.port <> NEW.port THEN INSERT INTO log VALUES (NULL, 101, NEW.id, 'Porta E-Mail', OLD.port, NEW.port, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF IFNULL(OLD.email, '') <> IFNULL(NEW.email, '') THEN INSERT INTO log VALUES (NULL, 101, NEW.id, 'E-mail', OLD.email, NEW.email, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF IFNULL(OLD.password, '') <> IFNULL(NEW.password, '') THEN INSERT INTO log VALUES (NULL, 101, NEW.id, 'Senha E-mail Alterada', NULL, NULL, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.enablessl <> NEW.enablessl THEN INSERT INTO log VALUES (NULL, 101, NEW.id, 'Habilita SSL E-Mail', OLD.enablessl, NEW.enablessl, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+END$$
+CREATE TRIGGER `manager`.`useremailinsert` AFTER INSERT ON `useremail` FOR EACH ROW
+BEGIN
+INSERT INTO log VALUES (NULL, 101, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END$$
+CREATE TRIGGER `manager`.`useremaildelete` AFTER DELETE ON `useremail` FOR EACH ROW
+BEGIN
+INSERT INTO log VALUES (NULL, 101, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ', (SELECT user.username FROM user WHERE user.id = OLD.userid)));
+END$$
 DELIMITER ;
 SET SQL_SAFE_UPDATES = 0;
 update log set routineid = 1201 where routineid = 1202;
@@ -1482,44 +1560,3 @@ update log set routineid = 204 where routineid = 205;
 delete from log where routineid = 14;
 delete from log where routineid = 1401;
 SET SQL_SAFE_UPDATES = 1;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -62,10 +62,14 @@ Public Class Route
     Public Sub Delete()
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
-            Using CmdRouteDelete As New MySqlCommand(My.Resources.RouteDelete, Con)
-                CmdRouteDelete.Parameters.AddWithValue("@id", ID)
-                CmdRouteDelete.ExecuteNonQuery()
-                Clear()
+            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
+                UpdateUser(Con, Tra)
+                Using CmdRouteDelete As New MySqlCommand(My.Resources.RouteDelete, Con, Tra)
+                    CmdRouteDelete.Parameters.AddWithValue("@id", ID)
+                    CmdRouteDelete.ExecuteNonQuery()
+                    Clear()
+                End Using
+                Tra.Commit()
             End Using
         End Using
     End Sub

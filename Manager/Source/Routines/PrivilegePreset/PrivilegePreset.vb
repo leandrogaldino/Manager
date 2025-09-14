@@ -60,7 +60,7 @@ Public Class PrivilegePreset
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
                 UpdateUser(Con, Tra)
                 Privileges.ForEach(Sub(p) p.UpdateUser(Con, Tra))
-                Using Cmd As New MySqlCommand(My.Resources.PrivilegePresetDelete, Con)
+                Using Cmd As New MySqlCommand(My.Resources.PrivilegePresetDelete, Con, Tra)
                     Cmd.Parameters.AddWithValue("@id", ID)
                     Cmd.ExecuteNonQuery()
                     Clear()

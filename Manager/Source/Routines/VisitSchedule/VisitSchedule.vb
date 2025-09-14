@@ -94,10 +94,14 @@ Public Class VisitSchedule
     Public Sub Delete()
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
-            Using Cmd As New MySqlCommand(My.Resources.VisitScheduleDelete, Con)
-                Cmd.Parameters.AddWithValue("@id", ID)
-                Cmd.ExecuteNonQuery()
-                Clear()
+            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
+                UpdateUser(Con, Tra)
+                Using Cmd As New MySqlCommand(My.Resources.VisitScheduleDelete, Con, Tra)
+                    Cmd.Parameters.AddWithValue("@id", ID)
+                    Cmd.ExecuteNonQuery()
+                    Clear()
+                End Using
+                Tra.Commit()
             End Using
         End Using
     End Sub

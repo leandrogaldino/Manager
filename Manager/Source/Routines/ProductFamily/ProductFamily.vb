@@ -91,10 +91,14 @@ Public Class ProductFamily
         Dim Session = Locator.GetInstance(Of Session)
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
-            Using CmdProductFamilyDelete As New MySqlCommand(My.Resources.ProductFamilyDelete, Con)
-                CmdProductFamilyDelete.Parameters.AddWithValue("@id", ID)
-                CmdProductFamilyDelete.ExecuteNonQuery()
-                Clear()
+            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
+                UpdateUser(Con, Tra)
+                Using CmdProductFamilyDelete As New MySqlCommand(My.Resources.ProductFamilyDelete, Con, Tra)
+                    CmdProductFamilyDelete.Parameters.AddWithValue("@id", ID)
+                    CmdProductFamilyDelete.ExecuteNonQuery()
+                    Clear()
+                End Using
+                Tra.Commit()
             End Using
         End Using
     End Sub

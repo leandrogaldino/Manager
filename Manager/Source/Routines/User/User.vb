@@ -16,8 +16,6 @@ Public Class User
             Return _RequestPassword
         End Get
     End Property
-
-
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Username As String = String.Empty
     Public ReadOnly Property Password As String
@@ -28,7 +26,6 @@ Public Class User
     Public Property Person As New Lazy(Of Person)(Function() New Person().Load(_PersonID, False))
     Public Property Note As String
     Public Property Privileges As New List(Of UserPrivilege)
-
     Public Property Emails As New List(Of UserEmail)
     Public Shadows User As New Lazy(Of User)(Function() New User().Load(_UserID, False))
     Public Sub New()
@@ -36,9 +33,6 @@ Public Class User
         _UserID = If(Locator.GetInstance(Of Session).User IsNot Nothing, Locator.GetInstance(Of Session).User.ID, 0)
         _Password = Locator.GetInstance(Of Session).Setting.General.User.DefaultPassword
     End Sub
-
-
-
     Public Function CanAccess(Routine As Routine) As Boolean
         Return Privileges.Any(Function(x) x.PrivilegedRoutine.Equals(Routine) And x.Level.Equals(PrivilegeLevel.Access))
     End Function
@@ -49,7 +43,6 @@ Public Class User
     Public Function CanDelete(Routine As Routine) As Boolean
         Return Privileges.Any(Function(x) x.PrivilegedRoutine.Equals(Routine) And x.Level.Equals(PrivilegeLevel.Delete))
     End Function
-
     Public Sub ResetPassword()
         Dim Session = Locator.GetInstance(Of Session)
         Dim CryptoKey = Locator.GetInstance(Of CryptoKeyService)
@@ -148,10 +141,16 @@ Public Class User
         Dim Session = Locator.GetInstance(Of Session)
         Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
             Con.Open()
-            Using Cmd As New MySqlCommand(My.Resources.UserDelete, Con)
-                Cmd.Parameters.AddWithValue("@id", ID)
-                Cmd.ExecuteNonQuery()
-                Clear()
+            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
+                UpdateUser(Con, Tra)
+                Privileges.ForEach(Sub(p) p.UpdateUser(Con, Tra))
+                Emails.ForEach(Sub(e) e.UpdateUser(Con, Tra))
+                Using Cmd As New MySqlCommand(My.Resources.UserDelete, Con, Tra)
+                    Cmd.Parameters.AddWithValue("@id", ID)
+                    Cmd.ExecuteNonQuery()
+                    Clear()
+                End Using
+                Tra.Commit()
             End Using
         End Using
     End Sub
@@ -186,7 +185,6 @@ Public Class User
                         Cmd.Parameters.AddWithValue("@email", If(String.IsNullOrEmpty(Email.Email), DBNull.Value, Email.Email))
                         Cmd.Parameters.AddWithValue("@password", If(String.IsNullOrEmpty(Email.Password), DBNull.Value, Email.Password))
                         Cmd.Parameters.AddWithValue("@enablessl", Email.EnableSSL)
-                        Cmd.Parameters.AddWithValue("@ofuserid", ID)
                         Cmd.Parameters.AddWithValue("@userid", Session.User.ID)
                         Cmd.ExecuteNonQuery()
                         Email.SetID(Cmd.LastInsertedId)

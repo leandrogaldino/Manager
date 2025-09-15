@@ -123,12 +123,14 @@ Public Class TaskBackup
             If Not Directory.Exists(TempBackupDirectory) Then Directory.CreateDirectory(TempBackupDirectory)
             FileManager = New FileManager()
             FileManagerCopyInfo = New List(Of CopyDirectoryInfo) From {
-                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.ProductPictureDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.ProductPicture.ToString))),
-                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.EvaluationDocumentDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.EvaluationDocument.ToString))),
-                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.RequestDocumentDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.RequestDocument.ToString))),
-                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.EmailSignatureDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.EmailSignature.ToString))),
                 New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.CashDocumentDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.CashDocument.ToString))),
-                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.HelpersDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.Helpers.ToString)))
+                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.EmailSignatureDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.EmailSignature.ToString))),
+                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.EvaluationDocumentDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.EvaluationDocument.ToString))),
+                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.EvaluationPictureDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.EvaluationPicture.ToString))),
+                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.EvaluationSignatureDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.EvaluationSignature.ToString))),
+                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.HelpersDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.Helpers.ToString))),
+                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.ProductPictureDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.ProductPicture.ToString))),
+                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.RequestDocumentDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.RequestDocument.ToString)))
             }
             Response.Text = "Criando arquivos temporários"
             Response.Event.AddChildEvent($"Criando Backup: Criando arquivos temporários")
@@ -143,6 +145,7 @@ Public Class TaskBackup
 
 
             Await FileManager.CopyDirectoriesAsync(FileManagerCopyInfo)
+
 
             Await Task.Delay(Constants.WaitForJob)
 

@@ -15,10 +15,12 @@ End Enum
 
 
 Public Enum BackupDirectories
-    ProductPicture = 0
-    EvaluationDocument = 1
-    RequestDocument = 2
-    EmailSignature = 3
-    CashDocument = 4
-    Helpers = 5
+    CashDocument = 0
+    EmailSignature = 1
+    EvaluationDocument = 2
+    EvaluationPicture = 3
+    EvaluationSignature = 4
+    ProductPicture = 5
+    RequestDocument = 6
+    Helpers = 7
 End Enum

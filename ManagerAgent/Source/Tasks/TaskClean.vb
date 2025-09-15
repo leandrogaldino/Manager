@@ -80,13 +80,15 @@ Public Class TaskClean
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             For Each Entry In Result.Data
-                criar agente
-                Dim AgentID As Long = obteriddoagente
                 Await _DatabaseService.BeginTransactionAsync()
-                Await _DatabaseService.ExecuteUpdateAsync("evaluation", New Dictionary(Of String, String) From {{"userid", criaridproagente}}, "id = @id", New Dictionary(Of String, Object) From {{"@id", Entry("id")}})
-                'fazer o mesmo para todos os dependentes de evaluation antes de deletar
-
+                Dim AgentID As Long = (Await _DatabaseService.ExecuteSelectAsync("user", New List(Of String) From {"id"}, "username = 'SISTEMA'", Limit:=1)).Data(0)("id")
+                Await _DatabaseService.ExecuteUpdateAsync("evaluation", New Dictionary(Of String, String) From {{"userid", AgentID}}, "id = @id", New Dictionary(Of String, Object) From {{"@id", Entry("id")}})
+                Await _DatabaseService.ExecuteUpdateAsync("evaluationcontrolledsellable", New Dictionary(Of String, String) From {{"userid", AgentID}}, "evaluationid = @evaluationid", New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}})
+                Await _DatabaseService.ExecuteUpdateAsync("evaluationpicture", New Dictionary(Of String, String) From {{"userid", AgentID}}, "evaluationid = @evaluationid", New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}})
+                Await _DatabaseService.ExecuteUpdateAsync("evaluationreplacedsellable", New Dictionary(Of String, String) From {{"userid", AgentID}}, "evaluationid = @evaluationid", New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}})
+                Await _DatabaseService.ExecuteUpdateAsync("evaluationtechnician", New Dictionary(Of String, String) From {{"userid", AgentID}}, "evaluationid = @evaluationid", New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}})
                 Await _DatabaseService.ExecuteDeleteAsync("evaluation", $"id = {Entry("id")}")
+                Await _DatabaseService.CommitTransactionAsync()
                 CurrentRow += 1
                 Response.Percent = CurrentRow / AllRows * 100
                 Response.Text = $"Limpeza - Excluindo avaliações antigas ({Response.Percent}%)"

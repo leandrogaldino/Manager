@@ -648,6 +648,12 @@ ALTER TABLE `manager`.`compressorsellable` DROP COLUMN `itemname`;
 ALTER TABLE `manager`.`compressorsellable` ADD INDEX `serviceid` (`serviceid` ASC) VISIBLE;
 ALTER TABLE `manager`.`compressorsellable` ADD CONSTRAINT `compressorsellable_service`  FOREIGN KEY (`serviceid`)  REFERENCES `manager`.`service` (`id`)  ON DELETE RESTRICT  ON UPDATE RESTRICT;
 
+UPDATE evaluationpart SET userid = 1 WHERE id = 10729;
+UPDATE evaluationpart SET userid = 1 WHERE id = 10730;
+UPDATE evaluationpart SET userid = 1 WHERE id = 23194;
+UPDATE evaluationpart SET userid = 1 WHERE id = 23195;
+UPDATE personcompressorpart SET userid = 1 WHERE id = 3960;
+UPDATE personcompressorpart SET userid = 1 WHERE id = 3961;
 DELETE FROM evaluationpart WHERE id = 10729;
 DELETE FROM evaluationpart WHERE id = 10730;
 DELETE FROM evaluationpart WHERE id = 23194;
@@ -1013,15 +1019,22 @@ IF OLD.quantity <> NEW.quantity THEN INSERT INTO log VALUES (NULL, CASE WHEN old
 END$$
 DELIMITER ;
 
+UPDATE evaluationpart SET userid = 1 WHERE personcompressorpartid = 3431;
+UPDATE evaluationpart SET userid = 1 WHERE personcompressorpartid = 3501;
+UPDATE evaluationpart SET userid = 1 WHERE personcompressorpartid = 3504;
+UPDATE evaluationpart SET userid = 1 WHERE personcompressorpartid = 3505;
 DELETE FROM evaluationpart WHERE personcompressorpartid = 3431;
 DELETE FROM evaluationpart WHERE personcompressorpartid = 3501;
 DELETE FROM evaluationpart WHERE personcompressorpartid = 3504;
 DELETE FROM evaluationpart WHERE personcompressorpartid = 3505;
-
-DELETE FROM personcompressorsellable WHERE id = '3431';
-DELETE FROM personcompressorsellable WHERE id = '3501';
-DELETE FROM personcompressorsellable WHERE id = '3504';
-DELETE FROM personcompressorsellable WHERE id = '3505';
+UPDATE personcompressorsellable SET userid = 1 WHERE id = 3431;
+UPDATE personcompressorsellable SET userid = 1 WHERE id = 3501;
+UPDATE personcompressorsellable SET userid = 1 WHERE id = 3504;
+UPDATE personcompressorsellable SET userid = 1 WHERE id = 3505;
+DELETE FROM personcompressorsellable WHERE id = 3431;
+DELETE FROM personcompressorsellable WHERE id = 3501;
+DELETE FROM personcompressorsellable WHERE id = 3504;
+DELETE FROM personcompressorsellable WHERE id = 3505;
 
 ALTER TABLE `manager`.`personcompressorsellable` DROP COLUMN `itemname`;
 ALTER TABLE `manager`.`personcompressorsellable` DROP FOREIGN KEY `personcompressorsellable_personcompressor`;
@@ -1555,10 +1568,10 @@ INSERT INTO log VALUES (NULL, 101, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCA
 END$$
 DELIMITER ;
 SET SQL_SAFE_UPDATES = 0;
-update log set routineid = 1201 where routineid = 1202;
-update log set routineid = 204 where routineid = 205;
-delete from log where routineid = 14;
-delete from log where routineid = 1401;
+UPDATE log SET routineid = 1201 WHERE routineid = 1202;
+UPDATE log SET routineid = 204 WHERE routineid = 205;
+DELETE FROM log WHERE routineid = 14;
+DELETE FROM log WHERE routineid = 1401;
 SET SQL_SAFE_UPDATES = 1;
 ALTER TABLE `manager`.`evaluationphoto` CHANGE COLUMN `photoname` `picturename` VARCHAR(255) NOT NULL , RENAME TO  `manager`.`evaluationpicture` ;
 
@@ -1617,6 +1630,11 @@ DELETE FROM evaluationpicture WHERE evaluationid = OLD.id;
 END$$
 DELIMITER ;
 
+INSERT INTO user VALUES (NULL, now(), 0, 'SISTEMA', 'kMY08GUx41ZTR8sUAjMHdA==', NULL, NULL, 0, 1); 
+
+SELECT id FROM user WHERE username = 'SISTEMA' LIMIT 1 ;
+select * from evaluation where id = 4179;
+select * from log order by id desc;
 
 
 

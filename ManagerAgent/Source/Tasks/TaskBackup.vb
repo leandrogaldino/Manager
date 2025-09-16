@@ -1,13 +1,12 @@
 ﻿Imports System.IO
 Imports ControlLibrary
-Imports ControlLibrary.FileManager
 Imports ManagerCore
 
 Public Class TaskBackup
     Inherits TaskBase
-    Private _DatabaseService As LocalDB
-    Private _SettingsService As SettingService
-    Private _SessionModel As SessionModel
+    Private ReadOnly _DatabaseService As LocalDB
+    Private ReadOnly _SettingsService As SettingService
+    Private ReadOnly _SessionModel As SessionModel
     Public Sub New(DatabaseService As LocalDB, SettingsService As SettingService, SessionModel As SessionModel)
         _DatabaseService = DatabaseService
         _SettingsService = SettingsService
@@ -105,175 +104,71 @@ Public Class TaskBackup
     Public Overrides Async Function Run(Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task
         Dim Response As New AsyncResponseModel
         Dim IntProgress As Progress(Of Integer)
-        Dim TempBackupDirectory As String
         Dim FileName As String
         Dim BackupDir As DirectoryInfo
-        Dim Files As New List(Of FileInfo)
-        Dim FileManager As FileManager
-        Dim FileManagerCopyInfo As List(Of CopyDirectoryInfo)
         Dim Exception As Exception = Nothing
+        Dim Files As List(Of FileInfo)
+        Dim FileManager As New FileManager
+        Dim TempDatabaseDirectory As String
+        Dim TargetList As List(Of String)
         Try
             Response.Text = $"Criando Backup {If(Not IsManual, "Automático", "Manual")}: Iniciando"
             Response.Event.SetInitialEvent($"Backup {If(Not IsManual, "Automático", "Manual")}: Iniciando")
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForStart)
-            If Not Directory.Exists(ApplicationPaths.AgentTempDirectory) Then Directory.CreateDirectory(ApplicationPaths.AgentTempDirectory)
-            FileName = "Backup " & Now.ToString("dd-MM-yyyy HH.mm.ss")
-            TempBackupDirectory = Path.Combine(ApplicationPaths.AgentTempDirectory, FileName)
-            If Not Directory.Exists(TempBackupDirectory) Then Directory.CreateDirectory(TempBackupDirectory)
-            FileManager = New FileManager()
-            FileManagerCopyInfo = New List(Of CopyDirectoryInfo) From {
-                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.CashDocumentDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.CashDocument.ToString))),
-                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.EmailSignatureDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.EmailSignature.ToString))),
-                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.EvaluationDocumentDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.EvaluationDocument.ToString))),
-                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.EvaluationPictureDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.EvaluationPicture.ToString))),
-                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.EvaluationSignatureDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.EvaluationSignature.ToString))),
-                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.HelpersDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.Helpers.ToString))),
-                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.ProductPictureDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.ProductPicture.ToString))),
-                New CopyDirectoryInfo(New DirectoryInfo(ApplicationPaths.RequestDocumentDirectory), New DirectoryInfo(Path.Combine(TempBackupDirectory, BackupDirectories.RequestDocument.ToString)))
+            Response.Event.AddChildEvent($"Gerando dump do banco de dados")
+            If Progress IsNot Nothing Then Progress.Report(Response)
+            IntProgress = New Progress(Of Integer)(Sub(Percent As Integer)
+                                                       Response.Percent = Percent
+                                                       Response.Text = $"Criando Backup: Gerando dump do banco de dados ({Percent}%)"
+                                                       If Progress IsNot Nothing Then Progress.Report(Response)
+                                                   End Sub)
+            TempDatabaseDirectory = Path.Combine(ApplicationPaths.AgentTempDirectory, "Database")
+            If Not Directory.Exists(TempDatabaseDirectory) Then Directory.CreateDirectory(TempDatabaseDirectory)
+            Await _DatabaseService.ExecuteBackupAsync(Path.Combine(TempDatabaseDirectory, "Database.sql"), IntProgress)
+            Await Task.Delay(Constants.WaitForJob)
+            Response.Percent = 0
+            FileName = $"Backup {Now:dd-MM-yyyy HH.mm.ss}.bkp"
+            BackupDir = New DirectoryInfo(_SessionModel.ManagerSetting.Backup.Location)
+            TargetList = New List(Of String) From {
+                ApplicationPaths.CashDocumentDirectory,
+                ApplicationPaths.EmailSignatureDirectory,
+                ApplicationPaths.EvaluationDocumentDirectory,
+                ApplicationPaths.EvaluationPictureDirectory,
+                ApplicationPaths.EvaluationSignatureDirectory,
+                ApplicationPaths.HelpersDirectory,
+                ApplicationPaths.ProductPictureDirectory,
+                ApplicationPaths.RequestDocumentDirectory,
+                TempDatabaseDirectory
             }
-            Response.Text = "Criando arquivos temporários"
-            Response.Event.AddChildEvent($"Criando Backup: Criando arquivos temporários")
-            If Progress IsNot Nothing Then Progress.Report(Response)
-            FileManager = New FileManager
-
-            AddHandler FileManager.CopyDirectoryProgressChanged, Sub(IOSender, IOEventArgs)
-                                                                     Response.Percent = IOEventArgs.PercentCompleted
-                                                                     Response.Text = $"Criando Backup: Criando arquivos temporários ({IOEventArgs.PercentCompleted}%)"
-                                                                     If Progress IsNot Nothing Then Progress.Report(Response)
-                                                                 End Sub
-
-
-            Await FileManager.CopyDirectoriesAsync(FileManagerCopyInfo)
-
-
+            IntProgress = New Progress(Of Integer)(Sub(p)
+                                                       Response.Percent = p
+                                                       Response.Text = $"Criando Backup: Criando backup ({p}%)"
+                                                       If Progress IsNot Nothing Then Progress.Report(Response)
+                                                   End Sub)
+            Await FileMerge.MergeAsync(Path.Combine(BackupDir.FullName, FileName), TargetList, _SessionModel.ZipPassword, IntProgress)
+            Await FileManager.DeleteDirectoriesAsync(New List(Of FileManager.DeleteDirectoryInfo) From {New FileManager.DeleteDirectoryInfo(New DirectoryInfo(TempDatabaseDirectory), True)})
             Await Task.Delay(Constants.WaitForJob)
-
-
-
-            Response.Text = $"Criando Backup: Copiando o banco de dados"
-            Response.Event.AddChildEvent($"Copiando o banco de dados")
-
-            If Progress IsNot Nothing Then Progress.Report(Response)
-
-            IntProgress = New Progress(Of Integer)
-
-            AddHandler IntProgress.ProgressChanged, Sub(sender As Object, Percent As Integer)
-                                                        Response.Percent = Percent
-                                                        Response.Text = $"Criando Backup: Copiando o banco de dados ({Percent}%)"
-                                                        If Progress IsNot Nothing Then Progress.Report(Response)
-                                                    End Sub
-
-            Await _DatabaseService.ExecuteBackupAsync(Path.Combine(TempBackupDirectory, "Database.sql"), IntProgress)
-
-            Await Task.Delay(Constants.WaitForJob)
-
             Response.Percent = 0
-            Response.Text = "Criando Backup: Compactando arquivos"
-            Response.Event.AddChildEvent("Compactando arquivos")
-            If Progress IsNot Nothing Then Progress.Report(Response)
-
-            Dim Compression As CompressionService = Locator.GetInstance(Of ICompression)
-
-
-            IntProgress = New Progress(Of Integer)
-
-            AddHandler IntProgress.ProgressChanged, Sub(sender As Object, Percent As Integer)
-                                                        Response.Percent = Percent
-                                                        Response.Text = $"Criando Backup: Compactando arquivos ({Percent}%)"
-                                                        If Progress IsNot Nothing Then Progress.Report(Response)
-                                                    End Sub
-
-            Await Compression.Compress(TempBackupDirectory, $"{TempBackupDirectory}.bkp", _SessionModel.ZipPassword, IntProgress)
-
-            Await Task.Delay(Constants.WaitForJob)
-
-
-
-            Response.Text = "Criando Backup: Copiando o backup para a pasta definitiva"
-            Response.Event.AddChildEvent("Copiando o backup para a pasta definitiva")
-            Response.Percent = 0
-
-            If Progress IsNot Nothing Then Progress.Report(Response)
-
-
-
-            If Not Directory.Exists(_SessionModel.ManagerSetting.Backup.Location) Then Directory.CreateDirectory(_SessionModel.ManagerSetting.Backup.Location)
-
-
-
-            FileManager = New FileManager
-            AddHandler FileManager.CopyFileProgressChanged, Sub(IOSender, IOEventArgs)
-                                                                Response.Percent = IOEventArgs.PercentCompleted
-                                                                Response.Text = $"Criando Backup: Copiando o backup para a pasta definitiva ({IOEventArgs.PercentCompleted}%)"
-                                                                If Progress IsNot Nothing Then Progress.Report(Response)
-                                                            End Sub
-
-
-
-            Await FileManager.CopyFileAsync(New FileInfo($"{TempBackupDirectory}.bkp"), New FileInfo(Path.Combine(_SessionModel.ManagerSetting.Backup.Location, $"{FileName}.bkp")))
-
-
-            Await Task.Delay(Constants.WaitForJob)
-
-
-            Response.Percent = 0
-            Response.Text = "Criando Backup: Excluindo arquivos temporários"
-            Response.Event.AddChildEvent("Excluindo arquivos temporários")
-            If Progress IsNot Nothing Then Progress.Report(Response)
-
-
-            FileManager = New FileManager
-            AddHandler FileManager.DeleteDirectoriesProgressChanged, Sub(IOSender, IOEventArgs)
-                                                                         Response.Percent = IOEventArgs.PercentCompleted
-                                                                         Response.Text = $"Criando Backup: Excluindo arquivos temporários ({IOEventArgs.PercentCompleted}%)"
-                                                                         If Progress IsNot Nothing Then Progress.Report(Response)
-                                                                     End Sub
-
-            Await FileManager.DeleteDirectoriesAsync(New List(Of DeleteDirectoryInfo) From {New DeleteDirectoryInfo With {.Directory = New DirectoryInfo(TempBackupDirectory)}})
-
-            Await FileManager.DeleteFilesAsync({New FileInfo($"{TempBackupDirectory}.bkp")}.ToList)
-
-
-            Await Task.Delay(Constants.WaitForJob)
-
-
-            Response.Percent = 0
-            Response.Text = "Criando Backup: Excluindo backups obsoletos"
             Response.Event.AddChildEvent("Excluindo backups obsoletos")
             If Progress IsNot Nothing Then Progress.Report(Response)
-
             BackupDir = New DirectoryInfo(_SessionModel.ManagerSetting.Backup.Location)
             Files = Util.GetBackupFiles()
-
-
-
-
             If Files.Count > 0 Then
-
                 AddHandler FileManager.DeleteFilesProgressChanged, Sub(IOSender, IOEventArgs)
                                                                        Response.Percent = IOEventArgs.PercentCompleted
                                                                        Response.Text = $"Criando Backup: Excluindo backups obsoletos ({IOEventArgs.PercentCompleted}%)"
                                                                        If Progress IsNot Nothing Then Progress.Report(Response)
                                                                    End Sub
                 Files = Files.Take(Files.Count - _SessionModel.ManagerSetting.Backup.Keep).ToList
-
-
                 Await FileManager.DeleteFilesAsync(Files)
-
-
             End If
             Await Task.Delay(Constants.WaitForJob)
-
-
             Response.Percent = 0
             Response.Text = $"Criando Backup: Backup {If(Not IsManual, "automático", "manual")} concluído"
             Response.Event.SetFinalEvent($"Backup {If(Not IsManual, "automático", "manual")} concluído")
             If Progress IsNot Nothing Then Progress.Report(Response)
-
             Await Task.Delay(Constants.WaitForFinish)
-
-
         Catch ex As Exception
             Exception = ex
         Finally
@@ -281,7 +176,6 @@ Public Class TaskBackup
             If Not IsManual Then _SessionModel.ManagerSetting.LastExecution.Backup = Now
             If Not IsManual Then _SettingsService.Save(_SessionModel.ManagerSetting)
         End Try
-
         If Exception IsNot Nothing Then
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
@@ -294,7 +188,5 @@ Public Class TaskBackup
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         End If
-
     End Function
-
 End Class

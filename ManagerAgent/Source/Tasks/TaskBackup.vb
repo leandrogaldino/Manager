@@ -143,7 +143,7 @@ Public Class TaskBackup
             }
             IntProgress = New Progress(Of Integer)(Sub(p)
                                                        Response.Percent = p
-                                                       Response.Text = $"Criando Backup: Criando backup ({p}%)"
+                                                       Response.Text = $"Criando Backup: Processando os dados ({p}%)"
                                                        If Progress IsNot Nothing Then Progress.Report(Response)
                                                    End Sub)
             Await FileMerge.MergeAsync(Path.Combine(BackupDir.FullName, FileName), TargetList, _SessionModel.ManagerPassword, IntProgress)

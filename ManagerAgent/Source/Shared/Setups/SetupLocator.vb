@@ -14,7 +14,7 @@ Public Class SetupLocator
         Locator.RegisterSingleton(New PasswordService(Locator.GetInstance(Of LicenseService), Locator.GetInstance(Of SessionModel), Locator.GetInstance(Of CryptoKeyService)))
         Locator.RegisterSingleton(Of TaskBase)(New TaskBackup(Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of SettingService), Locator.GetInstance(Of SessionModel)), TaskName.Backup)
         Locator.RegisterSingleton(Of TaskBase)(New TaskBackupManual(Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of SettingService), Locator.GetInstance(Of SessionModel)), TaskName.BackupManual)
-        Locator.RegisterSingleton(Of TaskBase)(New TaskRestoreBackup(Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of SettingService), Locator.GetInstance(Of SessionModel)), TaskName.BackupRestore)
+        Locator.RegisterSingleton(Of TaskBase)(New TaskRestoreBackup(Locator.GetInstance(Of LocalDB)), TaskName.BackupRestore)
         Locator.RegisterSingleton(Of TaskBase)(New TaskClean(Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of SettingService), Locator.GetInstance(Of SessionModel)), TaskName.Clean)
         Locator.RegisterSingleton(Of TaskBase)(New TaskCleanManual(Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of SettingService), Locator.GetInstance(Of SessionModel)), TaskName.CleanManual)
         Locator.RegisterSingleton(Of TaskBase)(New TaskCloudSync(Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer), Locator.GetInstance(Of SettingService), Locator.GetInstance(Of SessionModel)), TaskName.CloudSync)
@@ -23,6 +23,5 @@ Public Class SetupLocator
         Locator.RegisterSingleton(Of TaskBase)(New TaskReleaseManual(Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of SettingService), Locator.GetInstance(Of SessionModel)), TaskName.ReleaseManual)
         Locator.RegisterSingleton(New TaskStackService())
         Locator.RegisterSingleton(New AppService(Locator.GetInstance(Of SettingService)))
-        Locator.RegisterSingleton(Of ICompression)(New CompressionService())
     End Sub
 End Class

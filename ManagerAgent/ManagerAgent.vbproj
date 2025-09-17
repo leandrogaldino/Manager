@@ -181,7 +181,6 @@
     <Compile Include="Source\Models\RegistryModel.vb" />
     <Compile Include="Source\Builder\EventBuilder.vb" />
     <Compile Include="Source\Services\AppService.vb" />
-    <Compile Include="Source\Services\CompressionService.vb" />
     <Compile Include="Source\Shared\Flags.vb" />
     <Compile Include="Source\Tasks\TaskBackup.vb" />
     <Compile Include="Source\Tasks\TaskBackupManual.vb" />

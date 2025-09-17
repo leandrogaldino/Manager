@@ -5,13 +5,11 @@ Imports ManagerCore
 
 Public Class TaskRestoreBackup
     Inherits TaskBase
-    Private _DatabaseService As LocalDB
-    Private _SettingsService As SettingService
-    Private _SessionModel As SessionModel
-    Public Sub New(DatabaseService As LocalDB, SettingsService As SettingService, SessionModel As SessionModel)
+    Private ReadOnly _DatabaseService As LocalDB
+
+    Public Sub New(DatabaseService As LocalDB)
         _DatabaseService = DatabaseService
-        _SettingsService = SettingsService
-        _SessionModel = SessionModel
+
     End Sub
     Public Overrides ReadOnly Property Name As TaskName
         Get
@@ -43,7 +41,6 @@ Public Class TaskRestoreBackup
         Dim Response As New AsyncResponseModel
         Dim BackupLocation As String
         Dim RestoreDirectory As String
-
         Dim Directories As New List(Of DeleteDirectoryInfo)
         Dim FileManager As FileManager
         Dim FileManagerCopyInfo As List(Of CopyDirectoryInfo)
@@ -76,10 +73,8 @@ Public Class TaskRestoreBackup
                                                     End Sub
 
 
-            Dim BackupComprerssion As CompressionService = Locator.GetInstance(Of ICompression)
 
 
-            Await BackupComprerssion.Decompress(BackupLocation, RestoreDirectory, _SessionModel.ZipPassword, IntProgress)
 
 
             Await Task.Delay(Constants.WaitForJob)

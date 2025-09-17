@@ -146,7 +146,7 @@ Public Class TaskBackup
                                                        Response.Text = $"Criando Backup: Criando backup ({p}%)"
                                                        If Progress IsNot Nothing Then Progress.Report(Response)
                                                    End Sub)
-            Await FileMerge.MergeAsync(Path.Combine(BackupDir.FullName, FileName), TargetList, _SessionModel.ZipPassword, IntProgress)
+            Await FileMerge.MergeAsync(Path.Combine(BackupDir.FullName, FileName), TargetList, _SessionModel.ManagerPassword, IntProgress)
             Await FileManager.DeleteDirectoriesAsync(New List(Of FileManager.DeleteDirectoryInfo) From {New FileManager.DeleteDirectoryInfo(New DirectoryInfo(TempDatabaseDirectory), True)})
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0

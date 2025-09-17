@@ -27,7 +27,6 @@ Public Class FrmRestoreBackup
             Using Frm As New FrmLogin
                 If Frm.ShowDialog = DialogResult.OK Then
                     If _ViewModel.RestoreBackup(SelectedFile) Then
-
                         DialogResult = DialogResult.OK
                     End If
 

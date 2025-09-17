@@ -10,25 +10,18 @@ Public Class TaskStackService
         Return _TaskStack
     End Function
     Public ReadOnly TaskProgress As Progress(Of AsyncResponseModel)
-
     Public Sub Start()
         _Timer.Start()
     End Sub
-
     Public Sub [Stop]()
         _Timer.Stop()
     End Sub
-
-
     Public Sub New()
         _TaskStack = New List(Of TaskBase)
         TaskProgress = New Progress(Of AsyncResponseModel)
         _Timer = New Timers.Timer With {.Interval = 5000}
-
         AddHandler _Timer.Elapsed, AddressOf TimerElapsed
     End Sub
-
-
     Public Async Sub AddTask(Task As TaskBase, Optional OnTop As Boolean = False)
         Await _TaskSemaphore.WaitAsync()
         If OnTop Then

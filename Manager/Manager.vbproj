@@ -893,12 +893,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Routines\VisitSchedule\VisitSchedule.vb" />
-    <Compile Include="Source\Controls\UcPictureViewer.Designer.vb">
-      <DependentUpon>UcPictureViewer.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Controls\UcPictureViewer.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Source\Controls\UcEvaluationSoldLost.Designer.vb">
       <DependentUpon>UcEvaluationSoldLost.vb</DependentUpon>
     </Compile>
@@ -1443,9 +1437,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Email\FrmEmailImportEmailModel.resx">
       <DependentUpon>FrmEmailImportEmailModel.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Controls\UcPictureViewer.resx">
-      <DependentUpon>UcPictureViewer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Controls\UcEvaluationSoldLost.resx">
       <DependentUpon>UcEvaluationSoldLost.vb</DependentUpon>

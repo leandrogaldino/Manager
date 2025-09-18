@@ -1634,9 +1634,9 @@ INSERT INTO user VALUES (NULL, now(), 0, 'SISTEMA', 'kMY08GUx41ZTR8sUAjMHdA==', 
 
 
 
-DROP procedure IF EXISTS `DropAllTablesManager`;
+DROP procedure IF EXISTS `DropAllTables`;
 DELIMITER $$
-CREATE PROCEDURE `DropAllTablesManager`()
+CREATE PROCEDURE `DropAllTables`()
 BEGIN
     DECLARE done INT DEFAULT 0;
     DECLARE tblName VARCHAR(255);

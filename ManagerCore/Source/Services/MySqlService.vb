@@ -9,11 +9,9 @@ Public Class MySqlService
     Public Overrides Sub Initialize(DatabaseSettings As SettingDatabaseModel)
         _DatabaseSettings = DatabaseSettings
     End Sub
-
     Public Overrides Function GetConnection() As Common.DbConnection
         Return New MySqlConnection(_DatabaseSettings.GetConnectionString())
     End Function
-
     Public Overrides Async Function ExecuteRestoreAsync(FilePath As String, Optional Progress As IProgress(Of Integer) = Nothing) As Task
         Dim RoolBackRequired As Boolean
         Dim RaisedEx As Exception = Nothing
@@ -21,10 +19,6 @@ Public Class MySqlService
         Dim Transaction As MySqlTransaction = If(_Transaction, Nothing)
         Try
             Using Cmd As New MySqlCommand(Nothing, Connection, Transaction)
-
-
-
-
                 Using Bkp As New MySqlBackup(Cmd)
                     Bkp.ImportInfo.IntervalForProgressReport = 1
                     AddHandler Bkp.ImportProgressChanged, Sub(BkpSender, BkpEventArgs)
@@ -36,16 +30,12 @@ Public Class MySqlService
                     AddHandler Bkp.ImportCompleted, Sub(BkpSender, BkpEventArgs)
                                                         Progress?.Report(100)
                                                     End Sub
-
-
                     If Connection.State <> ConnectionState.Open Then Await Connection.OpenAsync()
-
                     Bkp.ImportFromFile(FilePath)
-
-                    Using Stream As New FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, True)
-                        Await Stream.FlushAsync()
-                        Bkp.ImportFromStream(Stream)
-                    End Using
+                    'Using Stream As New FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, True)
+                    '    Await Stream.FlushAsync()
+                    '    Bkp.ImportFromStream(Stream)
+                    'End Using
                 End Using
             End Using
         Catch ex As Exception
@@ -105,8 +95,6 @@ Public Class MySqlService
     Public Overrides Sub ExecuteBackup(FilePath As String)
         Util.AsyncLock(Function() ExecuteBackupAsync(FilePath))
     End Sub
-
-
     Public Overrides Async Function BeginTransactionAsync() As Task
         If _Connection Is Nothing Then
             _Connection = New MySqlConnection(_DatabaseSettings.GetConnectionString())
@@ -202,7 +190,6 @@ Public Class MySqlService
         End If
         Return New QueryResult(Data, 0)
     End Function
-
     Public Overrides Function ExecuteSelect(Table As String, Optional Columns As List(Of String) = Nothing, Optional Where As String = Nothing, Optional QueryArgs As Dictionary(Of String, Object) = Nothing, Optional OrderBy As String = Nothing, Optional Limit As Integer = 0) As QueryResult
         Return Util.AsyncLock(Function() ExecuteSelectAsync(Table, Columns, Where, QueryArgs, OrderBy, Limit))
     End Function
@@ -284,7 +271,6 @@ Public Class MySqlService
     Public Overrides Function ExecuteUpdate(Table As String, Values As Dictionary(Of String, String), Optional Where As String = Nothing, Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As QueryResult
         Return Util.AsyncLock(Function() ExecuteUpdateAsync(Table, Values, Where, QueryArgs))
     End Function
-
     Public Overrides Async Function ExecuteDeleteAsync(Table As String, Optional Where As String = Nothing, Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As Task(Of QueryResult)
         Dim RoolBackRequired As Boolean
         Dim RaisedEx As Exception = Nothing
@@ -376,11 +362,54 @@ Public Class MySqlService
     Public Overrides Function ExecuteRawQuery(Query As String, Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As QueryResult
         Return Util.AsyncLock(Function() ExecuteRawQueryAsync(Query, QueryArgs))
     End Function
+    Public Overrides Function ExecuteProcedure(ProcedureName As String, Optional Params As Dictionary(Of String, Object) = Nothing) As QueryResult
+        Return Util.AsyncLock(Function() ExecuteProcedureAsync(ProcedureName, Params))
+    End Function
+    Public Overrides Async Function ExecuteProcedureAsync(ProcedureName As String, Optional Params As Dictionary(Of String, Object) = Nothing) As Task(Of QueryResult)
+        Dim RoolBackRequired As Boolean
+        Dim RaisedEx As Exception = Nothing
+        Dim Data As New List(Of Dictionary(Of String, Object))()
+        Dim TableResult As DataTable
+        Dim Connection As MySqlConnection = If(_Connection, New MySqlConnection(_DatabaseSettings.GetConnectionString()))
+        Dim Transaction As MySqlTransaction = If(_Transaction, Nothing)
+        Try
+            Using Cmd As New MySqlCommand(ProcedureName, Connection, Transaction)
+                Cmd.CommandType = CommandType.StoredProcedure
+                If Params IsNot Nothing Then
+                    For Each Arg In Params
+                        Cmd.Parameters.AddWithValue(Arg.Key, If(Arg.Value, DBNull.Value))
+                    Next
+                End If
+                If Connection.State <> ConnectionState.Open Then Await Connection.OpenAsync()
+                Using Adp As New MySqlDataAdapter(Cmd)
+                    TableResult = New DataTable()
+                    Await Adp.FillAsync(TableResult)
+                    For Each Row As DataRow In TableResult.Rows
+                        Dim Item As New Dictionary(Of String, Object)()
+                        For Each Column As DataColumn In TableResult.Columns
+                            Item.Add(Column.ColumnName, Row(Column))
+                        Next
+                        Data.Add(Item)
+                    Next
+                End Using
+            End Using
+        Catch ex As Exception
+            RoolBackRequired = True
+            RaisedEx = ex
+        Finally
+            If _Connection Is Nothing And _Transaction Is Nothing Then
+                DisposeConnection(Connection, Transaction)
+            End If
+        End Try
+        If RoolBackRequired Then
+            Await RollbackTransaction()
+            If RaisedEx IsNot Nothing Then Throw RaisedEx
+        End If
+        Return New QueryResult(Data, 0)
+    End Function
     Private Sub DisposeConnection(Connection As MySqlConnection, Optional Transaction As MySqlTransaction = Nothing)
         If Connection.State <> ConnectionState.Closed Then Connection.Close()
         If Not Connection.IsDisposed Then Connection.Dispose()
         If Transaction IsNot Nothing Then Transaction.Dispose()
     End Sub
-
-
 End Class

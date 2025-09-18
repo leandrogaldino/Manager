@@ -20,6 +20,8 @@ Public MustInherit Class LocalDB
     MustOverride Sub ExecuteBackup(FilePath As String)
     MustOverride Async Function ExecuteRestoreAsync(FilePath As String, Optional Progress As IProgress(Of Integer) = Nothing) As Task
     MustOverride Sub ExecuteRestore(FilePath As String)
+    MustOverride Function ExecuteProcedureAsync(ProcedureName As String, Optional Params As Dictionary(Of String, Object) = Nothing) As Task(Of QueryResult)
+    MustOverride Function ExecuteProcedure(ProcedureName As String, Optional Params As Dictionary(Of String, Object) = Nothing) As QueryResult
 
 
     Public Class QueryResult

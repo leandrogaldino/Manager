@@ -1632,6 +1632,47 @@ DELIMITER ;
 
 INSERT INTO user VALUES (NULL, now(), 0, 'SISTEMA', 'kMY08GUx41ZTR8sUAjMHdA==', NULL, NULL, 0, 1); 
 
+
+
+DROP procedure IF EXISTS `DropAllTablesManager`;
+DELIMITER $$
+CREATE PROCEDURE `DropAllTablesManager`()
+BEGIN
+    DECLARE done INT DEFAULT 0;
+    DECLARE tblName VARCHAR(255);
+
+    DECLARE cur CURSOR FOR 
+        SELECT table_name 
+        FROM information_schema.tables 
+        WHERE table_schema = 'manager';
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+    SET FOREIGN_KEY_CHECKS = 0;
+
+    OPEN cur;
+
+    read_loop: LOOP
+        FETCH cur INTO tblName;
+        IF done = 1 THEN
+            LEAVE read_loop;
+        END IF;
+        
+        SET @s = CONCAT('DROP TABLE IF EXISTS `manager`.`', tblName, '`');
+        PREPARE stmt FROM @s;
+        EXECUTE stmt;
+        DEALLOCATE PREPARE stmt;
+    END LOOP;
+
+    CLOSE cur;
+
+    SET FOREIGN_KEY_CHECKS = 1;
+END$$
+DELIMITER ;
+
+
+
+
 SELECT id FROM user WHERE username = 'SISTEMA' LIMIT 1 ;
 select * from evaluation where id = 4179;
 select * from log order by id desc;

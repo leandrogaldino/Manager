@@ -160,7 +160,7 @@ Public Class TaskBackup
                                                                        Response.Text = $"Criando Backup: Excluindo backups obsoletos ({IOEventArgs.PercentCompleted}%)"
                                                                        If Progress IsNot Nothing Then Progress.Report(Response)
                                                                    End Sub
-                Files = Files.Take(Files.Count - _SessionModel.ManagerSetting.Backup.Keep).ToList
+                Files = Files. Take(Files.Count - _SessionModel.ManagerSetting.Backup.Keep).ToList
                 Await FileManager.DeleteFilesAsync(Files)
             End If
             Await Task.Delay(Constants.WaitForJob)

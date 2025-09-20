@@ -8,7 +8,7 @@
     MustOverride ReadOnly Property IsManual As Boolean
     Public Property IsRunning As Boolean
     Public Property CancelRun As Boolean
-
+    Public Property Waiting As Boolean
     Public Overridable Property NextRun As Date
         Get
             If IsManual Then

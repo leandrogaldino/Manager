@@ -1,6 +1,4 @@
-﻿Imports System.Threading
-
-Public Class EventBuilder
+﻿Public Class EventBuilder
     Private _InitialEvent As EventInitialModel
     Private _ChildEvents As List(Of EventChildModel)
     Private _FinalEvent As EventFinalModel
@@ -48,7 +46,13 @@ Public Class EventBuilder
         End If
     End Sub
     Public Function GetChildEvents() As List(Of EventChildModel)
-        Return _ChildEvents
+        If _ChildEvents Is Nothing Then
+            Return New List(Of EventChildModel)()
+        Else
+            SyncLock _ChildEvents
+                Return New List(Of EventChildModel)(_ChildEvents)
+            End SyncLock
+        End If
     End Function
 
 End Class

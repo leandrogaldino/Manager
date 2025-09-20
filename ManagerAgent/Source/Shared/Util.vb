@@ -1,39 +1,16 @@
 ﻿Imports System.IO
 Imports ControlLibrary
 Public Class Util
-    Public Shared Function IsBackupFile(BackupFile As FileInfo) As Boolean
-        Dim SessionModel As SessionModel = Locator.GetInstance(Of SessionModel)
-        If Not IsZipFile(BackupFile) Then
-            Return False
-        End If
-        'Using ZipFile As ZipFile = ZipFile.Read(BackupFile.FullName)
-        'ZipFile.Password = SessionModel.ZipPassword
-        'Try
-        'ZipFile.ExtractSelectedEntries("", "Database\Database.sql")
-        Return True
-        'Catch ex As Exception
-        'Return False
-        'End Try
-        'End Using
-    End Function
     Public Shared Function GetBackupFiles() As List(Of FileInfo)
         Dim SessionModel As SessionModel = Locator.GetInstance(Of SessionModel)
         Dim BackupDirectory As New DirectoryInfo(SessionModel.ManagerSetting.Backup.Location)
-        If Directory.Exists(SessionModel.ManagerSetting.Backup.Location) Then
-            Return BackupDirectory.GetFiles().OrderBy(Function(x) x.CreationTime).Where(Function(y) IsBackupFile(y)).ToList
+        If BackupDirectory.Exists Then
+            Return BackupDirectory.GetFiles().OrderBy(Function(x) x.CreationTime).Where(Function(y) FileMerge.IsValidFile(y.FullName)).ToList
         Else
             Return New List(Of FileInfo)
         End If
     End Function
-    Private Shared Function IsZipFile(file As FileInfo) As Boolean
-        Try
-            'Using zip As ZipFile = ZipFile.Read(file.FullName)
-            Return True
-            'End Using
-        Catch ex As Exception
-            Return False
-        End Try
-    End Function
+
     Public Shared Function HasUpdate(Dir As String) As Boolean
         Dim DeployDirectory As New DirectoryInfo(Dir)
         If DeployDirectory.GetFiles("*", SearchOption.AllDirectories).Count > 0 Then

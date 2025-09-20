@@ -1,27 +1,25 @@
-﻿Imports ControlLibrary
+﻿Imports System.Threading
+Imports ControlLibrary
 Imports ManagerCore
 Public Class EventService
-    Private _Database As LocalDB
+    Private ReadOnly _Database As LocalDB
+    Private ReadOnly _Semaphore As SemaphoreSlim
 
-    Public Sub New(Database As LocalDB)
+    Public Sub New(Database As LocalDB, Semaphore As SemaphoreSlim)
         _Database = Database
+        _Semaphore = Semaphore
     End Sub
-
     Public Sub Write(Builder As EventBuilder, Data As DataTable)
         Dim Initial As EventInitialModel = Builder.GetInitialEvent()
         Dim Childs As List(Of EventChildModel) = Builder.GetChildEvents()
         Dim Final As EventFinalModel = Builder.GetFinalEvent()
-
         If Data Is Nothing OrElse Data.Columns.Count = 0 Then Exit Sub
-
         If Initial IsNot Nothing AndAlso Not Initial.Processed Then
             WriteSingle(Initial, Data)
         End If
         Dim BuilderChilds As List(Of EventChildModel) = Nothing
         If Childs IsNot Nothing Then BuilderChilds = Childs.ToList
-
         If BuilderChilds IsNot Nothing AndAlso BuilderChilds.Any(Function(x) Not x.Processed) Then
-
             For Each Child As EventChildModel In BuilderChilds.Where(Function(x) Not x.Processed)
                 WriteSingle(Child, Data)
             Next Child
@@ -33,9 +31,7 @@ Public Class EventService
     End Sub
     Private Sub WriteSingle([Event] As EventModel, Data As DataTable)
         Dim NewRow As DataRow
-
         If Data Is Nothing OrElse Data.Columns.Count = 0 Then Exit Sub
-
         NewRow = Data.NewRow()
         NewRow.Item("id") = [Event].ID
         NewRow.Item("parentid") = [Event].ParentID
@@ -53,35 +49,36 @@ Public Class EventService
         Dim Args As Dictionary(Of String, Object)
         If Data Is Nothing OrElse Data.Columns.Count = 0 Then Exit Function
         If Data.Rows.Cast(Of DataRow).Any(Function(x) Not CBool(x("issaved"))) Then
+            Await _Semaphore.WaitAsync()
             Try
                 Await _Database.BeginTransactionAsync()
                 For Each Row As DataRow In Data.Rows.Cast(Of DataRow).Where(Function(x) Not CBool(x("issaved"))).Reverse()
                     Values = New Dictionary(Of String, String) From {
-                        {"id", "@id"},
-                        {"parentid", "@parentid"},
-                        {"eventtype", "@eventtype"},
-                        {"time", "@time"},
-                        {"description", "@description"}
-                    }
+                            {"id", "@id"},
+                            {"parentid", "@parentid"},
+                            {"eventtype", "@eventtype"},
+                            {"time", "@time"},
+                            {"description", "@description"}
+                        }
                     Args = New Dictionary(Of String, Object) From {
-                        {"@id", DBNull.Value},
-                        {"@parentid", If(Row("parentid") > 0, Row("parentid"), DBNull.Value)},
-                        {"@eventtype", CInt(Row("eventtype"))},
-                        {"@time", CDate(Row("time")).ToString("yyyy-MM-dd HH:mm:ss")},
-                        {"@description", Row("description").ToString.Replace($"{Constants.SubItemSymbol} ", Nothing)}
-                    }
+                            {"@id", DBNull.Value},
+                            {"@parentid", If(Row("parentid") > 0, Row("parentid"), DBNull.Value)},
+                            {"@eventtype", CInt(Row("eventtype"))},
+                            {"@time", CDate(Row("time")).ToString("yyyy-MM-dd HH:mm:ss")},
+                            {"@description", Row("description").ToString.Replace($"{Constants.SubItemSymbol} ", Nothing)}
+                        }
                     Dim Result = Await _Database.ExecuteInsertAsync("agentevent", Values, Args)
                     Row("id") = Result.LastInsertedID
                     If Row("eventtype") = EventTypes.Initial Then
                         For Each r As DataRow In Data.Rows.Cast(Of DataRow).Where(Function(x) x("tempid") IsNot DBNull.Value AndAlso x("tempid") = Row("tempid") And x("eventtype") <> EventTypes.Initial)
                             r("parentid") = Row("id")
                             Values = New Dictionary(Of String, String) From {
-                                {"parentid", "@parentid"}
-                            }
+                                    {"parentid", "@parentid"}
+                                }
                             Args = New Dictionary(Of String, Object) From {
-                                {"@parentid", r("parentid")},
-                                {"@id", r("id")}
-                            }
+                                    {"@parentid", r("parentid")},
+                                    {"@id", r("id")}
+                                }
                             Await _Database.ExecuteUpdateAsync("agentevent", Values, "id = @id", Args)
                         Next r
                     End If
@@ -92,24 +89,24 @@ Public Class EventService
                 Next
             Catch ex As Exception
                 WriteSingle(New EventInitialModel($"Ocorreu um erro ao salvar os eventos - {ex.Message}"), Data)
+            Finally
+                _Semaphore.Release()
             End Try
         End If
     End Function
     Public Async Function Read() As Task(Of DataTable)
-        Dim TableParent As New DataTable
+        Dim TableParent As DataTable
         Dim TableChild As DataTable
         Dim TableAll As New DataTable
         Dim NewRow As DataRow
         Dim Columns As List(Of String)
         Dim Args As Dictionary(Of String, Object)
-
-
-
+        _Semaphore.Wait()
         Try
             Await _Database.BeginTransactionAsync()
             Columns = New List(Of String) From {"id", "parentid", "eventtype", "time", "description"}
             Args = New Dictionary(Of String, Object) From {{"@eventtype", EventTypes.Initial}}
-            Dim Result = Await _Database.ExecuteSelectAsync("agentevent", Columns, " eventtype = @eventtype", Args, "id DESC", 20)
+            Dim Result = Await _Database.ExecuteSelectAsync("agentevent", Columns, " eventtype = @eventtype", Args, "id DESC", 10)
             TableParent = Util.DictionariesToDataTable(Result.Data)
             For Each Column As String In Columns
                 TableAll.Columns.Add(Column)
@@ -147,6 +144,8 @@ Public Class EventService
         Catch ex As Exception
             CMessageBox.Show("Erro ao ler", "Ocorreu um erro ao ler os eventos.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Return New DataTable()
+        Finally
+            _Semaphore.Release()
         End Try
     End Function
 End Class

@@ -5,7 +5,7 @@ Public Class TaskStackService
     Public Event TaskWillRun As EventHandler(Of TaskBase)
     Public Event TaskRunned As EventHandler(Of TaskBase)
     Public Event TaskListChanged As EventHandler(Of TaskBase)
-    Private ReadOnly _TaskSemaphore As New SemaphoreSlim(1, 1)
+    Private _Semaphore As SemaphoreSlim
     Public Function GetTaskStack() As List(Of TaskBase)
         Return _TaskStack
     End Function
@@ -16,32 +16,33 @@ Public Class TaskStackService
     Public Sub [Stop]()
         _Timer.Stop()
     End Sub
-    Public Sub New()
+    Public Sub New(Semaphore As SemaphoreSlim)
         _TaskStack = New List(Of TaskBase)
         TaskProgress = New Progress(Of AsyncResponseModel)
         _Timer = New Timers.Timer With {.Interval = 5000}
+        _Semaphore = Semaphore
         AddHandler _Timer.Elapsed, AddressOf TimerElapsed
     End Sub
     Public Async Sub AddTask(Task As TaskBase, Optional OnTop As Boolean = False)
-        Await _TaskSemaphore.WaitAsync()
+        Await _Semaphore.WaitAsync()
         If OnTop Then
             _TaskStack.Insert(0, Task)
         Else
             _TaskStack.Add(Task)
         End If
         RaiseEvent TaskListChanged(Me, Task)
-        _TaskSemaphore.Release()
+        _Semaphore.Release()
     End Sub
     Public Async Sub RemoveTask(Task As TaskBase)
-        Await _TaskSemaphore.WaitAsync()
+        Await _Semaphore.WaitAsync()
         _TaskStack.Remove(Task)
         RaiseEvent TaskListChanged(Me, Task)
-        _TaskSemaphore.Release()
+        _Semaphore.Release()
     End Sub
 
     Private Async Sub TimerElapsed()
         _Timer.Stop()
-        Await _TaskSemaphore.WaitAsync()
+        Await _Semaphore.WaitAsync()
         For Each AddedTask In _TaskStack
             If AddedTask IsNot Nothing AndAlso AddedTask.IsRunNeeded Then
                 SetupApp.SetupData()
@@ -59,7 +60,7 @@ Public Class TaskStackService
                 RaiseEvent TaskRunned(Me, AddedTask)
             End If
         Next AddedTask
-        _TaskSemaphore.Release()
+        _Semaphore.Release()
         _Timer.Start()
     End Sub
 End Class

@@ -5,12 +5,45 @@ Public Class MySqlService
     Private _DatabaseSettings As SettingDatabaseModel
     Private _Transaction As MySqlTransaction
     Private _Connection As MySqlConnection
-
     Public Overrides Sub Initialize(DatabaseSettings As SettingDatabaseModel)
         _DatabaseSettings = DatabaseSettings
     End Sub
     Public Overrides Function GetConnection() As Common.DbConnection
         Return New MySqlConnection(_DatabaseSettings.GetConnectionString())
+    End Function
+    Public Overrides Async Function BeginTransactionAsync() As Task
+        If _Connection Is Nothing Then
+            _Connection = New MySqlConnection(_DatabaseSettings.GetConnectionString())
+            If _Connection.State = ConnectionState.Closed Then Await _Connection.OpenAsync()
+        End If
+        If _Transaction Is Nothing Then _Transaction = Await _Connection.BeginTransactionAsync()
+    End Function
+    Public Overrides Sub BeginTransaction()
+        Util.AsyncLock(Function() BeginTransactionAsync())
+    End Sub
+
+    Public Overrides Async Function CommitTransactionAsync() As Task
+        If _Transaction IsNot Nothing Then
+            Await _Transaction.CommitAsync()
+            _Transaction.Dispose()
+            _Transaction = Nothing
+            If _Connection.State <> ConnectionState.Closed Then _Connection.Close()
+            _Connection.Dispose()
+            _Connection = Nothing
+        End If
+    End Function
+    Public Overrides Sub CommitTransaction()
+        Util.AsyncLock(Function() CommitTransactionAsync())
+    End Sub
+    Private Async Function RollbackTransaction() As Task
+        If _Transaction IsNot Nothing Then
+            Await _Transaction.RollbackAsync()
+            _Transaction.Dispose()
+            _Transaction = Nothing
+            If _Connection.State <> ConnectionState.Closed Then _Connection.Close()
+            _Connection.Dispose()
+            _Connection = Nothing
+        End If
     End Function
     Public Overrides Async Function ExecuteRestoreAsync(FilePath As String, Optional Progress As IProgress(Of Integer) = Nothing) As Task
         Dim RoolBackRequired As Boolean
@@ -32,10 +65,6 @@ Public Class MySqlService
                                                     End Sub
                     If Connection.State <> ConnectionState.Open Then Await Connection.OpenAsync()
                     Bkp.ImportFromFile(FilePath)
-                    'Using Stream As New FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, True)
-                    '    Await Stream.FlushAsync()
-                    '    Bkp.ImportFromStream(Stream)
-                    'End Using
                 End Using
             End Using
         Catch ex As Exception
@@ -95,44 +124,10 @@ Public Class MySqlService
     Public Overrides Sub ExecuteBackup(FilePath As String)
         Util.AsyncLock(Function() ExecuteBackupAsync(FilePath))
     End Sub
-    Public Overrides Async Function BeginTransactionAsync() As Task
-        If _Connection Is Nothing Then
-            _Connection = New MySqlConnection(_DatabaseSettings.GetConnectionString())
-            If _Connection.State = ConnectionState.Closed Then Await _Connection.OpenAsync()
-        End If
-        If _Transaction Is Nothing Then _Transaction = Await _Connection.BeginTransactionAsync()
-    End Function
-    Public Overrides Sub BeginTransaction()
-        Util.AsyncLock(Function() BeginTransactionAsync())
-    End Sub
 
-    Public Overrides Async Function CommitTransactionAsync() As Task
-        If _Transaction IsNot Nothing Then
-            Await _Transaction.CommitAsync()
-            _Transaction.Dispose()
-            _Transaction = Nothing
-            If _Connection.State <> ConnectionState.Closed Then _Connection.Close()
-            _Connection.Dispose()
-            _Connection = Nothing
-        End If
-    End Function
-    Public Overrides Sub CommitTransaction()
-        Util.AsyncLock(Function() CommitTransactionAsync())
-    End Sub
-    Private Async Function RollbackTransaction() As Task
-        If _Transaction IsNot Nothing Then
-            Await _Transaction.RollbackAsync()
-            _Transaction.Dispose()
-            _Transaction = Nothing
-            If _Connection.State <> ConnectionState.Closed Then _Connection.Close()
-            _Connection.Dispose()
-            _Connection = Nothing
-        End If
-    End Function
     Public Overrides Async Function ExecuteSelectAsync(Table As String, Optional Columns As List(Of String) = Nothing, Optional Where As String = Nothing, Optional QueryArgs As Dictionary(Of String, Object) = Nothing, Optional OrderBy As String = Nothing, Optional Limit As Integer = Nothing) As Task(Of QueryResult)
         Dim RoolBackRequired As Boolean
         Dim RaisedEx As Exception = Nothing
-        Dim TableResult As DataTable
         Dim Data As New List(Of Dictionary(Of String, Object))
         Dim Item As Dictionary(Of String, Object)
         Dim Query As String = "SELECT "
@@ -161,19 +156,14 @@ Public Class MySqlService
                     Next Arg
                 End If
                 If Connection.State <> ConnectionState.Open Then Await Connection.OpenAsync()
-                Using Adp As New MySqlDataAdapter(Cmd)
-                    TableResult = New DataTable
-                    Await Adp.FillAsync(TableResult)
-                    If TableResult.Rows.Count > 0 Then
-                        Data = New List(Of Dictionary(Of String, Object))
-                        For Each Row As DataRow In TableResult.Rows
-                            Item = New Dictionary(Of String, Object)
-                            For Each Column As DataColumn In TableResult.Columns
-                                Item.Add(Column.ColumnName, Row(Column))
-                            Next Column
-                            Data.Add(Item)
-                        Next Row
-                    End If
+                Using reader = Await Cmd.ExecuteReaderAsync()
+                    While Await reader.ReadAsync()
+                        Item = New Dictionary(Of String, Object)
+                        For i = 0 To reader.FieldCount - 1
+                            Item.Add(reader.GetName(i), reader.GetValue(i))
+                        Next
+                        Data.Add(item)
+                    End While
                 End Using
             End Using
         Catch ex As Exception
@@ -311,7 +301,6 @@ Public Class MySqlService
     Public Overrides Async Function ExecuteRawQueryAsync(Query As String, Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As Task(Of QueryResult)
         Dim RoolBackRequired As Boolean
         Dim RaisedEx As Exception = Nothing
-        Dim TableResult As DataTable = Nothing
         Dim isSelect As Boolean = Query.TrimStart().StartsWith("SELECT", StringComparison.OrdinalIgnoreCase)
         Dim AffectedRows As Integer = 0
         Dim Data As List(Of Dictionary(Of String, Object)) = Nothing
@@ -328,18 +317,14 @@ Public Class MySqlService
                 If Connection.State <> ConnectionState.Open Then Await Connection.OpenAsync()
                 If isSelect Then
                     Data = New List(Of Dictionary(Of String, Object))()
-                    Using Adp As New MySqlDataAdapter(Cmd)
-                        TableResult = New DataTable()
-                        Await Adp.FillAsync(TableResult)
-                        If TableResult.Rows.Count > 0 Then
-                            For Each Row As DataRow In TableResult.Rows
-                                Item = New Dictionary(Of String, Object)()
-                                For Each Column As DataColumn In TableResult.Columns
-                                    Item.Add(Column.ColumnName, Row(Column))
-                                Next Column
-                                Data.Add(Item)
-                            Next Row
-                        End If
+                    Using reader = Await Cmd.ExecuteReaderAsync()
+                        While Await reader.ReadAsync()
+                            Item = New Dictionary(Of String, Object)
+                            For i = 0 To reader.FieldCount - 1
+                                item.Add(reader.GetName(i), reader.GetValue(i))
+                            Next
+                            Data.Add(item)
+                        End While
                     End Using
                 Else
                     AffectedRows = Await Cmd.ExecuteNonQueryAsync()
@@ -368,10 +353,10 @@ Public Class MySqlService
     Public Overrides Async Function ExecuteProcedureAsync(ProcedureName As String, Optional Params As Dictionary(Of String, Object) = Nothing) As Task(Of QueryResult)
         Dim RoolBackRequired As Boolean
         Dim RaisedEx As Exception = Nothing
-        Dim Data As New List(Of Dictionary(Of String, Object))()
-        Dim TableResult As DataTable
+        Dim Data As List(Of Dictionary(Of String, Object)) = Nothing
         Dim Connection As MySqlConnection = If(_Connection, New MySqlConnection(_DatabaseSettings.GetConnectionString()))
         Dim Transaction As MySqlTransaction = If(_Transaction, Nothing)
+        Dim Item As Dictionary(Of String, Object)
         Try
             Using Cmd As New MySqlCommand(ProcedureName, Connection, Transaction)
                 Cmd.CommandType = CommandType.StoredProcedure
@@ -381,16 +366,15 @@ Public Class MySqlService
                     Next
                 End If
                 If Connection.State <> ConnectionState.Open Then Await Connection.OpenAsync()
-                Using Adp As New MySqlDataAdapter(Cmd)
-                    TableResult = New DataTable()
-                    Await Adp.FillAsync(TableResult)
-                    For Each Row As DataRow In TableResult.Rows
-                        Dim Item As New Dictionary(Of String, Object)()
-                        For Each Column As DataColumn In TableResult.Columns
-                            Item.Add(Column.ColumnName, Row(Column))
+                Data = New List(Of Dictionary(Of String, Object))
+                Using reader = Await Cmd.ExecuteReaderAsync()
+                    While Await reader.ReadAsync()
+                        Item = New Dictionary(Of String, Object)
+                        For i = 0 To reader.FieldCount - 1
+                            Item.Add(reader.GetName(i), reader.GetValue(i))
                         Next
                         Data.Add(Item)
-                    Next
+                    End While
                 End Using
             End Using
         Catch ex As Exception

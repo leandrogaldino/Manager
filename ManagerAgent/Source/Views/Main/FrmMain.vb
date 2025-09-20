@@ -73,11 +73,11 @@ Public Class FrmMain
     End Sub
     Private Sub OnTask()
         FillDgvTasks()
-        BtnExecuteBackup.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.BackupManual And Not x.IsRunning) And _StateWarnings.Count = 0
-        BtnRestoreBackup.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.BackupManual And Not x.IsRunning) And _StateWarnings.Count = 0
-        BtnClean.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.CleanManual And Not x.IsRunning) And _StateWarnings.Count = 0
-        BtnRelease.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.ReleaseManual And Not x.IsRunning) And _StateWarnings.Count = 0
-        BtnCloudSync.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.CloudSyncManual And Not x.IsRunning) And _StateWarnings.Count = 0
+        BtnExecuteBackup.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.BackupManual And Not x.IsRunning And Not x.Waiting) And _StateWarnings.Count = 0
+        BtnRestoreBackup.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.BackupManual And Not x.IsRunning And Not x.Waiting) And _StateWarnings.Count = 0
+        BtnClean.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.CleanManual And Not x.IsRunning And Not x.Waiting) And _StateWarnings.Count = 0
+        BtnRelease.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.ReleaseManual And Not x.IsRunning And Not x.Waiting) And _StateWarnings.Count = 0
+        BtnCloudSync.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.CloudSyncManual And Not x.IsRunning And Not x.Waiting) And _StateWarnings.Count = 0
     End Sub
     Private Sub OnTaskProgressChanged(sender As Object, Response As AsyncResponseModel)
         LblProgress.Visible = True
@@ -131,6 +131,7 @@ Public Class FrmMain
             DgvTasks.Rows(RowIndex).DefaultCellStyle.ForeColor = Color.White
             DgvTasks.Rows(RowIndex).DefaultCellStyle.Font = New Font(DgvTasks.Font, FontStyle.Bold)
             If Task.IsRunning Then
+                Task.Waiting = False
                 Row = New DataGridViewRow()
                 Row.CreateCells(DgvTasks)
                 Row.Cells(0).Value = "Executando"
@@ -139,6 +140,7 @@ Public Class FrmMain
                 DgvTasks.Rows.Add(Row)
             Else
                 If (Task.IsManual And Task.IsRunNeeded) Or Task.CancelRun Then
+                    Task.Waiting = True
                     Row = New DataGridViewRow()
                     Row.CreateCells(DgvTasks)
                     Row.Cells(0).Value = "Aguardando"
@@ -146,6 +148,7 @@ Public Class FrmMain
                     Row.DefaultCellStyle.BackColor = Color.LightBlue
                     DgvTasks.Rows.Add(Row)
                 Else
+                    Task.Waiting = False
                     Row = New DataGridViewRow()
                     Row.CreateCells(DgvTasks)
                     Row.Cells(0).Value = $"{Task.NextRun:dd/MM/yyyy HH:mm:ss}"

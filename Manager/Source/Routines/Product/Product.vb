@@ -591,5 +591,4 @@ Public Class Product
             .Unit = Unit
         }
     End Function
-
 End Class

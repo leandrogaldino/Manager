@@ -54,11 +54,18 @@ Public Class FrmPersonMaintenancePlan
             DgvCompressor.Fill(_Person.Compressors)
             DgvCompressor.Columns("Order").Visible = False
             DgvCompressor.Columns("ID").Visible = False
+            DgvCompressor.Columns("Guid").Visible = False
+            DgvCompressor.Columns("Routine").Visible = False
+            DgvCompressor.Columns("IsSaved").Visible = False
+            DgvCompressor.Columns("User").Visible = False
             DgvCompressor.Columns("Creation").Visible = False
             DgvCompressor.Columns("Status").Visible = False
             DgvCompressor.Columns("Note").Visible = False
-            DgvCompressor.Columns("Compressor").ReadOnly = True
-            DgvCompressor.Columns("Compressor").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+            DgvCompressor.Columns("Compressor").Visible = False
+            DgvCompressor.Columns("CompressorID").Visible = False
+            DgvCompressor.Columns("CompressorName").ReadOnly = True
+            DgvCompressor.Columns("CompressorName").HeaderText = "Compressor"
+            DgvCompressor.Columns("CompressorName").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
             DgvCompressor.Columns("SerialNumber").ReadOnly = True
             DgvCompressor.Columns("SerialNumber").HeaderText = "Nº de Série"
             DgvCompressor.Columns("SerialNumber").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
@@ -79,7 +86,7 @@ Public Class FrmPersonMaintenancePlan
             Dim Ex As New List(Of String)
             For Each Row As DataGridViewRow In DgvCompressor.Rows.Cast(Of DataGridViewRow).Reverse
                 If Evaluation.GetLastEvaluationID(Row.Cells("ID").Value) = 0 Or Evaluation.CountEvaluation(Row.Cells("ID").Value, {EvaluationStatus.Disapproved, EvaluationStatus.Rejected, EvaluationStatus.Reviewed}.ToList) > 0 Then
-                    Ex.Add(String.Format("{0} {1} {2} {3}", Row.Cells("Compressor").Value, If(Row.Cells("SerialNumber").Value = Nothing, Nothing, "NS: " & Row.Cells("SerialNumber").Value), If(Row.Cells("Patrimony").Value = Nothing, Nothing, "PAT: " & Row.Cells("Patrimony").Value), If(Row.Cells("Sector").Value = Nothing, Nothing, "- " & Row.Cells("Sector").Value)))
+                    Ex.Add(String.Format("{0} {1} {2} {3}", Row.Cells("CompressorName").Value, If(Row.Cells("SerialNumber").Value = Nothing, Nothing, "NS: " & Row.Cells("SerialNumber").Value), If(Row.Cells("Patrimony").Value = Nothing, Nothing, "PAT: " & Row.Cells("Patrimony").Value), If(Row.Cells("Sector").Value = Nothing, Nothing, "- " & Row.Cells("Sector").Value)))
                     DgvCompressor.Rows.Remove(Row)
                 End If
             Next Row

@@ -78,7 +78,7 @@ Public Class PersonReport
                     Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementControlledSellableFilter, Con)
                         Cmd.Transaction = Tra
                         Cmd.Parameters.AddWithValue("evaluationid", LastEvaluationID)
-                        Cmd.Parameters.AddWithValue("parttypeid", CompressorSellableControlType.WorkedHour)
+                        Cmd.Parameters.AddWithValue("controltypeid", CompressorSellableControlType.WorkedHour)
                         Using Adp As New MySqlDataAdapter(Cmd)
                             TableWorkedHour = New DataTable
                             Adp.Fill(TableWorkedHour)
@@ -88,7 +88,7 @@ Public Class PersonReport
                         Using Adp As New MySqlDataAdapter(Cmd)
                             Cmd.Transaction = Tra
                             Cmd.Parameters.AddWithValue("evaluationid", LastEvaluationID)
-                            Cmd.Parameters.AddWithValue("parttypeid", CompressorSellableControlType.ElapsedDay)
+                            Cmd.Parameters.AddWithValue("controltypeid", CompressorSellableControlType.ElapsedDay)
                             TableElapsedDay = New DataTable
                             Adp.Fill(TableElapsedDay)
                         End Using
@@ -319,6 +319,9 @@ Public Class PersonReport
         chart.ChartAreas(0).AxisY.Maximum = 24
         chart.ChartAreas(0).AxisY.Interval = 4
         chart.ChartAreas(0).AxisY.LabelStyle.Format = "0\h"
+        chart.ChartAreas(0).AxisX.LabelStyle.Font = New Font("Century Gothic", 6)
+        chart.ChartAreas(0).AxisX.LabelStyle.Angle = -45  ' inclina os nomes para economizar espaço
+        chart.ChartAreas(0).AxisX.Interval = 1  ' força mostrar cada rótulo
         chart.PaletteCustomColors = {Color.FromArgb(255, 128, 0)}
         chart.Palette = ChartColorPalette.None
         chart.Legends.Clear()

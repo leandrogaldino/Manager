@@ -1,5 +1,5 @@
 SELECT
-    IFNULL(product.name, service.name) AS 'Produto/Serviço',
+    IFNULL(product.name, service.name) AS item,
 	evaluationcontrolledsellable.currentcapacity,
 	(
 		SELECT 
@@ -25,5 +25,4 @@ LEFT JOIN service ON service.id = personcompressorsellable.serviceid
 WHERE
 	evaluation.id = @evaluationid AND
     personcompressorsellable.controltypeid = @controltypeid
-GROUP BY personcompressorsellable.id
 ORDER BY nextexchange ASC;

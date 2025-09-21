@@ -35,4 +35,22 @@ Public Class RequestItem
     Public Sub New()
         SetRoutine(Routine.RequestItem)
     End Sub
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New RequestItem With {
+            .Taked = Taked,
+            .Applied = Applied,
+            .Lossed = Lossed,
+            .Returned = Returned,
+            .LossReason = LossReason,
+            .ItemName = ItemName,
+            .Status = Status,
+            .Product = CType(Product.Clone(), Product)
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Cloned.SetGuid(Guid)
+        Return Cloned
+    End Function
+
 End Class

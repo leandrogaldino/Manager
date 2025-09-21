@@ -9,8 +9,13 @@ Public Class CashItemResponsible
     End Sub
 
     Public Overrides Function Clone() As BaseModel
-        Return New CashItemResponsible With {
+        Dim Cloned As New CashItemResponsible With {
             .Responsible = Responsible.Clone()
         }
+        Cloned.SetCreation(Creation)
+        Cloned.SetGuid(Guid)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Return Cloned
     End Function
 End Class

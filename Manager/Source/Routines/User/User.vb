@@ -376,4 +376,26 @@ Public Class User
     Public Overrides Function ToString() As String
         Return If(Username, String.Empty)
     End Function
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New User With {
+            .Emails = Emails.Select(Function(x) CType(x.Clone(), UserEmail)).ToList(),
+            .Note = Note,
+            .Privileges = Privileges.Select(Function(x) CType(x.Clone(), UserPrivilege)).ToList(),
+            .Status = Status,
+            .Username = Username,
+            .Person = New Lazy(Of Person)(
+                Function()
+                    If Person.IsValueCreated Then
+                        Return CType(Person.Value.Clone(), Person)
+                    Else
+                        Return New Person().Load(_PersonID, False)
+                    End If
+                End Function
+            )
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Return Cloned
+    End Function
 End Class

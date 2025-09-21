@@ -136,4 +136,15 @@ Public Class ProductFamily
     Public Overrides Function ToString() As String
         Return If(Name, String.Empty)
     End Function
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New ProductFamily With {
+            .Name = Name,
+            .Status = Status
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Return Cloned
+    End Function
+
 End Class

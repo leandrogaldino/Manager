@@ -9,4 +9,16 @@ Public Class ProductProviderCode
     Public Sub New()
         SetRoutine(Routine.ProductProviderCode)
     End Sub
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New ProductProviderCode With {
+            .IsMainProvider = IsMainProvider,
+            .Code = Code,
+            .Provider = CType(Provider.Clone(), Person)
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Cloned.SetGuid(Guid)
+        Return Cloned
+    End Function
 End Class

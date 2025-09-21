@@ -15,7 +15,6 @@ Public Class FrmMain
         CreateEvaluationButton()
         CreateRequestButton()
         CreateCashButton()
-        CreateCrmButton()
         CreateFirstSeparator()
         CreatePersonButton()
         CreateProductButton()
@@ -25,11 +24,6 @@ Public Class FrmMain
         If (_User.CanAccess(Routine.Evaluation) Or _User.CanAccess(Routine.Request) Or _User.CanAccess(Routine.Cash) And
             (_User.CanAccess(Routine.Person) Or _User.CanAccess(Routine.Product) Or _User.CanAccess(Routine.User))) Then
             TsRoutine.Items.Add(New ToolStripSeparator With {.Margin = New Padding(0, 0, 5, 0)})
-        End If
-    End Sub
-    Private Sub CreateCrmButton()
-        If _User.CanAccess(Routine.Crm) Then
-            TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripButton("CRM", "CRM", My.Resources.CRM, AddressOf CrmClick))
         End If
     End Sub
     Private Sub CreateEvaluationButton()
@@ -153,13 +147,6 @@ Public Class FrmMain
             Else
                 TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripButton("Usuário", "Cadastro de Usuários", My.Resources.User, AddressOf UserClick))
             End If
-        End If
-    End Sub
-    Private Sub CrmClick()
-        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.Crm)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmCrms, EnumHelper.GetEnumDescription(Routine.Crm))
-        Else
-            SelectTab(Routine.Crm)
         End If
     End Sub
     Private Sub PersonClick()

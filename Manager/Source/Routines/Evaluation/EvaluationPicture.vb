@@ -8,4 +8,16 @@ Public Class EvaluationPicture
     Public Sub New()
         SetRoutine(Routine.EvaluationPicture)
     End Sub
+
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New EvaluationPicture With {
+            .Picture = Picture.Clone()
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Cloned.SetGuid(Guid)
+        Return Cloned
+    End Function
+
 End Class

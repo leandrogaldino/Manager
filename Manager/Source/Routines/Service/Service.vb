@@ -411,14 +411,18 @@ Public Class Service
         Return If(Name, String.Empty)
     End Function
     Public Overrides Function Clone() As BaseModel
-        Return New Service With {
+        Dim Cloned As New Service With {
             .Codes = Codes.Select(Function(x) CType(x.Clone(), ServiceCode)).ToList(),
             .Complements = Complements.Select(Function(x) CType(x.Clone(), ServiceComplement)).ToList(),
             .Indicators = Indicators.Select(Function(x) CType(x.Clone(), ServicePriceIndicator)).ToList(),
-            .Prices = Prices.Select(Function(x) CType(x.Clone, ServicePrice)).ToList(),
+            .Prices = Prices.Select(Function(x) CType(x.Clone(), ServicePrice)).ToList(),
             .Name = Name,
             .Note = Note,
             .Status = Status
         }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Return Cloned
     End Function
 End Class

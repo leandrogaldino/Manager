@@ -236,4 +236,19 @@ Public Class Request
             End Using
         End Using
     End Sub
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New Request With {
+            .Destination = Destination,
+            .Note = Note,
+            .Status = Status,
+            .Responsible = Responsible,
+            .Document = Document.Clone(),
+            .Items = Items.Select(Function(x) CType(x.Clone(), RequestItem)).ToList()
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Return Cloned
+    End Function
+
 End Class

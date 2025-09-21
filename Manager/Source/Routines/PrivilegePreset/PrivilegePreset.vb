@@ -172,8 +172,19 @@ Public Class PrivilegePreset
 
         Return Privileges
     End Function
-
     Public Overrides Function ToString() As String
         Return If(Name, String.Empty)
     End Function
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New PrivilegePreset With {
+            .Name = Name,
+            .Status = Status,
+            .Privileges = Privileges.Select(Function(x) CType(x.Clone(), UserPrivilege)).ToList()
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Return Cloned
+    End Function
+
 End Class

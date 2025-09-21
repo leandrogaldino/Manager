@@ -1,9 +1,8 @@
-﻿Imports System.Data.Common
-Imports ControlLibrary
+﻿Imports ControlLibrary
 Imports MySql.Data.MySqlClient
 Public MustInherit Class ParentModel
     Inherits BaseModel
-    Private _Session As Session = Locator.GetInstance(Of Session)
+    Private ReadOnly _Session As Session = Locator.GetInstance(Of Session)
     Friend WithEvents Timer As New Timers.Timer With {.Enabled = True, .Interval = Locator.GetInstance(Of Session).Setting.General.Release.RefreshBlockedRegistryInterval * 1000 * 60}
     Public Property LockInfo As New LockRegistryInfo
     Protected Function GetLockInfo(Transaction As MySqlTransaction) As LockRegistryInfo

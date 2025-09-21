@@ -12,4 +12,19 @@ Public Class PersonContact
     Public Sub New()
         SetRoutine(Routine.PersonContact)
     End Sub
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New PersonContact With {
+            .Email = Email,
+            .IsMainContact = IsMainContact,
+            .JobTitle = JobTitle,
+            .Name = Name,
+            .Phone = Phone
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Cloned.SetGuid(Guid)
+        Return Cloned
+    End Function
+
 End Class

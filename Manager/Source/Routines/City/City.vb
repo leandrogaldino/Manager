@@ -218,4 +218,19 @@ Public Class City
     Public Overrides Function ToString() As String
         Return If(Not String.IsNullOrEmpty(Name), Name & " - " & State.ShortName, Nothing)
     End Function
+
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New City With {
+            .BIGSCode = BIGSCode,
+            .Name = Name,
+            .State = State,
+            .Status = Status,
+            .Routes = Routes.Select(Function(x) CType(x.Clone(), CityRoute)).ToList()
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Return Cloned
+    End Function
+
 End Class

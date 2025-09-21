@@ -293,4 +293,29 @@ Public Class Compressor
             End Using
         End Using
     End Sub
+
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New Compressor With {
+            .Name = Name,
+            .Status = Status,
+            .ManufacturerID = ManufacturerID,
+            .ManufacturerName = ManufacturerName,
+            .WorkedHourSellables = WorkedHourSellables.Select(Function(x) CType(x.Clone(), CompressorSellable)).ToList(),
+            .ElapsedDaySellables = ElapsedDaySellables.Select(Function(x) CType(x.Clone(), CompressorSellable)).ToList(),
+            .Manufacturer = New Lazy(Of Person)(
+                Function()
+                    If Manufacturer.IsValueCreated Then
+                        Return CType(Manufacturer.Value.Clone(), Person)
+                    Else
+                        Return New Person().Load(ManufacturerID, False)
+                    End If
+                End Function
+            )
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Return Cloned
+    End Function
+
 End Class

@@ -144,8 +144,8 @@ Public Class Evaluation
                 End Using
                 Tra.Commit()
             End Using
+            _Shadow = Clone()
         End Using
-        _Shadow = Clone()
         Return Me
     End Function
     Public Sub Delete()
@@ -1030,11 +1030,11 @@ Public Class Evaluation
     End Function
 
     Public Overrides Function Clone() As BaseModel
-        Return New Evaluation With {
+        Dim Cloned As New Evaluation With {
             .AverageWorkLoad = AverageWorkLoad,
             .CallType = CallType,
-            .Compressor = Compressor.Clone(),
-            .Customer = Customer.Clone(),
+            .Compressor = CType(Compressor.Clone(), PersonCompressor),
+            .Customer = CType(Customer.Clone(), Person),
             .Document = Document.Clone(),
             .EndTime = EndTime,
             .EvaluationCreationType = EvaluationCreationType,
@@ -1057,5 +1057,10 @@ Public Class Evaluation
             .ReplacedSellables = ReplacedSellables.Select(Function(x) CType(x.Clone(), EvaluationReplacedSellable)).ToList(),
             .Technicians = Technicians.Select(Function(x) CType(x.Clone(), EvaluationTechnician)).ToList()
         }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Return Cloned
     End Function
+
 End Class

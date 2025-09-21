@@ -3,8 +3,14 @@
     Public Property Name As String
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Note As String
-
     Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New Sellable With {
+            .Name = Name,
+            .Status = Status,
+            .Note = Note
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
         Return New Sellable With {
             .Name = Name,
             .Status = Status,

@@ -12,4 +12,20 @@ Public Class UserEmail
     Public Sub New()
         SetRoutine(Routine.UserEmail)
     End Sub
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New UserEmail With {
+            .Email = Email,
+            .EnableSSL = EnableSSL,
+            .IsMainEmail = IsMainEmail,
+            .SmtpServer = SmtpServer,
+            .Port = Port,
+            .Password = Password
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Cloned.SetGuid(Guid)
+        Return Cloned
+    End Function
+
 End Class

@@ -361,4 +361,18 @@ Public Class Cash
             End Using
         End Using
     End Function
+
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New Cash With {
+            .Status = Status,
+            .Note = Note,
+            .Document = Document.Clone(),
+            .CashFlow = CashFlow.Clone(),
+            .CashItems = CashItems.Select(Function(x) CType(x.Clone(), CashItem)).ToList
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved((IsSaved))
+        Return Cloned
+    End Function
 End Class

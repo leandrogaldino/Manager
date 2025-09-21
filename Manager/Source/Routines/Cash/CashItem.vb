@@ -13,4 +13,21 @@ Public Class CashItem
     Public Sub New()
         SetRoutine(Routine.CashItem)
     End Sub
+
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New CashItem With {
+            .Description = Description,
+            .DocumentDate = DocumentDate,
+            .DocumentNumber = DocumentNumber,
+            .ItemCategory = ItemCategory,
+            .ItemType = ItemType,
+            .Value = Value,
+            .Responsibles = Responsibles.Select(Function(x) CType(x.Clone(), CashItemResponsible)).ToList()
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetGuid(Guid)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Return Cloned
+    End Function
 End Class

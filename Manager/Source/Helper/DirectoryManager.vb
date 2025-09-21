@@ -1,7 +1,5 @@
 ﻿Imports System.IO
 Imports ChinhDo.Transactions
-Imports DocumentFormat.OpenXml.Drawing
-
 Public Class DirectoryManager
     Private _DestDirectory As String
     Private _OriginalDirectory As String
@@ -64,4 +62,10 @@ Public Class DirectoryManager
             End If
         End If
     End Sub
+    Public Function Clone() As DirectoryManager
+        Dim fm As New DirectoryManager(Me._DestDirectory)
+        fm.SetCurrentDirectory(Me._CurrentDirectory, False)
+        fm.SetCurrentDirectory(Me._OriginalDirectory, True)
+        Return fm
+    End Function
 End Class

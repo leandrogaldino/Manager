@@ -7,4 +7,7 @@ Public MustInherit Class ChildModel
             Return _Guid
         End Get
     End Property
+    Public Sub SetGuid(Guid As String)
+        _Guid = Guid
+    End Sub
 End Class

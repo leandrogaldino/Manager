@@ -569,13 +569,13 @@ Public Class Product
         Return If(Name, String.Empty)
     End Function
     Public Overrides Function Clone() As BaseModel
-        Return New Product With {
+        Dim Cloned As New Product With {
             .Codes = Codes.Select(Function(x) CType(x.Clone(), ProductCode)).ToList(),
             .Dimensions = Dimensions,
-            .Family = Family.Clone(),
+            .Family = CType(Family.Clone(), ProductFamily),
             .GrossWeight = GrossWeight,
-            .Group = Group.Clone(),
-            .Indicators = Indicators.Select(Function(x) CType(x.Clone, ProductPriceIndicator)).ToList(),
+            .Group = CType(Group.Clone(), ProductGroup),
+            .Indicators = Indicators.Select(Function(x) CType(x.Clone(), ProductPriceIndicator)).ToList(),
             .InternalName = InternalName,
             .Location = Location,
             .MaximumQuantity = MaximumQuantity,
@@ -590,5 +590,10 @@ Public Class Product
             .Status = Status,
             .Unit = Unit
         }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Return Cloned
     End Function
+
 End Class

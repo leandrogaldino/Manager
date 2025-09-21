@@ -156,4 +156,42 @@ Public Class VisitSchedule
     Public Overrides Function ToString() As String
         Return $"{Customer.Name}: {Compressor.CompressorName}{If(Not String.IsNullOrEmpty(Compressor.SerialNumber), $" {Compressor.SerialNumber}", {String.Empty})}"
     End Function
+
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New VisitSchedule With {
+            .CallType = CallType,
+            .Compressor = CType(Compressor.Clone(), PersonCompressor),
+            .Customer = CType(Customer.Clone(), Person),
+            .EvaluationID = EvaluationID,
+            .Instructions = Instructions,
+            .LastUpdate = LastUpdate,
+            .OverridedVisitScheduleID = OverridedVisitScheduleID,
+            .PerformedDate = PerformedDate,
+            .ScheduledDate = ScheduledDate,
+            .Status = Status,
+            .Technician = CType(Technician.Clone(), Person),
+            .Evaluation = New Lazy(Of Evaluation)(
+                Function()
+                    If Evaluation.IsValueCreated Then
+                        Return CType(Evaluation.Value.Clone(), Evaluation)
+                    Else
+                        Return New Evaluation().Load(EvaluationID, False)
+                    End If
+                End Function
+            ),
+            .OverridedVisitSchedule = New Lazy(Of VisitSchedule)(
+                Function()
+                    If OverridedVisitSchedule.IsValueCreated Then
+                        Return CType(OverridedVisitSchedule.Value.Clone(), VisitSchedule)
+                    Else
+                        Return New VisitSchedule().Load(OverridedVisitScheduleID, False)
+                    End If
+                End Function
+            )
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Return Cloned
+    End Function
 End Class

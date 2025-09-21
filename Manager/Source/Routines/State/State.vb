@@ -72,4 +72,11 @@ Public Class State
     Public Overrides Function ToString() As String
         Return Name
     End Function
+
+    Public Overrides Function Clone() As BaseModel
+        Return New State With {
+            ._Name = _Name,
+            ._ShortName = _ShortName
+        }
+    End Function
 End Class

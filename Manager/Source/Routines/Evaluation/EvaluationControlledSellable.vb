@@ -29,12 +29,18 @@ Public Class EvaluationControlledSellable
     End Sub
 
     Public Overrides Function Clone() As BaseModel
-        Return New EvaluationControlledSellable With {
+        Dim Cloned As New EvaluationControlledSellable With {
             .CurrentCapacity = CurrentCapacity,
             .Lost = Lost,
-            .PersonCompressorSellable = PersonCompressorSellable.Clone(),
+            .PersonCompressorSellable = CType(PersonCompressorSellable.Clone(), PersonCompressorSellable),
             .SellableStatus = SellableStatus,
             .Sold = Sold
         }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Cloned.SetGuid(Guid)
+        Return Cloned
     End Function
+
 End Class

@@ -31,4 +31,35 @@ Public Class PriceTableSellable
     Public Sub New()
         SetRoutine(Routine.PriceTableSellable)
     End Sub
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New PriceTableSellable With {
+            .Code = Code,
+            .Name = Name,
+            .Price = Price,
+            .SellableID = SellableID,
+            .Sellable = New Lazy(Of Sellable)(
+                Function()
+                    If Sellable.IsValueCreated Then
+                        If SellableType = SellableType.Product Then
+                            Return CType(Sellable.Value.Clone(), Product)
+                        Else
+                            Return CType(Sellable.Value.Clone(), Service)
+                        End If
+                    Else
+                        If SellableType = SellableType.Product Then
+                            Return New Product().Load(SellableID, False)
+                        Else
+                            Return New Service().Load(SellableID, False)
+                        End If
+                    End If
+                End Function
+            )
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Cloned.SetGuid(Guid)
+        Return Cloned
+    End Function
+
 End Class

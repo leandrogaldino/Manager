@@ -139,4 +139,16 @@ Public Class ProductUnit
     Public Overrides Function ToString() As String
         Return ShortName
     End Function
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New ProductUnit With {
+            .Name = Name,
+            .ShortName = ShortName,
+            .Status = Status
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Return Cloned
+    End Function
+
 End Class

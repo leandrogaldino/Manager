@@ -1,9 +1,10 @@
-﻿Imports ChinhDo.Transactions
+﻿Imports System.IO
+Imports System.Text
+Imports ChinhDo.Transactions
 Imports ControlLibrary
 Imports ManagerCore
 Imports MySql.Data.MySqlClient
-Imports System.IO
-Imports System.Text
+Imports Org.BouncyCastle.Asn1.Ocsp
 
 Public Class EmailModel
     Inherits ParentModel
@@ -157,4 +158,18 @@ Public Class EmailModel
     Public Overrides Function ToString() As String
         Return If(Name, String.Empty)
     End Function
+
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New EmailModel With {
+            .Body = Body,
+            .Name = Name,
+            .Subject = Subject,
+            .Signature = Signature.Clone()
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Return Cloned
+    End Function
+
 End Class

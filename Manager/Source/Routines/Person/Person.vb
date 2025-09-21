@@ -790,9 +790,8 @@ Public Class Person
     Public Overrides Function ToString() As String
         Return If(ShortName, String.Empty)
     End Function
-
     Public Overrides Function Clone() As BaseModel
-        Return New Person With {
+        Dim Cloned As New Person With {
             .Addresses = Addresses.Select(Function(x) CType(x.Clone(), PersonAddress)).ToList(),
             .Compressors = Compressors.Select(Function(x) CType(x.Clone(), PersonCompressor)).ToList(),
             .Contacts = Contacts.Select(Function(x) CType(x.Clone(), PersonContact)).ToList(),
@@ -809,5 +808,9 @@ Public Class Person
             .ShortName = ShortName,
             .Status = Status
         }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Return Cloned
     End Function
 End Class

@@ -1686,7 +1686,8 @@ IF IFNULL(OLD.note, '') <> IFNULL(NEW.note, '') THEN INSERT INTO log VALUES (NUL
 END$$
 DELIMITER ;
 
-
+DROP TABLE crmtreatment;
+DROP table crm;
 
 
 

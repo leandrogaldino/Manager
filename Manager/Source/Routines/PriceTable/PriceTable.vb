@@ -6,7 +6,6 @@ Public Class PriceTable
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
     Public Property Sellables As New List(Of PriceTableSellable)
-
     Public Sub New()
         SetRoutine(Routine.PriceTable)
     End Sub
@@ -212,4 +211,16 @@ Public Class PriceTable
     Public Overrides Function ToString() As String
         Return If(Name, String.Empty)
     End Function
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New PriceTable With {
+            .Name = Name,
+            .Status = Status,
+            .Sellables = Sellables.Select(Function(x) CType(x.Clone(), PriceTableSellable)).ToList()
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Return Cloned
+    End Function
+
 End Class

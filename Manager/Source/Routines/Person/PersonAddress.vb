@@ -19,4 +19,28 @@ Public Class PersonAddress
     Public Sub New()
         SetRoutine(Routine.PersonAddress)
     End Sub
+
+    Public Overrides Function Clone() As BaseModel
+        Dim Cloned As New PersonAddress With {
+            .Carrier = CType(Carrier.Clone(), Person),
+            .City = CType(City.Clone(), City),
+            .CityDocument = CityDocument,
+            .Complement = Complement,
+            .ContributionType = ContributionType,
+            .District = District,
+            .IsMainAddress = IsMainAddress,
+            .Name = Name,
+            .Number = Number,
+            .StateDocument = StateDocument,
+            .Status = Status,
+            .Street = Street,
+            .ZipCode = ZipCode
+        }
+        Cloned.SetCreation(Creation)
+        Cloned.SetID(ID)
+        Cloned.SetIsSaved(IsSaved)
+        Cloned.SetGuid(Guid)
+        Return Cloned
+    End Function
+
 End Class

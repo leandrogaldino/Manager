@@ -699,11 +699,11 @@ Public Class Evaluation
     Private Sub GetControlledSellables(Transaction As MySqlTransaction)
         Dim TableResult As DataTable
         Dim Sellable As EvaluationControlledSellable
-        Using CmdEvaluationSellable As New MySqlCommand(My.Resources.EvaluationControlledSellableSelect, Transaction.Connection)
-            CmdEvaluationSellable.Transaction = Transaction
-            CmdEvaluationSellable.Parameters.AddWithValue("@evaluationid", ID)
-            CmdEvaluationSellable.Parameters.AddWithValue("@controltypeid", CInt(CompressorSellableControlType.WorkedHour))
-            Using Adp As New MySqlDataAdapter(CmdEvaluationSellable)
+        Using CmdWorkedHour As New MySqlCommand(My.Resources.EvaluationControlledSellableSelect, Transaction.Connection)
+            CmdWorkedHour.Transaction = Transaction
+            CmdWorkedHour.Parameters.AddWithValue("@evaluationid", ID)
+            CmdWorkedHour.Parameters.AddWithValue("@controltypeid", CInt(CompressorSellableControlType.WorkedHour))
+            Using Adp As New MySqlDataAdapter(CmdWorkedHour)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
                 For Each Row As DataRow In TableResult.Rows
@@ -729,11 +729,11 @@ Public Class Evaluation
                 Next Row
             End Using
         End Using
-        Using CmdEvaluationReplacedSellable As New MySqlCommand(My.Resources.EvaluationControlledSellableSelect, Transaction.Connection)
-            CmdEvaluationReplacedSellable.Transaction = Transaction
-            CmdEvaluationReplacedSellable.Parameters.AddWithValue("@evaluationid", ID)
-            CmdEvaluationReplacedSellable.Parameters.AddWithValue("@controltypeid", CInt(CompressorSellableControlType.ElapsedDay))
-            Using Adp As New MySqlDataAdapter(CmdEvaluationReplacedSellable)
+        Using CmdElapsedDay As New MySqlCommand(My.Resources.EvaluationControlledSellableSelect, Transaction.Connection)
+            CmdElapsedDay.Transaction = Transaction
+            CmdElapsedDay.Parameters.AddWithValue("@evaluationid", ID)
+            CmdElapsedDay.Parameters.AddWithValue("@controltypeid", CInt(CompressorSellableControlType.ElapsedDay))
+            Using Adp As New MySqlDataAdapter(CmdElapsedDay)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
                 For Each Row As DataRow In TableResult.Rows

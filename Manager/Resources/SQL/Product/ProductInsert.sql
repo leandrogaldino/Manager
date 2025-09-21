@@ -12,6 +12,8 @@ INSERT INTO product
 	maximumquantity,
 	grossweight,
 	netweight,
+	dimensions,
+	sku,
 	note,
 	userid
 )
@@ -29,6 +31,8 @@ VALUES
 	@maximumquantity,
 	@grossweight,
 	@netweight,
+	@dimensions,
+	@sku,
 	@note,
 	@userid
 );

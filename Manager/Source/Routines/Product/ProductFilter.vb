@@ -32,6 +32,13 @@ Public Class ProductFilter
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(UpperNoAccentConverter))>
     Public Property Location As String
+
+    <NotifyParentProperty(True)>
+    <RefreshProperties(RefreshProperties.All)>
+    <TypeConverter(GetType(UpperNoAccentConverter))>
+    Public Property SKU As String
+
+
     <DisplayName("Observação")>
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
@@ -69,6 +76,7 @@ Public Class ProductFilter
                 If Name <> Nothing Then Cmd.Parameters.AddWithValue("@name", Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@name", "%")
                 If Code <> Nothing Then Cmd.Parameters.AddWithValue("@code", Code) : Filtering = True Else Cmd.Parameters.AddWithValue("@code", "%")
                 If Location <> Nothing Then Cmd.Parameters.AddWithValue("@location", Location) : Filtering = True Else Cmd.Parameters.AddWithValue("@location", "%")
+                If SKU <> Nothing Then Cmd.Parameters.AddWithValue("@sku", SKU) : Filtering = True Else Cmd.Parameters.AddWithValue("@sku", "%")
                 If Note <> Nothing Then Cmd.Parameters.AddWithValue("@note", Note) : Filtering = True Else Cmd.Parameters.AddWithValue("@note", "%")
                 If Family <> Nothing Then Cmd.Parameters.AddWithValue("@family", Family) : Filtering = True Else Cmd.Parameters.AddWithValue("@family", "%")
                 If Group <> Nothing Then Cmd.Parameters.AddWithValue("@group", Group) : Filtering = True Else Cmd.Parameters.AddWithValue("@group", "%")
@@ -105,6 +113,7 @@ Public Class ProductFilter
         Name = Nothing
         Code = Nothing
         Location = Nothing
+        SKU = Nothing
         Note = Nothing
         Family = Nothing
         Group = Nothing

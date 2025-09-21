@@ -1629,11 +1629,7 @@ DELETE FROM evaluationreplacedsellable WHERE evaluationid = OLD.id;
 DELETE FROM evaluationpicture WHERE evaluationid = OLD.id;
 END$$
 DELIMITER ;
-
 INSERT INTO user VALUES (NULL, now(), 0, 'SISTEMA', 'kMY08GUx41ZTR8sUAjMHdA==', NULL, NULL, 0, 1); 
-
-
-
 DROP procedure IF EXISTS `DropAllTables`;
 DELIMITER $$
 CREATE PROCEDURE `DropAllTables`()
@@ -1669,17 +1665,26 @@ BEGIN
     SET FOREIGN_KEY_CHECKS = 1;
 END$$
 DELIMITER ;
-
-
-
-
-SELECT id FROM user WHERE username = 'SISTEMA' LIMIT 1 ;
-select * from evaluation where id = 4179;
-select * from log order by id desc;
-
-
-
-
+ALTER TABLE `manager`.`product` ADD COLUMN `dimensions` VARCHAR(20) NULL DEFAULT NULL AFTER `netweight`, ADD COLUMN `sku` VARCHAR(45) NULL DEFAULT NULL AFTER `dimensions`;
+DROP TRIGGER IF EXISTS `manager`.`productupdate`;
+DELIMITER $$
+CREATE TRIGGER `productupdate` AFTER UPDATE ON `product` FOR EACH ROW BEGIN
+IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 6, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'ATIVO' WHEN OLD.statusid = 1 THEN 'INATIVO' END, CASE WHEN NEW.statusid = 0 THEN 'ATIVO' WHEN NEW.statusid = 1 THEN 'INATIVO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.name <> NEW.name THEN INSERT INTO log VALUES (NULL, 6, NEW.id, 'Nome', OLD.name, NEW.name, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.internalname <> NEW.internalname THEN INSERT INTO log VALUES (NULL, 19, NEW.id, 'Nome Interno', OLD.internalname, NEW.internalname, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF IFNULL(OLD.location, '') <> IFNULL(NEW.location, '') THEN INSERT INTO log VALUES (NULL, 6, NEW.id, 'Localização', OLD.location, NEW.location, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.unitid <> NEW.unitid THEN INSERT INTO log VALUES (NULL, 6, NEW.id, 'Und.', CONCAT(OLD.unitid, ' - ', (SELECT productunit.shortname FROM productunit WHERE productunit.id = OLD.unitid)), CONCAT(NEW.unitid, ' - ', (SELECT productunit.shortname FROM productunit WHERE productunit.id = NEW.unitid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.familyid <> NEW.familyid THEN INSERT INTO log VALUES (NULL, 6, NEW.id, 'Família', CONCAT(OLD.familyid, ' - ', (SELECT productfamily.name FROM productfamily WHERE productfamily.id = OLD.familyid)), CONCAT(NEW.familyid, ' - ', (SELECT productfamily.name FROM productfamily WHERE productfamily.id = NEW.familyid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.groupid <> NEW.groupid THEN INSERT INTO log VALUES (NULL, 6, NEW.id, 'Grupo', CONCAT(OLD.groupid, ' - ', (SELECT productgroup.name FROM productgroup WHERE productgroup.id = OLD.groupid)), CONCAT(NEW.groupid, ' - ', (SELECT productgroup.name FROM productgroup WHERE productgroup.id = NEW.groupid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.minimumquantity <> NEW.minimumquantity THEN INSERT INTO log VALUES (NULL, 6, NEW.id, 'Qtd. Min.', OLD.minimumquantity, NEW.minimumquantity, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.maximumquantity <> NEW.maximumquantity THEN INSERT INTO log VALUES (NULL, 6, NEW.id, 'Qtd. Max.', OLD.maximumquantity, NEW.maximumquantity, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.grossweight <> NEW.grossweight THEN INSERT INTO log VALUES (NULL, 6, NEW.id, 'Peso Bruto', OLD.grossweight, NEW.grossweight, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.netweight <> NEW.netweight THEN INSERT INTO log VALUES (NULL, 6, NEW.id, 'Peso Líq.', OLD.netweight, NEW.netweight, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF IFNULL(OLD.dimensions, '') <> IFNULL(NEW.dimensions, '') THEN INSERT INTO log VALUES (NULL, 6, NEW.id, 'Dimensões', OLD.dimensions, NEW.dimensions, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF IFNULL(OLD.sku, '') <> IFNULL(NEW.sku, '') THEN INSERT INTO log VALUES (NULL, 6, NEW.id, 'SKU', OLD.sku, NEW.sku, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF IFNULL(OLD.note, '') <> IFNULL(NEW.note, '') THEN INSERT INTO log VALUES (NULL, 6, NEW.id, 'Observação', OLD.note, NEW.note, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+END$$
+DELIMITER ;
 
 
 

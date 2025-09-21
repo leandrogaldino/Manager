@@ -11,6 +11,8 @@ UPDATE product SET
 	groupid = @groupid,
 	grossweight = @grossweight,
 	netweight = @netweight,
+	dimensions = @dimensions,
+	sku = @sku,
 	note = @note,
 	userid = @userid
 WHERE product.id = @id;

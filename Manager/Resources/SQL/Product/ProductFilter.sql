@@ -15,6 +15,8 @@ SELECT DISTINCT
     product.maximumquantity AS 'Qtd. Max.',
     product.grossweight AS 'Peso Bruto',
     product.netweight AS 'Peso Liq.',
+    product.dimensions As 'Dimensões',
+    product.sku as 'SKU',
     REPLACE(product.note, '\n', ' ') AS 'Observação'
 FROM product
 LEFT JOIN productfamily ON productfamily.id = product.familyid
@@ -34,6 +36,7 @@ WHERE
         IFNULL(productcode.code, '') LIKE CONCAT('%', @code, '%')
     ) AND
     IFNULL(product.location, '') LIKE CONCAT('%', @location, '%') AND
+    IFNULL(product.sku, '') LIKE CONCAT('%', @sku, '%') AND
     IFNULL(product.note, '') LIKE CONCAT('%', @note, '%') AND
     IFNULL(productfamily.name, '') LIKE CONCAT('%', @family, '%') AND
     IFNULL(productgroup.name, '') LIKE CONCAT('%', @group, '%')

@@ -84,8 +84,8 @@ Partial Class FrmProduct
         Me.DbxQtyMin = New ControlLibrary.DecimalBox()
         Me.LblQtyMin = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.TxtSKU = New System.Windows.Forms.TextBox()
+        Me.TxtDimensions = New System.Windows.Forms.TextBox()
         Me.TxtLocation = New System.Windows.Forms.TextBox()
         Me.QbxUnit = New ControlLibrary.QueriedBox()
         Me.QbxGroup = New ControlLibrary.QueriedBox()
@@ -561,8 +561,8 @@ Partial Class FrmProduct
         Me.TabMain.Controls.Add(Me.DbxQtyMin)
         Me.TabMain.Controls.Add(Me.LblQtyMin)
         Me.TabMain.Controls.Add(Me.Label5)
-        Me.TabMain.Controls.Add(Me.TextBox2)
-        Me.TabMain.Controls.Add(Me.TextBox1)
+        Me.TabMain.Controls.Add(Me.TxtSKU)
+        Me.TabMain.Controls.Add(Me.TxtDimensions)
         Me.TabMain.Controls.Add(Me.TxtLocation)
         Me.TabMain.Controls.Add(Me.QbxUnit)
         Me.TabMain.Controls.Add(Me.QbxGroup)
@@ -808,23 +808,23 @@ Partial Class FrmProduct
         Me.Label5.TabIndex = 12
         Me.Label5.Text = "Localização"
         '
-        'TextBox2
+        'TxtSKU
         '
-        Me.TextBox2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TextBox2.Location = New System.Drawing.Point(502, 162)
-        Me.TextBox2.MaxLength = 20
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(98, 23)
-        Me.TextBox2.TabIndex = 13
+        Me.TxtSKU.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtSKU.Location = New System.Drawing.Point(502, 162)
+        Me.TxtSKU.MaxLength = 45
+        Me.TxtSKU.Name = "TxtSKU"
+        Me.TxtSKU.Size = New System.Drawing.Size(98, 23)
+        Me.TxtSKU.TabIndex = 13
         '
-        'TextBox1
+        'TxtDimensions
         '
-        Me.TextBox1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TextBox1.Location = New System.Drawing.Point(370, 162)
-        Me.TextBox1.MaxLength = 20
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(126, 23)
-        Me.TextBox1.TabIndex = 13
+        Me.TxtDimensions.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtDimensions.Location = New System.Drawing.Point(370, 162)
+        Me.TxtDimensions.MaxLength = 20
+        Me.TxtDimensions.Name = "TxtDimensions"
+        Me.TxtDimensions.Size = New System.Drawing.Size(126, 23)
+        Me.TxtDimensions.TabIndex = 13
         '
         'TxtLocation
         '
@@ -1140,10 +1140,10 @@ Partial Class FrmProduct
         Me.TabPicture.Controls.Add(Me.PbxPicture)
         Me.TabPicture.Controls.Add(Me.TlpPictureControls)
         Me.TabPicture.Controls.Add(Me.LblPictureCount)
-        Me.TabPicture.Location = New System.Drawing.Point(4, 26)
+        Me.TabPicture.Location = New System.Drawing.Point(4, 22)
         Me.TabPicture.Name = "TabPicture"
         Me.TabPicture.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPicture.Size = New System.Drawing.Size(606, 192)
+        Me.TabPicture.Size = New System.Drawing.Size(606, 196)
         Me.TabPicture.TabIndex = 8
         Me.TabPicture.Text = "Fotos"
         Me.TabPicture.UseVisualStyleBackColor = True
@@ -1154,7 +1154,7 @@ Partial Class FrmProduct
         Me.PbxPicture.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PbxPicture.Location = New System.Drawing.Point(3, 31)
         Me.PbxPicture.Name = "PbxPicture"
-        Me.PbxPicture.Size = New System.Drawing.Size(600, 135)
+        Me.PbxPicture.Size = New System.Drawing.Size(600, 139)
         Me.PbxPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PbxPicture.TabIndex = 15
         Me.PbxPicture.TabStop = False
@@ -1297,7 +1297,7 @@ Partial Class FrmProduct
         Me.LblPictureCount.BackColor = System.Drawing.Color.White
         Me.LblPictureCount.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.LblPictureCount.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblPictureCount.Location = New System.Drawing.Point(3, 166)
+        Me.LblPictureCount.Location = New System.Drawing.Point(3, 170)
         Me.LblPictureCount.Name = "LblPictureCount"
         Me.LblPictureCount.Size = New System.Drawing.Size(600, 23)
         Me.LblPictureCount.TabIndex = 17
@@ -1477,9 +1477,9 @@ Partial Class FrmProduct
     Friend WithEvents TabPrice As TabPage
     Friend WithEvents TabIndicator As TabPage
     Friend WithEvents Label1 As Label
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents TxtDimensions As TextBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents TxtSKU As TextBox
     Friend WithEvents DgvIndicator As DataGridView
     Friend WithEvents DgvCode As DataGridView
     Friend WithEvents TsCode As ToolStrip

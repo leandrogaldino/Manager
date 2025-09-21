@@ -12,6 +12,8 @@ SELECT
 	product.groupid,
 	product.grossweight,
 	product.netweight,
+	product.dimensions,
+	product.sku,
 	product.note,
 	product.userid
 FROM product

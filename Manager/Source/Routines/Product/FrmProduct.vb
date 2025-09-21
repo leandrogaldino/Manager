@@ -104,6 +104,8 @@ Public Class FrmProduct
         DbxQtyMax.Text = _Product.MaximumQuantity
         DbxGrossWeight.Text = _Product.GrossWeight
         DbxNetWeight.Text = _Product.NetWeight
+        TxtDimensions.Text = _Product.Dimensions
+        TxtSKU.Text = _Product.SKU
         TxtNote.Text = _Product.Note
         TxtFilterProviderCode.Clear()
         TxtFilterCode.Clear()
@@ -330,7 +332,9 @@ Public Class FrmProduct
                                                                           DbxQtyMax.TextChanged,
                                                                           DbxGrossWeight.TextChanged,
                                                                           DbxNetWeight.TextChanged,
-                                                                          TxtNote.TextChanged, TextBox1.TextChanged, TextBox2.TextChanged
+                                                                          TxtNote.TextChanged,
+                                                                          TxtDimensions.TextChanged,
+                                                                          TxtSKU.TextChanged
 
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
@@ -530,6 +534,8 @@ Public Class FrmProduct
                     _Product.MaximumQuantity = DbxQtyMax.DecimalValue
                     _Product.GrossWeight = DbxGrossWeight.DecimalValue
                     _Product.NetWeight = DbxNetWeight.DecimalValue
+                    _Product.Dimensions = TxtDimensions.Text
+                    _Product.SKU = TxtSKU.Text
                     _Product.Note = TxtNote.Text
                     _Product.SaveChanges()
                     _Product.Lock()
@@ -697,8 +703,6 @@ Public Class FrmProduct
         FilterForm.ShowDialog()
         QbxGroup.Select()
     End Sub
-
-
     Private Sub BtnIncludePrice_Click(sender As Object, e As EventArgs) Handles BtnIncludePrice.Click
         Dim Form As New FrmProductPrice(_Product, New ProductPrice, Me)
         Form.ShowDialog()
@@ -794,29 +798,6 @@ Public Class FrmProduct
             Button.BackgroundImage = Img
         End If
     End Sub
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     Private Sub TxtName_Leave(sender As Object, e As EventArgs) Handles TxtName.Leave
         If TxtInternalName.Text = Nothing Then TxtInternalName.Text = TxtName.Text
     End Sub
@@ -845,7 +826,6 @@ Public Class FrmProduct
     Private Sub DgvCode_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvCode.DataSourceChanged
         FilterCode()
     End Sub
-
     Private Sub DgvCode_SelectionChanged(sender As Object, e As EventArgs) Handles DgvCode.SelectionChanged
         If DgvCode.SelectedRows.Count = 0 Then
             BtnEditCode.Enabled = False

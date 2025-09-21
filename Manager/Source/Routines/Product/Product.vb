@@ -21,6 +21,8 @@ Public Class Product
     Public Property MaximumQuantity As Decimal
     Public Property GrossWeight As Decimal
     Public Property NetWeight As Decimal
+    Public Property Dimensions As String
+    Public Property SKU As String
     Public Property Prices As New List(Of ProductPrice)
     Public Property Indicators As New List(Of ProductPriceIndicator)
     Public Sub New()
@@ -45,6 +47,8 @@ Public Class Product
         Group = New ProductGroup
         GrossWeight = 0
         NetWeight = 0
+        Dimensions = Nothing
+        SKU = Nothing
         Prices = New List(Of ProductPrice)
         Indicators = New List(Of ProductPriceIndicator)
         Note = Nothing
@@ -66,25 +70,27 @@ Public Class Product
                         Clear()
                     ElseIf TableResult.Rows.Count = 1 Then
                         Clear()
-                        SetID(TableResult.Rows(0).Item("id"))
-                        SetCreation(TableResult.Rows(0).Item("creation"))
+                        SetID(Convert.ToInt64(TableResult.Rows(0).Item("id")))
+                        SetCreation(Convert.ToDateTime(TableResult.Rows(0).Item("creation")))
                         SetIsSaved(True)
-                        Status = TableResult.Rows(0).Item("statusid")
-                        Name = TableResult.Rows(0).Item("name").ToString
-                        InternalName = TableResult.Rows(0).Item("internalname").ToString
+                        Status = Convert.ToInt32(TableResult.Rows(0).Item("statusid"))
+                        Name = Convert.ToString(TableResult.Rows(0).Item("name"))
+                        InternalName = Convert.ToString(TableResult.Rows(0).Item("internalname"))
                         Pictures = GetPictures(Tra)
                         ProviderCodes = GetProviderCodes(Tra)
                         Codes = GetCodes(Tra)
                         Prices = GetPrices(Tra)
-                        Location = TableResult.Rows(0).Item("location").ToString
-                        MinimumQuantity = TableResult.Rows(0).Item("minimumquantity")
-                        MaximumQuantity = TableResult.Rows(0).Item("maximumquantity")
-                        Family = New ProductFamily().Load(TableResult.Rows(0).Item("familyid"), Tra, False)
-                        Unit = New ProductUnit().Load(TableResult.Rows(0).Item("unitid"), Tra, False)
-                        Group = New ProductGroup().Load(TableResult.Rows(0).Item("groupid"), Tra, False)
-                        GrossWeight = TableResult.Rows(0).Item("grossweight")
-                        NetWeight = TableResult.Rows(0).Item("netweight")
-                        Note = TableResult.Rows(0).Item("note").ToString
+                        Location = Convert.ToString(TableResult.Rows(0).Item("location"))
+                        MinimumQuantity = Convert.ToDecimal(TableResult.Rows(0).Item("minimumquantity"))
+                        MaximumQuantity = Convert.ToDecimal(TableResult.Rows(0).Item("maximumquantity"))
+                        Family = New ProductFamily().Load(Convert.ToInt64(TableResult.Rows(0).Item("familyid")), Tra, False)
+                        Unit = New ProductUnit().Load(Convert.ToInt64(TableResult.Rows(0).Item("unitid")), Tra, False)
+                        Group = New ProductGroup().Load(Convert.ToInt64(TableResult.Rows(0).Item("groupid")), Tra, False)
+                        GrossWeight = Convert.ToDecimal(TableResult.Rows(0).Item("grossweight"))
+                        NetWeight = Convert.ToDecimal(TableResult.Rows(0).Item("netweight"))
+                        Dimensions = Convert.ToString(TableResult.Rows(0).Item("dimensions"))
+                        SKU = Convert.ToString(TableResult.Rows(0).Item("sku"))
+                        Note = Convert.ToString(TableResult.Rows(0).Item("note"))
                         Indicators = GetIndicators(Tra)
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
@@ -149,6 +155,8 @@ Public Class Product
                     CmdProduct.Parameters.AddWithValue("@groupid", Group.ID)
                     CmdProduct.Parameters.AddWithValue("@grossweight", GrossWeight)
                     CmdProduct.Parameters.AddWithValue("@netweight", NetWeight)
+                    CmdProduct.Parameters.AddWithValue("@dimensions", If(String.IsNullOrEmpty(Dimensions), DBNull.Value, Dimensions))
+                    CmdProduct.Parameters.AddWithValue("@sku", If(String.IsNullOrEmpty(SKU), DBNull.Value, SKU))
                     CmdProduct.Parameters.AddWithValue("@note", If(String.IsNullOrEmpty(Note), DBNull.Value, Note))
                     CmdProduct.Parameters.AddWithValue("@userid", User.ID)
                     CmdProduct.ExecuteNonQuery()
@@ -224,6 +232,8 @@ Public Class Product
                     CmdProduct.Parameters.AddWithValue("@groupid", Group.ID)
                     CmdProduct.Parameters.AddWithValue("@grossweight", GrossWeight)
                     CmdProduct.Parameters.AddWithValue("@netweight", NetWeight)
+                    CmdProduct.Parameters.AddWithValue("@dimensions", If(String.IsNullOrEmpty(Dimensions), DBNull.Value, Dimensions))
+                    CmdProduct.Parameters.AddWithValue("@sku", If(String.IsNullOrEmpty(SKU), DBNull.Value, SKU))
                     CmdProduct.Parameters.AddWithValue("@note", If(String.IsNullOrEmpty(Note), DBNull.Value, Note))
                     CmdProduct.Parameters.AddWithValue("@userid", User.ID)
                     CmdProduct.ExecuteNonQuery()
@@ -370,10 +380,10 @@ Public Class Product
                 Pictures = New List(Of ProductPicture)
                 For Each Row As DataRow In TableResult.Rows
                     Picture = New ProductPicture
-                    Picture.Picture.SetCurrentFile(Path.Combine(ApplicationPaths.ProductPictureDirectory, Row.Item("picturename").ToString), True)
+                    Picture.Picture.SetCurrentFile(Path.Combine(ApplicationPaths.ProductPictureDirectory, Convert.ToString(Row.Item("picturename"))), True)
                     Picture.SetIsSaved(True)
-                    Picture.SetID(Row.Item("id"))
-                    Picture.SetCreation(Row.Item("creation"))
+                    Picture.SetID(Convert.ToInt64(Row.Item("id")))
+                    Picture.SetCreation(Convert.ToDateTime(Row.Item("creation")))
                     Pictures.Add(Picture)
                 Next Row
             End Using
@@ -393,13 +403,13 @@ Public Class Product
                 ProviderCodes = New List(Of ProductProviderCode)
                 For Each Row As DataRow In TableResult.Rows
                     ProviderCode = New ProductProviderCode With {
-                        .IsMainProvider = Row.Item("ismainprovider"),
-                        .Code = Row.Item("code").ToString,
-                        .Provider = New Person().Load(Row.Item("providerid"), False)
+                        .IsMainProvider = Convert.ToBoolean(Row.Item("ismainprovider")),
+                        .Code = Convert.ToString(Row.Item("code")),
+                        .Provider = New Person().Load(Convert.ToInt64(Row.Item("providerid")), False)
                     }
                     ProviderCode.SetIsSaved(True)
-                    ProviderCode.SetID(Row.Item("id"))
-                    ProviderCode.SetCreation(Row.Item("creation"))
+                    ProviderCode.SetID(Convert.ToInt64(Row.Item("id")))
+                    ProviderCode.SetCreation(Convert.ToDateTime(Row.Item("creation")))
                     ProviderCodes.Add(ProviderCode)
                 Next Row
             End Using
@@ -419,12 +429,12 @@ Public Class Product
                 Codes = New List(Of ProductCode)
                 For Each Row As DataRow In TableResult.Rows
                     Code = New ProductCode With {
-                        .Name = Row.Item("name").ToString,
-                        .Code = Row.Item("code").ToString
+                        .Name = Convert.ToString(Row.Item("name")),
+                        .Code = Convert.ToString(Row.Item("code"))
                     }
                     Code.SetIsSaved(True)
-                    Code.SetID(Row.Item("id"))
-                    Code.SetCreation(Row.Item("creation"))
+                    Code.SetID(Convert.ToInt64(Row.Item("id")))
+                    Code.SetCreation(Convert.ToDateTime(Row.Item("creation")))
                     Codes.Add(Code)
                 Next Row
             End Using
@@ -444,14 +454,14 @@ Public Class Product
                 Prices = New List(Of ProductPrice)
                 For Each Row As DataRow In TableResult.Rows
                     Price = New ProductPrice With {
-                        .PriceTableID = Convert.ToInt32(Row.Item("pricetableid")),
-                        .PriceTable = New Lazy(Of PriceTable)(Function() New PriceTable().Load(Convert.ToInt32(Row.Item("pricetableid")), False)),
-                        .PriceTableName = Row.Item("pricetablename").ToString,
-                        .Price = Convert.ToDecimal(Row.Item("price"))
+                        .PriceTableID = Convert.ToInt64(Row.Item("pricetableid")),
+                        .PriceTable = New Lazy(Of PriceTable)(Function() New PriceTable().Load(Convert.ToInt32(Convert.ToInt64(Row.Item("pricetableid"))), False)),
+                        .PriceTableName = Convert.ToString(Row.Item("pricetablename")),
+                        .Price = Convert.ToDecimal(Convert.ToDecimal(Row.Item("price")))
                     }
                     Price.SetIsSaved(True)
-                    Price.SetID(Row.Item("id"))
-                    Price.SetCreation(Row.Item("creation"))
+                    Price.SetID(Convert.ToInt64(Row.Item("id")))
+                    Price.SetCreation(Convert.ToDateTime(Row.Item("creation")))
                     Prices.Add(Price)
                 Next Row
             End Using
@@ -470,10 +480,10 @@ Public Class Product
                 Adp.Fill(TableResult)
                 Indicators = New List(Of ProductPriceIndicator)
                 For Each Row As DataRow In TableResult.Rows
-                    Indicator = New ProductPriceIndicator(Convert.ToInt32(Row.Item("indicatorid")), Convert.ToDecimal(Row.Item("price")))
+                    Indicator = New ProductPriceIndicator(Convert.ToInt64(Row.Item("indicatorid")), Convert.ToDecimal(Row.Item("price")))
                     Indicator.SetIsSaved(True)
-                    Indicator.SetID(Row.Item("id"))
-                    Indicator.SetCreation(Row.Item("creation"))
+                    Indicator.SetID(Convert.ToInt64(Row.Item("id")))
+                    Indicator.SetCreation(Convert.ToDateTime(Row.Item("creation")))
                     Indicators.Add(Indicator)
                 Next Row
             End Using
@@ -555,7 +565,6 @@ Public Class Product
             End Using
         End Using
     End Sub
-
     Public Overrides Function ToString() As String
         Return If(Name, String.Empty)
     End Function

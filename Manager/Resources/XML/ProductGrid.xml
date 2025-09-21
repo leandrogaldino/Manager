@@ -83,6 +83,18 @@
 	<Column Index="13">
 		<Visible>True</Visible>
 		<DisplayIndex>13</DisplayIndex>
+		<Name>Dimensões</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="14">
+		<Visible>True</Visible>
+		<DisplayIndex>14</DisplayIndex>
+		<Name>SKU</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="15">
+		<Visible>True</Visible>
+		<DisplayIndex>15</DisplayIndex>
 		<Name>Observação</Name>
 		<Width>350</Width>
 	</Column>

@@ -7,4 +7,10 @@ Public Class CashItemResponsible
     Public Sub New()
         SetRoutine(Routine.CashItemResponsible)
     End Sub
+
+    Public Overrides Function Clone() As BaseModel
+        Return New CashItemResponsible With {
+            .Responsible = Responsible.Clone()
+        }
+    End Function
 End Class

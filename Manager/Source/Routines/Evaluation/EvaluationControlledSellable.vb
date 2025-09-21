@@ -27,4 +27,14 @@ Public Class EvaluationControlledSellable
     Public Sub New()
         SetRoutine(Routine.EvaluationControlledSellable)
     End Sub
+
+    Public Overrides Function Clone() As BaseModel
+        Return New EvaluationControlledSellable With {
+            .CurrentCapacity = CurrentCapacity,
+            .Lost = Lost,
+            .PersonCompressorSellable = PersonCompressorSellable.Clone(),
+            .SellableStatus = SellableStatus,
+            .Sold = Sold
+        }
+    End Function
 End Class

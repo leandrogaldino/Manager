@@ -1,14 +1,11 @@
 ﻿Imports ControlLibrary
 Imports MySql.Data.MySqlClient
 Public MustInherit Class BaseModel
-    Inherits CloneableModel
     Implements IEquatable(Of BaseModel)
-
     Private _ID As Long
     Private _Creation As Date = Today
     Private _Routine As Routine
     Private _IsSaved As Boolean
-
 
     Public ReadOnly Property ID As Long
         Get
@@ -75,4 +72,5 @@ Public MustInherit Class BaseModel
         If other Is Nothing Then Return False
         Return Me.GetType() = other.GetType()
     End Function
+    Public MustOverride Function Clone() As BaseModel
 End Class

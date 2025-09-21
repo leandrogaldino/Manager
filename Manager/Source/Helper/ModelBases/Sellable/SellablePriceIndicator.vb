@@ -36,4 +36,10 @@ Public Class SellablePriceIndicator
                 Return String.Empty
         End Select
     End Function
+    Public Overrides Function Clone() As BaseModel
+        Return New SellablePriceIndicator With {
+            .Price = Price,
+            .Indicator = Indicator
+        }
+    End Function
 End Class

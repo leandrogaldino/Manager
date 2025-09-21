@@ -1028,4 +1028,34 @@ Public Class Evaluation
         Loop
         Return EvaluationNumber
     End Function
+
+    Public Overrides Function Clone() As BaseModel
+        Return New Evaluation With {
+            .AverageWorkLoad = AverageWorkLoad,
+            .CallType = CallType,
+            .Compressor = Compressor.Clone(),
+            .Customer = Customer.Clone(),
+            .Document = Document.Clone(),
+            .EndTime = EndTime,
+            .EvaluationCreationType = EvaluationCreationType,
+            .EvaluationNumber = EvaluationNumber,
+            .EvaluationDate = EvaluationDate,
+            .HasRepair = HasRepair,
+            .Horimeter = Horimeter,
+            .ManualAverageWorkLoad = ManualAverageWorkLoad,
+            .NeedProposal = NeedProposal,
+            .Pressure = Pressure,
+            .Responsible = Responsible,
+            .Signature = Signature.Clone(),
+            .StartTime = StartTime,
+            .TechnicalAdvice = TechnicalAdvice,
+            .Temperature = Temperature,
+            .UnitName = UnitName,
+            .Pictures = Pictures.Select(Function(x) CType(x.Clone(), EvaluationPicture)).ToList(),
+            .ElapsedDayControlledSellable = ElapsedDayControlledSellable.Select(Function(x) CType(x.Clone(), EvaluationControlledSellable)).ToList(),
+            .WorkedHourControlledSelable = WorkedHourControlledSelable.Select(Function(x) CType(x.Clone(), EvaluationControlledSellable)).ToList(),
+            .ReplacedSellables = ReplacedSellables.Select(Function(x) CType(x.Clone(), EvaluationReplacedSellable)).ToList(),
+            .Technicians = Technicians.Select(Function(x) CType(x.Clone(), EvaluationTechnician)).ToList()
+        }
+    End Function
 End Class

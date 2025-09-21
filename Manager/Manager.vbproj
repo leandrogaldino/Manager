@@ -558,7 +558,6 @@
     <Compile Include="Source\Helper\Flags\PriceIndicator.vb" />
     <Compile Include="Source\Helper\Flags\SellableType.vb" />
     <Compile Include="Source\Helper\ModelBases\BaseModel.vb" />
-    <Compile Include="Source\Helper\ModelBases\CloneableModel.vb" />
     <Compile Include="Source\Helper\ModelBases\ChildModel.vb" />
     <Compile Include="Source\Helper\ModelBases\Sellable\Sellable.vb" />
     <Compile Include="Source\Helper\ModelBases\Sellable\SellableCode.vb" />

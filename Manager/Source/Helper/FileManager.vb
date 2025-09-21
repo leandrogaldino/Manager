@@ -1,15 +1,16 @@
 ﻿Imports System.IO
 Imports ChinhDo.Transactions
 Public Class FileManager
-    Private _TargetDirectory As String
+    Private ReadOnly _TargetDirectory As String
     Private _OriginalFile As String
     Private _CurrentFile As String
+    Public Shared Property TempDirectory As String
     Public ReadOnly Property TargetDirectory As String
         Get
             Return _TargetDirectory
         End Get
     End Property
-    Public Shared Property TempDirectory As String
+
     Public ReadOnly Property OriginalFile As String
         Get
             Return _OriginalFile
@@ -67,4 +68,11 @@ Public Class FileManager
             End If
         End If
     End Sub
+
+    Public Function Clone() As FileManager
+        Dim fm As New FileManager(Me._TargetDirectory)
+        fm.SetCurrentFile(Me._CurrentFile, False)
+        fm.SetCurrentFile(Me._OriginalFile, True)
+        Return fm
+    End Function
 End Class

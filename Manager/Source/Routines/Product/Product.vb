@@ -568,4 +568,28 @@ Public Class Product
     Public Overrides Function ToString() As String
         Return If(Name, String.Empty)
     End Function
+    Public Overrides Function Clone() As BaseModel
+        Return New Product With {
+            .Codes = Codes.Select(Function(x) CType(x.Clone(), ProductCode)).ToList(),
+            .Dimensions = Dimensions,
+            .Family = Family.Clone(),
+            .GrossWeight = GrossWeight,
+            .Group = Group.Clone(),
+            .Indicators = Indicators.Select(Function(x) CType(x.Clone, ProductPriceIndicator)).ToList(),
+            .InternalName = InternalName,
+            .Location = Location,
+            .MaximumQuantity = MaximumQuantity,
+            .MinimumQuantity = MinimumQuantity,
+            .Name = Name,
+            .Note = Note,
+            .Pictures = Pictures.Select(Function(x) CType(x.Clone(), ProductPicture)).ToList(),
+            .NetWeight = NetWeight,
+            .Prices = Prices.Select(Function(x) CType(x.Clone(), ProductPrice)).ToList(),
+            .ProviderCodes = ProviderCodes.Select(Function(x) CType(x.Clone(), ProductProviderCode)).ToList(),
+            .SKU = SKU,
+            .Status = Status,
+            .Unit = Unit
+        }
+    End Function
+
 End Class

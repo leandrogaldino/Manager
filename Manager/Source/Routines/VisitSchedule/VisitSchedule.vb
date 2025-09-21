@@ -156,7 +156,6 @@ Public Class VisitSchedule
     Public Overrides Function ToString() As String
         Return $"{Customer.Name}: {Compressor.CompressorName}{If(Not String.IsNullOrEmpty(Compressor.SerialNumber), $" {Compressor.SerialNumber}", {String.Empty})}"
     End Function
-
     Public Overrides Function Clone() As BaseModel
         Dim Cloned As New VisitSchedule With {
             .CallType = CallType,

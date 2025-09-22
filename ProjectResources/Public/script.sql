@@ -1687,7 +1687,7 @@ END$$
 DELIMITER ;
 
 DROP TABLE crmtreatment;
-DROP table crm;
+DROP table crm; 
 
 
 

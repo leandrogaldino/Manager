@@ -25,14 +25,15 @@ Public Class PersonReport
         Dim Logo As Drawings.IXLPicture
         Dim ChartPicture As Drawings.IXLPicture
         Dim CompressorsDataChart As New List(Of Tuple(Of String, Decimal))
-        Dim series As Series
-        Dim chartArea As ChartArea
-        Dim larguraGrafico As Integer = 650
-        Dim alturaGrafico As Integer = 350
-        Dim chart As Chart
-        Dim chartImage As Bitmap
+        Dim Series As Series
+        Dim ChartArea As ChartArea
+        Dim ChartWidth As Integer = 650
+        Dim ChartHeight As Integer = 350
+        Dim Chart As Chart
+        Dim ChartImage As Bitmap
         Dim ChartImageName As String
         Dim NextChange As Date
+        Dim SelectedRows As List(Of DataGridViewRow)
         WsReport.ShowGridLines = False
         WsReport.Rows.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center
         WsReport.Rows.Style.NumberFormat.Format = "@"
@@ -65,7 +66,8 @@ Public Class PersonReport
         WsReport.Rows(2, 2).Height = 20
         WsReport.Rows(3, 3).Height = 20
         WsReport.Rows(4, 4).Height = 290
-        For Each DgvRow As DataGridViewRow In DgvCompressor.Rows.Cast(Of DataGridViewRow).Where(Function(x) x.Cells("X").Value = True)
+        SelectedRows = DgvCompressor.Rows.Cast(Of DataGridViewRow).Where(Function(x) x.Cells("X").Value = True).ToList()
+        For Each DgvRow As DataGridViewRow In SelectedRows
             LastEvaluationID = Evaluation.GetLastEvaluationID(DgvRow.Cells("ID").Value)
             Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
                 Con.Open()
@@ -306,40 +308,45 @@ Public Class PersonReport
             CompressorCount += 1
         Next DgvRow
         CompressorsDataChart.Sort(Function(x, y) x.Item2.CompareTo(y.Item2))
-        chart = New Chart()
-        chart.Width = larguraGrafico
-        chart.Height = alturaGrafico
-        chartArea = New ChartArea()
-        chartArea.Name = "ChartArea1"
-        chart.ChartAreas.Add(chartArea)
-        chart.ChartAreas(0).AxisX.MajorGrid.Enabled = False
-        chart.ChartAreas(0).AxisY.MajorGrid.LineColor = Color.DarkGray
-        chart.ChartAreas(0).AxisX.LineColor = Color.DarkGray
-        chart.ChartAreas(0).AxisY.LineColor = Color.DarkGray
-        chart.ChartAreas(0).AxisY.Maximum = 24
-        chart.ChartAreas(0).AxisY.Interval = 4
-        chart.ChartAreas(0).AxisY.LabelStyle.Format = "0\h"
-        chart.ChartAreas(0).AxisX.LabelStyle.Font = New Font("Century Gothic", 6)
-        'chart.ChartAreas(0).AxisX.LabelStyle.Angle = -45  ' inclina os nomes para economizar espaço
-        chart.ChartAreas(0).AxisX.Interval = 1  ' força mostrar cada rótulo
-        chart.PaletteCustomColors = {Color.FromArgb(255, 128, 0)}
-        chart.Palette = ChartColorPalette.None
-        chart.Legends.Clear()
-        series = New Series With {
+        Chart = New Chart()
+        Chart.Width = ChartWidth
+        Chart.Height = ChartHeight
+        ChartArea = New ChartArea()
+        ChartArea.Name = "ChartArea1"
+        Chart.ChartAreas.Add(ChartArea)
+        Chart.ChartAreas(0).AxisX.MajorGrid.Enabled = False
+        Chart.ChartAreas(0).AxisY.MajorGrid.LineColor = Color.DarkGray
+        Chart.ChartAreas(0).AxisX.LineColor = Color.DarkGray
+        Chart.ChartAreas(0).AxisY.LineColor = Color.DarkGray
+        Chart.ChartAreas(0).AxisY.Maximum = 24
+        Chart.ChartAreas(0).AxisY.Interval = 4
+        Chart.ChartAreas(0).AxisY.LabelStyle.Format = "0\h"
+        If SelectedRows.Count <= 10 Then
+            Chart.ChartAreas(0).AxisX.LabelStyle.Font = New Font("Century Gothic", 10)
+        ElseIf SelectedRows.Count <= 20 Then
+            Chart.ChartAreas(0).AxisX.LabelStyle.Font = New Font("Century Gothic", 8)
+        Else
+            Chart.ChartAreas(0).AxisX.LabelStyle.Font = New Font("Century Gothic", 6)
+        End If
+        Chart.ChartAreas(0).AxisX.Interval = 1  ' força mostrar cada rótulo
+        Chart.PaletteCustomColors = {Color.FromArgb(255, 128, 0)}
+        Chart.Palette = ChartColorPalette.None
+        Chart.Legends.Clear()
+        Series = New Series With {
             .ChartType = SeriesChartType.Bar,
             .IsValueShownAsLabel = True,
             .LabelFormat = "0.00"
         }
         For Each v As Tuple(Of String, Decimal) In CompressorsDataChart
-            series.Points.AddXY(v.Item1, v.Item2)
+            Series.Points.AddXY(v.Item1, v.Item2)
         Next v
-        chart.Series.Add(series)
-        chartImage = New Bitmap(larguraGrafico, alturaGrafico)
-        chart.DrawToBitmap(chartImage, New Rectangle(0, 0, chartImage.Width, chartImage.Height))
+        Chart.Series.Add(Series)
+        ChartImage = New Bitmap(ChartWidth, ChartHeight)
+        Chart.DrawToBitmap(ChartImage, New Rectangle(0, 0, ChartImage.Width, ChartImage.Height))
         ChartImageName = Util.GetFilename(".png")
-        chartImage.Save(Path.Combine(ApplicationPaths.ManagerTempDirectory, ChartImageName), Imaging.ImageFormat.Png)
-        chartImage.Dispose()
-        chart.Dispose()
+        ChartImage.Save(Path.Combine(ApplicationPaths.ManagerTempDirectory, ChartImageName), Imaging.ImageFormat.Png)
+        ChartImage.Dispose()
+        Chart.Dispose()
         ChartPicture = WsReport.AddPicture(New MemoryStream(File.ReadAllBytes(Path.Combine(ApplicationPaths.ManagerTempDirectory, ChartImageName))))
         ChartPicture.MoveTo(WsReport.Cell("A4"), New Point(0, 5))
         SettingsDocument = New XmlDocument

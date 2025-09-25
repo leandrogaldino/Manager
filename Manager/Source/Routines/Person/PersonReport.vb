@@ -28,7 +28,7 @@ Public Class PersonReport
         Dim series As Series
         Dim chartArea As ChartArea
         Dim larguraGrafico As Integer = 650
-        Dim alturaGrafico As Integer = 280
+        Dim alturaGrafico As Integer = 350
         Dim chart As Chart
         Dim chartImage As Bitmap
         Dim ChartImageName As String
@@ -64,7 +64,7 @@ Public Class PersonReport
         WsReport.Rows(1, 1).Height = 20
         WsReport.Rows(2, 2).Height = 20
         WsReport.Rows(3, 3).Height = 20
-        WsReport.Rows(4, 4).Height = 220
+        WsReport.Rows(4, 4).Height = 290
         For Each DgvRow As DataGridViewRow In DgvCompressor.Rows.Cast(Of DataGridViewRow).Where(Function(x) x.Cells("X").Value = True)
             LastEvaluationID = Evaluation.GetLastEvaluationID(DgvRow.Cells("ID").Value)
             Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
@@ -139,7 +139,7 @@ Public Class PersonReport
                 WsReport.Rows(Row, Row).Height = 20
                 'VALOR DE COMPRESSOR
                 WsReport.Range(Row, 2, Row, 2).Value = String.Format("{0} {1} {2} {3}", ReportingEvaluation.Compressor.CompressorName, If(String.IsNullOrEmpty(ReportingEvaluation.Compressor.SerialNumber), Nothing, "NS: " & ReportingEvaluation.Compressor.SerialNumber), If(String.IsNullOrEmpty(ReportingEvaluation.Compressor.Patrimony), Nothing, "PAT: " & ReportingEvaluation.Compressor.Patrimony), If(String.IsNullOrEmpty(ReportingEvaluation.Compressor.Sector), Nothing, "- " & ReportingEvaluation.Compressor.Sector))
-                WsReport.Range(Row, 2, Row, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center
+                WsReport.Range(Row, 2, Row, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left
                 WsReport.Range(Row, 2, Row, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin
                 WsReport.Range(Row, 2, Row, 2).Style.Border.BottomBorderColor = XLColor.Black
                 WsReport.Range(Row, 2, Row, 2).Style.Fill.BackgroundColor = XLColor.Gainsboro
@@ -320,7 +320,7 @@ Public Class PersonReport
         chart.ChartAreas(0).AxisY.Interval = 4
         chart.ChartAreas(0).AxisY.LabelStyle.Format = "0\h"
         chart.ChartAreas(0).AxisX.LabelStyle.Font = New Font("Century Gothic", 6)
-        chart.ChartAreas(0).AxisX.LabelStyle.Angle = -45  ' inclina os nomes para economizar espaço
+        'chart.ChartAreas(0).AxisX.LabelStyle.Angle = -45  ' inclina os nomes para economizar espaço
         chart.ChartAreas(0).AxisX.Interval = 1  ' força mostrar cada rótulo
         chart.PaletteCustomColors = {Color.FromArgb(255, 128, 0)}
         chart.Palette = ChartColorPalette.None

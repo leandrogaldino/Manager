@@ -4,7 +4,6 @@ Imports ChinhDo.Transactions
 Imports ControlLibrary
 Imports ManagerCore
 Imports MySql.Data.MySqlClient
-Imports Org.BouncyCastle.Asn1.Ocsp
 
 Public Class EmailModel
     Inherits ParentModel
@@ -40,8 +39,8 @@ Public Class EmailModel
         Dim TempDirectory As String
         Dim Manager As TxFileManager
         Dim FullHtmlContent As String
-        TempDirectory = Path.Combine(ApplicationPaths.ManagerTempDirectory, Util.GetFilename())
-        TempHtmlFile = Path.Combine(TempDirectory, Util.GetFilename(".html"))
+        TempDirectory = Path.Combine(ApplicationPaths.ManagerTempDirectory, TextHelper.GetRandomFileName())
+        TempHtmlFile = Path.Combine(TempDirectory, TextHelper.GetRandomFileName(".html"))
         Manager = New TxFileManager(ApplicationPaths.ManagerTempDirectory)
         If Not String.IsNullOrEmpty(Signature.Directory.CurrentDirectory) Then
             If Manager.DirectoryExists(Signature.Directory.CurrentDirectory) Then

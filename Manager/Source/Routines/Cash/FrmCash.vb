@@ -356,7 +356,7 @@ Public Class FrmCash
         Dim Filename As String
         OfdDocument.FileName = Nothing
         If OfdDocument.ShowDialog = DialogResult.OK Then
-            Filename = Util.GetFilename(Path.GetExtension(OfdDocument.FileName))
+            Filename = TextHelper.GetRandomFileName(Path.GetExtension(OfdDocument.FileName))
             File.Copy(OfdDocument.FileName, Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
             _Cash.Document.SetCurrentFile(Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
             If Not String.IsNullOrEmpty(_Cash.Document.CurrentFile) AndAlso File.Exists(_Cash.Document.CurrentFile) Then

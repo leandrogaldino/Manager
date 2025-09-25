@@ -660,7 +660,7 @@ Public Class FrmEvaluation
     Private Sub BtnAttachPDF_Click(sender As Object, e As EventArgs) Handles BtnAttachPDF.Click
         Dim Filename As String
         If OfdDocument.ShowDialog = DialogResult.OK Then
-            Filename = Util.GetFilename(Path.GetExtension(OfdDocument.FileName))
+            Filename = TextHelper.GetRandomFileName(Path.GetExtension(OfdDocument.FileName))
             File.Copy(OfdDocument.FileName, Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
             _Evaluation.Document.SetCurrentFile(Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
             If Not String.IsNullOrEmpty(_Evaluation.Document.CurrentFile) AndAlso File.Exists(_Evaluation.Document.CurrentFile) Then
@@ -750,7 +750,7 @@ Public Class FrmEvaluation
             Ofd.Filter = "Imagens|*.jpg;*.jpeg;*.png;*.bmp|Todos os arquivos|*.*"
             Ofd.Title = "Selecionar Imagem"
             If Ofd.ShowDialog() = DialogResult.OK Then
-                Filename = Util.GetFilename(Path.GetExtension(Ofd.FileName))
+                Filename = TextHelper.GetRandomFileName(Path.GetExtension(Ofd.FileName))
                 File.Copy(Ofd.FileName, Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
                 Picture = New EvaluationPicture()
                 Picture.Picture.SetCurrentFile(Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))

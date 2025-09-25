@@ -343,7 +343,7 @@ Public Class PersonReport
         Chart.Series.Add(Series)
         ChartImage = New Bitmap(ChartWidth, ChartHeight)
         Chart.DrawToBitmap(ChartImage, New Rectangle(0, 0, ChartImage.Width, ChartImage.Height))
-        ChartImageName = Util.GetFilename(".png")
+        ChartImageName = TextHelper.GetRandomFileName(".png")
         ChartImage.Save(Path.Combine(ApplicationPaths.ManagerTempDirectory, ChartImageName), Imaging.ImageFormat.Png)
         ChartImage.Dispose()
         Chart.Dispose()

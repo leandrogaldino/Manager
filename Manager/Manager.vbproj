@@ -1061,7 +1061,6 @@
     <Compile Include="Source\Helper\FiltrerConverter\SimpleStatusConverter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\UpperNoAccentConverter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\YesNoConverter.vb" />
-    <Compile Include="Source\Helper\Util.vb" />
     <Compile Include="Source\Controls\DataGridViewLayout.vb">
       <SubType>Component</SubType>
     </Compile>

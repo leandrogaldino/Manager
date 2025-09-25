@@ -98,7 +98,7 @@ Public Class FrmProduct
         If _Product.Codes IsNot Nothing Then DgvCode.Fill(_Product.Codes)
         If _Product.Prices IsNot Nothing Then DgvPrice.Fill(_Product.Prices)
         If _Product.Indicators IsNot Nothing Then DgvIndicator.Fill(_Product.Indicators)
-        PvPicture.AddPictures(_Product.Pictures.Select(Function(x) x.Picture.CurrentFile).ToList)
+        PvPicture.AddPictures(_Product.Pictures.Select(Function(x) x.Picture.CurrentFile).ToList, 0)
         BtnDelete.Enabled = _Product.ID > 0 And _User.CanDelete(Routine.Product)
         Text = "Produto"
         If _Product.LockInfo.IsLocked And Not _Product.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Product.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
@@ -226,6 +226,10 @@ Public Class FrmProduct
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
+    Private Sub PvPicture_PictureChanged(Path As String) Handles PvPicture.PictureAdded, PvPicture.PictureRemoved
+        EprValidation.Clear()
+        If Not _Loading Then BtnSave.Enabled = True
+    End Sub
     Private Sub TxtNote_LinkClicked(sender As Object, e As LinkClickedEventArgs) Handles TxtNote.LinkClicked
         Process.Start(e.LinkText)
     End Sub
@@ -299,7 +303,6 @@ Public Class FrmProduct
             End If
         End If
     End Sub
-
     Private Sub TcPerson_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcProduct.SelectedIndexChanged
         If TcProduct.SelectedTab Is TabMain Then
             Size = New Size(630, 355)
@@ -429,7 +432,7 @@ Public Class FrmProduct
                     PvPicture.Pictures.ToList().ForEach(Sub(x)
                                                             If Not _Product.Pictures.Any(Function(y) y.Picture.CurrentFile = x) Then
                                                                 Dim ProductPircture As New ProductPicture
-                                                                ProductPircture.Picture.SetCurrentFile(x, True)
+                                                                ProductPircture.Picture.SetCurrentFile(x)
                                                                 _Product.Pictures.Add(ProductPircture)
                                                             End If
                                                         End Sub)
@@ -437,7 +440,7 @@ Public Class FrmProduct
 
                     _Product.Pictures.ForEach(Sub(x)
                                                   If Not PvPicture.Pictures.Any(Function(y) y = x.Picture.CurrentFile) Then
-                                                      _Product.Pictures.Remove(x)
+                                                      x.Picture.SetCurrentFile(Nothing)
                                                   End If
                                               End Sub)
 
@@ -723,4 +726,6 @@ Public Class FrmProduct
             BtnDeleteProviderCode.Enabled = True
         End If
     End Sub
+
+
 End Class

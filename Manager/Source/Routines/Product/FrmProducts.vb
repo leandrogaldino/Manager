@@ -35,17 +35,17 @@ Public Class FrmProducts
         Form.ShowDialog()
     End Sub
     Private Sub BtnEdit_Click(sender As Object, e As EventArgs) Handles BtnEdit.Click
-        Dim ProductForm As FrmProduct
         If DgvData.SelectedRows.Count = 1 Then
             Try
                 Cursor = Cursors.WaitCursor
                 _Product = New Product().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
-                ProductForm = New FrmProduct(_Product, Me)
-                ProductForm.DgvProviderCode.Fill(_Product.ProviderCodes)
-                ProductForm.DgvCode.Fill(_Product.Codes)
-                ProductForm.DgvPrice.Fill(_Product.Prices)
-                ProductForm.DgvIndicator.Fill(_Product.Indicators)
-                ProductForm.ShowDialog()
+                Using ProductForm As New FrmProduct(_Product, Me)
+                    ProductForm.DgvProviderCode.Fill(_Product.ProviderCodes)
+                    ProductForm.DgvCode.Fill(_Product.Codes)
+                    ProductForm.DgvPrice.Fill(_Product.Prices)
+                    ProductForm.DgvIndicator.Fill(_Product.Indicators)
+                    ProductForm.ShowDialog()
+                End Using
             Catch ex As Exception
                 CMessageBox.Show("ERRO PD004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally

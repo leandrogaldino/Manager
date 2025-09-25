@@ -358,7 +358,7 @@ Public Class FrmRequest
         Dim Filename As String
         OfdDocument.FileName = Nothing
         If OfdDocument.ShowDialog = DialogResult.OK Then
-            Filename = Util.GetFilename(Path.GetExtension(OfdDocument.FileName))
+            Filename = TextHelper.GetRandomFileName(Path.GetExtension(OfdDocument.FileName))
             File.Copy(OfdDocument.FileName, Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
             _Request.Document.SetCurrentFile(Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
             If Not String.IsNullOrEmpty(_Request.Document.CurrentFile) AndAlso File.Exists(_Request.Document.CurrentFile) Then

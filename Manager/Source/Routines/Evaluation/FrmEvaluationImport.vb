@@ -180,7 +180,7 @@ Public Class FrmEvaluationImport
 
                     SignatureData = Await _Storage.DownloadFile(_EvaluationData("signaturepath"))
 
-                    TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, Util.GetFilename(".png"))
+                    TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, TextHelper.GetRandomFileName(".png"))
                     Using SignatureStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)
                         Await SignatureStream.WriteAsync(SignatureData, 0, SignatureData.Length)
                     End Using
@@ -189,7 +189,7 @@ Public Class FrmEvaluationImport
 
                         PictureData = Await _Storage.DownloadFile(Picture("path"))
 
-                        TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, Util.GetFilename(".jpg"))
+                        TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, TextHelper.GetRandomFileName(".jpg"))
                         Using PictureStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)
                             Await PictureStream.WriteAsync(PictureData, 0, PictureData.Length)
                         End Using

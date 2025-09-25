@@ -234,7 +234,7 @@ Public Class FrmEmailSignature
         Dim DirectorySize As Long
         Dim DirectoryManager As TxFileManager
         If FbdSignature.ShowDialog = DialogResult.OK Then
-            DirectoryPath = Util.GetFilename()
+            DirectoryPath = TextHelper.GetRandomFileName()
             SelectedDirectory = New DirectoryInfo(FbdSignature.SelectedPath)
             If File.Exists(Path.Combine(SelectedDirectory.FullName, "sign.html")) Then
                 SelectedDirectory.GetFiles.ToList.ForEach(Sub(x) DirectorySize += x.Length)

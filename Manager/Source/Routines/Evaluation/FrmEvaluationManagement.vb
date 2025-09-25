@@ -237,7 +237,7 @@ Public Class FrmEvaluationManagement
 
     Private Function GetAutomaticPDF() As String
         Dim Filename As String
-        Filename = Util.GetFilename(".pdf")
+        Filename = TextHelper.GetRandomFileName(".pdf")
         Using document As New PdfDocument()
             Dim page As PdfPage = document.Pages.Add()
             Dim graphics As PdfGraphics = page.Graphics

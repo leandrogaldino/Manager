@@ -109,6 +109,7 @@ Partial Class FrmProduct
         Me.TabIndicator = New System.Windows.Forms.TabPage()
         Me.DgvIndicator = New System.Windows.Forms.DataGridView()
         Me.TabPicture = New System.Windows.Forms.TabPage()
+        Me.PvPicture = New ControlLibrary.PictureViewer()
         Me.TmrQueriedBoxFamily = New System.Windows.Forms.Timer(Me.components)
         Me.TmrQueriedBoxGroup = New System.Windows.Forms.Timer(Me.components)
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
@@ -118,7 +119,6 @@ Partial Class FrmProduct
         Me.DgvPictureLayout = New Manager.DataGridViewLayout()
         Me.DgvIndicatorLayout = New Manager.DataGridViewLayout()
         Me.DgvPriceLayout = New Manager.DataGridViewLayout()
-        Me.PvPicture = New ControlLibrary.PictureViewer()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
         Me.PnButtons.SuspendLayout()
@@ -1135,6 +1135,29 @@ Partial Class FrmProduct
         Me.TabPicture.Text = "Fotos"
         Me.TabPicture.UseVisualStyleBackColor = True
         '
+        'PvPicture
+        '
+        Me.PvPicture.ControlBarBackColor = System.Drawing.Color.White
+        Me.PvPicture.CounterBarBackColor = System.Drawing.Color.White
+        Me.PvPicture.CounterMask = "Foto {0} de {1} - Max {2}"
+        Me.PvPicture.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PvPicture.FirstButtonImage = CType(resources.GetObject("PvPicture.FirstButtonImage"), System.Drawing.Image)
+        Me.PvPicture.IncludeButtonImage = CType(resources.GetObject("PvPicture.IncludeButtonImage"), System.Drawing.Image)
+        Me.PvPicture.LastButtonImage = CType(resources.GetObject("PvPicture.LastButtonImage"), System.Drawing.Image)
+        Me.PvPicture.Location = New System.Drawing.Point(3, 3)
+        Me.PvPicture.MaximumPictures = 5
+        Me.PvPicture.Name = "PvPicture"
+        Me.PvPicture.NextButtonImage = CType(resources.GetObject("PvPicture.NextButtonImage"), System.Drawing.Image)
+        Me.PvPicture.Padding = New System.Windows.Forms.Padding(1)
+        Me.PvPicture.PreviousButtonImage = CType(resources.GetObject("PvPicture.PreviousButtonImage"), System.Drawing.Image)
+        Me.PvPicture.RemoveButtonImage = CType(resources.GetObject("PvPicture.RemoveButtonImage"), System.Drawing.Image)
+        Me.PvPicture.SaveButtonImage = CType(resources.GetObject("PvPicture.SaveButtonImage"), System.Drawing.Image)
+        Me.PvPicture.ShowControlBar = True
+        Me.PvPicture.ShowCounterBar = True
+        Me.PvPicture.Size = New System.Drawing.Size(600, 186)
+        Me.PvPicture.TabIndex = 0
+        Me.PvPicture.TempDirectory = "C:\Users\leand\AppData\Local\Temp\Manager\"
+        '
         'TmrQueriedBoxFamily
         '
         Me.TmrQueriedBoxFamily.Enabled = True
@@ -1182,28 +1205,6 @@ Partial Class FrmProduct
         '
         Me.DgvPriceLayout.DataGridView = Me.DgvPrice
         Me.DgvPriceLayout.Routine = Manager.Routine.ProductPrice
-        '
-        'PvPicture
-        '
-        Me.PvPicture.ControlBarBackColor = System.Drawing.Color.White
-        Me.PvPicture.CounterBarBackColor = System.Drawing.Color.White
-        Me.PvPicture.CounterMask = "Foto {0} de {1} - Max {2}"
-        Me.PvPicture.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PvPicture.FirstButtonImage = CType(resources.GetObject("PvPicture.FirstButtonImage"), System.Drawing.Image)
-        Me.PvPicture.IncludeButtonImage = CType(resources.GetObject("PvPicture.IncludeButtonImage"), System.Drawing.Image)
-        Me.PvPicture.LastButtonImage = CType(resources.GetObject("PvPicture.LastButtonImage"), System.Drawing.Image)
-        Me.PvPicture.Location = New System.Drawing.Point(3, 3)
-        Me.PvPicture.MaximumPictures = 5
-        Me.PvPicture.Name = "PvPicture"
-        Me.PvPicture.NextButtonImage = CType(resources.GetObject("PvPicture.NextButtonImage"), System.Drawing.Image)
-        Me.PvPicture.Padding = New System.Windows.Forms.Padding(1)
-        Me.PvPicture.PreviousButtonImage = CType(resources.GetObject("PvPicture.PreviousButtonImage"), System.Drawing.Image)
-        Me.PvPicture.RemoveButtonImage = CType(resources.GetObject("PvPicture.RemoveButtonImage"), System.Drawing.Image)
-        Me.PvPicture.SaveButtonImage = CType(resources.GetObject("PvPicture.SaveButtonImage"), System.Drawing.Image)
-        Me.PvPicture.ShowControlBar = True
-        Me.PvPicture.ShowCounterBar = True
-        Me.PvPicture.Size = New System.Drawing.Size(600, 186)
-        Me.PvPicture.TabIndex = 0
         '
         'FrmProduct
         '

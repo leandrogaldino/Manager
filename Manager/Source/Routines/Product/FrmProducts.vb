@@ -40,11 +40,6 @@ Public Class FrmProducts
             Try
                 Cursor = Cursors.WaitCursor
                 _Product = New Product().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
-                For Each p In _Product.Pictures.ToArray.Reverse
-                    If Not IO.File.Exists(p.Picture.OriginalFile) Then
-                        _Product.Pictures.Remove(p)
-                    End If
-                Next p
                 ProductForm = New FrmProduct(_Product, Me)
                 ProductForm.DgvProviderCode.Fill(_Product.ProviderCodes)
                 ProductForm.DgvCode.Fill(_Product.Codes)

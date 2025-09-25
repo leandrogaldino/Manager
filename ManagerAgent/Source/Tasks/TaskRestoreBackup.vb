@@ -37,7 +37,7 @@ Public Class TaskRestoreBackup
     Public Property BackupFile As BackupFileModel
     Public Overrides Async Function Run(Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task
         Dim Response As New AsyncResponseModel
-        Dim DatabaseDirectory As String
+        Dim DatabaseDirectory As String = String.Empty
         Dim FileManager As FileManager
         Dim IntProgress As Progress(Of Integer)
         Dim Exception As Exception = Nothing

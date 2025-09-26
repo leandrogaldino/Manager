@@ -3,8 +3,8 @@
 Public Class Updater
     Public Delegate Sub UpdateProgressChange(sender As Object, e As ProgressEventArgs)
     Public Event UpdateProgressChanged As UpdateProgressChange
-    Private _ServerDirectory As DirectoryInfo
-    Private _ManagerDirectory As DirectoryInfo
+    Private ReadOnly _ServerDirectory As DirectoryInfo
+    Private ReadOnly _ManagerDirectory As DirectoryInfo
     Public Sub New(ServerDirectory As DirectoryInfo, ManagerDirectory As DirectoryInfo)
         _ServerDirectory = ServerDirectory
         _ManagerDirectory = ManagerDirectory
@@ -25,6 +25,10 @@ Public Class Updater
         For Each ManagerDirectory As DirectoryInfo In AllDirectories
             ManagerDirectory.Delete(True)
         Next ManagerDirectory
+
+        Dim AppDirectory As String = Path.Combine(_ManagerDirectory.FullName, "App")
+
+        Directory.CreateDirectory(AppDirectory)
         AllFiles = _ServerDirectory.GetFiles("*", SearchOption.AllDirectories)
         AllDirectories = _ServerDirectory.GetDirectories("*", SearchOption.AllDirectories)
         Args = New ProgressEventArgs With {
@@ -32,12 +36,12 @@ Public Class Updater
                 }
         For Each SourceDir As DirectoryInfo In AllDirectories
             RelativePath = SourceDir.FullName.Substring(_ServerDirectory.FullName.Length + 1)
-            DestFilePath = Path.Combine(_ManagerDirectory.FullName, RelativePath)
+            DestFilePath = Path.Combine(AppDirectory, RelativePath)
             Directory.CreateDirectory(DestFilePath)
         Next SourceDir
         For Each SourceFile As FileInfo In AllFiles
             RelativePath = SourceFile.FullName.Substring(_ServerDirectory.FullName.Length + 1)
-            DestFilePath = Path.Combine(_ManagerDirectory.FullName, RelativePath)
+            DestFilePath = Path.Combine(AppDirectory, RelativePath)
             DestFileDir = New DirectoryInfo(Path.GetDirectoryName(DestFilePath))
             Directory.CreateDirectory(DestFileDir.FullName)
             File.Copy(SourceFile.FullName, DestFilePath, True)

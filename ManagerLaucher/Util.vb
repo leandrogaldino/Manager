@@ -16,7 +16,7 @@ Public Class Util
     End Function
 
     Private Shared Function GetCurrentVersion(ManagerDirectory As String) As String
-        Dim ManagerFile As String = Path.Combine(ManagerDirectory, "Manager.exe")
+        Dim ManagerFile As String = Path.Combine(ManagerDirectory, "App", "Manager.exe")
         Dim Assembly As Reflection.Assembly
         Dim VersionInfo As FileVersionInfo
         Dim Version As String

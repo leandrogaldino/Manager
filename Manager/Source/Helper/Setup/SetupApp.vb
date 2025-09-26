@@ -4,7 +4,11 @@ Imports ManagerCore
 
 Public Class SetupApp
     Public Shared Sub SetupIO()
-        ApplicationPaths.AgentDirectory = File.ReadAllText(Path.Combine(Application.StartupPath, "AgentLocation.txt"))
+        ApplicationPaths.AgentDirectory = File.ReadAllText(Path.Combine(Application.StartupPath, "..", "AgentLocation.txt"))
+        If Directory.Exists(ApplicationPaths.AgentDirectory) = False Then
+            Throw New DirectoryNotFoundException("O diretório do Agent não foi encontrado.")
+        End If
+
         ApplicationPaths.Create()
         WipeTempDirectory()
         If Not File.Exists(Path.Combine(ApplicationPaths.HelpersDirectory, "MaintenancePlan.xml")) Then

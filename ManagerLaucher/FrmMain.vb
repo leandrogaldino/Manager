@@ -27,7 +27,7 @@ Public Class FrmMain
                     _UcUpdate.CheckUpdate()
                 Else
                     Try
-                        Process.Start(Path.Combine(_ManagerDirectory, "Manager.exe"))
+                        Process.Start(Path.Combine(_ManagerDirectory, "App", "Manager.exe"))
                     Catch ex As Exception
                         MessageBox.Show($"Não foi possível iniciar o sistema{vbNewLine}Erro: {ex.Message}")
                     Finally

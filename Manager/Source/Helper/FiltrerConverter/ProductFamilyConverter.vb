@@ -1,5 +1,4 @@
-﻿Imports Manager.Util
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
 Imports MySql.Data.MySqlClient
 Imports ControlLibrary
 Public Class ProductFamilyConverter

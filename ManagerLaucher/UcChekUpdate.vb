@@ -31,7 +31,7 @@ Public Class UcChekUpdate
 
     Private Sub BwUpdate_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BwUpdate.RunWorkerCompleted
         CpbUpdate.Value = 100
-        Process.Start(Path.Combine(_ManagerDirectory, "Manager.exe"))
+        Process.Start(Path.Combine(_ManagerDirectory, "App", "Manager.exe"))
         Application.Exit()
     End Sub
 End Class

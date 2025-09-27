@@ -3,7 +3,7 @@
 Public Class FrmMain
     Private _ManagerDirectory As String = Directory.GetCurrentDirectory()
     Private _AgentDirectory As String
-    Private _AgentLocationFile As String = Path.Combine(_ManagerDirectory, "AgentLocation.txt")
+    Private _AgentLocationFile As String = Path.Combine(_ManagerDirectory, ".AgentLocation")
     Private _DeployDirectory As String
     Private _UcChose As UcChoseLocation
     Private _UcType As UcTypeLocation

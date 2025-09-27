@@ -9,7 +9,7 @@ Public Class UcChoseLocation
     Private Sub BtnAgentDir_Click(sender As Object, e As EventArgs) Handles BtnAgentDir.Click
         If FbdAgentDir.ShowDialog = DialogResult.OK Then
             If File.Exists(Path.Combine(FbdAgentDir.SelectedPath, "ManagerAgent.exe")) Then
-                File.WriteAllText(Path.Combine(_ManagerDirectory, "AgentLocation.txt"), FbdAgentDir.SelectedPath)
+                File.WriteAllText(Path.Combine(_ManagerDirectory, ".AgentLocation"), FbdAgentDir.SelectedPath)
                 MessageBox.Show("A configuração foi salva, o sistema será reiniciado.")
                 Application.Restart()
             Else

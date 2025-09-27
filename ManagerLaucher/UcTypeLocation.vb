@@ -8,7 +8,7 @@ Public Class UcTypeLocation
     End Sub
     Private Sub BtnAgentDir_Click(sender As Object, e As EventArgs) Handles BtnAgentDir.Click
         If File.Exists(Path.Combine(TxtAgentDir.Text, "ManagerAgent.exe")) Then
-            File.WriteAllText(Path.Combine(_ManagerDirectory, "AgentLocation.txt"), TxtAgentDir.Text)
+            File.WriteAllText(Path.Combine(_ManagerDirectory, ".AgentLocation"), TxtAgentDir.Text)
             MessageBox.Show("A configuração foi salva, por favor inicie o sistema novamente.")
             Application.Exit()
         Else

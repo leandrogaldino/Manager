@@ -1,14 +1,16 @@
 ﻿Imports System.IO
 Imports ControlLibrary
 Imports ManagerCore
-
 Public Class SetupApp
     Public Shared Sub SetupIO()
-        ApplicationPaths.AgentDirectory = File.ReadAllText(Path.Combine(Application.StartupPath, "..", "AgentLocation.txt"))
+        Dim AgentLocationFile As String = Path.GetFullPath(Path.Combine(Application.StartupPath, "..", ".AgentLocation"))
+        If Not File.Exists(AgentLocationFile) Then AgentLocationFile = Path.GetFullPath(Path.Combine(Application.StartupPath, ".AgentLocation"))
+        If Not File.Exists(AgentLocationFile) Then Throw New FileNotFoundException("O arquivo de localização do Agent não foi encontrado.")
+        Dim AgentLocation As String = File.ReadAllText(AgentLocationFile)
+        ApplicationPaths.AgentDirectory = Path.GetFullPath(AgentLocation)
         If Directory.Exists(ApplicationPaths.AgentDirectory) = False Then
             Throw New DirectoryNotFoundException("O diretório do Agent não foi encontrado.")
         End If
-
         ApplicationPaths.Create()
         WipeTempDirectory()
         If Not File.Exists(Path.Combine(ApplicationPaths.HelpersDirectory, "MaintenancePlan.xml")) Then
@@ -21,7 +23,6 @@ Public Class SetupApp
         DataGridViewLayout.XmlDirectory = Path.Combine(Session.UserDirectoryLocation, "GridLayout")
         DataGridViewLayout.CreateOrUpdateFiles()
     End Sub
-
     Public Shared Sub SetupDatabases()
         Dim Session As Session = Locator.GetInstance(Of Session)
         Locator.GetInstance(Of LocalDB)().Initialize(Session.Setting.Database)
@@ -29,8 +30,6 @@ Public Class SetupApp
         Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer).Initialize(Session.Setting.Cloud.CustomerDB)
         Locator.GetInstance(Of Storage)().Initialize(Session.Setting.Cloud.Storage)
     End Sub
-
-
     Private Shared Sub WipeTempDirectory()
         Dim CurrentDirectory As DirectoryInfo
         If Process.GetProcessesByName("Manager").Length = 1 Then

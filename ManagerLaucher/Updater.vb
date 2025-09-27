@@ -17,7 +17,7 @@ Public Class Updater
         Dim DestFilePath As String
         Dim DestFileDir As DirectoryInfo
         Dim Args As ProgressEventArgs
-        AllFiles = _ManagerDirectory.GetFiles().Where(Function(x) Not x.Name.Equals("ManagerLaucher.exe") And Not x.Name.Equals("AgentLocation.txt")).ToArray
+        AllFiles = _ManagerDirectory.GetFiles().Where(Function(x) Not x.Name.Equals("ManagerLaucher.exe") And Not x.Name.Equals(".AgentLocation")).ToArray
         AllDirectories = _ManagerDirectory.GetDirectories()
         For Each ManagerFile As FileInfo In AllFiles
             ManagerFile.Delete()

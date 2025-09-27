@@ -9,6 +9,8 @@
 • Correções na tela de alteração de capacidades das peças da avaliação.
 • Possibilidade de incluir produtos e serviços como itens dos compressores.
 • Criação de vínculo dos itens do compressor da pessoa para recebimento de dados da nuvem.
+• Correção no grafico do plano de manutenção que fazia os dados ficarem truncados ao gerar plano para muitos compressores.
+• Diversas melhorias e ajustes técnicos internos realizados para aprimorar a estabilidade e desempenho do sistema.
 #1.1.6
 • Corrigido um bug que fazia a avaliação automática vencer no mesmo dia em que era criada.
 #1.1.5

@@ -152,8 +152,9 @@ Public Class FrmEmailSignature
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.EmailSignature, _EmailSignature.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.EmailSignature, _EmailSignature.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub TxtName_TextChanged(sender As Object, e As EventArgs) Handles TxtName.TextChanged
         EprValidation.Clear()

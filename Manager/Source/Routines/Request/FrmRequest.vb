@@ -172,8 +172,9 @@ Public Class FrmRequest
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.Request, _Request.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.Request, _Request.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtDestination.TextChanged,
                                                                           TxtResponsible.TextChanged,
@@ -203,16 +204,17 @@ Public Class FrmRequest
         Save()
     End Sub
     Private Sub BtnIncludeItem_Click(sender As Object, e As EventArgs) Handles BtnIncludeItem.Click
-        Dim Form As New FrmRequestItem(_Request, New RequestItem(), Me)
-        Form.ShowDialog()
+        Using Form As New FrmRequestItem(_Request, New RequestItem(), Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditItem_Click(sender As Object, e As EventArgs) Handles BtnEditItem.Click
-        Dim Form As FrmRequestItem
         Dim Item As RequestItem
         If DgvItem.SelectedRows.Count = 1 Then
             Item = _Request.Items.Single(Function(x) x.Guid = DgvItem.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmRequestItem(_Request, Item, Me)
-            Form.ShowDialog()
+            Using Form As New FrmRequestItem(_Request, Item, Me)
+                Form.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub BtnDeleteItem_Click(sender As Object, e As EventArgs) Handles BtnDeleteItem.Click
@@ -429,8 +431,8 @@ Public Class FrmRequest
         End If
     End Sub
     Private Sub BtnRequestSheet_Click(sender As Object, e As EventArgs) Handles BtnRequestSheet.Click
-        Using FormSheet As New FrmRequestSheet(_Request, BtnSave.Enabled)
-            FormSheet.ShowDialog()
+        Using Form As New FrmRequestSheet(_Request, BtnSave.Enabled)
+            Form.ShowDialog()
         End Using
     End Sub
 

@@ -28,27 +28,26 @@ Public Class FrmUserImportPrivilege
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Preset As PrivilegePreset
-        Dim Form As FrmPrivilegePreset
         Preset = New PrivilegePreset
-        Form = New FrmPrivilegePreset(Preset)
-        Form.ShowDialog()
+        Using Form As New FrmPrivilegePreset(Preset)
+            Form.ShowDialog()
+        End Using
         If Preset.ID > 0 Then
             QbxPreset.Freeze(Preset.ID)
         End If
         QbxPreset.Select()
     End Sub
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
-        Dim Form As New FrmPrivilegePreset(New PrivilegePreset().Load(QbxPreset.FreezedPrimaryKey, True))
-        Form.ShowDialog()
+        Using Form As New FrmPrivilegePreset(New PrivilegePreset().Load(QbxPreset.FreezedPrimaryKey, True))
+            Form.ShowDialog()
+        End Using
         QbxPreset.Freeze(QbxPreset.FreezedPrimaryKey)
         QbxPreset.Select()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New PrivilegePresetQueriedBoxFilter(), QbxPreset) With {
-            .Text = "Filtro de Predefinição de Permissões"
-        }
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New PrivilegePresetQueriedBoxFilter(), QbxPreset) With {.Text = "Filtro de Predefinição de Permissões"}
+            Form.ShowDialog()
+        End Using
         QbxPreset.Select()
     End Sub
     Private Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click

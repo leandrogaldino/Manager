@@ -156,8 +156,9 @@ Public Class FrmCompressor
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.Compressor, _Compressor.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.Compressor, _Compressor.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
@@ -282,13 +283,11 @@ Public Class FrmCompressor
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Manufacturer As Person
-        Dim Form As FrmPerson
-        Manufacturer = New Person With {
-            .IsProvider = True
-        }
-        Form = New FrmPerson(Manufacturer)
-        Form.CbxIsProvider.Enabled = False
-        Form.ShowDialog()
+        Manufacturer = New Person With {.IsProvider = True}
+        Using Form As New FrmPerson(Manufacturer)
+            Form.CbxIsProvider.Enabled = False
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If Manufacturer.ID > 0 Then
             QbxManufacturer.Freeze(Manufacturer.ID)
@@ -296,17 +295,17 @@ Public Class FrmCompressor
         QbxManufacturer.Select()
     End Sub
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
-        Dim Form As New FrmPerson(New Person().Load(QbxManufacturer.FreezedPrimaryKey, True))
-        Form.CbxIsProvider.Enabled = False
-        Form.ShowDialog()
+        Using Form As New FrmPerson(New Person().Load(QbxManufacturer.FreezedPrimaryKey, True))
+            Form.CbxIsProvider.Enabled = False
+            Form.ShowDialog()
+        End Using
         QbxManufacturer.Freeze(QbxManufacturer.FreezedPrimaryKey)
         QbxManufacturer.Select()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New PersonProviderQueriedBoxFilter(), QbxManufacturer)
-        FilterForm.Text = "Filtro de Fornecedores"
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New PersonProviderQueriedBoxFilter(), QbxManufacturer) With {.Text = "Filtro de Fornecedores"}
+            Form.ShowDialog()
+        End Using
         QbxManufacturer.Select()
     End Sub
     Private Sub TcCompressor_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcCompressor.SelectedIndexChanged
@@ -322,16 +321,17 @@ Public Class FrmCompressor
         End If
     End Sub
     Private Sub BtnIncludeWorkedHourSellable_Click(sender As Object, e As EventArgs) Handles BtnIncludeWorkedHourSellable.Click
-        Dim Form As New FrmCompressorSellableWorkedHour(_Compressor, New CompressorSellable(CompressorSellableControlType.WorkedHour), Me)
-        Form.ShowDialog()
+        Using Form As New FrmCompressorSellableWorkedHour(_Compressor, New CompressorSellable(CompressorSellableControlType.WorkedHour), Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditWorkedHourSellable_Click(sender As Object, e As EventArgs) Handles BtnEditWorkedHourSellable.Click
-        Dim Form As FrmCompressorSellableWorkedHour
         Dim WorkedHourSellable As CompressorSellable
         If DgvCompressorWorkedHourSellable.SelectedRows.Count = 1 Then
             WorkedHourSellable = _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = DgvCompressorWorkedHourSellable.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmCompressorSellableWorkedHour(_Compressor, WorkedHourSellable, Me)
-            Form.ShowDialog()
+            Using Form As New FrmCompressorSellableWorkedHour(_Compressor, WorkedHourSellable, Me)
+                Form.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub BtnDeleteWorkedHourSellable_Click(sender As Object, e As EventArgs) Handles BtnDeleteWorkedHourSellable.Click
@@ -406,16 +406,17 @@ Public Class FrmCompressor
         End If
     End Sub
     Private Sub BtnIncludeElapsedDaySellable_Click(sender As Object, e As EventArgs) Handles BtnIncludeElapsedDaySellable.Click
-        Dim Form As New FrmCompressorSellableElapsedDay(_Compressor, New CompressorSellable(CompressorSellableControlType.ElapsedDay), Me)
-        Form.ShowDialog()
+        Using Form As New FrmCompressorSellableElapsedDay(_Compressor, New CompressorSellable(CompressorSellableControlType.ElapsedDay), Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BBtnEditElapsedDaySellable_Click(sender As Object, e As EventArgs) Handles BtnEditElapsedDaySellable.Click
-        Dim Form As FrmCompressorSellableElapsedDay
         Dim ElapsedDaySellable As CompressorSellable
         If DgvCompressorElapsedDaySellable.SelectedRows.Count = 1 Then
             ElapsedDaySellable = _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = DgvCompressorElapsedDaySellable.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmCompressorSellableElapsedDay(_Compressor, ElapsedDaySellable, Me)
-            Form.ShowDialog()
+            Using Form As New FrmCompressorSellableElapsedDay(_Compressor, ElapsedDaySellable, Me)
+                Form.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub BtnDeleteElapsedDaySellable_Click(sender As Object, e As EventArgs) Handles BtnDeleteElapsedDaySellable.Click

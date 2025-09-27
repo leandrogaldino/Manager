@@ -51,14 +51,10 @@ Partial Class FrmHtmlPreview
         '
         'WbPreview
         '
-        Me.WbPreview.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.WbPreview.Location = New System.Drawing.Point(19, 19)
-        Me.WbPreview.Margin = New System.Windows.Forms.Padding(10)
+        Me.WbPreview.Location = New System.Drawing.Point(12, 12)
         Me.WbPreview.MinimumSize = New System.Drawing.Size(20, 20)
         Me.WbPreview.Name = "WbPreview"
-        Me.WbPreview.Size = New System.Drawing.Size(543, 321)
+        Me.WbPreview.Size = New System.Drawing.Size(557, 328)
         Me.WbPreview.TabIndex = 19
         '
         'FrmHtmlPreview

@@ -34,18 +34,19 @@ Public Class FrmEvaluations
         AddHandler Parent.FindForm.Resize, AddressOf FrmMain_ResizeEnd
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
-        Dim Form As New FrmEvaluation(New Evaluation, Me)
-        Form.ShowDialog()
+        Using Form As New FrmEvaluation(New Evaluation, Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEdit_Click(sender As Object, e As EventArgs) Handles BtnEdit.Click
-        Dim EvaluationForm As FrmEvaluation
         If DgvData.SelectedRows.Count = 1 Then
             Try
                 Cursor = Cursors.WaitCursor
                 _Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
-                EvaluationForm = New FrmEvaluation(_Evaluation, Me)
                 Evaluation.FillControlledSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvWorkedHourSellable, CompressorSellableControlType.WorkedHour)
-                EvaluationForm.ShowDialog()
+                Using Form As New FrmEvaluation(_Evaluation, Me)
+                    Form.ShowDialog()
+                End Using
             Catch ex As Exception
                 CMessageBox.Show("ERRO EV006", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
@@ -99,15 +100,19 @@ Public Class FrmEvaluations
     End Sub
     Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
         Dim Index As Integer
+        Dim Page As TabPage
         If Not Control.ModifierKeys = Keys.Shift Then
             Index = FrmMain.TcWindows.SelectedIndex
-            FrmMain.TcWindows.TabPages.Remove(FrmMain.TcWindows.SelectedTab)
+            Page = FrmMain.TcWindows.SelectedTab
+            FrmMain.TcWindows.TabPages.Remove(Page)
+            Page.Dispose()
             If Index > 0 Then
                 FrmMain.TcWindows.SelectTab(Index - 1)
             End If
         Else
-            For Each Page As TabPage In FrmMain.TcWindows.TabPages
+            For Each Page In FrmMain.TcWindows.TabPages
                 FrmMain.TcWindows.TabPages.Remove(Page)
+                Page.Dispose()
             Next Page
         End If
     End Sub
@@ -226,8 +231,8 @@ Public Class FrmEvaluations
     End Sub
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Avaliações", .Grid = DgvData}})
-        Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, EnumHelper.GetEnumDescription(Routine.ExportGrid))
+        Dim Form As New FrmReport(Result)
+        FrmMain.OpenTab(Form, EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
     Private Sub BtnApprove_Click(sender As Object, e As EventArgs) Handles BtnApprove.Click
         Try
@@ -243,12 +248,12 @@ Public Class FrmEvaluations
         End Try
     End Sub
     Private Sub BtnReject_Click(sender As Object, e As EventArgs) Handles BtnReject.Click
-        Using FormReject As New FrmEvaluationRejectReason
-            If FormReject.ShowDialog = DialogResult.OK Then
+        Using Form As New FrmEvaluationRejectReason
+            If Form.ShowDialog = DialogResult.OK Then
                 Try
                     Cursor = Cursors.WaitCursor
                     _Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("id").Value, False)
-                    _Evaluation.SetStatus(EvaluationStatus.Rejected, FormReject.TxtReason.Text)
+                    _Evaluation.SetStatus(EvaluationStatus.Rejected, Form.TxtReason.Text)
                     _Filter.Filter()
                     DgvEvaluationLayout.Load()
                 Catch ex As Exception
@@ -291,8 +296,8 @@ Public Class FrmEvaluations
     End Sub
 
     Private Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
-        Using ImportForm As New FrmEvaluationImport(Me)
-            ImportForm.ShowDialog()
+        Using Form As New FrmEvaluationImport(Me)
+            Form.ShowDialog()
         End Using
     End Sub
 End Class

@@ -101,8 +101,9 @@ Public Class FrmPersonCompressorSellableElapsedDay
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.PersonCompressorSellable, _ElapsedDaySellable.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.PersonCompressorSellable, _ElapsedDaySellable.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
@@ -298,19 +299,19 @@ Public Class FrmPersonCompressorSellableElapsedDay
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Product As Product
         Dim Service As Service
-        Dim ProductForm As FrmProduct
-        Dim ServiceForm As FrmService
         If RbtProduct.Checked Then
             Product = New Product
-            ProductForm = New FrmProduct(Product)
-            ProductForm.ShowDialog()
+            Using Form As New FrmProduct(Product)
+                Form.ShowDialog()
+            End Using
             If Product.ID > 0 Then
                 QbxSellable.Freeze(Product.ID)
             End If
         Else
             Service = New Service
-            ServiceForm = New FrmService(Service)
-            ServiceForm.ShowDialog()
+            Using Form As New FrmService(Service)
+                Form.ShowDialog()
+            End Using
             If Service.ID > 0 Then
                 QbxSellable.Freeze(Service.ID)
             End If
@@ -319,30 +320,28 @@ Public Class FrmPersonCompressorSellableElapsedDay
         QbxSellable.Select()
     End Sub
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
-        Dim ProductForm As FrmProduct
-        Dim ServiceForm As FrmService
         If RbtProduct.Checked Then
-            ProductForm = New FrmProduct(New Product().Load(QbxSellable.FreezedPrimaryKey, True))
-            ProductForm.ShowDialog()
+            Using Form As New FrmProduct(New Product().Load(QbxSellable.FreezedPrimaryKey, True))
+                Form.ShowDialog()
+            End Using
         Else
-            ServiceForm = New FrmService(New Service().Load(QbxSellable.FreezedPrimaryKey, True))
-            ServiceForm.ShowDialog()
+            Using Form As New FrmService(New Service().Load(QbxSellable.FreezedPrimaryKey, True))
+                Form.ShowDialog()
+            End Using
         End If
         QbxSellable.Freeze(QbxSellable.FreezedPrimaryKey)
         QbxSellable.Select()
     End Sub    '
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
-        Dim FilterForm As FrmFilter
         If RbtProduct.Checked Then
-            FilterForm = New FrmFilter(New ProductQueriedBoxFilter(), QbxSellable) With {
-                .Text = "Filtro de Produtos"
-            }
+            Using Form As New FrmFilter(New ProductQueriedBoxFilter(), QbxSellable) With {.Text = "Filtro de Produtos"}
+                Form.ShowDialog()
+            End Using
         Else
-            FilterForm = New FrmFilter(New ServiceQueriedBoxFilter(), QbxSellable) With {
-                .Text = "Filtro de Serviços"
-            }
+            Using Form As New FrmFilter(New ServiceQueriedBoxFilter(), QbxSellable) With {.Text = "Filtro de Serviços"}
+                Form.ShowDialog()
+            End Using
         End If
-        FilterForm.ShowDialog()
         QbxSellable.Select()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click

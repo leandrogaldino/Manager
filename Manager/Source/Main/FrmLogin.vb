@@ -21,11 +21,6 @@ Public Class FrmLogin
         End If
         MyBase.DefWndProc(m)
     End Sub
-    Public Class Script
-        Public Sub Main()
-            MessageBox.Show("Hello World!")
-        End Sub
-    End Class
     Private Sub TxtUser_Leave(sender As Object, e As EventArgs) Handles TxtUsername.Leave
         If TxtUsername.Text <> Nothing Then
             TxtUsername.Text = TxtUsername.Text.ToUnaccented()
@@ -36,12 +31,9 @@ Public Class FrmLogin
         BtnLogin.Enabled = False
         Dim TypedPassword As String
         Dim DbPassword As String
-        Dim FormChangePassword As FrmUserChangePassword
-
         Dim Session = Locator.GetInstance(Of Session)
         Dim License = Locator.GetInstance(Of LicenseService)
         Dim CryptoKey = Locator.GetInstance(Of CryptoKeyService)
-
         Try
             Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
                 Using Com As New MySqlCommand(My.Resources.UserLoginSelect, Con)
@@ -65,12 +57,6 @@ Public Class FrmLogin
                                                 If Session.LicenseResult.Success Then
                                                     Hide()
                                                     FrmMain.Show()
-                                                    'Dim frm As New FrmLoader() : frm.Show()
-                                                    'Dim frm As New FrmEvaluationImport() : frm.Show()
-
-
-
-
                                                 Else
                                                     Select Case Session.LicenseResult.Flag
                                                         Case LicenseMessages.OutdatedLocalLicenseKey
@@ -89,8 +75,9 @@ Public Class FrmLogin
                                             End Try
                                         Else
                                             CMessageBox.Show("Será necessário alterar a sua senha.", CMessageBoxType.Information)
-                                            FormChangePassword = New FrmUserChangePassword(Session.User)
-                                            FormChangePassword.ShowDialog()
+                                            Using Form As New FrmUserChangePassword(Session.User)
+                                                Form.ShowDialog()
+                                            End Using
                                             TxtPassword.Clear()
                                             TxtPassword.Select()
                                         End If
@@ -159,10 +146,9 @@ Public Class FrmLogin
             BtnLogin.Enabled = False
         End If
     End Sub
-
     Private Sub LblVersion_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LblVersion.LinkClicked
-        Using Frm As New FrmUpdateNotes()
-            Frm.ShowDialog()
+        Using Form As New FrmUpdateNotes()
+            Form.ShowDialog()
         End Using
     End Sub
 End Class

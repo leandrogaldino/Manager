@@ -568,18 +568,17 @@ Public Class FrmEvaluation
         If ControlType = CompressorSellableControlType.ElapsedDay Then
             Sellable = _Evaluation.ElapsedDayControlledSellable.Single(Function(x) x.PersonCompressorSellable.ID = DgvElapsedDaySellable.SelectedRows(0).Cells("PersonCompressorSellable").Value.ID)
             RowIndex = DgvElapsedDaySellable.SelectedRows(0).Index
-            Using Frm As New FrmEvaluationControlledSellable(Sellable)
-                Result = Frm.ShowDialog()
+            Using Form As New FrmEvaluationControlledSellable(Sellable)
+                Result = Form.ShowDialog()
                 DgvElapsedDaySellable.Fill(_Evaluation.ElapsedDayControlledSellable)
                 DgvlElapsedDaySellable.Load()
                 NavElapsedDaySellable.EnsureVisibleRow(RowIndex)
-
             End Using
         Else
             Sellable = _Evaluation.WorkedHourControlledSelable.Single(Function(x) x.PersonCompressorSellable.ID = DgvWorkedHourSellable.SelectedRows(0).Cells("PersonCompressorSellable").Value.ID)
             RowIndex = DgvWorkedHourSellable.SelectedRows(0).Index
-            Using Frm As New FrmEvaluationControlledSellable(Sellable)
-                Result = Frm.ShowDialog()
+            Using Form As New FrmEvaluationControlledSellable(Sellable)
+                Result = Form.ShowDialog()
                 DgvWorkedHourSellable.Fill(_Evaluation.WorkedHourControlledSelable)
                 DgvlWorkedHourSellable.Load()
                 NavWorkedHourSellable.EnsureVisibleRow(RowIndex)
@@ -902,8 +901,9 @@ Public Class FrmEvaluation
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.Evaluation, _Evaluation.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.Evaluation, _Evaluation.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
         Save()
@@ -965,11 +965,11 @@ Public Class FrmEvaluation
     Private Sub BtnReject_Click(sender As Object, e As EventArgs) Handles BtnReject.Click
         Dim Row As DataGridViewRow
         If _Evaluation.ID > 0 Then
-            Using FormReject As New FrmEvaluationRejectReason
-                If FormReject.ShowDialog = DialogResult.OK Then
+            Using Form As New FrmEvaluationRejectReason
+                If Form.ShowDialog = DialogResult.OK Then
                     Try
                         Cursor = Cursors.WaitCursor
-                        _Evaluation.SetStatus(EvaluationStatus.Rejected, FormReject.TxtReason.Text)
+                        _Evaluation.SetStatus(EvaluationStatus.Rejected, Form.TxtReason.Text)
                         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
                         BtnStatusValue.ToolTipText = If(String.IsNullOrEmpty(_Evaluation.RejectReason), Nothing, "MOTIVO:" & vbNewLine & _Evaluation.RejectReason)
                         LblStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
@@ -1107,15 +1107,15 @@ Public Class FrmEvaluation
     End Sub
     Private Sub BtnNewCustomer_Click(sender As Object, e As EventArgs) Handles BtnNewCustomer.Click
         Dim Customer As Person
-        Dim Form As FrmPerson
         Customer = New Person With {
             .IsCustomer = True,
             .ControlMaintenance = True
         }
-        Form = New FrmPerson(Customer)
-        Form.CbxIsCustomer.Enabled = False
-        Form.CbxMaintenance.Enabled = False
-        Form.ShowDialog()
+        Using Form As New FrmPerson(Customer)
+            Form.CbxIsCustomer.Enabled = False
+            Form.CbxMaintenance.Enabled = False
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If Customer.ID > 0 Then
             QbxCustomer.Freeze(Customer.ID)
@@ -1125,12 +1125,13 @@ Public Class FrmEvaluation
         QbxCustomer.Select()
     End Sub
     Private Sub BtnViewCustomer_Click(sender As Object, e As EventArgs) Handles BtnViewCustomer.Click
-        Dim Form As New FrmPerson(New Person().Load(QbxCustomer.FreezedPrimaryKey, True))
         Dim FreezedCustomerID As Long = QbxCustomer.FreezedPrimaryKey
         Dim FreezedCompressorID As Long = QbxCompressor.FreezedPrimaryKey
-        Form.CbxIsCustomer.Enabled = False
-        Form.CbxMaintenance.Enabled = False
-        Form.ShowDialog()
+        Using Form As New FrmPerson(New Person().Load(QbxCustomer.FreezedPrimaryKey, True))
+            Form.CbxIsCustomer.Enabled = False
+            Form.CbxMaintenance.Enabled = False
+            Form.ShowDialog()
+        End Using
         _Loading = True
         QbxCustomer.Unfreeze()
         QbxCustomer.Freeze(FreezedCustomerID)
@@ -1140,24 +1141,23 @@ Public Class FrmEvaluation
         _Loading = False
     End Sub
     Private Sub BtnFilterCustomer_Click(sender As Object, e As EventArgs) Handles BtnFilterCustomer.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New PersonCustomerQueriedBoxFilter("Sim"), QbxCustomer) With {
-            .Text = "Filtro de Clientes"
-        }
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New PersonCustomerQueriedBoxFilter("Sim"), QbxCustomer) With {.Text = "Filtro de Clientes"}
+            Form.ShowDialog()
+        End Using
         QbxCustomer.Select()
     End Sub
     Private Sub BtnIncludetechnician_Click(sender As Object, e As EventArgs) Handles BtnIncludeTechnician.Click
-        Dim Form As New FrmEvaluationTechnician(_Evaluation, New EvaluationTechnician(), Me)
-        Form.ShowDialog()
+        Using Form As New FrmEvaluationTechnician(_Evaluation, New EvaluationTechnician(), Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditTechnician_Click(sender As Object, e As EventArgs) Handles BtnEditTechnician.Click
-        Dim Form As FrmEvaluationTechnician
         Dim Technician As EvaluationTechnician
         If DgvTechnician.SelectedRows.Count = 1 Then
             Technician = _Evaluation.Technicians.Single(Function(x) x.Guid = DgvTechnician.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmEvaluationTechnician(_Evaluation, Technician, Me)
-            Form.ShowDialog()
+            Using Form As New FrmEvaluationTechnician(_Evaluation, Technician, Me)
+                Form.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub BtnDeleteTechnician_Click(sender As Object, e As EventArgs) Handles BtnDeleteTechnician.Click
@@ -1172,16 +1172,17 @@ Public Class FrmEvaluation
         End If
     End Sub
     Private Sub BtnIncludeReplacedSellable_Click(sender As Object, e As EventArgs) Handles BtnIncludeReplacedSellable.Click
-        Dim Form As New FrmEvaluationReplacedSellable(_Evaluation, New EvaluationReplacedSellable(), Me)
-        Form.ShowDialog()
+        Using Form As New FrmEvaluationReplacedSellable(_Evaluation, New EvaluationReplacedSellable(), Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditReplacedSellable_Click(sender As Object, e As EventArgs) Handles BtnEditReplacedSellable.Click
-        Dim Form As FrmEvaluationReplacedSellable
         Dim Item As EvaluationReplacedSellable
         If DgvReplacedSellable.SelectedRows.Count = 1 Then
             Item = _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = DgvReplacedSellable.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmEvaluationReplacedSellable(_Evaluation, Item, Me)
-            Form.ShowDialog()
+            Using Form As New FrmEvaluationReplacedSellable(_Evaluation, Item, Me)
+                Form.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub BtnDeleteReplacedSellable_Click(sender As Object, e As EventArgs) Handles BtnDeleteReplacedSellable.Click

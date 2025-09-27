@@ -146,8 +146,9 @@ Public Class FrmProductUnit
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.ProductUnit, _Unit.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.ProductUnit, _Unit.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then

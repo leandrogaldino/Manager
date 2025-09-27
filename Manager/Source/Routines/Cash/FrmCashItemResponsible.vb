@@ -97,8 +97,9 @@ Public Class FrmCashItemResponsible
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.CashItemResponsible, _CashItemResponsible.ID)
-        Frm.ShowDialog()
+        Using Frm As New FrmLog(Routine.CashItemResponsible, _CashItemResponsible.ID)
+            Frm.ShowDialog()
+        End Using
     End Sub
     Private Sub QbxResponsible_TextChanged(sender As Object, e As EventArgs) Handles QbxResponsible.TextChanged
         EprValidation.Clear()
@@ -198,12 +199,12 @@ Public Class FrmCashItemResponsible
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Responsible As Person
-        Dim Form As FrmPerson
         Responsible = New Person
         Responsible.IsEmployee = True
-        Form = New FrmPerson(Responsible)
-        Form.CbxIsEmployee.Enabled = False
-        Form.ShowDialog()
+        Using Form As New FrmPerson(Responsible)
+            Form.CbxIsEmployee.Enabled = False
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If Responsible.ID > 0 Then
             QbxResponsible.Freeze(Responsible.ID)
@@ -211,17 +212,17 @@ Public Class FrmCashItemResponsible
         QbxResponsible.Select()
     End Sub
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
-        Dim Form As New FrmPerson(New Person().Load(QbxResponsible.FreezedPrimaryKey, True))
-        Form.CbxIsEmployee.Enabled = False
-        Form.ShowDialog()
+        Using Form As New FrmPerson(New Person().Load(QbxResponsible.FreezedPrimaryKey, True))
+            Form.CbxIsEmployee.Enabled = False
+            Form.ShowDialog()
+        End Using
         QbxResponsible.Freeze(QbxResponsible.FreezedPrimaryKey)
         QbxResponsible.Select()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New PersonEmployeeQueriedBoxFilter(), QbxResponsible)
-        FilterForm.Text = "Filtro de Funcionários"
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New PersonEmployeeQueriedBoxFilter(), QbxResponsible) With {.Text = "Filtro de Funcionários"}
+            Form.ShowDialog()
+        End Using
         QbxResponsible.Select()
     End Sub
 End Class

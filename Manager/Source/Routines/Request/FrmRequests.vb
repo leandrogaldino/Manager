@@ -36,18 +36,19 @@ Public Class FrmRequests
         AddHandler Parent.FindForm.Resize, AddressOf FrmMain_ResizeEnd
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
-        Dim Form As New FrmRequest(New Request, Me)
-        Form.ShowDialog()
+        Using Form As New FrmRequest(New Request, Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEdit_Click(sender As Object, e As EventArgs) Handles BtnEdit.Click
-        Dim RequestForm As FrmRequest
         If DgvData.SelectedRows.Count = 1 Then
             Try
                 Cursor = Cursors.WaitCursor
                 _Request = New Request().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
-                RequestForm = New FrmRequest(_Request, Me)
-                RequestForm.DgvItem.Fill(_Request.Items)
-                RequestForm.ShowDialog()
+                Using Form As New FrmRequest(_Request, Me)
+                    Form.DgvItem.Fill(_Request.Items)
+                    Form.ShowDialog()
+                End Using
             Catch ex As Exception
                 CMessageBox.Show("ERRO RQ006", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
@@ -108,15 +109,19 @@ Public Class FrmRequests
     End Sub
     Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
         Dim Index As Integer
+        Dim Page As TabPage
         If Not Control.ModifierKeys = Keys.Shift Then
             Index = FrmMain.TcWindows.SelectedIndex
-            FrmMain.TcWindows.TabPages.Remove(FrmMain.TcWindows.SelectedTab)
+            Page = FrmMain.TcWindows.SelectedTab
+            FrmMain.TcWindows.TabPages.Remove(Page)
+            Page.Dispose()
             If Index > 0 Then
                 FrmMain.TcWindows.SelectTab(Index - 1)
             End If
         Else
-            For Each Page As TabPage In FrmMain.TcWindows.TabPages
+            For Each Page In FrmMain.TcWindows.TabPages
                 FrmMain.TcWindows.TabPages.Remove(Page)
+                Page.Dispose()
             Next Page
         End If
     End Sub
@@ -241,7 +246,7 @@ Public Class FrmRequests
 
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Requisições", .Grid = DgvData}})
-        Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, EnumHelper.GetEnumDescription(Routine.ExportGrid))
+        Dim Form As New FrmReport(Result)
+        FrmMain.OpenTab(Form, EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
 End Class

@@ -100,8 +100,9 @@ Public Class FrmPersonContact
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.PersonContact, _PersonContact.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.PersonContact, _PersonContact.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub CbxCheckedChanged(sender As Object, e As EventArgs) Handles CbxIsMainContact.CheckedChanged
         EprValidation.Clear()

@@ -74,8 +74,9 @@ Public Class FrmCityRoute
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.CityRoute, _CityRoute.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.CityRoute, _CityRoute.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
 
     Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles QbxRoute.TextChanged
@@ -165,10 +166,10 @@ Public Class FrmCityRoute
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Route As Route
-        Dim Form As FrmRoute
         Route = New Route
-        Form = New FrmRoute(Route)
-        Form.ShowDialog()
+        Using Form As New FrmRoute(Route)
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If Route.ID > 0 Then
             QbxRoute.Freeze(Route.ID)
@@ -176,16 +177,16 @@ Public Class FrmCityRoute
         QbxRoute.Select()
     End Sub
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
-        Dim Form As New FrmRoute(New Route().Load(QbxRoute.FreezedPrimaryKey, True))
-        Form.ShowDialog()
+        Using Form As New FrmRoute(New Route().Load(QbxRoute.FreezedPrimaryKey, True))
+            Form.ShowDialog()
+        End Using
         QbxRoute.Freeze(QbxRoute.FreezedPrimaryKey)
         QbxRoute.Select()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New RouteQueriedBoxFilter(), QbxRoute)
-        FilterForm.Text = "Filtro de Rotas"
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New RouteQueriedBoxFilter(), QbxRoute) With {.Text = "Filtro de Rotas"}
+            Form.ShowDialog()
+        End Using
         QbxRoute.Select()
     End Sub
     Private Sub TmrQueriedBox_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBox.Tick

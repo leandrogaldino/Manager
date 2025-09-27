@@ -74,8 +74,9 @@ Public Class FrmEvaluationTechnician
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.EvaluationTechnician, _EvaluationTechnician.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.EvaluationTechnician, _EvaluationTechnician.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles QbxTechnician.TextChanged
         EprValidation.Clear()
@@ -174,12 +175,12 @@ Public Class FrmEvaluationTechnician
     End Sub
     Private Sub BtnNewTechnician_Click(sender As Object, e As EventArgs) Handles BtnNewTechnician.Click
         Dim Technician As Person
-        Dim Form As FrmPerson
         Technician = New Person
         Technician.IsTechnician = True
-        Form = New FrmPerson(Technician)
-        Form.CbxIsTechnician.Enabled = False
-        Form.ShowDialog()
+        Using Form As New FrmPerson(Technician)
+            Form.CbxIsTechnician.Enabled = False
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If Technician.ID > 0 Then
             QbxTechnician.Freeze(Technician.ID)
@@ -187,21 +188,19 @@ Public Class FrmEvaluationTechnician
         QbxTechnician.Select()
     End Sub
     Private Sub BtnViewTechnician_Click(sender As Object, e As EventArgs) Handles BtnViewTechnician.Click
-        Dim Form As New FrmPerson(New Person().Load(QbxTechnician.FreezedPrimaryKey, True))
-        Form.CbxIsTechnician.Enabled = False
-        Form.ShowDialog()
+        Using Form As New FrmPerson(New Person().Load(QbxTechnician.FreezedPrimaryKey, True))
+            Form.CbxIsTechnician.Enabled = False
+            Form.ShowDialog()
+        End Using
         QbxTechnician.Freeze(QbxTechnician.FreezedPrimaryKey)
         QbxTechnician.Select()
     End Sub
     Private Sub BtnFilterTechnician_Click(sender As Object, e As EventArgs) Handles BtnFilterTechnician.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New PersonTechnicianQueriedBoxFilter(), QbxTechnician)
-        FilterForm.Text = "Filtro de Técnicos"
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New PersonTechnicianQueriedBoxFilter(), QbxTechnician) With {.Text = "Filtro de Técnicos"}
+            Form.ShowDialog()
+        End Using
         QbxTechnician.Select()
     End Sub
-
-
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         If BtnSave.Enabled Then
             If CMessageBox.Show("Houve alterações que ainda não foram salvas. Deseja salvar antes de continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then

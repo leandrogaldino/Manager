@@ -1,6 +1,5 @@
 ﻿Imports System.IO
 Imports ControlLibrary
-
 Public Class FrmReport
     Private _Result As ReportResult
     Public Sub New(Result As ReportResult)
@@ -16,15 +15,19 @@ Public Class FrmReport
     End Sub
     Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
         Dim Index As Integer
+        Dim Page As TabPage
         If Not Control.ModifierKeys = Keys.Shift Then
             Index = FrmMain.TcWindows.SelectedIndex
-            FrmMain.TcWindows.TabPages.Remove(FrmMain.TcWindows.SelectedTab)
+            Page = FrmMain.TcWindows.SelectedTab
+            FrmMain.TcWindows.TabPages.Remove(Page)
+            Page.Dispose()
             If Index > 0 Then
                 FrmMain.TcWindows.SelectTab(Index - 1)
             End If
         Else
-            For Each Page As TabPage In FrmMain.TcWindows.TabPages
+            For Each Page In FrmMain.TcWindows.TabPages
                 FrmMain.TcWindows.TabPages.Remove(Page)
+                Page.Dispose()
             Next Page
         End If
     End Sub
@@ -97,8 +100,9 @@ Public Class FrmReport
         PdfDocumentViewer.ZoomTo(PdfDocumentViewer.ZoomPercentage + 10)
     End Sub
     Private Sub BtnEmail_Click(sender As Object, e As EventArgs) Handles BtnEmail.Click
-        Dim FormEmail As New FrmEmail(_Result.Attachments)
-        FormEmail.Show()
+        Using Form As New FrmEmail(_Result.Attachments)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub PdfDocumentViewer_CurrentPageChanged(sender As Object, args As EventArgs)
         TxtCurrentPage.Text = PdfDocumentViewer.CurrentPageIndex

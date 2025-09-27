@@ -205,10 +205,10 @@ Public Class FrmPersonGetDocument
     End Sub
     Private Sub BtnNewCity_Click(sender As Object, e As EventArgs) Handles BtnNewCity.Click
         Dim City As City
-        Dim Form As FrmCity
         City = New City
-        Form = New FrmCity(City)
-        Form.ShowDialog()
+        Using Form As New FrmCity(City)
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If City.ID > 0 Then
             QbxCity.Freeze(City.ID)
@@ -216,16 +216,16 @@ Public Class FrmPersonGetDocument
         QbxCity.Select()
     End Sub
     Private Sub BtnViewCity_Click(sender As Object, e As EventArgs) Handles BtnViewCity.Click
-        Dim Form As New FrmCity(New City().Load(QbxCity.FreezedPrimaryKey, False))
-        Form.ShowDialog()
+        Using Form As New FrmCity(New City().Load(QbxCity.FreezedPrimaryKey, False))
+            Form.ShowDialog()
+        End Using
         QbxCity.Freeze(QbxCity.FreezedPrimaryKey)
         QbxCity.Select()
     End Sub
     Private Sub BtnFilterCity_Click(sender As Object, e As EventArgs) Handles BtnFilterCity.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New CityQueriedBoxFilter(), QbxCity)
-        FilterForm.Text = "Filtro de Cidades"
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New CityQueriedBoxFilter(), QbxCity) With {.Text = "Filtro de Cidades"}
+            Form.ShowDialog()
+        End Using
         QbxCity.Select()
     End Sub
     Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles TxtZipCode.TextChanged,

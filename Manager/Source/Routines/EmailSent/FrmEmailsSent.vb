@@ -88,7 +88,7 @@ Public Class FrmEmailsSent
 
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "E-Mails Enviados", .Grid = DgvData}})
-        Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, EnumHelper.GetEnumDescription(Routine.ExportGrid))
+        Dim Form As New FrmReport(Result)
+        FrmMain.OpenTab(Form, EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
 End Class

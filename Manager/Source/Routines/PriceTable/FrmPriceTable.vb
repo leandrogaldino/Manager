@@ -156,8 +156,9 @@ Public Class FrmPriceTable
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.PriceTable, _PriceTable.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.PriceTable, _PriceTable.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
@@ -200,18 +201,18 @@ Public Class FrmPriceTable
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
         Save()
     End Sub
-
     Private Sub BtnIncludePriceTableSellable_Click(sender As Object, e As EventArgs) Handles BtnIncludePriceTableSellable.Click
-        Dim Form As New FrmPriceTableSellable(_PriceTable, New PriceTableSellable, Me)
-        Form.ShowDialog()
+        Using Form As New FrmPriceTableSellable(_PriceTable, New PriceTableSellable, Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditPriceTableSellable_Click(sender As Object, e As EventArgs) Handles BtnEditPriceTableSellable.Click
-        Dim Form As FrmPriceTableSellable
         Dim PriceTableItem As PriceTableSellable
         If DgvPriceTableSellable.SelectedRows.Count = 1 Then
             PriceTableItem = _PriceTable.Sellables.Single(Function(x) x.Guid = DgvPriceTableSellable.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmPriceTableSellable(_PriceTable, PriceTableItem, Me)
-            Form.ShowDialog()
+            Using Form As New FrmPriceTableSellable(_PriceTable, PriceTableItem, Me)
+                Form.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub BtnDeletePriceTableSellable_Click(sender As Object, e As EventArgs) Handles BtnDeletePriceTableSellable.Click

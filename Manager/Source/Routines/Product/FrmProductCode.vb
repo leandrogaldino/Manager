@@ -94,8 +94,9 @@ Public Class FrmProductCode
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.ProductCode, _ProductCode.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.ProductCode, _ProductCode.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub TxtName_TextChanged(sender As Object, e As EventArgs) Handles CbxName.SelectedIndexChanged,
                                                                               TxtCode.TextChanged

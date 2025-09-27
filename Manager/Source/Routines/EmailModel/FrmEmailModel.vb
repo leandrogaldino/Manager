@@ -170,8 +170,9 @@ Public Class FrmEmailModel
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.EmailModel, _EmailModel.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.EmailModel, _EmailModel.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtName.TextChanged, TxtSubject.TextChanged
         EprValidation.Clear()
@@ -254,12 +255,12 @@ Public Class FrmEmailModel
         End If
     End Function
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
-        Dim Frm As FrmHtmlPreview
         Dim TempModel As New EmailModel
         TempModel.Body = TxtBody.Rtf
         If CbxSignature.SelectedIndex > 0 Then TempModel.Signature = New EmailSignature().Load(CbxSignature.SelectedValue, False)
-        Frm = New FrmHtmlPreview(TempModel)
-        Frm.ShowDialog()
+        Using Form As New FrmHtmlPreview(TempModel)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub TxtBody_SelectionChanged(sender As Object, e As EventArgs) Handles TxtBody.SelectionChanged
         If TxtBody.SelectionFont IsNot Nothing Then

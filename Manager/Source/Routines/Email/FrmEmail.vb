@@ -219,21 +219,21 @@ Public Class FrmEmail
         End Using
     End Sub
     Private Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
-        Dim Frm As New FrmEmailImportEmailModel
-        If Frm.ShowDialog = DialogResult.OK Then
-            _EmailModel = Frm.ImportedEmailModel
-            TxtSubject.Text = _EmailModel.Subject
-            TxtBody.Rtf = _EmailModel.Body
-            CbxSignature.SelectedValue = _EmailModel.Signature.ID
-        End If
+        Using Form As New FrmEmailImportEmailModel
+            If Form.ShowDialog = DialogResult.OK Then
+                _EmailModel = Form.ImportedEmailModel
+                TxtSubject.Text = _EmailModel.Subject
+                TxtBody.Rtf = _EmailModel.Body
+                CbxSignature.SelectedValue = _EmailModel.Signature.ID
+            End If
+        End Using
     End Sub
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
-        Dim Frm As FrmHtmlPreview
-        Dim TempModel As New EmailModel
-        TempModel.Body = TxtBody.Rtf
+        Dim TempModel As New EmailModel With {.Body = TxtBody.Rtf}
         If CbxSignature.SelectedIndex > 0 Then TempModel.Signature = New EmailSignature().Load(CbxSignature.SelectedValue, False)
-        Frm = New FrmHtmlPreview(TempModel)
-        Frm.ShowDialog()
+        Using Form As New FrmHtmlPreview(TempModel)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub TxtBody_SelectionChanged(sender As Object, e As EventArgs) Handles TxtBody.SelectionChanged
         TxtFont.Text = TxtBody.SelectionFont.Name

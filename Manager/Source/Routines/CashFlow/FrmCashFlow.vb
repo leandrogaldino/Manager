@@ -152,8 +152,9 @@ Public Class FrmCashFlow
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.CashFlow, _CashFlow.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.CashFlow, _CashFlow.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
@@ -248,22 +249,18 @@ Public Class FrmCashFlow
     Private Sub FrmCashFlow_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         _CashFlow.Unlock()
     End Sub
-
-
-
-
-
     Private Sub BtnIncludeAuthorized_Click(sender As Object, e As EventArgs) Handles BtnIncludeAuthorized.Click
-        Dim Form As New FrmCashFlowAuthorized(_CashFlow, New CashFlowAuthorized(), Me)
-        Form.ShowDialog()
+        Using Form As New FrmCashFlowAuthorized(_CashFlow, New CashFlowAuthorized(), Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditAuthorized_Click(sender As Object, e As EventArgs) Handles BtnEditAuthorized.Click
-        Dim Form As FrmCashFlowAuthorized
         Dim Authorized As CashFlowAuthorized
         If DgvAuthorized.SelectedRows.Count = 1 Then
             Authorized = _CashFlow.Authorizeds.Single(Function(x) x.Guid = DgvAuthorized.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmCashFlowAuthorized(_CashFlow, Authorized, Me)
-            Form.ShowDialog()
+            Using Form As New FrmCashFlowAuthorized(_CashFlow, Authorized, Me)
+                Form.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub BtnDeleteAuthorized_Click(sender As Object, e As EventArgs) Handles BtnDeleteAuthorized.Click

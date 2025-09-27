@@ -157,13 +157,13 @@ Public Class FrmMain
         End If
     End Sub
     Private Sub PersonRegistrationFormClick()
-        Using FormRegistration As New FrmPersonRegistrationForm()
-            FormRegistration.ShowDialog()
+        Using Form As New FrmPersonRegistrationForm()
+            Form.ShowDialog()
         End Using
     End Sub
     Private Sub PersonMaintenancePlanClick()
-        Using FormMaintenance As New FrmPersonMaintenancePlan()
-            FormMaintenance.ShowDialog()
+        Using Form As New FrmPersonMaintenancePlan()
+            Form.ShowDialog()
         End Using
     End Sub
     Private Sub CompressorClick()
@@ -289,8 +289,8 @@ Public Class FrmMain
         End If
     End Sub
     Private Sub RequestPendingPartClick()
-        Using FormPending As New FrmRequestPendingItems()
-            FormPending.ShowDialog()
+        Using Form As New FrmRequestPendingItems()
+            Form.ShowDialog()
         End Using
     End Sub
     Private Sub CashClick()
@@ -328,13 +328,13 @@ Public Class FrmMain
         End If
     End Sub
     Private Sub CashExpensesPerResponsibleClick()
-        Using FormResponsible As New FrmCashExpensesPerResponsible()
-            FormResponsible.ShowDialog()
+        Using Form As New FrmCashExpensesPerResponsible()
+            Form.ShowDialog()
         End Using
     End Sub
     Private Sub CashSheetClick()
-        Using FormSheet As New FrmCashSheet()
-            FormSheet.ShowDialog()
+        Using Form As New FrmCashSheet()
+            Form.ShowDialog()
         End Using
     End Sub
     Public Sub OpenTab(Form As Form, TabText As String)
@@ -406,9 +406,9 @@ Public Class FrmMain
         Cursor = Cursors.Default
     End Sub
     Private Sub BtnChangePassword_Click(sender As Object, e As EventArgs) Handles BtnChangePassword.Click
-        Dim FormChangePassword As FrmUserChangePassword
-        FormChangePassword = New FrmUserChangePassword(Locator.GetInstance(Of Session).User)
-        FormChangePassword.ShowDialog()
+        Using Form As New FrmUserChangePassword(Locator.GetInstance(Of Session).User)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub FrmMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         If Not Locator.GetInstance(Of Session).AutoCloseApp Then

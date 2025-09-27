@@ -161,8 +161,9 @@ Public Class FrmCity
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.City, _City.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.City, _City.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
@@ -276,16 +277,17 @@ Public Class FrmCity
         End If
     End Function
     Private Sub BtnIncludeRoute_Click(sender As Object, e As EventArgs) Handles BtnIncludeRoute.Click
-        Dim Form As New FrmCityRoute(_City, New CityRoute(), Me)
-        Form.ShowDialog()
+        Using Form As New FrmCityRoute(_City, New CityRoute(), Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditRoute_Click(sender As Object, e As EventArgs) Handles BtnEditRoute.Click
-        Dim Form As FrmCityRoute
         Dim Route As CityRoute
         If DgvRoute.SelectedRows.Count = 1 Then
             Route = _City.Routes.Single(Function(x) x.Guid = DgvRoute.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmCityRoute(_City, Route, Me)
-            Form.ShowDialog()
+            Using Form As New FrmCityRoute(_City, Route, Me)
+                Form.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub BtnDeleteRoute_Click(sender As Object, e As EventArgs) Handles BtnDeleteRoute.Click

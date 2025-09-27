@@ -215,8 +215,9 @@ Public Class FrmUser
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.User, _User.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.User, _User.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
@@ -386,7 +387,6 @@ Public Class FrmUser
                                 _User.Privileges.Remove(accessPrivilege)
                             End If
                         End If
-
                         ' Verifica e atualiza o privilégio de "Write"
                         Dim writePrivilege As UserPrivilege = _User.Privileges.FirstOrDefault(Function(p) p.PrivilegedRoutine = routine AndAlso p.Level = PrivilegeLevel.Write)
                         If PrivilegeControl.CanWrite Then
@@ -400,7 +400,6 @@ Public Class FrmUser
                                 _User.Privileges.Remove(writePrivilege)
                             End If
                         End If
-
                         ' Verifica e atualiza o privilégio de "Delete"
                         Dim deletePrivilege As UserPrivilege = _User.Privileges.FirstOrDefault(Function(p) p.PrivilegedRoutine = routine AndAlso p.Level = PrivilegeLevel.Delete)
                         If PrivilegeControl.CanDelete Then
@@ -492,13 +491,11 @@ Public Class FrmUser
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Person As Person
-        Dim Form As FrmPerson
-        Person = New Person With {
-            .IsEmployee = True
-        }
-        Form = New FrmPerson(Person)
-        Form.CbxIsEmployee.Enabled = False
-        Form.ShowDialog()
+        Person = New Person With {.IsEmployee = True}
+        Using Form As New FrmPerson(Person)
+            Form.CbxIsEmployee.Enabled = False
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If Person.ID > 0 Then
             QbxPerson.Freeze(Person.ID)
@@ -506,34 +503,32 @@ Public Class FrmUser
         QbxPerson.Select()
     End Sub
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
-        Dim Form As New FrmPerson(New Person().Load(QbxPerson.FreezedPrimaryKey, True))
-        Form.CbxIsEmployee.Enabled = False
-        Form.ShowDialog()
+        Using Form As New FrmPerson(New Person().Load(QbxPerson.FreezedPrimaryKey, True))
+            Form.CbxIsEmployee.Enabled = False
+            Form.ShowDialog()
+        End Using
         QbxPerson.Freeze(QbxPerson.FreezedPrimaryKey)
         QbxPerson.Select()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New PersonEmployeeQueriedBoxFilter(), QbxPerson) With {
-            .Text = "Filtro de Funcionários"
-        }
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New PersonEmployeeQueriedBoxFilter(), QbxPerson) With {.Text = "Filtro de Funcionários"}
+            Form.ShowDialog()
+        End Using
         QbxPerson.Select()
     End Sub
-
-
     Private Sub BtnIncludeEmail_Click(sender As Object, e As EventArgs) Handles BtnIncludeEmail.Click
-        Dim Form As New FrmUserEmail(_User, New UserEmail, Me)
-        Form.ShowDialog()
+        Using Form As New FrmUserEmail(_User, New UserEmail, Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditEmail_Click(sender As Object, e As EventArgs) Handles BtnEditEmail.Click
-        Dim Form As FrmUserEmail
         Dim Email As UserEmail
         If DgvEmail.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
             Email = _User.Emails.Single(Function(x) x.Guid = DgvEmail.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmUserEmail(_User, Email, Me)
-            Form.ShowDialog()
+            Using Form As New FrmUserEmail(_User, Email, Me)
+                Form.ShowDialog()
+            End Using
             Cursor = Cursors.Default
         End If
     End Sub
@@ -647,11 +642,10 @@ Public Class FrmUser
     Private Sub BtnImportPrivilege_Click(sender As Object, e As EventArgs) Handles BtnImportPrivilege.Click
         Dim Preset As PrivilegePreset
         Dim UserPrivilege As UserPrivilege
-        Using Frm As New FrmUserImportPrivilege()
-            If Frm.ShowDialog() = DialogResult.OK Then
-                Preset = New PrivilegePreset().Load(Frm.QbxPreset.FreezedPrimaryKey, False)
+        Using Form As New FrmUserImportPrivilege()
+            If Form.ShowDialog() = DialogResult.OK Then
+                Preset = New PrivilegePreset().Load(Form.QbxPreset.FreezedPrimaryKey, False)
                 _User.Privileges.Clear()
-
                 For Each Privilege In Preset.Privileges
                     UserPrivilege = New UserPrivilege With {
                         .PrivilegedRoutine = Privilege.PrivilegedRoutine,

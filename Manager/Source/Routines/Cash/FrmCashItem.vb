@@ -212,8 +212,9 @@ Public Class FrmCashItem
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.CashItem, _CashItem.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.CashItem, _CashItem.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub Rbt_CheckedChanged(sender As Object, e As EventArgs) Handles RbExpense.CheckedChanged, RbIncome.CheckedChanged
         Dim Radio As RadioButton = CType(sender, RadioButton)
@@ -356,16 +357,17 @@ Public Class FrmCashItem
         End If
     End Function
     Private Sub BtnIncludeCashItemResponsible_Click(sender As Object, e As EventArgs) Handles BtnIncludeCashItemResponsible.Click
-        Dim Form As New FrmCashItemResponsible(_CashItem, New CashItemResponsible(), Me)
-        Form.ShowDialog()
+        Using Form As New FrmCashItemResponsible(_CashItem, New CashItemResponsible(), Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditCashItemResponsible_Click(sender As Object, e As EventArgs) Handles BtnEditCashItemResponsible.Click
-        Dim Form As FrmCashItemResponsible
         Dim Responsible As CashItemResponsible
         If DgvResponsibles.SelectedRows.Count = 1 Then
             Responsible = _CashItem.Responsibles.Single(Function(X) X.Guid = DgvResponsibles.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmCashItemResponsible(_CashItem, Responsible, Me)
-            Form.ShowDialog()
+            Using Form As New FrmCashItemResponsible(_CashItem, Responsible, Me)
+                Form.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub BtnDeleteCashItemResponsible_Click(sender As Object, e As EventArgs) Handles BtnDeleteCashItemResponsible.Click

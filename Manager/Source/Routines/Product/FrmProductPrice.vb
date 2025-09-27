@@ -90,8 +90,9 @@ Public Class FrmProductPrice
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.PriceTableSellable, _ProductPrice.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.PriceTableSellable, _ProductPrice.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub QbxPriceTable_TextChanged(sender As Object, e As EventArgs) Handles QbxPriceTable.TextChanged
         EprValidation.Clear()
@@ -189,11 +190,9 @@ Public Class FrmProductPrice
         TmrQueriedBox.Start()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New PriceTableQueriedBoxFilter(), QbxPriceTable) With {
-            .Text = "Filtro de Tabela de Preços"
-        }
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New PriceTableQueriedBoxFilter(), QbxPriceTable) With {.Text = "Filtro de Tabela de Preços"}
+            Form.ShowDialog()
+        End Using
         QbxPriceTable.Select()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click

@@ -58,10 +58,10 @@ Public Class FrmPersonRegistrationForm
     End Sub
     Private Sub BtnNewPerson_Click(sender As Object, e As EventArgs) Handles BtnNewPerson.Click
         Dim Person As Person
-        Dim Form As FrmPerson
         Person = New Person
-        Form = New FrmPerson(Person)
-        Form.ShowDialog()
+        Using Form As New FrmPerson(Person)
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If Person.ID > 0 Then
             QbxPerson.Freeze(Person.ID)
@@ -69,16 +69,16 @@ Public Class FrmPersonRegistrationForm
         QbxPerson.Select()
     End Sub
     Private Sub BtnViewPerson_Click(sender As Object, e As EventArgs) Handles BtnViewPerson.Click
-        Dim Form As New FrmPerson(New Person().Load(QbxPerson.FreezedPrimaryKey, True))
-        Form.ShowDialog()
+        Using Form As New FrmPerson(New Person().Load(QbxPerson.FreezedPrimaryKey, True))
+            Form.ShowDialog()
+        End Using
         QbxPerson.Freeze(QbxPerson.FreezedPrimaryKey)
         QbxPerson.Select()
     End Sub
     Private Sub BtnFilterPerson_Click(sender As Object, e As EventArgs) Handles BtnFilterPerson.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New PersonFilter(), QbxPerson)
-        FilterForm.Text = "Filtro de Pessoas"
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New PersonFilter(), QbxPerson) With {.Text = "Filtro de Pessoas"}
+            Form.ShowDialog()
+        End Using
         QbxPerson.Select()
     End Sub
     Private Sub TmrQueriedBox_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBox.Tick

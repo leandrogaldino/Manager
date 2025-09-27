@@ -42,15 +42,19 @@ Public Class FrmEvaluationManagement
     End Sub
     Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
         Dim Index As Integer
+        Dim Page As TabPage
         If Not Control.ModifierKeys = Keys.Shift Then
             Index = FrmMain.TcWindows.SelectedIndex
-            FrmMain.TcWindows.TabPages.Remove(FrmMain.TcWindows.SelectedTab)
+            Page = FrmMain.TcWindows.SelectedTab
+            FrmMain.TcWindows.TabPages.Remove(Page)
+            Page.Dispose()
             If Index > 0 Then
                 FrmMain.TcWindows.SelectTab(Index - 1)
             End If
         Else
-            For Each Page As TabPage In FrmMain.TcWindows.TabPages
+            For Each Page In FrmMain.TcWindows.TabPages
                 FrmMain.TcWindows.TabPages.Remove(Page)
+                Page.Dispose()
             Next Page
         End If
     End Sub
@@ -161,26 +165,26 @@ Public Class FrmEvaluationManagement
         End If
     End Sub
     Private Sub DgvWorkedHourSellable_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvWorkedHourSellable.MouseDoubleClick
-        Dim Form As FrmEvaluation
         Dim Evaluation As Evaluation
         Dim ClickPlace As DataGridView.HitTestInfo = DgvWorkedHourSellable.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
             Evaluation = New Evaluation().Load(DgvWorkedHourSellable.SelectedRows(0).Cells("lastchangeevaluation").Value, False)
-            Form = New FrmEvaluation(Evaluation)
-            Form.ShowDialog()
+            Using Form As New FrmEvaluation(Evaluation)
+                Form.ShowDialog()
+            End Using
             _Filter.Filter()
             DgvEvaluationManagementLayout.Load()
             LoadDetails()
         End If
     End Sub
     Private Sub DgvElapsedDaySellableMouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvElapsedDaySellable.MouseDoubleClick
-        Dim Form As FrmEvaluation
         Dim Evaluation As Evaluation
         Dim ClickPlace As DataGridView.HitTestInfo = DgvElapsedDaySellable.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
             Evaluation = New Evaluation().Load(DgvElapsedDaySellable.SelectedRows(0).Cells("lastchangeevaluation").Value, False)
-            Form = New FrmEvaluation(Evaluation)
-            Form.ShowDialog()
+            Using Form As New FrmEvaluation(Evaluation)
+                Form.ShowDialog()
+            End Using
             _Filter.Filter()
             DgvEvaluationManagementLayout.Load()
             LoadDetails()
@@ -196,8 +200,8 @@ Public Class FrmEvaluationManagement
     End Sub
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Gerenciamento de Avaliações", .Grid = DgvData}})
-        Dim FormReport As New FrmReport(Result)
-        FrmMain.OpenTab(FormReport, EnumHelper.GetEnumDescription(Routine.ExportGrid))
+        Dim Form As New FrmReport(Result)
+        FrmMain.OpenTab(Form, EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
     Private Sub DgvData_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvData.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvData.HitTest(e.X, e.Y)
@@ -213,17 +217,16 @@ Public Class FrmEvaluationManagement
     End Sub
     Private Sub LoadEvaluation()
         Dim Evaluation As Evaluation
-        Dim Frm As FrmEvaluation
         Dim Row As DataGridViewRow
         Dim EvaluationID As Long
-        Dim Nav As New DataGridViewNavigator()
-        Nav.DataGridView = DgvData
+        Dim Nav As New DataGridViewNavigator() With {.DataGridView = DgvData}
         Try
             Cursor = Cursors.WaitCursor
             EvaluationID = DgvData.SelectedRows(0).Cells("evaluation").Value
             Evaluation = New Evaluation().Load(EvaluationID, True)
-            Frm = New FrmEvaluation(Evaluation)
-            Frm.ShowDialog()
+            Using Form As New FrmEvaluation(Evaluation)
+                Form.ShowDialog()
+            End Using
             _Filter.Filter()
             DgvEvaluationManagementLayout.Load()
             Row = DgvData.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("evaluation").Value = EvaluationID)
@@ -334,8 +337,9 @@ Public Class FrmEvaluationManagement
                     .Compressor = SelectedEvaluation.Compressor,
                     .Customer = SelectedEvaluation.Customer
                 }
-                Dim FrmVisitSchedule As New FrmVisitSchedule(Visit)
-                FrmVisitSchedule.ShowDialog()
+                Using Form As New FrmVisitSchedule(Visit)
+                    Form.ShowDialog()
+                End Using
                 BtnRefresh.PerformClick()
             End If
         Catch ex As Exception

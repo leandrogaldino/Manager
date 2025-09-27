@@ -102,8 +102,9 @@ Public Class FrmPersonAddress
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.PersonAddress, _PersonAddress.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.PersonAddress, _PersonAddress.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
@@ -342,10 +343,10 @@ Public Class FrmPersonAddress
     End Sub
     Private Sub BtnNewCity_Click(sender As Object, e As EventArgs) Handles BtnNewCity.Click
         Dim City As City
-        Dim Form As FrmCity
         City = New City
-        Form = New FrmCity(City)
-        Form.ShowDialog()
+        Using Form As New FrmCity(City)
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If City.ID > 0 Then
             QbxCity.Freeze(City.ID)
@@ -353,16 +354,16 @@ Public Class FrmPersonAddress
         QbxCity.Select()
     End Sub
     Private Sub BtnViewCity_Click(sender As Object, e As EventArgs) Handles BtnViewCity.Click
-        Dim Form As New FrmCity(New City().Load(QbxCity.FreezedPrimaryKey, True))
-        Form.ShowDialog()
+        Using Form As New FrmCity(New City().Load(QbxCity.FreezedPrimaryKey, True))
+            Form.ShowDialog()
+        End Using
         QbxCity.Freeze(QbxCity.FreezedPrimaryKey)
         QbxCity.Select()
     End Sub
     Private Sub BtnFilterCity_Click(sender As Object, e As EventArgs) Handles BtnFilterCity.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New CityQueriedBoxFilter(), QbxCity)
-        FilterForm.Text = "Filtro de Cidades"
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New CityQueriedBoxFilter(), QbxCity) With {.Text = "Filtro de Cidades"}
+            Form.ShowDialog()
+        End Using
         QbxCity.Select()
     End Sub
     Private Sub TmrQueriedBoxCarrier_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBoxCarrier.Tick
@@ -385,13 +386,13 @@ Public Class FrmPersonAddress
         If Not _Loading Then BtnViewCarrier.Visible = QbxCarrier.IsFreezed And _User.CanWrite(Routine.Person)
     End Sub
     Private Sub BtnNewCarrier_Click(sender As Object, e As EventArgs) Handles BtnNewCarrier.Click
-        Dim Carrier As Person
-        Dim Form As FrmPerson
-        Carrier = New Person
-        Carrier.IsCarrier = True
-        Form = New FrmPerson(Carrier)
-        Form.CbxIsCarrier.Enabled = False
-        Form.ShowDialog()
+        Dim Carrier As New Person With {
+            .IsCarrier = True
+        }
+        Using Form As New FrmPerson(Carrier)
+            Form.CbxIsCarrier.Enabled = False
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If Carrier.ID > 0 Then
             QbxCarrier.Freeze(Carrier.ID)
@@ -399,17 +400,17 @@ Public Class FrmPersonAddress
         QbxCarrier.Select()
     End Sub
     Private Sub BtnViewCarrier_Click(sender As Object, e As EventArgs) Handles BtnViewCarrier.Click
-        Dim Form As New FrmPerson(New Person().Load(QbxCarrier.FreezedPrimaryKey, True))
-        Form.CbxIsCarrier.Enabled = False
-        Form.ShowDialog()
+        Using Form As New FrmPerson(New Person().Load(QbxCarrier.FreezedPrimaryKey, True))
+            Form.CbxIsCarrier.Enabled = False
+            Form.ShowDialog()
+        End Using
         QbxCarrier.Freeze(QbxCarrier.FreezedPrimaryKey)
         QbxCarrier.Select()
     End Sub
     Private Sub BtnFilterCarrier_Click(sender As Object, e As EventArgs) Handles BtnFilterCarrier.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New PersonCarrierQueriedBoxFilter(), QbxCarrier)
-        FilterForm.Text = "Filtro de Transportadoras"
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New PersonCarrierQueriedBoxFilter(), QbxCarrier) With {.Text = "Filtro de Transportadoras"}
+            Form.ShowDialog()
+        End Using
         QbxCarrier.Select()
     End Sub
     Private Sub TxtZipCode_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtZipCode.KeyPress
@@ -424,7 +425,6 @@ Public Class FrmPersonAddress
     End Sub
     Private Sub BtnZipCode_Click(sender As Object, e As EventArgs) Handles BtnZipCode.Click
         Dim PersonAddress As PersonAddress
-        Dim FormGet As FrmPersonAddressGetZipCode
         TxtZipCode.Text = BrazilianFormatHelper.GetFormatedZipCode(TxtZipCode.Text).Replace(".", Nothing).Replace("-", Nothing)
         Try
             Cursor = Cursors.WaitCursor
@@ -441,21 +441,22 @@ Public Class FrmPersonAddress
                             .IsMainAddress = _Person.Addresses.Count = 0
                         }
                     PersonAddress.SetIsSaved(True)
-                    FormGet = New FrmPersonAddressGetZipCode(PersonAddress, Result)
-                    If FormGet.ShowDialog() = DialogResult.OK Then
-                        TxtName.Text = FormGet.TxtAddressName.Text
-                        TxtStreet.Text = FormGet.TxtStreet.Text
-                        TxtDistrict.Text = FormGet.TxtDistrict.Text
-                        QbxCity.Unfreeze()
-                        If FormGet.QbxCity.IsFreezed Then
+                    Using Form As New FrmPersonAddressGetZipCode(PersonAddress, Result)
+                        If Form.ShowDialog() = DialogResult.OK Then
+                            TxtName.Text = Form.TxtAddressName.Text
+                            TxtStreet.Text = Form.TxtStreet.Text
+                            TxtDistrict.Text = Form.TxtDistrict.Text
+                            QbxCity.Unfreeze()
+                            If Form.QbxCity.IsFreezed Then
 
-                            QbxCity.Freeze(FormGet.QbxCity.FreezedPrimaryKey)
-                        Else
-                            QbxCity.QueryEnabled = False
-                            QbxCity.Text = FormGet.QbxCity.Text
-                            QbxCity.QueryEnabled = True
+                                QbxCity.Freeze(Form.QbxCity.FreezedPrimaryKey)
+                            Else
+                                QbxCity.QueryEnabled = False
+                                QbxCity.Text = Form.QbxCity.Text
+                                QbxCity.QueryEnabled = True
+                            End If
                         End If
-                    End If
+                    End Using
                 Else
                     CMessageBox.Show("A busca não retornou dados, verifique o número digitado e tente novamente.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                 End If

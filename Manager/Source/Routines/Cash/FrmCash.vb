@@ -174,8 +174,9 @@ Public Class FrmCash
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.Cash, _Cash.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.Cash, _Cash.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnStatusValue_TextChanged(sender As Object, e As EventArgs) Handles BtnStatusValue.TextChanged
         EprValidation.Clear()
@@ -209,17 +210,18 @@ Public Class FrmCash
         Save()
     End Sub
     Private Sub BtnIncludeCashItem_Click(sender As Object, e As EventArgs) Handles BtnIncludeCashItem.Click
-        Dim Form As New FrmCashItem(_Cash, New CashItem(), Me)
-        Form.ShowDialog()
+        Using Form As New FrmCashItem(_Cash, New CashItem(), Me)
+            Form.ShowDialog()
+        End Using
         CalculateValues()
     End Sub
     Private Sub BtnEditCashItem_Click(sender As Object, e As EventArgs) Handles BtnEditCashItem.Click
-        Dim Form As FrmCashItem
         Dim CashItem As CashItem
         If DgvCashItem.SelectedRows.Count = 1 Then
             CashItem = _Cash.CashItems.Single(Function(x) x.Guid = DgvCashItem.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmCashItem(_Cash, CashItem, Me)
-            Form.ShowDialog()
+            Using Form As New FrmCashItem(_Cash, CashItem, Me)
+                Form.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub BtnDeleteCashItem_Click(sender As Object, e As EventArgs) Handles BtnDeleteCashItem.Click

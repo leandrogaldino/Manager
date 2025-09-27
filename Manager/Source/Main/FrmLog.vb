@@ -50,7 +50,6 @@ Public Class FrmLog
             End Using
         End Using
     End Sub
-
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult
         Try

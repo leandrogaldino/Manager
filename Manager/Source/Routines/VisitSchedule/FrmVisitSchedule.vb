@@ -85,12 +85,12 @@ Public Class FrmVisitSchedule
     End Sub
     Private Sub UcVisitScheduleGeneratedItems_EvaluationClick(sender As Object, e As EventArgs)
         Dim Evaluation As Evaluation = If(sender, Nothing)
-        Dim Frm As FrmEvaluation
         If Evaluation IsNot Nothing Then
             CcoGeneratedItems.CloseDropDown()
             If Evaluation.ID > 0 Then
-                Frm = New FrmEvaluation(Evaluation)
-                Frm.ShowDialog()
+                Using Form As New FrmEvaluation(Evaluation)
+                    Form.ShowDialog()
+                End Using
             Else
                 CMessageBox.Show("Essa avaliação não existe mais.", CMessageBoxType.Information)
             End If
@@ -98,38 +98,38 @@ Public Class FrmVisitSchedule
     End Sub
     Private Sub UcVisitScheduleGeneratedItems_VisitScheduleClick(sender As Object, e As EventArgs)
         Dim VisitSchedule As VisitSchedule = If(sender, Nothing)
-        Dim Frm As FrmVisitSchedule
         If VisitSchedule IsNot Nothing Then
             CcoGeneratedItems.CloseDropDown()
             If VisitSchedule.ID > 0 Then
-                Frm = New FrmVisitSchedule(VisitSchedule)
-                ControlHelper.GetAllControls(Frm, False).ToList.ForEach(Sub(c) c.Enabled = False)
-                Frm.PnButtons.Visible = False
-                Frm.Height -= PnButtons.Height
-                Frm.TsTitle.Visible = False
-                Frm.LblCallType.Top -= TsTitle.Height
-                Frm.CbxCallType.Top -= TsTitle.Height
-                Frm.LblScheduledDate.Top -= TsTitle.Height
-                Frm.DbxScheduledDate.Top -= TsTitle.Height
-                Frm.TbxScheduledTime.Top -= TsTitle.Height
-                Frm.LblPerformedDate.Top -= TsTitle.Height
-                Frm.TxtPerformedDate.Top -= TsTitle.Height
-                Frm.TxtPerformedTime.Top -= TsTitle.Height
-                Frm.LblGeneratedItems.Top -= TsTitle.Height
-                Frm.BtnGeneratedItems.Top -= TsTitle.Height
-                Frm.FlpCustomer.Top -= TsTitle.Height
-                Frm.LblCustomer.Top -= TsTitle.Height
-                Frm.QbxCustomer.Top -= TsTitle.Height
-                Frm.LblCompressor.Top -= TsTitle.Height
-                Frm.QbxCompressor.Top -= TsTitle.Height
-                Frm.FlpTechnician.Top -= TsTitle.Height
-                Frm.LblTechnician.Top -= TsTitle.Height
-                Frm.QbxTechnician.Top -= TsTitle.Height
-                Frm.LblInstructions.Top -= TsTitle.Height
-                Frm.TxtInstructions.Top -= TsTitle.Height
-                Frm.LblGeneratedItems.Visible = False
-                Frm.BtnGeneratedItems.Visible = False
-                Frm.ShowDialog()
+                Using Form As New FrmVisitSchedule(VisitSchedule)
+                    ControlHelper.GetAllControls(Form, False).ToList.ForEach(Sub(c) c.Enabled = False)
+                    Form.PnButtons.Visible = False
+                    Form.Height -= PnButtons.Height
+                    Form.TsTitle.Visible = False
+                    Form.LblCallType.Top -= TsTitle.Height
+                    Form.CbxCallType.Top -= TsTitle.Height
+                    Form.LblScheduledDate.Top -= TsTitle.Height
+                    Form.DbxScheduledDate.Top -= TsTitle.Height
+                    Form.TbxScheduledTime.Top -= TsTitle.Height
+                    Form.LblPerformedDate.Top -= TsTitle.Height
+                    Form.TxtPerformedDate.Top -= TsTitle.Height
+                    Form.TxtPerformedTime.Top -= TsTitle.Height
+                    Form.LblGeneratedItems.Top -= TsTitle.Height
+                    Form.BtnGeneratedItems.Top -= TsTitle.Height
+                    Form.FlpCustomer.Top -= TsTitle.Height
+                    Form.LblCustomer.Top -= TsTitle.Height
+                    Form.QbxCustomer.Top -= TsTitle.Height
+                    Form.LblCompressor.Top -= TsTitle.Height
+                    Form.QbxCompressor.Top -= TsTitle.Height
+                    Form.FlpTechnician.Top -= TsTitle.Height
+                    Form.LblTechnician.Top -= TsTitle.Height
+                    Form.QbxTechnician.Top -= TsTitle.Height
+                    Form.LblInstructions.Top -= TsTitle.Height
+                    Form.TxtInstructions.Top -= TsTitle.Height
+                    Form.LblGeneratedItems.Visible = False
+                    Form.BtnGeneratedItems.Visible = False
+                    Form.ShowDialog()
+                End Using
             Else
                 CMessageBox.Show("Esse agendamento não existe mais.", CMessageBoxType.Information)
             End If
@@ -440,15 +440,15 @@ Public Class FrmVisitSchedule
     End Sub
     Private Sub BtnNewCustomer_Click(sender As Object, e As EventArgs) Handles BtnNewCustomer.Click
         Dim Customer As Person
-        Dim Form As FrmPerson
         Customer = New Person With {
             .IsCustomer = True,
             .ControlMaintenance = True
         }
-        Form = New FrmPerson(Customer)
-        Form.CbxIsCustomer.Enabled = False
-        Form.CbxMaintenance.Enabled = False
-        Form.ShowDialog()
+        Using Form As New FrmPerson(Customer)
+            Form.CbxIsCustomer.Enabled = False
+            Form.CbxMaintenance.Enabled = False
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If Customer.ID > 0 Then
             QbxCustomer.Freeze(Customer.ID)
@@ -456,12 +456,13 @@ Public Class FrmVisitSchedule
         QbxCustomer.Select()
     End Sub
     Private Sub BtnViewCustomer_Click(sender As Object, e As EventArgs) Handles BtnViewCustomer.Click
-        Dim Form As New FrmPerson(New Person().Load(QbxCustomer.FreezedPrimaryKey, True))
         Dim FreezedCustomerID As Long = QbxCustomer.FreezedPrimaryKey
         Dim FreezedCompressorID As Long = QbxCompressor.FreezedPrimaryKey
-        Form.CbxIsCustomer.Enabled = False
-        Form.CbxMaintenance.Enabled = False
-        Form.ShowDialog()
+        Using Form As New FrmPerson(New Person().Load(QbxCustomer.FreezedPrimaryKey, True))
+            Form.CbxIsCustomer.Enabled = False
+            Form.CbxMaintenance.Enabled = False
+            Form.ShowDialog()
+        End Using
         _Loading = True
         QbxCustomer.Unfreeze()
         QbxCustomer.Freeze(FreezedCustomerID)
@@ -471,19 +472,11 @@ Public Class FrmVisitSchedule
         _Loading = False
     End Sub
     Private Sub BtnFilterCustomer_Click(sender As Object, e As EventArgs) Handles BtnFilterCustomer.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New PersonCustomerQueriedBoxFilter("Sim"), QbxCustomer) With {
-            .Text = "Filtro de Clientes"
-        }
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New PersonCustomerQueriedBoxFilter("Sim"), QbxCustomer) With {.Text = "Filtro de Clientes"}
+            Form.ShowDialog()
+        End Using
         QbxCustomer.Select()
     End Sub
-
-
-
-
-
-
     Private Sub TmrQueriedBox_Tick(sender As Object, e As EventArgs) Handles TmrTechnician.Tick
         BtnViewTechnician.Visible = False
         BtnNewTechnician.Visible = False
@@ -505,12 +498,11 @@ Public Class FrmVisitSchedule
     End Sub
     Private Sub BtnNewTechnician_Click(sender As Object, e As EventArgs) Handles BtnNewTechnician.Click
         Dim Technician As Person
-        Dim Form As FrmPerson
-        Technician = New Person
-        Technician.IsTechnician = True
-        Form = New FrmPerson(Technician)
-        Form.CbxIsTechnician.Enabled = False
-        Form.ShowDialog()
+        Technician = New Person With {.IsTechnician = True}
+        Using Form As New FrmPerson(Technician)
+            Form.CbxIsTechnician.Enabled = False
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If Technician.ID > 0 Then
             QbxTechnician.Freeze(Technician.ID)
@@ -518,23 +510,20 @@ Public Class FrmVisitSchedule
         QbxTechnician.Select()
     End Sub
     Private Sub BtnViewTechnician_Click(sender As Object, e As EventArgs) Handles BtnViewTechnician.Click
-        Dim Form As New FrmPerson(New Person().Load(QbxTechnician.FreezedPrimaryKey, True))
-        Form.CbxIsTechnician.Enabled = False
-        Form.ShowDialog()
+        Using Form As New FrmPerson(New Person().Load(QbxTechnician.FreezedPrimaryKey, True))
+            Form.CbxIsTechnician.Enabled = False
+            Form.ShowDialog()
+        End Using
         QbxTechnician.Freeze(QbxTechnician.FreezedPrimaryKey)
         QbxTechnician.Select()
     End Sub
     Private Sub BtnFilterTechnician_Click(sender As Object, e As EventArgs) Handles BtnFilterTechnician.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New PersonTechnicianQueriedBoxFilter(), QbxTechnician)
-        FilterForm.Text = "Filtro de Técnicos"
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New PersonTechnicianQueriedBoxFilter(), QbxTechnician) With {.Text = "Filtro de Técnicos"}
+            Form.ShowDialog()
+        End Using
         QbxTechnician.Select()
     End Sub
-
-
     Private Sub Form_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         _VisitSchedule.Unlock()
     End Sub
-
 End Class

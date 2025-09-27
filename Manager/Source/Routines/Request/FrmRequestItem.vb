@@ -103,8 +103,9 @@ Public Class FrmRequestItem
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.RequestItem, _RequestItem.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.RequestItem, _RequestItem.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub QbxItem_TextChanged(sender As Object, e As EventArgs) Handles QbxItem.TextChanged
         EprValidation.Clear()
@@ -281,10 +282,10 @@ Public Class FrmRequestItem
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Product As Product
-        Dim Form As FrmProduct
         Product = New Product
-        Form = New FrmProduct(Product)
-        Form.ShowDialog()
+        Using Form As New FrmProduct(Product)
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If Product.ID > 0 Then
             QbxItem.Freeze(Product.ID)
@@ -292,16 +293,16 @@ Public Class FrmRequestItem
         QbxItem.Select()
     End Sub
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
-        Dim Form As New FrmProduct(New Product().Load(QbxItem.FreezedPrimaryKey, True))
-        Form.ShowDialog()
+        Using Form As New FrmProduct(New Product().Load(QbxItem.FreezedPrimaryKey, True))
+            Form.ShowDialog()
+        End Using
         QbxItem.Freeze(QbxItem.FreezedPrimaryKey)
         QbxItem.Select()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New ProductQueriedBoxFilter(), QbxItem)
-        FilterForm.Text = "Filtro de Produtos"
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New ProductQueriedBoxFilter(), QbxItem) With {.Text = "Filtro de Produtos"}
+            Form.ShowDialog()
+        End Using
         QbxItem.Select()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click

@@ -100,8 +100,9 @@ Public Class FrmProductProviderCode
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.ProductProviderCode, _ProductProviderCode.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.ProductProviderCode, _ProductProviderCode.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles TxtCode.TextChanged,
                                                                          QbxProvider.TextChanged
@@ -238,12 +239,11 @@ Public Class FrmProductProviderCode
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Provider As Person
-        Dim Form As FrmPerson
-        Provider = New Person
-        Provider.IsProvider = True
-        Form = New FrmPerson(Provider)
-        Form.CbxIsProvider.Enabled = False
-        Form.ShowDialog()
+        Provider = New Person With {.IsProvider = True}
+        Using Form As New FrmPerson(Provider)
+            Form.CbxIsProvider.Enabled = False
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If Provider.ID > 0 Then
             QbxProvider.Freeze(Provider.ID)
@@ -251,17 +251,17 @@ Public Class FrmProductProviderCode
         QbxProvider.Select()
     End Sub
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
-        Dim Form As New FrmPerson(New Person().Load(QbxProvider.FreezedPrimaryKey, True))
-        Form.CbxIsProvider.Enabled = False
-        Form.ShowDialog()
+        Using Form As New FrmPerson(New Person().Load(QbxProvider.FreezedPrimaryKey, True))
+            Form.CbxIsProvider.Enabled = False
+            Form.ShowDialog()
+        End Using
         QbxProvider.Freeze(QbxProvider.FreezedPrimaryKey)
         QbxProvider.Select()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New PersonProviderQueriedBoxFilter(), QbxProvider)
-        FilterForm.Text = "Filtro de Fornecedores"
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New PersonProviderQueriedBoxFilter(), QbxProvider) With {.Text = "Filtro de Fornecedores"}
+            Form.ShowDialog()
+        End Using
         QbxProvider.Select()
     End Sub
 End Class

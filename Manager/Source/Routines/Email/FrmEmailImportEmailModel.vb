@@ -16,10 +16,10 @@ Public Class FrmEmailImportEmailModel
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNewModel.Click
         Dim Model As EmailModel
-        Dim Form As FrmEmailModel
         Model = New EmailModel
-        Form = New FrmEmailModel(Model)
-        Form.ShowDialog()
+        Using Form As New FrmEmailModel(Model)
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If Model.ID > 0 Then
             QbxEmailModel.Freeze(Model.ID)
@@ -27,16 +27,16 @@ Public Class FrmEmailImportEmailModel
         QbxEmailModel.Select()
     End Sub
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnViewModel.Click
-        Dim Form As New FrmEmailModel(New EmailModel().Load(QbxEmailModel.FreezedPrimaryKey, True))
-        Form.ShowDialog()
+        Using Form As New FrmEmailModel(New EmailModel().Load(QbxEmailModel.FreezedPrimaryKey, True))
+            Form.ShowDialog()
+        End Using
         QbxEmailModel.Freeze(QbxEmailModel.FreezedPrimaryKey)
         QbxEmailModel.Select()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilterModel.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New EmailModelFilter(), QbxEmailModel)
-        FilterForm.Text = "Filtro de Modelos de E-Mail"
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New EmailModelFilter(), QbxEmailModel) With {.Text = "Filtro de Modelos de E-Mail"}
+            Form.ShowDialog()
+        End Using
         QbxEmailModel.Select()
     End Sub
     Private Sub TmrModel_Tick(sender As Object, e As EventArgs) Handles TmrModel.Tick

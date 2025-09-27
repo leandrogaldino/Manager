@@ -184,8 +184,9 @@ Public Class FrmPersonCompressor
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.PersonCompressor, _PersonCompressor.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.PersonCompressor, _PersonCompressor.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
@@ -355,10 +356,10 @@ Public Class FrmPersonCompressor
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Compressor As Compressor
-        Dim Form As FrmCompressor
         Compressor = New Compressor
-        Form = New FrmCompressor(Compressor)
-        Form.ShowDialog()
+        Using Form As New FrmCompressor(Compressor)
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If Compressor.ID > 0 Then
             QbxCompressor.Freeze(Compressor.ID)
@@ -366,29 +367,30 @@ Public Class FrmPersonCompressor
         QbxCompressor.Select()
     End Sub
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
-        Dim Form As New FrmCompressor(New Compressor().Load(QbxCompressor.FreezedPrimaryKey, True))
-        Form.ShowDialog()
+        Using Form As New FrmCompressor(New Compressor().Load(QbxCompressor.FreezedPrimaryKey, True))
+            Form.ShowDialog()
+        End Using
         QbxCompressor.Freeze(QbxCompressor.FreezedPrimaryKey)
         QbxCompressor.Select()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New CompressorQueriedBoxFilter(), QbxCompressor)
-        FilterForm.Text = "Filtro de Compressores"
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New CompressorQueriedBoxFilter(), QbxCompressor) With {.Text = "Filtro de Compressores"}
+            Form.ShowDialog()
+        End Using
         QbxCompressor.Select()
     End Sub
     Private Sub BtnIncludeWorkedHourSellable_Click(sender As Object, e As EventArgs) Handles BtnIncludeWorkedHourSellable.Click
-        Dim Form As New FrmPersonCompressorSellableWorkedHour(_PersonCompressor, New PersonCompressorSellable(CompressorSellableControlType.WorkedHour), Me)
-        Form.ShowDialog()
+        Using Form As New FrmPersonCompressorSellableWorkedHour(_PersonCompressor, New PersonCompressorSellable(CompressorSellableControlType.WorkedHour), Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditWorkedHourSellable_Click(sender As Object, e As EventArgs) Handles BtnEditWorkedHourSellable.Click
-        Dim Form As FrmPersonCompressorSellableWorkedHour
         Dim PersonCompressorWorkedHourSellable As PersonCompressorSellable
         If DgvWorkedHourSellable.SelectedRows.Count = 1 Then
             PersonCompressorWorkedHourSellable = _PersonCompressor.WorkedHourSellables.Single(Function(X) X.Guid = DgvWorkedHourSellable.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmPersonCompressorSellableWorkedHour(_PersonCompressor, PersonCompressorWorkedHourSellable, Me)
-            Form.ShowDialog()
+            Using Form As New FrmPersonCompressorSellableWorkedHour(_PersonCompressor, PersonCompressorWorkedHourSellable, Me)
+                Form.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub BtnDeleteWorkedHourSellable_Click(sender As Object, e As EventArgs) Handles BtnDeleteWorkedHourSellable.Click
@@ -403,16 +405,17 @@ Public Class FrmPersonCompressor
         End If
     End Sub
     Private Sub BtnIncludeElapsedDaySellable_Click(sender As Object, e As EventArgs) Handles BtnIncludeElapsedDaySellable.Click
-        Dim Form As New FrmPersonCompressorSellableElapsedDay(_PersonCompressor, New PersonCompressorSellable(CompressorSellableControlType.ElapsedDay), Me)
-        Form.ShowDialog()
+        Using Form As New FrmPersonCompressorSellableElapsedDay(_PersonCompressor, New PersonCompressorSellable(CompressorSellableControlType.ElapsedDay), Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditElapsedDaySellable_Click(sender As Object, e As EventArgs) Handles BtnEditElapsedDaySellable.Click
-        Dim Form As FrmPersonCompressorSellableElapsedDay
         Dim ElapsedDaySellable As PersonCompressorSellable
         If DgvElapsedDaySellable.SelectedRows.Count = 1 Then
             ElapsedDaySellable = _PersonCompressor.ElapsedDaySellables.Single(Function(X) X.Guid = DgvElapsedDaySellable.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmPersonCompressorSellableElapsedDay(_PersonCompressor, ElapsedDaySellable, Me)
-            Form.ShowDialog()
+            Using Form As New FrmPersonCompressorSellableElapsedDay(_PersonCompressor, ElapsedDaySellable, Me)
+                Form.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub BtnDeleteElapsedDaySellable_Click(sender As Object, e As EventArgs) Handles BtnDeleteElapsedDaySellable.Click
@@ -525,45 +528,45 @@ Public Class FrmPersonCompressor
         End If
     End Sub
     Private Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
-        Dim Form As FrmPersonCompressorImport
         Dim Compressor As Compressor = New Compressor().Load(QbxCompressor.FreezedPrimaryKey, False)
         Cursor = Cursors.WaitCursor
-        Form = New FrmPersonCompressorImport(Compressor, _PersonCompressor)
-        If Form.ShowDialog() = DialogResult.OK Then
-            Cursor = Cursors.WaitCursor
-            For Each Row As DataGridViewRow In Form.DgvWorkedHourSellable.Rows
-                Dim WhSellable = Compressor.WorkedHourSellables.SingleOrDefault(Function(x) x.ID = Row.Cells("ID").Value)
-                If Row.Cells("X").Value = True Then
-                    Dim Sellable As New PersonCompressorSellable(CompressorSellableControlType.WorkedHour) With {
-                        .Status = SimpleStatus.Active,
-                        .Sellable = WhSellable.Sellable,
-                        .SellableID = WhSellable.SellableID,
-                        .Code = WhSellable.Code,
-                        .Name = WhSellable.Name,
-                        .Quantity = WhSellable.Quantity
-                    }
-                    _PersonCompressor.WorkedHourSellables.Add(Sellable)
-                    _PersonCompressor.WorkedHourSellables.Last.SetIsSaved(True)
-                    BtnSave.Enabled = True
-                End If
-            Next Row
-            For Each Row As DataGridViewRow In Form.DgvElapsedDaySellable.Rows
-                Dim EdSellable = Compressor.ElapsedDaySellables.SingleOrDefault(Function(x) x.ID = Row.Cells("ID").Value)
-                If Row.Cells("X").Value = True Then
-                    Dim Sellable As New PersonCompressorSellable(CompressorSellableControlType.ElapsedDay) With {
-                        .Status = SimpleStatus.Active,
-                        .Sellable = EdSellable.Sellable,
-                        .SellableID = EdSellable.SellableID,
-                        .Code = EdSellable.Code,
-                        .Name = EdSellable.Name,
-                        .Quantity = EdSellable.Quantity
-                    }
-                    _PersonCompressor.ElapsedDaySellables.Add(Sellable)
-                    _PersonCompressor.ElapsedDaySellables.Last.SetIsSaved(True)
-                    BtnSave.Enabled = True
-                End If
-            Next Row
-        End If
+        Using Form As New FrmPersonCompressorImport(Compressor, _PersonCompressor)
+            If Form.ShowDialog() = DialogResult.OK Then
+                Cursor = Cursors.WaitCursor
+                For Each Row As DataGridViewRow In Form.DgvWorkedHourSellable.Rows
+                    Dim WhSellable = Compressor.WorkedHourSellables.SingleOrDefault(Function(x) x.ID = Row.Cells("ID").Value)
+                    If Row.Cells("X").Value = True Then
+                        Dim Sellable As New PersonCompressorSellable(CompressorSellableControlType.WorkedHour) With {
+                            .Status = SimpleStatus.Active,
+                            .Sellable = WhSellable.Sellable,
+                            .SellableID = WhSellable.SellableID,
+                            .Code = WhSellable.Code,
+                            .Name = WhSellable.Name,
+                            .Quantity = WhSellable.Quantity
+                        }
+                        _PersonCompressor.WorkedHourSellables.Add(Sellable)
+                        _PersonCompressor.WorkedHourSellables.Last.SetIsSaved(True)
+                        BtnSave.Enabled = True
+                    End If
+                Next Row
+                For Each Row As DataGridViewRow In Form.DgvElapsedDaySellable.Rows
+                    Dim EdSellable = Compressor.ElapsedDaySellables.SingleOrDefault(Function(x) x.ID = Row.Cells("ID").Value)
+                    If Row.Cells("X").Value = True Then
+                        Dim Sellable As New PersonCompressorSellable(CompressorSellableControlType.ElapsedDay) With {
+                            .Status = SimpleStatus.Active,
+                            .Sellable = EdSellable.Sellable,
+                            .SellableID = EdSellable.SellableID,
+                            .Code = EdSellable.Code,
+                            .Name = EdSellable.Name,
+                            .Quantity = EdSellable.Quantity
+                        }
+                        _PersonCompressor.ElapsedDaySellables.Add(Sellable)
+                        _PersonCompressor.ElapsedDaySellables.Last.SetIsSaved(True)
+                        BtnSave.Enabled = True
+                    End If
+                Next Row
+            End If
+        End Using
         DgvWorkedHourSellable.Fill(_PersonCompressor.WorkedHourSellables)
         DgvElapsedDaySellable.Fill(_PersonCompressor.ElapsedDaySellables)
         EprValidation.Clear()

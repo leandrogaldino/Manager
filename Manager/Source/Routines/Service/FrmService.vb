@@ -170,8 +170,9 @@ Public Class FrmService
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.Service, _Service.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.Service, _Service.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
@@ -219,16 +220,17 @@ Public Class FrmService
         Save()
     End Sub
     Private Sub BtnIncludeCode_Click(sender As Object, e As EventArgs) Handles BtnIncludeCode.Click
-        Dim Form As New FrmServiceCode(_Service, New ServiceCode, Me)
-        Form.ShowDialog()
+        Using Form As New FrmServiceCode(_Service, New ServiceCode, Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditCode_Click(sender As Object, e As EventArgs) Handles BtnEditCode.Click
-        Dim Form As FrmServiceCode
         Dim Code As ServiceCode
         If DgvCode.SelectedRows.Count = 1 Then
             Code = _Service.Codes.Single(Function(x) x.Guid = DgvCode.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmServiceCode(_Service, Code, Me)
-            Form.ShowDialog()
+            Using Form As New FrmServiceCode(_Service, Code, Me)
+                Form.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub BtnDeleteCode_Click(sender As Object, e As EventArgs) Handles BtnDeleteCode.Click
@@ -243,16 +245,17 @@ Public Class FrmService
         End If
     End Sub
     Private Sub BtnIncludePrice_Click(sender As Object, e As EventArgs) Handles BtnIncludePrice.Click
-        Dim Form As New FrmServicePrice(_Service, New ServicePrice, Me)
-        Form.ShowDialog()
+        Using Form As New FrmServicePrice(_Service, New ServicePrice, Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditPrice_Click(sender As Object, e As EventArgs) Handles BtnEditPrice.Click
-        Dim Form As FrmServicePrice
         Dim Price As ServicePrice
         If DgvPrice.SelectedRows.Count = 1 Then
             Price = _Service.Prices.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmServicePrice(_Service, Price, Me)
-            Form.ShowDialog()
+            Using Form As New FrmServicePrice(_Service, Price, Me)
+                Form.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub BtnDeletePrice_Click(sender As Object, e As EventArgs) Handles BtnDeletePrice.Click
@@ -267,16 +270,17 @@ Public Class FrmService
         End If
     End Sub
     Private Sub BtnIncludeComplement_Click(sender As Object, e As EventArgs) Handles BtnIncludeComplement.Click
-        Dim Form As New FrmServiceComplement(_Service, New ServiceComplement, Me)
-        Form.ShowDialog()
+        Using Form As New FrmServiceComplement(_Service, New ServiceComplement, Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditComplement_Click(sender As Object, e As EventArgs) Handles BtnEditComplement.Click
-        Dim Form As FrmServiceComplement
         Dim Complement As ServiceComplement
         If DgvComplement.SelectedRows.Count = 1 Then
             Complement = _Service.Complements.Single(Function(x) x.Guid = DgvComplement.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmServiceComplement(_Service, Complement, Me)
-            Form.ShowDialog()
+            Using Form As New FrmServiceComplement(_Service, Complement, Me)
+                Form.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub BtnDeleteComplement_Click(sender As Object, e As EventArgs) Handles BtnDeleteComplement.Click
@@ -399,7 +403,6 @@ Public Class FrmService
     Private Sub TxtFilterCode_TextChanged(sender As Object, e As EventArgs) Handles TxtFilterCode.TextChanged
         FilterCode()
     End Sub
-
     Private Sub TxtFilterCode_Enter(sender As Object, e As EventArgs) Handles TxtFilterCode.Enter
         EprInformation.SetError(TsCode, "Filtrando os campo: Nome e Código.")
         EprInformation.SetIconAlignment(TsCode, ErrorIconAlignment.MiddleLeft)
@@ -412,7 +415,6 @@ Public Class FrmService
     Private Sub DgvCode_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvCode.DataSourceChanged
         FilterCode()
     End Sub
-
     Private Sub DgvCode_SelectionChanged(sender As Object, e As EventArgs) Handles DgvCode.SelectionChanged
         If DgvCode.SelectedRows.Count = 0 Then
             BtnEditCode.Enabled = False

@@ -187,8 +187,9 @@ Public Class FrmProduct
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.Product, _Product.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.Product, _Product.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
@@ -252,16 +253,17 @@ Public Class FrmProduct
         Save()
     End Sub
     Private Sub BtnIncludeProviderCode_Click(sender As Object, e As EventArgs) Handles BtnIncludeProviderCode.Click
-        Dim Form As New FrmProductProviderCode(_Product, New ProductProviderCode(), Me)
-        Form.ShowDialog()
+        Using Form As New FrmProductProviderCode(_Product, New ProductProviderCode(), Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditProviderCode_Click(sender As Object, e As EventArgs) Handles BtnEditProviderCode.Click
-        Dim Form As FrmProductProviderCode
         Dim ProviderCode As ProductProviderCode
         If DgvProviderCode.SelectedRows.Count = 1 Then
             ProviderCode = _Product.ProviderCodes.Single(Function(x) x.Guid = DgvProviderCode.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmProductProviderCode(_Product, ProviderCode, Me)
-            Form.ShowDialog()
+            Using Form As New FrmProductProviderCode(_Product, ProviderCode, Me)
+                Form.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub BtnDeleteProviderCode_Click(sender As Object, e As EventArgs) Handles BtnDeleteProviderCode.Click
@@ -280,16 +282,17 @@ Public Class FrmProduct
         End If
     End Sub
     Private Sub BtnIncludeCode_Click(sender As Object, e As EventArgs) Handles BtnIncludeCode.Click
-        Dim Form As New FrmProductCode(_Product, New ProductCode, Me)
-        Form.ShowDialog()
+        Using Form As New FrmProductCode(_Product, New ProductCode, Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditCode_Click(sender As Object, e As EventArgs) Handles BtnEditCode.Click
-        Dim Form As FrmProductCode
         Dim Code As ProductCode
         If DgvCode.SelectedRows.Count = 1 Then
             Code = _Product.Codes.Single(Function(x) x.Guid = DgvCode.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmProductCode(_Product, Code, Me)
-            Form.ShowDialog()
+            Using Form As New FrmProductCode(_Product, Code, Me)
+                Form.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub BtnDeleteCode_Click(sender As Object, e As EventArgs) Handles BtnDeleteCode.Click
@@ -544,10 +547,10 @@ Public Class FrmProduct
     End Sub
     Private Sub BtnNewFamily_Click(sender As Object, e As EventArgs) Handles BtnNewFamily.Click
         Dim Family As ProductFamily
-        Dim Form As FrmProductFamily
         Family = New ProductFamily
-        Form = New FrmProductFamily(Family)
-        Form.ShowDialog()
+        Using Form As New FrmProductFamily(Family)
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If Family.ID > 0 Then
             QbxFamily.Freeze(Family.ID)
@@ -555,16 +558,16 @@ Public Class FrmProduct
         QbxFamily.Select()
     End Sub
     Private Sub BtnViewFamily_Click(sender As Object, e As EventArgs) Handles BtnViewFamily.Click
-        Dim Form As New FrmProductFamily(New ProductFamily().Load(QbxFamily.FreezedPrimaryKey, True))
-        Form.ShowDialog()
+        Using Form As New FrmProductFamily(New ProductFamily().Load(QbxFamily.FreezedPrimaryKey, True))
+            Form.ShowDialog()
+        End Using
         QbxFamily.Freeze(QbxFamily.FreezedPrimaryKey)
         QbxFamily.Select()
     End Sub
     Private Sub BtnFilterFamily_Click(sender As Object, e As EventArgs) Handles BtnFilterFamily.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New ProductFamilyQueriedBoxFilter(), QbxFamily)
-        FilterForm.Text = "Filtro de Família de Produto"
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New ProductFamilyQueriedBoxFilter(), QbxFamily) With {.Text = "Filtro de Família de Produto"}
+            Form.ShowDialog()
+        End Using
         QbxFamily.Select()
     End Sub
     Private Sub TmrQueriedBoxGroup_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBoxGroup.Tick
@@ -588,10 +591,10 @@ Public Class FrmProduct
     End Sub
     Private Sub BtnNewGroup_Click(sender As Object, e As EventArgs) Handles BtnNewGroup.Click
         Dim Group As ProductGroup
-        Dim Form As FrmProductGroup
         Group = New ProductGroup
-        Form = New FrmProductGroup(Group)
-        Form.ShowDialog()
+        Using Form As New FrmProductGroup(Group)
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If Group.ID > 0 Then
             QbxGroup.Freeze(Group.ID)
@@ -599,29 +602,30 @@ Public Class FrmProduct
         QbxGroup.Select()
     End Sub
     Private Sub BtnViewGroup_Click(sender As Object, e As EventArgs) Handles BtnViewGroup.Click
-        Dim Form As New FrmProductGroup(New ProductGroup().Load(QbxGroup.FreezedPrimaryKey, True))
-        Form.ShowDialog()
+        Using Form As New FrmProductGroup(New ProductGroup().Load(QbxGroup.FreezedPrimaryKey, True))
+            Form.ShowDialog()
+        End Using
         QbxGroup.Freeze(QbxGroup.FreezedPrimaryKey)
         QbxGroup.Select()
     End Sub
     Private Sub BtnFilterGroup_Click(sender As Object, e As EventArgs) Handles BtnFilterGroup.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New ProductGroupQueriedBoxFilter(), QbxGroup)
-        FilterForm.Text = "Filtro de Grupo de Produto"
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New ProductGroupQueriedBoxFilter(), QbxGroup) With {.Text = "Filtro de Grupo de Produto"}
+            Form.ShowDialog()
+        End Using
         QbxGroup.Select()
     End Sub
     Private Sub BtnIncludePrice_Click(sender As Object, e As EventArgs) Handles BtnIncludePrice.Click
-        Dim Form As New FrmProductPrice(_Product, New ProductPrice, Me)
-        Form.ShowDialog()
+        Using Form As New FrmProductPrice(_Product, New ProductPrice, Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditPrice_Click(sender As Object, e As EventArgs) Handles BtnEditPrice.Click
-        Dim Form As FrmProductPrice
         Dim Price As ProductPrice
         If DgvPrice.SelectedRows.Count = 1 Then
             Price = _Product.Prices.Single(Function(x) x.Guid = DgvPrice.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmProductPrice(_Product, Price, Me)
-            Form.ShowDialog()
+            Using Form As New FrmProductPrice(_Product, Price, Me)
+                Form.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub BtnDeletePrice_Click(sender As Object, e As EventArgs) Handles BtnDeletePrice.Click

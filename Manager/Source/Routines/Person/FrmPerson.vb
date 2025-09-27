@@ -180,8 +180,9 @@ Public Class FrmPerson
         End If
     End Sub
     Private Sub BtnLog_Click(sender As Object, e As EventArgs) Handles BtnLog.Click
-        Dim Frm As New FrmLog(Routine.Person, _Person.ID)
-        Frm.ShowDialog()
+        Using Form As New FrmLog(Routine.Person, _Person.ID)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
@@ -258,7 +259,6 @@ Public Class FrmPerson
         Dim DataSearch As Consulta.CNPJ.Services.CNPJService
         Dim SearchResult As Consulta.CNPJ.Models.CNPJResult
         Dim Person As Person
-        Dim FormGet As FrmPersonGetDocument
         TxtDocument.Text = BrazilianFormatHelper.GetFormatedDocument(TxtDocument.Text)
         Try
             Cursor = Cursors.WaitCursor
@@ -289,21 +289,22 @@ Public Class FrmPerson
                         .ContributionType = PersonContributionType.NonTaxPayer
                     })
                     Person.Addresses.Last.SetIsSaved(True)
-                    FormGet = New FrmPersonGetDocument(Person, SearchResult)
-                    If FormGet.ShowDialog() = DialogResult.OK Then
-                        If FormGet.CbxImportIdentity.Checked Then
-                            TxtName.Text = Person.Name
-                            TxtShortName.Text = Person.ShortName
+                    Using Form As New FrmPersonGetDocument(Person, SearchResult)
+                        If Form.ShowDialog() = DialogResult.OK Then
+                            If Form.CbxImportIdentity.Checked Then
+                                TxtName.Text = Person.Name
+                                TxtShortName.Text = Person.ShortName
+                            End If
+                            If Form.CbxImportContact.Checked Then
+                                _Person.Contacts.Add(Person.Contacts(0))
+                                DgvContact.Fill(_Person.Contacts)
+                            End If
+                            If Form.CbxImportAddress.Checked Then
+                                _Person.Addresses.Add(Person.Addresses(0))
+                                DgvAddress.Fill(_Person.Addresses)
+                            End If
                         End If
-                        If FormGet.CbxImportContact.Checked Then
-                            _Person.Contacts.Add(Person.Contacts(0))
-                            DgvContact.Fill(_Person.Contacts)
-                        End If
-                        If FormGet.CbxImportAddress.Checked Then
-                            _Person.Addresses.Add(Person.Addresses(0))
-                            DgvAddress.Fill(_Person.Addresses)
-                        End If
-                    End If
+                    End Using
                 Else
                     CMessageBox.Show("A busca não retornou dados, verifique o número digitado e tente novamente.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                 End If
@@ -320,17 +321,18 @@ Public Class FrmPerson
         Save()
     End Sub
     Private Sub BtnIncludeAddress_Click(sender As Object, e As EventArgs) Handles BtnIncludeAddress.Click
-        Dim Form As New FrmPersonAddress(_Person, New PersonAddress(), Me)
-        Form.ShowDialog()
+        Using Form As New FrmPersonAddress(_Person, New PersonAddress(), Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditAddress_Click(sender As Object, e As EventArgs) Handles BtnEditAddress.Click
-        Dim Form As FrmPersonAddress
         Dim Address As PersonAddress
         If DgvAddress.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
             Address = _Person.Addresses.Single(Function(x) x.Guid = DgvAddress.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmPersonAddress(_Person, Address, Me)
-            Form.ShowDialog()
+            Using Form As New FrmPersonAddress(_Person, Address, Me)
+                Form.ShowDialog()
+            End Using
             Cursor = Cursors.Default
         End If
     End Sub
@@ -350,17 +352,18 @@ Public Class FrmPerson
         End If
     End Sub
     Private Sub BtnIncludeContact_Click(sender As Object, e As EventArgs) Handles BtnIncludeContact.Click
-        Dim Form As New FrmPersonContact(_Person, New PersonContact, Me)
-        Form.ShowDialog()
+        Using Form As New FrmPersonContact(_Person, New PersonContact, Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditContact_Click(sender As Object, e As EventArgs) Handles BtnEditContact.Click
-        Dim Form As FrmPersonContact
         Dim Contact As PersonContact
         If DgvContact.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
             Contact = _Person.Contacts.Single(Function(x) x.Guid = DgvContact.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmPersonContact(_Person, Contact, Me)
-            Form.ShowDialog()
+            Using Form As New FrmPersonContact(_Person, Contact, Me)
+                Form.ShowDialog()
+            End Using
             Cursor = Cursors.Default
         End If
     End Sub
@@ -380,17 +383,18 @@ Public Class FrmPerson
         End If
     End Sub
     Private Sub BtnIncludeCompressor_Click(sender As Object, e As EventArgs) Handles BtnIncludeCompressor.Click
-        Dim Form As New FrmPersonCompressor(_Person, New PersonCompressor(), Me)
-        Form.ShowDialog()
+        Using Form As New FrmPersonCompressor(_Person, New PersonCompressor(), Me)
+            Form.ShowDialog()
+        End Using
     End Sub
     Private Sub BtnEditCompressor_Click(sender As Object, e As EventArgs) Handles BtnEditCompressor.Click
-        Dim Form As FrmPersonCompressor
         Dim Compressor As PersonCompressor
         If DgvCompressor.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
             Compressor = _Person.Compressors.Single(Function(x) x.Guid = DgvCompressor.SelectedRows(0).Cells("Guid").Value)
-            Form = New FrmPersonCompressor(_Person, Compressor, Me)
-            Form.ShowDialog()
+            Using Form As New FrmPersonCompressor(_Person, Compressor, Me)
+                Form.ShowDialog()
+            End Using
             Cursor = Cursors.Default
         End If
     End Sub

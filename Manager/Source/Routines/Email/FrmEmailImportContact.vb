@@ -31,10 +31,10 @@ Public Class FrmEmailImportContact
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Manufacturer As Person
-        Dim Form As FrmPerson
         Manufacturer = New Person
-        Form = New FrmPerson(Manufacturer)
-        Form.ShowDialog()
+        Using Form As New FrmPerson(Manufacturer)
+            Form.ShowDialog()
+        End Using
         EprValidation.Clear()
         If Manufacturer.ID > 0 Then
             QbxPerson.Freeze(Manufacturer.ID)
@@ -42,16 +42,16 @@ Public Class FrmEmailImportContact
         QbxPerson.Select()
     End Sub
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
-        Dim Form As New FrmPerson(New Person().Load(QbxPerson.FreezedPrimaryKey, True))
-        Form.ShowDialog()
+        Using Form As New FrmPerson(New Person().Load(QbxPerson.FreezedPrimaryKey, True))
+            Form.ShowDialog()
+        End Using
         QbxPerson.Freeze(QbxPerson.FreezedPrimaryKey)
         QbxPerson.Select()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
-        Dim FilterForm As FrmFilter
-        FilterForm = New FrmFilter(New PersonFilter(), QbxPerson)
-        FilterForm.Text = "Filtro de Pessoas"
-        FilterForm.ShowDialog()
+        Using Form As New FrmFilter(New PersonFilter(), QbxPerson) With {.Text = "Filtro de Pessoas"}
+            Form.ShowDialog()
+        End Using
         QbxPerson.Select()
     End Sub
     Private Sub FillDataGridView(Person As Person)

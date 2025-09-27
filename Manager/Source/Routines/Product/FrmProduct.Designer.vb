@@ -1156,7 +1156,7 @@ Partial Class FrmProduct
         Me.PvPicture.ShowCounterBar = True
         Me.PvPicture.Size = New System.Drawing.Size(600, 186)
         Me.PvPicture.TabIndex = 0
-        Me.PvPicture.TempDirectory = "C:\Users\leand\AppData\Local\Temp\Manager\"
+        Me.PvPicture.TempDirectory = ""
         '
         'TmrQueriedBoxFamily
         '

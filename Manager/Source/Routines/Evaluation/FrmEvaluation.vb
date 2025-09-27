@@ -8,7 +8,6 @@ Public Class FrmEvaluation
     Private _UcCallTypeHasRepairNeedProposal As UcEvaluationCallTypeHasRepairNeedProposal
     Private _UcUnitTemperaturePressure As UcEvaluationUnitTemperaturePressure
     Private _EvaluationsForm As FrmEvaluations
-    Private _SelectedPicture As EvaluationPicture
     Private _EvaluationsGrid As DataGridView
     Private _Filter As EvaluationFilter
     Private _Evaluation As Evaluation
@@ -37,19 +36,6 @@ Public Class FrmEvaluation
                 Else
                     _Resizer.SetSize(_TargetSize)
                 End If
-            End If
-        End Set
-    End Property
-    Private Property SelectedPicture As EvaluationPicture
-        Get
-            Return _SelectedPicture
-        End Get
-        Set(value As EvaluationPicture)
-            _SelectedPicture = value
-            If _SelectedPicture IsNot Nothing Then
-                PbxPicture.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_SelectedPicture.Picture.CurrentFile)))
-            Else
-                PbxPicture.Image = Nothing
             End If
         End Set
     End Property
@@ -155,9 +141,9 @@ Public Class FrmEvaluation
         CcoCallTypeHasRepairNeedProposal.DropDownControl = _UcCallTypeHasRepairNeedProposal
         _UcUnitTemperaturePressure = New UcEvaluationUnitTemperaturePressure()
         CcoUnitTemperaturePressure.DropDownControl = _UcUnitTemperaturePressure
+        PvPicture.TempDirectory = ManagerCore.ApplicationPaths.ManagerTempDirectory
         AddHandler _UcCallTypeHasRepairNeedProposal.ValueChanged, AddressOf CallTypeHasRepairNeedProposalChanged
         AddHandler _UcUnitTemperaturePressure.ValueChanged, AddressOf UnitTemperaturePressureChanged
-        RefreshPictureControls()
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -245,10 +231,7 @@ Public Class FrmEvaluation
             BtnZoomIn.Enabled = False
             BtnZoomOut.Enabled = False
         End If
-        If _Evaluation.Pictures.Count > 0 Then
-            SelectedPicture = _Evaluation.Pictures(0)
-        End If
-        RefreshPictureControls()
+        PvPicture.AddPictures(_Evaluation.Pictures.Select(Function(x) x.Picture.CurrentFile).ToList, 0)
         If File.Exists(_Evaluation.Signature.CurrentFile) Then
             PbxSignature.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_Evaluation.Signature.CurrentFile)))
         End If
@@ -432,12 +415,20 @@ Public Class FrmEvaluation
                     _Evaluation.ManualAverageWorkLoad = CbxManualAverageWorkLoad.Checked
                     _Evaluation.AverageWorkLoad = DbxAverageWorkLoad.Text
                     _Evaluation.TechnicalAdvice = TxtTechnicalAdvice.Text
-                    If _Evaluation.ID = 0 AndAlso _User.CanAccess(Routine.EvaluationApproveOrReject) Then
-                        _Evaluation.SaveChanges()
-                        BtnApprove.PerformClick()
-                    Else
-                        _Evaluation.SaveChanges()
-                    End If
+                    PvPicture.Pictures.ToList().ForEach(Sub(x)
+                                                            If Not _Evaluation.Pictures.Any(Function(y) y.Picture.CurrentFile = x) Then
+                                                                Dim EvaluationPicture As New EvaluationPicture
+                                                                EvaluationPicture.Picture.SetCurrentFile(x)
+                                                                _Evaluation.Pictures.Add(EvaluationPicture)
+                                                            End If
+                                                        End Sub)
+                    _Evaluation.Pictures.ForEach(Sub(x)
+                                                     If Not PvPicture.Pictures.Any(Function(y) y = x.Picture.CurrentFile) Then
+                                                         x.Picture.SetCurrentFile(Nothing)
+                                                     End If
+                                                 End Sub)
+                    _Evaluation.SaveChanges()
+                    If _Evaluation.ID = 0 AndAlso _User.CanAccess(Routine.EvaluationApproveOrReject) Then BtnApprove.PerformClick()
                     _Evaluation.Lock()
                     LblIDValue.Text = _Evaluation.ID
                     DgvTechnician.Fill(_Evaluation.Technicians)
@@ -716,153 +707,6 @@ Public Class FrmEvaluation
     End Sub
     Private Sub PdfDocumentViewer_CurrentPageChanged(sender As Object, args As EventArgs) Handles PdfDocumentViewer.CurrentPageChanged
         LblDocumentPage.Text = "Página " & PdfDocumentViewer.CurrentPageIndex & " de " & PdfDocumentViewer.PageCount
-    End Sub
-#End Region
-#Region "Picture"
-    Private Sub BtnSavePicture_Click(sender As Object, e As EventArgs) Handles BtnSavePicture.Click
-        Using Sfd As New SaveFileDialog()
-            Sfd.Filter = "JPEG Image|*.jpg|PNG Image|*.png|BMP Image|*.bmp"
-            Sfd.Title = "Salvar Imagem"
-            Sfd.FileName = "Foto"
-            If Sfd.ShowDialog() = DialogResult.OK Then
-                Dim FileExtension As String = IO.Path.GetExtension(Sfd.FileName).ToLower()
-                Dim ImageFormat As Imaging.ImageFormat
-                Select Case FileExtension
-                    Case ".jpg"
-                        ImageFormat = Imaging.ImageFormat.Jpeg
-                    Case ".png"
-                        ImageFormat = Imaging.ImageFormat.Png
-                    Case ".bmp"
-                        ImageFormat = Imaging.ImageFormat.Bmp
-                    Case Else
-                        MessageBox.Show("Formato de arquivo não suportado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        Exit Sub
-                End Select
-                PbxPicture.Image.Save(Sfd.FileName, ImageFormat)
-            End If
-        End Using
-    End Sub
-    Private Sub BtnIncludePicture_Click(sender As Object, e As EventArgs) Handles BtnIncludePicture.Click
-        Dim Filename As String
-        Dim Picture As EvaluationPicture
-        Using Ofd As New OpenFileDialog()
-            Ofd.Filter = "Imagens|*.jpg;*.jpeg;*.png;*.bmp|Todos os arquivos|*.*"
-            Ofd.Title = "Selecionar Imagem"
-            If Ofd.ShowDialog() = DialogResult.OK Then
-                Filename = TextHelper.GetRandomFileName(Path.GetExtension(Ofd.FileName))
-                File.Copy(Ofd.FileName, Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
-                Picture = New EvaluationPicture()
-                Picture.Picture.SetCurrentFile(Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename))
-                _Evaluation.Pictures.Add(Picture)
-                SelectedPicture = Picture
-                EprValidation.Clear()
-                BtnSave.Enabled = True
-            End If
-        End Using
-        RefreshPictureControls()
-    End Sub
-    Private Sub BtnRemovePicture_Click(sender As Object, e As EventArgs) Handles BtnRemovePicture.Click
-        Dim Pictures As List(Of EvaluationPicture) = _Evaluation.Pictures.ToList()
-        If CMessageBox.Show("A foto será excluída permanentemente quando essa avaliação for salva. Confirma a exclusão?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-            SelectedPicture.Picture.SetCurrentFile(Nothing)
-            Dim Index As Integer = Pictures.IndexOf(SelectedPicture)
-            Dim Found As Boolean = False
-            For i As Integer = Index - 1 To 0 Step -1
-                If Pictures(i).Picture.CurrentFile IsNot Nothing Then
-                    SelectedPicture = Pictures(i)
-                    Found = True
-                    Exit For
-                End If
-            Next
-            If Not Found Then
-                For i As Integer = Index + 1 To Pictures.Count - 1
-                    If Pictures(i).Picture.CurrentFile IsNot Nothing Then
-                        SelectedPicture = Pictures(i)
-                        Found = True
-                        Exit For
-                    End If
-                Next
-            End If
-            If Not Found Then
-                SelectedPicture = Nothing
-            End If
-            RefreshPictureControls()
-            EprValidation.Clear()
-            BtnSave.Enabled = True
-        End If
-    End Sub
-    Private Sub BtnPreviousPicture_Click(sender As Object, e As EventArgs) Handles BtnPreviousPicture.Click
-        Dim ValidPictures As List(Of EvaluationPicture) = _Evaluation.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
-        SelectedPicture = ValidPictures(ValidPictures.IndexOf(SelectedPicture) - 1)
-        RefreshPictureControls()
-    End Sub
-
-    Private Sub BtnNextPicture_Click(sender As Object, e As EventArgs) Handles BtnNextPicture.Click
-        Dim ValidPictures As List(Of EvaluationPicture) = _Evaluation.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
-        SelectedPicture = ValidPictures(ValidPictures.IndexOf(SelectedPicture) + 1)
-        RefreshPictureControls()
-    End Sub
-
-    Private Sub BtnFirstPicture_Click(sender As Object, e As EventArgs) Handles BtnFirstPicture.Click
-        Dim ValidPicture As List(Of EvaluationPicture) = _Evaluation.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
-        SelectedPicture = ValidPicture(0)
-        RefreshPictureControls()
-    End Sub
-
-    Private Sub BtnLastPicture_Click(sender As Object, e As EventArgs) Handles BtnLastPicture.Click
-        Dim ValidPicture As List(Of EvaluationPicture) = _Evaluation.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
-        SelectedPicture = ValidPicture(ValidPicture.Count - 1)
-        RefreshPictureControls()
-    End Sub
-    Private Sub RefreshPictureControls()
-        Dim ValidPictures As List(Of EvaluationPicture) = _Evaluation.Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing).ToList
-        Dim PictureCount As Integer = ValidPictures.Count
-        Dim PictureIndex As Integer = ValidPictures.IndexOf(SelectedPicture)
-        If PictureCount < 1 Then
-            LblPictureCount.Visible = False
-            BtnSavePicture.Enabled = False
-            BtnRemovePicture.Enabled = False
-            BtnFirstPicture.Enabled = False
-            BtnPreviousPicture.Enabled = False
-            BtnNextPicture.Enabled = False
-            BtnLastPicture.Enabled = False
-            PbxPicture.Image = Nothing
-        Else
-            LblPictureCount.Visible = True
-            LblPictureCount.Text = $"Foto {PictureIndex + 1} de {PictureCount}"
-            BtnRemovePicture.Enabled = True
-            BtnSavePicture.Enabled = True
-            BtnFirstPicture.Enabled = (PictureIndex > 0)
-            BtnPreviousPicture.Enabled = (PictureIndex > 0)
-            BtnNextPicture.Enabled = (PictureIndex < PictureCount - 1)
-            BtnLastPicture.Enabled = (PictureIndex < PictureCount - 1)
-        End If
-    End Sub
-    Private Sub BtnPicture_EnabledChanged(sender As Object, e As EventArgs) Handles BtnSavePicture.EnabledChanged, BtnRemovePicture.EnabledChanged, BtnPreviousPicture.EnabledChanged, BtnNextPicture.EnabledChanged, BtnLastPicture.EnabledChanged, BtnIncludePicture.EnabledChanged, BtnFirstPicture.EnabledChanged
-        Dim Button As NoFocusCueButton = sender
-        If Button.Enabled Then
-            Select Case True
-                Case Button Is BtnFirstPicture
-                    Button.BackgroundImage = My.Resources.NavFirst
-                Case Button Is BtnPreviousPicture
-                    Button.BackgroundImage = My.Resources.NavPrevious
-                Case Button Is BtnNextPicture
-                    Button.BackgroundImage = My.Resources.NavNext
-                Case Button Is BtnLastPicture
-                    Button.BackgroundImage = My.Resources.NavLast
-                Case Button Is BtnIncludePicture
-                    Button.BackgroundImage = My.Resources.ImageInclude
-                Case Button Is BtnRemovePicture
-                    Button.BackgroundImage = My.Resources.ImageDelete
-                Case Button Is BtnSavePicture
-                    Button.BackgroundImage = My.Resources.ImageSave
-            End Select
-        Else
-            Dim Img As Image = Button.BackgroundImage
-            Dim Colors As List(Of Color) = ImageHelper.GetImageColors(Img)
-            Img = ImageHelper.GetRecoloredImage(Img, Color.Gray)
-            Button.BackgroundImage = Img
-        End If
     End Sub
 #End Region
 #Region "Button Events"
@@ -1319,6 +1163,12 @@ Public Class FrmEvaluation
             WindowState = FormWindowState.Maximized
             MaximizeBox = True
         End If
+    End Sub
+#End Region
+#Region "PictureViewer Events"
+    Private Sub PvPicture_PictureChanged(Path As String) Handles PvPicture.PictureAdded, PvPicture.PictureRemoved
+        EprValidation.Clear()
+        If Not _Loading Then BtnSave.Enabled = True
     End Sub
 #End Region
 #Region "QueriedBox Events"

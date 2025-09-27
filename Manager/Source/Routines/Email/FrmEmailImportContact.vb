@@ -74,6 +74,10 @@ Public Class FrmEmailImportContact
         DgvEmail.Columns("Phone").Visible = False
         DgvEmail.Columns("Name").HeaderText = "Nome"
         DgvEmail.Columns("Name").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+        DgvEmail.Columns("Guid").Visible = False
+        DgvEmail.Columns("Routine").Visible = False
+        DgvEmail.Columns("IsSaved").Visible = False
+        DgvEmail.Columns("User").Visible = False
         DgvEmail.Columns("Email").HeaderText = "E-Mail"
         DgvEmail.Columns("Email").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
     End Sub

@@ -1028,7 +1028,6 @@ Public Class Evaluation
         Loop
         Return EvaluationNumber
     End Function
-
     Public Overrides Function Clone() As BaseModel
         Dim Cloned As New Evaluation With {
             .AverageWorkLoad = AverageWorkLoad,
@@ -1062,5 +1061,4 @@ Public Class Evaluation
         Cloned.SetIsSaved(IsSaved)
         Return Cloned
     End Function
-
 End Class

@@ -1689,5 +1689,11 @@ DELIMITER ;
 DROP TABLE crmtreatment;
 DROP table crm; 
 
+ALTER TABLE `manager`.`evaluation` ADD COLUMN `sourceid` INT NOT NULL AFTER `statusid`;
+ALTER TABLE `manager`.`evaluation` CHANGE COLUMN `evaluationnumber` `evaluationnumber` VARCHAR(20) NULL ;
 
+SET SQL_SAFE_UPDATES = 0;
+UPDATE evaluation SET sourceid = 1 WHERE evaluationnumber = 'AUTOMÁTICO';
+UPDATE evaluation SET evaluationnumber = NULL WHERE evaluationnumber = 'AUTOMÁTICO';
+SET SQL_SAFE_UPDATES = 1;
 

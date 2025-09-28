@@ -34,7 +34,7 @@ Partial Class FrmMain
         Me.BtnEmailModel = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnEmailSign = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnEmailSent = New System.Windows.Forms.ToolStripMenuItem()
-        Me.LblVersion = New System.Windows.Forms.ToolStripLabel()
+        Me.BtnVersion = New System.Windows.Forms.ToolStripButton()
         Me.TcWindows = New System.Windows.Forms.TabControl()
         Me.TabRoutine = New System.Windows.Forms.TabPage()
         Me.TsRoutine = New System.Windows.Forms.ToolStrip()
@@ -54,7 +54,7 @@ Partial Class FrmMain
         Me.TsBotMenu.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsBotMenu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.TsBotMenu.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.TsBotMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.LblCompany, Me.LblUser, Me.BtnUser, Me.LblVersion})
+        Me.TsBotMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.LblCompany, Me.LblUser, Me.BtnUser, Me.BtnVersion})
         Me.TsBotMenu.Location = New System.Drawing.Point(0, 463)
         Me.TsBotMenu.Name = "TsBotMenu"
         Me.TsBotMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -142,16 +142,17 @@ Partial Class FrmMain
         Me.BtnEmailSent.Size = New System.Drawing.Size(146, 22)
         Me.BtnEmailSent.Text = "Enviados"
         '
-        'LblVersion
+        'BtnVersion
         '
-        Me.LblVersion.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.LblVersion.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblVersion.ForeColor = System.Drawing.Color.FromArgb(CType(CType(80, Byte), Integer), CType(CType(80, Byte), Integer), CType(CType(80, Byte), Integer))
-        Me.LblVersion.Margin = New System.Windows.Forms.Padding(30, 1, 0, 2)
-        Me.LblVersion.Name = "LblVersion"
-        Me.LblVersion.Size = New System.Drawing.Size(24, 22)
-        Me.LblVersion.Text = "x.x"
-        Me.LblVersion.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
+        Me.BtnVersion.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.BtnVersion.AutoToolTip = False
+        Me.BtnVersion.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnVersion.ForeColor = System.Drawing.Color.FromArgb(CType(CType(80, Byte), Integer), CType(CType(80, Byte), Integer), CType(CType(80, Byte), Integer))
+        Me.BtnVersion.Margin = New System.Windows.Forms.Padding(30, 1, 0, 2)
+        Me.BtnVersion.Name = "BtnVersion"
+        Me.BtnVersion.Size = New System.Drawing.Size(28, 22)
+        Me.BtnVersion.Text = "x.x"
+        Me.BtnVersion.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         '
         'TcWindows
         '
@@ -261,5 +262,5 @@ Partial Class FrmMain
     Friend WithEvents BtnEmailModel As ToolStripMenuItem
     Friend WithEvents BtnEmailSign As ToolStripMenuItem
     Friend WithEvents BtnEmailSent As ToolStripMenuItem
-    Friend WithEvents LblVersion As ToolStripLabel
+    Friend WithEvents BtnVersion As ToolStripButton
 End Class

@@ -233,6 +233,7 @@ Public Class FrmEvaluation
             BtnZoomIn.Enabled = False
             BtnZoomOut.Enabled = False
         End If
+        PvPicture.Clear()
         PvPicture.AddPictures(_Evaluation.Pictures.Select(Function(x) x.Picture.CurrentFile).ToList, 0)
         If File.Exists(_Evaluation.Signature.CurrentFile) Then
             PbxSignature.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_Evaluation.Signature.CurrentFile)))

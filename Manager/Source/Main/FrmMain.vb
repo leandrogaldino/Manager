@@ -6,7 +6,7 @@ Public Class FrmMain
         InitializeComponent()
         _User = Locator.GetInstance(Of Session).User
         LblCompany.Text = Locator.GetInstance(Of Session).Setting.Company.ShortName
-        LblVersion.Text = Locator.GetInstance(Of Session).ManagerVersion
+        BtnVersion.Text = Locator.GetInstance(Of Session).ManagerVersion
         BtnUser.Text = _User.Username
         BtnEmail.Visible = _User.CanAccess(Routine.EmailModel) Or _User.CanAccess(Routine.EmailSignature) Or _User.CanAccess(Routine.EmailSent)
         BtnEmailModel.Visible = _User.CanAccess(Routine.EmailModel)
@@ -481,6 +481,11 @@ Public Class FrmMain
         Else
             SelectTab(Routine.EmailSignature)
         End If
+    End Sub
+    Private Sub BtnVersion_Click(sender As Object, e As EventArgs) Handles BtnVersion.Click
+        Using Form As New FrmUpdateNotes()
+            Form.ShowDialog()
+        End Using
     End Sub
 End Class
 

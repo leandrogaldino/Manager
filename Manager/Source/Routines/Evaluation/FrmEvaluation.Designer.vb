@@ -149,6 +149,7 @@ Partial Class FrmEvaluation
         Me.BtnZoomOut = New System.Windows.Forms.ToolStripButton()
         Me.LblDocumentPage = New System.Windows.Forms.ToolStripLabel()
         Me.TabPicture = New System.Windows.Forms.TabPage()
+        Me.PvPicture = New ControlLibrary.PictureViewer()
         Me.TabSignature = New System.Windows.Forms.TabPage()
         Me.PnSignature = New System.Windows.Forms.Panel()
         Me.PbxSignature = New System.Windows.Forms.PictureBox()
@@ -168,7 +169,6 @@ Partial Class FrmEvaluation
         Me.CcoCallTypeHasRepairNeedProposal = New ControlLibrary.ControlContainer()
         Me.CcoUnitTemperaturePressure = New ControlLibrary.ControlContainer()
         Me.DgvlReplacedSellable = New Manager.DataGridViewLayout()
-        Me.PvPicture = New ControlLibrary.PictureViewer()
         Me.PnBottom.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -1167,10 +1167,10 @@ Partial Class FrmEvaluation
         '
         Me.TabTechnicalAdvice.BackColor = System.Drawing.Color.White
         Me.TabTechnicalAdvice.Controls.Add(Me.TlpAdvice)
-        Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 22)
+        Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 26)
         Me.TabTechnicalAdvice.Name = "TabTechnicalAdvice"
         Me.TabTechnicalAdvice.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1031, 411)
+        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1031, 407)
         Me.TabTechnicalAdvice.TabIndex = 6
         Me.TabTechnicalAdvice.Text = "Parecer Técnico"
         '
@@ -1186,7 +1186,7 @@ Partial Class FrmEvaluation
         Me.TlpAdvice.RowCount = 2
         Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.0!))
         Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.0!))
-        Me.TlpAdvice.Size = New System.Drawing.Size(1025, 405)
+        Me.TlpAdvice.Size = New System.Drawing.Size(1025, 401)
         Me.TlpAdvice.TabIndex = 2
         '
         'TlpReplaced
@@ -1200,7 +1200,7 @@ Partial Class FrmEvaluation
         Me.TlpReplaced.Name = "TlpReplaced"
         Me.TlpReplaced.RowCount = 1
         Me.TlpReplaced.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TlpReplaced.Size = New System.Drawing.Size(1019, 237)
+        Me.TlpReplaced.Size = New System.Drawing.Size(1019, 234)
         Me.TlpReplaced.TabIndex = 1
         '
         'GbxReplacedSellable
@@ -1210,7 +1210,7 @@ Partial Class FrmEvaluation
         Me.GbxReplacedSellable.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GbxReplacedSellable.Location = New System.Drawing.Point(3, 3)
         Me.GbxReplacedSellable.Name = "GbxReplacedSellable"
-        Me.GbxReplacedSellable.Size = New System.Drawing.Size(1013, 231)
+        Me.GbxReplacedSellable.Size = New System.Drawing.Size(1013, 228)
         Me.GbxReplacedSellable.TabIndex = 2
         Me.GbxReplacedSellable.TabStop = False
         Me.GbxReplacedSellable.Text = "Peças Substituídas/Serviços Executados"
@@ -1234,7 +1234,7 @@ Partial Class FrmEvaluation
         Me.DgvReplacedSellable.RowHeadersVisible = False
         Me.DgvReplacedSellable.RowTemplate.Height = 26
         Me.DgvReplacedSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvReplacedSellable.Size = New System.Drawing.Size(1007, 184)
+        Me.DgvReplacedSellable.Size = New System.Drawing.Size(1007, 181)
         Me.DgvReplacedSellable.TabIndex = 1
         Me.DgvReplacedSellable.TabStop = False
         '
@@ -1299,9 +1299,9 @@ Partial Class FrmEvaluation
         '
         Me.GbxAdvice.Controls.Add(Me.TxtTechnicalAdvice)
         Me.GbxAdvice.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GbxAdvice.Location = New System.Drawing.Point(3, 246)
+        Me.GbxAdvice.Location = New System.Drawing.Point(3, 243)
         Me.GbxAdvice.Name = "GbxAdvice"
-        Me.GbxAdvice.Size = New System.Drawing.Size(1019, 156)
+        Me.GbxAdvice.Size = New System.Drawing.Size(1019, 155)
         Me.GbxAdvice.TabIndex = 0
         Me.GbxAdvice.TabStop = False
         Me.GbxAdvice.Text = "Observação"
@@ -1313,7 +1313,7 @@ Partial Class FrmEvaluation
         Me.TxtTechnicalAdvice.Location = New System.Drawing.Point(3, 19)
         Me.TxtTechnicalAdvice.MaxLength = 1000000
         Me.TxtTechnicalAdvice.Name = "TxtTechnicalAdvice"
-        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1013, 134)
+        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1013, 133)
         Me.TxtTechnicalAdvice.TabIndex = 1
         Me.TxtTechnicalAdvice.Text = ""
         '
@@ -1322,10 +1322,10 @@ Partial Class FrmEvaluation
         Me.TabDocument.AutoScroll = True
         Me.TabDocument.Controls.Add(Me.PdfDocumentViewer)
         Me.TabDocument.Controls.Add(Me.TsDocument)
-        Me.TabDocument.Location = New System.Drawing.Point(4, 22)
+        Me.TabDocument.Location = New System.Drawing.Point(4, 26)
         Me.TabDocument.Name = "TabDocument"
         Me.TabDocument.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabDocument.Size = New System.Drawing.Size(1031, 411)
+        Me.TabDocument.Size = New System.Drawing.Size(1031, 407)
         Me.TabDocument.TabIndex = 7
         Me.TabDocument.Text = "Documento"
         Me.TabDocument.UseVisualStyleBackColor = True
@@ -1355,7 +1355,7 @@ Partial Class FrmEvaluation
         Me.PdfDocumentViewer.ScrollDisplacementValue = 0
         Me.PdfDocumentViewer.ShowHorizontalScrollBar = True
         Me.PdfDocumentViewer.ShowVerticalScrollBar = True
-        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1025, 380)
+        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1025, 376)
         Me.PdfDocumentViewer.SpaceBetweenPages = 8
         Me.PdfDocumentViewer.TabIndex = 1
         TextSearchSettings1.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -1456,13 +1456,36 @@ Partial Class FrmEvaluation
         Me.TabPicture.Text = "Fotos"
         Me.TabPicture.UseVisualStyleBackColor = True
         '
+        'PvPicture
+        '
+        Me.PvPicture.ControlBarBackColor = System.Drawing.Color.White
+        Me.PvPicture.CounterBarBackColor = System.Drawing.Color.White
+        Me.PvPicture.CounterMask = "Foto {0} de {1} - Max: {2}"
+        Me.PvPicture.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PvPicture.FirstButtonImage = CType(resources.GetObject("PvPicture.FirstButtonImage"), System.Drawing.Image)
+        Me.PvPicture.IncludeButtonImage = CType(resources.GetObject("PvPicture.IncludeButtonImage"), System.Drawing.Image)
+        Me.PvPicture.LastButtonImage = CType(resources.GetObject("PvPicture.LastButtonImage"), System.Drawing.Image)
+        Me.PvPicture.Location = New System.Drawing.Point(3, 3)
+        Me.PvPicture.MaximumPictures = 5
+        Me.PvPicture.Name = "PvPicture"
+        Me.PvPicture.NextButtonImage = CType(resources.GetObject("PvPicture.NextButtonImage"), System.Drawing.Image)
+        Me.PvPicture.Padding = New System.Windows.Forms.Padding(1)
+        Me.PvPicture.PreviousButtonImage = CType(resources.GetObject("PvPicture.PreviousButtonImage"), System.Drawing.Image)
+        Me.PvPicture.RemoveButtonImage = CType(resources.GetObject("PvPicture.RemoveButtonImage"), System.Drawing.Image)
+        Me.PvPicture.SaveButtonImage = CType(resources.GetObject("PvPicture.SaveButtonImage"), System.Drawing.Image)
+        Me.PvPicture.ShowControlBar = False
+        Me.PvPicture.ShowCounterBar = True
+        Me.PvPicture.Size = New System.Drawing.Size(1025, 401)
+        Me.PvPicture.TabIndex = 0
+        Me.PvPicture.TempDirectory = "C:\Users\leand\AppData\Local\Temp\"
+        '
         'TabSignature
         '
         Me.TabSignature.Controls.Add(Me.PnSignature)
-        Me.TabSignature.Location = New System.Drawing.Point(4, 22)
+        Me.TabSignature.Location = New System.Drawing.Point(4, 26)
         Me.TabSignature.Name = "TabSignature"
         Me.TabSignature.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabSignature.Size = New System.Drawing.Size(1031, 411)
+        Me.TabSignature.Size = New System.Drawing.Size(1031, 407)
         Me.TabSignature.TabIndex = 9
         Me.TabSignature.Text = "Assinatura"
         Me.TabSignature.UseVisualStyleBackColor = True
@@ -1474,7 +1497,7 @@ Partial Class FrmEvaluation
         Me.PnSignature.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PnSignature.Location = New System.Drawing.Point(3, 3)
         Me.PnSignature.Name = "PnSignature"
-        Me.PnSignature.Size = New System.Drawing.Size(1025, 405)
+        Me.PnSignature.Size = New System.Drawing.Size(1025, 401)
         Me.PnSignature.TabIndex = 18
         '
         'PbxSignature
@@ -1483,7 +1506,7 @@ Partial Class FrmEvaluation
         Me.PbxSignature.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PbxSignature.Location = New System.Drawing.Point(0, 0)
         Me.PbxSignature.Name = "PbxSignature"
-        Me.PbxSignature.Size = New System.Drawing.Size(1023, 403)
+        Me.PbxSignature.Size = New System.Drawing.Size(1023, 399)
         Me.PbxSignature.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PbxSignature.TabIndex = 11
         Me.PbxSignature.TabStop = False
@@ -1584,29 +1607,6 @@ Partial Class FrmEvaluation
         '
         Me.DgvlReplacedSellable.DataGridView = Me.DgvReplacedSellable
         Me.DgvlReplacedSellable.Routine = Manager.Routine.EvaluationReplacedSellable
-        '
-        'PvPicture
-        '
-        Me.PvPicture.ControlBarBackColor = System.Drawing.Color.White
-        Me.PvPicture.CounterBarBackColor = System.Drawing.Color.White
-        Me.PvPicture.CounterMask = "Foto {0} de {1} - Max: {2}"
-        Me.PvPicture.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PvPicture.FirstButtonImage = CType(resources.GetObject("PvPicture.FirstButtonImage"), System.Drawing.Image)
-        Me.PvPicture.IncludeButtonImage = CType(resources.GetObject("PvPicture.IncludeButtonImage"), System.Drawing.Image)
-        Me.PvPicture.LastButtonImage = CType(resources.GetObject("PvPicture.LastButtonImage"), System.Drawing.Image)
-        Me.PvPicture.Location = New System.Drawing.Point(3, 3)
-        Me.PvPicture.MaximumPictures = 5
-        Me.PvPicture.Name = "PvPicture"
-        Me.PvPicture.NextButtonImage = CType(resources.GetObject("PvPicture.NextButtonImage"), System.Drawing.Image)
-        Me.PvPicture.Padding = New System.Windows.Forms.Padding(1)
-        Me.PvPicture.PreviousButtonImage = CType(resources.GetObject("PvPicture.PreviousButtonImage"), System.Drawing.Image)
-        Me.PvPicture.RemoveButtonImage = CType(resources.GetObject("PvPicture.RemoveButtonImage"), System.Drawing.Image)
-        Me.PvPicture.SaveButtonImage = CType(resources.GetObject("PvPicture.SaveButtonImage"), System.Drawing.Image)
-        Me.PvPicture.ShowControlBar = True
-        Me.PvPicture.ShowCounterBar = True
-        Me.PvPicture.Size = New System.Drawing.Size(1025, 401)
-        Me.PvPicture.TabIndex = 0
-        Me.PvPicture.TempDirectory = "C:\Users\leand\AppData\Local\Temp\"
         '
         'FrmEvaluation
         '

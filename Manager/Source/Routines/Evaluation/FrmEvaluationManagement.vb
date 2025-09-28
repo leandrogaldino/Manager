@@ -291,7 +291,7 @@ Public Class FrmEvaluationManagement
                 If CMessageBox.Show("Confirma o lançamento automático para esse compressor?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                     Dim SelectedEvaluation As Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("evaluation").Value, False)
                     Dim NewEvaluation As New Evaluation With {
-                        .EvaluationNumber = Evaluation.GetEvaluationNumber(EvaluationCreationType.Automatic),
+                        .EvaluationNumber = Evaluation.GetEvaluationNumber(EvaluationSource.Automatic),
                         .AverageWorkLoad = SelectedEvaluation.AverageWorkLoad,
                         .Compressor = SelectedEvaluation.Compressor,
                         .Customer = SelectedEvaluation.Customer,

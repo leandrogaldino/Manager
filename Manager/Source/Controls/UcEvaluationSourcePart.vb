@@ -1,13 +1,10 @@
 ﻿Imports System.ComponentModel
-
 Public Class UcEvaluationSourcePart
-
     Public Event ValidateRequired(sender As Object, e As EventArgs)
     Public ReadOnly Property UcSoldLost As UcEvaluationSoldLost
     Private Sub OnValidateRequired()
         RaiseEvent ValidateRequired(Me, EventArgs.Empty)
     End Sub
-
     Public Sub New(Title As String, Item1 As String, item2 As String)
         InitializeComponent()
         LblTitle.Text = Title
@@ -15,16 +12,12 @@ Public Class UcEvaluationSourcePart
         CbxItem2.Text = item2
         UcSoldLost = New UcEvaluationSoldLost(CcSoldLost)
         CcSoldLost.DropDownControl = UcSoldLost
-
     End Sub
     Public Sub New()
         InitializeComponent()
         UcSoldLost = New UcEvaluationSoldLost(CcSoldLost)
         CcSoldLost.DropDownControl = UcSoldLost
     End Sub
-
-
-
     <Browsable(False)>
     Public ReadOnly Property SelectedValue As String
         Get
@@ -65,9 +58,6 @@ Public Class UcEvaluationSourcePart
             CbxItem2.Text = value
         End Set
     End Property
-
-
-
     Private Sub CheckedChanged(sender As Object, e As EventArgs) Handles CbxItem1.CheckedChanged, CbxItem2.CheckedChanged
         Dim Control As CheckBox = CType(sender, CheckBox)
         Control.Image = If(Control.Checked, My.Resources.Approve, Nothing)
@@ -80,7 +70,6 @@ Public Class UcEvaluationSourcePart
         End If
         OnValidateRequired()
     End Sub
-
     Private Sub CcSoldLost_Closed(sender As Object) Handles CcSoldLost.Closed
         If UcSoldLost.IsSold Then BtnSoldLost.Text = "Troca: Vendido"
         If UcSoldLost.IsLost Then BtnSoldLost.Text = "Troca: Perdido"

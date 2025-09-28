@@ -2,6 +2,7 @@ INSERT INTO evaluation
 (
 	creation,
     statusid,
+	sourceid,
 	calltypeid,
 	needproposalid,
 	hasrepairid,
@@ -28,6 +29,7 @@ VALUES
 (
 	@creation,
 	@statusid,
+	@sourceid,
 	@calltypeid,
 	@needproposalid,
 	@hasrepairid,

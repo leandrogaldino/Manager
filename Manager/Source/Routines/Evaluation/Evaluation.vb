@@ -14,7 +14,7 @@ Public Class Evaluation
             Return _Status
         End Get
     End Property
-    Public Property EvaluationCreationType As EvaluationCreationType = EvaluationCreationType.Manual
+    Public Property Source As EvaluationSource = EvaluationSource.Manual
     Public Property CallType As CallType = CallType.None
     Public Property NeedProposal As ConfirmationType = ConfirmationType.None
     Public Property HasRepair As ConfirmationType = ConfirmationType.None
@@ -108,6 +108,7 @@ Public Class Evaluation
                         SetCreation(TableResult.Rows(0).Item("creation"))
                         SetIsSaved(True)
                         _Status = Convert.ToInt32(TableResult.Rows(0).Item("statusid"))
+                        Source = Convert.ToInt32(TableResult.Rows(0).Item("sourceid"))
                         CallType = Convert.ToInt32(TableResult.Rows(0).Item("calltypeid"))
                         NeedProposal = Convert.ToInt32(TableResult.Rows(0).Item("needproposalid"))
                         HasRepair = Convert.ToInt32(TableResult.Rows(0).Item("hasrepairid"))
@@ -204,6 +205,7 @@ Public Class Evaluation
                 Using CmdEvaluation As New MySqlCommand(My.Resources.EvaluationInsert, Con)
                     CmdEvaluation.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     CmdEvaluation.Parameters.AddWithValue("@statusid", Convert.ToInt32(Status))
+                    CmdEvaluation.Parameters.AddWithValue("@sourceid", Convert.ToInt32(Source))
                     CmdEvaluation.Parameters.AddWithValue("@calltypeid", Convert.ToInt32(CallType))
                     CmdEvaluation.Parameters.AddWithValue("@needproposalid", Convert.ToInt32(NeedProposal))
                     CmdEvaluation.Parameters.AddWithValue("@hasrepairid", Convert.ToInt32(HasRepair))
@@ -213,7 +215,7 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@evaluationdate", EvaluationDate.ToString("yyyy-MM-dd"))
                     CmdEvaluation.Parameters.AddWithValue("@starttime", StartTime.ToString("hh\:mm"))
                     CmdEvaluation.Parameters.AddWithValue("@endtime", EndTime.ToString("hh\:mm"))
-                    CmdEvaluation.Parameters.AddWithValue("@evaluationnumber", EvaluationNumber)
+                    CmdEvaluation.Parameters.AddWithValue("@evaluationnumber", If(String.IsNullOrEmpty(EvaluationNumber), DBNull.Value, EvaluationNumber))
                     CmdEvaluation.Parameters.AddWithValue("@customerid", Customer.ID)
                     CmdEvaluation.Parameters.AddWithValue("@responsible", If(String.IsNullOrEmpty(Responsible), DBNull.Value, Responsible))
                     CmdEvaluation.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
@@ -312,7 +314,7 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@evaluationdate", EvaluationDate)
                     CmdEvaluation.Parameters.AddWithValue("@starttime", StartTime.ToString("hh\:mm"))
                     CmdEvaluation.Parameters.AddWithValue("@endtime", EndTime.ToString("hh\:mm"))
-                    CmdEvaluation.Parameters.AddWithValue("@evaluationnumber", EvaluationNumber)
+                    CmdEvaluation.Parameters.AddWithValue("@evaluationnumber", If(String.IsNullOrEmpty(EvaluationNumber), DBNull.Value, EvaluationNumber))
                     CmdEvaluation.Parameters.AddWithValue("@customerid", Customer.ID)
                     CmdEvaluation.Parameters.AddWithValue("@responsible", If(String.IsNullOrEmpty(Responsible), DBNull.Value, Responsible))
                     CmdEvaluation.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
@@ -932,8 +934,8 @@ Public Class Evaluation
         Dim Evaluation As New Evaluation
         Dim EvaluationTechnician As EvaluationTechnician
         Dim Coalescent As EvaluationControlledSellable
-        Evaluation.EvaluationNumber = GetEvaluationNumber(EvaluationCreationType.Imported)
-        Evaluation.EvaluationCreationType = EvaluationCreationType.Imported
+        Evaluation.EvaluationNumber = GetEvaluationNumber(EvaluationSource.Cloud)
+        Evaluation.Source = EvaluationSource.Cloud
         Evaluation.CallType = CallType.None
         Evaluation.NeedProposal = If(Data("needproposal") = True, ConfirmationType.Yes, ConfirmationType.No)
         Evaluation.HasRepair = ConfirmationType.None
@@ -1006,15 +1008,15 @@ Public Class Evaluation
         Next p
         Return Evaluation
     End Function
-    Public Shared Function GetEvaluationNumber(CreationType As EvaluationCreationType) As String
+    Public Shared Function GetEvaluationNumber(CreationType As EvaluationSource) As String
         Dim EvaluationNumber As String = String.Empty
         Dim IsUnique As Boolean
         Dim Session = Locator.GetInstance(Of Session)
         Do Until IsUnique
             EvaluationNumber = TextHelper.GetRandomString(1, 8, Nothing, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
-            If CreationType = EvaluationCreationType.Automatic Then
+            If CreationType = EvaluationSource.Automatic Then
                 EvaluationNumber = $"A-{EvaluationNumber}"
-            ElseIf CreationType = EvaluationCreationType.Imported Then
+            ElseIf CreationType = EvaluationSource.Cloud Then
                 EvaluationNumber = $"I-{EvaluationNumber}"
             End If
             Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
@@ -1036,7 +1038,7 @@ Public Class Evaluation
             .Customer = CType(Customer.Clone(), Person),
             .Document = Document.Clone(),
             .EndTime = EndTime,
-            .EvaluationCreationType = EvaluationCreationType,
+            .Source = Source,
             .EvaluationNumber = EvaluationNumber,
             .EvaluationDate = EvaluationDate,
             .HasRepair = HasRepair,

@@ -15,6 +15,7 @@ Public Class FrmEvaluation
     Private _Calculated As Boolean
     Private _Deleting As Boolean
     Private _Loading As Boolean
+    Private _TabPageSignature As TabPage
     Private _TargetSize As Size
     Private _User As User
 #End Region
@@ -47,7 +48,7 @@ Public Class FrmEvaluation
         _EvaluationsForm = EvaluationsForm
         _EvaluationsGrid = _EvaluationsForm.DgvData
         _Filter = CType(_EvaluationsForm.PgFilter.SelectedObject, EvaluationFilter)
-        ConfigureControls()
+        InitializeControls()
         LoadData()
     End Sub
     Public Sub New(Evaluation As Evaluation)
@@ -60,7 +61,7 @@ Public Class FrmEvaluation
         LblStatus.Visible = True
         LblStatusValue.Visible = True
         BtnStatusValue.Visible = False
-        ConfigureControls()
+        InitializeControls()
         LoadData()
     End Sub
 #End Region
@@ -123,7 +124,7 @@ Public Class FrmEvaluation
     End Sub
 #End Region
 #Region "Configuration & Initialization"
-    Private Sub ConfigureControls()
+    Private Sub InitializeControls()
         ControlHelper.EnableControlDoubleBuffer(DgvWorkedHourSellable, True)
         ControlHelper.EnableControlDoubleBuffer(DgvElapsedDaySellable, True)
         _Resizer = New FluidResizer(Me)
@@ -135,13 +136,14 @@ Public Class FrmEvaluation
         BtnStatusValue.Visible = _User.CanAccess(Routine.EvaluationApproveOrReject)
         LblStatusValue.Visible = Not _User.CanAccess(Routine.EvaluationApproveOrReject)
         LblDocumentPage.Text = Nothing
-        TxtEvaluationNumber.ReadOnly = _Evaluation.EvaluationCreationType <> EvaluationCreationType.Manual
+        TxtEvaluationNumber.ReadOnly = _Evaluation.Source <> EvaluationSource.Manual
         Tip.SetToolTip(LblAverageWorkLoad, "Carga Média de Trabalho")
         _UcCallTypeHasRepairNeedProposal = New UcEvaluationCallTypeHasRepairNeedProposal()
         CcoCallTypeHasRepairNeedProposal.DropDownControl = _UcCallTypeHasRepairNeedProposal
         _UcUnitTemperaturePressure = New UcEvaluationUnitTemperaturePressure()
         CcoUnitTemperaturePressure.DropDownControl = _UcUnitTemperaturePressure
-        PvPicture.TempDirectory = ManagerCore.ApplicationPaths.ManagerTempDirectory
+        PvPicture.TempDirectory = ApplicationPaths.ManagerTempDirectory
+        _TabPageSignature = TcEvaluation.TabPages("TabSignature")
         AddHandler _UcCallTypeHasRepairNeedProposal.ValueChanged, AddressOf CallTypeHasRepairNeedProposalChanged
         AddHandler _UcUnitTemperaturePressure.ValueChanged, AddressOf UnitTemperaturePressureChanged
     End Sub
@@ -183,7 +185,7 @@ Public Class FrmEvaluation
         DbxAverageWorkLoad.Text = _Evaluation.AverageWorkLoad
         TxtTechnicalAdvice.Text = _Evaluation.TechnicalAdvice
         DgvTechnician.Fill(_Evaluation.Technicians)
-        If _Evaluation.EvaluationCreationType = EvaluationCreationType.Imported Or (_Evaluation.EvaluationCreationType = EvaluationCreationType.Manual And _Evaluation.ID > 0) Then
+        If _Evaluation.Source = EvaluationSource.Cloud Or _Evaluation.Source = EvaluationSource.Automatic Or (_Evaluation.Source = EvaluationSource.Manual And _Evaluation.ID > 0) Then
             For Each p As EvaluationControlledSellable In _Evaluation.WorkedHourControlledSelable.ToArray.Reverse()
                 If Not p.IsSaved Then
                     _Evaluation.WorkedHourControlledSelable.Remove(p)
@@ -236,11 +238,19 @@ Public Class FrmEvaluation
             PbxSignature.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_Evaluation.Signature.CurrentFile)))
         End If
         BtnDelete.Enabled = _Evaluation.ID > 0 And _User.CanDelete(Routine.Evaluation)
-        Text = "Avaliação de Compressor"
+        Text = $"Avaliação de Compressor ({EnumHelper.GetEnumDescription(_Evaluation.Source)})"
         If _Evaluation.LockInfo.IsLocked And Not _Evaluation.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Evaluation.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _Evaluation.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
         End If
+        If _Evaluation.Source = EvaluationSource.Cloud Then
+            If Not TcEvaluation.TabPages.Cast(Of TabPage).Any(Function(x) x.Equals(_TabPageSignature)) Then
+                TcEvaluation.TabPages.Insert(4, _TabPageSignature)
+            End If
+        Else
+            TcEvaluation.TabPages.Remove(_TabPageSignature)
+        End If
+        TxtEvaluationNumber.Enabled = _Evaluation.Source = EvaluationSource.Manual
         BtnSave.Enabled = False
         TxtEvaluationNumber.Select()
         _Loading = False

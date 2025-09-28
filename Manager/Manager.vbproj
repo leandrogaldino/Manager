@@ -715,7 +715,7 @@
     <Compile Include="Source\Helper\Flags\CompressorSellableControlType.vb" />
     <Compile Include="Source\Helper\Flags\CrmStatus.vb" />
     <Compile Include="Source\Helper\Flags\CrmTreatmentContactType.vb" />
-    <Compile Include="Source\Helper\Flags\EvaluationCreationType.vb" />
+    <Compile Include="Source\Helper\Flags\EvaluationSource.vb" />
     <Compile Include="Source\Helper\Flags\EvaluationPanelInformation.vb" />
     <Compile Include="Source\Helper\Flags\EvaluationStatus.vb" />
     <Compile Include="Source\Helper\Flags\CallType.vb" />

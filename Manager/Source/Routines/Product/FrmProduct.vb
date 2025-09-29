@@ -97,7 +97,7 @@ Public Class FrmProduct
         If _Product.Codes IsNot Nothing Then DgvCode.Fill(_Product.Codes)
         If _Product.Prices IsNot Nothing Then DgvPrice.Fill(_Product.Prices)
         If _Product.Indicators IsNot Nothing Then DgvIndicator.Fill(_Product.Indicators)
-        PvPicture.clear()
+        PvPicture.Clear()
         PvPicture.AddPictures(_Product.Pictures.Select(Function(x) x.Picture.CurrentFile).ToList, 0)
         BtnDelete.Enabled = _Product.ID > 0 And _User.CanDelete(Routine.Product)
         Text = "Produto"

@@ -1697,3 +1697,6 @@ UPDATE evaluation SET sourceid = 1 WHERE evaluationnumber = 'AUTOMÁTICO';
 UPDATE evaluation SET evaluationnumber = NULL WHERE evaluationnumber = 'AUTOMÁTICO';
 SET SQL_SAFE_UPDATES = 1;
 
+FLUSH TABLES WITH READ LOCK;
+UNLOCK TABLES;
+

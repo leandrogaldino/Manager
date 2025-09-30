@@ -658,8 +658,16 @@ DELETE FROM evaluationpart WHERE id = 10729;
 DELETE FROM evaluationpart WHERE id = 10730;
 DELETE FROM evaluationpart WHERE id = 23194;
 DELETE FROM evaluationpart WHERE id = 23195;
+
+
+
+
+
 DELETE FROM personcompressorpart where id = 3960;
 DELETE FROM personcompressorpart where id = 3961;
+
+
+
 
 
 ALTER TABLE `manager`.`personcompressorpart` 
@@ -716,6 +724,9 @@ SET SQL_SAFE_UPDATES = 0;
 UPDATE personcompressorsellable SET serviceid = @idengraxamento WHERE personcompressorsellable.itemname = "REVITALIZACAO";
 UPDATE personcompressorsellable SET serviceid = @idengraxamento WHERE personcompressorsellable.itemname = "REVITALIAZACAO";
 UPDATE personcompressorsellable SET serviceid = @idengraxamento WHERE personcompressorsellable.itemname = "REVITALIAZAO";
+UPDATE personcompressorsellable SET serviceid = @idengraxamento WHERE personcompressorsellable.itemname = "REVITALIZACAO2000";
+
+
 UPDATE personcompressorsellable SET productid = 67 WHERE personcompressorsellable.id = 1853;
 UPDATE personcompressorsellable SET productid = 16 WHERE personcompressorsellable.id = 4274;
 UPDATE personcompressorsellable SET productid = 47 WHERE personcompressorsellable.id = 3513;

@@ -652,17 +652,16 @@ UPDATE evaluationpart SET userid = 1 WHERE id = 10729;
 UPDATE evaluationpart SET userid = 1 WHERE id = 10730;
 UPDATE evaluationpart SET userid = 1 WHERE id = 23194;
 UPDATE evaluationpart SET userid = 1 WHERE id = 23195;
+UPDATE evaluationpart SET userid = 1 WHERE id = 51108;
+UPDATE evaluationpart SET userid = 1 WHERE id = 51109;
 UPDATE personcompressorpart SET userid = 1 WHERE id = 3960;
 UPDATE personcompressorpart SET userid = 1 WHERE id = 3961;
+DELETE FROM `manager`.`evaluationpart` WHERE (`id` = '51108');
+DELETE FROM `manager`.`evaluationpart` WHERE (`id` = '51109');
 DELETE FROM evaluationpart WHERE id = 10729;
 DELETE FROM evaluationpart WHERE id = 10730;
 DELETE FROM evaluationpart WHERE id = 23194;
 DELETE FROM evaluationpart WHERE id = 23195;
-
-
-
-
-
 DELETE FROM personcompressorpart where id = 3960;
 DELETE FROM personcompressorpart where id = 3961;
 

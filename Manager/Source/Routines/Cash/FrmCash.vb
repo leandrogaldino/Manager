@@ -237,7 +237,6 @@ Public Class FrmCash
         CalculateValues()
     End Sub
 
-    pq ta disparando?
     <DebuggerStepThrough>
     Private Sub DgvCashItems_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvCashItem.CellFormatting
         Dim Dgv As DataGridView = sender

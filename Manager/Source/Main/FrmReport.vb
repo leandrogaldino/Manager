@@ -33,6 +33,7 @@ Public Class FrmReport
     End Sub
     <DebuggerStepThrough>
     Private Sub FrmMain_ResizeEnd(sender As Object, e As EventArgs) Handles MyBase.ResizeEnd
+        If Me.Disposing OrElse Me.IsDisposed Then Return
         If Parent.FindForm IsNot Nothing Then
             Height = Parent.FindForm.Height - 196
             Width = Parent.FindForm.Width - 24

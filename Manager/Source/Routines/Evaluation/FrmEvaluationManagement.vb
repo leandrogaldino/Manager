@@ -192,6 +192,7 @@ Public Class FrmEvaluationManagement
     End Sub
     <DebuggerStepThrough>
     Private Sub FrmMain_ResizeEnd(sender As Object, e As EventArgs) Handles MyBase.ResizeEnd
+        If Me.Disposing OrElse Me.IsDisposed Then Return
         If BtnFilter.Checked Then BtnFilter.PerformClick()
         If Parent.FindForm IsNot Nothing Then
             Height = Parent.FindForm.Height - 196
@@ -237,7 +238,6 @@ Public Class FrmEvaluationManagement
             Cursor = Cursors.Default
         End Try
     End Sub
-
     Private Function GetAutomaticPDF() As String
         Dim Filename As String
         Filename = TextHelper.GetRandomFileName(".pdf")
@@ -264,7 +264,6 @@ Public Class FrmEvaluationManagement
             End Try
         End Using
     End Function
-
     Private Sub DgvData_MouseDown(sender As Object, e As MouseEventArgs) Handles DgvData.MouseDown
         Dim Click As DataGridView.HitTestInfo = DgvData.HitTest(e.X, e.Y)
         If Click.Type = DataGridViewHitTestType.Cell And e.Button = MouseButtons.Right Then
@@ -279,7 +278,6 @@ Public Class FrmEvaluationManagement
             _ShowCms = False
         End If
     End Sub
-
     Private Sub CmsOptions_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles CmsOptions.Opening
         If Not _User.CanAccess(Routine.EvaluationCreateAutomaticRecord) And Not _User.CanAccess(Routine.VisitSchedule) Then e.Cancel = True
         BtnAutoEvaluation.Visible = _User.CanAccess(Routine.EvaluationCreateAutomaticRecord)

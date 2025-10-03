@@ -181,13 +181,13 @@ Public Class FrmVisitSchedules
     End Sub
     <DebuggerStepThrough>
     Private Sub FrmMain_ResizeEnd(sender As Object, e As EventArgs)
+        If Me.Disposing OrElse Me.IsDisposed Then Return
         If BtnFilter.Checked Then BtnFilter.PerformClick()
         If Parent.FindForm IsNot Nothing Then
             Height = Parent.FindForm.Height - 196
             Width = Parent.FindForm.Width - 24
         End If
     End Sub
-
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Agendamentos de Visita", .Grid = DgvData}})
         Dim Form As New FrmReport(Result)

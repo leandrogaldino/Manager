@@ -179,6 +179,7 @@ Public Class FrmPrivilegePresets
     End Sub
     <DebuggerStepThrough>
     Private Sub FrmMain_ResizeEnd(sender As Object, e As EventArgs)
+        If Me.Disposing OrElse Me.IsDisposed Then Return
         If BtnFilter.Checked Then BtnFilter.PerformClick()
         If Parent.FindForm IsNot Nothing Then
             Height = Parent.FindForm.Height - 196

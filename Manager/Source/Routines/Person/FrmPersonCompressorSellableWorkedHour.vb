@@ -159,7 +159,7 @@ Public Class FrmPersonCompressorSellableWorkedHour
             EprValidation.SetIconAlignment(LblCapacity, ErrorIconAlignment.MiddleRight)
             DbxQuantity.Select()
             Return False
-        ElseIf CbxSellableBind.SelectedIndex <> 0 Then
+        ElseIf CbxSellableBind.SelectedIndex <> 0 And RbtService.Checked Then
             EprValidation.SetError(RbtService, $"Não é possível vincular um {LCase(CbxSellableBind.Text)} a um serviço.")
             EprValidation.SetIconAlignment(RbtService, ErrorIconAlignment.MiddleRight)
             QbxSellable.Select()

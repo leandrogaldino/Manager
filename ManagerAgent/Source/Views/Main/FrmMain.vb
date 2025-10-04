@@ -78,6 +78,7 @@ Public Class FrmMain
         BtnClean.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.CleanManual And Not x.IsRunning And Not x.Waiting) And _StateWarnings.Count = 0
         BtnRelease.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.ReleaseManual And Not x.IsRunning And Not x.Waiting) And _StateWarnings.Count = 0
         BtnCloudSync.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.CloudSyncManual And Not x.IsRunning And Not x.Waiting) And _StateWarnings.Count = 0
+        BtnAgentState.Enabled = Not _StackTaskService.GetTaskStack().Any(Function(x) x.IsRunning)
     End Sub
     Private Sub OnTaskProgressChanged(sender As Object, Response As AsyncResponseModel)
         LblProgress.Visible = True
@@ -480,4 +481,5 @@ Public Class FrmMain
     Private Sub DgvEvents_RowsAdded(sender As Object, e As DataGridViewRowsAddedEventArgs) Handles DgvEvents.RowsAdded
         DgvEvents.FirstDisplayedScrollingRowIndex = 0
     End Sub
+
 End Class

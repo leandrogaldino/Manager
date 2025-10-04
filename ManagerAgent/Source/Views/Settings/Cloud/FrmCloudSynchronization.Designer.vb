@@ -164,12 +164,12 @@ Partial Class FrmCloudSynchronization
         'NudCloudMaxOperation
         '
         Me.NudCloudMaxOperation.Location = New System.Drawing.Point(229, 3)
-        Me.NudCloudMaxOperation.Maximum = New Decimal(New Integer() {5000, 0, 0, 0})
+        Me.NudCloudMaxOperation.Maximum = New Decimal(New Integer() {50000, 0, 0, 0})
         Me.NudCloudMaxOperation.Name = "NudCloudMaxOperation"
         Me.NudCloudMaxOperation.Size = New System.Drawing.Size(216, 23)
         Me.NudCloudMaxOperation.TabIndex = 2
         Me.NudCloudMaxOperation.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.NudCloudMaxOperation.Value = New Decimal(New Integer() {1000, 0, 0, 0})
+        Me.NudCloudMaxOperation.Value = New Decimal(New Integer() {10000, 0, 0, 0})
         '
         'LblCloudMaxOperation
         '

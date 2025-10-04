@@ -39,7 +39,6 @@ Public Class TaskStackService
         RaiseEvent TaskListChanged(Me, Task)
         _Semaphore.Release()
     End Sub
-
     Private Async Sub TimerElapsed()
         _Timer.Stop()
         Await _Semaphore.WaitAsync()

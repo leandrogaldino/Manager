@@ -12,7 +12,6 @@ Public Class Service
     Public Property Indicators As New List(Of ServicePriceIndicator)
     Public Sub New()
         SetRoutine(Routine.Service)
-
     End Sub
     Public Sub Clear()
         Unlock()

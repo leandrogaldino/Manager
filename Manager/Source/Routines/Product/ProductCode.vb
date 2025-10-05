@@ -7,6 +7,13 @@ Public Class ProductCode
         SetRoutine(Routine.ProductCode)
     End Sub
     Public Overrides Function Clone() As BaseModel
-        Return MyBase.Clone()
+        Dim Cloned As New ProductCode With {
+            .Name = Me.Name,
+            .Code = Me.Code
+        }
+        Cloned.SetID(Me.ID)
+        Cloned.SetCreation(Me.Creation)
+        Cloned.SetIsSaved(Me.IsSaved)
+        Return Cloned
     End Function
 End Class

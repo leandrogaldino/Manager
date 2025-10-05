@@ -251,6 +251,8 @@ Public Class FrmCash
             End Select
         ElseIf e.ColumnIndex = Dgv.Columns("ItemCategory").Index Then
             Select Case e.Value
+                Case Is = CashItemCategory.PaymentAdvance
+                    e.Value = EnumHelper.GetEnumDescription(CashItemCategory.PaymentAdvance)
                 Case Is = CashItemCategory.Supermarket
                     e.Value = EnumHelper.GetEnumDescription(CashItemCategory.Supermarket)
                 Case Is = CashItemCategory.Food

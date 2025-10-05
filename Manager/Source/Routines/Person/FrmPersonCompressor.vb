@@ -152,6 +152,7 @@ Public Class FrmPersonCompressor
                             _PersonCompressor.WorkedHourSellables.Add(ShadowPersonCompressorSellable)
                         End If
                     Next ShadowPersonCompressorSellable
+                    Exit Sub
                 End If
             End If
         End If
@@ -191,14 +192,8 @@ Public Class FrmPersonCompressor
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
             BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
-            If _PersonCompressor.Status = SimpleStatus.Active Then
-                CMessageBox.Show("O registro foi marcado para ser inativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
-            End If
         ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive) Then
             BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active)
-            If _PersonCompressor.Status = SimpleStatus.Inactive Then
-                CMessageBox.Show("O registro foi marcado para ser ativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
-            End If
         End If
         BtnSave.Enabled = True
     End Sub

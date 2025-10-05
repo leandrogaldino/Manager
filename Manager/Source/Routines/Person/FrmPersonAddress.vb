@@ -112,16 +112,10 @@ Public Class FrmPersonAddress
                 CMessageBox.Show("O endereço principal não pode inativado.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
             Else
                 BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
-                If _PersonAddress.Status = SimpleStatus.Active Then
-                    CMessageBox.Show("O registro foi marcado para ser inativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
-                End If
                 BtnSave.Enabled = True
             End If
         ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive) Then
             BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active)
-            If _PersonAddress.Status = SimpleStatus.Inactive Then
-                CMessageBox.Show("O registro foi marcado para ser ativado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
-            End If
             BtnSave.Enabled = True
         End If
     End Sub

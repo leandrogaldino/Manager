@@ -1,6 +1,9 @@
 #2.0.1
 • Correção no ciclo de vida dos formulários embutidos: eventos não são mais disparados após fechar uma rotina.
 • Correção de validação no cadastro das peças do compressor da pessoa, onde acusava servico vinculado mesmo incluindo um produto.
+• Correção na validação do cadastro do compressor da pessoa e do item de caixa, que não era aplicada ao incluir um novo item e salvar o atual.
+• Removida a mensagem exibida ao inativar um registro, que informava que a ação só teria efeito após salvar.
+• Correções e melhorias técnicas internas para aprimorar a estabilidade e desempenho do sistema.
 #2.0.0
 • Incluída integração com a núvem para avaliações online.
 • Inclusão do módulo de Agendamento de Visitas.

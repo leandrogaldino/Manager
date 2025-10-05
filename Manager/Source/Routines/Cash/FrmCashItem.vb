@@ -11,6 +11,25 @@ Public Class FrmCashItem
     Private _CategoryList As List(Of String)
     Private _Suggestions As New AutoCompleteStringCollection
     Private _SuggestionsFile As String = Path.Combine(Locator.GetInstance(Of Session).UserDirectoryLocation, "CashItemSuggestion.txt")
+
+    Public Sub New(Cash As Cash, CashItem As CashItem, CashForm As FrmCash)
+        _CategoryList = EnumHelper.GetEnumDescriptions(Of CashItemCategory).ToList()
+        _CategoryList.Sort()
+        InitializeComponent()
+        _Cash = Cash
+        _CashItem = CashItem
+        _CashItemShadow = CashItem.Clone()
+        _CashForm = CashForm
+        LoadForm()
+        DgvNavigator.DataGridView = _CashForm.DgvCashItem
+        DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
+        DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
+        BtnLog.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.Log)
+    End Sub
+    Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        DgvResponsiblesLayout.Load()
+        LoadSuggestions()
+    End Sub
     Private Sub TxtDescription_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtDescription.KeyDown
         Dim Suggestion As String
         If e.KeyCode = Keys.Delete Then
@@ -24,30 +43,21 @@ Public Class FrmCashItem
     End Sub
     Private Sub LoadSuggestions()
         If Not File.Exists(_SuggestionsFile) Then
-            Using Writer As New StreamWriter(_SuggestionsFile, False, System.Text.Encoding.UTF8)
-                Writer.Close()
-            End Using
+            File.WriteAllText(_SuggestionsFile, "", System.Text.Encoding.UTF8)
         End If
-        _Suggestions.AddRange(IO.File.ReadLines(_SuggestionsFile).ToArray)
+        _Suggestions.Clear()
+        _Suggestions.AddRange(File.ReadAllLines(_SuggestionsFile))
         DistinctSuggestions()
         TxtDescription.AutoCompleteCustomSource = _Suggestions
     End Sub
     Private Sub SaveSuggestions()
-        If Not File.Exists(_SuggestionsFile) Then
-            Dim Writer As New StreamWriter(_SuggestionsFile, False, System.Text.Encoding.UTF8)
-            Writer.Close()
-        End If
         DistinctSuggestions()
-        IO.File.WriteAllLines(_SuggestionsFile, AutoCompleteStringCollectionToList())
+        File.WriteAllLines(_SuggestionsFile, AutoCompleteStringCollectionToList())
     End Sub
     Private Sub DistinctSuggestions()
-        Dim List As New List(Of String)
-        For Each s In _Suggestions
-            List.Add(s)
-        Next s
-        List = List.Distinct.ToList()
+        Dim distinctList = _Suggestions.Cast(Of String)().Distinct().ToList()
         _Suggestions.Clear()
-        _Suggestions.AddRange(List.ToArray)
+        _Suggestions.AddRange(distinctList.ToArray())
     End Sub
     Private Function AutoCompleteStringCollectionToList() As List(Of String)
         Dim List As New List(Of String)
@@ -69,24 +79,7 @@ Public Class FrmCashItem
         End If
         MyBase.DefWndProc(m)
     End Sub
-    Public Sub New(Cash As Cash, CashItem As CashItem, CashForm As FrmCash)
-        InitializeComponent()
-        _Cash = Cash
-        _CashItem = CashItem
-        _CashItemShadow = CashItem.Clone()
-        _CashForm = CashForm
-        _CategoryList = EnumHelper.GetEnumDescriptions(Of CashItemCategory).ToList()
-        _CategoryList.Sort()
-        LoadForm()
-        DgvNavigator.DataGridView = _CashForm.DgvCashItem
-        DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
-        DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        BtnLog.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.Log)
-    End Sub
-    Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvResponsiblesLayout.Load()
-        LoadSuggestions()
-    End Sub
+
     Private Sub BeforeDataGridViewRowMove()
         Dim Response As DialogResult
         Dim Revert As Boolean
@@ -171,30 +164,28 @@ Public Class FrmCashItem
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         Dim ItemResponsible As CashItemResponsible
         Dim Responsibles As New List(Of CashItemResponsible)
-        For Each ItemResponsible In _CashItem.Responsibles
-            ItemResponsible = New CashItemResponsible()
-            ItemResponsible.Responsible = New Person().Load(ItemResponsible.Responsible.ID, False)
-            ItemResponsible.SetIsSaved(True)
+        For Each Responsible In _CashItem.Responsibles
+            ItemResponsible = Responsible.Clone()
             Responsibles.Add(ItemResponsible)
-        Next ItemResponsible
+        Next Responsible
         If BtnSave.Enabled Then
             If CMessageBox.Show("Houve alterações que ainda não foram salvas. Deseja salvar antes de continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                 If Not PreSave() Then
-                    For Each ItemResponsible In _CashItem.Responsibles.ToArray.Reverse
-                        If Not _CashItemShadow.Responsibles.Any(Function(x) x.Responsible.ID = ItemResponsible.Responsible.ID) Then
-                            _CashItem.Responsibles.Remove(ItemResponsible)
+                    For Each Responsible In _CashItem.Responsibles.ToArray.Reverse
+                        If Not _CashItemShadow.Responsibles.Any(Function(x) x.Responsible.ID = Responsible.Responsible.ID) Then
+                            _CashItem.Responsibles.Remove(Responsible)
                         End If
-                    Next ItemResponsible
-                    For Each ItemResponsible In _CashItemShadow.Responsibles
-                        If Not _CashItem.Responsibles.Any(Function(x) x.Responsible.ID = ItemResponsible.Responsible.ID) Then
-                            _CashItem.Responsibles.Add(ItemResponsible)
+                    Next Responsible
+                    For Each Responsible In _CashItemShadow.Responsibles
+                        If Not _CashItem.Responsibles.Any(Function(x) x.Responsible.ID = Responsible.Responsible.ID) Then
+                            _CashItem.Responsibles.Add(Responsible)
                         End If
-                    Next ItemResponsible
+                    Next Responsible
+                    Exit Sub
                 End If
             End If
         End If
-        _CashItem = New CashItem()
-        _CashItem.Responsibles = Responsibles
+        _CashItem = New CashItem With {.Responsibles = Responsibles}
         LoadForm()
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
@@ -218,13 +209,13 @@ Public Class FrmCashItem
     End Sub
     Private Sub Rbt_CheckedChanged(sender As Object, e As EventArgs) Handles RbExpense.CheckedChanged, RbIncome.CheckedChanged
         Dim Radio As RadioButton = CType(sender, RadioButton)
-        If _CategoryList IsNot Nothing Then
-            If Radio.Equals(RbExpense) Then
+
+        If Radio.Equals(RbExpense) Then
                 CbxCategory.DataSource = _CategoryList.Where(Function(x) x <> "REEMBOLSO").ToList()
             Else
                 CbxCategory.DataSource = _CategoryList.Where(Function(x) x = "REEMBOLSO").ToList()
             End If
-        End If
+
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
@@ -251,11 +242,11 @@ Public Class FrmCashItem
         LblCreationValue.Text = _CashItem.Creation
         RbExpense.Checked = _CashItem.ItemType = CashItemType.Expense
         RbIncome.Checked = _CashItem.ItemType = CashItemType.Income
-        If RbExpense.Checked Then
-            CbxCategory.DataSource = _CategoryList.Where(Function(x) x <> "REEMBOLSO").ToList
-        Else
-            CbxCategory.DataSource = _CategoryList.Where(Function(x) x = "REEMBOLSO").ToList
-        End If
+        'If RbExpense.Checked Then
+        '    CbxCategory.DataSource = _CategoryList.Where(Function(x) x <> "REEMBOLSO").ToList
+        'Else
+        '    CbxCategory.DataSource = _CategoryList.Where(Function(x) x = "REEMBOLSO").ToList
+        'End If
         CbxCategory.SelectedIndex = CbxCategory.FindStringExact(EnumHelper.GetEnumDescription(_CashItem.ItemCategory))
         TxtDescription.Text = _CashItem.Description
         TxtDocumentNumber.Text = _CashItem.DocumentNumber

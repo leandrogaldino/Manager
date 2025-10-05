@@ -15,6 +15,7 @@ INNER JOIN city ON city.id = personaddress.cityid
 INNER JOIN state ON state.id = city.stateid
 WHERE
 	personaddress.ismainaddress = 1 AND
+	personcompressor.controlledid = 0 AND
 	evaluation.evaluationdate = (SELECT MAX(ev.evaluationdate) FROM evaluation ev WHERE ev.personcompressorid = evaluation.personcompressorid)
 HAVING nextexchange < NOW()
 ORDER BY nextexchange;

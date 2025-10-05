@@ -6,6 +6,7 @@
 • Correção de um problema que exibia uma mensagem de item duplicado na requisição e nas peças de compressor, mesmo quando não havia duplicatas.
 • Incluído o filtro por fonte na tela de avaliações.
 • Removida a mensagem exibida ao inativar um registro, que informava que a ação só teria efeito após salvar.
+• O controle de manutenção agora é feito por compressor, e não mais por pessoa.
 • Correções e melhorias técnicas internas para aprimorar a estabilidade e desempenho do sistema.
 #2.0.0
 • Incluída integração com a núvem para avaliações online.

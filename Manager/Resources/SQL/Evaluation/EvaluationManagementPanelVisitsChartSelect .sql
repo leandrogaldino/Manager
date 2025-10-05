@@ -13,7 +13,7 @@ WHERE
     YEAR(evaluation.evaluationdate) = @year
     AND evaluation.statusid = 1
     AND person.statusid = 0
-    AND person.controlmaintenance = 1
+    AND personcompressor.controlledid = 0
     AND personcompressor.statusid = 0
 GROUP BY EvaluationYear, MonthNumber, MonthName
 ORDER BY MonthNumber ASC;

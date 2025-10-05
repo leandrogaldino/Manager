@@ -508,6 +508,7 @@
     <Content Include="Resources\SQL\Person\PersonCompressorSellableInsert.sql" />
     <Content Include="Resources\SQL\Person\PersonCompressorSellableSelect.sql" />
     <Content Include="Resources\SQL\Person\PersonCompressorSellableUpdate.sql" />
+    <Content Include="Resources\SQL\Person\PersonIsCompressorControlled.sql" />
     <Content Include="Resources\SQL\PriceTable\PriceTableDelete.sql" />
     <Content Include="Resources\SQL\PriceTable\PriceTableFilter.sql" />
     <Content Include="Resources\SQL\PriceTable\PriceTableGetPriceTableName.sql" />

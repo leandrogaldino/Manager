@@ -243,7 +243,7 @@ Partial Class FrmPersonCompressor
         Me.Label3.Location = New System.Drawing.Point(178, 52)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(40, 17)
-        Me.Label3.TabIndex = 7
+        Me.Label3.TabIndex = 9
         Me.Label3.Text = "Setor"
         '
         'Label8
@@ -252,7 +252,7 @@ Partial Class FrmPersonCompressor
         Me.Label8.Location = New System.Drawing.Point(92, 50)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(79, 17)
-        Me.Label8.TabIndex = 5
+        Me.Label8.TabIndex = 7
         Me.Label8.Text = "Patrimônio"
         '
         'Label1
@@ -261,7 +261,7 @@ Partial Class FrmPersonCompressor
         Me.Label1.Location = New System.Drawing.Point(6, 52)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(77, 17)
-        Me.Label1.TabIndex = 3
+        Me.Label1.TabIndex = 5
         Me.Label1.Text = "Nº de Série"
         '
         'LblCompressor
@@ -395,7 +395,7 @@ Partial Class FrmPersonCompressor
         Me.TxtSector.MaxLength = 50
         Me.TxtSector.Name = "TxtSector"
         Me.TxtSector.Size = New System.Drawing.Size(155, 23)
-        Me.TxtSector.TabIndex = 8
+        Me.TxtSector.TabIndex = 10
         '
         'TxtPatrimony
         '
@@ -404,7 +404,7 @@ Partial Class FrmPersonCompressor
         Me.TxtPatrimony.MaxLength = 50
         Me.TxtPatrimony.Name = "TxtPatrimony"
         Me.TxtPatrimony.Size = New System.Drawing.Size(80, 23)
-        Me.TxtPatrimony.TabIndex = 6
+        Me.TxtPatrimony.TabIndex = 8
         Me.TxtPatrimony.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'TxtSerialNumber
@@ -414,7 +414,7 @@ Partial Class FrmPersonCompressor
         Me.TxtSerialNumber.MaxLength = 50
         Me.TxtSerialNumber.Name = "TxtSerialNumber"
         Me.TxtSerialNumber.Size = New System.Drawing.Size(80, 23)
-        Me.TxtSerialNumber.TabIndex = 4
+        Me.TxtSerialNumber.TabIndex = 6
         Me.TxtSerialNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'TcPersonCompressor
@@ -463,7 +463,7 @@ Partial Class FrmPersonCompressor
         Me.CbxControlled.Location = New System.Drawing.Point(342, 23)
         Me.CbxControlled.Name = "CbxControlled"
         Me.CbxControlled.Size = New System.Drawing.Size(100, 24)
-        Me.CbxControlled.TabIndex = 10
+        Me.CbxControlled.TabIndex = 4
         '
         'DbxUnitCapacity
         '
@@ -473,7 +473,7 @@ Partial Class FrmPersonCompressor
         Me.DbxUnitCapacity.Location = New System.Drawing.Point(342, 70)
         Me.DbxUnitCapacity.Name = "DbxUnitCapacity"
         Me.DbxUnitCapacity.Size = New System.Drawing.Size(100, 23)
-        Me.DbxUnitCapacity.TabIndex = 9
+        Me.DbxUnitCapacity.TabIndex = 12
         Me.DbxUnitCapacity.Text = "0"
         Me.DbxUnitCapacity.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -530,7 +530,7 @@ Partial Class FrmPersonCompressor
         Me.BtnNew.Location = New System.Drawing.Point(3, 3)
         Me.BtnNew.Name = "BtnNew"
         Me.BtnNew.Size = New System.Drawing.Size(17, 17)
-        Me.BtnNew.TabIndex = 3
+        Me.BtnNew.TabIndex = 0
         Me.BtnNew.TabStop = False
         Me.BtnNew.TooltipText = ""
         Me.BtnNew.UseVisualStyleBackColor = False
@@ -542,7 +542,7 @@ Partial Class FrmPersonCompressor
         Me.LblControlled.Location = New System.Drawing.Point(339, 4)
         Me.LblControlled.Name = "LblControlled"
         Me.LblControlled.Size = New System.Drawing.Size(84, 17)
-        Me.LblControlled.TabIndex = 0
+        Me.LblControlled.TabIndex = 3
         Me.LblControlled.Text = "Controlado"
         '
         'LblUnitCapacity
@@ -551,16 +551,16 @@ Partial Class FrmPersonCompressor
         Me.LblUnitCapacity.Location = New System.Drawing.Point(339, 50)
         Me.LblUnitCapacity.Name = "LblUnitCapacity"
         Me.LblUnitCapacity.Size = New System.Drawing.Size(74, 17)
-        Me.LblUnitCapacity.TabIndex = 5
+        Me.LblUnitCapacity.TabIndex = 11
         Me.LblUnitCapacity.Text = "Cap. Und."
         '
         'TabMaintenance
         '
         Me.TabMaintenance.Controls.Add(Me.TcMaintenance)
-        Me.TabMaintenance.Location = New System.Drawing.Point(4, 22)
+        Me.TabMaintenance.Location = New System.Drawing.Point(4, 26)
         Me.TabMaintenance.Name = "TabMaintenance"
         Me.TabMaintenance.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabMaintenance.Size = New System.Drawing.Size(451, 106)
+        Me.TabMaintenance.Size = New System.Drawing.Size(451, 102)
         Me.TabMaintenance.TabIndex = 8
         Me.TabMaintenance.Text = "Manutenção"
         Me.TabMaintenance.UseVisualStyleBackColor = True
@@ -573,7 +573,7 @@ Partial Class FrmPersonCompressor
         Me.TcMaintenance.Location = New System.Drawing.Point(3, 3)
         Me.TcMaintenance.Name = "TcMaintenance"
         Me.TcMaintenance.SelectedIndex = 0
-        Me.TcMaintenance.Size = New System.Drawing.Size(445, 100)
+        Me.TcMaintenance.Size = New System.Drawing.Size(445, 96)
         Me.TcMaintenance.TabIndex = 0
         '
         'TabWorkedHourSellable
@@ -583,7 +583,7 @@ Partial Class FrmPersonCompressor
         Me.TabWorkedHourSellable.Location = New System.Drawing.Point(4, 26)
         Me.TabWorkedHourSellable.Name = "TabWorkedHourSellable"
         Me.TabWorkedHourSellable.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabWorkedHourSellable.Size = New System.Drawing.Size(437, 70)
+        Me.TabWorkedHourSellable.Size = New System.Drawing.Size(437, 66)
         Me.TabWorkedHourSellable.TabIndex = 6
         Me.TabWorkedHourSellable.Text = "Hora Trabalhada"
         Me.TabWorkedHourSellable.UseVisualStyleBackColor = True
@@ -606,7 +606,7 @@ Partial Class FrmPersonCompressor
         Me.DgvWorkedHourSellable.RowHeadersVisible = False
         Me.DgvWorkedHourSellable.RowTemplate.Height = 26
         Me.DgvWorkedHourSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvWorkedHourSellable.Size = New System.Drawing.Size(431, 39)
+        Me.DgvWorkedHourSellable.Size = New System.Drawing.Size(431, 35)
         Me.DgvWorkedHourSellable.TabIndex = 4
         '
         'TsWorkedHourSellable

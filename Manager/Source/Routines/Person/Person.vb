@@ -738,6 +738,16 @@ Public Class Person
             End Using
         End Using
     End Sub
+    Public Shared Function IsCompressorControlled(PersonCompressorID As Long) As ConfirmationType
+        Dim Session = Locator.GetInstance(Of Session)
+        Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
+            Con.Open()
+            Using Cmd As New MySqlCommand(My.Resources.PersonIsCompressorControlled, Con)
+                Cmd.Parameters.AddWithValue("@personcompressorid", PersonCompressorID)
+                Return Convert.ToInt32(Cmd.ExecuteScalar())
+            End Using
+        End Using
+    End Function
     Public Shared Sub FillContactDataGridView(PersonID As Long, Dgv As DataGridView)
         Dim Session = Locator.GetInstance(Of Session)
         Dim TableResult As New DataTable

@@ -52,5 +52,4 @@ Public Class PersonCompressor
         Cloned.SetGuid(Guid)
         Return Cloned
     End Function
-
 End Class

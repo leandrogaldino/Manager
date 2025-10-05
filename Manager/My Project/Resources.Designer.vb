@@ -2080,11 +2080,13 @@ Namespace My.Resources
         '''        WHEN evaluation.statusid = 2 THEN &quot;REJEITADA&quot;
         '''        WHEN evaluation.statusid = 3 THEN &quot;REVISADA&quot;
         '''	END AS &apos;Status&apos;,
+        '''        CASE 
+        '''		WHEN evaluation.sourceid = 0 THEN &quot;MANUAL&quot;
+        '''        WHEN evaluation.sourceid = 1 THEN &quot;AUTOMÁTICA&quot;
+        '''        WHEN evaluation.sourceid = 2 THEN &quot;IMPORTADA&quot;
+        '''	END AS &apos;Fonte&apos;,
         '''    CASE
-        '''        WHEN evaluation.calltypeid = 0 THEN &quot;LEVANTAMENTO&quot;
-        '''        WHEN evaluation.calltypeid = 1 THEN &quot;PREVENTIVA&quot;
-        '''        WHEN evaluation.calltypeid = 2 THEN &quot;CHAMADO&quot;
-        '''        WHEN evalu [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''  [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationFilter() As String
             Get
@@ -2094,7 +2096,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;Evaluation&quot; Version=&quot;1&quot;&gt;
+        '''&lt;Routine Id=&quot;Evaluation&quot; Version=&quot;2&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -2146,6 +2148,7 @@ Namespace My.Resources
         '''(
         '''	creation,
         '''    statusid,
+        '''	sourceid,
         '''	calltypeid,
         '''	needproposalid,
         '''	hasrepairid,
@@ -2172,12 +2175,11 @@ Namespace My.Resources
         '''(
         '''	@creation,
         '''	@statusid,
+        '''	@sourceid,
         '''	@calltypeid,
         '''	@needproposalid,
         '''	@hasrepairid,
-        '''	@unitname,
-        '''	@temperature,
-        '''	@pres [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	@unitname [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationInsert() As String
             Get
@@ -2214,7 +2216,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''    IFNULL(product.name, service.name) AS &apos;Produto/Servi�o&apos;,
+        '''    IFNULL(product.name, service.name) AS item,
         '''	evaluationcontrolledsellable.currentcapacity,
         '''	(
         '''		SELECT 
@@ -2227,7 +2229,7 @@ Namespace My.Resources
         '''			pcp.id = evaluationcontrolledsellable.personcompressorsellableid
         '''	) previousexchange,  
         '''	CASE
-        '''		WHEN personcompressorsel [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''		WHEN personcompressorsellable.control [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationManagementControlledSellableFilter() As String
             Get
@@ -2335,7 +2337,7 @@ Namespace My.Resources
         '''	),0) hours
         '''FROM person
         '''LEFT JOIN evaluationtechnician ON evaluationtechnician.technicianid = person.id
-        '''LEFT JOIN evaluation ON evaluation.id = evaluationtechnician.evaluationid AND evaluation.statusid = 1 AND evaluation.calltypeid = @calltypeid AND MONTHNAME [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''LEFT JOIN evaluation ON evaluation.id = evaluationtechnician.evaluationid AND evaluation.statusid = 1 AND evaluation.hasrepairid = @hasrepairid AND MONTHNA [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationManagementPanelFillChartProductivityChartSelect() As String
             Get
@@ -2395,18 +2397,19 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''	MONTHNAME(evaluation.evaluationdate) AS MonthName,
-        '''	YEAR(evaluation.evaluationdate) AS EvaluationYear,
+        '''    MONTH(evaluation.evaluationdate) AS MonthNumber,
+        '''    MONTHNAME(evaluation.evaluationdate) AS MonthName,
+        '''    YEAR(evaluation.evaluationdate) AS EvaluationYear,
         '''    COUNT(evaluation.id) AS CountEvaluation
         '''FROM evaluation
-        '''INNER JOIN person ON person.id = evaluation.customerid
-        '''INNER JOIN personcompressor ON personcompressor.personid = person.id AND personcompressor.id = evaluation.personcompressorid
+        '''INNER JOIN person 
+        '''    ON person.id = evaluation.customerid
+        '''INNER JOIN personcompressor 
+        '''    ON personcompressor.personid = person.id 
+        '''   AND personcompressor.id = evaluation.personcompressorid
         '''WHERE
-        '''	YEAR(evaluation.evaluationdate) LIKE @year AND
-        '''    evaluation.statusid = 1 AND
-        '''	person.statusid = 0 AND
-        '''	person.controlmaintenance = 1 AND
-        '''	pe [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''    YEAR(evaluation.evaluationdate) = @year
+        '''    AND evaluation.status [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationManagementPanelVisitsChartSelect() As String
             Get
@@ -2651,6 +2654,7 @@ Namespace My.Resources
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	evaluation.id,
         '''	evaluation.creation,
+        '''	evaluation.sourceid,
         '''    evaluation.statusid,
         '''	evaluation.calltypeid,
         '''	evaluation.needproposalid,
@@ -2667,8 +2671,7 @@ Namespace My.Resources
         '''	evaluation.personcompressorid,
         '''	evaluation.horimeter,
         '''	evaluation.manualaverageworkload,
-        '''	evaluation.averageworkload,
-        '''	evalu [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	evaluation.a [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationSelect() As String
             Get
@@ -3342,10 +3345,14 @@ Namespace My.Resources
         '''        WHEN personcompressor.statusid = 1 THEN &apos;INATIVO&apos;
         '''	END AS &apos;Status&apos;,
         '''    compressor.name AS &apos;Compressor&apos;,
+        '''    CASE
+        '''		WHEN personcompressor.controlledid = 0 THEN &apos;SIM&apos;
+        '''        WHEN personcompressor.controlledid = 1 THEN &apos;NÃO&apos;
+        '''	END AS &apos;Controlado&apos;,
         '''    personcompressor.serialnumber AS &apos;Nº de Série&apos;
         '''FROM personcompressor
         '''INNER JOIN compressor ON compressor.id = personcompressor.compressorid
-        '''WHERE personcompressor.personid = @personid;.
+        '''WHERE personcompressor.personid =  [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PersonCompressorDetailSelect() As String
             Get
@@ -3385,6 +3392,7 @@ Namespace My.Resources
         '''	creation,
         '''	statusid,
         '''	compressorid,
+        '''	controlledid,
         '''	serialnumber,
         '''	patrimony,
         '''	sector,
@@ -3398,6 +3406,7 @@ Namespace My.Resources
         '''	@creation,
         '''	@statusid,
         '''	@compressorid,
+        '''	@controlledid,
         '''	@serialnumber,
         '''	@patrimony,
         '''	@sector,
@@ -3419,6 +3428,7 @@ Namespace My.Resources
         '''	personcompressor.creation,
         '''	personcompressor.statusid,
         '''	personcompressor.compressorid,
+        '''	personcompressor.controlledid,
         '''	compressor.name AS compressorname,
         '''    personcompressor.serialnumber,
         '''	personcompressor.patrimony,
@@ -3548,6 +3558,7 @@ Namespace My.Resources
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE personcompressor SET
         '''	statusid = @statusid,
         '''    compressorid = @compressorid,
+        '''	controlledid = @controlledid,
         '''	serialnumber = @serialnumber,
         '''	patrimony = @patrimony,
         '''	sector = @sector,
@@ -3749,7 +3760,6 @@ Namespace My.Resources
         '''	isemployee,
         '''	istechnician,
         '''	iscarrier,
-        '''	controlmaintenance,
         '''	document,
         '''	name,
         '''	shortname,
@@ -3766,7 +3776,6 @@ Namespace My.Resources
         '''	@isemployee,
         '''	@istechnician,
         '''	@iscarrier,
-        '''	@controlmaintenance,
         '''	@document,
         '''	@name,
         '''	@shortname,
@@ -3783,6 +3792,18 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	personcompressor.controlledid
+        '''FROM personcompressor
+        '''WHERE personcompressor.id = @personcompressorid;.
+        '''</summary>
+        Friend ReadOnly Property PersonIsCompressorControlled() As String
+            Get
+                Return ResourceManager.GetString("PersonIsCompressorControlled", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	person.id,
         '''	person.creation,
         '''    person.statusid,
@@ -3792,7 +3813,6 @@ Namespace My.Resources
         '''	person.isemployee,
         '''	person.istechnician,
         '''	person.iscarrier,
-        '''	person.controlmaintenance,
         '''	person.document,
         '''	person.name,
         '''	person.shortname,
@@ -3818,7 +3838,6 @@ Namespace My.Resources
         '''	person.isemployee,
         '''	person.istechnician,
         '''	person.iscarrier,
-        '''	person.controlmaintenance,
         '''	person.document,
         '''	person.name,
         '''	person.shortname,
@@ -3843,7 +3862,6 @@ Namespace My.Resources
         '''	isemployee = @isemployee,
         '''	istechnician = @istechnician,
         '''	iscarrier = @iscarrier,
-        '''	controlmaintenance = @controlmaintenance,
         '''	document = @document,
         '''	name = @name,
         '''	shortname = @shortname,
@@ -4706,6 +4724,8 @@ Namespace My.Resources
         '''	maximumquantity,
         '''	grossweight,
         '''	netweight,
+        '''	dimensions,
+        '''	sku,
         '''	note,
         '''	userid
         ''')
@@ -4723,6 +4743,8 @@ Namespace My.Resources
         '''	@maximumquantity,
         '''	@grossweight,
         '''	@netweight,
+        '''	@dimensions,
+        '''	@sku,
         '''	@note,
         '''	@userid
         ''');
@@ -5030,6 +5052,8 @@ Namespace My.Resources
         '''	product.groupid,
         '''	product.grossweight,
         '''	product.netweight,
+        '''	product.dimensions,
+        '''	product.sku,
         '''	product.note,
         '''	product.userid
         '''FROM product
@@ -5178,6 +5202,8 @@ Namespace My.Resources
         '''	groupid = @groupid,
         '''	grossweight = @grossweight,
         '''	netweight = @netweight,
+        '''	dimensions = @dimensions,
+        '''	sku = @sku,
         '''	note = @note,
         '''	userid = @userid
         '''WHERE product.id = @id;.
@@ -6285,7 +6311,8 @@ Namespace My.Resources
         '''    REPLACE(user.note, &apos;\n&apos;, &apos; &apos;) AS &apos;Observação&apos;
         '''FROM user
         '''WHERE
-        '''    user.id &gt; 1 AND
+        '''    user.username &lt;&gt; &apos;ADMIN&apos; AND
+        '''    user.username &lt;&gt; &apos;AGENTE&apos; AND
         '''	IFNULL(user.id, &apos;&apos;) LIKE @id AND
         '''    IFNULL(user.statusid, &apos;&apos;) LIKE @statusid
         '''GROUP BY user.id;.

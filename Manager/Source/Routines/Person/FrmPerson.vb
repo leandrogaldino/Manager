@@ -425,6 +425,13 @@ Public Class FrmPerson
                     e.Value = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
                     e.CellStyle.ForeColor = Color.DarkRed
             End Select
+        ElseIf e.ColumnIndex = Dgv.Columns("Controlled").Index Then
+            Select Case e.Value
+                Case Is = ConfirmationType.Yes
+                    e.Value = EnumHelper.GetEnumDescription(ConfirmationType.Yes).ToUpper()
+                Case Is = ConfirmationType.No
+                    e.Value = EnumHelper.GetEnumDescription(ConfirmationType.No).ToUpper()
+            End Select
         End If
     End Sub
     <DebuggerStepThrough>

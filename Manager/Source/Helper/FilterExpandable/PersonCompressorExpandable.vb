@@ -20,6 +20,11 @@ Public Class PersonCompressorExpandable
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(UpperNoAccentConverter))>
     Public Property Sector As String
+    <DisplayName("Controlado")>
+    <NotifyParentProperty(True)>
+    <RefreshProperties(RefreshProperties.All)>
+    <TypeConverter(GetType(YesNoConverter.WithSpace))>
+    Public Overridable Property Controlled As String
     Public Overrides Function ToString() As String
         Return Nothing
     End Function

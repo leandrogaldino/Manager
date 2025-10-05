@@ -53,6 +53,7 @@ WHERE
     IFNULL(compressor.name, '') LIKE CONCAT('%', @compressorname, '%') AND
     IFNULL(personcompressor.serialnumber, '') LIKE CONCAT('%', @compressorserialnumber, '%') AND
     IFNULL(personcompressor.patrimony, '') LIKE CONCAT('%', @compressorpatrimony, '%') AND
-    IFNULL(personcompressor.sector, '') LIKE CONCAT('%', @compressorsector, '%')
+    IFNULL(personcompressor.sector, '') LIKE CONCAT('%', @compressorsector, '%') AND
+    IFNULL(personcompressor.controlledid, '') LIKE @controlledid
 GROUP BY person.id
 ORDER BY person.id;

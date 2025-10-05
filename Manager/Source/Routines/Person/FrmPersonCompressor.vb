@@ -254,6 +254,7 @@ Public Class FrmPersonCompressor
             QbxCompressor.Select()
             Return False
         ElseIf String.IsNullOrEmpty(CbxControlled.text) Then
+            TcPersonCompressor.SelectedTab = TabMain
             EprValidation.SetError(LblControlled, $"Campo obrigatório")
             EprValidation.SetIconAlignment(LblControlled, ErrorIconAlignment.MiddleRight)
             CbxControlled.Select()

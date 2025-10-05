@@ -60,6 +60,7 @@ Public Class FrmPersonMaintenancePlan
             DgvCompressor.Columns("User").Visible = False
             DgvCompressor.Columns("Creation").Visible = False
             DgvCompressor.Columns("Status").Visible = False
+            DgvCompressor.Columns("Controlled").Visible = False
             DgvCompressor.Columns("Note").Visible = False
             DgvCompressor.Columns("Compressor").Visible = False
             DgvCompressor.Columns("CompressorID").Visible = False
@@ -85,16 +86,25 @@ Public Class FrmPersonMaintenancePlan
             LblCompressor.Text = If(DgvCompressor.Rows.Count > 1, "Compressores", "Compressor")
             Dim Ex As New List(Of String)
             For Each Row As DataGridViewRow In DgvCompressor.Rows.Cast(Of DataGridViewRow).Reverse
-                If Evaluation.GetLastEvaluationID(Row.Cells("ID").Value) = 0 Or Evaluation.CountEvaluation(Row.Cells("ID").Value, {EvaluationStatus.Disapproved, EvaluationStatus.Rejected, EvaluationStatus.Reviewed}.ToList) > 0 Then
+                'TODO: CADASTRAR UM COMPRESSOR NO MEU CADASTRO E TESTAR
+                Dim IsControlled As ConfirmationType = Person.IsCompressorControlled(Convert.ToInt64(Row.Cells("ID").Value))
+                Dim LastEvaluation As Long = Evaluation.GetLastEvaluationID(Row.Cells("ID").Value)
+                Dim EvaluationCount As Long = Evaluation.CountEvaluation(Row.Cells("ID").Value, {EvaluationStatus.Disapproved, EvaluationStatus.Rejected, EvaluationStatus.Reviewed}.ToList)
+                If IsControlled = ConfirmationType.No Then
                     Ex.Add(String.Format("{0} {1} {2} {3}", Row.Cells("CompressorName").Value, If(Row.Cells("SerialNumber").Value = Nothing, Nothing, "NS: " & Row.Cells("SerialNumber").Value), If(Row.Cells("Patrimony").Value = Nothing, Nothing, "PAT: " & Row.Cells("Patrimony").Value), If(Row.Cells("Sector").Value = Nothing, Nothing, "- " & Row.Cells("Sector").Value)))
                     DgvCompressor.Rows.Remove(Row)
+                Else
+                    If LastEvaluation = 0 Or EvaluationCount > 0 Then
+                        Ex.Add(String.Format("{0} {1} {2} {3}", Row.Cells("CompressorName").Value, If(Row.Cells("SerialNumber").Value = Nothing, Nothing, "NS: " & Row.Cells("SerialNumber").Value), If(Row.Cells("Patrimony").Value = Nothing, Nothing, "PAT: " & Row.Cells("Patrimony").Value), If(Row.Cells("Sector").Value = Nothing, Nothing, "- " & Row.Cells("Sector").Value)))
+                        DgvCompressor.Rows.Remove(Row)
+                    End If
                 End If
             Next Row
             If Ex.Count > 0 Then
                 If Ex.Count = 1 Then
-                    Ex.Insert(0, "O compressor abaixo não foi exibido pois não há avaliação lançada ou existe pelo menos uma avaliação não aprovada para ele.")
+                    Ex.Insert(0, $"O compressor abaixo não foi exibido. Possiveis Causas:{vbNewLine}{vbNewLine}• O Compressor está marcado para não controlar manutenção;{vbNewLine}• Não há avaliação lançada para o compressor;{vbNewLine}• Existe pelo menos uma avaliação não aprovada para o compressor.{vbNewLine}{vbNewLine}Compressor:{vbNewLine}")
                 ElseIf Ex.Count > 1 Then
-                    Ex.Insert(0, "Os compressores abaixo não foram exibidos pois não há avaliação lançada ou existe pelo menos uma avaliação não aprovada para ele.")
+                    Ex.Insert(0, $"Os compressors abaixo não foram exibidos. Possiveis Causas:{vbNewLine}{vbNewLine}• O Compressor está marcado para não controlar manutenção;{vbNewLine}• Não há avaliação lançada para o compressor;{vbNewLine}• Existe pelo menos uma avaliação não aprovada para o compressor.{vbNewLine}{vbNewLine}Compressores:{vbNewLine}")
                 End If
                 EprInformation.SetIconPadding(LblCompressor, -20)
                 EprInformation.SetError(LblCompressor, Join(Ex.ToArray, vbNewLine))
@@ -144,7 +154,7 @@ Public Class FrmPersonMaintenancePlan
         QbxPerson.Select()
     End Sub
     Private Sub BtnFilterPerson_Click(sender As Object, e As EventArgs) Handles BtnFilterPerson.Click
-        Using Form As New FrmFilter(New PersonCustomerQueriedBoxFilter("Sim"), QbxPerson) With {.Text = "Filtro de Clientes"}
+        Using Form As New FrmFilter(New PersonCustomerQueriedBoxFilter(), QbxPerson) With {.Text = "Filtro de Clientes"}
             Form.ShowDialog()
         End Using
         QbxPerson.Select()

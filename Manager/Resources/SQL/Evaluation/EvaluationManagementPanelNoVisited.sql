@@ -26,7 +26,7 @@ INNER JOIN personaddress ON personaddress.personid = person.id
 INNER JOIN city ON city.id = personaddress.cityid
 INNER JOIN state ON state.id = city.stateid
 WHERE
-	person.controlmaintenance = 1 AND
+	personcompressor.controlledid = 0 AND
 	personaddress.ismainaddress = 1
 GROUP BY personcompressor.id, city
 HAVING hasevaluation = 0

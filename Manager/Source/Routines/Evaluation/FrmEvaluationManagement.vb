@@ -238,32 +238,6 @@ Public Class FrmEvaluationManagement
             Cursor = Cursors.Default
         End Try
     End Sub
-    Private Function GetAutomaticPDF() As String
-        Dim Filename As String
-        Filename = TextHelper.GetRandomFileName(".pdf")
-        Using document As New PdfDocument()
-            Dim page As PdfPage = document.Pages.Add()
-            Dim graphics As PdfGraphics = page.Graphics
-            Dim font As PdfFont = New PdfStandardFont(PdfFontFamily.Helvetica, 100)
-            Dim text As String = "AUTOMÁTICO"
-            Dim textSize As SizeF = font.MeasureString(text)
-            Dim startPoint As New PointF((page.Size.Width - textSize.Width) / 2, (page.Size.Height - textSize.Height) / 2)
-            graphics.TranslateTransform(startPoint.X + textSize.Width / 2, startPoint.Y + textSize.Height / 2)
-            graphics.RotateTransform(45)
-            graphics.TranslateTransform(-textSize.Width / 2, -textSize.Height / 2)
-            graphics.DrawString(text, font, PdfBrushes.DarkRed, PointF.Empty)
-            graphics.TranslateTransform(startPoint.X + textSize.Width / 2, startPoint.Y + textSize.Height / 2)
-            graphics.RotateTransform(-45)
-            graphics.TranslateTransform(-startPoint.X - textSize.Width / 2, -startPoint.Y - textSize.Height / 2)
-            Filename = Path.Combine(ApplicationPaths.ManagerTempDirectory, Filename)
-            Try
-                document.Save(Filename)
-                Return Filename
-            Catch ex As Exception
-                Throw ex
-            End Try
-        End Using
-    End Function
     Private Sub DgvData_MouseDown(sender As Object, e As MouseEventArgs) Handles DgvData.MouseDown
         Dim Click As DataGridView.HitTestInfo = DgvData.HitTest(e.X, e.Y)
         If Click.Type = DataGridViewHitTestType.Cell And e.Button = MouseButtons.Right Then
@@ -289,6 +263,7 @@ Public Class FrmEvaluationManagement
                 If CMessageBox.Show("Confirma o lançamento automático para esse compressor?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                     Dim SelectedEvaluation As Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("evaluation").Value, False)
                     Dim NewEvaluation As New Evaluation With {
+                        .Source = EvaluationSource.Automatic,
                         .EvaluationNumber = Evaluation.GetEvaluationNumber(EvaluationSource.Automatic),
                         .AverageWorkLoad = SelectedEvaluation.AverageWorkLoad,
                         .Compressor = SelectedEvaluation.Compressor,
@@ -301,7 +276,6 @@ Public Class FrmEvaluationManagement
                         .Responsible = SelectedEvaluation.Responsible,
                         .TechnicalAdvice = SelectedEvaluation.TechnicalAdvice
                     }
-                    NewEvaluation.Document.SetCurrentFile(GetAutomaticPDF)
                     SelectedEvaluation.Technicians.ToList().ForEach(Sub(x) NewEvaluation.Technicians.Add(x))
 
 

@@ -1012,22 +1012,24 @@ Public Class Evaluation
         Dim EvaluationNumber As String = String.Empty
         Dim IsUnique As Boolean
         Dim Session = Locator.GetInstance(Of Session)
-        Do Until IsUnique
-            EvaluationNumber = TextHelper.GetRandomString(1, 8, Nothing, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
-            If CreationType = EvaluationSource.Automatic Then
-                EvaluationNumber = $"A-{EvaluationNumber}"
-            ElseIf CreationType = EvaluationSource.Imported Then
-                EvaluationNumber = $"I-{EvaluationNumber}"
-            End If
-            Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
-                Con.Open()
-                Using Cmd As New MySqlCommand("SELECT COUNT(id) FROM evaluation WHERE evaluationnumber = @evaluationnumber", Con)
-                    Cmd.Parameters.AddWithValue("@evaluationnumber", EvaluationNumber)
-                    Dim Count As Integer = Convert.ToInt32(Cmd.ExecuteScalar())
-                    IsUnique = (Count = 0)
+        If CreationType <> EvaluationSource.Manual Then
+            Do Until IsUnique
+                EvaluationNumber = TextHelper.GetRandomString(1, 8, Nothing, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+                If CreationType = EvaluationSource.Automatic Then
+                    EvaluationNumber = $"A-{EvaluationNumber}"
+                ElseIf CreationType = EvaluationSource.Imported Then
+                    EvaluationNumber = $"I-{EvaluationNumber}"
+                End If
+                Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
+                    Con.Open()
+                    Using Cmd As New MySqlCommand("SELECT COUNT(id) FROM evaluation WHERE evaluationnumber = @evaluationnumber", Con)
+                        Cmd.Parameters.AddWithValue("@evaluationnumber", EvaluationNumber)
+                        Dim Count As Integer = Convert.ToInt32(Cmd.ExecuteScalar())
+                        IsUnique = (Count = 0)
+                    End Using
                 End Using
-            End Using
-        Loop
+            Loop
+        End If
         Return EvaluationNumber
     End Function
     Public Overrides Function Clone() As BaseModel

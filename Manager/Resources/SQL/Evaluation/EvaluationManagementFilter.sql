@@ -44,7 +44,7 @@ WHERE
                                     INNER JOIN personcompressor pc ON pc.id = ev.personcompressorid
                                     WHERE pc.id = personcompressor.id AND ev.statusid = 1
 								) AND
-    person.controlmaintenance = 1 AND
+    personcompressor.controlledid = 0 AND
     personcompressor.statusid = 0 AND
 	personaddress.ismainaddress = 1 AND
 	IFNULL(person.id,'') LIKE @personid AND

@@ -17,7 +17,7 @@ LEFT JOIN (
     WHERE statusid = 1
     GROUP BY personcompressorid
 ) ev ON ev.personcompressorid = pc.id
-WHERE p.controlmaintenance = 1
+WHERE pc.controlledid = 0
   AND pa.ismainaddress = 1
   AND (ev.maxdate IS NULL OR DATE_ADD(ev.maxdate, INTERVAL @days DAY) <= CURDATE())
 ORDER BY p.shortname;

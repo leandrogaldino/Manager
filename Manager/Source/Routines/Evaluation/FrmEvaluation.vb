@@ -993,7 +993,7 @@ Public Class FrmEvaluation
         _Loading = False
     End Sub
     Private Sub BtnFilterCustomer_Click(sender As Object, e As EventArgs) Handles BtnFilterCustomer.Click
-        Using Form As New FrmFilter(New PersonCustomerQueriedBoxFilter("Sim"), QbxCustomer) With {.Text = "Filtro de Clientes"}
+        Using Form As New FrmFilter(New PersonCustomerQueriedBoxFilter(), QbxCustomer) With {.Text = "Filtro de Clientes"}
             Form.ShowDialog()
         End Using
         QbxCustomer.Select()

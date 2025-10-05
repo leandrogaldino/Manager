@@ -59,11 +59,6 @@ Public Class PersonFilter
     <DisplayName("Categoria")>
     <TypeConverter(GetType(ExpandableObjectConverter))>
     Public Overridable Property Category As New PersonCategoryExpandable
-    <DisplayName("Controla Manutenção")>
-    <NotifyParentProperty(True)>
-    <RefreshProperties(RefreshProperties.All)>
-    <TypeConverter(GetType(YesNoConverter.WithSpace))>
-    Public Overridable Property ControlMaintenance As String
     <DisplayName("Endereço")>
     <TypeConverter(GetType(ExpandableObjectConverter))>
     Public Property Address As New PersonAddressExpandable
@@ -111,7 +106,6 @@ Public Class PersonFilter
                 If Category.IsEmployee <> Nothing Then Cmd.Parameters.AddWithValue("@isemployee", Category.IsEmployee = "Sim") : Filtering = True Else Cmd.Parameters.AddWithValue("@isemployee", "%")
                 If Category.IsTechnician <> Nothing Then Cmd.Parameters.AddWithValue("@istechnician", Category.IsTechnician = "Sim") : Filtering = True Else Cmd.Parameters.AddWithValue("@istechnician", "%")
                 If Category.IsCarrier <> Nothing Then Cmd.Parameters.AddWithValue("@iscarrier", Category.IsCarrier = "Sim") : Filtering = True Else Cmd.Parameters.AddWithValue("@iscarrier", "%")
-                If ControlMaintenance <> Nothing Then Cmd.Parameters.AddWithValue("@controlmaintenance", ControlMaintenance = "Sim") : Filtering = True Else Cmd.Parameters.AddWithValue("@controlmaintenance", "%")
                 If Address.ZipCode <> Nothing Then Cmd.Parameters.AddWithValue("@zipcode", Address.ZipCode) : Filtering = True Else Cmd.Parameters.AddWithValue("@zipcode", "%")
                 If Address.Address <> Nothing Then Cmd.Parameters.AddWithValue("@address", Address.Address) : Filtering = True Else Cmd.Parameters.AddWithValue("@address", "%")
                 If Address.City <> Nothing Then Cmd.Parameters.AddWithValue("@city", Address.City) : Filtering = True Else Cmd.Parameters.AddWithValue("@city", "%")
@@ -124,6 +118,7 @@ Public Class PersonFilter
                 If Compressor.SerialNumber <> Nothing Then Cmd.Parameters.AddWithValue("@compressorserialnumber", Compressor.SerialNumber) : Filtering = True Else Cmd.Parameters.AddWithValue("@compressorserialnumber", "%")
                 If Compressor.Patrimony <> Nothing Then Cmd.Parameters.AddWithValue("@compressorpatrimony", Compressor.Patrimony) : Filtering = True Else Cmd.Parameters.AddWithValue("@compressorpatrimony", "%")
                 If Compressor.Sector <> Nothing Then Cmd.Parameters.AddWithValue("@compressorsector", Compressor.Sector) : Filtering = True Else Cmd.Parameters.AddWithValue("@compressorsector", "%")
+                If Compressor.Controlled <> Nothing Then Cmd.Parameters.AddWithValue("@controlledid", If(Compressor.Controlled = EnumHelper.GetEnumDescription(ConfirmationType.Yes), CInt(ConfirmationType.Yes), CInt(ConfirmationType.No))) : Filtering = True Else Cmd.Parameters.AddWithValue("@controlledid", "%")
                 Using Adp As New MySqlDataAdapter(Cmd)
                     Adp.Fill(Table)
                     DataGridView.DataSource = Nothing

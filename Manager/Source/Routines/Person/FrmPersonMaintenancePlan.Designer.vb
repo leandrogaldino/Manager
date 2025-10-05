@@ -24,13 +24,9 @@ Partial Class FrmPersonMaintenancePlan
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Condition3 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
         Dim OtherField1 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
         Dim OtherField2 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
         Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Parameter3 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmPersonMaintenancePlan))
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
@@ -138,23 +134,14 @@ Partial Class FrmPersonMaintenancePlan
         'QbxPerson
         '
         Me.QbxPerson.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Condition1.FieldName = "controlmaintenance"
+        Condition1.FieldName = "statusid"
         Condition1.Operator = "="
         Condition1.TableNameOrAlias = "person"
-        Condition1.Value = "@controlmaintenance"
-        Condition2.FieldName = "iscustomer"
-        Condition2.Operator = "="
-        Condition2.TableNameOrAlias = "person"
-        Condition2.Value = "@iscustomer"
-        Condition3.FieldName = "statusid"
-        Condition3.Operator = "="
-        Condition3.TableNameOrAlias = "person"
-        Condition3.Value = "@statusid"
+        Condition1.Value = "@statusid"
         Me.QbxPerson.Conditions.Add(Condition1)
-        Me.QbxPerson.Conditions.Add(Condition2)
-        Me.QbxPerson.Conditions.Add(Condition3)
         Me.QbxPerson.DebugOnTextChanged = False
         Me.QbxPerson.DisplayFieldAlias = "Nome Curto"
+        Me.QbxPerson.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         Me.QbxPerson.DisplayFieldName = "shortname"
         Me.QbxPerson.DisplayMainFieldName = "id"
         Me.QbxPerson.DisplayTableAlias = Nothing
@@ -169,6 +156,7 @@ Partial Class FrmPersonMaintenancePlan
         Me.QbxPerson.MainTableName = "person"
         Me.QbxPerson.Name = "QbxPerson"
         OtherField1.DisplayFieldAlias = "Nome"
+        OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField1.DisplayFieldName = "name"
         OtherField1.DisplayMainFieldName = "id"
         OtherField1.DisplayTableAlias = Nothing
@@ -178,6 +166,7 @@ Partial Class FrmPersonMaintenancePlan
         OtherField1.Prefix = Nothing
         OtherField1.Suffix = Nothing
         OtherField2.DisplayFieldAlias = "CPF/CNPJ"
+        OtherField2.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField2.DisplayFieldName = "document"
         OtherField2.DisplayMainFieldName = "id"
         OtherField2.DisplayTableAlias = Nothing
@@ -188,15 +177,9 @@ Partial Class FrmPersonMaintenancePlan
         OtherField2.Suffix = Nothing
         Me.QbxPerson.OtherFields.Add(OtherField1)
         Me.QbxPerson.OtherFields.Add(OtherField2)
-        Parameter1.ParameterName = "@controlmaintenance"
-        Parameter1.ParameterValue = "1"
-        Parameter2.ParameterName = "@iscustomer"
-        Parameter2.ParameterValue = "1"
-        Parameter3.ParameterName = "@statusid"
-        Parameter3.ParameterValue = "0"
+        Parameter1.ParameterName = "@statusid"
+        Parameter1.ParameterValue = "0"
         Me.QbxPerson.Parameters.Add(Parameter1)
-        Me.QbxPerson.Parameters.Add(Parameter2)
-        Me.QbxPerson.Parameters.Add(Parameter3)
         Me.QbxPerson.Prefix = Nothing
         Me.QbxPerson.Size = New System.Drawing.Size(460, 23)
         Me.QbxPerson.Suffix = Nothing

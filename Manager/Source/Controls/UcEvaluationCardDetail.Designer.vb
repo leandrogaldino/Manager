@@ -42,6 +42,7 @@ Partial Class UcEvaluationCardDetail
         Me.DgvCardDetail.ReadOnly = True
         Me.DgvCardDetail.RowHeadersVisible = False
         Me.DgvCardDetail.RowTemplate.Height = 26
+        Me.DgvCardDetail.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DgvCardDetail.Size = New System.Drawing.Size(1000, 493)
         Me.DgvCardDetail.TabIndex = 1
         '

@@ -6,6 +6,7 @@
 Public Class PersonCompressor
     Inherits ChildModel
     Public Property Status As SimpleStatus = SimpleStatus.Active
+    Public Property Controlled As ConfirmationType = ConfirmationType.None
     Public Property Compressor As New Lazy(Of Compressor)
     Public Property CompressorID As Long
     Public Property CompressorName As String
@@ -24,6 +25,7 @@ Public Class PersonCompressor
     End Function
     Public Overrides Function Clone() As BaseModel
         Dim Cloned As New PersonCompressor With {
+            .Controlled = Controlled,
             .CompressorID = CompressorID,
             .CompressorName = CompressorName,
             .Note = Note,

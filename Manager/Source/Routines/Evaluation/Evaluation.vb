@@ -934,8 +934,8 @@ Public Class Evaluation
         Dim Evaluation As New Evaluation
         Dim EvaluationTechnician As EvaluationTechnician
         Dim Coalescent As EvaluationControlledSellable
-        Evaluation.EvaluationNumber = GetEvaluationNumber(EvaluationSource.Cloud)
-        Evaluation.Source = EvaluationSource.Cloud
+        Evaluation.EvaluationNumber = GetEvaluationNumber(EvaluationSource.Imported)
+        Evaluation.Source = EvaluationSource.Imported
         Evaluation.CallType = CallType.None
         Evaluation.NeedProposal = If(Data("needproposal") = True, ConfirmationType.Yes, ConfirmationType.No)
         Evaluation.HasRepair = ConfirmationType.None
@@ -1016,7 +1016,7 @@ Public Class Evaluation
             EvaluationNumber = TextHelper.GetRandomString(1, 8, Nothing, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
             If CreationType = EvaluationSource.Automatic Then
                 EvaluationNumber = $"A-{EvaluationNumber}"
-            ElseIf CreationType = EvaluationSource.Cloud Then
+            ElseIf CreationType = EvaluationSource.Imported Then
                 EvaluationNumber = $"I-{EvaluationNumber}"
             End If
             Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())

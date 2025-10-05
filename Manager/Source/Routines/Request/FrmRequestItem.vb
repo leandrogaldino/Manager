@@ -181,7 +181,6 @@ Public Class FrmRequestItem
     End Function
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
-        Dim HasDuplicate As Boolean = False
         If Not QbxItem.IsFreezed Then
             QbxItem.QueryEnabled = False
             QbxItem.Text = QbxItem.Text.Trim.ToUnaccented()
@@ -189,9 +188,10 @@ Public Class FrmRequestItem
         End If
         TxtLostReason.Text = TxtLostReason.Text.ToUnaccented()
         If IsValidFields() Then
-            HasDuplicate = HasDuplicateItem()
-            If HasDuplicate Then Return False
             If _RequestItem.IsSaved Then
+                If (QbxItem.IsFreezed AndAlso _RequestItem.Product.ID <> QbxItem.FreezedPrimaryKey) OrElse (Not QbxItem.IsFreezed And _RequestItem.ItemName <> QbxItem.Text) Then
+                    If HasDuplicatedItem() Then Return False
+                End If
                 _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).Status = EnumHelper.GetEnumValue(Of RequestStatus)(LblStatusValue.Text)
                 If QbxItem.IsFreezed Then
                     _Request.Items.Single(Function(x) x.Guid = _RequestItem.Guid).ItemName = String.Empty
@@ -220,6 +220,7 @@ Public Class FrmRequestItem
                 _RequestItem.Applied = DbxApplied.Text
                 _RequestItem.Lossed = DbxLossed.Text
                 _RequestItem.LossReason = TxtLostReason.Text
+                If HasDuplicatedItem() Then Return False
                 _RequestItem.SetIsSaved(True)
                 _Request.Items.Add(_RequestItem)
             End If
@@ -244,7 +245,7 @@ Public Class FrmRequestItem
             Return False
         End If
     End Function
-    Private Function HasDuplicateItem() As Boolean
+    Private Function HasDuplicatedItem() As Boolean
         Dim TargetItems As List(Of RequestItem)
         TargetItems = _Request.Items.Where(Function(x)
                                                If QbxItem.IsFreezed Then

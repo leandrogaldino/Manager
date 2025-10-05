@@ -7,6 +7,11 @@ SELECT
         WHEN evaluation.statusid = 2 THEN "REJEITADA"
         WHEN evaluation.statusid = 3 THEN "REVISADA"
 	END AS 'Status',
+        CASE 
+		WHEN evaluation.sourceid = 0 THEN "MANUAL"
+        WHEN evaluation.sourceid = 1 THEN "AUTOMÁTICA"
+        WHEN evaluation.sourceid = 2 THEN "IMPORTADA"
+	END AS 'Fonte',
     CASE
         WHEN evaluation.calltypeid = 0 THEN "LEVANTAMENTO"
         WHEN evaluation.calltypeid = 1 THEN "PREVENTIVA"
@@ -39,6 +44,7 @@ LEFT JOIN person AS customer ON customer.id = evaluation.customerid
 WHERE
     IFNULL(evaluation.id, '') LIKE @id AND
     FIND_IN_SET(evaluation.statusid, @statusid) AND
+    FIND_IN_SET(evaluation.sourceid, @sourceid) AND
     IFNULL(evaluation.calltypeid, '') LIKE @calltypeid AND
     IFNULL(evaluation.evaluationnumber,'') LIKE CONCAT('%', @evaluationnumber, '%') AND
     IFNULL(evaluation.technicaladvice,'') LIKE CONCAT('%', @technicaladvice, '%') AND

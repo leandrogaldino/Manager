@@ -17,7 +17,10 @@ Public Class EvaluationFilter
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(ExpandableObjectConverter))>
     Public Overridable Property Status As New EvaluationStatusExpandable
-
+    <NotifyParentProperty(True)>
+    <RefreshProperties(RefreshProperties.All)>
+    <TypeConverter(GetType(ExpandableObjectConverter))>
+    Public Overridable Property Source As New EvaluationSourceExpandable
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(EvaluationCallTypeConverter))>
@@ -70,6 +73,7 @@ Public Class EvaluationFilter
         Dim SelectedRow As Long = 0
         Dim FirstRow As Long = 0
         Dim StatusList As New List(Of String)
+        Dim SourceList As New List(Of String)
         If DataGridView IsNot Nothing Then
             If DataGridView.SelectedRows.Count = 1 Then
                 SelectedRow = DataGridView.SelectedRows(0).Index
@@ -84,8 +88,12 @@ Public Class EvaluationFilter
                 If Status.Approved = "Sim" Or Status.Approved = Nothing Then StatusList.Add(CInt(EvaluationStatus.Approved))
                 If Status.Rejected = "Sim" Or Status.Rejected = Nothing Then StatusList.Add(CInt(EvaluationStatus.Rejected))
                 If Status.Reviewed = "Sim" Or Status.Reviewed = Nothing Then StatusList.Add(CInt(EvaluationStatus.Reviewed))
-                If CallType <> Nothing Then Cmd.Parameters.AddWithValue("@calltypeid", CInt(EnumHelper.GetEnumValue(Of CallType)(CallType.ToUpper))) : Filtering = True Else Cmd.Parameters.AddWithValue("@calltypeid", "%")
                 Cmd.Parameters.AddWithValue("@statusid", String.Join(",", StatusList)) : Filtering = True
+                If Source.Manual = "Sim" Or Source.Manual = Nothing Then SourceList.Add(CInt(EvaluationSource.Manual))
+                If Source.Automatic = "Sim" Or Source.Automatic = Nothing Then SourceList.Add(CInt(EvaluationSource.Automatic))
+                If Source.Imported = "Sim" Or Source.Imported = Nothing Then SourceList.Add(CInt(EvaluationSource.Imported))
+                Cmd.Parameters.AddWithValue("@sourceid", String.Join(",", SourceList)) : Filtering = True
+                If CallType <> Nothing Then Cmd.Parameters.AddWithValue("@calltypeid", CInt(EnumHelper.GetEnumValue(Of CallType)(CallType.ToUpper))) : Filtering = True Else Cmd.Parameters.AddWithValue("@calltypeid", "%")
                 If EvaluationNumber <> Nothing Then Cmd.Parameters.AddWithValue("@evaluationnumber", EvaluationNumber) : Filtering = True Else Cmd.Parameters.AddWithValue("@evaluationnumber", "%")
                 If TechnicalAdvice <> Nothing Then Cmd.Parameters.AddWithValue("@technicaladvice", TechnicalAdvice) : Filtering = True Else Cmd.Parameters.AddWithValue("@technicaladvice", "%")
                 If Note <> Nothing Then Cmd.Parameters.AddWithValue("@note", Note) : Filtering = True Else Cmd.Parameters.AddWithValue("@note", "%")
@@ -135,6 +143,7 @@ Public Class EvaluationFilter
     Public Sub Clean()
         ID = Nothing
         Status = New EvaluationStatusExpandable
+        Source = New EvaluationSourceExpandable
         CallType = Nothing
         EvaluationNumber = Nothing
         Technician = New PersonExpandable

@@ -6,5 +6,5 @@
 Public Enum EvaluationSource
     <Description("Manual")> Manual = 0
     <Description("Automática")> Automatic = 1
-    <Description("Núvem")> Cloud = 2
+    <Description("Importada")> Imported = 2
 End Enum

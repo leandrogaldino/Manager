@@ -148,6 +148,9 @@ Public Class FrmCompressorSellableElapsedDay
         Dim Row As DataGridViewRow
         If IsValidFields() Then
             If _ElapsedDaySellable.IsSaved Then
+                If _ElapsedDaySellable.SellableID <> QbxSellable.FreezedPrimaryKey Then
+                    If HasDuplicatedItem() Then Return False
+                End If
                 With _Compressor.ElapsedDaySellables.Single(Function(x) x.Guid = _ElapsedDaySellable.Guid)
                     .SellableID = QbxSellable.FreezedPrimaryKey
                     .Quantity = DbxQuantity.DecimalValue

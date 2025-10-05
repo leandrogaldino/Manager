@@ -148,6 +148,9 @@ Public Class FrmCompressorSellableWorkedHour
         Dim Row As DataGridViewRow
         If IsValidFields() Then
             If _WorkedHourSellable.IsSaved Then
+                If _WorkedHourSellable.SellableID <> QbxSellable.FreezedPrimaryKey Then
+                    If HasDuplicatedItem() Then Return False
+                End If
                 With _Compressor.WorkedHourSellables.Single(Function(x) x.Guid = _WorkedHourSellable.Guid)
                     .SellableID = QbxSellable.FreezedPrimaryKey
                     .Quantity = DbxQuantity.DecimalValue

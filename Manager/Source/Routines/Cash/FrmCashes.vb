@@ -218,7 +218,6 @@ Public Class FrmCashes
             End If
         End If
     End Sub
-
     Private Sub DgvData_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvData.KeyDown
         If e.KeyCode = Keys.Enter Then
             BtnEdit.PerformClick()

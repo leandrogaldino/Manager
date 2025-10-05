@@ -547,6 +547,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Helper\Attibutes\RoutineDependencyAttribute.vb" />
+    <Compile Include="Source\Helper\FilterExpandable\EvaluationSourceExpandable.vb" />
     <Compile Include="Source\Helper\FilterExpandable\VisitScheduleStatusExpandable.vb" />
     <Compile Include="Source\Helper\FilterQueriedBox\PrivilegePresetQueriedBoxFilter.vb" />
     <Compile Include="Source\Helper\FilterQueriedBox\PriceTableQueriedBoxFilter.vb" />

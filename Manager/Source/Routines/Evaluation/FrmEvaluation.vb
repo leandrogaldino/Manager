@@ -185,7 +185,7 @@ Public Class FrmEvaluation
         DbxAverageWorkLoad.Text = _Evaluation.AverageWorkLoad
         TxtTechnicalAdvice.Text = _Evaluation.TechnicalAdvice
         DgvTechnician.Fill(_Evaluation.Technicians)
-        If _Evaluation.Source = EvaluationSource.Cloud Or _Evaluation.Source = EvaluationSource.Automatic Or (_Evaluation.Source = EvaluationSource.Manual And _Evaluation.ID > 0) Then
+        If _Evaluation.Source = EvaluationSource.Imported Or _Evaluation.Source = EvaluationSource.Automatic Or (_Evaluation.Source = EvaluationSource.Manual And _Evaluation.ID > 0) Then
             For Each p As EvaluationControlledSellable In _Evaluation.WorkedHourControlledSelable.ToArray.Reverse()
                 If Not p.IsSaved Then
                     _Evaluation.WorkedHourControlledSelable.Remove(p)
@@ -244,7 +244,7 @@ Public Class FrmEvaluation
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _Evaluation.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
         End If
-        If _Evaluation.Source = EvaluationSource.Cloud Then
+        If _Evaluation.Source = EvaluationSource.Imported Then
             If Not TcEvaluation.TabPages.Cast(Of TabPage).Any(Function(x) x.Equals(_TabPageSignature)) Then
                 TcEvaluation.TabPages.Insert(4, _TabPageSignature)
             End If

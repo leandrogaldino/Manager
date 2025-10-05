@@ -96,7 +96,7 @@ Public Class TaskCloudSync
                 Progress?.Report(Response)
                 PerformedOperations = 0
                 Response.Percent = CInt((PerformedOperations / TotalChanges) * 100)
-                Response.Text = $"Sincronização com a núvem - Enviando dados para a núvem {(Response.Percent)}%"
+                Response.Text = $"Sincronização com a núvem - Enviando dados para a núvem ({Response.Percent})%"
                 Response.Event.AddChildEvent("Enviando dados para a núvem")
                 For Each Change In Result.Data
                     Select Case Change("routineid")
@@ -137,7 +137,7 @@ Public Class TaskCloudSync
                     End Select
                     LastSyncID = Change("id")
                     Response.Percent = CInt((PerformedOperations / TotalChanges) * 100)
-                    Response.Text = $"Sincronização com a núvem - Enviando dados para a núvem {(Response.Percent)}%"
+                    Response.Text = $"Sincronização com a núvem - Enviando dados para a núvem ({Response.Percent})%"
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                     If PerformedOperations >= RemainingOperations Then
@@ -207,7 +207,7 @@ Public Class TaskCloudSync
                                                     {"@id", RemoteResult.First(Function(x) x("id").ToString.Equals(Schedule("id").ToString))("id")}
                                                 })
                     Response.Percent = CInt((PerformedOperations / TotalChanges) * 100)
-                    Response.Text = $"Sincronização com a núvem - Atualizando agendamentos - {(Response.Percent)}%"
+                    Response.Text = $"Sincronização com a núvem - Atualizando agendamentos - ({Response.Percent})%"
                     Response.Event.AddChildEvent($"Atualizando agendamentos")
                     If Progress IsNot Nothing Then Progress.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
@@ -239,7 +239,7 @@ Public Class TaskCloudSync
                                                 })
                     PerformedOperations += 1
                     Response.Percent = CInt((PerformedOperations / TotalChanges) * 100)
-                    Response.Text = $"Sincronização com a núvem - Atualizando agendamentos - {(Response.Percent)}%"
+                    Response.Text = $"Sincronização com a núvem - Atualizando agendamentos - ({Response.Percent})%"
                     Response.Event.AddChildEvent($"Atualizando agendamentos")
                     If Progress IsNot Nothing Then Progress.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
@@ -255,7 +255,7 @@ Public Class TaskCloudSync
                     Await _RemoteDB.ExecutePut("visitschedules", Schedule, Schedule("id"))
                     PerformedOperations += 1
                     Response.Percent = CInt((PerformedOperations / TotalChanges) * 100)
-                    Response.Text = $"Sincronização com a núvem - Enviando novos agendamentos para a núvem - {(Response.Percent)}%"
+                    Response.Text = $"Sincronização com a núvem - Enviando novos agendamentos para a núvem - ({Response.Percent})%"
                     Response.Event.AddChildEvent($"Enviando novos agendamentos para a núvem")
                     If Progress IsNot Nothing Then Progress.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)

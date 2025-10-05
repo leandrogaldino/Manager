@@ -77,7 +77,6 @@ Partial Class FrmPerson
         Me.LblShortName = New System.Windows.Forms.Label()
         Me.BtnDocument = New ControlLibrary.NoFocusCueButton()
         Me.CbxIsTechnician = New System.Windows.Forms.CheckBox()
-        Me.CbxMaintenance = New System.Windows.Forms.CheckBox()
         Me.CbxIsCarrier = New System.Windows.Forms.CheckBox()
         Me.RbtIsLegalEntity = New System.Windows.Forms.RadioButton()
         Me.CbxIsEmployee = New System.Windows.Forms.CheckBox()
@@ -322,11 +321,11 @@ Partial Class FrmPerson
         '
         Me.TabCompressor.Controls.Add(Me.DgvCompressor)
         Me.TabCompressor.Controls.Add(Me.TsCompressor)
-        Me.TabCompressor.Location = New System.Drawing.Point(4, 26)
+        Me.TabCompressor.Location = New System.Drawing.Point(4, 22)
         Me.TabCompressor.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabCompressor.Name = "TabCompressor"
         Me.TabCompressor.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabCompressor.Size = New System.Drawing.Size(629, 107)
+        Me.TabCompressor.Size = New System.Drawing.Size(629, 111)
         Me.TabCompressor.TabIndex = 1
         Me.TabCompressor.Text = "Compressores"
         Me.TabCompressor.UseVisualStyleBackColor = True
@@ -349,7 +348,7 @@ Partial Class FrmPerson
         Me.DgvCompressor.RowHeadersVisible = False
         Me.DgvCompressor.RowTemplate.Height = 26
         Me.DgvCompressor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvCompressor.Size = New System.Drawing.Size(623, 74)
+        Me.DgvCompressor.Size = New System.Drawing.Size(623, 78)
         Me.DgvCompressor.TabIndex = 1
         '
         'TsCompressor
@@ -604,7 +603,6 @@ Partial Class FrmPerson
         Me.TabMain.Controls.Add(Me.LblShortName)
         Me.TabMain.Controls.Add(Me.BtnDocument)
         Me.TabMain.Controls.Add(Me.CbxIsTechnician)
-        Me.TabMain.Controls.Add(Me.CbxMaintenance)
         Me.TabMain.Controls.Add(Me.CbxIsCarrier)
         Me.TabMain.Controls.Add(Me.RbtIsLegalEntity)
         Me.TabMain.Controls.Add(Me.CbxIsEmployee)
@@ -692,16 +690,6 @@ Partial Class FrmPerson
         Me.CbxIsTechnician.TabIndex = 6
         Me.CbxIsTechnician.Text = "Técnico"
         Me.CbxIsTechnician.UseVisualStyleBackColor = True
-        '
-        'CbxMaintenance
-        '
-        Me.CbxMaintenance.AutoSize = True
-        Me.CbxMaintenance.Location = New System.Drawing.Point(381, 8)
-        Me.CbxMaintenance.Name = "CbxMaintenance"
-        Me.CbxMaintenance.Size = New System.Drawing.Size(172, 21)
-        Me.CbxMaintenance.TabIndex = 2
-        Me.CbxMaintenance.Text = "Controla Manutenção"
-        Me.CbxMaintenance.UseVisualStyleBackColor = True
         '
         'CbxIsCarrier
         '
@@ -931,5 +919,4 @@ Partial Class FrmPerson
     Friend WithEvents DgvContactLayout As DataGridViewLayout
     Friend WithEvents CbxIsTechnician As CheckBox
     Friend WithEvents EprInformation As ErrorProvider
-    Friend WithEvents CbxMaintenance As CheckBox
 End Class

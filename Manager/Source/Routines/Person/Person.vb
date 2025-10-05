@@ -13,7 +13,6 @@ Public Class Person
     Public Property IsEmployee As Boolean
     Public Property IsTechnician As Boolean
     Public Property IsCarrier As Boolean
-    Public Property ControlMaintenance As Boolean
     Public Property Addresses As New List(Of PersonAddress)
     Public Property Contacts As New List(Of PersonContact)
     Public Property Compressors As New List(Of PersonCompressor)
@@ -36,7 +35,6 @@ Public Class Person
         IsEmployee = False
         IsTechnician = False
         IsCarrier = False
-        ControlMaintenance = False
         Addresses = New List(Of PersonAddress)
         Contacts = New List(Of PersonContact)
         Compressors = New List(Of PersonCompressor)
@@ -72,7 +70,6 @@ Public Class Person
                         IsEmployee = TableResult.Rows(0).Item("isemployee")
                         IsTechnician = TableResult.Rows(0).Item("istechnician")
                         IsCarrier = TableResult.Rows(0).Item("iscarrier")
-                        ControlMaintenance = TableResult.Rows(0).Item("controlmaintenance")
                         Document = TableResult.Rows(0).Item("document").ToString
                         Name = TableResult.Rows(0).Item("name").ToString
                         ShortName = TableResult.Rows(0).Item("shortname").ToString
@@ -119,7 +116,6 @@ Public Class Person
                         IsEmployee = TableResult.Rows(0).Item("isemployee")
                         IsTechnician = TableResult.Rows(0).Item("istechnician")
                         IsCarrier = TableResult.Rows(0).Item("iscarrier")
-                        ControlMaintenance = TableResult.Rows(0).Item("controlmaintenance")
                         Document = TableResult.Rows(0).Item("document").ToString
                         Name = TableResult.Rows(0).Item("name").ToString
                         ShortName = TableResult.Rows(0).Item("shortname").ToString
@@ -189,7 +185,6 @@ Public Class Person
                     CmdPerson.Parameters.AddWithValue("@isemployee", IsEmployee)
                     CmdPerson.Parameters.AddWithValue("@istechnician", IsTechnician)
                     CmdPerson.Parameters.AddWithValue("@iscarrier", IsCarrier)
-                    CmdPerson.Parameters.AddWithValue("@controlmaintenance", ControlMaintenance)
                     CmdPerson.Parameters.AddWithValue("@document", Document)
                     CmdPerson.Parameters.AddWithValue("@name", Name)
                     CmdPerson.Parameters.AddWithValue("@shortname", ShortName)
@@ -307,7 +302,6 @@ Public Class Person
                     CmdPerson.Parameters.AddWithValue("@isemployee", IsEmployee)
                     CmdPerson.Parameters.AddWithValue("@istechnician", IsTechnician)
                     CmdPerson.Parameters.AddWithValue("@iscarrier", IsCarrier)
-                    CmdPerson.Parameters.AddWithValue("@controlmaintenance", ControlMaintenance)
                     CmdPerson.Parameters.AddWithValue("@document", Document)
                     CmdPerson.Parameters.AddWithValue("@name", Name)
                     CmdPerson.Parameters.AddWithValue("@shortname", ShortName)
@@ -649,6 +643,7 @@ Public Class Person
                 For Each Row As DataRow In TableResult.Rows
                     Compressor = New PersonCompressor With {
                         .Status = Convert.ToInt32(Row.Item("statusid")),
+                        .Controlled = Convert.ToBoolean(Row.Item("controlled")),
                         .Compressor = New Lazy(Of Compressor)(Function() New Compressor().Load(Row.Item("compressorid"), False)),
                         .CompressorID = Convert.ToInt32(Row.Item("compressorid")),
                         .CompressorName = Convert.ToString(Row.Item("compressorname")),
@@ -795,7 +790,6 @@ Public Class Person
             .Addresses = Addresses.Select(Function(x) CType(x.Clone(), PersonAddress)).ToList(),
             .Compressors = Compressors.Select(Function(x) CType(x.Clone(), PersonCompressor)).ToList(),
             .Contacts = Contacts.Select(Function(x) CType(x.Clone(), PersonContact)).ToList(),
-            .ControlMaintenance = ControlMaintenance,
             .Document = Document,
             .Entity = Entity,
             .IsCarrier = IsCarrier,

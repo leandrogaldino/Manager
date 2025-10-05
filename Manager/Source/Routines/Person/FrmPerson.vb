@@ -209,8 +209,7 @@ Public Class FrmPerson
                                                         CbxIsProvider.CheckedChanged,
                                                         CbxIsEmployee.CheckedChanged,
                                                         CbxIsCarrier.CheckedChanged,
-                                                        CbxIsTechnician.CheckedChanged,
-                                                        CbxMaintenance.CheckedChanged
+                                                        CbxIsTechnician.CheckedChanged
         EprValidation.Clear()
         BtnSave.Enabled = True
     End Sub

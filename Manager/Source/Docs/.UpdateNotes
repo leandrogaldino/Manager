@@ -4,6 +4,7 @@
 • Correção na validação do cadastro do compressor da pessoa e do item de caixa, que não era aplicada ao incluir um novo item e salvar o atual.
 • Correção de um problema que fazia o grid perder a classificação quando um item era excluído.
 • Correção de um problema que exibia uma mensagem de item duplicado na requisição e nas peças de compressor, mesmo quando não havia duplicatas.
+• Incluído o filtro por fonte na tela de avaliações.
 • Removida a mensagem exibida ao inativar um registro, que informava que a ação só teria efeito após salvar.
 • Correções e melhorias técnicas internas para aprimorar a estabilidade e desempenho do sistema.
 #2.0.0

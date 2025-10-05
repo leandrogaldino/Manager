@@ -1312,10 +1312,10 @@ Partial Class FrmEvaluation
         Me.TabDocument.AutoScroll = True
         Me.TabDocument.Controls.Add(Me.PdfDocumentViewer)
         Me.TabDocument.Controls.Add(Me.TsDocument)
-        Me.TabDocument.Location = New System.Drawing.Point(4, 22)
+        Me.TabDocument.Location = New System.Drawing.Point(4, 26)
         Me.TabDocument.Name = "TabDocument"
         Me.TabDocument.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabDocument.Size = New System.Drawing.Size(1031, 411)
+        Me.TabDocument.Size = New System.Drawing.Size(1031, 407)
         Me.TabDocument.TabIndex = 7
         Me.TabDocument.Text = "Documento"
         Me.TabDocument.UseVisualStyleBackColor = True
@@ -1345,7 +1345,7 @@ Partial Class FrmEvaluation
         Me.PdfDocumentViewer.ScrollDisplacementValue = 0
         Me.PdfDocumentViewer.ShowHorizontalScrollBar = True
         Me.PdfDocumentViewer.ShowVerticalScrollBar = True
-        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1025, 380)
+        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1025, 376)
         Me.PdfDocumentViewer.SpaceBetweenPages = 8
         Me.PdfDocumentViewer.TabIndex = 1
         TextSearchSettings1.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -1438,10 +1438,10 @@ Partial Class FrmEvaluation
         'TabPicture
         '
         Me.TabPicture.Controls.Add(Me.PvPicture)
-        Me.TabPicture.Location = New System.Drawing.Point(4, 22)
+        Me.TabPicture.Location = New System.Drawing.Point(4, 26)
         Me.TabPicture.Name = "TabPicture"
         Me.TabPicture.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPicture.Size = New System.Drawing.Size(1031, 411)
+        Me.TabPicture.Size = New System.Drawing.Size(1031, 407)
         Me.TabPicture.TabIndex = 8
         Me.TabPicture.Text = "Fotos"
         Me.TabPicture.UseVisualStyleBackColor = True
@@ -1463,19 +1463,19 @@ Partial Class FrmEvaluation
         Me.PvPicture.PreviousButtonImage = CType(resources.GetObject("PvPicture.PreviousButtonImage"), System.Drawing.Image)
         Me.PvPicture.RemoveButtonImage = CType(resources.GetObject("PvPicture.RemoveButtonImage"), System.Drawing.Image)
         Me.PvPicture.SaveButtonImage = CType(resources.GetObject("PvPicture.SaveButtonImage"), System.Drawing.Image)
-        Me.PvPicture.ShowControlBar = False
+        Me.PvPicture.ShowControlBar = True
         Me.PvPicture.ShowCounterBar = True
-        Me.PvPicture.Size = New System.Drawing.Size(1025, 405)
+        Me.PvPicture.Size = New System.Drawing.Size(1025, 401)
         Me.PvPicture.TabIndex = 0
         Me.PvPicture.TempDirectory = "C:\Users\leand\AppData\Local\Temp\"
         '
         'TabSignature
         '
         Me.TabSignature.Controls.Add(Me.PnSignature)
-        Me.TabSignature.Location = New System.Drawing.Point(4, 22)
+        Me.TabSignature.Location = New System.Drawing.Point(4, 26)
         Me.TabSignature.Name = "TabSignature"
         Me.TabSignature.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabSignature.Size = New System.Drawing.Size(1031, 411)
+        Me.TabSignature.Size = New System.Drawing.Size(1031, 407)
         Me.TabSignature.TabIndex = 9
         Me.TabSignature.Text = "Assinatura"
         Me.TabSignature.UseVisualStyleBackColor = True
@@ -1487,7 +1487,7 @@ Partial Class FrmEvaluation
         Me.PnSignature.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PnSignature.Location = New System.Drawing.Point(3, 3)
         Me.PnSignature.Name = "PnSignature"
-        Me.PnSignature.Size = New System.Drawing.Size(1025, 405)
+        Me.PnSignature.Size = New System.Drawing.Size(1025, 401)
         Me.PnSignature.TabIndex = 18
         '
         'PbxSignature
@@ -1496,7 +1496,7 @@ Partial Class FrmEvaluation
         Me.PbxSignature.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PbxSignature.Location = New System.Drawing.Point(0, 0)
         Me.PbxSignature.Name = "PbxSignature"
-        Me.PbxSignature.Size = New System.Drawing.Size(1023, 403)
+        Me.PbxSignature.Size = New System.Drawing.Size(1023, 399)
         Me.PbxSignature.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PbxSignature.TabIndex = 11
         Me.PbxSignature.TabStop = False

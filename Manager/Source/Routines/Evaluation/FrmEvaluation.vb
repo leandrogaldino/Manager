@@ -16,6 +16,8 @@ Public Class FrmEvaluation
     Private _Deleting As Boolean
     Private _Loading As Boolean
     Private _TabPageSignature As TabPage
+    Private _TabPageDocument As TabPage
+    Private _TabPagePictures As TabPage
     Private _TargetSize As Size
     Private _User As User
 #End Region
@@ -144,6 +146,8 @@ Public Class FrmEvaluation
         CcoUnitTemperaturePressure.DropDownControl = _UcUnitTemperaturePressure
         PvPicture.TempDirectory = ApplicationPaths.ManagerTempDirectory
         _TabPageSignature = TcEvaluation.TabPages("TabSignature")
+        _TabPageDocument = TcEvaluation.TabPages("TabDocument")
+        _TabPagePictures = TcEvaluation.TabPages("TabPicture")
         AddHandler _UcCallTypeHasRepairNeedProposal.ValueChanged, AddressOf CallTypeHasRepairNeedProposalChanged
         AddHandler _UcUnitTemperaturePressure.ValueChanged, AddressOf UnitTemperaturePressureChanged
     End Sub
@@ -244,13 +248,21 @@ Public Class FrmEvaluation
             CMessageBox.Show(String.Format("Esse registro está sendo editado por {0}. Você não poderá salvar alterações.", _Evaluation.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Text &= " - SOMENTE LEITURA"
         End If
-        If _Evaluation.Source = EvaluationSource.Imported Then
-            If Not TcEvaluation.TabPages.Cast(Of TabPage).Any(Function(x) x.Equals(_TabPageSignature)) Then
-                TcEvaluation.TabPages.Insert(4, _TabPageSignature)
-            End If
-        Else
-            TcEvaluation.TabPages.Remove(_TabPageSignature)
+        TcEvaluation.TabPages.Remove(_TabDocument)
+        TcEvaluation.TabPages.Remove(_TabPicture)
+        TcEvaluation.TabPages.Remove(_TabPageSignature)
+
+        If _Evaluation.Source = EvaluationSource.Manual Then
+            If Not TcEvaluation.TabPages.Cast(Of TabPage).Any(Function(x) x.Equals(_TabDocument)) Then TcEvaluation.TabPages.Add(_TabDocument)
+            If Not TcEvaluation.TabPages.Cast(Of TabPage).Any(Function(x) x.Equals(_TabPicture)) Then TcEvaluation.TabPages.Add(_TabPicture)
+        ElseIf _Evaluation.Source = EvaluationSource.Imported Then
+            If Not TcEvaluation.TabPages.Cast(Of TabPage).Any(Function(x) x.Equals(_TabDocument)) Then TcEvaluation.TabPages.Add(_TabDocument)
+            If Not TcEvaluation.TabPages.Cast(Of TabPage).Any(Function(x) x.Equals(_TabPicture)) Then TcEvaluation.TabPages.Add(_TabPicture)
+            If Not TcEvaluation.TabPages.Cast(Of TabPage).Any(Function(x) x.Equals(_TabPageSignature)) Then TcEvaluation.TabPages.Add(_TabPageSignature)
+
         End If
+
+
         TxtEvaluationNumber.Enabled = _Evaluation.Source = EvaluationSource.Manual
         BtnSave.Enabled = False
         TxtEvaluationNumber.Select()

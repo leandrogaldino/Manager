@@ -20,6 +20,7 @@ Public Class EvaluationFilter
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(ExpandableObjectConverter))>
+    <DisplayName("Fonte")>
     Public Overridable Property Source As New EvaluationSourceExpandable
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>

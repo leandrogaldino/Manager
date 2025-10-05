@@ -356,7 +356,7 @@ Public Class FrmCompressor
             e.CellStyle.Format = "N2"
         End If
     End Sub
-    Private Sub DgvCompressorSellableWorkedHour_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvCompressorWorkedHourSellable.MouseDoubleClick, DgvCompressorWorkedHourSellable.MouseDoubleClick
+    Private Sub DgvCompressorSellableWorkedHour_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvCompressorWorkedHourSellable.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvCompressorWorkedHourSellable.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
             BtnEditWorkedHourSellable.PerformClick()
@@ -390,7 +390,7 @@ Public Class FrmCompressor
             End If
         End If
     End Sub
-    Private Sub DgvCompressorSellableWorkedHour_SelectionChanged(sender As Object, e As EventArgs) Handles DgvCompressorWorkedHourSellable.SelectionChanged, DgvCompressorWorkedHourSellable.SelectionChanged
+    Private Sub DgvCompressorSellableWorkedHour_SelectionChanged(sender As Object, e As EventArgs) Handles DgvCompressorWorkedHourSellable.SelectionChanged
         If DgvCompressorWorkedHourSellable.SelectedRows.Count = 0 Then
             BtnEditWorkedHourSellable.Enabled = False
             BtnDeleteWorkedHourSellable.Enabled = False
@@ -496,7 +496,7 @@ Public Class FrmCompressor
     Private Sub FrmCompressor_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         _Compressor.Unlock()
     End Sub
-    Private Sub DgvCompressorSellableWorkedHour_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvCompressorWorkedHourSellable.DataSourceChanged, DgvCompressorWorkedHourSellable.DataSourceChanged
+    Private Sub DgvCompressorSellableWorkedHour_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvCompressorWorkedHourSellable.DataSourceChanged
         FilterWorkedHourSellable()
     End Sub
     Private Sub DgvCompressorSellableElapsedDay_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvCompressorElapsedDaySellable.DataSourceChanged

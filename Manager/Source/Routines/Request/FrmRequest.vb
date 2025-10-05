@@ -224,6 +224,7 @@ Public Class FrmRequest
                 Item = _Request.Items.Single(Function(x) x.Guid = DgvItem.SelectedRows(0).Cells("Guid").Value)
                 _Request.Items.Remove(Item)
                 DgvItem.Fill(_Request.Items)
+                DgvItemLayout.Load()
                 BtnSave.Enabled = True
             End If
         End If

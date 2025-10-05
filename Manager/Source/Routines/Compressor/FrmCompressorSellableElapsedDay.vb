@@ -213,7 +213,6 @@ Public Class FrmCompressorSellableElapsedDay
             Return False
         End If
     End Function
-
     Private Function HasDuplicatedItem() As Boolean
         Dim WorkedHourItems As List(Of CompressorSellable)
         Dim ElapsedDayItems As List(Of CompressorSellable)

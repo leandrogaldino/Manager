@@ -27,6 +27,7 @@ Public Class FrmPersonCompressor
         _PersonCompressorShadow = PersonCompressor.Clone()
         _PersonForm = PersonForm
         _User = Locator.GetInstance(Of Session).User
+        CbxControlled.Items.AddRange(EnumHelper.GetEnumDescriptions(Of ConfirmationType).ToArray())
         LoadForm()
         DgvNavigator.DataGridView = _PersonForm.DgvCompressor
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
@@ -220,6 +221,7 @@ Public Class FrmPersonCompressor
         LblCreationValue.Text = _PersonCompressor.Creation
         QbxCompressor.Unfreeze()
         QbxCompressor.Freeze(_PersonCompressor.CompressorID)
+        CbxControlled.Text = EnumHelper.GetEnumDescription(_PersonCompressor.Controlled)
         TxtSerialNumber.Text = _PersonCompressor.SerialNumber
         TxtPatrimony.Text = _PersonCompressor.Patrimony
         TxtSector.Text = _PersonCompressor.Sector
@@ -250,6 +252,11 @@ Public Class FrmPersonCompressor
             EprValidation.SetError(LblCompressor, "Compressor não encontrado.")
             EprValidation.SetIconAlignment(LblCompressor, ErrorIconAlignment.MiddleRight)
             QbxCompressor.Select()
+            Return False
+        ElseIf String.IsNullOrEmpty(CbxControlled.text) Then
+            EprValidation.SetError(LblControlled, $"Campo obrigatório")
+            EprValidation.SetIconAlignment(LblControlled, ErrorIconAlignment.MiddleRight)
+            CbxControlled.Select()
             Return False
         ElseIf DbxUnitCapacity.DecimalValue <= 0 Then
             TcPersonCompressor.SelectedTab = TabMain
@@ -289,6 +296,7 @@ Public Class FrmPersonCompressor
                     .Compressor = New Lazy(Of Compressor)(Function() New Compressor().Load(QbxCompressor.FreezedPrimaryKey, False))
                     .CompressorID = QbxCompressor.FreezedPrimaryKey
                     .CompressorName = QbxCompressor.Text
+                    .Controlled = EnumHelper.GetEnumValue(Of ConfirmationType)(CbxControlled.Text)
                     .SerialNumber = TxtSerialNumber.Text
                     .Patrimony = TxtPatrimony.Text
                     .Sector = TxtSector.Text
@@ -296,15 +304,19 @@ Public Class FrmPersonCompressor
                     .Note = TxtNote.Text
                 End With
             Else
-                _PersonCompressor.Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
-                _PersonCompressor.Compressor = New Lazy(Of Compressor)(Function() New Compressor().Load(QbxCompressor.FreezedPrimaryKey, False))
-                _PersonCompressor.CompressorID = QbxCompressor.FreezedPrimaryKey
-                _PersonCompressor.CompressorName = QbxCompressor.Text
-                _PersonCompressor.SerialNumber = TxtSerialNumber.Text
-                _PersonCompressor.Patrimony = TxtPatrimony.Text
-                _PersonCompressor.Sector = TxtSector.Text
-                _PersonCompressor.UnitCapacity = DbxUnitCapacity.Text
-                _PersonCompressor.Note = TxtNote.Text
+                With _PersonCompressor
+                    .Status = EnumHelper.GetEnumValue(Of SimpleStatus)(BtnStatusValue.Text)
+                    .Compressor = New Lazy(Of Compressor)(Function() New Compressor().Load(QbxCompressor.FreezedPrimaryKey, False))
+                    .CompressorID = QbxCompressor.FreezedPrimaryKey
+                    .CompressorName = QbxCompressor.Text
+                    .Controlled = EnumHelper.GetEnumValue(Of ConfirmationType)(CbxControlled.Text)
+                    .SerialNumber = TxtSerialNumber.Text
+                    .Patrimony = TxtPatrimony.Text
+                    .Sector = TxtSector.Text
+                    .UnitCapacity = DbxUnitCapacity.Text
+                    .Note = TxtNote.Text
+                End With
+
                 _PersonCompressor.SetIsSaved(True)
                 _Person.Compressors.Add(_PersonCompressor)
             End If
@@ -348,6 +360,10 @@ Public Class FrmPersonCompressor
     Private Sub QbxCompressor_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxCompressor.FreezedPrimaryKeyChanged
         If Not _Loading Then BtnView.Visible = QbxCompressor.IsFreezed And _User.CanWrite(Routine.Compressor)
         If Not _Loading Then BtnImport.Visible = QbxCompressor.IsFreezed
+    End Sub
+    Private Sub CbxControlled_TextChanged(sender As Object, e As EventArgs) Handles CbxControlled.SelectedIndexChanged
+        EprValidation.Clear()
+        If Not _Loading Then BtnSave.Enabled = True
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         Dim Compressor As Compressor

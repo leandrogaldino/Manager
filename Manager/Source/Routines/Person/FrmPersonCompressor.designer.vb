@@ -58,11 +58,13 @@ Partial Class FrmPersonCompressor
         Me.TxtSerialNumber = New System.Windows.Forms.TextBox()
         Me.TcPersonCompressor = New System.Windows.Forms.TabControl()
         Me.TabMain = New System.Windows.Forms.TabPage()
+        Me.CbxControlled = New ControlLibrary.CentralizedComboBox()
         Me.DbxUnitCapacity = New ControlLibrary.DecimalBox()
         Me.FlpCompressor = New System.Windows.Forms.FlowLayoutPanel()
         Me.BtnFilter = New ControlLibrary.NoFocusCueButton()
         Me.BtnView = New ControlLibrary.NoFocusCueButton()
         Me.BtnNew = New ControlLibrary.NoFocusCueButton()
+        Me.LblControlled = New System.Windows.Forms.Label()
         Me.LblUnitCapacity = New System.Windows.Forms.Label()
         Me.TabMaintenance = New System.Windows.Forms.TabPage()
         Me.TcMaintenance = New System.Windows.Forms.TabControl()
@@ -89,8 +91,6 @@ Partial Class FrmPersonCompressor
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.LblControlled = New System.Windows.Forms.Label()
-        Me.CbxControlled = New ControlLibrary.CentralizedComboBox()
         Me.TsMain.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.TsData.SuspendLayout()
@@ -394,7 +394,7 @@ Partial Class FrmPersonCompressor
         Me.TxtSector.Location = New System.Drawing.Point(181, 70)
         Me.TxtSector.MaxLength = 50
         Me.TxtSector.Name = "TxtSector"
-        Me.TxtSector.Size = New System.Drawing.Size(164, 23)
+        Me.TxtSector.Size = New System.Drawing.Size(155, 23)
         Me.TxtSector.TabIndex = 8
         '
         'TxtPatrimony
@@ -455,14 +455,24 @@ Partial Class FrmPersonCompressor
         Me.TabMain.Text = "Identificação"
         Me.TabMain.UseVisualStyleBackColor = True
         '
+        'CbxControlled
+        '
+        Me.CbxControlled.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.CbxControlled.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CbxControlled.FormattingEnabled = True
+        Me.CbxControlled.Location = New System.Drawing.Point(342, 23)
+        Me.CbxControlled.Name = "CbxControlled"
+        Me.CbxControlled.Size = New System.Drawing.Size(100, 24)
+        Me.CbxControlled.TabIndex = 10
+        '
         'DbxUnitCapacity
         '
         Me.DbxUnitCapacity.DecimalOnly = True
         Me.DbxUnitCapacity.DecimalPlaces = 0
         Me.DbxUnitCapacity.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxUnitCapacity.Location = New System.Drawing.Point(351, 70)
+        Me.DbxUnitCapacity.Location = New System.Drawing.Point(342, 70)
         Me.DbxUnitCapacity.Name = "DbxUnitCapacity"
-        Me.DbxUnitCapacity.Size = New System.Drawing.Size(91, 23)
+        Me.DbxUnitCapacity.Size = New System.Drawing.Size(100, 23)
         Me.DbxUnitCapacity.TabIndex = 9
         Me.DbxUnitCapacity.Text = "0"
         Me.DbxUnitCapacity.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -526,10 +536,19 @@ Partial Class FrmPersonCompressor
         Me.BtnNew.UseVisualStyleBackColor = False
         Me.BtnNew.Visible = False
         '
+        'LblControlled
+        '
+        Me.LblControlled.AutoSize = True
+        Me.LblControlled.Location = New System.Drawing.Point(339, 4)
+        Me.LblControlled.Name = "LblControlled"
+        Me.LblControlled.Size = New System.Drawing.Size(84, 17)
+        Me.LblControlled.TabIndex = 0
+        Me.LblControlled.Text = "Controlado"
+        '
         'LblUnitCapacity
         '
         Me.LblUnitCapacity.AutoSize = True
-        Me.LblUnitCapacity.Location = New System.Drawing.Point(348, 50)
+        Me.LblUnitCapacity.Location = New System.Drawing.Point(339, 50)
         Me.LblUnitCapacity.Name = "LblUnitCapacity"
         Me.LblUnitCapacity.Size = New System.Drawing.Size(74, 17)
         Me.LblUnitCapacity.TabIndex = 5
@@ -654,7 +673,7 @@ Partial Class FrmPersonCompressor
         Me.TabElapsedDaySellable.Location = New System.Drawing.Point(4, 22)
         Me.TabElapsedDaySellable.Name = "TabElapsedDaySellable"
         Me.TabElapsedDaySellable.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabElapsedDaySellable.Size = New System.Drawing.Size(437, 70)
+        Me.TabElapsedDaySellable.Size = New System.Drawing.Size(437, 74)
         Me.TabElapsedDaySellable.TabIndex = 7
         Me.TabElapsedDaySellable.Text = "Dia Corrido"
         Me.TabElapsedDaySellable.UseVisualStyleBackColor = True
@@ -677,7 +696,7 @@ Partial Class FrmPersonCompressor
         Me.DgvElapsedDaySellable.RowHeadersVisible = False
         Me.DgvElapsedDaySellable.RowTemplate.Height = 26
         Me.DgvElapsedDaySellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(431, 39)
+        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(431, 43)
         Me.DgvElapsedDaySellable.TabIndex = 5
         '
         'TsElapsedDaySellable
@@ -794,24 +813,6 @@ Partial Class FrmPersonCompressor
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "TabPage2"
         Me.TabPage2.UseVisualStyleBackColor = True
-        '
-        'LblControlled
-        '
-        Me.LblControlled.AutoSize = True
-        Me.LblControlled.Location = New System.Drawing.Point(339, 4)
-        Me.LblControlled.Name = "LblControlled"
-        Me.LblControlled.Size = New System.Drawing.Size(84, 17)
-        Me.LblControlled.TabIndex = 0
-        Me.LblControlled.Text = "Controlado"
-        '
-        'CbxControlled
-        '
-        Me.CbxControlled.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.CbxControlled.FormattingEnabled = True
-        Me.CbxControlled.Location = New System.Drawing.Point(342, 23)
-        Me.CbxControlled.Name = "CbxControlled"
-        Me.CbxControlled.Size = New System.Drawing.Size(100, 24)
-        Me.CbxControlled.TabIndex = 10
         '
         'FrmPersonCompressor
         '

@@ -123,12 +123,10 @@ Public Class FrmPersonMaintenancePlan
     End Sub
     Private Sub BtnNewPerson_Click(sender As Object, e As EventArgs) Handles BtnNewPerson.Click
         Dim Person As New Person With {
-            .IsCustomer = True,
-            .ControlMaintenance = True
+            .IsCustomer = True
         }
         Using Form As New FrmPerson(Person)
             Form.CbxIsCustomer.Enabled = False
-            Form.CbxMaintenance.Enabled = False
             Form.ShowDialog()
         End Using
         EprValidation.Clear()
@@ -140,7 +138,6 @@ Public Class FrmPersonMaintenancePlan
     Private Sub BtnViewPerson_Click(sender As Object, e As EventArgs) Handles BtnViewPerson.Click
         Using Form As New FrmPerson(New Person().Load(QbxPerson.FreezedPrimaryKey, True))
             Form.CbxIsCustomer.Enabled = False
-            Form.CbxMaintenance.Enabled = False
             Form.ShowDialog()
         End Using
         QbxPerson.Freeze(QbxPerson.FreezedPrimaryKey)

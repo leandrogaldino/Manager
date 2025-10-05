@@ -79,7 +79,6 @@ Public Class FrmPerson
         CbxIsEmployee.Checked = _Person.IsEmployee
         CbxIsTechnician.Checked = _Person.IsTechnician
         CbxIsCarrier.Checked = _Person.IsCarrier
-        CbxMaintenance.Checked = _Person.ControlMaintenance
         TxtDocument.Text = _Person.Document
         TxtName.Text = _Person.Name
         TxtShortName.Text = _Person.ShortName
@@ -542,7 +541,6 @@ Public Class FrmPerson
                     _Person.IsEmployee = CbxIsEmployee.Checked
                     _Person.IsTechnician = CbxIsTechnician.Checked
                     _Person.IsCarrier = CbxIsCarrier.Checked
-                    _Person.ControlMaintenance = CbxMaintenance.Checked
                     _Person.Name = TxtName.Text
                     _Person.ShortName = TxtShortName.Text
                     _Person.Document = TxtDocument.Text

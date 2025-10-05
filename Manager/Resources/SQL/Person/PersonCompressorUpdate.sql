@@ -1,6 +1,7 @@
 UPDATE personcompressor SET
 	statusid = @statusid,
     compressorid = @compressorid,
+	controlledid = @controlledid,
 	serialnumber = @serialnumber,
 	patrimony = @patrimony,
 	sector = @sector,

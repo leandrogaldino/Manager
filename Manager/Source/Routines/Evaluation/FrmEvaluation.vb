@@ -963,12 +963,10 @@ Public Class FrmEvaluation
     Private Sub BtnNewCustomer_Click(sender As Object, e As EventArgs) Handles BtnNewCustomer.Click
         Dim Customer As Person
         Customer = New Person With {
-            .IsCustomer = True,
-            .ControlMaintenance = True
+            .IsCustomer = True
         }
         Using Form As New FrmPerson(Customer)
             Form.CbxIsCustomer.Enabled = False
-            Form.CbxMaintenance.Enabled = False
             Form.ShowDialog()
         End Using
         EprValidation.Clear()
@@ -984,7 +982,6 @@ Public Class FrmEvaluation
         Dim FreezedCompressorID As Long = QbxCompressor.FreezedPrimaryKey
         Using Form As New FrmPerson(New Person().Load(QbxCustomer.FreezedPrimaryKey, True))
             Form.CbxIsCustomer.Enabled = False
-            Form.CbxMaintenance.Enabled = False
             Form.ShowDialog()
         End Using
         _Loading = True

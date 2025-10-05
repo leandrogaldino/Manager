@@ -42,22 +42,20 @@ Partial Class FrmEvaluation
         Dim RichTextPart16 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
         Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
         Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Condition3 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
         Dim OtherField1 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
         Dim OtherField2 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
         Dim OtherField3 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
         Dim OtherField4 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
         Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
         Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Parameter3 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
         Dim Relation1 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
         Dim Relation2 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
         Dim Relation3 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
-        Dim Condition4 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Condition3 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
         Dim OtherField5 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
         Dim OtherField6 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
         Dim OtherField7 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim Parameter4 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Parameter3 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
         Dim Relation4 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
         Dim MessageBoxSettings1 As Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings = New Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings()
         Dim PdfViewerPrinterSettings1 As Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings = New Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings()
@@ -772,13 +770,8 @@ Partial Class FrmEvaluation
         Condition2.Operator = "="
         Condition2.TableNameOrAlias = "person"
         Condition2.Value = "@statusid"
-        Condition3.FieldName = "controlmaintenance"
-        Condition3.Operator = "="
-        Condition3.TableNameOrAlias = "person"
-        Condition3.Value = "@controlmaintenance"
         Me.QbxCustomer.Conditions.Add(Condition1)
         Me.QbxCustomer.Conditions.Add(Condition2)
-        Me.QbxCustomer.Conditions.Add(Condition3)
         Me.QbxCustomer.DebugOnTextChanged = False
         Me.QbxCustomer.DisplayFieldAlias = "Nome Curto"
         Me.QbxCustomer.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
@@ -844,11 +837,8 @@ Partial Class FrmEvaluation
         Parameter1.ParameterValue = "1"
         Parameter2.ParameterName = "@statusid"
         Parameter2.ParameterValue = "0"
-        Parameter3.ParameterName = "@controlmaintenance"
-        Parameter3.ParameterValue = "1"
         Me.QbxCustomer.Parameters.Add(Parameter1)
         Me.QbxCustomer.Parameters.Add(Parameter2)
-        Me.QbxCustomer.Parameters.Add(Parameter3)
         Me.QbxCustomer.Prefix = Nothing
         Relation1.Operator = "="
         Relation1.RelateFieldName = "personid"
@@ -1091,11 +1081,11 @@ Partial Class FrmEvaluation
         '
         Me.QbxCompressor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxCompressor.CharactersToQuery = 1
-        Condition4.FieldName = "statusid"
-        Condition4.Operator = "="
-        Condition4.TableNameOrAlias = "personcompressor"
-        Condition4.Value = "@statusid"
-        Me.QbxCompressor.Conditions.Add(Condition4)
+        Condition3.FieldName = "statusid"
+        Condition3.Operator = "="
+        Condition3.TableNameOrAlias = "personcompressor"
+        Condition3.Value = "@statusid"
+        Me.QbxCompressor.Conditions.Add(Condition3)
         Me.QbxCompressor.DebugOnTextChanged = False
         Me.QbxCompressor.DisplayFieldAlias = "Compressor"
         Me.QbxCompressor.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
@@ -1146,9 +1136,9 @@ Partial Class FrmEvaluation
         Me.QbxCompressor.OtherFields.Add(OtherField5)
         Me.QbxCompressor.OtherFields.Add(OtherField6)
         Me.QbxCompressor.OtherFields.Add(OtherField7)
-        Parameter4.ParameterName = "@statusid"
-        Parameter4.ParameterValue = "0"
-        Me.QbxCompressor.Parameters.Add(Parameter4)
+        Parameter3.ParameterName = "@statusid"
+        Parameter3.ParameterValue = "0"
+        Me.QbxCompressor.Parameters.Add(Parameter3)
         Me.QbxCompressor.Prefix = Nothing
         Relation4.Operator = "="
         Relation4.RelateFieldName = "id"
@@ -1448,10 +1438,10 @@ Partial Class FrmEvaluation
         'TabPicture
         '
         Me.TabPicture.Controls.Add(Me.PvPicture)
-        Me.TabPicture.Location = New System.Drawing.Point(4, 26)
+        Me.TabPicture.Location = New System.Drawing.Point(4, 22)
         Me.TabPicture.Name = "TabPicture"
         Me.TabPicture.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPicture.Size = New System.Drawing.Size(1031, 407)
+        Me.TabPicture.Size = New System.Drawing.Size(1031, 411)
         Me.TabPicture.TabIndex = 8
         Me.TabPicture.Text = "Fotos"
         Me.TabPicture.UseVisualStyleBackColor = True
@@ -1473,9 +1463,9 @@ Partial Class FrmEvaluation
         Me.PvPicture.PreviousButtonImage = CType(resources.GetObject("PvPicture.PreviousButtonImage"), System.Drawing.Image)
         Me.PvPicture.RemoveButtonImage = CType(resources.GetObject("PvPicture.RemoveButtonImage"), System.Drawing.Image)
         Me.PvPicture.SaveButtonImage = CType(resources.GetObject("PvPicture.SaveButtonImage"), System.Drawing.Image)
-        Me.PvPicture.ShowControlBar = True
+        Me.PvPicture.ShowControlBar = False
         Me.PvPicture.ShowCounterBar = True
-        Me.PvPicture.Size = New System.Drawing.Size(1025, 401)
+        Me.PvPicture.Size = New System.Drawing.Size(1025, 405)
         Me.PvPicture.TabIndex = 0
         Me.PvPicture.TempDirectory = "C:\Users\leand\AppData\Local\Temp\"
         '

@@ -7,7 +7,6 @@ UPDATE person SET
 	isemployee = @isemployee,
 	istechnician = @istechnician,
 	iscarrier = @iscarrier,
-	controlmaintenance = @controlmaintenance,
 	document = @document,
 	name = @name,
 	shortname = @shortname,

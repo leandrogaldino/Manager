@@ -238,6 +238,7 @@ Public Class Person
                         CmdCompressor.Parameters.AddWithValue("@creation", PersonCompressor.Creation)
                         CmdCompressor.Parameters.AddWithValue("@statusid", Convert.ToInt32(PersonCompressor.Status))
                         CmdCompressor.Parameters.AddWithValue("@compressorid", PersonCompressor.CompressorID)
+                        CmdCompressor.Parameters.AddWithValue("@controlledid", Convert.ToInt32(PersonCompressor.Controlled))
                         CmdCompressor.Parameters.AddWithValue("@serialnumber", If(String.IsNullOrEmpty(PersonCompressor.SerialNumber), DBNull.Value, PersonCompressor.SerialNumber))
                         CmdCompressor.Parameters.AddWithValue("@patrimony", If(String.IsNullOrEmpty(PersonCompressor.Patrimony), DBNull.Value, PersonCompressor.Patrimony))
                         CmdCompressor.Parameters.AddWithValue("@sector", If(String.IsNullOrEmpty(PersonCompressor.Sector), DBNull.Value, PersonCompressor.Sector))
@@ -438,6 +439,7 @@ Public Class Person
                             CmdCompressor.Parameters.AddWithValue("@creation", PersonCompressor.Creation)
                             CmdCompressor.Parameters.AddWithValue("@statusid", Convert.ToInt32(PersonCompressor.Status))
                             CmdCompressor.Parameters.AddWithValue("@compressorid", PersonCompressor.CompressorID)
+                            CmdCompressor.Parameters.AddWithValue("@controlledid", Convert.ToInt32(PersonCompressor.Controlled))
                             CmdCompressor.Parameters.AddWithValue("@serialnumber", If(String.IsNullOrEmpty(PersonCompressor.SerialNumber), DBNull.Value, PersonCompressor.SerialNumber))
                             CmdCompressor.Parameters.AddWithValue("@patrimony", If(String.IsNullOrEmpty(PersonCompressor.Patrimony), DBNull.Value, PersonCompressor.Patrimony))
                             CmdCompressor.Parameters.AddWithValue("@sector", If(String.IsNullOrEmpty(PersonCompressor.Sector), DBNull.Value, PersonCompressor.Sector))
@@ -487,6 +489,7 @@ Public Class Person
                             CmdCompressor.Parameters.AddWithValue("@id", PersonCompressor.ID)
                             CmdCompressor.Parameters.AddWithValue("@statusid", Convert.ToInt32(PersonCompressor.Status))
                             CmdCompressor.Parameters.AddWithValue("@compressorid", PersonCompressor.CompressorID)
+                            CmdCompressor.Parameters.AddWithValue("@controlledid", Convert.ToInt32(PersonCompressor.Controlled))
                             CmdCompressor.Parameters.AddWithValue("@serialnumber", If(String.IsNullOrEmpty(PersonCompressor.SerialNumber), DBNull.Value, PersonCompressor.SerialNumber))
                             CmdCompressor.Parameters.AddWithValue("@patrimony", If(String.IsNullOrEmpty(PersonCompressor.Patrimony), DBNull.Value, PersonCompressor.Patrimony))
                             CmdCompressor.Parameters.AddWithValue("@sector", If(String.IsNullOrEmpty(PersonCompressor.Sector), DBNull.Value, PersonCompressor.Sector))
@@ -643,7 +646,7 @@ Public Class Person
                 For Each Row As DataRow In TableResult.Rows
                     Compressor = New PersonCompressor With {
                         .Status = Convert.ToInt32(Row.Item("statusid")),
-                        .Controlled = Convert.ToBoolean(Row.Item("controlled")),
+                        .Controlled = Convert.ToInt32(Row.Item("controlledid")),
                         .Compressor = New Lazy(Of Compressor)(Function() New Compressor().Load(Row.Item("compressorid"), False)),
                         .CompressorID = Convert.ToInt32(Row.Item("compressorid")),
                         .CompressorName = Convert.ToString(Row.Item("compressorname")),

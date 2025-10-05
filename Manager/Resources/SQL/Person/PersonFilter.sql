@@ -37,7 +37,6 @@ WHERE
     IFNULL(person.isemployee, '') LIKE @isemployee AND
     IFNULL(person.istechnician, '') LIKE @istechnician AND
     IFNULL(person.iscarrier, '') LIKE @iscarrier AND    
-    IFNULL(person.controlmaintenance, '') LIKE @controlmaintenance AND  
     IFNULL(personaddress.zipcode, '') LIKE CONCAT('%', @zipcode, '%') AND
     (    
         IFNULL(personaddress.street, '') LIKE CONCAT('%', @address, '%') OR 

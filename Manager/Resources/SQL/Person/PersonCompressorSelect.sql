@@ -3,6 +3,7 @@ SELECT
 	personcompressor.creation,
 	personcompressor.statusid,
 	personcompressor.compressorid,
+	personcompressor.controlledid,
 	compressor.name AS compressorname,
     personcompressor.serialnumber,
 	personcompressor.patrimony,

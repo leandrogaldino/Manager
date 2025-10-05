@@ -8,7 +8,6 @@ SELECT
 	person.isemployee,
 	person.istechnician,
 	person.iscarrier,
-	person.controlmaintenance,
 	person.document,
 	person.name,
 	person.shortname,

@@ -96,15 +96,13 @@ Public Class TaskRelease
                     If Progress IsNot Nothing Then Progress.Report(Response)
                     Await Task.Delay(Constants.WaitForJob)
                 Next Registry
-                Response.Text = $"{BloquedList.Count} registros {If(BloquedList.Count = 1, "foi", "foram")} {If(BloquedList.Count = 1, "desbloqueado", "desbloqueados")}"
-                Response.Event.AddChildEvent($"{BloquedList.Count} registros {If(BloquedList.Count = 1, "foi", "foram")} {If(BloquedList.Count = 1, "desbloqueado", "desbloqueados")}")
                 Response.Percent = 0
                 If Progress IsNot Nothing Then Progress.Report(Response)
-                Await Threading.Tasks.Task.Delay(Constants.WaitForJob)
+                Await Task.Delay(Constants.WaitForJob)
                 Response.Text = "Desbloqueador de registros finalizado"
                 Response.Event.SetFinalEvent("Desbloqueador de registros finalizado")
                 If Progress IsNot Nothing Then Progress.Report(Response)
-                Await Threading.Tasks.Task.Delay(Constants.WaitForFinish)
+                Await Task.Delay(Constants.WaitForFinish)
             End If
             Await _DatabaseService.CommitTransactionAsync()
             If Not IsManual Then _SessionModel.ManagerSetting.LastExecution.Release = Now

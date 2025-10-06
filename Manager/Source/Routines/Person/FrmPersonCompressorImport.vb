@@ -17,6 +17,7 @@ Public Class FrmPersonCompressorImport
         DgvWorkedHourSellable.Columns("Order").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
         DgvWorkedHourSellable.Columns("Order").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
         DgvWorkedHourSellable.Columns("Status").Visible = False
+        DgvWorkedHourSellable.Columns("SellableType").Visible = False
         DgvWorkedHourSellable.Columns("SellableControlType").Visible = False
         DgvWorkedHourSellable.Columns("Sellable").Visible = False
         DgvWorkedHourSellable.Columns("SellableID").Visible = False
@@ -48,6 +49,7 @@ Public Class FrmPersonCompressorImport
         DgvElapsedDaySellable.Columns("Order").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
         DgvElapsedDaySellable.Columns("Order").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
         DgvElapsedDaySellable.Columns("Status").Visible = False
+        DgvElapsedDaySellable.Columns("SellableType").Visible = False
         DgvElapsedDaySellable.Columns("SellableControlType").Visible = False
         DgvElapsedDaySellable.Columns("Sellable").Visible = False
         DgvElapsedDaySellable.Columns("SellableID").Visible = False

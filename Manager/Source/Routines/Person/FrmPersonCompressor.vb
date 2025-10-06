@@ -281,9 +281,42 @@ Public Class FrmPersonCompressor
             EprValidation.SetIconPadding(TsElapsedDaySellable, -90)
             DgvElapsedDaySellable.Select()
             Return False
+        ElseIf Not _PersonCompressor.WorkedHourSellables.Any(Function(x) x.SellableBind = CompressorSellableBindType.AirFilter) Then
+            TcPersonCompressor.SelectedTab = TabMaintenance
+            TcMaintenance.SelectedTab = TabWorkedHourSellable
+            EprValidation.SetError(TsWorkedHourSellable, $"Vincule pelo menos um item a {EnumHelper.GetEnumDescription(CompressorSellableBindType.AirFilter).ToLower()}.")
+            EprValidation.SetIconAlignment(TsWorkedHourSellable, ErrorIconAlignment.MiddleLeft)
+            EprValidation.SetIconPadding(TsWorkedHourSellable, -90)
+            DgvWorkedHourSellable.Select()
+            Return False
+        ElseIf Not _PersonCompressor.WorkedHourSellables.Any(Function(x) x.SellableBind = CompressorSellableBindType.OilFilter) Then
+            TcPersonCompressor.SelectedTab = TabMaintenance
+            TcMaintenance.SelectedTab = TabWorkedHourSellable
+            EprValidation.SetError(TsWorkedHourSellable, $"Vincule pelo menos um item a {EnumHelper.GetEnumDescription(CompressorSellableBindType.OilFilter).ToLower()}.")
+            EprValidation.SetIconAlignment(TsWorkedHourSellable, ErrorIconAlignment.MiddleLeft)
+            EprValidation.SetIconPadding(TsWorkedHourSellable, -90)
+            DgvWorkedHourSellable.Select()
+            Return False
+        ElseIf Not _PersonCompressor.WorkedHourSellables.Any(Function(x) x.SellableBind = CompressorSellableBindType.Separator) Then
+            TcPersonCompressor.SelectedTab = TabMaintenance
+            TcMaintenance.SelectedTab = TabWorkedHourSellable
+            EprValidation.SetError(TsWorkedHourSellable, $"Vincule pelo menos um item a {EnumHelper.GetEnumDescription(CompressorSellableBindType.Separator).ToLower()}.")
+            EprValidation.SetIconAlignment(TsWorkedHourSellable, ErrorIconAlignment.MiddleLeft)
+            EprValidation.SetIconPadding(TsWorkedHourSellable, -90)
+            DgvWorkedHourSellable.Select()
+            Return False
+        ElseIf Not _PersonCompressor.WorkedHourSellables.Any(Function(x) x.SellableBind = CompressorSellableBindType.Oil) Then
+            TcPersonCompressor.SelectedTab = TabMaintenance
+            TcMaintenance.SelectedTab = TabWorkedHourSellable
+            EprValidation.SetError(TsWorkedHourSellable, $"Vincule pelo menos um item a {EnumHelper.GetEnumDescription(CompressorSellableBindType.Oil).ToLower()}.")
+            EprValidation.SetIconAlignment(TsWorkedHourSellable, ErrorIconAlignment.MiddleLeft)
+            EprValidation.SetIconPadding(TsWorkedHourSellable, -90)
+            DgvWorkedHourSellable.Select()
+            Return False
         End If
         Return True
     End Function
+
     Private Function PreSave() As Boolean
         Dim Row As DataGridViewRow
         TxtSector.Text = TxtSector.Text.Trim.ToUnaccented()
@@ -546,7 +579,7 @@ Public Class FrmPersonCompressor
             If Form.ShowDialog() = DialogResult.OK Then
                 Cursor = Cursors.WaitCursor
                 For Each Row As DataGridViewRow In Form.DgvWorkedHourSellable.Rows
-                    Dim WhSellable = Compressor.WorkedHourSellables.SingleOrDefault(Function(x) x.ID = Row.Cells("ID").Value)
+                    Dim WhSellable = Compressor.WorkedHourSellables.SingleOrDefault(Function(x) x.ID = Row.Cells("ID").Value And x.SellableType = Row.Cells("SellableType").Value)
                     If Row.Cells("X").Value = True Then
                         Dim Sellable As New PersonCompressorSellable(CompressorSellableControlType.WorkedHour) With {
                             .Status = SimpleStatus.Active,
@@ -562,7 +595,7 @@ Public Class FrmPersonCompressor
                     End If
                 Next Row
                 For Each Row As DataGridViewRow In Form.DgvElapsedDaySellable.Rows
-                    Dim EdSellable = Compressor.ElapsedDaySellables.SingleOrDefault(Function(x) x.ID = Row.Cells("ID").Value)
+                    Dim EdSellable = Compressor.ElapsedDaySellables.SingleOrDefault(Function(x) x.ID = Row.Cells("ID").Value And x.SellableType = Row.Cells("SellableType").Value)
                     If Row.Cells("X").Value = True Then
                         Dim Sellable As New PersonCompressorSellable(CompressorSellableControlType.ElapsedDay) With {
                             .Status = SimpleStatus.Active,
@@ -606,7 +639,6 @@ Public Class FrmPersonCompressor
     Private Sub DgvElapsedDaySellable_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvElapsedDaySellable.DataSourceChanged
         FilterElapsedDaySellable()
     End Sub
-
     Private Sub TcMaintenance_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcMaintenance.SelectedIndexChanged
         If TcMaintenance.SelectedTab Is TabWorkedHourSellable Then
             DgvlWorkedHourSellable.Load()

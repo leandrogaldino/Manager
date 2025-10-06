@@ -36,6 +36,7 @@ Public Class FrmEvaluationReplacedSellable
         LblOrderValue.Text = If(_ReplacedSellable.IsSaved, _EvaluationForm.DgvReplacedSellable.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _ReplacedSellable.Creation
         ClearQbxSellable()
+        'TODO: PODE SER SERVICE
         SetUpQbxSellableForProduct()
         If _ReplacedSellable.Sellable Is Nothing Then RbtProduct.Checked = True
         If _ReplacedSellable.Sellable IsNot Nothing AndAlso _ReplacedSellable.SellableType = SellableType.Product Then RbtProduct.Checked = True

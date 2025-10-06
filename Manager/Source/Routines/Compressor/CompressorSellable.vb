@@ -6,7 +6,6 @@ Public Class CompressorSellable
     Inherits ChildModel
     Private ReadOnly _ControlType As CompressorSellableControlType
     Public Property Status As SimpleStatus = SimpleStatus.Active
-    <IgnoreInToTable>
     Public Property SellableType As SellableType
     <IgnoreInToTable>
     Public ReadOnly Property Product As Product

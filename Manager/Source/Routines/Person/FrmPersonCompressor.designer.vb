@@ -86,11 +86,11 @@ Partial Class FrmPersonCompressor
         Me.TxtFilterElapsedDaySellable = New System.Windows.Forms.ToolStripTextBox()
         Me.TabNote = New System.Windows.Forms.TabPage()
         Me.TxtNote = New System.Windows.Forms.RichTextBox()
-        Me.DgvlWorkedHourSellable = New Manager.DataGridViewLayout()
-        Me.DgvlElapsedDaySellable = New Manager.DataGridViewLayout()
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.DgvlWorkedHourSellable = New Manager.DataGridViewLayout()
+        Me.DgvlElapsedDaySellable = New Manager.DataGridViewLayout()
         Me.TsMain.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.TsData.SuspendLayout()
@@ -225,6 +225,7 @@ Partial Class FrmPersonCompressor
         Me.BtnImport.Name = "BtnImport"
         Me.BtnImport.Size = New System.Drawing.Size(23, 22)
         Me.BtnImport.Text = "Importar Itens do Compressor"
+        Me.BtnImport.Visible = False
         '
         'Panel1
         '
@@ -778,16 +779,6 @@ Partial Class FrmPersonCompressor
         Me.TxtNote.TabIndex = 0
         Me.TxtNote.Text = ""
         '
-        'DgvlWorkedHourSellable
-        '
-        Me.DgvlWorkedHourSellable.DataGridView = Me.DgvWorkedHourSellable
-        Me.DgvlWorkedHourSellable.Routine = Manager.Routine.PersonCompressorSellable
-        '
-        'DgvlElapsedDaySellable
-        '
-        Me.DgvlElapsedDaySellable.DataGridView = Me.DgvElapsedDaySellable
-        Me.DgvlElapsedDaySellable.Routine = Manager.Routine.PersonCompressorSellable
-        '
         'EprInformation
         '
         Me.EprInformation.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink
@@ -813,6 +804,16 @@ Partial Class FrmPersonCompressor
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "TabPage2"
         Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'DgvlWorkedHourSellable
+        '
+        Me.DgvlWorkedHourSellable.DataGridView = Me.DgvWorkedHourSellable
+        Me.DgvlWorkedHourSellable.Routine = Manager.Routine.PersonCompressorSellable
+        '
+        'DgvlElapsedDaySellable
+        '
+        Me.DgvlElapsedDaySellable.DataGridView = Me.DgvElapsedDaySellable
+        Me.DgvlElapsedDaySellable.Routine = Manager.Routine.PersonCompressorSellable
         '
         'FrmPersonCompressor
         '

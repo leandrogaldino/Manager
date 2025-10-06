@@ -37,6 +37,8 @@ Public Class FrmCompressorSellableElapsedDay
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_ElapsedDaySellable.Status)
         LblCreationValue.Text = _ElapsedDaySellable.Creation
         ClearQbxSellable()
+
+        'TODO: PODE SER SERVICE
         SetUpQbxSellableForProduct()
         If _ElapsedDaySellable.Sellable Is Nothing Then RbtProduct.Checked = True
         If _ElapsedDaySellable.Sellable IsNot Nothing AndAlso _ElapsedDaySellable.SellableType = SellableType.Product Then RbtProduct.Checked = True

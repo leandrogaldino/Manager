@@ -37,6 +37,7 @@ Public Class FrmCompressorSellableWorkedHour
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_WorkedHourSellable.Status)
         LblCreationValue.Text = _WorkedHourSellable.Creation
         ClearQbxSellable()
+        'TODO: PODE SER SERVICE
         SetUpQbxSellableForProduct()
         If _WorkedHourSellable.Sellable Is Nothing Then RbtProduct.Checked = True
         If _WorkedHourSellable.Sellable IsNot Nothing AndAlso _WorkedHourSellable.SellableType = SellableType.Product Then RbtProduct.Checked = True

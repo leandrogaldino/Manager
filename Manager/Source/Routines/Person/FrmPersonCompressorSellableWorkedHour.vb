@@ -1,4 +1,5 @@
-﻿Imports ControlLibrary
+﻿Imports CefSharp
+Imports ControlLibrary
 Imports ControlLibrary.Extensions
 Public Class FrmPersonCompressorSellableWorkedHour
     Private _PersonCompressorForm As FrmPersonCompressor
@@ -39,6 +40,9 @@ Public Class FrmPersonCompressorSellableWorkedHour
         LblCreationValue.Text = _WorkedHourSellable.Creation
         CbxSellableBind.Text = EnumHelper.GetEnumDescription(_WorkedHourSellable.SellableBind)
         ClearQbxSellable()
+
+
+        'TODO: PODE SER UM SERVICE
         SetUpQbxSellableForProduct()
         If _WorkedHourSellable.Sellable Is Nothing Then RbtProduct.Checked = True
         If _WorkedHourSellable.Sellable IsNot Nothing AndAlso _WorkedHourSellable.SellableType = SellableType.Product Then RbtProduct.Checked = True

@@ -295,7 +295,6 @@ Public Class FrmEvaluations
             _ShowApproval = False
         End If
     End Sub
-
     Private Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
         Using Form As New FrmEvaluationImport(Me)
             Form.ShowDialog()

@@ -1,3 +1,5 @@
+#2.0.2
+• Correção nas telas de peças do compressor, peças do compressor do cliente, itens da tabela de preços e peças e serviços substituídos na avaliação. O sistema estava interpretando itens de serviço como produtos ao serem abertos.
 #2.0.1
 • Correção no ciclo de vida dos formulários embutidos: eventos não são mais disparados após fechar uma rotina.
 • Correção de validação no cadastro das peças do compressor da pessoa, onde acusava servico vinculado mesmo incluindo um produto.

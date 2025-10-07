@@ -86,25 +86,26 @@ Public Class FrmPersonMaintenancePlan
             LblCompressor.Text = If(DgvCompressor.Rows.Count > 1, "Compressores", "Compressor")
             Dim Ex As New List(Of String)
             For Each Row As DataGridViewRow In DgvCompressor.Rows.Cast(Of DataGridViewRow).Reverse
-                'TODO: CADASTRAR UM COMPRESSOR NO MEU CADASTRO E TESTAR
                 Dim IsControlled As ConfirmationType = Person.IsCompressorControlled(Convert.ToInt64(Row.Cells("ID").Value))
                 Dim LastEvaluation As Long = Evaluation.GetLastEvaluationID(Row.Cells("ID").Value)
                 Dim EvaluationCount As Long = Evaluation.CountEvaluation(Row.Cells("ID").Value, {EvaluationStatus.Disapproved, EvaluationStatus.Rejected, EvaluationStatus.Reviewed}.ToList)
+                Dim IsInactive As Boolean = Convert.ToInt32(Row.Cells("Status").Value) = SimpleStatus.Inactive
                 If IsControlled = ConfirmationType.No Then
                     Ex.Add(String.Format("{0} {1} {2} {3}", Row.Cells("CompressorName").Value, If(Row.Cells("SerialNumber").Value = Nothing, Nothing, "NS: " & Row.Cells("SerialNumber").Value), If(Row.Cells("Patrimony").Value = Nothing, Nothing, "PAT: " & Row.Cells("Patrimony").Value), If(Row.Cells("Sector").Value = Nothing, Nothing, "- " & Row.Cells("Sector").Value)))
                     DgvCompressor.Rows.Remove(Row)
                 Else
-                    If LastEvaluation = 0 Or EvaluationCount > 0 Then
+                    If LastEvaluation = 0 Or EvaluationCount > 0 Or IsInactive Then
                         Ex.Add(String.Format("{0} {1} {2} {3}", Row.Cells("CompressorName").Value, If(Row.Cells("SerialNumber").Value = Nothing, Nothing, "NS: " & Row.Cells("SerialNumber").Value), If(Row.Cells("Patrimony").Value = Nothing, Nothing, "PAT: " & Row.Cells("Patrimony").Value), If(Row.Cells("Sector").Value = Nothing, Nothing, "- " & Row.Cells("Sector").Value)))
                         DgvCompressor.Rows.Remove(Row)
                     End If
                 End If
             Next Row
             If Ex.Count > 0 Then
+                Dim Reasons As String = $"{vbNewLine}{vbNewLine}• O Compressor está invativo;{vbNewLine}• O Compressor está marcado para não controlar manutenção;{vbNewLine}• Não há avaliação lançada para o compressor;{vbNewLine}• Existe pelo menos uma avaliação não aprovada para o compressor.{vbNewLine}{vbNewLine}Compressor:{vbNewLine}"
                 If Ex.Count = 1 Then
-                    Ex.Insert(0, $"O compressor abaixo não foi exibido. Possiveis Causas:{vbNewLine}{vbNewLine}• O Compressor está marcado para não controlar manutenção;{vbNewLine}• Não há avaliação lançada para o compressor;{vbNewLine}• Existe pelo menos uma avaliação não aprovada para o compressor.{vbNewLine}{vbNewLine}Compressor:{vbNewLine}")
+                    Ex.Insert(0, $"O compressor abaixo não foi exibido. Possiveis Causas:{Reasons}")
                 ElseIf Ex.Count > 1 Then
-                    Ex.Insert(0, $"Os compressors abaixo não foram exibidos. Possiveis Causas:{vbNewLine}{vbNewLine}• O Compressor está marcado para não controlar manutenção;{vbNewLine}• Não há avaliação lançada para o compressor;{vbNewLine}• Existe pelo menos uma avaliação não aprovada para o compressor.{vbNewLine}{vbNewLine}Compressores:{vbNewLine}")
+                    Ex.Insert(0, $"Os compressors abaixo não foram exibidos. Possiveis Causas:{Reasons}")
                 End If
                 EprInformation.SetIconPadding(LblCompressor, -20)
                 EprInformation.SetError(LblCompressor, Join(Ex.ToArray, vbNewLine))
@@ -118,10 +119,8 @@ Public Class FrmPersonMaintenancePlan
                 Else
                     BtnViewPerson.Visible = False
                 End If
-                'BtnGenerate.Enabled = True
                 Size = New Size(500, 475)
             Else
-                'BtnGenerate.Enabled = False
                 Size = New Size(500, 155)
             End If
             Cursor = Cursors.Default

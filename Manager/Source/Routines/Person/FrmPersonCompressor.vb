@@ -587,7 +587,8 @@ Public Class FrmPersonCompressor
                             .SellableID = WhSellable.SellableID,
                             .Code = WhSellable.Code,
                             .Name = WhSellable.Name,
-                            .Quantity = WhSellable.Quantity
+                            .Quantity = WhSellable.Quantity,
+                            .SellableType = WhSellable.SellableType
                         }
                         _PersonCompressor.WorkedHourSellables.Add(Sellable)
                         _PersonCompressor.WorkedHourSellables.Last.SetIsSaved(True)
@@ -603,7 +604,8 @@ Public Class FrmPersonCompressor
                             .SellableID = EdSellable.SellableID,
                             .Code = EdSellable.Code,
                             .Name = EdSellable.Name,
-                            .Quantity = EdSellable.Quantity
+                            .Quantity = EdSellable.Quantity,
+                            .SellableType = EdSellable.SellableType
                         }
                         _PersonCompressor.ElapsedDaySellables.Add(Sellable)
                         _PersonCompressor.ElapsedDaySellables.Last.SetIsSaved(True)

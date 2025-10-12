@@ -58,7 +58,10 @@ Partial Class FrmProducts
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
+        Me.BtnDuplicate = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CmsMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.DgvProductLayout = New Manager.DataGridViewLayout()
+        Me.DataGridViewContentCopy = New ControlLibrary.DataGridViewContentCopy()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -82,6 +85,7 @@ Partial Class FrmProducts
         CType(Me.DgvIndicator, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsDetails.SuspendLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.CmsMenu.SuspendLayout()
         Me.SuspendLayout()
         '
         'TsMenu
@@ -394,7 +398,7 @@ Partial Class FrmProducts
         Me.DgvCode.RowHeadersVisible = False
         Me.DgvCode.RowTemplate.Height = 26
         Me.DgvCode.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvCode.Size = New System.Drawing.Size(256, 376)
+        Me.DgvCode.Size = New System.Drawing.Size(256, 380)
         Me.DgvCode.TabIndex = 1
         '
         'TabPrice
@@ -426,7 +430,7 @@ Partial Class FrmProducts
         Me.DgvPrice.RowHeadersVisible = False
         Me.DgvPrice.RowTemplate.Height = 26
         Me.DgvPrice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPrice.Size = New System.Drawing.Size(256, 376)
+        Me.DgvPrice.Size = New System.Drawing.Size(256, 380)
         Me.DgvPrice.TabIndex = 1
         '
         'TabIndicator
@@ -458,7 +462,7 @@ Partial Class FrmProducts
         Me.DgvIndicator.RowHeadersVisible = False
         Me.DgvIndicator.RowTemplate.Height = 26
         Me.DgvIndicator.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvIndicator.Size = New System.Drawing.Size(256, 376)
+        Me.DgvIndicator.Size = New System.Drawing.Size(256, 380)
         Me.DgvIndicator.TabIndex = 1
         '
         'TsDetails
@@ -514,10 +518,29 @@ Partial Class FrmProducts
         'TmrLoadDetails
         '
         '
+        'BtnDuplicate
+        '
+        Me.BtnDuplicate.Name = "BtnDuplicate"
+        Me.BtnDuplicate.Size = New System.Drawing.Size(118, 22)
+        Me.BtnDuplicate.Text = "Duplicar"
+        '
+        'CmsMenu
+        '
+        Me.CmsMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnDuplicate})
+        Me.CmsMenu.Name = "CmsMenu"
+        Me.CmsMenu.Size = New System.Drawing.Size(119, 26)
+        '
         'DgvProductLayout
         '
         Me.DgvProductLayout.DataGridView = Me.DgvData
         Me.DgvProductLayout.Routine = Manager.Routine.Product
+        '
+        'DataGridViewContentCopy
+        '
+        Me.DataGridViewContentCopy.ContextMenuStrip = Me.CmsMenu
+        Me.DataGridViewContentCopy.DataGridView = Me.DgvData
+        Me.DataGridViewContentCopy.IncludeHeaderTextInCellCopy = False
+        Me.DataGridViewContentCopy.IncludeHeaderTextInRowCopy = False
         '
         'FrmProducts
         '
@@ -564,6 +587,7 @@ Partial Class FrmProducts
         Me.TsDetails.ResumeLayout(False)
         Me.TsDetails.PerformLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.CmsMenu.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -606,4 +630,7 @@ Partial Class FrmProducts
     Friend WithEvents DgvPrice As DataGridView
     Friend WithEvents TabIndicator As TabPage
     Friend WithEvents DgvIndicator As DataGridView
+    Friend WithEvents BtnDuplicate As ToolStripMenuItem
+    Friend WithEvents CmsMenu As ContextMenuStrip
+    Friend WithEvents DataGridViewContentCopy As ControlLibrary.DataGridViewContentCopy
 End Class

@@ -223,4 +223,25 @@ Public Class FrmProducts
         Dim Form As New FrmReport(Result)
         FrmMain.OpenTab(Form, EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
+
+    Private Sub BtnDuplicate_Click(sender As Object, e As EventArgs) Handles BtnDuplicate.Click
+        If DgvData.SelectedRows.Count = 1 Then
+            Try
+                Cursor = Cursors.WaitCursor
+                _Product = New Product().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
+                _Product = _Product.GetDuplicate()
+                Using Form As New FrmProduct(_Product, Me)
+                    Form.DgvProviderCode.Fill(_Product.ProviderCodes)
+                    Form.DgvCode.Fill(_Product.Codes)
+                    Form.DgvPrice.Fill(_Product.Prices)
+                    Form.DgvIndicator.Fill(_Product.Indicators)
+                    Form.ShowDialog()
+                End Using
+            Catch ex As Exception
+                CMessageBox.Show("ERRO PD008", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+            Finally
+                Cursor = Cursors.Default
+            End Try
+        End If
+    End Sub
 End Class

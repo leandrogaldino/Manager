@@ -568,6 +568,31 @@ Public Class Product
     Public Overrides Function ToString() As String
         Return If(Name, String.Empty)
     End Function
+
+    Public Function GetDuplicate() As Product
+        Dim Duplicated As New Product With {
+            .Codes = Codes.Select(Function(x) CType(x.Clone(), ProductCode)).ToList(),
+            .Dimensions = Dimensions,
+            .Family = CType(Family.Clone(), ProductFamily),
+            .GrossWeight = GrossWeight,
+            .Group = CType(Group.Clone(), ProductGroup),
+            .InternalName = InternalName,
+            .Location = Location,
+            .MaximumQuantity = MaximumQuantity,
+            .MinimumQuantity = MinimumQuantity,
+            .Name = Name,
+            .Note = Note,
+            .NetWeight = NetWeight,
+            .Unit = Unit
+        }
+        Duplicated.SetCreation(DateTime.Now)
+        Duplicated.SetIsSaved(False)
+        Duplicated.Pictures.ToList().ForEach(Sub(x) x.SetIsSaved(False))
+        Duplicated.ProviderCodes.ToList().ForEach(Sub(x) x.SetIsSaved(False))
+        Duplicated.Codes.ToList().ForEach(Sub(x) x.SetIsSaved(False))
+        Return Duplicated
+    End Function
+
     Public Overrides Function Clone() As BaseModel
         Dim Cloned As New Product With {
             .Codes = Codes.Select(Function(x) CType(x.Clone(), ProductCode)).ToList(),

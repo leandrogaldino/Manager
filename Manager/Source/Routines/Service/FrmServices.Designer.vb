@@ -63,6 +63,13 @@ Partial Class FrmServices
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.DgvServiceLayout = New Manager.DataGridViewLayout()
+        Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
+        Me.CmsMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.BtnDuplicate = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DgvCcCode = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvCcComplement = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvCcIndicator = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvCcPrice = New ControlLibrary.DataGridViewContentCopy()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -86,6 +93,7 @@ Partial Class FrmServices
         CType(Me.DgvComplement, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsDetails.SuspendLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.CmsMenu.SuspendLayout()
         Me.SuspendLayout()
         '
         'TsMenu
@@ -381,10 +389,10 @@ Partial Class FrmServices
         'TabPrice
         '
         Me.TabPrice.Controls.Add(Me.DgvPrice)
-        Me.TabPrice.Location = New System.Drawing.Point(4, 26)
+        Me.TabPrice.Location = New System.Drawing.Point(4, 22)
         Me.TabPrice.Name = "TabPrice"
         Me.TabPrice.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPrice.Size = New System.Drawing.Size(262, 382)
+        Me.TabPrice.Size = New System.Drawing.Size(261, 384)
         Me.TabPrice.TabIndex = 2
         Me.TabPrice.Text = "Preços"
         Me.TabPrice.UseVisualStyleBackColor = True
@@ -416,16 +424,16 @@ Partial Class FrmServices
         Me.DgvPrice.RowHeadersVisible = False
         Me.DgvPrice.RowTemplate.Height = 26
         Me.DgvPrice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPrice.Size = New System.Drawing.Size(256, 376)
+        Me.DgvPrice.Size = New System.Drawing.Size(255, 378)
         Me.DgvPrice.TabIndex = 2
         '
         'TabIndicator
         '
         Me.TabIndicator.Controls.Add(Me.DgvIndicator)
-        Me.TabIndicator.Location = New System.Drawing.Point(4, 26)
+        Me.TabIndicator.Location = New System.Drawing.Point(4, 22)
         Me.TabIndicator.Name = "TabIndicator"
         Me.TabIndicator.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabIndicator.Size = New System.Drawing.Size(262, 382)
+        Me.TabIndicator.Size = New System.Drawing.Size(261, 384)
         Me.TabIndicator.TabIndex = 4
         Me.TabIndicator.Text = "Indicadores"
         Me.TabIndicator.UseVisualStyleBackColor = True
@@ -457,16 +465,16 @@ Partial Class FrmServices
         Me.DgvIndicator.RowHeadersVisible = False
         Me.DgvIndicator.RowTemplate.Height = 26
         Me.DgvIndicator.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvIndicator.Size = New System.Drawing.Size(256, 376)
+        Me.DgvIndicator.Size = New System.Drawing.Size(255, 378)
         Me.DgvIndicator.TabIndex = 3
         '
         'TpgComplement
         '
         Me.TpgComplement.Controls.Add(Me.DgvComplement)
-        Me.TpgComplement.Location = New System.Drawing.Point(4, 26)
+        Me.TpgComplement.Location = New System.Drawing.Point(4, 22)
         Me.TpgComplement.Name = "TpgComplement"
         Me.TpgComplement.Padding = New System.Windows.Forms.Padding(3)
-        Me.TpgComplement.Size = New System.Drawing.Size(262, 382)
+        Me.TpgComplement.Size = New System.Drawing.Size(261, 384)
         Me.TpgComplement.TabIndex = 1
         Me.TpgComplement.Text = "Complementos"
         Me.TpgComplement.UseVisualStyleBackColor = True
@@ -498,7 +506,7 @@ Partial Class FrmServices
         Me.DgvComplement.RowHeadersVisible = False
         Me.DgvComplement.RowTemplate.Height = 26
         Me.DgvComplement.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvComplement.Size = New System.Drawing.Size(256, 376)
+        Me.DgvComplement.Size = New System.Drawing.Size(255, 378)
         Me.DgvComplement.TabIndex = 1
         '
         'TsDetails
@@ -559,6 +567,49 @@ Partial Class FrmServices
         Me.DgvServiceLayout.DataGridView = Me.DgvData
         Me.DgvServiceLayout.Routine = Manager.Routine.Service
         '
+        'DgvCcData
+        '
+        Me.DgvCcData.ContextMenuStrip = Me.CmsMenu
+        Me.DgvCcData.DataGridView = Me.DgvData
+        Me.DgvCcData.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcData.IncludeHeaderTextInRowCopy = True
+        '
+        'CmsMenu
+        '
+        Me.CmsMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnDuplicate})
+        Me.CmsMenu.Name = "CmsMenu"
+        Me.CmsMenu.Size = New System.Drawing.Size(119, 26)
+        '
+        'BtnDuplicate
+        '
+        Me.BtnDuplicate.Name = "BtnDuplicate"
+        Me.BtnDuplicate.Size = New System.Drawing.Size(118, 22)
+        Me.BtnDuplicate.Text = "Duplicar"
+        '
+        'DgvCcCode
+        '
+        Me.DgvCcCode.DataGridView = Me.DgvCode
+        Me.DgvCcCode.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcCode.IncludeHeaderTextInRowCopy = True
+        '
+        'DgvCcComplement
+        '
+        Me.DgvCcComplement.DataGridView = Me.DgvComplement
+        Me.DgvCcComplement.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcComplement.IncludeHeaderTextInRowCopy = True
+        '
+        'DgvCcIndicator
+        '
+        Me.DgvCcIndicator.DataGridView = Me.DgvIndicator
+        Me.DgvCcIndicator.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcIndicator.IncludeHeaderTextInRowCopy = True
+        '
+        'DgvCcPrice
+        '
+        Me.DgvCcPrice.DataGridView = Me.DgvPrice
+        Me.DgvCcPrice.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcPrice.IncludeHeaderTextInRowCopy = True
+        '
         'FrmServices
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
@@ -604,6 +655,7 @@ Partial Class FrmServices
         Me.TsDetails.ResumeLayout(False)
         Me.TsDetails.PerformLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.CmsMenu.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -646,4 +698,11 @@ Partial Class FrmServices
     Friend WithEvents DgvCode As DataGridView
     Friend WithEvents TabIndicator As TabPage
     Friend WithEvents DgvIndicator As DataGridView
+    Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents CmsMenu As ContextMenuStrip
+    Friend WithEvents BtnDuplicate As ToolStripMenuItem
+    Friend WithEvents DgvCcCode As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvCcComplement As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvCcIndicator As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvCcPrice As ControlLibrary.DataGridViewContentCopy
 End Class

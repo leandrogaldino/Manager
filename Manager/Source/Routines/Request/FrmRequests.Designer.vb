@@ -53,6 +53,8 @@ Partial Class FrmRequests
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.DgvRequestLayout = New Manager.DataGridViewLayout()
+        Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvCcRequestItem = New ControlLibrary.DataGridViewContentCopy()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -408,6 +410,18 @@ Partial Class FrmRequests
         Me.DgvRequestLayout.DataGridView = Me.DgvData
         Me.DgvRequestLayout.Routine = Manager.Routine.Request
         '
+        'DgvCcData
+        '
+        Me.DgvCcData.DataGridView = Me.DgvData
+        Me.DgvCcData.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcData.IncludeHeaderTextInRowCopy = True
+        '
+        'DgvCcRequestItem
+        '
+        Me.DgvCcRequestItem.DataGridView = Me.DgvItem
+        Me.DgvCcRequestItem.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcRequestItem.IncludeHeaderTextInRowCopy = True
+        '
         'FrmRequests
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
@@ -483,4 +497,6 @@ Partial Class FrmRequests
     Friend WithEvents DgvRequestLayout As DataGridViewLayout
     Friend WithEvents DgvItem As DataGridView
     Friend WithEvents BtnExport As ToolStripButton
+    Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvCcRequestItem As ControlLibrary.DataGridViewContentCopy
 End Class

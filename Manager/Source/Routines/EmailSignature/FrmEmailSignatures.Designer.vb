@@ -22,6 +22,7 @@ Partial Class FrmEmailSignatures
     'Não o modifique usando o editor de códigos.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.TsMenu = New System.Windows.Forms.ToolStrip()
         Me.BtnInclude = New System.Windows.Forms.ToolStripButton()
         Me.BtnEdit = New System.Windows.Forms.ToolStripButton()
@@ -49,6 +50,7 @@ Partial Class FrmEmailSignatures
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.DgvEmailSignaturesLayout = New Manager.DataGridViewLayout()
+        Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -362,7 +364,13 @@ Partial Class FrmEmailSignatures
         'DgvEmailSignaturesLayout
         '
         Me.DgvEmailSignaturesLayout.DataGridView = Me.DgvData
-        Me.DgvEmailSignaturesLayout.Routine = Routine.EmailModel
+        Me.DgvEmailSignaturesLayout.Routine = Manager.Routine.EmailModel
+        '
+        'DgvCcData
+        '
+        Me.DgvCcData.DataGridView = Me.DgvData
+        Me.DgvCcData.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcData.IncludeHeaderTextInRowCopy = True
         '
         'FrmEmailSignatures
         '
@@ -433,4 +441,5 @@ Partial Class FrmEmailSignatures
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents DgvEmailSignaturesLayout As DataGridViewLayout
     Friend WithEvents BtnExport As ToolStripButton
+    Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
 End Class

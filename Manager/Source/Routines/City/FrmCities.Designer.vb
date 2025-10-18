@@ -22,6 +22,7 @@ Partial Class FrmCities
     'Não o modifique usando o editor de códigos.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.TsMenu = New System.Windows.Forms.ToolStrip()
         Me.BtnInclude = New System.Windows.Forms.ToolStripButton()
         Me.BtnEdit = New System.Windows.Forms.ToolStripButton()
@@ -30,6 +31,7 @@ Partial Class FrmCities
         Me.BtnFilter = New System.Windows.Forms.ToolStripButton()
         Me.BtnDetails = New System.Windows.Forms.ToolStripButton()
         Me.BtnClose = New System.Windows.Forms.ToolStripButton()
+        Me.BtnExport = New System.Windows.Forms.ToolStripButton()
         Me.SsInformation = New System.Windows.Forms.StatusStrip()
         Me.LblInfo = New System.Windows.Forms.ToolStripStatusLabel()
         Me.LblStatus = New System.Windows.Forms.ToolStripStatusLabel()
@@ -48,7 +50,7 @@ Partial Class FrmCities
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.DgvCitiesLayout = New Manager.DataGridViewLayout()
-        Me.BtnExport = New System.Windows.Forms.ToolStripButton()
+        Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -155,6 +157,16 @@ Partial Class FrmCities
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(36, 36)
         Me.BtnClose.Text = "Fechar"
+        '
+        'BtnExport
+        '
+        Me.BtnExport.AutoToolTip = False
+        Me.BtnExport.Image = Global.Manager.My.Resources.Resources.Export
+        Me.BtnExport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnExport.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnExport.Name = "BtnExport"
+        Me.BtnExport.Size = New System.Drawing.Size(97, 36)
+        Me.BtnExport.Text = "Exportar"
         '
         'SsInformation
         '
@@ -352,17 +364,13 @@ Partial Class FrmCities
         'DgvCitiesLayout
         '
         Me.DgvCitiesLayout.DataGridView = Me.DgvData
-        Me.DgvCitiesLayout.Routine = Routine.City
+        Me.DgvCitiesLayout.Routine = Manager.Routine.City
         '
-        'BtnExport
+        'DgvCcData
         '
-        Me.BtnExport.AutoToolTip = False
-        Me.BtnExport.Image = Global.Manager.My.Resources.Resources.Export
-        Me.BtnExport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.BtnExport.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnExport.Name = "BtnExport"
-        Me.BtnExport.Size = New System.Drawing.Size(97, 36)
-        Me.BtnExport.Text = "Exportar"
+        Me.DgvCcData.DataGridView = Me.DgvData
+        Me.DgvCcData.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcData.IncludeHeaderTextInRowCopy = True
         '
         'FrmCities
         '
@@ -433,4 +441,5 @@ Partial Class FrmCities
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents DgvCitiesLayout As DataGridViewLayout
     Friend WithEvents BtnExport As ToolStripButton
+    Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
 End Class

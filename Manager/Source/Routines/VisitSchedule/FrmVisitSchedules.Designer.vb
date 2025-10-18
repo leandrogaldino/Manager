@@ -22,6 +22,7 @@ Partial Class FrmVisitSchedules
     'Não o modifique usando o editor de códigos.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.TsMenu = New System.Windows.Forms.ToolStrip()
         Me.BtnInclude = New System.Windows.Forms.ToolStripButton()
         Me.BtnEdit = New System.Windows.Forms.ToolStripButton()
@@ -49,6 +50,7 @@ Partial Class FrmVisitSchedules
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.DgvlVisitScheduleLayout = New Manager.DataGridViewLayout()
+        Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -364,6 +366,12 @@ Partial Class FrmVisitSchedules
         Me.DgvlVisitScheduleLayout.DataGridView = Me.DgvData
         Me.DgvlVisitScheduleLayout.Routine = Manager.Routine.VisitSchedule
         '
+        'DgvCcData
+        '
+        Me.DgvCcData.DataGridView = Me.DgvData
+        Me.DgvCcData.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcData.IncludeHeaderTextInRowCopy = True
+        '
         'FrmVisitSchedules
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
@@ -433,4 +441,5 @@ Partial Class FrmVisitSchedules
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents DgvlVisitScheduleLayout As DataGridViewLayout
     Friend WithEvents BtnExport As ToolStripButton
+    Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
 End Class

@@ -56,6 +56,7 @@ Partial Class FrmCompressors
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.DgvCompressorLayout = New Manager.DataGridViewLayout()
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
+        Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -469,6 +470,12 @@ Partial Class FrmCompressors
         '
         Me.TmrLoadDetails.Interval = 300
         '
+        'DgvCcData
+        '
+        Me.DgvCcData.DataGridView = Me.DgvData
+        Me.DgvCcData.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcData.IncludeHeaderTextInRowCopy = True
+        '
         'FrmCompressors
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
@@ -549,4 +556,5 @@ Partial Class FrmCompressors
     Friend WithEvents Label2 As Label
     Friend WithEvents TmrLoadDetails As Timer
     Friend WithEvents BtnExport As ToolStripButton
+    Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
 End Class

@@ -61,7 +61,11 @@ Partial Class FrmProducts
         Me.BtnDuplicate = New System.Windows.Forms.ToolStripMenuItem()
         Me.CmsMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.DgvProductLayout = New Manager.DataGridViewLayout()
-        Me.DataGridViewContentCopy = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvCcPrividerCode = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvCcCode = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvCcIndicator = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvCcPrice = New ControlLibrary.DataGridViewContentCopy()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -372,10 +376,10 @@ Partial Class FrmProducts
         'TpgCode
         '
         Me.TpgCode.Controls.Add(Me.DgvCode)
-        Me.TpgCode.Location = New System.Drawing.Point(4, 26)
+        Me.TpgCode.Location = New System.Drawing.Point(4, 22)
         Me.TpgCode.Name = "TpgCode"
         Me.TpgCode.Padding = New System.Windows.Forms.Padding(3)
-        Me.TpgCode.Size = New System.Drawing.Size(262, 382)
+        Me.TpgCode.Size = New System.Drawing.Size(261, 384)
         Me.TpgCode.TabIndex = 1
         Me.TpgCode.Text = "Códigos de Produto"
         Me.TpgCode.UseVisualStyleBackColor = True
@@ -398,16 +402,16 @@ Partial Class FrmProducts
         Me.DgvCode.RowHeadersVisible = False
         Me.DgvCode.RowTemplate.Height = 26
         Me.DgvCode.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvCode.Size = New System.Drawing.Size(256, 380)
+        Me.DgvCode.Size = New System.Drawing.Size(255, 378)
         Me.DgvCode.TabIndex = 1
         '
         'TabPrice
         '
         Me.TabPrice.Controls.Add(Me.DgvPrice)
-        Me.TabPrice.Location = New System.Drawing.Point(4, 26)
+        Me.TabPrice.Location = New System.Drawing.Point(4, 22)
         Me.TabPrice.Name = "TabPrice"
         Me.TabPrice.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPrice.Size = New System.Drawing.Size(262, 382)
+        Me.TabPrice.Size = New System.Drawing.Size(261, 384)
         Me.TabPrice.TabIndex = 2
         Me.TabPrice.Text = "Preços"
         Me.TabPrice.UseVisualStyleBackColor = True
@@ -430,16 +434,16 @@ Partial Class FrmProducts
         Me.DgvPrice.RowHeadersVisible = False
         Me.DgvPrice.RowTemplate.Height = 26
         Me.DgvPrice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPrice.Size = New System.Drawing.Size(256, 380)
+        Me.DgvPrice.Size = New System.Drawing.Size(255, 378)
         Me.DgvPrice.TabIndex = 1
         '
         'TabIndicator
         '
         Me.TabIndicator.Controls.Add(Me.DgvIndicator)
-        Me.TabIndicator.Location = New System.Drawing.Point(4, 26)
+        Me.TabIndicator.Location = New System.Drawing.Point(4, 22)
         Me.TabIndicator.Name = "TabIndicator"
         Me.TabIndicator.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabIndicator.Size = New System.Drawing.Size(262, 382)
+        Me.TabIndicator.Size = New System.Drawing.Size(261, 384)
         Me.TabIndicator.TabIndex = 3
         Me.TabIndicator.Text = "Indicadores"
         Me.TabIndicator.UseVisualStyleBackColor = True
@@ -462,7 +466,7 @@ Partial Class FrmProducts
         Me.DgvIndicator.RowHeadersVisible = False
         Me.DgvIndicator.RowTemplate.Height = 26
         Me.DgvIndicator.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvIndicator.Size = New System.Drawing.Size(256, 380)
+        Me.DgvIndicator.Size = New System.Drawing.Size(255, 378)
         Me.DgvIndicator.TabIndex = 1
         '
         'TsDetails
@@ -535,12 +539,36 @@ Partial Class FrmProducts
         Me.DgvProductLayout.DataGridView = Me.DgvData
         Me.DgvProductLayout.Routine = Manager.Routine.Product
         '
-        'DataGridViewContentCopy
+        'DgvCcData
         '
-        Me.DataGridViewContentCopy.ContextMenuStrip = Me.CmsMenu
-        Me.DataGridViewContentCopy.DataGridView = Me.DgvData
-        Me.DataGridViewContentCopy.IncludeHeaderTextInCellCopy = False
-        Me.DataGridViewContentCopy.IncludeHeaderTextInRowCopy = False
+        Me.DgvCcData.ContextMenuStrip = Me.CmsMenu
+        Me.DgvCcData.DataGridView = Me.DgvData
+        Me.DgvCcData.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcData.IncludeHeaderTextInRowCopy = True
+        '
+        'DgvCcPrividerCode
+        '
+        Me.DgvCcPrividerCode.DataGridView = Me.DgvProviderCode
+        Me.DgvCcPrividerCode.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcPrividerCode.IncludeHeaderTextInRowCopy = True
+        '
+        'DgvCcCode
+        '
+        Me.DgvCcCode.DataGridView = Me.DgvCode
+        Me.DgvCcCode.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcCode.IncludeHeaderTextInRowCopy = True
+        '
+        'DgvCcIndicator
+        '
+        Me.DgvCcIndicator.DataGridView = Me.DgvIndicator
+        Me.DgvCcIndicator.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcIndicator.IncludeHeaderTextInRowCopy = True
+        '
+        'DgvCcPrice
+        '
+        Me.DgvCcPrice.DataGridView = Me.DgvPrice
+        Me.DgvCcPrice.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcPrice.IncludeHeaderTextInRowCopy = True
         '
         'FrmProducts
         '
@@ -632,5 +660,9 @@ Partial Class FrmProducts
     Friend WithEvents DgvIndicator As DataGridView
     Friend WithEvents BtnDuplicate As ToolStripMenuItem
     Friend WithEvents CmsMenu As ContextMenuStrip
-    Friend WithEvents DataGridViewContentCopy As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvCcPrividerCode As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvCcCode As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvCcIndicator As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvCcPrice As ControlLibrary.DataGridViewContentCopy
 End Class

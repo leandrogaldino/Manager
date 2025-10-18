@@ -22,6 +22,7 @@ Partial Class FrmEmailsSent
     'Não o modifique usando o editor de códigos.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.TsMenu = New System.Windows.Forms.ToolStrip()
         Me.BtnRefresh = New System.Windows.Forms.ToolStripButton()
         Me.BtnFilter = New System.Windows.Forms.ToolStripButton()
@@ -44,6 +45,7 @@ Partial Class FrmEmailsSent
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.DgvEmailSentLayout = New Manager.DataGridViewLayout()
+        Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -305,7 +307,13 @@ Partial Class FrmEmailsSent
         'DgvEmailSentLayout
         '
         Me.DgvEmailSentLayout.DataGridView = Me.DgvData
-        Me.DgvEmailSentLayout.Routine = Routine.EmailSent
+        Me.DgvEmailSentLayout.Routine = Manager.Routine.EmailSent
+        '
+        'DgvCcData
+        '
+        Me.DgvCcData.DataGridView = Me.DgvData
+        Me.DgvCcData.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcData.IncludeHeaderTextInRowCopy = True
         '
         'FrmEmailsSent
         '
@@ -371,4 +379,5 @@ Partial Class FrmEmailsSent
     Friend WithEvents LblCounter As ToolStripStatusLabel
     Friend WithEvents DgvEmailSentLayout As DataGridViewLayout
     Friend WithEvents BtnExport As ToolStripButton
+    Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
 End Class

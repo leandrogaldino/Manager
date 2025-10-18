@@ -57,6 +57,7 @@ Partial Class FrmPersons
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.DgvPersonLayout = New Manager.DataGridViewLayout()
+        Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -481,6 +482,12 @@ Partial Class FrmPersons
         Me.DgvPersonLayout.DataGridView = Me.DgvData
         Me.DgvPersonLayout.Routine = Manager.Routine.Person
         '
+        'DgvCcData
+        '
+        Me.DgvCcData.DataGridView = Me.DgvData
+        Me.DgvCcData.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcData.IncludeHeaderTextInRowCopy = True
+        '
         'FrmPersons
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
@@ -564,4 +571,5 @@ Partial Class FrmPersons
     Friend WithEvents DgvAddress As DataGridView
     Friend WithEvents BtnExport As ToolStripButton
     Friend WithEvents DgvPersonLayout As DataGridViewLayout
+    Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
 End Class

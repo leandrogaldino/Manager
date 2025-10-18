@@ -55,6 +55,8 @@ Partial Class FrmPriceTables
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.DgvPriceTablesLayout = New Manager.DataGridViewLayout()
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
+        Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvCcSellables = New ControlLibrary.DataGridViewContentCopy()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -427,6 +429,18 @@ Partial Class FrmPriceTables
         'TmrLoadDetails
         '
         '
+        'DgvCcData
+        '
+        Me.DgvCcData.DataGridView = Me.DgvData
+        Me.DgvCcData.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcData.IncludeHeaderTextInRowCopy = True
+        '
+        'DgvCcSellables
+        '
+        Me.DgvCcSellables.DataGridView = Me.DgvSellables
+        Me.DgvCcSellables.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcSellables.IncludeHeaderTextInRowCopy = True
+        '
         'FrmPriceTables
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
@@ -503,4 +517,6 @@ Partial Class FrmPriceTables
     Friend WithEvents TabItems As TabPage
     Friend WithEvents DgvSellables As DataGridView
     Friend WithEvents TmrLoadDetails As Timer
+    Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvCcSellables As ControlLibrary.DataGridViewContentCopy
 End Class

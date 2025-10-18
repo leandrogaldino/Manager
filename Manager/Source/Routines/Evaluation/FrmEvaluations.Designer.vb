@@ -60,6 +60,7 @@ Partial Class FrmEvaluations
         Me.BtnDisapprove = New System.Windows.Forms.ToolStripMenuItem()
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.DgvEvaluationLayout = New Manager.DataGridViewLayout()
+        Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -502,6 +503,13 @@ Partial Class FrmEvaluations
         Me.DgvEvaluationLayout.DataGridView = Me.DgvData
         Me.DgvEvaluationLayout.Routine = Manager.Routine.Evaluation
         '
+        'DgvCcData
+        '
+        Me.DgvCcData.ContextMenuStrip = Me.CmsSetStatus
+        Me.DgvCcData.DataGridView = Me.DgvData
+        Me.DgvCcData.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcData.IncludeHeaderTextInRowCopy = True
+        '
         'FrmEvaluations
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
@@ -588,4 +596,5 @@ Partial Class FrmEvaluations
     Friend WithEvents TmrLoadDetails As Timer
     Friend WithEvents BtnDisapprove As ToolStripMenuItem
     Friend WithEvents BtnImport As ToolStripButton
+    Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
 End Class

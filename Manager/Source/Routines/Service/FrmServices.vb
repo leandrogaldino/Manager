@@ -222,4 +222,25 @@ Public Class FrmServices
         Dim Form As New FrmReport(Result)
         FrmMain.OpenTab(Form, EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
+
+    Private Sub BtnDuplicate_Click(sender As Object, e As EventArgs) Handles BtnDuplicate.Click
+        If DgvData.SelectedRows.Count = 1 Then
+            Try
+                Cursor = Cursors.WaitCursor
+                _Service = New Service().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
+                _Service = _Service.GetDuplicate()
+                Using Form As New FrmService(_Service, Me)
+                    Form.DgvCode.Fill(_Service.Codes)
+                    Form.DgvPrice.Fill(_Service.Prices)
+                    Form.DgvIndicator.Fill(_Service.Indicators)
+                    Form.DgvComplement.Fill(_Service.Complements)
+                    Form.ShowDialog()
+                End Using
+            Catch ex As Exception
+                CMessageBox.Show("ERRO SV008", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+            Finally
+                Cursor = Cursors.Default
+            End Try
+        End If
+    End Sub
 End Class

@@ -53,9 +53,8 @@ Partial Class FrmCashes
         Me.CmsSetStatus = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.BtnOpenCash = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnCloseCash = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.CopiarCelulaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CopiarLinhaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvCcCashItem = New ControlLibrary.DataGridViewContentCopy()
         Me.DgvCashesLayout = New Manager.DataGridViewLayout()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
@@ -387,40 +386,35 @@ Partial Class FrmCashes
         '
         'CmsSetStatus
         '
-        Me.CmsSetStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnOpenCash, Me.BtnCloseCash, Me.ToolStripSeparator1, Me.CopiarCelulaToolStripMenuItem, Me.CopiarLinhaToolStripMenuItem})
+        Me.CmsSetStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnOpenCash, Me.BtnCloseCash})
         Me.CmsSetStatus.Name = "CmsApproval"
-        Me.CmsSetStatus.Size = New System.Drawing.Size(181, 120)
+        Me.CmsSetStatus.Size = New System.Drawing.Size(141, 48)
         '
         'BtnOpenCash
         '
         Me.BtnOpenCash.Image = Global.Manager.My.Resources.Resources.OpenCash
         Me.BtnOpenCash.Name = "BtnOpenCash"
-        Me.BtnOpenCash.Size = New System.Drawing.Size(180, 22)
+        Me.BtnOpenCash.Size = New System.Drawing.Size(140, 22)
         Me.BtnOpenCash.Text = "Abrir Caixa"
         '
         'BtnCloseCash
         '
         Me.BtnCloseCash.Image = Global.Manager.My.Resources.Resources.CloseCash
         Me.BtnCloseCash.Name = "BtnCloseCash"
-        Me.BtnCloseCash.Size = New System.Drawing.Size(180, 22)
+        Me.BtnCloseCash.Size = New System.Drawing.Size(140, 22)
         Me.BtnCloseCash.Text = "Fechar Caixa"
         '
-        'ToolStripSeparator1
+        'DgvCcData
         '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(177, 6)
+        Me.DgvCcData.DataGridView = Me.DgvData
+        Me.DgvCcData.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcData.IncludeHeaderTextInRowCopy = True
         '
-        'CopiarCelulaToolStripMenuItem
+        'DgvCcCashItem
         '
-        Me.CopiarCelulaToolStripMenuItem.Name = "CopiarCelulaToolStripMenuItem"
-        Me.CopiarCelulaToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.CopiarCelulaToolStripMenuItem.Text = "Copiar Celula"
-        '
-        'CopiarLinhaToolStripMenuItem
-        '
-        Me.CopiarLinhaToolStripMenuItem.Name = "CopiarLinhaToolStripMenuItem"
-        Me.CopiarLinhaToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.CopiarLinhaToolStripMenuItem.Text = "Copiar Linha"
+        Me.DgvCcCashItem.DataGridView = Me.DgvCashItem
+        Me.DgvCcCashItem.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcCashItem.IncludeHeaderTextInRowCopy = True
         '
         'DgvCashesLayout
         '
@@ -502,7 +496,6 @@ Partial Class FrmCashes
     Friend WithEvents CmsSetStatus As ContextMenuStrip
     Friend WithEvents BtnOpenCash As ToolStripMenuItem
     Friend WithEvents BtnCloseCash As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
-    Friend WithEvents CopiarCelulaToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents CopiarLinhaToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvCcCashItem As ControlLibrary.DataGridViewContentCopy
 End Class

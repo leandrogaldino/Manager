@@ -409,6 +409,19 @@ Public Class Service
     Public Overrides Function ToString() As String
         Return If(Name, String.Empty)
     End Function
+    Public Function GetDuplicate() As Service
+        Dim Duplicated As New Service With {
+            .Codes = Codes.Select(Function(x) CType(x.Clone(), ServiceCode)).ToList(),
+            .Complements = Complements.Select(Function(x) CType(x.Clone(), ServiceComplement)).ToList(),
+            .Name = If(Name, String.Empty) & " - Cópia",
+            .Note = Note,
+            .Status = SimpleStatus.Active
+        }
+        Duplicated.SetCreation(Today)
+        Duplicated.SetID(0)
+        Duplicated.SetIsSaved(False)
+        Return Duplicated
+    End Function
     Public Overrides Function Clone() As BaseModel
         Dim Cloned As New Service With {
             .Codes = Codes.Select(Function(x) CType(x.Clone(), ServiceCode)).ToList(),

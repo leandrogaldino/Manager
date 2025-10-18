@@ -296,4 +296,5 @@ Public Class FrmCashes
             CMessageBox.Show("Esse caixa não pode ser fechado, pois ainda não foi salvo.")
         End If
     End Sub
+
 End Class

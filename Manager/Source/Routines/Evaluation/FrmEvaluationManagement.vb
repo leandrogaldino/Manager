@@ -28,9 +28,6 @@ Public Class FrmEvaluationManagement
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvEvaluationManagementLayout.Load()
     End Sub
-    Private Sub Form_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
-        AddHandler Parent.FindForm.Resize, AddressOf FrmMain_ResizeEnd
-    End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
         DgvEvaluationManagementLayout.Load()
@@ -190,19 +187,9 @@ Public Class FrmEvaluationManagement
             LoadDetails()
         End If
     End Sub
-    <DebuggerStepThrough>
-    Private Sub FrmMain_ResizeEnd(sender As Object, e As EventArgs) Handles MyBase.ResizeEnd
-        If Me.Disposing OrElse Me.IsDisposed Then Return
-        If BtnFilter.Checked Then BtnFilter.PerformClick()
-        If Parent.FindForm IsNot Nothing Then
-            Height = Parent.FindForm.Height - 196
-            Width = Parent.FindForm.Width - 24
-        End If
-    End Sub
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Gerenciamento de Avaliações", .Grid = DgvData}})
-        Dim Form As New FrmReport(Result)
-        FrmMain.OpenTab(Form, EnumHelper.GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(New UcReport(Result), EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
     Private Sub DgvData_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvData.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvData.HitTest(e.X, e.Y)

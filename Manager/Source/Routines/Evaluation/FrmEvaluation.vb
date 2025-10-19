@@ -7,7 +7,7 @@ Public Class FrmEvaluation
 #Region "Fields"
     Private _UcCallTypeHasRepairNeedProposal As UcEvaluationCallTypeHasRepairNeedProposal
     Private _UcUnitTemperaturePressure As UcEvaluationUnitTemperaturePressure
-    Private _EvaluationsForm As FrmEvaluations
+    Private _GridControl As UcEvaluationGrid
     Private _EvaluationsGrid As DataGridView
     Private _Filter As EvaluationFilter
     Private _Evaluation As Evaluation
@@ -29,9 +29,9 @@ Public Class FrmEvaluation
         Set(value As Boolean)
             _Calculated = value
             If Calculated Then
-                _TargetSize = New Size(1055, 570 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
+                _TargetSize = New Size(1055, 570 - If(_GridControl IsNot Nothing, 0, TsNavigation.Height))
             Else
-                _TargetSize = New Size(433, 570 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
+                _TargetSize = New Size(433, 570 - If(_GridControl IsNot Nothing, 0, TsNavigation.Height))
             End If
             If _Resizer IsNot Nothing Then
                 If _Loading Then
@@ -44,12 +44,12 @@ Public Class FrmEvaluation
     End Property
 #End Region
 #Region "Constructors"
-    Public Sub New(Evaluation As Evaluation, EvaluationsForm As FrmEvaluations)
+    Public Sub New(Evaluation As Evaluation, GridControl As UcEvaluationGrid)
         InitializeComponent()
         _Evaluation = Evaluation
-        _EvaluationsForm = EvaluationsForm
-        _EvaluationsGrid = _EvaluationsForm.DgvData
-        _Filter = CType(_EvaluationsForm.PgFilter.SelectedObject, EvaluationFilter)
+        _GridControl = GridControl
+        _EvaluationsGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, EvaluationFilter)
         InitializeControls()
         LoadData()
     End Sub
@@ -475,9 +475,9 @@ Public Class FrmEvaluation
                             BtnDisapprove.Visible = _Evaluation.Status <> EvaluationStatus.Disapproved
                         End If
                     End If
-                    If _EvaluationsForm IsNot Nothing Then
+                    If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _EvaluationsForm.DgvEvaluationLayout.Load()
+                        '_GridControl.DgvEvaluationLayout.Load()
                         Row = _EvaluationsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()
@@ -751,7 +751,7 @@ Public Class FrmEvaluation
                         _Evaluation.Delete()
                         If _EvaluationsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _EvaluationsForm.DgvEvaluationLayout.Load()
+                            '_GridControl.DgvEvaluationLayout.Load()
                             _EvaluationsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -788,9 +788,9 @@ Public Class FrmEvaluation
                 BtnApprove.Visible = _Evaluation.Status <> EvaluationStatus.Approved
                 BtnReject.Visible = _Evaluation.Status <> EvaluationStatus.Rejected
                 BtnDisapprove.Visible = _Evaluation.Status <> EvaluationStatus.Disapproved
-                If _EvaluationsForm IsNot Nothing Then
+                If _GridControl IsNot Nothing Then
                     _Filter.Filter()
-                    _EvaluationsForm.DgvEvaluationLayout.Load()
+                    ' _GridControl.DgvEvaluationLayout.Load()
                     Row = _EvaluationsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                     If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                     DgvNavigator.RefreshButtons()
@@ -816,9 +816,9 @@ Public Class FrmEvaluation
             BtnApprove.Visible = _Evaluation.Status <> EvaluationStatus.Approved
             BtnReject.Visible = _Evaluation.Status <> EvaluationStatus.Rejected
             BtnDisapprove.Visible = _Evaluation.Status <> EvaluationStatus.Disapproved
-            If _EvaluationsForm IsNot Nothing Then
+            If _GridControl IsNot Nothing Then
                 _Filter.Filter()
-                _EvaluationsForm.DgvEvaluationLayout.Load()
+                ' _GridControl.DgvEvaluationLayout.Load()
                 Row = _EvaluationsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                 If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                 DgvNavigator.RefreshButtons()
@@ -844,9 +844,9 @@ Public Class FrmEvaluation
                         BtnApprove.Visible = _Evaluation.Status <> EvaluationStatus.Approved
                         BtnReject.Visible = _Evaluation.Status <> EvaluationStatus.Rejected
                         BtnDisapprove.Visible = _Evaluation.Status <> EvaluationStatus.Disapproved
-                        If _EvaluationsForm IsNot Nothing Then
+                        If _GridControl IsNot Nothing Then
                             _Filter.Filter()
-                            _EvaluationsForm.DgvEvaluationLayout.Load()
+                            ' _GridControl.DgvEvaluationLayout.Load()
                             Row = _EvaluationsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                             DgvNavigator.RefreshButtons()
@@ -1171,12 +1171,12 @@ Public Class FrmEvaluation
                 FormBorderStyle = FormBorderStyle.FixedSingle
                 WindowState = FormWindowState.Normal
                 MaximizeBox = False
-                Size = New Size(1055, 570 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
+                Size = New Size(1055, 570 - If(_GridControl IsNot Nothing, 0, TsNavigation.Height))
             Else
                 FormBorderStyle = FormBorderStyle.FixedSingle
                 WindowState = FormWindowState.Normal
                 MaximizeBox = False
-                Size = New Size(433, 570 - If(_EvaluationsForm IsNot Nothing, 0, TsNavigation.Height))
+                Size = New Size(433, 570 - If(_GridControl IsNot Nothing, 0, TsNavigation.Height))
             End If
         Else
             FormBorderStyle = FormBorderStyle.Sizable

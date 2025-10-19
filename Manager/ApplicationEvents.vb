@@ -18,14 +18,18 @@ Namespace My
                 If LCase(Application.CommandLineArgs(0)) = "-panels" Then
                     e.Cancel = True
                     Try
-                        FrmEvaluationManagementPanel.BtnClose.Visible = False
-                        FrmEvaluationManagementPanel.ShowIcon = True
-                        FrmEvaluationManagementPanel.ShowInTaskbar = True
-                        FrmEvaluationManagementPanel.WindowState = FormWindowState.Maximized
-                        FrmEvaluationManagementPanel.FormBorderStyle = FormBorderStyle.FixedSingle
-                        FrmEvaluationManagementPanel.Text = "Painel de Gerenciamento de Compressores"
-                        FrmEvaluationManagementPanel.BtnExport.Visible = False
-                        FrmEvaluationManagementPanel.ShowDialog()
+                        Using PanelForm As New Form
+                            PanelForm.ShowIcon = True
+                            PanelForm.ShowInTaskbar = True
+                            PanelForm.WindowState = FormWindowState.Maximized
+                            PanelForm.FormBorderStyle = FormBorderStyle.FixedSingle
+                            PanelForm.Text = "Painel de Gerenciamento de Compressores"
+                            Using PanelControl As New UcEvaluationManagementPanelGrid
+                                PanelControl.BtnClose.Visible = False
+                                PanelControl.BtnExport.Visible = False
+                                PanelForm.ShowDialog()
+                            End Using
+                        End Using
                     Catch ex As Exception
                         MsgBox(ex.Message)
                     End Try

@@ -57,7 +57,7 @@ Public Class FrmLog
             BtnExport.Enabled = False
             Result = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Histórico", .Grid = DgvLog}})
             DialogResult = DialogResult.OK
-            FrmMain.OpenTab(New FrmReport(Result), EnumHelper.GetEnumDescription(Routine.ExportGrid))
+            FrmMain.OpenTab(New UcReport(Result), EnumHelper.GetEnumDescription(Routine.ExportGrid))
             CMessageBox.Show("O Relátório foi gerado na tela inicial.", CMessageBoxType.Information)
         Catch ex As Exception
             CMessageBox.Show("ERRO LG002", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

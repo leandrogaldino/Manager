@@ -212,7 +212,6 @@ Public Class DataGridViewLayout
         End If
         For Each r In EnumHelper.GetEnumItems(Of Routine)
             If Not String.IsNullOrEmpty(My.Resources.ResourceManager.GetString(r.ToString & "Grid")) Then
-
                 If Not File.Exists(XmlDirectory & "\" & r.ToString & ".xml") Then
                     File.WriteAllText(XmlDirectory & "\" & r.ToString & ".xml", My.Resources.ResourceManager.GetString(r.ToString & "Grid"))
                 Else

@@ -4,7 +4,7 @@ Imports MySql.Data.MySqlClient
 
 Public Class FrmPrivilegePreset
     Private _PrivilegePreset As PrivilegePreset
-    Private _PrivilegePresetsForm As FrmPrivilegePresets
+    Private _GridControl As UcPrivilegePresetGrid
     Private _PrivilegePresetsGrid As DataGridView
     Private _Filter As PrivilegePresetFilter
     Private _Deleting As Boolean
@@ -28,11 +28,11 @@ Public Class FrmPrivilegePreset
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(PrivilegePreset As PrivilegePreset, PrivilegePresetsForm As FrmPrivilegePresets)
+    Public Sub New(PrivilegePreset As PrivilegePreset, GridControl As UcPrivilegePresetGrid)
         _PrivilegePreset = PrivilegePreset
-        _PrivilegePresetsForm = PrivilegePresetsForm
-        _PrivilegePresetsGrid = _PrivilegePresetsForm.DgvData
-        _Filter = CType(_PrivilegePresetsForm.PgFilter.SelectedObject, PrivilegePresetFilter)
+        _GridControl = GridControl
+        _PrivilegePresetsGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, PrivilegePresetFilter)
         _LoggedUser = Locator.GetInstance(Of Session).User
         InitializeComponent()
         LoadForm()
@@ -185,7 +185,7 @@ Public Class FrmPrivilegePreset
                         _PrivilegePreset.Delete()
                         If _PrivilegePresetsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _PrivilegePresetsForm.DgvlPrivilegePresetLayout.Load()
+                            ' _GridControl.DgvlPrivilegePresetLayout.Load()
                             _PrivilegePresetsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -346,9 +346,9 @@ Public Class FrmPrivilegePreset
                     LblIDValue.Text = _PrivilegePreset.ID
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _LoggedUser.CanDelete(Routine.PrivilegePreset)
-                    If _PrivilegePresetsForm IsNot Nothing Then
+                    If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _PrivilegePresetsForm.DgvlPrivilegePresetLayout.Load()
+                        '_GridControl.DgvlPrivilegePresetLayout.Load()
                         Row = _PrivilegePresetsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

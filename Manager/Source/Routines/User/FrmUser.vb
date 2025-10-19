@@ -5,7 +5,7 @@ Imports MySql.Data.MySqlClient
 Imports Org.BouncyCastle.Bcpg
 Public Class FrmUser
     Private _User As User
-    Private _UsersForm As FrmUsers
+    Private _GridControl As UcUserGrid
     Private _UsersGrid As DataGridView
     Private _Filter As UserFilter
     Private _Deleting As Boolean
@@ -29,11 +29,11 @@ Public Class FrmUser
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(User As User, UsersForm As FrmUsers)
+    Public Sub New(User As User, GridControl As UcUserGrid)
         _User = User
-        _UsersForm = UsersForm
-        _UsersGrid = _UsersForm.DgvData
-        _Filter = CType(_UsersForm.PgFilter.SelectedObject, UserFilter)
+        _GridControl = GridControl
+        _UsersGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, UserFilter)
         _LoggedUser = Locator.GetInstance(Of Session).User
         InitializeComponent()
         LoadForm()
@@ -147,7 +147,7 @@ Public Class FrmUser
                 End If
             End If
         End If
-        If _UsersForm IsNot Nothing Then
+        If _GridControl IsNot Nothing Then
             DgvEmail.Fill(_User.Emails)
         End If
         _Deleting = False
@@ -194,7 +194,7 @@ Public Class FrmUser
                         _User.Delete()
                         If _UsersGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _UsersForm.DgvUserLayout.Load()
+                            '_GridControl.DgvUserLayout.Load()
                             _UsersGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -432,9 +432,9 @@ Public Class FrmUser
                     DgvEmail.Fill(_User.Emails)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _LoggedUser.CanDelete(Routine.User)
-                    If _UsersForm IsNot Nothing Then
+                    If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _UsersForm.DgvUserLayout.Load()
+                        '_GridControl.DgvUserLayout.Load()
                         Row = _UsersGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

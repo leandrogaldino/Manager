@@ -19,7 +19,7 @@ Public Class UcCityGrid
         BtnDelete.Visible = Locator.GetInstance(Of Session).User.CanDelete(Routine.City)
         BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
-    Private Sub Frm(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvCitiesLayout.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click

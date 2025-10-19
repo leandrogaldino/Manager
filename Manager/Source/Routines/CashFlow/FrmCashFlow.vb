@@ -4,7 +4,7 @@ Imports MySql.Data.MySqlClient
 
 Public Class FrmCashFlow
     Private _CashFlow As CashFlow
-    Private _CashFlowsForm As FrmCashFlows
+    Private _GridControl As UcCashFlowGrid
     Private _CashFlowsGrid As DataGridView
     Private _Filter As CashFlowFilter
     Private _Deleting As Boolean
@@ -28,11 +28,11 @@ Public Class FrmCashFlow
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(CashFlow As CashFlow, CashFlowsForm As FrmCashFlows)
+    Public Sub New(CashFlow As CashFlow, GridControl As UcCashFlowGrid)
         _CashFlow = CashFlow
-        _CashFlowsForm = CashFlowsForm
-        _CashFlowsGrid = _CashFlowsForm.DgvData
-        _Filter = CType(_CashFlowsForm.PgFilter.SelectedObject, CashFlowFilter)
+        _GridControl = GridControl
+        _CashFlowsGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, CashFlowFilter)
         _User = Locator.GetInstance(Of Session).User
         InitializeComponent()
         LoadData()
@@ -107,7 +107,7 @@ Public Class FrmCashFlow
                     End If
                 End If
             End If
-            If _CashFlowsForm IsNot Nothing Then
+            If _GridControl IsNot Nothing Then
                 DgvAuthorized.Fill(_CashFlow.Authorizeds)
             End If
             _Deleting = False
@@ -131,7 +131,7 @@ Public Class FrmCashFlow
                         _CashFlow.Delete()
                         If _CashFlowsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _CashFlowsForm.DgvCashFlowLayout.Load()
+                            '_GridControl.DgvCashFlowLayout.Load()
                             _CashFlowsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -159,7 +159,7 @@ Public Class FrmCashFlow
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active) Then
             BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
-        ElseIf BtnStatusValue.Text = enumhelper.GetEnumDescription(SimpleStatus.Inactive) Then
+        ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Inactive) Then
             BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active)
         End If
         BtnSave.Enabled = True
@@ -217,9 +217,9 @@ Public Class FrmCashFlow
                     DgvAuthorized.Fill(_CashFlow.Authorizeds)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.CashFlow)
-                    If _CashFlowsForm IsNot Nothing Then
+                    If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _CashFlowsForm.DgvCashFlowLayout.Load()
+                        ' _GridControl.DgvCashFlowLayout.Load()
                         Row = _CashFlowsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

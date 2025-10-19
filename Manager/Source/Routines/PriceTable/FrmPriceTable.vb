@@ -4,7 +4,7 @@ Imports MySql.Data.MySqlClient
 
 Public Class FrmPriceTable
     Private _PriceTable As PriceTable
-    Private _PriceTablesForm As FrmPriceTables
+    Private _GridControl As UcPriceTableGrid
     Private _PriceTablesGrid As DataGridView
     Private _Filter As PriceTableFilter
     Private _Deleting As Boolean
@@ -28,12 +28,12 @@ Public Class FrmPriceTable
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(PriceTable As PriceTable, PriceTablesForm As FrmPriceTables)
+    Public Sub New(PriceTable As PriceTable, GridControl As UcPriceTableGrid)
         InitializeComponent()
         _PriceTable = PriceTable
-        _PriceTablesForm = PriceTablesForm
-        _PriceTablesGrid = _PriceTablesForm.DgvData
-        _Filter = CType(_PriceTablesForm.PgFilter.SelectedObject, PriceTableFilter)
+        _GridControl = GridControl
+        _PriceTablesGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, PriceTableFilter)
         _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
@@ -111,7 +111,7 @@ Public Class FrmPriceTable
                     End If
                 End If
             End If
-            If _PriceTablesForm IsNot Nothing Then
+            If _GridControl IsNot Nothing Then
                 DgvPriceTableSellable.Fill(_PriceTable.Sellables)
             End If
             _Deleting = False
@@ -135,7 +135,7 @@ Public Class FrmPriceTable
                         _PriceTable.Delete()
                         If _PriceTablesGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _PriceTablesForm.DgvPriceTablesLayout.Load()
+                            '_GridControl.DgvPriceTablesLayout.Load()
                             _PriceTablesGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -268,9 +268,9 @@ Public Class FrmPriceTable
                     DgvPriceTableSellable.Fill(_PriceTable.Sellables)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.PriceTable)
-                    If _PriceTablesForm IsNot Nothing Then
+                    If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _PriceTablesForm.DgvPriceTablesLayout.Load()
+                        '_GridControl.DgvPriceTablesLayout.Load()
                         Row = _PriceTablesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

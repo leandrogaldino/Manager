@@ -3,7 +3,7 @@ Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Public Class FrmRoute
     Private _Route As Route
-    Private _RoutesForm As FrmRoutes
+    Private _GridControl As UcRouteGrid
     Private _RoutesGrid As DataGridView
     Private _Filter As RouteFilter
     Private _Deleting As Boolean
@@ -27,12 +27,12 @@ Public Class FrmRoute
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(Route As Route, RoutesForm As FrmRoutes)
+    Public Sub New(Route As Route, GridControl As UcRouteGrid)
         InitializeComponent()
         _Route = Route
-        _RoutesForm = RoutesForm
-        _RoutesGrid = _RoutesForm.DgvData
-        _Filter = CType(_RoutesForm.PgFilter.SelectedObject, RouteFilter)
+        _GridControl = GridControl
+        _RoutesGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, RouteFilter)
         _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
@@ -124,7 +124,7 @@ Public Class FrmRoute
                         _Route.Delete()
                         If _RoutesGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _RoutesForm.DgvlRouteLayout.Load()
+                            _GridControl.DgvlRouteLayout.Load()
                             _RoutesGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -209,9 +209,9 @@ Public Class FrmRoute
                     LblIDValue.Text = _Route.ID
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Route)
-                    If _RoutesForm IsNot Nothing Then
+                    If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _RoutesForm.DgvlRouteLayout.Load()
+                        _GridControl.DgvlRouteLayout.Load()
                         Row = _RoutesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

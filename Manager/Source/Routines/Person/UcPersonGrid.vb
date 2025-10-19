@@ -23,7 +23,7 @@ Public Class UcPersonGrid
         BtnDelete.Visible = Locator.GetInstance(Of Session).User.CanDelete(Routine.Person)
         BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
-    Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvPersonLayout.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click

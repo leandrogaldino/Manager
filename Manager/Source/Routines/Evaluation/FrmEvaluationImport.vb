@@ -4,7 +4,7 @@ Imports System.IO
 
 Public Class FrmEvaluationImport
     Private _EvaluationData As Dictionary(Of String, Object) = Nothing
-    Private _EvaluationsForm As Form
+    Private _GridControl As UcEvaluationGrid
     Private _RemoteDB As RemoteDB
     Private _LocalDB As LocalDB
     Private _Storage As Storage
@@ -16,11 +16,11 @@ Public Class FrmEvaluationImport
         InitializeDbListener()
     End Sub
 
-    Public Sub New(EvaluationsForm As Form)
+    Public Sub New(GridControl As UcEvaluationGrid)
         InitializeComponent()
         InitializeDatabases()
         InitializeDbListener()
-        _EvaluationsForm = EvaluationsForm
+        _GridControl = GridControl
     End Sub
 
 
@@ -190,8 +190,8 @@ Public Class FrmEvaluationImport
                         Next Picture
                         Using EvaluationSourceForm = New FrmEvaluationSource(_EvaluationData, TempSignature, TempPictures)
                             If EvaluationSourceForm.ShowDialog() = DialogResult.OK Then
-                                If _EvaluationsForm IsNot Nothing Then
-                                    EvaluationForm = New FrmEvaluation(EvaluationSourceForm.ResultEvaluation, _EvaluationsForm)
+                                If _GridControl IsNot Nothing Then
+                                    EvaluationForm = New FrmEvaluation(EvaluationSourceForm.ResultEvaluation, _GridControl)
                                 Else
                                     EvaluationForm = New FrmEvaluation(EvaluationSourceForm.ResultEvaluation)
                                 End If

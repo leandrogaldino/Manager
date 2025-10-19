@@ -3,7 +3,7 @@ Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Public Class FrmVisitSchedule
     Private _VisitSchedule As VisitSchedule
-    Private _VisitSchedulesForm As FrmVisitSchedules
+    Private _GridControl As UcVisitScheduleGrid
     Private _VisitSchedulesGrid As DataGridView
     Private _Filter As VisitScheduleFilter
     Private _Deleting As Boolean
@@ -29,12 +29,12 @@ Public Class FrmVisitSchedule
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(VisitSchedule As VisitSchedule, VisitSchedulesForm As FrmVisitSchedules)
+    Public Sub New(VisitSchedule As VisitSchedule, GridControl As UcVisitScheduleGrid)
         InitializeComponent()
         _VisitSchedule = VisitSchedule
-        _VisitSchedulesForm = VisitSchedulesForm
-        _VisitSchedulesGrid = _VisitSchedulesForm.DgvData
-        _Filter = CType(_VisitSchedulesForm.PgFilter.SelectedObject, VisitScheduleFilter)
+        _GridControl = GridControl
+        _VisitSchedulesGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, VisitScheduleFilter)
         _User = Locator.GetInstance(Of Session).User
         LoadForm()
         LoadData()
@@ -230,7 +230,7 @@ Public Class FrmVisitSchedule
                         _VisitSchedule.Delete()
                         If _VisitSchedulesGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _VisitSchedulesForm.DgvlVisitScheduleLayout.Load()
+                            ''_GridControl.DgvlVisitScheduleLayout.Load()
                             _VisitSchedulesGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -390,9 +390,9 @@ Public Class FrmVisitSchedule
             LblIDValue.Text = _VisitSchedule.ID
             BtnSave.Enabled = False
             BtnDelete.Enabled = _User.CanDelete(Routine.Route)
-            If _VisitSchedulesForm IsNot Nothing Then
+            If _GridControl IsNot Nothing Then
                 _Filter.Filter()
-                _VisitSchedulesForm.DgvlVisitScheduleLayout.Load()
+                '_GridControl.DgvlVisitScheduleLayout.Load()
                 Row = _VisitSchedulesGrid.Rows.Cast(Of DataGridViewRow)().FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                 If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                 DgvNavigator.RefreshButtons()

@@ -3,7 +3,7 @@ Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Public Class FrmService
     Private _Service As Service
-    Private _ServicesForm As FrmServices
+    Private _GridControl As UcServiceGrid
     Private _ServicesGrid As DataGridView
     Private _Filter As ServiceFilter
     Private _Deleting As Boolean
@@ -27,12 +27,12 @@ Public Class FrmService
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(Service As Service, ServicesForm As FrmServices)
+    Public Sub New(Service As Service, GridControl As UcServiceGrid)
         InitializeComponent()
         _Service = Service
-        _ServicesForm = ServicesForm
-        _ServicesGrid = _ServicesForm.DgvData
-        _Filter = CType(_ServicesForm.PgFilter.SelectedObject, ServiceFilter)
+        _GridControl = GridControl
+        _ServicesGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, ServiceFilter)
         _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
@@ -122,7 +122,7 @@ Public Class FrmService
                     End If
                 End If
             End If
-            If _ServicesForm IsNot Nothing Then
+            If _GridControl IsNot Nothing Then
                 DgvCode.Fill(_Service.Codes)
                 DgvPrice.Fill(_Service.Prices)
                 DgvComplement.Fill(_Service.Complements)
@@ -149,7 +149,7 @@ Public Class FrmService
                         _Service.Delete()
                         If _ServicesGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _ServicesForm.DgvServiceLayout.Load()
+                            '_GridControl.DgvServiceLayout.Load()
                             _ServicesGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -353,9 +353,9 @@ Public Class FrmService
                     DgvIndicator.Fill(_Service.Indicators)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Service)
-                    If _ServicesForm IsNot Nothing Then
+                    If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _ServicesForm.DgvServiceLayout.Load()
+                        '_GridControl.DgvServiceLayout.Load()
                         Row = _ServicesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

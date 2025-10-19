@@ -4,7 +4,7 @@ Imports MySql.Data.MySqlClient
 
 Public Class FrmCompressor
     Private _Compressor As Compressor
-    Private _CompressorsForm As FrmCompressors
+    Private _GridControl As UcCompressorGrid
     Private _CompressorsGrid As DataGridView
     Private _Filter As CompressorFilter
     Private _Deleting As Boolean
@@ -28,12 +28,12 @@ Public Class FrmCompressor
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(Compressor As Compressor, CompressorsForm As FrmCompressors)
+    Public Sub New(Compressor As Compressor, GridControl As UcCompressorGrid)
         InitializeComponent()
         _Compressor = Compressor
-        _CompressorsForm = CompressorsForm
-        _CompressorsGrid = _CompressorsForm.DgvData
-        _Filter = CType(_CompressorsForm.PgFilter.SelectedObject, CompressorFilter)
+        _GridControl = GridControl
+        _CompressorsGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, CompressorFilter)
         _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
@@ -111,7 +111,7 @@ Public Class FrmCompressor
                 End If
             End If
         End If
-        If _CompressorsForm IsNot Nothing Then
+        If _GridControl IsNot Nothing Then
             DgvCompressorWorkedHourSellable.Fill(_Compressor.WorkedHourSellables)
             DgvCompressorElapsedDaySellable.Fill(_Compressor.ElapsedDaySellables)
         End If
@@ -135,7 +135,7 @@ Public Class FrmCompressor
                         _Compressor.Delete()
                         If _CompressorsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _CompressorsForm.DgvCompressorLayout.Load()
+                            _GridControl.DgvCompressorLayout.Load()
                             _CompressorsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -232,9 +232,9 @@ Public Class FrmCompressor
                     DgvCompressorElapsedDaySellable.Fill(_Compressor.ElapsedDaySellables)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Compressor)
-                    If _CompressorsForm IsNot Nothing Then
+                    If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _CompressorsForm.DgvCompressorLayout.Load()
+                        _GridControl.DgvCompressorLayout.Load()
                         Row = _CompressorsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

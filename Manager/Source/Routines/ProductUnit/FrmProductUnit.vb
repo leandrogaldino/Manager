@@ -3,7 +3,7 @@ Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Public Class FrmProductUnit
     Private _Unit As ProductUnit
-    Private _UnitsForm As FrmProductUnits
+    Private _GridControl As UcProductUnitGrid
     Private _UnitsGrid As DataGridView
     Private _Filter As ProductUnitFilter
     Private _Deleting As Boolean
@@ -27,12 +27,12 @@ Public Class FrmProductUnit
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(Unit As ProductUnit, UnitsForm As FrmProductUnits)
+    Public Sub New(Unit As ProductUnit, GridControl As UcProductUnitGrid)
         InitializeComponent()
         _Unit = Unit
-        _UnitsForm = UnitsForm
-        _UnitsGrid = _UnitsForm.DgvData
-        _Filter = CType(_UnitsForm.PgFilter.SelectedObject, ProductUnitFilter)
+        _GridControl = GridControl
+        _UnitsGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, ProductUnitFilter)
         _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
@@ -125,7 +125,7 @@ Public Class FrmProductUnit
                         _Unit.Delete()
                         If _UnitsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _UnitsForm.DgvUnitsLayout.Load()
+                            _GridControl.DgvUnitsLayout.Load()
                             _UnitsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -218,9 +218,9 @@ Public Class FrmProductUnit
                     LblIDValue.Text = _Unit.ID
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.ProductUnit)
-                    If _UnitsForm IsNot Nothing Then
+                    If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _UnitsForm.DgvUnitsLayout.Load()
+                        _GridControl.DgvUnitsLayout.Load()
                         Row = _UnitsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

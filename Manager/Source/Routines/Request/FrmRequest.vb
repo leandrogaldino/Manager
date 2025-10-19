@@ -5,7 +5,7 @@ Imports System.IO
 Imports ManagerCore
 Public Class FrmRequest
     Private _Request As Request
-    Private _RequestsForm As FrmRequests
+    Private _GridControl As UcRequestGrid
     Private _RequestsGrid As DataGridView
     Private _Filter As RequestFilter
     Private _Deleting As Boolean
@@ -29,12 +29,12 @@ Public Class FrmRequest
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(Request As Request, RequestsForm As FrmRequests)
+    Public Sub New(Request As Request, GridControl As UcRequestGrid)
         InitializeComponent()
         _Request = Request
-        _RequestsForm = RequestsForm
-        _RequestsGrid = _RequestsForm.DgvData
-        _Filter = CType(_RequestsForm.PgFilter.SelectedObject, RequestFilter)
+        _GridControl = GridControl
+        _RequestsGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, RequestFilter)
         _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
@@ -131,7 +131,7 @@ Public Class FrmRequest
                     End If
                 End If
             End If
-            If _RequestsForm IsNot Nothing Then
+            If _GridControl IsNot Nothing Then
                 DgvItem.Fill(_Request.Items)
             End If
             _Deleting = False
@@ -155,7 +155,7 @@ Public Class FrmRequest
                         _Request.Delete()
                         If _RequestsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _RequestsForm.DgvRequestLayout.Load()
+                            '_GridControl.DgvRequestLayout.Load()
                             _RequestsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -326,9 +326,9 @@ Public Class FrmRequest
                     DgvItem.Fill(_Request.Items)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Request)
-                    If _RequestsForm IsNot Nothing Then
+                    If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _RequestsForm.DgvRequestLayout.Load()
+                        '_GridControl.DgvRequestLayout.Load()
                         Row = _RequestsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

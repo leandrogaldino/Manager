@@ -4,7 +4,7 @@ Imports MySql.Data.MySqlClient
 Imports System.Text
 Public Class FrmEmailModel
     Private _EmailModel As EmailModel
-    Private _EmailModelsForm As FrmEmailModels
+    Private _GridControl As UcEmailModelGrid
     Private _EmailModelsGrid As DataGridView
     Private _Filter As EmailModelFilter
     Private _Deleting As Boolean
@@ -28,12 +28,12 @@ Public Class FrmEmailModel
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(EmailModel As EmailModel, EmailModelsForm As FrmEmailModels)
+    Public Sub New(EmailModel As EmailModel, GridControl As UcEmailModelGrid)
         InitializeComponent()
         _EmailModel = EmailModel
-        _EmailModelsForm = EmailModelsForm
-        _EmailModelsGrid = _EmailModelsForm.DgvData
-        _Filter = CType(_EmailModelsForm.PgFilter.SelectedObject, EmailModelFilter)
+        _GridControl = GridControl
+        _EmailModelsGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, EmailModelFilter)
         _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
@@ -63,7 +63,7 @@ Public Class FrmEmailModel
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = _User.CanAccess(Routine.Log)
-        TsBody.Renderer = New CustomToolstripRender
+        TsBody.Renderer = New CustomToolStripRender
         TxtFont.Text = TxtBody.Font.Name
         Sb.AppendLine("#sdl#: é substituido por bom dia, boa tarde ou boa noite.")
         Sb.AppendLine("#sdn#: é substituido por Bom dia, Boa tarde ou Boa noite.")
@@ -153,7 +153,7 @@ Public Class FrmEmailModel
                         _EmailModel.Delete()
                         If _EmailModelsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _EmailModelsForm.DgvEmailModelsLayout.Load()
+                            '_GridControl.DgvEmailModelsLayout.Load()
                             _EmailModelsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -232,9 +232,9 @@ Public Class FrmEmailModel
                     LblIDValue.Text = _EmailModel.ID
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = True
-                    If _EmailModelsForm IsNot Nothing Then
+                    If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _EmailModelsForm.DgvEmailModelsLayout.Load()
+                        '_GridControl.DgvEmailModelsLayout.Load()
                         Row = _EmailModelsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

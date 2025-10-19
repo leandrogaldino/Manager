@@ -6,7 +6,7 @@ Imports ManagerCore
 Imports ChinhDo.Transactions
 Public Class FrmEmailSignature
     Private _EmailSignature As EmailSignature
-    Private _EmailSignaturesForm As FrmEmailSignatures
+    Private _GridControl As UcEmailSignatureGrid
     Private _EmailSignaturesGrid As DataGridView
     Private _Filter As EmailSignatureFilter
     Private _Deleting As Boolean
@@ -30,12 +30,12 @@ Public Class FrmEmailSignature
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(EmailSignature As EmailSignature, EmailSignaturesForm As FrmEmailSignatures)
+    Public Sub New(EmailSignature As EmailSignature, GridControl As UcEmailSignatureGrid)
         InitializeComponent()
         _EmailSignature = EmailSignature
-        _EmailSignaturesForm = EmailSignaturesForm
-        _EmailSignaturesGrid = _EmailSignaturesForm.DgvData
-        _Filter = CType(_EmailSignaturesForm.PgFilter.SelectedObject, EmailSignatureFilter)
+        _GridControl = GridControl
+        _EmailSignaturesGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, EmailSignatureFilter)
         _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
@@ -135,7 +135,7 @@ Public Class FrmEmailSignature
                         _EmailSignature.Delete()
                         If _EmailSignaturesGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _EmailSignaturesForm.DgvEmailSignaturesLayout.Load()
+                            '_GridControl.DgvEmailSignaturesLayout.Load()
                             _EmailSignaturesGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -203,9 +203,9 @@ Public Class FrmEmailSignature
                     LblIDValue.Text = _EmailSignature.ID
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = True
-                    If _EmailSignaturesForm IsNot Nothing Then
+                    If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _EmailSignaturesForm.DgvEmailSignaturesLayout.Load()
+                        '_GridControl.DgvEmailSignaturesLayout.Load()
                         Row = _EmailSignaturesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

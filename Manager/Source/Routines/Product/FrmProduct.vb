@@ -3,7 +3,7 @@ Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Public Class FrmProduct
     Private _Product As Product
-    Private _ProductsForm As FrmProducts
+    Private _GridControl As UcProductGrid
     Private _ProductsGrid As DataGridView
     Private _Filter As ProductFilter
     Private _Deleting As Boolean
@@ -27,12 +27,12 @@ Public Class FrmProduct
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(Product As Product, ProductsForm As FrmProducts)
+    Public Sub New(Product As Product, GridControl As UcProductGrid)
         InitializeComponent()
         _Product = Product
-        _ProductsForm = ProductsForm
-        _ProductsGrid = _ProductsForm.DgvData
-        _Filter = CType(_ProductsForm.PgFilter.SelectedObject, ProductFilter)
+        _GridControl = GridControl
+        _ProductsGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, ProductFilter)
         _User = Locator.GetInstance(Of Session).User
         ConfigureControls()
         LoadData()
@@ -138,7 +138,7 @@ Public Class FrmProduct
                     End If
                 End If
             End If
-            If _ProductsForm IsNot Nothing Then
+            If _GridControl IsNot Nothing Then
                 DgvProviderCode.Fill(_Product.ProviderCodes)
                 DgvCode.Fill(_Product.Codes)
                 DgvPrice.Fill(_Product.Prices)
@@ -165,7 +165,7 @@ Public Class FrmProduct
                         _Product.Delete()
                         If _ProductsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _ProductsForm.DgvProductLayout.Load()
+                            ' _GridControl.DgvProductLayout.Load()
                             _ProductsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -443,9 +443,9 @@ Public Class FrmProduct
                     DgvIndicator.Fill(_Product.Indicators)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Product)
-                    If _ProductsForm IsNot Nothing Then
+                    If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _ProductsForm.DgvProductLayout.Load()
+                        '_GridControl.DgvProductLayout.Load()
                         Row = _ProductsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

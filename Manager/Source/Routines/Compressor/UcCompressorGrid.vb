@@ -20,7 +20,7 @@ Public Class UcCompressorGrid
         BtnDelete.Visible = Locator.GetInstance(Of Session).User.CanDelete(Routine.Compressor)
         BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
-    Private Sub Frm(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvCompressorLayout.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
@@ -195,15 +195,6 @@ Public Class UcCompressorGrid
             LblCounter.Text = DgvData.Rows.Count & " registro" & If(DgvData.Rows.Count > 1, "s", Nothing)
             LblCounter.ForeColor = Color.DimGray
             LblCounter.Font = New Font(LblCounter.Font, FontStyle.Bold)
-        End If
-    End Sub
-    <DebuggerStepThrough>
-    Private Sub FrmMain_ResizeEnd(sender As Object, e As EventArgs)
-        If Me.Disposing OrElse Me.IsDisposed Then Return
-        If BtnFilter.Checked Then BtnFilter.PerformClick()
-        If Parent.FindForm IsNot Nothing Then
-            Height = Parent.FindForm.Height - 196
-            Width = Parent.FindForm.Width - 24
         End If
     End Sub
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click

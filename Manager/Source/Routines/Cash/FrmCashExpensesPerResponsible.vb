@@ -69,7 +69,7 @@ Public Class FrmCashExpensesPerResponsible
                 Result = CashReport.ProcessExpensesPerResponsible(CbxFlow.SelectedValue, DbxInitialDate.Text, DbxFinalDate.Text, CbxIdentifier.SelectedIndex = 1)
                 If Result IsNot Nothing Then
                     DialogResult = DialogResult.OK
-                    FrmMain.OpenTab(New FrmReport(Result), EnumHelper.GetEnumDescription(Routine.CashItemResponsible))
+                    FrmMain.OpenTab(New UcReport(Result), EnumHelper.GetEnumDescription(Routine.CashItemResponsible))
                 Else
                     CMessageBox.Show("Não existem despesas lançadas nesse período.", CMessageBoxType.Information)
                 End If

@@ -6,7 +6,7 @@ Imports ManagerCore
 
 Public Class FrmCash
     Private _Cash As Cash
-    Private _CashesForm As FrmCashes
+    Private _GridControl As UcCashGrid
     Private _CashesGrid As DataGridView
     Private _Filter As CashFilter
     Private _Deleting As Boolean
@@ -30,12 +30,12 @@ Public Class FrmCash
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(Cash As Cash, CashesForm As FrmCashes)
+    Public Sub New(Cash As Cash, GridControl As UcCashGrid)
         InitializeComponent()
         _Cash = Cash
-        _CashesForm = CashesForm
-        _CashesGrid = _CashesForm.DgvData
-        _Filter = CType(_CashesForm.PgFilter.SelectedObject, CashFilter)
+        _GridControl = GridControl
+        _CashesGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, CashFilter)
         _User = Locator.GetInstance(Of Session).User
         LoadData()
     End Sub
@@ -133,7 +133,7 @@ Public Class FrmCash
                     End If
                 End If
             End If
-            If _CashesForm IsNot Nothing Then
+            If _GridControl IsNot Nothing Then
                 DgvCashItem.Fill(_Cash.CashItems)
             End If
             _Deleting = False
@@ -157,7 +157,7 @@ Public Class FrmCash
                         _Cash.Delete()
                         If _CashesGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _CashesForm.DgvCashesLayout.Load()
+                            '_GridControl.DgvCashesLayout.Load()
                             _CashesGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -321,9 +321,9 @@ Public Class FrmCash
                     DgvCashItem.Fill(_Cash.CashItems)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Cash)
-                    If _CashesForm IsNot Nothing Then
+                    If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _CashesForm.DgvCashesLayout.Load()
+                        '_GridControl.DgvCashesLayout.Load()
                         Row = _CashesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()
@@ -506,7 +506,7 @@ Public Class FrmCash
         Try
             Cursor = Cursors.WaitCursor
             Result = CashReport.ProcessCashSheet({_Cash}.ToList)
-            FrmMain.OpenTab(New FrmReport(Result), EnumHelper.GetEnumDescription(Routine.CashSheetReport))
+            FrmMain.OpenTab(New UcReport(Result), EnumHelper.GetEnumDescription(Routine.CashSheetReport))
             CMessageBox.Show("O Relátório foi gerado na tela inicial.", CMessageBoxType.Information)
         Catch ex As Exception
             CMessageBox.Show("ERRO CS010", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -538,9 +538,9 @@ Public Class FrmCash
                             BtnStatusValue.Visible = True
                             LblStatusValue.Visible = False
                         End If
-                        If _CashesForm IsNot Nothing Then
+                        If _GridControl IsNot Nothing Then
                             _Filter.Filter()
-                            _CashesForm.DgvCashesLayout.Load()
+                            ' _GridControl.DgvCashesLayout.Load()
                             Row = _CashesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                             DgvNavigator.RefreshButtons()
@@ -569,9 +569,9 @@ Public Class FrmCash
             LblStatusValue.Text = EnumHelper.GetEnumDescription(_Cash.Status)
             BtnCloseCash.Visible = _Cash.Status <> CashStatus.Closed
             BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And _User.CanAccess(Routine.CashReopen)
-            If _CashesForm IsNot Nothing Then
+            If _GridControl IsNot Nothing Then
                 _Filter.Filter()
-                _CashesForm.DgvCashesLayout.Load()
+                ' _GridControl.DgvCashesLayout.Load()
                 Row = _CashesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                 If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                 DgvNavigator.RefreshButtons()

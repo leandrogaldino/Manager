@@ -31,7 +31,7 @@ Public Class FrmPersonMaintenancePlan
             BtnGenerate.Enabled = False
             Result = PersonReport.ProcessMaintenancePlan(DgvCompressor, _Person, CbxShowTechnicalAdvice.Checked, CbxShowMDHT.Checked)
             DialogResult = DialogResult.OK
-            FrmMain.OpenTab(New FrmReport(Result), EnumHelper.GetEnumDescription(Routine.PersonMaintenancePlanReport))
+            FrmMain.OpenTab(New UcReport(Result), EnumHelper.GetEnumDescription(Routine.PersonMaintenancePlanReport))
         Catch ex As Exception
             CMessageBox.Show("ERRO PS012", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             BtnGenerate.Enabled = True

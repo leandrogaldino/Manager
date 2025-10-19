@@ -3,7 +3,7 @@ Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Public Class FrmProductFamily
     Private _ProductFamily As ProductFamily
-    Private _ProductFamiliesForm As FrmProductFamilies
+    Private _GridControl As UcProductFamilyGrid
     Private _ProductFamiliesGrid As DataGridView
     Private _Filter As ProductFamilyFilter
     Private _Deleting As Boolean
@@ -27,12 +27,12 @@ Public Class FrmProductFamily
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(ProductFamily As ProductFamily, ProductFamiliesForm As FrmProductFamilies)
+    Public Sub New(ProductFamily As ProductFamily, GridControl As UcProductFamilyGrid)
         InitializeComponent()
         _ProductFamily = ProductFamily
-        _ProductFamiliesForm = ProductFamiliesForm
-        _ProductFamiliesGrid = _ProductFamiliesForm.DgvData
-        _Filter = CType(_ProductFamiliesForm.PgFilter.SelectedObject, ProductFamilyFilter)
+        _GridControl = GridControl
+        _ProductFamiliesGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, ProductFamilyFilter)
         _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
@@ -124,7 +124,7 @@ Public Class FrmProductFamily
                         _ProductFamily.Delete()
                         If _ProductFamiliesGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _ProductFamiliesForm.DgvProductFamilyLayout.Load()
+                            '_GridControl.DgvProductFamilyLayout.Load()
                             _ProductFamiliesGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -209,9 +209,9 @@ Public Class FrmProductFamily
                     LblIDValue.Text = _ProductFamily.ID
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.ProductFamily)
-                    If _ProductFamiliesForm IsNot Nothing Then
+                    If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _ProductFamiliesForm.DgvProductFamilyLayout.Load()
+                        '_GridControl.DgvProductFamilyLayout.Load()
                         Row = _ProductFamiliesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

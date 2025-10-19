@@ -495,6 +495,18 @@
     <Compile Include="Source\Main\UcReport.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Source\Routines\CashFlow\UcCashFlowGrid.Designer.vb">
+      <DependentUpon>UcCashFlowGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\CashFlow\UcCashFlowGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\Cash\UcCashGrid.Designer.vb">
+      <DependentUpon>UcCashGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Cash\UcCashGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Source\Routines\City\UcCityGrid.Designer.vb">
       <DependentUpon>UcCityGrid.vb</DependentUpon>
     </Compile>
@@ -541,22 +553,46 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\UcEvaluationCallTypeHasRepairNeedProposal.Designer.vb">
+    <Compile Include="Source\Routines\EmailSent\UcEmailSentGrid.Designer.vb">
+      <DependentUpon>UcEmailSentGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\EmailSent\UcEmailSentGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\EmailSignature\UcEmailSignatureGrid.Designer.vb">
+      <DependentUpon>UcEmailSignatureGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\EmailSignature\UcEmailSignatureGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\Evaluation\UcEvaluationCallTypeHasRepairNeedProposal.Designer.vb">
       <DependentUpon>UcEvaluationCallTypeHasRepairNeedProposal.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\UcEvaluationCallTypeHasRepairNeedProposal.vb">
+    <Compile Include="Source\Routines\Evaluation\UcEvaluationCallTypeHasRepairNeedProposal.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Source\Controls\UcEvaluationUnitTemperaturePressure.Designer.vb">
+    <Compile Include="Source\Routines\Evaluation\UcEvaluationManagementPanelGrid.Designer.vb">
+      <DependentUpon>UcEvaluationManagementPanelGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Evaluation\UcEvaluationManagementPanelGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\Evaluation\UcEvaluationUnitTemperaturePressure.Designer.vb">
       <DependentUpon>UcEvaluationUnitTemperaturePressure.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\UcEvaluationUnitTemperaturePressure.vb">
+    <Compile Include="Source\Routines\Evaluation\UcEvaluationUnitTemperaturePressure.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Source\Controls\UcVisitScheduleGeneratedItems.Designer.vb">
+    <Compile Include="Source\Routines\Request\UcRequestGrid.Designer.vb">
+      <DependentUpon>UcRequestGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Request\UcRequestGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\VisitSchedule\UcVisitScheduleGeneratedItems.Designer.vb">
       <DependentUpon>UcVisitScheduleGeneratedItems.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\UcVisitScheduleGeneratedItems.vb">
+    <Compile Include="Source\Routines\VisitSchedule\UcVisitScheduleGeneratedItems.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Helper\Attibutes\RoutineDependencyAttribute.vb" />
@@ -586,12 +622,6 @@
     <Compile Include="Source\Routines\CashFlow\FrmCashFlowAuthorized.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\CashFlow\FrmCashFlows.Designer.vb">
-      <DependentUpon>FrmCashFlows.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\CashFlow\FrmCashFlows.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Source\Routines\CashFlow\FrmChoseCashFlow.Designer.vb">
       <DependentUpon>FrmChoseCashFlow.vb</DependentUpon>
     </Compile>
@@ -607,12 +637,6 @@
       <DependentUpon>FrmCash.vb</DependentUpon>
     </Compile>
     <Compile Include="Source\Routines\Cash\FrmCash.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Routines\Cash\FrmCashes.designer.vb">
-      <DependentUpon>FrmCashes.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\Cash\FrmCashes.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Routines\CashFlow\FrmCashFlow.Designer.vb">
@@ -667,25 +691,19 @@
     <Compile Include="Source\Routines\Compressor\UcCompressorGrid.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Source\Routines\EmailModel\UcEmailModelGrid.Designer.vb">
+      <DependentUpon>UcEmailModelGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\EmailModel\UcEmailModelGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Source\Routines\EmailSent\EmailSentFilter.vb" />
-    <Compile Include="Source\Routines\EmailSent\FrmEmailsSent.Designer.vb">
-      <DependentUpon>FrmEmailsSent.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\EmailSent\FrmEmailsSent.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Source\Routines\EmailSignature\EmailSignature.vb" />
     <Compile Include="Source\Routines\EmailSignature\EmailSignatureFilter.vb" />
     <Compile Include="Source\Routines\EmailSignature\FrmEmailSignature.Designer.vb">
       <DependentUpon>FrmEmailSignature.vb</DependentUpon>
     </Compile>
     <Compile Include="Source\Routines\EmailSignature\FrmEmailSignature.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Routines\EmailSignature\FrmEmailSignatures.Designer.vb">
-      <DependentUpon>FrmEmailSignatures.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\EmailSignature\FrmEmailSignatures.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Routines\Email\Email.vb" />
@@ -707,12 +725,6 @@
       <DependentUpon>FrmEmailModel.vb</DependentUpon>
     </Compile>
     <Compile Include="Source\Routines\EmailModel\FrmEmailModel.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Routines\EmailModel\FrmEmailModels.Designer.vb">
-      <DependentUpon>FrmEmailModels.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\EmailModel\FrmEmailModels.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Routines\Email\FrmEmailImportEmailModel.Designer.vb">
@@ -756,6 +768,18 @@
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationReplacedSellable.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Source\Routines\Evaluation\UcEvaluationGrid.Designer.vb">
+      <DependentUpon>UcEvaluationGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Evaluation\UcEvaluationGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\Evaluation\UcEvaluationManagementGrid.Designer.vb">
+      <DependentUpon>UcEvaluationManagementGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Evaluation\UcEvaluationManagementGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Source\Routines\Person\FrmPersonCompressorSellableElapsedDay.Designer.vb">
       <DependentUpon>FrmPersonCompressorSellableElapsedDay.vb</DependentUpon>
     </Compile>
@@ -787,53 +811,65 @@
     <Compile Include="Source\Routines\PriceTable\FrmPriceTableSellable.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\PriceTable\FrmPriceTables.Designer.vb">
-      <DependentUpon>FrmPriceTables.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\PriceTable\FrmPriceTables.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Source\Routines\PriceTable\PriceTable.vb" />
     <Compile Include="Source\Routines\PriceTable\PriceTableFilter.vb" />
     <Compile Include="Source\Routines\PriceTable\PriceTableSellable.vb" />
+    <Compile Include="Source\Routines\PriceTable\UcPriceTableGrid.Designer.vb">
+      <DependentUpon>UcPriceTableGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\PriceTable\UcPriceTableGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Source\Routines\PrivilegePreset\FrmPrivilegePreset.Designer.vb">
       <DependentUpon>FrmPrivilegePreset.vb</DependentUpon>
     </Compile>
     <Compile Include="Source\Routines\PrivilegePreset\FrmPrivilegePreset.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\PrivilegePreset\FrmPrivilegePresets.Designer.vb">
-      <DependentUpon>FrmPrivilegePresets.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\PrivilegePreset\FrmPrivilegePresets.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Source\Routines\PrivilegePreset\PrivilegePreset.vb" />
-    <Compile Include="Source\Controls\UcBiStatePrivilegeItem.Designer.vb">
+    <Compile Include="Source\Routines\PrivilegePreset\UcBiStatePrivilegeItem.Designer.vb">
       <DependentUpon>UcBiStatePrivilegeItem.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\UcBiStatePrivilegeItem.vb">
+    <Compile Include="Source\Routines\PrivilegePreset\UcBiStatePrivilegeItem.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Source\Controls\UcBiStatePrivilegeTitle.Designer.vb">
+    <Compile Include="Source\Routines\PrivilegePreset\UcBiStatePrivilegeTitle.Designer.vb">
       <DependentUpon>UcBiStatePrivilegeTitle.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\UcBiStatePrivilegeTitle.vb">
+    <Compile Include="Source\Routines\PrivilegePreset\UcBiStatePrivilegeTitle.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Source\Controls\UcTriStatePrivilegeTitle.Designer.vb">
+    <Compile Include="Source\Routines\PrivilegePreset\UcTriStatePrivilegeTitle.Designer.vb">
       <DependentUpon>UcTriStatePrivilegeTitle.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\UcTriStatePrivilegeTitle.vb">
+    <Compile Include="Source\Routines\PrivilegePreset\UcTriStatePrivilegeTitle.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Source\Controls\UcTristatePrivilegeItem.Designer.vb">
+    <Compile Include="Source\Routines\PrivilegePreset\UcTristatePrivilegeItem.Designer.vb">
       <DependentUpon>UcTristatePrivilegeItem.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\UcTristatePrivilegeItem.vb">
+    <Compile Include="Source\Routines\PrivilegePreset\UcTristatePrivilegeItem.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Routines\PrivilegePreset\PrivilegePresetFilter.vb" />
+    <Compile Include="Source\Routines\PrivilegePreset\UcPrivilegePresetGrid.Designer.vb">
+      <DependentUpon>UcPrivilegePresetGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\PrivilegePreset\UcPrivilegePresetGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\ProductFamily\UcProductFamilyGrid.Designer.vb">
+      <DependentUpon>UcProductFamilyGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\ProductFamily\UcProductFamilyGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\ProductGroup\UcProductGroupGrid.Designer.vb">
+      <DependentUpon>UcProductGroupGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\ProductGroup\UcProductGroupGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Source\Routines\ProductUnit\UcProductUnitGrid.Designer.vb">
       <DependentUpon>UcProductUnitGrid.vb</DependentUpon>
     </Compile>
@@ -848,6 +884,12 @@
     </Compile>
     <Compile Include="Source\Routines\Product\ProductPrice.vb" />
     <Compile Include="Source\Routines\Product\ProductPriceIndicator.vb" />
+    <Compile Include="Source\Routines\Product\UcProductGrid.Designer.vb">
+      <DependentUpon>UcProductGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Product\UcProductGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Source\Routines\Route\UcRouteGrid.Designer.vb">
       <DependentUpon>UcRouteGrid.vb</DependentUpon>
     </Compile>
@@ -878,18 +920,24 @@
     <Compile Include="Source\Routines\Service\FrmServicePrice.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Service\FrmServices.Designer.vb">
-      <DependentUpon>FrmServices.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\Service\FrmServices.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Source\Routines\Service\Service.vb" />
     <Compile Include="Source\Routines\Service\ServiceCode.vb" />
     <Compile Include="Source\Routines\Service\ServiceComplement.vb" />
     <Compile Include="Source\Routines\Service\ServiceFilter.vb" />
     <Compile Include="Source\Routines\Service\ServicePrice.vb" />
     <Compile Include="Source\Routines\Service\ServicePriceIndicator.vb" />
+    <Compile Include="Source\Routines\Service\UcServiceGrid.Designer.vb">
+      <DependentUpon>UcServiceGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Service\UcServiceGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\User\UcUserGrid.Designer.vb">
+      <DependentUpon>UcUserGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\User\UcUserGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Source\Routines\User\UserPrivilege.vb" />
     <Compile Include="Source\Routines\VisitSchedule\FrmVisitSchedule.Designer.vb">
       <DependentUpon>FrmVisitSchedule.vb</DependentUpon>
@@ -897,23 +945,23 @@
     <Compile Include="Source\Routines\VisitSchedule\FrmVisitSchedule.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\VisitSchedule\FrmVisitSchedules.Designer.vb">
-      <DependentUpon>FrmVisitSchedules.vb</DependentUpon>
+    <Compile Include="Source\Routines\VisitSchedule\UcVisitScheduleGrid.Designer.vb">
+      <DependentUpon>UcVisitScheduleGrid.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Routines\VisitSchedule\FrmVisitSchedules.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Routines\VisitSchedule\VisitSchedule.vb" />
-    <Compile Include="Source\Controls\UcEvaluationSoldLost.Designer.vb">
-      <DependentUpon>UcEvaluationSoldLost.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Controls\UcEvaluationSoldLost.vb">
+    <Compile Include="Source\Routines\VisitSchedule\UcVisitScheduleGrid.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Source\Controls\UcEvaluationSourceHeader.Designer.vb">
+    <Compile Include="Source\Routines\VisitSchedule\VisitSchedule.vb" />
+    <Compile Include="Source\Routines\Evaluation\UcEvaluationSoldLost.Designer.vb">
+      <DependentUpon>UcEvaluationSoldLost.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Evaluation\UcEvaluationSoldLost.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\Evaluation\UcEvaluationSourceHeader.Designer.vb">
       <DependentUpon>UcEvaluationSourceHeader.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\UcEvaluationSourceHeader.vb">
+    <Compile Include="Source\Routines\Evaluation\UcEvaluationSourceHeader.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Routines\Evaluation\EvaluationPicture.vb" />
@@ -922,12 +970,6 @@
       <DependentUpon>FrmEvaluationImport.vb</DependentUpon>
     </Compile>
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationImport.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Routines\Evaluation\FrmEvaluationManagementPanel.Designer.vb">
-      <DependentUpon>FrmEvaluationManagementPanel.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\Evaluation\FrmEvaluationManagementPanel.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationManagementPanelExport.Designer.vb">
@@ -954,10 +996,10 @@
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationTechnician.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Controls\UcEvaluationCardDetail.Designer.vb">
+    <Compile Include="Source\Routines\Evaluation\UcEvaluationCardDetail.Designer.vb">
       <DependentUpon>UcEvaluationCardDetail.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\UcEvaluationCardDetail.vb">
+    <Compile Include="Source\Routines\Evaluation\UcEvaluationCardDetail.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Helper\FilterExpandable\CrmStatusExpandable.vb" />
@@ -1046,12 +1088,6 @@
       <DependentUpon>FrmEvaluationManagement.vb</DependentUpon>
     </Compile>
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationManagement.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Routines\Evaluation\FrmEvaluations.Designer.vb">
-      <DependentUpon>FrmEvaluations.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\Evaluation\FrmEvaluations.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Helper\FilterExpandable\CashItemExpandable.vb" />
@@ -1175,12 +1211,6 @@
     <Compile Include="Source\Routines\Person\PersonCompressor.vb" />
     <Compile Include="Source\Routines\Person\PersonContact.vb" />
     <Compile Include="Source\Routines\Person\PersonFilter.vb" />
-    <Compile Include="Source\Routines\ProductFamily\FrmProductFamilies.designer.vb">
-      <DependentUpon>FrmProductFamilies.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\ProductFamily\FrmProductFamilies.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Source\Routines\ProductFamily\FrmProductFamily.designer.vb">
       <DependentUpon>FrmProductFamily.vb</DependentUpon>
     </Compile>
@@ -1193,12 +1223,6 @@
       <DependentUpon>FrmProductGroup.vb</DependentUpon>
     </Compile>
     <Compile Include="Source\Routines\ProductGroup\FrmProductGroup.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Routines\ProductGroup\FrmProductGroups.designer.vb">
-      <DependentUpon>FrmProductGroups.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\ProductGroup\FrmProductGroups.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Routines\ProductGroup\ProductGroup.vb" />
@@ -1229,12 +1253,6 @@
     <Compile Include="Source\Routines\Product\FrmProductProviderCode.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Product\FrmProducts.Designer.vb">
-      <DependentUpon>FrmProducts.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\Product\FrmProducts.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Source\Routines\Product\Product.vb" />
     <Compile Include="Source\Routines\Product\ProductFilter.vb" />
     <Compile Include="Source\Routines\Product\ProductCode.vb" />
@@ -1250,12 +1268,6 @@
       <DependentUpon>FrmRequestPendingItems.vb</DependentUpon>
     </Compile>
     <Compile Include="Source\Routines\Request\FrmRequestPendingItems.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Routines\Request\FrmRequests.Designer.vb">
-      <DependentUpon>FrmRequests.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\Request\FrmRequests.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Routines\Request\FrmRequestSheet.Designer.vb">
@@ -1283,10 +1295,10 @@
     <Compile Include="Misc\FrmTest.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Controls\UcEvaluationSourcePart.Designer.vb">
+    <Compile Include="Source\Routines\Evaluation\UcEvaluationSourcePart.Designer.vb">
       <DependentUpon>UcEvaluationSourcePart.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\UcEvaluationSourcePart.vb">
+    <Compile Include="Source\Routines\Evaluation\UcEvaluationSourcePart.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Routines\User\FrmUser.designer.vb">
@@ -1313,25 +1325,34 @@
     <Compile Include="Source\Routines\User\FrmUserChangePassword.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\User\FrmUsers.designer.vb">
-      <DependentUpon>FrmUsers.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\User\FrmUsers.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Source\Routines\User\User.vb" />
     <Compile Include="Source\Routines\User\UserEmail.vb" />
     <Compile Include="Source\Routines\User\UserFilter.vb" />
     <Compile Include="Source\Routines\VisitSchedule\VisitScheduleFilter.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Source\Controls\UcEvaluationCallTypeHasRepairNeedProposal.resx">
+    <EmbeddedResource Include="Source\Routines\CashFlow\UcCashFlowGrid.resx">
+      <DependentUpon>UcCashFlowGrid.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Cash\UcCashGrid.resx">
+      <DependentUpon>UcCashGrid.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\EmailSignature\UcEmailSignatureGrid.resx">
+      <DependentUpon>UcEmailSignatureGrid.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Evaluation\UcEvaluationCallTypeHasRepairNeedProposal.resx">
       <DependentUpon>UcEvaluationCallTypeHasRepairNeedProposal.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Controls\UcEvaluationUnitTemperaturePressure.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\UcEvaluationManagementPanelGrid.resx">
+      <DependentUpon>UcEvaluationManagementPanelGrid.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Evaluation\UcEvaluationUnitTemperaturePressure.resx">
       <DependentUpon>UcEvaluationUnitTemperaturePressure.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Controls\UcVisitScheduleGeneratedItems.resx">
+    <EmbeddedResource Include="Source\Routines\Request\UcRequestGrid.resx">
+      <DependentUpon>UcRequestGrid.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\VisitSchedule\UcVisitScheduleGeneratedItems.resx">
       <DependentUpon>UcVisitScheduleGeneratedItems.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Main\UcReport.resx">
@@ -1340,17 +1361,11 @@
     <EmbeddedResource Include="Source\Routines\CashFlow\FrmCashFlowAuthorized.resx">
       <DependentUpon>FrmCashFlowAuthorized.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\CashFlow\FrmCashFlows.resx">
-      <DependentUpon>FrmCashFlows.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\CashFlow\FrmChoseCashFlow.resx">
       <DependentUpon>FrmChoseCashFlow.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Cash\FrmCash.resx">
       <DependentUpon>FrmCash.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Cash\FrmCashes.resx">
-      <DependentUpon>FrmCashes.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\CashFlow\FrmCashFlow.resx">
       <DependentUpon>FrmCashFlow.vb</DependentUpon>
@@ -1385,14 +1400,11 @@
     <EmbeddedResource Include="Source\Routines\Compressor\UcCompressorGrid.resx">
       <DependentUpon>UcCompressorGrid.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\EmailSent\FrmEmailsSent.resx">
-      <DependentUpon>FrmEmailsSent.vb</DependentUpon>
+    <EmbeddedResource Include="Source\Routines\EmailModel\UcEmailModelGrid.resx">
+      <DependentUpon>UcEmailModelGrid.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\EmailSignature\FrmEmailSignature.resx">
       <DependentUpon>FrmEmailSignature.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\EmailSignature\FrmEmailSignatures.resx">
-      <DependentUpon>FrmEmailSignatures.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Email\FrmEmail.resx">
       <DependentUpon>FrmEmail.vb</DependentUpon>
@@ -1403,16 +1415,13 @@
     <EmbeddedResource Include="Source\Routines\EmailModel\FrmEmailModel.resx">
       <DependentUpon>FrmEmailModel.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\EmailModel\FrmEmailModels.resx">
-      <DependentUpon>FrmEmailModels.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Email\FrmEmailImportEmailModel.resx">
       <DependentUpon>FrmEmailImportEmailModel.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Controls\UcEvaluationSoldLost.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\UcEvaluationSoldLost.resx">
       <DependentUpon>UcEvaluationSoldLost.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Controls\UcEvaluationSourceHeader.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\UcEvaluationSourceHeader.resx">
       <DependentUpon>UcEvaluationSourceHeader.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluation.resx">
@@ -1428,9 +1437,6 @@
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationManagement.resx">
       <DependentUpon>FrmEvaluationManagement.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationManagementPanel.resx">
-      <DependentUpon>FrmEvaluationManagementPanel.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationManagementPanelExport.resx">
       <DependentUpon>FrmEvaluationManagementPanelExport.vb</DependentUpon>
     </EmbeddedResource>
@@ -1440,16 +1446,13 @@
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationReplacedSellable.resx">
       <DependentUpon>FrmEvaluationReplacedSellable.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluations.resx">
-      <DependentUpon>FrmEvaluations.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationSource.resx">
       <DependentUpon>FrmEvaluationSource.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationTechnician.resx">
       <DependentUpon>FrmEvaluationTechnician.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Controls\UcEvaluationCardDetail.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\UcEvaluationCardDetail.resx">
       <DependentUpon>UcEvaluationCardDetail.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Controls\DataGridViewLayout.resx">
@@ -1478,6 +1481,12 @@
     <EmbeddedResource Include="Source\Main\FrmUpdateNotes.resx">
       <DependentUpon>FrmUpdateNotes.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Evaluation\UcEvaluationGrid.resx">
+      <DependentUpon>UcEvaluationGrid.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Evaluation\UcEvaluationManagementGrid.resx">
+      <DependentUpon>UcEvaluationManagementGrid.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Person\FrmPersonCompressorSellableElapsedDay.resx">
       <DependentUpon>FrmPersonCompressorSellableElapsedDay.vb</DependentUpon>
     </EmbeddedResource>
@@ -1496,20 +1505,29 @@
     <EmbeddedResource Include="Source\Routines\PriceTable\FrmPriceTableSellable.resx">
       <DependentUpon>FrmPriceTableSellable.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\PriceTable\FrmPriceTables.resx">
-      <DependentUpon>FrmPriceTables.vb</DependentUpon>
+    <EmbeddedResource Include="Source\Routines\PriceTable\UcPriceTableGrid.resx">
+      <DependentUpon>UcPriceTableGrid.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\PrivilegePreset\FrmPrivilegePreset.resx">
       <DependentUpon>FrmPrivilegePreset.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\PrivilegePreset\FrmPrivilegePresets.resx">
-      <DependentUpon>FrmPrivilegePresets.vb</DependentUpon>
+    <EmbeddedResource Include="Source\Routines\PrivilegePreset\UcPrivilegePresetGrid.resx">
+      <DependentUpon>UcPrivilegePresetGrid.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\ProductFamily\UcProductFamilyGrid.resx">
+      <DependentUpon>UcProductFamilyGrid.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\ProductGroup\UcProductGroupGrid.resx">
+      <DependentUpon>UcProductGroupGrid.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\ProductUnit\UcProductUnitGrid.resx">
       <DependentUpon>UcProductUnitGrid.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Product\FrmProductPrice.resx">
       <DependentUpon>FrmProductPrice.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Product\UcProductGrid.resx">
+      <DependentUpon>UcProductGrid.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Request\FrmRequest.resx">
       <DependentUpon>FrmRequest.vb</DependentUpon>
@@ -1544,17 +1562,11 @@
     <EmbeddedResource Include="Source\Routines\Person\FrmPersonRegistrationForm.resx">
       <DependentUpon>FrmPersonRegistrationForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\ProductFamily\FrmProductFamilies.resx">
-      <DependentUpon>FrmProductFamilies.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\ProductFamily\FrmProductFamily.resx">
       <DependentUpon>FrmProductFamily.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\ProductGroup\FrmProductGroup.resx">
       <DependentUpon>FrmProductGroup.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\ProductGroup\FrmProductGroups.resx">
-      <DependentUpon>FrmProductGroups.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\ProductUnit\FrmProductUnit.resx">
       <DependentUpon>FrmProductUnit.vb</DependentUpon>
@@ -1568,17 +1580,11 @@
     <EmbeddedResource Include="Source\Routines\Product\FrmProductProviderCode.resx">
       <DependentUpon>FrmProductProviderCode.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Product\FrmProducts.resx">
-      <DependentUpon>FrmProducts.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Request\FrmRequestItem.resx">
       <DependentUpon>FrmRequestItem.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Request\FrmRequestPendingItems.resx">
       <DependentUpon>FrmRequestPendingItems.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Request\FrmRequests.resx">
-      <DependentUpon>FrmRequests.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Request\FrmRequestSheet.resx">
       <DependentUpon>FrmRequestSheet.vb</DependentUpon>
@@ -1589,19 +1595,19 @@
     <EmbeddedResource Include="Misc\FrmTest.resx">
       <DependentUpon>FrmTest.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Controls\UcEvaluationSourcePart.resx">
+    <EmbeddedResource Include="Source\Routines\Evaluation\UcEvaluationSourcePart.resx">
       <DependentUpon>UcEvaluationSourcePart.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Controls\UcBiStatePrivilegeItem.resx">
+    <EmbeddedResource Include="Source\Routines\PrivilegePreset\UcBiStatePrivilegeItem.resx">
       <DependentUpon>UcBiStatePrivilegeItem.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Controls\UcBiStatePrivilegeTitle.resx">
+    <EmbeddedResource Include="Source\Routines\PrivilegePreset\UcBiStatePrivilegeTitle.resx">
       <DependentUpon>UcBiStatePrivilegeTitle.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Controls\UcTristatePrivilegeItem.resx">
+    <EmbeddedResource Include="Source\Routines\PrivilegePreset\UcTristatePrivilegeItem.resx">
       <DependentUpon>UcTristatePrivilegeItem.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Controls\UcTriStatePrivilegeTitle.resx">
+    <EmbeddedResource Include="Source\Routines\PrivilegePreset\UcTriStatePrivilegeTitle.resx">
       <DependentUpon>UcTriStatePrivilegeTitle.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Route\UcRouteGrid.resx">
@@ -1619,8 +1625,8 @@
     <EmbeddedResource Include="Source\Routines\Service\FrmServicePrice.resx">
       <DependentUpon>FrmServicePrice.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Service\FrmServices.resx">
-      <DependentUpon>FrmServices.vb</DependentUpon>
+    <EmbeddedResource Include="Source\Routines\Service\UcServiceGrid.resx">
+      <DependentUpon>UcServiceGrid.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\User\FrmUser.resx">
       <DependentUpon>FrmUser.vb</DependentUpon>
@@ -1634,17 +1640,17 @@
     <EmbeddedResource Include="Source\Routines\User\FrmUserChangePassword.resx">
       <DependentUpon>FrmUserChangePassword.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\User\FrmUsers.resx">
-      <DependentUpon>FrmUsers.vb</DependentUpon>
+    <EmbeddedResource Include="Source\Routines\User\UcUserGrid.resx">
+      <DependentUpon>UcUserGrid.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\VisitSchedule\FrmVisitSchedule.resx">
       <DependentUpon>FrmVisitSchedule.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\VisitSchedule\FrmVisitSchedules.resx">
-      <DependentUpon>FrmVisitSchedules.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\City\UcCityGrid.resx">
       <DependentUpon>UcCityGrid.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\VisitSchedule\UcVisitScheduleGrid.resx">
+      <DependentUpon>UcVisitScheduleGrid.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

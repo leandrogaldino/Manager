@@ -3,7 +3,7 @@ Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Public Class FrmProductGroup
     Private _ProductGroup As ProductGroup
-    Private _ProductGroupsForm As FrmProductGroups
+    Private _GridControl As UcProductGroupGrid
     Private _ProductGroupsGrid As DataGridView
     Private _Filter As ProductGroupFilter
     Private _Deleting As Boolean
@@ -27,13 +27,13 @@ Public Class FrmProductGroup
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(ProductGroup As ProductGroup, ProductGroupsForm As FrmProductGroups)
+    Public Sub New(ProductGroup As ProductGroup, GridControl As UcProductGroupGrid)
         InitializeComponent()
         _ProductGroup = ProductGroup
-        _ProductGroupsForm = ProductGroupsForm
-        _ProductGroupsGrid = _ProductGroupsForm.DgvData
-        _Filter = CType(_ProductGroupsForm.PgFilter.SelectedObject, ProductGroupFilter)
-        _User =Locator.GetInstance(Of Session).User
+        _GridControl = GridControl
+        _ProductGroupsGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, ProductGroupFilter)
+        _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
     End Sub
@@ -124,7 +124,7 @@ Public Class FrmProductGroup
                         _ProductGroup.Delete()
                         If _ProductGroupsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _ProductGroupsForm.DgvProductGroupLayout.Load()
+                            '_GridControl.DgvProductGroupLayout.Load()
                             _ProductGroupsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -209,9 +209,9 @@ Public Class FrmProductGroup
                     LblIDValue.Text = _ProductGroup.ID
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.ProductGroup)
-                    If _ProductGroupsForm IsNot Nothing Then
+                    If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _ProductGroupsForm.DgvProductGroupLayout.Load()
+                        '_GridControl.DgvProductGroupLayout.Load()
                         Row = _ProductGroupsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

@@ -1,5 +1,4 @@
-﻿Imports ClosedXML
-Imports Syncfusion.ExcelToPdfConverter
+﻿Imports Syncfusion.ExcelToPdfConverter
 Imports System.IO
 Imports System.Xml
 Imports MySql.Data.MySqlClient
@@ -45,9 +44,11 @@ Public Class PersonReport
         WsReport.Columns(4, 4).Width = 16
         WsReport.Columns(5, 5).Width = 16
         If File.Exists(Session.Setting.Company.LogoLocation) Then
-            Logo = WsReport.AddPicture(New MemoryStream(File.ReadAllBytes(Session.Setting.Company.LogoLocation)))
-            Logo.MoveTo(WsReport.Cell("A1"), New Point(0, 5))
-            Logo.WithSize(156, 57)
+            Using Stream As New MemoryStream(File.ReadAllBytes(Session.Setting.Company.LogoLocation))
+                Logo = WsReport.AddPicture(Stream)
+                Logo.MoveTo(WsReport.Cell("A1"), New Point(0, 5))
+                Logo.WithSize(156, 57)
+            End Using
         End If
         WsReport.Range(1, 1, 2, 5).Merge()
         WsReport.Range(1, 1, 2, 5).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center

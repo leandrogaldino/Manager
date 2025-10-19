@@ -1,5 +1,6 @@
 ﻿Imports ControlLibrary
 Imports ManagerCore
+Imports ZstdSharp
 Public Class FrmMain
     Private _User As User
     Public Sub New()
@@ -342,8 +343,8 @@ Public Class FrmMain
         Form.TopMost = False
         Form.TopLevel = False
         Form.Location = New Point(0, 0)
-        Form.Height = Height - 196
-        Form.Width = Width - 24
+        Form.Height = Height - 198
+        Form.Width = Width - 26
         Page = New TabPage With {
             .Text = TabText,
             .AutoScroll = True
@@ -486,6 +487,21 @@ Public Class FrmMain
         Using Form As New FrmUpdateNotes()
             Form.ShowDialog()
         End Using
+    End Sub
+
+    Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
+        Dim Result As ReportResult
+        Try
+            Cursor = Cursors.WaitCursor
+            Dim ev = New Evaluation().Load(133, True)
+            Result = EvaluationReport.EvaluationSheet(ev)
+            DialogResult = DialogResult.OK
+            OpenTab(New FrmReport(Result), EnumHelper.GetEnumDescription(Routine.PersonMaintenancePlanReport))
+        Catch ex As Exception
+            CMessageBox.Show("ERRO", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+        Finally
+            Cursor = Cursors.Default
+        End Try
     End Sub
 End Class
 

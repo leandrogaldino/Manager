@@ -5,14 +5,25 @@ Imports System.IO
 
 Public Class FrmRegisterSettings
     Private _ViewModel As RegisterSettingsViewModel
-    Private _TempLogoLocation As String
     Private _DeleteLogo As Boolean
+    Private _IsLoading As Boolean
     Public Sub New()
+        _IsLoading = True
         InitializeComponent()
         _ViewModel = New RegisterSettingsViewModel()
         CbxState.SelectedIndex = 0
         InitializeBindings()
         AddHandler _ViewModel.PropertyChanged, AddressOf OnViewModelPropertychanged
+        PictureViewer.TempDirectory = ApplicationPaths.AgentTempDirectory()
+        If File.Exists(_ViewModel.LogoLocation) Then
+            PictureViewer.AddPicture(_ViewModel.LogoLocation)
+            BtnIncludeLogo.Enabled = False
+            BtnDeleteLogo.Enabled = True
+        Else
+            BtnIncludeLogo.Enabled = True
+            BtnDeleteLogo.Enabled = False
+        End If
+        _IsLoading = False
     End Sub
     Private Sub Form_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If e.KeyCode = Keys.S And e.Control Then
@@ -22,13 +33,6 @@ Public Class FrmRegisterSettings
             BtnClose.PerformClick()
             e.SuppressKeyPress = True
         End If
-    End Sub
-    Private Sub BtnDeleteLogo_Click(sender As Object, e As EventArgs) Handles BtnDeleteLogo.Click
-        _TempLogoLocation = Nothing
-        _DeleteLogo = True
-        PbxLogo.Image = Nothing
-        BtnSave.Enabled = True
-        EprValidation.Clear()
     End Sub
     Private Sub TxtDocument_Leave(sender As Object, e As EventArgs) Handles TxtDocument.Leave
         TxtDocument.Text = BrazilianFormatHelper.GetFormatedDocument(TxtDocument.Text)
@@ -41,19 +45,23 @@ Public Class FrmRegisterSettings
         Txt.Text = BrazilianFormatHelper.GetFormatedPhoneNumber(Txt.Text)
     End Sub
     Private Sub BtnIncludeLogo_Click(sender As Object, e As EventArgs) Handles BtnIncludeLogo.Click
-        Dim Filename As String
         If OfdLogo.ShowDialog = DialogResult.OK Then
-            Filename = Now.ToString("ddMMyyyyHHmmss") & UCase(Path.GetRandomFileName().Replace(".", Nothing)) & New FileInfo(OfdLogo.FileName).Extension
-            _TempLogoLocation = Path.Combine(ApplicationPaths.AgentTempDirectory(), Filename)
-            File.Copy(OfdLogo.FileName, _TempLogoLocation)
-            PbxLogo.Image = Image.FromStream(New MemoryStream(File.ReadAllBytes(_TempLogoLocation)))
+            PictureViewer.AddPicture(OfdLogo.FileName)
             BtnSave.Enabled = True
             EprValidation.Clear()
         End If
     End Sub
-    Private Sub OnViewModelPropertychanged(sender As Object, e As PropertyChangedEventArgs)
-        EprValidation.Clear()
+    Private Sub BtnDeleteLogo_Click(sender As Object, e As EventArgs) Handles BtnDeleteLogo.Click
+        _DeleteLogo = True
+        PictureViewer.RemovePicture(PictureViewer.SelectedPicture)
         BtnSave.Enabled = True
+        EprValidation.Clear()
+    End Sub
+    Private Sub OnViewModelPropertychanged(sender As Object, e As PropertyChangedEventArgs)
+        If Not _IsLoading Then
+            EprValidation.Clear()
+            BtnSave.Enabled = True
+        End If
     End Sub
     Private Function IsValidFields() As Boolean
         Dim b As Boolean = BrazilianFormatHelper.IsValidLegalEntityDocument(TxtDocument.Text)
@@ -71,29 +79,7 @@ Public Class FrmRegisterSettings
         Return True
     End Function
     Private Sub InitializeBindings()
-        Dim Binding As Binding
-        Binding = New Binding("Image", _ViewModel, "LogoLocation", False, DataSourceUpdateMode.OnPropertyChanged)
-        AddHandler Binding.Format, Sub(sender, e)
-                                       If e.DesiredType Is GetType(Image) AndAlso TypeOf e.Value Is String Then
-                                           Dim ImagePath As String = CType(e.Value, String)
-                                           Try
-                                               If Not String.IsNullOrEmpty(ImagePath) AndAlso IO.File.Exists(ImagePath) Then
-                                                   e.Value = Image.FromStream(New MemoryStream(File.ReadAllBytes(ImagePath)))
-                                                   CType(e.Value, Image).Tag = ImagePath
-                                               Else
-                                                   e.Value = New Bitmap(1, 1)
-                                               End If
-                                           Catch ex As Exception
-                                               e.Value = New Bitmap(1, 1)
-                                           End Try
-                                       End If
-                                   End Sub
-        AddHandler Binding.Parse, Sub(sender, e)
-                                      If e.DesiredType Is GetType(String) AndAlso TypeOf e.Value Is Image Then
-                                          e.Value = CType(e.Value, Image).Tag
-                                      End If
-                                  End Sub
-        PbxLogo.DataBindings.Add(Binding)
+        PictureViewer.DataBindings.Add("SelectedPicture", _ViewModel, "LogoLocation", False, DataSourceUpdateMode.OnPropertyChanged)
         TxtName.DataBindings.Add("Text", _ViewModel, "Name", False, DataSourceUpdateMode.OnPropertyChanged)
         TxtShortName.DataBindings.Add("Text", _ViewModel, "ShortName", False, DataSourceUpdateMode.OnPropertyChanged)
         TxtDocument.DataBindings.Add("Text", _ViewModel, "Document", False, DataSourceUpdateMode.OnPropertyChanged)
@@ -119,7 +105,7 @@ Public Class FrmRegisterSettings
         Dim Result As Boolean
         Cursor = Cursors.WaitCursor
         If IsValidFields() Then
-            Result = _ViewModel.Save(_TempLogoLocation, _DeleteLogo)
+            Result = _ViewModel.Save()
             _DeleteLogo = False
         End If
         Cursor = Cursors.Default
@@ -133,7 +119,7 @@ Public Class FrmRegisterSettings
             If CMessageBox.Show("Houve alterações que ainda não foram salvas. Deseja salvar antes de continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                 IsValid = IsValidFields()
                 If IsValid Then
-                    Result = _ViewModel.Save(_TempLogoLocation, _DeleteLogo)
+                    Result = _ViewModel.Save()
                 End If
 
                 If Not IsValid Or Not Result Then
@@ -141,5 +127,17 @@ Public Class FrmRegisterSettings
                 End If
             End If
         End If
+    End Sub
+
+    Private Sub PictureViewer_PictureAdded(Path As String) Handles PictureViewer.PictureAdded
+        _ViewModel.LogoLocation = Path
+        BtnDeleteLogo.Enabled = True
+        BtnIncludeLogo.Enabled = False
+    End Sub
+
+    Private Sub PictureViewer_PictureRemoved(Path As String) Handles PictureViewer.PictureRemoved
+        _ViewModel.LogoLocation = Nothing
+        BtnIncludeLogo.Enabled = True
+        BtnDeleteLogo.Enabled = False
     End Sub
 End Class

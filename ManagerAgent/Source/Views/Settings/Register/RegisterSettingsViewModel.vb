@@ -251,18 +251,18 @@ Public Class RegisterSettingsViewModel
         Site = _SessionModel.ManagerSetting.Company.Contact.Site
         LogoLocation = _SessionModel.ManagerSetting.Company.LogoLocation
     End Sub
-    Public Function Save(TempLogoLocation As String, DeleleLogo As Boolean) As Boolean
-        Dim DefaultLogoLocation As String = String.Empty
-        If Not String.IsNullOrEmpty(TempLogoLocation) Then
-            DefaultLogoLocation = Path.Combine(ApplicationPaths.LogoDirectory, New FileInfo(TempLogoLocation).Name)
-            If File.Exists(_SessionModel.ManagerSetting.Company.LogoLocation) Then File.Delete(_SessionModel.ManagerSetting.Company.LogoLocation)
-            File.Copy(TempLogoLocation, DefaultLogoLocation)
+    Public Function Save() As Boolean
+
+        Dim Dir As New DirectoryInfo(ApplicationPaths.LogoDirectory)
+        For Each f In Dir.GetFiles()
+            File.Delete(f.FullName)
+        Next f
+
+        If Not String.IsNullOrEmpty(LogoLocation) Then
+            _SessionModel.ManagerSetting.Company.LogoLocation = Path.Combine(ApplicationPaths.LogoDirectory, Now.ToString("ddMMyyyyHHmmss") & UCase(Path.GetRandomFileName().Replace(".", Nothing)) & New FileInfo(LogoLocation).Extension)
+            File.Copy(LogoLocation, _SessionModel.ManagerSetting.Company.LogoLocation, True)
         End If
-        If DeleleLogo Then
-            If File.Exists(_SessionModel.ManagerSetting.Company.LogoLocation) Then
-                File.Delete(_SessionModel.ManagerSetting.Company.LogoLocation)
-            End If
-        End If
+
         _SessionModel.ManagerSetting.Company.Name = Name
         _SessionModel.ManagerSetting.Company.ShortName = ShortName
         _SessionModel.ManagerSetting.Company.Document = Document
@@ -283,7 +283,6 @@ Public Class RegisterSettingsViewModel
         _SessionModel.ManagerSetting.Company.Contact.Instagram = Instagram
         _SessionModel.ManagerSetting.Company.Contact.Linkedin = Linkedin
         _SessionModel.ManagerSetting.Company.Contact.Site = Site
-        _SessionModel.ManagerSetting.Company.LogoLocation = DefaultLogoLocation
         _SettingService.Save(_SessionModel.ManagerSetting)
         Return True
     End Function

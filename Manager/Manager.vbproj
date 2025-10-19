@@ -731,6 +731,7 @@
     <Compile Include="Source\Helper\Flags\VisitScheduleStatus.vb" />
     <Compile Include="Source\Routines\Evaluation\EvaluationControlledSellable.vb" />
     <Compile Include="Source\Routines\Evaluation\EvaluationReplacedSellable.vb" />
+    <Compile Include="Source\Routines\Evaluation\EvaluationReport.vb" />
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationControlledSellable.Designer.vb">
       <DependentUpon>FrmEvaluationControlledSellable.vb</DependentUpon>
     </Compile>

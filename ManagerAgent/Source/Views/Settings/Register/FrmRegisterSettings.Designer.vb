@@ -23,6 +23,7 @@ Partial Class FrmRegisterSettings
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmRegisterSettings))
         Me.PnButtons = New System.Windows.Forms.Panel()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
@@ -34,7 +35,6 @@ Partial Class FrmRegisterSettings
         Me.TxtDocument = New System.Windows.Forms.TextBox()
         Me.TxtShortName = New System.Windows.Forms.TextBox()
         Me.TxtName = New System.Windows.Forms.TextBox()
-        Me.PbxLogo = New System.Windows.Forms.PictureBox()
         Me.LblCityDocument = New System.Windows.Forms.Label()
         Me.LblStateDocument = New System.Windows.Forms.Label()
         Me.LblDocument = New System.Windows.Forms.Label()
@@ -74,9 +74,9 @@ Partial Class FrmRegisterSettings
         Me.SfdLogo = New System.Windows.Forms.SaveFileDialog()
         Me.OfdLogo = New System.Windows.Forms.OpenFileDialog()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
+        Me.PictureViewer = New ControlLibrary.PictureViewer()
         Me.PnButtons.SuspendLayout()
         Me.FlpProduct.SuspendLayout()
-        CType(Me.PbxLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -198,16 +198,6 @@ Partial Class FrmRegisterSettings
         Me.TxtName.Name = "TxtName"
         Me.TxtName.Size = New System.Drawing.Size(278, 23)
         Me.TxtName.TabIndex = 16
-        '
-        'PbxLogo
-        '
-        Me.PbxLogo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PbxLogo.Location = New System.Drawing.Point(15, 29)
-        Me.PbxLogo.Name = "PbxLogo"
-        Me.PbxLogo.Size = New System.Drawing.Size(138, 69)
-        Me.PbxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PbxLogo.TabIndex = 14
-        Me.PbxLogo.TabStop = False
         '
         'LblCityDocument
         '
@@ -550,11 +540,34 @@ Partial Class FrmRegisterSettings
         Me.EprValidation.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink
         Me.EprValidation.ContainerControl = Me
         '
+        'PictureViewer
+        '
+        Me.PictureViewer.ControlBarBackColor = System.Drawing.Color.White
+        Me.PictureViewer.CounterBarBackColor = System.Drawing.Color.White
+        Me.PictureViewer.CounterMask = "{0}/{1}"
+        Me.PictureViewer.FirstButtonImage = CType(resources.GetObject("PictureViewer.FirstButtonImage"), System.Drawing.Image)
+        Me.PictureViewer.IncludeButtonImage = CType(resources.GetObject("PictureViewer.IncludeButtonImage"), System.Drawing.Image)
+        Me.PictureViewer.LastButtonImage = CType(resources.GetObject("PictureViewer.LastButtonImage"), System.Drawing.Image)
+        Me.PictureViewer.Location = New System.Drawing.Point(12, 29)
+        Me.PictureViewer.MaximumPictures = Nothing
+        Me.PictureViewer.Name = "PictureViewer"
+        Me.PictureViewer.NextButtonImage = CType(resources.GetObject("PictureViewer.NextButtonImage"), System.Drawing.Image)
+        Me.PictureViewer.Padding = New System.Windows.Forms.Padding(1)
+        Me.PictureViewer.PreviousButtonImage = CType(resources.GetObject("PictureViewer.PreviousButtonImage"), System.Drawing.Image)
+        Me.PictureViewer.RemoveButtonImage = CType(resources.GetObject("PictureViewer.RemoveButtonImage"), System.Drawing.Image)
+        Me.PictureViewer.SaveButtonImage = CType(resources.GetObject("PictureViewer.SaveButtonImage"), System.Drawing.Image)
+        Me.PictureViewer.ShowControlBar = False
+        Me.PictureViewer.ShowCounterBar = False
+        Me.PictureViewer.Size = New System.Drawing.Size(141, 66)
+        Me.PictureViewer.TabIndex = 55
+        Me.PictureViewer.TempDirectory = "C:\Users\leand\AppData\Local\Temp\"
+        '
         'FrmRegisterSettings
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(595, 521)
+        Me.Controls.Add(Me.PictureViewer)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.LblLinkedin)
         Me.Controls.Add(Me.LblInstagram)
@@ -591,7 +604,6 @@ Partial Class FrmRegisterSettings
         Me.Controls.Add(Me.TxtDocument)
         Me.Controls.Add(Me.TxtShortName)
         Me.Controls.Add(Me.TxtName)
-        Me.Controls.Add(Me.PbxLogo)
         Me.Controls.Add(Me.LblCityDocument)
         Me.Controls.Add(Me.LblStateDocument)
         Me.Controls.Add(Me.LblDocument)
@@ -608,7 +620,6 @@ Partial Class FrmRegisterSettings
         Me.Text = "Cadastro"
         Me.PnButtons.ResumeLayout(False)
         Me.FlpProduct.ResumeLayout(False)
-        CType(Me.PbxLogo, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -625,7 +636,6 @@ Partial Class FrmRegisterSettings
     Friend WithEvents TxtDocument As TextBox
     Friend WithEvents TxtShortName As TextBox
     Friend WithEvents TxtName As TextBox
-    Friend WithEvents PbxLogo As PictureBox
     Friend WithEvents LblCityDocument As Label
     Friend WithEvents LblStateDocument As Label
     Friend WithEvents LblDocument As Label
@@ -665,4 +675,5 @@ Partial Class FrmRegisterSettings
     Friend WithEvents SfdLogo As SaveFileDialog
     Friend WithEvents OfdLogo As OpenFileDialog
     Friend WithEvents EprValidation As ErrorProvider
+    Friend WithEvents PictureViewer As ControlLibrary.PictureViewer
 End Class

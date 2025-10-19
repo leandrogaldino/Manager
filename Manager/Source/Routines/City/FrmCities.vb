@@ -179,8 +179,8 @@ Public Class FrmCities
         If Me.Disposing OrElse Me.IsDisposed Then Return
         If BtnFilter.Checked Then BtnFilter.PerformClick()
         If Parent.FindForm IsNot Nothing Then
-            Height = Parent.FindForm.Height - 196
-            Width = Parent.FindForm.Width - 24
+            Height = Parent.FindForm.Height - 198
+            Width = Parent.FindForm.Width - 26
         End If
     End Sub
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click

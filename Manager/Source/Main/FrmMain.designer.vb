@@ -41,6 +41,7 @@ Partial Class FrmMain
         Me.BtnExit = New System.Windows.Forms.ToolStripButton()
         Me.TcMenu = New System.Windows.Forms.TabControl()
         Me.TimerAccess = New System.Windows.Forms.Timer(Me.components)
+        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.TsBotMenu.SuspendLayout()
         Me.TabRoutine.SuspendLayout()
         Me.TsRoutine.SuspendLayout()
@@ -54,11 +55,11 @@ Partial Class FrmMain
         Me.TsBotMenu.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsBotMenu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.TsBotMenu.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.TsBotMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.LblCompany, Me.LblUser, Me.BtnUser, Me.BtnVersion})
-        Me.TsBotMenu.Location = New System.Drawing.Point(0, 463)
+        Me.TsBotMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.LblCompany, Me.LblUser, Me.BtnUser, Me.BtnVersion, Me.ToolStripButton1})
+        Me.TsBotMenu.Location = New System.Drawing.Point(0, 461)
         Me.TsBotMenu.Name = "TsBotMenu"
         Me.TsBotMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsBotMenu.Size = New System.Drawing.Size(990, 25)
+        Me.TsBotMenu.Size = New System.Drawing.Size(990, 27)
         Me.TsBotMenu.TabIndex = 2
         Me.TsBotMenu.Text = "     "
         '
@@ -67,7 +68,7 @@ Partial Class FrmMain
         Me.ToolStripLabel1.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ToolStripLabel1.ForeColor = System.Drawing.Color.Black
         Me.ToolStripLabel1.Name = "ToolStripLabel1"
-        Me.ToolStripLabel1.Size = New System.Drawing.Size(69, 22)
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(69, 24)
         Me.ToolStripLabel1.Text = "EMPRESA:"
         Me.ToolStripLabel1.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         '
@@ -76,7 +77,7 @@ Partial Class FrmMain
         Me.LblCompany.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblCompany.ForeColor = System.Drawing.Color.Black
         Me.LblCompany.Name = "LblCompany"
-        Me.LblCompany.Size = New System.Drawing.Size(74, 22)
+        Me.LblCompany.Size = New System.Drawing.Size(74, 24)
         Me.LblCompany.Text = "@Empresa"
         Me.LblCompany.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         '
@@ -86,7 +87,7 @@ Partial Class FrmMain
         Me.LblUser.ForeColor = System.Drawing.Color.Black
         Me.LblUser.Margin = New System.Windows.Forms.Padding(30, 1, 0, 2)
         Me.LblUser.Name = "LblUser"
-        Me.LblUser.Size = New System.Drawing.Size(67, 22)
+        Me.LblUser.Size = New System.Drawing.Size(67, 24)
         Me.LblUser.Text = "USUÁRIO:"
         Me.LblUser.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         '
@@ -97,7 +98,7 @@ Partial Class FrmMain
         Me.BtnUser.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnUser.ForeColor = System.Drawing.Color.Black
         Me.BtnUser.Name = "BtnUser"
-        Me.BtnUser.Size = New System.Drawing.Size(78, 22)
+        Me.BtnUser.Size = New System.Drawing.Size(78, 24)
         Me.BtnUser.Text = "@Usuário"
         Me.BtnUser.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         '
@@ -150,7 +151,7 @@ Partial Class FrmMain
         Me.BtnVersion.ForeColor = System.Drawing.Color.FromArgb(CType(CType(80, Byte), Integer), CType(CType(80, Byte), Integer), CType(CType(80, Byte), Integer))
         Me.BtnVersion.Margin = New System.Windows.Forms.Padding(30, 1, 0, 2)
         Me.BtnVersion.Name = "BtnVersion"
-        Me.BtnVersion.Size = New System.Drawing.Size(28, 22)
+        Me.BtnVersion.Size = New System.Drawing.Size(28, 24)
         Me.BtnVersion.Text = "x.x"
         Me.BtnVersion.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         '
@@ -160,7 +161,7 @@ Partial Class FrmMain
         Me.TcWindows.Location = New System.Drawing.Point(0, 102)
         Me.TcWindows.Name = "TcWindows"
         Me.TcWindows.SelectedIndex = 0
-        Me.TcWindows.Size = New System.Drawing.Size(990, 361)
+        Me.TcWindows.Size = New System.Drawing.Size(990, 359)
         Me.TcWindows.TabIndex = 13
         '
         'TabRoutine
@@ -218,6 +219,15 @@ Partial Class FrmMain
         Me.TimerAccess.Enabled = True
         Me.TimerAccess.Interval = 10000
         '
+        'ToolStripButton1
+        '
+        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton1.Image = CType(resources.GetObject("ToolStripButton1.Image"), System.Drawing.Image)
+        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton1.Name = "ToolStripButton1"
+        Me.ToolStripButton1.Size = New System.Drawing.Size(24, 24)
+        Me.ToolStripButton1.Text = "ToolStripButton1"
+        '
         'FrmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
@@ -263,4 +273,5 @@ Partial Class FrmMain
     Friend WithEvents BtnEmailSign As ToolStripMenuItem
     Friend WithEvents BtnEmailSent As ToolStripMenuItem
     Friend WithEvents BtnVersion As ToolStripButton
+    Friend WithEvents ToolStripButton1 As ToolStripButton
 End Class

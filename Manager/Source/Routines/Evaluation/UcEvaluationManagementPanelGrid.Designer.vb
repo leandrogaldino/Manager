@@ -23,9 +23,9 @@ Partial Class UcEvaluationManagementPanelGrid
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.TsMenu = New System.Windows.Forms.ToolStrip()
         Me.BtnRefresh = New System.Windows.Forms.ToolStripButton()
         Me.BtnClose = New System.Windows.Forms.ToolStripButton()
@@ -156,17 +156,18 @@ Partial Class UcEvaluationManagementPanelGrid
         '
         'Chart
         '
-        ChartArea2.Name = "ChartArea1"
-        Me.Chart.ChartAreas.Add(ChartArea2)
+        ChartArea1.Name = "ChartArea1"
+        Me.Chart.ChartAreas.Add(ChartArea1)
         Me.Chart.Dock = System.Windows.Forms.DockStyle.Fill
-        Legend2.Name = "Legend1"
-        Me.Chart.Legends.Add(Legend2)
+        Legend1.Name = "Legend1"
+        Me.Chart.Legends.Add(Legend1)
         Me.Chart.Location = New System.Drawing.Point(0, 207)
+        Me.Chart.MinimumSize = New System.Drawing.Size(200, 100)
         Me.Chart.Name = "Chart"
-        Series2.ChartArea = "ChartArea1"
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series1"
-        Me.Chart.Series.Add(Series2)
+        Series1.ChartArea = "ChartArea1"
+        Series1.Legend = "Legend1"
+        Series1.Name = "Series1"
+        Me.Chart.Series.Add(Series1)
         Me.Chart.Size = New System.Drawing.Size(1089, 315)
         Me.Chart.TabIndex = 8
         Me.Chart.Text = "Chart1"
@@ -588,18 +589,18 @@ Partial Class UcEvaluationManagementPanelGrid
         Me.CcoOverdueUnit.DropDownEnabled = True
         Me.CcoOverdueUnit.HostControl = Nothing
         '
-        'FrmEvaluationManagementPanel
+        'UcEvaluationManagementPanelGrid
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(1089, 561)
         Me.Controls.Add(Me.PnContainer)
         Me.Controls.Add(Me.TsMenu)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "FrmEvaluationManagementPanel"
+        Me.Name = "UcEvaluationManagementPanelGrid"
+        Me.Size = New System.Drawing.Size(1089, 561)
         Me.TsMenu.ResumeLayout(False)
         Me.TsMenu.PerformLayout()
         Me.PnContainer.ResumeLayout(False)

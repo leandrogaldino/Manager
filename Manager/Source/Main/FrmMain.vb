@@ -338,7 +338,6 @@ Public Class FrmMain
             .Visible = False
         }
         GridControl.Dock = DockStyle.Fill
-        MsgBox(GridControl.Height)
         Page.Controls.Add(GridControl)
         TcWindows.SuspendLayout()
         TcWindows.Controls.Add(Page)

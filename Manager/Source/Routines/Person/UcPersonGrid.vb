@@ -1,33 +1,33 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
-Public Class FrmCompressors
-    Private _Compressor As New Compressor
-    Private _Filter As CompressorFilter
+Public Class UcPersonGrid
+    Private _Person As New Person
+    Private _Filter As PersonFilter
     Public Sub New()
         InitializeComponent()
         ControlHelper.EnableControlDoubleBuffer(DgvData, True)
-        ControlHelper.EnableControlDoubleBuffer(DgvWorkedHourSellable, True)
-        ControlHelper.EnableControlDoubleBuffer(DgvElapsedDaySellable, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvAddress, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvCompressor, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvContact, True)
         SplitContainer1.Panel1Collapsed = True
+        SplitContainer1.SplitterDistance = 250
         SplitContainer2.Panel1Collapsed = True
-        _Filter = New CompressorFilter(DgvData, PgFilter)
+        SplitContainer2.SplitterDistance = 500
+        _Filter = New PersonFilter(DgvData, PgFilter)
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter
         LoadDetails()
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.Compressor)
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.Compressor)
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.CanDelete(Routine.Compressor)
+        BtnInclude.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.Person)
+        BtnEdit.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.Person)
+        BtnDelete.Visible = Locator.GetInstance(Of Session).User.CanDelete(Routine.Person)
         BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
-    Private Sub Frm(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvCompressorLayout.Load()
-    End Sub
-    Private Sub Form_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
-        AddHandler Parent.FindForm.Resize, AddressOf FrmMain_ResizeEnd
+    Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        DgvPersonLayout.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
-        Using Form As New FrmCompressor(New Compressor, Me)
+        Using Form As New FrmPerson(New Person, Me)
             Form.ShowDialog()
         End Using
     End Sub
@@ -35,14 +35,15 @@ Public Class FrmCompressors
         If DgvData.SelectedRows.Count = 1 Then
             Try
                 Cursor = Cursors.WaitCursor
-                _Compressor = New Compressor().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
-                Using Form As New FrmCompressor(_Compressor, Me)
-                    Form.DgvCompressorWorkedHourSellable.Fill(_Compressor.WorkedHourSellables)
-                    Form.DgvCompressorElapsedDaySellable.Fill(_Compressor.ElapsedDaySellables)
+                _Person = New Person().Load(CLng(DgvData.SelectedRows(0).Cells("id").Value), True)
+                Using Form As New FrmPerson(_Person, Me)
+                    Form.DgvCompressor.Fill(_Person.Compressors)
+                    Form.DgvAddress.Fill(_Person.Addresses)
+                    Form.DgvContact.Fill(_Person.Contacts)
                     Form.ShowDialog()
                 End Using
             Catch ex As Exception
-                CMessageBox.Show("ERRO CP004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                CMessageBox.Show("ERRO PS007", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
                 Cursor = Cursors.Default
             End Try
@@ -52,27 +53,27 @@ Public Class FrmCompressors
         If DgvData.SelectedRows.Count = 1 Then
             Try
                 Cursor = Cursors.WaitCursor
-                _Compressor.Load(DgvData.SelectedRows(0).Cells("id").Value, False)
-                If Not _Compressor.LockInfo.IsLocked Then
+                _Person.Load(DgvData.SelectedRows(0).Cells("id").Value, False)
+                If Not _Person.LockInfo.IsLocked Then
                     If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                         Try
-                            _Compressor.Delete()
+                            _Person.Delete()
                             _Filter.Filter()
-                            DgvCompressorLayout.Load()
+                            DgvPersonLayout.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
                                 CMessageBox.Show("Esse registro não pode ser excluído pois já foi referenciado em outras rotinas.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                             Else
-                                CMessageBox.Show("ERRO CP005", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                                CMessageBox.Show("ERRO PS008", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                             End If
                         End Try
                     End If
                 Else
-                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _Compressor.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
+                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _Person.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                 End If
             Catch ex As Exception
-                CMessageBox.Show("ERRO CP006", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                CMessageBox.Show("ERRO PS009", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
                 Cursor = Cursors.Default
             End Try
@@ -80,17 +81,12 @@ Public Class FrmCompressors
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        DgvCompressorLayout.Load()
+        DgvPersonLayout.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
         SplitContainer1.Panel1Collapsed = If(BtnFilter.Checked, False, True)
         SplitContainer1.SplitterDistance = 350
-    End Sub
-    Private Sub BtnDetails_Click(sender As Object, e As EventArgs) Handles BtnDetails.Click
-        SplitContainer2.Panel1Collapsed = Not BtnDetails.Checked
-        SplitContainer2.SplitterDistance = 450
-        LoadDetails()
     End Sub
     Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
         Dim Index As Integer
@@ -106,6 +102,7 @@ Public Class FrmCompressors
         Else
             For Each Page In FrmMain.TcWindows.TabPages
                 FrmMain.TcWindows.TabPages.Remove(Page)
+                Page.Controls(0).Dispose()
                 Page.Dispose()
             Next Page
         End If
@@ -118,10 +115,14 @@ Public Class FrmCompressors
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        DgvCompressorLayout.Load()
+        DgvPersonLayout.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
+    End Sub
+    Private Sub BtnDetails_Click(sender As Object, e As EventArgs) Handles BtnDetails.Click
+        SplitContainer2.Panel1Collapsed = Not BtnDetails.Checked
+        LoadDetails()
     End Sub
     Private Sub BtnCloseDetails_Click(sender As Object, e As EventArgs) Handles BtnCloseDetails.Click
         SplitContainer2.Panel1Collapsed = True
@@ -156,8 +157,7 @@ Public Class FrmCompressors
         End If
     End Sub
     Private Sub TmrLoadDetails_Tick(sender As Object, e As EventArgs) Handles TmrLoadDetails.Tick
-        LoadDetails()
-        TmrLoadDetails.Stop()
+
     End Sub
     Private Sub PgFilter_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles PgFilter.PropertyValueChanged
         If _Filter.Filter() = True Then
@@ -169,21 +169,23 @@ Public Class FrmCompressors
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        DgvCompressorLayout.Load()
+        DgvPersonLayout.Load()
     End Sub
     Private Sub LoadDetails()
         If BtnDetails.Checked Then
             If DgvData.SelectedRows.Count = 1 Then
                 Try
-                    Compressor.FillSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvWorkedHourSellable, CompressorSellableControlType.WorkedHour)
-                    Compressor.FillSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvElapsedDaySellable, CompressorSellableControlType.ElapsedDay)
+                    Person.FillAddressDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvAddress)
+                    Person.FillCompressorDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvCompressor)
+                    Person.FillContactDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvContact)
                 Catch ex As Exception
                     TmrLoadDetails.Stop()
-                    CMessageBox.Show("ERRO CP007", "Ocorreu um erro ao consultar os dados do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                    CMessageBox.Show("ERRO PS010", "Ocorreu um erro ao consultar os dados do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                 End Try
             Else
-                DgvWorkedHourSellable.DataSource = Nothing
-                DgvElapsedDaySellable.DataSource = Nothing
+                DgvCompressor.DataSource = Nothing
+                DgvAddress.DataSource = Nothing
+                DgvContact.DataSource = Nothing
             End If
         End If
     End Sub
@@ -193,6 +195,7 @@ Public Class FrmCompressors
             e.Handled = True
         End If
     End Sub
+
     Private Sub DgvData_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvData.DataSourceChanged
         If DgvData.Rows.Count > 0 Then
             LblCounter.Text = DgvData.Rows.Count & " registro" & If(DgvData.Rows.Count > 1, "s", Nothing)
@@ -201,17 +204,31 @@ Public Class FrmCompressors
         End If
     End Sub
     <DebuggerStepThrough>
-    Private Sub FrmMain_ResizeEnd(sender As Object, e As EventArgs)
-        If Me.Disposing OrElse Me.IsDisposed Then Return
-        If BtnFilter.Checked Then BtnFilter.PerformClick()
-        If Parent.FindForm IsNot Nothing Then
-            Height = Parent.FindForm.Height - 196
-            Width = Parent.FindForm.Width - 24
+    Private Sub DgvCompressors_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvCompressor.CellFormatting
+        Dim Dgv As DataGridView = sender
+        If e.ColumnIndex = Dgv.Columns("Status").Index Then
+            Select Case e.Value
+                Case Is = EnumHelper.GetEnumDescription(SimpleStatus.Active)
+                    e.CellStyle.ForeColor = Color.DarkBlue
+                Case Is = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
+                    e.CellStyle.ForeColor = Color.DarkRed
+            End Select
+        End If
+    End Sub
+    <DebuggerStepThrough>
+    Private Sub DgvAddress_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvAddress.CellFormatting
+        Dim Dgv As DataGridView = sender
+        If e.ColumnIndex = Dgv.Columns("Status").Index Then
+            Select Case e.Value
+                Case Is = EnumHelper.GetEnumDescription(SimpleStatus.Active)
+                    e.CellStyle.ForeColor = Color.DarkBlue
+                Case Is = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
+                    e.CellStyle.ForeColor = Color.DarkRed
+            End Select
         End If
     End Sub
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
-        Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Compressores", .Grid = DgvData}})
-        Dim Form As New FrmReport(Result)
-        FrmMain.OpenTab(Form, EnumHelper.GetEnumDescription(Routine.ExportGrid))
+        Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Pessoas", .Grid = DgvData}})
+        FrmMain.OpenTab(New UcReport(Result), EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
 End Class

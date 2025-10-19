@@ -1,9 +1,9 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
-Public Class FrmRoutes
-    Private _Route As New Route
-    Private _Filter As RouteFilter
+Public Class UcProductUnitGrid
+    Private _Unit As New ProductUnit
+    Private _Filter As ProductUnitFilter
     Private _User As User
     Public Sub New()
         InitializeComponent()
@@ -12,23 +12,20 @@ Public Class FrmRoutes
         SplitContainer1.SplitterDistance = 250
         SplitContainer2.Panel1Collapsed = True
         SplitContainer2.SplitterDistance = 800
-        _Filter = New RouteFilter(DgvData, PgFilter)
+        _Filter = New ProductUnitFilter(DgvData, PgFilter)
         _Filter.Filter()
         _User = Locator.GetInstance(Of Session).User
         PgFilter.SelectedObject = _Filter
-        BtnInclude.Visible = _User.CanWrite(Routine.Route)
-        BtnEdit.Visible = _User.CanWrite(Routine.Route)
-        BtnDelete.Visible = _User.CanDelete(Routine.Route)
+        BtnInclude.Visible = _User.CanWrite(Routine.ProductUnit)
+        BtnEdit.Visible = _User.CanWrite(Routine.ProductUnit)
+        BtnDelete.Visible = _User.CanDelete(Routine.ProductUnit)
         BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvlRouteLayout.Load()
-    End Sub
-    Private Sub Form_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
-        AddHandler Parent.FindForm.Resize, AddressOf FrmMain_ResizeEnd
+        DgvUnitsLayout.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
-        Using Form As New FrmRoute(New Route, Me)
+        Using Form As New FrmProductUnit(New ProductUnit, Me)
             Form.ShowDialog()
         End Using
     End Sub
@@ -36,12 +33,12 @@ Public Class FrmRoutes
         If DgvData.SelectedRows.Count = 1 Then
             Try
                 Cursor = Cursors.WaitCursor
-                _Route = New Route().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
-                Using Form As New FrmRoute(_Route, Me)
+                _Unit = New ProductUnit().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
+                Using Form As New FrmProductUnit(_Unit, Me)
                     Form.ShowDialog()
                 End Using
             Catch ex As Exception
-                CMessageBox.Show("ERRO RT004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                CMessageBox.Show("ERRO PU004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
                 Cursor = Cursors.Default
             End Try
@@ -51,27 +48,27 @@ Public Class FrmRoutes
         If DgvData.SelectedRows.Count = 1 Then
             Try
                 Cursor = Cursors.WaitCursor
-                _Route.Load(DgvData.SelectedRows(0).Cells("id").Value, False)
-                If Not _Route.LockInfo.IsLocked Then
+                _Unit.Load(DgvData.SelectedRows(0).Cells("id").Value, False)
+                If Not _Unit.LockInfo.IsLocked Then
                     If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                         Try
-                            _Route.Delete()
+                            _Unit.Delete()
                             _Filter.Filter()
-                            DgvlRouteLayout.Load()
+                            DgvUnitsLayout.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
                                 CMessageBox.Show("Esse registro não pode ser excluído pois já foi referenciado em outras rotinas.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                             Else
-                                CMessageBox.Show("ERRO RT005", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                                CMessageBox.Show("ERRO PU005", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                             End If
                         End Try
                     End If
                 Else
-                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _Route.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
+                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _Unit.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                 End If
             Catch ex As Exception
-                CMessageBox.Show("ERRO RT006", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                CMessageBox.Show("ERRO PU006", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
                 Cursor = Cursors.Default
             End Try
@@ -79,7 +76,7 @@ Public Class FrmRoutes
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        DgvlRouteLayout.Load()
+        DgvUnitsLayout.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -112,7 +109,7 @@ Public Class FrmRoutes
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        DgvlRouteLayout.Load()
+        DgvUnitsLayout.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -161,7 +158,7 @@ Public Class FrmRoutes
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        DgvlRouteLayout.Load()
+        DgvUnitsLayout.Load()
     End Sub
     Private Sub DgvData_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvData.KeyDown
         If e.KeyCode = Keys.Enter Then
@@ -176,18 +173,8 @@ Public Class FrmRoutes
             LblCounter.Font = New Font(LblCounter.Font, FontStyle.Bold)
         End If
     End Sub
-    <DebuggerStepThrough>
-    Private Sub FrmMain_ResizeEnd(sender As Object, e As EventArgs)
-        If Me.Disposing OrElse Me.IsDisposed Then Return
-        If BtnFilter.Checked Then BtnFilter.PerformClick()
-        If Parent.FindForm IsNot Nothing Then
-            Height = Parent.FindForm.Height - 196
-            Width = Parent.FindForm.Width - 24
-        End If
-    End Sub
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
-        Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Rotas", .Grid = DgvData}})
-        Dim Form As New FrmReport(Result)
-        FrmMain.OpenTab(Form, EnumHelper.GetEnumDescription(Routine.ExportGrid))
+        Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Unidades de Medida", .Grid = DgvData}})
+        FrmMain.OpenTab(New UcReport(Result), EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
 End Class

@@ -1,8 +1,8 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class FrmCompressors
-    Inherits System.Windows.Forms.Form
+Partial Class UcCompressorGrid
+    Inherits System.Windows.Forms.UserControl
 
-    'Descartar substituições de formulário para limpar a lista de componentes.
+    'O UserControl substitui o descarte para limpar a lista de componentes.
     <System.Diagnostics.DebuggerNonUserCode()> _
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
@@ -20,7 +20,7 @@ Partial Class FrmCompressors
     'OBSERVAÇÃO: o procedimento a seguir é exigido pelo Windows Form Designer
     'Pode ser modificado usando o Windows Form Designer.  
     'Não o modifique usando o editor de códigos.
-    <System.Diagnostics.DebuggerStepThrough()>
+    <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.TsMenu = New System.Windows.Forms.ToolStrip()
@@ -88,8 +88,8 @@ Partial Class FrmCompressors
         Me.TsMenu.Location = New System.Drawing.Point(0, 0)
         Me.TsMenu.Name = "TsMenu"
         Me.TsMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsMenu.Size = New System.Drawing.Size(1089, 39)
-        Me.TsMenu.TabIndex = 0
+        Me.TsMenu.Size = New System.Drawing.Size(1000, 39)
+        Me.TsMenu.TabIndex = 1
         '
         'BtnInclude
         '
@@ -183,12 +183,12 @@ Partial Class FrmCompressors
         '
         Me.SsInformation.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SsInformation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblInfo, Me.LblStatus, Me.LblCounter})
-        Me.SsInformation.Location = New System.Drawing.Point(0, 478)
+        Me.SsInformation.Location = New System.Drawing.Point(0, 578)
         Me.SsInformation.Name = "SsInformation"
-        Me.SsInformation.Size = New System.Drawing.Size(1089, 22)
+        Me.SsInformation.Size = New System.Drawing.Size(1000, 22)
         Me.SsInformation.SizingGrip = False
         Me.SsInformation.Stretch = False
-        Me.SsInformation.TabIndex = 2
+        Me.SsInformation.TabIndex = 3
         Me.SsInformation.Text = "StatusStrip1"
         '
         'LblInfo
@@ -205,7 +205,7 @@ Partial Class FrmCompressors
         'LblCounter
         '
         Me.LblCounter.Name = "LblCounter"
-        Me.LblCounter.Size = New System.Drawing.Size(1038, 17)
+        Me.LblCounter.Size = New System.Drawing.Size(918, 17)
         Me.LblCounter.Spring = True
         Me.LblCounter.Text = "       "
         Me.LblCounter.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -227,9 +227,9 @@ Partial Class FrmCompressors
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.SplitContainer2)
-        Me.SplitContainer1.Size = New System.Drawing.Size(1089, 439)
-        Me.SplitContainer1.SplitterDistance = 261
-        Me.SplitContainer1.TabIndex = 3
+        Me.SplitContainer1.Size = New System.Drawing.Size(1000, 539)
+        Me.SplitContainer1.SplitterDistance = 239
+        Me.SplitContainer1.TabIndex = 4
         '
         'PgFilter
         '
@@ -238,7 +238,7 @@ Partial Class FrmCompressors
         Me.PgFilter.Location = New System.Drawing.Point(0, 25)
         Me.PgFilter.Name = "PgFilter"
         Me.PgFilter.PropertySort = System.Windows.Forms.PropertySort.NoSort
-        Me.PgFilter.Size = New System.Drawing.Size(259, 387)
+        Me.PgFilter.Size = New System.Drawing.Size(237, 487)
         Me.PgFilter.TabIndex = 1
         Me.PgFilter.ToolbarVisible = False
         '
@@ -249,7 +249,7 @@ Partial Class FrmCompressors
         Me.TsFilterTop.Location = New System.Drawing.Point(0, 0)
         Me.TsFilterTop.Name = "TsFilterTop"
         Me.TsFilterTop.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsFilterTop.Size = New System.Drawing.Size(259, 25)
+        Me.TsFilterTop.Size = New System.Drawing.Size(237, 25)
         Me.TsFilterTop.TabIndex = 0
         Me.TsFilterTop.Text = "ToolStrip1"
         '
@@ -277,9 +277,9 @@ Partial Class FrmCompressors
         Me.TsFilterBot.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.TsFilterBot.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.TsFilterBot.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnClean, Me.ToolStripButton1})
-        Me.TsFilterBot.Location = New System.Drawing.Point(0, 412)
+        Me.TsFilterBot.Location = New System.Drawing.Point(0, 512)
         Me.TsFilterBot.Name = "TsFilterBot"
-        Me.TsFilterBot.Size = New System.Drawing.Size(259, 25)
+        Me.TsFilterBot.Size = New System.Drawing.Size(237, 25)
         Me.TsFilterBot.TabIndex = 2
         Me.TsFilterBot.Text = "ToolStrip1"
         '
@@ -319,8 +319,8 @@ Partial Class FrmCompressors
         Me.SplitContainer2.Panel2.Controls.Add(Me.DgvData)
         Me.SplitContainer2.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.SplitContainer2.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.SplitContainer2.Size = New System.Drawing.Size(824, 439)
-        Me.SplitContainer2.SplitterDistance = 272
+        Me.SplitContainer2.Size = New System.Drawing.Size(757, 539)
+        Me.SplitContainer2.SplitterDistance = 249
         Me.SplitContainer2.TabIndex = 0
         '
         'SplitContainer3
@@ -341,8 +341,8 @@ Partial Class FrmCompressors
         Me.SplitContainer3.Panel2.Controls.Add(Me.DgvElapsedDaySellable)
         Me.SplitContainer3.Panel2.Controls.Add(Me.Label2)
         Me.SplitContainer3.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.SplitContainer3.Size = New System.Drawing.Size(270, 412)
-        Me.SplitContainer3.SplitterDistance = 206
+        Me.SplitContainer3.Size = New System.Drawing.Size(247, 512)
+        Me.SplitContainer3.SplitterDistance = 256
         Me.SplitContainer3.TabIndex = 3
         '
         'DgvWorkedHourSellable
@@ -363,7 +363,7 @@ Partial Class FrmCompressors
         Me.DgvWorkedHourSellable.RowHeadersVisible = False
         Me.DgvWorkedHourSellable.RowTemplate.Height = 26
         Me.DgvWorkedHourSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvWorkedHourSellable.Size = New System.Drawing.Size(270, 180)
+        Me.DgvWorkedHourSellable.Size = New System.Drawing.Size(247, 230)
         Me.DgvWorkedHourSellable.TabIndex = 2
         '
         'Label1
@@ -373,7 +373,7 @@ Partial Class FrmCompressors
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(0, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(270, 26)
+        Me.Label1.Size = New System.Drawing.Size(247, 26)
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "Controla Hora Trabalhada"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -396,7 +396,7 @@ Partial Class FrmCompressors
         Me.DgvElapsedDaySellable.RowHeadersVisible = False
         Me.DgvElapsedDaySellable.RowTemplate.Height = 26
         Me.DgvElapsedDaySellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(270, 176)
+        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(247, 226)
         Me.DgvElapsedDaySellable.TabIndex = 3
         '
         'Label2
@@ -406,7 +406,7 @@ Partial Class FrmCompressors
         Me.Label2.ForeColor = System.Drawing.Color.White
         Me.Label2.Location = New System.Drawing.Point(0, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(270, 26)
+        Me.Label2.Size = New System.Drawing.Size(247, 26)
         Me.Label2.TabIndex = 1
         Me.Label2.Text = "Controla Dia Corrido"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -418,7 +418,7 @@ Partial Class FrmCompressors
         Me.TsDetails.Location = New System.Drawing.Point(0, 0)
         Me.TsDetails.Name = "TsDetails"
         Me.TsDetails.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsDetails.Size = New System.Drawing.Size(270, 25)
+        Me.TsDetails.Size = New System.Drawing.Size(247, 25)
         Me.TsDetails.TabIndex = 0
         Me.TsDetails.Text = "ToolStrip2"
         '
@@ -458,7 +458,7 @@ Partial Class FrmCompressors
         Me.DgvData.RowHeadersVisible = False
         Me.DgvData.RowTemplate.Height = 26
         Me.DgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvData.Size = New System.Drawing.Size(546, 437)
+        Me.DgvData.Size = New System.Drawing.Size(502, 537)
         Me.DgvData.TabIndex = 0
         '
         'DgvCompressorLayout
@@ -476,21 +476,17 @@ Partial Class FrmCompressors
         Me.DgvCcData.IncludeHeaderTextInCellCopy = False
         Me.DgvCcData.IncludeHeaderTextInRowCopy = True
         '
-        'FrmCompressors
+        'UcCompressorGrid
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.AutoSize = True
-        Me.ClientSize = New System.Drawing.Size(1089, 500)
         Me.Controls.Add(Me.SplitContainer1)
-        Me.Controls.Add(Me.TsMenu)
         Me.Controls.Add(Me.SsInformation)
+        Me.Controls.Add(Me.TsMenu)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
-        Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "FrmCompressors"
-        Me.ShowIcon = False
-        Me.ShowInTaskbar = False
+        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Name = "UcCompressorGrid"
+        Me.Size = New System.Drawing.Size(1000, 600)
         Me.TsMenu.ResumeLayout(False)
         Me.TsMenu.PerformLayout()
         Me.SsInformation.ResumeLayout(False)
@@ -528,33 +524,33 @@ Partial Class FrmCompressors
     Friend WithEvents BtnEdit As ToolStripButton
     Friend WithEvents BtnDelete As ToolStripButton
     Friend WithEvents BtnRefresh As ToolStripButton
-    Friend WithEvents BtnClose As ToolStripButton
     Friend WithEvents BtnFilter As ToolStripButton
+    Friend WithEvents BtnDetails As ToolStripButton
+    Friend WithEvents BtnClose As ToolStripButton
+    Friend WithEvents BtnExport As ToolStripButton
     Friend WithEvents SsInformation As StatusStrip
+    Friend WithEvents LblInfo As ToolStripStatusLabel
+    Friend WithEvents LblStatus As ToolStripStatusLabel
+    Friend WithEvents LblCounter As ToolStripStatusLabel
     Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents PgFilter As PropertyGrid
     Friend WithEvents TsFilterTop As ToolStrip
     Friend WithEvents BtnCloseFilter As ToolStripButton
     Friend WithEvents LblFilter As ToolStripLabel
-    Friend WithEvents SplitContainer2 As SplitContainer
-    Friend WithEvents TsDetails As ToolStrip
-    Friend WithEvents BtnCloseDetails As ToolStripButton
-    Friend WithEvents LblView As ToolStripLabel
-    Friend WithEvents DgvData As DataGridView
     Friend WithEvents TsFilterBot As ToolStrip
     Friend WithEvents BtnClean As ToolStripButton
-    Friend WithEvents LblStatus As ToolStripStatusLabel
-    Friend WithEvents LblInfo As ToolStripStatusLabel
-    Friend WithEvents LblCounter As ToolStripStatusLabel
-    Friend WithEvents BtnDetails As ToolStripButton
     Friend WithEvents ToolStripButton1 As ToolStripButton
-    Friend WithEvents DgvCompressorLayout As DataGridViewLayout
+    Friend WithEvents SplitContainer2 As SplitContainer
     Friend WithEvents SplitContainer3 As SplitContainer
     Friend WithEvents DgvWorkedHourSellable As DataGridView
     Friend WithEvents Label1 As Label
     Friend WithEvents DgvElapsedDaySellable As DataGridView
     Friend WithEvents Label2 As Label
+    Friend WithEvents TsDetails As ToolStrip
+    Friend WithEvents BtnCloseDetails As ToolStripButton
+    Friend WithEvents LblView As ToolStripLabel
+    Friend WithEvents DgvData As DataGridView
+    Friend WithEvents DgvCompressorLayout As DataGridViewLayout
     Friend WithEvents TmrLoadDetails As Timer
-    Friend WithEvents BtnExport As ToolStripButton
     Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
 End Class

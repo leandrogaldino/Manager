@@ -1,13 +1,12 @@
 ﻿Imports System.IO
 Imports ControlLibrary
-Public Class FrmReport
+Public Class UcReport
     Private _Result As ReportResult
     Public Sub New(Result As ReportResult)
         InitializeComponent()
         _Result = Result
     End Sub
-    Private Sub Form_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
-        AddHandler Parent.FindForm.Resize, AddressOf FrmMain_ResizeEnd
+    Private Sub UcReport_Load(sender As Object, e As EventArgs) Handles Me.Load
         If _Result IsNot Nothing Then
             PdfDocumentViewer.Load(_Result.FilePath & ".pdf")
             LblDocumentPage.Text = " De " & PdfDocumentViewer.PageCount
@@ -29,14 +28,6 @@ Public Class FrmReport
                 FrmMain.TcWindows.TabPages.Remove(Page)
                 Page.Dispose()
             Next Page
-        End If
-    End Sub
-    <DebuggerStepThrough>
-    Private Sub FrmMain_ResizeEnd(sender As Object, e As EventArgs) Handles MyBase.ResizeEnd
-        If Me.Disposing OrElse Me.IsDisposed Then Return
-        If Parent.FindForm IsNot Nothing Then
-            Height = Parent.FindForm.Height - 196
-            Width = Parent.FindForm.Width - 24
         End If
     End Sub
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click

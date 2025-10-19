@@ -3,7 +3,7 @@ Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Public Class FrmCity
     Private _City As City
-    Private _CitiesForm As FrmCities
+    Private _GridControl As UcCityGrid
     Private _CitiesGrid As DataGridView
     Private _Filter As CityFilter
     Private _Deleting As Boolean
@@ -27,12 +27,12 @@ Public Class FrmCity
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(City As City, CitiesForm As FrmCities)
+    Public Sub New(City As City, GridControl As UcCityGrid)
         InitializeComponent()
         _City = City
-        _CitiesForm = CitiesForm
-        _CitiesGrid = _CitiesForm.DgvData
-        _Filter = CType(_CitiesForm.PgFilter.SelectedObject, CityFilter)
+        _GridControl = GridControl
+        _CitiesGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, CityFilter)
         _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
@@ -116,7 +116,7 @@ Public Class FrmCity
                     End If
                 End If
             End If
-            If _CitiesForm IsNot Nothing Then
+            If _GridControl IsNot Nothing Then
                 DgvRoute.Fill(_City.Routes)
             End If
             _Deleting = False
@@ -140,7 +140,7 @@ Public Class FrmCity
                         _City.Delete()
                         If _CitiesGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _CitiesForm.DgvCitiesLayout.Load()
+                            _GridControl.DgvCitiesLayout.Load()
                             _CitiesGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -244,9 +244,9 @@ Public Class FrmCity
                     DgvRoute.Fill(_City.Routes)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.City)
-                    If _CitiesForm IsNot Nothing Then
+                    If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _CitiesForm.DgvCitiesLayout.Load()
+                        _GridControl.DgvCitiesLayout.Load()
                         Row = _CitiesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

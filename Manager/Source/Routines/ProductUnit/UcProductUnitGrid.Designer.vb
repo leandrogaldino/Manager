@@ -1,8 +1,8 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class FrmRoutes
-    Inherits System.Windows.Forms.Form
+Partial Class UcProductUnitGrid
+    Inherits System.Windows.Forms.UserControl
 
-    'Descartar substituições de formulário para limpar a lista de componentes.
+    'O UserControl substitui o descarte para limpar a lista de componentes.
     <System.Diagnostics.DebuggerNonUserCode()> _
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
@@ -20,9 +20,8 @@ Partial Class FrmRoutes
     'OBSERVAÇÃO: o procedimento a seguir é exigido pelo Windows Form Designer
     'Pode ser modificado usando o Windows Form Designer.  
     'Não o modifique usando o editor de códigos.
-    <System.Diagnostics.DebuggerStepThrough()>
+    <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Me.TsMenu = New System.Windows.Forms.ToolStrip()
         Me.BtnInclude = New System.Windows.Forms.ToolStripButton()
         Me.BtnEdit = New System.Windows.Forms.ToolStripButton()
@@ -49,8 +48,7 @@ Partial Class FrmRoutes
         Me.BtnCloseDetails = New System.Windows.Forms.ToolStripButton()
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
-        Me.DgvlRouteLayout = New Manager.DataGridViewLayout()
-        Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvUnitsLayout = New Manager.DataGridViewLayout()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -76,8 +74,8 @@ Partial Class FrmRoutes
         Me.TsMenu.Location = New System.Drawing.Point(0, 0)
         Me.TsMenu.Name = "TsMenu"
         Me.TsMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsMenu.Size = New System.Drawing.Size(1089, 39)
-        Me.TsMenu.TabIndex = 0
+        Me.TsMenu.Size = New System.Drawing.Size(1000, 39)
+        Me.TsMenu.TabIndex = 1
         '
         'BtnInclude
         '
@@ -172,12 +170,12 @@ Partial Class FrmRoutes
         '
         Me.SsInformation.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SsInformation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblInfo, Me.LblStatus, Me.LblCounter})
-        Me.SsInformation.Location = New System.Drawing.Point(0, 478)
+        Me.SsInformation.Location = New System.Drawing.Point(0, 578)
         Me.SsInformation.Name = "SsInformation"
-        Me.SsInformation.Size = New System.Drawing.Size(1089, 22)
+        Me.SsInformation.Size = New System.Drawing.Size(1000, 22)
         Me.SsInformation.SizingGrip = False
         Me.SsInformation.Stretch = False
-        Me.SsInformation.TabIndex = 2
+        Me.SsInformation.TabIndex = 3
         Me.SsInformation.Text = "StatusStrip1"
         '
         'LblInfo
@@ -194,7 +192,7 @@ Partial Class FrmRoutes
         'LblCounter
         '
         Me.LblCounter.Name = "LblCounter"
-        Me.LblCounter.Size = New System.Drawing.Size(1038, 17)
+        Me.LblCounter.Size = New System.Drawing.Size(949, 17)
         Me.LblCounter.Spring = True
         Me.LblCounter.Text = "       "
         Me.LblCounter.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -216,9 +214,9 @@ Partial Class FrmRoutes
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.SplitContainer2)
-        Me.SplitContainer1.Size = New System.Drawing.Size(1089, 439)
-        Me.SplitContainer1.SplitterDistance = 261
-        Me.SplitContainer1.TabIndex = 3
+        Me.SplitContainer1.Size = New System.Drawing.Size(1000, 539)
+        Me.SplitContainer1.SplitterDistance = 239
+        Me.SplitContainer1.TabIndex = 4
         '
         'PgFilter
         '
@@ -227,7 +225,7 @@ Partial Class FrmRoutes
         Me.PgFilter.Location = New System.Drawing.Point(0, 25)
         Me.PgFilter.Name = "PgFilter"
         Me.PgFilter.PropertySort = System.Windows.Forms.PropertySort.NoSort
-        Me.PgFilter.Size = New System.Drawing.Size(259, 387)
+        Me.PgFilter.Size = New System.Drawing.Size(237, 487)
         Me.PgFilter.TabIndex = 1
         Me.PgFilter.ToolbarVisible = False
         '
@@ -238,7 +236,7 @@ Partial Class FrmRoutes
         Me.TsFilterTop.Location = New System.Drawing.Point(0, 0)
         Me.TsFilterTop.Name = "TsFilterTop"
         Me.TsFilterTop.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsFilterTop.Size = New System.Drawing.Size(259, 25)
+        Me.TsFilterTop.Size = New System.Drawing.Size(237, 25)
         Me.TsFilterTop.TabIndex = 0
         Me.TsFilterTop.Text = "ToolStrip1"
         '
@@ -266,9 +264,9 @@ Partial Class FrmRoutes
         Me.TsFilterBot.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.TsFilterBot.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.TsFilterBot.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnClean, Me.ToolStripButton1})
-        Me.TsFilterBot.Location = New System.Drawing.Point(0, 412)
+        Me.TsFilterBot.Location = New System.Drawing.Point(0, 512)
         Me.TsFilterBot.Name = "TsFilterBot"
-        Me.TsFilterBot.Size = New System.Drawing.Size(259, 25)
+        Me.TsFilterBot.Size = New System.Drawing.Size(237, 25)
         Me.TsFilterBot.TabIndex = 2
         Me.TsFilterBot.Text = "ToolStrip1"
         '
@@ -307,8 +305,8 @@ Partial Class FrmRoutes
         Me.SplitContainer2.Panel2.Controls.Add(Me.DgvData)
         Me.SplitContainer2.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.SplitContainer2.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.SplitContainer2.Size = New System.Drawing.Size(824, 439)
-        Me.SplitContainer2.SplitterDistance = 272
+        Me.SplitContainer2.Size = New System.Drawing.Size(757, 539)
+        Me.SplitContainer2.SplitterDistance = 249
         Me.SplitContainer2.TabIndex = 0
         '
         'TsDetails
@@ -318,7 +316,7 @@ Partial Class FrmRoutes
         Me.TsDetails.Location = New System.Drawing.Point(0, 0)
         Me.TsDetails.Name = "TsDetails"
         Me.TsDetails.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsDetails.Size = New System.Drawing.Size(270, 25)
+        Me.TsDetails.Size = New System.Drawing.Size(247, 25)
         Me.TsDetails.TabIndex = 0
         Me.TsDetails.Text = "ToolStrip2"
         '
@@ -358,35 +356,25 @@ Partial Class FrmRoutes
         Me.DgvData.RowHeadersVisible = False
         Me.DgvData.RowTemplate.Height = 26
         Me.DgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvData.Size = New System.Drawing.Size(546, 437)
+        Me.DgvData.Size = New System.Drawing.Size(502, 537)
         Me.DgvData.TabIndex = 0
         '
-        'DgvlRouteLayout
+        'DgvUnitsLayout
         '
-        Me.DgvlRouteLayout.DataGridView = Me.DgvData
-        Me.DgvlRouteLayout.Routine = Manager.Routine.Route
+        Me.DgvUnitsLayout.DataGridView = Me.DgvData
+        Me.DgvUnitsLayout.Routine = Manager.Routine.ProductUnit
         '
-        'DgvCcData
-        '
-        Me.DgvCcData.DataGridView = Me.DgvData
-        Me.DgvCcData.IncludeHeaderTextInCellCopy = False
-        Me.DgvCcData.IncludeHeaderTextInRowCopy = True
-        '
-        'FrmRoutes
+        'UcProductUnitGrid
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.AutoSize = True
-        Me.ClientSize = New System.Drawing.Size(1089, 500)
         Me.Controls.Add(Me.SplitContainer1)
-        Me.Controls.Add(Me.TsMenu)
         Me.Controls.Add(Me.SsInformation)
+        Me.Controls.Add(Me.TsMenu)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "FrmRoutes"
-        Me.ShowIcon = False
-        Me.ShowInTaskbar = False
+        Me.Name = "UcProductUnitGrid"
+        Me.Size = New System.Drawing.Size(1000, 600)
         Me.TsMenu.ResumeLayout(False)
         Me.TsMenu.PerformLayout()
         Me.SsInformation.ResumeLayout(False)
@@ -418,28 +406,26 @@ Partial Class FrmRoutes
     Friend WithEvents BtnEdit As ToolStripButton
     Friend WithEvents BtnDelete As ToolStripButton
     Friend WithEvents BtnRefresh As ToolStripButton
-    Friend WithEvents BtnClose As ToolStripButton
     Friend WithEvents BtnFilter As ToolStripButton
+    Friend WithEvents BtnDetails As ToolStripButton
+    Friend WithEvents BtnClose As ToolStripButton
+    Friend WithEvents BtnExport As ToolStripButton
     Friend WithEvents SsInformation As StatusStrip
     Friend WithEvents LblInfo As ToolStripStatusLabel
+    Friend WithEvents LblStatus As ToolStripStatusLabel
+    Friend WithEvents LblCounter As ToolStripStatusLabel
     Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents PgFilter As PropertyGrid
     Friend WithEvents TsFilterTop As ToolStrip
     Friend WithEvents BtnCloseFilter As ToolStripButton
     Friend WithEvents LblFilter As ToolStripLabel
+    Friend WithEvents TsFilterBot As ToolStrip
+    Friend WithEvents BtnClean As ToolStripButton
+    Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents SplitContainer2 As SplitContainer
     Friend WithEvents TsDetails As ToolStrip
     Friend WithEvents BtnCloseDetails As ToolStripButton
     Friend WithEvents LblView As ToolStripLabel
     Friend WithEvents DgvData As DataGridView
-    Friend WithEvents TsFilterBot As ToolStrip
-    Friend WithEvents FffffToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents BtnClean As ToolStripButton
-    Friend WithEvents LblStatus As ToolStripStatusLabel
-    Friend WithEvents LblCounter As ToolStripStatusLabel
-    Friend WithEvents BtnDetails As ToolStripButton
-    Friend WithEvents ToolStripButton1 As ToolStripButton
-    Friend WithEvents DgvlRouteLayout As DataGridViewLayout
-    Friend WithEvents BtnExport As ToolStripButton
-    Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvUnitsLayout As DataGridViewLayout
 End Class

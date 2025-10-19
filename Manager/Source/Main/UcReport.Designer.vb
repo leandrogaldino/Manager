@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class FrmReport
-    Inherits System.Windows.Forms.Form
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class UcReport
+    Inherits System.Windows.Forms.UserControl
 
-    'Descartar substituições de formulário para limpar a lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()>
+    'O UserControl substitui o descarte para limpar a lista de componentes.
+    <System.Diagnostics.DebuggerNonUserCode()> _
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,12 +20,12 @@ Partial Class FrmReport
     'OBSERVAÇÃO: o procedimento a seguir é exigido pelo Windows Form Designer
     'Pode ser modificado usando o Windows Form Designer.  
     'Não o modifique usando o editor de códigos.
-    <System.Diagnostics.DebuggerStepThrough()>
+    <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmReport))
-        Dim MessageBoxSettings1 As Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings = New Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings()
-        Dim PdfViewerPrinterSettings1 As Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings = New Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings()
-        Dim TextSearchSettings1 As Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings = New Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(UcReport))
+        Dim MessageBoxSettings2 As Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings = New Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings()
+        Dim PdfViewerPrinterSettings2 As Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings = New Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings()
+        Dim TextSearchSettings2 As Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings = New Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings()
         Me.TsMenu = New System.Windows.Forms.ToolStrip()
         Me.BtnSave = New System.Windows.Forms.ToolStripButton()
         Me.BtnPrint = New System.Windows.Forms.ToolStripButton()
@@ -36,8 +36,8 @@ Partial Class FrmReport
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.TxtCurrentPage = New System.Windows.Forms.ToolStripTextBox()
         Me.LblDocumentPage = New System.Windows.Forms.ToolStripLabel()
-        Me.SfdDocument = New System.Windows.Forms.SaveFileDialog()
         Me.PdfDocumentViewer = New Syncfusion.Windows.Forms.PdfViewer.PdfDocumentView()
+        Me.SfdDocument = New System.Windows.Forms.SaveFileDialog()
         Me.TsMenu.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -50,8 +50,8 @@ Partial Class FrmReport
         Me.TsMenu.Location = New System.Drawing.Point(0, 0)
         Me.TsMenu.Name = "TsMenu"
         Me.TsMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsMenu.Size = New System.Drawing.Size(1089, 39)
-        Me.TsMenu.TabIndex = 0
+        Me.TsMenu.Size = New System.Drawing.Size(1000, 39)
+        Me.TsMenu.TabIndex = 1
         '
         'BtnSave
         '
@@ -150,46 +150,42 @@ Partial Class FrmReport
         Me.PdfDocumentViewer.IsTextSearchEnabled = True
         Me.PdfDocumentViewer.IsTextSelectionEnabled = True
         Me.PdfDocumentViewer.Location = New System.Drawing.Point(0, 39)
-        MessageBoxSettings1.EnableNotification = True
-        Me.PdfDocumentViewer.MessageBoxSettings = MessageBoxSettings1
+        MessageBoxSettings2.EnableNotification = True
+        Me.PdfDocumentViewer.MessageBoxSettings = MessageBoxSettings2
         Me.PdfDocumentViewer.MinimumZoomPercentage = 50
         Me.PdfDocumentViewer.Name = "PdfDocumentViewer"
         Me.PdfDocumentViewer.PageBorderThickness = 1
-        PdfViewerPrinterSettings1.PageOrientation = Syncfusion.Windows.PdfViewer.PdfViewerPrintOrientation.[Auto]
-        PdfViewerPrinterSettings1.PageSize = Syncfusion.Windows.PdfViewer.PdfViewerPrintSize.ActualSize
-        PdfViewerPrinterSettings1.PrintLocation = CType(resources.GetObject("PdfViewerPrinterSettings1.PrintLocation"), System.Drawing.PointF)
-        PdfViewerPrinterSettings1.ShowPrintStatusDialog = True
-        Me.PdfDocumentViewer.PrinterSettings = PdfViewerPrinterSettings1
+        PdfViewerPrinterSettings2.PageOrientation = Syncfusion.Windows.PdfViewer.PdfViewerPrintOrientation.[Auto]
+        PdfViewerPrinterSettings2.PageSize = Syncfusion.Windows.PdfViewer.PdfViewerPrintSize.ActualSize
+        PdfViewerPrinterSettings2.PrintLocation = CType(resources.GetObject("PdfViewerPrinterSettings2.PrintLocation"), System.Drawing.PointF)
+        PdfViewerPrinterSettings2.ShowPrintStatusDialog = True
+        Me.PdfDocumentViewer.PrinterSettings = PdfViewerPrinterSettings2
         Me.PdfDocumentViewer.ReferencePath = Nothing
         Me.PdfDocumentViewer.ScrollDisplacementValue = 0
         Me.PdfDocumentViewer.ShowHorizontalScrollBar = True
         Me.PdfDocumentViewer.ShowVerticalScrollBar = True
-        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1089, 461)
+        Me.PdfDocumentViewer.Size = New System.Drawing.Size(1000, 561)
         Me.PdfDocumentViewer.SpaceBetweenPages = 8
-        Me.PdfDocumentViewer.TabIndex = 4
-        TextSearchSettings1.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
-        TextSearchSettings1.HighlightAllInstance = True
-        TextSearchSettings1.OtherInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(254, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.PdfDocumentViewer.TextSearchSettings = TextSearchSettings1
+        Me.PdfDocumentViewer.TabIndex = 5
+        TextSearchSettings2.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
+        TextSearchSettings2.HighlightAllInstance = True
+        TextSearchSettings2.OtherInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(254, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.PdfDocumentViewer.TextSearchSettings = TextSearchSettings2
         Me.PdfDocumentViewer.ThemeName = "Default"
         Me.PdfDocumentViewer.VerticalScrollOffset = 0
         Me.PdfDocumentViewer.VisualStyle = Syncfusion.Windows.Forms.PdfViewer.VisualStyle.[Default]
         Me.PdfDocumentViewer.ZoomMode = Syncfusion.Windows.Forms.PdfViewer.ZoomMode.[Default]
         '
-        'FrmReport
+        'UcReport
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.AutoSize = True
-        Me.ClientSize = New System.Drawing.Size(1089, 500)
         Me.Controls.Add(Me.PdfDocumentViewer)
         Me.Controls.Add(Me.TsMenu)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "FrmReport"
-        Me.ShowIcon = False
-        Me.ShowInTaskbar = False
+        Me.Name = "UcReport"
+        Me.Size = New System.Drawing.Size(1000, 600)
         Me.TsMenu.ResumeLayout(False)
         Me.TsMenu.PerformLayout()
         Me.ResumeLayout(False)
@@ -200,14 +196,13 @@ Partial Class FrmReport
     Friend WithEvents TsMenu As ToolStrip
     Friend WithEvents BtnSave As ToolStripButton
     Friend WithEvents BtnPrint As ToolStripButton
-    Friend WithEvents BtnClose As ToolStripButton
-    Friend WithEvents FffffToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents LblDocumentPage As ToolStripLabel
     Friend WithEvents BtnEmail As ToolStripButton
-    Friend WithEvents SfdDocument As SaveFileDialog
+    Friend WithEvents BtnClose As ToolStripButton
     Friend WithEvents BtnZoomIn As ToolStripButton
     Friend WithEvents BtnZoomOut As ToolStripButton
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
     Friend WithEvents TxtCurrentPage As ToolStripTextBox
+    Friend WithEvents LblDocumentPage As ToolStripLabel
     Friend WithEvents PdfDocumentViewer As Syncfusion.Windows.Forms.PdfViewer.PdfDocumentView
+    Friend WithEvents SfdDocument As SaveFileDialog
 End Class

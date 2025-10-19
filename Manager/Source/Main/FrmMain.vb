@@ -152,7 +152,7 @@ Public Class FrmMain
     End Sub
     Private Sub PersonClick()
         If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.Person)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmPersons, EnumHelper.GetEnumDescription(Routine.Person))
+            OpenTab(New UcPersonGrid, EnumHelper.GetEnumDescription(Routine.Person))
         Else
             SelectTab(Routine.Person)
         End If
@@ -169,28 +169,28 @@ Public Class FrmMain
     End Sub
     Private Sub CompressorClick()
         If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.Compressor)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmCompressors, EnumHelper.GetEnumDescription(Routine.Compressor))
+            OpenTab(New UcCompressorGrid, EnumHelper.GetEnumDescription(Routine.Compressor))
         Else
             SelectTab(Routine.Compressor)
         End If
     End Sub
     Private Sub RouteClick()
         If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.Route)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmRoutes, EnumHelper.GetEnumDescription(Routine.Route))
+            OpenTab(New UcRouteGrid, EnumHelper.GetEnumDescription(Routine.Route))
         Else
             SelectTab(Routine.Route)
         End If
     End Sub
     Private Sub CityClick()
         If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.City)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmCities, EnumHelper.GetEnumDescription(Routine.City))
+            OpenTab(New UcCityGrid, EnumHelper.GetEnumDescription(Routine.City))
         Else
             SelectTab(Routine.City)
         End If
     End Sub
     Private Sub ProductUnitClick()
         If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.ProductUnit)) Or Control.ModifierKeys = Keys.Shift Then
-            OpenTab(New FrmProductUnits, EnumHelper.GetEnumDescription(Routine.ProductUnit))
+            OpenTab(New UcProductUnitGrid, EnumHelper.GetEnumDescription(Routine.ProductUnit))
         Else
             SelectTab(Routine.ProductUnit)
         End If
@@ -338,21 +338,16 @@ Public Class FrmMain
             Form.ShowDialog()
         End Using
     End Sub
-    Public Sub OpenTab(Form As Form, TabText As String)
+    Public Sub OpenTab(UC As UserControl, TabText As String)
         Dim Page As TabPage
-        Form.TopMost = False
-        Form.TopLevel = False
-        Form.Location = New Point(0, 0)
-        Form.Height = Height - 198
-        Form.Width = Width - 26
+        UC.Dock = DockStyle.Fill
         Page = New TabPage With {
             .Text = TabText,
             .AutoScroll = True
         }
-        Page.Controls.Add(Form)
+        Page.Controls.Add(UC)
         TcWindows.Controls.Add(Page)
         TcWindows.SelectTab(TcWindows.TabCount - 1)
-        Form.Show()
     End Sub
     Public Sub SelectTab(Routine As Routine)
         Dim FirstIndex As Integer

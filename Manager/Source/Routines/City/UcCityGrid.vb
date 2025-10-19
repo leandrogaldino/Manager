@@ -1,10 +1,9 @@
 ﻿Imports ControlLibrary
-Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
-Public Class FrmProductUnits
-    Private _Unit As New ProductUnit
-    Private _Filter As ProductUnitFilter
-    Private _User As User
+Imports ControlLibrary.Extensions
+Public Class UcCityGrid
+    Private _City As New City
+    Private _Filter As CityFilter
     Public Sub New()
         InitializeComponent()
         ControlHelper.EnableControlDoubleBuffer(DgvData, True)
@@ -12,23 +11,19 @@ Public Class FrmProductUnits
         SplitContainer1.SplitterDistance = 250
         SplitContainer2.Panel1Collapsed = True
         SplitContainer2.SplitterDistance = 800
-        _Filter = New ProductUnitFilter(DgvData, PgFilter)
+        _Filter = New CityFilter(DgvData, PgFilter)
         _Filter.Filter()
-        _User = Locator.GetInstance(Of Session).User
         PgFilter.SelectedObject = _Filter
-        BtnInclude.Visible = _User.CanWrite(Routine.ProductUnit)
-        BtnEdit.Visible = _User.CanWrite(Routine.ProductUnit)
-        BtnDelete.Visible = _User.CanDelete(Routine.ProductUnit)
-        BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
+        BtnInclude.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.City)
+        BtnEdit.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.City)
+        BtnDelete.Visible = Locator.GetInstance(Of Session).User.CanDelete(Routine.City)
+        BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
-    Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvUnitsLayout.Load()
-    End Sub
-    Private Sub Form_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
-        AddHandler Parent.FindForm.Resize, AddressOf FrmMain_ResizeEnd
+    Private Sub Frm(sender As Object, e As EventArgs) Handles MyBase.Load
+        DgvCitiesLayout.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
-        Using Form As New FrmProductUnit(New ProductUnit, Me)
+        Using Form As New FrmCity(New City, Me)
             Form.ShowDialog()
         End Using
     End Sub
@@ -36,12 +31,12 @@ Public Class FrmProductUnits
         If DgvData.SelectedRows.Count = 1 Then
             Try
                 Cursor = Cursors.WaitCursor
-                _Unit = New ProductUnit().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
-                Using Form As New FrmProductUnit(_Unit, Me)
+                _City = New City().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
+                Using Form As New FrmCity(_City, Me)
                     Form.ShowDialog()
                 End Using
             Catch ex As Exception
-                CMessageBox.Show("ERRO PU004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                CMessageBox.Show("ERRO CT001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
                 Cursor = Cursors.Default
             End Try
@@ -51,27 +46,27 @@ Public Class FrmProductUnits
         If DgvData.SelectedRows.Count = 1 Then
             Try
                 Cursor = Cursors.WaitCursor
-                _Unit.Load(DgvData.SelectedRows(0).Cells("id").Value, False)
-                If Not _Unit.LockInfo.IsLocked Then
+                _City.Load(DgvData.SelectedRows(0).Cells("id").Value, False)
+                If Not _City.LockInfo.IsLocked Then
                     If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                         Try
-                            _Unit.Delete()
+                            _City.Delete()
                             _Filter.Filter()
-                            DgvUnitsLayout.Load()
+                            DgvCitiesLayout.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
                                 CMessageBox.Show("Esse registro não pode ser excluído pois já foi referenciado em outras rotinas.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                             Else
-                                CMessageBox.Show("ERRO PU005", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                                CMessageBox.Show("ERRO CT002", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                             End If
                         End Try
                     End If
                 Else
-                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _Unit.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
+                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _City.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                 End If
             Catch ex As Exception
-                CMessageBox.Show("ERRO PU006", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                CMessageBox.Show("ERRO CT003", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
                 Cursor = Cursors.Default
             End Try
@@ -79,11 +74,11 @@ Public Class FrmProductUnits
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        DgvUnitsLayout.Load()
+        DgvCitiesLayout.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
-        SplitContainer1.Panel1Collapsed = If(BtnFilter.Checked, False, True)
+        SplitContainer1.Panel1Collapsed = Not BtnFilter.Checked
         SplitContainer1.SplitterDistance = 350
     End Sub
     Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
@@ -112,7 +107,7 @@ Public Class FrmProductUnits
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        DgvUnitsLayout.Load()
+        DgvCitiesLayout.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -161,7 +156,7 @@ Public Class FrmProductUnits
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        DgvUnitsLayout.Load()
+        DgvCitiesLayout.Load()
     End Sub
     Private Sub DgvData_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvData.KeyDown
         If e.KeyCode = Keys.Enter Then
@@ -176,19 +171,11 @@ Public Class FrmProductUnits
             LblCounter.Font = New Font(LblCounter.Font, FontStyle.Bold)
         End If
     End Sub
-    <DebuggerStepThrough>
-    Private Sub FrmMain_ResizeEnd(sender As Object, e As EventArgs)
-        If Me.Disposing OrElse Me.IsDisposed Then Return
-        If BtnFilter.Checked Then BtnFilter.PerformClick()
-        If Parent.FindForm IsNot Nothing Then
-            Height = Parent.FindForm.Height - 196
-            Width = Parent.FindForm.Width - 24
-        End If
-    End Sub
-
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
-        Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Unidades de Medida", .Grid = DgvData}})
-        Dim Form As New FrmReport(Result)
-        FrmMain.OpenTab(Form, EnumHelper.GetEnumDescription(Routine.ExportGrid))
+        Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Cidades", .Grid = DgvData}})
+        FrmMain.OpenTab(New UcReport(Result), EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
 End Class
+
+
+

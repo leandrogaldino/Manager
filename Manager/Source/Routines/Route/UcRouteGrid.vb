@@ -1,36 +1,34 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
-Public Class FrmPersons
-    Private _Person As New Person
-    Private _Filter As PersonFilter
+Public Class UcRouteGrid
+    Private _Route As New Route
+    Private _Filter As RouteFilter
+    Private _User As User
     Public Sub New()
         InitializeComponent()
         ControlHelper.EnableControlDoubleBuffer(DgvData, True)
-        ControlHelper.EnableControlDoubleBuffer(DgvAddress, True)
-        ControlHelper.EnableControlDoubleBuffer(DgvCompressor, True)
-        ControlHelper.EnableControlDoubleBuffer(DgvContact, True)
         SplitContainer1.Panel1Collapsed = True
         SplitContainer1.SplitterDistance = 250
         SplitContainer2.Panel1Collapsed = True
-        SplitContainer2.SplitterDistance = 500
-        _Filter = New PersonFilter(DgvData, PgFilter)
+        SplitContainer2.SplitterDistance = 800
+        _Filter = New RouteFilter(DgvData, PgFilter)
         _Filter.Filter()
+        _User = Locator.GetInstance(Of Session).User
         PgFilter.SelectedObject = _Filter
-        LoadDetails()
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.Person)
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.Person)
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.CanDelete(Routine.Person)
-        BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
+        BtnInclude.Visible = _User.CanWrite(Routine.Route)
+        BtnEdit.Visible = _User.CanWrite(Routine.Route)
+        BtnDelete.Visible = _User.CanDelete(Routine.Route)
+        BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvPersonLayout.Load()
+        DgvlRouteLayout.Load()
     End Sub
     Private Sub Form_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         AddHandler Parent.FindForm.Resize, AddressOf FrmMain_ResizeEnd
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
-        Using Form As New FrmPerson(New Person, Me)
+        Using Form As New FrmRoute(New Route, Me)
             Form.ShowDialog()
         End Using
     End Sub
@@ -38,15 +36,12 @@ Public Class FrmPersons
         If DgvData.SelectedRows.Count = 1 Then
             Try
                 Cursor = Cursors.WaitCursor
-                _Person = New Person().Load(CLng(DgvData.SelectedRows(0).Cells("id").Value), True)
-                Using Form As New FrmPerson(_Person, Me)
-                    Form.DgvCompressor.Fill(_Person.Compressors)
-                    Form.DgvAddress.Fill(_Person.Addresses)
-                    Form.DgvContact.Fill(_Person.Contacts)
+                _Route = New Route().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
+                Using Form As New FrmRoute(_Route, Me)
                     Form.ShowDialog()
                 End Using
             Catch ex As Exception
-                CMessageBox.Show("ERRO PS007", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                CMessageBox.Show("ERRO RT004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
                 Cursor = Cursors.Default
             End Try
@@ -56,27 +51,27 @@ Public Class FrmPersons
         If DgvData.SelectedRows.Count = 1 Then
             Try
                 Cursor = Cursors.WaitCursor
-                _Person.Load(DgvData.SelectedRows(0).Cells("id").Value, False)
-                If Not _Person.LockInfo.IsLocked Then
+                _Route.Load(DgvData.SelectedRows(0).Cells("id").Value, False)
+                If Not _Route.LockInfo.IsLocked Then
                     If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                         Try
-                            _Person.Delete()
+                            _Route.Delete()
                             _Filter.Filter()
-                            DgvPersonLayout.Load()
+                            DgvlRouteLayout.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
                                 CMessageBox.Show("Esse registro não pode ser excluído pois já foi referenciado em outras rotinas.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                             Else
-                                CMessageBox.Show("ERRO PS008", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                                CMessageBox.Show("ERRO RT005", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                             End If
                         End Try
                     End If
                 Else
-                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _Person.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
+                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _Route.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                 End If
             Catch ex As Exception
-                CMessageBox.Show("ERRO PS009", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                CMessageBox.Show("ERRO RT006", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
                 Cursor = Cursors.Default
             End Try
@@ -84,7 +79,7 @@ Public Class FrmPersons
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        DgvPersonLayout.Load()
+        DgvlRouteLayout.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -105,7 +100,6 @@ Public Class FrmPersons
         Else
             For Each Page In FrmMain.TcWindows.TabPages
                 FrmMain.TcWindows.TabPages.Remove(Page)
-                Page.Controls(0).Dispose()
                 Page.Dispose()
             Next Page
         End If
@@ -118,14 +112,13 @@ Public Class FrmPersons
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        DgvPersonLayout.Load()
+        DgvlRouteLayout.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
     End Sub
     Private Sub BtnDetails_Click(sender As Object, e As EventArgs) Handles BtnDetails.Click
         SplitContainer2.Panel1Collapsed = Not BtnDetails.Checked
-        LoadDetails()
     End Sub
     Private Sub BtnCloseDetails_Click(sender As Object, e As EventArgs) Handles BtnCloseDetails.Click
         SplitContainer2.Panel1Collapsed = True
@@ -150,7 +143,6 @@ Public Class FrmPersons
         End If
     End Sub
     Private Sub DgvData_SelectionChanged(sender As Object, e As EventArgs) Handles DgvData.SelectionChanged
-        TmrLoadDetails.Start()
         If DgvData.SelectedRows.Count = 0 Then
             BtnEdit.Enabled = False
             BtnDelete.Enabled = False
@@ -158,10 +150,6 @@ Public Class FrmPersons
             BtnEdit.Enabled = True
             BtnDelete.Enabled = True
         End If
-    End Sub
-    Private Sub TmrLoadDetails_Tick(sender As Object, e As EventArgs) Handles TmrLoadDetails.Tick
-        LoadDetails()
-        TmrLoadDetails.Stop()
     End Sub
     Private Sub PgFilter_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles PgFilter.PropertyValueChanged
         If _Filter.Filter() = True Then
@@ -173,25 +161,7 @@ Public Class FrmPersons
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        DgvPersonLayout.Load()
-    End Sub
-    Private Sub LoadDetails()
-        If BtnDetails.Checked Then
-            If DgvData.SelectedRows.Count = 1 Then
-                Try
-                    Person.FillAddressDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvAddress)
-                    Person.FillCompressorDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvCompressor)
-                    Person.FillContactDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvContact)
-                Catch ex As Exception
-                    TmrLoadDetails.Stop()
-                    CMessageBox.Show("ERRO PS010", "Ocorreu um erro ao consultar os dados do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
-                End Try
-            Else
-                DgvCompressor.DataSource = Nothing
-                DgvAddress.DataSource = Nothing
-                DgvContact.DataSource = Nothing
-            End If
-        End If
+        DgvlRouteLayout.Load()
     End Sub
     Private Sub DgvData_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvData.KeyDown
         If e.KeyCode = Keys.Enter Then
@@ -199,36 +169,11 @@ Public Class FrmPersons
             e.Handled = True
         End If
     End Sub
-
     Private Sub DgvData_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvData.DataSourceChanged
         If DgvData.Rows.Count > 0 Then
             LblCounter.Text = DgvData.Rows.Count & " registro" & If(DgvData.Rows.Count > 1, "s", Nothing)
             LblCounter.ForeColor = Color.DimGray
             LblCounter.Font = New Font(LblCounter.Font, FontStyle.Bold)
-        End If
-    End Sub
-    <DebuggerStepThrough>
-    Private Sub DgvCompressors_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvCompressor.CellFormatting
-        Dim Dgv As DataGridView = sender
-        If e.ColumnIndex = Dgv.Columns("Status").Index Then
-            Select Case e.Value
-                Case Is = EnumHelper.GetEnumDescription(SimpleStatus.Active)
-                    e.CellStyle.ForeColor = Color.DarkBlue
-                Case Is = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
-                    e.CellStyle.ForeColor = Color.DarkRed
-            End Select
-        End If
-    End Sub
-    <DebuggerStepThrough>
-    Private Sub DgvAddress_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvAddress.CellFormatting
-        Dim Dgv As DataGridView = sender
-        If e.ColumnIndex = Dgv.Columns("Status").Index Then
-            Select Case e.Value
-                Case Is = EnumHelper.GetEnumDescription(SimpleStatus.Active)
-                    e.CellStyle.ForeColor = Color.DarkBlue
-                Case Is = EnumHelper.GetEnumDescription(SimpleStatus.Inactive)
-                    e.CellStyle.ForeColor = Color.DarkRed
-            End Select
         End If
     End Sub
     <DebuggerStepThrough>
@@ -241,8 +186,7 @@ Public Class FrmPersons
         End If
     End Sub
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
-        Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Pessoas", .Grid = DgvData}})
-        Dim Form As New FrmReport(Result)
-        FrmMain.OpenTab(Form, EnumHelper.GetEnumDescription(Routine.ExportGrid))
+        Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Rotas", .Grid = DgvData}})
+        FrmMain.OpenTab(New UcReport(Result), EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
 End Class

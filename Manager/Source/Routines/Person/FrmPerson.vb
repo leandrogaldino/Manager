@@ -3,7 +3,7 @@ Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Public Class FrmPerson
     Private _Person As Person
-    Private _PersonsForm As FrmPersons
+    Private _GridControl As UcPersonGrid
     Private _PersonsGrid As DataGridView
     Private _Filter As PersonFilter
     Private _CompressorsShadow As New List(Of PersonCompressor)
@@ -28,12 +28,12 @@ Public Class FrmPerson
         DefWndProc(New Message With {.Msg = _MouseButtonUp})
         MyBase.OnResize(e)
     End Sub
-    Public Sub New(Person As Person, PersonsForm As FrmPersons)
+    Public Sub New(Person As Person, GridControl As UcPersonGrid)
         InitializeComponent()
         _Person = Person
-        _PersonsForm = PersonsForm
-        _PersonsGrid = _PersonsForm.DgvData
-        _Filter = CType(_PersonsForm.PgFilter.SelectedObject, PersonFilter)
+        _GridControl = GridControl
+        _PersonsGrid = _GridControl.DgvData
+        _Filter = CType(_GridControl.PgFilter.SelectedObject, PersonFilter)
         _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
@@ -132,7 +132,7 @@ Public Class FrmPerson
                     End If
                 End If
             End If
-            If _PersonsForm IsNot Nothing Then
+            If _GridControl IsNot Nothing Then
                 DgvAddress.Fill(_Person.Addresses)
                 DgvContact.Fill(_Person.Contacts)
                 DgvCompressor.Fill(_Person.Compressors)
@@ -158,7 +158,7 @@ Public Class FrmPerson
                         _Person.Delete()
                         If _PersonsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _PersonsForm.DgvPersonLayout.Load()
+                            _GridControl.DgvPersonLayout.Load()
                             _PersonsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -403,7 +403,7 @@ Public Class FrmPerson
     End Sub
     Private Sub TcPerson_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcPerson.SelectedIndexChanged
         If TcPerson.SelectedTab Is TabMain Then
-            Size = If(_PersonsForm IsNot Nothing, New Size(653, 270), New Size(653, 270 - TsNavigation.Height))
+            Size = If(_GridControl IsNot Nothing, New Size(653, 270), New Size(653, 270 - TsNavigation.Height))
             FormBorderStyle = FormBorderStyle.FixedSingle
             WindowState = FormWindowState.Normal
             MaximizeBox = False
@@ -564,9 +564,9 @@ Public Class FrmPerson
                     Next
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Person)
-                    If _PersonsForm IsNot Nothing Then
+                    If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _PersonsForm.DgvPersonLayout.Load()
+                        _GridControl.DgvPersonLayout.Load()
                         Row = _PersonsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

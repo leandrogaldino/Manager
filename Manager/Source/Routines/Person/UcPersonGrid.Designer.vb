@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class FrmCities
-    Inherits System.Windows.Forms.Form
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class UcPersonGrid
+    Inherits System.Windows.Forms.UserControl
 
-    'Descartar substituições de formulário para limpar a lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    'O UserControl substitui o descarte para limpar a lista de componentes.
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -43,14 +43,21 @@ Partial Class FrmCities
         Me.LblFilter = New System.Windows.Forms.ToolStripLabel()
         Me.TsFilterBot = New System.Windows.Forms.ToolStrip()
         Me.BtnClean = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
+        Me.TcDetail = New System.Windows.Forms.TabControl()
+        Me.TpgContact = New System.Windows.Forms.TabPage()
+        Me.DgvContact = New System.Windows.Forms.DataGridView()
+        Me.TpgAddress = New System.Windows.Forms.TabPage()
+        Me.DgvAddress = New System.Windows.Forms.DataGridView()
+        Me.TpgCompressor = New System.Windows.Forms.TabPage()
+        Me.DgvCompressor = New System.Windows.Forms.DataGridView()
         Me.TsDetails = New System.Windows.Forms.ToolStrip()
         Me.BtnCloseDetails = New System.Windows.Forms.ToolStripButton()
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
-        Me.DgvCitiesLayout = New Manager.DataGridViewLayout()
+        Me.DgvPersonLayout = New Manager.DataGridViewLayout()
         Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
+        Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -63,6 +70,13 @@ Partial Class FrmCities
         Me.SplitContainer2.Panel1.SuspendLayout()
         Me.SplitContainer2.Panel2.SuspendLayout()
         Me.SplitContainer2.SuspendLayout()
+        Me.TcDetail.SuspendLayout()
+        Me.TpgContact.SuspendLayout()
+        CType(Me.DgvContact, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TpgAddress.SuspendLayout()
+        CType(Me.DgvAddress, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TpgCompressor.SuspendLayout()
+        CType(Me.DgvCompressor, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsDetails.SuspendLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -76,8 +90,8 @@ Partial Class FrmCities
         Me.TsMenu.Location = New System.Drawing.Point(0, 0)
         Me.TsMenu.Name = "TsMenu"
         Me.TsMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsMenu.Size = New System.Drawing.Size(1089, 39)
-        Me.TsMenu.TabIndex = 0
+        Me.TsMenu.Size = New System.Drawing.Size(1000, 39)
+        Me.TsMenu.TabIndex = 1
         '
         'BtnInclude
         '
@@ -143,7 +157,6 @@ Partial Class FrmCities
         Me.BtnDetails.Name = "BtnDetails"
         Me.BtnDetails.Size = New System.Drawing.Size(100, 36)
         Me.BtnDetails.Text = "Detalhes"
-        Me.BtnDetails.Visible = False
         '
         'BtnClose
         '
@@ -172,12 +185,12 @@ Partial Class FrmCities
         '
         Me.SsInformation.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SsInformation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblInfo, Me.LblStatus, Me.LblCounter})
-        Me.SsInformation.Location = New System.Drawing.Point(0, 478)
+        Me.SsInformation.Location = New System.Drawing.Point(0, 578)
         Me.SsInformation.Name = "SsInformation"
-        Me.SsInformation.Size = New System.Drawing.Size(1089, 22)
+        Me.SsInformation.Size = New System.Drawing.Size(1000, 22)
         Me.SsInformation.SizingGrip = False
         Me.SsInformation.Stretch = False
-        Me.SsInformation.TabIndex = 2
+        Me.SsInformation.TabIndex = 3
         Me.SsInformation.Text = "StatusStrip1"
         '
         'LblInfo
@@ -194,7 +207,7 @@ Partial Class FrmCities
         'LblCounter
         '
         Me.LblCounter.Name = "LblCounter"
-        Me.LblCounter.Size = New System.Drawing.Size(1038, 17)
+        Me.LblCounter.Size = New System.Drawing.Size(949, 17)
         Me.LblCounter.Spring = True
         Me.LblCounter.Text = "       "
         Me.LblCounter.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -216,9 +229,9 @@ Partial Class FrmCities
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.SplitContainer2)
-        Me.SplitContainer1.Size = New System.Drawing.Size(1089, 439)
-        Me.SplitContainer1.SplitterDistance = 261
-        Me.SplitContainer1.TabIndex = 3
+        Me.SplitContainer1.Size = New System.Drawing.Size(1000, 539)
+        Me.SplitContainer1.SplitterDistance = 239
+        Me.SplitContainer1.TabIndex = 4
         '
         'PgFilter
         '
@@ -227,7 +240,7 @@ Partial Class FrmCities
         Me.PgFilter.Location = New System.Drawing.Point(0, 25)
         Me.PgFilter.Name = "PgFilter"
         Me.PgFilter.PropertySort = System.Windows.Forms.PropertySort.NoSort
-        Me.PgFilter.Size = New System.Drawing.Size(259, 387)
+        Me.PgFilter.Size = New System.Drawing.Size(237, 487)
         Me.PgFilter.TabIndex = 1
         Me.PgFilter.ToolbarVisible = False
         '
@@ -238,7 +251,7 @@ Partial Class FrmCities
         Me.TsFilterTop.Location = New System.Drawing.Point(0, 0)
         Me.TsFilterTop.Name = "TsFilterTop"
         Me.TsFilterTop.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsFilterTop.Size = New System.Drawing.Size(259, 25)
+        Me.TsFilterTop.Size = New System.Drawing.Size(237, 25)
         Me.TsFilterTop.TabIndex = 0
         Me.TsFilterTop.Text = "ToolStrip1"
         '
@@ -265,10 +278,10 @@ Partial Class FrmCities
         '
         Me.TsFilterBot.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.TsFilterBot.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsFilterBot.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnClean, Me.ToolStripButton1})
-        Me.TsFilterBot.Location = New System.Drawing.Point(0, 412)
+        Me.TsFilterBot.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnClean})
+        Me.TsFilterBot.Location = New System.Drawing.Point(0, 512)
         Me.TsFilterBot.Name = "TsFilterBot"
-        Me.TsFilterBot.Size = New System.Drawing.Size(259, 25)
+        Me.TsFilterBot.Size = New System.Drawing.Size(237, 25)
         Me.TsFilterBot.TabIndex = 2
         Me.TsFilterBot.Text = "ToolStrip1"
         '
@@ -282,14 +295,6 @@ Partial Class FrmCities
         Me.BtnClean.Size = New System.Drawing.Size(64, 22)
         Me.BtnClean.Text = "Limpar"
         '
-        'ToolStripButton1
-        '
-        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton1.Name = "ToolStripButton1"
-        Me.ToolStripButton1.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton1.Text = "ToolStripButton1"
-        '
         'SplitContainer2
         '
         Me.SplitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
@@ -299,6 +304,7 @@ Partial Class FrmCities
         '
         'SplitContainer2.Panel1
         '
+        Me.SplitContainer2.Panel1.Controls.Add(Me.TcDetail)
         Me.SplitContainer2.Panel1.Controls.Add(Me.TsDetails)
         Me.SplitContainer2.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         '
@@ -307,9 +313,116 @@ Partial Class FrmCities
         Me.SplitContainer2.Panel2.Controls.Add(Me.DgvData)
         Me.SplitContainer2.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.SplitContainer2.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.SplitContainer2.Size = New System.Drawing.Size(824, 439)
-        Me.SplitContainer2.SplitterDistance = 272
+        Me.SplitContainer2.Size = New System.Drawing.Size(757, 539)
+        Me.SplitContainer2.SplitterDistance = 249
         Me.SplitContainer2.TabIndex = 0
+        '
+        'TcDetail
+        '
+        Me.TcDetail.Controls.Add(Me.TpgContact)
+        Me.TcDetail.Controls.Add(Me.TpgAddress)
+        Me.TcDetail.Controls.Add(Me.TpgCompressor)
+        Me.TcDetail.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TcDetail.Location = New System.Drawing.Point(0, 25)
+        Me.TcDetail.Name = "TcDetail"
+        Me.TcDetail.SelectedIndex = 0
+        Me.TcDetail.Size = New System.Drawing.Size(247, 512)
+        Me.TcDetail.TabIndex = 1
+        '
+        'TpgContact
+        '
+        Me.TpgContact.Controls.Add(Me.DgvContact)
+        Me.TpgContact.Location = New System.Drawing.Point(4, 26)
+        Me.TpgContact.Name = "TpgContact"
+        Me.TpgContact.Padding = New System.Windows.Forms.Padding(3)
+        Me.TpgContact.Size = New System.Drawing.Size(239, 482)
+        Me.TpgContact.TabIndex = 0
+        Me.TpgContact.Text = "Contatos"
+        Me.TpgContact.UseVisualStyleBackColor = True
+        '
+        'DgvContact
+        '
+        Me.DgvContact.AllowUserToAddRows = False
+        Me.DgvContact.AllowUserToDeleteRows = False
+        Me.DgvContact.AllowUserToResizeColumns = False
+        Me.DgvContact.AllowUserToResizeRows = False
+        Me.DgvContact.BackgroundColor = System.Drawing.Color.White
+        Me.DgvContact.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.DgvContact.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvContact.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvContact.Location = New System.Drawing.Point(3, 3)
+        Me.DgvContact.MultiSelect = False
+        Me.DgvContact.Name = "DgvContact"
+        Me.DgvContact.ReadOnly = True
+        Me.DgvContact.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvContact.RowHeadersVisible = False
+        Me.DgvContact.RowTemplate.Height = 26
+        Me.DgvContact.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvContact.Size = New System.Drawing.Size(233, 476)
+        Me.DgvContact.TabIndex = 0
+        '
+        'TpgAddress
+        '
+        Me.TpgAddress.Controls.Add(Me.DgvAddress)
+        Me.TpgAddress.Location = New System.Drawing.Point(4, 22)
+        Me.TpgAddress.Name = "TpgAddress"
+        Me.TpgAddress.Padding = New System.Windows.Forms.Padding(3)
+        Me.TpgAddress.Size = New System.Drawing.Size(239, 486)
+        Me.TpgAddress.TabIndex = 1
+        Me.TpgAddress.Text = "Endereços"
+        Me.TpgAddress.UseVisualStyleBackColor = True
+        '
+        'DgvAddress
+        '
+        Me.DgvAddress.AllowUserToAddRows = False
+        Me.DgvAddress.AllowUserToDeleteRows = False
+        Me.DgvAddress.AllowUserToResizeColumns = False
+        Me.DgvAddress.AllowUserToResizeRows = False
+        Me.DgvAddress.BackgroundColor = System.Drawing.Color.White
+        Me.DgvAddress.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.DgvAddress.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvAddress.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvAddress.Location = New System.Drawing.Point(3, 3)
+        Me.DgvAddress.MultiSelect = False
+        Me.DgvAddress.Name = "DgvAddress"
+        Me.DgvAddress.ReadOnly = True
+        Me.DgvAddress.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvAddress.RowHeadersVisible = False
+        Me.DgvAddress.RowTemplate.Height = 26
+        Me.DgvAddress.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvAddress.Size = New System.Drawing.Size(233, 480)
+        Me.DgvAddress.TabIndex = 1
+        '
+        'TpgCompressor
+        '
+        Me.TpgCompressor.Controls.Add(Me.DgvCompressor)
+        Me.TpgCompressor.Location = New System.Drawing.Point(4, 22)
+        Me.TpgCompressor.Name = "TpgCompressor"
+        Me.TpgCompressor.Size = New System.Drawing.Size(239, 486)
+        Me.TpgCompressor.TabIndex = 2
+        Me.TpgCompressor.Text = "Compressores"
+        Me.TpgCompressor.UseVisualStyleBackColor = True
+        '
+        'DgvCompressor
+        '
+        Me.DgvCompressor.AllowUserToAddRows = False
+        Me.DgvCompressor.AllowUserToDeleteRows = False
+        Me.DgvCompressor.AllowUserToResizeColumns = False
+        Me.DgvCompressor.AllowUserToResizeRows = False
+        Me.DgvCompressor.BackgroundColor = System.Drawing.Color.White
+        Me.DgvCompressor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.DgvCompressor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvCompressor.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvCompressor.Location = New System.Drawing.Point(0, 0)
+        Me.DgvCompressor.MultiSelect = False
+        Me.DgvCompressor.Name = "DgvCompressor"
+        Me.DgvCompressor.ReadOnly = True
+        Me.DgvCompressor.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvCompressor.RowHeadersVisible = False
+        Me.DgvCompressor.RowTemplate.Height = 26
+        Me.DgvCompressor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvCompressor.Size = New System.Drawing.Size(239, 486)
+        Me.DgvCompressor.TabIndex = 9
         '
         'TsDetails
         '
@@ -318,7 +431,7 @@ Partial Class FrmCities
         Me.TsDetails.Location = New System.Drawing.Point(0, 0)
         Me.TsDetails.Name = "TsDetails"
         Me.TsDetails.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsDetails.Size = New System.Drawing.Size(270, 25)
+        Me.TsDetails.Size = New System.Drawing.Size(247, 25)
         Me.TsDetails.TabIndex = 0
         Me.TsDetails.Text = "ToolStrip2"
         '
@@ -358,13 +471,13 @@ Partial Class FrmCities
         Me.DgvData.RowHeadersVisible = False
         Me.DgvData.RowTemplate.Height = 26
         Me.DgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvData.Size = New System.Drawing.Size(546, 437)
+        Me.DgvData.Size = New System.Drawing.Size(502, 537)
         Me.DgvData.TabIndex = 0
         '
-        'DgvCitiesLayout
+        'DgvPersonLayout
         '
-        Me.DgvCitiesLayout.DataGridView = Me.DgvData
-        Me.DgvCitiesLayout.Routine = Manager.Routine.City
+        Me.DgvPersonLayout.DataGridView = Me.DgvData
+        Me.DgvPersonLayout.Routine = Manager.Routine.Person
         '
         'DgvCcData
         '
@@ -372,21 +485,17 @@ Partial Class FrmCities
         Me.DgvCcData.IncludeHeaderTextInCellCopy = False
         Me.DgvCcData.IncludeHeaderTextInRowCopy = True
         '
-        'FrmCities
+        'UcPersonGrid
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.AutoSize = True
-        Me.ClientSize = New System.Drawing.Size(1089, 500)
         Me.Controls.Add(Me.SplitContainer1)
-        Me.Controls.Add(Me.TsMenu)
         Me.Controls.Add(Me.SsInformation)
+        Me.Controls.Add(Me.TsMenu)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "FrmCities"
-        Me.ShowIcon = False
-        Me.ShowInTaskbar = False
+        Me.Name = "UcPersonGrid"
+        Me.Size = New System.Drawing.Size(1000, 600)
         Me.TsMenu.ResumeLayout(False)
         Me.TsMenu.PerformLayout()
         Me.SsInformation.ResumeLayout(False)
@@ -405,6 +514,13 @@ Partial Class FrmCities
         Me.SplitContainer2.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer2.ResumeLayout(False)
+        Me.TcDetail.ResumeLayout(False)
+        Me.TpgContact.ResumeLayout(False)
+        CType(Me.DgvContact, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TpgAddress.ResumeLayout(False)
+        CType(Me.DgvAddress, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TpgCompressor.ResumeLayout(False)
+        CType(Me.DgvCompressor, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsDetails.ResumeLayout(False)
         Me.TsDetails.PerformLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).EndInit()
@@ -418,28 +534,34 @@ Partial Class FrmCities
     Friend WithEvents BtnEdit As ToolStripButton
     Friend WithEvents BtnDelete As ToolStripButton
     Friend WithEvents BtnRefresh As ToolStripButton
-    Friend WithEvents BtnClose As ToolStripButton
     Friend WithEvents BtnFilter As ToolStripButton
+    Friend WithEvents BtnDetails As ToolStripButton
+    Friend WithEvents BtnClose As ToolStripButton
+    Friend WithEvents BtnExport As ToolStripButton
     Friend WithEvents SsInformation As StatusStrip
     Friend WithEvents LblInfo As ToolStripStatusLabel
+    Friend WithEvents LblStatus As ToolStripStatusLabel
+    Friend WithEvents LblCounter As ToolStripStatusLabel
     Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents PgFilter As PropertyGrid
     Friend WithEvents TsFilterTop As ToolStrip
     Friend WithEvents BtnCloseFilter As ToolStripButton
     Friend WithEvents LblFilter As ToolStripLabel
+    Friend WithEvents TsFilterBot As ToolStrip
+    Friend WithEvents BtnClean As ToolStripButton
     Friend WithEvents SplitContainer2 As SplitContainer
+    Friend WithEvents TcDetail As TabControl
+    Friend WithEvents TpgContact As TabPage
+    Friend WithEvents DgvContact As DataGridView
+    Friend WithEvents TpgAddress As TabPage
+    Friend WithEvents DgvAddress As DataGridView
+    Friend WithEvents TpgCompressor As TabPage
+    Friend WithEvents DgvCompressor As DataGridView
     Friend WithEvents TsDetails As ToolStrip
     Friend WithEvents BtnCloseDetails As ToolStripButton
     Friend WithEvents LblView As ToolStripLabel
     Friend WithEvents DgvData As DataGridView
-    Friend WithEvents TsFilterBot As ToolStrip
-    Friend WithEvents FffffToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents BtnClean As ToolStripButton
-    Friend WithEvents LblStatus As ToolStripStatusLabel
-    Friend WithEvents LblCounter As ToolStripStatusLabel
-    Friend WithEvents BtnDetails As ToolStripButton
-    Friend WithEvents ToolStripButton1 As ToolStripButton
-    Friend WithEvents DgvCitiesLayout As DataGridViewLayout
-    Friend WithEvents BtnExport As ToolStripButton
+    Friend WithEvents DgvPersonLayout As DataGridViewLayout
     Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents TmrLoadDetails As Timer
 End Class

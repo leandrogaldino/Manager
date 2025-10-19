@@ -1,32 +1,30 @@
 ﻿Imports ControlLibrary
-Imports MySql.Data.MySqlClient
 Imports ControlLibrary.Extensions
-Public Class FrmCities
-    Private _City As New City
-    Private _Filter As CityFilter
+Imports MySql.Data.MySqlClient
+Public Class UcCompressorGrid
+    Private _Compressor As New Compressor
+    Private _Filter As CompressorFilter
     Public Sub New()
         InitializeComponent()
         ControlHelper.EnableControlDoubleBuffer(DgvData, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvWorkedHourSellable, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvElapsedDaySellable, True)
         SplitContainer1.Panel1Collapsed = True
-        SplitContainer1.SplitterDistance = 250
         SplitContainer2.Panel1Collapsed = True
-        SplitContainer2.SplitterDistance = 800
-        _Filter = New CityFilter(DgvData, PgFilter)
+        _Filter = New CompressorFilter(DgvData, PgFilter)
         _Filter.Filter()
         PgFilter.SelectedObject = _Filter
-        BtnInclude.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.City)
-        BtnEdit.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.City)
-        BtnDelete.Visible = Locator.GetInstance(Of Session).User.CanDelete(Routine.City)
+        LoadDetails()
+        BtnInclude.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.Compressor)
+        BtnEdit.Visible = Locator.GetInstance(Of Session).User.CanWrite(Routine.Compressor)
+        BtnDelete.Visible = Locator.GetInstance(Of Session).User.CanDelete(Routine.Compressor)
         BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Frm(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvCitiesLayout.Load()
-    End Sub
-    Private Sub Form_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
-        AddHandler Parent.FindForm.Resize, AddressOf FrmMain_ResizeEnd
+        DgvCompressorLayout.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
-        Using Form As New FrmCity(New City, Me)
+        Using Form As New FrmCompressor(New Compressor, Me)
             Form.ShowDialog()
         End Using
     End Sub
@@ -34,12 +32,14 @@ Public Class FrmCities
         If DgvData.SelectedRows.Count = 1 Then
             Try
                 Cursor = Cursors.WaitCursor
-                _City = New City().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
-                Using Form As New FrmCity(_City, Me)
+                _Compressor = New Compressor().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
+                Using Form As New FrmCompressor(_Compressor, Me)
+                    Form.DgvCompressorWorkedHourSellable.Fill(_Compressor.WorkedHourSellables)
+                    Form.DgvCompressorElapsedDaySellable.Fill(_Compressor.ElapsedDaySellables)
                     Form.ShowDialog()
                 End Using
             Catch ex As Exception
-                CMessageBox.Show("ERRO CT001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                CMessageBox.Show("ERRO CP004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
                 Cursor = Cursors.Default
             End Try
@@ -49,27 +49,27 @@ Public Class FrmCities
         If DgvData.SelectedRows.Count = 1 Then
             Try
                 Cursor = Cursors.WaitCursor
-                _City.Load(DgvData.SelectedRows(0).Cells("id").Value, False)
-                If Not _City.LockInfo.IsLocked Then
+                _Compressor.Load(DgvData.SelectedRows(0).Cells("id").Value, False)
+                If Not _Compressor.LockInfo.IsLocked Then
                     If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                         Try
-                            _City.Delete()
+                            _Compressor.Delete()
                             _Filter.Filter()
-                            DgvCitiesLayout.Load()
+                            DgvCompressorLayout.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
                                 CMessageBox.Show("Esse registro não pode ser excluído pois já foi referenciado em outras rotinas.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                             Else
-                                CMessageBox.Show("ERRO CT002", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                                CMessageBox.Show("ERRO CP005", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                             End If
                         End Try
                     End If
                 Else
-                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _City.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
+                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _Compressor.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                 End If
             Catch ex As Exception
-                CMessageBox.Show("ERRO CT003", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                CMessageBox.Show("ERRO CP006", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
                 Cursor = Cursors.Default
             End Try
@@ -77,12 +77,17 @@ Public Class FrmCities
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        DgvCitiesLayout.Load()
+        DgvCompressorLayout.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
         SplitContainer1.Panel1Collapsed = If(BtnFilter.Checked, False, True)
         SplitContainer1.SplitterDistance = 350
+    End Sub
+    Private Sub BtnDetails_Click(sender As Object, e As EventArgs) Handles BtnDetails.Click
+        SplitContainer2.Panel1Collapsed = Not BtnDetails.Checked
+        SplitContainer2.SplitterDistance = 450
+        LoadDetails()
     End Sub
     Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
         Dim Index As Integer
@@ -110,13 +115,10 @@ Public Class FrmCities
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        DgvCitiesLayout.Load()
+        DgvCompressorLayout.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
-    End Sub
-    Private Sub BtnDetails_Click(sender As Object, e As EventArgs) Handles BtnDetails.Click
-        SplitContainer2.Panel1Collapsed = Not BtnDetails.Checked
     End Sub
     Private Sub BtnCloseDetails_Click(sender As Object, e As EventArgs) Handles BtnCloseDetails.Click
         SplitContainer2.Panel1Collapsed = True
@@ -141,6 +143,7 @@ Public Class FrmCities
         End If
     End Sub
     Private Sub DgvData_SelectionChanged(sender As Object, e As EventArgs) Handles DgvData.SelectionChanged
+        TmrLoadDetails.Start()
         If DgvData.SelectedRows.Count = 0 Then
             BtnEdit.Enabled = False
             BtnDelete.Enabled = False
@@ -148,6 +151,10 @@ Public Class FrmCities
             BtnEdit.Enabled = True
             BtnDelete.Enabled = True
         End If
+    End Sub
+    Private Sub TmrLoadDetails_Tick(sender As Object, e As EventArgs) Handles TmrLoadDetails.Tick
+        LoadDetails()
+        TmrLoadDetails.Stop()
     End Sub
     Private Sub PgFilter_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles PgFilter.PropertyValueChanged
         If _Filter.Filter() = True Then
@@ -159,7 +166,23 @@ Public Class FrmCities
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        DgvCitiesLayout.Load()
+        DgvCompressorLayout.Load()
+    End Sub
+    Private Sub LoadDetails()
+        If BtnDetails.Checked Then
+            If DgvData.SelectedRows.Count = 1 Then
+                Try
+                    Compressor.FillSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvWorkedHourSellable, CompressorSellableControlType.WorkedHour)
+                    Compressor.FillSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvElapsedDaySellable, CompressorSellableControlType.ElapsedDay)
+                Catch ex As Exception
+                    TmrLoadDetails.Stop()
+                    CMessageBox.Show("ERRO CP007", "Ocorreu um erro ao consultar os dados do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                End Try
+            Else
+                DgvWorkedHourSellable.DataSource = Nothing
+                DgvElapsedDaySellable.DataSource = Nothing
+            End If
+        End If
     End Sub
     Private Sub DgvData_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvData.KeyDown
         If e.KeyCode = Keys.Enter Then
@@ -179,13 +202,12 @@ Public Class FrmCities
         If Me.Disposing OrElse Me.IsDisposed Then Return
         If BtnFilter.Checked Then BtnFilter.PerformClick()
         If Parent.FindForm IsNot Nothing Then
-            Height = Parent.FindForm.Height - 198
-            Width = Parent.FindForm.Width - 26
+            Height = Parent.FindForm.Height - 196
+            Width = Parent.FindForm.Width - 24
         End If
     End Sub
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
-        Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Cidades", .Grid = DgvData}})
-        Dim Form As New FrmReport(Result)
-        FrmMain.OpenTab(Form, EnumHelper.GetEnumDescription(Routine.ExportGrid))
+        Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Compressores", .Grid = DgvData}})
+        FrmMain.OpenTab(New UcReport(Result), EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
 End Class

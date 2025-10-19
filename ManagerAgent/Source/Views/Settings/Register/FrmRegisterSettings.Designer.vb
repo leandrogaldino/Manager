@@ -542,6 +542,7 @@ Partial Class FrmRegisterSettings
         '
         'PictureViewer
         '
+        Me.PictureViewer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.PictureViewer.ControlBarBackColor = System.Drawing.Color.White
         Me.PictureViewer.CounterBarBackColor = System.Drawing.Color.White
         Me.PictureViewer.CounterMask = "{0}/{1}"
@@ -558,7 +559,7 @@ Partial Class FrmRegisterSettings
         Me.PictureViewer.SaveButtonImage = CType(resources.GetObject("PictureViewer.SaveButtonImage"), System.Drawing.Image)
         Me.PictureViewer.ShowControlBar = False
         Me.PictureViewer.ShowCounterBar = False
-        Me.PictureViewer.Size = New System.Drawing.Size(141, 66)
+        Me.PictureViewer.Size = New System.Drawing.Size(141, 69)
         Me.PictureViewer.TabIndex = 55
         Me.PictureViewer.TempDirectory = "C:\Users\leand\AppData\Local\Temp\"
         '

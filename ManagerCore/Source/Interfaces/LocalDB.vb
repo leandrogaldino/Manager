@@ -61,7 +61,37 @@ Public MustInherit Class LocalDB
                 Return _Data
             End Get
         End Property
+        Public ReadOnly Property Table As DataTable
+            Get
+                If _Data Is Nothing Then
+                    Return Nothing
+                Else
+                    Return GetDataTable(_Data)
+                End If
+            End Get
+        End Property
+        Private Function GetDataTable(dictList As List(Of Dictionary(Of String, Object))) As DataTable
+            Dim Table As New DataTable()
+            Dim AllKeys As New HashSet(Of String)()
+            For Each Dict In dictList
+                For Each Key In Dict.Keys
+                    AllKeys.Add(Key)
+                Next Key
+            Next Dict
+            For Each Key In AllKeys
+                Table.Columns.Add(Key, GetType(Object))
+            Next Key
+            For Each Dict In dictList
+                Dim RowValues As Object() = Table.Columns.Cast(Of DataColumn)().
+                                        Select(Function(Col)
+                                                   Dim Val As Object = Nothing
+                                                   Dict.TryGetValue(Col.ColumnName, Val)
+                                                   Return If(Val, DBNull.Value)
+                                               End Function).ToArray()
+                Table.Rows.Add(RowValues)
+            Next Dict
+            Return Table
+        End Function
+
     End Class
-
-
 End Class

@@ -1,5 +1,4 @@
-﻿Imports MySql.Data.MySqlClient
-Imports ControlLibrary
+﻿Imports ControlLibrary
 Imports System.IO
 Imports System.Drawing.Imaging
 Imports System.Windows.Forms.DataVisualization.Charting
@@ -22,11 +21,11 @@ Public Class UcEvaluationManagementPanelGrid
         InitializeComponent()
         _Session = Locator.GetInstance(Of Session)
         _User = _Session.User
-        'ConfigureControls()
+        ConfigureControls()
     End Sub
-    Private Sub Me_Load(sender As Object, e As EventArgs) Handles Me.Load
-        'RefreshDates()
-        'RefreshData()
+    Private Async Sub Me_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Await RefreshDates()
+        Await RefreshData()
     End Sub
     Private Sub ConfigureControls()
         CbxInformation.Items.AddRange(EnumHelper.GetEnumDescriptions(Of EvaluationPanelInformation).ToArray)
@@ -56,29 +55,31 @@ Public Class UcEvaluationManagementPanelGrid
         BtnExportPanelImage.Visible = _User.CanAccess(Routine.EvaluationExportManagementPanel)
         BtnExportGrid.Visible = _User.CanAccess(Routine.ExportGrid)
     End Sub
-    Private Sub RefreshDates()
+    Private Async Function RefreshDates() As Task
         Dim Db As LocalDB = Locator.GetInstance(Of LocalDB)
         Dim Result As QueryResult
         Dim Years As List(Of Integer)
-        ManagerCore.Util.AsyncLock(Function() Db.ExecuteRawQueryAsync(My.Resources.SetBrazilianDatabaseMonthNames))
-        Result = ManagerCore.Util.AsyncLock(Function() Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelDatesSelect))
+        Await Db.ExecuteRawQueryAsync(My.Resources.SetBrazilianDatabaseMonthNames)
+        Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelDatesSelect)
         _Dates = Result.Data
         Years = _Dates.Select(Of Integer)(Function(d) d("yearnumber")).Distinct().OrderByDescending(Function(y) y).ToList()
         CbxYear.DataSource = Years
-    End Sub
+    End Function
 
-    Private Sub ComboBoxYear_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxYear.SelectedIndexChanged
+    Private Async Sub ComboBoxYear_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxYear.SelectedIndexChanged
         _YearChanged = True
         Dim SelectedYear As String = CbxYear.SelectedItem.ToString()
         Dim Months As List(Of String) = _Dates.Where(Function(d) d("yearnumber") = SelectedYear).Select(Of String)(Function(d) d("monthname")).Distinct().ToList()
         CbxMonth.DataSource = Months
-        FillChart()
+        Await FillChart()
         _YearChanged = False
     End Sub
-    Private Sub CbxMonth_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxMonth.SelectedIndexChanged
-        If Not _YearChanged Then FillChart()
+    Private Async Sub CbxMonth_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxMonth.SelectedIndexChanged
+        If Not _YearChanged Then
+            Await FillChart()
+        End If
     End Sub
-    Private Sub CbxInformation_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxInformation.SelectedIndexChanged
+    Private Async Sub CbxInformation_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxInformation.SelectedIndexChanged
         If CbxInformation.SelectedIndex = CInt(EvaluationPanelInformation.Visits) Then
             LblMonth.Visible = False
             CbxMonth.Visible = False
@@ -86,74 +87,46 @@ Public Class UcEvaluationManagementPanelGrid
             LblMonth.Visible = True
             CbxMonth.Visible = True
         End If
-        FillChart()
+        Await FillChart()
     End Sub
-    Private Sub RefreshData()
-        RefreshDates()
-        FillCards()
-        FillChart()
-    End Sub
-    Private Sub FillCards()
+    Private Async Function RefreshData() As Task
+        Await RefreshDates()
+        Await FillCards()
+        Await FillChart()
+    End Function
+    Private Async Function FillCards() As Task
         Dim Session = Locator.GetInstance(Of Session)
         Dim TableResult As New DataTable
         Dim TableNeverVisited As New DataTable
         Dim TableToVisit As New DataTable
         Dim TableUnitOverdue As New DataTable
-        Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
-            Con.Open()
-            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
-                ' Preenche TableResult
-                Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementFilter, Con)
-                    Cmd.Transaction = Tra
-                    Cmd.Parameters.AddWithValue("@personid", "%")
-                    Cmd.Parameters.AddWithValue("@persondocument", "%")
-                    Cmd.Parameters.AddWithValue("@personname", "%")
-                    Cmd.Parameters.AddWithValue("@zipcode", "%")
-                    Cmd.Parameters.AddWithValue("@address", "%")
-                    Cmd.Parameters.AddWithValue("@city", "%")
-                    Cmd.Parameters.AddWithValue("@state", "%")
-                    Cmd.Parameters.AddWithValue("@compressorname", "%")
-                    Cmd.Parameters.AddWithValue("@serialnumber", "%")
-                    Cmd.Parameters.AddWithValue("@patrimony", "%")
-                    Cmd.Parameters.AddWithValue("@sector", "%")
-                    Cmd.Parameters.AddWithValue("@route", "%")
-                    Cmd.Parameters.AddWithValue("@nextexchangei", "0000-01-01")
-                    Cmd.Parameters.AddWithValue("@nextexchangef", "9999-12-31")
-                    Using Adp As New MySqlDataAdapter(Cmd)
-                        Adp.Fill(TableResult)
-                    End Using
-                End Using
-
-                ' Preenche TableNeverVisited
-                Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementPanelNoVisited, Con)
-                    Cmd.Transaction = Tra
-                    Using Adp As New MySqlDataAdapter(Cmd)
-                        Adp.Fill(TableNeverVisited)
-                    End Using
-                End Using
-
-                ' Preenche TableToVisit
-                Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementPanelCustomerToVisit, Con)
-                    Cmd.Transaction = Tra
-                    Cmd.Parameters.AddWithValue("@days", Session.Setting.General.Evaluation.DaysBeforeVisitAlert)
-                    Using Adp As New MySqlDataAdapter(Cmd)
-                        Adp.Fill(TableToVisit)
-                    End Using
-                End Using
-
-                ' Preenche TableUnitOverdue
-                Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementPanelUnitOverdue, Con)
-                    Cmd.Transaction = Tra
-                    Using Adp As New MySqlDataAdapter(Cmd)
-                        Adp.Fill(TableUnitOverdue)
-                    End Using
-                End Using
-
-                Tra.Commit()
-            End Using
-        End Using
-
-        ' Preenche os cards
+        Dim Db As LocalDB = Locator.GetInstance(Of LocalDB)
+        Dim Result As QueryResult
+        Await Db.BeginTransactionAsync()
+        Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementFilter, New Dictionary(Of String, Object) From {
+            {"@personid", "%"},
+            {"@persondocument", "%"},
+            {"@personname", "%"},
+            {"@zipcode", "%"},
+            {"@address", "%"},
+            {"@city", "%"},
+            {"@state", "%"},
+            {"@compressorname", "%"},
+            {"@serialnumber", "%"},
+            {"@patrimony", "%"},
+            {"@sector", "%"},
+            {"@route", "%"},
+            {"@nextexchangei", "0000-01-01"},
+            {"@nextexchangef", "9999-12-31"}
+        })
+        TableResult = Result.Table
+        Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelNoVisited)
+        TableNeverVisited = Result.Table
+        Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelCustomerToVisit, New Dictionary(Of String, Object) From {{"@days", Session.Setting.General.Evaluation.DaysBeforeVisitAlert}})
+        TableToVisit = Result.Table
+        Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelUnitOverdue)
+        TableUnitOverdue = Result.Table
+        Await Db.CommitTransactionAsync()
         FillCardInDay(TableResult, Session)
         FillCardToOverdue(TableResult, Session)
         FillCardOverdue(TableResult)
@@ -161,12 +134,7 @@ Public Class UcEvaluationManagementPanelGrid
         FillCardNeverVisited(TableNeverVisited)
         FillCardToVisit(TableToVisit)
         FillCardTotal()
-    End Sub
-
-    ' ===========================
-    ' Métodos de preenchimento de cada card
-    ' ===========================
-
+    End Function
     Private Sub FillCardInDay(tableResult As DataTable, session As Session)
         Dim tableInDay = tableResult.Clone()
         Dim rows = tableResult.AsEnumerable().Where(Function(x) x.Item("nextexchange") IsNot DBNull.Value AndAlso
@@ -175,7 +143,6 @@ Public Class UcEvaluationManagementPanelGrid
         FillDataGridView(_InDayDetail.DgvCardDetail, tableInDay)
         LblInDayValue.Text = If(tableInDay.Rows.Count > 0, tableInDay.Rows.Count.ToString(), "-")
     End Sub
-
     Private Sub FillCardToOverdue(tableResult As DataTable, session As Session)
         Dim tableToOverdue = tableResult.Clone()
         Dim rows = tableResult.AsEnumerable().Where(Function(x) x.Item("nextexchange") IsNot DBNull.Value AndAlso
@@ -215,23 +182,19 @@ Public Class UcEvaluationManagementPanelGrid
         TableTotal.Columns.Add("city", GetType(String))
         TableTotal.Columns.Add("compressor", GetType(String))
         TableTotal.Columns.Add("serialnumber", GetType(String))
-
         Dim allRows As New List(Of DataGridView) From {
-        _InDayDetail.DgvCardDetail,
-        _ToOverdueDetail.DgvCardDetail,
-        _OverDueDetail.DgvCardDetail,
-        _NeverVisitDetail.DgvCardDetail
-    }
-
+            _InDayDetail.DgvCardDetail,
+            _ToOverdueDetail.DgvCardDetail,
+            _OverDueDetail.DgvCardDetail,
+            _NeverVisitDetail.DgvCardDetail
+        }
         Dim totalCount As Integer = 0
-
         For Each dgv In allRows
             For Each row As DataGridViewRow In dgv.Rows
                 TableTotal.Rows.Add({row.Cells("customer").Value, row.Cells("city").Value, row.Cells("compressor").Value, row.Cells("serialnumber").Value})
                 totalCount += 1
             Next
         Next
-
         If totalCount > 0 Then
             TableTotal.DefaultView.Sort = "customer ASC"
             _TotalDetail.DgvCardDetail.DataSource = TableTotal
@@ -241,10 +204,6 @@ Public Class UcEvaluationManagementPanelGrid
             LblTotalValue.Text = "-"
         End If
     End Sub
-
-    ' ===========================
-    ' Método genérico para configurar DataGridView
-    ' ===========================
     Private Sub FillDataGridView(dgv As DataGridView, dt As DataTable)
         dgv.DataSource = dt
         For Each col As DataGridViewColumn In dgv.Columns
@@ -275,7 +234,6 @@ Public Class UcEvaluationManagementPanelGrid
             End Select
         Next
     End Sub
-
     Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
         Dim Index As Integer
         Dim Page As TabPage
@@ -329,12 +287,12 @@ Public Class UcEvaluationManagementPanelGrid
             Return Date.DaysInMonth(CbxYear.Text, Date.ParseExact(CbxMonth.Text, "MMMM", CultureInfo.CurrentCulture).Month) * AverageHourPerDay
         End If
     End Function
-    Private Sub FillChart()
+    Private Async Function FillChart() As Task
         If CbxInformation.SelectedIndex = EvaluationPanelInformation.Visits Then
             If CbxYear.Text <> Nothing Then
                 Try
                     Cursor = Cursors.WaitCursor
-                    FillChartVisits()
+                    Await FillChartVisits()
                 Catch ex As Exception
                     CMessageBox.Show("ERRO EV012", "Ocorreu um erro ao carregar os paineis.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                 Finally
@@ -345,7 +303,7 @@ Public Class UcEvaluationManagementPanelGrid
             If CbxYear.Text <> Nothing And CbxMonth.Text <> Nothing Then
                 Try
                     Cursor = Cursors.WaitCursor
-                    FillChartProductivity()
+                    Await FillChartProductivity()
                 Catch ex As Exception
                     CMessageBox.Show("ERRO EV022", "Ocorreu um erro ao carregar os paineis.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                 Finally
@@ -353,41 +311,32 @@ Public Class UcEvaluationManagementPanelGrid
                 End Try
             End If
         End If
-    End Sub
-    Private Sub FillChartProductivity()
+    End Function
+    Private Async Function FillChartProductivity() As Task
         Dim Session = Locator.GetInstance(Of Session)
         Dim TableGathering As New DataTable
         Dim TableExecution As New DataTable
         Dim TableMerged As New DataTable
         Dim Highest As Decimal
         Dim Time As TimeSpan
-        Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
-            Con.Open()
-            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
-                Using Cmd As New MySqlCommand(My.Resources.SetBrazilianDatabaseMonthNames, Con)
-                    Cmd.ExecuteNonQuery()
-                End Using
-                Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementPanelFillChartProductivityChartSelect, Con)
-                    Cmd.Transaction = Tra
-                    Cmd.Parameters.AddWithValue("@hasrepairid", ConfirmationType.No)
-                    Cmd.Parameters.AddWithValue("@month", CbxMonth.Text)
-                    Cmd.Parameters.AddWithValue("@year", CbxYear.Text)
-                    Using Adp As New MySqlDataAdapter(Cmd)
-                        Adp.Fill(TableGathering)
-                    End Using
-                End Using
-                Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementPanelFillChartProductivityChartSelect, Con)
-                    Cmd.Transaction = Tra
-                    Cmd.Parameters.AddWithValue("@hasrepairid", ConfirmationType.Yes)
-                    Cmd.Parameters.AddWithValue("@month", CbxMonth.Text)
-                    Cmd.Parameters.AddWithValue("@year", CbxYear.Text)
-                    Using Adp As New MySqlDataAdapter(Cmd)
-                        Adp.Fill(TableExecution)
-                    End Using
-                End Using
-                Tra.Commit()
-            End Using
-        End Using
+        Dim Db As LocalDB = Locator.GetInstance(Of LocalDB)
+        Dim Result As QueryResult
+
+        Await Db.BeginTransactionAsync()
+        Await Db.ExecuteRawQueryAsync(My.Resources.SetBrazilianDatabaseMonthNames)
+        Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelFillChartProductivityChartSelect, New Dictionary(Of String, Object) From {
+            {"@hasrepairid", ConfirmationType.No},
+            {"@month", CbxMonth.Text},
+            {"@year", CbxYear.Text}
+        })
+        TableGathering = Result.Table
+        Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelFillChartProductivityChartSelect, New Dictionary(Of String, Object) From {
+            {"@hasrepairid", ConfirmationType.Yes},
+            {"@month", CbxMonth.Text},
+            {"@year", CbxYear.Text}
+        })
+        TableExecution = Result.Table
+        Await Db.CommitTransactionAsync
         'Chart.ChartAreas(0).AxisY.Maximum = GetElapsedHoursInMonth()
         Chart.ChartAreas(0).AxisY.MajorGrid.Enabled = False
         Chart.ChartAreas(0).AxisX.MajorGrid.Enabled = False
@@ -464,15 +413,15 @@ Public Class UcEvaluationManagementPanelGrid
             Chart.Titles.Clear()
             Chart.Titles.Add(New Title(EnumHelper.GetEnumDescription(EvaluationPanelInformation.Productivity), Docking.Top, New Font("Century Ghotic", 12, FontStyle.Bold), Color.FromArgb(40, 40, 40)))
         End If
-    End Sub
-    Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
+    End Function
+    Private Async Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         Dim YearIndex As Integer
         Dim MonthIndex As Integer
         Try
             Cursor = Cursors.WaitCursor
             YearIndex = CbxYear.SelectedIndex
             MonthIndex = CbxMonth.SelectedIndex
-            RefreshData()
+            Await RefreshData()
             If CbxYear.Items.Count > 0 Then
                 If CbxYear.Items.Count >= YearIndex + 1 Then
                     CbxYear.SelectedIndex = YearIndex
@@ -493,25 +442,18 @@ Public Class UcEvaluationManagementPanelGrid
             Cursor = Cursors.Default
         End Try
     End Sub
-    Private Sub FillChartVisits()
+    Private Async Function FillChartVisits() As Task
         Dim Session = Locator.GetInstance(Of Session)
+        Dim Db As LocalDB = Locator.GetInstance(Of LocalDB)
+        Dim Result As QueryResult
         Dim TableResult As New DataTable
-        Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
-            Con.Open()
-            Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
-                Using Cmd As New MySqlCommand(My.Resources.SetBrazilianDatabaseMonthNames, Con)
-                    Cmd.ExecuteNonQuery()
-                End Using
-                Using Cmd As New MySqlCommand(My.Resources.EvaluationManagementPanelVisitsChartSelect, Con)
-                    Cmd.Transaction = Tra
-                    Cmd.Parameters.AddWithValue("@year", CbxYear.Text)
-                    Using Adp As New MySqlDataAdapter(Cmd)
-                        Adp.Fill(TableResult)
-                    End Using
-                End Using
-                Tra.Commit()
-            End Using
-        End Using
+        Await Db.BeginTransactionAsync()
+        Await Db.ExecuteRawQueryAsync(My.Resources.SetBrazilianDatabaseMonthNames)
+        Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelVisitsChartSelect, New Dictionary(Of String, Object) From {
+            {"@year", CbxYear.Text}
+        })
+        TableResult = Result.Table
+        Await Db.CommitTransactionAsync()
         Chart.Series.Clear()
         Chart.ChartAreas(0).AxisY.Maximum = Double.NaN
         Chart.ChartAreas(0).AxisY.MajorGrid.Enabled = False
@@ -534,7 +476,7 @@ Public Class UcEvaluationManagementPanelGrid
             Chart.Titles.Clear()
             Chart.Titles.Add(New Title(EnumHelper.GetEnumDescription(EvaluationPanelInformation.Visits), Docking.Top, New Font("Century Ghotic", 12, FontStyle.Bold), Color.FromArgb(40, 40, 40)))
         End If
-    End Sub
+    End Function
     Private Sub Chart_GetToolTipText(sender As Object, e As ToolTipEventArgs) Handles Chart.GetToolTipText
         Dim Time As TimeSpan
         Dim TotalTime As TimeSpan

@@ -321,9 +321,9 @@ Public Class MySqlService
                         While Await reader.ReadAsync()
                             Item = New Dictionary(Of String, Object)
                             For i = 0 To reader.FieldCount - 1
-                                item.Add(reader.GetName(i), reader.GetValue(i))
+                                Item.Add(reader.GetName(i), reader.GetValue(i))
                             Next
-                            Data.Add(item)
+                            Data.Add(Item)
                         End While
                     End Using
                 Else
@@ -391,9 +391,12 @@ Public Class MySqlService
         End If
         Return New QueryResult(Data, 0)
     End Function
-    Private Sub DisposeConnection(Connection As MySqlConnection, Optional Transaction As MySqlTransaction = Nothing)
+    Private Sub DisposeConnection(ByRef Connection As MySqlConnection, Optional ByRef Transaction As MySqlTransaction = Nothing)
         If Connection.State <> ConnectionState.Closed Then Connection.Close()
-        If Not Connection.IsDisposed Then Connection.Dispose()
+        If Not Connection.IsDisposed Then
+            Connection.Dispose()
+            Connection = Nothing
+        End If
         If Transaction IsNot Nothing Then Transaction.Dispose()
     End Sub
 End Class

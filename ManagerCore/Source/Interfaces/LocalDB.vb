@@ -2,10 +2,6 @@
 Public MustInherit Class LocalDB
     MustOverride Sub Initialize(DatabaseSettings As SettingDatabaseModel)
     MustOverride Function GetConnection() As DbConnection
-    MustOverride Async Function BeginTransactionAsync() As Task
-    MustOverride Sub BeginTransaction()
-    MustOverride Async Function CommitTransactionAsync() As Task
-    MustOverride Sub CommitTransaction()
     MustOverride Async Function ExecuteRawQueryAsync(Query As String, Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As Task(Of QueryResult)
     MustOverride Function ExecuteRawQuery(Query As String, Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As QueryResult
     MustOverride Async Function ExecuteSelectAsync(Table As String, Optional Columns As List(Of String) = Nothing, Optional Where As String = Nothing, Optional QueryArgs As Dictionary(Of String, Object) = Nothing, Optional OrderBy As String = Nothing, Optional Limit As Integer = Nothing) As Task(Of QueryResult)
@@ -25,9 +21,9 @@ Public MustInherit Class LocalDB
 
 
     Public Class QueryResult
-        Private _Data As List(Of Dictionary(Of String, Object))
-        Private _AffectedRows As Long
-        Private _LastInsertedID As Long
+        Private ReadOnly _Data As List(Of Dictionary(Of String, Object))
+        Private ReadOnly _AffectedRows As Long
+        Private ReadOnly _LastInsertedID As Long
 
         Public Sub New(Optional Data As List(Of Dictionary(Of String, Object)) = Nothing, Optional AffectedRows As Long = 0, Optional LastInsertedID As Long = 0)
             _Data = Data

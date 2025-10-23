@@ -1,4 +1,5 @@
 ﻿Imports System.Threading
+Imports System.Transactions
 Imports ControlLibrary
 Imports ManagerCore
 Public Class EventService
@@ -51,42 +52,43 @@ Public Class EventService
         If Data.Rows.Cast(Of DataRow).Any(Function(x) Not CBool(x("issaved"))) Then
             Await _Semaphore.WaitAsync()
             Try
-                Await _Database.BeginTransactionAsync()
-                For Each Row As DataRow In Data.Rows.Cast(Of DataRow).Where(Function(x) Not CBool(x("issaved"))).Reverse()
-                    Values = New Dictionary(Of String, String) From {
-                            {"id", "@id"},
-                            {"parentid", "@parentid"},
-                            {"eventtype", "@eventtype"},
-                            {"time", "@time"},
-                            {"description", "@description"}
-                        }
-                    Args = New Dictionary(Of String, Object) From {
-                            {"@id", DBNull.Value},
-                            {"@parentid", If(Row("parentid") > 0, Row("parentid"), DBNull.Value)},
-                            {"@eventtype", CInt(Row("eventtype"))},
-                            {"@time", CDate(Row("time")).ToString("yyyy-MM-dd HH:mm:ss")},
-                            {"@description", Row("description").ToString.Replace($"{Constants.SubItemSymbol} ", Nothing)}
-                        }
-                    Dim Result = Await _Database.ExecuteInsertAsync("agentevent", Values, Args)
-                    Row("id") = Result.LastInsertedID
-                    If Row("eventtype") = EventTypes.Initial Then
-                        For Each r As DataRow In Data.Rows.Cast(Of DataRow).Where(Function(x) x("tempid") IsNot DBNull.Value AndAlso x("tempid") = Row("tempid") And x("eventtype") <> EventTypes.Initial)
-                            r("parentid") = Row("id")
-                            Values = New Dictionary(Of String, String) From {
-                                    {"parentid", "@parentid"}
-                                }
-                            Args = New Dictionary(Of String, Object) From {
-                                    {"@parentid", r("parentid")},
-                                    {"@id", r("id")}
-                                }
-                            Await _Database.ExecuteUpdateAsync("agentevent", Values, "id = @id", Args)
-                        Next r
-                    End If
-                Next Row
-                Await _Database.CommitTransactionAsync()
-                For Each Row As DataRow In Data.Rows.Cast(Of DataRow).Where(Function(x) Not CBool(x("issaved")))
-                    Row("issaved") = True
-                Next
+                Using Scope As New TransactionScope(TransactionScopeAsyncFlowOption.Enabled)
+                    For Each Row As DataRow In Data.Rows.Cast(Of DataRow).Where(Function(x) Not CBool(x("issaved"))).Reverse()
+                        Values = New Dictionary(Of String, String) From {
+                                {"id", "@id"},
+                                {"parentid", "@parentid"},
+                                {"eventtype", "@eventtype"},
+                                {"time", "@time"},
+                                {"description", "@description"}
+                            }
+                        Args = New Dictionary(Of String, Object) From {
+                                {"@id", DBNull.Value},
+                                {"@parentid", If(Row("parentid") > 0, Row("parentid"), DBNull.Value)},
+                                {"@eventtype", CInt(Row("eventtype"))},
+                                {"@time", CDate(Row("time")).ToString("yyyy-MM-dd HH:mm:ss")},
+                                {"@description", Row("description").ToString.Replace($"{Constants.SubItemSymbol} ", Nothing)}
+                            }
+                        Dim Result = Await _Database.ExecuteInsertAsync("agentevent", Values, Args)
+                        Row("id") = Result.LastInsertedID
+                        If Row("eventtype") = EventTypes.Initial Then
+                            For Each r As DataRow In Data.Rows.Cast(Of DataRow).Where(Function(x) x("tempid") IsNot DBNull.Value AndAlso x("tempid") = Row("tempid") And x("eventtype") <> EventTypes.Initial)
+                                r("parentid") = Row("id")
+                                Values = New Dictionary(Of String, String) From {
+                                        {"parentid", "@parentid"}
+                                    }
+                                Args = New Dictionary(Of String, Object) From {
+                                        {"@parentid", r("parentid")},
+                                        {"@id", r("id")}
+                                    }
+                                Await _Database.ExecuteUpdateAsync("agentevent", Values, "id = @id", Args)
+                            Next r
+                        End If
+                    Next Row
+                    For Each Row As DataRow In Data.Rows.Cast(Of DataRow).Where(Function(x) Not CBool(x("issaved")))
+                        Row("issaved") = True
+                    Next
+                    Scope.Complete()
+                End Using
             Catch ex As Exception
                 WriteSingle(New EventInitialModel($"Ocorreu um erro ao salvar os eventos - {ex.Message}"), Data)
             Finally
@@ -103,44 +105,46 @@ Public Class EventService
         Dim Args As Dictionary(Of String, Object)
         _Semaphore.Wait()
         Try
-            Await _Database.BeginTransactionAsync()
-            Columns = New List(Of String) From {"id", "parentid", "eventtype", "time", "description"}
-            Args = New Dictionary(Of String, Object) From {{"@eventtype", EventTypes.Initial}}
-            Dim Result = Await _Database.ExecuteSelectAsync("agentevent", Columns, " eventtype = @eventtype", Args, "id DESC", 10)
-            TableParent = Util.DictionariesToDataTable(Result.Data)
-            For Each Column As String In Columns
-                TableAll.Columns.Add(Column)
-            Next Column
-            TableAll.Columns.Add("issaved")
-            TableAll.Columns.Add("tempid")
-            For Each ParentRow As DataRow In TableParent.Rows
-                Args = New Dictionary(Of String, Object) From {{"@parentid", ParentRow.Item("id")}}
-                Result = Await _Database.ExecuteSelectAsync("agentevent", Columns, "parentid = @parentid", Args, "id DESC")
-                TableChild = Util.DictionariesToDataTable(Result.Data)
-                For Each ChildRow As DataRow In TableChild.Rows
-                    If ChildRow.Item("eventtype") = EventTypes.Child Then
-                        ChildRow.Item("Description") = $"{Constants.SubItemSymbol} {ChildRow.Item("Description")}"
-                    End If
+            Using Scope As New TransactionScope(TransactionScopeAsyncFlowOption.Enabled)
+                Columns = New List(Of String) From {"id", "parentid", "eventtype", "time", "description"}
+                Args = New Dictionary(Of String, Object) From {{"@eventtype", EventTypes.Initial}}
+                Dim Result = Await _Database.ExecuteSelectAsync("agentevent", Columns, " eventtype = @eventtype", Args, "id DESC", 10)
+                TableParent = Util.DictionariesToDataTable(Result.Data)
+                For Each Column As String In Columns
+                    TableAll.Columns.Add(Column)
+                Next Column
+                TableAll.Columns.Add("issaved")
+                TableAll.Columns.Add("tempid")
+                For Each ParentRow As DataRow In TableParent.Rows
+                    Args = New Dictionary(Of String, Object) From {{"@parentid", ParentRow.Item("id")}}
+                    Result = Await _Database.ExecuteSelectAsync("agentevent", Columns, "parentid = @parentid", Args, "id DESC")
+                    TableChild = Util.DictionariesToDataTable(Result.Data)
+                    For Each ChildRow As DataRow In TableChild.Rows
+                        If ChildRow.Item("eventtype") = EventTypes.Child Then
+                            ChildRow.Item("Description") = $"{Constants.SubItemSymbol} {ChildRow.Item("Description")}"
+                        End If
+                        NewRow = TableAll.NewRow()
+                        NewRow.Item("id") = ChildRow.Item("id")
+                        NewRow.Item("parentid") = ChildRow.Item("parentid")
+                        NewRow.Item("eventtype") = ChildRow.Item("eventtype")
+                        NewRow.Item("time") = ChildRow.Item("time")
+                        NewRow.Item("description") = ChildRow.Item("description")
+                        NewRow.Item("issaved") = True
+                        TableAll.Rows.Add(NewRow)
+                    Next ChildRow
                     NewRow = TableAll.NewRow()
-                    NewRow.Item("id") = ChildRow.Item("id")
-                    NewRow.Item("parentid") = ChildRow.Item("parentid")
-                    NewRow.Item("eventtype") = ChildRow.Item("eventtype")
-                    NewRow.Item("time") = ChildRow.Item("time")
-                    NewRow.Item("description") = ChildRow.Item("description")
+                    NewRow.Item("id") = ParentRow.Item("id")
+                    NewRow.Item("parentid") = ParentRow.Item("parentid")
+                    NewRow.Item("eventtype") = ParentRow.Item("eventtype")
+                    NewRow.Item("time") = ParentRow.Item("time")
+                    NewRow.Item("description") = ParentRow.Item("description")
                     NewRow.Item("issaved") = True
                     TableAll.Rows.Add(NewRow)
-                Next ChildRow
-                NewRow = TableAll.NewRow()
-                NewRow.Item("id") = ParentRow.Item("id")
-                NewRow.Item("parentid") = ParentRow.Item("parentid")
-                NewRow.Item("eventtype") = ParentRow.Item("eventtype")
-                NewRow.Item("time") = ParentRow.Item("time")
-                NewRow.Item("description") = ParentRow.Item("description")
-                NewRow.Item("issaved") = True
-                TableAll.Rows.Add(NewRow)
-            Next ParentRow
-            Await _Database.CommitTransactionAsync()
-            Return TableAll
+                Next ParentRow
+                Scope.Complete()
+                Return TableAll
+            End Using
+
         Catch ex As Exception
             CMessageBox.Show("Erro ao ler", "Ocorreu um erro ao ler os eventos.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Return New DataTable()

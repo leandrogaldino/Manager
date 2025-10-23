@@ -5,6 +5,7 @@ Imports System.Windows.Forms.DataVisualization.Charting
 Imports System.Globalization
 Imports ManagerCore
 Imports ManagerCore.LocalDB
+Imports System.Transactions
 Public Class UcEvaluationManagementPanelGrid
     Private _InDayDetail As New UcEvaluationCardDetail
     Private _ToOverdueDetail As New UcEvaluationCardDetail
@@ -102,31 +103,32 @@ Public Class UcEvaluationManagementPanelGrid
         Dim TableUnitOverdue As New DataTable
         Dim Db As LocalDB = Locator.GetInstance(Of LocalDB)
         Dim Result As QueryResult
-        Await Db.BeginTransactionAsync()
-        Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementFilter, New Dictionary(Of String, Object) From {
-            {"@personid", "%"},
-            {"@persondocument", "%"},
-            {"@personname", "%"},
-            {"@zipcode", "%"},
-            {"@address", "%"},
-            {"@city", "%"},
-            {"@state", "%"},
-            {"@compressorname", "%"},
-            {"@serialnumber", "%"},
-            {"@patrimony", "%"},
-            {"@sector", "%"},
-            {"@route", "%"},
-            {"@nextexchangei", "0000-01-01"},
-            {"@nextexchangef", "9999-12-31"}
-        })
-        TableResult = Result.Table
-        Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelNoVisited)
-        TableNeverVisited = Result.Table
-        Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelCustomerToVisit, New Dictionary(Of String, Object) From {{"@days", Session.Setting.General.Evaluation.DaysBeforeVisitAlert}})
-        TableToVisit = Result.Table
-        Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelUnitOverdue)
-        TableUnitOverdue = Result.Table
-        Await Db.CommitTransactionAsync()
+        Using Scope As New TransactionScope(TransactionScopeAsyncFlowOption.Enabled)
+            Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementFilter, New Dictionary(Of String, Object) From {
+                {"@personid", "%"},
+                {"@persondocument", "%"},
+                {"@personname", "%"},
+                {"@zipcode", "%"},
+                {"@address", "%"},
+                {"@city", "%"},
+                {"@state", "%"},
+                {"@compressorname", "%"},
+                {"@serialnumber", "%"},
+                {"@patrimony", "%"},
+                {"@sector", "%"},
+                {"@route", "%"},
+                {"@nextexchangei", "0000-01-01"},
+                {"@nextexchangef", "9999-12-31"}
+            })
+            TableResult = Result.Table
+            Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelNoVisited)
+            TableNeverVisited = Result.Table
+            Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelCustomerToVisit, New Dictionary(Of String, Object) From {{"@days", Session.Setting.General.Evaluation.DaysBeforeVisitAlert}})
+            TableToVisit = Result.Table
+            Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelUnitOverdue)
+            TableUnitOverdue = Result.Table
+            Scope.Complete()
+        End Using
         FillCardInDay(TableResult, Session)
         FillCardToOverdue(TableResult, Session)
         FillCardOverdue(TableResult)
@@ -321,22 +323,22 @@ Public Class UcEvaluationManagementPanelGrid
         Dim Time As TimeSpan
         Dim Db As LocalDB = Locator.GetInstance(Of LocalDB)
         Dim Result As QueryResult
-
-        Await Db.BeginTransactionAsync()
-        Await Db.ExecuteRawQueryAsync(My.Resources.SetBrazilianDatabaseMonthNames)
-        Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelFillChartProductivityChartSelect, New Dictionary(Of String, Object) From {
-            {"@hasrepairid", ConfirmationType.No},
-            {"@month", CbxMonth.Text},
-            {"@year", CbxYear.Text}
-        })
-        TableGathering = Result.Table
-        Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelFillChartProductivityChartSelect, New Dictionary(Of String, Object) From {
-            {"@hasrepairid", ConfirmationType.Yes},
-            {"@month", CbxMonth.Text},
-            {"@year", CbxYear.Text}
-        })
-        TableExecution = Result.Table
-        Await Db.CommitTransactionAsync
+        Using Scope As New TransactionScope(TransactionScopeAsyncFlowOption.Enabled)
+            Await Db.ExecuteRawQueryAsync(My.Resources.SetBrazilianDatabaseMonthNames)
+            Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelFillChartProductivityChartSelect, New Dictionary(Of String, Object) From {
+                {"@hasrepairid", ConfirmationType.No},
+                {"@month", CbxMonth.Text},
+                {"@year", CbxYear.Text}
+            })
+            TableGathering = Result.Table
+            Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelFillChartProductivityChartSelect, New Dictionary(Of String, Object) From {
+                {"@hasrepairid", ConfirmationType.Yes},
+                {"@month", CbxMonth.Text},
+                {"@year", CbxYear.Text}
+            })
+            TableExecution = Result.Table
+            Scope.Complete()
+        End Using
         'Chart.ChartAreas(0).AxisY.Maximum = GetElapsedHoursInMonth()
         Chart.ChartAreas(0).AxisY.MajorGrid.Enabled = False
         Chart.ChartAreas(0).AxisX.MajorGrid.Enabled = False
@@ -447,13 +449,14 @@ Public Class UcEvaluationManagementPanelGrid
         Dim Db As LocalDB = Locator.GetInstance(Of LocalDB)
         Dim Result As QueryResult
         Dim TableResult As New DataTable
-        Await Db.BeginTransactionAsync()
-        Await Db.ExecuteRawQueryAsync(My.Resources.SetBrazilianDatabaseMonthNames)
-        Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelVisitsChartSelect, New Dictionary(Of String, Object) From {
-            {"@year", CbxYear.Text}
-        })
-        TableResult = Result.Table
-        Await Db.CommitTransactionAsync()
+        Using Scope As New TransactionScope(TransactionScopeAsyncFlowOption.Enabled)
+            Await Db.ExecuteRawQueryAsync(My.Resources.SetBrazilianDatabaseMonthNames)
+            Result = Await Db.ExecuteRawQueryAsync(My.Resources.EvaluationManagementPanelVisitsChartSelect, New Dictionary(Of String, Object) From {
+                {"@year", CbxYear.Text}
+            })
+            TableResult = Result.Table
+            Scope.Complete()
+        End Using
         Chart.Series.Clear()
         Chart.ChartAreas(0).AxisY.Maximum = Double.NaN
         Chart.ChartAreas(0).AxisY.MajorGrid.Enabled = False

@@ -27,6 +27,8 @@ Namespace My
                             Using PanelControl As New UcEvaluationManagementPanelGrid
                                 PanelControl.BtnClose.Visible = False
                                 PanelControl.BtnExport.Visible = False
+                                PanelControl.Dock = DockStyle.Fill
+                                PanelForm.Controls.Add(PanelControl)
                                 PanelForm.ShowDialog()
                             End Using
                         End Using

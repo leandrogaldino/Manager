@@ -160,7 +160,7 @@ Public Class TaskClean
                     If Not String.IsNullOrEmpty(Entry("filename").ToString) Then
                         If Not Files.Any(Function(x) x.Name = Entry("filename").ToString) Then
                             Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
-                            Response.Event.AddChildEvent($"O arquivo {Entry("filename")} da avaliação de ID {Entry("id")} não foi encontrado")
+                            Response.Event.AddChildEvent($"O arquivo {Entry("filename")} da requisição de ID {Entry("id")} não foi encontrado")
                             Progress?.Report(Response)
                             Await Task.Delay(Constants.WaitForLoop)
                         End If
@@ -175,7 +175,7 @@ Public Class TaskClean
                     If Not String.IsNullOrEmpty(Entry("picturename").ToString) Then
                         If Not Files.Any(Function(x) x.Name = Entry("picturename").ToString) Then
                             Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
-                            Response.Event.AddChildEvent($"O arquivo {Entry("picturename")} da avaliação de ID {Entry("id")} não foi encontrado")
+                            Response.Event.AddChildEvent($"O arquivo {Entry("picturename")} do produto de ID {Entry("id")} não foi encontrado")
                             Progress?.Report(Response)
                             Await Task.Delay(Constants.WaitForLoop)
                         End If
@@ -205,7 +205,7 @@ Public Class TaskClean
                     If Not String.IsNullOrEmpty(Entry("documentname").ToString) Then
                         If Not Files.Any(Function(x) x.Name = Entry("documentname").ToString) Then
                             Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
-                            Response.Event.AddChildEvent($"O arquivo {Entry("documentname")} da avaliação de ID {Entry("id")} não foi encontrado")
+                            Response.Event.AddChildEvent($"O arquivo {Entry("documentname")} do caixa de ID {Entry("id")} não foi encontrado")
                             Progress?.Report(Response)
                             Await Task.Delay(Constants.WaitForLoop)
                         End If

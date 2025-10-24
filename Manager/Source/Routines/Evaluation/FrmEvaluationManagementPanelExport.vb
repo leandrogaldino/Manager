@@ -50,7 +50,7 @@ Public Class FrmEvaluationManagementPanelExport
             BtnGenerate.Enabled = False
             Result = ExportGrid.Export(ExportList.ToArray)
             DialogResult = DialogResult.OK
-            FrmMain.OpenTab(New UcReport(Result), EnumHelper.GetEnumDescription(Routine.EvaluationExportManagementPanel))
+            FrmMain.OpenTab(New UcReport(Result), "Painel da Avaliação Exportado")
         Catch ex As Exception
             CMessageBox.Show("ERRO EV018", "Ocorreu um erro exportar.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally

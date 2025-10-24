@@ -184,7 +184,7 @@ Public Class UcEvaluationManagementGrid
     End Sub
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Gerenciamento de Avaliações", .Grid = DgvData}})
-        FrmMain.OpenTab(New UcReport(Result), EnumHelper.GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(New UcReport(Result), "Grade Exportada")
     End Sub
     Private Sub DgvData_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvData.MouseDoubleClick
         Dim ClickPlace As DataGridView.HitTestInfo = DgvData.HitTest(e.X, e.Y)

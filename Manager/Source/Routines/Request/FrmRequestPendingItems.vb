@@ -50,7 +50,7 @@ Public Class FrmRequestPendingItems
                 BtnGenerate.Enabled = False
                 Result = RequestReport.ProcessPendingItems(DbxInitialDate.Text, DbxFinalDate.Text, CbxShowResponsible.Checked, CbxShowDestination.Checked)
                 DialogResult = DialogResult.OK
-                FrmMain.OpenTab(New UcReport(Result), EnumHelper.GetEnumDescription(Routine.RequestPendingItemsReport))
+                FrmMain.OpenTab(New UcReport(Result), "Relatório de Peças Pendentes")
             Catch ex As Exception
                 CMessageBox.Show("ERRO RQ005", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally

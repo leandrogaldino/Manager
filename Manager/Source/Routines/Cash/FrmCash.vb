@@ -506,7 +506,7 @@ Public Class FrmCash
         Try
             Cursor = Cursors.WaitCursor
             Result = CashReport.ProcessCashSheet({_Cash}.ToList)
-            FrmMain.OpenTab(New UcReport(Result), EnumHelper.GetEnumDescription(Routine.CashSheetReport))
+            FrmMain.OpenTab(New UcReport(Result), "Relatório de Folha Caixa")
             CMessageBox.Show("O Relátório foi gerado na tela inicial.", CMessageBoxType.Information)
         Catch ex As Exception
             CMessageBox.Show("ERRO CS010", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

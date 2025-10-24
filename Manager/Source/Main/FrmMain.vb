@@ -484,10 +484,10 @@ Public Class FrmMain
         Dim Result As ReportResult
         Try
             Cursor = Cursors.WaitCursor
-            Dim ev = New Evaluation().Load(133, True)
+            Dim ev = New Evaluation().Load(189, True)
             Result = EvaluationReport.EvaluationSheet(ev)
             DialogResult = DialogResult.OK
-            OpenTab(New UcReport(Result), EnumHelper.GetEnumDescription(Routine.PersonMaintenancePlanReport))
+            OpenTab(New UcReport(Result), "Relatório de Atendimento")
         Catch ex As Exception
             CMessageBox.Show("ERRO", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally

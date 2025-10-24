@@ -88,7 +88,7 @@ Public Class FrmCashSheet
                     Result = CashReport.ProcessCashSheet(cs)
                     If Result IsNot Nothing Then
                         DialogResult = DialogResult.OK
-                        FrmMain.OpenTab(New UcReport(Result), EnumHelper.GetEnumDescription(Routine.CashItemResponsible))
+                        FrmMain.OpenTab(New UcReport(Result), "Relatório de Despesas por Responsável")
                     Else
                         CMessageBox.Show("Não existem despesas lançadas nesse período.", CMessageBoxType.Information)
                     End If

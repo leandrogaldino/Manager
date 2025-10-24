@@ -154,6 +154,6 @@ Public Class UcEmailModelGrid
     End Sub
     Private Sub BtnExport_Click(sender As Object, e As EventArgs) Handles BtnExport.Click
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Modelos de E-Mail", .Grid = DgvData}})
-        FrmMain.OpenTab(New UcReport(Result), EnumHelper.GetEnumDescription(Routine.ExportGrid))
+        FrmMain.OpenTab(New UcReport(Result), "Grade Exportada")
     End Sub
 End Class

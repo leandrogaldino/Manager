@@ -1255,4 +1255,7 @@
   <data name="PersonIsCompressorControlled" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\Person\PersonIsCompressorControlled.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="EmailSignatureGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XML\EmailSignatureGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

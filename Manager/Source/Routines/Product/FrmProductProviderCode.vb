@@ -89,7 +89,7 @@ Public Class FrmProductProviderCode
                 If Not _ProductProviderCode.IsMainProvider Then
                     _Product.ProviderCodes.Remove(_ProductProviderCode)
                     _ProductForm.DgvProviderCode.Fill(_Product.ProviderCodes)
-                    _ProductForm.DgvProviderCodeLayout.Load()
+                    _ProductForm.DgvlProviderCode.Load()
                     _Deleting = True
                     Dispose()
                     _ProductForm.BtnSave.Enabled = True
@@ -198,7 +198,7 @@ Public Class FrmProductProviderCode
                 Next Code
             End If
             _ProductForm.DgvProviderCode.Fill(_Product.ProviderCodes)
-            _ProductForm.DgvProviderCodeLayout.Load()
+            _ProductForm.DgvlProviderCode.Load()
             BtnSave.Enabled = False
             If Not _ProductProviderCode.IsSaved Then
                 BtnSave.Text = "Incluir"

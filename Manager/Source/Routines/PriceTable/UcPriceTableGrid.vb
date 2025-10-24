@@ -19,7 +19,7 @@ Public Class UcPriceTableGrid
         BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'DgvPriceTablesLayout.Load()
+        DgvlPriceTable.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         Using Form As New FrmPriceTable(New PriceTable(), Me)
@@ -52,7 +52,7 @@ Public Class UcPriceTableGrid
                         Try
                             _PriceTable.Delete()
                             _Filter.Filter()
-                            'DgvPriceTablesLayout.Load()
+                            DgvlPriceTable.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
@@ -74,7 +74,7 @@ Public Class UcPriceTableGrid
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        'DgvPriceTablesLayout.Load()
+        DgvlPriceTable.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -107,7 +107,7 @@ Public Class UcPriceTableGrid
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        'DgvPriceTablesLayout.Load()
+        DgvlPriceTable.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -159,7 +159,7 @@ Public Class UcPriceTableGrid
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        'DgvPriceTablesLayout.Load()
+        DgvlPriceTable.Load()
     End Sub
     Private Sub DgvData_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvData.KeyDown
         If e.KeyCode = Keys.Enter Then

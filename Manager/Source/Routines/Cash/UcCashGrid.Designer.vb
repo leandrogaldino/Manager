@@ -55,6 +55,7 @@ Partial Class UcCashGrid
         Me.BtnCloseCash = New System.Windows.Forms.ToolStripMenuItem()
         Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
         Me.DgvCcCashItem = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvlCash = New Manager.DataGridViewLayout()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -415,18 +416,23 @@ Partial Class UcCashGrid
         Me.DgvCcCashItem.IncludeHeaderTextInCellCopy = False
         Me.DgvCcCashItem.IncludeHeaderTextInRowCopy = True
         '
-        'FrmCashes
+        'DgvlCash
+        '
+        Me.DgvlCash.DataGridView = Me.DgvData
+        Me.DgvlCash.Routine = Manager.Routine.Cash
+        '
+        'UcCashGrid
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
-        Me.ClientSize = New System.Drawing.Size(1089, 500)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.TsMenu)
         Me.Controls.Add(Me.SsInformation)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "FrmCashes"
+        Me.Name = "UcCashGrid"
+        Me.Size = New System.Drawing.Size(1089, 500)
         Me.TsMenu.ResumeLayout(False)
         Me.TsMenu.PerformLayout()
         Me.SsInformation.ResumeLayout(False)
@@ -488,4 +494,5 @@ Partial Class UcCashGrid
     Friend WithEvents BtnCloseCash As ToolStripMenuItem
     Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
     Friend WithEvents DgvCcCashItem As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvlCash As DataGridViewLayout
 End Class

@@ -20,7 +20,7 @@ Public Class UcEmailSignatureGrid
         BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'DgvEmailSignaturesLayout.Load()
+        DgvlEmailSignature.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         Using Form As New FrmEmailSignature(New EmailSignature, Me)
@@ -52,7 +52,7 @@ Public Class UcEmailSignatureGrid
                         Try
                             _EmailSignature.Delete()
                             _Filter.Filter()
-                            'DgvEmailSignaturesLayout.Load()
+                            DgvlEmailSignature.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
@@ -74,7 +74,7 @@ Public Class UcEmailSignatureGrid
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        'DgvEmailSignaturesLayout.Load()
+        DgvlEmailSignature.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -107,7 +107,7 @@ Public Class UcEmailSignatureGrid
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        'DgvEmailSignaturesLayout.Load()
+        DgvlEmailSignature.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -144,7 +144,7 @@ Public Class UcEmailSignatureGrid
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        'DgvEmailSignaturesLayout.Load()
+        DgvlEmailSignature.Load()
     End Sub
     Private Sub DgvData_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvData.KeyDown
         If e.KeyCode = Keys.Enter Then

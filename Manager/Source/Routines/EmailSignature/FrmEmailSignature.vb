@@ -135,7 +135,7 @@ Public Class FrmEmailSignature
                         _EmailSignature.Delete()
                         If _EmailSignaturesGrid IsNot Nothing Then
                             _Filter.Filter()
-                            '_GridControl.DgvEmailSignaturesLayout.Load()
+                            _GridControl.DgvlEmailSignature.Load()
                             _EmailSignaturesGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -205,7 +205,7 @@ Public Class FrmEmailSignature
                     BtnDelete.Enabled = True
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        '_GridControl.DgvEmailSignaturesLayout.Load()
+                        _GridControl.DgvlEmailSignature.Load()
                         Row = _EmailSignaturesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

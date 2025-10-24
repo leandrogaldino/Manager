@@ -125,7 +125,7 @@ Public Class FrmProductUnit
                         _Unit.Delete()
                         If _UnitsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _GridControl.DgvUnitsLayout.Load()
+                            _GridControl.DgvlProductUnit.Load()
                             _UnitsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -220,7 +220,7 @@ Public Class FrmProductUnit
                     BtnDelete.Enabled = _User.CanDelete(Routine.ProductUnit)
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _GridControl.DgvUnitsLayout.Load()
+                        _GridControl.DgvlProductUnit.Load()
                         Row = _UnitsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

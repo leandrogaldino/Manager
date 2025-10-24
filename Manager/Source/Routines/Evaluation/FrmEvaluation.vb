@@ -89,7 +89,7 @@ Public Class FrmEvaluation
 #End Region
 #Region "Form Events"
     Private Sub Form_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvlTechnicianLayout.Load()
+        DgvlTechnician.Load()
         DgvlElapsedDaySellable.Load()
         DgvlWorkedHourSellable.Load()
         DgvlReplacedSellable.Load()
@@ -251,7 +251,6 @@ Public Class FrmEvaluation
         TcEvaluation.TabPages.Remove(_TabDocument)
         TcEvaluation.TabPages.Remove(_TabPicture)
         TcEvaluation.TabPages.Remove(_TabPageSignature)
-
         If _Evaluation.Source = EvaluationSource.Manual Then
             If Not TcEvaluation.TabPages.Cast(Of TabPage).Any(Function(x) x.Equals(_TabDocument)) Then TcEvaluation.TabPages.Add(_TabDocument)
             If Not TcEvaluation.TabPages.Cast(Of TabPage).Any(Function(x) x.Equals(_TabPicture)) Then TcEvaluation.TabPages.Add(_TabPicture)
@@ -261,8 +260,6 @@ Public Class FrmEvaluation
             If Not TcEvaluation.TabPages.Cast(Of TabPage).Any(Function(x) x.Equals(_TabPageSignature)) Then TcEvaluation.TabPages.Add(_TabPageSignature)
 
         End If
-
-
         TxtEvaluationNumber.Enabled = _Evaluation.Source = EvaluationSource.Manual
         BtnSave.Enabled = False
         TxtEvaluationNumber.Select()
@@ -477,7 +474,7 @@ Public Class FrmEvaluation
                     End If
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        '_GridControl.DgvEvaluationLayout.Load()
+                        _GridControl.DgvlEvaluation.Load()
                         Row = _EvaluationsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()
@@ -751,7 +748,7 @@ Public Class FrmEvaluation
                         _Evaluation.Delete()
                         If _EvaluationsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            '_GridControl.DgvEvaluationLayout.Load()
+                            _GridControl.DgvlEvaluation.Load()
                             _EvaluationsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -790,7 +787,7 @@ Public Class FrmEvaluation
                 BtnDisapprove.Visible = _Evaluation.Status <> EvaluationStatus.Disapproved
                 If _GridControl IsNot Nothing Then
                     _Filter.Filter()
-                    ' _GridControl.DgvEvaluationLayout.Load()
+                    _GridControl.DgvlEvaluation.Load()
                     Row = _EvaluationsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                     If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                     DgvNavigator.RefreshButtons()
@@ -818,7 +815,7 @@ Public Class FrmEvaluation
             BtnDisapprove.Visible = _Evaluation.Status <> EvaluationStatus.Disapproved
             If _GridControl IsNot Nothing Then
                 _Filter.Filter()
-                ' _GridControl.DgvEvaluationLayout.Load()
+                _GridControl.DgvlEvaluation.Load()
                 Row = _EvaluationsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                 If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                 DgvNavigator.RefreshButtons()
@@ -846,7 +843,7 @@ Public Class FrmEvaluation
                         BtnDisapprove.Visible = _Evaluation.Status <> EvaluationStatus.Disapproved
                         If _GridControl IsNot Nothing Then
                             _Filter.Filter()
-                            ' _GridControl.DgvEvaluationLayout.Load()
+                            _GridControl.DgvlEvaluation.Load()
                             Row = _EvaluationsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                             DgvNavigator.RefreshButtons()

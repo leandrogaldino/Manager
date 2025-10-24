@@ -157,7 +157,7 @@ Public Class FrmServicePrice
                 _Service.Prices.Add(_ServicePrice)
             End If
             _ServiceForm.DgvPrice.Fill(_Service.Prices)
-            _ServiceForm.DgvPriceLayout.Load()
+            _ServiceForm.DgvlPrice.Load()
             BtnSave.Enabled = False
             If Not _ServicePrice.IsSaved Then
                 BtnSave.Text = "Incluir"
@@ -210,7 +210,7 @@ Public Class FrmServicePrice
                 _ServicePrice = _Service.Prices.Single(Function(x) x.Guid = _ServiceForm.DgvPrice.SelectedRows(0).Cells("Guid").Value)
                 _Service.Prices.Remove(_ServicePrice)
                 _ServiceForm.DgvPrice.Fill(_Service.Prices)
-                _ServiceForm.DgvPriceLayout.Load()
+                _ServiceForm.DgvlPrice.Load()
                 _Deleting = True
                 Dispose()
                 _ServiceForm.BtnSave.Enabled = True

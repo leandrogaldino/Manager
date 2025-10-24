@@ -22,7 +22,7 @@ Public Class UcPrivilegePresetGrid
         BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'DgvlPrivilegePresetLayout.Load()
+        DgvlPrivilegePreset.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         Using Form As New FrmPrivilegePreset(New PrivilegePreset, Me)
@@ -54,7 +54,7 @@ Public Class UcPrivilegePresetGrid
                         Try
                             _PrivilegePreset.Delete()
                             _Filter.Filter()
-                            'DgvlPrivilegePresetLayout.Load()
+                            DgvlPrivilegePreset.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
@@ -76,7 +76,7 @@ Public Class UcPrivilegePresetGrid
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        'DgvlPrivilegePresetLayout.Load()
+        DgvlPrivilegePreset.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -109,7 +109,7 @@ Public Class UcPrivilegePresetGrid
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        'DgvlPrivilegePresetLayout.Load()
+        DgvlPrivilegePreset.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -158,7 +158,7 @@ Public Class UcPrivilegePresetGrid
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        'DgvlPrivilegePresetLayout.Load()
+        DgvlPrivilegePreset.Load()
     End Sub
     Private Sub DgvData_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvData.KeyDown
         If e.KeyCode = Keys.Enter Then

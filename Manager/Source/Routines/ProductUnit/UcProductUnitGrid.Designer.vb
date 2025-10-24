@@ -48,7 +48,7 @@ Partial Class UcProductUnitGrid
         Me.BtnCloseDetails = New System.Windows.Forms.ToolStripButton()
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
-        Me.DgvUnitsLayout = New Manager.DataGridViewLayout()
+        Me.DgvlProductUnit = New Manager.DataGridViewLayout()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -359,10 +359,10 @@ Partial Class UcProductUnitGrid
         Me.DgvData.Size = New System.Drawing.Size(502, 537)
         Me.DgvData.TabIndex = 0
         '
-        'DgvUnitsLayout
+        'DgvlProductUnit
         '
-        Me.DgvUnitsLayout.DataGridView = Me.DgvData
-        Me.DgvUnitsLayout.Routine = Manager.Routine.ProductUnit
+        Me.DgvlProductUnit.DataGridView = Me.DgvData
+        Me.DgvlProductUnit.Routine = Manager.Routine.ProductUnit
         '
         'UcProductUnitGrid
         '
@@ -427,5 +427,5 @@ Partial Class UcProductUnitGrid
     Friend WithEvents BtnCloseDetails As ToolStripButton
     Friend WithEvents LblView As ToolStripLabel
     Friend WithEvents DgvData As DataGridView
-    Friend WithEvents DgvUnitsLayout As DataGridViewLayout
+    Friend WithEvents DgvlProductUnit As DataGridViewLayout
 End Class

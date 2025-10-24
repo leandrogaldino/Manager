@@ -1084,12 +1084,6 @@
     <Compile Include="Source\Routines\Evaluation\FrmEvaluation.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Evaluation\FrmEvaluationManagement.Designer.vb">
-      <DependentUpon>FrmEvaluationManagement.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\Evaluation\FrmEvaluationManagement.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Source\Helper\FilterExpandable\CashItemExpandable.vb" />
     <Compile Include="Source\Helper\FilterExpandable\DateExpandable.vb" />
     <Compile Include="Source\Helper\FilterExpandable\DecimalExpandable.vb" />
@@ -1337,6 +1331,9 @@
     <EmbeddedResource Include="Source\Routines\Cash\UcCashGrid.resx">
       <DependentUpon>UcCashGrid.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\EmailSent\UcEmailSentGrid.resx">
+      <DependentUpon>UcEmailSentGrid.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\EmailSignature\UcEmailSignatureGrid.resx">
       <DependentUpon>UcEmailSignatureGrid.vb</DependentUpon>
     </EmbeddedResource>
@@ -1433,9 +1430,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationImport.resx">
       <DependentUpon>FrmEvaluationImport.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationManagement.resx">
-      <DependentUpon>FrmEvaluationManagement.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationManagementPanelExport.resx">
       <DependentUpon>FrmEvaluationManagementPanelExport.vb</DependentUpon>
@@ -1791,6 +1785,7 @@
     <Content Include="Resources\SQL\User\UserPersonShortNameSelect.sql" />
     <Content Include="Resources\XML\CashFlowAuthorizedGrid.xml" />
     <Content Include="Resources\XML\CashFlowGrid.xml" />
+    <Content Include="Resources\XML\EmailSignatureGrid.xml" />
     <Content Include="Resources\XML\EvaluationControlledSellableGrid.xml" />
     <Content Include="Resources\XML\EvaluationReplacedSellableGrid.xml" />
     <Content Include="Resources\XML\PersonCompressorSellableGrid.xml" />

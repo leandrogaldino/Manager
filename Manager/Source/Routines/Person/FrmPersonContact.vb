@@ -89,7 +89,7 @@ Public Class FrmPersonContact
                 If Not _PersonContact.IsMainContact Then
                     _Person.Contacts.Remove(_PersonContact)
                     _PersonForm.DgvContact.Fill(_Person.Contacts)
-                    _PersonForm.DgvContactLayout.Load()
+                    _PersonForm.DgvlContact.Load()
                     _Deleting = True
                     Dispose()
                     _PersonForm.BtnSave.Enabled = True
@@ -201,7 +201,7 @@ Public Class FrmPersonContact
                 CbxIsMainContact.Enabled = True
             End If
             _PersonForm.DgvContact.Fill(_Person.Contacts)
-            _PersonForm.DgvContactLayout.Load()
+            _PersonForm.DgvlContact.Load()
             BtnSave.Enabled = False
             If Not _PersonContact.IsSaved Then
                 BtnSave.Text = "Incluir"

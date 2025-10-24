@@ -87,9 +87,9 @@ Partial Class FrmPerson
         Me.TcPerson = New System.Windows.Forms.TabControl()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.DgvCompressorLayout = New Manager.DataGridViewLayout()
-        Me.DgvAddressLayout = New Manager.DataGridViewLayout()
-        Me.DgvContactLayout = New Manager.DataGridViewLayout()
+        Me.DgvlCompressor = New Manager.DataGridViewLayout()
+        Me.DgvlAddress = New Manager.DataGridViewLayout()
+        Me.DgvlContact = New Manager.DataGridViewLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
         Me.PnButtons.SuspendLayout()
@@ -321,11 +321,11 @@ Partial Class FrmPerson
         '
         Me.TabCompressor.Controls.Add(Me.DgvCompressor)
         Me.TabCompressor.Controls.Add(Me.TsCompressor)
-        Me.TabCompressor.Location = New System.Drawing.Point(4, 26)
+        Me.TabCompressor.Location = New System.Drawing.Point(4, 22)
         Me.TabCompressor.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabCompressor.Name = "TabCompressor"
         Me.TabCompressor.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabCompressor.Size = New System.Drawing.Size(629, 107)
+        Me.TabCompressor.Size = New System.Drawing.Size(629, 111)
         Me.TabCompressor.TabIndex = 1
         Me.TabCompressor.Text = "Compressores"
         Me.TabCompressor.UseVisualStyleBackColor = True
@@ -348,7 +348,7 @@ Partial Class FrmPerson
         Me.DgvCompressor.RowHeadersVisible = False
         Me.DgvCompressor.RowTemplate.Height = 26
         Me.DgvCompressor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvCompressor.Size = New System.Drawing.Size(623, 74)
+        Me.DgvCompressor.Size = New System.Drawing.Size(623, 78)
         Me.DgvCompressor.TabIndex = 1
         '
         'TsCompressor
@@ -791,20 +791,20 @@ Partial Class FrmPerson
         Me.EprInformation.ContainerControl = Me
         Me.EprInformation.Icon = CType(resources.GetObject("EprInformation.Icon"), System.Drawing.Icon)
         '
-        'DgvCompressorLayout
+        'DgvlCompressor
         '
-        Me.DgvCompressorLayout.DataGridView = Me.DgvCompressor
-        Me.DgvCompressorLayout.Routine = Manager.Routine.PersonCompressor
+        Me.DgvlCompressor.DataGridView = Me.DgvCompressor
+        Me.DgvlCompressor.Routine = Manager.Routine.PersonCompressor
         '
-        'DgvAddressLayout
+        'DgvlAddress
         '
-        Me.DgvAddressLayout.DataGridView = Me.DgvAddress
-        Me.DgvAddressLayout.Routine = Manager.Routine.PersonAddress
+        Me.DgvlAddress.DataGridView = Me.DgvAddress
+        Me.DgvlAddress.Routine = Manager.Routine.PersonAddress
         '
-        'DgvContactLayout
+        'DgvlContact
         '
-        Me.DgvContactLayout.DataGridView = Me.DgvContact
-        Me.DgvContactLayout.Routine = Manager.Routine.PersonContact
+        Me.DgvlContact.DataGridView = Me.DgvContact
+        Me.DgvlContact.Routine = Manager.Routine.PersonContact
         '
         'FrmPerson
         '
@@ -907,7 +907,7 @@ Partial Class FrmPerson
     Friend WithEvents TxtFilterCompressor As ToolStripTextBox
     Friend WithEvents TabNote As TabPage
     Friend WithEvents TxtNote As RichTextBox
-    Friend WithEvents DgvCompressorLayout As DataGridViewLayout
+    Friend WithEvents DgvlCompressor As DataGridViewLayout
     Friend WithEvents DgvAddress As DataGridView
     Friend WithEvents TsAddress As ToolStrip
     Friend WithEvents BtnIncludeAddress As ToolStripButton
@@ -915,8 +915,8 @@ Partial Class FrmPerson
     Friend WithEvents BtnDeleteAddress As ToolStripButton
     Friend WithEvents ToolStripLabel3 As ToolStripLabel
     Friend WithEvents TxtFilterAddress As ToolStripTextBox
-    Friend WithEvents DgvAddressLayout As DataGridViewLayout
-    Friend WithEvents DgvContactLayout As DataGridViewLayout
+    Friend WithEvents DgvlAddress As DataGridViewLayout
+    Friend WithEvents DgvlContact As DataGridViewLayout
     Friend WithEvents CbxIsTechnician As CheckBox
     Friend WithEvents EprInformation As ErrorProvider
 End Class

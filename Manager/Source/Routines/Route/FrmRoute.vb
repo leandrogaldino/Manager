@@ -124,7 +124,7 @@ Public Class FrmRoute
                         _Route.Delete()
                         If _RoutesGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _GridControl.DgvlRouteLayout.Load()
+                            _GridControl.DgvlRoute.Load()
                             _RoutesGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -211,7 +211,7 @@ Public Class FrmRoute
                     BtnDelete.Enabled = _User.CanDelete(Routine.Route)
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _GridControl.DgvlRouteLayout.Load()
+                        _GridControl.DgvlRoute.Load()
                         Row = _RoutesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

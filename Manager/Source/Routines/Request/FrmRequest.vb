@@ -54,7 +54,7 @@ Public Class FrmRequest
         LoadForm()
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvItemLayout.Load()
+        DgvRequestItem.Load()
     End Sub
     Private Sub LoadForm()
         ControlHelper.EnableControlDoubleBuffer(DgvItem, True)
@@ -155,7 +155,7 @@ Public Class FrmRequest
                         _Request.Delete()
                         If _RequestsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            '_GridControl.DgvRequestLayout.Load()
+                            _GridControl.DgvlRequest.Load()
                             _RequestsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -224,7 +224,7 @@ Public Class FrmRequest
                 Item = _Request.Items.Single(Function(x) x.Guid = DgvItem.SelectedRows(0).Cells("Guid").Value)
                 _Request.Items.Remove(Item)
                 DgvItem.Fill(_Request.Items)
-                DgvItemLayout.Load()
+                DgvRequestItem.Load()
                 BtnSave.Enabled = True
             End If
         End If
@@ -328,7 +328,7 @@ Public Class FrmRequest
                     BtnDelete.Enabled = _User.CanDelete(Routine.Request)
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        '_GridControl.DgvRequestLayout.Load()
+                        _GridControl.DgvlRequest.Load()
                         Row = _RequestsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()
@@ -413,7 +413,7 @@ Public Class FrmRequest
             End If
         End Using
     End Sub
-    Private Sub DgvItemLayout_Loaded(sender As Object, e As EventArgs) Handles DgvItemLayout.Loaded
+    Private Sub DgvItemLayout_Loaded(sender As Object, e As EventArgs) Handles DgvRequestItem.Loaded
         If _Request.Items.All(Function(x) x.Status = RequestStatus.Pending) Then
             LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Pending)
         ElseIf _Request.Items.All(Function(x) x.Status = RequestStatus.Concluded) Then

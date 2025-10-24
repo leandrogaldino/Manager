@@ -23,10 +23,10 @@ Partial Class FrmCash
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim MessageBoxSettings2 As Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings = New Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings()
-        Dim PdfViewerPrinterSettings2 As Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings = New Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings()
+        Dim MessageBoxSettings1 As Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings = New Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings()
+        Dim PdfViewerPrinterSettings1 As Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings = New Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmCash))
-        Dim TextSearchSettings2 As Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings = New Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings()
+        Dim TextSearchSettings1 As Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings = New Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
@@ -84,7 +84,7 @@ Partial Class FrmCash
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.SfdDocument = New System.Windows.Forms.SaveFileDialog()
         Me.OfdDocument = New System.Windows.Forms.OpenFileDialog()
-        Me.DgvCashItemsLayout = New Manager.DataGridViewLayout()
+        Me.DgvlCashItem = New Manager.DataGridViewLayout()
         Me.Panel1.SuspendLayout()
         Me.TcCash.SuspendLayout()
         Me.TabMain.SuspendLayout()
@@ -246,10 +246,10 @@ Partial Class FrmCash
         '
         Me.TabDocument.Controls.Add(Me.PdfDocumentViewer)
         Me.TabDocument.Controls.Add(Me.TsDocument)
-        Me.TabDocument.Location = New System.Drawing.Point(4, 26)
+        Me.TabDocument.Location = New System.Drawing.Point(4, 22)
         Me.TabDocument.Name = "TabDocument"
         Me.TabDocument.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabDocument.Size = New System.Drawing.Size(606, 196)
+        Me.TabDocument.Size = New System.Drawing.Size(606, 200)
         Me.TabDocument.TabIndex = 2
         Me.TabDocument.Text = "Documento"
         Me.TabDocument.UseVisualStyleBackColor = True
@@ -265,27 +265,27 @@ Partial Class FrmCash
         Me.PdfDocumentViewer.IsTextSearchEnabled = True
         Me.PdfDocumentViewer.IsTextSelectionEnabled = True
         Me.PdfDocumentViewer.Location = New System.Drawing.Point(3, 28)
-        MessageBoxSettings2.EnableNotification = True
-        Me.PdfDocumentViewer.MessageBoxSettings = MessageBoxSettings2
+        MessageBoxSettings1.EnableNotification = True
+        Me.PdfDocumentViewer.MessageBoxSettings = MessageBoxSettings1
         Me.PdfDocumentViewer.MinimumZoomPercentage = 50
         Me.PdfDocumentViewer.Name = "PdfDocumentViewer"
         Me.PdfDocumentViewer.PageBorderThickness = 1
-        PdfViewerPrinterSettings2.PageOrientation = Syncfusion.Windows.PdfViewer.PdfViewerPrintOrientation.[Auto]
-        PdfViewerPrinterSettings2.PageSize = Syncfusion.Windows.PdfViewer.PdfViewerPrintSize.ActualSize
-        PdfViewerPrinterSettings2.PrintLocation = CType(resources.GetObject("PdfViewerPrinterSettings2.PrintLocation"), System.Drawing.PointF)
-        PdfViewerPrinterSettings2.ShowPrintStatusDialog = True
-        Me.PdfDocumentViewer.PrinterSettings = PdfViewerPrinterSettings2
+        PdfViewerPrinterSettings1.PageOrientation = Syncfusion.Windows.PdfViewer.PdfViewerPrintOrientation.[Auto]
+        PdfViewerPrinterSettings1.PageSize = Syncfusion.Windows.PdfViewer.PdfViewerPrintSize.ActualSize
+        PdfViewerPrinterSettings1.PrintLocation = CType(resources.GetObject("PdfViewerPrinterSettings1.PrintLocation"), System.Drawing.PointF)
+        PdfViewerPrinterSettings1.ShowPrintStatusDialog = True
+        Me.PdfDocumentViewer.PrinterSettings = PdfViewerPrinterSettings1
         Me.PdfDocumentViewer.ReferencePath = Nothing
         Me.PdfDocumentViewer.ScrollDisplacementValue = 0
         Me.PdfDocumentViewer.ShowHorizontalScrollBar = True
         Me.PdfDocumentViewer.ShowVerticalScrollBar = True
-        Me.PdfDocumentViewer.Size = New System.Drawing.Size(600, 165)
+        Me.PdfDocumentViewer.Size = New System.Drawing.Size(600, 169)
         Me.PdfDocumentViewer.SpaceBetweenPages = 8
         Me.PdfDocumentViewer.TabIndex = 3
-        TextSearchSettings2.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
-        TextSearchSettings2.HighlightAllInstance = True
-        TextSearchSettings2.OtherInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(254, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.PdfDocumentViewer.TextSearchSettings = TextSearchSettings2
+        TextSearchSettings1.CurrentInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(64, Byte), Integer))
+        TextSearchSettings1.HighlightAllInstance = True
+        TextSearchSettings1.OtherInstanceColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(254, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.PdfDocumentViewer.TextSearchSettings = TextSearchSettings1
         Me.PdfDocumentViewer.ThemeName = "Default"
         Me.PdfDocumentViewer.VerticalScrollOffset = 0
         Me.PdfDocumentViewer.VisualStyle = Syncfusion.Windows.Forms.PdfViewer.VisualStyle.[Default]
@@ -689,10 +689,10 @@ Partial Class FrmCash
         Me.OfdDocument.Filter = "Documento (PDF)|*.pdf;"
         Me.OfdDocument.Title = "Escolha um documento"
         '
-        'DgvCashItemsLayout
+        'DgvlCashItem
         '
-        Me.DgvCashItemsLayout.DataGridView = Me.DgvCashItem
-        Me.DgvCashItemsLayout.Routine = Manager.Routine.CashItem
+        Me.DgvlCashItem.DataGridView = Me.DgvCashItem
+        Me.DgvlCashItem.Routine = Manager.Routine.CashItem
         '
         'FrmCash
         '
@@ -769,7 +769,7 @@ Partial Class FrmCash
     Friend WithEvents DgvCashItem As DataGridView
     Friend WithEvents EprValidation As ErrorProvider
     Friend WithEvents DgvNavigator As ControlLibrary.DataGridViewNavigator
-    Friend WithEvents DgvCashItemsLayout As DataGridViewLayout
+    Friend WithEvents DgvlCashItem As DataGridViewLayout
     Friend WithEvents TabNote As TabPage
     Friend WithEvents TxtNote As RichTextBox
     Friend WithEvents EprInformation As ErrorProvider

@@ -29,7 +29,7 @@ Public Class FrmUserEmail
         _UserForm = UserForm
         _GrantedUser = Locator.GetInstance(Of Session).User
         LoadForm()
-        DgvNavigator.DataGridView = _UserForm.DgvEmail
+        DgvNavigator.DataGridView = _UserForm.DgvUserEmail
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = _GrantedUser.CanAccess(Routine.Log)
@@ -44,9 +44,9 @@ Public Class FrmUserEmail
         End If
     End Sub
     Private Sub AfterDataGridViewRowMove()
-        If _UserForm.DgvEmail.SelectedRows.Count = 1 Then
+        If _UserForm.DgvUserEmail.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _UserEmail = _User.Emails.Single(Function(x) x.Guid = _UserForm.DgvEmail.SelectedRows(0).Cells("Guid").Value)
+            _UserEmail = _User.Emails.Single(Function(x) x.Guid = _UserForm.DgvUserEmail.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -86,12 +86,12 @@ Public Class FrmUserEmail
         LoadForm()
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
-        If _UserForm.DgvEmail.SelectedRows.Count = 1 Then
+        If _UserForm.DgvUserEmail.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _UserEmail = _User.Emails.Single(Function(x) x.Guid = _UserForm.DgvEmail.SelectedRows(0).Cells("Guid").Value)
+                _UserEmail = _User.Emails.Single(Function(x) x.Guid = _UserForm.DgvUserEmail.SelectedRows(0).Cells("Guid").Value)
                 _User.Emails.Remove(_UserEmail)
-                _UserForm.DgvEmail.Fill(_User.Emails)
-                _UserForm.DgvEmailLayout.Load()
+                _UserForm.DgvUserEmail.Fill(_User.Emails)
+                _UserForm.DgvlUserEmail.Load()
                 _Deleting = True
                 Dispose()
                 _UserForm.BtnSave.Enabled = True
@@ -141,7 +141,7 @@ Public Class FrmUserEmail
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = If(_UserEmail.IsSaved, _UserForm.DgvEmail.SelectedRows(0).Cells("Order").Value, 0)
+        LblOrderValue.Text = If(_UserEmail.IsSaved, _UserForm.DgvUserEmail.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _UserEmail.Creation
         CbxIsMainEmail.Checked = _UserEmail.IsMainEmail
         CbxEnableSSL.Checked = _UserEmail.EnableSSL
@@ -210,8 +210,8 @@ Public Class FrmUserEmail
                     End If
                 Next Email
             End If
-            _UserForm.DgvEmail.Fill(_User.Emails)
-            _UserForm.DgvEmailLayout.Load()
+            _UserForm.DgvUserEmail.Fill(_User.Emails)
+            _UserForm.DgvlUserEmail.Load()
             BtnSave.Enabled = False
             If Not _UserEmail.IsSaved Then
                 BtnSave.Text = "Incluir"
@@ -220,9 +220,9 @@ Public Class FrmUserEmail
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _UserForm.DgvEmail.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _UserEmail.Guid)
+            Row = _UserForm.DgvUserEmail.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _UserEmail.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _UserForm.DgvEmail.SelectedRows(0).Cells("Order").Value
+            LblOrderValue.Text = _UserForm.DgvUserEmail.SelectedRows(0).Cells("Order").Value
             _UserForm.EprValidation.Clear()
             _UserForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()

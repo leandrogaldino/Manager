@@ -20,7 +20,7 @@ Public Class UcUserGrid
         BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'DgvUserLayout.Load()
+        DgvlUser.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         Using Form As New FrmUser(New User, Me)
@@ -52,7 +52,7 @@ Public Class UcUserGrid
                         Try
                             _User.Delete()
                             _Filter.Filter()
-                            'DgvUserLayout.Load()
+                            DgvlUser.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
@@ -74,7 +74,7 @@ Public Class UcUserGrid
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        'DgvUserLayout.Load()
+        DgvlUser.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -107,7 +107,7 @@ Public Class UcUserGrid
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        'DgvUserLayout.Load()
+        DgvlUser.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -156,7 +156,7 @@ Public Class UcUserGrid
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        'DgvUserLayout.Load()
+        DgvlUser.Load()
     End Sub
     Private Sub DgvData_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvData.KeyDown
         If e.KeyCode = Keys.Enter Then

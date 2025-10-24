@@ -185,7 +185,7 @@ Public Class FrmPrivilegePreset
                         _PrivilegePreset.Delete()
                         If _PrivilegePresetsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            ' _GridControl.DgvlPrivilegePresetLayout.Load()
+                            _GridControl.DgvlPrivilegePreset.Load()
                             _PrivilegePresetsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -348,7 +348,7 @@ Public Class FrmPrivilegePreset
                     BtnDelete.Enabled = _LoggedUser.CanDelete(Routine.PrivilegePreset)
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        '_GridControl.DgvlPrivilegePresetLayout.Load()
+                        _GridControl.DgvlPrivilegePreset.Load()
                         Row = _PrivilegePresetsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

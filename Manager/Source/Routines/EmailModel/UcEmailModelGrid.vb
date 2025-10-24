@@ -17,7 +17,7 @@ Public Class UcEmailModelGrid
         BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'DgvEmailModelsLayout.Load()
+        DgvlEmailModel.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         Using Form As New FrmEmailModel(New EmailModel, Me)
@@ -49,7 +49,7 @@ Public Class UcEmailModelGrid
                         Try
                             _EmailModel.Delete()
                             _Filter.Filter()
-                            'DgvEmailModelsLayout.Load()
+                            DgvlEmailModel.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             CMessageBox.Show("ERRO EM007", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -67,7 +67,7 @@ Public Class UcEmailModelGrid
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        'DgvEmailModelsLayout.Load()
+        DgvlEmailModel.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -100,7 +100,7 @@ Public Class UcEmailModelGrid
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        'DgvEmailModelsLayout.Load()
+        DgvlEmailModel.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -137,7 +137,7 @@ Public Class UcEmailModelGrid
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        'DgvEmailModelsLayout.Load()
+        DgvlEmailModel.Load()
     End Sub
     Private Sub DgvData_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvData.KeyDown
         If e.KeyCode = Keys.Enter Then

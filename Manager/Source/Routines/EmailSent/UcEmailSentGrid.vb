@@ -14,15 +14,15 @@ Public Class UcEmailSentGrid
         _Filter.Filter()
         _User = Locator.GetInstance(Of Session).User
         PgFilter.SelectedObject = _Filter
-        'DgvEmailSentLayout.Load()
+        DgvlEmailSent.Load()
         BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'DgvEmailSentLayout.Load()
+        DgvlEmailSent.Load()
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        'DgvEmailSentLayout.Load()
+        DgvlEmailSent.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -51,14 +51,14 @@ Public Class UcEmailSentGrid
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        'DgvEmailSentLayout.Load()
+        DgvlEmailSent.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
     End Sub
     Private Sub PgFilter_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles PgFilter.PropertyValueChanged
         If _Filter.Filter() = True Then
-            'DgvEmailSentLayout.Load()
+            DgvlEmailSent.Load()
             LblStatus.Text = "Filtro Ativo"
             LblStatus.ForeColor = Color.DarkRed
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Bold)

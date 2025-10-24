@@ -30,7 +30,7 @@ Public Class UcRequestGrid
         BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' DgvRequestLayout.Load()
+        DgvlRequest.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         Using Form As New FrmRequest(New Request, Me)
@@ -71,7 +71,7 @@ Public Class UcRequestGrid
                                 LblStatus.ForeColor = Color.Black
                                 LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
                             End If
-                            'DgvRequestLayout.Load()
+                            DgvlRequest.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             CMessageBox.Show("ERRO RQ007", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -97,7 +97,7 @@ Public Class UcRequestGrid
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        'DgvRequestLayout.Load()
+        DgvlRequest.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -130,7 +130,7 @@ Public Class UcRequestGrid
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        'DgvRequestLayout.Load()
+        DgvlRequest.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -188,7 +188,7 @@ Public Class UcRequestGrid
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        'DgvRequestLayout.Load()
+        DgvlRequest.Load()
     End Sub
     Private Sub LoadDetails()
         If BtnDetails.Checked Then

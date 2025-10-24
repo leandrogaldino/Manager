@@ -225,7 +225,7 @@ Public Class FrmRequestItem
                 _Request.Items.Add(_RequestItem)
             End If
             _RequestForm.DgvItem.Fill(_Request.Items)
-            _RequestForm.DgvItemLayout.Load()
+            _RequestForm.DgvRequestItem.Load()
             BtnSave.Enabled = False
             If Not _RequestItem.IsSaved Then
                 BtnSave.Text = "Incluir"
@@ -321,7 +321,7 @@ Public Class FrmRequestItem
                 _RequestItem = _Request.Items.Single(Function(x) x.Guid = _RequestForm.DgvItem.SelectedRows(0).Cells("Guid").Value)
                 _Request.Items.Remove(_RequestItem)
                 _RequestForm.DgvItem.Fill(_Request.Items)
-                _RequestForm.DgvItemLayout.Load()
+                _RequestForm.DgvRequestItem.Load()
                 _Deleting = True
                 Dispose()
                 _RequestForm.BtnSave.Enabled = True

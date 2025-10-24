@@ -135,7 +135,7 @@ Public Class FrmPriceTable
                         _PriceTable.Delete()
                         If _PriceTablesGrid IsNot Nothing Then
                             _Filter.Filter()
-                            '_GridControl.DgvPriceTablesLayout.Load()
+                            _GridControl.DgvlPriceTable.Load()
                             _PriceTablesGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -270,7 +270,7 @@ Public Class FrmPriceTable
                     BtnDelete.Enabled = _User.CanDelete(Routine.PriceTable)
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        '_GridControl.DgvPriceTablesLayout.Load()
+                        _GridControl.DgvlPriceTable.Load()
                         Row = _PriceTablesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

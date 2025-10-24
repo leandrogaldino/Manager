@@ -47,7 +47,7 @@ Public Class FrmCash
         DgvNavigator.DataGridView = _CashesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        DgvCashItemsLayout.Load()
+        DgvlCashItem.Load()
         BtnLog.Visible = _User.CanAccess(Routine.Log)
         LblDocumentPage.Text = Nothing
     End Sub
@@ -157,7 +157,7 @@ Public Class FrmCash
                         _Cash.Delete()
                         If _CashesGrid IsNot Nothing Then
                             _Filter.Filter()
-                            '_GridControl.DgvCashesLayout.Load()
+                            _GridControl.DgvlCash.Load()
                             _CashesGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -323,7 +323,7 @@ Public Class FrmCash
                     BtnDelete.Enabled = _User.CanDelete(Routine.Cash)
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        '_GridControl.DgvCashesLayout.Load()
+                        _GridControl.DgvlCash.Load()
                         Row = _CashesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()
@@ -540,7 +540,7 @@ Public Class FrmCash
                         End If
                         If _GridControl IsNot Nothing Then
                             _Filter.Filter()
-                            ' _GridControl.DgvCashesLayout.Load()
+                            _GridControl.DgvlCash.Load()
                             Row = _CashesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                             DgvNavigator.RefreshButtons()
@@ -571,7 +571,7 @@ Public Class FrmCash
             BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And _User.CanAccess(Routine.CashReopen)
             If _GridControl IsNot Nothing Then
                 _Filter.Filter()
-                ' _GridControl.DgvCashesLayout.Load()
+                _GridControl.DgvlCash.Load()
                 Row = _CashesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                 If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                 DgvNavigator.RefreshButtons()

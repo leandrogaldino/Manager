@@ -20,7 +20,7 @@ Public Class UcCityGrid
         BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvCitiesLayout.Load()
+        DgvlCity.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         Using Form As New FrmCity(New City, Me)
@@ -52,7 +52,7 @@ Public Class UcCityGrid
                         Try
                             _City.Delete()
                             _Filter.Filter()
-                            DgvCitiesLayout.Load()
+                            DgvlCity.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
@@ -74,7 +74,7 @@ Public Class UcCityGrid
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        DgvCitiesLayout.Load()
+        DgvlCity.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -107,7 +107,7 @@ Public Class UcCityGrid
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        DgvCitiesLayout.Load()
+        DgvlCity.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -156,7 +156,7 @@ Public Class UcCityGrid
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        DgvCitiesLayout.Load()
+        DgvlCity.Load()
     End Sub
     Private Sub DgvData_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvData.KeyDown
         If e.KeyCode = Keys.Enter Then

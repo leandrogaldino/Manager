@@ -52,7 +52,7 @@ Partial Class FrmCashFlow
         Me.BtnEditAuthorized = New System.Windows.Forms.ToolStripButton()
         Me.BtnDeleteAuthorized = New System.Windows.Forms.ToolStripButton()
         Me.LblAuthorized = New System.Windows.Forms.Label()
-        Me.DgvAuthorizedLayout = New Manager.DataGridViewLayout()
+        Me.DgvlAuthorized = New Manager.DataGridViewLayout()
         Me.Panel1.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -360,10 +360,10 @@ Partial Class FrmCashFlow
         Me.LblAuthorized.TabIndex = 14
         Me.LblAuthorized.Text = "Usuários Autorizados"
         '
-        'DgvAuthorizedLayout
+        'DgvlAuthorized
         '
-        Me.DgvAuthorizedLayout.DataGridView = Me.DgvAuthorized
-        Me.DgvAuthorizedLayout.Routine = Manager.Routine.CashFlowAuthorized
+        Me.DgvlAuthorized.DataGridView = Me.DgvAuthorized
+        Me.DgvlAuthorized.Routine = Manager.Routine.CashFlowAuthorized
         '
         'FrmCashFlow
         '
@@ -430,5 +430,5 @@ Partial Class FrmCashFlow
     Friend WithEvents BtnEditAuthorized As ToolStripButton
     Friend WithEvents BtnDeleteAuthorized As ToolStripButton
     Friend WithEvents LblAuthorized As Label
-    Friend WithEvents DgvAuthorizedLayout As DataGridViewLayout
+    Friend WithEvents DgvlAuthorized As DataGridViewLayout
 End Class

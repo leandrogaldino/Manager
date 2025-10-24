@@ -65,6 +65,7 @@ Partial Class UcProductGrid
         Me.DgvCcCode = New ControlLibrary.DataGridViewContentCopy()
         Me.DgvCcIndicator = New ControlLibrary.DataGridViewContentCopy()
         Me.DgvCcPrice = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvlProduct = New Manager.DataGridViewLayout()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -564,18 +565,23 @@ Partial Class UcProductGrid
         Me.DgvCcPrice.IncludeHeaderTextInCellCopy = False
         Me.DgvCcPrice.IncludeHeaderTextInRowCopy = True
         '
-        'FrmProducts
+        'DgvlProduct
+        '
+        Me.DgvlProduct.DataGridView = Me.DgvData
+        Me.DgvlProduct.Routine = Manager.Routine.Product
+        '
+        'UcProductGrid
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
-        Me.ClientSize = New System.Drawing.Size(1089, 500)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.TsMenu)
         Me.Controls.Add(Me.SsInformation)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "FrmProducts"
+        Me.Name = "UcProductGrid"
+        Me.Size = New System.Drawing.Size(1089, 500)
         Me.TsMenu.ResumeLayout(False)
         Me.TsMenu.PerformLayout()
         Me.SsInformation.ResumeLayout(False)
@@ -655,4 +661,5 @@ Partial Class UcProductGrid
     Friend WithEvents DgvCcCode As ControlLibrary.DataGridViewContentCopy
     Friend WithEvents DgvCcIndicator As ControlLibrary.DataGridViewContentCopy
     Friend WithEvents DgvCcPrice As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvlProduct As DataGridViewLayout
 End Class

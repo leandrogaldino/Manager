@@ -79,7 +79,7 @@ Partial Class FrmRequest
         Me.OfdDocument = New System.Windows.Forms.OpenFileDialog()
         Me.SfdDocument = New System.Windows.Forms.SaveFileDialog()
         Me.TmrDocumentPage = New System.Windows.Forms.Timer(Me.components)
-        Me.DgvItemLayout = New Manager.DataGridViewLayout()
+        Me.DgvRequestItem = New Manager.DataGridViewLayout()
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.Panel1.SuspendLayout()
         Me.TsTitle.SuspendLayout()
@@ -372,10 +372,10 @@ Partial Class FrmRequest
         '
         Me.TabItems.Controls.Add(Me.DgvItem)
         Me.TabItems.Controls.Add(Me.TsItem)
-        Me.TabItems.Location = New System.Drawing.Point(4, 26)
+        Me.TabItems.Location = New System.Drawing.Point(4, 22)
         Me.TabItems.Name = "TabItems"
         Me.TabItems.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabItems.Size = New System.Drawing.Size(536, 85)
+        Me.TabItems.Size = New System.Drawing.Size(536, 89)
         Me.TabItems.TabIndex = 8
         Me.TabItems.Text = "Itens"
         Me.TabItems.UseVisualStyleBackColor = True
@@ -398,7 +398,7 @@ Partial Class FrmRequest
         Me.DgvItem.RowHeadersVisible = False
         Me.DgvItem.RowTemplate.Height = 26
         Me.DgvItem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvItem.Size = New System.Drawing.Size(530, 54)
+        Me.DgvItem.Size = New System.Drawing.Size(530, 58)
         Me.DgvItem.TabIndex = 1
         '
         'TsItem
@@ -641,10 +641,10 @@ Partial Class FrmRequest
         '
         Me.TmrDocumentPage.Enabled = True
         '
-        'DgvItemLayout
+        'DgvRequestItem
         '
-        Me.DgvItemLayout.DataGridView = Me.DgvItem
-        Me.DgvItemLayout.Routine = Manager.Routine.RequestItem
+        Me.DgvRequestItem.DataGridView = Me.DgvItem
+        Me.DgvRequestItem.Routine = Manager.Routine.RequestItem
         '
         'EprInformation
         '
@@ -743,7 +743,7 @@ Partial Class FrmRequest
     Friend WithEvents BtnDeleteItem As ToolStripButton
     Friend WithEvents ToolStripLabel3 As ToolStripLabel
     Friend WithEvents TxtFilterItem As ToolStripTextBox
-    Friend WithEvents DgvItemLayout As DataGridViewLayout
+    Friend WithEvents DgvRequestItem As DataGridViewLayout
     Friend WithEvents LblStatusValue As ToolStripLabel
     Friend WithEvents EprInformation As ErrorProvider
     Friend WithEvents BtnRequestSheet As ToolStripButton

@@ -23,7 +23,7 @@ Partial Class UcPriceTableGrid
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TsMenu = New System.Windows.Forms.ToolStrip()
         Me.BtnInclude = New System.Windows.Forms.ToolStripButton()
         Me.BtnEdit = New System.Windows.Forms.ToolStripButton()
@@ -56,6 +56,7 @@ Partial Class UcPriceTableGrid
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
         Me.DgvCcSellables = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvlPriceTable = New Manager.DataGridViewLayout()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -350,14 +351,14 @@ Partial Class UcPriceTableGrid
         Me.DgvSellables.BackgroundColor = System.Drawing.Color.White
         Me.DgvSellables.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.DgvSellables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DgvSellables.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DgvSellables.DefaultCellStyle = DataGridViewCellStyle2
         Me.DgvSellables.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DgvSellables.Location = New System.Drawing.Point(3, 3)
         Me.DgvSellables.MultiSelect = False
@@ -435,18 +436,23 @@ Partial Class UcPriceTableGrid
         Me.DgvCcSellables.IncludeHeaderTextInCellCopy = False
         Me.DgvCcSellables.IncludeHeaderTextInRowCopy = True
         '
-        'FrmPriceTables
+        'DgvlPriceTable
+        '
+        Me.DgvlPriceTable.DataGridView = Me.DgvData
+        Me.DgvlPriceTable.Routine = Manager.Routine.PriceTable
+        '
+        'UcPriceTableGrid
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
-        Me.ClientSize = New System.Drawing.Size(1089, 500)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.TsMenu)
         Me.Controls.Add(Me.SsInformation)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "FrmPriceTables"
+        Me.Name = "UcPriceTableGrid"
+        Me.Size = New System.Drawing.Size(1089, 500)
         Me.TsMenu.ResumeLayout(False)
         Me.TsMenu.PerformLayout()
         Me.SsInformation.ResumeLayout(False)
@@ -509,5 +515,5 @@ Partial Class UcPriceTableGrid
     Friend WithEvents TmrLoadDetails As Timer
     Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
     Friend WithEvents DgvCcSellables As ControlLibrary.DataGridViewContentCopy
-
+    Friend WithEvents DgvlPriceTable As DataGridViewLayout
 End Class

@@ -78,10 +78,10 @@ Partial Class FrmService
         Me.BtnLog = New System.Windows.Forms.ToolStripButton()
         Me.TsTitle = New System.Windows.Forms.ToolStrip()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
-        Me.DgvComplementLayout = New Manager.DataGridViewLayout()
-        Me.DgvPriceLayout = New Manager.DataGridViewLayout()
-        Me.DgvCodeLayout = New Manager.DataGridViewLayout()
-        Me.DgvIndicatorLayout = New Manager.DataGridViewLayout()
+        Me.DgvlComplement = New Manager.DataGridViewLayout()
+        Me.DgvlPrice = New Manager.DataGridViewLayout()
+        Me.DgvlCode = New Manager.DataGridViewLayout()
+        Me.DgvlIndicator = New Manager.DataGridViewLayout()
         Me.PnButtons.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabNote.SuspendLayout()
@@ -696,25 +696,25 @@ Partial Class FrmService
         Me.DgvNavigator.NextButton = Me.BtnNext
         Me.DgvNavigator.PreviousButton = Me.BtnPrevious
         '
-        'DgvComplementLayout
+        'DgvlComplement
         '
-        Me.DgvComplementLayout.DataGridView = Me.DgvComplement
-        Me.DgvComplementLayout.Routine = Manager.Routine.ServiceComplement
+        Me.DgvlComplement.DataGridView = Me.DgvComplement
+        Me.DgvlComplement.Routine = Manager.Routine.ServiceComplement
         '
-        'DgvPriceLayout
+        'DgvlPrice
         '
-        Me.DgvPriceLayout.DataGridView = Me.DgvPrice
-        Me.DgvPriceLayout.Routine = Manager.Routine.ServicePrice
+        Me.DgvlPrice.DataGridView = Me.DgvPrice
+        Me.DgvlPrice.Routine = Manager.Routine.ServicePrice
         '
-        'DgvCodeLayout
+        'DgvlCode
         '
-        Me.DgvCodeLayout.DataGridView = Me.DgvCode
-        Me.DgvCodeLayout.Routine = Manager.Routine.ServiceCode
+        Me.DgvlCode.DataGridView = Me.DgvCode
+        Me.DgvlCode.Routine = Manager.Routine.ServiceCode
         '
-        'DgvIndicatorLayout
+        'DgvlIndicator
         '
-        Me.DgvIndicatorLayout.DataGridView = Me.DgvIndicator
-        Me.DgvIndicatorLayout.Routine = Manager.Routine.ServicePriceIndicator
+        Me.DgvlIndicator.DataGridView = Me.DgvIndicator
+        Me.DgvlIndicator.Routine = Manager.Routine.ServicePriceIndicator
         '
         'FrmService
         '
@@ -796,7 +796,7 @@ Partial Class FrmService
     Friend WithEvents BtnLog As ToolStripButton
     Friend WithEvents TsTitle As ToolStrip
     Friend WithEvents DgvNavigator As ControlLibrary.DataGridViewNavigator
-    Friend WithEvents DgvComplementLayout As DataGridViewLayout
+    Friend WithEvents DgvlComplement As DataGridViewLayout
     Friend WithEvents TsComplement As ToolStrip
     Friend WithEvents BtnIncludeComplement As ToolStripButton
     Friend WithEvents BtnEditComplement As ToolStripButton
@@ -811,7 +811,7 @@ Partial Class FrmService
     Friend WithEvents BtnDeletePrice As ToolStripButton
     Friend WithEvents LblFilterPrice As ToolStripLabel
     Friend WithEvents TxtFilterPrice As ToolStripTextBox
-    Friend WithEvents DgvPriceLayout As DataGridViewLayout
+    Friend WithEvents DgvlPrice As DataGridViewLayout
     Friend WithEvents TabCode As TabPage
     Friend WithEvents DgvCode As DataGridView
     Friend WithEvents TsCode As ToolStrip
@@ -820,8 +820,8 @@ Partial Class FrmService
     Friend WithEvents BtnDeleteCode As ToolStripButton
     Friend WithEvents LblFilterCode As ToolStripLabel
     Friend WithEvents TxtFilterCode As ToolStripTextBox
-    Friend WithEvents DgvCodeLayout As DataGridViewLayout
+    Friend WithEvents DgvlCode As DataGridViewLayout
     Friend WithEvents TabIndicator As TabPage
     Friend WithEvents DgvIndicator As DataGridView
-    Friend WithEvents DgvIndicatorLayout As DataGridViewLayout
+    Friend WithEvents DgvlIndicator As DataGridViewLayout
 End Class

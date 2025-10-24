@@ -26,7 +26,7 @@ Public Class UcCashGrid
         BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'DgvCashesLayout.Load()
+        DgvlCash.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         Using Form As New FrmCash(New Cash With {.CashFlow = _Flow}, Me)
@@ -59,7 +59,7 @@ Public Class UcCashGrid
                         Try
                             _Cash.Delete()
                             _Filter.Filter()
-                            'DgvCashesLayout.Load()
+                            DgvlCash.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
@@ -81,7 +81,7 @@ Public Class UcCashGrid
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        'DgvCashesLayout.Load()
+        DgvlCash.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -114,7 +114,7 @@ Public Class UcCashGrid
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        'DgvCashesLayout.Load()
+        DgvlCash.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -198,7 +198,7 @@ Public Class UcCashGrid
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        'DgvCashesLayout.Load()
+        DgvlCash.Load()
     End Sub
     Private Sub LoadDetails()
         If BtnDetails.Checked Then
@@ -255,7 +255,7 @@ Public Class UcCashGrid
             BtnCloseCash.Visible = _Cash.Status <> CashStatus.Closed
             BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And _User.CanAccess(Routine.CashReopen)
             _Filter.Filter()
-            'DgvCashesLayout.Load()
+            DgvlCash.Load()
         Catch ex As Exception
             CMessageBox.Show("ERRO CS012", "Ocorreu um erro ao abrir o caixa.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally
@@ -271,7 +271,7 @@ Public Class UcCashGrid
                 BtnCloseCash.Visible = _Cash.Status <> CashStatus.Closed
                 BtnOpenCash.Visible = _Cash.Status <> CashStatus.Opened And _User.CanAccess(Routine.CashReopen)
                 _Filter.Filter()
-                'DgvCashesLayout.Load()
+                DgvlCash.Load()
             Catch ex As Exception
                 CMessageBox.Show("ERRO CS011", "Ocorreu um erro ao fechar o caixa.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally

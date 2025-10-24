@@ -46,7 +46,7 @@ Partial Class FrmCashItem
         Me.LblValue = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.DgvResponsibles = New System.Windows.Forms.DataGridView()
+        Me.DgvResponsible = New System.Windows.Forms.DataGridView()
         Me.TsResponsibles = New System.Windows.Forms.ToolStrip()
         Me.BtnIncludeCashItemResponsible = New System.Windows.Forms.ToolStripButton()
         Me.BtnEditCashItemResponsible = New System.Windows.Forms.ToolStripButton()
@@ -63,13 +63,13 @@ Partial Class FrmCashItem
         Me.CbxCategory = New System.Windows.Forms.ComboBox()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.DgvResponsiblesLayout = New Manager.DataGridViewLayout()
+        Me.DgvlResponsible = New Manager.DataGridViewLayout()
         Me.TsMain.SuspendLayout()
         Me.TsData.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.Panel2.SuspendLayout()
-        CType(Me.DgvResponsibles, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DgvResponsible, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsResponsibles.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
@@ -297,35 +297,35 @@ Partial Class FrmCashItem
         'Panel2
         '
         Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel2.Controls.Add(Me.DgvResponsibles)
+        Me.Panel2.Controls.Add(Me.DgvResponsible)
         Me.Panel2.Controls.Add(Me.TsResponsibles)
         Me.Panel2.Location = New System.Drawing.Point(6, 131)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(318, 159)
         Me.Panel2.TabIndex = 13
         '
-        'DgvResponsibles
+        'DgvResponsible
         '
-        Me.DgvResponsibles.AllowUserToAddRows = False
-        Me.DgvResponsibles.AllowUserToDeleteRows = False
-        Me.DgvResponsibles.AllowUserToOrderColumns = True
-        Me.DgvResponsibles.AllowUserToResizeRows = False
-        Me.DgvResponsibles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.DgvResponsibles.BackgroundColor = System.Drawing.Color.WhiteSmoke
-        Me.DgvResponsibles.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DgvResponsibles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvResponsibles.ColumnHeadersVisible = False
-        Me.DgvResponsibles.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvResponsibles.Location = New System.Drawing.Point(0, 25)
-        Me.DgvResponsibles.MultiSelect = False
-        Me.DgvResponsibles.Name = "DgvResponsibles"
-        Me.DgvResponsibles.ReadOnly = True
-        Me.DgvResponsibles.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvResponsibles.RowHeadersVisible = False
-        Me.DgvResponsibles.RowTemplate.Height = 26
-        Me.DgvResponsibles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvResponsibles.Size = New System.Drawing.Size(316, 132)
-        Me.DgvResponsibles.TabIndex = 1
+        Me.DgvResponsible.AllowUserToAddRows = False
+        Me.DgvResponsible.AllowUserToDeleteRows = False
+        Me.DgvResponsible.AllowUserToOrderColumns = True
+        Me.DgvResponsible.AllowUserToResizeRows = False
+        Me.DgvResponsible.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.DgvResponsible.BackgroundColor = System.Drawing.Color.WhiteSmoke
+        Me.DgvResponsible.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DgvResponsible.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvResponsible.ColumnHeadersVisible = False
+        Me.DgvResponsible.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvResponsible.Location = New System.Drawing.Point(0, 25)
+        Me.DgvResponsible.MultiSelect = False
+        Me.DgvResponsible.Name = "DgvResponsible"
+        Me.DgvResponsible.ReadOnly = True
+        Me.DgvResponsible.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvResponsible.RowHeadersVisible = False
+        Me.DgvResponsible.RowTemplate.Height = 26
+        Me.DgvResponsible.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvResponsible.Size = New System.Drawing.Size(316, 132)
+        Me.DgvResponsible.TabIndex = 1
         '
         'TsResponsibles
         '
@@ -407,10 +407,13 @@ Partial Class FrmCashItem
         'DbxDocumentDate
         '
         Me.DbxDocumentDate.ButtonImage = CType(resources.GetObject("DbxDocumentDate.ButtonImage"), System.Drawing.Image)
+        Me.DbxDocumentDate.Date = Nothing
         Me.DbxDocumentDate.Location = New System.Drawing.Point(118, 85)
+        Me.DbxDocumentDate.MinimumSize = New System.Drawing.Size(100, 0)
         Me.DbxDocumentDate.Name = "DbxDocumentDate"
         Me.DbxDocumentDate.Size = New System.Drawing.Size(100, 23)
         Me.DbxDocumentDate.TabIndex = 5
+        Me.DbxDocumentDate.Text = "  /  /"
         '
         'Label2
         '
@@ -487,10 +490,10 @@ Partial Class FrmCashItem
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Categoria"
         '
-        'DgvResponsiblesLayout
+        'DgvlResponsible
         '
-        Me.DgvResponsiblesLayout.DataGridView = Me.DgvResponsibles
-        Me.DgvResponsiblesLayout.Routine = Manager.Routine.CashItemResponsible
+        Me.DgvlResponsible.DataGridView = Me.DgvResponsible
+        Me.DgvlResponsible.Routine = Manager.Routine.CashItemResponsible
         '
         'FrmCashItem
         '
@@ -519,7 +522,7 @@ Partial Class FrmCashItem
         Me.GroupBox1.PerformLayout()
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
-        CType(Me.DgvResponsibles, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DgvResponsible, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsResponsibles.ResumeLayout(False)
         Me.TsResponsibles.PerformLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).EndInit()
@@ -553,7 +556,7 @@ Partial Class FrmCashItem
     Friend WithEvents TxtDescription As TextBox
     Friend WithEvents TxtDocumentNumber As TextBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents DgvResponsibles As DataGridView
+    Friend WithEvents DgvResponsible As DataGridView
     Friend WithEvents Panel2 As Panel
     Friend WithEvents TsResponsibles As ToolStrip
     Friend WithEvents BtnIncludeCashItemResponsible As ToolStripButton
@@ -565,7 +568,7 @@ Partial Class FrmCashItem
     Friend WithEvents LblOrderValue As ToolStripLabel
     Friend WithEvents LblCreation As ToolStripLabel
     Friend WithEvents LblCreationValue As ToolStripLabel
-    Friend WithEvents DgvResponsiblesLayout As DataGridViewLayout
+    Friend WithEvents DgvlResponsible As DataGridViewLayout
     Friend WithEvents GroupBox2 As GroupBox
     Friend WithEvents CbxCategory As ComboBox
     Friend WithEvents Label1 As Label

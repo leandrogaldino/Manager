@@ -24,7 +24,7 @@ Public Class UcPersonGrid
         BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvPersonLayout.Load()
+        DgvlPerson.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         Using Form As New FrmPerson(New Person, Me)
@@ -59,7 +59,7 @@ Public Class UcPersonGrid
                         Try
                             _Person.Delete()
                             _Filter.Filter()
-                            DgvPersonLayout.Load()
+                            DgvlPerson.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
@@ -81,7 +81,7 @@ Public Class UcPersonGrid
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        DgvPersonLayout.Load()
+        DgvlPerson.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -115,7 +115,7 @@ Public Class UcPersonGrid
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        DgvPersonLayout.Load()
+        DgvlPerson.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -169,7 +169,7 @@ Public Class UcPersonGrid
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        DgvPersonLayout.Load()
+        DgvlPerson.Load()
     End Sub
     Private Sub LoadDetails()
         If BtnDetails.Checked Then

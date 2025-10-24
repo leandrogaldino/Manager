@@ -50,6 +50,7 @@ Partial Class FrmEmailModel
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.PnBody = New System.Windows.Forms.Panel()
+        Me.TxtBody = New Manager.RichTextBoxSingleSelection()
         Me.TsBody = New System.Windows.Forms.ToolStrip()
         Me.TxtFont = New System.Windows.Forms.ToolStripLabel()
         Me.BtnColor = New System.Windows.Forms.ToolStripButton()
@@ -60,8 +61,6 @@ Partial Class FrmEmailModel
         Me.CdColor = New System.Windows.Forms.ColorDialog()
         Me.LblSignature = New System.Windows.Forms.Label()
         Me.CbxSignature = New System.Windows.Forms.ComboBox()
-        Me.TxtBody = New Manager.RichTextBoxSingleSelection()
-        Me.DgvItemLayout = New Manager.DataGridViewLayout()
         Me.Panel1.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -324,6 +323,22 @@ Partial Class FrmEmailModel
         Me.PnBody.Size = New System.Drawing.Size(733, 342)
         Me.PnBody.TabIndex = 9
         '
+        'TxtBody
+        '
+        Me.TxtBody.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TxtBody.AutoWordSelection = True
+        Me.TxtBody.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TxtBody.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TxtBody.Location = New System.Drawing.Point(5, 34)
+        Me.TxtBody.Margin = New System.Windows.Forms.Padding(5)
+        Me.TxtBody.Name = "TxtBody"
+        Me.TxtBody.Size = New System.Drawing.Size(721, 301)
+        Me.TxtBody.TabIndex = 1
+        Me.TxtBody.Text = ""
+        Me.TxtBody.WordWrap = False
+        '
         'TsBody
         '
         Me.TsBody.BackColor = System.Drawing.Color.WhiteSmoke
@@ -407,26 +422,6 @@ Partial Class FrmEmailModel
         Me.CbxSignature.Size = New System.Drawing.Size(177, 25)
         Me.CbxSignature.TabIndex = 5
         '
-        'TxtBody
-        '
-        Me.TxtBody.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TxtBody.AutoWordSelection = True
-        Me.TxtBody.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TxtBody.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TxtBody.Location = New System.Drawing.Point(5, 34)
-        Me.TxtBody.Margin = New System.Windows.Forms.Padding(5)
-        Me.TxtBody.Name = "TxtBody"
-        Me.TxtBody.Size = New System.Drawing.Size(721, 301)
-        Me.TxtBody.TabIndex = 1
-        Me.TxtBody.Text = ""
-        Me.TxtBody.WordWrap = False
-        '
-        'DgvItemLayout
-        '
-        Me.DgvItemLayout.Routine = Routine.RequestItem
-        '
         'FrmEmailModel
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
@@ -490,7 +485,6 @@ Partial Class FrmEmailModel
     Friend WithEvents LblSubject As Label
     Friend WithEvents TxtSubject As TextBox
     Friend WithEvents EprValidation As ErrorProvider
-    Friend WithEvents DgvItemLayout As DataGridViewLayout
     Friend WithEvents EprInformation As ErrorProvider
     Friend WithEvents DgvNavigator As ControlLibrary.DataGridViewNavigator
     Friend WithEvents BtnView As Button

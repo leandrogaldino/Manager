@@ -86,7 +86,7 @@ Public Class FrmServiceCode
                 _ServiceCode = _Service.Codes.Single(Function(x) x.Guid = _ServiceForm.DgvCode.SelectedRows(0).Cells("Guid").Value)
                 _Service.Codes.Remove(_ServiceCode)
                 _ServiceForm.DgvCode.Fill(_Service.Codes)
-                _ServiceForm.DgvCodeLayout.Load()
+                _ServiceForm.DgvlCode.Load()
                 _Deleting = True
                 Dispose()
                 _ServiceForm.BtnSave.Enabled = True
@@ -153,7 +153,7 @@ Public Class FrmServiceCode
                 _Service.Codes.Add(_ServiceCode)
             End If
             _ServiceForm.DgvCode.Fill(_Service.Codes)
-            _ServiceForm.DgvCodeLayout.Load()
+            _ServiceForm.DgvlCode.Load()
             BtnSave.Enabled = False
             If Not _ServiceCode.IsSaved Then
                 BtnSave.Text = "Incluir"

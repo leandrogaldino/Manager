@@ -135,7 +135,7 @@ Public Class FrmCompressor
                         _Compressor.Delete()
                         If _CompressorsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _GridControl.DgvCompressorLayout.Load()
+                            _GridControl.DgvlCompressor.Load()
                             _CompressorsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -234,7 +234,7 @@ Public Class FrmCompressor
                     BtnDelete.Enabled = _User.CanDelete(Routine.Compressor)
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _GridControl.DgvCompressorLayout.Load()
+                        _GridControl.DgvlCompressor.Load()
                         Row = _CompressorsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

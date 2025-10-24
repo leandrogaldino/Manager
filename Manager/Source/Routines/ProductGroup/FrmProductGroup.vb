@@ -124,7 +124,7 @@ Public Class FrmProductGroup
                         _ProductGroup.Delete()
                         If _ProductGroupsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            '_GridControl.DgvProductGroupLayout.Load()
+                            _GridControl.DgvlProductGroup.Load()
                             _ProductGroupsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -211,7 +211,7 @@ Public Class FrmProductGroup
                     BtnDelete.Enabled = _User.CanDelete(Routine.ProductGroup)
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        '_GridControl.DgvProductGroupLayout.Load()
+                        _GridControl.DgvlProductGroup.Load()
                         Row = _ProductGroupsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

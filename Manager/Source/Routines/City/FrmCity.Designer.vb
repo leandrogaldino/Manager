@@ -62,7 +62,7 @@ Partial Class FrmCity
         Me.TxtFilterRoute = New System.Windows.Forms.ToolStripTextBox()
         Me.LblRoute = New System.Windows.Forms.Label()
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.DgvlRouteLayout = New Manager.DataGridViewLayout()
+        Me.DgvlRoute = New Manager.DataGridViewLayout()
         Me.Panel1.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -450,10 +450,10 @@ Partial Class FrmCity
         Me.EprInformation.ContainerControl = Me
         Me.EprInformation.Icon = CType(resources.GetObject("EprInformation.Icon"), System.Drawing.Icon)
         '
-        'DgvlRouteLayout
+        'DgvlRoute
         '
-        Me.DgvlRouteLayout.DataGridView = Me.DgvRoute
-        Me.DgvlRouteLayout.Routine = Manager.Routine.CityRoute
+        Me.DgvlRoute.DataGridView = Me.DgvRoute
+        Me.DgvlRoute.Routine = Manager.Routine.CityRoute
         '
         'FrmCity
         '
@@ -536,5 +536,5 @@ Partial Class FrmCity
     Friend WithEvents TxtFilterRoute As ToolStripTextBox
     Friend WithEvents DgvRoute As DataGridView
     Friend WithEvents EprInformation As ErrorProvider
-    Friend WithEvents DgvlRouteLayout As DataGridViewLayout
+    Friend WithEvents DgvlRoute As DataGridViewLayout
 End Class

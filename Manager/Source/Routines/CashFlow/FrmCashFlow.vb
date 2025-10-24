@@ -131,7 +131,7 @@ Public Class FrmCashFlow
                         _CashFlow.Delete()
                         If _CashFlowsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            '_GridControl.DgvCashFlowLayout.Load()
+                            _GridControl.DgvlCashFlow.Load()
                             _CashFlowsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -219,7 +219,7 @@ Public Class FrmCashFlow
                     BtnDelete.Enabled = _User.CanDelete(Routine.CashFlow)
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        ' _GridControl.DgvCashFlowLayout.Load()
+                        _GridControl.DgvlCashFlow.Load()
                         Row = _CashFlowsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()
@@ -285,6 +285,6 @@ Public Class FrmCashFlow
     End Sub
 
     Private Sub FrmCashFlow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvAuthorizedLayout.Load()
+        DgvlAuthorized.Load()
     End Sub
 End Class

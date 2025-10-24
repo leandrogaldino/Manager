@@ -86,7 +86,7 @@ Public Class FrmProductCode
                 _ProductCode = _Product.Codes.Single(Function(x) x.Guid = _ProductForm.DgvCode.SelectedRows(0).Cells("Guid").Value)
                 _Product.Codes.Remove(_ProductCode)
                 _ProductForm.DgvCode.Fill(_Product.Codes)
-                _ProductForm.DgvCodeLayout.Load()
+                _ProductForm.DgvlCode.Load()
                 _Deleting = True
                 Dispose()
                 _ProductForm.BtnSave.Enabled = True
@@ -154,7 +154,7 @@ Public Class FrmProductCode
                 _Product.Codes.Add(_ProductCode)
             End If
             _ProductForm.DgvCode.Fill(_Product.Codes)
-            _ProductForm.DgvCodeLayout.Load()
+            _ProductForm.DgvlCode.Load()
             BtnSave.Enabled = False
             If Not _ProductCode.IsSaved Then
                 BtnSave.Text = "Incluir"

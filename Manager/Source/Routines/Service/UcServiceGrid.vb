@@ -25,7 +25,7 @@ Public Class UcServiceGrid
         BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'DgvServiceLayout.Load()
+        DgvlService.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         Using Form As New FrmService(New Service, Me)
@@ -61,7 +61,7 @@ Public Class UcServiceGrid
                         Try
                             _Service.Delete()
                             _Filter.Filter()
-                            'DgvServiceLayout.Load()
+                            DgvlService.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
@@ -83,7 +83,7 @@ Public Class UcServiceGrid
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        'DgvServiceLayout.Load()
+        DgvlService.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -116,7 +116,7 @@ Public Class UcServiceGrid
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        'DgvServiceLayout.Load()
+        DgvlService.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -168,7 +168,7 @@ Public Class UcServiceGrid
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        'DgvServiceLayout.Load()
+        DgvlService.Load()
     End Sub
     Private Sub TmrLoadDetails_Tick(sender As Object, e As EventArgs) Handles TmrLoadDetails.Tick
         LoadDetails()
@@ -208,7 +208,6 @@ Public Class UcServiceGrid
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Serviços", .Grid = DgvData}})
         FrmMain.OpenTab(New UcReport(Result), EnumHelper.GetEnumDescription(Routine.ExportGrid))
     End Sub
-
     Private Sub BtnDuplicate_Click(sender As Object, e As EventArgs) Handles BtnDuplicate.Click
         If DgvData.SelectedRows.Count = 1 Then
             Try

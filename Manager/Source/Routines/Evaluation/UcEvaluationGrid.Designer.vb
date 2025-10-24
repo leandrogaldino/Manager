@@ -60,6 +60,7 @@ Partial Class UcEvaluationGrid
         Me.BtnDisapprove = New System.Windows.Forms.ToolStripMenuItem()
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvlEvaluation = New Manager.DataGridViewLayout()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -494,6 +495,9 @@ Partial Class UcEvaluationGrid
         Me.BtnDisapprove.Size = New System.Drawing.Size(133, 22)
         Me.BtnDisapprove.Text = "Desaprovar"
         '
+        'TmrLoadDetails
+        '
+        '
         'DgvCcData
         '
         Me.DgvCcData.ContextMenuStrip = Me.CmsSetStatus
@@ -501,18 +505,23 @@ Partial Class UcEvaluationGrid
         Me.DgvCcData.IncludeHeaderTextInCellCopy = False
         Me.DgvCcData.IncludeHeaderTextInRowCopy = True
         '
-        'FrmEvaluations
+        'DgvlEvaluation
+        '
+        Me.DgvlEvaluation.DataGridView = Me.DgvData
+        Me.DgvlEvaluation.Routine = Manager.Routine.Evaluation
+        '
+        'UcEvaluationGrid
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
-        Me.ClientSize = New System.Drawing.Size(1089, 500)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.TsMenu)
         Me.Controls.Add(Me.SsInformation)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "FrmEvaluations"
+        Me.Name = "UcEvaluationGrid"
+        Me.Size = New System.Drawing.Size(1089, 500)
         Me.TsMenu.ResumeLayout(False)
         Me.TsMenu.PerformLayout()
         Me.SsInformation.ResumeLayout(False)
@@ -584,4 +593,5 @@ Partial Class UcEvaluationGrid
     Friend WithEvents BtnDisapprove As ToolStripMenuItem
     Friend WithEvents BtnImport As ToolStripButton
     Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvlEvaluation As DataGridViewLayout
 End Class

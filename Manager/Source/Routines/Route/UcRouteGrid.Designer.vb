@@ -50,7 +50,7 @@ Partial Class UcRouteGrid
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
-        Me.DgvlRouteLayout = New Manager.DataGridViewLayout()
+        Me.DgvlRoute = New Manager.DataGridViewLayout()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -194,7 +194,7 @@ Partial Class UcRouteGrid
         'LblCounter
         '
         Me.LblCounter.Name = "LblCounter"
-        Me.LblCounter.Size = New System.Drawing.Size(918, 17)
+        Me.LblCounter.Size = New System.Drawing.Size(949, 17)
         Me.LblCounter.Spring = True
         Me.LblCounter.Text = "       "
         Me.LblCounter.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -367,10 +367,10 @@ Partial Class UcRouteGrid
         Me.DgvCcData.IncludeHeaderTextInCellCopy = False
         Me.DgvCcData.IncludeHeaderTextInRowCopy = True
         '
-        'DgvlRouteLayout
+        'DgvlRoute
         '
-        Me.DgvlRouteLayout.DataGridView = Me.DgvData
-        Me.DgvlRouteLayout.Routine = Manager.Routine.Route
+        Me.DgvlRoute.DataGridView = Me.DgvData
+        Me.DgvlRoute.Routine = Manager.Routine.Route
         '
         'UcRouteGrid
         '
@@ -380,7 +380,7 @@ Partial Class UcRouteGrid
         Me.Controls.Add(Me.SsInformation)
         Me.Controls.Add(Me.TsMenu)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "UcRouteGrid"
         Me.Size = New System.Drawing.Size(1000, 600)
         Me.TsMenu.ResumeLayout(False)
@@ -436,5 +436,5 @@ Partial Class UcRouteGrid
     Friend WithEvents LblView As ToolStripLabel
     Friend WithEvents DgvData As DataGridView
     Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
-    Friend WithEvents DgvlRouteLayout As DataGridViewLayout
+    Friend WithEvents DgvlRoute As DataGridViewLayout
 End Class

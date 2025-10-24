@@ -21,7 +21,7 @@ Public Class UcCompressorGrid
         BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvCompressorLayout.Load()
+        DgvlCompressor.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         Using Form As New FrmCompressor(New Compressor, Me)
@@ -55,7 +55,7 @@ Public Class UcCompressorGrid
                         Try
                             _Compressor.Delete()
                             _Filter.Filter()
-                            DgvCompressorLayout.Load()
+                            DgvlCompressor.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
@@ -77,7 +77,7 @@ Public Class UcCompressorGrid
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        DgvCompressorLayout.Load()
+        DgvlCompressor.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -115,7 +115,7 @@ Public Class UcCompressorGrid
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        DgvCompressorLayout.Load()
+        DgvlCompressor.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -166,7 +166,7 @@ Public Class UcCompressorGrid
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        DgvCompressorLayout.Load()
+        DgvlCompressor.Load()
     End Sub
     Private Sub LoadDetails()
         If BtnDetails.Checked Then

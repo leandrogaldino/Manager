@@ -166,7 +166,7 @@ Public Class FrmPersonCompressor
                 _PersonCompressor = _Person.Compressors.Single(Function(x) x.Guid = _PersonForm.DgvCompressor.SelectedRows(0).Cells("Guid").Value)
                 _Person.Compressors.Remove(_PersonCompressor)
                 _PersonForm.DgvCompressor.Fill(_Person.Compressors)
-                _PersonForm.DgvCompressorLayout.Load()
+                _PersonForm.DgvlCompressor.Load()
                 _Deleting = True
                 Dispose()
                 _PersonForm.BtnSave.Enabled = True
@@ -355,7 +355,7 @@ Public Class FrmPersonCompressor
                 _Person.Compressors.Add(_PersonCompressor)
             End If
             _PersonForm.DgvCompressor.Fill(_Person.Compressors)
-            _PersonForm.DgvCompressorLayout.Load()
+            _PersonForm.DgvlCompressor.Load()
             BtnSave.Enabled = False
             If Not _PersonCompressor.IsSaved Then
                 BtnSave.Text = "Incluir"

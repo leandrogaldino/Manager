@@ -57,6 +57,7 @@ Partial Class UcEvaluationManagementGrid
         Me.CmsOptions = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.BtnAutoEvaluation = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnVisitSchedule = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DgvlEvaluationManagement = New Manager.DataGridViewLayout()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -460,7 +461,6 @@ Partial Class UcEvaluationManagementGrid
         '
         'TmrLoadDetails
         '
-        Me.TmrLoadDetails.Interval = 1
         '
         'CmsOptions
         '
@@ -480,18 +480,23 @@ Partial Class UcEvaluationManagementGrid
         Me.BtnVisitSchedule.Size = New System.Drawing.Size(206, 22)
         Me.BtnVisitSchedule.Text = "Agendar Visita"
         '
-        'FrmEvaluationManagement
+        'DgvlEvaluationManagement
+        '
+        Me.DgvlEvaluationManagement.DataGridView = Me.DgvData
+        Me.DgvlEvaluationManagement.Routine = Manager.Routine.EvaluationManagement
+        '
+        'UcEvaluationManagementGrid
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
-        Me.ClientSize = New System.Drawing.Size(1089, 500)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.TsMenu)
         Me.Controls.Add(Me.SsInformation)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "FrmEvaluationManagement"
+        Me.Name = "UcEvaluationManagementGrid"
+        Me.Size = New System.Drawing.Size(1089, 500)
         Me.TsMenu.ResumeLayout(False)
         Me.TsMenu.PerformLayout()
         Me.SsInformation.ResumeLayout(False)
@@ -561,4 +566,5 @@ Partial Class UcEvaluationManagementGrid
     Friend WithEvents CmsOptions As ContextMenuStrip
     Friend WithEvents BtnAutoEvaluation As ToolStripMenuItem
     Friend WithEvents BtnVisitSchedule As ToolStripMenuItem
+    Friend WithEvents DgvlEvaluationManagement As DataGridViewLayout
 End Class

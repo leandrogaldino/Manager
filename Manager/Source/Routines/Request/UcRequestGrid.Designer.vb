@@ -54,6 +54,7 @@ Partial Class UcRequestGrid
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
         Me.DgvCcRequestItem = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvlRequest = New Manager.DataGridViewLayout()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -401,6 +402,9 @@ Partial Class UcRequestGrid
         Me.DgvData.Size = New System.Drawing.Size(546, 437)
         Me.DgvData.TabIndex = 0
         '
+        'TmrLoadDetails
+        '
+        '
         'DgvCcData
         '
         Me.DgvCcData.DataGridView = Me.DgvData
@@ -413,18 +417,23 @@ Partial Class UcRequestGrid
         Me.DgvCcRequestItem.IncludeHeaderTextInCellCopy = False
         Me.DgvCcRequestItem.IncludeHeaderTextInRowCopy = True
         '
-        'FrmRequests
+        'DgvlRequest
+        '
+        Me.DgvlRequest.DataGridView = Me.DgvData
+        Me.DgvlRequest.Routine = Manager.Routine.Request
+        '
+        'UcRequestGrid
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
-        Me.ClientSize = New System.Drawing.Size(1089, 500)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.TsMenu)
         Me.Controls.Add(Me.SsInformation)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "FrmRequests"
+        Me.Name = "UcRequestGrid"
+        Me.Size = New System.Drawing.Size(1089, 500)
         Me.TsMenu.ResumeLayout(False)
         Me.TsMenu.PerformLayout()
         Me.SsInformation.ResumeLayout(False)
@@ -486,4 +495,5 @@ Partial Class UcRequestGrid
     Friend WithEvents BtnExport As ToolStripButton
     Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
     Friend WithEvents DgvCcRequestItem As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvlRequest As DataGridViewLayout
 End Class

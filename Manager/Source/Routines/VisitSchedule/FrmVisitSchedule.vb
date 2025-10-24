@@ -230,7 +230,7 @@ Public Class FrmVisitSchedule
                         _VisitSchedule.Delete()
                         If _VisitSchedulesGrid IsNot Nothing Then
                             _Filter.Filter()
-                            ''_GridControl.DgvlVisitScheduleLayout.Load()
+                            _GridControl.DgvlVisitSchedule.Load()
                             _VisitSchedulesGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -392,7 +392,7 @@ Public Class FrmVisitSchedule
             BtnDelete.Enabled = _User.CanDelete(Routine.Route)
             If _GridControl IsNot Nothing Then
                 _Filter.Filter()
-                '_GridControl.DgvlVisitScheduleLayout.Load()
+                _GridControl.DgvlVisitSchedule.Load()
                 Row = _VisitSchedulesGrid.Rows.Cast(Of DataGridViewRow)().FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                 If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                 DgvNavigator.RefreshButtons()

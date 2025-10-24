@@ -54,7 +54,7 @@ Partial Class UcCompressorGrid
         Me.BtnCloseDetails = New System.Windows.Forms.ToolStripButton()
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
-        Me.DgvCompressorLayout = New Manager.DataGridViewLayout()
+        Me.DgvlCompressor = New Manager.DataGridViewLayout()
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
         Me.TsMenu.SuspendLayout()
@@ -205,7 +205,7 @@ Partial Class UcCompressorGrid
         'LblCounter
         '
         Me.LblCounter.Name = "LblCounter"
-        Me.LblCounter.Size = New System.Drawing.Size(918, 17)
+        Me.LblCounter.Size = New System.Drawing.Size(949, 17)
         Me.LblCounter.Spring = True
         Me.LblCounter.Text = "       "
         Me.LblCounter.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -461,14 +461,13 @@ Partial Class UcCompressorGrid
         Me.DgvData.Size = New System.Drawing.Size(502, 537)
         Me.DgvData.TabIndex = 0
         '
-        'DgvCompressorLayout
+        'DgvlCompressor
         '
-        Me.DgvCompressorLayout.DataGridView = Me.DgvData
-        Me.DgvCompressorLayout.Routine = Manager.Routine.Compressor
+        Me.DgvlCompressor.DataGridView = Me.DgvData
+        Me.DgvlCompressor.Routine = Manager.Routine.Compressor
         '
         'TmrLoadDetails
         '
-        Me.TmrLoadDetails.Interval = 300
         '
         'DgvCcData
         '
@@ -484,7 +483,7 @@ Partial Class UcCompressorGrid
         Me.Controls.Add(Me.SsInformation)
         Me.Controls.Add(Me.TsMenu)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "UcCompressorGrid"
         Me.Size = New System.Drawing.Size(1000, 600)
         Me.TsMenu.ResumeLayout(False)
@@ -550,7 +549,7 @@ Partial Class UcCompressorGrid
     Friend WithEvents BtnCloseDetails As ToolStripButton
     Friend WithEvents LblView As ToolStripLabel
     Friend WithEvents DgvData As DataGridView
-    Friend WithEvents DgvCompressorLayout As DataGridViewLayout
+    Friend WithEvents DgvlCompressor As DataGridViewLayout
     Friend WithEvents TmrLoadDetails As Timer
     Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
 End Class

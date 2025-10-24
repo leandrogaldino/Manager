@@ -21,11 +21,11 @@ Public Class UcEvaluationManagementGrid
         BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'DgvEvaluationManagementLayout.Load()
+        DgvlEvaluationManagement.Load()
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        'DgvEvaluationManagementLayout.Load()
+        DgvlEvaluationManagement.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -58,7 +58,7 @@ Public Class UcEvaluationManagementGrid
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        'DgvEvaluationManagementLayout.Load()
+        DgvlEvaluationManagement.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -123,7 +123,7 @@ Public Class UcEvaluationManagementGrid
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        'DgvEvaluationManagementLayout.Load()
+        DgvlEvaluationManagement.Load()
     End Sub
     Private Sub LoadDetails()
         If BtnDetails.Checked Then
@@ -165,7 +165,7 @@ Public Class UcEvaluationManagementGrid
                 Form.ShowDialog()
             End Using
             _Filter.Filter()
-            'DgvEvaluationManagementLayout.Load()
+            DgvlEvaluationManagement.Load()
             LoadDetails()
         End If
     End Sub
@@ -178,7 +178,7 @@ Public Class UcEvaluationManagementGrid
                 Form.ShowDialog()
             End Using
             _Filter.Filter()
-            'DgvEvaluationManagementLayout.Load()
+            DgvlEvaluationManagement.Load()
             LoadDetails()
         End If
     End Sub
@@ -211,7 +211,7 @@ Public Class UcEvaluationManagementGrid
                 Form.ShowDialog()
             End Using
             _Filter.Filter()
-            'DgvEvaluationManagementLayout.Load()
+            DgvlEvaluationManagement.Load()
             Row = DgvData.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("evaluation").Value = EvaluationID)
             If Row IsNot Nothing Then Nav.EnsureVisibleRow(Row.Index)
         Catch ex As Exception

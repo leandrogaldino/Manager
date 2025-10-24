@@ -1855,6 +1855,31 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;EmailSignature&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''    &lt;Column Index=&quot;0&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;ID&lt;/Name&gt;
+        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''    &lt;/Column&gt;    
+        '''    &lt;Column Index=&quot;1&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;Criação&lt;/Name&gt;
+        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''    &lt;/Column&gt;
+        '''    &lt;Column Index=&quot;2&quot; [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property EmailSignatureGrid() As String
+            Get
+                Return ResourceManager.GetString("EmailSignatureGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO emailsignature
         '''(
         '''    ofuserid,
@@ -3362,7 +3387,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;PersonCompressor&quot; Version=&quot;1&quot;&gt;
+        '''&lt;Routine Id=&quot;PersonCompressor&quot; Version=&quot;2&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -3377,7 +3402,7 @@ Namespace My.Resources
         '''        &lt;Name&gt;Status&lt;/Name&gt;
         '''        &lt;Width&gt;100&lt;/Width&gt;
         '''    &lt;/Column&gt;
-        '''    &lt;Column Index= [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	&lt;Column Index=&quot;2&quot; [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PersonCompressorGrid() As String
             Get

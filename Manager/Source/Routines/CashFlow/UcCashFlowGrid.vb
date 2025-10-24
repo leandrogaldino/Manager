@@ -20,7 +20,7 @@ Public Class UcCashFlowGrid
         BtnExport.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'DgvCashFlowLayout.Load()
+        DgvlCashFlow.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         Using Form As New FrmCashFlow(New CashFlow, Me)
@@ -52,7 +52,7 @@ Public Class UcCashFlowGrid
                         Try
                             _CashFlow.Delete()
                             _Filter.Filter()
-                            'DgvCashFlowLayout.Load()
+                            DgvlCashFlow.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
@@ -74,7 +74,7 @@ Public Class UcCashFlowGrid
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        'DgvCashFlowLayout.Load()
+        DgvlCashFlow.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -107,7 +107,7 @@ Public Class UcCashFlowGrid
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        'DgvCashFlowLayout.Load()
+        DgvlCashFlow.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -156,7 +156,7 @@ Public Class UcCashFlowGrid
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        'DgvCashFlowLayout.Load()
+        DgvlCashFlow.Load()
     End Sub
     Private Sub DgvData_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvData.KeyDown
         If e.KeyCode = Keys.Enter Then

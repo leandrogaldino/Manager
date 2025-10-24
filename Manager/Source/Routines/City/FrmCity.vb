@@ -140,7 +140,7 @@ Public Class FrmCity
                         _City.Delete()
                         If _CitiesGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _GridControl.DgvCitiesLayout.Load()
+                            _GridControl.DgvlCity.Load()
                             _CitiesGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -246,7 +246,7 @@ Public Class FrmCity
                     BtnDelete.Enabled = _User.CanDelete(Routine.City)
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _GridControl.DgvCitiesLayout.Load()
+                        _GridControl.DgvlCity.Load()
                         Row = _CitiesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()
@@ -351,6 +351,6 @@ Public Class FrmCity
     End Sub
 
     Private Sub FrmCity_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvlRouteLayout.Load()
+        DgvlRoute.Load()
     End Sub
 End Class

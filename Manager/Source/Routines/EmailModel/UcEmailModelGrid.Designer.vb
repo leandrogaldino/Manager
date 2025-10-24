@@ -50,6 +50,7 @@ Partial Class UcEmailModelGrid
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvlEmailModel = New Manager.DataGridViewLayout()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -366,18 +367,23 @@ Partial Class UcEmailModelGrid
         Me.DgvCcData.IncludeHeaderTextInCellCopy = False
         Me.DgvCcData.IncludeHeaderTextInRowCopy = True
         '
-        'FrmEmailModels
+        'DgvlEmailModel
+        '
+        Me.DgvlEmailModel.DataGridView = Me.DgvData
+        Me.DgvlEmailModel.Routine = Manager.Routine.EmailModel
+        '
+        'UcEmailModelGrid
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
-        Me.ClientSize = New System.Drawing.Size(1089, 500)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.TsMenu)
         Me.Controls.Add(Me.SsInformation)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "FrmEmailModels"
+        Me.Name = "UcEmailModelGrid"
+        Me.Size = New System.Drawing.Size(1089, 500)
         Me.TsMenu.ResumeLayout(False)
         Me.TsMenu.PerformLayout()
         Me.SsInformation.ResumeLayout(False)
@@ -432,4 +438,5 @@ Partial Class UcEmailModelGrid
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents BtnExport As ToolStripButton
     Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvlEmailModel As DataGridViewLayout
 End Class

@@ -53,10 +53,10 @@ Public Class FrmProduct
         LoadData()
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvProviderCodeLayout.Load()
-        DgvCodeLayout.Load()
-        DgvPriceLayout.Load()
-        DgvIndicatorLayout.Load()
+        DgvlProviderCode.Load()
+        DgvlCode.Load()
+        DgvlPrice.Load()
+        DgvlIndicator.Load()
     End Sub
     Private Sub ConfigureControls()
         ControlHelper.EnableControlDoubleBuffer(DgvProviderCode, True)
@@ -165,7 +165,7 @@ Public Class FrmProduct
                         _Product.Delete()
                         If _ProductsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            ' _GridControl.DgvProductLayout.Load()
+                            _GridControl.DgvlProduct.Load()
                             _ProductsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -445,7 +445,7 @@ Public Class FrmProduct
                     BtnDelete.Enabled = _User.CanDelete(Routine.Product)
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        '_GridControl.DgvProductLayout.Load()
+                        _GridControl.DgvlProduct.Load()
                         Row = _ProductsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

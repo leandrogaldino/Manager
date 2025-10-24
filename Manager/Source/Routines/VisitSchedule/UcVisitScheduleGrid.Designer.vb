@@ -50,6 +50,7 @@ Partial Class UcVisitScheduleGrid
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvlVisitSchedule = New Manager.DataGridViewLayout()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -366,18 +367,23 @@ Partial Class UcVisitScheduleGrid
         Me.DgvCcData.IncludeHeaderTextInCellCopy = False
         Me.DgvCcData.IncludeHeaderTextInRowCopy = True
         '
-        'FrmVisitSchedules
+        'DgvlVisitSchedule
+        '
+        Me.DgvlVisitSchedule.DataGridView = Me.DgvData
+        Me.DgvlVisitSchedule.Routine = Manager.Routine.VisitSchedule
+        '
+        'UcVisitScheduleGrid
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
-        Me.ClientSize = New System.Drawing.Size(1089, 500)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.TsMenu)
         Me.Controls.Add(Me.SsInformation)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "FrmVisitSchedules"
+        Me.Name = "UcVisitScheduleGrid"
+        Me.Size = New System.Drawing.Size(1089, 500)
         Me.TsMenu.ResumeLayout(False)
         Me.TsMenu.PerformLayout()
         Me.SsInformation.ResumeLayout(False)
@@ -432,4 +438,5 @@ Partial Class UcVisitScheduleGrid
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents BtnExport As ToolStripButton
     Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvlVisitSchedule As DataGridViewLayout
 End Class

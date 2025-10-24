@@ -22,7 +22,7 @@ Public Class UcProductGroupGrid
         BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'DgvProductGroupLayout.Load()
+        DgvlProductGroup.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         Using Form As New FrmProductGroup(New ProductGroup, Me)
@@ -54,7 +54,7 @@ Public Class UcProductGroupGrid
                         Try
                             _ProductsGroup.Delete()
                             _Filter.Filter()
-                            'DgvProductGroupLayout.Load()
+                            DgvlProductGroup.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
@@ -76,7 +76,7 @@ Public Class UcProductGroupGrid
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        'DgvProductGroupLayout.Load()
+        DgvlProductGroup.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -109,7 +109,7 @@ Public Class UcProductGroupGrid
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        'DgvProductGroupLayout.Load()
+        DgvlProductGroup.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -158,7 +158,7 @@ Public Class UcProductGroupGrid
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        'DgvProductGroupLayout.Load()
+        DgvlProductGroup.Load()
     End Sub
     Private Sub DgvData_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvData.KeyDown
         If e.KeyCode = Keys.Enter Then

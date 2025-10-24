@@ -55,7 +55,7 @@ Partial Class UcPersonGrid
         Me.BtnCloseDetails = New System.Windows.Forms.ToolStripButton()
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
-        Me.DgvPersonLayout = New Manager.DataGridViewLayout()
+        Me.DgvlPerson = New Manager.DataGridViewLayout()
         Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.TsMenu.SuspendLayout()
@@ -474,16 +474,19 @@ Partial Class UcPersonGrid
         Me.DgvData.Size = New System.Drawing.Size(502, 537)
         Me.DgvData.TabIndex = 0
         '
-        'DgvPersonLayout
+        'DgvlPerson
         '
-        Me.DgvPersonLayout.DataGridView = Me.DgvData
-        Me.DgvPersonLayout.Routine = Manager.Routine.Person
+        Me.DgvlPerson.DataGridView = Me.DgvData
+        Me.DgvlPerson.Routine = Manager.Routine.Person
         '
         'DgvCcData
         '
         Me.DgvCcData.DataGridView = Me.DgvData
         Me.DgvCcData.IncludeHeaderTextInCellCopy = False
         Me.DgvCcData.IncludeHeaderTextInRowCopy = True
+        '
+        'TmrLoadDetails
+        '
         '
         'UcPersonGrid
         '
@@ -561,7 +564,7 @@ Partial Class UcPersonGrid
     Friend WithEvents BtnCloseDetails As ToolStripButton
     Friend WithEvents LblView As ToolStripLabel
     Friend WithEvents DgvData As DataGridView
-    Friend WithEvents DgvPersonLayout As DataGridViewLayout
     Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
     Friend WithEvents TmrLoadDetails As Timer
+    Friend WithEvents DgvlPerson As DataGridViewLayout
 End Class

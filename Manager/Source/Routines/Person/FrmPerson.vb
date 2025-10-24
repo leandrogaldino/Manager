@@ -53,9 +53,9 @@ Public Class FrmPerson
         LoadForm()
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvCompressorLayout.Load()
-        DgvAddressLayout.Load()
-        DgvContactLayout.Load()
+        DgvlCompressor.Load()
+        DgvlAddress.Load()
+        DgvlContact.Load()
     End Sub
     Private Sub LoadForm()
         ControlHelper.EnableControlDoubleBuffer(DgvCompressor, True)
@@ -158,7 +158,7 @@ Public Class FrmPerson
                         _Person.Delete()
                         If _PersonsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            _GridControl.DgvPersonLayout.Load()
+                            _GridControl.DgvlPerson.Load()
                             _PersonsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -566,7 +566,7 @@ Public Class FrmPerson
                     BtnDelete.Enabled = _User.CanDelete(Routine.Person)
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        _GridControl.DgvPersonLayout.Load()
+                        _GridControl.DgvlPerson.Load()
                         Row = _PersonsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

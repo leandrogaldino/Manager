@@ -50,6 +50,7 @@ Partial Class UcCashFlowGrid
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
+        Me.DgvlCashFlow = New Manager.DataGridViewLayout()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -366,18 +367,23 @@ Partial Class UcCashFlowGrid
         Me.DgvCcData.IncludeHeaderTextInCellCopy = False
         Me.DgvCcData.IncludeHeaderTextInRowCopy = True
         '
-        'FrmCashFlows
+        'DgvlCashFlow
+        '
+        Me.DgvlCashFlow.DataGridView = Me.DgvData
+        Me.DgvlCashFlow.Routine = Manager.Routine.CashFlow
+        '
+        'UcCashFlowGrid
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
-        Me.ClientSize = New System.Drawing.Size(1089, 500)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.TsMenu)
         Me.Controls.Add(Me.SsInformation)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "FrmCashFlows"
+        Me.Name = "UcCashFlowGrid"
+        Me.Size = New System.Drawing.Size(1089, 500)
         Me.TsMenu.ResumeLayout(False)
         Me.TsMenu.PerformLayout()
         Me.SsInformation.ResumeLayout(False)
@@ -432,4 +438,5 @@ Partial Class UcCashFlowGrid
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents BtnExport As ToolStripButton
     Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DgvlCashFlow As DataGridViewLayout
 End Class

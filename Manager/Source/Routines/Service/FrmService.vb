@@ -53,10 +53,10 @@ Public Class FrmService
         LoadForm()
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvCodeLayout.Load()
-        DgvPriceLayout.Load()
-        DgvComplementLayout.Load()
-        DgvIndicatorLayout.Load()
+        DgvlCode.Load()
+        DgvlPrice.Load()
+        DgvlComplement.Load()
+        DgvlIndicator.Load()
     End Sub
     Private Sub LoadForm()
         ControlHelper.EnableControlDoubleBuffer(DgvCode, True)
@@ -149,7 +149,7 @@ Public Class FrmService
                         _Service.Delete()
                         If _ServicesGrid IsNot Nothing Then
                             _Filter.Filter()
-                            '_GridControl.DgvServiceLayout.Load()
+                            _GridControl.DgvlService.Load()
                             _ServicesGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -355,7 +355,7 @@ Public Class FrmService
                     BtnDelete.Enabled = _User.CanDelete(Routine.Service)
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        '_GridControl.DgvServiceLayout.Load()
+                        _GridControl.DgvlService.Load()
                         Row = _ServicesGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

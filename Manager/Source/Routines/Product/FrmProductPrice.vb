@@ -157,7 +157,7 @@ Public Class FrmProductPrice
                 _Product.Prices.Add(_ProductPrice)
             End If
             _ProductForm.DgvPrice.Fill(_Product.Prices)
-            _ProductForm.DgvPriceLayout.Load()
+            _ProductForm.DgvlPrice.Load()
             BtnSave.Enabled = False
             If Not _ProductPrice.IsSaved Then
                 BtnSave.Text = "Incluir"
@@ -210,7 +210,7 @@ Public Class FrmProductPrice
                 _ProductPrice = _Product.Prices.Single(Function(x) x.Guid = _ProductForm.DgvPrice.SelectedRows(0).Cells("Guid").Value)
                 _Product.Prices.Remove(_ProductPrice)
                 _ProductForm.DgvPrice.Fill(_Product.Prices)
-                _ProductForm.DgvPriceLayout.Load()
+                _ProductForm.DgvlPrice.Load()
                 _Deleting = True
                 Dispose()
                 _ProductForm.BtnSave.Enabled = True

@@ -91,7 +91,7 @@ Public Class FrmPersonAddress
                 If Not _PersonAddress.IsMainAddress Then
                     _Person.Addresses.Remove(_PersonAddress)
                     _PersonForm.DgvAddress.Fill(_Person.Addresses)
-                    _PersonForm.DgvAddressLayout.Load()
+                    _PersonForm.DgvlAddress.Load()
                     _Deleting = True
                     Dispose()
                     _PersonForm.BtnSave.Enabled = True
@@ -296,7 +296,7 @@ Public Class FrmPersonAddress
                 CbxIsMainAddress.Enabled = _PersonAddress.Status = SimpleStatus.Active
             End If
             _PersonForm.DgvAddress.Fill(_Person.Addresses)
-            _PersonForm.DgvAddressLayout.Load()
+            _PersonForm.DgvlAddress.Load()
             BtnSave.Enabled = False
             If Not _PersonAddress.IsSaved Then
                 BtnSave.Text = "Incluir"

@@ -23,9 +23,9 @@ Partial Class FrmProduct
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim OtherField1 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim OtherField2 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmProduct))
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
@@ -114,11 +114,10 @@ Partial Class FrmProduct
         Me.TmrQueriedBoxGroup = New System.Windows.Forms.Timer(Me.components)
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.DgvProviderCodeLayout = New Manager.DataGridViewLayout()
-        Me.DgvCodeLayout = New Manager.DataGridViewLayout()
-        Me.DgvPictureLayout = New Manager.DataGridViewLayout()
-        Me.DgvIndicatorLayout = New Manager.DataGridViewLayout()
-        Me.DgvPriceLayout = New Manager.DataGridViewLayout()
+        Me.DgvlProviderCode = New Manager.DataGridViewLayout()
+        Me.DgvlCode = New Manager.DataGridViewLayout()
+        Me.DgvlIndicator = New Manager.DataGridViewLayout()
+        Me.DgvlPrice = New Manager.DataGridViewLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
         Me.PnButtons.SuspendLayout()
@@ -828,11 +827,11 @@ Partial Class FrmProduct
         '
         Me.QbxUnit.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxUnit.CharactersToQuery = 1
-        Condition1.FieldName = "statusid"
-        Condition1.Operator = "="
-        Condition1.TableNameOrAlias = "productunit"
-        Condition1.Value = "@statusid"
-        Me.QbxUnit.Conditions.Add(Condition1)
+        Condition2.FieldName = "statusid"
+        Condition2.Operator = "="
+        Condition2.TableNameOrAlias = "productunit"
+        Condition2.Value = "@statusid"
+        Me.QbxUnit.Conditions.Add(Condition2)
         Me.QbxUnit.DebugOnTextChanged = False
         Me.QbxUnit.DisplayFieldAlias = "Sigla"
         Me.QbxUnit.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
@@ -850,20 +849,20 @@ Partial Class FrmProduct
         Me.QbxUnit.MainTableAlias = Nothing
         Me.QbxUnit.MainTableName = "productunit"
         Me.QbxUnit.Name = "QbxUnit"
-        OtherField1.DisplayFieldAlias = "Unidade"
-        OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField1.DisplayFieldName = "name"
-        OtherField1.DisplayMainFieldName = "id"
-        OtherField1.DisplayTableAlias = Nothing
-        OtherField1.DisplayTableName = "productunit"
-        OtherField1.Freeze = False
-        OtherField1.IfNull = Nothing
-        OtherField1.Prefix = Nothing
-        OtherField1.Suffix = Nothing
-        Me.QbxUnit.OtherFields.Add(OtherField1)
-        Parameter1.ParameterName = "@statusid"
-        Parameter1.ParameterValue = "0"
-        Me.QbxUnit.Parameters.Add(Parameter1)
+        OtherField2.DisplayFieldAlias = "Unidade"
+        OtherField2.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField2.DisplayFieldName = "name"
+        OtherField2.DisplayMainFieldName = "id"
+        OtherField2.DisplayTableAlias = Nothing
+        OtherField2.DisplayTableName = "productunit"
+        OtherField2.Freeze = False
+        OtherField2.IfNull = Nothing
+        OtherField2.Prefix = Nothing
+        OtherField2.Suffix = Nothing
+        Me.QbxUnit.OtherFields.Add(OtherField2)
+        Parameter2.ParameterName = "@statusid"
+        Parameter2.ParameterValue = "0"
+        Me.QbxUnit.Parameters.Add(Parameter2)
         Me.QbxUnit.Prefix = Nothing
         Me.QbxUnit.Size = New System.Drawing.Size(50, 23)
         Me.QbxUnit.Suffix = Nothing
@@ -1127,10 +1126,10 @@ Partial Class FrmProduct
         'TabPicture
         '
         Me.TabPicture.Controls.Add(Me.PvPicture)
-        Me.TabPicture.Location = New System.Drawing.Point(4, 26)
+        Me.TabPicture.Location = New System.Drawing.Point(4, 22)
         Me.TabPicture.Name = "TabPicture"
         Me.TabPicture.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPicture.Size = New System.Drawing.Size(606, 192)
+        Me.TabPicture.Size = New System.Drawing.Size(606, 196)
         Me.TabPicture.TabIndex = 8
         Me.TabPicture.Text = "Fotos"
         Me.TabPicture.UseVisualStyleBackColor = True
@@ -1152,9 +1151,9 @@ Partial Class FrmProduct
         Me.PvPicture.PreviousButtonImage = CType(resources.GetObject("PvPicture.PreviousButtonImage"), System.Drawing.Image)
         Me.PvPicture.RemoveButtonImage = CType(resources.GetObject("PvPicture.RemoveButtonImage"), System.Drawing.Image)
         Me.PvPicture.SaveButtonImage = CType(resources.GetObject("PvPicture.SaveButtonImage"), System.Drawing.Image)
-        Me.PvPicture.ShowControlBar = True
+        Me.PvPicture.ShowControlBar = False
         Me.PvPicture.ShowCounterBar = True
-        Me.PvPicture.Size = New System.Drawing.Size(600, 186)
+        Me.PvPicture.Size = New System.Drawing.Size(600, 190)
         Me.PvPicture.TabIndex = 0
         Me.PvPicture.TempDirectory = ""
         '
@@ -1182,29 +1181,25 @@ Partial Class FrmProduct
         Me.EprInformation.ContainerControl = Me
         Me.EprInformation.Icon = CType(resources.GetObject("EprInformation.Icon"), System.Drawing.Icon)
         '
-        'DgvProviderCodeLayout
+        'DgvlProviderCode
         '
-        Me.DgvProviderCodeLayout.DataGridView = Me.DgvProviderCode
-        Me.DgvProviderCodeLayout.Routine = Manager.Routine.ProductProviderCode
+        Me.DgvlProviderCode.DataGridView = Me.DgvProviderCode
+        Me.DgvlProviderCode.Routine = Manager.Routine.ProductProviderCode
         '
-        'DgvCodeLayout
+        'DgvlCode
         '
-        Me.DgvCodeLayout.DataGridView = Me.DgvCode
-        Me.DgvCodeLayout.Routine = Manager.Routine.ProductCode
+        Me.DgvlCode.DataGridView = Me.DgvCode
+        Me.DgvlCode.Routine = Manager.Routine.ProductCode
         '
-        'DgvPictureLayout
+        'DgvlIndicator
         '
-        Me.DgvPictureLayout.Routine = Manager.Routine.ProductPicture
+        Me.DgvlIndicator.DataGridView = Me.DgvIndicator
+        Me.DgvlIndicator.Routine = Manager.Routine.ProductPriceIndicator
         '
-        'DgvIndicatorLayout
+        'DgvlPrice
         '
-        Me.DgvIndicatorLayout.DataGridView = Me.DgvIndicator
-        Me.DgvIndicatorLayout.Routine = Manager.Routine.ProductPriceIndicator
-        '
-        'DgvPriceLayout
-        '
-        Me.DgvPriceLayout.DataGridView = Me.DgvPrice
-        Me.DgvPriceLayout.Routine = Manager.Routine.ProductPrice
+        Me.DgvlPrice.DataGridView = Me.DgvPrice
+        Me.DgvlPrice.Routine = Manager.Routine.ProductPrice
         '
         'FrmProduct
         '
@@ -1286,7 +1281,7 @@ Partial Class FrmProduct
     Friend WithEvents TabProductCode As TabPage
     Friend WithEvents TabNote As TabPage
     Friend WithEvents TxtNote As RichTextBox
-    Friend WithEvents DgvProviderCodeLayout As DataGridViewLayout
+    Friend WithEvents DgvlProviderCode As DataGridViewLayout
     Friend WithEvents DgvProviderCode As DataGridView
     Friend WithEvents TsProviderCode As ToolStrip
     Friend WithEvents BtnIncludeProviderCode As ToolStripButton
@@ -1294,7 +1289,7 @@ Partial Class FrmProduct
     Friend WithEvents BtnDeleteProviderCode As ToolStripButton
     Friend WithEvents ToolStripLabel3 As ToolStripLabel
     Friend WithEvents TxtFilterProviderCode As ToolStripTextBox
-    Friend WithEvents DgvCodeLayout As DataGridViewLayout
+    Friend WithEvents DgvlCode As DataGridViewLayout
     Friend WithEvents QbxFamily As ControlLibrary.QueriedBox
     Friend WithEvents LblGroup As Label
     Friend WithEvents LblFamily As Label
@@ -1322,7 +1317,6 @@ Partial Class FrmProduct
     Friend WithEvents TmrQueriedBoxFamily As Timer
     Friend WithEvents TmrQueriedBoxGroup As Timer
     Friend WithEvents TabPicture As TabPage
-    Friend WithEvents DgvPictureLayout As DataGridViewLayout
     Friend WithEvents FlpGroup As FlowLayoutPanel
     Friend WithEvents FlpFamily As FlowLayoutPanel
     Friend WithEvents EprInformation As ErrorProvider
@@ -1347,7 +1341,7 @@ Partial Class FrmProduct
     Friend WithEvents BtnDeletePrice As ToolStripButton
     Friend WithEvents LblFilterPrice As ToolStripLabel
     Friend WithEvents TxtFilterPrice As ToolStripTextBox
-    Friend WithEvents DgvIndicatorLayout As DataGridViewLayout
-    Friend WithEvents DgvPriceLayout As DataGridViewLayout
+    Friend WithEvents DgvlIndicator As DataGridViewLayout
+    Friend WithEvents DgvlPrice As DataGridViewLayout
     Friend WithEvents PvPicture As ControlLibrary.PictureViewer
 End Class

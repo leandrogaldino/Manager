@@ -27,7 +27,7 @@ Public Class FrmCashItemResponsible
         _CashItemForm = CashItemForm
         _User = Locator.GetInstance(Of Session).User
         LoadForm()
-        DgvNavigator.DataGridView = _CashItemForm.DgvResponsibles
+        DgvNavigator.DataGridView = _CashItemForm.DgvResponsible
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.Log)
@@ -42,9 +42,9 @@ Public Class FrmCashItemResponsible
         End If
     End Sub
     Private Sub AfterDataGridViewRowMove()
-        If _CashItemForm.DgvResponsibles.SelectedRows.Count = 1 Then
+        If _CashItemForm.DgvResponsible.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _CashItemResponsible = _CashItem.Responsibles.Single(Function(x) x.Guid = _CashItemForm.DgvResponsibles.SelectedRows(0).Cells("Guid").Value)
+            _CashItemResponsible = _CashItem.Responsibles.Single(Function(x) x.Guid = _CashItemForm.DgvResponsible.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -84,12 +84,12 @@ Public Class FrmCashItemResponsible
         LoadForm()
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
-        If _CashItemForm.DgvResponsibles.SelectedRows.Count = 1 Then
+        If _CashItemForm.DgvResponsible.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _CashItemResponsible = _CashItem.Responsibles.Single(Function(x) x.Guid = _CashItemForm.DgvResponsibles.SelectedRows(0).Cells("Guid").Value)
+                _CashItemResponsible = _CashItem.Responsibles.Single(Function(x) x.Guid = _CashItemForm.DgvResponsible.SelectedRows(0).Cells("Guid").Value)
                 _CashItem.Responsibles.Remove(_CashItemResponsible)
-                _CashItemForm.DgvResponsibles.Fill(_CashItem.Responsibles)
-                _CashItemForm.DgvResponsiblesLayout.Load()
+                _CashItemForm.DgvResponsible.Fill(_CashItem.Responsibles)
+                _CashItemForm.DgvlResponsible.Load()
                 _Deleting = True
                 Dispose()
                 _CashItemForm.BtnSave.Enabled = True
@@ -110,7 +110,7 @@ Public Class FrmCashItemResponsible
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = If(_CashItemForm.DgvResponsibles.SelectedRows.Count = 1, _CashItemForm.DgvResponsibles.SelectedRows(0).Cells("Order").Value, 0)
+        LblOrderValue.Text = If(_CashItemForm.DgvResponsible.SelectedRows.Count = 1, _CashItemForm.DgvResponsible.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _CashItemResponsible.Creation
         QbxResponsible.Unfreeze()
         QbxResponsible.Freeze(_CashItemResponsible.Responsible.ID)
@@ -156,8 +156,8 @@ Public Class FrmCashItemResponsible
                 _CashItemResponsible.SetIsSaved(True)
                 _CashItem.Responsibles.Add(_CashItemResponsible)
             End If
-            _CashItemForm.DgvResponsibles.Fill(_CashItem.Responsibles)
-            _CashItemForm.DgvResponsiblesLayout.Load()
+            _CashItemForm.DgvResponsible.Fill(_CashItem.Responsibles)
+            _CashItemForm.DgvlResponsible.Load()
             QbxResponsible.Select()
             BtnSave.Enabled = False
             If Not _CashItemResponsible.IsSaved Then
@@ -167,9 +167,9 @@ Public Class FrmCashItemResponsible
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _CashItemForm.DgvResponsibles.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _CashItemResponsible.Guid)
+            Row = _CashItemForm.DgvResponsible.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _CashItemResponsible.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _CashItemForm.DgvResponsibles.SelectedRows(0).Cells("Order").Value
+            LblOrderValue.Text = _CashItemForm.DgvResponsible.SelectedRows(0).Cells("Order").Value
             _CashItemForm.EprValidation.Clear()
             _CashItemForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()

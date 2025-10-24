@@ -19,7 +19,7 @@ Public Class UcEvaluationGrid
         _User = Locator.GetInstance(Of Session).User
         PgFilter.SelectedObject = _Filter
         LoadDetails()
-        'DgvEvaluationLayout.Load()
+        DgvlEvaluation.Load()
         BtnInclude.Visible = _User.CanWrite(Routine.Evaluation)
         BtnEdit.Visible = _User.CanWrite(Routine.Evaluation)
         BtnDelete.Visible = _User.CanDelete(Routine.Evaluation)
@@ -27,7 +27,7 @@ Public Class UcEvaluationGrid
         BtnImport.Visible = _User.CanAccess(Routine.EvaluationImport)
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'DgvEvaluationLayout.Load()
+        DgvlEvaluation.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         Using Form As New FrmEvaluation(New Evaluation, Me)
@@ -60,7 +60,7 @@ Public Class UcEvaluationGrid
                         Try
                             _Evaluation.Delete()
                             _Filter.Filter()
-                            'DgvEvaluationLayout.Load()
+                            DgvlEvaluation.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
@@ -82,7 +82,7 @@ Public Class UcEvaluationGrid
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        'DgvEvaluationLayout.Load()
+        DgvlEvaluation.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -120,7 +120,7 @@ Public Class UcEvaluationGrid
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        'DgvEvaluationLayout.Load()
+        DgvlEvaluation.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -178,7 +178,7 @@ Public Class UcEvaluationGrid
     End Sub
     Private Sub PgFilter_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles PgFilter.PropertyValueChanged
         If _Filter.Filter() = True Then
-            'DgvEvaluationLayout.Load()
+            DgvlEvaluation.Load()
             LblStatus.Text = "Filtro Ativo"
             LblStatus.ForeColor = Color.DarkRed
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Bold)
@@ -227,7 +227,7 @@ Public Class UcEvaluationGrid
             _Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("id").Value, False)
             _Evaluation.SetStatus(EvaluationStatus.Approved)
             _Filter.Filter()
-            'DgvEvaluationLayout.Load()
+            DgvlEvaluation.Load()
         Catch ex As Exception
             CMessageBox.Show("ERRO EV015", "Ocorreu um erro ao aprovar a avaliação.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally
@@ -242,7 +242,7 @@ Public Class UcEvaluationGrid
                     _Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("id").Value, False)
                     _Evaluation.SetStatus(EvaluationStatus.Rejected, Form.TxtReason.Text)
                     _Filter.Filter()
-                    'DgvEvaluationLayout.Load()
+                    DgvlEvaluation.Load()
                 Catch ex As Exception
                     CMessageBox.Show("ERRO EV016", "Ocorreu um erro ao rejeitar a avaliação.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                 Finally
@@ -257,7 +257,7 @@ Public Class UcEvaluationGrid
             _Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("id").Value, False)
             _Evaluation.SetStatus(EvaluationStatus.Disapproved)
             _Filter.Filter()
-            'DgvEvaluationLayout.Load()
+            DgvlEvaluation.Load()
         Catch ex As Exception
             CMessageBox.Show("ERRO EV021", "Ocorreu um erro ao desaprovar a avaliação.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally

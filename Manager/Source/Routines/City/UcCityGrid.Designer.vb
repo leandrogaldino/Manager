@@ -50,7 +50,7 @@ Partial Class UcCityGrid
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
-        Me.DgvCitiesLayout = New Manager.DataGridViewLayout()
+        Me.DgvlCity = New Manager.DataGridViewLayout()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -367,10 +367,10 @@ Partial Class UcCityGrid
         Me.DgvCcData.IncludeHeaderTextInCellCopy = False
         Me.DgvCcData.IncludeHeaderTextInRowCopy = True
         '
-        'DgvCitiesLayout
+        'DgvlCity
         '
-        Me.DgvCitiesLayout.DataGridView = Me.DgvData
-        Me.DgvCitiesLayout.Routine = Manager.Routine.City
+        Me.DgvlCity.DataGridView = Me.DgvData
+        Me.DgvlCity.Routine = Manager.Routine.City
         '
         'UcCityGrid
         '
@@ -434,5 +434,5 @@ Partial Class UcCityGrid
     Friend WithEvents LblView As ToolStripLabel
     Friend WithEvents DgvData As DataGridView
     Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
-    Friend WithEvents DgvCitiesLayout As DataGridViewLayout
+    Friend WithEvents DgvlCity As DataGridViewLayout
 End Class

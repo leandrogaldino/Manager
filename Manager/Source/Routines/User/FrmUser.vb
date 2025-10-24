@@ -40,10 +40,10 @@ Public Class FrmUser
         LoadData()
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvEmailLayout.Load()
+        DgvlUserEmail.Load()
     End Sub
     Private Sub LoadForm()
-        ControlHelper.EnableControlDoubleBuffer(DgvEmail, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvUserEmail, True)
         ControlHelper.EnableControlDoubleBuffer(FlpPrivilege, True)
         ControlHelper.EnableControlDoubleBuffer(TcUser, True)
         ControlHelper.EnableControlDoubleBuffer(TabPrivilege, True)
@@ -107,7 +107,7 @@ Public Class FrmUser
         TxtNote.Text = _User.Note
         TxtFilterEmail.Clear()
         TxtFilterPrivileges.Clear()
-        If _User.Emails IsNot Nothing Then DgvEmail.Fill(_User.Emails)
+        If _User.Emails IsNot Nothing Then DgvUserEmail.Fill(_User.Emails)
         BtnDelete.Enabled = _User.ID > 0 And _LoggedUser.CanDelete(Routine.User)
         UpdatePrivileges()
         Text = "Usuário"
@@ -148,7 +148,7 @@ Public Class FrmUser
             End If
         End If
         If _GridControl IsNot Nothing Then
-            DgvEmail.Fill(_User.Emails)
+            DgvUserEmail.Fill(_User.Emails)
         End If
         _Deleting = False
     End Sub
@@ -194,7 +194,7 @@ Public Class FrmUser
                         _User.Delete()
                         If _UsersGrid IsNot Nothing Then
                             _Filter.Filter()
-                            '_GridControl.DgvUserLayout.Load()
+                            _GridControl.DgvlUser.Load()
                             _UsersGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -429,12 +429,12 @@ Public Class FrmUser
                     _User.SaveChanges()
                     _User.Lock()
                     LblIDValue.Text = _User.ID
-                    DgvEmail.Fill(_User.Emails)
+                    DgvUserEmail.Fill(_User.Emails)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _LoggedUser.CanDelete(Routine.User)
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        '_GridControl.DgvUserLayout.Load()
+                        _GridControl.DgvlUser.Load()
                         Row = _UsersGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()
@@ -517,9 +517,9 @@ Public Class FrmUser
     End Sub
     Private Sub BtnEditEmail_Click(sender As Object, e As EventArgs) Handles BtnEditEmail.Click
         Dim Email As UserEmail
-        If DgvEmail.SelectedRows.Count = 1 Then
+        If DgvUserEmail.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            Email = _User.Emails.Single(Function(x) x.Guid = DgvEmail.SelectedRows(0).Cells("Guid").Value)
+            Email = _User.Emails.Single(Function(x) x.Guid = DgvUserEmail.SelectedRows(0).Cells("Guid").Value)
             Using Form As New FrmUserEmail(_User, Email, Me)
                 Form.ShowDialog()
             End Using
@@ -528,17 +528,17 @@ Public Class FrmUser
     End Sub
     Private Sub BtnDeleteEmail_Click(sender As Object, e As EventArgs) Handles BtnDeleteEmail.Click
         Dim Email As UserEmail
-        If DgvEmail.SelectedRows.Count = 1 Then
+        If DgvUserEmail.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Email = _User.Emails.Single(Function(x) x.Guid = DgvEmail.SelectedRows(0).Cells("Guid").Value)
+                Email = _User.Emails.Single(Function(x) x.Guid = DgvUserEmail.SelectedRows(0).Cells("Guid").Value)
                 _User.Emails.Remove(Email)
-                DgvEmail.Fill(_User.Emails)
+                DgvUserEmail.Fill(_User.Emails)
                 BtnSave.Enabled = True
             End If
         End If
     End Sub
-    Private Sub DgvEmail_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvEmail.MouseDoubleClick
-        Dim ClickPlace As DataGridView.HitTestInfo = DgvEmail.HitTest(e.X, e.Y)
+    Private Sub DgvEmail_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvUserEmail.MouseDoubleClick
+        Dim ClickPlace As DataGridView.HitTestInfo = DgvUserEmail.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
             BtnEditEmail.PerformClick()
         End If
@@ -561,8 +561,8 @@ Public Class FrmUser
                                                  "Email LIKE '%@VALUE%'",
                                                  "SmtpServer LIKE '%@VALUE%'"
                                             )
-        If DgvEmail.DataSource IsNot Nothing Then
-            Table = DgvEmail.DataSource
+        If DgvUserEmail.DataSource IsNot Nothing Then
+            Table = DgvUserEmail.DataSource
             View = Table.DefaultView
             If TxtFilterEmail.Text <> Nothing Then
                 Filter = Filter.Replace("@VALUE", TxtFilterEmail.Text.Replace("%", Nothing).Replace("*", Nothing))
@@ -576,11 +576,11 @@ Public Class FrmUser
         _User.Unlock()
     End Sub
 
-    Private Sub DgvEmail_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvEmail.DataSourceChanged
+    Private Sub DgvEmail_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvUserEmail.DataSourceChanged
         FilterEmail()
     End Sub
-    Private Sub DgvEmail_SelectionChanged(sender As Object, e As EventArgs) Handles DgvEmail.SelectionChanged
-        If DgvEmail.SelectedRows.Count = 0 Then
+    Private Sub DgvEmail_SelectionChanged(sender As Object, e As EventArgs) Handles DgvUserEmail.SelectionChanged
+        If DgvUserEmail.SelectedRows.Count = 0 Then
             BtnEditEmail.Enabled = False
             BtnDeleteEmail.Enabled = False
         Else

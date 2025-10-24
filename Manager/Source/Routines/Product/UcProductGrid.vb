@@ -25,7 +25,7 @@ Public Class UcProductGrid
         BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'DgvProductLayout.Load()
+        DgvlProduct.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
         Using Form As New FrmProduct(New Product, Me)
@@ -61,7 +61,7 @@ Public Class UcProductGrid
                         Try
                             _Product.Delete()
                             _Filter.Filter()
-                            'DgvProductLayout.Load()
+                            DgvlProduct.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
@@ -83,7 +83,7 @@ Public Class UcProductGrid
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        'DgvProductLayout.Load()
+        DgvlProduct.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
@@ -116,7 +116,7 @@ Public Class UcProductGrid
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        'DgvProductLayout.Load()
+        DgvlProduct.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -172,7 +172,7 @@ Public Class UcProductGrid
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        'DgvProductLayout.Load()
+        DgvlProduct.Load()
     End Sub
     Private Sub LoadDetails()
         If BtnDetails.Checked Then

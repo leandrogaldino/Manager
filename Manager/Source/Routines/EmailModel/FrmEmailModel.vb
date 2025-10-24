@@ -153,7 +153,7 @@ Public Class FrmEmailModel
                         _EmailModel.Delete()
                         If _EmailModelsGrid IsNot Nothing Then
                             _Filter.Filter()
-                            '_GridControl.DgvEmailModelsLayout.Load()
+                            _GridControl.DgvlEmailModel.Load()
                             _EmailModelsGrid.ClearSelection()
                         End If
                         _Deleting = True
@@ -234,7 +234,7 @@ Public Class FrmEmailModel
                     BtnDelete.Enabled = True
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()
-                        '_GridControl.DgvEmailModelsLayout.Load()
+                        _GridControl.DgvlEmailModel.Load()
                         Row = _EmailModelsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()

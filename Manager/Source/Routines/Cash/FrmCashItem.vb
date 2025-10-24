@@ -27,7 +27,7 @@ Public Class FrmCashItem
         BtnLog.Visible = Locator.GetInstance(Of Session).User.CanAccess(Routine.Log)
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvResponsiblesLayout.Load()
+        DgvlResponsible.Load()
         LoadSuggestions()
     End Sub
     Private Sub TxtDescription_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtDescription.KeyDown
@@ -194,7 +194,7 @@ Public Class FrmCashItem
                 _CashItem = _Cash.CashItems.Single(Function(x) x.Guid = _CashForm.DgvCashItem.SelectedRows(0).Cells("Guid").Value)
                 _Cash.CashItems.Remove(_CashItem)
                 _CashForm.DgvCashItem.Fill(_Cash.CashItems)
-                _CashForm.DgvCashItemsLayout.Load()
+                _CashForm.DgvlCashItem.Load()
                 _CashForm.CalculateValues()
                 _Deleting = True
                 Dispose()
@@ -230,8 +230,8 @@ Public Class FrmCashItem
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
         PreSave()
     End Sub
-    Private Sub DgvResponsibles_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvResponsibles.MouseDoubleClick
-        Dim ClickPlace As DataGridView.HitTestInfo = DgvResponsibles.HitTest(e.X, e.Y)
+    Private Sub DgvResponsibles_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvResponsible.MouseDoubleClick
+        Dim ClickPlace As DataGridView.HitTestInfo = DgvResponsible.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
             BtnEditCashItemResponsible.PerformClick()
         End If
@@ -259,7 +259,7 @@ Public Class FrmCashItem
             BtnSave.Text = "Alterar"
             BtnDelete.Enabled = True
         End If
-        DgvResponsibles.Fill(_CashItem.Responsibles)
+        DgvResponsible.Fill(_CashItem.Responsibles)
         BtnSave.Enabled = False
         TxtDescription.Select()
         _Loading = False
@@ -290,11 +290,11 @@ Public Class FrmCashItem
             EprValidation.SetIconAlignment(LblValue, ErrorIconAlignment.MiddleRight)
             DbxValue.Select()
             Return False
-        ElseIf DgvResponsibles.Rows.Count = 0 Then
+        ElseIf DgvResponsible.Rows.Count = 0 Then
             EprValidation.SetError(TsResponsibles, "O lançamento deve ter pelo menos um responsável.")
             EprValidation.SetIconAlignment(TsResponsibles, ErrorIconAlignment.MiddleLeft)
             EprValidation.SetIconPadding(TsResponsibles, -90)
-            DgvResponsibles.Select()
+            DgvResponsible.Select()
             Return False
         End If
         Return True
@@ -325,7 +325,7 @@ Public Class FrmCashItem
                 _Cash.CashItems.Add(_CashItem)
             End If
             _CashForm.DgvCashItem.Fill(_Cash.CashItems)
-            _CashForm.DgvCashItemsLayout.Load()
+            _CashForm.DgvlCashItem.Load()
             BtnSave.Enabled = False
             BtnDelete.Enabled = True
             If Not _CashItem.IsSaved Then
@@ -354,8 +354,8 @@ Public Class FrmCashItem
     End Sub
     Private Sub BtnEditCashItemResponsible_Click(sender As Object, e As EventArgs) Handles BtnEditCashItemResponsible.Click
         Dim Responsible As CashItemResponsible
-        If DgvResponsibles.SelectedRows.Count = 1 Then
-            Responsible = _CashItem.Responsibles.Single(Function(X) X.Guid = DgvResponsibles.SelectedRows(0).Cells("Guid").Value)
+        If DgvResponsible.SelectedRows.Count = 1 Then
+            Responsible = _CashItem.Responsibles.Single(Function(X) X.Guid = DgvResponsible.SelectedRows(0).Cells("Guid").Value)
             Using Form As New FrmCashItemResponsible(_CashItem, Responsible, Me)
                 Form.ShowDialog()
             End Using
@@ -363,17 +363,17 @@ Public Class FrmCashItem
     End Sub
     Private Sub BtnDeleteCashItemResponsible_Click(sender As Object, e As EventArgs) Handles BtnDeleteCashItemResponsible.Click
         Dim Responsible As CashItemResponsible
-        If DgvResponsibles.SelectedRows.Count = 1 Then
+        If DgvResponsible.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Responsible = _CashItem.Responsibles.Single(Function(X) X.Guid = DgvResponsibles.SelectedRows(0).Cells("Guid").Value)
+                Responsible = _CashItem.Responsibles.Single(Function(X) X.Guid = DgvResponsible.SelectedRows(0).Cells("Guid").Value)
                 _CashItem.Responsibles.Remove(Responsible)
-                DgvResponsibles.Fill(_CashItem.Responsibles)
+                DgvResponsible.Fill(_CashItem.Responsibles)
                 BtnSave.Enabled = True
             End If
         End If
     End Sub
-    Private Sub DgvData_SelectionChanged(sender As Object, e As EventArgs) Handles DgvResponsibles.SelectionChanged
-        If DgvResponsibles.SelectedRows.Count = 0 Then
+    Private Sub DgvData_SelectionChanged(sender As Object, e As EventArgs) Handles DgvResponsible.SelectionChanged
+        If DgvResponsible.SelectedRows.Count = 0 Then
             BtnEditCashItemResponsible.Enabled = False
             BtnDeleteCashItemResponsible.Enabled = False
         Else

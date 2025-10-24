@@ -51,6 +51,10 @@ Partial Class FrmUser
         Me.TcUser = New System.Windows.Forms.TabControl()
         Me.TabMain = New System.Windows.Forms.TabPage()
         Me.FlpManufacturer = New System.Windows.Forms.FlowLayoutPanel()
+        Me.BtnFilter = New ControlLibrary.NoFocusCueButton()
+        Me.BtnView = New ControlLibrary.NoFocusCueButton()
+        Me.BtnNew = New ControlLibrary.NoFocusCueButton()
+        Me.QbxPerson = New ControlLibrary.QueriedBox()
         Me.TabPrivilege = New System.Windows.Forms.TabPage()
         Me.FlpPrivilege = New System.Windows.Forms.FlowLayoutPanel()
         Me.TlpFilter = New System.Windows.Forms.TableLayoutPanel()
@@ -58,7 +62,7 @@ Partial Class FrmUser
         Me.LblFilter = New System.Windows.Forms.Label()
         Me.TxtFilterPrivileges = New System.Windows.Forms.TextBox()
         Me.TabEmail = New System.Windows.Forms.TabPage()
-        Me.DgvEmail = New System.Windows.Forms.DataGridView()
+        Me.DgvUserEmail = New System.Windows.Forms.DataGridView()
         Me.TsEmail = New System.Windows.Forms.ToolStrip()
         Me.BtnIncludeEmail = New System.Windows.Forms.ToolStripButton()
         Me.BtnEditEmail = New System.Windows.Forms.ToolStripButton()
@@ -67,11 +71,7 @@ Partial Class FrmUser
         Me.TabNote = New System.Windows.Forms.TabPage()
         Me.TxtNote = New System.Windows.Forms.RichTextBox()
         Me.TmrQueriedBox = New System.Windows.Forms.Timer(Me.components)
-        Me.DgvEmailLayout = New Manager.DataGridViewLayout()
-        Me.BtnFilter = New ControlLibrary.NoFocusCueButton()
-        Me.BtnView = New ControlLibrary.NoFocusCueButton()
-        Me.BtnNew = New ControlLibrary.NoFocusCueButton()
-        Me.QbxPerson = New ControlLibrary.QueriedBox()
+        Me.DgvlUserEmail = New Manager.DataGridViewLayout()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -84,7 +84,7 @@ Partial Class FrmUser
         Me.TlpFilter.SuspendLayout()
         Me.PnFilter.SuspendLayout()
         Me.TabEmail.SuspendLayout()
-        CType(Me.DgvEmail, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DgvUserEmail, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsEmail.SuspendLayout()
         Me.TabNote.SuspendLayout()
         Me.SuspendLayout()
@@ -377,14 +377,88 @@ Partial Class FrmUser
         Me.FlpManufacturer.Size = New System.Drawing.Size(69, 21)
         Me.FlpManufacturer.TabIndex = 4
         '
+        'BtnFilter
+        '
+        Me.BtnFilter.BackColor = System.Drawing.Color.Transparent
+        Me.BtnFilter.BackgroundImage = Global.Manager.My.Resources.Resources.Magnifier
+        Me.BtnFilter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnFilter.FlatAppearance.BorderSize = 0
+        Me.BtnFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnFilter.Location = New System.Drawing.Point(49, 3)
+        Me.BtnFilter.Name = "BtnFilter"
+        Me.BtnFilter.Size = New System.Drawing.Size(17, 17)
+        Me.BtnFilter.TabIndex = 2
+        Me.BtnFilter.TabStop = False
+        Me.BtnFilter.TooltipText = ""
+        Me.BtnFilter.UseVisualStyleBackColor = False
+        Me.BtnFilter.Visible = False
+        '
+        'BtnView
+        '
+        Me.BtnView.BackColor = System.Drawing.Color.Transparent
+        Me.BtnView.BackgroundImage = Global.Manager.My.Resources.Resources.View
+        Me.BtnView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnView.FlatAppearance.BorderSize = 0
+        Me.BtnView.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnView.Location = New System.Drawing.Point(26, 3)
+        Me.BtnView.Name = "BtnView"
+        Me.BtnView.Size = New System.Drawing.Size(17, 17)
+        Me.BtnView.TabIndex = 1
+        Me.BtnView.TabStop = False
+        Me.BtnView.TooltipText = ""
+        Me.BtnView.UseVisualStyleBackColor = False
+        Me.BtnView.Visible = False
+        '
+        'BtnNew
+        '
+        Me.BtnNew.BackColor = System.Drawing.Color.Transparent
+        Me.BtnNew.BackgroundImage = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnNew.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnNew.FlatAppearance.BorderSize = 0
+        Me.BtnNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnNew.Location = New System.Drawing.Point(3, 3)
+        Me.BtnNew.Name = "BtnNew"
+        Me.BtnNew.Size = New System.Drawing.Size(17, 17)
+        Me.BtnNew.TabIndex = 0
+        Me.BtnNew.TabStop = False
+        Me.BtnNew.TooltipText = ""
+        Me.BtnNew.UseVisualStyleBackColor = False
+        Me.BtnNew.Visible = False
+        '
+        'QbxPerson
+        '
+        Me.QbxPerson.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.QbxPerson.CharactersToQuery = 1
+        Me.QbxPerson.DebugOnTextChanged = False
+        Me.QbxPerson.DisplayFieldAlias = "Nome"
+        Me.QbxPerson.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        Me.QbxPerson.DisplayFieldName = "name"
+        Me.QbxPerson.DisplayMainFieldName = "id"
+        Me.QbxPerson.DisplayTableAlias = Nothing
+        Me.QbxPerson.DisplayTableName = "person"
+        Me.QbxPerson.Distinct = False
+        Me.QbxPerson.DropDownAutoStretchRight = False
+        Me.QbxPerson.GridHeaderBackColor = System.Drawing.SystemColors.Window
+        Me.QbxPerson.IfNull = Nothing
+        Me.QbxPerson.Location = New System.Drawing.Point(115, 33)
+        Me.QbxPerson.MainReturnFieldName = "id"
+        Me.QbxPerson.MainTableAlias = Nothing
+        Me.QbxPerson.MainTableName = "person"
+        Me.QbxPerson.Name = "QbxPerson"
+        Me.QbxPerson.Prefix = Nothing
+        Me.QbxPerson.ShowStartOnFreeze = True
+        Me.QbxPerson.Size = New System.Drawing.Size(329, 23)
+        Me.QbxPerson.Suffix = Nothing
+        Me.QbxPerson.TabIndex = 3
+        '
         'TabPrivilege
         '
         Me.TabPrivilege.Controls.Add(Me.FlpPrivilege)
         Me.TabPrivilege.Controls.Add(Me.TlpFilter)
-        Me.TabPrivilege.Location = New System.Drawing.Point(4, 26)
+        Me.TabPrivilege.Location = New System.Drawing.Point(4, 22)
         Me.TabPrivilege.Name = "TabPrivilege"
         Me.TabPrivilege.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPrivilege.Size = New System.Drawing.Size(451, 67)
+        Me.TabPrivilege.Size = New System.Drawing.Size(451, 71)
         Me.TabPrivilege.TabIndex = 8
         Me.TabPrivilege.Text = "Permissões"
         Me.TabPrivilege.UseVisualStyleBackColor = True
@@ -395,7 +469,7 @@ Partial Class FrmUser
         Me.FlpPrivilege.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FlpPrivilege.Location = New System.Drawing.Point(3, 38)
         Me.FlpPrivilege.Name = "FlpPrivilege"
-        Me.FlpPrivilege.Size = New System.Drawing.Size(445, 26)
+        Me.FlpPrivilege.Size = New System.Drawing.Size(445, 30)
         Me.FlpPrivilege.TabIndex = 0
         '
         'TlpFilter
@@ -441,36 +515,36 @@ Partial Class FrmUser
         '
         'TabEmail
         '
-        Me.TabEmail.Controls.Add(Me.DgvEmail)
+        Me.TabEmail.Controls.Add(Me.DgvUserEmail)
         Me.TabEmail.Controls.Add(Me.TsEmail)
-        Me.TabEmail.Location = New System.Drawing.Point(4, 22)
+        Me.TabEmail.Location = New System.Drawing.Point(4, 26)
         Me.TabEmail.Name = "TabEmail"
         Me.TabEmail.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabEmail.Size = New System.Drawing.Size(451, 71)
+        Me.TabEmail.Size = New System.Drawing.Size(451, 67)
         Me.TabEmail.TabIndex = 11
         Me.TabEmail.Text = "E-Mails"
         Me.TabEmail.UseVisualStyleBackColor = True
         '
-        'DgvEmail
+        'DgvUserEmail
         '
-        Me.DgvEmail.AllowUserToAddRows = False
-        Me.DgvEmail.AllowUserToDeleteRows = False
-        Me.DgvEmail.AllowUserToOrderColumns = True
-        Me.DgvEmail.AllowUserToResizeRows = False
-        Me.DgvEmail.BackgroundColor = System.Drawing.Color.WhiteSmoke
-        Me.DgvEmail.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DgvEmail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvEmail.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvEmail.Location = New System.Drawing.Point(3, 28)
-        Me.DgvEmail.MultiSelect = False
-        Me.DgvEmail.Name = "DgvEmail"
-        Me.DgvEmail.ReadOnly = True
-        Me.DgvEmail.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvEmail.RowHeadersVisible = False
-        Me.DgvEmail.RowTemplate.Height = 26
-        Me.DgvEmail.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvEmail.Size = New System.Drawing.Size(445, 40)
-        Me.DgvEmail.TabIndex = 3
+        Me.DgvUserEmail.AllowUserToAddRows = False
+        Me.DgvUserEmail.AllowUserToDeleteRows = False
+        Me.DgvUserEmail.AllowUserToOrderColumns = True
+        Me.DgvUserEmail.AllowUserToResizeRows = False
+        Me.DgvUserEmail.BackgroundColor = System.Drawing.Color.WhiteSmoke
+        Me.DgvUserEmail.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DgvUserEmail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvUserEmail.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvUserEmail.Location = New System.Drawing.Point(3, 28)
+        Me.DgvUserEmail.MultiSelect = False
+        Me.DgvUserEmail.Name = "DgvUserEmail"
+        Me.DgvUserEmail.ReadOnly = True
+        Me.DgvUserEmail.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvUserEmail.RowHeadersVisible = False
+        Me.DgvUserEmail.RowTemplate.Height = 26
+        Me.DgvUserEmail.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvUserEmail.Size = New System.Drawing.Size(445, 36)
+        Me.DgvUserEmail.TabIndex = 3
         '
         'TsEmail
         '
@@ -549,83 +623,10 @@ Partial Class FrmUser
         Me.TmrQueriedBox.Enabled = True
         Me.TmrQueriedBox.Interval = 300
         '
-        'DgvEmailLayout
+        'DgvlUserEmail
         '
-        Me.DgvEmailLayout.DataGridView = Me.DgvEmail
-        Me.DgvEmailLayout.Routine = Manager.Routine.UserEmail
-        '
-        'BtnFilter
-        '
-        Me.BtnFilter.BackColor = System.Drawing.Color.Transparent
-        Me.BtnFilter.BackgroundImage = Global.Manager.My.Resources.Resources.Magnifier
-        Me.BtnFilter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnFilter.FlatAppearance.BorderSize = 0
-        Me.BtnFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnFilter.Location = New System.Drawing.Point(49, 3)
-        Me.BtnFilter.Name = "BtnFilter"
-        Me.BtnFilter.Size = New System.Drawing.Size(17, 17)
-        Me.BtnFilter.TabIndex = 2
-        Me.BtnFilter.TabStop = False
-        Me.BtnFilter.TooltipText = ""
-        Me.BtnFilter.UseVisualStyleBackColor = False
-        Me.BtnFilter.Visible = False
-        '
-        'BtnView
-        '
-        Me.BtnView.BackColor = System.Drawing.Color.Transparent
-        Me.BtnView.BackgroundImage = Global.Manager.My.Resources.Resources.View
-        Me.BtnView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnView.FlatAppearance.BorderSize = 0
-        Me.BtnView.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnView.Location = New System.Drawing.Point(26, 3)
-        Me.BtnView.Name = "BtnView"
-        Me.BtnView.Size = New System.Drawing.Size(17, 17)
-        Me.BtnView.TabIndex = 1
-        Me.BtnView.TabStop = False
-        Me.BtnView.TooltipText = ""
-        Me.BtnView.UseVisualStyleBackColor = False
-        Me.BtnView.Visible = False
-        '
-        'BtnNew
-        '
-        Me.BtnNew.BackColor = System.Drawing.Color.Transparent
-        Me.BtnNew.BackgroundImage = Global.Manager.My.Resources.Resources.IncludeSmall
-        Me.BtnNew.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnNew.FlatAppearance.BorderSize = 0
-        Me.BtnNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnNew.Location = New System.Drawing.Point(3, 3)
-        Me.BtnNew.Name = "BtnNew"
-        Me.BtnNew.Size = New System.Drawing.Size(17, 17)
-        Me.BtnNew.TabIndex = 0
-        Me.BtnNew.TabStop = False
-        Me.BtnNew.TooltipText = ""
-        Me.BtnNew.UseVisualStyleBackColor = False
-        Me.BtnNew.Visible = False
-        '
-        'QbxPerson
-        '
-        Me.QbxPerson.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.QbxPerson.CharactersToQuery = 1
-        Me.QbxPerson.DebugOnTextChanged = False
-        Me.QbxPerson.DisplayFieldAlias = "Nome"
-        Me.QbxPerson.DisplayFieldName = "name"
-        Me.QbxPerson.DisplayMainFieldName = "id"
-        Me.QbxPerson.DisplayTableAlias = Nothing
-        Me.QbxPerson.DisplayTableName = "person"
-        Me.QbxPerson.Distinct = False
-        Me.QbxPerson.DropDownAutoStretchRight = False
-        Me.QbxPerson.GridHeaderBackColor = System.Drawing.SystemColors.Window
-        Me.QbxPerson.IfNull = Nothing
-        Me.QbxPerson.Location = New System.Drawing.Point(115, 33)
-        Me.QbxPerson.MainReturnFieldName = "id"
-        Me.QbxPerson.MainTableAlias = Nothing
-        Me.QbxPerson.MainTableName = "person"
-        Me.QbxPerson.Name = "QbxPerson"
-        Me.QbxPerson.Prefix = Nothing
-        Me.QbxPerson.ShowStartOnFreeze = True
-        Me.QbxPerson.Size = New System.Drawing.Size(329, 23)
-        Me.QbxPerson.Suffix = Nothing
-        Me.QbxPerson.TabIndex = 3
+        Me.DgvlUserEmail.DataGridView = Me.DgvUserEmail
+        Me.DgvlUserEmail.Routine = Manager.Routine.UserEmail
         '
         'DgvNavigator
         '
@@ -669,7 +670,7 @@ Partial Class FrmUser
         Me.PnFilter.PerformLayout()
         Me.TabEmail.ResumeLayout(False)
         Me.TabEmail.PerformLayout()
-        CType(Me.DgvEmail, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DgvUserEmail, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsEmail.ResumeLayout(False)
         Me.TsEmail.PerformLayout()
         Me.TabNote.ResumeLayout(False)
@@ -714,13 +715,13 @@ Partial Class FrmUser
     Friend WithEvents QbxPerson As ControlLibrary.QueriedBox
     Friend WithEvents TmrQueriedBox As Timer
     Friend WithEvents TabEmail As TabPage
-    Friend WithEvents DgvEmail As DataGridView
+    Friend WithEvents DgvUserEmail As DataGridView
     Friend WithEvents TsEmail As ToolStrip
     Friend WithEvents BtnIncludeEmail As ToolStripButton
     Friend WithEvents BtnEditEmail As ToolStripButton
     Friend WithEvents BtnDeleteEmail As ToolStripButton
     Friend WithEvents TxtFilterEmail As ToolStripTextBox
-    Friend WithEvents DgvEmailLayout As DataGridViewLayout
+    Friend WithEvents DgvlUserEmail As DataGridViewLayout
     Friend WithEvents TlpFilter As TableLayoutPanel
     Friend WithEvents PnFilter As Panel
     Friend WithEvents LblFilter As Label

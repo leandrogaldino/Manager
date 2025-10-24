@@ -558,10 +558,10 @@ Partial Class FrmPersonCompressor
         'TabMaintenance
         '
         Me.TabMaintenance.Controls.Add(Me.TcMaintenance)
-        Me.TabMaintenance.Location = New System.Drawing.Point(4, 26)
+        Me.TabMaintenance.Location = New System.Drawing.Point(4, 22)
         Me.TabMaintenance.Name = "TabMaintenance"
         Me.TabMaintenance.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabMaintenance.Size = New System.Drawing.Size(451, 102)
+        Me.TabMaintenance.Size = New System.Drawing.Size(451, 106)
         Me.TabMaintenance.TabIndex = 8
         Me.TabMaintenance.Text = "Manutenção"
         Me.TabMaintenance.UseVisualStyleBackColor = True
@@ -574,7 +574,7 @@ Partial Class FrmPersonCompressor
         Me.TcMaintenance.Location = New System.Drawing.Point(3, 3)
         Me.TcMaintenance.Name = "TcMaintenance"
         Me.TcMaintenance.SelectedIndex = 0
-        Me.TcMaintenance.Size = New System.Drawing.Size(445, 96)
+        Me.TcMaintenance.Size = New System.Drawing.Size(445, 100)
         Me.TcMaintenance.TabIndex = 0
         '
         'TabWorkedHourSellable
@@ -584,7 +584,7 @@ Partial Class FrmPersonCompressor
         Me.TabWorkedHourSellable.Location = New System.Drawing.Point(4, 26)
         Me.TabWorkedHourSellable.Name = "TabWorkedHourSellable"
         Me.TabWorkedHourSellable.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabWorkedHourSellable.Size = New System.Drawing.Size(437, 66)
+        Me.TabWorkedHourSellable.Size = New System.Drawing.Size(437, 70)
         Me.TabWorkedHourSellable.TabIndex = 6
         Me.TabWorkedHourSellable.Text = "Hora Trabalhada"
         Me.TabWorkedHourSellable.UseVisualStyleBackColor = True
@@ -607,7 +607,7 @@ Partial Class FrmPersonCompressor
         Me.DgvWorkedHourSellable.RowHeadersVisible = False
         Me.DgvWorkedHourSellable.RowTemplate.Height = 26
         Me.DgvWorkedHourSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvWorkedHourSellable.Size = New System.Drawing.Size(431, 35)
+        Me.DgvWorkedHourSellable.Size = New System.Drawing.Size(431, 39)
         Me.DgvWorkedHourSellable.TabIndex = 4
         '
         'TsWorkedHourSellable

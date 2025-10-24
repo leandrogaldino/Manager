@@ -19,7 +19,7 @@ Public Class EvaluationReport
         WsReport.RowHeight = 18
         WsReport.Columns(1, 7).Width = 15
         WsReport.Range(1, 7, 3, 7).Merge()
-        WsReport.Range(1, 7, 1, 7).Value = ReportingEvaluation.EvaluationDate.ToString("dd/MM/yyyy")
+        WsReport.Range(1, 7, 1, 7).Value = ReportingEvaluation.EvaluationNumber
         WsReport.Range(1, 7, 1, 7).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center
         If File.Exists(Session.Setting.Company.LogoLocation) Then
             Using Stream As New MemoryStream(File.ReadAllBytes(Session.Setting.Company.LogoLocation))
@@ -28,6 +28,9 @@ Public Class EvaluationReport
                 Logo.WithSize(156, 57)
             End Using
         End If
+
+
+
         WsReport.PageSetup.PagesWide = 1
         WsReport.PageSetup.PagesTall = False
         WsReport.PageSetup.CenterHorizontally = True

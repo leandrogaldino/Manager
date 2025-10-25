@@ -826,7 +826,7 @@ Public Class Evaluation
                     Adp.Fill(TableResult)
                     Dgv.AutoGenerateColumns = False
                     Dgv.Columns.Clear()
-                    Dgv.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "Item", .HeaderText = "Item", .DataPropertyName = "Item", .CellTemplate = New DataGridViewTextBoxCell})
+                    Dgv.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "Sellable", .HeaderText = "Produto/Serviço", .DataPropertyName = "Produto/Serviço", .CellTemplate = New DataGridViewTextBoxCell})
                     Dgv.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "Cap. Atual", .HeaderText = "Cap. Atual", .DataPropertyName = "Cap. Atual", .CellTemplate = New DataGridViewTextBoxCell})
                     Dgv.Columns.Add(New DataGridViewCheckBoxColumn With {.Name = "Vendido", .HeaderText = "Vendido", .DataPropertyName = "Vendido", .CellTemplate = New DataGridViewCheckBoxCell})
                     Dgv.Columns.Add(New DataGridViewCheckBoxColumn With {.Name = "Perdido", .HeaderText = "Perdido", .DataPropertyName = "Perdido", .CellTemplate = New DataGridViewCheckBoxCell})

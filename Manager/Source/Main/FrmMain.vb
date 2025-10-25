@@ -484,7 +484,7 @@ Public Class FrmMain
         Dim Result As ReportResult
         Try
             Cursor = Cursors.WaitCursor
-            Dim ev = New Evaluation().Load(708, True)
+            Dim ev = New Evaluation().Load(404, True)
             Result = EvaluationReport.EvaluationSheet(ev)
             DialogResult = DialogResult.OK
             OpenTab(New UcReport(Result), "Relatório de Atendimento")

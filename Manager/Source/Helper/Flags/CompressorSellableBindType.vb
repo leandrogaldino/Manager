@@ -7,4 +7,5 @@ Public Enum CompressorSellableBindType
     <Description("ELEMENTO SEPARADOR")> Separator = 3
     <Description("ÓLEO")> Oil = 4
     <Description("COALESCENTE")> Coalescent = 5
+    <Description("ENGRAXAMENTO")> Greasing = 6
 End Enum

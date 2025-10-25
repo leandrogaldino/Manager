@@ -167,6 +167,7 @@ Partial Class FrmEvaluation
         Me.CcoCallTypeHasRepairNeedProposal = New ControlLibrary.ControlContainer()
         Me.CcoUnitTemperaturePressure = New ControlLibrary.ControlContainer()
         Me.DgvlReplacedSellable = New Manager.DataGridViewLayout()
+        Me.BtnEvaluationTreatment = New System.Windows.Forms.ToolStripButton()
         Me.PnBottom.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -346,7 +347,7 @@ Partial Class FrmEvaluation
         Me.TsNavigation.BackColor = System.Drawing.Color.White
         Me.TsNavigation.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsNavigation.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsNavigation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnDelete, Me.BtnFirst, Me.BtnPrevious, Me.BtnNext, Me.BtnLast, Me.BtnLog})
+        Me.TsNavigation.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnDelete, Me.BtnFirst, Me.BtnPrevious, Me.BtnNext, Me.BtnLast, Me.BtnLog, Me.BtnEvaluationTreatment})
         Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -1598,6 +1599,16 @@ Partial Class FrmEvaluation
         Me.DgvlReplacedSellable.DataGridView = Me.DgvReplacedSellable
         Me.DgvlReplacedSellable.Routine = Manager.Routine.EvaluationReplacedSellable
         '
+        'BtnEvaluationTreatment
+        '
+        Me.BtnEvaluationTreatment.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.BtnEvaluationTreatment.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnEvaluationTreatment.Image = Global.Manager.My.Resources.Resources.ReportSmall
+        Me.BtnEvaluationTreatment.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnEvaluationTreatment.Name = "BtnEvaluationTreatment"
+        Me.BtnEvaluationTreatment.Size = New System.Drawing.Size(23, 22)
+        Me.BtnEvaluationTreatment.Text = "Gerar Relatório"
+        '
         'FrmEvaluation
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
@@ -1762,4 +1773,5 @@ Partial Class FrmEvaluation
     Friend WithEvents TbxEndTime As ControlLibrary.TimeBox
     Friend WithEvents TbxStartTime As ControlLibrary.TimeBox
     Friend WithEvents PvPicture As ControlLibrary.PictureViewer
+    Friend WithEvents BtnEvaluationTreatment As ToolStripButton
 End Class

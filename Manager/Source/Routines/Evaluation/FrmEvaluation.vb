@@ -137,6 +137,7 @@ Public Class FrmEvaluation
         BtnLog.Visible = _User.CanAccess(Routine.Log)
         BtnStatusValue.Visible = _User.CanAccess(Routine.EvaluationApproveOrReject)
         LblStatusValue.Visible = Not _User.CanAccess(Routine.EvaluationApproveOrReject)
+        BtnEvaluationTreatment.Visible = _User.CanAccess(Routine.EvaluationTreatmentReport)
         LblDocumentPage.Text = Nothing
         TxtEvaluationNumber.ReadOnly = _Evaluation.Source <> EvaluationSource.Manual
         Tip.SetToolTip(LblAverageWorkLoad, "Carga Média de Trabalho")
@@ -153,6 +154,11 @@ Public Class FrmEvaluation
     End Sub
     Private Sub LoadData()
         _Loading = True
+        If _Evaluation.ID > 0 Then
+            BtnEvaluationTreatment.Enabled = True
+        Else
+            BtnEvaluationTreatment.Enabled = False
+        End If
         TcEvaluation.SelectedTab = TabMain
         LblIDValue.Text = _Evaluation.ID
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
@@ -459,6 +465,7 @@ Public Class FrmEvaluation
                     DgvlWorkedHourSellable.Load()
                     DgvlReplacedSellable.Load()
                     BtnSave.Enabled = False
+                    BtnEvaluationTreatment.Enabled = True
                     BtnDelete.Enabled = _User.CanDelete(Routine.Evaluation)
                     If _Evaluation.Status = EvaluationStatus.Rejected Then
                         If CMessageBox.Show("Deseja alterar o status da avaliação para REVISADO?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
@@ -1056,6 +1063,20 @@ Public Class FrmEvaluation
                 BtnSave.Enabled = True
             End If
         End If
+    End Sub
+    Private Sub BtnEvaluationTreatment_Click(sender As Object, e As EventArgs) Handles BtnEvaluationTreatment.Click
+        Dim Result As ReportResult
+        If BtnSave.Enabled Then CMessageBox.Show("A avaliação foi modificada sem ser salva. O relatório será gerado com base nos dados previamente salvos.", CMessageBoxType.Information)
+        Try
+            Cursor = Cursors.WaitCursor
+            Result = EvaluationReport.EvaluationTreatment(_Evaluation)
+            FrmMain.OpenTab(New UcReport(Result), "Relatório de Atendimento")
+            CMessageBox.Show("O Relátório foi gerado na tela inicial.", CMessageBoxType.Information)
+        Catch ex As Exception
+            CMessageBox.Show("ERRO EV026", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+        Finally
+            Cursor = Cursors.Default
+        End Try
     End Sub
 #End Region
 #Region "Textbox Events"

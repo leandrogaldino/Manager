@@ -5,7 +5,7 @@ Imports ControlLibrary.Extensions
 Imports ManagerCore
 Imports Syncfusion.ExcelToPdfConverter
 Public Class EvaluationReport
-    Public Shared Function EvaluationSheet(ReportingEvaluation As Evaluation) As ReportResult
+    Public Shared Function EvaluationTreatment(ReportingEvaluation As Evaluation) As ReportResult
         Dim Session = Locator.GetInstance(Of Session)
         Dim WbReport As New XLWorkbook
         Dim WsReport As IXLWorksheet = WbReport.Worksheets.Add("Relatório de Atendimento")

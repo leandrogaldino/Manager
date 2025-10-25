@@ -49,6 +49,7 @@ Public Class FrmCash
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         DgvlCashItem.Load()
         BtnLog.Visible = _User.CanAccess(Routine.Log)
+        BtnCashSheet.Visible = _User.CanAccess(Routine.CashSheetReport)
         LblDocumentPage.Text = Nothing
     End Sub
     Private Sub LoadData()
@@ -66,9 +67,11 @@ Public Class FrmCash
                 BtnStatusValue.Visible = True
                 LblStatusValue.Visible = False
             End If
+            BtnCashSheet.Enabled = True
         Else
             BtnStatusValue.Visible = True
             LblStatusValue.Visible = False
+            BtnCashSheet.Enabled = False
         End If
         If Not String.IsNullOrEmpty(_Cash.Document.CurrentFile) AndAlso File.Exists(_Cash.Document.CurrentFile) Then
             PdfDocumentViewer.Load(New MemoryStream(File.ReadAllBytes(_Cash.Document.CurrentFile)))
@@ -320,6 +323,7 @@ Public Class FrmCash
                     LblCreationDateValue.Text = _Cash.Creation.ToString("dd/MM/yyyy")
                     DgvCashItem.Fill(_Cash.CashItems)
                     BtnSave.Enabled = False
+                    BtnCashSheet.Enabled = True
                     BtnDelete.Enabled = _User.CanDelete(Routine.Cash)
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()

@@ -62,10 +62,16 @@ Public Class FrmRequest
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = _User.CanAccess(Routine.Log)
+        BtnRequestSheet.Visible = _User.CanAccess(Routine.RequestSheetReport)
         LblDocumentPage.Text = Nothing
     End Sub
     Private Sub LoadData()
         _Loading = True
+        If _Request.ID > 0 Then
+            BtnRequestSheet.Enabled = True
+        Else
+            BtnRequestSheet.Enabled = False
+        End If
         TcRequest.SelectedTab = TabMain
         LblIDValue.Text = _Request.ID
         LblStatusValue.Text = EnumHelper.GetEnumDescription(_Request.Status)
@@ -326,6 +332,7 @@ Public Class FrmRequest
                     DgvItem.Fill(_Request.Items)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Request)
+                    BtnRequestSheet.Enabled = True
                     If _GridControl IsNot Nothing Then
                         _Filter.Filter()
                         _GridControl.DgvlRequest.Load()
@@ -436,8 +443,6 @@ Public Class FrmRequest
             Form.ShowDialog()
         End Using
     End Sub
-
-
     Private Sub TxtKeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtFilterItem.KeyPress
         Dim LstChar As New List(Of Char) From {"", ".", ",", "-", "/", "(", ")", "+", "*", "%", "&", "@", "#", "$", "<", ">", "\"}
         If Not Char.IsLetter(e.KeyChar) And Not Char.IsNumber(e.KeyChar) And Not LstChar.Contains(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then

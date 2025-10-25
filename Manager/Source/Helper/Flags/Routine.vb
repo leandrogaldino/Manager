@@ -72,6 +72,8 @@ Public Enum Routine
     <Description("Importar avaliações da núvem")> <BiStatePrivilege> <RoutineDependency(Evaluation)>
     EvaluationImport = 1311
     EvaluationReplacedSellable = 1312
+    <Description("Gerar o relatório de atendimento da avaliação")> <BiStatePrivilege> <RoutineDependency(Evaluation)>
+    EvaluationTreatmentReport = 1313
     <Description("Predefinição de Permissões")> <TriStatePrivilege> <RoutineDependency(User)>
     PrivilegePreset = 14
     PrivilegePresetPrivilege = 1401

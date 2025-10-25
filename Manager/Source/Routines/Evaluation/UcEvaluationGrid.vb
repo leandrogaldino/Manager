@@ -1,6 +1,7 @@
 ﻿Imports ControlLibrary
-Imports MySql.Data.MySqlClient
 Imports ControlLibrary.Extensions
+Imports MySql.Data.MySqlClient
+Imports Mysqlx.XDevAPI.Common
 Public Class UcEvaluationGrid
     Private _Evaluation As New Evaluation
     Private _Filter As EvaluationFilter
@@ -25,6 +26,10 @@ Public Class UcEvaluationGrid
         BtnDelete.Visible = _User.CanDelete(Routine.Evaluation)
         BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
         BtnImport.Visible = _User.CanAccess(Routine.EvaluationImport)
+        If Not _User.CanAccess(Routine.EvaluationTreatmentReport) Then
+            CmsSetStatus.Items.Remove(CmsSetStatus.Items.Cast(Of ToolStripItem).Single(Function(x) x.Name = "BtnEvaluationTreatment"))
+        End If
+
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvlEvaluation.Load()
@@ -285,5 +290,17 @@ Public Class UcEvaluationGrid
         Using Form As New FrmEvaluationImport(Me)
             Form.ShowDialog()
         End Using
+    End Sub
+    Private Sub BtnEvaluationTreatment_Click(sender As Object, e As EventArgs) Handles BtnEvaluationTreatment.Click
+        Try
+            Cursor = Cursors.WaitCursor
+            _Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("id").Value, False)
+            Dim Retult As ReportResult = EvaluationReport.EvaluationTreatment(_Evaluation)
+            FrmMain.OpenTab(New UcReport(Retult), "Relatório de Atendimento")
+        Catch ex As Exception
+            CMessageBox.Show("ERRO EV027", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+        Finally
+            Cursor = Cursors.Default
+        End Try
     End Sub
 End Class

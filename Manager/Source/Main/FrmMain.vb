@@ -485,7 +485,7 @@ Public Class FrmMain
         Try
             Cursor = Cursors.WaitCursor
             Dim ev = New Evaluation().Load(404, True)
-            Result = EvaluationReport.EvaluationSheet(ev)
+            Result = EvaluationReport.EvaluationTreatment(ev)
             DialogResult = DialogResult.OK
             OpenTab(New UcReport(Result), "Relatório de Atendimento")
         Catch ex As Exception

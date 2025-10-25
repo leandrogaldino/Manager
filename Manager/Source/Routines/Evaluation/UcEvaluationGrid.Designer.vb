@@ -54,13 +54,13 @@ Partial Class UcEvaluationGrid
         Me.BtnCloseDetails = New System.Windows.Forms.ToolStripButton()
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
         Me.DgvData = New System.Windows.Forms.DataGridView()
-        Me.CmsSetStatus = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.CmsMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.BtnApprove = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnReject = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnDisapprove = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnEvaluationTreatment = New System.Windows.Forms.ToolStripMenuItem()
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
-        Me.BtnEvaluationTreatment = New System.Windows.Forms.ToolStripMenuItem()
         Me.DgvlEvaluation = New Manager.DataGridViewLayout()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
@@ -82,7 +82,7 @@ Partial Class UcEvaluationGrid
         CType(Me.DgvElapsedDaySellable, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsDetails.SuspendLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.CmsSetStatus.SuspendLayout()
+        Me.CmsMenu.SuspendLayout()
         Me.SuspendLayout()
         '
         'TsMenu
@@ -469,11 +469,11 @@ Partial Class UcEvaluationGrid
         Me.DgvData.Size = New System.Drawing.Size(546, 437)
         Me.DgvData.TabIndex = 0
         '
-        'CmsSetStatus
+        'CmsMenu
         '
-        Me.CmsSetStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnApprove, Me.BtnReject, Me.BtnDisapprove, Me.BtnEvaluationTreatment})
-        Me.CmsSetStatus.Name = "CmsApproval"
-        Me.CmsSetStatus.Size = New System.Drawing.Size(211, 114)
+        Me.CmsMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnApprove, Me.BtnReject, Me.BtnDisapprove, Me.BtnEvaluationTreatment})
+        Me.CmsMenu.Name = "CmsApproval"
+        Me.CmsMenu.Size = New System.Drawing.Size(211, 92)
         '
         'BtnApprove
         '
@@ -496,22 +496,22 @@ Partial Class UcEvaluationGrid
         Me.BtnDisapprove.Size = New System.Drawing.Size(210, 22)
         Me.BtnDisapprove.Text = "Desaprovar"
         '
-        'TmrLoadDetails
-        '
-        '
-        'DgvCcData
-        '
-        Me.DgvCcData.ContextMenuStrip = Me.CmsSetStatus
-        Me.DgvCcData.DataGridView = Me.DgvData
-        Me.DgvCcData.IncludeHeaderTextInCellCopy = False
-        Me.DgvCcData.IncludeHeaderTextInRowCopy = True
-        '
         'BtnEvaluationTreatment
         '
         Me.BtnEvaluationTreatment.Image = Global.Manager.My.Resources.Resources.ReportSmall
         Me.BtnEvaluationTreatment.Name = "BtnEvaluationTreatment"
         Me.BtnEvaluationTreatment.Size = New System.Drawing.Size(210, 22)
         Me.BtnEvaluationTreatment.Text = "Relatório de Atendimento"
+        '
+        'TmrLoadDetails
+        '
+        '
+        'DgvCcData
+        '
+        Me.DgvCcData.ContextMenuStrip = Me.CmsMenu
+        Me.DgvCcData.DataGridView = Me.DgvData
+        Me.DgvCcData.IncludeHeaderTextInCellCopy = False
+        Me.DgvCcData.IncludeHeaderTextInRowCopy = True
         '
         'DgvlEvaluation
         '
@@ -557,7 +557,7 @@ Partial Class UcEvaluationGrid
         Me.TsDetails.ResumeLayout(False)
         Me.TsDetails.PerformLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.CmsSetStatus.ResumeLayout(False)
+        Me.CmsMenu.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -594,7 +594,7 @@ Partial Class UcEvaluationGrid
     Friend WithEvents DgvElapsedDaySellable As DataGridView
     Friend WithEvents Label2 As Label
     Friend WithEvents BtnExport As ToolStripButton
-    Friend WithEvents CmsSetStatus As ContextMenuStrip
+    Friend WithEvents CmsMenu As ContextMenuStrip
     Friend WithEvents BtnApprove As ToolStripMenuItem
     Friend WithEvents BtnReject As ToolStripMenuItem
     Friend WithEvents TmrLoadDetails As Timer

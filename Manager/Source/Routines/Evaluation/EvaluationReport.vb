@@ -115,7 +115,6 @@ Public Class EvaluationReport
         WsReport.Cell(12, 5).SetValue("LUB. MOTOR")
         WsReport.Cell(12, 6).SetValue("ÓLEO")
         WsReport.Cell(12, 7).SetValue("TIPO ÓLEO")
-
         WsReport.Range(12, 1, 12, 7).Style.Font.Bold = True
         WsReport.Range(12, 1, 12, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
         WsReport.Range(12, 1, 12, 7).Style.Fill.SetBackgroundColor(XLColor.WhiteSmoke)
@@ -127,9 +126,7 @@ Public Class EvaluationReport
         WsReport.Cell(13, 2).SetValue(FormatNumber(ReportingEvaluation.WorkedHourControlledSelables.First(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.AirFilter).CurrentCapacity, 0, TriState.True))
         WsReport.Cell(13, 3).SetValue(FormatNumber(ReportingEvaluation.WorkedHourControlledSelables.First(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.OilFilter).CurrentCapacity, 0, TriState.True))
         WsReport.Cell(13, 4).SetValue(FormatNumber(ReportingEvaluation.WorkedHourControlledSelables.First(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Separator).CurrentCapacity, 0, TriState.True))
-
         Dim HasGreasing As Boolean = ReportingEvaluation.WorkedHourControlledSelables.Any(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Greasing)
-
         WsReport.Cell(13, 5).SetValue(If(HasGreasing, FormatNumber(ReportingEvaluation.WorkedHourControlledSelables.First(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Greasing).CurrentCapacity, 0, TriState.True), "N/A"))
         WsReport.Cell(13, 6).SetValue(FormatNumber(ReportingEvaluation.WorkedHourControlledSelables.First(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Oil).CurrentCapacity, 0, TriState.True))
         Dim OilCapacity As Integer = ReportingEvaluation.WorkedHourControlledSelables.First(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Oil).PersonCompressorSellable.Capacity
@@ -142,11 +139,10 @@ Public Class EvaluationReport
         WsReport.Range(13, 1, 13, 7).Style.Border.SetInsideBorderColor(XLColor.DimGray)
         WsReport.Range(13, 1, 13, 1).Style.Fill.SetBackgroundColor(XLColor.Gainsboro)
         WsReport.Range(13, 7, 13, 7).Style.Fill.SetBackgroundColor(XLColor.Gainsboro)
-
         If ReportingEvaluation.ElapsedDayControlledSellables.Any(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Coalescent) Then
             WsReport.Rows(14).Height = 5
             CreateHeader(WsReport, 15, "FILTROS COALESCENTES")
-            WsReport.Range(16, 1, 19, 3).Merge()
+            WsReport.Range(16, 1, 16, 3).Merge()
             WsReport.Cell(16, 1).SetValue("ELEMENTO")
             WsReport.Cell(16, 4).SetValue("ÚLTIMA TROCA")
             WsReport.Cell(16, 5).SetValue("PROX. TROCA")
@@ -305,7 +301,6 @@ Public Class EvaluationReport
         Result.Attachments.Insert(0, New ReportResult.ReportAttachment(Result.FilePath & ".pdf", "Relatório de Atendimento.pdf"))
         Return Result
     End Function
-
     Private Shared Sub CreateHeader(Sheet As IXLWorksheet, Row As Integer, HeaderText As String)
         Sheet.Range(Row, 1, Row, 7).Merge()
         Sheet.Range(Row, 1, Row, 7).SetValue(HeaderText)

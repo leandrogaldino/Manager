@@ -27,7 +27,7 @@ Public Class UcEvaluationGrid
         BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
         BtnImport.Visible = _User.CanAccess(Routine.EvaluationImport)
         If Not _User.CanAccess(Routine.EvaluationTreatmentReport) Then
-            CmsSetStatus.Items.Remove(CmsSetStatus.Items.Cast(Of ToolStripItem).Single(Function(x) x.Name = "BtnEvaluationTreatment"))
+            CmsMenu.Items.Remove(CmsMenu.Items.Cast(Of ToolStripItem).Single(Function(x) x.Name = "BtnEvaluationTreatment"))
         End If
 
     End Sub
@@ -282,7 +282,7 @@ Public Class UcEvaluationGrid
             BtnApprove.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> EnumHelper.GetEnumDescription(EvaluationStatus.Approved)
             BtnReject.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> EnumHelper.GetEnumDescription(EvaluationStatus.Rejected)
             BtnDisapprove.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> EnumHelper.GetEnumDescription(EvaluationStatus.Disapproved)
-            CmsSetStatus.Show(DgvData.PointToScreen(_CmsPoint))
+            CmsMenu.Show(DgvData.PointToScreen(_CmsPoint))
             _ShowApproval = False
         End If
     End Sub

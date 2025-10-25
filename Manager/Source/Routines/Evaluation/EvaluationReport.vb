@@ -1,6 +1,8 @@
 ﻿Imports System.IO
+Imports CefSharp.DevTools.Autofill
 Imports ClosedXML.Excel
 Imports ControlLibrary
+Imports ControlLibrary.Extensions
 Imports ManagerCore
 Imports Syncfusion.ExcelToPdfConverter
 Public Class EvaluationReport
@@ -11,6 +13,9 @@ Public Class EvaluationReport
         Dim Converter As ExcelToPdfConverter
         Dim Result As New ReportResult
         Dim Logo As Drawings.IXLPicture
+        Dim Row As Integer
+        Dim Address As String
+        Dim Phones As String
         WsReport.ShowGridLines = False
         WsReport.Rows.Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center)
         WsReport.Rows.Style.NumberFormat.SetFormat("@")
@@ -24,7 +29,7 @@ Public Class EvaluationReport
         If File.Exists(Session.Setting.Company.LogoLocation) Then
             Using Stream As New MemoryStream(File.ReadAllBytes(Session.Setting.Company.LogoLocation))
                 Logo = WsReport.AddPicture(Stream)
-                Logo.MoveTo(WsReport.Cell("A1"), New Point(0, 5))
+                Logo.MoveTo(WsReport.Cell(1, 1), New Point(0, 5))
                 Logo.WithSize(156, 57)
             End Using
         End If
@@ -70,13 +75,7 @@ Public Class EvaluationReport
             AddText("      ").AddText("FIM: ").SetBold().
             AddText(ReportingEvaluation.EndTime.ToString("hh\:mm"))
         WsReport.Rows(9).Height = 5
-        WsReport.Range(10, 1, 10, 7).Merge()
-        WsReport.Range(10, 1, 10, 7).SetValue("INFORMAÇÕES DO COMPRESSOR")
-        WsReport.Range(10, 1, 10, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
-        WsReport.Range(10, 1, 10, 7).Style.Fill.SetBackgroundColor(XLColor.Gainsboro)
-        WsReport.Range(10, 1, 10, 7).Style.Font.SetBold(True)
-        WsReport.Range(10, 1, 10, 7).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin)
-        WsReport.Range(10, 1, 10, 7).Style.Border.SetOutsideBorderColor(XLColor.DimGray)
+        CreateHeader(WsReport, 10, "INFORMAÇÕES DO COMPRESSOR")
         WsReport.Cell(11, 1).SetValue("COMPRESSOR")
         WsReport.Cell(11, 2).SetValue("HORÍMETRO")
         WsReport.Cell(11, 3).SetValue("Nº SÉRIE/PAT.")
@@ -104,15 +103,7 @@ Public Class EvaluationReport
         WsReport.Range(12, 1, 12, 7).Style.Border.SetInsideBorder(XLBorderStyleValues.Thin)
         WsReport.Range(12, 1, 12, 7).Style.Border.SetInsideBorderColor(XLColor.DimGray)
         WsReport.Rows(13).Height = 5
-
-
-        WsReport.Range(14, 1, 14, 7).Merge()
-        WsReport.Range(14, 1, 14, 7).SetValue("HORAS RESTANTES PARA SUBSTITUIÇÃO")
-        WsReport.Range(14, 1, 14, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
-        WsReport.Range(14, 1, 14, 7).Style.Fill.SetBackgroundColor(XLColor.Gainsboro)
-        WsReport.Range(14, 1, 14, 7).Style.Font.SetBold(True)
-        WsReport.Range(14, 1, 14, 7).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin)
-        WsReport.Range(14, 1, 14, 7).Style.Border.SetOutsideBorderColor(XLColor.DimGray)
+        CreateHeader(WsReport, 14, "HORAS RESTANTES PARA SUBSTITUIÇÃO")
         WsReport.Cell(15, 1).SetValue("RECONSTRUIR UND.")
         WsReport.Cell(15, 2).SetValue("FILTRO AR")
         WsReport.Cell(15, 3).SetValue("FILTRO ÓLEO")
@@ -128,7 +119,6 @@ Public Class EvaluationReport
         WsReport.Range(15, 1, 15, 7).Style.Border.SetInsideBorder(XLBorderStyleValues.Thin)
         WsReport.Range(15, 1, 15, 7).Style.Border.SetInsideBorderColor(XLColor.DimGray)
         WsReport.Cell(16, 1).SetValue(If(ReportingEvaluation.Compressor.UnitCapacity <= ReportingEvaluation.Horimeter, "SIM", "NÃO"))
-
         WsReport.Cell(16, 2).SetValue(FormatNumber(ReportingEvaluation.WorkedHourControlledSelable.First(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.AirFilter).CurrentCapacity, 0, TriState.True))
         WsReport.Cell(16, 3).SetValue(FormatNumber(ReportingEvaluation.WorkedHourControlledSelable.First(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.OilFilter).CurrentCapacity, 0, TriState.True))
         WsReport.Cell(16, 4).SetValue(FormatNumber(ReportingEvaluation.WorkedHourControlledSelable.First(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Separator).CurrentCapacity, 0, TriState.True))
@@ -137,21 +127,141 @@ Public Class EvaluationReport
         Dim OilCapacity As Integer = ReportingEvaluation.WorkedHourControlledSelable.First(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Oil).PersonCompressorSellable.Capacity
         Dim OilType As String = If(OilCapacity <= 1000, "MINERAL", If(OilCapacity <= 4000, "SEMI SINTÉTICO", "SINTÉTICO"))
         WsReport.Cell(16, 7).SetValue(OilType)
-
         WsReport.Range(16, 1, 16, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
         WsReport.Range(16, 1, 16, 7).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin)
         WsReport.Range(16, 1, 16, 7).Style.Border.SetOutsideBorderColor(XLColor.DimGray)
         WsReport.Range(16, 1, 16, 7).Style.Border.SetInsideBorder(XLBorderStyleValues.Thin)
         WsReport.Range(16, 1, 16, 7).Style.Border.SetInsideBorderColor(XLColor.DimGray)
-
         WsReport.Range(15, 1, 16, 1).Style.Fill.SetBackgroundColor(XLColor.Gainsboro)
         WsReport.Range(15, 7, 16, 7).Style.Fill.SetBackgroundColor(XLColor.Gainsboro)
         WsReport.Cell(15, 1).Style.Font.SetFontSize(8)
-
         WsReport.Rows(17).Height = 5
-
-
-
+        CreateHeader(WsReport, 18, "FILTROS COALESCENTES")
+        WsReport.Range(19, 1, 19, 3).Merge()
+        WsReport.Cell(19, 1).SetValue("ELEMENTO")
+        WsReport.Cell(19, 4).SetValue("ÚLTIMA TROCA")
+        WsReport.Cell(19, 5).SetValue("PROX. TROCA")
+        WsReport.Cell(19, 6).SetValue("CAPACIDADE")
+        WsReport.Cell(19, 7).SetValue("UTILIZADO")
+        WsReport.Range(19, 1, 19, 7).Style.Font.Bold = True
+        WsReport.Range(19, 1, 19, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
+        WsReport.Range(19, 1, 19, 7).Style.Fill.SetBackgroundColor(XLColor.WhiteSmoke)
+        WsReport.Range(19, 1, 19, 7).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin)
+        WsReport.Range(19, 1, 19, 7).Style.Border.SetOutsideBorderColor(XLColor.DimGray)
+        WsReport.Range(19, 1, 19, 7).Style.Border.SetInsideBorder(XLBorderStyleValues.Thin)
+        WsReport.Range(19, 1, 19, 7).Style.Border.SetInsideBorderColor(XLColor.DimGray)
+        Row = 20
+        For Each Coalescent In ReportingEvaluation.ElapsedDayControlledSellable.Where(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Coalescent)
+            WsReport.Range(Row, 1, Row, 3).Merge()
+            WsReport.Cell(Row, 1).SetValue(Coalescent.Name)
+            WsReport.Cell(Row, 4).SetValue("ultima troca do coalescente")
+            WsReport.Cell(Row, 5).SetValue(ReportingEvaluation.EvaluationDate.AddDays(Coalescent.CurrentCapacity).ToString("dd/MM/yyyy"))
+            WsReport.Cell(Row, 6).SetValue(Coalescent.PersonCompressorSellable.Capacity)
+            WsReport.Cell(Row, 7).SetValue(Coalescent.PersonCompressorSellable.Capacity - Coalescent.CurrentCapacity)
+            WsReport.Range(Row, 1, Row, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
+            WsReport.Range(Row, 1, Row, 7).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin)
+            WsReport.Range(Row, 1, Row, 7).Style.Border.SetOutsideBorderColor(XLColor.DimGray)
+            WsReport.Range(Row, 1, Row, 7).Style.Border.SetInsideBorder(XLBorderStyleValues.Thin)
+            WsReport.Range(Row, 1, Row, 7).Style.Border.SetInsideBorderColor(XLColor.DimGray)
+            Row += 1
+        Next Coalescent
+        WsReport.Rows(Row).Height = 5
+        Row += 1
+        CreateHeader(WsReport, Row, "PEÇAS SUBSTITUÍDAS/SERVIÇOS EXECUTADOS")
+        Row += 1
+        WsReport.Cell(Row, 1).SetValue("CÓDIGO")
+        WsReport.Range(Row, 2, Row, 6).Merge()
+        WsReport.Cell(Row, 2).SetValue("PEÇAS/SERVIÇOS")
+        WsReport.Cell(Row, 7).SetValue("QTD.")
+        WsReport.Range(Row, 1, Row, 7).Style.Font.Bold = True
+        WsReport.Range(Row, 1, Row, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
+        WsReport.Range(Row, 1, Row, 7).Style.Fill.SetBackgroundColor(XLColor.WhiteSmoke)
+        WsReport.Range(Row, 1, Row, 7).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin)
+        WsReport.Range(Row, 1, Row, 7).Style.Border.SetOutsideBorderColor(XLColor.DimGray)
+        WsReport.Range(Row, 1, Row, 7).Style.Border.SetInsideBorder(XLBorderStyleValues.Thin)
+        WsReport.Range(Row, 1, Row, 7).Style.Border.SetInsideBorderColor(XLColor.DimGray)
+        Row += 1
+        For Each ReplacedSellable In ReportingEvaluation.ReplacedSellables
+            WsReport.Cell(Row, 1).SetValue($"{If(ReplacedSellable.SellableType = SellableType.Product, "P", "S")}{ReplacedSellable.SellableID}")
+            WsReport.Range(Row, 2, Row, 6).Merge()
+            WsReport.Cell(Row, 2).SetValue(ReplacedSellable.Name)
+            WsReport.Cell(Row, 7).SetValue(ReplacedSellable.Quantity)
+            WsReport.Range(Row, 1, Row, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
+            WsReport.Range(Row, 1, Row, 7).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin)
+            WsReport.Range(Row, 1, Row, 7).Style.Border.SetOutsideBorderColor(XLColor.DimGray)
+            WsReport.Range(Row, 1, Row, 7).Style.Border.SetInsideBorder(XLBorderStyleValues.Thin)
+            WsReport.Range(Row, 1, Row, 7).Style.Border.SetInsideBorderColor(XLColor.DimGray)
+            Row += 1
+        Next ReplacedSellable
+        WsReport.Rows(Row).Height = 5
+        Row += 1
+        CreateHeader(WsReport, Row, "PARECER TÉCNICO")
+        Row += 1
+        WsReport.Range(Row, 1, Row + 3, 7).Merge()
+        WsReport.Range(Row, 1, Row + 3, 7).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin)
+        WsReport.Range(Row, 1, Row + 3, 7).Style.Border.SetOutsideBorderColor(XLColor.DimGray)
+        WsReport.Range(Row, 1, Row, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left)
+        WsReport.Range(Row, 1, Row, 7).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Top)
+        WsReport.Range(Row, 1, Row, 7).Style.Alignment.SetWrapText(True)
+        WsReport.Cell(Row, 1).SetValue(ReportingEvaluation.TechnicalAdvice)
+        Row += 4
+        WsReport.Rows(Row).Height = 5
+        Row += 1
+        Dim Culture As New System.Globalization.CultureInfo("pt-BR")
+        Dim MonthName As String = DateAndTime.MonthName(ReportingEvaluation.EvaluationDate.Month, False)
+        MonthName = MonthName.ToUpper(Culture)
+        WsReport.Range(Row, 1, Row, 7).Merge()
+        WsReport.Cell(Row, 1).SetValue($"POR ESTAREM DE ACORDO COM O CONTEÚDO DESTA AVALIAÇÃO, AS PARTES FIRMAM O PRESENTE RELATÓRIO EM {ReportingEvaluation.EvaluationDate.Day} DE {MonthName} DE {ReportingEvaluation.EvaluationDate.Year}.")
+        WsReport.Range(Row, 1, Row, 7).Style.Alignment.SetShrinkToFit(True)
+        Row += 2
+        WsReport.Range(Row, 1, Row + 2, 4).Merge()
+        WsReport.Range(Row, 1, Row + 2, 4).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
+        WsReport.Range(Row, 1, Row + 2, 4).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center)
+        WsReport.Range(Row, 1, Row + 3, 4).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin) 'remover esssa linha
+        If File.Exists(ReportingEvaluation.Signature.CurrentFile) Then
+            Using Stream As New MemoryStream(File.ReadAllBytes(ReportingEvaluation.Signature.CurrentFile))
+                Logo = WsReport.AddPicture(Stream)
+                Logo.MoveTo(WsReport.Cell(Row, 1), New Point(0, 5))
+                Logo.WithSize(156, 57)
+            End Using
+        End If
+        WsReport.Range(Row, 5, Row + 2, 7).Merge()
+        WsReport.Range(Row, 5, Row + 2, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
+        WsReport.Range(Row, 5, Row + 2, 7).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center)
+        WsReport.Range(Row, 5, Row + 3, 7).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin) 'remover esssa linha
+        WsReport.Cell(Row, 5).SetValue(ReportingEvaluation.Technicians(0).Technician.ShortName.ToTitle())
+        WsReport.Cell(Row, 5).Style.Font.SetFontName("Brush Script MT")
+        WsReport.Cell(Row, 5).Style.Font.SetFontSize(26)
+        Row += 3
+        WsReport.Range(Row, 1, Row, 4).Merge()
+        WsReport.Range(Row, 1, Row, 4).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
+        WsReport.Range(Row, 1, Row, 4).Style.Font.SetBold(True)
+        WsReport.Cell(Row, 1).SetValue("CLIENTE")
+        WsReport.Range(Row, 5, Row, 7).Merge()
+        WsReport.Range(Row, 5, Row, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
+        WsReport.Range(Row, 5, Row, 7).Style.Font.SetBold(True)
+        WsReport.Cell(Row, 5).SetValue("TÉCNICO")
+        Row += 2
+        WsReport.Range(Row, 1, Row, 7).Merge()
+        WsReport.Range(Row, 1, Row, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
+        Address = String.Empty
+        If Not String.IsNullOrEmpty(Session.Setting.Company.Address.Street) Then Address &= Session.Setting.Company.Address.Street
+        If Not String.IsNullOrEmpty(Session.Setting.Company.Address.Complement) Then Address &= $" {Session.Setting.Company.Address.Complement}"
+        If Not String.IsNullOrEmpty(Session.Setting.Company.Address.Number) Then Address &= $" Nº {Session.Setting.Company.Address.Number}"
+        If Not String.IsNullOrEmpty(Session.Setting.Company.Address.District) Then Address &= $" {Session.Setting.Company.Address.District}"
+        Address &= ", "
+        If Not String.IsNullOrEmpty(Session.Setting.Company.Address.City) Then Address &= $" {Session.Setting.Company.Address.City}"
+        If Not String.IsNullOrEmpty(Session.Setting.Company.Address.State) Then Address &= $"/{Session.Setting.Company.Address.State}"
+        Phones = String.Empty
+        If Not String.IsNullOrEmpty(Session.Setting.Company.Contact.Phone1) Then Phones &= Session.Setting.Company.Contact.Phone1
+        If Not String.IsNullOrEmpty(Session.Setting.Company.Contact.Phone2) Then Phones &= $" | {Session.Setting.Company.Contact.Phone2}"
+        If Not String.IsNullOrEmpty(Session.Setting.Company.Contact.CellPhone) Then Phones &= $" | {Session.Setting.Company.Contact.CellPhone}"
+        WsReport.Cell(Row, 1).SetValue($"{Address}{If(Not String.IsNullOrWhiteSpace(Phones), $" - {Phones}", String.Empty)}")
+        WsReport.Range(Row, 1, Row, 7).Style.Alignment.SetShrinkToFit(True)
+        Row += 1
+        WsReport.Range(Row, 1, Row, 7).Merge()
+        WsReport.Range(Row, 1, Row, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
+        WsReport.Cell(Row, 1).SetValue($"{Session.Setting.Company.Contact.Email}{If(Not String.IsNullOrEmpty(Session.Setting.Company.Contact.Site), $" - {Session.Setting.Company.Contact.Site}", String.Empty)}")
         WsReport.PageSetup.SetPagesWide(1)
         WsReport.PageSetup.SetPagesTall(False)
         WsReport.PageSetup.SetCenterHorizontally(True)
@@ -163,4 +273,14 @@ Public Class EvaluationReport
         Result.Attachments.Insert(0, New ReportResult.ReportAttachment(Result.FilePath & ".pdf", "Relatório de Atendimento.pdf"))
         Return Result
     End Function
+
+    Private Shared Sub CreateHeader(Sheet As IXLWorksheet, Row As Integer, HeaderText As String)
+        Sheet.Range(Row, 1, Row, 7).Merge()
+        Sheet.Range(Row, 1, Row, 7).SetValue(HeaderText)
+        Sheet.Range(Row, 1, Row, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
+        Sheet.Range(Row, 1, Row, 7).Style.Fill.SetBackgroundColor(XLColor.Gainsboro)
+        Sheet.Range(Row, 1, Row, 7).Style.Font.SetBold(True)
+        Sheet.Range(Row, 1, Row, 7).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin)
+        Sheet.Range(Row, 1, Row, 7).Style.Border.SetOutsideBorderColor(XLColor.DimGray)
+    End Sub
 End Class

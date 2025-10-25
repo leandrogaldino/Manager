@@ -2120,6 +2120,18 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT evaluation.evaluationdate
+        '''FROM evaluation
+        '''WHERE personcompressorid = @personcompressorid
+        '''ORDER BY evaluationdate LIMIT 1;.
+        '''</summary>
+        Friend ReadOnly Property EvaluationFirstEvaluationDateSelect() As String
+            Get
+                Return ResourceManager.GetString("EvaluationFirstEvaluationDateSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         '''&lt;Routine Id=&quot;Evaluation&quot; Version=&quot;2&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
@@ -2226,6 +2238,32 @@ Namespace My.Resources
         Friend ReadOnly Property EvaluationLastEvaluationSelect() As String
             Get
                 Return ResourceManager.GetString("EvaluationLastEvaluationSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT IFNULL(e.evaluationdate, &apos;&apos;) evaluationdate FROM evaluation e
+        '''JOIN evaluationcontrolledsellable ecs ON ecs.evaluationid = e.id
+        '''WHERE ecs.personcompressorsellableid = @personcompressorsellableid  AND (sold = 1 OR lost =1) AND e.evaluationdate &lt;= @refevaluationdate
+        '''ORDER BY e.evaluationdate DESC
+        '''LIMIT 1;.
+        '''</summary>
+        Friend ReadOnly Property EvaluationLastReplacedSellableCapacitySelect() As String
+            Get
+                Return ResourceManager.GetString("EvaluationLastReplacedSellableCapacitySelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT IFNULL(e.evaluationdate, &apos;&apos;) evaluationdate FROM evaluation e
+        '''JOIN evaluationcontrolledsellable ecs ON ecs.evaluationid = e.id
+        '''WHERE ecs.personcompressorsellableid = @personcompressorsellableid  AND (sold = 1 OR lost =1) AND e.evaluationdate &lt;= @refevaluationdate
+        '''ORDER BY e.evaluationdate DESC
+        '''LIMIT 1;.
+        '''</summary>
+        Friend ReadOnly Property EvaluationLastReplacedSellableDateSelect() As String
+            Get
+                Return ResourceManager.GetString("EvaluationLastReplacedSellableDateSelect", resourceCulture)
             End Get
         End Property
         

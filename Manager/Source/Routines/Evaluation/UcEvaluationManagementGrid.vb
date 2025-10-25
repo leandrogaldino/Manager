@@ -262,13 +262,13 @@ Public Class UcEvaluationManagementGrid
 
 
 
-                    NewEvaluation.WorkedHourControlledSelable.ToList().ForEach(Sub(x)
+                    NewEvaluation.WorkedHourControlledSelables.ToList().ForEach(Sub(x)
                                                                                    x.Lost = False
                                                                                    x.Sold = False
                                                                                    x.CurrentCapacity = x.PersonCompressorSellable.Capacity
                                                                                End Sub
                                                                    )
-                    NewEvaluation.ElapsedDayControlledSellable.ToList().ForEach(Sub(x)
+                    NewEvaluation.ElapsedDayControlledSellables.ToList().ForEach(Sub(x)
                                                                                     x.Lost = False
                                                                                     x.Sold = False
                                                                                     x.CurrentCapacity = x.PersonCompressorSellable.Capacity

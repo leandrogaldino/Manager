@@ -523,6 +523,9 @@
     <Content Include="Resources\SQL\Evaluation\EvaluationControlledSellableInsert.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationControlledSellableSelect.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationControlledSellableUpdate.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationFirstEvaluationDateSelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationLastReplacedSellableCapacitySelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationLastReplacedSellableDateSelect.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationManagementControlledSellableFilter .sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableDelete.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableInsert.sql" />

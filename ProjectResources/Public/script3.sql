@@ -32,3 +32,9 @@ IF OLD.quantity <> NEW.quantity THEN INSERT INTO log VALUES (NULL, 204, NEW.id, 
 IF OLD.capacity <> NEW.capacity THEN INSERT INTO log VALUES (NULL, 204, NEW.id, 'Cap.', FORMAT(OLD.capacity, 0, 'pt_BR'), FORMAT(NEW.capacity, 0, 'pt_BR'), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DELIMITER ;
+SET SQL_SAFE_UPDATES = 0;
+UPDATE personcompressorsellable SET userid = 1 WHERE serviceid = 1;
+UPDATE personcompressorsellable SET sellablebindid = 6 WHERE serviceid = 1;
+SET SQL_SAFE_UPDATES = 1;
+
+

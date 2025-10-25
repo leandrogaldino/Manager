@@ -246,7 +246,7 @@ Public Class EvaluationReport
         WsReport.Range(Row, 1, Row + 2, 4).Merge()
         WsReport.Range(Row, 1, Row + 2, 4).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
         WsReport.Range(Row, 1, Row + 2, 4).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center)
-        WsReport.Range(Row, 1, Row + 3, 4).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin) 'remover esssa linha
+        'WsReport.Range(Row, 1, Row + 3, 4).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin) 'remover esssa linha
         If File.Exists(ReportingEvaluation.Signature.CurrentFile) Then
             Using Stream As New MemoryStream(File.ReadAllBytes(ReportingEvaluation.Signature.CurrentFile))
                 Logo = WsReport.AddPicture(Stream)
@@ -257,7 +257,7 @@ Public Class EvaluationReport
         WsReport.Range(Row, 5, Row + 2, 7).Merge()
         WsReport.Range(Row, 5, Row + 2, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
         WsReport.Range(Row, 5, Row + 2, 7).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center)
-        WsReport.Range(Row, 5, Row + 3, 7).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin) 'remover esssa linha
+        'WsReport.Range(Row, 5, Row + 3, 7).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin) 'remover esssa linha
         WsReport.Cell(Row, 5).SetValue(ReportingEvaluation.Technicians(0).Technician.ShortName.ToTitle())
         WsReport.Cell(Row, 5).Style.Font.SetFontName("Brush Script MT")
         WsReport.Cell(Row, 5).Style.Font.SetFontSize(26)

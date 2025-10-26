@@ -86,8 +86,8 @@ Public Class TaskCloudSync
             Dim LastSyncID As Long = _SessionModel.ManagerSetting.Cloud.Synchronization.CloudLastSyncID
             Dim Result As QueryResult = Await _LocalDB.ExecuteSelectAsync("log",
                                                   New List(Of String) From {"id", "routineid", "registryid", "fieldname", "oldvalue", "newvalue", "changedate"},
-                                                  "id > @id AND routineid IN (@person, @personcompressor, @personcompressorsellableelapsedday, @product, @productprovidercode, @service, @visitschedule)",
-                                                  New Dictionary(Of String, Object) From {{"@id", LastSyncID}, {"@person", 2}, {"@personcompressor", 203}, {"@personcompressorsellableelapsedday", 205}, {"@product", 6}, {"@productprovidercode", 601}, {"@service", 23}, {"@visitschedule", 22}},
+                                                  "id > @id AND routineid IN (@person, @compressor, @personcompressor, @personcompressorsellable, @product, @productprovidercode, @service, @visitschedule)",
+                                                  New Dictionary(Of String, Object) From {{"@id", LastSyncID}, {"@person", 2}, {"@compressor", 12}, {"@personcompressor", 203}, {"@personcompressorsellable", 204}, {"@product", 6}, {"@productprovidercode", 601}, {"@service", 23}, {"@visitschedule", 22}},
                                                   "id ASC")
             Dim TotalChanges As Long = If(Result.Data.Count > RemainingOperations, RemainingOperations, Result.Data.Count)
             If TotalChanges > 0 Then
@@ -112,9 +112,9 @@ Public Class TaskCloudSync
                             Debug.Print("Fetching PersonCompressor")
                             Await FetchPersonCompressor(Change)
                             PerformedOperations += 1
-                        Case 205 'PersonCompressorSellableElapsedDay
-                            Debug.Print("Fetching Coalescent")
-                            Await FetchPersonCompressorCoalescent(Change)
+                        Case 204 'PersonCompressorSellable
+                            Debug.Print("Fetching FetchPersonCompressorCoalescents")
+                            Await FetchPersonCompressorCoalescents(Change)
                             PerformedOperations += 1
                         Case 6 'Product'
                             Debug.Print("Fetching Product")
@@ -267,14 +267,14 @@ Public Class TaskCloudSync
 
 
     Private Async Function FetchVisitSchedule(Change As Dictionary(Of String, Object)) As Task
-        Await _RemoteDB.ExecuteUpdate("visitschedules",
+        Await _RemoteDB.ExecuteUpdate("visitchedules",
                                           New Dictionary(Of String, Object) From {{"statusid", 3}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Change("changedate"))}},
                                           New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
 
     End Function
     Private Async Function FetchCompressor(Change As Dictionary(Of String, Object)) As Task
         Dim Result = Await _LocalDB.ExecuteSelectAsync("compressor",
-                                                  New List(Of String) From {"id", "name"},
+                                                  New List(Of String) From {"id", "name", "statusid"},
                                                   "id = @id",
                                                   New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
                                                   Limit:=1)
@@ -292,7 +292,7 @@ Public Class TaskCloudSync
                                           New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
         End If
     End Function
-    Private Async Function FetchPersonCompressorCoalescent(Change As Dictionary(Of String, Object)) As Task
+    Private Async Function FetchPersonCompressorCoalescents(Change As Dictionary(Of String, Object)) As Task
         Dim Result = Await _LocalDB.ExecuteSelectAsync("personcompressorsellable",
                                                   New List(Of String) From {"id", "personcompressorid", "productid", "statusid", "sellablebindid"},
                                                   "id = @id AND controltypeid = @controltypeid",
@@ -307,10 +307,10 @@ Public Class TaskCloudSync
             CoalescentData("visible") = If(CoalescentData("statusid") = 0, 1, 0)
             CoalescentData.Remove("statusid")
             CoalescentData.Remove("sellablebindid")
-            Await _RemoteDB.ExecutePut("coalescents", CoalescentData, CoalescentData("id"))
+            Await _RemoteDB.ExecutePut("personcompressorcoalescents", CoalescentData, CoalescentData("id"))
         End If
         If Change("fieldname") = "Deleção" Then
-            Await _RemoteDB.ExecuteUpdate("coalescents",
+            Await _RemoteDB.ExecuteUpdate("personcompressorcoalescents",
                                           New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Change("changedate"))}},
                                           New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
         End If
@@ -391,10 +391,10 @@ Public Class TaskCloudSync
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             Dim CodeData As Dictionary(Of String, Object) = Result.Data(0)
             CodeData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Change("changedate"))
-            Await _RemoteDB.ExecutePut("codes", CodeData, CodeData("id"))
+            Await _RemoteDB.ExecutePut("productcodes", CodeData, CodeData("id"))
         End If
         If Change("fieldname") = "Deleção" Then
-            Await _RemoteDB.ExecuteUpdate("codes",
+            Await _RemoteDB.ExecuteUpdate("productcodes",
                                           New Dictionary(Of String, Object) From {{"ismainprovider", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Change("changedate"))}},
                                           New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
         End If
@@ -411,14 +411,12 @@ Public Class TaskCloudSync
             ServiceData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Change("changedate"))
             ServiceData("visible") = If(ServiceData("statusid") = 0, 1, 0)
             ServiceData.Remove("statusid")
-            Await _RemoteDB.ExecutePut("service", ServiceData, ServiceData("id"))
+            Await _RemoteDB.ExecutePut("services", ServiceData, ServiceData("id"))
         End If
         If Change("fieldname") = "Deleção" Then
-            Await _RemoteDB.ExecuteUpdate("service",
+            Await _RemoteDB.ExecuteUpdate("services",
                                           New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Change("changedate"))}},
                                           New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
         End If
     End Function
-
-
 End Class

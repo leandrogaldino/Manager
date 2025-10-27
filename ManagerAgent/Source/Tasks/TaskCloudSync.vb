@@ -60,11 +60,10 @@ Public Class TaskCloudSync
                 Response.Event.SetFinalEvent($"Sincronização com a núvem concluída")
                 If Progress IsNot Nothing Then Progress.Report(Response)
             End If
-        Catch ex As Exception
-            Exception = ex
-        Finally
             _SessionModel.ManagerSetting.LastExecution.Cloud = Now.ToString("yyyy-MM-dd HH:mm:ss")
             _SettingsService.Save(_SessionModel.ManagerSetting)
+        Catch ex As Exception
+            Exception = ex
         End Try
         If Exception IsNot Nothing Then
             Await Task.Delay(Constants.WaitForJob)
@@ -389,7 +388,10 @@ Public Class TaskCloudSync
                                                   New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
                                                   Limit:=1)
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
-            Dim CodeData As Dictionary(Of String, Object) = Result.Data(0)
+            Dim CodeData As Dictionary(Of String, Object)
+            CodeData = Result.Data(0)
+            CodeData("visible") = CodeData("ismainprovider")
+            CodeData.Remove("ismainprovider")
             CodeData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Change("changedate"))
             Await _RemoteDB.ExecutePut("productcodes", CodeData, CodeData("id"))
         End If

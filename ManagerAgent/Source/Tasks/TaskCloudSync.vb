@@ -350,8 +350,11 @@ Public Class TaskCloudSync
             Dim PersonData As Dictionary(Of String, Object) = Result.Data(0)
             Dim IsCustomer = Convert.ToBoolean(PersonData("iscustomer"))
             Dim IsTechnician = Convert.ToBoolean(PersonData("istechnician"))
-            PersonData("visible") = If(PersonData("statusid") = 0, 1, 0)
-            ?
+            If PersonData("statusid") = 0 And (IsCustomer Or IsTechnician) Then
+                PersonData("visible") = 1
+            Else
+                PersonData("visible") = 0
+            End If
             PersonData.Remove("statusid")
             PersonData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Change("changedate"))
             Await _RemoteDB.ExecutePut("persons", PersonData, PersonData("id"))

@@ -1,11 +1,11 @@
 ﻿Imports System.Threading
 Public Class TaskStackService
     Private ReadOnly _Timer As Timers.Timer
-    Private _TaskStack As List(Of TaskBase)
+    Private ReadOnly _TaskStack As List(Of TaskBase)
     Public Event TaskWillRun As EventHandler(Of TaskBase)
     Public Event TaskRunned As EventHandler(Of TaskBase)
     Public Event TaskListChanged As EventHandler(Of TaskBase)
-    Private _Semaphore As SemaphoreSlim
+    Private ReadOnly _Semaphore As SemaphoreSlim
     Public Function GetTaskStack() As List(Of TaskBase)
         Return _TaskStack
     End Function

@@ -79,6 +79,7 @@ Public Class FrmMain
         BtnRelease.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.ReleaseManual And Not x.IsRunning And Not x.Waiting) And _StateWarnings.Count = 0
         BtnCloudSync.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.CloudSyncManual And Not x.IsRunning And Not x.Waiting) And _StateWarnings.Count = 0
         BtnAgentState.Enabled = Not _StackTaskService.GetTaskStack().Any(Function(x) x.IsRunning)
+        BtnCleanEventLog.Enabled = Not _StackTaskService.GetTaskStack().Any(Function(x) x.IsRunning)
     End Sub
     Private Sub OnTaskProgressChanged(sender As Object, Response As AsyncResponseModel)
         LblProgress.Visible = True
@@ -472,6 +473,10 @@ Public Class FrmMain
     End Sub
     Private Async Sub BtnCleanEventLog_Click(sender As Object, e As EventArgs) Handles BtnCleanEventLog.Click
         If CMessageBox.Show("Todos os eventos serão apagados permanentemente. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+            If _StackTaskService.GetTaskStack().Any(Function(x) x.IsRunning) Then
+                CMessageBox.Show("Tarefa em andamento, aguarde o término?", CMessageBoxType.Information, CMessageBoxButtons.OK)
+                Exit Sub
+            End If
             Dim Database = Locator.GetInstance(Of LocalDB)
             Await Database.ExecuteDeleteAsync("agentevent")
             DgvEvents.DataSource = Await _EventService.Read()

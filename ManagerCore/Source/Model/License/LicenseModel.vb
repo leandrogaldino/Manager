@@ -71,7 +71,7 @@ Public Class LicenseModel
     End Function
     Private Async Function WriteElementAsync(Writer As XmlWriter, ElementName As String, Value As String) As Task
         Await Writer.WriteStartElementAsync(Nothing, ElementName, Nothing)
-        Await Writer.WriteStringAsync(If(String.IsNullOrEmpty(Value), "", Value)) ' Garante que o elemento esteja presente mesmo se vazio
+        Await Writer.WriteStringAsync(If(String.IsNullOrEmpty(Value), "", Value))
         Await Writer.WriteEndElementAsync()
     End Function
     Public Shared Function FromXml(xmlData As String) As LicenseModel
@@ -88,7 +88,7 @@ Public Class LicenseModel
         }
         Dim LastValidationString As String = GetElementValue(Doc, "LastOnlineValidation")
         If Not String.IsNullOrEmpty(LastValidationString) Then
-            Model.LastOnlineValidation = Date.Parse(LastValidationString, Globalization.CultureInfo.InvariantCulture)
+            Model.LastOnlineValidation = DateTime.ParseExact(LastValidationString, "dd/MM/yyyy HH:mm:ss", Globalization.CultureInfo.InvariantCulture)
         End If
         Return Model
     End Function

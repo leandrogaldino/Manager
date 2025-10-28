@@ -37,7 +37,7 @@ Public Class EventService
         NewRow.Item("id") = [Event].ID
         NewRow.Item("parentid") = [Event].ParentID
         NewRow.Item("eventtype") = CInt([Event].EventType)
-        NewRow.Item("time") = [Event].Time
+        NewRow.Item("time") = [Event].Time.ToString("dd/MM/yyyy HH:mm:ss")
         NewRow.Item("description") = If([Event].EventType = EventTypes.Child, $"{Constants.SubItemSymbol} {[Event].Description}", [Event].Description)
         NewRow.Item("tempid") = [Event].TempID
         NewRow.Item("issaved") = False
@@ -127,7 +127,7 @@ Public Class EventService
                         NewRow.Item("id") = ChildRow.Item("id")
                         NewRow.Item("parentid") = ChildRow.Item("parentid")
                         NewRow.Item("eventtype") = ChildRow.Item("eventtype")
-                        NewRow.Item("time") = ChildRow.Item("time")
+                        NewRow.Item("time") = Convert.ToDateTime(ChildRow.Item("time")).ToString("dd/MM/yyyy HH:mm:ss")
                         NewRow.Item("description") = ChildRow.Item("description")
                         NewRow.Item("issaved") = True
                         TableAll.Rows.Add(NewRow)
@@ -136,7 +136,7 @@ Public Class EventService
                     NewRow.Item("id") = ParentRow.Item("id")
                     NewRow.Item("parentid") = ParentRow.Item("parentid")
                     NewRow.Item("eventtype") = ParentRow.Item("eventtype")
-                    NewRow.Item("time") = ParentRow.Item("time")
+                    NewRow.Item("time") = Convert.ToDateTime(ParentRow.Item("time")).ToString("dd/MM/yyyy HH:mm:ss")
                     NewRow.Item("description") = ParentRow.Item("description")
                     NewRow.Item("issaved") = True
                     TableAll.Rows.Add(NewRow)

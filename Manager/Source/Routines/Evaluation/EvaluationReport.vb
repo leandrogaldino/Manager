@@ -34,8 +34,9 @@ Public Class EvaluationReport
             AddText("Nº ").SetBold(True).SetFontSize(14).
             AddText(ReportingEvaluation.EvaluationNumber).SetFontSize(12)
         WsReport.Range(1, 7, 1, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
-        If File.Exists(Session.Setting.Company.LogoLocation) Then
-            Using Stream As New MemoryStream(File.ReadAllBytes(Session.Setting.Company.LogoLocation))
+        Dim LogoLocation As String = Path.Combine(ApplicationPaths.LogoDirectory, Path.GetFileName(Session.Setting.Company.LogoLocation))
+        If File.Exists(LogoLocation) Then
+            Using Stream As New MemoryStream(File.ReadAllBytes(LogoLocation))
                 Logo = WsReport.AddPicture(Stream)
                 Logo.MoveTo(WsReport.Cell(1, 1), New Point(0, 5))
                 Logo.WithSize(156, 57)

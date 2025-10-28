@@ -479,20 +479,5 @@ Public Class FrmMain
             Form.ShowDialog()
         End Using
     End Sub
-
-    Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
-        Dim Result As ReportResult
-        Try
-            Cursor = Cursors.WaitCursor
-            Dim ev = New Evaluation().Load(404, True)
-            Result = EvaluationReport.EvaluationTreatment(ev)
-            DialogResult = DialogResult.OK
-            OpenTab(New UcReport(Result), "Relatório de Atendimento")
-        Catch ex As Exception
-            CMessageBox.Show("ERRO", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
-        Finally
-            Cursor = Cursors.Default
-        End Try
-    End Sub
 End Class
 

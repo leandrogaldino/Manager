@@ -7,14 +7,10 @@ Imports ManagerCore.RemoteDB
 Public Class LicenseService
     Private ReadOnly _Key As String
     Private ReadOnly _Database As RemoteDB
-
-
-
     Public Sub New(Database As RemoteDB, CryptoKeyService As CryptoKeyService)
         _Database = Database
         _Key = CryptoKeyService.ReadCryptoKey()
     End Sub
-
     Public Function GetLocalLicenseKey() As String
         Dim XmlStr As String
         Dim XmlDoc As XmlDocument
@@ -46,21 +42,13 @@ Public Class LicenseService
             Return Nothing
         End If
     End Function
-
     Public Function GetLocalLicense() As LicenseResultModel
         Dim Result As New LicenseResultModel
         Dim XmlStr As String
-
         If File.Exists(ApplicationPaths.LicenseFile) Then
-
-
-
             XmlStr = File.ReadAllText(ApplicationPaths.LicenseFile)
             XmlStr = Cryptography.Decrypt(XmlStr, _Key)
             Result.License = LicenseModel.FromXml(XmlStr)
-
-
-
             If (Not String.IsNullOrEmpty(Result.License.LicenseKey)) Then
                 If Result.License.LastOnlineValidation.AddDays(1) >= Today Then
                     Result.Success = True

@@ -46,22 +46,16 @@ Public Class LicenseModel
         }
         Return Dictionary
     End Function
-
-
-    ' Método para converter o objeto em XML com indentação e de forma assíncrona
     Public Async Function ToXmlAsync() As Task(Of String)
         Dim Settings As New XmlWriterSettings() With {
-            .Indent = True,  ' Ativar indentação
+            .Indent = True,
             .NewLineOnAttributes = False,
-            .Async = True     ' Permitir operações assíncronas
+            .Async = True
         }
-
         Dim StringBuilder As New Text.StringBuilder()
         Using Writer As XmlWriter = XmlWriter.Create(StringBuilder, Settings)
             Await Writer.WriteStartDocumentAsync()
             Await Writer.WriteStartElementAsync(Nothing, "License", Nothing)
-
-            ' Escreve cada propriedade como um elemento de forma assíncrona
             Await WriteElementAsync(Writer, "LicenseKey", LicenseKey)
             Await WriteElementAsync(Writer, "LicenseToken", LicenseToken)
             Await WriteElementAsync(Writer, "CustomerDocument", CustomerDocument)
@@ -69,48 +63,35 @@ Public Class LicenseModel
             Await WriteElementAsync(Writer, "ExpirationDate", ExpirationDate)
             Await WriteElementAsync(Writer, "ManagerAgentPassword", ManagerAgentPassword)
             Await WriteElementAsync(Writer, "ManagerAgentUsername", ManagerAgentUsername)
-            Await WriteElementAsync(Writer, "LastOnlineValidation", LastOnlineValidation.ToString())
-
-            Await Writer.WriteEndElementAsync() ' Fecha o elemento "License"
+            Await WriteElementAsync(Writer, "LastOnlineValidation", LastOnlineValidation.ToString("dd/MM/yyyy HH:mm:ss"))
+            Await Writer.WriteEndElementAsync()
             Await Writer.WriteEndDocumentAsync()
         End Using
-
-        ' Retorna o XML formatado como string
         Return StringBuilder.ToString()
     End Function
-
-    ' Método auxiliar para escrever elementos no XML de forma assíncrona
     Private Async Function WriteElementAsync(Writer As XmlWriter, ElementName As String, Value As String) As Task
         Await Writer.WriteStartElementAsync(Nothing, ElementName, Nothing)
         Await Writer.WriteStringAsync(If(String.IsNullOrEmpty(Value), "", Value)) ' Garante que o elemento esteja presente mesmo se vazio
         Await Writer.WriteEndElementAsync()
     End Function
-
-    ' Método para criar um objeto LicenseModel a partir de XML
     Public Shared Function FromXml(xmlData As String) As LicenseModel
         Dim Doc As New XmlDocument()
         Doc.LoadXml(xmlData)
-
-        Dim Model As New LicenseModel()
-
-        ' Atribuir valores de cada elemento XML à respectiva propriedade
-        Model.LicenseKey = GetElementValue(Doc, "LicenseKey")
-        Model.LicenseToken = GetElementValue(Doc, "LicenseToken")
-        Model.CustomerDocument = GetElementValue(Doc, "CustomerDocument")
-        Model.CustomerName = GetElementValue(Doc, "CustomerName")
-        Model.ExpirationDate = GetElementValue(Doc, "ExpirationDate")
-        Model.ManagerAgentPassword = GetElementValue(Doc, "ManagerAgentPassword")
-        Model.ManagerAgentUsername = GetElementValue(Doc, "ManagerAgentUsername")
-
+        Dim Model As New LicenseModel With {
+            .LicenseKey = GetElementValue(Doc, "LicenseKey"),
+            .LicenseToken = GetElementValue(Doc, "LicenseToken"),
+            .CustomerDocument = GetElementValue(Doc, "CustomerDocument"),
+            .CustomerName = GetElementValue(Doc, "CustomerName"),
+            .ExpirationDate = GetElementValue(Doc, "ExpirationDate"),
+            .ManagerAgentPassword = GetElementValue(Doc, "ManagerAgentPassword"),
+            .ManagerAgentUsername = GetElementValue(Doc, "ManagerAgentUsername")
+        }
         Dim LastValidationString As String = GetElementValue(Doc, "LastOnlineValidation")
         If Not String.IsNullOrEmpty(LastValidationString) Then
-            Model.LastOnlineValidation = Date.Parse(LastValidationString)
+            Model.LastOnlineValidation = Date.Parse(LastValidationString, Globalization.CultureInfo.InvariantCulture)
         End If
-
         Return Model
     End Function
-
-    ' Método auxiliar para buscar valor de elementos XML
     Private Shared Function GetElementValue(Doc As XmlDocument, ElementName As String) As String
         Dim Element As XmlElement = Doc.SelectSingleNode("//" & ElementName)
         If Element IsNot Nothing Then

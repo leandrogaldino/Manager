@@ -10,7 +10,6 @@ SELECT
 	visitschedule.technicianid,
 	visitschedule.instructions,
 	visitschedule.evaluationid,
-	visitschedule.overridedvisitscheduleid,
-	visitschedule.lastupdate
+	visitschedule.overridedvisitscheduleid
 FROM visitschedule
 WHERE visitschedule.id = @id;

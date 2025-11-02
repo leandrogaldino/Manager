@@ -17,7 +17,6 @@ Public Class VisitSchedule
     Public Property Evaluation As New Lazy(Of Evaluation)
     Public Property OverridedVisitScheduleID As Long
     Public Property OverridedVisitSchedule As New Lazy(Of VisitSchedule)
-    Public Property LastUpdate As Date = Now
     Public Sub New()
         _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
         SetRoutine(Routine.VisitSchedule)
@@ -36,7 +35,6 @@ Public Class VisitSchedule
         Instructions = Nothing
         Evaluation = Nothing
         OverridedVisitSchedule = Nothing
-        LastUpdate = Now
         If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As VisitSchedule
@@ -70,7 +68,6 @@ Public Class VisitSchedule
                         Evaluation = New Lazy(Of Evaluation)(Function() If(Not IsDBNull(TableResult.Rows(0).Item("evaluationid")), New Evaluation().Load(Convert.ToInt64(TableResult.Rows(0).Item("evaluationid")), False), Nothing))
                         OverridedVisitScheduleID = If(Not IsDBNull(TableResult.Rows(0).Item("overridedvisitscheduleid")), Convert.ToInt64(TableResult.Rows(0).Item("overridedvisitscheduleid")), 0)
                         OverridedVisitSchedule = New Lazy(Of VisitSchedule)(Function() If(Not IsDBNull(TableResult.Rows(0).Item("overridedvisitscheduleid")), New VisitSchedule().Load(Convert.ToInt64(TableResult.Rows(0).Item("overridedvisitscheduleid")), False), Nothing))
-                        LastUpdate = Convert.ToDateTime(TableResult.Rows(0).Item("lastupdate"))
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
                     Else
@@ -83,7 +80,6 @@ Public Class VisitSchedule
         Return Me
     End Function
     Public Sub SaveChanges()
-        LastUpdate = Now
         If Not IsSaved Then
             Insert()
         Else
@@ -122,7 +118,6 @@ Public Class VisitSchedule
                     Cmd.Parameters.AddWithValue("@instructions", If(String.IsNullOrEmpty(Instructions), DBNull.Value, Instructions))
                     Cmd.Parameters.AddWithValue("@evaluationid", DBNull.Value)
                     Cmd.Parameters.AddWithValue("@overridedvisitscheduleid", DBNull.Value)
-                    Cmd.Parameters.AddWithValue("@lastupdate", LastUpdate.ToString("yyyy-MM-dd HH:mm:ss"))
                     Cmd.Parameters.AddWithValue("@userid", User.ID)
                     Cmd.ExecuteNonQuery()
                     SetID(Cmd.LastInsertedId)
@@ -144,7 +139,6 @@ Public Class VisitSchedule
                 Cmd.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
                 Cmd.Parameters.AddWithValue("@technicianid", Technician.ID)
                 Cmd.Parameters.AddWithValue("@instructions", If(String.IsNullOrEmpty(Instructions), DBNull.Value, Instructions))
-                Cmd.Parameters.AddWithValue("@lastupdate", LastUpdate.ToString("yyyy-MM-dd HH:mm:ss"))
                 Cmd.Parameters.AddWithValue("@userid", User.ID)
                 Cmd.Parameters.AddWithValue("@evaluationid", If(EvaluationID = 0, DBNull.Value, EvaluationID))
                 Cmd.Parameters.AddWithValue("@overridedvisitscheduleid", If(OverridedVisitScheduleID = 0, DBNull.Value, OverridedVisitScheduleID))
@@ -163,7 +157,6 @@ Public Class VisitSchedule
             .Customer = CType(Customer.Clone(), Person),
             .EvaluationID = EvaluationID,
             .Instructions = Instructions,
-            .LastUpdate = LastUpdate,
             .OverridedVisitScheduleID = OverridedVisitScheduleID,
             .PerformedDate = PerformedDate,
             .ScheduledDate = ScheduledDate,

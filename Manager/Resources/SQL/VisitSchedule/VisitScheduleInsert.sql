@@ -11,7 +11,6 @@ INSERT INTO visitschedule
     instructions,
     evaluationid,
     overridedvisitscheduleid,
-    lastupdate,
     userid
 )
 VALUES
@@ -27,6 +26,5 @@ VALUES
     @instructions,
     @evaluationid,
     @overridedvisitscheduleid,
-    @lastupdate,
     @userid
 );

@@ -9,6 +9,5 @@ UPDATE visitschedule SET
     instructions = @instructions,
     evaluationid = @evaluationid,
     overridedvisitscheduleid = @overridedvisitscheduleid,
-    lastupdate = @lastupdate,
     userid = @userid
 WHERE visitschedule.id = @id;

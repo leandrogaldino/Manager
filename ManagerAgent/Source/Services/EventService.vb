@@ -1,4 +1,5 @@
-﻿Imports System.Threading
+﻿Imports System.Globalization
+Imports System.Threading
 Imports System.Transactions
 Imports ControlLibrary
 Imports ManagerCore
@@ -65,9 +66,10 @@ Public Class EventService
                                 {"@id", DBNull.Value},
                                 {"@parentid", If(Row("parentid") > 0, Row("parentid"), DBNull.Value)},
                                 {"@eventtype", CInt(Row("eventtype"))},
-                                {"@time", CDate(Row("time")).ToString("yyyy-MM-dd HH:mm:ss")},
+                                {"@time", DateTime.ParseExact(Row("time"), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)},
                                 {"@description", Row("description").ToString.Replace($"{Constants.SubItemSymbol} ", Nothing)}
                             }
+
                         Dim Result = Await _Database.ExecuteInsertAsync("agentevent", Values, Args)
                         Row("id") = Result.LastInsertedID
                         If Row("eventtype") = EventTypes.Initial Then

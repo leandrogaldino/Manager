@@ -7,7 +7,7 @@ Public Class VisitSchedule
     Private ReadOnly _RemoteDB As RemoteDB
     Public Property Status As VisitScheduleStatus = VisitScheduleStatus.Pending
     Public Property CallType As CallType = CallType.None
-    Public Property ScheduledDate As Date = Now
+    Public Property ScheduledDate As Date = Now.AddHours(1)
     Public Property PerformedDate As Date? = Nothing
     Public Property Customer As New Person
     Public Property Compressor As New PersonCompressor

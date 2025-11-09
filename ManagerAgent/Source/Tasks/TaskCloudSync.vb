@@ -103,10 +103,7 @@ Public Class TaskCloudSync
                 Response.Event.AddChildEvent("Enviando dados")
                 Progress?.Report(Response)
                 Await Task.Delay(Constants.WaitForJob)
-
-
                 PerformedOperations = 0
-
                 For Each Change In Result.Data
                     Select Case Change("routineid")
                         Case 12
@@ -188,7 +185,6 @@ Public Class TaskCloudSync
                         {"@lastupdate", DateTimeHelper.DateFromMilliseconds(Schedule("lastupdate"))},
                         {"@id", Schedule("id")}
                     })
-
                     PerformedOperations += 1
                     Response.Percent = CInt((PerformedOperations / TotalChanges) * 100)
                     Response.Text = $"Sincronização com a núvem - Recebendo agendamentos - ({Response.Percent}%)"
@@ -221,10 +217,10 @@ Public Class TaskCloudSync
             ScheduleData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Change("changedate"))
             ScheduleData("visible") = If(ScheduleData("statusid") = 0, 1, 0)
             ScheduleData.Remove("statusid")
-            Await _RemoteDB.ExecutePut("schedules", ScheduleData, ScheduleData("id"))
+            Await _RemoteDB.ExecutePut("visitschedules", ScheduleData, ScheduleData("id"))
         End If
         If Change("fieldname") = "Deleção" Then
-            Await _RemoteDB.ExecuteUpdate("schedules",
+            Await _RemoteDB.ExecuteUpdate("visitschedules",
                                           New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Change("changedate"))}},
                                           New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
         End If

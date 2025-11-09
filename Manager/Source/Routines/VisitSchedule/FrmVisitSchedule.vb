@@ -81,7 +81,6 @@ Public Class FrmVisitSchedule
         _CcoGeneratedItems.DropDownControl = _UcVisitScheduleGeneratedItems
         AddHandler _UcVisitScheduleGeneratedItems.ValueChanged, AddressOf UcVisitScheduleGeneratedItems_ValueChanged
         AddHandler _UcVisitScheduleGeneratedItems.EvaluationClick, AddressOf UcVisitScheduleGeneratedItems_EvaluationClick
-        AddHandler _UcVisitScheduleGeneratedItems.VisitScheduleClick, AddressOf UcVisitScheduleGeneratedItems_VisitScheduleClick
     End Sub
     Private Sub UcVisitScheduleGeneratedItems_EvaluationClick(sender As Object, e As EventArgs)
         Dim Evaluation As Evaluation = If(sender, Nothing)
@@ -137,10 +136,8 @@ Public Class FrmVisitSchedule
     End Sub
     Private Sub UcVisitScheduleGeneratedItems_ValueChanged(sender As Object, e As EventArgs)
         Dim HasEvaluation As String
-        Dim HasSchedule As String
         HasEvaluation = If(_UcVisitScheduleGeneratedItems.EvaluationID > 0, "Sim", "Não")
-        HasSchedule = If(_UcVisitScheduleGeneratedItems.ScheduleID > 0, "Sim", "Não")
-        BtnGeneratedItems.Text = $"{HasEvaluation} | {HasSchedule}"
+        BtnGeneratedItems.Text = HasEvaluation
     End Sub
     Private Sub LoadData()
         _Loading = True
@@ -151,7 +148,6 @@ Public Class FrmVisitSchedule
         TxtPerformedDate.Text = If(_VisitSchedule.PerformedDate.HasValue, _VisitSchedule.PerformedDate.Value.ToString("dd/MM/yyyy"), String.Empty)
         TxtPerformedTime.Text = If(_VisitSchedule.PerformedDate.HasValue, _VisitSchedule.PerformedDate.Value.ToString("HH:mm"), String.Empty)
         _UcVisitScheduleGeneratedItems.EvaluationID = _VisitSchedule.EvaluationID
-        _UcVisitScheduleGeneratedItems.ScheduleID = _VisitSchedule.OverridedVisitScheduleID
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_VisitSchedule.Status)
         LblCreationValue.Text = _VisitSchedule.Creation.ToString("dd/MM/yyyy")
         QbxCompressor.Conditions.Clear()
@@ -253,14 +249,8 @@ Public Class FrmVisitSchedule
     Private Sub BtnStatusValue_Click(sender As Object, e As EventArgs) Handles BtnStatusValue.Click
         If BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Pending) Then
             BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled)
-            If _VisitSchedule.Status = VisitScheduleStatus.Pending Then
-                CMessageBox.Show("O registro foi marcado para ser cancelado, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
-            End If
         ElseIf BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Canceled) Then
             BtnStatusValue.Text = EnumHelper.GetEnumDescription(VisitScheduleStatus.Pending)
-            If _VisitSchedule.Status = VisitScheduleStatus.Canceled Then
-                CMessageBox.Show("O registro foi marcado para pendente, salve para concluir a alteração.", CMessageBoxType.Information, CMessageBoxButtons.OK)
-            End If
         End If
         BtnSave.Enabled = True
     End Sub

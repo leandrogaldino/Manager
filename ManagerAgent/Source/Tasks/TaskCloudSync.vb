@@ -180,7 +180,7 @@ Public Class TaskCloudSync
                     },
                     "id = @id",
                     New Dictionary(Of String, Object) From {
-                        {"@statusid", Schedule("statusid")},
+                        {"@statusid", 1},
                         {"@performeddate", DateTimeHelper.DateFromMilliseconds(Schedule("performeddate"))},
                         {"@lastupdate", DateTimeHelper.DateFromMilliseconds(Schedule("lastupdate"))},
                         {"@id", Schedule("id")}
@@ -206,7 +206,7 @@ Public Class TaskCloudSync
     End Function
     Private Async Function FetchVisitSchedule(Change As Dictionary(Of String, Object)) As Task
         Dim Result = Await _LocalDB.ExecuteSelectAsync("visitschedule",
-                                                 New List(Of String) From {"id", "creation creationdate", "statusid", "scheduleddate", "calltypeid", "customerid", "personcompressorid compressorid", "technicianid", "instructions"},
+                                                 New List(Of String) From {"id", "creation creationdate", "statusid", "scheduleddate", "performeddate", "calltypeid", "customerid", "personcompressorid compressorid", "technicianid", "instructions"},
                                                  "id = @id",
                                                  New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
                                                  Limit:=1)

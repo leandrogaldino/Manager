@@ -206,7 +206,7 @@ Public Class TaskCloudSync
     End Function
     Private Async Function FetchVisitSchedule(Change As Dictionary(Of String, Object)) As Task
         Dim Result = Await _LocalDB.ExecuteSelectAsync("visitschedule",
-                                                 New List(Of String) From {"id", "creation creationdate", "statusid", "scheduleddate", "performeddate", "calltypeid", "customerid", "personcompressorid compressorid", "technicianid", "instructions"},
+                                                 New List(Of String) From {"id", "creation creationdate", "statusid", "scheduleddate", "IFNULL(performeddate, '') performeddate", "calltypeid", "customerid", "personcompressorid compressorid", "technicianid", "instructions"},
                                                  "id = @id",
                                                  New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
                                                  Limit:=1)
@@ -215,14 +215,14 @@ Public Class TaskCloudSync
             ScheduleData = Result.Data(0)
             ScheduleData("creationdate") = DateTimeHelper.MillisecondsFromDate(ScheduleData(("creationdate")))
             ScheduleData("scheduleddate") = DateTimeHelper.MillisecondsFromDate(ScheduleData(("scheduleddate")))
-            ScheduleData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Change("changedate"))
+            ScheduleData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Now)
             ScheduleData("visible") = If(ScheduleData("statusid") = 0, 1, 0)
             ScheduleData.Remove("statusid")
             Await _RemoteDB.ExecutePut("visitschedules", ScheduleData, ScheduleData("id"))
         End If
         If Change("fieldname") = "Deleção" Then
             Await _RemoteDB.ExecuteUpdate("visitschedules",
-                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Change("changedate"))}},
+                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Now)}},
                                           New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
         End If
     End Function
@@ -235,14 +235,14 @@ Public Class TaskCloudSync
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             Dim CompressorData As Dictionary(Of String, Object)
             CompressorData = Result.Data(0)
-            CompressorData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Change("changedate"))
+            CompressorData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Now)
             CompressorData("visible") = If(CompressorData("statusid") = 0, 1, 0)
             CompressorData.Remove("statusid")
             Await _RemoteDB.ExecutePut("compressors", CompressorData, CompressorData("id"))
         End If
         If Change("fieldname") = "Deleção" Then
             Await _RemoteDB.ExecuteUpdate("compressors",
-                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Change("changedate"))}},
+                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Now)}},
                                           New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
         End If
     End Function
@@ -255,7 +255,7 @@ Public Class TaskCloudSync
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             Dim CoalescentData As Dictionary(Of String, Object)
             CoalescentData = Result.Data(0)
-            CoalescentData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Change("changedate"))
+            CoalescentData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Now)
             Dim SellableBindID = Convert.ToInt32(CoalescentData("sellablebindid"))
             If SellableBindID <> 5 Then CoalescentData("statusid") = 1
             CoalescentData("visible") = If(CoalescentData("statusid") = 0, 1, 0)
@@ -265,7 +265,7 @@ Public Class TaskCloudSync
         End If
         If Change("fieldname") = "Deleção" Then
             Await _RemoteDB.ExecuteUpdate("personcompressorcoalescents",
-                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Change("changedate"))}},
+                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Now)}},
                                           New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
         End If
     End Function
@@ -276,20 +276,20 @@ Public Class TaskCloudSync
                                                  "id = @id",
                                                  New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
                                                  Limit:=1)
-            If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
+        If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
                 Dim PersonCompressorData As Dictionary(Of String, Object)
                 PersonCompressorData = Result.Data(0)
                 PersonCompressorData("serialnumber") = If(PersonCompressorData("serialnumber") Is DBNull.Value, String.Empty, PersonCompressorData("serialnumber"))
                 PersonCompressorData("patrimony") = If(PersonCompressorData("patrimony") Is DBNull.Value, String.Empty, PersonCompressorData("patrimony"))
                 PersonCompressorData("sector") = If(PersonCompressorData("sector") Is DBNull.Value, String.Empty, PersonCompressorData("sector"))
-            PersonCompressorData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Change("changedate"))
+            PersonCompressorData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Now)
             PersonCompressorData("visible") = If(PersonCompressorData("statusid") = 0, 1, 0)
-                PersonCompressorData.Remove("statusid")
-                Await _RemoteDB.ExecutePut("personcompressors", PersonCompressorData, PersonCompressorData("id"))
-            End If
+            PersonCompressorData.Remove("statusid")
+            Await _RemoteDB.ExecutePut("personcompressors", PersonCompressorData, PersonCompressorData("id"))
+        End If
             If Change("fieldname") = "Deleção" Then
             Await _RemoteDB.ExecuteUpdate("personcompressors",
-                                              New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Change("changedate"))}},
+                                              New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Now)}},
                                               New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
         End If
 
@@ -311,12 +311,12 @@ Public Class TaskCloudSync
                 PersonData("visible") = 0
             End If
             PersonData.Remove("statusid")
-            PersonData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Change("changedate"))
+            PersonData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Now)
             Await _RemoteDB.ExecutePut("persons", PersonData, PersonData("id"))
         End If
         If Change("fieldname") = "Deleção" Then
             Await _RemoteDB.ExecuteUpdate("persons",
-                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Change("changedate"))}},
+                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Now)}},
                                           New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
         End If
     End Function
@@ -331,12 +331,12 @@ Public Class TaskCloudSync
             ProductData = Result.Data(0)
             ProductData("visible") = If(ProductData("statusid") = 0, 1, 0)
             ProductData.Remove("statusid")
-            ProductData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Change("changedate"))
+            ProductData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Now)
             Await _RemoteDB.ExecutePut("products", ProductData, ProductData("id"))
         End If
         If Change("fieldname") = "Deleção" Then
             Await _RemoteDB.ExecuteUpdate("products",
-                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Change("changedate"))}},
+                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Now)}},
                                           New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
         End If
     End Function
@@ -351,12 +351,12 @@ Public Class TaskCloudSync
             CodeData = Result.Data(0)
             CodeData("visible") = CodeData("ismainprovider")
             CodeData.Remove("ismainprovider")
-            CodeData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Change("changedate"))
+            CodeData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Now)
             Await _RemoteDB.ExecutePut("productcodes", CodeData, CodeData("id"))
         End If
         If Change("fieldname") = "Deleção" Then
             Await _RemoteDB.ExecuteUpdate("productcodes",
-                                          New Dictionary(Of String, Object) From {{"ismainprovider", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Change("changedate"))}},
+                                          New Dictionary(Of String, Object) From {{"ismainprovider", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Now)}},
                                           New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
         End If
     End Function
@@ -369,14 +369,14 @@ Public Class TaskCloudSync
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             Dim ServiceData As Dictionary(Of String, Object)
             ServiceData = Result.Data(0)
-            ServiceData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Change("changedate"))
+            ServiceData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Now)
             ServiceData("visible") = If(ServiceData("statusid") = 0, 1, 0)
             ServiceData.Remove("statusid")
             Await _RemoteDB.ExecutePut("services", ServiceData, ServiceData("id"))
         End If
         If Change("fieldname") = "Deleção" Then
             Await _RemoteDB.ExecuteUpdate("services",
-                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Change("changedate"))}},
+                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Now)}},
                                           New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
         End If
     End Function

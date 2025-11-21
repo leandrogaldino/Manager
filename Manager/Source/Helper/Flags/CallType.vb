@@ -1,7 +1,7 @@
 ﻿Imports System.ComponentModel
 
 ''' <summary>
-''' Utilizado para sinalizar o tipo de chamado.
+''' Utilizado para sinalizar o tipo de visita.
 ''' </summary>
 Public Enum CallType
     <Description("LEVANTAMENTO")> Gathering = 0

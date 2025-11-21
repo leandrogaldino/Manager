@@ -15,7 +15,7 @@ SELECT
     CASE
         WHEN evaluation.calltypeid = 0 THEN "LEVANTAMENTO"
         WHEN evaluation.calltypeid = 1 THEN "PREVENTIVA"
-        WHEN evaluation.calltypeid = 2 THEN "CHAMADO"
+        WHEN evaluation.calltypeid = 2 THEN "CORRETIVA"
         WHEN evaluation.calltypeid = 3 THEN "CONTRATO"
     END AS 'Tipo',
     CASE

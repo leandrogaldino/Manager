@@ -11,7 +11,7 @@ SELECT
     CASE
         WHEN visitschedule.calltypeid = 0 THEN "LEVANTAMENTO"
         WHEN visitschedule.calltypeid = 1 THEN "PREVENTIVA"
-        WHEN visitschedule.calltypeid = 2 THEN "CHAMADO"
+        WHEN visitschedule.calltypeid = 2 THEN "CORRETIVA"
         WHEN visitschedule.calltypeid = 3 THEN "CONTRATO"
     END AS 'Tipo',
     customer.shortname AS 'Cliente',    

@@ -13,7 +13,7 @@ Public Class VisitScheduleTypeConverter
             "",
             "Levantamento",
             "Preventiva",
-            "Chamado",
+            "Corretiva",
             "Contrato"
         }
         Return New StandardValuesCollection(List)

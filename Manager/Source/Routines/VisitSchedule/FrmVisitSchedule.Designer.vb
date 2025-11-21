@@ -446,9 +446,9 @@ Partial Class FrmVisitSchedule
         Me.LblGeneratedItems.AutoSize = True
         Me.LblGeneratedItems.Location = New System.Drawing.Point(476, 50)
         Me.LblGeneratedItems.Name = "LblGeneratedItems"
-        Me.LblGeneratedItems.Size = New System.Drawing.Size(151, 17)
+        Me.LblGeneratedItems.Size = New System.Drawing.Size(75, 17)
         Me.LblGeneratedItems.TabIndex = 10
-        Me.LblGeneratedItems.Text = "Avaliação/Sobrescrita"
+        Me.LblGeneratedItems.Text = "Avaliação"
         '
         'BtnGeneratedItems
         '
@@ -460,7 +460,7 @@ Partial Class FrmVisitSchedule
         Me.BtnGeneratedItems.Size = New System.Drawing.Size(148, 23)
         Me.BtnGeneratedItems.TabIndex = 11
         Me.BtnGeneratedItems.TabStop = False
-        Me.BtnGeneratedItems.Text = "Não | Não"
+        Me.BtnGeneratedItems.Text = "Não"
         Me.BtnGeneratedItems.TooltipText = ""
         Me.BtnGeneratedItems.UseVisualStyleBackColor = True
         '

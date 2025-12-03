@@ -48,7 +48,6 @@ Partial Class FrmMain
         Me.BtnSettingsCloud = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnSettingsCloudStorage = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnSettingsCloudDatabase = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BtnSettingsCloudSynchronization = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnSettingsSupport = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.BtnSettingsChangePassword = New System.Windows.Forms.ToolStripMenuItem()
@@ -251,7 +250,7 @@ Partial Class FrmMain
         '
         'BtnSettingsCloud
         '
-        Me.BtnSettingsCloud.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnSettingsCloudStorage, Me.BtnSettingsCloudDatabase, Me.BtnSettingsCloudSynchronization})
+        Me.BtnSettingsCloud.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnSettingsCloudStorage, Me.BtnSettingsCloudDatabase})
         Me.BtnSettingsCloud.Name = "BtnSettingsCloud"
         Me.BtnSettingsCloud.Size = New System.Drawing.Size(223, 22)
         Me.BtnSettingsCloud.Text = "Núvem"
@@ -267,12 +266,6 @@ Partial Class FrmMain
         Me.BtnSettingsCloudDatabase.Name = "BtnSettingsCloudDatabase"
         Me.BtnSettingsCloudDatabase.Size = New System.Drawing.Size(185, 22)
         Me.BtnSettingsCloudDatabase.Text = "Banco de Dados"
-        '
-        'BtnSettingsCloudSynchronization
-        '
-        Me.BtnSettingsCloudSynchronization.Name = "BtnSettingsCloudSynchronization"
-        Me.BtnSettingsCloudSynchronization.Size = New System.Drawing.Size(185, 22)
-        Me.BtnSettingsCloudSynchronization.Text = "Sincronização"
         '
         'BtnSettingsSupport
         '
@@ -619,5 +612,4 @@ Partial Class FrmMain
     Friend WithEvents BtnSettingsClean As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
     Friend WithEvents BtnCleanEventLog As ToolStripMenuItem
-    Friend WithEvents BtnSettingsCloudSynchronization As ToolStripMenuItem
 End Class

@@ -307,13 +307,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Views\Settings\Cloud\CloudDatabaseSettingsViewModel.vb" />
-    <Compile Include="Source\Views\Settings\Cloud\CloudSynchronizationViewModel.vb" />
-    <Compile Include="Source\Views\Settings\Cloud\FrmCloudSynchronization.Designer.vb">
-      <DependentUpon>FrmCloudSynchronization.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Views\Settings\Cloud\FrmCloudSynchronization.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Source\Views\Settings\Database\DatabaseSettingsViewModel.vb" />
     <Compile Include="Source\Views\Settings\Evaluation\EvaluationSettingsViewModel.vb" />
     <Compile Include="Source\Views\Settings\License\LicenseKeyViewModel.vb" />
@@ -447,9 +440,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Settings\Cloud\FrmCloudDatabaseSettings.resx">
       <DependentUpon>FrmCloudDatabaseSettings.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Settings\Cloud\FrmCloudSynchronization.resx">
-      <DependentUpon>FrmCloudSynchronization.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Settings\Database\FrmDatabaseSettings.resx">
       <DependentUpon>FrmDatabaseSettings.vb</DependentUpon>

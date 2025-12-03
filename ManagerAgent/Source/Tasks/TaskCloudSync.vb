@@ -27,7 +27,7 @@ Public Class TaskCloudSync
     End Property
     Public Overrides ReadOnly Property LastRun As Date
         Get
-            Return _SessionModel.ManagerSetting.LastExecution.Cloud
+            Return _SessionModel.ManagerSetting.LastExecution.CloudDataSended
         End Get
     End Property
     Public Overrides ReadOnly Property IsManual As Boolean
@@ -48,7 +48,7 @@ Public Class TaskCloudSync
                 Response.Event.SetFinalEvent($"Sincronização com a núvem concluída")
                 If Progress IsNot Nothing Then Progress.Report(Response)
             End If
-            _SessionModel.ManagerSetting.LastExecution.Cloud = Now.ToString("yyyy-MM-dd HH:mm:ss")
+            _SessionModel.ManagerSetting.LastExecution.CloudDataSended = Now.ToString("yyyy-MM-dd HH:mm:ss")
             _SettingsService.Save(_SessionModel.ManagerSetting)
         Catch ex As Exception
             Exception = ex
@@ -69,7 +69,7 @@ Public Class TaskCloudSync
     End Function
     Private Async Function SyncFromLocalToCloud(Response As AsyncResponseModel, Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task
         Dim PerformedOperations As Long
-        Dim LastSyncTime As Date = _SessionModel.ManagerSetting.LastExecution.Cloud
+        Dim LastSyncTime As Date = _SessionModel.ManagerSetting.LastExecution.CloudDataSended
         Dim ContinueSync As Boolean = True
         Do While ContinueSync
             ContinueSync = False
@@ -151,12 +151,12 @@ Public Class TaskCloudSync
     Private Async Function FetchSchedulesFromCloudToLocal(Response As AsyncResponseModel, Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task
         Dim PerformedOperations As Integer
         Dim TotalChanges As Integer
-        Dim LastSyncLimit As Date = _SessionModel.ManagerSetting.LastExecution.Cloud
+        Dim LastSyncLimit As Date = _SessionModel.ManagerSetting.LastExecution.CloudDataSended
         Dim ContinueSync As Boolean = True
         Do While ContinueSync
             ContinueSync = False
             Dim StartTime As Long = DateTimeHelper.MillisecondsFromDate(Now)
-            Dim RemoteResult As List(Of Dictionary(Of String, Object)) = Await _RemoteDB.ExecuteGet("visitschedules", New List(Of Condition) From {New WhereGreaterThanCondition("lastupdate", DateTimeHelper.MillisecondsFromDate(LastSyncLimit))})
+            Dim RemoteResult As List(Of Dictionary(Of String, Object)) = Await _RemoteDB.ExecuteGet("visitschedules", New List(Of Condition) From {New WhereGreaterThanCondition("lastupdate", DateTimeHelper.MillisecondsFromDate(LastSyncLimit)), New WhereNotEqualToCondition("performeddate", Nothing)})
             TotalChanges = RemoteResult.Count
             If TotalChanges > 0 Then
                 If Not Response.Event.IsInitialized Then
@@ -215,6 +215,7 @@ Public Class TaskCloudSync
             ScheduleData = Result.Data(0)
             ScheduleData("creationdate") = DateTimeHelper.MillisecondsFromDate(ScheduleData(("creationdate")))
             ScheduleData("scheduleddate") = DateTimeHelper.MillisecondsFromDate(ScheduleData(("scheduleddate")))
+            ScheduleData("performeddate") = Nothing
             ScheduleData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Now)
             ScheduleData("visible") = If(ScheduleData("statusid") = 0, 1, 0)
             ScheduleData.Remove("statusid")
@@ -342,21 +343,20 @@ Public Class TaskCloudSync
     End Function
     Private Async Function FetchProductProviderCode(Change As Dictionary(Of String, Object)) As Task
         Dim Result = Await _LocalDB.ExecuteSelectAsync("productprovidercode",
-                                                  New List(Of String) From {"id", "productid", "code", "ismainprovider"},
+                                                  New List(Of String) From {"id", "productid", "code", "ismainprovider ismain"},
                                                   "id = @id",
                                                   New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
                                                   Limit:=1)
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             Dim CodeData As Dictionary(Of String, Object)
             CodeData = Result.Data(0)
-            CodeData("visible") = CodeData("ismainprovider")
-            CodeData.Remove("ismainprovider")
             CodeData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Now)
+            CodeData("visible") = 1
             Await _RemoteDB.ExecutePut("productcodes", CodeData, CodeData("id"))
         End If
         If Change("fieldname") = "Deleção" Then
             Await _RemoteDB.ExecuteUpdate("productcodes",
-                                          New Dictionary(Of String, Object) From {{"ismainprovider", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Now)}},
+                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Now)}},
                                           New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
         End If
     End Function

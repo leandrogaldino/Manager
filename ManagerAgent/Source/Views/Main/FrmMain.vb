@@ -346,14 +346,7 @@ Public Class FrmMain
             End Using
         End If
     End Sub
-    Private Async Sub BtnSettingsCloudSynchronization_Click(sender As Object, e As EventArgs) Handles BtnSettingsCloudSynchronization.Click
-        If RequestLogin() Then
-            Using Frm As New FrmCloudSynchronization()
-                Frm.ShowDialog()
-                Await ValidateState()
-            End Using
-        End If
-    End Sub
+
     Private Async Sub BtnSettingsRegister_Click(sender As Object, e As EventArgs) Handles BtnSettingsRegister.Click
         If RequestLogin() Then
             Using Frm As New FrmRegisterSettings()

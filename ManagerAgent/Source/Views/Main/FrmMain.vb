@@ -467,7 +467,7 @@ Public Class FrmMain
     Private Async Sub BtnCleanEventLog_Click(sender As Object, e As EventArgs) Handles BtnCleanEventLog.Click
         If CMessageBox.Show("Todos os eventos serão apagados permanentemente. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
             If _StackTaskService.GetTaskStack().Any(Function(x) x.IsRunning) Then
-                CMessageBox.Show("Tarefa em andamento, aguarde o término?", CMessageBoxType.Information, CMessageBoxButtons.OK)
+                CMessageBox.Show("Tarefa em andamento, aguarde o término.", CMessageBoxType.Information, CMessageBoxButtons.OK)
                 Exit Sub
             End If
             Dim Database = Locator.GetInstance(Of LocalDB)

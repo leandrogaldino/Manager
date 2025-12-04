@@ -9,7 +9,6 @@ SELECT
 	visitschedule.personcompressorid,
 	visitschedule.technicianid,
 	visitschedule.instructions,
-	visitschedule.evaluationid,
-	visitschedule.overridedvisitscheduleid
+	visitschedule.evaluationid
 FROM visitschedule
 WHERE visitschedule.id = @id;

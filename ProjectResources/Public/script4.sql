@@ -735,3 +735,9 @@ IF IFNULL(OLD.instructions, '') <> IFNULL(NEW.instructions, '') THEN INSERT INTO
 END$$
 DELIMITER ;
 
+ALTER TABLE `manager`.`visitschedule` 
+DROP FOREIGN KEY `visitschedile_ibfk_4`;
+ALTER TABLE `manager`.`visitschedule` 
+DROP COLUMN `overridedvisitscheduleid`,
+DROP INDEX `visitschedile_ibfk_4_idx` ;
+

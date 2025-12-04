@@ -10,7 +10,6 @@ INSERT INTO visitschedule
     technicianid,
     instructions,
     evaluationid,
-    overridedvisitscheduleid,
     userid
 )
 VALUES
@@ -25,6 +24,5 @@ VALUES
     @technicianid,
     @instructions,
     @evaluationid,
-    @overridedvisitscheduleid,
     @userid
 );

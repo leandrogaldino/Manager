@@ -7,7 +7,6 @@ UPDATE visitschedule SET
     personcompressorid = @personcompressorid,
     technicianid = @technicianid,
     instructions = @instructions,
-    evaluationid = @evaluationid,
-    overridedvisitscheduleid = @overridedvisitscheduleid,
+    evaluationid = @evaluationid
     userid = @userid
 WHERE visitschedule.id = @id;

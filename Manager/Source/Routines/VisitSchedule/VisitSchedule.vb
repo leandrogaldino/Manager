@@ -15,8 +15,6 @@ Public Class VisitSchedule
     Public Property Instructions As String
     Public Property EvaluationID As Long
     Public Property Evaluation As New Lazy(Of Evaluation)
-    Public Property OverridedVisitScheduleID As Long
-    Public Property OverridedVisitSchedule As New Lazy(Of VisitSchedule)
     Public Sub New()
         _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
         SetRoutine(Routine.VisitSchedule)
@@ -34,7 +32,6 @@ Public Class VisitSchedule
         Technician = New Person()
         Instructions = Nothing
         Evaluation = Nothing
-        OverridedVisitSchedule = Nothing
         If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As VisitSchedule
@@ -66,8 +63,6 @@ Public Class VisitSchedule
                         Instructions = Convert.ToString(TableResult.Rows(0).Item("instructions"))
                         EvaluationID = If(Not IsDBNull(TableResult.Rows(0).Item("evaluationid")), Convert.ToInt64(TableResult.Rows(0).Item("evaluationid")), 0)
                         Evaluation = New Lazy(Of Evaluation)(Function() If(Not IsDBNull(TableResult.Rows(0).Item("evaluationid")), New Evaluation().Load(Convert.ToInt64(TableResult.Rows(0).Item("evaluationid")), False), Nothing))
-                        OverridedVisitScheduleID = If(Not IsDBNull(TableResult.Rows(0).Item("overridedvisitscheduleid")), Convert.ToInt64(TableResult.Rows(0).Item("overridedvisitscheduleid")), 0)
-                        OverridedVisitSchedule = New Lazy(Of VisitSchedule)(Function() If(Not IsDBNull(TableResult.Rows(0).Item("overridedvisitscheduleid")), New VisitSchedule().Load(Convert.ToInt64(TableResult.Rows(0).Item("overridedvisitscheduleid")), False), Nothing))
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
                     Else
@@ -117,7 +112,6 @@ Public Class VisitSchedule
                     Cmd.Parameters.AddWithValue("@technicianid", Technician.ID)
                     Cmd.Parameters.AddWithValue("@instructions", If(String.IsNullOrEmpty(Instructions), DBNull.Value, Instructions))
                     Cmd.Parameters.AddWithValue("@evaluationid", DBNull.Value)
-                    Cmd.Parameters.AddWithValue("@overridedvisitscheduleid", DBNull.Value)
                     Cmd.Parameters.AddWithValue("@userid", User.ID)
                     Cmd.ExecuteNonQuery()
                     SetID(Cmd.LastInsertedId)
@@ -141,7 +135,6 @@ Public Class VisitSchedule
                 Cmd.Parameters.AddWithValue("@instructions", If(String.IsNullOrEmpty(Instructions), DBNull.Value, Instructions))
                 Cmd.Parameters.AddWithValue("@userid", User.ID)
                 Cmd.Parameters.AddWithValue("@evaluationid", If(EvaluationID = 0, DBNull.Value, EvaluationID))
-                Cmd.Parameters.AddWithValue("@overridedvisitscheduleid", If(OverridedVisitScheduleID = 0, DBNull.Value, OverridedVisitScheduleID))
                 Cmd.ExecuteNonQuery()
             End Using
         End Using
@@ -157,7 +150,6 @@ Public Class VisitSchedule
             .Customer = CType(Customer.Clone(), Person),
             .EvaluationID = EvaluationID,
             .Instructions = Instructions,
-            .OverridedVisitScheduleID = OverridedVisitScheduleID,
             .PerformedDate = PerformedDate,
             .ScheduledDate = ScheduledDate,
             .Status = Status,
@@ -168,15 +160,6 @@ Public Class VisitSchedule
                         Return CType(Evaluation.Value.Clone(), Evaluation)
                     Else
                         Return New Evaluation().Load(EvaluationID, False)
-                    End If
-                End Function
-            ),
-            .OverridedVisitSchedule = New Lazy(Of VisitSchedule)(
-                Function()
-                    If OverridedVisitSchedule.IsValueCreated Then
-                        Return CType(OverridedVisitSchedule.Value.Clone(), VisitSchedule)
-                    Else
-                        Return New VisitSchedule().Load(OverridedVisitScheduleID, False)
                     End If
                 End Function
             )

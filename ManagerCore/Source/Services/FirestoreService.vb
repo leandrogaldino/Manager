@@ -2,16 +2,8 @@
 Imports Google.Cloud.Firestore
 Public Class FirestoreService
     Inherits RemoteDB
-
-    Private _Listeners As New Dictionary(Of String, FirestoreChangeListener)
-
-
-
+    Private ReadOnly _Listeners As New Dictionary(Of String, FirestoreChangeListener)
     Private _Database As FirestoreDb
-
-    Public Sub New()
-    End Sub
-
     Public Overrides Async Function Initialize(Settings As SettingCloudManagerDatabaseModel) As Task
         Dim Json As String = Settings.JsonCredentials
         Dim Credential As GoogleCredential = GoogleCredential.FromJson(Json)
@@ -21,7 +13,6 @@ Public Class FirestoreService
         }
         _Database = Await builder.BuildAsync()
     End Function
-
     Public Overrides Async Function TestConnection() As Task
         If _Database IsNot Nothing Then
             Dim List = _Database.ListRootCollectionsAsync()
@@ -31,25 +22,13 @@ Public Class FirestoreService
             Throw New Exception("O banco de dados não foi definido.")
         End If
     End Function
-
-
-
-
-
-
     Public Overrides Sub StartListening(Collection As String, Optional Args As List(Of Condition) = Nothing)
         Dim Query As Query = _Database.Collection(Collection)
         If Args IsNot Nothing Then Query = ProcessArgs(Query, Args)
-
-        ' Gera uma chave única para o listener
         Dim ListenerKey As String = GenerateListenerKey(Collection, Args)
-
-        ' Se já existe um listener para esta chave, para o anterior
         If _Listeners.ContainsKey(ListenerKey) Then
             StopListening(ListenerKey)
         End If
-
-        ' Adiciona o novo listener ao dicionário
         Dim Listener As FirestoreChangeListener = Query.Listen(Sub(Snapshot As QuerySnapshot)
                                                                    HandleSnapshotAsync(Collection, Snapshot)
                                                                End Sub)
@@ -66,26 +45,20 @@ Public Class FirestoreService
 
     Public Overrides Sub StopListening(Optional ListenerKey As String = Nothing)
         If ListenerKey Is Nothing Then
-            ' Para todos os listeners se nenhuma chave for fornecida
             For Each Listener In _Listeners.Values
                 Listener.StopAsync()
             Next
             _Listeners.Clear()
         ElseIf _Listeners.ContainsKey(ListenerKey) Then
-            ' Para um listener específico
             _Listeners(ListenerKey).StopAsync()
             _Listeners.Remove(ListenerKey)
         End If
     End Sub
-
-    ' Gera uma chave única para cada listener com base na coleção e argumentos
     Private Function GenerateListenerKey(Collection As String, Args As List(Of Condition)) As String
         If Args Is Nothing Then Return Collection
         Dim ConditionsString As String = String.Join("_", Args.Select(Function(arg) DescribeCondition(arg)))
         Return $"{Collection}_{ConditionsString}"
     End Function
-
-    ' Converte uma Condition em uma descrição única para a chave
     Private Function DescribeCondition(condition As Condition) As String
         Select Case True
             Case TypeOf condition Is WhereEqualToCondition
@@ -122,13 +95,6 @@ Public Class FirestoreService
                 Return "UnknownCondition"
         End Select
     End Function
-
-
-
-
-
-
-
     Public Class FirestoreChangeEventArgs
         Public Property CollectionName As String
         Public Property Documents As List(Of Dictionary(Of String, Object))
@@ -157,45 +123,29 @@ Public Class FirestoreService
         Next
         Return DeletedCount
     End Function
-
     Public Overrides Async Function ExecutePut(Collection As String, Data As Dictionary(Of String, Object), Optional DocumentID As String = Nothing) As Task(Of DateTime)
         Dim DocRef As DocumentReference = If(Not String.IsNullOrEmpty(DocumentID), _Database.Collection(Collection).Document(DocumentID.Replace(".", Nothing).Replace("-", Nothing).Replace("/", Nothing)), _Database.Collection(Collection).Document())
         Dim Result As WriteResult = Await DocRef.SetAsync(Data)
         Return Result.UpdateTime.ToDateTime
     End Function
-
-
     Public Overrides Async Function ExecuteUpdate(Collection As String, FieldsToUpdate As Dictionary(Of String, Object), Args As List(Of Condition)) As Task(Of Integer)
         If Args Is Nothing OrElse Args.Count = 0 Then
             Throw New ArgumentException("As condições (Args) não podem ser nulas ou vazias.")
         End If
-
         Try
-            ' Cria a query com base nas condições fornecidas
             Dim QueryRef As Query = _Database.Collection(Collection)
             QueryRef = ProcessArgs(QueryRef, Args)
-
-            ' Busca os documentos que atendem às condições
             Dim Snapshot As QuerySnapshot = Await QueryRef.GetSnapshotAsync()
-
             Dim UpdatedCount As Integer = 0
-
-            ' Atualiza os campos para cada documento encontrado
             For Each Doc As DocumentSnapshot In Snapshot.Documents
                 Await Doc.Reference.UpdateAsync(FieldsToUpdate)
                 UpdatedCount += 1
             Next
-
-            ' Retorna a quantidade de documentos atualizados
             Return UpdatedCount
         Catch ex As Exception
-            ' Opcional: Logar ou tratar o erro
             Throw New Exception($"Erro ao atualizar documentos: {ex.Message}")
         End Try
     End Function
-
-
-
     Private Function ProcessArgs(Query As Query, Args As List(Of Condition)) As Query
         For Each Arg In Args
             Select Case Arg.GetType

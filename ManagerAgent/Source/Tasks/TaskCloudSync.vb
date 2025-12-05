@@ -27,7 +27,7 @@ Public Class TaskCloudSync
     End Property
     Public Overrides ReadOnly Property LastRun As Date
         Get
-            Return _SessionModel.ManagerSetting.LastExecution.CloudDataSended
+            Return _SessionModel.ManagerSetting.LastExecution.CloudSync
         End Get
     End Property
     Public Overrides ReadOnly Property IsManual As Boolean
@@ -48,7 +48,7 @@ Public Class TaskCloudSync
                 Response.Event.SetFinalEvent($"Sincronização com a núvem concluída")
                 If Progress IsNot Nothing Then Progress.Report(Response)
             End If
-            _SessionModel.ManagerSetting.LastExecution.CloudDataSended = Now.ToString("yyyy-MM-dd HH:mm:ss")
+            _SessionModel.ManagerSetting.LastExecution.CloudSync = Now.ToString("yyyy-MM-dd HH:mm:ss")
             _SettingsService.Save(_SessionModel.ManagerSetting)
         Catch ex As Exception
             Exception = ex
@@ -69,7 +69,7 @@ Public Class TaskCloudSync
     End Function
     Private Async Function SyncFromLocalToCloud(Response As AsyncResponseModel, Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task
         Dim PerformedOperations As Long
-        Dim LastSyncTime As Date = _SessionModel.ManagerSetting.LastExecution.CloudDataSended
+        Dim LastSyncTime As Date = _SessionModel.ManagerSetting.LastExecution.CloudSync
         Dim ContinueSync As Boolean = True
         Do While ContinueSync
             ContinueSync = False
@@ -151,7 +151,7 @@ Public Class TaskCloudSync
     Private Async Function FetchSchedulesFromCloudToLocal(Response As AsyncResponseModel, Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task
         Dim PerformedOperations As Integer
         Dim TotalChanges As Integer
-        Dim LastSyncLimit As Date = _SessionModel.ManagerSetting.LastExecution.CloudDataSended
+        Dim LastSyncLimit As Date = _SessionModel.ManagerSetting.LastExecution.CloudSync
         Dim ContinueSync As Boolean = True
         Do While ContinueSync
             ContinueSync = False

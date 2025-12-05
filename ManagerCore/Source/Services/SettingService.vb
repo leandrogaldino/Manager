@@ -75,7 +75,7 @@ Public Class SettingService
             Model.LastExecution.Backup = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Backup").InnerText)
             Model.LastExecution.Clean = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Clean").InnerText)
             Model.LastExecution.Release = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Release").InnerText)
-            Model.LastExecution.CloudDataSended = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/CloudDataSended").InnerText)
+            Model.LastExecution.CloudSync = CDate(XmlDoc.SelectSingleNode("Setting/LastExecutionDates/CloudSync").InnerText)
             Return Model
         Else
             Throw New Exception("Setting File Not Found, Run ManagerAgent to create.")
@@ -146,7 +146,7 @@ Public Class SettingService
         XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Backup").InnerText = Model.LastExecution.Backup.ToString("yyyy-MM-dd HH:mm:ss")
         XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Clean").InnerText = Model.LastExecution.Clean.ToString("yyyy-MM-dd HH:mm:ss")
         XmlDoc.SelectSingleNode("Setting/LastExecutionDates/Release").InnerText = Model.LastExecution.Release.ToString("yyyy-MM-dd HH:mm:ss")
-        XmlDoc.SelectSingleNode("Setting/LastExecutionDates/CloudDataSended").InnerText = Model.LastExecution.CloudDataSended.ToString("yyyy-MM-dd HH:mm:ss")
+        XmlDoc.SelectSingleNode("Setting/LastExecutionDates/CloudSync").InnerText = Model.LastExecution.CloudSync.ToString("yyyy-MM-dd HH:mm:ss")
         Dim Builder As New StringBuilder()
         Dim Settings As New XmlWriterSettings()
         Settings.Indent = True

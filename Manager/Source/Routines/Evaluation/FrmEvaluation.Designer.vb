@@ -83,6 +83,7 @@ Partial Class FrmEvaluation
         Me.BtnNext = New System.Windows.Forms.ToolStripButton()
         Me.BtnLast = New System.Windows.Forms.ToolStripButton()
         Me.BtnLog = New System.Windows.Forms.ToolStripButton()
+        Me.BtnEvaluationTreatment = New System.Windows.Forms.ToolStripButton()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TmrTechnician = New System.Windows.Forms.Timer(Me.components)
         Me.TcEvaluation = New System.Windows.Forms.TabControl()
@@ -167,7 +168,6 @@ Partial Class FrmEvaluation
         Me.CcoCallTypeHasRepairNeedProposal = New ControlLibrary.ControlContainer()
         Me.CcoUnitTemperaturePressure = New ControlLibrary.ControlContainer()
         Me.DgvlReplacedSellable = New Manager.DataGridViewLayout()
-        Me.BtnEvaluationTreatment = New System.Windows.Forms.ToolStripButton()
         Me.PnBottom.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -425,6 +425,16 @@ Partial Class FrmEvaluation
         Me.BtnLog.Name = "BtnLog"
         Me.BtnLog.Size = New System.Drawing.Size(23, 22)
         Me.BtnLog.Text = "Histórico"
+        '
+        'BtnEvaluationTreatment
+        '
+        Me.BtnEvaluationTreatment.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.BtnEvaluationTreatment.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnEvaluationTreatment.Image = Global.Manager.My.Resources.Resources.ReportSmall
+        Me.BtnEvaluationTreatment.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnEvaluationTreatment.Name = "BtnEvaluationTreatment"
+        Me.BtnEvaluationTreatment.Size = New System.Drawing.Size(23, 22)
+        Me.BtnEvaluationTreatment.Text = "Gerar Relatório"
         '
         'EprValidation
         '
@@ -1439,10 +1449,10 @@ Partial Class FrmEvaluation
         'TabPicture
         '
         Me.TabPicture.Controls.Add(Me.PvPicture)
-        Me.TabPicture.Location = New System.Drawing.Point(4, 22)
+        Me.TabPicture.Location = New System.Drawing.Point(4, 26)
         Me.TabPicture.Name = "TabPicture"
         Me.TabPicture.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPicture.Size = New System.Drawing.Size(1031, 411)
+        Me.TabPicture.Size = New System.Drawing.Size(1031, 407)
         Me.TabPicture.TabIndex = 8
         Me.TabPicture.Text = "Fotos"
         Me.TabPicture.UseVisualStyleBackColor = True
@@ -1457,16 +1467,16 @@ Partial Class FrmEvaluation
         Me.PvPicture.IncludeButtonImage = CType(resources.GetObject("PvPicture.IncludeButtonImage"), System.Drawing.Image)
         Me.PvPicture.LastButtonImage = CType(resources.GetObject("PvPicture.LastButtonImage"), System.Drawing.Image)
         Me.PvPicture.Location = New System.Drawing.Point(3, 3)
-        Me.PvPicture.MaximumPictures = 5
+        Me.PvPicture.MaximumPictures = 6
         Me.PvPicture.Name = "PvPicture"
         Me.PvPicture.NextButtonImage = CType(resources.GetObject("PvPicture.NextButtonImage"), System.Drawing.Image)
         Me.PvPicture.Padding = New System.Windows.Forms.Padding(1)
         Me.PvPicture.PreviousButtonImage = CType(resources.GetObject("PvPicture.PreviousButtonImage"), System.Drawing.Image)
         Me.PvPicture.RemoveButtonImage = CType(resources.GetObject("PvPicture.RemoveButtonImage"), System.Drawing.Image)
         Me.PvPicture.SaveButtonImage = CType(resources.GetObject("PvPicture.SaveButtonImage"), System.Drawing.Image)
-        Me.PvPicture.ShowControlBar = False
+        Me.PvPicture.ShowControlBar = True
         Me.PvPicture.ShowCounterBar = True
-        Me.PvPicture.Size = New System.Drawing.Size(1025, 405)
+        Me.PvPicture.Size = New System.Drawing.Size(1025, 401)
         Me.PvPicture.TabIndex = 0
         Me.PvPicture.TempDirectory = "C:\Users\leand\AppData\Local\Temp\"
         '
@@ -1598,16 +1608,6 @@ Partial Class FrmEvaluation
         '
         Me.DgvlReplacedSellable.DataGridView = Me.DgvReplacedSellable
         Me.DgvlReplacedSellable.Routine = Manager.Routine.EvaluationReplacedSellable
-        '
-        'BtnEvaluationTreatment
-        '
-        Me.BtnEvaluationTreatment.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.BtnEvaluationTreatment.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnEvaluationTreatment.Image = Global.Manager.My.Resources.Resources.ReportSmall
-        Me.BtnEvaluationTreatment.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnEvaluationTreatment.Name = "BtnEvaluationTreatment"
-        Me.BtnEvaluationTreatment.Size = New System.Drawing.Size(23, 22)
-        Me.BtnEvaluationTreatment.Text = "Gerar Relatório"
         '
         'FrmEvaluation
         '

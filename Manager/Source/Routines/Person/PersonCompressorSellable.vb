@@ -43,6 +43,11 @@ Public Class PersonCompressorSellable
         _ControlType = ControlType
         SetRoutine(Routine.PersonCompressorSellable)
     End Sub
+
+    Public Overrides Function ToString() As String
+        Return Name
+    End Function
+
     Public Overrides Function Clone() As BaseModel
         Dim Cloned As New PersonCompressorSellable(_ControlType) With {
             .Capacity = Capacity,

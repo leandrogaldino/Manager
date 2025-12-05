@@ -183,7 +183,7 @@ Public Class FrmEvaluationImport
                             Await SignatureStream.WriteAsync(SignatureData, 0, SignatureData.Length)
                         End Using
                         TempSignature = TempPath
-                        For Each Picture As Dictionary(Of String, Object) In _EvaluationData("pictures")
+                        For Each Picture As Dictionary(Of String, Object) In _EvaluationData("photos")
                             PictureData = Await _Storage.DownloadFile(Picture("path"))
                             TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, TextHelper.GetRandomFileName(".jpg"))
                             Using PictureStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)

@@ -958,7 +958,7 @@ Public Class Evaluation
         Evaluation.HasRepair = ConfirmationType.None
         Evaluation.TechnicalAdvice = Data("advice")
         Evaluation.Customer = New Person().Load(Data("customerid"), False)
-        Evaluation.Compressor = Evaluation.Customer.Compressors.SingleOrDefault(Function(x) x.ID = Data("personcompressorid"))
+        Evaluation.Compressor = Evaluation.Customer.Compressors.SingleOrDefault(Function(x) x.ID = Data("compressorid"))
         Evaluation.EvaluationDate = DateTimeHelper.DateFromMilliseconds(Data("creationdate"))
         Evaluation.StartTime = TimeSpan.ParseExact(Data("starttime"), "hh\:mm", Nothing)
         Evaluation.EndTime = TimeSpan.ParseExact(Data("endtime"), "hh\:mm", Nothing)

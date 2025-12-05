@@ -36,8 +36,11 @@ Public Class FrmCompressorSellableElapsedDay
         LblOrderValue.Text = If(_ElapsedDaySellable.IsSaved, _CompressorForm.DgvCompressorElapsedDaySellable.SelectedRows(0).Cells("Order").Value, 0)
         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_ElapsedDaySellable.Status)
         LblCreationValue.Text = _ElapsedDaySellable.Creation
-        ClearQbxSellable()
-        SetUpQbxSellableForProduct()
+        If _ElapsedDaySellable.SellableType = SellableType.None Then
+            If RbtProduct.Checked Then _ElapsedDaySellable.SellableType = SellableType.Product
+            If RbtService.Checked Then _ElapsedDaySellable.SellableType = SellableType.Service
+        End If
+        If _ElapsedDaySellable.SellableType = SellableType.Product Then SetUpQbxSellableForProduct()
         If _ElapsedDaySellable.SellableType = SellableType.Service Then SetUpQbxSellableForService()
         If _ElapsedDaySellable.Sellable Is Nothing Then RbtProduct.Checked = True
         If _ElapsedDaySellable.Sellable IsNot Nothing AndAlso _ElapsedDaySellable.SellableType = SellableType.Product Then RbtProduct.Checked = True

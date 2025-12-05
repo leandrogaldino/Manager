@@ -40,7 +40,11 @@ Public Class FrmPersonCompressorSellableWorkedHour
         LblCreationValue.Text = _WorkedHourSellable.Creation
         CbxSellableBind.Text = EnumHelper.GetEnumDescription(_WorkedHourSellable.SellableBind)
         ClearQbxSellable()
-        SetUpQbxSellableForProduct()
+        If _WorkedHourSellable.SellableType = SellableType.None Then
+            If RbtProduct.Checked Then _WorkedHourSellable.SellableType = SellableType.Product
+            If RbtService.Checked Then _WorkedHourSellable.SellableType = SellableType.Service
+        End If
+        If _WorkedHourSellable.SellableType = SellableType.Product Then    SetUpQbxSellableForProduct()
         If _WorkedHourSellable.SellableType = SellableType.Service Then SetUpQbxSellableForService()
         If _WorkedHourSellable.Sellable Is Nothing Then RbtProduct.Checked = True
         If _WorkedHourSellable.Sellable IsNot Nothing AndAlso _WorkedHourSellable.SellableType = SellableType.Product Then RbtProduct.Checked = True
@@ -157,6 +161,11 @@ Public Class FrmPersonCompressorSellableWorkedHour
             Return False
         ElseIf (CbxSellableBind.SelectedIndex <> 0 And CbxSellableBind.SelectedIndex <> 5) And RbtService.Checked Then
             EprValidation.SetError(RbtService, $"Não é possível vincular um {LCase(CbxSellableBind.Text)} a um serviço.")
+            EprValidation.SetIconAlignment(RbtService, ErrorIconAlignment.MiddleRight)
+            QbxSellable.Select()
+            Return False
+        ElseIf RbtProduct.Checked And CbxSellableBind.SelectedIndex = 5 Then
+            EprValidation.SetError(RbtService, $"Não é possível vincular um {LCase(CbxSellableBind.Text)} a um produto.")
             EprValidation.SetIconAlignment(RbtService, ErrorIconAlignment.MiddleRight)
             QbxSellable.Select()
             Return False

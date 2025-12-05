@@ -70,13 +70,15 @@ Public Class FrmEvaluationImport
         If Docs IsNot Nothing AndAlso Docs.Count > 0 Then
             For Each doc In Docs
                 Dim Status As String = If(String.IsNullOrEmpty(doc("info")("importingby")), EnumHelper.GetEnumDescription(CloudSyncStatus.NotImported), EnumHelper.GetEnumDescription(CloudSyncStatus.Importing))
-                Dim Result As LocalDB.QueryResult = Await _LocalDB.ExecuteRawQueryAsync("SELECT c.id, c.name, pc.serialnumber, pc.sector FROM compressor c LEFT JOIN personcompressor pc ON c.id = pc.compressorid WHERE pc.id = @id", New Dictionary(Of String, Object) From {{"@id", doc("personcompressorid")}})
+
+
+                Dim Result As LocalDB.QueryResult = Await _LocalDB.ExecuteRawQueryAsync("SELECT c.id, c.name, pc.serialnumber, pc.sector FROM compressor c LEFT JOIN personcompressor pc ON c.id = pc.compressorid WHERE pc.id = @id", New Dictionary(Of String, Object) From {{"@id", doc("compressorid")}})
                 Dim CompressorName As String = Result.Data(0)("name").ToString
                 Dim SerialNumber As String = $" {Result.Data(0)("serialnumber")}"
                 Dim Sector As String = $" {Result.Data(0)("sector")}"
                 doc("compressorid") = Result.Data(0)("id")
 
-                Result = Await _LocalDB.ExecuteRawQueryAsync("SELECT p.id, p.shortname FROM person p LEFT JOIN personcompressor pc ON p.id = pc.personid WHERE pc.id = @id", New Dictionary(Of String, Object) From {{"@id", doc("personcompressorid")}})
+                Result = Await _LocalDB.ExecuteRawQueryAsync("SELECT p.id, p.shortname FROM person p LEFT JOIN personcompressor pc ON p.id = pc.personid WHERE pc.id = @id", New Dictionary(Of String, Object) From {{"@id", doc("compressorid")}})
                 Dim CustomerName As String = Result.Data(0)("shortname").ToString
                 doc("customerid") = Result.Data(0)("id")
                 Dim EvaluationDate As String = DateTimeHelper.DateFromMilliseconds(doc("creationdate")).ToString("dd/MM/yyyy")
@@ -172,6 +174,7 @@ Public Class FrmEvaluationImport
                     If Not SelectedRow.Cells("Status").Value = EnumHelper.GetEnumDescription(CloudSyncStatus.Importing) Then
                         _EvaluationData("info")("importingdate") = Now.ToString("yyyy-MM-dd HH:mm:ss")
                         _EvaluationData("info")("importingby") = _Session.User.Username
+                        'TODO: Verificar se aqui vai salvar uma nova avaliação na nuvem ou se vai atualizar a que está lá
                         Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
                         SyncTimer.Start()
                         SignatureData = Await _Storage.DownloadFile(_EvaluationData("signaturepath"))

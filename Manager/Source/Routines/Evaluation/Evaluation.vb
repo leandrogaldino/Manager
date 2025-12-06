@@ -761,10 +761,6 @@ Public Class Evaluation
                         ElapsedDayControlledSellables.Add(Sellable)
                     End If
                 Next Row
-
-
-
-
             End Using
         End Using
     End Sub
@@ -915,7 +911,6 @@ Public Class Evaluation
             End Using
         End Using
     End Function
-
     Public Shared Function GetAverageWorkLoad(PersonCompressor As PersonCompressor, Horimeter As Integer, EvaluationDate As Date, EvaluationID As Long) As Decimal
         Dim Avg As Decimal
         Dim HasPrevious As Boolean
@@ -951,6 +946,10 @@ Public Class Evaluation
         Dim Evaluation As New Evaluation
         Dim EvaluationTechnician As EvaluationTechnician
         Dim Coalescent As EvaluationControlledSellable
+        Dim EvaluationSellable As EvaluationReplacedSellable
+        Dim Product As Product
+        Dim ProductCode As String
+        Dim Service As Service
         Evaluation.Reference = GetEvaluationReference(EvaluationSource.Imported)
         Evaluation.Source = EvaluationSource.Imported
         Evaluation.CallType = Convert.ToInt32(Data("calltypeid"))
@@ -970,7 +969,6 @@ Public Class Evaluation
         Dim OilFilter As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelables.Where(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.OilFilter).ToList
         Dim Separator As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelables.Where(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Separator).ToList
         Dim Oil As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelables.Where(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Oil).ToList
-
         Evaluation.WorkedHourControlledSelables.ToList.ForEach(Sub(x)
                                                                    x.SetIsSaved(True)
                                                                End Sub)
@@ -1008,10 +1006,40 @@ Public Class Evaluation
             End If
         Next CoalescentData
         Evaluation.ElapsedDayControlledSellables.ForEach(Sub(x) x.SetIsSaved(True))
+
+        For Each ReplacedProductData In Data("replacedproducts")
+            Product = New Product().Load(ReplacedProductData("productid"), False)
+            ProductCode = Product.ProviderCodes.FirstOrDefault(Function(x) x.IsMainProvider).Code
+            EvaluationSellable = New EvaluationReplacedSellable() With {
+                .Code = ProductCode,
+                .Name = Product.Name,
+                .Quantity = ReplacedProductData("quantity"),
+                .SellableType = SellableType.Product,
+                .SellableID = Product.ID,
+                .Sellable = New Lazy(Of Sellable)(Function()
+                                                      Return New Product().Load(.SellableID, False)
+                                                  End Function)
+            }
+            Evaluation.ReplacedSellables.Add(EvaluationSellable)
+        Next ReplacedProductData
+        For Each ReplacedProductData In Data("performedservices")
+            Service = New Service().Load(ReplacedProductData("serviceid"), False)
+            EvaluationSellable = New EvaluationReplacedSellable() With {
+                .Code = String.Empty,
+                .Name = Service.Name,
+                .Quantity = ReplacedProductData("quantity"),
+                .SellableType = SellableType.Service,
+                .SellableID = Service.ID,
+                .Sellable = New Lazy(Of Sellable)(Function()
+                                                      Return New Service().Load(.SellableID, False)
+                                                  End Function)
+            }
+            Evaluation.ReplacedSellables.Add(EvaluationSellable)
+        Next ReplacedProductData
         Evaluation.Responsible = Data("responsible")
         Evaluation.StartTime = TimeSpan.ParseExact(Data("starttime"), "hh\:mm", Nothing)
         For Each TechnicianData In Data("technicians")
-            EvaluationTechnician = New EvaluationTechnician With {
+            EvaluationTechnician = New EvaluationTechnician() With {
                 .Technician = New Person().Load(TechnicianData("personid"), False)
             }
             EvaluationTechnician.SetIsSaved(True)

@@ -76,7 +76,7 @@ Public Class FrmVisitSchedule
         DgvNavigator.DataGridView = _VisitSchedulesGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        CbxCallType.DataSource = EnumHelper.GetEnumDescriptions(Of CallType).OrderBy(Function(x) x).ToList()
+        CbxCallType.DataSource = EnumHelper.GetEnumDescriptions(Of CallType).ToList()
         _UcVisitScheduleGeneratedItems = New UcVisitScheduleGeneratedItems()
         _CcoGeneratedItems.DropDownControl = _UcVisitScheduleGeneratedItems
         AddHandler _UcVisitScheduleGeneratedItems.ValueChanged, AddressOf UcVisitScheduleGeneratedItems_ValueChanged

@@ -177,6 +177,18 @@
         i3cOcAMWQDfT6lwFGBpEtByrPHgBaQlxBFZzOncAAAAASUVORK5CYII=
 </value>
   </data>
+  <metadata name="TsDocument.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>735, 17</value>
+  </metadata>
+  <metadata name="TmrTechnician.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>477, 17</value>
+  </metadata>
+  <metadata name="TsTechnician.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1318, 17</value>
+  </metadata>
+  <metadata name="TsReplacedSellable.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>937, 54</value>
+  </metadata>
   <metadata name="TsReplacedSellable.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>937, 54</value>
   </metadata>
@@ -189,7 +201,7 @@
         XFPIBpgDI19Q4wU4gFVz02HHqgAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="PdfViewerPrinterSettings1.PrintLocation" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="PdfViewerPrinterSettings2.PrintLocation" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
@@ -317,9 +329,6 @@
         G9pxXOiqI9WCk/HL+eUpIjYthnhdbVN/nQJhFGNVBZVO8ZVq4m+VDBZ8YirvNgAAAABJRU5ErkJggg==
 </value>
   </data>
-  <metadata name="TmrTechnician.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>477, 17</value>
-  </metadata>
   <metadata name="DgvNavigator.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>350, 17</value>
   </metadata>
@@ -359,6 +368,9 @@
         AADwDwAA//8AAA==
 </value>
   </data>
+  <metadata name="Tip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1247, 17</value>
+  </metadata>
   <metadata name="TmrResize.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 54</value>
   </metadata>

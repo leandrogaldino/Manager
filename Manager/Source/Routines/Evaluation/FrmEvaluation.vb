@@ -296,8 +296,8 @@ Public Class FrmEvaluation
             BtnCallTypeHasRepairNeedProposal.Select()
             Return False
         ElseIf String.IsNullOrWhiteSpace(TxtEvaluationNumber.Text) Then
-            EprValidation.SetError(LblEvaluationNumber, "Campo obrigatório.")
-            EprValidation.SetIconAlignment(LblEvaluationNumber, ErrorIconAlignment.MiddleRight)
+            EprValidation.SetError(LblEvaluationReference, "Campo obrigatório.")
+            EprValidation.SetIconAlignment(LblEvaluationReference, ErrorIconAlignment.MiddleRight)
             TcEvaluation.SelectedTab = TabMain
             TxtEvaluationNumber.Select()
             Return False

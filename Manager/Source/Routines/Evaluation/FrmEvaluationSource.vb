@@ -71,9 +71,9 @@
         Next Part
 
         If ResultEvaluation.WorkedHourControlledSelables.Any(Function(x) x.Sold) Or ResultEvaluation.ElapsedDayControlledSellables.Any(Function(x) x.Sold) Then
-            ResultEvaluation.CallType = CallType.Contract
+            ResultEvaluation.HasRepair = ConfirmationType.Yes
         Else
-            ResultEvaluation.CallType = CallType.Gathering
+            ResultEvaluation.HasRepair = ConfirmationType.No
         End If
 
         DialogResult = DialogResult.OK

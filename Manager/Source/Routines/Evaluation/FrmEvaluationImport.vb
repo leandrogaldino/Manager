@@ -76,11 +76,11 @@ Public Class FrmEvaluationImport
                 Dim CompressorName As String = Result.Data(0)("name").ToString
                 Dim SerialNumber As String = $" {Result.Data(0)("serialnumber")}"
                 Dim Sector As String = $" {Result.Data(0)("sector")}"
-                doc("compressorid") = Result.Data(0)("id")
+                'doc("compressorid") = Result.Data(0)("id")
 
                 Result = Await _LocalDB.ExecuteRawQueryAsync("SELECT p.id, p.shortname FROM person p LEFT JOIN personcompressor pc ON p.id = pc.personid WHERE pc.id = @id", New Dictionary(Of String, Object) From {{"@id", doc("compressorid")}})
                 Dim CustomerName As String = Result.Data(0)("shortname").ToString
-                doc("customerid") = Result.Data(0)("id")
+                'doc("customerid") = Result.Data(0)("id")
                 Dim EvaluationDate As String = DateTimeHelper.DateFromMilliseconds(doc("creationdate")).ToString("dd/MM/yyyy")
 
                 Dim row As New DataGridViewRow()
@@ -220,7 +220,7 @@ Public Class FrmEvaluationImport
                             End If
                         End Using
                     Else
-                        CMessageBox.Show($"Essa avaliação esta sendo importada por {_EvaluationData("info")("importingby")}", CMessageBoxType.Information)
+                        CMessageBox.Show($"Essa avaliação esta sendo importada por {_EvaluationData("info")("importingby")}.", CMessageBoxType.Information)
                         Cursor = Cursors.Default
                     End If
                 Catch ex As Exception

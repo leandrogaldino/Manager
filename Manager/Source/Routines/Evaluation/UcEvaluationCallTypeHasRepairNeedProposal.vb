@@ -6,7 +6,7 @@ Public Class UcEvaluationCallTypeHasRepairNeedProposal
     Private _ManualChanging As Boolean
     Public Sub New()
         InitializeComponent()
-        CbxCallType.DataSource = EnumHelper.GetEnumDescriptions(Of CallType).OrderBy(Function(x) x).ToList()
+        CbxCallType.DataSource = EnumHelper.GetEnumDescriptions(Of CallType).ToList()
     End Sub
     Public Property CallType As CallType
         Get

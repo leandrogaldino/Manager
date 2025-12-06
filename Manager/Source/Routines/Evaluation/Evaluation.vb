@@ -958,7 +958,7 @@ Public Class Evaluation
         Evaluation.NeedProposal = If(Data("needproposal") = 1, ConfirmationType.Yes, ConfirmationType.No)
         Evaluation.UnitName = Convert.ToString(Data("unitname"))
         Evaluation.Temperature = Convert.ToInt32(Data("temperature"))
-        Evaluation.Pressure = Convert.todec(Data("pressure"))
+        Evaluation.Pressure = Convert.ToDecimal(Data("pressure"))
         Evaluation.TechnicalAdvice = Data("advice")
         Evaluation.Customer = New Person().Load(Data("customerid"), False)
         Evaluation.Compressor = Evaluation.Customer.Compressors.SingleOrDefault(Function(x) x.ID = Data("compressorid"))

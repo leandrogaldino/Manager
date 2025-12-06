@@ -259,7 +259,7 @@ Public Class EvaluationReport
         WsReport.Range(Row, 5, Row + 2, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
         WsReport.Range(Row, 5, Row + 2, 7).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center)
         WsReport.Cell(Row, 5).SetValue(ReportingEvaluation.Technicians(0).Technician.ShortName.ToTitle())
-        WsReport.Cell(Row, 5).Style.Font.SetFontName("Brush Script MT")
+        WsReport.Cell(Row, 5).Style.Font.SetFontName("Cookie")
         WsReport.Cell(Row, 5).Style.Font.SetFontSize(26)
         Row += 3
         WsReport.Range(Row, 1, Row, 4).Merge()

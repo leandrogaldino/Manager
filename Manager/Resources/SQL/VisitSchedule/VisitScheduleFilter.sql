@@ -9,10 +9,10 @@ SELECT
     visitschedule.scheduleddate As 'Data Agendada',
     visitschedule.performeddate As 'Data Realizada',
     CASE
-        WHEN visitschedule.calltypeid = 0 THEN "LEVANTAMENTO"
-        WHEN visitschedule.calltypeid = 1 THEN "PREVENTIVA"
-        WHEN visitschedule.calltypeid = 2 THEN "CORRETIVA"
-        WHEN visitschedule.calltypeid = 3 THEN "CONTRATO"
+        WHEN visitschedule.calltypeid = 1 THEN "LEVANTAMENTO"
+        WHEN visitschedule.calltypeid = 2 THEN "PREVENTIVA"
+        WHEN visitschedule.calltypeid = 3 THEN "CORRETIVA"
+        WHEN visitschedule.calltypeid = 4 THEN "CONTRATO"
     END AS 'Tipo',
     customer.shortname AS 'Cliente',    
     CONCAT(compressor.name, IF(personcompressor.serialnumber IS NOT NULL AND personcompressor.serialnumber <> '', CONCAT(' NS: ', personcompressor.serialnumber), '')) AS 'Compressor',

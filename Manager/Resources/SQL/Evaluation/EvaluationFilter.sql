@@ -13,10 +13,10 @@ SELECT
         WHEN evaluation.sourceid = 2 THEN "IMPORTADA"
 	END AS 'Fonte',
     CASE
-        WHEN evaluation.calltypeid = 0 THEN "LEVANTAMENTO"
-        WHEN evaluation.calltypeid = 1 THEN "PREVENTIVA"
-        WHEN evaluation.calltypeid = 2 THEN "CORRETIVA"
-        WHEN evaluation.calltypeid = 3 THEN "CONTRATO"
+        WHEN evaluation.calltypeid = 1 THEN "LEVANTAMENTO"
+        WHEN evaluation.calltypeid = 2 THEN "PREVENTIVA"
+        WHEN evaluation.calltypeid = 3 THEN "CORRETIVA"
+        WHEN evaluation.calltypeid = 4 THEN "CONTRATO"
     END AS 'Tipo',
     CASE
         WHEN evaluation.needproposalid = 0 THEN "SIM"

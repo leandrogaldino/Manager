@@ -12,7 +12,7 @@ SELECT
 	evaluation.evaluationdate,
 	evaluation.starttime,
 	evaluation.endtime,
-	evaluation.evaluationnumber,
+	evaluation.reference,
 	evaluation.customerid,
 	evaluation.responsible,
 	evaluation.personcompressorid,

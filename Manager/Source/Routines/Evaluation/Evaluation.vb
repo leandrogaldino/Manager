@@ -24,7 +24,7 @@ Public Class Evaluation
     Public Property EvaluationDate As Date = Today
     Public Property StartTime As New TimeSpan(0, 0, 0)
     Public Property EndTime As New TimeSpan(0, 0, 0)
-    Public Property EvaluationNumber As String
+    Public Property Reference As String
     Public Property Technicians As New List(Of EvaluationTechnician)
     Public Property Customer As New Person
     Public Property Responsible As String
@@ -69,7 +69,7 @@ Public Class Evaluation
         EvaluationDate = Today
         StartTime = New TimeSpan(0, 0, 0)
         EndTime = New TimeSpan(0, 0, 0)
-        EvaluationNumber = Nothing
+        Reference = Nothing
         Technicians = New List(Of EvaluationTechnician)
         Customer = New Person
         Responsible = Nothing
@@ -118,7 +118,7 @@ Public Class Evaluation
                         EvaluationDate = Convert.ToDateTime(TableResult.Rows(0).Item("evaluationdate"))
                         StartTime = TimeSpan.Parse(TableResult.Rows(0).Item("starttime"))
                         EndTime = TimeSpan.Parse(TableResult.Rows(0).Item("endtime"))
-                        EvaluationNumber = Convert.ToString(TableResult.Rows(0).Item("evaluationnumber"))
+                        Reference = Convert.ToString(TableResult.Rows(0).Item("reference"))
                         Customer = New Person().Load(TableResult.Rows(0).Item("customerid"), False)
                         Responsible = Convert.ToString(TableResult.Rows(0).Item("responsible"))
                         Compressor = Customer.Compressors.SingleOrDefault(Function(x) x.ID = TableResult.Rows(0).Item("personcompressorid"))
@@ -215,7 +215,7 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@evaluationdate", EvaluationDate.ToString("yyyy-MM-dd"))
                     CmdEvaluation.Parameters.AddWithValue("@starttime", StartTime.ToString("hh\:mm"))
                     CmdEvaluation.Parameters.AddWithValue("@endtime", EndTime.ToString("hh\:mm"))
-                    CmdEvaluation.Parameters.AddWithValue("@evaluationnumber", If(String.IsNullOrEmpty(EvaluationNumber), DBNull.Value, EvaluationNumber))
+                    CmdEvaluation.Parameters.AddWithValue("@reference", If(String.IsNullOrEmpty(Reference), DBNull.Value, Reference))
                     CmdEvaluation.Parameters.AddWithValue("@customerid", Customer.ID)
                     CmdEvaluation.Parameters.AddWithValue("@responsible", If(String.IsNullOrEmpty(Responsible), DBNull.Value, Responsible))
                     CmdEvaluation.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
@@ -314,7 +314,7 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@evaluationdate", EvaluationDate)
                     CmdEvaluation.Parameters.AddWithValue("@starttime", StartTime.ToString("hh\:mm"))
                     CmdEvaluation.Parameters.AddWithValue("@endtime", EndTime.ToString("hh\:mm"))
-                    CmdEvaluation.Parameters.AddWithValue("@evaluationnumber", If(String.IsNullOrEmpty(EvaluationNumber), DBNull.Value, EvaluationNumber))
+                    CmdEvaluation.Parameters.AddWithValue("@reference", If(String.IsNullOrEmpty(Reference), DBNull.Value, Reference))
                     CmdEvaluation.Parameters.AddWithValue("@customerid", Customer.ID)
                     CmdEvaluation.Parameters.AddWithValue("@responsible", If(String.IsNullOrEmpty(Responsible), DBNull.Value, Responsible))
                     CmdEvaluation.Parameters.AddWithValue("@personcompressorid", Compressor.ID)
@@ -951,7 +951,7 @@ Public Class Evaluation
         Dim Evaluation As New Evaluation
         Dim EvaluationTechnician As EvaluationTechnician
         Dim Coalescent As EvaluationControlledSellable
-        Evaluation.EvaluationNumber = GetEvaluationNumber(EvaluationSource.Imported)
+        Evaluation.Reference = GetEvaluationReference(EvaluationSource.Imported)
         Evaluation.Source = EvaluationSource.Imported
         Evaluation.CallType = Convert.ToInt32(Data("calltypeid"))
         Evaluation.HasRepair = ConfirmationType.None
@@ -1028,29 +1028,29 @@ Public Class Evaluation
         Next p
         Return Evaluation
     End Function
-    Public Shared Function GetEvaluationNumber(CreationType As EvaluationSource) As String
-        Dim EvaluationNumber As String = String.Empty
+    Public Shared Function GetEvaluationReference(CreationType As EvaluationSource) As String
+        Dim Reference As String = String.Empty
         Dim IsUnique As Boolean
         Dim Session = Locator.GetInstance(Of Session)
         If CreationType <> EvaluationSource.Manual Then
             Do Until IsUnique
-                EvaluationNumber = TextHelper.GetRandomString(1, 8, Nothing, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+                Reference = TextHelper.GetRandomString(1, 8, Nothing, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
                 If CreationType = EvaluationSource.Automatic Then
-                    EvaluationNumber = $"A-{EvaluationNumber}"
+                    Reference = $"A-{Reference}"
                 ElseIf CreationType = EvaluationSource.Imported Then
-                    EvaluationNumber = $"I-{EvaluationNumber}"
+                    Reference = $"I-{Reference}"
                 End If
                 Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
                     Con.Open()
-                    Using Cmd As New MySqlCommand("SELECT COUNT(id) FROM evaluation WHERE evaluationnumber = @evaluationnumber", Con)
-                        Cmd.Parameters.AddWithValue("@evaluationnumber", EvaluationNumber)
+                    Using Cmd As New MySqlCommand("SELECT COUNT(id) FROM evaluation WHERE reference = @reference", Con)
+                        Cmd.Parameters.AddWithValue("@reference", Reference)
                         Dim Count As Integer = Convert.ToInt32(Cmd.ExecuteScalar())
                         IsUnique = (Count = 0)
                     End Using
                 End Using
             Loop
         End If
-        Return EvaluationNumber
+        Return Reference
     End Function
     Public Shared Function GetLastEvaluationReplacedSellableDate(PersonCompressorSellableID As Long, ReferencedDate As Date) As Date?
         Dim Db As LocalDB = Locator.GetInstance(Of LocalDB)
@@ -1089,7 +1089,7 @@ Public Class Evaluation
             .Document = Document.Clone(),
             .EndTime = EndTime,
             .Source = Source,
-            .EvaluationNumber = EvaluationNumber,
+            .Reference = Reference,
             .EvaluationDate = EvaluationDate,
             .HasRepair = HasRepair,
             .Horimeter = Horimeter,

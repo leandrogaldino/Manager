@@ -139,7 +139,7 @@ Public Class FrmEvaluation
         LblStatusValue.Visible = Not _User.CanAccess(Routine.EvaluationApproveOrReject)
         BtnEvaluationTreatment.Visible = _User.CanAccess(Routine.EvaluationTreatmentReport)
         LblDocumentPage.Text = Nothing
-        TxtEvaluationNumber.ReadOnly = _Evaluation.Source <> EvaluationSource.Manual
+        TxtReference.ReadOnly = _Evaluation.Source <> EvaluationSource.Manual
         Tip.SetToolTip(LblAverageWorkLoad, "Carga Média de Trabalho")
         _UcCallTypeHasRepairNeedProposal = New UcEvaluationCallTypeHasRepairNeedProposal()
         CcoCallTypeHasRepairNeedProposal.DropDownControl = _UcCallTypeHasRepairNeedProposal
@@ -178,7 +178,7 @@ Public Class FrmEvaluation
         DbxEvaluationDate.Text = _Evaluation.EvaluationDate
         TbxStartTime.Time = _Evaluation.StartTime
         TbxEndTime.Time = _Evaluation.EndTime
-        TxtEvaluationNumber.Text = _Evaluation.EvaluationNumber
+        TxtReference.Text = _Evaluation.Reference
         TxtResponsible.Text = _Evaluation.Responsible
         QbxCompressor.Conditions.Clear()
         QbxCompressor.Parameters.Clear()
@@ -266,9 +266,9 @@ Public Class FrmEvaluation
             If Not TcEvaluation.TabPages.Cast(Of TabPage).Any(Function(x) x.Equals(_TabPageSignature)) Then TcEvaluation.TabPages.Add(_TabPageSignature)
 
         End If
-        TxtEvaluationNumber.Enabled = _Evaluation.Source = EvaluationSource.Manual
+        TxtReference.Enabled = _Evaluation.Source = EvaluationSource.Manual
         BtnSave.Enabled = False
-        TxtEvaluationNumber.Select()
+        TxtReference.Select()
         _Loading = False
     End Sub
 #End Region
@@ -295,11 +295,11 @@ Public Class FrmEvaluation
             TcEvaluation.SelectedTab = TabMain
             BtnCallTypeHasRepairNeedProposal.Select()
             Return False
-        ElseIf String.IsNullOrWhiteSpace(TxtEvaluationNumber.Text) Then
-            EprValidation.SetError(LblEvaluationReference, "Campo obrigatório.")
-            EprValidation.SetIconAlignment(LblEvaluationReference, ErrorIconAlignment.MiddleRight)
+        ElseIf String.IsNullOrWhiteSpace(TxtReference.Text) Then
+            EprValidation.SetError(LblReference, "Campo obrigatório.")
+            EprValidation.SetIconAlignment(LblReference, ErrorIconAlignment.MiddleRight)
             TcEvaluation.SelectedTab = TabMain
-            TxtEvaluationNumber.Select()
+            TxtReference.Select()
             Return False
         ElseIf Not IsDate(DbxEvaluationDate.Text) Then
             EprValidation.SetError(LblEvaluationDate, "Data inválida")
@@ -434,7 +434,7 @@ Public Class FrmEvaluation
                     _Evaluation.EvaluationDate = DbxEvaluationDate.Text
                     _Evaluation.StartTime = TbxStartTime.Time
                     _Evaluation.EndTime = TbxEndTime.Time
-                    _Evaluation.EvaluationNumber = TxtEvaluationNumber.Text
+                    _Evaluation.Reference = TxtReference.Text
                     _Evaluation.Customer = New Person().Load(QbxCustomer.FreezedPrimaryKey, False)
                     _Evaluation.Responsible = TxtResponsible.Text
                     _Evaluation.Horimeter = DbxHorimeter.DecimalValue
@@ -698,7 +698,7 @@ Public Class FrmEvaluation
         End If
     End Sub
     Private Sub BtnSavePDF_Click(sender As Object, e As EventArgs) Handles BtnSavePDF.Click
-        SfdDocument.FileName = Path.GetFileName("Avaliação " & _Evaluation.EvaluationNumber)
+        SfdDocument.FileName = Path.GetFileName("Avaliação " & _Evaluation.Reference)
         SfdDocument.Filter = "Documento PDF|*.pdf"
         If SfdDocument.ShowDialog() = DialogResult.OK Then
             PdfDocumentViewer.LoadedDocument.Save(SfdDocument.FileName)
@@ -1085,7 +1085,7 @@ Public Class FrmEvaluation
     End Sub
     Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles TxtTechnicalAdvice.TextChanged,
                                                                          TxtResponsible.TextChanged,
-                                                                         TxtEvaluationNumber.TextChanged,
+                                                                         TxtReference.TextChanged,
                                                                          QbxCustomer.TextChanged,
                                                                          DbxAverageWorkLoad.TextChanged,
                                                                          TbxStartTime.TextChanged,

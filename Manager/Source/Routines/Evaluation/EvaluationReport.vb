@@ -32,7 +32,7 @@ Public Class EvaluationReport
         WsReport.Range(1, 1, 1, 6).Style.Font.SetFontSize(14)
         WsReport.Cell(1, 7).CreateRichText.
             AddText("Nº ").SetBold(True).SetFontSize(14).
-            AddText(ReportingEvaluation.EvaluationNumber).SetFontSize(12)
+            AddText(ReportingEvaluation.Reference).SetFontSize(12)
         WsReport.Range(1, 7, 1, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
         Dim LogoLocation As String = Path.Combine(ApplicationPaths.LogoDirectory, Path.GetFileName(Session.Setting.Company.LogoLocation))
         If File.Exists(LogoLocation) Then
@@ -298,7 +298,7 @@ Public Class EvaluationReport
         WbReport.SaveAs(Result.FilePath & ".xlsx")
         Converter = New ExcelToPdfConverter(Result.FilePath & ".xlsx")
         Converter.Convert(New ExcelToPdfConverterSettings() With {.EmbedFonts = True}).Save(Result.FilePath & ".pdf")
-        Result.ReportName = $"Relatório de Atendimento {ReportingEvaluation.EvaluationNumber} - { ReportingEvaluation.Customer.ShortName} - {ReportingEvaluation.Compressor.CompressorName}{If(Not String.IsNullOrEmpty(ReportingEvaluation.Compressor.SerialNumber), $" NS {ReportingEvaluation.Compressor.SerialNumber}", String.Empty)}"
+        Result.ReportName = $"Relatório de Atendimento {ReportingEvaluation.Reference} - { ReportingEvaluation.Customer.ShortName} - {ReportingEvaluation.Compressor.CompressorName}{If(Not String.IsNullOrEmpty(ReportingEvaluation.Compressor.SerialNumber), $" NS {ReportingEvaluation.Compressor.SerialNumber}", String.Empty)}"
         Result.Attachments.Insert(0, New ReportResult.ReportAttachment(Result.FilePath & ".pdf", "Relatório de Atendimento.pdf"))
         Return Result
     End Function

@@ -104,7 +104,7 @@ Partial Class FrmEvaluation
         Me.BtnCallTypeHasRepairNeedProposal = New ControlLibrary.RichTextButton()
         Me.BtnUnitTemperaturePressure = New ControlLibrary.RichTextButton()
         Me.QbxCustomer = New ControlLibrary.QueriedBox()
-        Me.TxtEvaluationNumber = New System.Windows.Forms.TextBox()
+        Me.TxtReference = New System.Windows.Forms.TextBox()
         Me.LblEndTime = New System.Windows.Forms.Label()
         Me.LblStartTime = New System.Windows.Forms.Label()
         Me.CbxManualAverageWorkLoad = New System.Windows.Forms.CheckBox()
@@ -117,7 +117,7 @@ Partial Class FrmEvaluation
         Me.LblEvaluationDate = New System.Windows.Forms.Label()
         Me.LblCustomer = New System.Windows.Forms.Label()
         Me.LblAverageWorkLoad = New System.Windows.Forms.Label()
-        Me.LblEvaluationReference = New System.Windows.Forms.Label()
+        Me.LblReference = New System.Windows.Forms.Label()
         Me.LblResponsible = New System.Windows.Forms.Label()
         Me.TxtResponsible = New System.Windows.Forms.TextBox()
         Me.DbxEvaluationDate = New ControlLibrary.DateBox()
@@ -632,7 +632,7 @@ Partial Class FrmEvaluation
         Me.GbxMain.Controls.Add(Me.BtnCallTypeHasRepairNeedProposal)
         Me.GbxMain.Controls.Add(Me.BtnUnitTemperaturePressure)
         Me.GbxMain.Controls.Add(Me.QbxCustomer)
-        Me.GbxMain.Controls.Add(Me.TxtEvaluationNumber)
+        Me.GbxMain.Controls.Add(Me.TxtReference)
         Me.GbxMain.Controls.Add(Me.LblEndTime)
         Me.GbxMain.Controls.Add(Me.LblStartTime)
         Me.GbxMain.Controls.Add(Me.CbxManualAverageWorkLoad)
@@ -642,7 +642,7 @@ Partial Class FrmEvaluation
         Me.GbxMain.Controls.Add(Me.LblEvaluationDate)
         Me.GbxMain.Controls.Add(Me.LblCustomer)
         Me.GbxMain.Controls.Add(Me.LblAverageWorkLoad)
-        Me.GbxMain.Controls.Add(Me.LblEvaluationReference)
+        Me.GbxMain.Controls.Add(Me.LblReference)
         Me.GbxMain.Controls.Add(Me.LblResponsible)
         Me.GbxMain.Controls.Add(Me.TxtResponsible)
         Me.GbxMain.Controls.Add(Me.DbxEvaluationDate)
@@ -882,15 +882,15 @@ Partial Class FrmEvaluation
         Me.QbxCustomer.Suffix = Nothing
         Me.QbxCustomer.TabIndex = 11
         '
-        'TxtEvaluationNumber
+        'TxtReference
         '
-        Me.TxtEvaluationNumber.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtEvaluationNumber.Location = New System.Drawing.Point(6, 101)
-        Me.TxtEvaluationNumber.MaxLength = 10
-        Me.TxtEvaluationNumber.Name = "TxtEvaluationNumber"
-        Me.TxtEvaluationNumber.Size = New System.Drawing.Size(105, 23)
-        Me.TxtEvaluationNumber.TabIndex = 3
-        Me.TxtEvaluationNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.TxtReference.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtReference.Location = New System.Drawing.Point(6, 101)
+        Me.TxtReference.MaxLength = 10
+        Me.TxtReference.Name = "TxtReference"
+        Me.TxtReference.Size = New System.Drawing.Size(105, 23)
+        Me.TxtReference.TabIndex = 3
+        Me.TxtReference.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'LblEndTime
         '
@@ -1033,14 +1033,14 @@ Partial Class FrmEvaluation
         Me.LblAverageWorkLoad.Text = "CMT"
         Me.Tip.SetToolTip(Me.LblAverageWorkLoad, "Carga Média de Trabalho")
         '
-        'LblEvaluationReference
+        'LblReference
         '
-        Me.LblEvaluationReference.AutoSize = True
-        Me.LblEvaluationReference.Location = New System.Drawing.Point(6, 81)
-        Me.LblEvaluationReference.Name = "LblEvaluationReference"
-        Me.LblEvaluationReference.Size = New System.Drawing.Size(76, 17)
-        Me.LblEvaluationReference.TabIndex = 2
-        Me.LblEvaluationReference.Text = "Referência"
+        Me.LblReference.AutoSize = True
+        Me.LblReference.Location = New System.Drawing.Point(6, 81)
+        Me.LblReference.Name = "LblReference"
+        Me.LblReference.Size = New System.Drawing.Size(76, 17)
+        Me.LblReference.TabIndex = 2
+        Me.LblReference.Text = "Referência"
         '
         'LblResponsible
         '
@@ -1691,7 +1691,7 @@ Partial Class FrmEvaluation
     Friend WithEvents QbxCompressor As ControlLibrary.QueriedBox
     Friend WithEvents LblCompressor As Label
     Friend WithEvents LblResponsible As Label
-    Friend WithEvents LblEvaluationReference As Label
+    Friend WithEvents LblReference As Label
     Friend WithEvents LblEvaluationDate As Label
     Friend WithEvents LblCustomer As Label
     Friend WithEvents TabTechnicalAdvice As TabPage
@@ -1735,7 +1735,7 @@ Partial Class FrmEvaluation
     Friend WithEvents BtnCalculate As Button
     Friend WithEvents EprInformation As ErrorProvider
     Friend WithEvents BtnDisapprove As ToolStripMenuItem
-    Friend WithEvents TxtEvaluationNumber As TextBox
+    Friend WithEvents TxtReference As TextBox
     Friend WithEvents QbxCustomer As ControlLibrary.QueriedBox
     Friend WithEvents Tip As ToolTip
     Friend WithEvents GbxTechnicians As GroupBox

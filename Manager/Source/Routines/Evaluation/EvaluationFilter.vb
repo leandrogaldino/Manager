@@ -31,8 +31,8 @@ Public Class EvaluationFilter
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(UpperNoAccentConverter))>
-    <DisplayName("Nº Avaliação")>
-    Public Property EvaluationNumber As String
+    <DisplayName("Referência")>
+    Public Property Reference As String
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(UpperNoAccentConverter))>
@@ -95,7 +95,7 @@ Public Class EvaluationFilter
                 If Source.Imported = "Sim" Or Source.Imported = Nothing Then SourceList.Add(CInt(EvaluationSource.Imported))
                 Cmd.Parameters.AddWithValue("@sourceid", String.Join(",", SourceList)) : Filtering = True
                 If CallType <> Nothing Then Cmd.Parameters.AddWithValue("@calltypeid", CInt(EnumHelper.GetEnumValue(Of CallType)(CallType.ToUpper))) : Filtering = True Else Cmd.Parameters.AddWithValue("@calltypeid", "%")
-                If EvaluationNumber <> Nothing Then Cmd.Parameters.AddWithValue("@evaluationnumber", EvaluationNumber) : Filtering = True Else Cmd.Parameters.AddWithValue("@evaluationnumber", "%")
+                If Reference <> Nothing Then Cmd.Parameters.AddWithValue("@reference", Reference) : Filtering = True Else Cmd.Parameters.AddWithValue("@reference", "%")
                 If TechnicalAdvice <> Nothing Then Cmd.Parameters.AddWithValue("@technicaladvice", TechnicalAdvice) : Filtering = True Else Cmd.Parameters.AddWithValue("@technicaladvice", "%")
                 If Note <> Nothing Then Cmd.Parameters.AddWithValue("@note", Note) : Filtering = True Else Cmd.Parameters.AddWithValue("@note", "%")
                 If Technician.ID <> Nothing Then Cmd.Parameters.AddWithValue("@technicianid", Technician.ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@technicianid", "%")
@@ -146,7 +146,7 @@ Public Class EvaluationFilter
         Status = New EvaluationStatusExpandable
         Source = New EvaluationSourceExpandable
         CallType = Nothing
-        EvaluationNumber = Nothing
+        Reference = Nothing
         Technician = New PersonExpandable
         Customer = New PersonExpandable
         Compressor = New PersonCompressorExpandable

@@ -27,7 +27,7 @@ SELECT
         WHEN evaluation.hasrepairid = 1 THEN "NÃO"
     END AS 'Houve Reparo',
     evaluation.evaluationdate AS 'Data Avaliação',
-    evaluation.evaluationnumber AS 'Nº Avaliação',
+    evaluation.reference AS 'Referência',
     customer.shortname AS 'Cliente',
     evaluation.responsible AS 'Responsável',
     CONCAT(compressor.name, IF(personcompressor.serialnumber IS NOT NULL AND personcompressor.serialnumber <> '', CONCAT(' NS: ', personcompressor.serialnumber), '')) AS 'Compressor',
@@ -46,7 +46,7 @@ WHERE
     FIND_IN_SET(evaluation.statusid, @statusid) AND
     FIND_IN_SET(evaluation.sourceid, @sourceid) AND
     IFNULL(evaluation.calltypeid, '') LIKE @calltypeid AND
-    IFNULL(evaluation.evaluationnumber,'') LIKE CONCAT('%', @evaluationnumber, '%') AND
+    IFNULL(evaluation.reference,'') LIKE CONCAT('%', @reference, '%') AND
     IFNULL(evaluation.technicaladvice,'') LIKE CONCAT('%', @technicaladvice, '%') AND
     IFNULL(technician.id,'') LIKE @technicianid AND
     IFNULL(technician.document,'') LIKE CONCAT('%', @techniciandocument, '%') AND

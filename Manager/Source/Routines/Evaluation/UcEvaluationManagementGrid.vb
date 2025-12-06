@@ -246,7 +246,7 @@ Public Class UcEvaluationManagementGrid
                     Dim SelectedEvaluation As Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("evaluation").Value, False)
                     Dim NewEvaluation As New Evaluation With {
                         .Source = EvaluationSource.Automatic,
-                        .EvaluationNumber = Evaluation.GetEvaluationNumber(EvaluationSource.Automatic),
+                        .Reference = Evaluation.GetEvaluationReference(EvaluationSource.Automatic),
                         .AverageWorkLoad = SelectedEvaluation.AverageWorkLoad,
                         .Compressor = SelectedEvaluation.Compressor,
                         .Customer = SelectedEvaluation.Customer,

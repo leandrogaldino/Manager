@@ -9,7 +9,7 @@ UPDATE evaluation SET
     evaluationdate = @evaluationdate,
     starttime = @starttime,
     endtime = @endtime,
-    evaluationnumber = @evaluationnumber,
+    reference = @reference,
     customerid = @customerid,
     responsible = @responsible,
     personcompressorid = @personcompressorid,

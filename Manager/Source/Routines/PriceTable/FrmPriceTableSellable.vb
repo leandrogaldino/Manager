@@ -37,7 +37,11 @@ Public Class FrmPriceTableSellable
         LblOrderValue.Text = If(_PriceTableItem.IsSaved, _PriceTableForm.DgvPriceTableSellable.SelectedRows(0).Cells("Order").Value, 0)
         LblCreationValue.Text = _PriceTableItem.Creation
         ClearQbxSellable()
-        SetUpQbxSellableForProduct()
+        If _PriceTableItem.SellableType = SellableType.None Then
+            If RbtProduct.Checked Then _PriceTableItem.SellableType = SellableType.Product
+            If RbtService.Checked Then _PriceTableItem.SellableType = SellableType.Service
+        End If
+        If _PriceTableItem.SellableType = SellableType.Product Then SetUpQbxSellableForProduct()
         If _PriceTableItem.SellableType = SellableType.Service Then SetUpQbxSellableForService()
         If _PriceTableItem.Sellable Is Nothing Then RbtProduct.Checked = True
         If _PriceTableItem.Sellable IsNot Nothing AndAlso _PriceTableItem. SellableType = SellableType.Product Then RbtProduct.Checked = True

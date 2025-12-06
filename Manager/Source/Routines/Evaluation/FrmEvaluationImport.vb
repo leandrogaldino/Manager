@@ -1,7 +1,6 @@
 ﻿Imports ManagerCore
 Imports ControlLibrary
 Imports System.IO
-
 Public Class FrmEvaluationImport
     Private _EvaluationData As Dictionary(Of String, Object) = Nothing
     Private _GridControl As UcEvaluationGrid
@@ -9,28 +8,23 @@ Public Class FrmEvaluationImport
     Private _LocalDB As LocalDB
     Private _Storage As Storage
     Private _Session As Session
-
     Public Sub New()
         InitializeComponent()
         InitializeDatabases()
         InitializeDbListener()
     End Sub
-
     Public Sub New(GridControl As UcEvaluationGrid)
         InitializeComponent()
         InitializeDatabases()
         InitializeDbListener()
         _GridControl = GridControl
     End Sub
-
-
     Private Sub InitializeDatabases()
         _Session = Locator.GetInstance(Of Session)
         _Storage = Locator.GetInstance(Of Storage)
         _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
         _LocalDB = Locator.GetInstance(Of LocalDB)
     End Sub
-
     Private Sub InitializeDbListener()
         Dim Condition As New List(Of RemoteDB.Condition) From {
             New RemoteDB.WhereEqualToCondition("info.importedid", Nothing)
@@ -43,8 +37,6 @@ Public Class FrmEvaluationImport
                                                      End If
                                                  End Sub
     End Sub
-
-
     Private Sub FrmEvaluationImport_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         ControlHelper.EnableControlDoubleBuffer(DgvEvaluations, True)
         SyncTimer.Stop()
@@ -53,46 +45,30 @@ Public Class FrmEvaluationImport
             DialogResult = DialogResult.Cancel
         End If
     End Sub
-
     Private Async Sub FillDgv(Docs As List(Of Dictionary(Of String, Object)))
-        ' Defina as colunas do DataGridView se ainda não estiverem definidas
         If DgvEvaluations.Columns.Count = 0 Then
             DgvEvaluations.Columns.Add("Status", "Status")
             DgvEvaluations.Columns.Add("Data", "Data")
             DgvEvaluations.Columns.Add("Cliente", "Cliente")
             DgvEvaluations.Columns.Add("Compressor", "Compressor")
         End If
-
-        ' Limpar as linhas existentes
         DgvEvaluations.Rows.Clear()
-
-        ' Adicione os dados ao DataGridView
         If Docs IsNot Nothing AndAlso Docs.Count > 0 Then
             For Each doc In Docs
-                Dim Status As String = If(String.IsNullOrEmpty(doc("info")("importingby")), EnumHelper.GetEnumDescription(CloudSyncStatus.NotImported), EnumHelper.GetEnumDescription(CloudSyncStatus.Importing))
-
-
+                Dim Status As String
                 Dim Result As LocalDB.QueryResult = Await _LocalDB.ExecuteRawQueryAsync("SELECT c.id, c.name, pc.serialnumber, pc.sector FROM compressor c LEFT JOIN personcompressor pc ON c.id = pc.compressorid WHERE pc.id = @id", New Dictionary(Of String, Object) From {{"@id", doc("compressorid")}})
                 Dim CompressorName As String = Result.Data(0)("name").ToString
                 Dim SerialNumber As String = $" {Result.Data(0)("serialnumber")}"
                 Dim Sector As String = $" {Result.Data(0)("sector")}"
-                'doc("compressorid") = Result.Data(0)("id")
-
                 Result = Await _LocalDB.ExecuteRawQueryAsync("SELECT p.id, p.shortname FROM person p LEFT JOIN personcompressor pc ON p.id = pc.personid WHERE pc.id = @id", New Dictionary(Of String, Object) From {{"@id", doc("compressorid")}})
                 Dim CustomerName As String = Result.Data(0)("shortname").ToString
-                'doc("customerid") = Result.Data(0)("id")
                 Dim EvaluationDate As String = DateTimeHelper.DateFromMilliseconds(doc("creationdate")).ToString("dd/MM/yyyy")
-
                 Dim row As New DataGridViewRow()
-
-
                 If IsDate(doc("info")("importingdate")) AndAlso Now < CDate(doc("info")("importingdate")).AddMinutes(10) Then
                     Status = EnumHelper.GetEnumDescription(CloudSyncStatus.Importing)
                 Else
                     Status = EnumHelper.GetEnumDescription(CloudSyncStatus.NotImported)
                 End If
-
-
                 row.CreateCells(DgvEvaluations)
                 row.Cells(0).Value = Status
                 row.Cells(1).Value = EvaluationDate
@@ -106,13 +82,10 @@ Public Class FrmEvaluationImport
         DgvEvaluations.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
         DgvEvaluations.Columns(2).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         DgvEvaluations.Columns(3).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-
     End Sub
-
     Private Async Sub DgvEvaluations_CellMouseDoubleClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DgvEvaluations.CellMouseDoubleClick
         Await Import()
     End Sub
-
     Private Async Sub SyncTimer_Tick(sender As Object, e As EventArgs) Handles SyncTimer.Tick
         If _EvaluationData IsNot Nothing AndAlso _EvaluationData.Count > 0 Then
             If IsDate(_EvaluationData("info")("importingdate")) AndAlso Now > CDate(_EvaluationData("info")("importingdate")).AddMinutes(1) Then
@@ -121,14 +94,11 @@ Public Class FrmEvaluationImport
             End If
         End If
     End Sub
-
     Private Async Sub RefreshTimer_Tick(sender As Object, e As EventArgs) Handles RefreshTimer.Tick
         RefreshTimer.Stop()
         Await RefreshSync()
         RefreshTimer.Start()
     End Sub
-
-
     Private Async Function RefreshSync() As Task
         For Each Row As DataGridViewRow In DgvEvaluations.Rows
             If Row.DataGridView.Columns.Contains("Status") Then
@@ -143,12 +113,9 @@ Public Class FrmEvaluationImport
             End If
         Next Row
     End Function
-
     Private Async Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
         Await Import()
     End Sub
-
-
     Private Async Function Import() As Task
         Dim TempPath As String
         Dim TempSignature As String
@@ -174,7 +141,6 @@ Public Class FrmEvaluationImport
                     If Not SelectedRow.Cells("Status").Value = EnumHelper.GetEnumDescription(CloudSyncStatus.Importing) Then
                         _EvaluationData("info")("importingdate") = Now.ToString("yyyy-MM-dd HH:mm:ss")
                         _EvaluationData("info")("importingby") = _Session.User.Username
-                        'TODO: Verificar se aqui vai salvar uma nova avaliação na nuvem ou se vai atualizar a que está lá
                         Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
                         SyncTimer.Start()
                         SignatureData = Await _Storage.DownloadFile(_EvaluationData("signaturepath"))

@@ -974,6 +974,11 @@ Public Class Evaluation
         Evaluation.EvaluationDate = DateTimeHelper.DateFromMilliseconds(Data("creationdate"))
         Evaluation.StartTime = TimeSpan.ParseExact(Data("starttime"), "hh\:mm", Nothing)
         Evaluation.EndTime = TimeSpan.ParseExact(Data("endtime"), "hh\:mm", Nothing)
+
+        If Evaluation.StartTime = Evaluation.EndTime Then
+            Evaluation.EndTime = Evaluation.EndTime.Add(New TimeSpan(0, 1, 0))
+        End If
+
         Evaluation.Horimeter = Data("horimeter")
         Dim AirFilter As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelables.Where(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.AirFilter).ToList
         Dim OilFilter As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelables.Where(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.OilFilter).ToList

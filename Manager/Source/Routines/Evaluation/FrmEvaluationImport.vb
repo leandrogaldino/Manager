@@ -171,14 +171,14 @@ Public Class FrmEvaluationImport
                             If EvaluationSourceForm Is Nothing OrElse (EvaluationSourceForm IsNot Nothing AndAlso EvaluationSourceForm.ResultEvaluation.ID = 0) Then
                                 _EvaluationData("info")("importingby") = Nothing
                                 _EvaluationData("info")("importingdate") = Nothing
-                                _EvaluationData("info")("importedid") = Nothing
+                                ' _EvaluationData("info")("importedid") = Nothing
                                 _EvaluationData("info")("importingby") = Nothing
                                 _EvaluationData("info")("importingdate") = Nothing
                                 Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
                             Else
                                 _EvaluationData("info")("importedby") = _Session.User.Username
                                 _EvaluationData("info")("importeddate") = Now.ToString("dd/MM/yyyy HH:mm:ss")
-                                _EvaluationData("info")("importedid") = EvaluationSourceForm.ResultEvaluation.ID
+                                ' _EvaluationData("info")("importedid") = EvaluationSourceForm.ResultEvaluation.ID
                                 _EvaluationData("info")("importingby") = Nothing
                                 _EvaluationData("info")("importingdate") = Nothing
                                 Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))

@@ -822,3 +822,5 @@ SET SQL_SAFE_UPDATES = 1;
 
 ALTER TABLE evaluation ADD COLUMN visitscheduleid INT AFTER rejectreason;
 ALTER TABLE evaluation ADD COLUMN cloudid VARCHAR(255) AFTER id;
+
+ALTER TABLE `manager`.`agentevent` CHANGE COLUMN `description` `description` TEXT NULL DEFAULT NULL ;

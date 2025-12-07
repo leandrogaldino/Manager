@@ -1,4 +1,5 @@
-﻿Imports ControlLibrary
+﻿Imports System.ComponentModel
+Imports ControlLibrary
 Imports ManagerCore
 Imports ManagerCore.LocalDB
 Imports ManagerCore.RemoteDB
@@ -77,7 +78,7 @@ Public Class TaskCloudSync
             Dim Result As QueryResult = Await _LocalDB.ExecuteSelectAsync(
                 "log",
                 New List(Of String) From {"id", "routineid", "registryid", "fieldname", "oldvalue", "newvalue", "changedate"},
-                "changedate > @changedate AND routineid IN (@person, @compressor, @personcompressor, @personcompressorsellable, @product, @productprovidercode, @service, @visitschedule)",
+                "changedate > @changedate AND routineid IN (@person, @compressor, @personcompressor, @personcompressorsellable, @product, @productprovidercode, @service, @visitschedule, @evaluation)",
                 New Dictionary(Of String, Object) From {
                     {"@changedate", LastSyncTime},
                     {"@person", 2},
@@ -87,7 +88,8 @@ Public Class TaskCloudSync
                     {"@product", 6},
                     {"@productprovidercode", 601},
                     {"@service", 23},
-                    {"@visitschedule", 22}
+                    {"@visitschedule", 22},
+                    {"@evaluation", 13}
                 },
                 "id ASC"
             )
@@ -108,6 +110,8 @@ Public Class TaskCloudSync
                     Select Case Change("routineid")
                         Case 12
                             Await FetchCompressor(Change)
+                        Case 13
+                            Await FetchEvaluation(Change)
                         Case 2
                             Await FetchPerson(Change)
                         Case 203
@@ -225,6 +229,22 @@ Public Class TaskCloudSync
             Await _RemoteDB.ExecuteUpdate("visitschedules",
                                           New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(Now)}},
                                           New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
+        End If
+    End Function
+
+    Private Async Function FetchEvaluation(Change As Dictionary(Of String, Object)) As Task
+        Dim Result = Await _LocalDB.ExecuteSelectAsync("evaluation",
+                                                 New List(Of String) From {"id", "sourceid", "cloudid", "visitscheduleid"},
+                                                 "id = @id",
+                                                 New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
+                                                 Limit:=1)
+        If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
+            Dim EvaluationData As Dictionary(Of String, Object)
+            EvaluationData = Result.Data(0)
+            If EvaluationData("sourceid") = 1 Then
+                Await _RemoteDB.ExecuteUpdate("evaluations", New Dictionary(Of String, Object) From {{"info.importedid", EvaluationData("id")}}, New List(Of Condition) From {New WhereEqualToCondition("id", EvaluationData("cloudid"))})
+                Await _LocalDB.ExecuteUpdateAsync("visitschedule", New Dictionary(Of String, String) From {{"evaluationid", "@evaluationid"}}, "id = @id", New Dictionary(Of String, Object) From {{"@evaluationid", EvaluationData("id")}, {"@id", EvaluationData("visitscheduleid")}})
+            End If
         End If
     End Function
     Private Async Function FetchCompressor(Change As Dictionary(Of String, Object)) As Task

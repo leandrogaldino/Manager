@@ -9,6 +9,8 @@ Public Class Evaluation
     Private _Compressor As New PersonCompressor
     Private _Status As EvaluationStatus = EvaluationStatus.Disapproved
     Private _RejectReason As String
+    Public Property CloudID As String = Nothing
+    Public Property VisitScheduleID As Long = 0
     Public ReadOnly Property Status As EvaluationStatus
         Get
             Return _Status
@@ -59,6 +61,8 @@ Public Class Evaluation
         SetIsSaved(False)
         SetID(0)
         SetCreation(Today)
+        CloudID = Nothing
+        VisitScheduleID = 0
         _Status = EvaluationStatus.Disapproved
         CallType = CallType.None
         NeedProposal = ConfirmationType.None
@@ -107,6 +111,8 @@ Public Class Evaluation
                         SetID(TableResult.Rows(0).Item("id"))
                         SetCreation(TableResult.Rows(0).Item("creation"))
                         SetIsSaved(True)
+                        CloudID = Convert.ToString(TableResult.Rows(0).Item("cloudid"))
+                        VisitScheduleID = If(TableResult.Rows(0).Item("visitscheduleid") Is DBNull.Value, 0, Convert.ToInt32(TableResult.Rows(0).Item("visitscheduleid")))
                         _Status = Convert.ToInt32(TableResult.Rows(0).Item("statusid"))
                         Source = Convert.ToInt32(TableResult.Rows(0).Item("sourceid"))
                         CallType = Convert.ToInt32(TableResult.Rows(0).Item("calltypeid"))
@@ -203,6 +209,8 @@ Public Class Evaluation
             Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
                 Con.Open()
                 Using CmdEvaluation As New MySqlCommand(My.Resources.EvaluationInsert, Con)
+                    CmdEvaluation.Parameters.AddWithValue("@cloudid", If(String.IsNullOrEmpty(CloudID), DBNull.Value, CloudID))
+                    CmdEvaluation.Parameters.AddWithValue("@visitscheduleid", If(VisitScheduleID = 0, DBNull.Value, VisitScheduleID))
                     CmdEvaluation.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     CmdEvaluation.Parameters.AddWithValue("@statusid", Convert.ToInt32(Status))
                     CmdEvaluation.Parameters.AddWithValue("@sourceid", Convert.ToInt32(Source))
@@ -951,6 +959,8 @@ Public Class Evaluation
         Dim ProductCode As String
         Dim Service As Service
         Evaluation.Reference = GetEvaluationReference(EvaluationSource.Imported)
+        Evaluation.CloudID = Convert.ToString(Data("id"))
+        Evaluation.VisitScheduleID = If(Data("info")("visitscheduleid") = Nothing, 0, Convert.ToInt32(Data("info")("visitscheduleid")))
         Evaluation.Source = EvaluationSource.Imported
         Evaluation.CallType = Convert.ToInt32(Data("calltypeid"))
         Evaluation.HasRepair = ConfirmationType.None

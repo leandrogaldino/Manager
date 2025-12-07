@@ -1,5 +1,7 @@
 SELECT
 	evaluation.id,
+	evaluation.cloudid,
+	evaluation.visitscheduleid,
 	evaluation.creation,
 	evaluation.sourceid,
     evaluation.statusid,

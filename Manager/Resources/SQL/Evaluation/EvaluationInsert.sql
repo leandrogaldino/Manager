@@ -1,5 +1,7 @@
 INSERT INTO evaluation
 (
+	cloudid,
+	visitscheduleid,
 	creation,
     statusid,
 	sourceid,
@@ -27,6 +29,8 @@ INSERT INTO evaluation
 )
 VALUES
 (
+	@cloudid,
+	@visitscheduleid,
 	@creation,
 	@statusid,
 	@sourceid,

@@ -819,3 +819,6 @@ DELIMITER ;
 SET SQL_SAFE_UPDATES = 0;
 UPDATE LOG SET fieldname = 'Referência' WHERE fieldname = 'Nº Avaliação';
 SET SQL_SAFE_UPDATES = 1;
+
+ALTER TABLE evaluation ADD COLUMN visitscheduleid INT AFTER rejectreason;
+ALTER TABLE evaluation ADD COLUMN cloudid VARCHAR(255) AFTER id;

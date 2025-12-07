@@ -210,7 +210,7 @@ Public Class TaskCloudSync
     End Function
     Private Async Function FetchVisitSchedule(Change As Dictionary(Of String, Object)) As Task
         Dim Result = Await _LocalDB.ExecuteSelectAsync("visitschedule",
-                                                 New List(Of String) From {"id", "creation creationdate", "statusid", "scheduleddate", "IFNULL(performeddate, '') performeddate", "calltypeid", "customerid", "personcompressorid compressorid", "technicianid", "instructions"},
+                                                 New List(Of String) From {"id", "creation creationdate", "statusid", "scheduleddate", "performeddate", "calltypeid", "customerid", "personcompressorid compressorid", "technicianid", "instructions"},
                                                  "id = @id",
                                                  New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
                                                  Limit:=1)
@@ -219,7 +219,10 @@ Public Class TaskCloudSync
             ScheduleData = Result.Data(0)
             ScheduleData("creationdate") = DateTimeHelper.MillisecondsFromDate(ScheduleData(("creationdate")))
             ScheduleData("scheduleddate") = DateTimeHelper.MillisecondsFromDate(ScheduleData(("scheduleddate")))
-            ScheduleData("performeddate") = Nothing
+
+            ScheduleData("performeddate") = If(ScheduleData("performeddate") Is DBNull.Value, Nothing, DateTimeHelper.MillisecondsFromDate(ScheduleData("performeddate")))
+
+            'ScheduleData("performeddate") = Nothing
             ScheduleData("lastupdate") = DateTimeHelper.MillisecondsFromDate(Now)
             ScheduleData("visible") = If(ScheduleData("statusid") = 0, 1, 0)
             ScheduleData.Remove("statusid")

@@ -244,7 +244,7 @@ Public Class TaskCloudSync
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             Dim EvaluationData As Dictionary(Of String, Object)
             EvaluationData = Result.Data(0)
-            If EvaluationData("sourceid") = 1 Then
+            If EvaluationData("sourceid") = 2 Then
                 Await _RemoteDB.ExecuteUpdate("evaluations", New Dictionary(Of String, Object) From {{"info.importedid", EvaluationData("id")}}, New List(Of Condition) From {New WhereEqualToCondition("id", EvaluationData("cloudid"))})
                 Await _LocalDB.ExecuteUpdateAsync("visitschedule", New Dictionary(Of String, String) From {{"evaluationid", "@evaluationid"}}, "id = @id", New Dictionary(Of String, Object) From {{"@evaluationid", EvaluationData("id")}, {"@id", EvaluationData("visitscheduleid")}})
             End If

@@ -91,49 +91,11 @@ Public Class FrmVisitSchedule
                     Form.ShowDialog()
                 End Using
             Else
-                CMessageBox.Show("Essa avaliação não existe mais.", CMessageBoxType.Information)
+                CMessageBox.Show("Essa avaliação foi excluída.", CMessageBoxType.Information)
             End If
         End If
     End Sub
-    Private Sub UcVisitScheduleGeneratedItems_VisitScheduleClick(sender As Object, e As EventArgs)
-        Dim VisitSchedule As VisitSchedule = If(sender, Nothing)
-        If VisitSchedule IsNot Nothing Then
-            CcoGeneratedItems.CloseDropDown()
-            If VisitSchedule.ID > 0 Then
-                Using Form As New FrmVisitSchedule(VisitSchedule)
-                    ControlHelper.GetAllControls(Form, False).ToList.ForEach(Sub(c) c.Enabled = False)
-                    Form.PnButtons.Visible = False
-                    Form.Height -= PnButtons.Height
-                    Form.TsTitle.Visible = False
-                    Form.LblCallType.Top -= TsTitle.Height
-                    Form.CbxCallType.Top -= TsTitle.Height
-                    Form.LblScheduledDate.Top -= TsTitle.Height
-                    Form.DbxScheduledDate.Top -= TsTitle.Height
-                    Form.TbxScheduledTime.Top -= TsTitle.Height
-                    Form.LblPerformedDate.Top -= TsTitle.Height
-                    Form.TxtPerformedDate.Top -= TsTitle.Height
-                    Form.TxtPerformedTime.Top -= TsTitle.Height
-                    Form.LblGeneratedItems.Top -= TsTitle.Height
-                    Form.BtnGeneratedItems.Top -= TsTitle.Height
-                    Form.FlpCustomer.Top -= TsTitle.Height
-                    Form.LblCustomer.Top -= TsTitle.Height
-                    Form.QbxCustomer.Top -= TsTitle.Height
-                    Form.LblCompressor.Top -= TsTitle.Height
-                    Form.QbxCompressor.Top -= TsTitle.Height
-                    Form.FlpTechnician.Top -= TsTitle.Height
-                    Form.LblTechnician.Top -= TsTitle.Height
-                    Form.QbxTechnician.Top -= TsTitle.Height
-                    Form.LblInstructions.Top -= TsTitle.Height
-                    Form.TxtInstructions.Top -= TsTitle.Height
-                    Form.LblGeneratedItems.Visible = False
-                    Form.BtnGeneratedItems.Visible = False
-                    Form.ShowDialog()
-                End Using
-            Else
-                CMessageBox.Show("Esse agendamento não existe mais.", CMessageBoxType.Information)
-            End If
-        End If
-    End Sub
+
     Private Sub UcVisitScheduleGeneratedItems_ValueChanged(sender As Object, e As EventArgs)
         Dim HasEvaluation As String
         HasEvaluation = If(_UcVisitScheduleGeneratedItems.EvaluationID > 0, "Sim", "Não")

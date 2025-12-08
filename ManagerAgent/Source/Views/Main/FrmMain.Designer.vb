@@ -69,6 +69,7 @@ Partial Class FrmMain
         Me.Label2 = New System.Windows.Forms.Label()
         Me.DgvWarnings = New System.Windows.Forms.DataGridView()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.DataGridViewContentCopy = New ControlLibrary.DataGridViewContentCopy()
         Me.CmsNotifyIcon.SuspendLayout()
         CType(Me.DgvEvents, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsTitle.SuspendLayout()
@@ -533,6 +534,13 @@ Partial Class FrmMain
         Me.Label1.Text = "Avisos"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'DataGridViewContentCopy
+        '
+        Me.DataGridViewContentCopy.DataGridView = Me.DgvEvents
+        Me.DataGridViewContentCopy.IncludeHeaderTextInCellCopy = False
+        Me.DataGridViewContentCopy.IncludeHeaderTextInRowCopy = True
+        Me.DataGridViewContentCopy.ShowImages = True
+        '
         'FrmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
@@ -612,4 +620,5 @@ Partial Class FrmMain
     Friend WithEvents BtnSettingsClean As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
     Friend WithEvents BtnCleanEventLog As ToolStripMenuItem
+    Friend WithEvents DataGridViewContentCopy As ControlLibrary.DataGridViewContentCopy
 End Class

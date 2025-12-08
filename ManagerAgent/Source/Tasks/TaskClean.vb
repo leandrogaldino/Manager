@@ -74,7 +74,7 @@ Public Class TaskClean
             Month = _SessionModel.ManagerSetting.General.Evaluation.MonthsBeforeRecordDeletion
             MonthStr = If(Month = 1, $"{Month} mês", $"{Month} meses")
             ResultDate = Today.AddMonths(-Month)
-            Result = Await _DatabaseService.ExecuteSelectAsync("evaluation", {"id"}.ToList, $"evaluationdate <= '{ResultDate:yyyy-MM-dd}'")
+            Result = Await _DatabaseService.ExecuteSelectAsync("evaluation", {"id", "evaluationdate", "customerid"}.ToList, $"evaluationdate <= '{ResultDate:yyyy-MM-dd}'")
             AllRows = Result.Data.Count
             Response.Text = $"Limpeza - Verificando se há avaliações antigas ({MonthStr})"
             Response.Event.AddChildEvent($"Verificando se há avaliações antigas ({MonthStr})")
@@ -92,7 +92,7 @@ Public Class TaskClean
                     CurrentRow += 1
                     Response.Percent = CurrentRow / AllRows * 100
                     Response.Text = $"Limpeza - Excluindo avaliações antigas ({Response.Percent}%)"
-                    Response.Event.AddChildEvent($"A avaliação de ID {Entry("id")} foi excluída")
+                    Response.Event.AddChildEvent($"Avaliação excluída: ID {Entry("id")} | Data: {Convert.ToDateTime(Entry("evaluationdate")):dd/MM/yyyy} | ID Cliente: {Entry("customerid")}.")
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                     Scope.Complete()
@@ -137,80 +137,80 @@ Public Class TaskClean
             AllRows = EvaluationResult.Data.Count + RequestResult.Data.Count + ProductResult.Data.Count + EmailResult.Data.Count + CashResult.Data.Count
             If FileCount > 0 Then
                 Files = EvaluationDocumentDir.GetFiles.ToList
-                For Each Entry In EvaluationResult.Data
+                For Each EvaluationEntry In EvaluationResult.Data
                     CurrentRow += 1
                     Response.Percent = CurrentRow / AllRows * 100
                     Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
                     Progress?.Report(Response)
-                    If Not String.IsNullOrEmpty(Entry("documentname").ToString) Then
-                        If Not Files.Any(Function(x) x.Name = Entry("documentname").ToString) Then
+                    If Not String.IsNullOrEmpty(EvaluationEntry("documentname").ToString) Then
+                        If Not Files.Any(Function(x) x.Name = EvaluationEntry("documentname").ToString) Then
                             Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
-                            Response.Event.AddChildEvent($"O arquivo {Entry("documentname")} da avaliação de ID {Entry("id")} não foi encontrado")
+                            Response.Event.AddChildEvent($"O arquivo {EvaluationEntry("documentname")} da avaliação de ID {EvaluationEntry("id")} não foi encontrado")
                             Progress?.Report(Response)
                             Await Task.Delay(Constants.WaitForLoop)
                         End If
                     End If
-                Next Entry
+                Next EvaluationEntry
                 Files = RequestDocumentDir.GetFiles.ToList
-                For Each Entry In RequestResult.Data
+                For Each RequestEntry In RequestResult.Data
                     CurrentRow += 1
                     Response.Percent = CurrentRow / AllRows * 100
                     Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
                     Progress?.Report(Response)
-                    If Not String.IsNullOrEmpty(Entry("filename").ToString) Then
-                        If Not Files.Any(Function(x) x.Name = Entry("filename").ToString) Then
+                    If Not String.IsNullOrEmpty(RequestEntry("documentname").ToString) Then
+                        If Not Files.Any(Function(x) x.Name = RequestEntry("documentname").ToString) Then
                             Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
-                            Response.Event.AddChildEvent($"O arquivo {Entry("filename")} da requisição de ID {Entry("id")} não foi encontrado")
+                            Response.Event.AddChildEvent($"O arquivo {RequestEntry("documentname")} da requisição de ID {RequestEntry("id")} não foi encontrado")
                             Progress?.Report(Response)
                             Await Task.Delay(Constants.WaitForLoop)
                         End If
                     End If
-                Next Entry
+                Next RequestEntry
                 Files = ProductPictureDir.GetFiles.ToList
-                For Each Entry As Dictionary(Of String, Object) In ProductResult.Data
+                For Each ProductEntry As Dictionary(Of String, Object) In ProductResult.Data
                     CurrentRow += 1
                     Response.Percent = CurrentRow / AllRows * 100
                     Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
                     Progress?.Report(Response)
-                    If Not String.IsNullOrEmpty(Entry("picturename").ToString) Then
-                        If Not Files.Any(Function(x) x.Name = Entry("picturename").ToString) Then
+                    If Not String.IsNullOrEmpty(ProductEntry("picturename").ToString) Then
+                        If Not Files.Any(Function(x) x.Name = ProductEntry("picturename").ToString) Then
                             Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
-                            Response.Event.AddChildEvent($"O arquivo {Entry("picturename")} do produto de ID {Entry("id")} não foi encontrado")
+                            Response.Event.AddChildEvent($"O arquivo {ProductEntry("picturename")} do produto de ID {ProductEntry("id")} não foi encontrado")
                             Progress?.Report(Response)
                             Await Task.Delay(Constants.WaitForLoop)
                         End If
                     End If
-                Next Entry
+                Next ProductEntry
                 Directories = EmailSignatureDir.GetDirectories.ToList
-                For Each Entry In EmailResult.Data
+                For Each EmailEntry In EmailResult.Data
                     CurrentRow += 1
                     Response.Percent = CurrentRow / AllRows * 100
                     Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
                     Progress?.Report(Response)
-                    If Not String.IsNullOrEmpty(Entry("directoryname").ToString) Then
-                        If Not Directories.Any(Function(x) x.Name = Entry("directoryname").ToString) Then
+                    If Not String.IsNullOrEmpty(EmailEntry("directoryname").ToString) Then
+                        If Not Directories.Any(Function(x) x.Name = EmailEntry("directoryname").ToString) Then
                             Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
-                            Response.Event.AddChildEvent($"A pasta {Entry("directoryname")} da assinatura de e-mail de ID {Entry("id")} não foi encontrada")
+                            Response.Event.AddChildEvent($"A pasta {EmailEntry("directoryname")} da assinatura de e-mail de ID {EmailEntry("id")} não foi encontrada")
                             Progress?.Report(Response)
                             Await Task.Delay(Constants.WaitForLoop)
                         End If
                     End If
-                Next Entry
+                Next EmailEntry
                 Files = CashDocumentDir.GetFiles.ToList
-                For Each Entry In CashResult.Data
+                For Each CashEntry In CashResult.Data
                     CurrentRow += 1
                     Response.Percent = CurrentRow / AllRows * 100
                     Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
                     Progress?.Report(Response)
-                    If Not String.IsNullOrEmpty(Entry("documentname").ToString) Then
-                        If Not Files.Any(Function(x) x.Name = Entry("documentname").ToString) Then
+                    If Not String.IsNullOrEmpty(CashEntry("documentname").ToString) Then
+                        If Not Files.Any(Function(x) x.Name = CashEntry("documentname").ToString) Then
                             Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
-                            Response.Event.AddChildEvent($"O arquivo {Entry("documentname")} do caixa de ID {Entry("id")} não foi encontrado")
+                            Response.Event.AddChildEvent($"O arquivo {CashEntry("documentname")} do caixa de ID {CashEntry("id")} não foi encontrado")
                             Progress?.Report(Response)
                             Await Task.Delay(Constants.WaitForLoop)
                         End If
                     End If
-                Next Entry
+                Next CashEntry
             End If
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
@@ -220,6 +220,9 @@ Public Class TaskClean
             Await Task.Delay(Constants.WaitForJob)
             CurrentRow = 0
             FileManager = New FileManager()
+
+            'adicionar todos os arquivos de uma vez e mostrar a porcentagem com a mensagem 'excluindo arquivos orfãos... deixar msg no dgv: x arquivos orfãos excluídos.
+
             For Each EvaluationFile As FileInfo In EvaluationDocumentDir.GetFiles()
                 CurrentRow += 1
                 Response.Percent = CurrentRow / FileCount * 100
@@ -238,7 +241,7 @@ Public Class TaskClean
                 Response.Percent = CurrentRow / FileCount * 100
                 Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
                 Progress?.Report(Response)
-                If Not RequestResult.Data.Any(Function(x) x("filename").ToString = RequestFile.Name) Then
+                If Not RequestResult.Data.Any(Function(x) x("documentname").ToString = RequestFile.Name) Then
                     Await FileManager.DeleteFilesAsync({RequestFile}.ToList)
                     Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
                     Response.Event.AddChildEvent($"O arquivo {RequestFile.Name} foi excluído da pasta de documentos de requisições pois não pertencia a nenhuma requisição")

@@ -220,9 +220,6 @@ Public Class TaskClean
             Await Task.Delay(Constants.WaitForJob)
             CurrentRow = 0
             FileManager = New FileManager()
-
-            'adicionar todos os arquivos de uma vez e mostrar a porcentagem com a mensagem 'excluindo arquivos orfãos... deixar msg no dgv: x arquivos orfãos excluídos.
-
             For Each EvaluationFile As FileInfo In EvaluationDocumentDir.GetFiles()
                 CurrentRow += 1
                 Response.Percent = CurrentRow / FileCount * 100

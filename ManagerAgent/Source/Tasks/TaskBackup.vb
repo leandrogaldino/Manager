@@ -21,7 +21,6 @@ Public Class TaskBackup
     Public Overrides Property NextRun As Date
         Get
             Dim BackupDays As Boolean() = GetBackupDays()
-
             If GetBackupDays.Where(Function(Day) Day).Count > 0 Then
                 Dim BackupTime As TimeSpan = _SessionModel.ManagerSetting.Backup.Time
                 Dim LastBackup As Date = _SessionModel.ManagerSetting.LastExecution.Backup
@@ -128,7 +127,7 @@ Public Class TaskBackup
             Await _DatabaseService.ExecuteBackupAsync(Path.Combine(TempDatabaseDirectory, "Database.sql"), IntProgress)
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
-            FileName = $"Backup {Now:dd-MM-yyyy HH.mm.ss}.bkp"
+            FileName = $"Backup {DateTimeHelper.Now:dd-MM-yyyy HH.mm.ss}.bkp"
             BackupDir = New DirectoryInfo(_SessionModel.ManagerSetting.Backup.Location)
             TargetList = New List(Of String) From {
                 ApplicationPaths.CashDocumentDirectory,
@@ -141,6 +140,7 @@ Public Class TaskBackup
                 ApplicationPaths.RequestDocumentDirectory,
                 TempDatabaseDirectory
             }
+            Response.Event.AddChildEvent($"Processando os dados")
             IntProgress = New Progress(Of Integer)(Sub(p)
                                                        Response.Percent = p
                                                        Response.Text = $"Criando Backup: Processando os dados ({p}%)"
@@ -160,7 +160,7 @@ Public Class TaskBackup
                                                                        Response.Text = $"Criando Backup: Excluindo backups obsoletos ({IOEventArgs.PercentCompleted}%)"
                                                                        If Progress IsNot Nothing Then Progress.Report(Response)
                                                                    End Sub
-                Files = Files. Take(Files.Count - _SessionModel.ManagerSetting.Backup.Keep).ToList
+                Files = Files.Take(Files.Count - _SessionModel.ManagerSetting.Backup.Keep).ToList
                 Await FileManager.DeleteFilesAsync(Files)
             End If
             Await Task.Delay(Constants.WaitForJob)

@@ -220,81 +220,59 @@ Public Class TaskClean
             Await Task.Delay(Constants.WaitForJob)
             CurrentRow = 0
             FileManager = New FileManager()
-
+            Files = New List(Of FileInfo)
             'adicionar todos os arquivos de uma vez e mostrar a porcentagem com a mensagem 'excluindo arquivos orfãos... deixar msg no dgv: x arquivos orfãos excluídos.
 
             For Each EvaluationFile As FileInfo In EvaluationDocumentDir.GetFiles()
-                CurrentRow += 1
-                Response.Percent = CurrentRow / FileCount * 100
-                Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
-                Progress?.Report(Response)
                 If Not EvaluationResult.Data.Any(Function(x) x("documentname").ToString = EvaluationFile.Name) Then
-                    Await FileManager.DeleteFilesAsync({EvaluationFile}.ToList)
-                    Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
-                    Response.Event.AddChildEvent($"O arquivo {EvaluationFile.Name} foi excluído da pasta de documentos de avaliações pois não pertencia a nenhuma avaliação")
-                    Progress?.Report(Response)
+                    Files.Add(EvaluationFile)
                     Await Task.Delay(Constants.WaitForLoop)
                 End If
             Next EvaluationFile
+
+
             For Each RequestFile As FileInfo In RequestDocumentDir.GetFiles()
-                CurrentRow += 1
-                Response.Percent = CurrentRow / FileCount * 100
-                Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
-                Progress?.Report(Response)
                 If Not RequestResult.Data.Any(Function(x) x("documentname").ToString = RequestFile.Name) Then
-                    Await FileManager.DeleteFilesAsync({RequestFile}.ToList)
-                    Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
-                    Response.Event.AddChildEvent($"O arquivo {RequestFile.Name} foi excluído da pasta de documentos de requisições pois não pertencia a nenhuma requisição")
-                    Progress?.Report(Response)
+                    Files.Add(RequestFile)
                     Await Task.Delay(Constants.WaitForLoop)
                 End If
             Next RequestFile
+
             For Each ProductPicture As FileInfo In ProductPictureDir.GetFiles()
-                CurrentRow += 1
-                Response.Percent = CurrentRow / FileCount * 100
-                Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
-                Progress?.Report(Response)
                 If Not ProductResult.Data.Any(Function(x) x("picturename").ToString = ProductPicture.Name) Then
-                    Await FileManager.DeleteFilesAsync({ProductPicture}.ToList)
-                    Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
-                    Response.Event.AddChildEvent($"O arquivo {ProductPicture.Name} foi excluído da pasta de fotos dos produtos pois não pertencia a nenhuma foto de produto")
-                    Progress?.Report(Response)
+                    Files.Add(ProductPicture)
                     Await Task.Delay(Constants.WaitForLoop)
                 End If
             Next ProductPicture
+
+
             For Each EmailFile As FileInfo In EmailSignatureDir.GetFiles()
-                Await FileManager.DeleteFilesAsync({EmailFile}.ToList)
-                Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
-                Response.Event.AddChildEvent($"O arquivo {EmailFile.Name} foi excluído da pasta de assinaturas de e-mail pois não pertencia a nenhuma assinatura de e-mail")
-                Progress?.Report(Response)
+                Files.Add(EmailFile)
                 Await Task.Delay(Constants.WaitForLoop)
             Next EmailFile
+
+            Directories = New List(Of DirectoryInfo)
+
+
             For Each EmailDir As DirectoryInfo In EmailSignatureDir.GetDirectories()
-                CurrentRow += 1
-                Response.Percent = CurrentRow / FileCount * 100
-                Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
-                Progress?.Report(Response)
                 If Not EmailResult.Data.Any(Function(x) x("directoryname").ToString = EmailDir.Name) Then
-                    Await FileManager.DeleteDirectoriesAsync(New List(Of FileManager.DeleteDirectoryInfo) From {New FileManager.DeleteDirectoryInfo(EmailDir, True)})
-                    Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
-                    Response.Event.AddChildEvent($"A pasta {EmailDir.Name} foi excluída da pasta de assinaturas de e-mail pois não pertencia a nenhuma assinatura de e-mail")
-                    Progress?.Report(Response)
+                    Directories.Add(EmailDir)
                     Await Task.Delay(Constants.WaitForLoop)
                 End If
             Next EmailDir
+
+
             For Each CashFile As FileInfo In CashDocumentDir.GetFiles()
-                CurrentRow += 1
-                Response.Percent = CurrentRow / FileCount * 100
-                Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
-                Progress?.Report(Response)
                 If Not CashResult.Data.Any(Function(x) x("documentname").ToString = CashFile.Name) Then
-                    Await FileManager.DeleteFilesAsync({CashFile}.ToList)
-                    Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
-                    Response.Event.AddChildEvent($"O arquivo {CashFile.Name} foi excluído da pasta de documentos do caixa pois não pertencia a nenhum caixa")
-                    Progress?.Report(Response)
+                    Files.Add(CashFile)
                     Await Task.Delay(Constants.WaitForLoop)
                 End If
             Next CashFile
+
+            FileCount = ??
+
+
+
             Await Task.Delay(Constants.WaitForJob)
             Response.Text = "Limpeza - Excluindo arquivos temporários"
             Response.Event.AddChildEvent("Excluindo arquivos temporários")

@@ -152,7 +152,7 @@ Public Class LicenseService
 
         ' Atualiza o token da licença se necessário
         If String.IsNullOrEmpty(LicenseToken) AndAlso String.IsNullOrEmpty(LicenseToken) AndAlso String.IsNullOrEmpty(Result.License.LicenseToken) Then
-            Dim NewToken As String = TextHelper.GetRandomString(1, 256, Nothing, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-.:;,!?/'()*+=%#@$[]{}|")
+            Dim NewToken As String = TextHelper.GetRandomString(1, 256, Nothing, {CharFilter.Alphanumeric, CharFilter.Numeric, CharFilter.SpecialCharacters}.ToList).Replace("=", String.Empty).Replace("+", String.Empty).Replace("/", String.Empty)
             Result.License = Await UpdateLicenseToken(Result.License, NewToken)
             Await SaveLocalLicense(Result.License)
             Return Result

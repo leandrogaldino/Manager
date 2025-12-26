@@ -290,6 +290,12 @@
     <Compile Include="Source\Models\SessionModel.vb" />
     <Compile Include="Source\Shared\Setups\SetupTasks.vb" />
     <Compile Include="Source\Tasks\TaskRestoreBackup.vb" />
+    <Compile Include="Source\Views\FrmCompanies.Designer.vb">
+      <DependentUpon>FrmCompanies.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\FrmCompanies.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Source\Views\Login\LoginViewModel.vb" />
     <Compile Include="Source\Views\RestoreBackup\RestoreBackupViewModel.vb" />
     <Compile Include="Source\Views\Settings\Backup\BackupSettingsViewModel.vb" />
@@ -307,13 +313,26 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Views\Settings\Cloud\CloudDatabaseSettingsViewModel.vb" />
+    <Compile Include="Source\Views\Settings\CompanyModel.vb" />
     <Compile Include="Source\Views\Settings\Database\DatabaseSettingsViewModel.vb" />
     <Compile Include="Source\Views\Settings\Evaluation\EvaluationSettingsViewModel.vb" />
+    <Compile Include="Source\Views\Settings\FrmCompany.Designer.vb">
+      <DependentUpon>FrmCompany.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Settings\FrmCompany.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Source\Views\Settings\License\LicenseKeyViewModel.vb" />
     <Compile Include="Source\Views\Settings\Register\RegisterSettingsViewModel.vb" />
     <Compile Include="Source\Views\Settings\Release\ReleaseSettingsViewModel.vb" />
     <Compile Include="Source\Views\Settings\Cloud\CloudStorageSettingsViewModel.vb" />
     <Compile Include="Source\Views\Settings\Support\SuportSettingsViewModel.vb" />
+    <Compile Include="Source\Views\Settings\UcCompanyTile.Designer.vb">
+      <DependentUpon>UcCompanyTile.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Settings\UcCompanyTile.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Source\Views\Settings\User\UserSettingsViewModel.vb" />
     <Compile Include="Source\Views\Settings\Backup\FrmBackupSettings.Designer.vb">
       <DependentUpon>FrmBackupSettings.vb</DependentUpon>
@@ -429,6 +448,9 @@
     <Compile Include="Source\Views\Settings\License\LicenseSettingsViewModel.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Source\Views\FrmCompanies.resx">
+      <DependentUpon>FrmCompanies.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Settings\Backup\FrmBackupSettings.resx">
       <DependentUpon>FrmBackupSettings.vb</DependentUpon>
     </EmbeddedResource>
@@ -447,6 +469,9 @@
     <EmbeddedResource Include="Source\Views\Settings\Evaluation\FrmEvaluationSettings.resx">
       <DependentUpon>FrmEvaluationSettings.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Settings\FrmCompany.resx">
+      <DependentUpon>FrmCompany.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Settings\Register\FrmRegisterSettings.resx">
       <DependentUpon>FrmRegisterSettings.vb</DependentUpon>
     </EmbeddedResource>
@@ -458,6 +483,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Settings\Support\FrmSuportSettings.resx">
       <DependentUpon>FrmSuportSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Settings\UcCompanyTile.resx">
+      <DependentUpon>UcCompanyTile.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Settings\User\FrmUserSettings.resx">
       <DependentUpon>FrmUserSettings.vb</DependentUpon>

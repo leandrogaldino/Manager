@@ -480,4 +480,7 @@ Public Class FrmMain
         DgvEvents.FirstDisplayedScrollingRowIndex = 0
     End Sub
 
+    Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
+        FrmCompanies.ShowDialog()
+    End Sub
 End Class

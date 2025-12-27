@@ -45,12 +45,6 @@ Public Class TaskCloudSync
         Try
             Await FetchSchedulesFromCloudToLocal(Response, Progress)
             Await SyncFromLocalToCloud(Response, Progress)
-            If Response.Event.IsInitialized Then
-                Await Task.Delay(Constants.WaitForFinish)
-                Response.Text = $"Sincronização com a núvem - Concluída"
-                Response.Event.SetFinalEvent($"Sincronização com a núvem concluída")
-                If Progress IsNot Nothing Then Progress.Report(Response)
-            End If
             _SessionModel.ManagerSetting.LastExecution.CloudSync = Now.ToString("yyyy-MM-dd HH:mm:ss")
             _SettingsService.Save(_SessionModel.ManagerSetting)
         Catch ex As Exception
@@ -60,12 +54,9 @@ Public Class TaskCloudSync
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
             Response.Text = $"Sincronização com a núvem - Ocorreu um erro executar a sincronização - {Exception.Message}"
-            If Not Response.Event.IsInitialized Then Response.Event.SetInitialEvent($"Sincronização com a núvem {If(Not IsManual, "automático", "manual")} - Iniciando")
-            Response.Event.AddChildEvent($"Ocorreu um erro executar a sincronização - {Exception.Message}")
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             Response.Text = $"Sincronização com a núvem - Concluída"
-            Response.Event.SetFinalEvent($"Sincronização com a núvem concluída")
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         End If
@@ -97,14 +88,8 @@ Public Class TaskCloudSync
             )
             Dim TotalChanges As Long = Result.Data.Count
             If TotalChanges > 0 Then
-                If Not Response.Event.IsInitialized Then
-                    Response.Text = $"Sincronização com a núvem {If(Not IsManual, "automática", "manual")} - Iniciando"
-                    Response.Event.SetInitialEvent(Response.Text)
-                    Progress?.Report(Response)
-                    Await Task.Delay(Constants.WaitForJob)
-                End If
+
                 Response.Text = $"Sincronização com a núvem - Enviando dados ({Response.Percent}%)"
-                Response.Event.AddChildEvent("Enviando dados")
                 Progress?.Report(Response)
                 Await Task.Delay(Constants.WaitForJob)
                 PerformedOperations = 0
@@ -144,7 +129,6 @@ Public Class TaskCloudSync
                 If NewResult.Data.Count > 0 Then
                     Response.Percent = 0
                     Response.Text = "Sincronização com a núvem - Registros remanescentes encontrados"
-                    Response.Event.AddChildEvent("Registros remanescentes encontrados")
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForJob)
                     ContinueSync = True
@@ -165,14 +149,8 @@ Public Class TaskCloudSync
             Dim RemoteResult As List(Of Dictionary(Of String, Object)) = Await _RemoteDB.ExecuteGet("visitschedules", New List(Of Condition) From {New WhereGreaterThanCondition("lastupdate", DateTimeHelper.MillisecondsFromDate(LastSyncLimit)), New WhereNotEqualToCondition("performeddate", Nothing)})
             TotalChanges = RemoteResult.Count
             If TotalChanges > 0 Then
-                If Not Response.Event.IsInitialized Then
-                    Response.Text = $"Sincronização com a núvem {If(Not IsManual, "automática", "manual")} - Iniciando"
-                    Response.Event.SetInitialEvent(Response.Text)
-                    Progress?.Report(Response)
-                    Await Task.Delay(Constants.WaitForJob)
-                End If
+
                 Response.Text = "Sincronização com a núvem - Recebendo agendamentos"
-                Response.Event.AddChildEvent("Recebendo agendamentos")
                 Progress?.Report(Response)
                 Await Task.Delay(Constants.WaitForJob)
                 PerformedOperations = 0
@@ -201,7 +179,6 @@ Public Class TaskCloudSync
                 If NewRecords.Count > 0 Then
                     Response.Percent = 0
                     Response.Text = "Sincronização com a núvem - Registros remanescentes encontrados"
-                    Response.Event.AddChildEvent("Registros remanescentes encontrados")
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForJob)
                     ContinueSync = True

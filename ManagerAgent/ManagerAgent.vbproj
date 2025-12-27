@@ -265,11 +265,7 @@
     <Compile Include="Source\Models\AsyncResponseModel.vb" />
     <Compile Include="Source\Models\BackupFileModel.vb" />
     <Compile Include="Source\Models\CloudTestResultModel.vb" />
-    <Compile Include="Source\Models\EventChildModel.vb" />
-    <Compile Include="Source\Models\EventFinalModel.vb" />
-    <Compile Include="Source\Models\EventInitialModel.vb" />
     <Compile Include="Source\Models\RegistryModel.vb" />
-    <Compile Include="Source\Builder\EventBuilder.vb" />
     <Compile Include="Source\Services\AppService.vb" />
     <Compile Include="Source\Shared\Flags.vb" />
     <Compile Include="Source\Tasks\TaskBackup.vb" />

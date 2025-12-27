@@ -85,7 +85,6 @@ Public Class TaskRelease
                 Dim BloquedList As List(Of RegistryModel) = Await GetBloquedList()
                 If BloquedList IsNot Nothing Then
                     Response.Text = "Desbloqueador de registros iniciado"
-                    Response.Event.SetInitialEvent("Desbloqueador de registros iniciado")
                     If Progress IsNot Nothing Then Progress.Report(Response)
                     Await Task.Delay(Constants.WaitForJob)
                     InitialMessagePosted = True
@@ -93,7 +92,6 @@ Public Class TaskRelease
                         Await UnlockRegistry(Registry)
                         Response.Text = $"Desbloqueado: Rotina {Registry.RoutineID}, Registro {Registry.RegistryID}, Usuário {Registry.UserID} ({BloquedList.IndexOf(Registry) + 1} de {BloquedList.Count})"
                         Response.Percent = (BloquedList.IndexOf(Registry) + 1) / BloquedList.Count * 100
-                        Response.Event.AddChildEvent($"Desbloqueado: Rotina {Registry.RoutineID}, Registro {Registry.RegistryID}, Usuário {Registry.UserID}")
                         If Progress IsNot Nothing Then Progress.Report(Response)
                         Await Task.Delay(Constants.WaitForJob)
                     Next Registry
@@ -101,7 +99,6 @@ Public Class TaskRelease
                     If Progress IsNot Nothing Then Progress.Report(Response)
                     Await Task.Delay(Constants.WaitForJob)
                     Response.Text = "Desbloqueador de registros finalizado"
-                    Response.Event.SetFinalEvent("Desbloqueador de registros finalizado")
                     If Progress IsNot Nothing Then Progress.Report(Response)
                     Await Task.Delay(Constants.WaitForFinish)
                 End If
@@ -110,17 +107,10 @@ Public Class TaskRelease
                 Scope.Complete()
             End Using
         Catch ex As Exception
-            If Not InitialMessagePosted Then
-                Response.Text = "Desbloqueador de registros iniciado"
-                Response.Event.SetInitialEvent("Desbloqueador de registros iniciado")
-                Response.Percent = 0
-                If Progress IsNot Nothing Then Progress.Report(Response)
-            End If
+
             Response.Text = $"Ocorreu um erro ao desbloquear os registros - {ex.Message}"
-            Response.Event.AddChildEvent($"Ocorreu um erro ao desbloquear os registros - {ex.Message}")
             If Progress IsNot Nothing Then Progress.Report(Response)
             Response.Text = "Desbloqueador de registros finalizado"
-            Response.Event.SetFinalEvent("Desbloqueador de registros finalizado")
             If Progress IsNot Nothing Then Progress.Report(Response)
         End Try
     End Function

@@ -111,15 +111,13 @@ Public Class TaskBackup
         Dim TempDatabaseDirectory As String
         Dim TargetList As List(Of String)
         Try
-            Response.Text = $"Criando Backup {If(Not IsManual, "Automático", "Manual")}: Iniciando"
-            Response.Event.SetInitialEvent($"Backup {If(Not IsManual, "Automático", "Manual")}: Iniciando")
+            Response.Text = $"Backup: Iniciando"
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForStart)
-            Response.Event.AddChildEvent($"Gerando dump do banco de dados")
             If Progress IsNot Nothing Then Progress.Report(Response)
             IntProgress = New Progress(Of Integer)(Sub(Percent As Integer)
                                                        Response.Percent = Percent
-                                                       Response.Text = $"Criando Backup: Gerando dump do banco de dados ({Percent}%)"
+                                                       Response.Text = $"Backup: Processando banco de dados ({Percent}%)"
                                                        If Progress IsNot Nothing Then Progress.Report(Response)
                                                    End Sub)
             TempDatabaseDirectory = Path.Combine(ApplicationPaths.AgentTempDirectory, "Database")
@@ -140,24 +138,22 @@ Public Class TaskBackup
                 ApplicationPaths.RequestDocumentDirectory,
                 TempDatabaseDirectory
             }
-            Response.Event.AddChildEvent($"Processando os dados")
             IntProgress = New Progress(Of Integer)(Sub(p)
                                                        Response.Percent = p
-                                                       Response.Text = $"Criando Backup: Processando os dados ({p}%)"
+                                                       Response.Text = $"Backup: Processando arquivos ({p}%)"
                                                        If Progress IsNot Nothing Then Progress.Report(Response)
                                                    End Sub)
             Await FileMerge.MergeAsync(Path.Combine(BackupDir.FullName, FileName), TargetList, _SessionModel.ManagerPassword, IntProgress)
             Await FileManager.DeleteDirectoriesAsync(New List(Of FileManager.DeleteDirectoryInfo) From {New FileManager.DeleteDirectoryInfo(New DirectoryInfo(TempDatabaseDirectory), True)})
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
-            Response.Event.AddChildEvent("Excluindo backups obsoletos")
             If Progress IsNot Nothing Then Progress.Report(Response)
             BackupDir = New DirectoryInfo(_SessionModel.ManagerSetting.Backup.Location)
             Files = Util.GetBackupFiles()
             If Files.Count > 0 Then
                 AddHandler FileManager.DeleteFilesProgressChanged, Sub(IOSender, IOEventArgs)
                                                                        Response.Percent = IOEventArgs.PercentCompleted
-                                                                       Response.Text = $"Criando Backup: Excluindo backups obsoletos ({IOEventArgs.PercentCompleted}%)"
+                                                                       Response.Text = $"Backup: Excluindo backups obsoletos ({IOEventArgs.PercentCompleted}%)"
                                                                        If Progress IsNot Nothing Then Progress.Report(Response)
                                                                    End Sub
                 Files = Files.Take(Files.Count - _SessionModel.ManagerSetting.Backup.Keep).ToList
@@ -165,8 +161,13 @@ Public Class TaskBackup
             End If
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
-            Response.Text = $"Criando Backup: Backup {If(Not IsManual, "automático", "manual")} concluído"
-            Response.Event.SetFinalEvent($"Backup {If(Not IsManual, "automático", "manual")} concluído")
+            Response.Text = $"Backup: Backup concluído"
+            Response.Event.EndTime = DateTime.Now
+            Response.Event.ReadyToPost = True
+            Response.Event.Description = $"Backup{If(Not IsManual, String.Empty, " Manual")}"
+
+
+
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         Catch ex As Exception
@@ -179,12 +180,14 @@ Public Class TaskBackup
         If Exception IsNot Nothing Then
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
-            Response.Text = $"Criando Backup: Ocorreu um erro executar o backup - {Exception.Message}"
-            Response.Event.AddChildEvent($"Ocorreu um erro executar o backup - {Exception.Message}")
+            Response.Text = $"Backup: Ocorreu um erro executar o backup - {Exception.Message}"
+            Response.Event.EndTime = DateTime.Now
+            Response.Event.Description = $"Backup{If(Not IsManual, String.Empty, " Manual")}"
+            Response.Event.ExceptionMessage = Exception.Message
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
-            Response.Text = $"Criando Backup: Backup {If(Not IsManual, "automático", "manual")} concluído"
-            Response.Event.SetFinalEvent($"Backup {If(Not IsManual, "automático", "manual")} concluído")
+            Response.Event.ReadyToPost = True
+            Response.Text = $"Backup: Backup {If(Not IsManual, "automático", "manual")} concluído"
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         End If

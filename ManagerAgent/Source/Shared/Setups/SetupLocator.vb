@@ -12,7 +12,7 @@ Public Class SetupLocator
         Locator.RegisterSingleton(Of RemoteDB)(New FirestoreService(), CloudDatabaseType.Manager)
         Locator.RegisterSingleton(Of Storage)(New StorageService())
         Locator.RegisterSingleton(New LicenseService(Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Manager), Locator.GetInstance(Of CryptoKeyService)))
-        Locator.RegisterSingleton(New EventService(Locator.GetInstance(Of LocalDB), Semaphore))
+        Locator.RegisterSingleton(New EventService(Semaphore))
         Locator.RegisterSingleton(New PasswordService(Locator.GetInstance(Of LicenseService), Locator.GetInstance(Of SessionModel), Locator.GetInstance(Of CryptoKeyService)))
         Locator.RegisterSingleton(Of TaskBase)(New TaskBackup(Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of SettingService), Locator.GetInstance(Of SessionModel)), TaskName.Backup)
         Locator.RegisterSingleton(Of TaskBase)(New TaskBackupManual(Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of SettingService), Locator.GetInstance(Of SessionModel)), TaskName.BackupManual)

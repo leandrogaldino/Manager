@@ -46,11 +46,9 @@ Public Class TaskRestoreBackup
         Dim Filename As String = New FileInfo(BackupLocation).Name.Replace(".bkp", Nothing).Replace("-", "/").Replace(".", ":")
         Try
             Response.Text = $"Restaurando Backup: Iniciando - {Filename}"
-            Response.Event.SetInitialEvent($"Restaurando Backup: Iniciando - {Filename}")
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForStart)
             Response.Text = "Restaurando Backup: Removendo a versão atual"
-            Response.Event.AddChildEvent("Removendo a versão atual")
             If Progress IsNot Nothing Then Progress.Report(Response)
             FileManager = New FileManager
             AddHandler FileManager.DeleteDirectoriesProgressChanged, Sub(IOSender, IOEventArgs)
@@ -70,7 +68,6 @@ Public Class TaskRestoreBackup
             })
             Response.Percent = 0
             Response.Text = "Restaurando Backup: Validando diretórios"
-            Response.Event.AddChildEvent("Validando diretórios")
             If Not Directory.Exists(ApplicationPaths.ProductPictureDirectory) Then Directory.CreateDirectory(ApplicationPaths.ProductPictureDirectory)
             Response.Percent = 14
             Response.Text = $"Restaurando Backup: Validando diretórios ({Response.Percent}%)"
@@ -108,7 +105,6 @@ Public Class TaskRestoreBackup
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
             Response.Text = "Restaurando Backup: Processando os dados"
-            Response.Event.AddChildEvent("Processando os dados")
             If Progress IsNot Nothing Then Progress.Report(Response)
             IntProgress = New Progress(Of Integer)(Sub(Percent As Integer)
                                                        Response.Percent = Percent
@@ -119,7 +115,6 @@ Public Class TaskRestoreBackup
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
             Response.Text = "Restaurando Backup: Restaurando o banco de dados"
-            Response.Event.AddChildEvent("Restaurando o banco de dados")
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await _DatabaseService.ExecuteProcedureAsync("DropAllTables")
             IntProgress = New Progress(Of Integer)(Sub(Percent As Integer)
@@ -134,7 +129,6 @@ Public Class TaskRestoreBackup
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
             Response.Text = $"Restaurando Backup: Concluído - {Filename}"
-            Response.Event.SetFinalEvent($"Restaurando Backup: Concluído - {Filename}")
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         Catch ex As Exception
@@ -144,12 +138,10 @@ Public Class TaskRestoreBackup
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
             Response.Text = $"Restaurando Backup: Ocorreu um erro ao restaurar o backup - {Filename} - {Exception.Message}"
-            Response.Event.AddChildEvent($"Restaurando Backup: Ocorreu um erro ao restaurar o backup - {Filename} - {Exception.Message}")
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             If Directory.Exists(DatabaseDirectory) Then Directory.Delete(DatabaseDirectory, True)
             Response.Text = $"Restaurando Backup: Concluído - {Filename}"
-            Response.Event.SetFinalEvent($"Restaurando Backup: Concluído - {Filename}")
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         End If

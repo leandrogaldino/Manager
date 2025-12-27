@@ -181,13 +181,13 @@ Public Class FrmMain
         End If
         _StateWarnings.Clear()
         If Not _SessionModel.ManagerLicenseResult.Success Then
-            _StateWarnings.Add($"{Constants.SubItemSymbol} {EnumHelper.GetEnumDescription(_SessionModel.ManagerLicenseResult.Flag)}")
+            _StateWarnings.Add($"{Constants.SeparatorSymbol} {EnumHelper.GetEnumDescription(_SessionModel.ManagerLicenseResult.Flag)}")
         End If
-        ManagerCloudPending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SubItemSymbol} {x}"))
-        ManagerDatabasePending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SubItemSymbol} {x}"))
-        BackupPending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SubItemSymbol} {x}"))
-        CustomerCloudPending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SubItemSymbol} {x}"))
-        CustomerStoragePending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SubItemSymbol} {x}"))
+        ManagerCloudPending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
+        ManagerDatabasePending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
+        BackupPending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
+        CustomerCloudPending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
+        CustomerStoragePending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
         BtnSettings.Enabled = True
         BtnSettingsLicense.Enabled = True
         BtnSettingsBackup.Enabled = _SessionModel.ManagerLicenseResult.Success
@@ -261,30 +261,13 @@ Public Class FrmMain
             e.Cancel = True
         End If
     End Sub
-    <DebuggerStepThrough>
-    Private Sub DgvEvents_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvEvents.CellFormatting
-        If e.ColumnIndex = DgvEvents.Columns("time").Index Then
-            Dim cellValue As EventTypes = DgvEvents.Rows(e.RowIndex).Cells("eventtype").Value
-            If cellValue = EventTypes.Child Then
-                DgvEvents.Rows(e.RowIndex).Cells(4).Style.Padding = New Padding(20, 0, 0, 0)
-                DgvEvents.Rows(e.RowIndex).Cells(4).Style.Font = New Font(DgvEvents.DefaultCellStyle.Font, FontStyle.Regular)
-                DgvEvents.Rows(e.RowIndex).Cells(3).Style.Font = New Font(DgvEvents.DefaultCellStyle.Font, FontStyle.Regular)
-            Else
-                DgvEvents.Rows(e.RowIndex).Cells(4).Style.Padding = New Padding(0, 0, 0, 0)
-                DgvEvents.Rows(e.RowIndex).Cells(4).Style.Font = New Font(DgvEvents.DefaultCellStyle.Font, FontStyle.Bold)
-                DgvEvents.Rows(e.RowIndex).Cells(3).Style.Font = New Font(DgvEvents.DefaultCellStyle.Font, FontStyle.Bold)
-            End If
-        End If
-    End Sub
     Private Sub DgvEvents_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvEvents.DataSourceChanged
-        If DgvEvents.DataSource IsNot Nothing AndAlso DgvEvents.Columns.Count = 7 Then
-            DgvEvents.Columns("id").Visible = False
-            DgvEvents.Columns("parentid").Visible = False
-            DgvEvents.Columns("eventtype").Visible = False
-            DgvEvents.Columns("issaved").Visible = False
-            DgvEvents.Columns("tempid").Visible = False
-            DgvEvents.Columns("time").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-            DgvEvents.Columns("description").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+        If DgvEvents.DataSource IsNot Nothing AndAlso DgvEvents.Columns.Count = 5 Then
+            DgvEvents.Columns("ID").Visible = False
+            DgvEvents.Columns("IsSaved").Visible = False
+            DgvEvents.Columns("StartTime").Visible = False
+            DgvEvents.Columns("EndTime").Visible = False
+            DgvEvents.Columns("Description").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             DataGridViewNavigator.EnsureVisibleRow(DgvEvents, 0)
         End If
 

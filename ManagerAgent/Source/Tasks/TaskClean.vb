@@ -1,10 +1,9 @@
 ﻿Imports System.IO
 Imports System.Transactions
-Imports System.Windows.Forms.Design
 Imports ControlLibrary
 Imports ManagerCore
 Imports ManagerCore.LocalDB
-
+igual no backup
 Public Class TaskClean
     Inherits TaskBase
 
@@ -62,7 +61,6 @@ Public Class TaskClean
         Dim Exception As Exception = Nothing
         Try
             Response.Text = "Limpeza - Iniciando"
-            Response.Event.SetInitialEvent("Limpeza - Iniciando")
             Progress?.Report(Response)
             EvaluationDocumentDir = New DirectoryInfo(ApplicationPaths.EvaluationDocumentDirectory)
             EmailSignatureDir = New DirectoryInfo(ApplicationPaths.EmailSignatureDirectory)
@@ -77,7 +75,6 @@ Public Class TaskClean
             Result = Await _DatabaseService.ExecuteSelectAsync("evaluation", {"id", "evaluationdate", "customerid"}.ToList, $"evaluationdate <= '{ResultDate:yyyy-MM-dd}'")
             AllRows = Result.Data.Count
             Response.Text = $"Limpeza - Verificando se há avaliações antigas ({MonthStr})"
-            Response.Event.AddChildEvent($"Verificando se há avaliações antigas ({MonthStr})")
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             For Each Entry In Result.Data
@@ -92,7 +89,6 @@ Public Class TaskClean
                     CurrentRow += 1
                     Response.Percent = CurrentRow / AllRows * 100
                     Response.Text = $"Limpeza - Excluindo avaliações antigas ({Response.Percent}%)"
-                    Response.Event.AddChildEvent($"Avaliação excluída: ID {Entry("id")} | Data: {Convert.ToDateTime(Entry("evaluationdate")):dd/MM/yyyy} | ID Cliente: {Entry("customerid")}.")
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                     Scope.Complete()
@@ -102,7 +98,6 @@ Public Class TaskClean
             AllRows = 0
             Await Task.Delay(Constants.WaitForJob)
             Response.Text = "Limpeza - Recuperando os endereços dos arquivos"
-            Response.Event.AddChildEvent("Recuperando os endereços dos arquivos")
             Progress?.Report(Response)
             Dim EvaluationResult As QueryResult = Await _DatabaseService.ExecuteSelectAsync("evaluation", {"id", "documentname"}.ToList, "documentname IS NOT NULL")
             Response.Percent = 20
@@ -131,7 +126,6 @@ Public Class TaskClean
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
             Response.Text = "Limpeza - Verificando a existência dos arquivos referenciados no banco de dados"
-            Response.Event.AddChildEvent("Verificando a existência dos arquivos referenciados no banco de dados")
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             AllRows = EvaluationResult.Data.Count + RequestResult.Data.Count + ProductResult.Data.Count + EmailResult.Data.Count + CashResult.Data.Count
@@ -145,7 +139,6 @@ Public Class TaskClean
                     If Not String.IsNullOrEmpty(EvaluationEntry("documentname").ToString) Then
                         If Not Files.Any(Function(x) x.Name = EvaluationEntry("documentname").ToString) Then
                             Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
-                            Response.Event.AddChildEvent($"O arquivo {EvaluationEntry("documentname")} da avaliação de ID {EvaluationEntry("id")} não foi encontrado")
                             Progress?.Report(Response)
                             Await Task.Delay(Constants.WaitForLoop)
                         End If
@@ -160,7 +153,6 @@ Public Class TaskClean
                     If Not String.IsNullOrEmpty(RequestEntry("documentname").ToString) Then
                         If Not Files.Any(Function(x) x.Name = RequestEntry("documentname").ToString) Then
                             Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
-                            Response.Event.AddChildEvent($"O arquivo {RequestEntry("documentname")} da requisição de ID {RequestEntry("id")} não foi encontrado")
                             Progress?.Report(Response)
                             Await Task.Delay(Constants.WaitForLoop)
                         End If
@@ -175,7 +167,6 @@ Public Class TaskClean
                     If Not String.IsNullOrEmpty(ProductEntry("picturename").ToString) Then
                         If Not Files.Any(Function(x) x.Name = ProductEntry("picturename").ToString) Then
                             Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
-                            Response.Event.AddChildEvent($"O arquivo {ProductEntry("picturename")} do produto de ID {ProductEntry("id")} não foi encontrado")
                             Progress?.Report(Response)
                             Await Task.Delay(Constants.WaitForLoop)
                         End If
@@ -190,7 +181,6 @@ Public Class TaskClean
                     If Not String.IsNullOrEmpty(EmailEntry("directoryname").ToString) Then
                         If Not Directories.Any(Function(x) x.Name = EmailEntry("directoryname").ToString) Then
                             Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
-                            Response.Event.AddChildEvent($"A pasta {EmailEntry("directoryname")} da assinatura de e-mail de ID {EmailEntry("id")} não foi encontrada")
                             Progress?.Report(Response)
                             Await Task.Delay(Constants.WaitForLoop)
                         End If
@@ -205,7 +195,6 @@ Public Class TaskClean
                     If Not String.IsNullOrEmpty(CashEntry("documentname").ToString) Then
                         If Not Files.Any(Function(x) x.Name = CashEntry("documentname").ToString) Then
                             Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
-                            Response.Event.AddChildEvent($"O arquivo {CashEntry("documentname")} do caixa de ID {CashEntry("id")} não foi encontrado")
                             Progress?.Report(Response)
                             Await Task.Delay(Constants.WaitForLoop)
                         End If
@@ -215,7 +204,6 @@ Public Class TaskClean
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
             Response.Text = "Limpeza - Verificando arquivos em disco não referenciados no banco de dados"
-            Response.Event.AddChildEvent("Verificando arquivos em disco não referenciados no banco de dados")
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             CurrentRow = 0
@@ -228,7 +216,6 @@ Public Class TaskClean
                 If Not EvaluationResult.Data.Any(Function(x) x("documentname").ToString = EvaluationFile.Name) Then
                     Await FileManager.DeleteFilesAsync({EvaluationFile}.ToList)
                     Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
-                    Response.Event.AddChildEvent($"O arquivo {EvaluationFile.Name} foi excluído da pasta de documentos de avaliações pois não pertencia a nenhuma avaliação")
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                 End If
@@ -241,7 +228,6 @@ Public Class TaskClean
                 If Not RequestResult.Data.Any(Function(x) x("documentname").ToString = RequestFile.Name) Then
                     Await FileManager.DeleteFilesAsync({RequestFile}.ToList)
                     Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
-                    Response.Event.AddChildEvent($"O arquivo {RequestFile.Name} foi excluído da pasta de documentos de requisições pois não pertencia a nenhuma requisição")
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                 End If
@@ -254,7 +240,6 @@ Public Class TaskClean
                 If Not ProductResult.Data.Any(Function(x) x("picturename").ToString = ProductPicture.Name) Then
                     Await FileManager.DeleteFilesAsync({ProductPicture}.ToList)
                     Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
-                    Response.Event.AddChildEvent($"O arquivo {ProductPicture.Name} foi excluído da pasta de fotos dos produtos pois não pertencia a nenhuma foto de produto")
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                 End If
@@ -262,7 +247,6 @@ Public Class TaskClean
             For Each EmailFile As FileInfo In EmailSignatureDir.GetFiles()
                 Await FileManager.DeleteFilesAsync({EmailFile}.ToList)
                 Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
-                Response.Event.AddChildEvent($"O arquivo {EmailFile.Name} foi excluído da pasta de assinaturas de e-mail pois não pertencia a nenhuma assinatura de e-mail")
                 Progress?.Report(Response)
                 Await Task.Delay(Constants.WaitForLoop)
             Next EmailFile
@@ -274,7 +258,6 @@ Public Class TaskClean
                 If Not EmailResult.Data.Any(Function(x) x("directoryname").ToString = EmailDir.Name) Then
                     Await FileManager.DeleteDirectoriesAsync(New List(Of FileManager.DeleteDirectoryInfo) From {New FileManager.DeleteDirectoryInfo(EmailDir, True)})
                     Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
-                    Response.Event.AddChildEvent($"A pasta {EmailDir.Name} foi excluída da pasta de assinaturas de e-mail pois não pertencia a nenhuma assinatura de e-mail")
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                 End If
@@ -287,14 +270,12 @@ Public Class TaskClean
                 If Not CashResult.Data.Any(Function(x) x("documentname").ToString = CashFile.Name) Then
                     Await FileManager.DeleteFilesAsync({CashFile}.ToList)
                     Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
-                    Response.Event.AddChildEvent($"O arquivo {CashFile.Name} foi excluído da pasta de documentos do caixa pois não pertencia a nenhum caixa")
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                 End If
             Next CashFile
             Await Task.Delay(Constants.WaitForJob)
             Response.Text = "Limpeza - Excluindo arquivos temporários"
-            Response.Event.AddChildEvent("Excluindo arquivos temporários")
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             AddHandler FileManager.DeleteDirectoriesProgressChanged,
@@ -308,7 +289,6 @@ Public Class TaskClean
             Await FileManager.DeleteDirectoriesAsync(TempDirectories)
             Await Task.Delay(Constants.WaitForJob)
             Response.Text = "Limpeza - Finalizado"
-            Response.Event.SetFinalEvent("Limpeza - Finalizado")
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         Catch ex As Exception
@@ -320,11 +300,9 @@ Public Class TaskClean
         If Exception IsNot Nothing Then
             Response.Percent = 0
             Response.Text = $"Ocorreu um erro ao executar o coletor - {Exception.Message}"
-            Response.Event.AddChildEvent($"Ocorreu um erro ao executar o coletor - {Exception.Message}")
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             Response.Text = "Limpeza - Finalizado"
-            Response.Event.SetFinalEvent("Limpeza - Finalizado")
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         End If

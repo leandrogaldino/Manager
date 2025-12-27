@@ -8,16 +8,8 @@ Public Class EventModel
     Public Property EndTime As Date
     Public Property Description As String
     Public Property ExceptionMessage As String
-
-    Public Function GetFullDescription() As String
-        Dim TimeInfo As String = $"Início: {StartTime:dd/MM/yyyy HH:mm:ss} {Constants.SeparatorSymbol} " & $"Fim: {EndTime:dd/MM/yyyy HH:mm:ss}"
-
-        If String.IsNullOrEmpty(ExceptionMessage) Then
-            Return $"{Description}: {TimeInfo}"
-        Else
-            Return $"{Description}: {TimeInfo} {Constants.SeparatorSymbol} [ERRO]: {ExceptionMessage}"
-        End If
-    End Function
+    Public Property LogMessages As New List(Of String)
+    Public Property Status As TaskStatus
     Public Sub New(ID As String, StartTime As Date, EndTime As Date, Description As String)
         Me.ID = ID
         Me.StartTime = StartTime

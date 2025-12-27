@@ -1,8 +1,8 @@
 ﻿Imports ControlLibrary
 Imports ManagerCore
 Imports System.Collections.ObjectModel
-
-
+Imports System.IO
+Imports System.Threading
 Public Class FrmMain
     Private _IsWorking As Boolean
     Private _EventService As EventService
@@ -16,6 +16,7 @@ Public Class FrmMain
     Private _HasManagerCloudPending As Boolean
     Private _HasDatabasePending As Boolean
     Private _LastLoginRequest As Date
+    Private _Semaphore As SemaphoreSlim
     Public Sub New()
         InitializeComponent()
         _LicenseService = Locator.GetInstance(Of LicenseService)
@@ -23,9 +24,10 @@ Public Class FrmMain
         _EventService = Locator.GetInstance(Of EventService)
         _StackTaskService = Locator.GetInstance(Of TaskStackService)
         _AppService = Locator.GetInstance(Of AppService)
+        _Semaphore = Locator.GetInstance(Of SemaphoreSlim)
         _StateWarnings = New ObservableCollection(Of String)
         ControlHelper.EnableControlDoubleBuffer(DgvEvents, True)
-        TsTitle.Renderer = New CustomToolstripRender()
+        TsTitle.Renderer = New CustomToolStripRender()
     End Sub
     Private Async Sub FrmMain_Load(sender As Object, e As EventArgs) Handles Me.Load
         AddHandler _StackTaskService.TaskProgress.ProgressChanged, AddressOf OnTaskProgressChanged
@@ -80,6 +82,7 @@ Public Class FrmMain
         BtnCloudSync.Enabled = _StackTaskService.GetTaskStack().Any(Function(x) x.Name = TaskName.CloudSyncManual And Not x.IsRunning And Not x.Waiting) And _StateWarnings.Count = 0
         BtnAgentState.Enabled = Not _StackTaskService.GetTaskStack().Any(Function(x) x.IsRunning)
         BtnCleanEventLog.Enabled = Not _StackTaskService.GetTaskStack().Any(Function(x) x.IsRunning)
+        BtnCompanies.Enabled = Not _StackTaskService.GetTaskStack().Any(Function(x) x.IsRunning)
     End Sub
     Private Sub OnTaskProgressChanged(sender As Object, Response As AsyncResponseModel)
         LblProgress.Visible = True
@@ -262,16 +265,42 @@ Public Class FrmMain
         End If
     End Sub
     Private Sub DgvEvents_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvEvents.DataSourceChanged
-        If DgvEvents.DataSource IsNot Nothing AndAlso DgvEvents.Columns.Count = 5 Then
+        If DgvEvents.DataSource IsNot Nothing Then
             DgvEvents.Columns("ID").Visible = False
             DgvEvents.Columns("IsSaved").Visible = False
             DgvEvents.Columns("StartTime").Visible = False
-            DgvEvents.Columns("EndTime").Visible = False
+            DgvEvents.Columns("EndTime").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
             DgvEvents.Columns("Description").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            DgvEvents.Columns("Status").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+            DgvEvents.Columns("ExceptionMessage").Visible = False
             DataGridViewNavigator.EnsureVisibleRow(DgvEvents, 0)
         End If
+    End Sub
+    Private Sub DgvEvents_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvEvents.CellFormatting
+
+        If DgvEvents.Columns(e.ColumnIndex).Name <> "Status" Then Exit Sub
+
+        Dim status = Convert.ToString(e.Value)
+
+        If status = "Sucesso" Then
+            With DgvEvents.Rows(e.RowIndex).DefaultCellStyle
+                .ForeColor = Color.DodgerBlue
+                .BackColor = Color.White
+                .SelectionBackColor = Color.DodgerBlue
+                .SelectionForeColor = Color.White
+            End With
+        Else
+            With DgvEvents.Rows(e.RowIndex).DefaultCellStyle
+                .ForeColor = Color.DarkRed
+                .BackColor = Color.White
+                .SelectionBackColor = Color.DarkRed
+                .SelectionForeColor = Color.White
+            End With
+        End If
+
 
     End Sub
+
     Private Sub DgvTasks_SelectionChanged(sender As Object, e As EventArgs) Handles DgvTasks.SelectionChanged
         DgvTasks.ClearSelection()
     End Sub
@@ -453,8 +482,7 @@ Public Class FrmMain
                 CMessageBox.Show("Tarefa em andamento, aguarde o término.", CMessageBoxType.Information, CMessageBoxButtons.OK)
                 Exit Sub
             End If
-            Dim Database = Locator.GetInstance(Of LocalDB)
-            Await Database.ExecuteDeleteAsync("agentevent")
+            File.Delete(Path.Combine(ApplicationPaths.FilesDirectory, "AgentEvents.json"))
             DgvEvents.DataSource = Await _EventService.Read()
         End If
     End Sub
@@ -463,7 +491,29 @@ Public Class FrmMain
         DgvEvents.FirstDisplayedScrollingRowIndex = 0
     End Sub
 
-    Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
-        FrmCompanies.ShowDialog()
+    Private Sub BtnCompanies_Click(sender As Object, e As EventArgs) Handles BtnCompanies.Click
+        _Semaphore.Wait()
+        Using Form As New FrmCompanies
+            Form.ShowDialog()
+        End Using
+        _Semaphore.Release()
+    End Sub
+
+    Private Sub DgvEvents_DoubleClick(sender As Object, e As EventArgs) Handles DgvEvents.DoubleClick
+        Dim [Event] As New EventModel
+        If DgvEvents.SelectedRows.Count = 1 Then
+            Dim Ds = CType(DgvEvents.DataSource, DataTable)
+            Dim Row As DataRow = Ds.Rows(DgvEvents.CurrentRow.Index)
+            [Event].ID = Convert.ToString(Row.Item("ID"))
+            [Event].Status = EnumHelper.GetEnumValue(Of TaskStatus)(Row.Item("Status"))
+            [Event].StartTime = DateTime.ParseExact(Convert.ToString(Row.Item("StartTime")), "dd/MM/yyyy HH:mm:ss", Globalization.CultureInfo.InvariantCulture)
+            [Event].EndTime = DateTime.ParseExact(Convert.ToString(Row.Item("EndTime")), "dd/MM/yyyy HH:mm:ss", Globalization.CultureInfo.InvariantCulture)
+            [Event].Description = Convert.ToString(Row.Item("Description"))
+            [Event].ExceptionMessage = Convert.ToString(Row.Item("ExceptionMessage"))
+            [Event].LogMessages = CType(Row.Item("LogMessages"), List(Of String))
+            Using Frm As New FrmEvent([Event])
+                Frm.ShowDialog()
+            End Using
+        End If
     End Sub
 End Class

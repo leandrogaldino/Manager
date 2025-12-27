@@ -3,7 +3,6 @@ Imports System.Transactions
 Imports ControlLibrary
 Imports ManagerCore
 Imports ManagerCore.LocalDB
-igual no backup
 Public Class TaskClean
     Inherits TaskBase
 
@@ -60,7 +59,7 @@ Public Class TaskClean
         Dim TempDirectories As List(Of FileManager.DeleteDirectoryInfo)
         Dim Exception As Exception = Nothing
         Try
-            Response.Text = "Limpeza - Iniciando"
+            Response.Text = "Limpeza: Iniciando"
             Progress?.Report(Response)
             EvaluationDocumentDir = New DirectoryInfo(ApplicationPaths.EvaluationDocumentDirectory)
             EmailSignatureDir = New DirectoryInfo(ApplicationPaths.EmailSignatureDirectory)
@@ -74,7 +73,7 @@ Public Class TaskClean
             ResultDate = Today.AddMonths(-Month)
             Result = Await _DatabaseService.ExecuteSelectAsync("evaluation", {"id", "evaluationdate", "customerid"}.ToList, $"evaluationdate <= '{ResultDate:yyyy-MM-dd}'")
             AllRows = Result.Data.Count
-            Response.Text = $"Limpeza - Verificando se há avaliações antigas ({MonthStr})"
+            Response.Text = $"Limpeza: Verificando se há avaliações antigas ({MonthStr})"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             For Each Entry In Result.Data
@@ -88,7 +87,7 @@ Public Class TaskClean
                     Await _DatabaseService.ExecuteDeleteAsync("evaluation", $"id = {Entry("id")}")
                     CurrentRow += 1
                     Response.Percent = CurrentRow / AllRows * 100
-                    Response.Text = $"Limpeza - Excluindo avaliações antigas ({Response.Percent}%)"
+                    Response.Text = $"Limpeza: Excluindo avaliações antigas ({Response.Percent}%)"
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                     Scope.Complete()
@@ -97,35 +96,35 @@ Public Class TaskClean
             CurrentRow = 0
             AllRows = 0
             Await Task.Delay(Constants.WaitForJob)
-            Response.Text = "Limpeza - Recuperando os endereços dos arquivos"
+            Response.Text = "Limpeza: Recuperando os endereços dos arquivos"
             Progress?.Report(Response)
             Dim EvaluationResult As QueryResult = Await _DatabaseService.ExecuteSelectAsync("evaluation", {"id", "documentname"}.ToList, "documentname IS NOT NULL")
             Response.Percent = 20
-            Response.Text = $"Limpeza - Recuperando os endereços dos arquivos {(Response.Percent)}%"
+            Response.Text = $"Limpeza: Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             Dim RequestResult As QueryResult = Await _DatabaseService.ExecuteSelectAsync("request", {"id", "documentname"}.ToList, "documentname IS NOT NULL")
             Response.Percent = 40
-            Response.Text = $"Limpeza - Recuperando os endereços dos arquivos {(Response.Percent)}%"
+            Response.Text = $"Limpeza: Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             Dim ProductResult As QueryResult = Await _DatabaseService.ExecuteSelectAsync("productpicture", {"id", "picturename"}.ToList, "picturename IS NOT NULL")
             Response.Percent = 60
-            Response.Text = $"Limpeza - Recuperando os endereços dos arquivos {(Response.Percent)}%"
+            Response.Text = $"Limpeza: Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             Dim EmailResult As QueryResult = Await _DatabaseService.ExecuteSelectAsync("emailsignature", {"id", "directoryname"}.ToList, "directoryname IS NOT NULL")
             Response.Percent = 80
-            Response.Text = $"Limpeza - Recuperando os endereços dos arquivos {(Response.Percent)}%"
+            Response.Text = $"Limpeza: Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             Dim CashResult As QueryResult = Await _DatabaseService.ExecuteSelectAsync("cash", {"id", "documentname"}.ToList, "documentname IS NOT NULL")
             Response.Percent = 100
-            Response.Text = $"Limpeza - Recuperando os endereços dos arquivos {(Response.Percent)}%"
+            Response.Text = $"Limpeza: Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
-            Response.Text = "Limpeza - Verificando a existência dos arquivos referenciados no banco de dados"
+            Response.Text = "Limpeza: Verificando a existência dos arquivos referenciados no banco de dados"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             AllRows = EvaluationResult.Data.Count + RequestResult.Data.Count + ProductResult.Data.Count + EmailResult.Data.Count + CashResult.Data.Count
@@ -134,11 +133,11 @@ Public Class TaskClean
                 For Each EvaluationEntry In EvaluationResult.Data
                     CurrentRow += 1
                     Response.Percent = CurrentRow / AllRows * 100
-                    Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
+                    Response.Text = $"Limpeza: Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
                     Progress?.Report(Response)
                     If Not String.IsNullOrEmpty(EvaluationEntry("documentname").ToString) Then
                         If Not Files.Any(Function(x) x.Name = EvaluationEntry("documentname").ToString) Then
-                            Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
+                            Response.Text = $"Limpeza: Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
                             Progress?.Report(Response)
                             Await Task.Delay(Constants.WaitForLoop)
                         End If
@@ -148,11 +147,11 @@ Public Class TaskClean
                 For Each RequestEntry In RequestResult.Data
                     CurrentRow += 1
                     Response.Percent = CurrentRow / AllRows * 100
-                    Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
+                    Response.Text = $"Limpeza: Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
                     Progress?.Report(Response)
                     If Not String.IsNullOrEmpty(RequestEntry("documentname").ToString) Then
                         If Not Files.Any(Function(x) x.Name = RequestEntry("documentname").ToString) Then
-                            Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
+                            Response.Text = $"Limpeza: Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
                             Progress?.Report(Response)
                             Await Task.Delay(Constants.WaitForLoop)
                         End If
@@ -162,11 +161,11 @@ Public Class TaskClean
                 For Each ProductEntry As Dictionary(Of String, Object) In ProductResult.Data
                     CurrentRow += 1
                     Response.Percent = CurrentRow / AllRows * 100
-                    Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
+                    Response.Text = $"Limpeza: Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
                     Progress?.Report(Response)
                     If Not String.IsNullOrEmpty(ProductEntry("picturename").ToString) Then
                         If Not Files.Any(Function(x) x.Name = ProductEntry("picturename").ToString) Then
-                            Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
+                            Response.Text = $"Limpeza: Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
                             Progress?.Report(Response)
                             Await Task.Delay(Constants.WaitForLoop)
                         End If
@@ -176,11 +175,11 @@ Public Class TaskClean
                 For Each EmailEntry In EmailResult.Data
                     CurrentRow += 1
                     Response.Percent = CurrentRow / AllRows * 100
-                    Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
+                    Response.Text = $"Limpeza: Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
                     Progress?.Report(Response)
                     If Not String.IsNullOrEmpty(EmailEntry("directoryname").ToString) Then
                         If Not Directories.Any(Function(x) x.Name = EmailEntry("directoryname").ToString) Then
-                            Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
+                            Response.Text = $"Limpeza: Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
                             Progress?.Report(Response)
                             Await Task.Delay(Constants.WaitForLoop)
                         End If
@@ -190,11 +189,11 @@ Public Class TaskClean
                 For Each CashEntry In CashResult.Data
                     CurrentRow += 1
                     Response.Percent = CurrentRow / AllRows * 100
-                    Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
+                    Response.Text = $"Limpeza: Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
                     Progress?.Report(Response)
                     If Not String.IsNullOrEmpty(CashEntry("documentname").ToString) Then
                         If Not Files.Any(Function(x) x.Name = CashEntry("documentname").ToString) Then
-                            Response.Text = $"Limpeza - Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
+                            Response.Text = $"Limpeza: Verificando a existência dos arquivos referenciados no banco de dados ({Response.Percent}%)"
                             Progress?.Report(Response)
                             Await Task.Delay(Constants.WaitForLoop)
                         End If
@@ -203,7 +202,7 @@ Public Class TaskClean
             End If
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
-            Response.Text = "Limpeza - Verificando arquivos em disco não referenciados no banco de dados"
+            Response.Text = "Limpeza: Verificando arquivos em disco não referenciados no banco de dados"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             CurrentRow = 0
@@ -211,11 +210,11 @@ Public Class TaskClean
             For Each EvaluationFile As FileInfo In EvaluationDocumentDir.GetFiles()
                 CurrentRow += 1
                 Response.Percent = CurrentRow / FileCount * 100
-                Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
+                Response.Text = $"Limpeza: Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
                 Progress?.Report(Response)
                 If Not EvaluationResult.Data.Any(Function(x) x("documentname").ToString = EvaluationFile.Name) Then
                     Await FileManager.DeleteFilesAsync({EvaluationFile}.ToList)
-                    Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
+                    Response.Text = $"Limpeza: Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                 End If
@@ -223,11 +222,11 @@ Public Class TaskClean
             For Each RequestFile As FileInfo In RequestDocumentDir.GetFiles()
                 CurrentRow += 1
                 Response.Percent = CurrentRow / FileCount * 100
-                Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
+                Response.Text = $"Limpeza: Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
                 Progress?.Report(Response)
                 If Not RequestResult.Data.Any(Function(x) x("documentname").ToString = RequestFile.Name) Then
                     Await FileManager.DeleteFilesAsync({RequestFile}.ToList)
-                    Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
+                    Response.Text = $"Limpeza: Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                 End If
@@ -235,29 +234,29 @@ Public Class TaskClean
             For Each ProductPicture As FileInfo In ProductPictureDir.GetFiles()
                 CurrentRow += 1
                 Response.Percent = CurrentRow / FileCount * 100
-                Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
+                Response.Text = $"Limpeza: Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
                 Progress?.Report(Response)
                 If Not ProductResult.Data.Any(Function(x) x("picturename").ToString = ProductPicture.Name) Then
                     Await FileManager.DeleteFilesAsync({ProductPicture}.ToList)
-                    Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
+                    Response.Text = $"Limpeza: Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                 End If
             Next ProductPicture
             For Each EmailFile As FileInfo In EmailSignatureDir.GetFiles()
                 Await FileManager.DeleteFilesAsync({EmailFile}.ToList)
-                Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
+                Response.Text = $"Limpeza: Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
                 Progress?.Report(Response)
                 Await Task.Delay(Constants.WaitForLoop)
             Next EmailFile
             For Each EmailDir As DirectoryInfo In EmailSignatureDir.GetDirectories()
                 CurrentRow += 1
                 Response.Percent = CurrentRow / FileCount * 100
-                Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
+                Response.Text = $"Limpeza: Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
                 Progress?.Report(Response)
                 If Not EmailResult.Data.Any(Function(x) x("directoryname").ToString = EmailDir.Name) Then
                     Await FileManager.DeleteDirectoriesAsync(New List(Of FileManager.DeleteDirectoryInfo) From {New FileManager.DeleteDirectoryInfo(EmailDir, True)})
-                    Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
+                    Response.Text = $"Limpeza: Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                 End If
@@ -265,22 +264,22 @@ Public Class TaskClean
             For Each CashFile As FileInfo In CashDocumentDir.GetFiles()
                 CurrentRow += 1
                 Response.Percent = CurrentRow / FileCount * 100
-                Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
+                Response.Text = $"Limpeza: Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
                 Progress?.Report(Response)
                 If Not CashResult.Data.Any(Function(x) x("documentname").ToString = CashFile.Name) Then
                     Await FileManager.DeleteFilesAsync({CashFile}.ToList)
-                    Response.Text = $"Limpeza - Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
+                    Response.Text = $"Limpeza: Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                 End If
             Next CashFile
             Await Task.Delay(Constants.WaitForJob)
-            Response.Text = "Limpeza - Excluindo arquivos temporários"
+            Response.Text = "Limpeza: Excluindo arquivos temporários"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             AddHandler FileManager.DeleteDirectoriesProgressChanged,
                 Sub(IOSender, IOEventArgs)
-                    Response.Text = $"Limpeza - Excluindo arquivos temporários ({IOEventArgs.PercentCompleted}%)"
+                    Response.Text = $"Limpeza: Excluindo arquivos temporários ({IOEventArgs.PercentCompleted}%)"
                     Progress?.Report(Response)
                 End Sub
             TempDirectories = New List(Of FileManager.DeleteDirectoryInfo) From {
@@ -288,7 +287,13 @@ Public Class TaskClean
             }
             Await FileManager.DeleteDirectoriesAsync(TempDirectories)
             Await Task.Delay(Constants.WaitForJob)
-            Response.Text = "Limpeza - Finalizado"
+
+            Response.Text = "Limpeza: Concluído"
+            Response.Percent = 0
+            Response.Event.EndTime = DateTime.Now
+            Response.Event.ReadyToPost = True
+            Response.Event.Description = $"Limpeza{If(Not IsManual, String.Empty, " Manual")}"
+
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         Catch ex As Exception
@@ -299,10 +304,16 @@ Public Class TaskClean
         End Try
         If Exception IsNot Nothing Then
             Response.Percent = 0
-            Response.Text = $"Ocorreu um erro ao executar o coletor - {Exception.Message}"
+            Response.Text = "Backup: Erro na execução"
+            Response.Percent = 0
+            Response.Event.EndTime = DateTime.Now
+            Response.Event.Description = $"Limpeza{If(Not IsManual, String.Empty, " Manual")}"
+            Response.Event.Status = TaskStatus.Error
+            Response.Event.ExceptionMessage = $"{Exception.Message}{vbNewLine}{Exception.StackTrace}"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
-            Response.Text = "Limpeza - Finalizado"
+            Response.Text = "Limpeza: Concluído"
+            Response.Event.ReadyToPost = True
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         End If

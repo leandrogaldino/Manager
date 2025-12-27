@@ -39,32 +39,52 @@ Public Class TaskCloudSync
     Public Overrides Async Function Run(Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task
         Dim Exception As Exception = Nothing
         Dim Response As New AsyncResponseModel
+        Dim SyncedFromCloud As Boolean
+        Dim SyncedToCloud As Boolean
+        Dim HasSynced As Boolean
         Await Task.Delay(Constants.WaitForStart)
         Dim HasInternet = Await InternetHelper.IsInternetAvailableAsync()
-        If Not HasInternet Then Exit Function
+        If Not HasInternet Then Return
         Try
-            Await FetchSchedulesFromCloudToLocal(Response, Progress)
-            Await SyncFromLocalToCloud(Response, Progress)
+            SyncedFromCloud = Await FetchSchedulesFromCloudToLocal(Response, Progress)
+            SyncedToCloud = Await SyncFromLocalToCloud(Response, Progress)
+            HasSynced = SyncedFromCloud OrElse SyncedToCloud
             _SessionModel.ManagerSetting.LastExecution.CloudSync = Now.ToString("yyyy-MM-dd HH:mm:ss")
             _SettingsService.Save(_SessionModel.ManagerSetting)
+            If _Started Then
+                Response.Text = "Sincronização: Concluído"
+                Response.Percent = 0
+                Response.Event.EndTime = DateTime.Now
+                If HasSynced Then Response.Event.ReadyToPost = True
+                Response.Event.Description = $"Sincronização{If(Not IsManual, String.Empty, " Manual")}"
+                Progress?.Report(Response)
+            End If
+            Await Task.Delay(Constants.WaitForFinish)
         Catch ex As Exception
             Exception = ex
         End Try
         If Exception IsNot Nothing Then
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
-            Response.Text = $"Sincronização com a núvem - Ocorreu um erro executar a sincronização - {Exception.Message}"
-            If Progress IsNot Nothing Then Progress.Report(Response)
+            Response.Text = $"Sincronização: [ERRO] = {Exception.Message}"
+            Response.Event.EndTime = DateTime.Now
+            Response.Event.Description = $"Sincronização{If(Not IsManual, String.Empty, " Manual")}"
+            Response.Event.Status = TaskStatus.Error
+            Response.Event.ExceptionMessage = $"{Exception.Message}{vbNewLine}{Exception.StackTrace}"
+            Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
-            Response.Text = $"Sincronização com a núvem - Concluída"
-            If Progress IsNot Nothing Then Progress.Report(Response)
+            Response.Text = $"Sincronização: Concluído"
+            Response.Event.ReadyToPost = True
+            Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         End If
     End Function
-    Private Async Function SyncFromLocalToCloud(Response As AsyncResponseModel, Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task
+    Private Async Function SyncFromLocalToCloud(Response As AsyncResponseModel, Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task(Of Boolean)
         Dim PerformedOperations As Long
         Dim LastSyncTime As Date = _SessionModel.ManagerSetting.LastExecution.CloudSync
         Dim ContinueSync As Boolean = True
+        Dim HasSynced As Boolean
+
         Do While ContinueSync
             ContinueSync = False
             Dim StartTime As Date = Now
@@ -88,8 +108,14 @@ Public Class TaskCloudSync
             )
             Dim TotalChanges As Long = Result.Data.Count
             If TotalChanges > 0 Then
-
-                Response.Text = $"Sincronização com a núvem - Enviando dados ({Response.Percent}%)"
+                If Not _Started Then
+                    HasSynced = True
+                    Response.Percent = 0
+                    Response.Text = $"Sincronização: Iniciando"
+                    Progress?.Report(Response)
+                    Await Task.Delay(Constants.WaitForJob)
+                End If
+                Response.Text = $"Sincronização: Enviando dados ({Response.Percent}%)"
                 Progress?.Report(Response)
                 Await Task.Delay(Constants.WaitForJob)
                 PerformedOperations = 0
@@ -116,7 +142,7 @@ Public Class TaskCloudSync
                     End Select
                     PerformedOperations += 1
                     Response.Percent = CInt((PerformedOperations / TotalChanges) * 100)
-                    Response.Text = $"Sincronização com a núvem - Enviando dados ({Response.Percent}%)"
+                    Response.Text = $"Sincronização: Enviando dados ({Response.Percent}%)"
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                 Next Change
@@ -128,7 +154,7 @@ Public Class TaskCloudSync
                 )
                 If NewResult.Data.Count > 0 Then
                     Response.Percent = 0
-                    Response.Text = "Sincronização com a núvem - Registros remanescentes encontrados"
+                    Response.Text = "Sincronização: Registros remanescentes encontrados"
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForJob)
                     ContinueSync = True
@@ -137,20 +163,30 @@ Public Class TaskCloudSync
                 End If
             End If
         Loop
+        Return HasSynced
     End Function
-    Private Async Function FetchSchedulesFromCloudToLocal(Response As AsyncResponseModel, Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task
+    Private _Started As Boolean
+    Private Async Function FetchSchedulesFromCloudToLocal(Response As AsyncResponseModel, Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task(Of Boolean)
         Dim PerformedOperations As Integer
         Dim TotalChanges As Integer
         Dim LastSyncLimit As Date = _SessionModel.ManagerSetting.LastExecution.CloudSync
         Dim ContinueSync As Boolean = True
+        Dim HasSynced As Boolean
+
         Do While ContinueSync
             ContinueSync = False
             Dim StartTime As Long = DateTimeHelper.MillisecondsFromDate(Now)
             Dim RemoteResult As List(Of Dictionary(Of String, Object)) = Await _RemoteDB.ExecuteGet("visitschedules", New List(Of Condition) From {New WhereGreaterThanCondition("lastupdate", DateTimeHelper.MillisecondsFromDate(LastSyncLimit)), New WhereNotEqualToCondition("performeddate", Nothing)})
             TotalChanges = RemoteResult.Count
             If TotalChanges > 0 Then
+                _Started = True
+                HasSynced = True
+                Response.Percent = 0
+                Response.Text = $"Sincronização: Iniciando"
+                Progress?.Report(Response)
+                Await Task.Delay(Constants.WaitForJob)
 
-                Response.Text = "Sincronização com a núvem - Recebendo agendamentos"
+                Response.Text = "Sincronização: Recebendo agendamentos"
                 Progress?.Report(Response)
                 Await Task.Delay(Constants.WaitForJob)
                 PerformedOperations = 0
@@ -171,14 +207,14 @@ Public Class TaskCloudSync
                     })
                     PerformedOperations += 1
                     Response.Percent = CInt((PerformedOperations / TotalChanges) * 100)
-                    Response.Text = $"Sincronização com a núvem - Recebendo agendamentos - ({Response.Percent}%)"
+                    Response.Text = $"Sincronização: Recebendo agendamentos - ({Response.Percent}%)"
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                 Next
                 Dim NewRecords As List(Of Dictionary(Of String, Object)) = Await _RemoteDB.ExecuteGet("visitschedules", New List(Of Condition) From {New WhereGreaterThanCondition("lastupdate", StartTime)})
                 If NewRecords.Count > 0 Then
                     Response.Percent = 0
-                    Response.Text = "Sincronização com a núvem - Registros remanescentes encontrados"
+                    Response.Text = "Sincronização: Registros remanescentes encontrados"
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForJob)
                     ContinueSync = True
@@ -186,6 +222,7 @@ Public Class TaskCloudSync
                 End If
             End If
         Loop
+        Return HasSynced
     End Function
     Private Async Function FetchVisitSchedule(Change As Dictionary(Of String, Object)) As Task
         Dim Result = Await _LocalDB.ExecuteSelectAsync("visitschedule",
@@ -198,10 +235,7 @@ Public Class TaskCloudSync
             ScheduleData = Result.Data(0)
             ScheduleData("creationdate") = DateTimeHelper.MillisecondsFromDate(ScheduleData(("creationdate")))
             ScheduleData("scheduleddate") = DateTimeHelper.MillisecondsFromDate(ScheduleData(("scheduleddate")))
-
             ScheduleData("performeddate") = If(ScheduleData("performeddate") Is DBNull.Value, Nothing, DateTimeHelper.MillisecondsFromDate(ScheduleData("performeddate")))
-
-            'ScheduleData("performeddate") = Nothing
             ScheduleData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
             ScheduleData("visible") = If(ScheduleData("statusid") = 0, 1, 0)
             ScheduleData.Remove("statusid")

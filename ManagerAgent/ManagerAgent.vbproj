@@ -293,6 +293,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Views\Login\LoginViewModel.vb" />
+    <Compile Include="Source\Views\Main\FrmEvent.Designer.vb">
+      <DependentUpon>FrmEvent.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Main\FrmEvent.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Source\Views\RestoreBackup\RestoreBackupViewModel.vb" />
     <Compile Include="Source\Views\Settings\Backup\BackupSettingsViewModel.vb" />
     <Compile Include="Source\Views\Settings\Backup\UcBackupDays.Designer.vb">
@@ -446,6 +452,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Source\Views\FrmCompanies.resx">
       <DependentUpon>FrmCompanies.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Main\FrmEvent.resx">
+      <DependentUpon>FrmEvent.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Settings\Backup\FrmBackupSettings.resx">
       <DependentUpon>FrmBackupSettings.vb</DependentUpon>

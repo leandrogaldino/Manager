@@ -24,9 +24,9 @@ Partial Class FrmMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmMain))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.NotifyIcon = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.CmsNotifyIcon = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.BtnClose = New System.Windows.Forms.ToolStripMenuItem()
@@ -35,6 +35,15 @@ Partial Class FrmMain
         Me.TsTitle = New System.Windows.Forms.ToolStrip()
         Me.BtnAgentState = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.BtnBackup = New System.Windows.Forms.ToolStripDropDownButton()
+        Me.BtnOpenBackupFolder = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnExecuteBackup = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnRestoreBackup = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnClean = New System.Windows.Forms.ToolStripButton()
+        Me.BtnRelease = New System.Windows.Forms.ToolStripButton()
+        Me.BtnCloudSync = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
+        Me.BtnCompanies = New System.Windows.Forms.ToolStripButton()
         Me.BtnSettings = New System.Windows.Forms.ToolStripDropDownButton()
         Me.BtnSettingsBackup = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnSettingsDatabase = New System.Windows.Forms.ToolStripMenuItem()
@@ -54,13 +63,6 @@ Partial Class FrmMain
         Me.BtnSettingsChangeKey = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.BtnCleanEventLog = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BtnBackup = New System.Windows.Forms.ToolStripDropDownButton()
-        Me.BtnOpenBackupFolder = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BtnExecuteBackup = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BtnRestoreBackup = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BtnClean = New System.Windows.Forms.ToolStripButton()
-        Me.BtnRelease = New System.Windows.Forms.ToolStripButton()
-        Me.BtnCloudSync = New System.Windows.Forms.ToolStripButton()
         Me.TpbProgress = New ControlLibrary.TextedProgressBar()
         Me.LblProgress = New System.Windows.Forms.Label()
         Me.ScTaskEvent = New System.Windows.Forms.SplitContainer()
@@ -70,7 +72,6 @@ Partial Class FrmMain
         Me.DgvWarnings = New System.Windows.Forms.DataGridView()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.DataGridViewContentCopy = New ControlLibrary.DataGridViewContentCopy()
-        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.CmsNotifyIcon.SuspendLayout()
         CType(Me.DgvEvents, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsTitle.SuspendLayout()
@@ -117,14 +118,14 @@ Partial Class FrmMain
         Me.DgvEvents.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
         Me.DgvEvents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DgvEvents.ColumnHeadersVisible = False
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Gainsboro
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer))
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DgvEvents.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Gainsboro
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer))
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DgvEvents.DefaultCellStyle = DataGridViewCellStyle1
         Me.DgvEvents.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DgvEvents.GridColor = System.Drawing.Color.WhiteSmoke
         Me.DgvEvents.Location = New System.Drawing.Point(0, 28)
@@ -132,7 +133,7 @@ Partial Class FrmMain
         Me.DgvEvents.ReadOnly = True
         Me.DgvEvents.RowHeadersVisible = False
         Me.DgvEvents.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvEvents.Size = New System.Drawing.Size(955, 538)
+        Me.DgvEvents.Size = New System.Drawing.Size(727, 338)
         Me.DgvEvents.TabIndex = 17
         '
         'LblTitle
@@ -143,7 +144,7 @@ Partial Class FrmMain
         Me.LblTitle.Location = New System.Drawing.Point(0, 0)
         Me.LblTitle.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.LblTitle.Name = "LblTitle"
-        Me.LblTitle.Size = New System.Drawing.Size(955, 28)
+        Me.LblTitle.Size = New System.Drawing.Size(727, 28)
         Me.LblTitle.TabIndex = 16
         Me.LblTitle.Text = "Eventos"
         Me.LblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -153,10 +154,10 @@ Partial Class FrmMain
         Me.TsTitle.BackColor = System.Drawing.Color.Transparent
         Me.TsTitle.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsTitle.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsTitle.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnAgentState, Me.ToolStripSeparator1, Me.BtnSettings, Me.BtnBackup, Me.BtnClean, Me.BtnRelease, Me.BtnCloudSync, Me.ToolStripButton1})
+        Me.TsTitle.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnAgentState, Me.ToolStripSeparator1, Me.BtnBackup, Me.BtnClean, Me.BtnRelease, Me.BtnCloudSync, Me.ToolStripSeparator4, Me.BtnCompanies, Me.BtnSettings})
         Me.TsTitle.Location = New System.Drawing.Point(0, 0)
         Me.TsTitle.Name = "TsTitle"
-        Me.TsTitle.Size = New System.Drawing.Size(1174, 63)
+        Me.TsTitle.Size = New System.Drawing.Size(894, 63)
         Me.TsTitle.TabIndex = 18
         Me.TsTitle.Text = "ToolStrip"
         '
@@ -180,9 +181,102 @@ Partial Class FrmMain
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
         Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 63)
         '
+        'BtnBackup
+        '
+        Me.BtnBackup.AutoSize = False
+        Me.BtnBackup.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnOpenBackupFolder, Me.BtnExecuteBackup, Me.BtnRestoreBackup})
+        Me.BtnBackup.Enabled = False
+        Me.BtnBackup.Image = Global.ManagerAgent.My.Resources.Resources.Backup
+        Me.BtnBackup.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnBackup.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnBackup.Margin = New System.Windows.Forms.Padding(5)
+        Me.BtnBackup.Name = "BtnBackup"
+        Me.BtnBackup.Size = New System.Drawing.Size(100, 53)
+        Me.BtnBackup.Text = "Backup"
+        Me.BtnBackup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnBackup.ToolTipText = "Restaurar ou cria um backup"
+        '
+        'BtnOpenBackupFolder
+        '
+        Me.BtnOpenBackupFolder.Name = "BtnOpenBackupFolder"
+        Me.BtnOpenBackupFolder.Size = New System.Drawing.Size(145, 22)
+        Me.BtnOpenBackupFolder.Text = "Abrir Pasta"
+        '
+        'BtnExecuteBackup
+        '
+        Me.BtnExecuteBackup.Name = "BtnExecuteBackup"
+        Me.BtnExecuteBackup.Size = New System.Drawing.Size(145, 22)
+        Me.BtnExecuteBackup.Text = "Executar"
+        '
+        'BtnRestoreBackup
+        '
+        Me.BtnRestoreBackup.Name = "BtnRestoreBackup"
+        Me.BtnRestoreBackup.Size = New System.Drawing.Size(145, 22)
+        Me.BtnRestoreBackup.Text = "Restaurar"
+        '
+        'BtnClean
+        '
+        Me.BtnClean.AutoSize = False
+        Me.BtnClean.Enabled = False
+        Me.BtnClean.Image = Global.ManagerAgent.My.Resources.Resources.Garbage
+        Me.BtnClean.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnClean.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnClean.Margin = New System.Windows.Forms.Padding(5)
+        Me.BtnClean.Name = "BtnClean"
+        Me.BtnClean.Size = New System.Drawing.Size(100, 53)
+        Me.BtnClean.Text = "Limpar"
+        Me.BtnClean.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnClean.ToolTipText = "Exclui arquivos que não são necessários pelo sistema"
+        '
+        'BtnRelease
+        '
+        Me.BtnRelease.AutoSize = False
+        Me.BtnRelease.Enabled = False
+        Me.BtnRelease.Image = Global.ManagerAgent.My.Resources.Resources.Release
+        Me.BtnRelease.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnRelease.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnRelease.Margin = New System.Windows.Forms.Padding(5)
+        Me.BtnRelease.Name = "BtnRelease"
+        Me.BtnRelease.Size = New System.Drawing.Size(100, 53)
+        Me.BtnRelease.Text = "Desbloquear"
+        Me.BtnRelease.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnRelease.ToolTipText = "Desbloqueia registros que foram bloqueados por usuários mas que não estão mais se" &
+    "ndo utilizados"
+        '
+        'BtnCloudSync
+        '
+        Me.BtnCloudSync.AutoSize = False
+        Me.BtnCloudSync.Enabled = False
+        Me.BtnCloudSync.Image = Global.ManagerAgent.My.Resources.Resources.Cloud
+        Me.BtnCloudSync.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnCloudSync.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnCloudSync.Margin = New System.Windows.Forms.Padding(5)
+        Me.BtnCloudSync.Name = "BtnCloudSync"
+        Me.BtnCloudSync.Size = New System.Drawing.Size(100, 53)
+        Me.BtnCloudSync.Text = "Sincronizar"
+        Me.BtnCloudSync.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnCloudSync.ToolTipText = "Sincroniza os dados do banco de dados local, com o banco de dados na núvem"
+        '
+        'ToolStripSeparator4
+        '
+        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(6, 63)
+        '
+        'BtnCompanies
+        '
+        Me.BtnCompanies.AutoSize = False
+        Me.BtnCompanies.Image = Global.ManagerAgent.My.Resources.Resources.Cloud
+        Me.BtnCompanies.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnCompanies.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnCompanies.Margin = New System.Windows.Forms.Padding(5)
+        Me.BtnCompanies.Name = "BtnCompanies"
+        Me.BtnCompanies.Size = New System.Drawing.Size(120, 53)
+        Me.BtnCompanies.Text = "Empresas"
+        Me.BtnCompanies.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnCompanies.ToolTipText = "Sincroniza os dados do banco de dados local, com o banco de dados na núvem"
+        '
         'BtnSettings
         '
-        Me.BtnSettings.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
         Me.BtnSettings.AutoSize = False
         Me.BtnSettings.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnSettingsBackup, Me.BtnSettingsDatabase, Me.BtnSettingsRegister, Me.BtnSettingsGeneral, Me.BtnSettingsLicense, Me.BtnSettingsCloud, Me.BtnSettingsSupport, Me.ToolStripSeparator2, Me.BtnSettingsChangePassword, Me.BtnSettingsChangeKey, Me.ToolStripSeparator3, Me.BtnCleanEventLog})
         Me.BtnSettings.Enabled = False
@@ -191,7 +285,7 @@ Partial Class FrmMain
         Me.BtnSettings.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnSettings.Margin = New System.Windows.Forms.Padding(5)
         Me.BtnSettings.Name = "BtnSettings"
-        Me.BtnSettings.Size = New System.Drawing.Size(150, 53)
+        Me.BtnSettings.Size = New System.Drawing.Size(120, 53)
         Me.BtnSettings.Text = "Configurações"
         Me.BtnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         '
@@ -303,95 +397,19 @@ Partial Class FrmMain
         Me.BtnCleanEventLog.Size = New System.Drawing.Size(223, 22)
         Me.BtnCleanEventLog.Text = "Limpar Log de Eventos"
         '
-        'BtnBackup
-        '
-        Me.BtnBackup.AutoSize = False
-        Me.BtnBackup.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnOpenBackupFolder, Me.BtnExecuteBackup, Me.BtnRestoreBackup})
-        Me.BtnBackup.Enabled = False
-        Me.BtnBackup.Image = Global.ManagerAgent.My.Resources.Resources.Backup
-        Me.BtnBackup.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.BtnBackup.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnBackup.Margin = New System.Windows.Forms.Padding(5)
-        Me.BtnBackup.Name = "BtnBackup"
-        Me.BtnBackup.Size = New System.Drawing.Size(150, 53)
-        Me.BtnBackup.Text = "Backup"
-        Me.BtnBackup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnBackup.ToolTipText = "Restaurar ou cria um backup"
-        '
-        'BtnOpenBackupFolder
-        '
-        Me.BtnOpenBackupFolder.Name = "BtnOpenBackupFolder"
-        Me.BtnOpenBackupFolder.Size = New System.Drawing.Size(145, 22)
-        Me.BtnOpenBackupFolder.Text = "Abrir Pasta"
-        '
-        'BtnExecuteBackup
-        '
-        Me.BtnExecuteBackup.Name = "BtnExecuteBackup"
-        Me.BtnExecuteBackup.Size = New System.Drawing.Size(145, 22)
-        Me.BtnExecuteBackup.Text = "Executar"
-        '
-        'BtnRestoreBackup
-        '
-        Me.BtnRestoreBackup.Name = "BtnRestoreBackup"
-        Me.BtnRestoreBackup.Size = New System.Drawing.Size(145, 22)
-        Me.BtnRestoreBackup.Text = "Restaurar"
-        '
-        'BtnClean
-        '
-        Me.BtnClean.AutoSize = False
-        Me.BtnClean.Enabled = False
-        Me.BtnClean.Image = Global.ManagerAgent.My.Resources.Resources.Garbage
-        Me.BtnClean.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.BtnClean.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnClean.Margin = New System.Windows.Forms.Padding(5)
-        Me.BtnClean.Name = "BtnClean"
-        Me.BtnClean.Size = New System.Drawing.Size(150, 53)
-        Me.BtnClean.Text = "Limpar"
-        Me.BtnClean.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnClean.ToolTipText = "Exclui arquivos que não são necessários pelo sistema"
-        '
-        'BtnRelease
-        '
-        Me.BtnRelease.AutoSize = False
-        Me.BtnRelease.Enabled = False
-        Me.BtnRelease.Image = Global.ManagerAgent.My.Resources.Resources.Release
-        Me.BtnRelease.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.BtnRelease.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnRelease.Margin = New System.Windows.Forms.Padding(5)
-        Me.BtnRelease.Name = "BtnRelease"
-        Me.BtnRelease.Size = New System.Drawing.Size(150, 53)
-        Me.BtnRelease.Text = "Desbloquear Registros"
-        Me.BtnRelease.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnRelease.ToolTipText = "Desbloqueia registros que foram bloqueados por usuários mas que não estão mais se" &
-    "ndo utilizados"
-        '
-        'BtnCloudSync
-        '
-        Me.BtnCloudSync.AutoSize = False
-        Me.BtnCloudSync.Enabled = False
-        Me.BtnCloudSync.Image = Global.ManagerAgent.My.Resources.Resources.Cloud
-        Me.BtnCloudSync.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.BtnCloudSync.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnCloudSync.Margin = New System.Windows.Forms.Padding(5)
-        Me.BtnCloudSync.Name = "BtnCloudSync"
-        Me.BtnCloudSync.Size = New System.Drawing.Size(150, 53)
-        Me.BtnCloudSync.Text = "Sincronizar Núvem"
-        Me.BtnCloudSync.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnCloudSync.ToolTipText = "Sincroniza os dados do banco de dados local, com o banco de dados na núvem"
-        '
         'TpbProgress
         '
         Me.TpbProgress.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
         Me.TpbProgress.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.TpbProgress.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TpbProgress.ForeColor = System.Drawing.Color.White
-        Me.TpbProgress.Location = New System.Drawing.Point(0, 659)
+        Me.TpbProgress.Location = New System.Drawing.Point(0, 459)
         Me.TpbProgress.Maximum = 100
         Me.TpbProgress.Minimum = 0
         Me.TpbProgress.Name = "TpbProgress"
         Me.TpbProgress.ProgressBottomColor = System.Drawing.Color.White
         Me.TpbProgress.ProgressTopColor = System.Drawing.Color.White
-        Me.TpbProgress.Size = New System.Drawing.Size(1174, 2)
+        Me.TpbProgress.Size = New System.Drawing.Size(894, 2)
         Me.TpbProgress.TabIndex = 19
         Me.TpbProgress.Value = 0
         Me.TpbProgress.Visible = False
@@ -401,9 +419,9 @@ Partial Class FrmMain
         Me.LblProgress.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
         Me.LblProgress.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.LblProgress.ForeColor = System.Drawing.Color.White
-        Me.LblProgress.Location = New System.Drawing.Point(0, 631)
+        Me.LblProgress.Location = New System.Drawing.Point(0, 431)
         Me.LblProgress.Name = "LblProgress"
-        Me.LblProgress.Size = New System.Drawing.Size(1174, 28)
+        Me.LblProgress.Size = New System.Drawing.Size(894, 28)
         Me.LblProgress.TabIndex = 20
         Me.LblProgress.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.LblProgress.Visible = False
@@ -423,8 +441,8 @@ Partial Class FrmMain
         '
         Me.ScTaskEvent.Panel2.Controls.Add(Me.DgvEvents)
         Me.ScTaskEvent.Panel2.Controls.Add(Me.LblTitle)
-        Me.ScTaskEvent.Size = New System.Drawing.Size(1174, 568)
-        Me.ScTaskEvent.SplitterDistance = 213
+        Me.ScTaskEvent.Size = New System.Drawing.Size(894, 368)
+        Me.ScTaskEvent.SplitterDistance = 161
         Me.ScTaskEvent.TabIndex = 21
         '
         'ScTaskWarning
@@ -445,7 +463,7 @@ Partial Class FrmMain
         Me.ScTaskWarning.Panel2.Controls.Add(Me.DgvWarnings)
         Me.ScTaskWarning.Panel2.Controls.Add(Me.Label1)
         Me.ScTaskWarning.Panel2Collapsed = True
-        Me.ScTaskWarning.Size = New System.Drawing.Size(213, 568)
+        Me.ScTaskWarning.Size = New System.Drawing.Size(161, 368)
         Me.ScTaskWarning.SplitterDistance = 250
         Me.ScTaskWarning.TabIndex = 23
         '
@@ -461,14 +479,14 @@ Partial Class FrmMain
         Me.DgvTasks.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
         Me.DgvTasks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DgvTasks.ColumnHeadersVisible = False
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.Gainsboro
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer))
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DgvTasks.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Gainsboro
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer))
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DgvTasks.DefaultCellStyle = DataGridViewCellStyle2
         Me.DgvTasks.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DgvTasks.GridColor = System.Drawing.Color.WhiteSmoke
         Me.DgvTasks.Location = New System.Drawing.Point(0, 28)
@@ -476,7 +494,7 @@ Partial Class FrmMain
         Me.DgvTasks.ReadOnly = True
         Me.DgvTasks.RowHeadersVisible = False
         Me.DgvTasks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvTasks.Size = New System.Drawing.Size(211, 538)
+        Me.DgvTasks.Size = New System.Drawing.Size(159, 338)
         Me.DgvTasks.TabIndex = 18
         '
         'Label2
@@ -487,7 +505,7 @@ Partial Class FrmMain
         Me.Label2.Location = New System.Drawing.Point(0, 0)
         Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(211, 28)
+        Me.Label2.Size = New System.Drawing.Size(159, 28)
         Me.Label2.TabIndex = 17
         Me.Label2.Text = "Tarefas"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -504,14 +522,14 @@ Partial Class FrmMain
         Me.DgvWarnings.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
         Me.DgvWarnings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DgvWarnings.ColumnHeadersVisible = False
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Gainsboro
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer))
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DgvWarnings.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Gainsboro
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer))
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DgvWarnings.DefaultCellStyle = DataGridViewCellStyle3
         Me.DgvWarnings.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DgvWarnings.GridColor = System.Drawing.Color.WhiteSmoke
         Me.DgvWarnings.Location = New System.Drawing.Point(0, 28)
@@ -542,27 +560,13 @@ Partial Class FrmMain
         Me.DataGridViewContentCopy.IncludeHeaderTextInRowCopy = True
         Me.DataGridViewContentCopy.ShowImages = True
         '
-        'ToolStripButton1
-        '
-        Me.ToolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.ToolStripButton1.AutoSize = False
-        Me.ToolStripButton1.Image = Global.ManagerAgent.My.Resources.Resources.Cloud
-        Me.ToolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton1.Margin = New System.Windows.Forms.Padding(5)
-        Me.ToolStripButton1.Name = "ToolStripButton1"
-        Me.ToolStripButton1.Size = New System.Drawing.Size(150, 53)
-        Me.ToolStripButton1.Text = "Empresas"
-        Me.ToolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.ToolStripButton1.ToolTipText = "Sincroniza os dados do banco de dados local, com o banco de dados na núvem"
-        '
         'FrmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.ClientSize = New System.Drawing.Size(1174, 661)
+        Me.ClientSize = New System.Drawing.Size(894, 461)
         Me.Controls.Add(Me.ScTaskEvent)
         Me.Controls.Add(Me.LblProgress)
         Me.Controls.Add(Me.TpbProgress)
@@ -636,5 +640,6 @@ Partial Class FrmMain
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
     Friend WithEvents BtnCleanEventLog As ToolStripMenuItem
     Friend WithEvents DataGridViewContentCopy As ControlLibrary.DataGridViewContentCopy
-    Friend WithEvents ToolStripButton1 As ToolStripButton
+    Friend WithEvents BtnCompanies As ToolStripButton
+    Friend WithEvents ToolStripSeparator4 As ToolStripSeparator
 End Class

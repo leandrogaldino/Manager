@@ -2,6 +2,8 @@
 Imports System.IO
 Imports System.Text
 Imports System.Threading
+Imports ControlLibrary
+Imports Google.Protobuf.Reflection
 Imports ManagerCore
 Imports Newtonsoft.Json
 Public Class EventService
@@ -20,15 +22,23 @@ Public Class EventService
         If Data Is Nothing OrElse Data.Columns.Count = 0 Then Exit Sub
         NewRow = Data.NewRow()
         NewRow.Item("ID") = [Event].ID
+        NewRow.Item("Status") = EnumHelper.GetEnumDescription([Event].Status)
         NewRow.Item("StartTime") = [Event].StartTime.ToString("dd/MM/yyyy HH:mm:ss")
         NewRow.Item("EndTime") = [Event].EndTime.ToString("dd/MM/yyyy HH:mm:ss")
-        NewRow.Item("Description") = [Event].GetFullDescription
+        NewRow.Item("Description") = [Event].Description
         NewRow.Item("IsSaved") = False
+        NewRow.Item("ExceptionMessage") = [Event].ExceptionMessage
+        NewRow.Item("LogMessages") = [Event].LogMessages
         Data.Rows.InsertAt(NewRow, 0)
     End Sub
+
+    Private _HasErrorOnSave As Boolean = False
+
     Public Async Function Save(Data As DataTable) As Task
         Dim EventModel As EventModel
         Dim EventList As EventList
+        Dim Exception As Exception = Nothing
+        If _HasErrorOnSave Then Return
         If Data Is Nothing OrElse Data.Columns.Count = 0 Then Return
         If Data.Rows.Cast(Of DataRow).Any(Function(x) Not CBool(x("IsSaved"))) Then
             Await _Semaphore.WaitAsync()
@@ -52,8 +62,11 @@ Public Class EventService
                         Convert.ToString(Row("ID")),
                         DateTime.ParseExact(Row("StartTime"), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture),
                         DateTime.ParseExact(Row("EndTime"), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture),
-                        Convert.ToString(Row("Description").ToString.Replace($"{Constants.SeparatorSymbol} ", ""))
+                        Convert.ToString(Row("Description"))
                     )
+                    EventModel.Status = EnumHelper.GetEnumValue(Of TaskStatus)(Row("Status"))
+                    EventModel.ExceptionMessage = If(Row("ExceptionMessage") Is DBNull.Value, String.Empty, Row("ExceptionMessage"))
+                    EventModel.LogMessages = Row("LogMessages")
                     EventList.Events.Add(EventModel)
                 Next Row
                 Dim Json As String = JsonConvert.SerializeObject(EventList, Formatting.Indented)
@@ -65,65 +78,70 @@ Public Class EventService
                     Row("issaved") = True
                 Next
             Catch ex As Exception
-                EventModel = New EventModel(
-                    Now,
-                    $"Ocorreu um erro ao salvar os eventos - {ex.Message}"
-                )
-                WriteSingle(EventModel, Data)
+                _HasErrorOnSave = True
+                Dim [Event] As New EventModel(Now, "Erro ao salvar os eventos")
+                [Event].ReadyToPost = True
+                [Event].Status = TaskStatus.Error
+                [Event].ExceptionMessage = $"{ex.Message}{vbNewLine}{ex.StackTrace}"
+                WriteSingle([Event], Data)
             Finally
                 _Semaphore.Release()
             End Try
         End If
     End Function
     Public Async Function Read() As Task(Of DataTable)
-        Dim EventModel As EventModel
-        Dim table As New DataTable()
-        table.Columns.Add("ID", GetType(String))
-        table.Columns.Add("StartTime", GetType(String))
-        table.Columns.Add("EndTime", GetType(String))
-        table.Columns.Add("Description", GetType(String))
-        table.Columns.Add("IsSaved", GetType(Boolean))
+        Dim Table As New DataTable()
+        Table.Columns.Add("ID", GetType(String))
+        Table.Columns.Add("StartTime", GetType(String))
+        Table.Columns.Add("EndTime", GetType(String))
+        Table.Columns.Add("Description", GetType(String))
+        Table.Columns.Add("Status", GetType(String))
+        Table.Columns.Add("IsSaved", GetType(Boolean))
+        Table.Columns.Add("ExceptionMessage", GetType(String))
+        Table.Columns.Add("LogMessages", GetType(List(Of String)))
         Dim JsonPath As String = Path.Combine(ApplicationPaths.FilesDirectory, "AgentEvents.json")
         If Not File.Exists(JsonPath) Then
-            Return table
+            Return Table
         End If
         Await _Semaphore.WaitAsync()
-        Await CleanupOldEventsAsync(JsonPath, table)
+        Await CleanupOldEventsAsync(JsonPath, Table)
         Try
-            Dim eventList As EventList
+            Dim EventList As EventList
             Using fs As New FileStream(JsonPath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, useAsync:=True)
                 Using sr As New StreamReader(fs, Encoding.UTF8)
                     Dim json As String = Await sr.ReadToEndAsync()
-                    eventList = JsonConvert.DeserializeObject(Of EventList)(json)
+                    EventList = JsonConvert.DeserializeObject(Of EventList)(json)
                 End Using
             End Using
-            If eventList Is Nothing OrElse eventList.Events Is Nothing Then
-                Return table
+            If EventList Is Nothing OrElse EventList.Events Is Nothing Then
+                Return Table
             End If
-            For Each [Event] As EventModel In eventList.Events
-                Dim row = table.NewRow()
+            EventList.Events = EventList.Events.OrderByDescending(Function(e) e.EndTime).ToList()
+            For Each [Event] As EventModel In EventList.Events
+                Dim row = Table.NewRow()
                 row("ID") = [Event].ID.ToString()
                 row("StartTime") = [Event].StartTime.ToString("dd/MM/yyyy HH:mm:ss")
                 row("EndTime") = [Event].EndTime.ToString("dd/MM/yyyy HH:mm:ss")
                 row("Description") = [Event].Description
+                row("Status") = EnumHelper.GetEnumDescription([Event].Status)
                 row("IsSaved") = True
-                table.Rows.Add(row)
+                row("ExceptionMessage") = [Event].ExceptionMessage
+                row("LogMessages") = [Event].LogMessages
+                Table.Rows.Add(row)
             Next
-            Return table
+            Return Table
         Catch ex As Exception
-            EventModel = New EventModel(
-                Now,
-                $"Ocorreu um erro ao carregar os eventos - {ex.Message}"
-            )
-            WriteSingle(EventModel, table)
-            Return table
+            Dim [Event] As New EventModel(Now, "Erro ao carregar os eventos")
+            [Event].ReadyToPost = True
+            [Event].Status = TaskStatus.Error
+            [Event].ExceptionMessage = $"{ex.Message}{vbNewLine}{ex.StackTrace}"
+            WriteSingle([Event], Table)
         Finally
             _Semaphore.Release()
         End Try
+        Return Table
     End Function
     Private Async Function CleanupOldEventsAsync(JsonPath As String, Table As DataTable, Optional months As Integer = 3) As Task
-        Dim EventModel As EventModel
-
         Try
             Dim eventList As EventList
             Using fs As New FileStream(JsonPath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, useAsync:=True)
@@ -141,12 +159,11 @@ Public Class EventService
                 Await fs.WriteAsync(buffer, 0, buffer.Length)
             End Using
         Catch ex As Exception
-            EventModel = New EventModel(
-                Now,
-                $"Ocorreu um erro ao limpar os eventos - {ex.Message}"
-            )
-            WriteSingle(EventModel, Table)
+            Dim [Event] As New EventModel(Now, "Erro ao limpar os eventos")
+            [Event].ReadyToPost = True
+            [Event].Status = TaskStatus.Error
+            [Event].ExceptionMessage = $"{ex.Message}{vbNewLine}{ex.StackTrace}"
+            WriteSingle([Event], Table)
         End Try
     End Function
-
 End Class

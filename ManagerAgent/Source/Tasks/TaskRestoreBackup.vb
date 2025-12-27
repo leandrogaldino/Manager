@@ -45,15 +45,15 @@ Public Class TaskRestoreBackup
         Dim BackupLocation As String = BackupFile.FilePath
         Dim Filename As String = New FileInfo(BackupLocation).Name.Replace(".bkp", Nothing).Replace("-", "/").Replace(".", ":")
         Try
-            Response.Text = $"Restaurando Backup: Iniciando - {Filename}"
+            Response.Text = $"Restaurar Backup: Iniciando - {Filename}"
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForStart)
-            Response.Text = "Restaurando Backup: Removendo a versão atual"
+            Response.Text = "Restaurar Backup: Removendo a versão atual"
             If Progress IsNot Nothing Then Progress.Report(Response)
             FileManager = New FileManager
             AddHandler FileManager.DeleteDirectoriesProgressChanged, Sub(IOSender, IOEventArgs)
                                                                          Response.Percent = IOEventArgs.PercentCompleted
-                                                                         Response.Text = $"Restaurando Backup: Removendo a versão atual ({IOEventArgs.PercentCompleted}%)"
+                                                                         Response.Text = $"Restaurar Backup: Removendo a versão atual ({IOEventArgs.PercentCompleted}%)"
                                                                          If Progress IsNot Nothing Then Progress.Report(Response)
                                                                      End Sub
             Await FileManager.DeleteDirectoriesAsync(New List(Of DeleteDirectoryInfo) From {
@@ -67,59 +67,59 @@ Public Class TaskRestoreBackup
                 New DeleteDirectoryInfo(New DirectoryInfo(ApplicationPaths.HelpersDirectory), True)
             })
             Response.Percent = 0
-            Response.Text = "Restaurando Backup: Validando diretórios"
+            Response.Text = "Restaurar Backup: Validando diretórios"
             If Not Directory.Exists(ApplicationPaths.ProductPictureDirectory) Then Directory.CreateDirectory(ApplicationPaths.ProductPictureDirectory)
             Response.Percent = 14
-            Response.Text = $"Restaurando Backup: Validando diretórios ({Response.Percent}%)"
+            Response.Text = $"Restaurar Backup: Validando diretórios ({Response.Percent}%)"
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             If Not Directory.Exists(ApplicationPaths.EvaluationDocumentDirectory) Then Directory.CreateDirectory(ApplicationPaths.EvaluationDocumentDirectory)
             Response.Percent = 29
-            Response.Text = $"Restaurando Backup: Validando diretórios ({Response.Percent}%)"
+            Response.Text = $"Restaurar Backup: Validando diretórios ({Response.Percent}%)"
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             If Not Directory.Exists(ApplicationPaths.EvaluationPictureDirectory) Then Directory.CreateDirectory(ApplicationPaths.EvaluationPictureDirectory)
             Response.Percent = 43
-            Response.Text = $"Restaurando Backup: Validando diretórios ({Response.Percent}%)"
+            Response.Text = $"Restaurar Backup: Validando diretórios ({Response.Percent}%)"
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             If Not Directory.Exists(ApplicationPaths.RequestDocumentDirectory) Then Directory.CreateDirectory(ApplicationPaths.RequestDocumentDirectory)
             Response.Percent = 58
-            Response.Text = $"Restaurando Backup: Validando diretórios ({Response.Percent}%)"
+            Response.Text = $"Restaurar Backup: Validando diretórios ({Response.Percent}%)"
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             If Not Directory.Exists(ApplicationPaths.EmailSignatureDirectory) Then Directory.CreateDirectory(ApplicationPaths.EmailSignatureDirectory)
             Response.Percent = 72
-            Response.Text = $"Restaurando Backup: Validando diretórios ({Response.Percent}%)"
+            Response.Text = $"Restaurar Backup: Validando diretórios ({Response.Percent}%)"
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             If Not Directory.Exists(ApplicationPaths.CashDocumentDirectory) Then Directory.CreateDirectory(ApplicationPaths.CashDocumentDirectory)
             Response.Percent = 87
-            Response.Text = $"Restaurando Backup: Validando diretórios ({Response.Percent}%)"
+            Response.Text = $"Restaurar Backup: Validando diretórios ({Response.Percent}%)"
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             If Not Directory.Exists(ApplicationPaths.HelpersDirectory) Then Directory.CreateDirectory(ApplicationPaths.HelpersDirectory)
             Response.Percent = 100
-            Response.Text = $"Restaurando Backup: Validando diretórios ({Response.Percent}%)"
+            Response.Text = $"Restaurar Backup: Validando diretórios ({Response.Percent}%)"
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
-            Response.Text = "Restaurando Backup: Processando os dados"
+            Response.Text = "Restaurar Backup: Processando os dados"
             If Progress IsNot Nothing Then Progress.Report(Response)
             IntProgress = New Progress(Of Integer)(Sub(Percent As Integer)
                                                        Response.Percent = Percent
-                                                       Response.Text = $"Restaurando Backup: Processando os dados ({Percent}%)"
+                                                       Response.Text = $"Restaurar Backup: Processando os dados ({Percent}%)"
                                                        If Progress IsNot Nothing Then Progress.Report(Response)
                                                    End Sub)
             Await FileMerge.UnMergeAsync(BackupLocation, TargetDirectory, _SessionModel.ManagerPassword, IntProgress)
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
-            Response.Text = "Restaurando Backup: Restaurando o banco de dados"
+            Response.Text = "Restaurar Backup: Processando o banco de dados"
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await _DatabaseService.ExecuteProcedureAsync("DropAllTables")
             IntProgress = New Progress(Of Integer)(Sub(Percent As Integer)
                                                        Response.Percent = Percent
-                                                       Response.Text = $"Restaurando Backup: Restaurando o banco de dados ({Percent}%)"
+                                                       Response.Text = $"Restaurar Backup: Processando o banco de dados ({Percent}%)"
                                                        If Progress IsNot Nothing Then Progress.Report(Response)
                                                    End Sub)
 
@@ -128,21 +128,25 @@ Public Class TaskRestoreBackup
             Await FileManager.DeleteDirectoriesAsync(New List(Of DeleteDirectoryInfo) From {New DeleteDirectoryInfo(New DirectoryInfo(DatabaseDirectory), True)})
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
-            Response.Text = $"Restaurando Backup: Concluído - {Filename}"
+            Response.Text = $"Restaurar Backup: Concluído - {Filename}"
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         Catch ex As Exception
             Exception = ex
         End Try
         If Exception IsNot Nothing Then
-            Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
-            Response.Text = $"Restaurando Backup: Ocorreu um erro ao restaurar o backup - {Filename} - {Exception.Message}"
-            If Progress IsNot Nothing Then Progress.Report(Response)
+            Response.Text = "Restaurar Backup: Erro na execução"
+            Response.Percent = 0
+            Response.Event.EndTime = DateTime.Now
+            Response.Event.Description = "Restaurar Backup"
+            Response.Event.Status = TaskStatus.Error
+            Response.Event.ExceptionMessage = $"{Exception.Message}{vbNewLine}{Exception.StackTrace}"
+            Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
-            If Directory.Exists(DatabaseDirectory) Then Directory.Delete(DatabaseDirectory, True)
-            Response.Text = $"Restaurando Backup: Concluído - {Filename}"
-            If Progress IsNot Nothing Then Progress.Report(Response)
+            Response.Text = "Restaurar Backup: Concluído"
+            Response.Event.ReadyToPost = True
+            Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         End If
     End Function

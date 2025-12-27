@@ -161,7 +161,7 @@ Public Class TaskBackup
             End If
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
-            Response.Text = $"Backup: Backup concluído"
+            Response.Text = $"Backup: Concluído"
             Response.Event.EndTime = DateTime.Now
             Response.Event.ReadyToPost = True
             Response.Event.Description = $"Backup{If(Not IsManual, String.Empty, " Manual")}"
@@ -180,14 +180,15 @@ Public Class TaskBackup
         If Exception IsNot Nothing Then
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
-            Response.Text = $"Backup: Ocorreu um erro executar o backup - {Exception.Message}"
+            Response.Text = "Backup: Erro na execução"
             Response.Event.EndTime = DateTime.Now
             Response.Event.Description = $"Backup{If(Not IsManual, String.Empty, " Manual")}"
-            Response.Event.ExceptionMessage = Exception.Message
+            Response.Event.Status = TaskStatus.Error
+            Response.Event.ExceptionMessage = $"{Exception.Message}{vbNewLine}{Exception.StackTrace}"
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
+            Response.Text = $"Backup: Concluído"
             Response.Event.ReadyToPost = True
-            Response.Text = $"Backup: Backup {If(Not IsManual, "automático", "manual")} concluído"
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         End If

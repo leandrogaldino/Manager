@@ -199,19 +199,19 @@ Partial Class FrmMain
         'BtnOpenBackupFolder
         '
         Me.BtnOpenBackupFolder.Name = "BtnOpenBackupFolder"
-        Me.BtnOpenBackupFolder.Size = New System.Drawing.Size(145, 22)
+        Me.BtnOpenBackupFolder.Size = New System.Drawing.Size(180, 22)
         Me.BtnOpenBackupFolder.Text = "Abrir Pasta"
         '
         'BtnExecuteBackup
         '
         Me.BtnExecuteBackup.Name = "BtnExecuteBackup"
-        Me.BtnExecuteBackup.Size = New System.Drawing.Size(145, 22)
+        Me.BtnExecuteBackup.Size = New System.Drawing.Size(180, 22)
         Me.BtnExecuteBackup.Text = "Executar"
         '
         'BtnRestoreBackup
         '
         Me.BtnRestoreBackup.Name = "BtnRestoreBackup"
-        Me.BtnRestoreBackup.Size = New System.Drawing.Size(145, 22)
+        Me.BtnRestoreBackup.Size = New System.Drawing.Size(180, 22)
         Me.BtnRestoreBackup.Text = "Restaurar"
         '
         'BtnClean

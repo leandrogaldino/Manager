@@ -21,7 +21,6 @@
             _NextRun = value
         End Set
     End Property
-
     Public Overridable Property IsRunNeeded As Boolean
         Get
             If IsManual Then
@@ -34,10 +33,6 @@
             _IsRunNeeded = value
         End Set
     End Property
-
-
-
-
     Public Overrides Function ToString() As String
         Return Name
     End Function

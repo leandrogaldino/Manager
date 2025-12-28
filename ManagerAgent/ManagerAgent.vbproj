@@ -300,105 +300,34 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Views\RestoreBackup\RestoreBackupViewModel.vb" />
-    <Compile Include="Source\Views\Settings\Backup\BackupSettingsViewModel.vb" />
-    <Compile Include="Source\Views\Settings\Backup\UcBackupDays.Designer.vb">
+    <Compile Include="Source\Views\Company\UcBackupDays.Designer.vb">
       <DependentUpon>UcBackupDays.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Views\Settings\Backup\UcBackupDays.vb">
+    <Compile Include="Source\Views\Company\UcBackupDays.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Source\Views\Settings\Clean\CleanSettingsViewModel.vb" />
-    <Compile Include="Source\Views\Settings\Clean\FrmCleanSettings.Designer.vb">
-      <DependentUpon>FrmCleanSettings.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Views\Settings\Clean\FrmCleanSettings.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Views\Settings\Cloud\CloudDatabaseSettingsViewModel.vb" />
-    <Compile Include="Source\Views\Settings\Database\DatabaseSettingsViewModel.vb" />
-    <Compile Include="Source\Views\Settings\Evaluation\EvaluationSettingsViewModel.vb" />
     <Compile Include="Source\Views\Company\FrmCompany.Designer.vb">
       <DependentUpon>FrmCompany.vb</DependentUpon>
     </Compile>
     <Compile Include="Source\Views\Company\FrmCompany.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Views\Settings\License\LicenseKeyViewModel.vb" />
-    <Compile Include="Source\Views\Settings\Register\RegisterSettingsViewModel.vb" />
-    <Compile Include="Source\Views\Settings\Release\ReleaseSettingsViewModel.vb" />
-    <Compile Include="Source\Views\Settings\Cloud\CloudStorageSettingsViewModel.vb" />
-    <Compile Include="Source\Views\Settings\Support\SuportSettingsViewModel.vb" />
     <Compile Include="Source\Views\Company\UcCompanyTile.Designer.vb">
       <DependentUpon>UcCompanyTile.vb</DependentUpon>
     </Compile>
     <Compile Include="Source\Views\Company\UcCompanyTile.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Source\Views\Settings\User\UserSettingsViewModel.vb" />
-    <Compile Include="Source\Views\Settings\Backup\FrmBackupSettings.Designer.vb">
-      <DependentUpon>FrmBackupSettings.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Views\Settings\Backup\FrmBackupSettings.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Views\Settings\Database\FrmDatabaseSettings.Designer.vb">
-      <DependentUpon>FrmDatabaseSettings.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Views\Settings\Database\FrmDatabaseSettings.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Views\Settings\Evaluation\FrmEvaluationSettings.Designer.vb">
-      <DependentUpon>FrmEvaluationSettings.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Views\Settings\Evaluation\FrmEvaluationSettings.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Views\Settings\Register\FrmRegisterSettings.Designer.vb">
-      <DependentUpon>FrmRegisterSettings.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Views\Settings\Register\FrmRegisterSettings.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Views\Settings\Cloud\FrmCloudStorageSettings.Designer.vb">
-      <DependentUpon>FrmCloudStorageSettings.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Views\Settings\Cloud\FrmCloudStorageSettings.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Views\Settings\Support\FrmSuportSettings.Designer.vb">
-      <DependentUpon>FrmSuportSettings.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Views\Settings\Support\FrmSuportSettings.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Views\Settings\User\FrmUserSettings.Designer.vb">
-      <DependentUpon>FrmUserSettings.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Views\Settings\User\FrmUserSettings.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Views\Settings\License\FrmChangePassword.Designer.vb">
+    <Compile Include="Source\Views\Main\FrmChangePassword.Designer.vb">
       <DependentUpon>FrmChangePassword.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Views\Settings\License\FrmChangePassword.vb">
+    <Compile Include="Source\Views\Main\FrmChangePassword.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Views\Settings\Cloud\FrmCloudDatabaseSettings.Designer.vb">
-      <DependentUpon>FrmCloudDatabaseSettings.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Views\Settings\Cloud\FrmCloudDatabaseSettings.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Views\Settings\License\FrmLicenseKey.designer.vb">
+    <Compile Include="Source\Views\Main\FrmLicenseKey.designer.vb">
       <DependentUpon>FrmLicenseKey.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Views\Settings\License\FrmLicenseKey.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Views\Settings\Release\FrmReleaseSettings.Designer.vb">
-      <DependentUpon>FrmReleaseSettings.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Views\Settings\Release\FrmReleaseSettings.vb">
+    <Compile Include="Source\Views\Main\FrmLicenseKey.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Views\Main\FrmMain.Designer.vb">
@@ -440,13 +369,6 @@
     <Compile Include="Source\Shared\Setups\SetupSession.vb" />
     <Compile Include="Source\Shared\Setups\SetupPaths.vb" />
     <Compile Include="Source\Shared\Util.vb" />
-    <Compile Include="Source\Views\Settings\License\FrmLicenseSettings.Designer.vb">
-      <DependentUpon>FrmLicenseSettings.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Views\Settings\License\FrmLicenseSettings.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Views\Settings\License\LicenseSettingsViewModel.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Source\Views\Company\FrmCompanies.resx">
@@ -455,49 +377,19 @@
     <EmbeddedResource Include="Source\Views\Main\FrmEvent.resx">
       <DependentUpon>FrmEvent.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Settings\Backup\FrmBackupSettings.resx">
-      <DependentUpon>FrmBackupSettings.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Settings\Backup\UcBackupDays.resx">
+    <EmbeddedResource Include="Source\Views\Company\UcBackupDays.resx">
       <DependentUpon>UcBackupDays.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Settings\Clean\FrmCleanSettings.resx">
-      <DependentUpon>FrmCleanSettings.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Settings\Cloud\FrmCloudDatabaseSettings.resx">
-      <DependentUpon>FrmCloudDatabaseSettings.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Settings\Database\FrmDatabaseSettings.resx">
-      <DependentUpon>FrmDatabaseSettings.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Settings\Evaluation\FrmEvaluationSettings.resx">
-      <DependentUpon>FrmEvaluationSettings.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Company\FrmCompany.resx">
       <DependentUpon>FrmCompany.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Settings\Register\FrmRegisterSettings.resx">
-      <DependentUpon>FrmRegisterSettings.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Settings\Release\FrmReleaseSettings.resx">
-      <DependentUpon>FrmReleaseSettings.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Settings\Cloud\FrmCloudStorageSettings.resx">
-      <DependentUpon>FrmCloudStorageSettings.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Settings\Support\FrmSuportSettings.resx">
-      <DependentUpon>FrmSuportSettings.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Company\UcCompanyTile.resx">
       <DependentUpon>UcCompanyTile.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Settings\User\FrmUserSettings.resx">
-      <DependentUpon>FrmUserSettings.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Settings\License\FrmChangePassword.resx">
+    <EmbeddedResource Include="Source\Views\Main\FrmChangePassword.resx">
       <DependentUpon>FrmChangePassword.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Settings\License\FrmLicenseKey.resx">
+    <EmbeddedResource Include="Source\Views\Main\FrmLicenseKey.resx">
       <DependentUpon>FrmLicenseKey.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Main\FrmMain.resx">
@@ -514,9 +406,6 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Settings\License\FrmLicenseSettings.resx">
-      <DependentUpon>FrmLicenseSettings.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

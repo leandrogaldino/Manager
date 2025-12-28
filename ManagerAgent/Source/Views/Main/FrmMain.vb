@@ -228,8 +228,10 @@ Public Class FrmMain
             Show()
         End If
     End Sub
+
+    'QUAL EMPRESA?
     Private Sub BtnOpenBackupFolder_Click(sender As Object, e As EventArgs) Handles BtnOpenBackupFolder.Click
-        Process.Start(_SessionModel.ManagerSetting.Backup.Location)
+        'Process.Start(_SessionModel.ManagerSetting.Backup.Location)
     End Sub
     Private Sub BtnAgentState_CheckedChanged(sender As Object, e As EventArgs) Handles BtnAgentState.CheckedChanged
         If BtnAgentState.Checked Then
@@ -314,99 +316,6 @@ Public Class FrmMain
             End Using
         End If
     End Sub
-    Private Async Sub BtnSettingsLicense_Click(sender As Object, e As EventArgs) Handles BtnSettingsLicense.Click
-        Using Frm As New FrmLicenseSettings()
-            If Not _HasManagerCloudPending Then
-                If RequestLogin() Then
-                    Frm.ShowDialog()
-                End If
-            Else
-                Frm.ShowDialog()
-            End If
-            Await ValidateState()
-        End Using
-    End Sub
-    Private Async Sub BtnSettingsDatabase_Click(sender As Object, e As EventArgs) Handles BtnSettingsDatabase.Click
-        If RequestLogin() Then
-            Using Frm As New FrmDatabaseSettings()
-                Frm.ShowDialog()
-                Await ValidateState()
-            End Using
-        End If
-    End Sub
-    Private Async Sub BtnSettingsBackup_Click(sender As Object, e As EventArgs) Handles BtnSettingsBackup.Click
-        If RequestLogin() Then
-            Using Frm As New FrmBackupSettings()
-                Frm.ShowDialog()
-                Await ValidateState()
-            End Using
-        End If
-    End Sub
-    Private Async Sub BtnSettingsCloudStorage_Click(sender As Object, e As EventArgs) Handles BtnSettingsCloudStorage.Click
-        If RequestLogin() Then
-            Using Frm As New FrmCloudStorageSettings()
-                Frm.ShowDialog()
-                Await ValidateState()
-            End Using
-        End If
-    End Sub
-    Private Async Sub BtnSettingsCloudDatabase_Click(sender As Object, e As EventArgs) Handles BtnSettingsCloudDatabase.Click
-        If RequestLogin() Then
-            Using Frm As New FrmCloudDatabaseSettings()
-                Frm.ShowDialog()
-                Await ValidateState()
-            End Using
-        End If
-    End Sub
-
-    Private Async Sub BtnSettingsRegister_Click(sender As Object, e As EventArgs) Handles BtnSettingsRegister.Click
-        If RequestLogin() Then
-            Using Frm As New FrmRegisterSettings()
-                Frm.ShowDialog()
-                Await ValidateState()
-            End Using
-        End If
-    End Sub
-    Private Async Sub BtnSettingsUser_Click(sender As Object, e As EventArgs) Handles BtnSettingsUser.Click
-        If RequestLogin() Then
-            Using Frm As New FrmUserSettings()
-                Frm.ShowDialog()
-                Await ValidateState()
-            End Using
-        End If
-    End Sub
-    Private Async Sub BtnSettingsRelease_Click(sender As Object, e As EventArgs) Handles BtnSettingsRelease.Click
-        If RequestLogin() Then
-            Using Frm As New FrmReleaseSettings()
-                Frm.ShowDialog()
-                Await ValidateState()
-            End Using
-        End If
-    End Sub
-    Private Async Sub BtnSettingsClean_Click(sender As Object, e As EventArgs) Handles BtnSettingsClean.Click
-        If RequestLogin() Then
-            Using Frm As New FrmCleanSettings()
-                Frm.ShowDialog()
-                Await ValidateState()
-            End Using
-        End If
-    End Sub
-    Private Async Sub BtnSettingsEvaluation_Click(sender As Object, e As EventArgs) Handles BtnSettingsEvaluation.Click
-        If RequestLogin() Then
-            Using Frm As New FrmEvaluationSettings()
-                Frm.ShowDialog()
-                Await ValidateState()
-            End Using
-        End If
-    End Sub
-    Private Async Sub BtnSettingsSupport_Click(sender As Object, e As EventArgs) Handles BtnSettingsSupport.Click
-        If RequestLogin() Then
-            Using Frm As New FrmSuportSettings()
-                Frm.ShowDialog()
-                Await ValidateState()
-            End Using
-        End If
-    End Sub
     Private Async Sub BtnSettingsChangePassword_Click(sender As Object, e As EventArgs) Handles BtnSettingsChangePassword.Click
         If RequestLogin() Then
             Using Frm As New FrmChangePassword()
@@ -458,6 +367,8 @@ Public Class FrmMain
         Task.IsRunNeeded = True
         FillDgvTasks()
     End Sub
+
+    'QUAL EMPRESA?
     Private Sub BtnRestoreBackup_Click(sender As Object, e As EventArgs) Handles BtnRestoreBackup.Click
         _StackTaskService.Stop()
         BtnExecuteBackup.Enabled = False
@@ -491,11 +402,12 @@ Public Class FrmMain
         DgvEvents.FirstDisplayedScrollingRowIndex = 0
     End Sub
 
-    Private Sub BtnCompanies_Click(sender As Object, e As EventArgs) Handles BtnCompanies.Click
+    Private Async Sub BtnCompanies_Click(sender As Object, e As EventArgs) Handles BtnCompanies.Click
         _Semaphore.Wait()
         Using Form As New FrmCompanies
             Form.ShowDialog()
         End Using
+        Await ValidateState()
         _Semaphore.Release()
     End Sub
 
@@ -516,4 +428,5 @@ Public Class FrmMain
             End Using
         End If
     End Sub
+
 End Class

@@ -3,7 +3,7 @@
 Public Class TaskBackupManual
     Inherits TaskBackup
 
-    Public Sub New(DatabaseService As LocalDB, SettingsService As ManagerCore.CompanyService, SessionModel As SessionModel)
+    Public Sub New(DatabaseService As LocalDB, SettingsService As CompanyService, SessionModel As SessionModel)
         MyBase.New(DatabaseService, SettingsService, SessionModel)
     End Sub
 

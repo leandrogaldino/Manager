@@ -1,4 +1,5 @@
-﻿Public Class FrmCompany
+﻿Imports ManagerCore
+Public Class FrmCompany
     Private _Company As CompanyModel
     Private _Service As CompanyService
     Public Sub New(Company As CompanyModel)

@@ -1,8 +1,6 @@
-﻿
-Imports System.IO
+﻿Imports ManagerCore
 
 Public Class UcCompanyTile
-    Public Event ValueChanged As EventHandler
     Private _Company As CompanyModel
     Private _IsSelected As Boolean = False
 
@@ -17,19 +15,7 @@ Public Class UcCompanyTile
             Return _Company
         End Get
         Set(value As CompanyModel)
-            'comparar o objeto
-            If value.Document <> _Company?.Document Then
-                _Company = value
-                LblCompanyName.Text = Company.Name
-                LblCompanyDocument.Text = Company.Document
-                LblCompanyLocation.Text = Company.Address
-                If File.Exists(Company.LogoFileName) Then
-                    Using fs As New FileStream(Company.LogoFileName, FileMode.Open, FileAccess.Read)
-                        PbxLogo.Image = Image.FromStream(fs)
-                    End Using
-                End If
-                OnValueChanged(Me)
-            End If
+            _Company = value
         End Set
     End Property
 
@@ -41,8 +27,6 @@ Public Class UcCompanyTile
         AddHandler LblCompanyDocument.Click, AddressOf UcCompanyTile_Click
         AddHandler LblCompanyLocation.Click, AddressOf UcCompanyTile_Click
         AddHandler PbxLogo.Click, AddressOf UcCompanyTile_Click
-
-
         AddHandler DoubleClick, AddressOf UcCompanyTile_DoubleClick
         AddHandler LblCompanyName.DoubleClick, AddressOf UcCompanyTile_DoubleClick
         AddHandler LblCompanyDocument.DoubleClick, AddressOf UcCompanyTile_DoubleClick
@@ -57,31 +41,21 @@ Public Class UcCompanyTile
         SetSelected(True)
         Me.Focus()
     End Sub
-
-    Private Sub OnValueChanged(s)
-        RaiseEvent ValueChanged(s, EventArgs.Empty)
-    End Sub
-
     Private Sub SelectNextTile()
-        Dim tiles = Me.Parent.Controls.OfType(Of UcCompanyTile)().OrderBy(Function(t) t.TabIndex).ToList()
-
-        If tiles.Count = 0 Then Exit Sub
-
-        Dim currentIndex = tiles.FindIndex(Function(t) t.IsSelected)
-
+        Dim Tiles = Me.Parent.Controls.OfType(Of UcCompanyTile)().OrderBy(Function(t) t.TabIndex).ToList()
+        If Tiles.Count = 0 Then Exit Sub
+        Dim currentIndex = Tiles.FindIndex(Function(t) t.IsSelected)
         If currentIndex = -1 Then
-            ' nenhum selecionado → seleciona o primeiro
-            tiles(0).SetSelected(True)
-        ElseIf currentIndex < tiles.Count - 1 Then
-            tiles(currentIndex + 1).SetSelected(True)
+            Tiles(0).SetSelected(True)
+        ElseIf currentIndex < Tiles.Count - 1 Then
+            Tiles(currentIndex + 1).SetSelected(True)
         End If
     End Sub
-
     Private Sub SelectPreviousTile()
-        Dim tiles = Me.Parent.Controls.OfType(Of UcCompanyTile)().OrderBy(Function(t) t.TabIndex).ToList()
-        Dim currentIndex = tiles.FindIndex(Function(t) t.IsSelected)
-        If currentIndex > 0 Then
-            tiles(currentIndex - 1).SetSelected(True)
+        Dim Tiles = Me.Parent.Controls.OfType(Of UcCompanyTile)().OrderBy(Function(t) t.TabIndex).ToList()
+        Dim CurrentIndex = Tiles.FindIndex(Function(t) t.IsSelected)
+        If CurrentIndex > 0 Then
+            Tiles(CurrentIndex - 1).SetSelected(True)
         End If
     End Sub
 

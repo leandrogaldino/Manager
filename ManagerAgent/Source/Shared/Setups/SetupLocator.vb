@@ -16,7 +16,13 @@ Public Class SetupLocator
         Locator.RegisterSingleton(New LicenseService(Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.System), Locator.GetInstance(Of CryptoKeyService)))
         Locator.RegisterSingleton(New EventService(Locator.GetInstance(Of SemaphoreSlim)))
         Locator.RegisterSingleton(New PasswordService(Locator.GetInstance(Of LicenseService), Locator.GetInstance(Of SessionModel), Locator.GetInstance(Of CryptoKeyService)))
+
         Locator.RegisterSingleton(Of TaskBase)(New TaskBackup(Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of CompanyService), Locator.GetInstance(Of SessionModel)), TaskName.Backup)
+
+
+
+
+
         Locator.RegisterSingleton(Of TaskBase)(New TaskBackupManual(Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of CompanyService), Locator.GetInstance(Of SessionModel)), TaskName.BackupManual)
         Locator.RegisterSingleton(Of TaskBase)(New TaskRestoreBackup(Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of SessionModel)), TaskName.BackupRestore)
         Locator.RegisterSingleton(Of TaskBase)(New TaskClean(Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of CompanyService), Locator.GetInstance(Of SessionModel)), TaskName.Clean)

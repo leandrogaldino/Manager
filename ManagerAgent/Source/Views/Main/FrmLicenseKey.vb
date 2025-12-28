@@ -3,28 +3,24 @@ Imports ControlLibrary
 Imports ManagerCore
 
 Public Class FrmLicenseKey
-    Private _ViewModel As LicenseKeyViewModel
+
     Public Sub New()
         InitializeComponent()
         Dim LicenseService = Locator.GetInstance(Of LicenseService)
         Dim SessionModel = Locator.GetInstance(Of SessionModel)
-        _ViewModel = New LicenseKeyViewModel(LicenseService, SessionModel)
-        AddHandler _ViewModel.PropertyChanged, AddressOf OnViewModelPropertyChanged
+
     End Sub
     Private Async Sub BtnOK_Click(sender As Object, e As EventArgs) Handles BtnOK.Click
-        Dim LicenseResult As LicenseResultModel = Await _ViewModel.ProcessLicense()
-        If LicenseResult.Success Then
-            DialogResult = DialogResult.OK
-        Else
-            CMessageBox.Show(EnumHelper.GetEnumDescription(LicenseResult.Flag), CMessageBoxType.Warning)
-        End If
+        'Dim LicenseResult As LicenseResultModel = Await _ViewModel.ProcessLicense()
+        'If LicenseResult.Success Then
+        '    DialogResult = DialogResult.OK
+        'Else
+        '    CMessageBox.Show(EnumHelper.GetEnumDescription(LicenseResult.Flag), CMessageBoxType.Warning)
+        'End If
     End Sub
-    Private Sub OnViewModelPropertyChanged(sender As Object, e As PropertyChangedEventArgs)
-        Select Case e.PropertyName
-            Case NameOf(_ViewModel.IsValidKey)
-                UpdateUIForLicenseValidation(_ViewModel.IsValidKey)
-        End Select
-    End Sub
+
+
+    'QUANDO PROPRIEDADE MUDAR
     Private Sub UpdateUIForLicenseValidation(isValid As Boolean)
         If isValid Then
             BtnOK.Enabled = True
@@ -39,16 +35,16 @@ Public Class FrmLicenseKey
         End If
     End Sub
     Private Async Sub TxtKey_TextChanged(sender As Object, e As EventArgs) Handles TxtKeyPartA.TextChanged, TxtKeyPartB.TextChanged, TxtKeyPartC.TextChanged, TxtKeyPartD.TextChanged, TxtKeyPartE.TextChanged
-        If TxtKeyPartA.Text.Length + TxtKeyPartB.Text.Length + TxtKeyPartC.Text.Length + TxtKeyPartD.Text.Length + TxtKeyPartE.Text.Length = 25 Then
-            _ViewModel.Key = String.Format("{0}-{1}-{2}-{3}-{4}", TxtKeyPartA.Text, TxtKeyPartB.Text, TxtKeyPartC.Text, TxtKeyPartD.Text, TxtKeyPartE.Text)
-            Await _ViewModel.ValidateLicenseAsync()
-            Height = 162
-            PbxLoading.Visible = True
-        Else
-            _ViewModel.IsValidKey = False
-            Height = 130
-            PbxLoading.Visible = False
-        End If
+        'If TxtKeyPartA.Text.Length + TxtKeyPartB.Text.Length + TxtKeyPartC.Text.Length + TxtKeyPartD.Text.Length + TxtKeyPartE.Text.Length = 25 Then
+        '    _ViewModel.Key = String.Format("{0}-{1}-{2}-{3}-{4}", TxtKeyPartA.Text, TxtKeyPartB.Text, TxtKeyPartC.Text, TxtKeyPartD.Text, TxtKeyPartE.Text)
+        '    Await _ViewModel.ValidateLicenseAsync()
+        '    Height = 162
+        '    PbxLoading.Visible = True
+        'Else
+        '    _ViewModel.IsValidKey = False
+        '    Height = 130
+        '    PbxLoading.Visible = False
+        'End If
     End Sub
     Private Sub TextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtKeyPartA.KeyDown, TxtKeyPartB.KeyDown, TxtKeyPartC.KeyDown, TxtKeyPartD.KeyDown, TxtKeyPartE.KeyDown
         If e.Control AndAlso e.KeyCode = Keys.V Then

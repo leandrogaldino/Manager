@@ -15,5 +15,5 @@ Public Enum LicenseMessages
     End Enum
 Public Enum CloudDatabaseType
     <Description("Cliente")> Customer = 0
-    <Description("Gerenciador")> Manager = 1
+    <Description("Sistema")> System = 1
 End Enum

@@ -66,7 +66,7 @@ Public Class LicenseSettingsViewModel
         End If
     End Function
     Private Async Function CloudPass(Cloud As CompanySystemCloudModel) As Task(Of CloudTestResultModel)
-        Dim Database As RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Manager)
+        Dim Database As RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.System)
         Dim Result As New CloudTestResultModel
         Try
             Await Database.Initialize(Cloud)

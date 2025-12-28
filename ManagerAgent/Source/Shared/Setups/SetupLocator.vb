@@ -10,10 +10,10 @@ Public Class SetupLocator
         Locator.RegisterSingleton(New CompanyService(Locator.GetInstance(Of CryptoKeyService)))
         Locator.RegisterSingleton(Of LocalDB)(New MySqlService())
         Locator.RegisterSingleton(Of RemoteDB)(New FirestoreService(), CloudDatabaseType.Customer)
-        Locator.RegisterSingleton(Of RemoteDB)(New FirestoreService(), CloudDatabaseType.Manager)
+        Locator.RegisterSingleton(Of RemoteDB)(New FirestoreService(), CloudDatabaseType.System)
         Locator.RegisterSingleton(Of Storage)(New StorageService())
-        Locator.RegisterSingleton(New LicenseService(Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Manager), Locator.GetInstance(Of CryptoKeyService)))
-        Locator.RegisterSingleton(New LicenseService(Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Manager), Locator.GetInstance(Of CryptoKeyService)))
+        Locator.RegisterSingleton(New LicenseService(Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.System), Locator.GetInstance(Of CryptoKeyService)))
+        Locator.RegisterSingleton(New LicenseService(Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.System), Locator.GetInstance(Of CryptoKeyService)))
         Locator.RegisterSingleton(New EventService(Locator.GetInstance(Of SemaphoreSlim)))
         Locator.RegisterSingleton(New PasswordService(Locator.GetInstance(Of LicenseService), Locator.GetInstance(Of SessionModel), Locator.GetInstance(Of CryptoKeyService)))
         Locator.RegisterSingleton(Of TaskBase)(New TaskBackup(Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of CompanyService), Locator.GetInstance(Of SessionModel)), TaskName.Backup)
@@ -26,6 +26,6 @@ Public Class SetupLocator
         Locator.RegisterSingleton(Of TaskBase)(New TaskRelease(Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of CompanyService), Locator.GetInstance(Of SessionModel)), TaskName.Release)
         Locator.RegisterSingleton(Of TaskBase)(New TaskReleaseManual(Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of CompanyService), Locator.GetInstance(Of SessionModel)), TaskName.ReleaseManual)
         Locator.RegisterSingleton(New TaskStackService(Locator.GetInstance(Of SemaphoreSlim)))
-        Locator.RegisterSingleton(New AppService(Locator.GetInstance(Of CompanyService)))
+        Locator.RegisterSingleton(New AppService(Locator.GetInstance(Of SessionModel), Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.System), Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer), Locator.GetInstance(Of Storage)))
     End Sub
 End Class

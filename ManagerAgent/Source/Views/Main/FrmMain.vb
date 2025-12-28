@@ -165,8 +165,8 @@ Public Class FrmMain
         Next Task
     End Sub
     Private Async Function ValidateState() As Task
-        Dim ManagerCloudPending As List(Of String) = Await _AppService.ValidateManagerCloudDB()
-        Dim CustomerCloudPending As List(Of String) = Await _AppService.ValidateCustomerCloudDB()
+        Dim ManagerCloudPending As List(Of String) = Await _AppService.ValidateSystemCloud()
+        Dim CustomerCloudPending As List(Of String) = Await _AppService.ValidateCustomerCloud()
         Dim ManagerDatabasePending As List(Of String) = Await _AppService.ValidateLocalDB()
         Dim CustomerStoragePending As List(Of String) = Await _AppService.ValidateStorage()
         Dim BackupPending As List(Of String) = _AppService.ValidateBackup()

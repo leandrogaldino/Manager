@@ -10,7 +10,7 @@ Public Class SetupApp
         Dim Session As SessionModel = Locator.GetInstance(Of SessionModel)
         For Each Company In Session.Companies
             Locator.GetInstance(Of LocalDB)().Initialize(Company.Database)
-            Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Manager).Initialize(Company.Cloud.System)
+            Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.System).Initialize(Company.Cloud.System)
             Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer).Initialize(Company.Cloud.Customer)
             Locator.GetInstance(Of Storage)().Initialize(Company.Cloud.Customer)
         Next Company

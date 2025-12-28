@@ -11,8 +11,9 @@ Public Enum LicenseMessages
         <Description("A chave do produto que você informou está correta, mas também está vinculada a outro cadastro. Por favor, entre em contato com o suporte para obter ajuda.")> DuplicateProductKey = 8
         <Description("A chave do produto que você informou já está ativada neste dispositivo.")> ProductKeyAlreadyActivatedOnThis = 9
         <Description("Senha inválida")> BadPassword = 10
-        <Description("Não foi possível acessar o servidor de validação da licença, verifique as credenciais.")> InaccessibleDestination = 11
-    End Enum
+    <Description("Não foi possível acessar o servidor de validação da licença, verifique as credenciais.")> InaccessibleDestination = 11
+    <Description("O banco de dados cloud de licença não foi configurado.")> MissingCredentials = 12
+End Enum
 Public Enum CloudDatabaseType
     <Description("Cliente")> Customer = 0
     <Description("Sistema")> License = 1

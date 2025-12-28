@@ -1,6 +1,5 @@
 ﻿Imports System.IO
 Imports System.Text
-Imports System.Xml
 Imports ControlLibrary
 Imports ManagerCore.RemoteDB
 
@@ -12,15 +11,13 @@ Public Class LicenseService
         _Key = CryptoKeyService.ReadCryptoKey()
     End Sub
     Public Function GetLocalLicenseKey() As String
-        Dim XmlStr As String
-        Dim XmlDoc As XmlDocument
+        Dim Json As String
         Dim LicenseKey As String
         If File.Exists(ApplicationPaths.LicenseFile) Then
-            XmlStr = File.ReadAllText(ApplicationPaths.LicenseFile)
-            XmlStr = Cryptography.Decrypt(XmlStr, _Key)
-            XmlDoc = New XmlDocument
-            XmlDoc.LoadXml(XmlStr)
-            LicenseKey = XmlDoc.SelectSingleNode("License/LicenseKey").InnerText
+            Json = File.ReadAllText(ApplicationPaths.LicenseFile)
+            Json = Cryptography.Decrypt(Json, _Key)
+            Dim Model = LicenseModel.FromJson(Json)
+            LicenseKey = Model.LicenseKey
             Return LicenseKey
         Else
             Return Nothing
@@ -28,15 +25,13 @@ Public Class LicenseService
     End Function
 
     Public Function GetLocalLicenseToken() As String
-        Dim XmlStr As String
-        Dim XmlDoc As XmlDocument
+        Dim Json As String
         Dim LicenseToken As String
         If File.Exists(ApplicationPaths.LicenseFile) Then
-            XmlStr = File.ReadAllText(ApplicationPaths.LicenseFile)
-            XmlStr = Cryptography.Decrypt(XmlStr, _Key)
-            XmlDoc = New XmlDocument
-            XmlDoc.LoadXml(XmlStr)
-            LicenseToken = XmlDoc.SelectSingleNode("License/LicenseToken").InnerText
+            Json = File.ReadAllText(ApplicationPaths.LicenseFile)
+            Json = Cryptography.Decrypt(Json, _Key)
+            Dim Model = LicenseModel.FromJson(Json)
+            LicenseToken = Model.LicenseToken
             Return LicenseToken
         Else
             Return Nothing
@@ -83,24 +78,17 @@ Public Class LicenseService
     End Function
 
     Public Async Function GetOnlineLicense() As Task(Of LicenseResultModel)
-        Dim XmlStr As String
-        Dim XmlDoc As XmlDocument
-        Dim LicenseKey As String = String.Empty
-        Dim LicenseToken As String = String.Empty
-        If File.Exists(ApplicationPaths.LicenseFile) Then
-            XmlStr = File.ReadAllText(ApplicationPaths.LicenseFile)
-            XmlStr = Cryptography.Decrypt(XmlStr, _Key)
-            XmlDoc = New XmlDocument
-            XmlDoc.LoadXml(XmlStr)
-            LicenseKey = XmlDoc.SelectSingleNode("License/LicenseKey").InnerText
-            LicenseToken = XmlDoc.SelectSingleNode("License/LicenseToken").InnerText
-        End If
-        Return Await GetOnlineLicense(LicenseKey, LicenseToken)
-    End Function
-
-    Public Async Function GetOnlineLicense(LicenseKey As String, LicenseToken As String) As Task(Of LicenseResultModel)
         Dim Result As New LicenseResultModel
         Dim Conditions As List(Of Condition)
+
+        Dim LicenseKey As String = GetLocalLicenseKey()
+        Dim LicenseToken As String = GetLocalLicenseToken()
+
+        'Verifica se o arquivo de credenciais da núvem de licença existe
+        If Not File.Exists(ApplicationPaths.LicenseCloudFile) Then
+            Result.Flag = LicenseMessages.MissingCredentials
+            Return Result
+        End If
 
         ' Verifica se o arquivo de licença existe
         If Not File.Exists(ApplicationPaths.LicenseFile) Then
@@ -172,9 +160,9 @@ Public Class LicenseService
     End Function
 
     Public Async Function SaveLocalLicense(License As LicenseModel) As Task(Of LicenseModel)
-        Dim json As String = License.ToJson()
-        json = Cryptography.Encrypt(json, _Key)
-        Dim bytes As Byte() = Encoding.UTF8.GetBytes(json)
+        Dim Json As String = License.ToJson()
+        Json = Cryptography.Encrypt(Json, _Key)
+        Dim bytes As Byte() = Encoding.UTF8.GetBytes(Json)
         Using fs As New FileStream(ApplicationPaths.LicenseFile, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize:=4096, useAsync:=True)
             Await fs.WriteAsync(bytes, 0, bytes.Length)
             Await fs.FlushAsync()

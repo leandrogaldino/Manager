@@ -165,7 +165,7 @@ Public Class FrmMain
         Next Task
     End Sub
     Private Async Function ValidateState() As Task
-        Dim ManagerCloudPending As List(Of String) = Await _AppService.ValidateLicenseCloud()
+        Dim LicenseCloudPending As List(Of String) = Await _AppService.ValidateLicenseCloud()
         Dim CustomerCloudPending As List(Of String) = Await _AppService.ValidateCustomerCloud()
         Dim ManagerDatabasePending As List(Of String) = Await _AppService.ValidateLocalDB()
         Dim CustomerStoragePending As List(Of String) = Await _AppService.ValidateStorage()
@@ -175,7 +175,7 @@ Public Class FrmMain
         Else
             _HasDatabasePending = True
         End If
-        If ManagerCloudPending.Count = 0 Then
+        If LicenseCloudPending.Count = 0 Then
             _SessionModel.ManagerLicenseResult = Await _LicenseService.GetOnlineLicense()
             _HasManagerCloudPending = False
         Else
@@ -186,7 +186,7 @@ Public Class FrmMain
         If Not _SessionModel.ManagerLicenseResult.Success Then
             _StateWarnings.Add($"{Constants.SeparatorSymbol} {EnumHelper.GetEnumDescription(_SessionModel.ManagerLicenseResult.Flag)}")
         End If
-        ManagerCloudPending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
+        LicenseCloudPending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
         ManagerDatabasePending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
         BackupPending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
         CustomerCloudPending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
@@ -200,7 +200,7 @@ Public Class FrmMain
         BtnSettingsCloud.Enabled = _SessionModel.ManagerLicenseResult.Success
         BtnSettingsSupport.Enabled = _SessionModel.ManagerLicenseResult.Success
         BtnSettingsChangePassword.Enabled = _SessionModel.ManagerLicenseResult.Success
-        BtnSettingsChangeKey.Enabled = ManagerCloudPending.Count = 0
+        BtnSettingsChangeKey.Enabled = LicenseCloudPending.Count = 0
         If _StateWarnings.Count > 0 Then
             BtnAgentState.Enabled = False
             BtnBackup.Enabled = False

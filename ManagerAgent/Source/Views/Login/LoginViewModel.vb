@@ -56,7 +56,7 @@ Public Class LoginViewModel
         Return False
     End Function
     Public Async Function RenewLicense() As Task
-        _SessionModel.ManagerLicenseResult = Await _LicenseService.GetOnlineLicense(_LicenseService.GetLocalLicenseKey, _LicenseService.GetLocalLicenseToken)
+        _SessionModel.ManagerLicenseResult = Await _LicenseService.GetOnlineLicense()
         If Not (_SessionModel.ManagerLicenseResult.Success AndAlso IsValidCredentials()) Then
             CMessageBox.Show(EnumHelper.GetEnumDescription(_SessionModel.ManagerLicenseResult.Flag), CMessageBoxType.Warning)
         End If

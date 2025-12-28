@@ -6,10 +6,11 @@ Imports ManagerCore
 Public Class TaskRestoreBackup
     Inherits TaskBase
     Private ReadOnly _DatabaseService As LocalDB
-    Private ReadOnly _SessionModel As SessionModel
-    Public Sub New(DatabaseService As LocalDB, SessionModel As SessionModel)
+    Private ReadOnly _CryptoKeyService As CryptoKeyService
+    Public Sub New(CompanyModel As CompanyModel, DatabaseService As LocalDB, CryptoKeyService As CryptoKeyService)
+        MyBase.New(CompanyModel)
         _DatabaseService = DatabaseService
-        _SessionModel = SessionModel
+        _CryptoKeyService = CryptoKeyService
     End Sub
     Public Overrides ReadOnly Property Name As TaskName
         Get
@@ -111,7 +112,7 @@ Public Class TaskRestoreBackup
                                                        Response.Text = $"Restaurar Backup: Processando os dados ({Percent}%)"
                                                        If Progress IsNot Nothing Then Progress.Report(Response)
                                                    End Sub)
-            Await FileMerge.UnMergeAsync(BackupLocation, TargetDirectory, _SessionModel.ManagerPassword, IntProgress)
+            Await FileMerge.UnMergeAsync(BackupLocation, TargetDirectory, _CryptoKeyService.ReadCryptoKey, IntProgress)
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
             Response.Text = "Restaurar Backup: Processando o banco de dados"

@@ -1,5 +1,4 @@
-﻿Imports System.ComponentModel
-Imports ControlLibrary
+﻿Imports ControlLibrary
 Imports ManagerCore
 Imports ManagerCore.LocalDB
 Imports ManagerCore.RemoteDB
@@ -8,13 +7,12 @@ Public Class TaskCloudSync
     Inherits TaskBase
     Private ReadOnly _LocalDB As LocalDB
     Private ReadOnly _RemoteDB As RemoteDB
-    Private ReadOnly _SettingsService As ManagerCore.CompanyService
-    Private ReadOnly _SessionModel As SessionModel
-    Public Sub New(LocalDB As LocalDB, RemoteDB As RemoteDB, SettingsService As ManagerCore.CompanyService, SessionModel As SessionModel)
+    Private ReadOnly _CompanyService As CompanyService
+    Public Sub New(CompanyModel As CompanyModel, LocalDB As LocalDB, RemoteDB As RemoteDB, CompanyService As CompanyService)
+        MyBase.New(CompanyModel)
         _LocalDB = LocalDB
         _RemoteDB = RemoteDB
-        _SettingsService = SettingsService
-        _SessionModel = SessionModel
+        _CompanyService = CompanyService
     End Sub
     Public Overrides ReadOnly Property Name As TaskName
         Get
@@ -23,12 +21,12 @@ Public Class TaskCloudSync
     End Property
     Public Overrides ReadOnly Property RunIntervalMinutes As Integer
         Get
-            Return _SessionModel.ManagerSetting.Cloud.CustomerDB.SyncInterval
+            Return Company.Cloud.SyncInterval
         End Get
     End Property
     Public Overrides ReadOnly Property LastRun As Date
         Get
-            Return _SessionModel.ManagerSetting.LastExecution.CloudSync
+            Return Company.LastExecution.CloudSync
         End Get
     End Property
     Public Overrides ReadOnly Property IsManual As Boolean
@@ -49,8 +47,8 @@ Public Class TaskCloudSync
             SyncedFromCloud = Await FetchSchedulesFromCloudToLocal(Response, Progress)
             SyncedToCloud = Await SyncFromLocalToCloud(Response, Progress)
             HasSynced = SyncedFromCloud OrElse SyncedToCloud
-            _SessionModel.ManagerSetting.LastExecution.CloudSync = Now.ToString("yyyy-MM-dd HH:mm:ss")
-            _SettingsService.Save(_SessionModel.ManagerSetting)
+            Company.LastExecution.CloudSync = Now.ToString("yyyy-MM-dd HH:mm:ss")
+            _CompanyService.Save(Company)
             If _Started Then
                 Response.Text = "Sincronização: Concluído"
                 Response.Percent = 0
@@ -81,10 +79,9 @@ Public Class TaskCloudSync
     End Function
     Private Async Function SyncFromLocalToCloud(Response As AsyncResponseModel, Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task(Of Boolean)
         Dim PerformedOperations As Long
-        Dim LastSyncTime As Date = _SessionModel.ManagerSetting.LastExecution.CloudSync
+        Dim LastSyncTime As Date = Company.LastExecution.CloudSync
         Dim ContinueSync As Boolean = True
         Dim HasSynced As Boolean
-
         Do While ContinueSync
             ContinueSync = False
             Dim StartTime As Date = Now
@@ -169,7 +166,7 @@ Public Class TaskCloudSync
     Private Async Function FetchSchedulesFromCloudToLocal(Response As AsyncResponseModel, Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task(Of Boolean)
         Dim PerformedOperations As Integer
         Dim TotalChanges As Integer
-        Dim LastSyncLimit As Date = _SessionModel.ManagerSetting.LastExecution.CloudSync
+        Dim LastSyncLimit As Date = Company.LastExecution.CloudSync
         Dim ContinueSync As Boolean = True
         Dim HasSynced As Boolean
 

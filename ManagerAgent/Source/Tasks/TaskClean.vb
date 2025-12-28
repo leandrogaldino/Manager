@@ -5,14 +5,12 @@ Imports ManagerCore
 Imports ManagerCore.LocalDB
 Public Class TaskClean
     Inherits TaskBase
-
-    Private _DatabaseService As LocalDB
-    Private _SettingsService As ManagerCore.CompanyService
-    Private _SessionModel As SessionModel
-    Public Sub New(DatabaseService As LocalDB, SettingsService As ManagerCore.CompanyService, SessionModel As SessionModel)
+    Private ReadOnly _DatabaseService As LocalDB
+    Private ReadOnly _CompanyService As CompanyService
+    Public Sub New(CompanyModel As CompanyModel, DatabaseService As LocalDB, CompanyService As CompanyService)
+        MyBase.New(CompanyModel)
         _DatabaseService = DatabaseService
-        _SettingsService = SettingsService
-        _SessionModel = SessionModel
+        _CompanyService = CompanyService
     End Sub
     Public Overrides ReadOnly Property Name As TaskName
         Get
@@ -22,13 +20,13 @@ Public Class TaskClean
 
     Public Overrides ReadOnly Property RunIntervalMinutes As Integer
         Get
-            Return _SessionModel.ManagerSetting.General.Clean.Interval * (24 * 60)
+            Return Company.General.Clean.Interval * (24 * 60)
         End Get
     End Property
 
     Public Overrides ReadOnly Property LastRun As Date
         Get
-            Return _SessionModel.ManagerSetting.LastExecution.Clean
+            Return Company.LastExecution.Clean
         End Get
     End Property
 
@@ -68,7 +66,7 @@ Public Class TaskClean
             CashDocumentDir = New DirectoryInfo(ApplicationPaths.CashDocumentDirectory)
             FileCount = EvaluationDocumentDir.GetFiles().Count() + EmailSignatureDir.GetDirectories().Count() + RequestDocumentDir.GetFiles().Count() + ProductPictureDir.GetFiles().Count() + CashDocumentDir.GetFiles().Count()
             Await Task.Delay(Constants.WaitForStart)
-            Month = _SessionModel.ManagerSetting.General.Evaluation.MonthsBeforeRecordDeletion
+            Month = Company.General.Evaluation.MonthsBeforeRecordDeletion
             MonthStr = If(Month = 1, $"{Month} mês", $"{Month} meses")
             ResultDate = Today.AddMonths(-Month)
             Result = Await _DatabaseService.ExecuteSelectAsync("evaluation", {"id", "evaluationdate", "customerid"}.ToList, $"evaluationdate <= '{ResultDate:yyyy-MM-dd}'")
@@ -299,8 +297,8 @@ Public Class TaskClean
         Catch ex As Exception
             Exception = ex
         Finally
-            If Not IsManual Then _SessionModel.ManagerSetting.LastExecution.Clean = Now
-            If Not IsManual Then _SettingsService.Save(_SessionModel.ManagerSetting)
+            If Not IsManual Then Company.LastExecution.Clean = Now
+            If Not IsManual Then _CompanyService.Save(Company)
         End Try
         If Exception IsNot Nothing Then
             Response.Percent = 0

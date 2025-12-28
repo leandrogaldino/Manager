@@ -3,8 +3,8 @@
 Public Class TaskCleanManual
     Inherits TaskClean
 
-    Public Sub New(DatabaseService As LocalDB, SettingsService As ManagerCore.CompanyService, SessionModel As SessionModel)
-        MyBase.New(DatabaseService, SettingsService, SessionModel)
+    Public Sub New(CompanyModel As CompanyModel, DatabaseService As LocalDB, CompanyService As CompanyService)
+        MyBase.New(CompanyModel, DatabaseService, CompanyService)
     End Sub
     Private _NextRun As Date = Nothing
     Public Overrides Property NextRun As Date

@@ -1,16 +1,19 @@
-﻿Imports ManagerCore
+﻿Imports ControlLibrary
+Imports ManagerCore
 Public Class AppService
     Private ReadOnly _Session As SessionModel
     Private ReadOnly _LocalDB As LocalDB
-    Private ReadOnly _SystemCloud As RemoteDB
+    Private ReadOnly _LicenseCloud As RemoteDB
     Private ReadOnly _CustomerCloud As RemoteDB
     Private ReadOnly _CustomerStorage As Storage
-    Public Sub New(Session As SessionModel, LocalDB As LocalDB, SystemCloud As RemoteDB, CustomerCloud As RemoteDB, CustomerStorage As Storage)
+    Private ReadOnly _LicenseCloudService As LicenseCloudService
+    Public Sub New(Session As SessionModel, LocalDB As LocalDB, LicenseCloud As RemoteDB, CustomerCloud As RemoteDB, CustomerStorage As Storage, LicenseCloudService As LicenseCloudService)
         _Session = Session
         _LocalDB = LocalDB
-        _SystemCloud = SystemCloud
+        _LicenseCloud = LicenseCloud
         _CustomerCloud = CustomerCloud
         _CustomerStorage = CustomerStorage
+        _LicenseCloudService = LicenseCloudService
     End Sub
 
     Public Function ValidateBackup() As List(Of String)
@@ -27,28 +30,33 @@ Public Class AppService
         Next Company
         Return Validations
     End Function
-    Public Async Function ValidateSystemCloud() As Task(Of List(Of String))
+    Public Async Function ValidateLicenseCloud() As Task(Of List(Of String))
         Dim Validations As New List(Of String)
-        Dim Companies As List(Of CompanyModel) = _Session.Companies
-        For Each Company In Companies
-            Dim Cloud As CompanySystemCloudModel = Company.Cloud.System
-            Dim ManagerValidations As New List(Of String)
-            If String.IsNullOrEmpty(Cloud.ProjectID) Then ManagerValidations.Add($"O nome do banco de dados cloud do sistema na empresa {Company.Register.ShortName} não foi definido;")
-            If String.IsNullOrEmpty(Cloud.JsonCredentials) Then ManagerValidations.Add($"As credenciais do banco de dados cloud do sistema na empresa {Company.Register.ShortName} não foram definidos;")
-            Try
-                Await _SystemCloud.TestConnection()
-            Catch ex As Exception
-                ManagerValidations.Add($"Erro ao conectar ou consultar no banco de dados cloud do sistema na empresa {Company.Register.ShortName}: {ex.Message};")
-            End Try
+        Dim LicenseCloudModel As LicenseCloudModel = _LicenseCloudService.Load()
+        Dim ManagerValidations As New List(Of String)
+
+        If LicenseCloudModel Is Nothing Then
+            ManagerValidations.Add($"O banco de dados cloud de licença não foi configurado;")
             Validations.AddRange(ManagerValidations)
-        Next Company
+            Return Validations
+        End If
+
+        If String.IsNullOrEmpty(LicenseCloudModel.ProjectID) Then ManagerValidations.Add($"O nome do banco de dados cloud de licença não foi definido;")
+        If String.IsNullOrEmpty(LicenseCloudModel.JsonCredentials) Then ManagerValidations.Add($"As credenciais do banco de dados cloud de licença não foram definidas;")
+        Try
+            Await _LicenseCloud.TestConnection()
+        Catch ex As Exception
+            ManagerValidations.Add($"Erro ao conectar ou consultar no banco de dados cloud de licença;")
+        End Try
+        Validations.AddRange(ManagerValidations)
+
         Return Validations
     End Function
     Public Async Function ValidateCustomerCloud() As Task(Of List(Of String))
         Dim Validations As New List(Of String)
         Dim Companies As List(Of CompanyModel) = _Session.Companies
         For Each Company In Companies
-            Dim Cloud As CompanyCustomerCloudModel = Company.Cloud.System
+            Dim Cloud As CompanyCloudModel = Company.Cloud
             Dim CustomerValidations As New List(Of String)
             If String.IsNullOrEmpty(Cloud.ProjectID) Then CustomerValidations.Add($"O nome do banco de dados cloud do cliete {Company.Register.ShortName} não foi definido;")
             If String.IsNullOrEmpty(Cloud.JsonCredentials) Then CustomerValidations.Add($"As credenciais do banco de dados cloud do cliente {Company.Register.ShortName} não foram definidos;")
@@ -65,7 +73,7 @@ Public Class AppService
         Dim Validations As New List(Of String)
         Dim Companies As List(Of CompanyModel) = _Session.Companies
         For Each Company In Companies
-            Dim Storage As CompanyCustomerCloudModel = Company.Cloud.Customer
+            Dim Storage As CompanyCloudModel = Company.Cloud
             If String.IsNullOrEmpty(Storage.BucketName) Then Validations.Add($"O nome do armazenamento não foi definido na empresa {Company.Register.ShortName};")
             If String.IsNullOrEmpty(Storage.JsonCredentials) Then Validations.Add($"As credenciais do armazenamento não foram definidos na empresa {Company.Register.ShortName};")
             Try

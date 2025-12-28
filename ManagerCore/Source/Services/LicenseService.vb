@@ -48,7 +48,7 @@ Public Class LicenseService
         If File.Exists(ApplicationPaths.LicenseFile) Then
             XmlStr = File.ReadAllText(ApplicationPaths.LicenseFile)
             XmlStr = Cryptography.Decrypt(XmlStr, _Key)
-            Result.License = LicenseModel.FromXml(XmlStr)
+            Result.License = LicenseModel.FromJson(XmlStr)
             If (Not String.IsNullOrEmpty(Result.License.LicenseKey)) Then
                 If Result.License.LastOnlineValidation.AddDays(1) >= Today Then
                     Result.Success = True
@@ -125,7 +125,7 @@ Public Class LicenseService
         Dim DBResult = Await _Database.ExecuteGet("licenses", Conditions)
 
         If DBResult.Count = 1 Then
-            Result.License = If(DBResult(0) Is Nothing, Nothing, LicenseModel.FromDictionary(DBResult(0)))
+            Result.License = If(DBResult(0) Is Nothing, Nothing, LicenseModel.FromCloud(DBResult(0)))
         ElseIf DBResult.Count > 1 Then
             Result.Flag = LicenseMessages.DuplicateProductKey
             Return Result
@@ -168,21 +168,23 @@ Public Class LicenseService
 
         ' Salva as alterações na licença
         Await SaveLocalLicense(Result.License)
-
         Return Result
     End Function
 
     Public Async Function SaveLocalLicense(License As LicenseModel) As Task(Of LicenseModel)
-        Dim XmlStr As String = Await License.ToXmlAsync()
-        XmlStr = Cryptography.Encrypt(XmlStr, _Key)
-        Using Filestream As FileStream = File.Create(ApplicationPaths.LicenseFile)
-            Filestream.Write(Encoding.ASCII.GetBytes(XmlStr), 0, XmlStr.Length)
+        Dim json As String = License.ToJson()
+        json = Cryptography.Encrypt(json, _Key)
+        Dim bytes As Byte() = Encoding.UTF8.GetBytes(json)
+        Using fs As New FileStream(ApplicationPaths.LicenseFile, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize:=4096, useAsync:=True)
+            Await fs.WriteAsync(bytes, 0, bytes.Length)
+            Await fs.FlushAsync()
         End Using
         Return License
     End Function
 
+
     Public Async Function UpdateLicenseToken(License As LicenseModel, NewToken As String) As Task(Of LicenseModel)
-        Dim Data As Dictionary(Of String, Object) = License.ToDictionary
+        Dim Data As Dictionary(Of String, Object) = License.ToCloud
         Data("license_token") = NewToken
         Await _Database.ExecutePut("licenses", Data, License.CustomerDocument)
         License.LicenseToken = NewToken
@@ -190,7 +192,7 @@ Public Class LicenseService
     End Function
 
     Public Async Function UpdateManagerAgentPassword(License As LicenseModel, NewPassword As String) As Task(Of LicenseModel)
-        Dim Data As Dictionary(Of String, Object) = License.ToDictionary
+        Dim Data As Dictionary(Of String, Object) = License.ToCloud
         Data("manager_agent_password") = NewPassword
         Await _Database.ExecutePut("licenses", Data, License.CustomerDocument)
         License.ManagerAgentPassword = NewPassword

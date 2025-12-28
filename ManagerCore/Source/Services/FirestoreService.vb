@@ -4,7 +4,9 @@ Public Class FirestoreService
     Inherits RemoteDB
     Private ReadOnly _Listeners As New Dictionary(Of String, FirestoreChangeListener)
     Private _Database As FirestoreDb
-    Public Overrides Async Function Initialize(Settings As CompanySystemCloudModel) As Task
+
+
+    Public Overrides Async Function Initialize(Settings As CloudModel) As Task
         Dim Json As String = Settings.JsonCredentials
         Dim Credential As GoogleCredential = GoogleCredential.FromJson(Json)
         Dim builder = New FirestoreDbBuilder() With {

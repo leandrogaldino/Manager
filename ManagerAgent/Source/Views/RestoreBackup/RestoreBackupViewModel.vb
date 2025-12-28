@@ -11,23 +11,23 @@ Public Class RestoreBackupViewModel
         LoadBackupFiles()
     End Sub
     Private Sub LoadBackupFiles()
-        BackupFiles.Clear()
-        Dim Dir As New DirectoryInfo(_SessionModel.ManagerSetting.Backup.Location)
-        If Dir.Exists Then
-            'ler metadados aqui
-            For Each File As FileInfo In Dir.GetFiles.Reverse().OrderBy(Function(y) y.CreationTime)
-                If FileMerge.IsValidFile(File.FullName) Then
-                    Dim MetaData As Dictionary(Of String, Object) = FileMerge.GetMetadata(File.FullName)
-                    BackupFiles.Add(New BackupFileModel With {
-                        .Date = MetaData("CreationDate"),
-                        .Size = FormatNumber(MetaData("TotalSize") / (1024 * 1024), 2, TriState.True) & " MB",
-                        .FilePath = File.FullName
-                    })
-                End If
-            Next File
-        Else
-            MessageBox.Show("A pasta de backups não foi encontrada. Defina nas configurações.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-        End If
+        'BackupFiles.Clear()
+        'Dim Dir As New DirectoryInfo(_SessionModel.ManagerSetting.Backup.Location)
+        'If Dir.Exists Then
+        '    'ler metadados aqui
+        '    For Each File As FileInfo In Dir.GetFiles.Reverse().OrderBy(Function(y) y.CreationTime)
+        '        If FileMerge.IsValidFile(File.FullName) Then
+        '            Dim MetaData As Dictionary(Of String, Object) = FileMerge.GetMetadata(File.FullName)
+        '            BackupFiles.Add(New BackupFileModel With {
+        '                .Date = MetaData("CreationDate"),
+        '                .Size = FormatNumber(MetaData("TotalSize") / (1024 * 1024), 2, TriState.True) & " MB",
+        '                .FilePath = File.FullName
+        '            })
+        '        End If
+        '    Next File
+        'Else
+        '    MessageBox.Show("A pasta de backups não foi encontrada. Defina nas configurações.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        'End If
     End Sub
     Public Function RestoreBackup(SelectedFile As BackupFileModel) As Boolean
         If SelectedFile IsNot Nothing Then

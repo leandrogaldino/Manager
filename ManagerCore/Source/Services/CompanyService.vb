@@ -2,7 +2,7 @@
 Imports ControlLibrary
 Imports Newtonsoft.Json
 Public Class CompanyService
-    Private _Key As String
+    Private ReadOnly _Key As String
     Public Sub New(CryptoKeyService As CryptoKeyService)
         _Key = CryptoKeyService.ReadCryptoKey()
     End Sub

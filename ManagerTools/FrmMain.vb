@@ -10,7 +10,7 @@ Public Class FrmMain
         TsBar.Renderer = New CustomToolstripRender
     End Sub
     Private Sub BtnGenerateKey_Click(sender As Object, e As EventArgs) Handles BtnGenerateKey.Click
-        TxtGeneratedKey.Text = TextHelper.GetRandomString(5, 5, "-", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+        TxtGeneratedKey.Text = TextHelper.GetRandomString(5, 5, "-", {CharFilter.UppercaseAlphabetic, CharFilter.Numeric}.ToList)
         BtnCopyKey.Visible = True
     End Sub
     Private Sub BtnCopyKey_Click(sender As Object, e As EventArgs) Handles BtnCopyKey.Click

@@ -5,12 +5,13 @@ Imports ManagerCore
 Public Class TaskBackup
     Inherits TaskBase
     Private ReadOnly _DatabaseService As LocalDB
-    Private ReadOnly _SettingsService As CompanyService
-    Private ReadOnly _SessionModel As SessionModel
-    Public Sub New(DatabaseService As LocalDB, SettingsService As CompanyService, SessionModel As SessionModel)
+    Private ReadOnly _CompanyService As CompanyService
+    Private ReadOnly _CryptoKeyService As CryptoKeyService
+    Public Sub New(CompanyModel As CompanyModel, DatabaseService As LocalDB, CompanyService As CompanyService, CryptoKeyService As CryptoKeyService)
+        MyBase.New(CompanyModel)
         _DatabaseService = DatabaseService
-        _SettingsService = SettingsService
-        _SessionModel = SessionModel
+        _CompanyService = CompanyService
+        _CryptoKeyService = CryptoKeyService
     End Sub
     Public Overrides ReadOnly Property Name As TaskName
         Get
@@ -22,8 +23,8 @@ Public Class TaskBackup
         Get
             Dim BackupDays As Boolean() = GetBackupDays()
             If GetBackupDays.Where(Function(Day) Day).Count > 0 Then
-                Dim BackupTime As TimeSpan = _SessionModel.ManagerSetting.Backup.Time
-                Dim LastBackup As Date = _SessionModel.ManagerSetting.LastExecution.Backup
+                Dim BackupTime As TimeSpan = Company.Backup.Time
+                Dim LastBackup As Date = Company.LastExecution.Backup
                 Dim NextAvailableDay As Date = GetNextAvailableDay(LastBackup, BackupDays, BackupTime)
                 If IsManual Then
                     Return MyBase.NextRun
@@ -64,7 +65,7 @@ Public Class TaskBackup
     End Property
     Public Overrides ReadOnly Property LastRun As Date
         Get
-            Return _SessionModel.ManagerSetting.LastExecution.Backup
+            Return Company.LastExecution.Backup
         End Get
     End Property
 
@@ -75,13 +76,13 @@ Public Class TaskBackup
     End Property
 
     Private Function GetBackupDays() As Boolean()
-        Dim Sunday As Boolean = _SessionModel.ManagerSetting.Backup.Sunday
-        Dim Monday As Boolean = _SessionModel.ManagerSetting.Backup.Monday
-        Dim Tuesday As Boolean = _SessionModel.ManagerSetting.Backup.Tuesday
-        Dim Wednesday As Boolean = _SessionModel.ManagerSetting.Backup.Wednesday
-        Dim Thursday As Boolean = _SessionModel.ManagerSetting.Backup.Thursday
-        Dim Friday As Boolean = _SessionModel.ManagerSetting.Backup.Friday
-        Dim Saturday As Boolean = _SessionModel.ManagerSetting.Backup.Saturday
+        Dim Sunday As Boolean = Company.Backup.Sunday
+        Dim Monday As Boolean = Company.Backup.Monday
+        Dim Tuesday As Boolean = Company.Backup.Tuesday
+        Dim Wednesday As Boolean = Company.Backup.Wednesday
+        Dim Thursday As Boolean = Company.Backup.Thursday
+        Dim Friday As Boolean = Company.Backup.Friday
+        Dim Saturday As Boolean = Company.Backup.Saturday
         Return {Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday}
     End Function
 
@@ -126,7 +127,7 @@ Public Class TaskBackup
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
             FileName = $"Backup {DateTimeHelper.Now:dd-MM-yyyy HH.mm.ss}.bkp"
-            BackupDir = New DirectoryInfo(_SessionModel.ManagerSetting.Backup.Location)
+            BackupDir = New DirectoryInfo(Company.Backup.Location)
             TargetList = New List(Of String) From {
                 ApplicationPaths.CashDocumentDirectory,
                 ApplicationPaths.EmailSignatureDirectory,
@@ -143,20 +144,20 @@ Public Class TaskBackup
                                                        Response.Text = $"Backup: Processando arquivos ({p}%)"
                                                        If Progress IsNot Nothing Then Progress.Report(Response)
                                                    End Sub)
-            Await FileMerge.MergeAsync(Path.Combine(BackupDir.FullName, FileName), TargetList, _SessionModel.ManagerPassword, IntProgress)
+            Await FileMerge.MergeAsync(Path.Combine(BackupDir.FullName, FileName), TargetList, _CryptoKeyService.ReadCryptoKey, IntProgress)
             Await FileManager.DeleteDirectoriesAsync(New List(Of FileManager.DeleteDirectoryInfo) From {New FileManager.DeleteDirectoryInfo(New DirectoryInfo(TempDatabaseDirectory), True)})
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
             If Progress IsNot Nothing Then Progress.Report(Response)
-            BackupDir = New DirectoryInfo(_SessionModel.ManagerSetting.Backup.Location)
-            Files = Util.GetBackupFiles()
+            BackupDir = New DirectoryInfo(Company.Backup.Location)
+            Files = Util.GetBackupFiles(Company)
             If Files.Count > 0 Then
                 AddHandler FileManager.DeleteFilesProgressChanged, Sub(IOSender, IOEventArgs)
                                                                        Response.Percent = IOEventArgs.PercentCompleted
                                                                        Response.Text = $"Backup: Excluindo backups obsoletos ({IOEventArgs.PercentCompleted}%)"
                                                                        If Progress IsNot Nothing Then Progress.Report(Response)
                                                                    End Sub
-                Files = Files.Take(Files.Count - _SessionModel.ManagerSetting.Backup.Keep).ToList
+                Files = Files.Take(Files.Count - Company.Backup.Keep).ToList
                 Await FileManager.DeleteFilesAsync(Files)
             End If
             Await Task.Delay(Constants.WaitForJob)
@@ -173,9 +174,9 @@ Public Class TaskBackup
         Catch ex As Exception
             Exception = ex
         Finally
-            If Not IsManual Then _SessionModel.ManagerSetting.Backup.IgnoreNext = False
-            If Not IsManual Then _SessionModel.ManagerSetting.LastExecution.Backup = Now
-            If Not IsManual Then _SettingsService.Save(_SessionModel.ManagerSetting)
+            If Not IsManual Then Company.Backup.IgnoreNext = False
+            If Not IsManual Then Company.LastExecution.Backup = Now
+            If Not IsManual Then _CompanyService.Save(Company)
         End Try
         If Exception IsNot Nothing Then
             Await Task.Delay(Constants.WaitForJob)

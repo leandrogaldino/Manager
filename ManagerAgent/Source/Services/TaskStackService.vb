@@ -6,6 +6,9 @@ Public Class TaskStackService
     Public Event TaskRunned As EventHandler(Of TaskBase)
     Public Event TaskListChanged As EventHandler(Of TaskBase)
     Private ReadOnly _Semaphore As SemaphoreSlim
+    Public Sub ClearTasks()
+        _TaskStack.Clear()
+    End Sub
     Public Function GetTaskStack() As List(Of TaskBase)
         Return _TaskStack
     End Function

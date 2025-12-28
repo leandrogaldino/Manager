@@ -1,4 +1,4 @@
-﻿Public Class SettingSupportModel
+﻿Public Class CompanySupportModel
     Public Property EnableSSL As Boolean
     Public Property Email As String
     Public Property SMTPServer As String

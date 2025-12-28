@@ -3,8 +3,8 @@ Imports System.Text
 Imports MySql.Data.MySqlClient
 Public Class MySqlService
     Inherits LocalDB
-    Private _DatabaseSettings As SettingDatabaseModel
-    Public Overrides Sub Initialize(DatabaseSettings As SettingDatabaseModel)
+    Private _DatabaseSettings As CompanyDatabaseModel
+    Public Overrides Sub Initialize(DatabaseSettings As CompanyDatabaseModel)
         _DatabaseSettings = DatabaseSettings
     End Sub
     Public Overrides Function GetConnection() As Common.DbConnection

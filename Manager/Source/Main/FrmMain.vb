@@ -6,7 +6,7 @@ Public Class FrmMain
     Public Sub New()
         InitializeComponent()
         _User = Locator.GetInstance(Of Session).User
-        LblCompany.Text = Locator.GetInstance(Of Session).Setting.Company.ShortName
+        LblCompany.Text = Locator.GetInstance(Of Session).Setting.Register.ShortName
         BtnVersion.Text = Locator.GetInstance(Of Session).ManagerVersion
         BtnUser.Text = _User.Username
         BtnEmail.Visible = _User.CanAccess(Routine.EmailModel) Or _User.CanAccess(Routine.EmailSignature) Or _User.CanAccess(Routine.EmailSent)

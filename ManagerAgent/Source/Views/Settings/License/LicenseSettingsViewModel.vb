@@ -5,14 +5,14 @@ Imports ManagerCore
 
 Public Class LicenseSettingsViewModel
     Implements INotifyPropertyChanged
-    Private ReadOnly _SettingService As SettingService
+    Private ReadOnly _SettingService As ManagerCore.CompanyService
     Private ReadOnly _SessionModel As SessionModel
     Private _CloudName As String
     Private _CloudCredentials As String
     Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
 
     Public Sub New()
-        _SettingService = Locator.GetInstance(Of SettingService)
+        _SettingService = Locator.GetInstance(Of ManagerCore.CompanyService)
         _SessionModel = Locator.GetInstance(Of SessionModel)
         LoadData()
     End Sub
@@ -43,7 +43,7 @@ Public Class LicenseSettingsViewModel
 
 
     Public Function Save() As Boolean
-        Dim TestSettings As New SettingCloudManagerDatabaseModel With {
+        Dim TestSettings As New CompanySystemCloudModel With {
             .ProjectID = CloudName,
             .JsonCredentials = CloudCredentials
         }
@@ -65,7 +65,7 @@ Public Class LicenseSettingsViewModel
             Return False
         End If
     End Function
-    Private Async Function CloudPass(Cloud As SettingCloudManagerDatabaseModel) As Task(Of CloudTestResultModel)
+    Private Async Function CloudPass(Cloud As CompanySystemCloudModel) As Task(Of CloudTestResultModel)
         Dim Database As RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Manager)
         Dim Result As New CloudTestResultModel
         Try

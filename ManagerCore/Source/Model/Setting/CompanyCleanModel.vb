@@ -1,3 +1,3 @@
-﻿Public Class SettingCleanModel
+﻿Public Class CompanyCleanModel
     Public Property Interval As Integer
 End Class

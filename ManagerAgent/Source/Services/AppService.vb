@@ -1,29 +1,30 @@
-﻿Imports System.Text
-Imports ControlLibrary
+﻿Imports ControlLibrary
 Imports ManagerCore
 
 Public Class AppService
-    Private _SettingService As SettingService
+    Private _CompanyService As CompanyService
 
-    Public Sub New(SettingService As SettingService)
-        _SettingService = SettingService
+    Public Sub New(CompanyService As CompanyService)
+        _CompanyService = CompanyService
     End Sub
 
     Public Function ValidateBackup() As List(Of String)
-        Dim BackupSettings As SettingBackupModel = _SettingService.GetSettings().Backup
+        Dim Companies As List(Of CompanyModel) = Locator.GetInstance(Of SessionModel).Companies
         Dim Validations As New List(Of String)
-        If String.IsNullOrEmpty(BackupSettings.Location) Then
-            Validations.Add($"O diretório de backup não foi definido;")
-        Else
-            If Not IO.Directory.Exists(BackupSettings.Location) Then
-                Validations.Add("O direrório de backup informado não existe;")
+        For Each Company In Companies
+            If String.IsNullOrEmpty(Company.Backup.Location) Then
+                Validations.Add($"O diretório de backup da empresa {Company.Register.ShortName} não foi definido;")
+            Else
+                If Not IO.Directory.Exists(Company.Backup.Location) Then
+                    Validations.Add($"O direrório de backup da empresa {Company.Register.ShortName} não existe;")
+                End If
             End If
-        End If
+        Next Company
         Return Validations
     End Function
 
     Public Async Function ValidateManagerCloudDB() As Task(Of List(Of String))
-        Dim CloudDbSettings As SettingCloudManagerDatabaseModel = _SettingService.GetSettings().Cloud.ManagerDB
+        Dim CloudDbSettings As CompanySystemCloudModel = _CompanyService.Load().Cloud.ManagerDB
         Dim ManagerValidations As New List(Of String)
         Dim Validations As New List(Of String)
         If String.IsNullOrEmpty(CloudDbSettings.ProjectID) Then ManagerValidations.Add($"O nome do banco de dados cloud do Gerenciador não foi definido;")
@@ -38,7 +39,7 @@ Public Class AppService
         Return Validations
     End Function
     Public Async Function ValidateCustomerCloudDB() As Task(Of List(Of String))
-        Dim CloudDbSettings As SettingCloudManagerDatabaseModel = _SettingService.GetSettings().Cloud.CustomerDB
+        Dim CloudDbSettings As CompanySystemCloudModel = _CompanyService.Load().Cloud.CustomerDB
         Dim CustomerValidations As New List(Of String)
         Dim Validations As New List(Of String)
         If String.IsNullOrEmpty(CloudDbSettings.ProjectID) Then CustomerValidations.Add($"O nome do banco de dados cloud do cliente não foi definido;")
@@ -53,7 +54,7 @@ Public Class AppService
         Return Validations
     End Function
     Public Async Function ValidateStorage() As Task(Of List(Of String))
-        Dim StorageSettings As SettingCloudStorageModel = _SettingService.GetSettings().Cloud.Storage
+        Dim StorageSettings As SettingCloudStorageModel = _CompanyService.Load().Cloud.Storage
         Dim Validations As New List(Of String)
         If String.IsNullOrEmpty(StorageSettings.BucketName) Then Validations.Add($"O nome do armazenamento não foi definido;")
         If String.IsNullOrEmpty(StorageSettings.JsonCredentials) Then Validations.Add("As credenciais do armazenamento não foram definidos;")
@@ -66,7 +67,7 @@ Public Class AppService
         Return Validations
     End Function
     Public Async Function ValidateLocalDB() As Task(Of List(Of String))
-        Dim DbSettings As SettingDatabaseModel = _SettingService.GetSettings().Database
+        Dim DbSettings As CompanyDatabaseModel = _CompanyService.Load().Database
         Dim Validations As New List(Of String)
         If String.IsNullOrEmpty(DbSettings.Name) Then Validations.Add($"O nome do banco de dados não foi definido;")
         If String.IsNullOrEmpty(DbSettings.Server) Then Validations.Add("O servidor do banco de dados não foi definido;")

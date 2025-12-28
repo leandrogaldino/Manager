@@ -1,4 +1,4 @@
-﻿Public Class SettingCompanyAddressModel
+﻿Public Class CompanyAddressModel
     Public Property ZipCode As String
     Public Property Street As String
     Public Property Number As String

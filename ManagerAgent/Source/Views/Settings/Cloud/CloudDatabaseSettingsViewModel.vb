@@ -5,7 +5,7 @@ Imports System.Runtime.CompilerServices
 
 Public Class CloudDatabaseSettingsViewModel
     Implements INotifyPropertyChanged
-    Private ReadOnly _SettingService As SettingService
+    Private ReadOnly _SettingService As ManagerCore.CompanyService
     Private ReadOnly _SessionModel As SessionModel
     Private _CloudName As String
     Private _CloudCredentials As String
@@ -13,7 +13,7 @@ Public Class CloudDatabaseSettingsViewModel
     Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
 
     Public Sub New()
-        _SettingService = Locator.GetInstance(Of SettingService)
+        _SettingService = Locator.GetInstance(Of ManagerCore.CompanyService)
         _SessionModel = Locator.GetInstance(Of SessionModel)
         LoadData()
     End Sub
@@ -55,7 +55,7 @@ Public Class CloudDatabaseSettingsViewModel
     End Sub
 
     Public Function Save() As Boolean
-        Dim TestSettings As New SettingCloudCustomerDatabaseModel With {
+        Dim TestSettings As New CompanyCustomerCloudModel With {
             .ProjectID = CloudName,
             .JsonCredentials = CloudCredentials,
             .SyncInterval = SyncInterval
@@ -78,7 +78,7 @@ Public Class CloudDatabaseSettingsViewModel
             Return False
         End If
     End Function
-    Private Async Function CloudPass(Cloud As SettingCloudCustomerDatabaseModel) As Task(Of CloudTestResultModel)
+    Private Async Function CloudPass(Cloud As CompanyCustomerCloudModel) As Task(Of CloudTestResultModel)
         Dim Database As RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
         Dim Result As New CloudTestResultModel
         Try

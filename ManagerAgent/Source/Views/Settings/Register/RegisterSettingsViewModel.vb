@@ -7,10 +7,10 @@ Imports ManagerCore
 Public Class RegisterSettingsViewModel
     Implements INotifyPropertyChanged
     Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
-    Private ReadOnly _SettingService As SettingService
+    Private ReadOnly _SettingService As ManagerCore.CompanyService
     Private ReadOnly _SessionModel As SessionModel
     Public Sub New()
-        _SettingService = Locator.GetInstance(Of SettingService)
+        _SettingService = Locator.GetInstance(Of ManagerCore.CompanyService)
         _SessionModel = Locator.GetInstance(Of SessionModel)
         LoadData()
     End Sub
@@ -229,27 +229,27 @@ Public Class RegisterSettingsViewModel
         RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
     End Sub
     Private Sub LoadData()
-        Name = _SessionModel.ManagerSetting.Company.Name
-        ShortName = _SessionModel.ManagerSetting.Company.ShortName
-        Document = _SessionModel.ManagerSetting.Company.Document
-        StateDocument = _SessionModel.ManagerSetting.Company.StateDocument
-        CityDocument = _SessionModel.ManagerSetting.Company.CityDocument
-        ZipCode = _SessionModel.ManagerSetting.Company.Address.ZipCode
-        Street = _SessionModel.ManagerSetting.Company.Address.Street
-        Number = _SessionModel.ManagerSetting.Company.Address.Number
-        Complement = _SessionModel.ManagerSetting.Company.Address.Complement
-        District = _SessionModel.ManagerSetting.Company.Address.District
-        City = _SessionModel.ManagerSetting.Company.Address.City
-        State = _SessionModel.ManagerSetting.Company.Address.State
-        Phone1 = _SessionModel.ManagerSetting.Company.Contact.Phone1
-        Phone2 = _SessionModel.ManagerSetting.Company.Contact.Phone2
-        CellPhone = _SessionModel.ManagerSetting.Company.Contact.CellPhone
-        Email = _SessionModel.ManagerSetting.Company.Contact.Email
-        Facebook = _SessionModel.ManagerSetting.Company.Contact.Facebook
-        Instagram = _SessionModel.ManagerSetting.Company.Contact.Instagram
-        Linkedin = _SessionModel.ManagerSetting.Company.Contact.Linkedin
-        Site = _SessionModel.ManagerSetting.Company.Contact.Site
-        LogoLocation = _SessionModel.ManagerSetting.Company.LogoLocation
+        Name = _SessionModel.ManagerSetting.Register.Name
+        ShortName = _SessionModel.ManagerSetting.Register.ShortName
+        Document = _SessionModel.ManagerSetting.Register.Document
+        StateDocument = _SessionModel.ManagerSetting.Register.StateDocument
+        CityDocument = _SessionModel.ManagerSetting.Register.CityDocument
+        ZipCode = _SessionModel.ManagerSetting.Register.Address.ZipCode
+        Street = _SessionModel.ManagerSetting.Register.Address.Street
+        Number = _SessionModel.ManagerSetting.Register.Address.Number
+        Complement = _SessionModel.ManagerSetting.Register.Address.Complement
+        District = _SessionModel.ManagerSetting.Register.Address.District
+        City = _SessionModel.ManagerSetting.Register.Address.City
+        State = _SessionModel.ManagerSetting.Register.Address.State
+        Phone1 = _SessionModel.ManagerSetting.Register.Contact.Phone1
+        Phone2 = _SessionModel.ManagerSetting.Register.Contact.Phone2
+        CellPhone = _SessionModel.ManagerSetting.Register.Contact.CellPhone
+        Email = _SessionModel.ManagerSetting.Register.Contact.Email
+        Facebook = _SessionModel.ManagerSetting.Register.Contact.Facebook
+        Instagram = _SessionModel.ManagerSetting.Register.Contact.Instagram
+        Linkedin = _SessionModel.ManagerSetting.Register.Contact.Linkedin
+        Site = _SessionModel.ManagerSetting.Register.Contact.Site
+        LogoLocation = _SessionModel.ManagerSetting.Register.LogoLocation
     End Sub
     Public Function Save() As Boolean
 
@@ -259,30 +259,30 @@ Public Class RegisterSettingsViewModel
         Next f
 
         If Not String.IsNullOrEmpty(LogoLocation) Then
-            _SessionModel.ManagerSetting.Company.LogoLocation = Path.Combine(ApplicationPaths.LogoDirectory, Now.ToString("ddMMyyyyHHmmss") & UCase(Path.GetRandomFileName().Replace(".", Nothing)) & New FileInfo(LogoLocation).Extension)
-            File.Copy(LogoLocation, _SessionModel.ManagerSetting.Company.LogoLocation, True)
+            _SessionModel.ManagerSetting.Register.LogoLocation = Path.Combine(ApplicationPaths.LogoDirectory, Now.ToString("ddMMyyyyHHmmss") & UCase(Path.GetRandomFileName().Replace(".", Nothing)) & New FileInfo(LogoLocation).Extension)
+            File.Copy(LogoLocation, _SessionModel.ManagerSetting.Register.LogoLocation, True)
         End If
 
-        _SessionModel.ManagerSetting.Company.Name = Name
-        _SessionModel.ManagerSetting.Company.ShortName = ShortName
-        _SessionModel.ManagerSetting.Company.Document = Document
-        _SessionModel.ManagerSetting.Company.StateDocument = StateDocument
-        _SessionModel.ManagerSetting.Company.CityDocument = CityDocument
-        _SessionModel.ManagerSetting.Company.Address.ZipCode = ZipCode
-        _SessionModel.ManagerSetting.Company.Address.Street = Street
-        _SessionModel.ManagerSetting.Company.Address.Number = Number
-        _SessionModel.ManagerSetting.Company.Address.Complement = Complement
-        _SessionModel.ManagerSetting.Company.Address.District = District
-        _SessionModel.ManagerSetting.Company.Address.City = City
-        _SessionModel.ManagerSetting.Company.Address.State = State
-        _SessionModel.ManagerSetting.Company.Contact.Phone1 = Phone1
-        _SessionModel.ManagerSetting.Company.Contact.Phone2 = Phone2
-        _SessionModel.ManagerSetting.Company.Contact.CellPhone = CellPhone
-        _SessionModel.ManagerSetting.Company.Contact.Email = Email
-        _SessionModel.ManagerSetting.Company.Contact.Facebook = Facebook
-        _SessionModel.ManagerSetting.Company.Contact.Instagram = Instagram
-        _SessionModel.ManagerSetting.Company.Contact.Linkedin = Linkedin
-        _SessionModel.ManagerSetting.Company.Contact.Site = Site
+        _SessionModel.ManagerSetting.Register.Name = Name
+        _SessionModel.ManagerSetting.Register.ShortName = ShortName
+        _SessionModel.ManagerSetting.Register.Document = Document
+        _SessionModel.ManagerSetting.Register.StateDocument = StateDocument
+        _SessionModel.ManagerSetting.Register.CityDocument = CityDocument
+        _SessionModel.ManagerSetting.Register.Address.ZipCode = ZipCode
+        _SessionModel.ManagerSetting.Register.Address.Street = Street
+        _SessionModel.ManagerSetting.Register.Address.Number = Number
+        _SessionModel.ManagerSetting.Register.Address.Complement = Complement
+        _SessionModel.ManagerSetting.Register.Address.District = District
+        _SessionModel.ManagerSetting.Register.Address.City = City
+        _SessionModel.ManagerSetting.Register.Address.State = State
+        _SessionModel.ManagerSetting.Register.Contact.Phone1 = Phone1
+        _SessionModel.ManagerSetting.Register.Contact.Phone2 = Phone2
+        _SessionModel.ManagerSetting.Register.Contact.CellPhone = CellPhone
+        _SessionModel.ManagerSetting.Register.Contact.Email = Email
+        _SessionModel.ManagerSetting.Register.Contact.Facebook = Facebook
+        _SessionModel.ManagerSetting.Register.Contact.Instagram = Instagram
+        _SessionModel.ManagerSetting.Register.Contact.Linkedin = Linkedin
+        _SessionModel.ManagerSetting.Register.Contact.Site = Site
         _SettingService.Save(_SessionModel.ManagerSetting)
         Return True
     End Function

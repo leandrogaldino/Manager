@@ -3,7 +3,7 @@
 Public Class TaskCloudSyncManual
     Inherits TaskCloudSync
 
-    Public Sub New(LocalDatabaseService As LocalDB, RemoteDatabaseService As RemoteDB, SettingsService As SettingService, SessionModel As SessionModel)
+    Public Sub New(LocalDatabaseService As LocalDB, RemoteDatabaseService As RemoteDB, SettingsService As ManagerCore.CompanyService, SessionModel As SessionModel)
         MyBase.New(LocalDatabaseService, RemoteDatabaseService, SettingsService, SessionModel)
     End Sub
     Private _NextRun As Date = Nothing

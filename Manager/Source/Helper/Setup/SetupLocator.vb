@@ -4,7 +4,7 @@ Imports ManagerCore
 Public Class SetupLocator
     Public Shared Sub Setup()
         Locator.RegisterSingleton(New CryptoKeyService)
-        Locator.RegisterSingleton(New SettingService(Locator.GetInstance(Of CryptoKeyService)))
+        Locator.RegisterSingleton(New CompanyService(Locator.GetInstance(Of CryptoKeyService)))
         Locator.RegisterSingleton(New Session())
         Locator.RegisterSingleton(Of LocalDB)(New MySqlService)
         Locator.RegisterSingleton(Of RemoteDB)(New FirestoreService(), CloudDatabaseType.Customer)

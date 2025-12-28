@@ -11,7 +11,7 @@ Public Class StorageService
 
 
 
-    Public Overrides Sub Initialize(Settings As SettingCloudStorageModel)
+    Public Overrides Sub Initialize(Settings As CompanyCustomerCloudModel)
         _BucketName = Settings.BucketName
         _JsonCredentials = Settings.JsonCredentials
     End Sub

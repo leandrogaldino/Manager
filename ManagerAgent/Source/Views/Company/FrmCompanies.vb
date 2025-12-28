@@ -93,9 +93,18 @@
 
     End Sub
 
+    Private Sub RefreshCompanies()
+        Throw New NotImplementedException
+    End Sub
 
+    Private Sub RegisterCompany_Click(sender As Object, e As EventArgs) Handles RegisterCompany.Click
+        Using Form As New FrmCompany(New CompanyModel())
+            Form.ShowDialog()
+        End Using
+        RefreshCompanies()
+    End Sub
 
-    Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
+    Private Sub EditCompany_Click(sender As Object, e As EventArgs) Handles EditCompany.Click
         Dim SelectedTile = FlpPrivilege.Controls.OfType(Of UcCompanyTile).ToList().First(Function(x) x.IsSelected)
         SelectedTile.OnClickAction?.Invoke(SelectedTile.Company)
     End Sub

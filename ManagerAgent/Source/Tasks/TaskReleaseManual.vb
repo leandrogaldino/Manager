@@ -3,7 +3,7 @@
 Public Class TaskReleaseManual
     Inherits TaskRelease
 
-    Public Sub New(DatabaseService As LocalDB, SettingsService As SettingService, SessionModel As SessionModel)
+    Public Sub New(DatabaseService As LocalDB, SettingsService As ManagerCore.CompanyService, SessionModel As SessionModel)
         MyBase.New(DatabaseService, SettingsService, SessionModel)
     End Sub
     Private _NextRun As Date = Nothing

@@ -1,5 +1,5 @@
 ﻿
-Public Class SettingDatabaseModel
+Public Class CompanyDatabaseModel
     Public Property Server As String
     Public Property Name As String
     Public Property Username As String

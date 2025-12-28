@@ -7,10 +7,12 @@ Public Class SetupApp
         CMessageBox.ShowEmailErrorButton = False
     End Sub
     Public Shared Sub SetupData()
-        Dim SessionModel As SessionModel = Locator.GetInstance(Of SessionModel)
-        Locator.GetInstance(Of LocalDB)().Initialize(SessionModel.ManagerSetting.Database)
-        Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Manager).Initialize(SessionModel.ManagerSetting.Cloud.ManagerDB)
-        Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer).Initialize(SessionModel.ManagerSetting.Cloud.CustomerDB)
-        Locator.GetInstance(Of Storage)().Initialize(SessionModel.ManagerSetting.Cloud.Storage)
+        Dim Session As SessionModel = Locator.GetInstance(Of SessionModel)
+        For Each Company In Session.Companies
+            Locator.GetInstance(Of LocalDB)().Initialize(Company.Database)
+            Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Manager).Initialize(Company.Cloud.System)
+            Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer).Initialize(Company.Cloud.Customer)
+            Locator.GetInstance(Of Storage)().Initialize(Company.Cloud.Customer)
+        Next Company
     End Sub
 End Class

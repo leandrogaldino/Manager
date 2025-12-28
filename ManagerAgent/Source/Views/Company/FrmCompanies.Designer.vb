@@ -25,9 +25,9 @@ Partial Class FrmCompanies
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmCompanies))
         Me.FlpPrivilege = New System.Windows.Forms.FlowLayoutPanel()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
-        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
+        Me.RegisterCompany = New System.Windows.Forms.ToolStripButton()
+        Me.EditCompany = New System.Windows.Forms.ToolStripButton()
+        Me.DisableCompany = New System.Windows.Forms.ToolStripButton()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -42,36 +42,36 @@ Partial Class FrmCompanies
         'ToolStrip1
         '
         Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton3, Me.ToolStripButton2, Me.ToolStripButton1})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RegisterCompany, Me.EditCompany, Me.DisableCompany})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Size = New System.Drawing.Size(553, 25)
         Me.ToolStrip1.TabIndex = 4
         Me.ToolStrip1.Text = "ToolStrip1"
         '
-        'ToolStripButton1
+        'RegisterCompany
         '
-        Me.ToolStripButton1.Image = CType(resources.GetObject("ToolStripButton1.Image"), System.Drawing.Image)
-        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton1.Name = "ToolStripButton1"
-        Me.ToolStripButton1.Size = New System.Drawing.Size(75, 22)
-        Me.ToolStripButton1.Text = "Desativar"
+        Me.RegisterCompany.Image = CType(resources.GetObject("RegisterCompany.Image"), System.Drawing.Image)
+        Me.RegisterCompany.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.RegisterCompany.Name = "RegisterCompany"
+        Me.RegisterCompany.Size = New System.Drawing.Size(73, 22)
+        Me.RegisterCompany.Text = "Registrar"
         '
-        'ToolStripButton2
+        'EditCompany
         '
-        Me.ToolStripButton2.Image = CType(resources.GetObject("ToolStripButton2.Image"), System.Drawing.Image)
-        Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton2.Name = "ToolStripButton2"
-        Me.ToolStripButton2.Size = New System.Drawing.Size(57, 22)
-        Me.ToolStripButton2.Text = "Editar"
+        Me.EditCompany.Image = CType(resources.GetObject("EditCompany.Image"), System.Drawing.Image)
+        Me.EditCompany.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.EditCompany.Name = "EditCompany"
+        Me.EditCompany.Size = New System.Drawing.Size(57, 22)
+        Me.EditCompany.Text = "Editar"
         '
-        'ToolStripButton3
+        'DisableCompany
         '
-        Me.ToolStripButton3.Image = CType(resources.GetObject("ToolStripButton3.Image"), System.Drawing.Image)
-        Me.ToolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton3.Name = "ToolStripButton3"
-        Me.ToolStripButton3.Size = New System.Drawing.Size(73, 22)
-        Me.ToolStripButton3.Text = "Registrar"
+        Me.DisableCompany.Image = CType(resources.GetObject("DisableCompany.Image"), System.Drawing.Image)
+        Me.DisableCompany.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.DisableCompany.Name = "DisableCompany"
+        Me.DisableCompany.Size = New System.Drawing.Size(75, 22)
+        Me.DisableCompany.Text = "Desativar"
         '
         'FrmCompanies
         '
@@ -96,7 +96,7 @@ Partial Class FrmCompanies
 
     Friend WithEvents FlpPrivilege As FlowLayoutPanel
     Friend WithEvents ToolStrip1 As ToolStrip
-    Friend WithEvents ToolStripButton3 As ToolStripButton
-    Friend WithEvents ToolStripButton2 As ToolStripButton
-    Friend WithEvents ToolStripButton1 As ToolStripButton
+    Friend WithEvents RegisterCompany As ToolStripButton
+    Friend WithEvents EditCompany As ToolStripButton
+    Friend WithEvents DisableCompany As ToolStripButton
 End Class

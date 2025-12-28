@@ -51,7 +51,11 @@ Public Class ApplicationPaths
             Return Path.Combine(FilesDirectory, "Config")
         End Get
     End Property
-
+    Public Shared ReadOnly Property CompanyDirectory As String
+        Get
+            Return Path.Combine(ConfigDirectory, "Company")
+        End Get
+    End Property
     Public Shared ReadOnly Property CryptoKeyFile As String
         Get
             Return Path.Combine(ConfigDirectory, ".CryptoKey")
@@ -60,11 +64,6 @@ Public Class ApplicationPaths
     Public Shared ReadOnly Property LicenseFile As String
         Get
             Return Path.Combine(ConfigDirectory, ".License")
-        End Get
-    End Property
-    Public Shared ReadOnly Property SettingFile As String
-        Get
-            Return Path.Combine(ConfigDirectory, ".Setting")
         End Get
     End Property
     Public Shared ReadOnly Property DeployDirectory As String

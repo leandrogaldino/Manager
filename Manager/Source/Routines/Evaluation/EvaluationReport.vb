@@ -34,7 +34,7 @@ Public Class EvaluationReport
             AddText("Nº ").SetBold(True).SetFontSize(14).
             AddText(ReportingEvaluation.Reference).SetFontSize(12)
         WsReport.Range(1, 7, 1, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
-        Dim LogoLocation As String = Path.Combine(ApplicationPaths.LogoDirectory, Path.GetFileName(Session.Setting.Company.LogoLocation))
+        Dim LogoLocation As String = Path.Combine(ApplicationPaths.LogoDirectory, Path.GetFileName(Session.Setting.Register.LogoLocation))
         If File.Exists(LogoLocation) Then
             Using Stream As New MemoryStream(File.ReadAllBytes(LogoLocation))
                 Logo = WsReport.AddPicture(Stream)
@@ -274,23 +274,23 @@ Public Class EvaluationReport
         WsReport.Range(Row, 1, Row, 7).Merge()
         WsReport.Range(Row, 1, Row, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
         Address = String.Empty
-        If Not String.IsNullOrEmpty(Session.Setting.Company.Address.Street) Then Address &= Session.Setting.Company.Address.Street
-        If Not String.IsNullOrEmpty(Session.Setting.Company.Address.Complement) Then Address &= $" {Session.Setting.Company.Address.Complement}"
-        If Not String.IsNullOrEmpty(Session.Setting.Company.Address.Number) Then Address &= $" Nº {Session.Setting.Company.Address.Number}"
-        If Not String.IsNullOrEmpty(Session.Setting.Company.Address.District) Then Address &= $" {Session.Setting.Company.Address.District}"
+        If Not String.IsNullOrEmpty(Session.Setting.Register.Address.Street) Then Address &= Session.Setting.Register.Address.Street
+        If Not String.IsNullOrEmpty(Session.Setting.Register.Address.Complement) Then Address &= $" {Session.Setting.Register.Address.Complement}"
+        If Not String.IsNullOrEmpty(Session.Setting.Register.Address.Number) Then Address &= $" Nº {Session.Setting.Register.Address.Number}"
+        If Not String.IsNullOrEmpty(Session.Setting.Register.Address.District) Then Address &= $" {Session.Setting.Register.Address.District}"
         Address &= ", "
-        If Not String.IsNullOrEmpty(Session.Setting.Company.Address.City) Then Address &= $" {Session.Setting.Company.Address.City}"
-        If Not String.IsNullOrEmpty(Session.Setting.Company.Address.State) Then Address &= $"/{Session.Setting.Company.Address.State}"
+        If Not String.IsNullOrEmpty(Session.Setting.Register.Address.City) Then Address &= $" {Session.Setting.Register.Address.City}"
+        If Not String.IsNullOrEmpty(Session.Setting.Register.Address.State) Then Address &= $"/{Session.Setting.Register.Address.State}"
         Phones = String.Empty
-        If Not String.IsNullOrEmpty(Session.Setting.Company.Contact.Phone1) Then Phones &= Session.Setting.Company.Contact.Phone1
-        If Not String.IsNullOrEmpty(Session.Setting.Company.Contact.Phone2) Then Phones &= $" | {Session.Setting.Company.Contact.Phone2}"
-        If Not String.IsNullOrEmpty(Session.Setting.Company.Contact.CellPhone) Then Phones &= $" | {Session.Setting.Company.Contact.CellPhone}"
+        If Not String.IsNullOrEmpty(Session.Setting.Register.Contact.Phone1) Then Phones &= Session.Setting.Register.Contact.Phone1
+        If Not String.IsNullOrEmpty(Session.Setting.Register.Contact.Phone2) Then Phones &= $" | {Session.Setting.Register.Contact.Phone2}"
+        If Not String.IsNullOrEmpty(Session.Setting.Register.Contact.CellPhone) Then Phones &= $" | {Session.Setting.Register.Contact.CellPhone}"
         WsReport.Cell(Row, 1).SetValue($"{Address}{If(Not String.IsNullOrWhiteSpace(Phones), $" - {Phones}", String.Empty)}")
         WsReport.Range(Row, 1, Row, 7).Style.Alignment.SetShrinkToFit(True)
         Row += 1
         WsReport.Range(Row, 1, Row, 7).Merge()
         WsReport.Range(Row, 1, Row, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
-        WsReport.Cell(Row, 1).SetValue($"{Session.Setting.Company.Contact.Email}{If(Not String.IsNullOrEmpty(Session.Setting.Company.Contact.Site), $" - {Session.Setting.Company.Contact.Site}", String.Empty)}")
+        WsReport.Cell(Row, 1).SetValue($"{Session.Setting.Register.Contact.Email}{If(Not String.IsNullOrEmpty(Session.Setting.Register.Contact.Site), $" - {Session.Setting.Register.Contact.Site}", String.Empty)}")
         WsReport.PageSetup.SetPagesWide(1)
         WsReport.PageSetup.SetPagesTall(False)
         WsReport.PageSetup.SetCenterHorizontally(True)

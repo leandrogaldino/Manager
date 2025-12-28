@@ -8,9 +8,9 @@ Public Class TaskCloudSync
     Inherits TaskBase
     Private ReadOnly _LocalDB As LocalDB
     Private ReadOnly _RemoteDB As RemoteDB
-    Private ReadOnly _SettingsService As SettingService
+    Private ReadOnly _SettingsService As ManagerCore.CompanyService
     Private ReadOnly _SessionModel As SessionModel
-    Public Sub New(LocalDB As LocalDB, RemoteDB As RemoteDB, SettingsService As SettingService, SessionModel As SessionModel)
+    Public Sub New(LocalDB As LocalDB, RemoteDB As RemoteDB, SettingsService As ManagerCore.CompanyService, SessionModel As SessionModel)
         _LocalDB = LocalDB
         _RemoteDB = RemoteDB
         _SettingsService = SettingsService

@@ -1,4 +1,4 @@
-﻿Public Class SettingCompanyContactModel
+﻿Public Class CompanyContactModel
     Public Property Phone1 As String
     Public Property Phone2 As String
     Public Property CellPhone As String

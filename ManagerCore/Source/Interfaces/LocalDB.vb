@@ -1,6 +1,6 @@
 ﻿Imports System.Data.Common
 Public MustInherit Class LocalDB
-    MustOverride Sub Initialize(DatabaseSettings As SettingDatabaseModel)
+    MustOverride Sub Initialize(DatabaseSettings As CompanyDatabaseModel)
     MustOverride Function GetConnection() As DbConnection
     MustOverride Async Function ExecuteRawQueryAsync(Query As String, Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As Task(Of QueryResult)
     MustOverride Function ExecuteRawQuery(Query As String, Optional QueryArgs As Dictionary(Of String, Object) = Nothing) As QueryResult

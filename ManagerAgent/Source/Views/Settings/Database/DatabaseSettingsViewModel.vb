@@ -6,7 +6,7 @@ Imports ManagerCore
 Public Class DatabaseSettingsViewModel
     Implements INotifyPropertyChanged
     Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
-    Private ReadOnly _SettingService As SettingService
+    Private ReadOnly _SettingService As ManagerCore.CompanyService
     Private ReadOnly _SessionModel As SessionModel
     Private _Key As String
     Private _Server As String
@@ -15,7 +15,7 @@ Public Class DatabaseSettingsViewModel
     Private _Password As String
 
     Public Sub New()
-        _SettingService = Locator.GetInstance(Of SettingService)
+        _SettingService = Locator.GetInstance(Of ManagerCore.CompanyService)
         _SessionModel = Locator.GetInstance(Of SessionModel)
         LoadData()
     End Sub
@@ -93,7 +93,7 @@ Public Class DatabaseSettingsViewModel
         End If
         Return True
     End Function
-    Private Async Function DatabasePass(DatabaseSettings As SettingDatabaseModel) As Task(Of Boolean)
+    Private Async Function DatabasePass(DatabaseSettings As CompanyDatabaseModel) As Task(Of Boolean)
         Dim Pass As Boolean
         Dim Database As LocalDB = Locator.GetInstance(Of LocalDB)
         Database.Initialize(DatabaseSettings)

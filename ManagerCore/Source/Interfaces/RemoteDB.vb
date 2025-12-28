@@ -5,7 +5,7 @@ Public MustInherit Class RemoteDB
     Protected Sub RaiseOnFirestoreChanged(Args As FirestoreChangeEventArgs)
         RaiseEvent OnFirestoreChanged(Args)
     End Sub
-    MustOverride Async Function Initialize(Settings As SettingCloudManagerDatabaseModel) As Task
+    MustOverride Async Function Initialize(Settings As CompanySystemCloudModel) As Task
     MustOverride Async Function TestConnection() As Task
     MustOverride Async Function ExecuteGet(Collection As String, Optional Args As List(Of Condition) = Nothing) As Task(Of List(Of Dictionary(Of String, Object)))
     MustOverride Async Function ExecuteDelete(Collection As String, Optional Args As List(Of Condition) = Nothing) As Task(Of Integer)

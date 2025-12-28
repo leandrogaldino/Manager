@@ -9,7 +9,7 @@ Public Class BackupSettingsViewModel
 
     Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
 
-    Private ReadOnly _SettingService As SettingService
+    Private ReadOnly _SettingService As ManagerCore.CompanyService
     Private ReadOnly _SessionModel As SessionModel
 
     Private _Monday As Boolean
@@ -25,7 +25,7 @@ Public Class BackupSettingsViewModel
     Private _Location As String
 
     Public Sub New()
-        _SettingService = Locator.GetInstance(Of SettingService)
+        _SettingService = Locator.GetInstance(Of ManagerCore.CompanyService)
         _SessionModel = Locator.GetInstance(Of SessionModel)
         LoadData()
     End Sub

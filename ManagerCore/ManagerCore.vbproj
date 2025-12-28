@@ -245,24 +245,23 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Source\Model\Setting\SettingCleanModel.vb" />
-    <Compile Include="Source\Model\Setting\SettingCloudCustomerDatabaseModel.vb" />
-    <Compile Include="Source\Model\Setting\SettingCloudModel.vb" />
-    <Compile Include="Source\Model\Setting\SettingCloudStorageModel.vb" />
-    <Compile Include="Source\Model\Setting\SettingCloudManagerDatabaseModel.vb" />
-    <Compile Include="Source\Model\Setting\SettingLastExecutionDates.vb" />
-    <Compile Include="Source\Model\Setting\SettingModel.vb" />
-    <Compile Include="Source\Model\Setting\SettingBackupModel.vb" />
-    <Compile Include="Source\Model\Setting\SettingCompanyModel.vb" />
-    <Compile Include="Source\Model\Setting\SettingCompanyAddressModel.vb" />
-    <Compile Include="Source\Model\Setting\SettingCompanyContactModel.vb" />
-    <Compile Include="Source\Model\Setting\SettingDatabaseModel.vb" />
-    <Compile Include="Source\Model\Setting\SettingEvaluationModel.vb" />
-    <Compile Include="Source\Model\Setting\SettingGeneralModel.vb" />
-    <Compile Include="Source\Model\Setting\SettingReleaseModel.vb" />
-    <Compile Include="Source\Services\SettingService.vb" />
-    <Compile Include="Source\Model\Setting\SettingSupportModel.vb" />
-    <Compile Include="Source\Model\Setting\SettingUserModel.vb" />
+    <Compile Include="Source\Model\Setting\CompanyCleanModel.vb" />
+    <Compile Include="Source\Model\Setting\CompanyCustomerCloudModel.vb" />
+    <Compile Include="Source\Model\Setting\CompanyCloudModel.vb" />
+    <Compile Include="Source\Model\Setting\CompanySystemCloudModel.vb" />
+    <Compile Include="Source\Model\Setting\CompanyLastExecutionDates.vb" />
+    <Compile Include="Source\Model\Setting\CompanyModel.vb" />
+    <Compile Include="Source\Model\Setting\CompanyBackupModel.vb" />
+    <Compile Include="Source\Model\Setting\CompanyRegisterModel.vb" />
+    <Compile Include="Source\Model\Setting\CompanyAddressModel.vb" />
+    <Compile Include="Source\Model\Setting\CompanyContactModel.vb" />
+    <Compile Include="Source\Model\Setting\CompanyDatabaseModel.vb" />
+    <Compile Include="Source\Model\Setting\CompanyEvaluationModel.vb" />
+    <Compile Include="Source\Model\Setting\CompanyGeneralModel.vb" />
+    <Compile Include="Source\Model\Setting\CompanyReleaseModel.vb" />
+    <Compile Include="Source\Services\CompanyService.vb" />
+    <Compile Include="Source\Model\Setting\CompanySupportModel.vb" />
+    <Compile Include="Source\Model\Setting\CompanyUserModel.vb" />
     <Compile Include="Source\Interfaces\LocalDB.vb" />
     <Compile Include="Source\Interfaces\RemoteDB.vb" />
     <Compile Include="Source\Interfaces\Storage.vb" />

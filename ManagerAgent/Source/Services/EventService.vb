@@ -3,7 +3,6 @@ Imports System.IO
 Imports System.Text
 Imports System.Threading
 Imports ControlLibrary
-Imports Google.Protobuf.Reflection
 Imports ManagerCore
 Imports Newtonsoft.Json
 Public Class EventService

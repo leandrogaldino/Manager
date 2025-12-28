@@ -62,8 +62,8 @@ Public Class CashReport
             WsReport.Columns(2).Width = 50
             WsReport.Columns(3).Width = 15
             WsReport.Columns(4).Width = 15
-            If File.Exists(Session.Setting.Company.LogoLocation) Then
-                Logo = WsReport.AddPicture(New MemoryStream(File.ReadAllBytes(Session.Setting.Company.LogoLocation)))
+            If File.Exists(Session.Setting.Register.LogoLocation) Then
+                Logo = WsReport.AddPicture(New MemoryStream(File.ReadAllBytes(Session.Setting.Register.LogoLocation)))
                 Logo.MoveTo(WsReport.Cell("A1"), New Point(0, 5))
                 Logo.WithSize(156, 57)
             End If
@@ -259,8 +259,8 @@ Public Class CashReport
         End Using
         If TableData.Rows.Count = 0 Then Return Nothing
         WsData.ShowGridLines = False
-        If File.Exists(Session.Setting.Company.LogoLocation) Then
-            Logo = WsData.AddPicture(New MemoryStream(File.ReadAllBytes(Session.Setting.Company.LogoLocation)))
+        If File.Exists(Session.Setting.Register.LogoLocation) Then
+            Logo = WsData.AddPicture(New MemoryStream(File.ReadAllBytes(Session.Setting.Register.LogoLocation)))
             Logo.MoveTo(WsData.Cell("A1"), New Point(0, 5))
             Logo.WithSize(156, 57)
         End If

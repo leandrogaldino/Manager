@@ -43,8 +43,8 @@ Public Class PersonReport
         WsReport.Columns(3, 3).Width = 16
         WsReport.Columns(4, 4).Width = 16
         WsReport.Columns(5, 5).Width = 16
-        If File.Exists(Session.Setting.Company.LogoLocation) Then
-            Using Stream As New MemoryStream(File.ReadAllBytes(Session.Setting.Company.LogoLocation))
+        If File.Exists(Session.Setting.Register.LogoLocation) Then
+            Using Stream As New MemoryStream(File.ReadAllBytes(Session.Setting.Register.LogoLocation))
                 Logo = WsReport.AddPicture(Stream)
                 Logo.MoveTo(WsReport.Cell("A1"), New Point(0, 5))
                 Logo.WithSize(156, 57)
@@ -366,23 +366,23 @@ Public Class PersonReport
         End If
         'DADOS DA EMPRESA
         WsReport.Range(Row, 1, Row, 5).Merge()
-        WsReport.Range(Row, 1, Row, 5).Value = Session.Setting.Company.Name
+        WsReport.Range(Row, 1, Row, 5).Value = Session.Setting.Register.Name
         WsReport.Range(Row, 1, Row, 5).Style.Font.Bold = True
         WsReport.Range(Row, 1, Row, 5).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center
         Row += 1
         WsReport.Rows(Row).Height = 20
         WsReport.Range(Row, 1, Row, 5).Merge()
-        WsReport.Range(Row, 1, Row, 5).Value = Join(New List(Of String)({Session.Setting.Company.Address.Street, "Nº " & Session.Setting.Company.Address.Number, Session.Setting.Company.Address.Complement, Session.Setting.Company.Address.District, Session.Setting.Company.Address.City & "-" & Session.Setting.Company.Address.State}).ToArray, " ")
+        WsReport.Range(Row, 1, Row, 5).Value = Join(New List(Of String)({Session.Setting.Register.Address.Street, "Nº " & Session.Setting.Register.Address.Number, Session.Setting.Register.Address.Complement, Session.Setting.Register.Address.District, Session.Setting.Register.Address.City & "-" & Session.Setting.Register.Address.State}).ToArray, " ")
         WsReport.Range(Row, 1, Row, 5).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center
         Row += 1
         WsReport.Rows(Row).Height = 20
         WsReport.Range(Row, 1, Row, 5).Merge()
-        WsReport.Range(Row, 1, Row, 5).Value = Session.Setting.Company.Document
+        WsReport.Range(Row, 1, Row, 5).Value = Session.Setting.Register.Document
         WsReport.Range(Row, 1, Row, 5).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center
         Row += 1
         WsReport.Rows(Row).Height = 20
         WsReport.Range(Row, 1, Row, 5).Merge()
-        WsReport.Range(Row, 1, Row, 5).Value = Session.Setting.Company.Contact.Phone1
+        WsReport.Range(Row, 1, Row, 5).Value = Session.Setting.Register.Contact.Phone1
         WsReport.Range(Row, 1, Row, 5).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center
         Row += 1
         WsReport.Rows(Row).Height = 10

@@ -7,9 +7,9 @@ Public Class TaskClean
     Inherits TaskBase
 
     Private _DatabaseService As LocalDB
-    Private _SettingsService As SettingService
+    Private _SettingsService As ManagerCore.CompanyService
     Private _SessionModel As SessionModel
-    Public Sub New(DatabaseService As LocalDB, SettingsService As SettingService, SessionModel As SessionModel)
+    Public Sub New(DatabaseService As LocalDB, SettingsService As ManagerCore.CompanyService, SessionModel As SessionModel)
         _DatabaseService = DatabaseService
         _SettingsService = SettingsService
         _SessionModel = SessionModel

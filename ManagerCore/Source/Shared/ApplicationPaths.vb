@@ -15,7 +15,6 @@ Public Class ApplicationPaths
             End If
         Next Prop
         Dim Key As String = New CryptoKeyService().ReadCryptoKey()
-        If Not File.Exists(LicenseFile) Then File.WriteAllText(LicenseFile, Cryptography.Encrypt(My.Resources.License, Key))
         If Not File.Exists(EmailDefaultHtmlFile) Then File.WriteAllText(EmailDefaultHtmlFile, My.Resources.DefaultEmail)
     End Sub
     Public Shared Property AgentDirectory As String

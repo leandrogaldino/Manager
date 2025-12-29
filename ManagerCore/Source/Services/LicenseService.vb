@@ -85,7 +85,7 @@ Public Class LicenseService
         Dim LicenseToken As String = GetLocalLicenseToken()
 
         'Verifica se o arquivo de credenciais da núvem de licença existe
-        If Not File.Exists(ApplicationPaths.LicenseCloudFile) Then
+        If Not File.Exists(ApplicationPaths.LicenseCredentialsFile) Then
             Result.Flag = LicenseMessages.MissingCredentials
             Return Result
         End If

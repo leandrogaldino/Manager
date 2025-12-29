@@ -106,13 +106,6 @@ Partial Class FrmCompany
         Me.Panel4 = New System.Windows.Forms.Panel()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.TxtDatabaseUsername = New System.Windows.Forms.TextBox()
-        Me.TabPage4 = New System.Windows.Forms.TabPage()
-        Me.Panel17 = New System.Windows.Forms.Panel()
-        Me.TxtCredentials = New System.Windows.Forms.TextBox()
-        Me.Label11 = New System.Windows.Forms.Label()
-        Me.Panel21 = New System.Windows.Forms.Panel()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.Label13 = New System.Windows.Forms.Label()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.Panel19 = New System.Windows.Forms.Panel()
         Me.TxtUserDefaultPassword = New System.Windows.Forms.TextBox()
@@ -174,9 +167,6 @@ Partial Class FrmCompany
         Me.Panel10.SuspendLayout()
         Me.Panel9.SuspendLayout()
         Me.Panel4.SuspendLayout()
-        Me.TabPage4.SuspendLayout()
-        Me.Panel17.SuspendLayout()
-        Me.Panel21.SuspendLayout()
         Me.TabPage5.SuspendLayout()
         Me.Panel19.SuspendLayout()
         Me.Panel25.SuspendLayout()
@@ -251,7 +241,6 @@ Partial Class FrmCompany
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
-        Me.TabControl1.Controls.Add(Me.TabPage4)
         Me.TabControl1.Controls.Add(Me.TabPage5)
         Me.TabControl1.Controls.Add(Me.TabPage6)
         Me.TabControl1.Controls.Add(Me.TabPage7)
@@ -758,10 +747,10 @@ Partial Class FrmCompany
         Me.TabPage2.Controls.Add(Me.Panel1)
         Me.TabPage2.Controls.Add(Me.Panel6)
         Me.TabPage2.Controls.Add(Me.Panel5)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 26)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(586, 478)
+        Me.TabPage2.Size = New System.Drawing.Size(586, 474)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Backup"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -958,9 +947,9 @@ Partial Class FrmCompany
         Me.TabPage3.Controls.Add(Me.Panel10)
         Me.TabPage3.Controls.Add(Me.Panel9)
         Me.TabPage3.Controls.Add(Me.Panel4)
-        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 26)
         Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Size = New System.Drawing.Size(586, 478)
+        Me.TabPage3.Size = New System.Drawing.Size(586, 474)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Banco de Dados"
         Me.TabPage3.UseVisualStyleBackColor = True
@@ -1096,82 +1085,6 @@ Partial Class FrmCompany
         Me.TxtDatabaseUsername.TabIndex = 1
         Me.TxtDatabaseUsername.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'TabPage4
-        '
-        Me.TabPage4.Controls.Add(Me.Panel17)
-        Me.TabPage4.Controls.Add(Me.Panel21)
-        Me.TabPage4.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage4.Name = "TabPage4"
-        Me.TabPage4.Size = New System.Drawing.Size(586, 478)
-        Me.TabPage4.TabIndex = 3
-        Me.TabPage4.Text = "Licença"
-        Me.TabPage4.UseVisualStyleBackColor = True
-        '
-        'Panel17
-        '
-        Me.Panel17.BackColor = System.Drawing.Color.White
-        Me.Panel17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel17.Controls.Add(Me.TxtCredentials)
-        Me.Panel17.Controls.Add(Me.Label11)
-        Me.Panel17.Location = New System.Drawing.Point(8, 50)
-        Me.Panel17.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel17.Name = "Panel17"
-        Me.Panel17.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel17.Size = New System.Drawing.Size(450, 155)
-        Me.Panel17.TabIndex = 9
-        '
-        'TxtCredentials
-        '
-        Me.TxtCredentials.Location = New System.Drawing.Point(131, 3)
-        Me.TxtCredentials.Multiline = True
-        Me.TxtCredentials.Name = "TxtCredentials"
-        Me.TxtCredentials.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TxtCredentials.Size = New System.Drawing.Size(314, 147)
-        Me.TxtCredentials.TabIndex = 1
-        '
-        'Label11
-        '
-        Me.Label11.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label11.Location = New System.Drawing.Point(4, 0)
-        Me.Label11.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(120, 153)
-        Me.Label11.TabIndex = 0
-        Me.Label11.Text = "Credenciais"
-        Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Panel21
-        '
-        Me.Panel21.BackColor = System.Drawing.Color.White
-        Me.Panel21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel21.Controls.Add(Me.TextBox1)
-        Me.Panel21.Controls.Add(Me.Label13)
-        Me.Panel21.Location = New System.Drawing.Point(8, 10)
-        Me.Panel21.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel21.Name = "Panel21"
-        Me.Panel21.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel21.Size = New System.Drawing.Size(450, 31)
-        Me.Panel21.TabIndex = 8
-        '
-        'TextBox1
-        '
-        Me.TextBox1.Location = New System.Drawing.Point(131, 3)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(314, 23)
-        Me.TextBox1.TabIndex = 1
-        Me.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Label13
-        '
-        Me.Label13.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label13.Location = New System.Drawing.Point(4, 0)
-        Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(120, 29)
-        Me.Label13.TabIndex = 0
-        Me.Label13.Text = "Nome"
-        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
         'TabPage5
         '
         Me.TabPage5.Controls.Add(Me.Panel19)
@@ -1180,9 +1093,9 @@ Partial Class FrmCompany
         Me.TabPage5.Controls.Add(Me.Panel26)
         Me.TabPage5.Controls.Add(Me.Panel23)
         Me.TabPage5.Controls.Add(Me.Panel24)
-        Me.TabPage5.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage5.Location = New System.Drawing.Point(4, 26)
         Me.TabPage5.Name = "TabPage5"
-        Me.TabPage5.Size = New System.Drawing.Size(586, 478)
+        Me.TabPage5.Size = New System.Drawing.Size(586, 474)
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Configurações"
         Me.TabPage5.UseVisualStyleBackColor = True
@@ -1406,9 +1319,9 @@ Partial Class FrmCompany
         Me.TabPage6.Controls.Add(Me.Panel16)
         Me.TabPage6.Controls.Add(Me.Panel13)
         Me.TabPage6.Controls.Add(Me.Panel12)
-        Me.TabPage6.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage6.Location = New System.Drawing.Point(4, 26)
         Me.TabPage6.Name = "TabPage6"
-        Me.TabPage6.Size = New System.Drawing.Size(586, 478)
+        Me.TabPage6.Size = New System.Drawing.Size(586, 474)
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Suporte"
         Me.TabPage6.UseVisualStyleBackColor = True
@@ -1559,9 +1472,9 @@ Partial Class FrmCompany
         Me.TabPage7.Controls.Add(Me.Panel8)
         Me.TabPage7.Controls.Add(Me.Panel14)
         Me.TabPage7.Controls.Add(Me.Panel15)
-        Me.TabPage7.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage7.Location = New System.Drawing.Point(4, 26)
         Me.TabPage7.Name = "TabPage7"
-        Me.TabPage7.Size = New System.Drawing.Size(586, 478)
+        Me.TabPage7.Size = New System.Drawing.Size(586, 474)
         Me.TabPage7.TabIndex = 6
         Me.TabPage7.Text = "Núvem"
         Me.TabPage7.UseVisualStyleBackColor = True
@@ -1736,11 +1649,6 @@ Partial Class FrmCompany
         Me.Panel9.PerformLayout()
         Me.Panel4.ResumeLayout(False)
         Me.Panel4.PerformLayout()
-        Me.TabPage4.ResumeLayout(False)
-        Me.Panel17.ResumeLayout(False)
-        Me.Panel17.PerformLayout()
-        Me.Panel21.ResumeLayout(False)
-        Me.Panel21.PerformLayout()
         Me.TabPage5.ResumeLayout(False)
         Me.Panel19.ResumeLayout(False)
         Me.Panel19.PerformLayout()
@@ -1845,7 +1753,6 @@ Partial Class FrmCompany
     Friend WithEvents LblBackupTime As Label
     Friend WithEvents TxtBackupTime As MaskedTextBox
     Friend WithEvents TabPage3 As TabPage
-    Friend WithEvents TabPage4 As TabPage
     Friend WithEvents TabPage5 As TabPage
     Friend WithEvents TabPage6 As TabPage
     Friend WithEvents Panel11 As Panel
@@ -1860,12 +1767,6 @@ Partial Class FrmCompany
     Friend WithEvents Panel4 As Panel
     Friend WithEvents Label9 As Label
     Friend WithEvents TxtDatabaseUsername As TextBox
-    Friend WithEvents Panel17 As Panel
-    Friend WithEvents TxtCredentials As TextBox
-    Friend WithEvents Label11 As Label
-    Friend WithEvents Panel21 As Panel
-    Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents Label13 As Label
     Friend WithEvents Panel24 As Panel
     Friend WithEvents LblInterval As Label
     Friend WithEvents TbrInterval As TrackBar

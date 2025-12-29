@@ -165,7 +165,7 @@ Public Class FrmMain
         Next Task
     End Sub
     Private Async Function ValidateState() As Task
-        Dim LicenseCloudPending As List(Of String) = Await _AppService.ValidateLicenseCloud()
+        Dim LicenseCloudPending As List(Of String) = Await _AppService.ValidateLicenseCredentials()
         Dim CustomerCloudPending As List(Of String) = Await _AppService.ValidateCustomerCloud()
         Dim ManagerDatabasePending As List(Of String) = Await _AppService.ValidateLocalDB()
         Dim CustomerStoragePending As List(Of String) = Await _AppService.ValidateStorage()
@@ -192,15 +192,11 @@ Public Class FrmMain
         CustomerCloudPending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
         CustomerStoragePending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
         BtnSettings.Enabled = True
-        BtnSettingsLicense.Enabled = True
-        BtnSettingsBackup.Enabled = _SessionModel.ManagerLicenseResult.Success
-        BtnSettingsDatabase.Enabled = _SessionModel.ManagerLicenseResult.Success
-        BtnSettingsRegister.Enabled = _SessionModel.ManagerLicenseResult.Success
-        BtnSettingsGeneral.Enabled = _SessionModel.ManagerLicenseResult.Success
-        BtnSettingsCloud.Enabled = _SessionModel.ManagerLicenseResult.Success
-        BtnSettingsSupport.Enabled = _SessionModel.ManagerLicenseResult.Success
-        BtnSettingsChangePassword.Enabled = _SessionModel.ManagerLicenseResult.Success
-        BtnSettingsChangeKey.Enabled = LicenseCloudPending.Count = 0
+        BtnLicense.Enabled = True
+        BtnCompanies.Enabled = _SessionModel.ManagerLicenseResult.Success
+        BtnChangePassword.Enabled = _SessionModel.ManagerLicenseResult.Success
+        BtnChangeLicenseKey.Enabled = LicenseCloudPending.Count = 0 And Not _SessionModel.ManagerLicenseResult.Flag = LicenseMessages.MissingCredentials
+        BtnCleanEventLog.Enabled = _SessionModel.ManagerLicenseResult.Success
         If _StateWarnings.Count > 0 Then
             BtnAgentState.Enabled = False
             BtnBackup.Enabled = False
@@ -279,11 +275,8 @@ Public Class FrmMain
         End If
     End Sub
     Private Sub DgvEvents_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvEvents.CellFormatting
-
         If DgvEvents.Columns(e.ColumnIndex).Name <> "Status" Then Exit Sub
-
         Dim status = Convert.ToString(e.Value)
-
         If status = "Sucesso" Then
             With DgvEvents.Rows(e.RowIndex).DefaultCellStyle
                 .ForeColor = Color.DodgerBlue
@@ -299,8 +292,6 @@ Public Class FrmMain
                 .SelectionForeColor = Color.White
             End With
         End If
-
-
     End Sub
 
     Private Sub DgvTasks_SelectionChanged(sender As Object, e As EventArgs) Handles DgvTasks.SelectionChanged
@@ -309,14 +300,14 @@ Public Class FrmMain
     Private Sub DgvWarnings_SelectionChanged(sender As Object, e As EventArgs) Handles DgvWarnings.SelectionChanged
         DgvWarnings.ClearSelection()
     End Sub
-    Private Sub BtnChangePassword_Click(sender As Object, e As EventArgs)
+    Private Sub BtnChangePassword_Click(sender As Object, e As EventArgs) Handles BtnChangePassword.Click
         If RequestLogin() Then
             Using Frm As New FrmChangePassword
                 Frm.ShowDialog()
             End Using
         End If
     End Sub
-    Private Async Sub BtnSettingsChangePassword_Click(sender As Object, e As EventArgs) Handles BtnSettingsChangePassword.Click
+    Private Async Sub BtnSettingsChangePassword_Click(sender As Object, e As EventArgs) Handles BtnChangePassword.Click
         If RequestLogin() Then
             Using Frm As New FrmChangePassword()
                 Frm.ShowDialog()
@@ -325,7 +316,7 @@ Public Class FrmMain
         End If
     End Sub
 
-    Private Async Sub BtnSettingsChangeKey_Click(sender As Object, e As EventArgs) Handles BtnSettingsChangeKey.Click
+    Private Async Sub BtnChangeLicenseKey_Click(sender As Object, e As EventArgs) Handles BtnChangeLicenseKey.Click
         Dim LicenseResult = Locator.GetInstance(Of SessionModel).ManagerLicenseResult
         Using Frm As New FrmLicenseKey()
             If Not _HasManagerCloudPending AndAlso LicenseResult.Flag = LicenseMessages.MissingProductKey Then
@@ -429,4 +420,11 @@ Public Class FrmMain
         End If
     End Sub
 
+    Private Async Sub BtnLicenseCredentials_Click(sender As Object, e As EventArgs) Handles BtnLicenseCredentials.Click
+        Using Form As New FrmLicenseCredentials
+            If Form.ShowDialog() = DialogResult.OK Then
+                Await ValidateState()
+            End If
+        End Using
+    End Sub
 End Class

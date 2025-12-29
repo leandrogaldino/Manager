@@ -65,9 +65,9 @@ Public Class ApplicationPaths
             Return Path.Combine(ConfigDirectory, ".License")
         End Get
     End Property
-    Public Shared ReadOnly Property LicenseCloudFile As String
+    Public Shared ReadOnly Property LicenseCredentialsFile As String
         Get
-            Return Path.Combine(ConfigDirectory, ".LicenseCloud")
+            Return Path.Combine(ConfigDirectory, ".LicenseCredentials")
         End Get
     End Property
     Public Shared ReadOnly Property DeployDirectory As String

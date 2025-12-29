@@ -292,6 +292,12 @@
     <Compile Include="Source\Views\Company\FrmCompanies.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Source\Views\License\FrmLicenseCredentials.Designer.vb">
+      <DependentUpon>FrmLicenseCredentials.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\License\FrmLicenseCredentials.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Source\Views\Login\LoginViewModel.vb" />
     <Compile Include="Source\Views\Main\FrmEvent.Designer.vb">
       <DependentUpon>FrmEvent.vb</DependentUpon>
@@ -324,10 +330,10 @@
     <Compile Include="Source\Views\Main\FrmChangePassword.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Views\Main\FrmLicenseKey.designer.vb">
+    <Compile Include="Source\Views\License\FrmLicenseKey.designer.vb">
       <DependentUpon>FrmLicenseKey.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Views\Main\FrmLicenseKey.vb">
+    <Compile Include="Source\Views\License\FrmLicenseKey.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Views\Main\FrmMain.Designer.vb">
@@ -374,6 +380,9 @@
     <EmbeddedResource Include="Source\Views\Company\FrmCompanies.resx">
       <DependentUpon>FrmCompanies.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\License\FrmLicenseCredentials.resx">
+      <DependentUpon>FrmLicenseCredentials.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Main\FrmEvent.resx">
       <DependentUpon>FrmEvent.vb</DependentUpon>
     </EmbeddedResource>
@@ -389,7 +398,7 @@
     <EmbeddedResource Include="Source\Views\Main\FrmChangePassword.resx">
       <DependentUpon>FrmChangePassword.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Main\FrmLicenseKey.resx">
+    <EmbeddedResource Include="Source\Views\License\FrmLicenseKey.resx">
       <DependentUpon>FrmLicenseKey.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Main\FrmMain.resx">
@@ -422,6 +431,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Images\ValidKey.gif" />
     <None Include="packages.config" />
     <None Include="protos\google\api\annotations.proto" />
     <None Include="protos\google\api\auth.proto" />
@@ -481,14 +491,13 @@
     <None Include="protos\google\type\timeofday.proto" />
     <None Include="Resources\Icon\icon.ico" />
     <Content Include="Resources\Images\Backup.png" />
-    <None Include="Resources\Images\ValidKey.png" />
     <None Include="Resources\Images\Garbage.png" />
     <None Include="Resources\Images\Cloud.png" />
     <Content Include="Resources\Images\ImageDelete.png" />
     <Content Include="Resources\Images\Execute.png" />
     <Content Include="Resources\Images\ImageInclude.png" />
-    <None Include="Resources\Images\InvalidKey.png" />
     <None Include="Resources\Images\LoadingKey.gif" />
+    <Content Include="Resources\Images\InvalidKey.gif" />
     <Content Include="Resources\Images\Pause.png" />
     <None Include="Resources\Images\Release.png" />
     <Content Include="Resources\Images\Settings.png" />

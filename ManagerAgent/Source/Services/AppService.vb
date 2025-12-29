@@ -29,7 +29,7 @@ Public Class AppService
         Next Company
         Return Validations
     End Function
-    Public Async Function ValidateLicenseCloud() As Task(Of List(Of String))
+    Public Async Function ValidateLicenseCredentials() As Task(Of List(Of String))
         Dim Validations As New List(Of String)
         Dim LicenseCloudModel As LicenseCloudModel = _LicenseCloudService.Load()
         Dim ManagerValidations As New List(Of String)

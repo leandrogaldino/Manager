@@ -7,6 +7,7 @@ Public Class FirestoreService
 
 
     Public Overrides Async Function Initialize(Settings As CloudModel) As Task
+        If Settings Is Nothing Then Return
         Dim Json As String = Settings.JsonCredentials
         Dim Credential As GoogleCredential = GoogleCredential.FromJson(Json)
         Dim builder = New FirestoreDbBuilder() With {

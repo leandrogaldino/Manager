@@ -17,7 +17,7 @@ Public Class SetupLocator
         Locator.RegisterSingleton(New EventService(Locator.GetInstance(Of SemaphoreSlim)))
         Locator.RegisterSingleton(New PasswordService(Locator.GetInstance(Of LicenseService), Locator.GetInstance(Of SessionModel), Locator.GetInstance(Of CryptoKeyService)))
         Locator.RegisterSingleton(New TaskStackService(Locator.GetInstance(Of SemaphoreSlim)))
-        Locator.RegisterSingleton(New LicenseCloudService(Locator.GetInstance(Of CryptoKeyService)))
-        Locator.RegisterSingleton(New AppService(Locator.GetInstance(Of SessionModel), Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.License), Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer), Locator.GetInstance(Of Storage), Locator.GetInstance(Of LicenseCloudService)))
+        Locator.RegisterSingleton(New LicenseCredentialsService(Locator.GetInstance(Of CryptoKeyService)))
+        Locator.RegisterSingleton(New AppService(Locator.GetInstance(Of SessionModel), Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.License), Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer), Locator.GetInstance(Of Storage), Locator.GetInstance(Of LicenseCredentialsService)))
     End Sub
 End Class

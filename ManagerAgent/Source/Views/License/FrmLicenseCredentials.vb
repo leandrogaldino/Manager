@@ -2,16 +2,21 @@
 Imports ManagerCore
 
 Public Class FrmLicenseCredentials
-    Private _LicenseCloudModel As LicenseCloudModel
-    Private _LicenseCloudService As LicenseCloudService
-    Public Sub New()
 
+    Private _LicenseService As LicenseService
+    Private _LicenseCredentialsModel As LicenseCredentialsModel
+    Private _LicenseCredentialsService As LicenseCredentialsService
+    Public Sub New(LicenseCredentialsModel As LicenseCredentialsModel)
         InitializeComponent()
-
-        _LicenseCloudService = Locator.GetInstance(Of LicenseCloudService)
-
+        _LicenseService = Locator.GetInstance(Of LicenseService)
+        _LicenseCredentialsService = Locator.GetInstance(Of LicenseCredentialsService)
+        _LicenseCredentialsModel = LicenseCredentialsModel
         Height = 300
         PnCredential.Visible = False
+
+        TxtName.Text = _LicenseCredentialsModel.ProjectID
+        TxtCredentials.Text = _LicenseCredentialsModel.JsonCredentials
+
     End Sub
 
 
@@ -23,13 +28,13 @@ Public Class FrmLicenseCredentials
         If Not String.IsNullOrEmpty(Name) And Not String.IsNullOrEmpty(Credentials) Then
             PnCredential.Visible = True
             Height = 330
-            _LicenseCloudModel = New LicenseCloudModel With {
+            _LicenseCredentialsModel = New LicenseCredentialsModel With {
                 .ProjectID = Name,
                 .JsonCredentials = Credentials
             }
             Try
                 UpdateUIForCredentialsValidation(Nothing)
-                Await Database.Initialize(_LicenseCloudModel)
+                Await Database.Initialize(_LicenseCredentialsModel)
                 Await Database.TestConnection()
                 UpdateUIForCredentialsValidation(True)
             Catch ex As Exception
@@ -63,7 +68,13 @@ Public Class FrmLicenseCredentials
     End Sub
 
     Private Sub BtnOK_Click(sender As Object, e As EventArgs) Handles BtnOK.Click
-        _LicenseCloudService.Save(_LicenseCloudModel)
+        _LicenseCredentialsService.Save(_LicenseCredentialsModel)
+
+        Dim Result As LicenseResultModel = _LicenseService.GetLocalLicense()
+        If Result.Flag = LicenseMessages.LicenseFileNotFound Then _LicenseService.SaveLocalLicense(New LicenseModel())
+
+
+
         DialogResult = DialogResult.OK
     End Sub
 End Class

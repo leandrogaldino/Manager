@@ -8,11 +8,11 @@ Public Class SetupApp
     End Sub
     Public Shared Sub SetupData()
         Dim Session As SessionModel = Locator.GetInstance(Of SessionModel)
-        Dim LicenseCloudService As LicenseCloudService = Locator.GetInstance(Of LicenseCloudService)
-        Dim LicenseCloudModel As LicenseCloudModel = LicenseCloudService.Load()
+        Dim LicenseCloudService As LicenseCredentialsService = Locator.GetInstance(Of LicenseCredentialsService)
+        Dim LicenseCloudModel As LicenseCredentialsModel = LicenseCloudService.Load()
+        Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.License).Initialize(LicenseCloudModel)
         For Each Company In Session.Companies
             Locator.GetInstance(Of LocalDB)().Initialize(Company.Database)
-            Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.License).Initialize(LicenseCloudModel)
             Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer).Initialize(Company.Cloud)
             Locator.GetInstance(Of Storage)().Initialize(Company.Cloud)
         Next Company

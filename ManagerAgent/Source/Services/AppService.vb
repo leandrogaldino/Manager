@@ -5,8 +5,8 @@ Public Class AppService
     Private ReadOnly _LicenseCloud As RemoteDB
     Private ReadOnly _CustomerCloud As RemoteDB
     Private ReadOnly _CustomerStorage As Storage
-    Private ReadOnly _LicenseCloudService As LicenseCloudService
-    Public Sub New(Session As SessionModel, LocalDB As LocalDB, LicenseCloud As RemoteDB, CustomerCloud As RemoteDB, CustomerStorage As Storage, LicenseCloudService As LicenseCloudService)
+    Private ReadOnly _LicenseCloudService As LicenseCredentialsService
+    Public Sub New(Session As SessionModel, LocalDB As LocalDB, LicenseCloud As RemoteDB, CustomerCloud As RemoteDB, CustomerStorage As Storage, LicenseCloudService As LicenseCredentialsService)
         _Session = Session
         _LocalDB = LocalDB
         _LicenseCloud = LicenseCloud
@@ -31,12 +31,9 @@ Public Class AppService
     End Function
     Public Async Function ValidateLicenseCredentials() As Task(Of List(Of String))
         Dim Validations As New List(Of String)
-        Dim LicenseCloudModel As LicenseCloudModel = _LicenseCloudService.Load()
+        Dim LicenseCloudModel As LicenseCredentialsModel = _LicenseCloudService.Load()
         Dim ManagerValidations As New List(Of String)
-
         If LicenseCloudModel Is Nothing Then Return Validations
-
-
         If String.IsNullOrEmpty(LicenseCloudModel.ProjectID) Then ManagerValidations.Add($"O nome do banco de dados cloud de licença não foi definido.")
         If String.IsNullOrEmpty(LicenseCloudModel.JsonCredentials) Then ManagerValidations.Add($"As credenciais do banco de dados cloud de licença não foram definidas.")
         Try

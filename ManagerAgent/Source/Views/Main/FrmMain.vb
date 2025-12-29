@@ -421,8 +421,15 @@ Public Class FrmMain
     End Sub
 
     Private Async Sub BtnLicenseCredentials_Click(sender As Object, e As EventArgs) Handles BtnLicenseCredentials.Click
-        Using Form As New FrmLicenseCredentials
+        Dim Credentials As LicenseCredentialsModel = Nothing
+        If _SessionModel.ManagerLicenseResult.Flag <> LicenseMessages.LicenseFileNotFound Then
+            Dim _LicenseCredentialsService = Locator.GetInstance(Of LicenseCredentialsService)
+            Credentials = _LicenseCredentialsService.Load()
+        End If
+        If Credentials Is Nothing Then Credentials = New LicenseCredentialsModel()
+        Using Form As New FrmLicenseCredentials(Credentials)
             If Form.ShowDialog() = DialogResult.OK Then
+
                 Await ValidateState()
             End If
         End Using

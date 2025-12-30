@@ -3,6 +3,7 @@ Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
 Imports System.IO
 Imports ManagerCore
+
 Public Class FrmRequest
     Private _Request As Request
     Private _GridControl As UcRequestGrid

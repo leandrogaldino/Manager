@@ -78,54 +78,5 @@ Namespace My.Resources
                 Return ResourceManager.GetString("DefaultEmail", resourceCulture)
             End Get
         End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-        '''&lt;License Version=&quot;1&quot;&gt;
-        '''	&lt;LicenseKey&gt;&lt;/LicenseKey&gt;
-        '''	&lt;LicenseToken&gt;&lt;/LicenseToken&gt;
-        '''	&lt;CustomerDocument&gt;&lt;/CustomerDocument&gt;
-        '''	&lt;CustomerName&gt;&lt;/CustomerName&gt;
-        '''	&lt;ExpirationDate&gt;0001-01-01 00:00:00&lt;/ExpirationDate&gt;
-        '''	&lt;ManagerAgentPassword&gt;&lt;/ManagerAgentPassword&gt;
-        '''	&lt;ManagerAgentUsername&gt;&lt;/ManagerAgentUsername&gt;	
-        '''	&lt;LastOnlineValidation&gt;0001-01-01 00:00:00&lt;/LastOnlineValidation&gt;
-        '''&lt;/License&gt;.
-        '''</summary>
-        Friend ReadOnly Property License() As String
-            Get
-                Return ResourceManager.GetString("License", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-        '''&lt;Setting Version=&quot;2&quot;&gt;
-        '''	&lt;Company&gt;
-        '''		&lt;Document&gt;&lt;/Document&gt;
-        '''		&lt;LogoLocation&gt;&lt;/LogoLocation&gt;
-        '''		&lt;Name&gt;&lt;/Name&gt;
-        '''		&lt;Shortname&gt;&lt;/Shortname&gt;
-        '''		&lt;CityDocument&gt;&lt;/CityDocument&gt;
-        '''		&lt;StateDocument&gt;&lt;/StateDocument&gt;
-        '''		&lt;Address&gt;
-        '''			&lt;ZipCode&gt;&lt;/ZipCode&gt;
-        '''			&lt;Street&gt;&lt;/Street&gt;
-        '''			&lt;Number&gt;&lt;/Number&gt;
-        '''			&lt;Complement&gt;&lt;/Complement&gt;
-        '''			&lt;District&gt;&lt;/District&gt;
-        '''			&lt;City&gt;&lt;/City&gt;
-        '''			&lt;State&gt;&lt;/State&gt;
-        '''		&lt;/Address&gt;
-        '''		&lt;Contact&gt;
-        '''			&lt;Phone1&gt;&lt;/Phone1&gt;
-        '''			&lt;Phone2&gt;&lt;/Phone2&gt;
-        '''			&lt;CellPhone&gt;&lt;/CellP [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property Setting() As String
-            Get
-                Return ResourceManager.GetString("Setting", resourceCulture)
-            End Get
-        End Property
     End Module
 End Namespace

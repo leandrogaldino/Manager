@@ -4,7 +4,7 @@ Imports ManagerCore.LocalDB
 Imports ManagerCore.RemoteDB
 
 Public Class CloudSyncService
-    Private _LocalDB As MySqlService
+    Private _LocalDB As MySqlBackupService
     Private _RemoteDB As FirestoreService
     Public Sub New(LocalDB As LocalDB, RemoteDB As RemoteDB)
         _LocalDB = LocalDB

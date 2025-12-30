@@ -1,28 +1,31 @@
 ﻿Imports System.Text
-Imports ManagerCore
-Imports ManagerCore.LocalDB
-Imports ManagerCore.RemoteDB
+Imports FirebaseController
+Imports MySqlController
 
 Public Class CloudSyncService
-    Private _LocalDB As MySqlBackupService
-    Private _RemoteDB As FirestoreService
-    Public Sub New(LocalDB As LocalDB, RemoteDB As RemoteDB)
+    Private ReadOnly _LocalDB As MySqlService
+    Private ReadOnly _RemoteDB As FirebaseService
+    Public Sub New(LocalDB As MySqlService, RemoteDB As FirebaseService)
         _LocalDB = LocalDB
         _RemoteDB = RemoteDB
     End Sub
     Private Async Function ConfigOperations() As Task
-        Dim Result As QueryResult = Await _LocalDB.ExecuteSelectAsync("config", {"value"}.ToList, "name = @name", New Dictionary(Of String, Object) From {{"@name", "CloudLastSyncDate"}})
+        Dim Result As MySqlResponse
+        Result = Await _LocalDB.Request.ExecuteSelectAsync("config", New MysqlSelectOptions With {
+            .Columns = {"value"}.ToList,
+            .Where = "name = @name",
+            .QueryArgs = New Dictionary(Of String, Object) From {{"@name", "CloudLastSyncDate"}}
+        })
         Dim LastSyncDate As Date = If(String.IsNullOrEmpty(Result.Data(0)("value")), Nothing, Result.Data(0)("value"))
-        Dim Values As Dictionary(Of String, String)
-        Dim Args As Dictionary(Of String, Object)
-        Dim Where As String
         If (Now - LastSyncDate).TotalHours >= 24 Then
-            Values = New Dictionary(Of String, String) From {{"value", "@value"}}
-            Where = "name = @name"
-            Args = New Dictionary(Of String, Object) From {{"@value", Now.ToString("yyyy-MM-dd HH:mm:ss")}, {"@name", "CloudLastSyncDate"}}
-            Await _LocalDB.ExecuteUpdateAsync("config", Values, Where, Args)
-            Args = New Dictionary(Of String, Object) From {{"@value", 0}, {"@name", "CloudOperationCount"}}
-            Await _LocalDB.ExecuteUpdateAsync("config", Values, Where, Args)
+            Await _LocalDB.Request.ExecuteUpdateAsync("config",
+                                                      New Dictionary(Of String, String) From {{"value", "@value"}},
+                                                      "name = @name",
+                                                      New Dictionary(Of String, Object) From {{"@value", Now.ToString("yyyy-MM-dd HH:mm:ss")}, {"@name", "CloudLastSyncDate"}})
+            Await _LocalDB.Request.ExecuteUpdateAsync("config",
+                                                      New Dictionary(Of String, String) From {{"value", "@value"}},
+                                                      "name = @name",
+                                                      New Dictionary(Of String, Object) From {{"@value", 0}, {"@name", "CloudOperationCount"}})
         End If
     End Function
 

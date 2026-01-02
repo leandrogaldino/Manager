@@ -1,5 +1,9 @@
-﻿Imports ControlLibrary
+﻿Imports System.IO
+Imports ControlLibrary
+Imports FirebaseController
+Imports Helpers
 Imports ManagerCore
+Imports AsyncLoader
 
 Public Class FrmLicenseCredentials
     Private _LicenseService As LicenseService
@@ -12,62 +16,103 @@ Public Class FrmLicenseCredentials
         _LicenseService = Locator.GetInstance(Of LicenseService)
         _LicenseCredentialsService = Locator.GetInstance(Of LicenseCredentialsService)
         _LicenseCredentialsModel = LicenseCredentialsModel
-        Height = 300
-        PnCredential.Visible = False
-        TxtName.Text = _LicenseCredentialsModel.ProjectID
-        TxtCredentials.Text = _LicenseCredentialsModel.JsonCredentials
+        TxtApiKey.Text = _LicenseCredentialsModel.ApiKey
+        TxtProjectID.Text = _LicenseCredentialsModel.ProjectID
+        TxtBucketName.Text = _LicenseCredentialsModel.BucketName
+        TxtUsername.Text = _LicenseCredentialsModel.Username
+        TxtPassword.Text = _LicenseCredentialsModel.Password
+
+
+        TxtApiKey.Text = "AIzaSyDHKmoQB7o9wKOT1hTF6FKqoSS8r1BtY58"
+        TxtProjectID.Text = "manager-license-2a24d"
+        TxtBucketName.Text = "manager-license-2a24d.firebasestorage.app"
+        TxtUsername.Text = "admin"
+        TxtPassword.Text = "123456"
+
         _Loading = False
+        AddHandler BtnTestAndOK.Click, AddressOf BtnTest_Click
     End Sub
-    Private Async Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtName.TextChanged, TxtCredentials.TextChanged
+
+    Private _TestPassed As Boolean
+
+    Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtApiKey.TextChanged, TxtBucketName.TextChanged, TxtProjectID.TextChanged, TxtPassword.TextChanged, TxtUsername.TextChanged
         If _Loading Then Return
-        Dim Name As String = TxtName.Text
-        Dim Credentials As String = TxtCredentials.Text
-        Dim Database As RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.License)
-
-        If Not String.IsNullOrEmpty(Name) And Not String.IsNullOrEmpty(Credentials) Then
-            PnCredential.Visible = True
-            Height = 330
-            _LicenseCredentialsModel = New LicenseCredentialsModel With {
-                .ProjectID = Name,
-                .JsonCredentials = Credentials
-            }
-            Try
-                UpdateUIForCredentialsValidation(Nothing)
-                Await Database.Initialize(_LicenseCredentialsModel)
-                Await Database.TestConnection()
-                UpdateUIForCredentialsValidation(True)
-            Catch ex As Exception
-                UpdateUIForCredentialsValidation(False)
-            End Try
-
+        Dim ApiKey As String = TxtApiKey.Text
+        Dim ProjectID As String = TxtProjectID.Text
+        Dim BucketName As String = TxtBucketName.Text
+        Dim Username As String = TxtUsername.Text
+        Dim Password As String = TxtPassword.Text
+        RemoveHandler BtnTestAndOK.Click, AddressOf BtnTest_Click
+        RemoveHandler BtnTestAndOK.Click, AddressOf BtnOK_Click
+        AddHandler BtnTestAndOK.Click, AddressOf BtnTest_Click
+        BtnTestAndOK.Enabled = False
+        BtnTestAndOK.Text = "Testar"
+        If Not String.IsNullOrEmpty(ApiKey) And Not String.IsNullOrEmpty(ProjectID) And Not String.IsNullOrEmpty(BucketName) And Not String.IsNullOrEmpty(Username) And Not String.IsNullOrEmpty(Password) Then
+            BtnTestAndOK.Enabled = True
         Else
-            BtnOK.Enabled = False
-            PnCredential.Visible = False
-            Height = 300
+            BtnTestAndOK.Enabled = False
         End If
     End Sub
-    Private Sub UpdateUIForCredentialsValidation(isValid As Boolean?)
-        If isValid Is Nothing Then
-            BtnOK.Enabled = False
-            PbxLoading.Image = My.Resources.LoadingKey
-            LblStatus.Text = "Validando credenciais."
-            LblStatus.ForeColor = Color.DodgerBlue
-        ElseIf isValid Then
-            BtnOK.Enabled = True
-            PbxLoading.Image = My.Resources.ValidKey
-            LblStatus.Text = "A credencial fornecida é válida."
-            LblStatus.ForeColor = Color.DarkGreen
-        Else
-            BtnOK.Enabled = False
-            PbxLoading.Image = My.Resources.InvalidKey
-            LblStatus.Text = "A credencial fornecida é inválida."
-            LblStatus.ForeColor = Color.DarkRed
-        End If
-    End Sub
-    Private Sub BtnOK_Click(sender As Object, e As EventArgs) Handles BtnOK.Click
+
+    Private Async Function TestConnectionAsync() As Task
+        Dim ErrorMessage As String = "Não foi possível conectar ao Firebase com as credenciais informadas."
+        Dim RemoteDb = Locator.GetInstance(Of FirebaseService)(CloudDatabaseType.License)
+        Dim Name As String = "connectiontest"
+        _LicenseCredentialsModel = New LicenseCredentialsModel With {
+            .ApiKey = TxtApiKey.Text,
+            .ProjectID = TxtProjectID.Text,
+            .BucketName = TxtBucketName.Text,
+            .Username = TxtUsername.Text,
+            .Password = TxtPassword.Text
+        }
+        RemoteDb.Initialize(_LicenseCredentialsModel.ApiKey, _LicenseCredentialsModel.ProjectID, _LicenseCredentialsModel.BucketName)
+        Try
+            Await RemoteDb.Auth.LoginAsync($"{_LicenseCredentialsModel.Username}@nexor.com", _LicenseCredentialsModel.Password)
+        Catch ex As Exception
+            CMessageBox.Show(ErrorMessage, CMessageBoxType.Error)
+            _TestPassed = False
+            Return
+        End Try
+        Try
+            Dim DocumentID As String = TextHelper.GetRandomFileName
+            Await RemoteDb.Firestore.SaveDocumentAsync(Name, DocumentID, New Dictionary(Of String, Object))
+            Await RemoteDb.Firestore.DeleteDocumentAsync(Name, DocumentID)
+        Catch ex As Exception
+            CMessageBox.Show(ErrorMessage, CMessageBoxType.Error)
+            _TestPassed = False
+            Return
+        End Try
+        Try
+            Dim ConnectionTestFile As String = Path.Combine(ApplicationPaths.AgentTempDirectory, Name)
+            File.WriteAllBytes(ConnectionTestFile, {})
+            Await RemoteDb.Storage.UploadFile(ConnectionTestFile, Name)
+            Await RemoteDb.Storage.DeleteFileAsync(Name)
+        Catch ex As Exception
+            CMessageBox.Show(ErrorMessage, CMessageBoxType.Error)
+            _TestPassed = False
+            Return
+        End Try
+        _TestPassed = True
+    End Function
+
+    Private Async Sub BtnOK_Click(sender As Object, e As EventArgs)
         _LicenseCredentialsService.Save(_LicenseCredentialsModel)
         Dim Result As LicenseResultModel = _LicenseService.GetLocalLicense()
-        If Result.Flag = LicenseMessages.LicenseFileNotFound Then _LicenseService.SaveLocalLicense(New LicenseModel())
+        If Result.Flag = LicenseMessages.LicenseFileNotFound Then Await _LicenseService.SaveLocalLicense(New LicenseModel())
         DialogResult = DialogResult.OK
+    End Sub
+    Private Async Sub BtnTest_Click(sender As Object, e As EventArgs)
+        Using LoaderForm As New FrmLoader(My.Resources.Loading)
+            Dim Loader As New LoaderController(Me, LoaderForm, 10, True, Color.White)
+            Await Loader.Start()
+            Await Task.Delay(3000)
+            Await TestConnectionAsync()
+            If _TestPassed Then
+                RemoveHandler BtnTestAndOK.Click, AddressOf BtnTest_Click
+                AddHandler BtnTestAndOK.Click, AddressOf BtnOK_Click
+                BtnTestAndOK.Text = "OK"
+            End If
+            Await Loader.Stop()
+        End Using
     End Sub
 End Class

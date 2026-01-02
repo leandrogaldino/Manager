@@ -1,17 +1,16 @@
-﻿Imports ControlLibrary
+﻿Imports FirebaseController
+Imports Helpers
 Imports ManagerCore
-Imports ManagerCore.LocalDB
-Imports ManagerCore.RemoteDB
-
+Imports MySqlController
 Public Class TaskCloudSync
     Inherits TaskBase
-    Private ReadOnly _LocalDB As LocalDB
-    Private ReadOnly _RemoteDB As RemoteDB
+    Private ReadOnly _LocalDb As MySqlService
+    Private ReadOnly _RemoteDb As FirebaseService
     Private ReadOnly _CompanyService As CompanyService
-    Public Sub New(CompanyModel As CompanyModel, LocalDB As LocalDB, RemoteDB As RemoteDB, CompanyService As CompanyService)
+    Public Sub New(CompanyModel As CompanyModel, LocalDb As MySqlService, RemoteDb As FirebaseService, CompanyService As CompanyService)
         MyBase.New(CompanyModel)
-        _LocalDB = LocalDB
-        _RemoteDB = RemoteDB
+        _LocalDb = LocalDb
+        _RemoteDb = RemoteDb
         _CompanyService = CompanyService
     End Sub
     Public Overrides ReadOnly Property Name As TaskName
@@ -85,11 +84,11 @@ Public Class TaskCloudSync
         Do While ContinueSync
             ContinueSync = False
             Dim StartTime As Date = Now
-            Dim Result As QueryResult = Await _LocalDB.ExecuteSelectAsync(
-                "log",
-                New List(Of String) From {"id", "routineid", "registryid", "fieldname", "oldvalue", "newvalue", "changedate"},
-                "changedate > @changedate AND routineid IN (@person, @compressor, @personcompressor, @personcompressorsellable, @product, @productprovidercode, @service, @visitschedule, @evaluation)",
-                New Dictionary(Of String, Object) From {
+            Dim Result As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync(
+                "log", New MysqlSelectOptions() With {
+                .Columns = {"id", "routineid", "registryid", "fieldname", "oldvalue", "newvalue", "changedate"}.ToList,
+                .Where = "changedate > @changedate AND routineid IN (@person, @compressor, @personcompressor, @personcompressorsellable, @product, @productprovidercode, @service, @visitschedule, @evaluation)",
+                .QueryArgs = New Dictionary(Of String, Object) From {
                     {"@changedate", LastSyncTime},
                     {"@person", 2},
                     {"@compressor", 12},
@@ -101,8 +100,8 @@ Public Class TaskCloudSync
                     {"@visitschedule", 22},
                     {"@evaluation", 13}
                 },
-                "id ASC"
-            )
+                .OrderBy = "id ASC"
+            })
             Dim TotalChanges As Long = Result.Data.Count
             If TotalChanges > 0 Then
                 If Not _Started Then
@@ -143,12 +142,12 @@ Public Class TaskCloudSync
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                 Next Change
-                Dim NewResult As QueryResult = Await _LocalDB.ExecuteSelectAsync(
-                    "log",
-                    New List(Of String) From {"id"},
-                    "changedate > @starttime",
-                    New Dictionary(Of String, Object) From {{"@starttime", StartTime}}
-                )
+                Dim NewResult As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync(
+                    "log", New MysqlSelectOptions() With {
+                    .Columns = {"id"}.ToList(),
+                    .Where = "changedate > @starttime",
+                    .QueryArgs = New Dictionary(Of String, Object) From {{"@starttime", StartTime}}
+                })
                 If NewResult.Data.Count > 0 Then
                     Response.Percent = 0
                     Response.Text = "Sincronização: Registros remanescentes encontrados"
@@ -169,11 +168,13 @@ Public Class TaskCloudSync
         Dim LastSyncLimit As Date = Company.LastExecution.CloudSync
         Dim ContinueSync As Boolean = True
         Dim HasSynced As Boolean
-
         Do While ContinueSync
             ContinueSync = False
             Dim StartTime As Long = DateTimeHelper.MillisecondsFromDate(Now)
-            Dim RemoteResult As List(Of Dictionary(Of String, Object)) = Await _RemoteDB.ExecuteGet("visitschedules", New List(Of Condition) From {New WhereGreaterThanCondition("lastupdate", DateTimeHelper.MillisecondsFromDate(LastSyncLimit)), New WhereNotEqualToCondition("performeddate", Nothing)})
+            Dim RemoteResult As List(Of Dictionary(Of String, Object)) = Await _RemoteDb.Firestore.QueryCompositeAsync("visitschedules", {
+                New FirestoreFilter("lastupdate", FirestoreOperator.GreaterThan, DateTimeHelper.MillisecondsFromDate(LastSyncLimit)),
+                New FirestoreFilter("performeddate", FirestoreOperator.NotEqual, Nothing)
+            }.ToList())
             TotalChanges = RemoteResult.Count
             If TotalChanges > 0 Then
                 _Started = True
@@ -182,13 +183,12 @@ Public Class TaskCloudSync
                 Response.Text = $"Sincronização: Iniciando"
                 Progress?.Report(Response)
                 Await Task.Delay(Constants.WaitForJob)
-
                 Response.Text = "Sincronização: Recebendo agendamentos"
                 Progress?.Report(Response)
                 Await Task.Delay(Constants.WaitForJob)
                 PerformedOperations = 0
                 For Each Schedule In RemoteResult
-                    Await _LocalDB.ExecuteUpdateAsync("visitschedule",
+                    Await _LocalDb.Request.ExecuteUpdateAsync("visitschedule",
                     New Dictionary(Of String, String) From {
                         {"statusid", "@statusid"},
                         {"performeddate", "@performeddate"},
@@ -208,7 +208,9 @@ Public Class TaskCloudSync
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                 Next
-                Dim NewRecords As List(Of Dictionary(Of String, Object)) = Await _RemoteDB.ExecuteGet("visitschedules", New List(Of Condition) From {New WhereGreaterThanCondition("lastupdate", StartTime)})
+                Dim NewRecords As List(Of Dictionary(Of String, Object)) = Await _RemoteDb.Firestore.QueryCompositeAsync("visitschedules", {
+                    New FirestoreFilter("lastupdate", FirestoreOperator.GreaterThan, StartTime)
+                }.ToList())
                 If NewRecords.Count > 0 Then
                     Response.Percent = 0
                     Response.Text = "Sincronização: Registros remanescentes encontrados"
@@ -222,11 +224,12 @@ Public Class TaskCloudSync
         Return HasSynced
     End Function
     Private Async Function FetchVisitSchedule(Change As Dictionary(Of String, Object)) As Task
-        Dim Result = Await _LocalDB.ExecuteSelectAsync("visitschedule",
-                                                 New List(Of String) From {"id", "creation creationdate", "statusid", "scheduleddate", "performeddate", "calltypeid", "customerid", "personcompressorid compressorid", "technicianid", "instructions"},
-                                                 "id = @id",
-                                                 New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
-                                                 Limit:=1)
+        Dim Result = Await _LocalDb.Request.ExecuteSelectAsync("visitschedule", New MysqlSelectOptions() With {
+            .Columns = {"id", "creation creationdate", "statusid", "scheduleddate", "performeddate", "calltypeid", "customerid", "personcompressorid compressorid", "technicianid", "instructions"}.ToList(),
+            .Where = "id = @id",
+            .QueryArgs = New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
+            .Limit = 1
+        })
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             Dim ScheduleData As Dictionary(Of String, Object)
             ScheduleData = Result.Data(0)
@@ -236,56 +239,65 @@ Public Class TaskCloudSync
             ScheduleData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
             ScheduleData("visible") = If(ScheduleData("statusid") = 0, 1, 0)
             ScheduleData.Remove("statusid")
-            Await _RemoteDB.ExecutePut("visitschedules", ScheduleData, ScheduleData("id"))
+            Await _RemoteDb.Firestore.SaveDocumentAsync("visitschedules",
+                                                        ScheduleData("id"),
+                                                        ScheduleData)
         End If
         If Change("fieldname") = "Deleção" Then
-            Await _RemoteDB.ExecuteUpdate("visitschedules",
-                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}},
-                                          New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
+            Await _RemoteDb.Firestore.SaveDocumentAsync("visitschedules",
+                                                        Change("registryid"),
+                                                        New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}})
         End If
     End Function
 
     Private Async Function FetchEvaluation(Change As Dictionary(Of String, Object)) As Task
-        Dim Result = Await _LocalDB.ExecuteSelectAsync("evaluation",
-                                                 New List(Of String) From {"id", "sourceid", "cloudid", "visitscheduleid"},
-                                                 "id = @id",
-                                                 New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
-                                                 Limit:=1)
+        Dim Result As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("evaluation", New MysqlSelectOptions() With {
+            .Columns = {"id", "sourceid", "cloudid", "visitscheduleid"}.ToList(),
+            .Where = "id = @id",
+            .QueryArgs = New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
+            .Limit = 1
+        })
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             Dim EvaluationData As Dictionary(Of String, Object)
             EvaluationData = Result.Data(0)
             If EvaluationData("sourceid") = 2 Then
-                Await _RemoteDB.ExecuteUpdate("evaluations", New Dictionary(Of String, Object) From {{"info.importedid", EvaluationData("id")}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}}, New List(Of Condition) From {New WhereEqualToCondition("id", EvaluationData("cloudid"))})
-                Await _LocalDB.ExecuteUpdateAsync("visitschedule", New Dictionary(Of String, String) From {{"evaluationid", "@evaluationid"}}, "id = @id", New Dictionary(Of String, Object) From {{"@evaluationid", EvaluationData("id")}, {"@id", EvaluationData("visitscheduleid")}})
+                Await _RemoteDb.Firestore.SaveDocumentAsync("evaluations",
+                                                            EvaluationData("cloudid"),
+                                                            New Dictionary(Of String, Object) From {{"info.importedid", EvaluationData("id")}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}})
+                Await _LocalDb.Request.ExecuteUpdateAsync("visitschedule", New Dictionary(Of String, String) From {{"evaluationid", "@evaluationid"}}, "id = @id", New Dictionary(Of String, Object) From {{"@evaluationid", EvaluationData("id")}, {"@id", EvaluationData("visitscheduleid")}})
             End If
         End If
     End Function
     Private Async Function FetchCompressor(Change As Dictionary(Of String, Object)) As Task
-        Dim Result = Await _LocalDB.ExecuteSelectAsync("compressor",
-                                                  New List(Of String) From {"id", "name", "statusid"},
-                                                  "id = @id",
-                                                  New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
-                                                  Limit:=1)
+        Dim Result As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("compressor", New MysqlSelectOptions() With {
+            .Columns = {"id", "name", "statusid"}.ToList(),
+            .Where = "id = @id",
+            .QueryArgs = New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
+            .Limit = 1
+        })
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             Dim CompressorData As Dictionary(Of String, Object)
             CompressorData = Result.Data(0)
             CompressorData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
             CompressorData("visible") = If(CompressorData("statusid") = 0, 1, 0)
             CompressorData.Remove("statusid")
-            Await _RemoteDB.ExecutePut("compressors", CompressorData, CompressorData("id"))
+            Await _RemoteDb.Firestore.SaveDocumentAsync("compressors",
+                                                        CompressorData("id"),
+                                                        CompressorData)
         End If
         If Change("fieldname") = "Deleção" Then
-            Await _RemoteDB.ExecuteUpdate("compressors",
-                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}},
-                                          New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
+            Await _RemoteDb.Firestore.SaveDocumentAsync("compressors",
+                                                        Change("registryid"),
+                                                        New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}})
         End If
     End Function
     Private Async Function FetchPersonCompressorCoalescents(Change As Dictionary(Of String, Object)) As Task
-        Dim Result = Await _LocalDB.ExecuteSelectAsync("personcompressorsellable",
-                                                  New List(Of String) From {"id", "personcompressorid", "productid", "statusid", "sellablebindid"},
-                                                  "id = @id AND controltypeid = @controltypeid",
-                                                  New Dictionary(Of String, Object) From {{"@id", Change("registryid")}, {"@controltypeid", 1}},
-                                                  Limit:=1)
+        Dim Result As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("personcompressorsellable", New MysqlSelectOptions() With {
+            .Columns = {"id", "personcompressorid", "productid", "statusid", "sellablebindid"}.ToList(),
+            .Where = "id = @id AND controltypeid = @controltypeid",
+            .QueryArgs = New Dictionary(Of String, Object) From {{"@id", Change("registryid")}, {"@controltypeid", 1}},
+            .Limit = 1
+        })
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             Dim CoalescentData As Dictionary(Of String, Object)
             CoalescentData = Result.Data(0)
@@ -295,46 +307,45 @@ Public Class TaskCloudSync
             CoalescentData("visible") = If(CoalescentData("statusid") = 0, 1, 0)
             CoalescentData.Remove("statusid")
             CoalescentData.Remove("sellablebindid")
-            Await _RemoteDB.ExecutePut("personcompressorcoalescents", CoalescentData, CoalescentData("id"))
+            Await _RemoteDb.Firestore.SaveDocumentAsync("personcompressorcoalescents", CoalescentData("id"), CoalescentData)
         End If
         If Change("fieldname") = "Deleção" Then
-            Await _RemoteDB.ExecuteUpdate("personcompressorcoalescents",
-                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}},
-                                          New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
+            Await _RemoteDb.Firestore.SaveDocumentAsync("personcompressorcoalescents",
+                                                        Change("registryid"),
+                                                        New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}})
         End If
     End Function
     Private Async Function FetchPersonCompressor(Change As Dictionary(Of String, Object)) As Task
-
-        Dim Result = Await _LocalDB.ExecuteSelectAsync("personcompressor",
-                                                 New List(Of String) From {"id", "statusid", "personid", "compressorid", "serialnumber", "patrimony", "sector"},
-                                                 "id = @id",
-                                                 New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
-                                                 Limit:=1)
+        Dim Result As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("personcompressor", New MysqlSelectOptions() With {
+            .Columns = {"id", "statusid", "personid", "compressorid", "serialnumber", "patrimony", "sector"}.ToList(),
+            .Where = "id = @id",
+            .QueryArgs = New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
+            .Limit = 1
+        })
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
-                Dim PersonCompressorData As Dictionary(Of String, Object)
-                PersonCompressorData = Result.Data(0)
-                PersonCompressorData("serialnumber") = If(PersonCompressorData("serialnumber") Is DBNull.Value, String.Empty, PersonCompressorData("serialnumber"))
-                PersonCompressorData("patrimony") = If(PersonCompressorData("patrimony") Is DBNull.Value, String.Empty, PersonCompressorData("patrimony"))
-                PersonCompressorData("sector") = If(PersonCompressorData("sector") Is DBNull.Value, String.Empty, PersonCompressorData("sector"))
+            Dim PersonCompressorData As Dictionary(Of String, Object)
+            PersonCompressorData = Result.Data(0)
+            PersonCompressorData("serialnumber") = If(PersonCompressorData("serialnumber") Is DBNull.Value, String.Empty, PersonCompressorData("serialnumber"))
+            PersonCompressorData("patrimony") = If(PersonCompressorData("patrimony") Is DBNull.Value, String.Empty, PersonCompressorData("patrimony"))
+            PersonCompressorData("sector") = If(PersonCompressorData("sector") Is DBNull.Value, String.Empty, PersonCompressorData("sector"))
             PersonCompressorData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
             PersonCompressorData("visible") = If(PersonCompressorData("statusid") = 0, 1, 0)
             PersonCompressorData.Remove("statusid")
-            Await _RemoteDB.ExecutePut("personcompressors", PersonCompressorData, PersonCompressorData("id"))
+            Await _RemoteDb.Firestore.SaveDocumentAsync("personcompressors", PersonCompressorData("id"), PersonCompressorData)
         End If
-            If Change("fieldname") = "Deleção" Then
-            Await _RemoteDB.ExecuteUpdate("personcompressors",
-                                              New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}},
-                                              New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
+        If Change("fieldname") = "Deleção" Then
+            Await _RemoteDb.Firestore.SaveDocumentAsync("personcompressors",
+                                                        Change("registryid"),
+                                                        New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}})
         End If
-
-
     End Function
     Private Async Function FetchPerson(Change As Dictionary(Of String, Object)) As Task
-        Dim Result = Await _LocalDB.ExecuteSelectAsync("person",
-                                                  New List(Of String) From {"id", "statusid", "document", "shortname", "iscustomer", "istechnician"},
-                                                  "id = @id",
-                                                  New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
-                                                  Limit:=1)
+        Dim Result As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("person", New MysqlSelectOptions() With {
+            .Columns = {"id", "statusid", "document", "shortname", "iscustomer", "istechnician"}.ToList(),
+            .Where = "id = @id",
+            .QueryArgs = New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
+            .Limit = 1
+        })
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             Dim PersonData As Dictionary(Of String, Object) = Result.Data(0)
             Dim IsCustomer = Convert.ToBoolean(PersonData("iscustomer"))
@@ -346,71 +357,74 @@ Public Class TaskCloudSync
             End If
             PersonData.Remove("statusid")
             PersonData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
-            Await _RemoteDB.ExecutePut("persons", PersonData, PersonData("id"))
+            Await _RemoteDb.Firestore.SaveDocumentAsync("persons", PersonData("id"), PersonData)
         End If
         If Change("fieldname") = "Deleção" Then
-            Await _RemoteDB.ExecuteUpdate("persons",
-                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}},
-                                          New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
+            Await _RemoteDb.Firestore.SaveDocumentAsync("persons",
+                                                        Change("registryid"),
+                                                        New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}})
         End If
     End Function
     Private Async Function FetchProduct(Change As Dictionary(Of String, Object)) As Task
-        Dim Result = Await _LocalDB.ExecuteSelectAsync("product",
-                                                  New List(Of String) From {"id", "statusid", "name"},
-                                                  "id = @id",
-                                                  New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
-                                                  Limit:=1)
+        Dim Result As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("product", New MysqlSelectOptions() With {
+            .Columns = {"id", "statusid", "name"}.ToList(),
+            .Where = "id = @id",
+            .QueryArgs = New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
+            .Limit = 1
+        })
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             Dim ProductData As Dictionary(Of String, Object)
             ProductData = Result.Data(0)
             ProductData("visible") = If(ProductData("statusid") = 0, 1, 0)
             ProductData.Remove("statusid")
             ProductData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
-            Await _RemoteDB.ExecutePut("products", ProductData, ProductData("id"))
+            Await _RemoteDb.Firestore.SaveDocumentAsync("products", ProductData("id"), ProductData)
         End If
         If Change("fieldname") = "Deleção" Then
-            Await _RemoteDB.ExecuteUpdate("products",
-                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}},
-                                          New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
+            Await _RemoteDb.Firestore.SaveDocumentAsync("products",
+                                                        Change("registryid"),
+                                                        New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}})
         End If
     End Function
     Private Async Function FetchProductProviderCode(Change As Dictionary(Of String, Object)) As Task
-        Dim Result = Await _LocalDB.ExecuteSelectAsync("productprovidercode",
-                                                  New List(Of String) From {"id", "productid", "code", "ismainprovider ismain"},
-                                                  "id = @id",
-                                                  New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
-                                                  Limit:=1)
+        Dim Result As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("productprovidercode", New MysqlSelectOptions() With {
+            .Columns = {"id", "productid", "code", "ismainprovider ismain"}.ToList(),
+            .Where = "id = @id",
+            .QueryArgs = New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
+            .Limit = 1
+        })
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             Dim CodeData As Dictionary(Of String, Object)
             CodeData = Result.Data(0)
             CodeData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
             CodeData("visible") = 1
-            Await _RemoteDB.ExecutePut("productcodes", CodeData, CodeData("id"))
+            Await _RemoteDb.Firestore.SaveDocumentAsync("productcodes", CodeData("id"), CodeData)
         End If
         If Change("fieldname") = "Deleção" Then
-            Await _RemoteDB.ExecuteUpdate("productcodes",
-                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}},
-                                          New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
+            Await _RemoteDb.Firestore.SaveDocumentAsync("productcodes",
+                                                        Change("registryid"),
+                                                        New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}})
         End If
     End Function
     Private Async Function FetchService(Change As Dictionary(Of String, Object)) As Task
-        Dim Result = Await _LocalDB.ExecuteSelectAsync("service",
-                                                  New List(Of String) From {"id", "statusid", "name"},
-                                                  "id = @id",
-                                                  New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
-                                                  Limit:=1)
+        Dim Result As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("service", New MysqlSelectOptions() With {
+            .Columns = {"id", "statusid", "name"}.ToList(),
+            .Where = "id = @id",
+            .QueryArgs = New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
+            .Limit = 1
+        })
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             Dim ServiceData As Dictionary(Of String, Object)
             ServiceData = Result.Data(0)
             ServiceData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
             ServiceData("visible") = If(ServiceData("statusid") = 0, 1, 0)
             ServiceData.Remove("statusid")
-            Await _RemoteDB.ExecutePut("services", ServiceData, ServiceData("id"))
+            Await _RemoteDb.Firestore.SaveDocumentAsync("services", ServiceData("id"), ServiceData)
         End If
         If Change("fieldname") = "Deleção" Then
-            Await _RemoteDB.ExecuteUpdate("services",
-                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}},
-                                          New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
+            Await _RemoteDb.Firestore.SaveDocumentAsync("services",
+                                                        Change("registryid"),
+                                                        New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}})
         End If
     End Function
 End Class

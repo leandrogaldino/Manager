@@ -23,138 +23,210 @@ Partial Class FrmLicenseCredentials
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.PnButtons = New System.Windows.Forms.Panel()
-        Me.BtnOK = New System.Windows.Forms.Button()
-        Me.Panel17 = New System.Windows.Forms.Panel()
-        Me.TxtCredentials = New System.Windows.Forms.TextBox()
-        Me.Label11 = New System.Windows.Forms.Label()
+        Me.BtnTestAndOK = New System.Windows.Forms.Button()
         Me.Panel21 = New System.Windows.Forms.Panel()
-        Me.TxtName = New System.Windows.Forms.TextBox()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.PnCredential = New System.Windows.Forms.Panel()
-        Me.PbxLoading = New System.Windows.Forms.PictureBox()
-        Me.LblStatus = New System.Windows.Forms.Label()
+        Me.TxtApiKey = New System.Windows.Forms.TextBox()
+        Me.LblApiKey = New System.Windows.Forms.Label()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.TxtProjectID = New System.Windows.Forms.TextBox()
+        Me.LblProjectID = New System.Windows.Forms.Label()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.TxtBucketName = New System.Windows.Forms.TextBox()
+        Me.LblBucketName = New System.Windows.Forms.Label()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.TxtUsername = New System.Windows.Forms.TextBox()
+        Me.LblUsername = New System.Windows.Forms.Label()
+        Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.TxtPassword = New System.Windows.Forms.TextBox()
+        Me.LblPassword = New System.Windows.Forms.Label()
         Me.PnButtons.SuspendLayout()
-        Me.Panel17.SuspendLayout()
         Me.Panel21.SuspendLayout()
-        Me.PnCredential.SuspendLayout()
-        CType(Me.PbxLoading, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel1.SuspendLayout()
+        Me.Panel2.SuspendLayout()
+        Me.Panel3.SuspendLayout()
+        Me.Panel4.SuspendLayout()
         Me.SuspendLayout()
         '
         'PnButtons
         '
         Me.PnButtons.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.PnButtons.Controls.Add(Me.BtnOK)
+        Me.PnButtons.Controls.Add(Me.BtnTestAndOK)
         Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PnButtons.Location = New System.Drawing.Point(0, 255)
+        Me.PnButtons.Location = New System.Drawing.Point(0, 238)
         Me.PnButtons.Name = "PnButtons"
         Me.PnButtons.Size = New System.Drawing.Size(475, 36)
-        Me.PnButtons.TabIndex = 10
+        Me.PnButtons.TabIndex = 5
         '
-        'BtnOK
+        'BtnTestAndOK
         '
-        Me.BtnOK.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnOK.Enabled = False
-        Me.BtnOK.Location = New System.Drawing.Point(368, 3)
-        Me.BtnOK.Name = "BtnOK"
-        Me.BtnOK.Size = New System.Drawing.Size(95, 30)
-        Me.BtnOK.TabIndex = 0
-        Me.BtnOK.Text = "OK"
-        Me.BtnOK.UseVisualStyleBackColor = True
-        '
-        'Panel17
-        '
-        Me.Panel17.BackColor = System.Drawing.Color.White
-        Me.Panel17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel17.Controls.Add(Me.TxtCredentials)
-        Me.Panel17.Controls.Add(Me.Label11)
-        Me.Panel17.Location = New System.Drawing.Point(12, 59)
-        Me.Panel17.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel17.Name = "Panel17"
-        Me.Panel17.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel17.Size = New System.Drawing.Size(450, 155)
-        Me.Panel17.TabIndex = 12
-        '
-        'TxtCredentials
-        '
-        Me.TxtCredentials.Location = New System.Drawing.Point(131, 3)
-        Me.TxtCredentials.Multiline = True
-        Me.TxtCredentials.Name = "TxtCredentials"
-        Me.TxtCredentials.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TxtCredentials.Size = New System.Drawing.Size(314, 147)
-        Me.TxtCredentials.TabIndex = 1
-        '
-        'Label11
-        '
-        Me.Label11.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label11.Location = New System.Drawing.Point(4, 0)
-        Me.Label11.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(120, 153)
-        Me.Label11.TabIndex = 0
-        Me.Label11.Text = "Credenciais"
-        Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.BtnTestAndOK.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnTestAndOK.Enabled = False
+        Me.BtnTestAndOK.Location = New System.Drawing.Point(368, 3)
+        Me.BtnTestAndOK.Name = "BtnTestAndOK"
+        Me.BtnTestAndOK.Size = New System.Drawing.Size(95, 30)
+        Me.BtnTestAndOK.TabIndex = 0
+        Me.BtnTestAndOK.Text = "Testar"
+        Me.BtnTestAndOK.UseVisualStyleBackColor = True
         '
         'Panel21
         '
         Me.Panel21.BackColor = System.Drawing.Color.White
         Me.Panel21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel21.Controls.Add(Me.TxtName)
-        Me.Panel21.Controls.Add(Me.Label13)
+        Me.Panel21.Controls.Add(Me.TxtApiKey)
+        Me.Panel21.Controls.Add(Me.LblApiKey)
         Me.Panel21.Location = New System.Drawing.Point(12, 19)
         Me.Panel21.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
         Me.Panel21.Name = "Panel21"
         Me.Panel21.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
         Me.Panel21.Size = New System.Drawing.Size(450, 31)
-        Me.Panel21.TabIndex = 11
+        Me.Panel21.TabIndex = 0
         '
-        'TxtName
+        'TxtApiKey
         '
-        Me.TxtName.Location = New System.Drawing.Point(131, 3)
-        Me.TxtName.Name = "TxtName"
-        Me.TxtName.Size = New System.Drawing.Size(314, 23)
-        Me.TxtName.TabIndex = 1
-        Me.TxtName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.TxtApiKey.Location = New System.Drawing.Point(131, 3)
+        Me.TxtApiKey.Name = "TxtApiKey"
+        Me.TxtApiKey.Size = New System.Drawing.Size(314, 23)
+        Me.TxtApiKey.TabIndex = 1
+        Me.TxtApiKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'Label13
+        'LblApiKey
         '
-        Me.Label13.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label13.Location = New System.Drawing.Point(4, 0)
-        Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(120, 29)
-        Me.Label13.TabIndex = 0
-        Me.Label13.Text = "Nome"
-        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.LblApiKey.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LblApiKey.Location = New System.Drawing.Point(4, 0)
+        Me.LblApiKey.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
+        Me.LblApiKey.Name = "LblApiKey"
+        Me.LblApiKey.Size = New System.Drawing.Size(120, 29)
+        Me.LblApiKey.TabIndex = 0
+        Me.LblApiKey.Text = "API Key"
+        Me.LblApiKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'PnCredential
+        'Panel1
         '
-        Me.PnCredential.Controls.Add(Me.PbxLoading)
-        Me.PnCredential.Controls.Add(Me.LblStatus)
-        Me.PnCredential.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PnCredential.Location = New System.Drawing.Point(0, 223)
-        Me.PnCredential.Margin = New System.Windows.Forms.Padding(0)
-        Me.PnCredential.Name = "PnCredential"
-        Me.PnCredential.Size = New System.Drawing.Size(475, 32)
-        Me.PnCredential.TabIndex = 13
+        Me.Panel1.BackColor = System.Drawing.Color.White
+        Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel1.Controls.Add(Me.TxtProjectID)
+        Me.Panel1.Controls.Add(Me.LblProjectID)
+        Me.Panel1.Location = New System.Drawing.Point(12, 63)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
+        Me.Panel1.Size = New System.Drawing.Size(450, 31)
+        Me.Panel1.TabIndex = 1
         '
-        'PbxLoading
+        'TxtProjectID
         '
-        Me.PbxLoading.Image = Global.ManagerAgent.My.Resources.Resources.LoadingKey
-        Me.PbxLoading.Location = New System.Drawing.Point(12, 5)
-        Me.PbxLoading.Name = "PbxLoading"
-        Me.PbxLoading.Size = New System.Drawing.Size(22, 22)
-        Me.PbxLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PbxLoading.TabIndex = 15
-        Me.PbxLoading.TabStop = False
+        Me.TxtProjectID.Location = New System.Drawing.Point(131, 3)
+        Me.TxtProjectID.Name = "TxtProjectID"
+        Me.TxtProjectID.Size = New System.Drawing.Size(314, 23)
+        Me.TxtProjectID.TabIndex = 1
+        Me.TxtProjectID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'LblStatus
+        'LblProjectID
         '
-        Me.LblStatus.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblStatus.Location = New System.Drawing.Point(43, 5)
-        Me.LblStatus.Name = "LblStatus"
-        Me.LblStatus.Size = New System.Drawing.Size(419, 24)
-        Me.LblStatus.TabIndex = 12
-        Me.LblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.LblProjectID.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LblProjectID.Location = New System.Drawing.Point(4, 0)
+        Me.LblProjectID.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
+        Me.LblProjectID.Name = "LblProjectID"
+        Me.LblProjectID.Size = New System.Drawing.Size(120, 29)
+        Me.LblProjectID.TabIndex = 0
+        Me.LblProjectID.Text = "ID do Projeto"
+        Me.LblProjectID.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Panel2
+        '
+        Me.Panel2.BackColor = System.Drawing.Color.White
+        Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel2.Controls.Add(Me.TxtBucketName)
+        Me.Panel2.Controls.Add(Me.LblBucketName)
+        Me.Panel2.Location = New System.Drawing.Point(12, 107)
+        Me.Panel2.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
+        Me.Panel2.Size = New System.Drawing.Size(450, 31)
+        Me.Panel2.TabIndex = 2
+        '
+        'TxtBucketName
+        '
+        Me.TxtBucketName.Location = New System.Drawing.Point(131, 3)
+        Me.TxtBucketName.Name = "TxtBucketName"
+        Me.TxtBucketName.Size = New System.Drawing.Size(314, 23)
+        Me.TxtBucketName.TabIndex = 1
+        Me.TxtBucketName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'LblBucketName
+        '
+        Me.LblBucketName.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LblBucketName.Location = New System.Drawing.Point(4, 0)
+        Me.LblBucketName.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
+        Me.LblBucketName.Name = "LblBucketName"
+        Me.LblBucketName.Size = New System.Drawing.Size(120, 29)
+        Me.LblBucketName.TabIndex = 0
+        Me.LblBucketName.Text = "Nome do Bucket"
+        Me.LblBucketName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Panel3
+        '
+        Me.Panel3.BackColor = System.Drawing.Color.White
+        Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel3.Controls.Add(Me.TxtUsername)
+        Me.Panel3.Controls.Add(Me.LblUsername)
+        Me.Panel3.Location = New System.Drawing.Point(12, 151)
+        Me.Panel3.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
+        Me.Panel3.Size = New System.Drawing.Size(450, 31)
+        Me.Panel3.TabIndex = 3
+        '
+        'TxtUsername
+        '
+        Me.TxtUsername.Location = New System.Drawing.Point(131, 3)
+        Me.TxtUsername.Name = "TxtUsername"
+        Me.TxtUsername.Size = New System.Drawing.Size(314, 23)
+        Me.TxtUsername.TabIndex = 1
+        Me.TxtUsername.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'LblUsername
+        '
+        Me.LblUsername.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LblUsername.Location = New System.Drawing.Point(4, 0)
+        Me.LblUsername.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
+        Me.LblUsername.Name = "LblUsername"
+        Me.LblUsername.Size = New System.Drawing.Size(120, 29)
+        Me.LblUsername.TabIndex = 0
+        Me.LblUsername.Text = "Usuário"
+        Me.LblUsername.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Panel4
+        '
+        Me.Panel4.BackColor = System.Drawing.Color.White
+        Me.Panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel4.Controls.Add(Me.TxtPassword)
+        Me.Panel4.Controls.Add(Me.LblPassword)
+        Me.Panel4.Location = New System.Drawing.Point(12, 195)
+        Me.Panel4.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
+        Me.Panel4.Name = "Panel4"
+        Me.Panel4.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
+        Me.Panel4.Size = New System.Drawing.Size(450, 31)
+        Me.Panel4.TabIndex = 4
+        '
+        'TxtPassword
+        '
+        Me.TxtPassword.Location = New System.Drawing.Point(131, 3)
+        Me.TxtPassword.Name = "TxtPassword"
+        Me.TxtPassword.Size = New System.Drawing.Size(314, 23)
+        Me.TxtPassword.TabIndex = 1
+        Me.TxtPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'LblPassword
+        '
+        Me.LblPassword.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LblPassword.Location = New System.Drawing.Point(4, 0)
+        Me.LblPassword.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
+        Me.LblPassword.Name = "LblPassword"
+        Me.LblPassword.Size = New System.Drawing.Size(120, 29)
+        Me.LblPassword.TabIndex = 0
+        Me.LblPassword.Text = "Senha"
+        Me.LblPassword.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'FrmLicenseCredentials
         '
@@ -162,9 +234,11 @@ Partial Class FrmLicenseCredentials
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.ClientSize = New System.Drawing.Size(475, 291)
-        Me.Controls.Add(Me.PnCredential)
-        Me.Controls.Add(Me.Panel17)
+        Me.ClientSize = New System.Drawing.Size(475, 274)
+        Me.Controls.Add(Me.Panel4)
+        Me.Controls.Add(Me.Panel3)
+        Me.Controls.Add(Me.Panel2)
+        Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.Panel21)
         Me.Controls.Add(Me.PnButtons)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -175,24 +249,34 @@ Partial Class FrmLicenseCredentials
         Me.Name = "FrmLicenseCredentials"
         Me.Text = "Credenciais da Licença"
         Me.PnButtons.ResumeLayout(False)
-        Me.Panel17.ResumeLayout(False)
-        Me.Panel17.PerformLayout()
         Me.Panel21.ResumeLayout(False)
         Me.Panel21.PerformLayout()
-        Me.PnCredential.ResumeLayout(False)
-        CType(Me.PbxLoading, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
+        Me.Panel3.ResumeLayout(False)
+        Me.Panel3.PerformLayout()
+        Me.Panel4.ResumeLayout(False)
+        Me.Panel4.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents PnButtons As Panel
-    Friend WithEvents BtnOK As Button
-    Friend WithEvents Panel17 As Panel
-    Friend WithEvents TxtCredentials As TextBox
-    Friend WithEvents Label11 As Label
+    Friend WithEvents BtnTestAndOK As Button
     Friend WithEvents Panel21 As Panel
-    Friend WithEvents TxtName As TextBox
-    Friend WithEvents Label13 As Label
-    Friend WithEvents PnCredential As Panel
-    Friend WithEvents LblStatus As Label
-    Friend WithEvents PbxLoading As PictureBox
+    Friend WithEvents TxtApiKey As TextBox
+    Friend WithEvents LblApiKey As Label
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents TxtProjectID As TextBox
+    Friend WithEvents LblProjectID As Label
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents TxtBucketName As TextBox
+    Friend WithEvents LblBucketName As Label
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents TxtUsername As TextBox
+    Friend WithEvents LblUsername As Label
+    Friend WithEvents Panel4 As Panel
+    Friend WithEvents TxtPassword As TextBox
+    Friend WithEvents LblPassword As Label
 End Class

@@ -6,8 +6,8 @@ Imports Helpers
 
 Public Class LicenseService
     Private ReadOnly _Key As String
-    Private ReadOnly _Database As FirebaseFirestore
-    Public Sub New(Database As FirebaseFirestore, CryptoKeyService As CryptoKeyService)
+    Private ReadOnly _Database As FirebaseService
+    Public Sub New(Database As FirebaseService, CryptoKeyService As CryptoKeyService)
         _Database = Database
         _Key = CryptoKeyService.ReadCryptoKey()
     End Sub
@@ -67,7 +67,7 @@ Public Class LicenseService
         Return Result
     End Function
     Public Async Function IsValidLicenseKey(LicenseKey As String) As Task(Of Boolean)
-        Dim Result = Await _Database.QueryCompositeAsync("licenses", {New FirestoreFilter("license_key", FirestoreOperator.Equal, LicenseKey)}.ToList)
+        Dim Result = Await _Database.Firestore.QueryCompositeAsync("licenses", {New FirestoreFilter("license_key", FirestoreOperator.Equal, LicenseKey)}.ToList)
         If Result IsNot Nothing AndAlso Result.Count = 1 Then
             Return True
         Else
@@ -100,7 +100,7 @@ Public Class LicenseService
             Return Result
         End If
         ' Realiza a consulta ao banco de dados
-        Dim DBResult = Await _Database.QueryCompositeAsync("licenses", {New FirestoreFilter("license_key", FirestoreOperator.Equal, LicenseKey)}.ToList)
+        Dim DBResult = Await _Database.Firestore.QueryCompositeAsync("licenses", {New FirestoreFilter("license_key", FirestoreOperator.Equal, LicenseKey)}.ToList)
         If DBResult.Count = 1 Then
             Result.License = If(DBResult(0) Is Nothing, Nothing, LicenseModel.FromCloud(DBResult(0)))
         ElseIf DBResult.Count > 1 Then
@@ -152,14 +152,14 @@ Public Class LicenseService
     Public Async Function UpdateLicenseToken(License As LicenseModel, NewToken As String) As Task(Of LicenseModel)
         Dim Data As Dictionary(Of String, Object) = License.ToCloud
         Data("license_token") = NewToken
-        Await _Database.SaveDocumentAsync("licenses", License.CustomerDocument, Data)
+        Await _Database.Firestore.SaveDocumentAsync("licenses", License.CustomerDocument, Data)
         License.LicenseToken = NewToken
         Return License
     End Function
     Public Async Function UpdateManagerAgentPassword(License As LicenseModel, NewPassword As String) As Task(Of LicenseModel)
         Dim Data As Dictionary(Of String, Object) = License.ToCloud
         Data("manager_agent_password") = NewPassword
-        Await _Database.SaveDocumentAsync("licenses", License.CustomerDocument, Data)
+        Await _Database.Firestore.SaveDocumentAsync("licenses", License.CustomerDocument, Data)
         License.ManagerAgentPassword = NewPassword
         Return License
     End Function

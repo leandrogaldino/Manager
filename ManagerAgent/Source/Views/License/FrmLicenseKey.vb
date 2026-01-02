@@ -21,19 +21,19 @@ Public Class FrmLicenseKey
 
 
     'QUANDO PROPRIEDADE MUDAR
-    Private Sub UpdateUIForLicenseValidation(isValid As Boolean)
-        If isValid Then
-            BtnOK.Enabled = True
-            PbxLoading.Image = My.Resources.ValidKey
-            LblStatus.Text = "A licença fornecida é válida."
-            LblStatus.ForeColor = Color.DarkGreen
-        Else
-            BtnOK.Enabled = False
-            PbxLoading.Image = My.Resources.InvalidKey
-            LblStatus.Text = "A licença fornecida é inválida."
-            LblStatus.ForeColor = Color.DarkRed
-        End If
-    End Sub
+    'Private Sub UpdateUIForLicenseValidation(isValid As Boolean)
+    '    If isValid Then
+    '        BtnOK.Enabled = True
+    '        PbxLoading.Image = My.Resources.ValidKey
+    '        LblStatus.Text = "A licença fornecida é válida."
+    '        LblStatus.ForeColor = Color.DarkGreen
+    '    Else
+    '        BtnOK.Enabled = False
+    '        PbxLoading.Image = My.Resources.InvalidKey
+    '        LblStatus.Text = "A licença fornecida é inválida."
+    '        LblStatus.ForeColor = Color.DarkRed
+    '    End If
+    'End Sub
     'Private Async Sub TxtKey_TextChanged(sender As Object, e As EventArgs) Handles TxtKeyPartA.TextChanged, TxtKeyPartB.TextChanged, TxtKeyPartC.TextChanged, TxtKeyPartD.TextChanged, TxtKeyPartE.TextChanged
     'If TxtKeyPartA.Text.Length + TxtKeyPartB.Text.Length + TxtKeyPartC.Text.Length + TxtKeyPartD.Text.Length + TxtKeyPartE.Text.Length = 25 Then
     '    _ViewModel.Key = String.Format("{0}-{1}-{2}-{3}-{4}", TxtKeyPartA.Text, TxtKeyPartB.Text, TxtKeyPartC.Text, TxtKeyPartD.Text, TxtKeyPartE.Text)

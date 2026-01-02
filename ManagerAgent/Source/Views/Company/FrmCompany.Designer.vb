@@ -139,18 +139,18 @@ Partial Class FrmCompany
         Me.CbxEnableSSL = New System.Windows.Forms.CheckBox()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
-        Me.Panel20 = New System.Windows.Forms.Panel()
-        Me.TextBox4 = New System.Windows.Forms.TextBox()
-        Me.Label14 = New System.Windows.Forms.Label()
         Me.Panel8 = New System.Windows.Forms.Panel()
         Me.LblSyncInterval = New System.Windows.Forms.Label()
         Me.TbrSyncInterval = New System.Windows.Forms.TrackBar()
         Me.Panel14 = New System.Windows.Forms.Panel()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.Label5 = New System.Windows.Forms.Label()
+        Me.TxtBucketName = New System.Windows.Forms.TextBox()
+        Me.LblBucketName = New System.Windows.Forms.Label()
         Me.Panel15 = New System.Windows.Forms.Panel()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
-        Me.Label10 = New System.Windows.Forms.Label()
+        Me.TxtProjectID = New System.Windows.Forms.TextBox()
+        Me.LblProjectID = New System.Windows.Forms.Label()
+        Me.Panel21 = New System.Windows.Forms.Panel()
+        Me.TxtApiKey = New System.Windows.Forms.TextBox()
+        Me.LblApiKey = New System.Windows.Forms.Label()
         Me.PnButtons.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl1.SuspendLayout()
@@ -182,11 +182,11 @@ Partial Class FrmCompany
         Me.Panel13.SuspendLayout()
         Me.Panel12.SuspendLayout()
         Me.TabPage7.SuspendLayout()
-        Me.Panel20.SuspendLayout()
         Me.Panel8.SuspendLayout()
         CType(Me.TbrSyncInterval, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel14.SuspendLayout()
         Me.Panel15.SuspendLayout()
+        Me.Panel21.SuspendLayout()
         Me.SuspendLayout()
         '
         'PnButtons
@@ -747,10 +747,10 @@ Partial Class FrmCompany
         Me.TabPage2.Controls.Add(Me.Panel1)
         Me.TabPage2.Controls.Add(Me.Panel6)
         Me.TabPage2.Controls.Add(Me.Panel5)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 26)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(586, 474)
+        Me.TabPage2.Size = New System.Drawing.Size(586, 478)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Backup"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -1468,10 +1468,10 @@ Partial Class FrmCompany
         '
         'TabPage7
         '
-        Me.TabPage7.Controls.Add(Me.Panel20)
-        Me.TabPage7.Controls.Add(Me.Panel8)
         Me.TabPage7.Controls.Add(Me.Panel14)
         Me.TabPage7.Controls.Add(Me.Panel15)
+        Me.TabPage7.Controls.Add(Me.Panel21)
+        Me.TabPage7.Controls.Add(Me.Panel8)
         Me.TabPage7.Location = New System.Drawing.Point(4, 26)
         Me.TabPage7.Name = "TabPage7"
         Me.TabPage7.Size = New System.Drawing.Size(586, 474)
@@ -1479,45 +1479,13 @@ Partial Class FrmCompany
         Me.TabPage7.Text = "Núvem"
         Me.TabPage7.UseVisualStyleBackColor = True
         '
-        'Panel20
-        '
-        Me.Panel20.BackColor = System.Drawing.Color.White
-        Me.Panel20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel20.Controls.Add(Me.TextBox4)
-        Me.Panel20.Controls.Add(Me.Label14)
-        Me.Panel20.Location = New System.Drawing.Point(8, 50)
-        Me.Panel20.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel20.Name = "Panel20"
-        Me.Panel20.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel20.Size = New System.Drawing.Size(450, 31)
-        Me.Panel20.TabIndex = 17
-        '
-        'TextBox4
-        '
-        Me.TextBox4.Location = New System.Drawing.Point(131, 3)
-        Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.Size = New System.Drawing.Size(314, 23)
-        Me.TextBox4.TabIndex = 1
-        Me.TextBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Label14
-        '
-        Me.Label14.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label14.Location = New System.Drawing.Point(4, 0)
-        Me.Label14.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(120, 29)
-        Me.Label14.TabIndex = 0
-        Me.Label14.Text = "Nome do Bucket"
-        Me.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
         'Panel8
         '
         Me.Panel8.BackColor = System.Drawing.Color.White
         Me.Panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel8.Controls.Add(Me.LblSyncInterval)
         Me.Panel8.Controls.Add(Me.TbrSyncInterval)
-        Me.Panel8.Location = New System.Drawing.Point(8, 262)
+        Me.Panel8.Location = New System.Drawing.Point(8, 138)
         Me.Panel8.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
         Me.Panel8.Name = "Panel8"
         Me.Panel8.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
@@ -1550,66 +1518,97 @@ Partial Class FrmCompany
         '
         Me.Panel14.BackColor = System.Drawing.Color.White
         Me.Panel14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel14.Controls.Add(Me.TextBox2)
-        Me.Panel14.Controls.Add(Me.Label5)
-        Me.Panel14.Location = New System.Drawing.Point(8, 94)
+        Me.Panel14.Controls.Add(Me.TxtBucketName)
+        Me.Panel14.Controls.Add(Me.LblBucketName)
+        Me.Panel14.Location = New System.Drawing.Point(8, 98)
         Me.Panel14.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
         Me.Panel14.Name = "Panel14"
         Me.Panel14.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel14.Size = New System.Drawing.Size(450, 155)
-        Me.Panel14.TabIndex = 15
+        Me.Panel14.Size = New System.Drawing.Size(450, 31)
+        Me.Panel14.TabIndex = 17
         '
-        'TextBox2
+        'TxtBucketName
         '
-        Me.TextBox2.Location = New System.Drawing.Point(131, 3)
-        Me.TextBox2.Multiline = True
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox2.Size = New System.Drawing.Size(314, 147)
-        Me.TextBox2.TabIndex = 1
+        Me.TxtBucketName.Location = New System.Drawing.Point(131, 3)
+        Me.TxtBucketName.Name = "TxtBucketName"
+        Me.TxtBucketName.Size = New System.Drawing.Size(314, 23)
+        Me.TxtBucketName.TabIndex = 1
+        Me.TxtBucketName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'Label5
+        'LblBucketName
         '
-        Me.Label5.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label5.Location = New System.Drawing.Point(4, 0)
-        Me.Label5.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(120, 153)
-        Me.Label5.TabIndex = 0
-        Me.Label5.Text = "Credenciais"
-        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.LblBucketName.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LblBucketName.Location = New System.Drawing.Point(4, 0)
+        Me.LblBucketName.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
+        Me.LblBucketName.Name = "LblBucketName"
+        Me.LblBucketName.Size = New System.Drawing.Size(120, 29)
+        Me.LblBucketName.TabIndex = 0
+        Me.LblBucketName.Text = "Nome do Bucket"
+        Me.LblBucketName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Panel15
         '
         Me.Panel15.BackColor = System.Drawing.Color.White
         Me.Panel15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel15.Controls.Add(Me.TextBox3)
-        Me.Panel15.Controls.Add(Me.Label10)
-        Me.Panel15.Location = New System.Drawing.Point(8, 10)
+        Me.Panel15.Controls.Add(Me.TxtProjectID)
+        Me.Panel15.Controls.Add(Me.LblProjectID)
+        Me.Panel15.Location = New System.Drawing.Point(8, 54)
         Me.Panel15.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
         Me.Panel15.Name = "Panel15"
         Me.Panel15.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
         Me.Panel15.Size = New System.Drawing.Size(450, 31)
-        Me.Panel15.TabIndex = 14
+        Me.Panel15.TabIndex = 18
         '
-        'TextBox3
+        'TxtProjectID
         '
-        Me.TextBox3.Location = New System.Drawing.Point(131, 3)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(314, 23)
-        Me.TextBox3.TabIndex = 1
-        Me.TextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.TxtProjectID.Location = New System.Drawing.Point(131, 3)
+        Me.TxtProjectID.Name = "TxtProjectID"
+        Me.TxtProjectID.Size = New System.Drawing.Size(314, 23)
+        Me.TxtProjectID.TabIndex = 1
+        Me.TxtProjectID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'Label10
+        'LblProjectID
         '
-        Me.Label10.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label10.Location = New System.Drawing.Point(4, 0)
-        Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(120, 29)
-        Me.Label10.TabIndex = 0
-        Me.Label10.Text = "Nome"
-        Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.LblProjectID.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LblProjectID.Location = New System.Drawing.Point(4, 0)
+        Me.LblProjectID.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
+        Me.LblProjectID.Name = "LblProjectID"
+        Me.LblProjectID.Size = New System.Drawing.Size(120, 29)
+        Me.LblProjectID.TabIndex = 0
+        Me.LblProjectID.Text = "ID do Projeto"
+        Me.LblProjectID.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Panel21
+        '
+        Me.Panel21.BackColor = System.Drawing.Color.White
+        Me.Panel21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel21.Controls.Add(Me.TxtApiKey)
+        Me.Panel21.Controls.Add(Me.LblApiKey)
+        Me.Panel21.Location = New System.Drawing.Point(8, 10)
+        Me.Panel21.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
+        Me.Panel21.Name = "Panel21"
+        Me.Panel21.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
+        Me.Panel21.Size = New System.Drawing.Size(450, 31)
+        Me.Panel21.TabIndex = 19
+        '
+        'TxtApiKey
+        '
+        Me.TxtApiKey.Location = New System.Drawing.Point(131, 3)
+        Me.TxtApiKey.Name = "TxtApiKey"
+        Me.TxtApiKey.Size = New System.Drawing.Size(314, 23)
+        Me.TxtApiKey.TabIndex = 1
+        Me.TxtApiKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'LblApiKey
+        '
+        Me.LblApiKey.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LblApiKey.Location = New System.Drawing.Point(4, 0)
+        Me.LblApiKey.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
+        Me.LblApiKey.Name = "LblApiKey"
+        Me.LblApiKey.Size = New System.Drawing.Size(120, 29)
+        Me.LblApiKey.TabIndex = 0
+        Me.LblApiKey.Text = "API Key"
+        Me.LblApiKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'FrmCompany
         '
@@ -1671,14 +1670,14 @@ Partial Class FrmCompany
         Me.Panel13.PerformLayout()
         Me.Panel12.ResumeLayout(False)
         Me.TabPage7.ResumeLayout(False)
-        Me.Panel20.ResumeLayout(False)
-        Me.Panel20.PerformLayout()
         Me.Panel8.ResumeLayout(False)
         CType(Me.TbrSyncInterval, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel14.ResumeLayout(False)
         Me.Panel14.PerformLayout()
         Me.Panel15.ResumeLayout(False)
         Me.Panel15.PerformLayout()
+        Me.Panel21.ResumeLayout(False)
+        Me.Panel21.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1802,12 +1801,12 @@ Partial Class FrmCompany
     Friend WithEvents LblSyncInterval As Label
     Friend WithEvents TbrSyncInterval As TrackBar
     Friend WithEvents Panel14 As Panel
-    Friend WithEvents TextBox2 As TextBox
-    Friend WithEvents Label5 As Label
+    Friend WithEvents TxtBucketName As TextBox
+    Friend WithEvents LblBucketName As Label
     Friend WithEvents Panel15 As Panel
-    Friend WithEvents TextBox3 As TextBox
-    Friend WithEvents Label10 As Label
-    Friend WithEvents Panel20 As Panel
-    Friend WithEvents TextBox4 As TextBox
-    Friend WithEvents Label14 As Label
+    Friend WithEvents TxtProjectID As TextBox
+    Friend WithEvents LblProjectID As Label
+    Friend WithEvents Panel21 As Panel
+    Friend WithEvents TxtApiKey As TextBox
+    Friend WithEvents LblApiKey As Label
 End Class

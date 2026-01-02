@@ -3,6 +3,7 @@ Imports ManagerCore
 Imports System.Collections.ObjectModel
 Imports System.IO
 Imports System.Threading
+Imports Helpers
 Public Class FrmMain
     Private _IsWorking As Boolean
     Private _EventService As EventService
@@ -168,7 +169,6 @@ Public Class FrmMain
         Dim LicenseCloudPending As List(Of String) = Await _AppService.ValidateLicenseCredentials()
         Dim CustomerCloudPending As List(Of String) = Await _AppService.ValidateCustomerCloud()
         Dim ManagerDatabasePending As List(Of String) = Await _AppService.ValidateLocalDB()
-        Dim CustomerStoragePending As List(Of String) = Await _AppService.ValidateStorage()
         Dim BackupPending As List(Of String) = _AppService.ValidateBackup()
         If ManagerDatabasePending.Count = 0 Then
             _HasDatabasePending = False
@@ -190,7 +190,6 @@ Public Class FrmMain
         ManagerDatabasePending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
         BackupPending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
         CustomerCloudPending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
-        CustomerStoragePending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
         BtnSettings.Enabled = True
         BtnLicense.Enabled = True
         BtnCompanies.Enabled = _SessionModel.ManagerLicenseResult.Success
@@ -429,7 +428,6 @@ Public Class FrmMain
         If Credentials Is Nothing Then Credentials = New LicenseCredentialsModel()
         Using Form As New FrmLicenseCredentials(Credentials)
             If Form.ShowDialog() = DialogResult.OK Then
-
                 Await ValidateState()
             End If
         End Using

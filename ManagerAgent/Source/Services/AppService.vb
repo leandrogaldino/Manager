@@ -36,15 +36,16 @@ Public Class AppService
         If LicenseCloudModel Is Nothing Then Return Validations
         If String.IsNullOrEmpty(LicenseCloudModel.ProjectID) Then ManagerValidations.Add($"O nome do banco de dados cloud de licença não foi definido.")
         If String.IsNullOrEmpty(LicenseCloudModel.ApiKey) Then ManagerValidations.Add($"A Api Key do banco de dados cloud de licença não foi definida.")
-        If String.IsNullOrEmpty(LicenseCloudModel.StorageBucket) Then ManagerValidations.Add($"O nome do bucket do storage do banco de dados cloud de licença não foi definido.")
-        Try
-            If Await _LicenseCloud.TestConnection() = False Then
-                ManagerValidations.Add($"Banco de dados cloud de licença não conectado, verifique as informações de conexão.")
-            End If
-        Catch ex As Exception
-            ManagerValidations.Add($"Erro ao conectar ou consultar no banco de dados cloud de licença.")
-        End Try
-        Validations.AddRange(ManagerValidations)
+        If String.IsNullOrEmpty(LicenseCloudModel.BucketName) Then ManagerValidations.Add($"O nome do bucket do storage do banco de dados cloud de licença não foi definido.")
+        'TODO: Consertar
+        'Try
+        '    If Await _LicenseCloud.TestConnectionAsync() = False Then
+        '        ManagerValidations.Add($"Banco de dados cloud de licença não conectado, verifique as informações de conexão.")
+        '    End If
+        'Catch ex As Exception
+        '    ManagerValidations.Add($"Erro ao conectar ou consultar no banco de dados cloud de licença.")
+        'End Try
+        'Validations.AddRange(ManagerValidations)
 
         Return Validations
     End Function
@@ -56,14 +57,15 @@ Public Class AppService
             Dim CustomerValidations As New List(Of String)
             If String.IsNullOrEmpty(Cloud.ProjectID) Then CustomerValidations.Add($"O nome do banco de dados cloud do cliete {Company.Register.ShortName} não foi definido.")
             If String.IsNullOrEmpty(Cloud.ApiKey) Then CustomerValidations.Add($"A Api Key do banco de dados cloud do cliente {Company.Register.ShortName} não foi definida.")
-            If String.IsNullOrEmpty(Cloud.StorageBucket) Then CustomerValidations.Add($"O nome do Bucket do storage do banco de dados cloud do cliente {Company.Register.ShortName} não foi definido.")
-            Try
-                If Await _CustomerCloud.TestConnection() = False Then
-                    CustomerValidations.Add($"banco de dados cloud do cliete {Company.Register.ShortName} não conectado, verifique as informações de conexão.")
-                End If
-            Catch ex As Exception
-                If CustomerValidations.Count = 0 Then CustomerValidations.Add($"Erro ao conectar ou consultar no banco de dados cloud do cliente: {ex.Message}.")
-            End Try
+            If String.IsNullOrEmpty(Cloud.BucketName) Then CustomerValidations.Add($"O nome do Bucket do storage do banco de dados cloud do cliente {Company.Register.ShortName} não foi definido.")
+            'TODO: Consertar
+            'Try
+            '    If Await _CustomerCloud.TestConnectionAsync() = False Then
+            '        CustomerValidations.Add($"banco de dados cloud do cliete {Company.Register.ShortName} não conectado, verifique as informações de conexão.")
+            '    End If
+            'Catch ex As Exception
+            '    If CustomerValidations.Count = 0 Then CustomerValidations.Add($"Erro ao conectar ou consultar no banco de dados cloud do cliente: {ex.Message}.")
+            'End Try
             Validations.AddRange(CustomerValidations)
         Next Company
         Return Validations

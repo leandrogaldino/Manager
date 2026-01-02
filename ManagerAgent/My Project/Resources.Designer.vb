@@ -101,16 +101,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta um recurso localizado do tipo System.Drawing.Icon semelhante a (Ícone).
-        '''</summary>
-        Friend ReadOnly Property icon() As System.Drawing.Icon
-            Get
-                Dim obj As Object = ResourceManager.GetObject("icon", resourceCulture)
-                Return CType(obj,System.Drawing.Icon)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property ImageDelete() As System.Drawing.Bitmap
@@ -133,19 +123,9 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property InvalidKey() As System.Drawing.Bitmap
+        Friend ReadOnly Property Loading() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("InvalidKey", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property LoadingKey() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("LoadingKey", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("Loading", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -176,16 +156,6 @@ Namespace My.Resources
         Friend ReadOnly Property Settings() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Settings", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property ValidKey() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("ValidKey", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

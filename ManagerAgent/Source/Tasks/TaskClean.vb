@@ -1,15 +1,16 @@
-﻿Imports System.IO
+﻿Imports System.Data.Common
+Imports System.IO
 Imports System.Transactions
 Imports ControlLibrary
 Imports ManagerCore
-Imports ManagerCore.LocalDB
+Imports MySqlController
 Public Class TaskClean
     Inherits TaskBase
-    Private ReadOnly _DatabaseService As LocalDB
+    Private ReadOnly _LocalDb As MySqlService
     Private ReadOnly _CompanyService As CompanyService
-    Public Sub New(CompanyModel As CompanyModel, DatabaseService As LocalDB, CompanyService As CompanyService)
+    Public Sub New(CompanyModel As CompanyModel, LocalDb As MySqlService, CompanyService As CompanyService)
         MyBase.New(CompanyModel)
-        _DatabaseService = DatabaseService
+        _LocalDb = LocalDb
         _CompanyService = CompanyService
     End Sub
     Public Overrides ReadOnly Property Name As TaskName
@@ -43,7 +44,7 @@ Public Class TaskClean
         Dim IddleFiles As New List(Of String)
         Dim Files As New List(Of FileInfo)
         Dim Directories As New List(Of DirectoryInfo)
-        Dim Result As QueryResult
+        Dim Result As MySqlResponse
         Dim ResultDate As Date
         Dim EvaluationDocumentDir As DirectoryInfo
         Dim EmailSignatureDir As DirectoryInfo
@@ -69,26 +70,63 @@ Public Class TaskClean
             Month = Company.General.Evaluation.MonthsBeforeRecordDeletion
             MonthStr = If(Month = 1, $"{Month} mês", $"{Month} meses")
             ResultDate = Today.AddMonths(-Month)
-            Result = Await _DatabaseService.ExecuteSelectAsync("evaluation", {"id", "evaluationdate", "customerid"}.ToList, $"evaluationdate <= '{ResultDate:yyyy-MM-dd}'")
+            Result = Await _LocalDb.Request.ExecuteSelectAsync("evaluation", New MysqlSelectOptions() With {
+                .Columns = {"id", "evaluationdate", "customerid"}.ToList,
+                .Where = "evaluationdate <= @evaluationdate",
+                .QueryArgs = New Dictionary(Of String, Object) From {{"@evaluationdate", ResultDate.ToString("yyyy-MM-dd")}}
+            })
             AllRows = Result.Data.Count
             Response.Text = $"Limpeza: Verificando se há avaliações antigas ({MonthStr})"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
+
+            Dim Connection As DbConnection = _LocalDb.Client.CreateDatabaseConnection()
+
+
+
             For Each Entry In Result.Data
                 Using Scope As New TransactionScope(TransactionScopeAsyncFlowOption.Enabled)
-                    Dim AgentID As Long = (Await _DatabaseService.ExecuteSelectAsync("user", New List(Of String) From {"id"}, "username = 'SISTEMA'", Limit:=1)).Data(0)("id")
-                    Await _DatabaseService.ExecuteUpdateAsync("evaluation", New Dictionary(Of String, String) From {{"userid", AgentID}}, "id = @id", New Dictionary(Of String, Object) From {{"@id", Entry("id")}})
-                    Await _DatabaseService.ExecuteUpdateAsync("evaluationcontrolledsellable", New Dictionary(Of String, String) From {{"userid", AgentID}}, "evaluationid = @evaluationid", New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}})
-                    Await _DatabaseService.ExecuteUpdateAsync("evaluationpicture", New Dictionary(Of String, String) From {{"userid", AgentID}}, "evaluationid = @evaluationid", New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}})
-                    Await _DatabaseService.ExecuteUpdateAsync("evaluationreplacedsellable", New Dictionary(Of String, String) From {{"userid", AgentID}}, "evaluationid = @evaluationid", New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}})
-                    Await _DatabaseService.ExecuteUpdateAsync("evaluationtechnician", New Dictionary(Of String, String) From {{"userid", AgentID}}, "evaluationid = @evaluationid", New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}})
-                    Await _DatabaseService.ExecuteDeleteAsync("evaluation", $"id = {Entry("id")}")
+                    Dim AgentID As Long = (Await _LocalDb.Request.ExecuteSelectAsync("user", New MysqlSelectOptions() With {
+                      .Columns = {"id"}.ToList,
+                      .Where = "username = @username",
+                      .QueryArgs = New Dictionary(Of String, Object) From {{"@username", "SISTEMA"}},
+                      .Limit = 1
+                    })).Data(0)("id")
+                    Await _LocalDb.Request.ExecuteUpdateAsync("evaluation",
+                                                              New Dictionary(Of String, String) From {{"userid", "@userid"}},
+                                                              "id = @id",
+                                                              New Dictionary(Of String, Object) From {{"@id", Entry("id")}, {"@userid", AgentID}},
+                                                              Connection)
+                    Await _LocalDb.Request.ExecuteUpdateAsync("evaluationcontrolledsellable",
+                                                              New Dictionary(Of String, String) From {{"userid", "@userid"}},
+                                                              "evaluationid = @evaluationid",
+                                                              New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}, {"@userid", AgentID}},
+                                                              Connection)
+                    Await _LocalDb.Request.ExecuteUpdateAsync("evaluationpicture",
+                                                              New Dictionary(Of String, String) From {{"userid", "@userid"}},
+                                                              "evaluationid = @evaluationid",
+                                                              New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}, {"@userid", AgentID}},
+                                                              Connection)
+                    Await _LocalDb.Request.ExecuteUpdateAsync("evaluationreplacedsellable",
+                                                              New Dictionary(Of String, String) From {{"userid", "@userid"}},
+                                                              "evaluationid = @evaluationid",
+                                                              New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}, {"@userid", AgentID}},
+                                                              Connection)
+                    Await _LocalDb.Request.ExecuteUpdateAsync("evaluationtechnician",
+                                                              New Dictionary(Of String, String) From {{"userid", "@userid"}},
+                                                              "evaluationid = @evaluationid",
+                                                              New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}, {"@userid", AgentID}},
+                                                              Connection)
+                    Await _LocalDb.Request.ExecuteDeleteAsync("evaluation",
+                                                              "id = @id",
+                                                              New Dictionary(Of String, Object) From {{"@id", Entry("id")}})
                     CurrentRow += 1
                     Response.Percent = CurrentRow / AllRows * 100
                     Response.Text = $"Limpeza: Excluindo avaliações antigas ({Response.Percent}%)"
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
                     Scope.Complete()
+                    Connection.Dispose()
                 End Using
             Next Entry
             CurrentRow = 0
@@ -96,27 +134,42 @@ Public Class TaskClean
             Await Task.Delay(Constants.WaitForJob)
             Response.Text = "Limpeza: Recuperando os endereços dos arquivos"
             Progress?.Report(Response)
-            Dim EvaluationResult As QueryResult = Await _DatabaseService.ExecuteSelectAsync("evaluation", {"id", "documentname"}.ToList, "documentname IS NOT NULL")
+            Dim EvaluationResult As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("evaluation", New MysqlSelectOptions() With {
+                .Columns = {"id", "documentname"}.ToList,
+                .Where = "documentname IS NOT NULL"
+            })
             Response.Percent = 20
             Response.Text = $"Limpeza: Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
-            Dim RequestResult As QueryResult = Await _DatabaseService.ExecuteSelectAsync("request", {"id", "documentname"}.ToList, "documentname IS NOT NULL")
+            Dim RequestResult As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("request", New MysqlSelectOptions() With {
+                .Columns = {"id", "documentname"}.ToList,
+                .Where = "documentname IS NOT NULL"
+            })
             Response.Percent = 40
             Response.Text = $"Limpeza: Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
-            Dim ProductResult As QueryResult = Await _DatabaseService.ExecuteSelectAsync("productpicture", {"id", "picturename"}.ToList, "picturename IS NOT NULL")
+            Dim ProductResult As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("productpicture", New MysqlSelectOptions() With {
+                .Columns = {"id", "picturename"}.ToList,
+                .Where = "picturename IS NOT NULL"
+            })
             Response.Percent = 60
             Response.Text = $"Limpeza: Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
-            Dim EmailResult As QueryResult = Await _DatabaseService.ExecuteSelectAsync("emailsignature", {"id", "directoryname"}.ToList, "directoryname IS NOT NULL")
+            Dim EmailResult As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("emailsignature", New MysqlSelectOptions() With {
+                .Columns = {"id", "directoryname"}.ToList,
+                .Where = "directoryname IS NOT NULL"
+            })
             Response.Percent = 80
             Response.Text = $"Limpeza: Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
-            Dim CashResult As QueryResult = Await _DatabaseService.ExecuteSelectAsync("cash", {"id", "documentname"}.ToList, "documentname IS NOT NULL")
+            Dim CashResult As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("cash", New MysqlSelectOptions() With {
+                .Columns = {"id", "documentname"}.ToList,
+                .Where = "documentname IS NOT NULL"
+            })
             Response.Percent = 100
             Response.Text = $"Limpeza: Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
@@ -291,7 +344,6 @@ Public Class TaskClean
             Response.Event.EndTime = DateTime.Now
             Response.Event.ReadyToPost = True
             Response.Event.Description = $"Limpeza{If(Not IsManual, String.Empty, " Manual")}"
-
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         Catch ex As Exception

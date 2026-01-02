@@ -175,17 +175,6 @@ Partial Class FrmLicenseKey
         Me.TxtKeyPartE.TabIndex = 9
         Me.TxtKeyPartE.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'PbxLoading
-        '
-        Me.PbxLoading.Image = Global.ManagerAgent.My.Resources.Resources.LoadingKey
-        Me.PbxLoading.Location = New System.Drawing.Point(15, 5)
-        Me.PbxLoading.Name = "PbxLoading"
-        Me.PbxLoading.Size = New System.Drawing.Size(22, 22)
-        Me.PbxLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PbxLoading.TabIndex = 11
-        Me.PbxLoading.TabStop = False
-        Me.PbxLoading.Visible = False
-        '
         'PnLicense
         '
         Me.PnLicense.Controls.Add(Me.LblStatus)

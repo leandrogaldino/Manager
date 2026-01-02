@@ -1,15 +1,17 @@
 ﻿Imports System.IO
 Imports ControlLibrary
 Imports ManagerCore
+Imports MySqlController
+Imports Helpers
 
 Public Class TaskBackup
     Inherits TaskBase
-    Private ReadOnly _DatabaseService As LocalDB
+    Private ReadOnly _LocalDb As MySqlService
     Private ReadOnly _CompanyService As CompanyService
     Private ReadOnly _CryptoKeyService As CryptoKeyService
-    Public Sub New(CompanyModel As CompanyModel, DatabaseService As LocalDB, CompanyService As CompanyService, CryptoKeyService As CryptoKeyService)
+    Public Sub New(CompanyModel As CompanyModel, LocalDb As MySqlService, CompanyService As CompanyService, CryptoKeyService As CryptoKeyService)
         MyBase.New(CompanyModel)
-        _DatabaseService = DatabaseService
+        _LocalDb = LocalDb
         _CompanyService = CompanyService
         _CryptoKeyService = CryptoKeyService
     End Sub
@@ -123,7 +125,7 @@ Public Class TaskBackup
                                                    End Sub)
             TempDatabaseDirectory = Path.Combine(ApplicationPaths.AgentTempDirectory, "Database")
             If Not Directory.Exists(TempDatabaseDirectory) Then Directory.CreateDirectory(TempDatabaseDirectory)
-            Await _DatabaseService.ExecuteBackupAsync(Path.Combine(TempDatabaseDirectory, "Database.sql"), IntProgress)
+            Await _LocalDb.Maintenance.ExecuteBackupAsync(Path.Combine(TempDatabaseDirectory, "Database.sql"), IntProgress)
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
             FileName = $"Backup {DateTimeHelper.Now:dd-MM-yyyy HH.mm.ss}.bkp"
@@ -166,9 +168,6 @@ Public Class TaskBackup
             Response.Event.EndTime = DateTime.Now
             Response.Event.ReadyToPost = True
             Response.Event.Description = $"Backup{If(Not IsManual, String.Empty, " Manual")}"
-
-
-
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         Catch ex As Exception

@@ -2,14 +2,15 @@
 Imports ControlLibrary
 Imports ControlLibrary.FileManager
 Imports ManagerCore
+Imports MySqlController
 
 Public Class TaskRestoreBackup
     Inherits TaskBase
-    Private ReadOnly _DatabaseService As LocalDB
+    Private ReadOnly _LocalDb As MySqlService
     Private ReadOnly _CryptoKeyService As CryptoKeyService
-    Public Sub New(CompanyModel As CompanyModel, DatabaseService As LocalDB, CryptoKeyService As CryptoKeyService)
+    Public Sub New(CompanyModel As CompanyModel, LocalDb As MySqlService, CryptoKeyService As CryptoKeyService)
         MyBase.New(CompanyModel)
-        _DatabaseService = DatabaseService
+        _LocalDb = LocalDb
         _CryptoKeyService = CryptoKeyService
     End Sub
     Public Overrides ReadOnly Property Name As TaskName
@@ -117,7 +118,7 @@ Public Class TaskRestoreBackup
             Response.Percent = 0
             Response.Text = "Restaurar Backup: Processando o banco de dados"
             If Progress IsNot Nothing Then Progress.Report(Response)
-            Await _DatabaseService.ExecuteProcedureAsync("DropAllTables")
+            Await _LocalDb.Request.ExecuteProcedureAsync("DropAllTables")
             IntProgress = New Progress(Of Integer)(Sub(Percent As Integer)
                                                        Response.Percent = Percent
                                                        Response.Text = $"Restaurar Backup: Processando o banco de dados ({Percent}%)"
@@ -125,7 +126,7 @@ Public Class TaskRestoreBackup
                                                    End Sub)
 
             DatabaseDirectory = Path.Combine(ApplicationPaths.FilesDirectory, "Database")
-            Await _DatabaseService.ExecuteRestoreAsync(Path.Combine(DatabaseDirectory, "Database.sql"), IntProgress)
+            Await _LocalDb.Maintenance.ExecuteRestoreAsync(Path.Combine(DatabaseDirectory, "Database.sql"), IntProgress)
             Await FileManager.DeleteDirectoriesAsync(New List(Of DeleteDirectoryInfo) From {New DeleteDirectoryInfo(New DirectoryInfo(DatabaseDirectory), True)})
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0

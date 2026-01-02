@@ -1,10 +1,10 @@
 ﻿Imports ManagerCore
+Imports MySqlController
 
 Public Class TaskReleaseManual
     Inherits TaskRelease
-
-    Public Sub New(CompanyModel As CompanyModel, DatabaseService As LocalDB, CompanyService As CompanyService)
-        MyBase.New(CompanyModel, DatabaseService, CompanyService)
+    Public Sub New(CompanyModel As CompanyModel, LocalDb As MySqlService, CompanyService As CompanyService)
+        MyBase.New(CompanyModel, LocalDb, CompanyService)
     End Sub
     Private _NextRun As Date = Nothing
     Public Overrides Property NextRun As Date

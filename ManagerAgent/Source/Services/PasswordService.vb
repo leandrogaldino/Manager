@@ -1,6 +1,6 @@
 ﻿Imports ControlLibrary
 Imports ManagerCore
-
+Imports Helpers
 Public Class PasswordService
     Private ReadOnly _LicenseService As LicenseService
     Private ReadOnly _Key As String

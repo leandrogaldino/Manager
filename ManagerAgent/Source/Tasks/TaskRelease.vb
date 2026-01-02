@@ -1,13 +1,13 @@
 ﻿Imports System.Transactions
 Imports ManagerCore
-Imports ManagerCore.LocalDB
+Imports MySqlController
 Public Class TaskRelease
     Inherits TaskBase
-    Private ReadOnly _DatabaseService As LocalDB
+    Private ReadOnly _LocalDb As MySqlService
     Private ReadOnly _CompanyService As CompanyService
-    Public Sub New(CompanyModel As CompanyModel, DatabaseService As LocalDB, CompanyService As CompanyService)
+    Public Sub New(CompanyModel As CompanyModel, LocalDb As MySqlService, CompanyService As CompanyService)
         MyBase.New(CompanyModel)
-        _DatabaseService = DatabaseService
+        _LocalDb = LocalDb
         _CompanyService = CompanyService
     End Sub
 
@@ -39,13 +39,11 @@ Public Class TaskRelease
     Private Async Function GetBloquedList() As Task(Of List(Of RegistryModel))
         Dim ReleasedList As List(Of RegistryModel) = Nothing
         Dim ReleasedRegistry As RegistryModel
-        Dim Columns As List(Of String)
-        Dim Where As String
-        Dim Args As Dictionary(Of String, Object)
-        Columns = New List(Of String) From {"session", "locktime", "routineid", "registryid", "userid"}
-        Where = "NOW() > DATE_ADD(lockedregistry.locktime, INTERVAL @min MINUTE);"
-        Args = New Dictionary(Of String, Object) From {{"@min", Company.General.Release.ReleaseBlockedRegisterInterval}}
-        Dim Result As QueryResult = Await _DatabaseService.ExecuteSelectAsync("lockedregistry", Columns, Where, Args)
+        Dim Result As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("lockedregistry", New MysqlSelectOptions() With {
+            .Columns = {"session", "locktime", "routineid", "registryid", "userid"}.ToList(),
+            .Where = "NOW() > DATE_ADD(lockedregistry.locktime, INTERVAL @min MINUTE);",
+            .QueryArgs = New Dictionary(Of String, Object) From {{"@min", Company.General.Release.ReleaseBlockedRegisterInterval}}
+        })
         If Result.HasData Then
             ReleasedList = New List(Of RegistryModel)
             For Each Item In Result.Data
@@ -71,7 +69,7 @@ Public Class TaskRelease
             {"@userid", Registry.UserID},
             {"@min", Company.General.Release.ReleaseBlockedRegisterInterval}
         }
-        Await _DatabaseService.ExecuteDeleteAsync("lockedregistry", Where, Args)
+        Await _LocalDb.Request.ExecuteDeleteAsync("lockedregistry", Where, Args)
         Await Task.Delay(Constants.WaitForJob)
     End Function
     Public Overrides Async Function Run(Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task
@@ -79,11 +77,7 @@ Public Class TaskRelease
         Dim InitialMessagePosted As Boolean
         Dim Response As New AsyncResponseModel
         Dim Exception As Exception = Nothing
-
         Try
-
-            Convert.ToInt16("Keabdro")
-
             Using Scope As New TransactionScope(TransactionScopeAsyncFlowOption.Enabled)
                 Await Task.Delay(Constants.WaitForStart)
                 Dim BloquedList As List(Of RegistryModel) = Await GetBloquedList()
@@ -99,8 +93,6 @@ Public Class TaskRelease
                         Progress?.Report(Response)
                         Await Task.Delay(Constants.WaitForJob)
                     Next Registry
-
-
                     Response.Text = "Desbloquear: Concluído"
                     Response.Percent = 0
                     Response.Event.EndTime = DateTime.Now

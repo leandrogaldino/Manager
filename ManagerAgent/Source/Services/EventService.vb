@@ -2,9 +2,9 @@
 Imports System.IO
 Imports System.Text
 Imports System.Threading
-Imports ControlLibrary
 Imports ManagerCore
 Imports Newtonsoft.Json
+Imports Helpers
 Public Class EventService
     Private ReadOnly _Semaphore As SemaphoreSlim
 

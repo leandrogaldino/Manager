@@ -2,7 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports ControlLibrary
 Imports ManagerCore
-
+Imports Helpers
 Public Class LoginViewModel
     Implements INotifyPropertyChanged
     Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged

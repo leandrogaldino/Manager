@@ -22,13 +22,6 @@ Public Class FrmLicenseCredentials
         TxtUsername.Text = _LicenseCredentialsModel.Username
         TxtPassword.Text = _LicenseCredentialsModel.Password
 
-
-        TxtApiKey.Text = "AIzaSyDHKmoQB7o9wKOT1hTF6FKqoSS8r1BtY58"
-        TxtProjectID.Text = "manager-license-2a24d"
-        TxtBucketName.Text = "manager-license-2a24d.firebasestorage.app"
-        TxtUsername.Text = "admin"
-        TxtPassword.Text = "123456"
-
         _Loading = False
         AddHandler BtnTestAndOK.Click, AddressOf BtnTest_Click
     End Sub

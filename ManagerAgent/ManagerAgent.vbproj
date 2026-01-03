@@ -56,63 +56,69 @@
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AsyncLoader">
-      <HintPath>..\..\ControlLibrary\AsyncLoader\bin\Debug\AsyncLoader.dll</HintPath>
+    <Reference Include="CoreSuite.AnimatedBox">
+      <HintPath>..\..\..\source\repos\CoreSuite\AnimatedBox\bin\Debug\CoreSuite.AnimatedBox.dll</HintPath>
     </Reference>
-    <Reference Include="ControlLibrary">
-      <HintPath>..\..\ControlLibrary\ControlLibrary\bin\Debug\ControlLibrary.dll</HintPath>
+    <Reference Include="CoreSuite.AsyncLoader">
+      <HintPath>..\..\..\source\repos\CoreSuite\AsyncLoader\bin\Debug\CoreSuite.AsyncLoader.dll</HintPath>
     </Reference>
-    <Reference Include="FirebaseController">
-      <HintPath>..\..\ControlLibrary\FirebaseController\bin\Debug\FirebaseController.dll</HintPath>
+    <Reference Include="CoreSuite.CMessageBox">
+      <HintPath>..\..\..\source\repos\CoreSuite\CMessageBox\bin\Debug\CoreSuite.CMessageBox.dll</HintPath>
     </Reference>
-    <Reference Include="GifBox">
-      <HintPath>..\..\ControlLibrary\GifBox\bin\Debug\GifBox.dll</HintPath>
+    <Reference Include="CoreSuite.ColoredProgressBar">
+      <HintPath>..\..\..\source\repos\CoreSuite\ColoredProgressBar\bin\Debug\CoreSuite.ColoredProgressBar.dll</HintPath>
     </Reference>
-    <Reference Include="Helpers">
-      <HintPath>..\..\ControlLibrary\Helpers\bin\Debug\Helpers.dll</HintPath>
+    <Reference Include="CoreSuite.ControlContainer">
+      <HintPath>..\..\..\source\repos\CoreSuite\ControlContainer\bin\Debug\CoreSuite.ControlContainer.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.Cryptography">
+      <HintPath>..\..\..\source\repos\CoreSuite\Cryptography\bin\Debug\CoreSuite.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.CToolStripRender">
+      <HintPath>..\..\..\source\repos\CoreSuite\CToolStripRender\bin\Debug\CoreSuite.CToolStripRender.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.DataGridViewClipboart">
+      <HintPath>..\..\..\source\repos\CoreSuite\DataGridViewClipboart\bin\Debug\CoreSuite.DataGridViewClipboart.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.DataGridViewNavigator">
+      <HintPath>..\..\..\source\repos\CoreSuite\DataGridViewNavigator\bin\Debug\CoreSuite.DataGridViewNavigator.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.DecimalBox">
+      <HintPath>..\..\..\source\repos\CoreSuite\DecimalBox\bin\Debug\CoreSuite.DecimalBox.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.FileManager">
+      <HintPath>..\..\..\source\repos\CoreSuite\FileManager\bin\Debug\CoreSuite.FileManager.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.FileMerger">
+      <HintPath>..\..\..\source\repos\CoreSuite\FileMerger\bin\Debug\CoreSuite.FileMerger.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.FirebaseService">
+      <HintPath>..\..\..\source\repos\CoreSuite\FirebaseService\bin\Debug\CoreSuite.FirebaseService.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.Helpers">
+      <HintPath>..\..\..\source\repos\CoreSuite\Helpers\bin\Debug\CoreSuite.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.Locator">
+      <HintPath>..\..\..\source\repos\CoreSuite\Locator\bin\Debug\CoreSuite.Locator.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.MySqlService">
+      <HintPath>..\..\..\source\repos\CoreSuite\MySqlService\bin\Debug\CoreSuite.MySqlService.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.NoFocusCueButton">
+      <HintPath>..\..\..\source\repos\CoreSuite\NoFocusCueButton\bin\Debug\CoreSuite.NoFocusCueButton.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.PictureViewer">
+      <HintPath>..\..\..\source\repos\CoreSuite\PictureViewer\bin\Debug\CoreSuite.PictureViewer.dll</HintPath>
     </Reference>
     <Reference Include="ManagerCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ManagerCore\bin\Debug\ManagerCore.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MySqlController">
-      <HintPath>..\..\ControlLibrary\MySqlController\bin\Debug\MySqlController.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Nito.AsyncEx.Context, Version=5.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nito.AsyncEx.Context.5.1.2\lib\net461\Nito.AsyncEx.Context.dll</HintPath>
-    </Reference>
-    <Reference Include="Nito.AsyncEx.Coordination, Version=5.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nito.AsyncEx.Coordination.5.1.2\lib\net461\Nito.AsyncEx.Coordination.dll</HintPath>
-    </Reference>
-    <Reference Include="Nito.AsyncEx.Interop.WaitHandles, Version=5.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nito.AsyncEx.Interop.WaitHandles.5.1.2\lib\net461\Nito.AsyncEx.Interop.WaitHandles.dll</HintPath>
-    </Reference>
-    <Reference Include="Nito.AsyncEx.Oop, Version=5.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nito.AsyncEx.Oop.5.1.2\lib\net461\Nito.AsyncEx.Oop.dll</HintPath>
-    </Reference>
-    <Reference Include="Nito.AsyncEx.Tasks, Version=5.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nito.AsyncEx.Tasks.5.1.2\lib\net461\Nito.AsyncEx.Tasks.dll</HintPath>
-    </Reference>
-    <Reference Include="Nito.Cancellation, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nito.Cancellation.1.2.0\lib\net461\Nito.Cancellation.dll</HintPath>
-    </Reference>
-    <Reference Include="Nito.Collections.Deque, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nito.Collections.Deque.1.2.1\lib\net461\Nito.Collections.Deque.dll</HintPath>
-    </Reference>
-    <Reference Include="Nito.Disposables, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nito.Disposables.2.5.0\lib\net461\Nito.Disposables.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Collections.Immutable, Version=10.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Collections.Immutable.10.0.1\lib\net462\System.Collections.Immutable.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -122,16 +128,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Management" />
-    <Reference Include="System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.6.3\lib\net462\System.Memory.dll</HintPath>
-    </Reference>
     <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.6.1\lib\net462\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.1.2\lib\net462\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -155,9 +152,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="Source\Interfaces\ICompression.vb" />
     <Compile Include="Source\Models\AsyncResponseModel.vb" />
     <Compile Include="Source\Models\BackupFileModel.vb" />
+    <Compile Include="Source\Models\DatabaseTestResultModel.vb" />
     <Compile Include="Source\Models\CloudTestResultModel.vb" />
     <Compile Include="Source\Models\RegistryModel.vb" />
     <Compile Include="Source\Services\AppService.vb" />
@@ -183,6 +180,24 @@
       <DependentUpon>FrmCompanies.vb</DependentUpon>
     </Compile>
     <Compile Include="Source\Views\Company\FrmCompanies.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\FrmBackup.Designer.vb">
+      <DependentUpon>FrmBackup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\FrmBackup.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\FrmParameters.Designer.vb">
+      <DependentUpon>FrmParameters.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\FrmParameters.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\FrmSupport.Designer.vb">
+      <DependentUpon>FrmSupport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\FrmSupport.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Views\Main\FrmLoader.Designer.vb">
@@ -278,6 +293,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Source\Views\Company\FrmCompanies.resx">
       <DependentUpon>FrmCompanies.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\FrmBackup.resx">
+      <DependentUpon>FrmBackup.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\FrmParameters.resx">
+      <DependentUpon>FrmParameters.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\FrmSupport.resx">
+      <DependentUpon>FrmSupport.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Main\FrmLoader.resx">
       <DependentUpon>FrmLoader.vb</DependentUpon>

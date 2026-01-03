@@ -35,7 +35,7 @@ Public MustInherit Class ParentModel
         Dim Lock As LockRegistryInfo
         Dim TableResult As DataTable
         If _Session.User IsNot Nothing Then
-            Using Con As New MySqlConnection(_Session.Setting.Database.GetConnectionString())
+            Using Con As New MySqlConnection(_Session.Setting.LocalDatabase.GetConnectionString())
                 Using Cmd As New MySqlCommand(My.Resources.LockedRegistrySelect, Con)
                     Cmd.Parameters.AddWithValue("@routineid", CInt(Routine))
                     Cmd.Parameters.AddWithValue("@registryid", ID)
@@ -62,7 +62,7 @@ Public MustInherit Class ParentModel
     Public Sub Lock()
         If Not Debugger.IsAttached Then
             Dim Time As String = Now.ToString("yyyy-MM-dd HH:mm:ss")
-            Using Con As New MySqlConnection(_Session.Setting.Database.GetConnectionString())
+            Using Con As New MySqlConnection(_Session.Setting.LocalDatabase.GetConnectionString())
                 Con.Open()
                 Using Cmd As New MySqlCommand(My.Resources.LockedRegistryInsert, Con)
                     Cmd.Parameters.AddWithValue("@session", _Session.Token)
@@ -125,7 +125,7 @@ Public MustInherit Class ParentModel
     Public Sub Unlock()
         If Not Debugger.IsAttached Then
             If _Session.User IsNot Nothing Then
-                Using Con As New MySqlConnection(_Session.Setting.Database.GetConnectionString())
+                Using Con As New MySqlConnection(_Session.Setting.LocalDatabase.GetConnectionString())
                     Con.Open()
                     Using Cmd As New MySqlCommand(My.Resources.LockedRegistryDelete, Con)
                         Cmd.Parameters.AddWithValue("@session", _Session.Token)
@@ -146,7 +146,7 @@ Public MustInherit Class ParentModel
     End Sub
     Private Async Sub Timer_Elapsed(sender As Object, e As EventArgs) Handles Timer.Elapsed
         Dim Time As String = Now.ToString("yyyy-MM-dd HH:mm:ss")
-        Dim ConnectionString As String = _Session.Setting.Database.GetConnectionString()
+        Dim ConnectionString As String = _Session.Setting.LocalDatabase.GetConnectionString()
         If LockInfo.IsLocked Then
             Try
                 Using Con As New MySqlConnection(ConnectionString)

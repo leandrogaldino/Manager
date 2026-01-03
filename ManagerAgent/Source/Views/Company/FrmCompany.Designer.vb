@@ -23,15 +23,12 @@ Partial Class FrmCompany
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Me.PnButtons = New System.Windows.Forms.Panel()
-        Me.BtnClose = New System.Windows.Forms.Button()
-        Me.BtnSave = New System.Windows.Forms.Button()
         Me.SfdLogo = New System.Windows.Forms.SaveFileDialog()
         Me.OfdLogo = New System.Windows.Forms.OpenFileDialog()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.PictureViewer = New ControlLibrary.PictureViewer()
+        Me.PictureViewer = New CoreSuite.Controls.PictureViewer()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.LblLinkedin = New System.Windows.Forms.Label()
         Me.LblInstagram = New System.Windows.Forms.Label()
@@ -63,8 +60,8 @@ Partial Class FrmCompany
         Me.LblStreet = New System.Windows.Forms.Label()
         Me.TxtStreet = New System.Windows.Forms.TextBox()
         Me.FlpProduct = New System.Windows.Forms.FlowLayoutPanel()
-        Me.BtnIncludeLogo = New ControlLibrary.NoFocusCueButton()
-        Me.BtnDeleteLogo = New ControlLibrary.NoFocusCueButton()
+        Me.BtnIncludeLogo = New CoreSuite.Controls.NoFocusCueButton()
+        Me.BtnDeleteLogo = New CoreSuite.Controls.NoFocusCueButton()
         Me.TxtCityDocument = New System.Windows.Forms.TextBox()
         Me.TxtStateDocument = New System.Windows.Forms.TextBox()
         Me.TxtDocument = New System.Windows.Forms.TextBox()
@@ -76,23 +73,6 @@ Partial Class FrmCompany
         Me.LblShortname = New System.Windows.Forms.Label()
         Me.LblLogo = New System.Windows.Forms.Label()
         Me.LblName = New System.Windows.Forms.Label()
-        Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.Panel3 = New System.Windows.Forms.Panel()
-        Me.BtnBackupDays = New System.Windows.Forms.Button()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.TxtBackupLocation = New System.Windows.Forms.TextBox()
-        Me.BtnBackupLocation = New System.Windows.Forms.Button()
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.CbxIgnoreNext = New System.Windows.Forms.CheckBox()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.Panel6 = New System.Windows.Forms.Panel()
-        Me.LblBackupKeep = New System.Windows.Forms.Label()
-        Me.DbxBackupKeep = New ControlLibrary.DecimalBox()
-        Me.Panel5 = New System.Windows.Forms.Panel()
-        Me.LblBackupTime = New System.Windows.Forms.Label()
-        Me.TxtBackupTime = New System.Windows.Forms.MaskedTextBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Panel11 = New System.Windows.Forms.Panel()
         Me.Label17 = New System.Windows.Forms.Label()
@@ -106,42 +86,7 @@ Partial Class FrmCompany
         Me.Panel4 = New System.Windows.Forms.Panel()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.TxtDatabaseUsername = New System.Windows.Forms.TextBox()
-        Me.TabPage5 = New System.Windows.Forms.TabPage()
-        Me.Panel19 = New System.Windows.Forms.Panel()
-        Me.TxtUserDefaultPassword = New System.Windows.Forms.TextBox()
-        Me.LblUserDefaultPassword = New System.Windows.Forms.Label()
-        Me.Panel25 = New System.Windows.Forms.Panel()
-        Me.LblReleaseRegister = New System.Windows.Forms.Label()
-        Me.TbrReleaseRegister = New System.Windows.Forms.TrackBar()
-        Me.Panel7 = New System.Windows.Forms.Panel()
-        Me.LblEvaluationMonthsBeforeRecordDeletion = New System.Windows.Forms.Label()
-        Me.DbxEvaluationMonthsBeforeRecordDeletion = New ControlLibrary.DecimalBox()
-        Me.Panel26 = New System.Windows.Forms.Panel()
-        Me.LblEvaluationDaysBeforeVisitAlert = New System.Windows.Forms.Label()
-        Me.DbxEvaluationDaysBeforeVisitAlert = New ControlLibrary.DecimalBox()
-        Me.Panel23 = New System.Windows.Forms.Panel()
-        Me.LblEvaluationDaysBeforeMaintenanceAlert = New System.Windows.Forms.Label()
-        Me.DbxEvaluationDaysBeforeMaintenanceAlert = New ControlLibrary.DecimalBox()
-        Me.Panel24 = New System.Windows.Forms.Panel()
-        Me.LblInterval = New System.Windows.Forms.Label()
-        Me.TbrInterval = New System.Windows.Forms.TrackBar()
-        Me.TabPage6 = New System.Windows.Forms.TabPage()
-        Me.Panel18 = New System.Windows.Forms.Panel()
-        Me.TxtSupportSMTPServer = New System.Windows.Forms.TextBox()
-        Me.Label19 = New System.Windows.Forms.Label()
-        Me.Panel16 = New System.Windows.Forms.Panel()
-        Me.TxtSupportEmail = New System.Windows.Forms.TextBox()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Panel13 = New System.Windows.Forms.Panel()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.DbxSupportPort = New ControlLibrary.DecimalBox()
-        Me.Panel12 = New System.Windows.Forms.Panel()
-        Me.CbxEnableSSL = New System.Windows.Forms.CheckBox()
-        Me.Label12 = New System.Windows.Forms.Label()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
-        Me.Panel8 = New System.Windows.Forms.Panel()
-        Me.LblSyncInterval = New System.Windows.Forms.Label()
-        Me.TbrSyncInterval = New System.Windows.Forms.TrackBar()
         Me.Panel14 = New System.Windows.Forms.Panel()
         Me.TxtBucketName = New System.Windows.Forms.TextBox()
         Me.LblBucketName = New System.Windows.Forms.Label()
@@ -151,76 +96,28 @@ Partial Class FrmCompany
         Me.Panel21 = New System.Windows.Forms.Panel()
         Me.TxtApiKey = New System.Windows.Forms.TextBox()
         Me.LblApiKey = New System.Windows.Forms.Label()
-        Me.PnButtons.SuspendLayout()
+        Me.Panel8 = New System.Windows.Forms.Panel()
+        Me.LblSyncInterval = New System.Windows.Forms.Label()
+        Me.TbrSyncInterval = New System.Windows.Forms.TrackBar()
+        Me.PnButtons = New System.Windows.Forms.Panel()
+        Me.BtnTestAndOK = New System.Windows.Forms.Button()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.FlpProduct.SuspendLayout()
-        Me.TabPage2.SuspendLayout()
-        Me.Panel3.SuspendLayout()
-        Me.Panel2.SuspendLayout()
-        Me.Panel1.SuspendLayout()
-        Me.Panel6.SuspendLayout()
-        Me.Panel5.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.Panel11.SuspendLayout()
         Me.Panel10.SuspendLayout()
         Me.Panel9.SuspendLayout()
         Me.Panel4.SuspendLayout()
-        Me.TabPage5.SuspendLayout()
-        Me.Panel19.SuspendLayout()
-        Me.Panel25.SuspendLayout()
-        CType(Me.TbrReleaseRegister, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Panel7.SuspendLayout()
-        Me.Panel26.SuspendLayout()
-        Me.Panel23.SuspendLayout()
-        Me.Panel24.SuspendLayout()
-        CType(Me.TbrInterval, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabPage6.SuspendLayout()
-        Me.Panel18.SuspendLayout()
-        Me.Panel16.SuspendLayout()
-        Me.Panel13.SuspendLayout()
-        Me.Panel12.SuspendLayout()
         Me.TabPage7.SuspendLayout()
-        Me.Panel8.SuspendLayout()
-        CType(Me.TbrSyncInterval, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel14.SuspendLayout()
         Me.Panel15.SuspendLayout()
         Me.Panel21.SuspendLayout()
+        Me.Panel8.SuspendLayout()
+        CType(Me.TbrSyncInterval, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PnButtons.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'PnButtons
-        '
-        Me.PnButtons.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.PnButtons.Controls.Add(Me.BtnClose)
-        Me.PnButtons.Controls.Add(Me.BtnSave)
-        Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PnButtons.Location = New System.Drawing.Point(0, 504)
-        Me.PnButtons.Name = "PnButtons"
-        Me.PnButtons.Size = New System.Drawing.Size(594, 44)
-        Me.PnButtons.TabIndex = 8
-        '
-        'BtnClose
-        '
-        Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnClose.Location = New System.Drawing.Point(490, 7)
-        Me.BtnClose.Name = "BtnClose"
-        Me.BtnClose.Size = New System.Drawing.Size(95, 30)
-        Me.BtnClose.TabIndex = 2
-        Me.BtnClose.Text = "Fechar"
-        Me.BtnClose.UseVisualStyleBackColor = True
-        '
-        'BtnSave
-        '
-        Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnSave.Enabled = False
-        Me.BtnSave.Location = New System.Drawing.Point(389, 7)
-        Me.BtnSave.Name = "BtnSave"
-        Me.BtnSave.Size = New System.Drawing.Size(95, 30)
-        Me.BtnSave.TabIndex = 1
-        Me.BtnSave.Text = "Salvar"
-        Me.BtnSave.UseVisualStyleBackColor = True
         '
         'SfdLogo
         '
@@ -238,17 +135,14 @@ Partial Class FrmCompany
         '
         'TabControl1
         '
-        Me.TabControl1.Controls.Add(Me.TabPage1)
-        Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
-        Me.TabControl1.Controls.Add(Me.TabPage5)
-        Me.TabControl1.Controls.Add(Me.TabPage6)
         Me.TabControl1.Controls.Add(Me.TabPage7)
+        Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(594, 504)
+        Me.TabControl1.Size = New System.Drawing.Size(594, 500)
         Me.TabControl1.TabIndex = 9
         '
         'TabPage1
@@ -299,7 +193,7 @@ Partial Class FrmCompany
         Me.TabPage1.Location = New System.Drawing.Point(4, 26)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(586, 474)
+        Me.TabPage1.Size = New System.Drawing.Size(586, 470)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Cadastro"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -740,207 +634,6 @@ Partial Class FrmCompany
         Me.LblName.TabIndex = 58
         Me.LblName.Text = "Razão Social"
         '
-        'TabPage2
-        '
-        Me.TabPage2.Controls.Add(Me.Panel3)
-        Me.TabPage2.Controls.Add(Me.Panel2)
-        Me.TabPage2.Controls.Add(Me.Panel1)
-        Me.TabPage2.Controls.Add(Me.Panel6)
-        Me.TabPage2.Controls.Add(Me.Panel5)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(586, 478)
-        Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "Backup"
-        Me.TabPage2.UseVisualStyleBackColor = True
-        '
-        'Panel3
-        '
-        Me.Panel3.BackColor = System.Drawing.Color.White
-        Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel3.Controls.Add(Me.BtnBackupDays)
-        Me.Panel3.Controls.Add(Me.Label2)
-        Me.Panel3.Location = New System.Drawing.Point(8, 10)
-        Me.Panel3.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel3.Name = "Panel3"
-        Me.Panel3.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel3.Size = New System.Drawing.Size(450, 31)
-        Me.Panel3.TabIndex = 33
-        '
-        'BtnBackupDays
-        '
-        Me.BtnBackupDays.Font = New System.Drawing.Font("Century Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnBackupDays.Location = New System.Drawing.Point(241, 3)
-        Me.BtnBackupDays.Name = "BtnBackupDays"
-        Me.BtnBackupDays.Size = New System.Drawing.Size(203, 23)
-        Me.BtnBackupDays.TabIndex = 29
-        Me.BtnBackupDays.Text = "Seg, Ter, Qua, Qui, Sex, Sáb, Dom"
-        Me.BtnBackupDays.UseVisualStyleBackColor = True
-        '
-        'Label2
-        '
-        Me.Label2.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label2.Location = New System.Drawing.Point(4, 0)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(8, 0, 4, 0)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(230, 29)
-        Me.Label2.TabIndex = 0
-        Me.Label2.Text = "Dias de backup"
-        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Panel2
-        '
-        Me.Panel2.BackColor = System.Drawing.Color.White
-        Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel2.Controls.Add(Me.Label6)
-        Me.Panel2.Controls.Add(Me.TxtBackupLocation)
-        Me.Panel2.Controls.Add(Me.BtnBackupLocation)
-        Me.Panel2.Location = New System.Drawing.Point(8, 186)
-        Me.Panel2.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel2.Size = New System.Drawing.Size(450, 31)
-        Me.Panel2.TabIndex = 32
-        '
-        'Label6
-        '
-        Me.Label6.BackColor = System.Drawing.Color.White
-        Me.Label6.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label6.Location = New System.Drawing.Point(4, 0)
-        Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(73, 29)
-        Me.Label6.TabIndex = 0
-        Me.Label6.Text = "Local"
-        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'TxtBackupLocation
-        '
-        Me.TxtBackupLocation.Location = New System.Drawing.Point(84, 3)
-        Me.TxtBackupLocation.Name = "TxtBackupLocation"
-        Me.TxtBackupLocation.ReadOnly = True
-        Me.TxtBackupLocation.Size = New System.Drawing.Size(327, 23)
-        Me.TxtBackupLocation.TabIndex = 1
-        '
-        'BtnBackupLocation
-        '
-        Me.BtnBackupLocation.Location = New System.Drawing.Point(417, 3)
-        Me.BtnBackupLocation.Name = "BtnBackupLocation"
-        Me.BtnBackupLocation.Size = New System.Drawing.Size(28, 23)
-        Me.BtnBackupLocation.TabIndex = 2
-        Me.BtnBackupLocation.Text = "..."
-        Me.BtnBackupLocation.UseVisualStyleBackColor = True
-        '
-        'Panel1
-        '
-        Me.Panel1.BackColor = System.Drawing.Color.White
-        Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel1.Controls.Add(Me.CbxIgnoreNext)
-        Me.Panel1.Controls.Add(Me.Label4)
-        Me.Panel1.Location = New System.Drawing.Point(8, 142)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel1.Size = New System.Drawing.Size(450, 31)
-        Me.Panel1.TabIndex = 31
-        '
-        'CbxIgnoreNext
-        '
-        Me.CbxIgnoreNext.Appearance = System.Windows.Forms.Appearance.Button
-        Me.CbxIgnoreNext.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.CbxIgnoreNext.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CbxIgnoreNext.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.CbxIgnoreNext.Location = New System.Drawing.Point(241, 3)
-        Me.CbxIgnoreNext.Name = "CbxIgnoreNext"
-        Me.CbxIgnoreNext.Size = New System.Drawing.Size(204, 23)
-        Me.CbxIgnoreNext.TabIndex = 3
-        Me.CbxIgnoreNext.Text = "Não"
-        Me.CbxIgnoreNext.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.CbxIgnoreNext.UseVisualStyleBackColor = True
-        '
-        'Label4
-        '
-        Me.Label4.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label4.Location = New System.Drawing.Point(4, 0)
-        Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(230, 29)
-        Me.Label4.TabIndex = 0
-        Me.Label4.Text = "Ignorar próximo backup"
-        Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Panel6
-        '
-        Me.Panel6.BackColor = System.Drawing.Color.White
-        Me.Panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel6.Controls.Add(Me.LblBackupKeep)
-        Me.Panel6.Controls.Add(Me.DbxBackupKeep)
-        Me.Panel6.Location = New System.Drawing.Point(8, 98)
-        Me.Panel6.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel6.Name = "Panel6"
-        Me.Panel6.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel6.Size = New System.Drawing.Size(450, 31)
-        Me.Panel6.TabIndex = 30
-        '
-        'LblBackupKeep
-        '
-        Me.LblBackupKeep.Dock = System.Windows.Forms.DockStyle.Left
-        Me.LblBackupKeep.Location = New System.Drawing.Point(4, 0)
-        Me.LblBackupKeep.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.LblBackupKeep.Name = "LblBackupKeep"
-        Me.LblBackupKeep.Size = New System.Drawing.Size(230, 29)
-        Me.LblBackupKeep.TabIndex = 0
-        Me.LblBackupKeep.Text = "Qtd. mantida"
-        Me.LblBackupKeep.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'DbxBackupKeep
-        '
-        Me.DbxBackupKeep.DecimalOnly = True
-        Me.DbxBackupKeep.DecimalPlaces = 0
-        Me.DbxBackupKeep.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxBackupKeep.Location = New System.Drawing.Point(241, 3)
-        Me.DbxBackupKeep.Name = "DbxBackupKeep"
-        Me.DbxBackupKeep.Size = New System.Drawing.Size(204, 23)
-        Me.DbxBackupKeep.TabIndex = 1
-        Me.DbxBackupKeep.Text = "0"
-        Me.DbxBackupKeep.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Panel5
-        '
-        Me.Panel5.BackColor = System.Drawing.Color.White
-        Me.Panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel5.Controls.Add(Me.LblBackupTime)
-        Me.Panel5.Controls.Add(Me.TxtBackupTime)
-        Me.Panel5.Location = New System.Drawing.Point(8, 54)
-        Me.Panel5.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel5.Name = "Panel5"
-        Me.Panel5.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel5.Size = New System.Drawing.Size(450, 31)
-        Me.Panel5.TabIndex = 29
-        '
-        'LblBackupTime
-        '
-        Me.LblBackupTime.Dock = System.Windows.Forms.DockStyle.Left
-        Me.LblBackupTime.Location = New System.Drawing.Point(4, 0)
-        Me.LblBackupTime.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.LblBackupTime.Name = "LblBackupTime"
-        Me.LblBackupTime.Size = New System.Drawing.Size(230, 29)
-        Me.LblBackupTime.TabIndex = 0
-        Me.LblBackupTime.Text = "Horário"
-        Me.LblBackupTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'TxtBackupTime
-        '
-        Me.TxtBackupTime.Location = New System.Drawing.Point(241, 3)
-        Me.TxtBackupTime.Mask = "00:00:00"
-        Me.TxtBackupTime.Name = "TxtBackupTime"
-        Me.TxtBackupTime.Size = New System.Drawing.Size(204, 23)
-        Me.TxtBackupTime.TabIndex = 1
-        Me.TxtBackupTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.TxtBackupTime.TextMaskFormat = System.Windows.Forms.MaskFormat.IncludePromptAndLiterals
-        Me.TxtBackupTime.ValidatingType = GetType(Date)
-        '
         'TabPage3
         '
         Me.TabPage3.Controls.Add(Me.Panel11)
@@ -949,9 +642,9 @@ Partial Class FrmCompany
         Me.TabPage3.Controls.Add(Me.Panel4)
         Me.TabPage3.Location = New System.Drawing.Point(4, 26)
         Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Size = New System.Drawing.Size(586, 474)
+        Me.TabPage3.Size = New System.Drawing.Size(586, 470)
         Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "Banco de Dados"
+        Me.TabPage3.Text = "Banco de Dados Local"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
         'Panel11
@@ -1085,387 +778,6 @@ Partial Class FrmCompany
         Me.TxtDatabaseUsername.TabIndex = 1
         Me.TxtDatabaseUsername.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'TabPage5
-        '
-        Me.TabPage5.Controls.Add(Me.Panel19)
-        Me.TabPage5.Controls.Add(Me.Panel25)
-        Me.TabPage5.Controls.Add(Me.Panel7)
-        Me.TabPage5.Controls.Add(Me.Panel26)
-        Me.TabPage5.Controls.Add(Me.Panel23)
-        Me.TabPage5.Controls.Add(Me.Panel24)
-        Me.TabPage5.Location = New System.Drawing.Point(4, 26)
-        Me.TabPage5.Name = "TabPage5"
-        Me.TabPage5.Size = New System.Drawing.Size(586, 474)
-        Me.TabPage5.TabIndex = 4
-        Me.TabPage5.Text = "Configurações"
-        Me.TabPage5.UseVisualStyleBackColor = True
-        '
-        'Panel19
-        '
-        Me.Panel19.BackColor = System.Drawing.Color.White
-        Me.Panel19.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel19.Controls.Add(Me.TxtUserDefaultPassword)
-        Me.Panel19.Controls.Add(Me.LblUserDefaultPassword)
-        Me.Panel19.Location = New System.Drawing.Point(8, 287)
-        Me.Panel19.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel19.Name = "Panel19"
-        Me.Panel19.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel19.Size = New System.Drawing.Size(450, 31)
-        Me.Panel19.TabIndex = 18
-        '
-        'TxtUserDefaultPassword
-        '
-        Me.TxtUserDefaultPassword.Location = New System.Drawing.Point(274, 3)
-        Me.TxtUserDefaultPassword.Name = "TxtUserDefaultPassword"
-        Me.TxtUserDefaultPassword.Size = New System.Drawing.Size(171, 23)
-        Me.TxtUserDefaultPassword.TabIndex = 1
-        Me.TxtUserDefaultPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'LblUserDefaultPassword
-        '
-        Me.LblUserDefaultPassword.Dock = System.Windows.Forms.DockStyle.Left
-        Me.LblUserDefaultPassword.Location = New System.Drawing.Point(4, 0)
-        Me.LblUserDefaultPassword.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.LblUserDefaultPassword.Name = "LblUserDefaultPassword"
-        Me.LblUserDefaultPassword.Size = New System.Drawing.Size(120, 29)
-        Me.LblUserDefaultPassword.TabIndex = 0
-        Me.LblUserDefaultPassword.Text = "Senha padrão"
-        Me.LblUserDefaultPassword.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Panel25
-        '
-        Me.Panel25.BackColor = System.Drawing.Color.White
-        Me.Panel25.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel25.Controls.Add(Me.LblReleaseRegister)
-        Me.Panel25.Controls.Add(Me.TbrReleaseRegister)
-        Me.Panel25.Location = New System.Drawing.Point(8, 213)
-        Me.Panel25.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel25.Name = "Panel25"
-        Me.Panel25.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel25.Size = New System.Drawing.Size(450, 62)
-        Me.Panel25.TabIndex = 17
-        '
-        'LblReleaseRegister
-        '
-        Me.LblReleaseRegister.Location = New System.Drawing.Point(1, 1)
-        Me.LblReleaseRegister.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.LblReleaseRegister.Name = "LblReleaseRegister"
-        Me.LblReleaseRegister.Size = New System.Drawing.Size(414, 26)
-        Me.LblReleaseRegister.TabIndex = 3
-        Me.LblReleaseRegister.Text = "Liberar registros não atualizados a mais de 2 minutos"
-        Me.LblReleaseRegister.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'TbrReleaseRegister
-        '
-        Me.TbrReleaseRegister.AutoSize = False
-        Me.TbrReleaseRegister.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.TbrReleaseRegister.Location = New System.Drawing.Point(4, 29)
-        Me.TbrReleaseRegister.Maximum = 60
-        Me.TbrReleaseRegister.Minimum = 2
-        Me.TbrReleaseRegister.Name = "TbrReleaseRegister"
-        Me.TbrReleaseRegister.Size = New System.Drawing.Size(444, 31)
-        Me.TbrReleaseRegister.TabIndex = 2
-        Me.TbrReleaseRegister.Value = 2
-        '
-        'Panel7
-        '
-        Me.Panel7.BackColor = System.Drawing.Color.White
-        Me.Panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel7.Controls.Add(Me.LblEvaluationMonthsBeforeRecordDeletion)
-        Me.Panel7.Controls.Add(Me.DbxEvaluationMonthsBeforeRecordDeletion)
-        Me.Panel7.Location = New System.Drawing.Point(8, 173)
-        Me.Panel7.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel7.Name = "Panel7"
-        Me.Panel7.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel7.Size = New System.Drawing.Size(450, 31)
-        Me.Panel7.TabIndex = 16
-        '
-        'LblEvaluationMonthsBeforeRecordDeletion
-        '
-        Me.LblEvaluationMonthsBeforeRecordDeletion.Dock = System.Windows.Forms.DockStyle.Left
-        Me.LblEvaluationMonthsBeforeRecordDeletion.Location = New System.Drawing.Point(4, 0)
-        Me.LblEvaluationMonthsBeforeRecordDeletion.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.LblEvaluationMonthsBeforeRecordDeletion.Name = "LblEvaluationMonthsBeforeRecordDeletion"
-        Me.LblEvaluationMonthsBeforeRecordDeletion.Size = New System.Drawing.Size(213, 29)
-        Me.LblEvaluationMonthsBeforeRecordDeletion.TabIndex = 0
-        Me.LblEvaluationMonthsBeforeRecordDeletion.Text = "Meses de retenção dos registros"
-        Me.LblEvaluationMonthsBeforeRecordDeletion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'DbxEvaluationMonthsBeforeRecordDeletion
-        '
-        Me.DbxEvaluationMonthsBeforeRecordDeletion.DecimalOnly = True
-        Me.DbxEvaluationMonthsBeforeRecordDeletion.DecimalPlaces = 0
-        Me.DbxEvaluationMonthsBeforeRecordDeletion.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxEvaluationMonthsBeforeRecordDeletion.Location = New System.Drawing.Point(274, 3)
-        Me.DbxEvaluationMonthsBeforeRecordDeletion.MaxLength = 3
-        Me.DbxEvaluationMonthsBeforeRecordDeletion.Name = "DbxEvaluationMonthsBeforeRecordDeletion"
-        Me.DbxEvaluationMonthsBeforeRecordDeletion.Size = New System.Drawing.Size(171, 23)
-        Me.DbxEvaluationMonthsBeforeRecordDeletion.TabIndex = 1
-        Me.DbxEvaluationMonthsBeforeRecordDeletion.Text = "0"
-        Me.DbxEvaluationMonthsBeforeRecordDeletion.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Panel26
-        '
-        Me.Panel26.BackColor = System.Drawing.Color.White
-        Me.Panel26.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel26.Controls.Add(Me.LblEvaluationDaysBeforeVisitAlert)
-        Me.Panel26.Controls.Add(Me.DbxEvaluationDaysBeforeVisitAlert)
-        Me.Panel26.Location = New System.Drawing.Point(8, 129)
-        Me.Panel26.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel26.Name = "Panel26"
-        Me.Panel26.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel26.Size = New System.Drawing.Size(450, 31)
-        Me.Panel26.TabIndex = 15
-        '
-        'LblEvaluationDaysBeforeVisitAlert
-        '
-        Me.LblEvaluationDaysBeforeVisitAlert.Dock = System.Windows.Forms.DockStyle.Left
-        Me.LblEvaluationDaysBeforeVisitAlert.Location = New System.Drawing.Point(4, 0)
-        Me.LblEvaluationDaysBeforeVisitAlert.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.LblEvaluationDaysBeforeVisitAlert.Name = "LblEvaluationDaysBeforeVisitAlert"
-        Me.LblEvaluationDaysBeforeVisitAlert.Size = New System.Drawing.Size(157, 29)
-        Me.LblEvaluationDaysBeforeVisitAlert.TabIndex = 0
-        Me.LblEvaluationDaysBeforeVisitAlert.Text = "Dias para alertar visita"
-        Me.LblEvaluationDaysBeforeVisitAlert.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'DbxEvaluationDaysBeforeVisitAlert
-        '
-        Me.DbxEvaluationDaysBeforeVisitAlert.DecimalOnly = True
-        Me.DbxEvaluationDaysBeforeVisitAlert.DecimalPlaces = 0
-        Me.DbxEvaluationDaysBeforeVisitAlert.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxEvaluationDaysBeforeVisitAlert.Location = New System.Drawing.Point(274, 3)
-        Me.DbxEvaluationDaysBeforeVisitAlert.MaxLength = 3
-        Me.DbxEvaluationDaysBeforeVisitAlert.Name = "DbxEvaluationDaysBeforeVisitAlert"
-        Me.DbxEvaluationDaysBeforeVisitAlert.Size = New System.Drawing.Size(171, 23)
-        Me.DbxEvaluationDaysBeforeVisitAlert.TabIndex = 1
-        Me.DbxEvaluationDaysBeforeVisitAlert.Text = "0"
-        Me.DbxEvaluationDaysBeforeVisitAlert.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Panel23
-        '
-        Me.Panel23.BackColor = System.Drawing.Color.White
-        Me.Panel23.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel23.Controls.Add(Me.LblEvaluationDaysBeforeMaintenanceAlert)
-        Me.Panel23.Controls.Add(Me.DbxEvaluationDaysBeforeMaintenanceAlert)
-        Me.Panel23.Location = New System.Drawing.Point(8, 85)
-        Me.Panel23.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel23.Name = "Panel23"
-        Me.Panel23.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel23.Size = New System.Drawing.Size(450, 31)
-        Me.Panel23.TabIndex = 14
-        '
-        'LblEvaluationDaysBeforeMaintenanceAlert
-        '
-        Me.LblEvaluationDaysBeforeMaintenanceAlert.Dock = System.Windows.Forms.DockStyle.Left
-        Me.LblEvaluationDaysBeforeMaintenanceAlert.Location = New System.Drawing.Point(4, 0)
-        Me.LblEvaluationDaysBeforeMaintenanceAlert.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.LblEvaluationDaysBeforeMaintenanceAlert.Name = "LblEvaluationDaysBeforeMaintenanceAlert"
-        Me.LblEvaluationDaysBeforeMaintenanceAlert.Size = New System.Drawing.Size(207, 29)
-        Me.LblEvaluationDaysBeforeMaintenanceAlert.TabIndex = 0
-        Me.LblEvaluationDaysBeforeMaintenanceAlert.Text = "Dias para alertar manutenção"
-        Me.LblEvaluationDaysBeforeMaintenanceAlert.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'DbxEvaluationDaysBeforeMaintenanceAlert
-        '
-        Me.DbxEvaluationDaysBeforeMaintenanceAlert.DecimalOnly = True
-        Me.DbxEvaluationDaysBeforeMaintenanceAlert.DecimalPlaces = 0
-        Me.DbxEvaluationDaysBeforeMaintenanceAlert.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxEvaluationDaysBeforeMaintenanceAlert.Location = New System.Drawing.Point(274, 3)
-        Me.DbxEvaluationDaysBeforeMaintenanceAlert.MaxLength = 3
-        Me.DbxEvaluationDaysBeforeMaintenanceAlert.Name = "DbxEvaluationDaysBeforeMaintenanceAlert"
-        Me.DbxEvaluationDaysBeforeMaintenanceAlert.Size = New System.Drawing.Size(171, 23)
-        Me.DbxEvaluationDaysBeforeMaintenanceAlert.TabIndex = 1
-        Me.DbxEvaluationDaysBeforeMaintenanceAlert.Text = "0"
-        Me.DbxEvaluationDaysBeforeMaintenanceAlert.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Panel24
-        '
-        Me.Panel24.BackColor = System.Drawing.Color.White
-        Me.Panel24.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel24.Controls.Add(Me.LblInterval)
-        Me.Panel24.Controls.Add(Me.TbrInterval)
-        Me.Panel24.Location = New System.Drawing.Point(8, 10)
-        Me.Panel24.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel24.Name = "Panel24"
-        Me.Panel24.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel24.Size = New System.Drawing.Size(450, 62)
-        Me.Panel24.TabIndex = 13
-        '
-        'LblInterval
-        '
-        Me.LblInterval.Location = New System.Drawing.Point(1, -1)
-        Me.LblInterval.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.LblInterval.Name = "LblInterval"
-        Me.LblInterval.Size = New System.Drawing.Size(414, 26)
-        Me.LblInterval.TabIndex = 3
-        Me.LblInterval.Text = "Executar a limpeza a cada 1 dia"
-        Me.LblInterval.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'TbrInterval
-        '
-        Me.TbrInterval.AutoSize = False
-        Me.TbrInterval.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.TbrInterval.Location = New System.Drawing.Point(4, 29)
-        Me.TbrInterval.Maximum = 60
-        Me.TbrInterval.Minimum = 1
-        Me.TbrInterval.Name = "TbrInterval"
-        Me.TbrInterval.Size = New System.Drawing.Size(444, 31)
-        Me.TbrInterval.TabIndex = 2
-        Me.TbrInterval.Value = 2
-        '
-        'TabPage6
-        '
-        Me.TabPage6.Controls.Add(Me.Panel18)
-        Me.TabPage6.Controls.Add(Me.Panel16)
-        Me.TabPage6.Controls.Add(Me.Panel13)
-        Me.TabPage6.Controls.Add(Me.Panel12)
-        Me.TabPage6.Location = New System.Drawing.Point(4, 26)
-        Me.TabPage6.Name = "TabPage6"
-        Me.TabPage6.Size = New System.Drawing.Size(586, 474)
-        Me.TabPage6.TabIndex = 5
-        Me.TabPage6.Text = "Suporte"
-        Me.TabPage6.UseVisualStyleBackColor = True
-        '
-        'Panel18
-        '
-        Me.Panel18.BackColor = System.Drawing.Color.White
-        Me.Panel18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel18.Controls.Add(Me.TxtSupportSMTPServer)
-        Me.Panel18.Controls.Add(Me.Label19)
-        Me.Panel18.Location = New System.Drawing.Point(8, 98)
-        Me.Panel18.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel18.Name = "Panel18"
-        Me.Panel18.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel18.Size = New System.Drawing.Size(450, 31)
-        Me.Panel18.TabIndex = 15
-        '
-        'TxtSupportSMTPServer
-        '
-        Me.TxtSupportSMTPServer.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower
-        Me.TxtSupportSMTPServer.Location = New System.Drawing.Point(162, 3)
-        Me.TxtSupportSMTPServer.Name = "TxtSupportSMTPServer"
-        Me.TxtSupportSMTPServer.Size = New System.Drawing.Size(283, 23)
-        Me.TxtSupportSMTPServer.TabIndex = 1
-        Me.TxtSupportSMTPServer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Label19
-        '
-        Me.Label19.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label19.Location = New System.Drawing.Point(4, 0)
-        Me.Label19.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(120, 29)
-        Me.Label19.TabIndex = 0
-        Me.Label19.Text = "Servidor SMTP"
-        Me.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Panel16
-        '
-        Me.Panel16.BackColor = System.Drawing.Color.White
-        Me.Panel16.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel16.Controls.Add(Me.TxtSupportEmail)
-        Me.Panel16.Controls.Add(Me.Label3)
-        Me.Panel16.Location = New System.Drawing.Point(8, 54)
-        Me.Panel16.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel16.Name = "Panel16"
-        Me.Panel16.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel16.Size = New System.Drawing.Size(450, 31)
-        Me.Panel16.TabIndex = 14
-        '
-        'TxtSupportEmail
-        '
-        Me.TxtSupportEmail.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower
-        Me.TxtSupportEmail.Location = New System.Drawing.Point(162, 3)
-        Me.TxtSupportEmail.Name = "TxtSupportEmail"
-        Me.TxtSupportEmail.Size = New System.Drawing.Size(283, 23)
-        Me.TxtSupportEmail.TabIndex = 1
-        Me.TxtSupportEmail.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Label3
-        '
-        Me.Label3.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label3.Location = New System.Drawing.Point(4, 0)
-        Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(120, 29)
-        Me.Label3.TabIndex = 0
-        Me.Label3.Text = "E-Mail"
-        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Panel13
-        '
-        Me.Panel13.BackColor = System.Drawing.Color.White
-        Me.Panel13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel13.Controls.Add(Me.Label16)
-        Me.Panel13.Controls.Add(Me.DbxSupportPort)
-        Me.Panel13.Location = New System.Drawing.Point(8, 142)
-        Me.Panel13.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel13.Name = "Panel13"
-        Me.Panel13.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel13.Size = New System.Drawing.Size(450, 31)
-        Me.Panel13.TabIndex = 16
-        '
-        'Label16
-        '
-        Me.Label16.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label16.Location = New System.Drawing.Point(4, 0)
-        Me.Label16.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(120, 29)
-        Me.Label16.TabIndex = 0
-        Me.Label16.Text = "Porta"
-        Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'DbxSupportPort
-        '
-        Me.DbxSupportPort.DecimalOnly = True
-        Me.DbxSupportPort.DecimalPlaces = 0
-        Me.DbxSupportPort.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxSupportPort.Location = New System.Drawing.Point(162, 3)
-        Me.DbxSupportPort.Name = "DbxSupportPort"
-        Me.DbxSupportPort.Size = New System.Drawing.Size(283, 23)
-        Me.DbxSupportPort.TabIndex = 1
-        Me.DbxSupportPort.Text = "0"
-        Me.DbxSupportPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Panel12
-        '
-        Me.Panel12.BackColor = System.Drawing.Color.White
-        Me.Panel12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel12.Controls.Add(Me.CbxEnableSSL)
-        Me.Panel12.Controls.Add(Me.Label12)
-        Me.Panel12.Location = New System.Drawing.Point(8, 10)
-        Me.Panel12.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel12.Name = "Panel12"
-        Me.Panel12.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel12.Size = New System.Drawing.Size(450, 31)
-        Me.Panel12.TabIndex = 13
-        '
-        'CbxEnableSSL
-        '
-        Me.CbxEnableSSL.Appearance = System.Windows.Forms.Appearance.Button
-        Me.CbxEnableSSL.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.CbxEnableSSL.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CbxEnableSSL.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.CbxEnableSSL.Location = New System.Drawing.Point(162, 3)
-        Me.CbxEnableSSL.Name = "CbxEnableSSL"
-        Me.CbxEnableSSL.Size = New System.Drawing.Size(283, 23)
-        Me.CbxEnableSSL.TabIndex = 3
-        Me.CbxEnableSSL.Text = "Não"
-        Me.CbxEnableSSL.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.CbxEnableSSL.UseVisualStyleBackColor = True
-        '
-        'Label12
-        '
-        Me.Label12.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label12.Location = New System.Drawing.Point(4, 0)
-        Me.Label12.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(120, 29)
-        Me.Label12.TabIndex = 0
-        Me.Label12.Text = "Habilita SSL"
-        Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
         'TabPage7
         '
         Me.TabPage7.Controls.Add(Me.Panel14)
@@ -1474,45 +786,10 @@ Partial Class FrmCompany
         Me.TabPage7.Controls.Add(Me.Panel8)
         Me.TabPage7.Location = New System.Drawing.Point(4, 26)
         Me.TabPage7.Name = "TabPage7"
-        Me.TabPage7.Size = New System.Drawing.Size(586, 474)
+        Me.TabPage7.Size = New System.Drawing.Size(586, 470)
         Me.TabPage7.TabIndex = 6
-        Me.TabPage7.Text = "Núvem"
+        Me.TabPage7.Text = "Banco de Dados Remoto"
         Me.TabPage7.UseVisualStyleBackColor = True
-        '
-        'Panel8
-        '
-        Me.Panel8.BackColor = System.Drawing.Color.White
-        Me.Panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel8.Controls.Add(Me.LblSyncInterval)
-        Me.Panel8.Controls.Add(Me.TbrSyncInterval)
-        Me.Panel8.Location = New System.Drawing.Point(8, 138)
-        Me.Panel8.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel8.Name = "Panel8"
-        Me.Panel8.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel8.Size = New System.Drawing.Size(450, 62)
-        Me.Panel8.TabIndex = 16
-        '
-        'LblSyncInterval
-        '
-        Me.LblSyncInterval.Location = New System.Drawing.Point(1, -1)
-        Me.LblSyncInterval.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.LblSyncInterval.Name = "LblSyncInterval"
-        Me.LblSyncInterval.Size = New System.Drawing.Size(414, 26)
-        Me.LblSyncInterval.TabIndex = 3
-        Me.LblSyncInterval.Text = "Sincronizar com a núvem a cada 1 minuto"
-        Me.LblSyncInterval.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'TbrSyncInterval
-        '
-        Me.TbrSyncInterval.AutoSize = False
-        Me.TbrSyncInterval.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.TbrSyncInterval.Location = New System.Drawing.Point(4, 29)
-        Me.TbrSyncInterval.Maximum = 60
-        Me.TbrSyncInterval.Minimum = 1
-        Me.TbrSyncInterval.Name = "TbrSyncInterval"
-        Me.TbrSyncInterval.Size = New System.Drawing.Size(444, 31)
-        Me.TbrSyncInterval.TabIndex = 2
-        Me.TbrSyncInterval.Value = 1
         '
         'Panel14
         '
@@ -1610,35 +887,82 @@ Partial Class FrmCompany
         Me.LblApiKey.Text = "API Key"
         Me.LblApiKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'Panel8
+        '
+        Me.Panel8.BackColor = System.Drawing.Color.White
+        Me.Panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel8.Controls.Add(Me.LblSyncInterval)
+        Me.Panel8.Controls.Add(Me.TbrSyncInterval)
+        Me.Panel8.Location = New System.Drawing.Point(8, 138)
+        Me.Panel8.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
+        Me.Panel8.Name = "Panel8"
+        Me.Panel8.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
+        Me.Panel8.Size = New System.Drawing.Size(450, 62)
+        Me.Panel8.TabIndex = 16
+        '
+        'LblSyncInterval
+        '
+        Me.LblSyncInterval.Location = New System.Drawing.Point(1, -1)
+        Me.LblSyncInterval.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.LblSyncInterval.Name = "LblSyncInterval"
+        Me.LblSyncInterval.Size = New System.Drawing.Size(414, 26)
+        Me.LblSyncInterval.TabIndex = 3
+        Me.LblSyncInterval.Text = "Sincronizar com a núvem a cada 1 minuto"
+        Me.LblSyncInterval.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'TbrSyncInterval
+        '
+        Me.TbrSyncInterval.AutoSize = False
+        Me.TbrSyncInterval.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.TbrSyncInterval.Location = New System.Drawing.Point(4, 29)
+        Me.TbrSyncInterval.Maximum = 60
+        Me.TbrSyncInterval.Minimum = 1
+        Me.TbrSyncInterval.Name = "TbrSyncInterval"
+        Me.TbrSyncInterval.Size = New System.Drawing.Size(444, 31)
+        Me.TbrSyncInterval.TabIndex = 2
+        Me.TbrSyncInterval.Value = 1
+        '
+        'PnButtons
+        '
+        Me.PnButtons.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.PnButtons.Controls.Add(Me.BtnTestAndOK)
+        Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.PnButtons.Location = New System.Drawing.Point(0, 500)
+        Me.PnButtons.Name = "PnButtons"
+        Me.PnButtons.Size = New System.Drawing.Size(594, 36)
+        Me.PnButtons.TabIndex = 10
+        '
+        'BtnTestAndOK
+        '
+        Me.BtnTestAndOK.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnTestAndOK.Enabled = False
+        Me.BtnTestAndOK.Location = New System.Drawing.Point(487, 3)
+        Me.BtnTestAndOK.Name = "BtnTestAndOK"
+        Me.BtnTestAndOK.Size = New System.Drawing.Size(95, 30)
+        Me.BtnTestAndOK.TabIndex = 0
+        Me.BtnTestAndOK.Text = "Testar"
+        Me.BtnTestAndOK.UseVisualStyleBackColor = True
+        '
         'FrmCompany
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(594, 548)
+        Me.ClientSize = New System.Drawing.Size(594, 536)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.PnButtons)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.KeyPreview = True
         Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "FrmCompany"
         Me.ShowIcon = False
         Me.Text = "Cadastro"
-        Me.PnButtons.ResumeLayout(False)
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
         Me.FlpProduct.ResumeLayout(False)
-        Me.TabPage2.ResumeLayout(False)
-        Me.Panel3.ResumeLayout(False)
-        Me.Panel2.ResumeLayout(False)
-        Me.Panel2.PerformLayout()
-        Me.Panel1.ResumeLayout(False)
-        Me.Panel6.ResumeLayout(False)
-        Me.Panel6.PerformLayout()
-        Me.Panel5.ResumeLayout(False)
-        Me.Panel5.PerformLayout()
         Me.TabPage3.ResumeLayout(False)
         Me.Panel11.ResumeLayout(False)
         Me.Panel11.PerformLayout()
@@ -1648,48 +972,25 @@ Partial Class FrmCompany
         Me.Panel9.PerformLayout()
         Me.Panel4.ResumeLayout(False)
         Me.Panel4.PerformLayout()
-        Me.TabPage5.ResumeLayout(False)
-        Me.Panel19.ResumeLayout(False)
-        Me.Panel19.PerformLayout()
-        Me.Panel25.ResumeLayout(False)
-        CType(Me.TbrReleaseRegister, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.Panel7.ResumeLayout(False)
-        Me.Panel7.PerformLayout()
-        Me.Panel26.ResumeLayout(False)
-        Me.Panel26.PerformLayout()
-        Me.Panel23.ResumeLayout(False)
-        Me.Panel23.PerformLayout()
-        Me.Panel24.ResumeLayout(False)
-        CType(Me.TbrInterval, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabPage6.ResumeLayout(False)
-        Me.Panel18.ResumeLayout(False)
-        Me.Panel18.PerformLayout()
-        Me.Panel16.ResumeLayout(False)
-        Me.Panel16.PerformLayout()
-        Me.Panel13.ResumeLayout(False)
-        Me.Panel13.PerformLayout()
-        Me.Panel12.ResumeLayout(False)
         Me.TabPage7.ResumeLayout(False)
-        Me.Panel8.ResumeLayout(False)
-        CType(Me.TbrSyncInterval, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel14.ResumeLayout(False)
         Me.Panel14.PerformLayout()
         Me.Panel15.ResumeLayout(False)
         Me.Panel15.PerformLayout()
         Me.Panel21.ResumeLayout(False)
         Me.Panel21.PerformLayout()
+        Me.Panel8.ResumeLayout(False)
+        CType(Me.TbrSyncInterval, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PnButtons.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents PnButtons As Panel
-    Friend WithEvents BtnClose As Button
-    Friend WithEvents BtnSave As Button
     Friend WithEvents SfdLogo As SaveFileDialog
     Friend WithEvents OfdLogo As OpenFileDialog
     Friend WithEvents EprValidation As ErrorProvider
     Friend WithEvents TabControl1 As TabControl
     Friend WithEvents TabPage1 As TabPage
-    Friend WithEvents PictureViewer As ControlLibrary.PictureViewer
+    Friend WithEvents PictureViewer As CoreSuite.Controls.PictureViewer
     Friend WithEvents Label1 As Label
     Friend WithEvents LblLinkedin As Label
     Friend WithEvents LblInstagram As Label
@@ -1721,8 +1022,8 @@ Partial Class FrmCompany
     Friend WithEvents LblStreet As Label
     Friend WithEvents TxtStreet As TextBox
     Friend WithEvents FlpProduct As FlowLayoutPanel
-    Friend WithEvents BtnIncludeLogo As ControlLibrary.NoFocusCueButton
-    Friend WithEvents BtnDeleteLogo As ControlLibrary.NoFocusCueButton
+    Friend WithEvents BtnIncludeLogo As CoreSuite.Controls.NoFocusCueButton
+    Friend WithEvents BtnDeleteLogo As CoreSuite.Controls.NoFocusCueButton
     Friend WithEvents TxtCityDocument As TextBox
     Friend WithEvents TxtStateDocument As TextBox
     Friend WithEvents TxtDocument As TextBox
@@ -1734,26 +1035,7 @@ Partial Class FrmCompany
     Friend WithEvents LblShortname As Label
     Friend WithEvents LblLogo As Label
     Friend WithEvents LblName As Label
-    Friend WithEvents TabPage2 As TabPage
-    Friend WithEvents Panel3 As Panel
-    Friend WithEvents BtnBackupDays As Button
-    Friend WithEvents Label2 As Label
-    Friend WithEvents Panel2 As Panel
-    Friend WithEvents Label6 As Label
-    Friend WithEvents TxtBackupLocation As TextBox
-    Friend WithEvents BtnBackupLocation As Button
-    Friend WithEvents Panel1 As Panel
-    Friend WithEvents CbxIgnoreNext As CheckBox
-    Friend WithEvents Label4 As Label
-    Friend WithEvents Panel6 As Panel
-    Friend WithEvents LblBackupKeep As Label
-    Friend WithEvents DbxBackupKeep As ControlLibrary.DecimalBox
-    Friend WithEvents Panel5 As Panel
-    Friend WithEvents LblBackupTime As Label
-    Friend WithEvents TxtBackupTime As MaskedTextBox
     Friend WithEvents TabPage3 As TabPage
-    Friend WithEvents TabPage5 As TabPage
-    Friend WithEvents TabPage6 As TabPage
     Friend WithEvents Panel11 As Panel
     Friend WithEvents Label17 As Label
     Friend WithEvents TxtDatabaseServer As TextBox
@@ -1766,36 +1048,6 @@ Partial Class FrmCompany
     Friend WithEvents Panel4 As Panel
     Friend WithEvents Label9 As Label
     Friend WithEvents TxtDatabaseUsername As TextBox
-    Friend WithEvents Panel24 As Panel
-    Friend WithEvents LblInterval As Label
-    Friend WithEvents TbrInterval As TrackBar
-    Friend WithEvents Panel7 As Panel
-    Friend WithEvents LblEvaluationMonthsBeforeRecordDeletion As Label
-    Friend WithEvents DbxEvaluationMonthsBeforeRecordDeletion As ControlLibrary.DecimalBox
-    Friend WithEvents Panel26 As Panel
-    Friend WithEvents LblEvaluationDaysBeforeVisitAlert As Label
-    Friend WithEvents DbxEvaluationDaysBeforeVisitAlert As ControlLibrary.DecimalBox
-    Friend WithEvents Panel23 As Panel
-    Friend WithEvents LblEvaluationDaysBeforeMaintenanceAlert As Label
-    Friend WithEvents DbxEvaluationDaysBeforeMaintenanceAlert As ControlLibrary.DecimalBox
-    Friend WithEvents Panel25 As Panel
-    Friend WithEvents LblReleaseRegister As Label
-    Friend WithEvents TbrReleaseRegister As TrackBar
-    Friend WithEvents Panel19 As Panel
-    Friend WithEvents TxtUserDefaultPassword As TextBox
-    Friend WithEvents LblUserDefaultPassword As Label
-    Friend WithEvents Panel18 As Panel
-    Friend WithEvents TxtSupportSMTPServer As TextBox
-    Friend WithEvents Label19 As Label
-    Friend WithEvents Panel16 As Panel
-    Friend WithEvents TxtSupportEmail As TextBox
-    Friend WithEvents Label3 As Label
-    Friend WithEvents Panel13 As Panel
-    Friend WithEvents Label16 As Label
-    Friend WithEvents DbxSupportPort As ControlLibrary.DecimalBox
-    Friend WithEvents Panel12 As Panel
-    Friend WithEvents CbxEnableSSL As CheckBox
-    Friend WithEvents Label12 As Label
     Friend WithEvents TabPage7 As TabPage
     Friend WithEvents Panel8 As Panel
     Friend WithEvents LblSyncInterval As Label
@@ -1809,4 +1061,6 @@ Partial Class FrmCompany
     Friend WithEvents Panel21 As Panel
     Friend WithEvents TxtApiKey As TextBox
     Friend WithEvents LblApiKey As Label
+    Friend WithEvents PnButtons As Panel
+    Friend WithEvents BtnTestAndOK As Button
 End Class

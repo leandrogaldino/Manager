@@ -1,12 +1,11 @@
-﻿Imports FirebaseController
-Imports ManagerCore
-Imports MySqlController
+﻿Imports ManagerCore
+Imports CoreSuite.Services
 
 Public Class TaskCloudSyncManual
     Inherits TaskCloudSync
 
-    Public Sub New(CompanyModel As CompanyModel, LocalDb As MySqlService, RemoteDb As FirebaseService, CompanyService As CompanyService)
-        MyBase.New(CompanyModel, LocalDb, RemoteDb, CompanyService)
+    Public Sub New(Preferences As PreferencesModel, PreferencesService As PreferencesService, LocalDb As MySqlService, RemoteDb As FirebaseService)
+        MyBase.New(Preferences, PreferencesService, LocalDb, RemoteDb)
     End Sub
     Private _NextRun As Date = Nothing
     Public Overrides Property NextRun As Date

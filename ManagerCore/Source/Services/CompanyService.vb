@@ -1,6 +1,6 @@
 ﻿Imports System.IO
-Imports ControlLibrary
 Imports Newtonsoft.Json
+Imports CoreSuite.Services
 Public Class CompanyService
     Private ReadOnly _Key As String
     Public Sub New(CryptoKeyService As CryptoKeyService)

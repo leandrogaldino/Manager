@@ -1,4 +1,4 @@
-﻿Public MustInherit Class CloudModel
+﻿Public MustInherit Class RemoteDatabaseModel
     Public Property ApiKey As String
     Public Property ProjectID As String
     Public Property BucketName As String

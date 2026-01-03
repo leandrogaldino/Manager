@@ -1,25 +1,25 @@
 ﻿Imports System.Transactions
 Imports ManagerCore
-Imports MySqlController
+Imports CoreSuite.Services
 Public Class TaskRelease
     Inherits TaskBase
     Private ReadOnly _LocalDb As MySqlService
-    Private ReadOnly _CompanyService As CompanyService
-    Public Sub New(CompanyModel As CompanyModel, LocalDb As MySqlService, CompanyService As CompanyService)
-        MyBase.New(CompanyModel)
+    Private ReadOnly _PreferencesService As PreferencesService
+    Public Sub New(Preferences As PreferencesModel, PreferencesService As PreferencesService, LocalDb As MySqlService)
+        MyBase.New(Preferences)
         _LocalDb = LocalDb
-        _CompanyService = CompanyService
+        _PreferencesService = PreferencesService
     End Sub
 
     Public Overrides ReadOnly Property RunIntervalMinutes As Integer
         Get
-            Return Company.General.Release.ReleaseBlockedRegisterInterval
+            Return Preferences.Parameters.Release.ReleaseBlockedRegisterInterval
         End Get
     End Property
 
     Public Overrides ReadOnly Property LastRun As Date
         Get
-            Return Company.LastExecution.Release
+            Return Preferences.LastExecution.Release
         End Get
     End Property
 
@@ -39,10 +39,10 @@ Public Class TaskRelease
     Private Async Function GetBloquedList() As Task(Of List(Of RegistryModel))
         Dim ReleasedList As List(Of RegistryModel) = Nothing
         Dim ReleasedRegistry As RegistryModel
-        Dim Result As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("lockedregistry", New MysqlSelectOptions() With {
+        Dim Result As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("lockedregistry", New MySqlSelectOptions() With {
             .Columns = {"session", "locktime", "routineid", "registryid", "userid"}.ToList(),
             .Where = "NOW() > DATE_ADD(lockedregistry.locktime, INTERVAL @min MINUTE);",
-            .QueryArgs = New Dictionary(Of String, Object) From {{"@min", Company.General.Release.ReleaseBlockedRegisterInterval}}
+            .QueryArgs = New Dictionary(Of String, Object) From {{"@min", Preferences.Parameters.Release.ReleaseBlockedRegisterInterval}}
         })
         If Result.HasData Then
             ReleasedList = New List(Of RegistryModel)
@@ -67,7 +67,7 @@ Public Class TaskRelease
             {"@routineid", Registry.RoutineID},
             {"@registryid", Registry.RegistryID},
             {"@userid", Registry.UserID},
-            {"@min", Company.General.Release.ReleaseBlockedRegisterInterval}
+            {"@min", Preferences.Parameters.Release.ReleaseBlockedRegisterInterval}
         }
         Await _LocalDb.Request.ExecuteDeleteAsync("lockedregistry", Where, Args)
         Await Task.Delay(Constants.WaitForJob)
@@ -106,8 +106,8 @@ Public Class TaskRelease
         Catch ex As Exception
             Exception = ex
         Finally
-            If Not IsManual Then Company.LastExecution.Release = Now
-            If Not IsManual Then _CompanyService.Save(Company)
+            If Not IsManual Then Preferences.LastExecution.Release = Now
+            If Not IsManual Then _PreferencesService.Save(Preferences)
         End Try
         If Exception IsNot Nothing Then
             Response.Percent = 0

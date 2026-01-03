@@ -1,4 +1,4 @@
-﻿Public Class CompanyBackupModel
+﻿Public Class PreferencesBackupModel
     Public Property Monday As Boolean
     Public Property Tuesday As Boolean
     Public Property Wednesday As Boolean

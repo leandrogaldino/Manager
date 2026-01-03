@@ -33,18 +33,8 @@ Partial Class FrmMain
         Me.DgvEvents = New System.Windows.Forms.DataGridView()
         Me.LblTitle = New System.Windows.Forms.Label()
         Me.TsTitle = New System.Windows.Forms.ToolStrip()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
-        Me.TpbProgress = New ControlLibrary.TextedProgressBar()
-        Me.LblProgress = New System.Windows.Forms.Label()
-        Me.ScTaskEvent = New System.Windows.Forms.SplitContainer()
-        Me.ScTaskWarning = New System.Windows.Forms.SplitContainer()
-        Me.DgvTasks = New System.Windows.Forms.DataGridView()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.DgvWarnings = New System.Windows.Forms.DataGridView()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.DataGridViewContentCopy = New ControlLibrary.DataGridViewContentCopy()
         Me.BtnAgentState = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.BtnBackup = New System.Windows.Forms.ToolStripDropDownButton()
         Me.BtnOpenBackupFolder = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnExecuteBackup = New System.Windows.Forms.ToolStripMenuItem()
@@ -52,6 +42,7 @@ Partial Class FrmMain
         Me.BtnClean = New System.Windows.Forms.ToolStripButton()
         Me.BtnRelease = New System.Windows.Forms.ToolStripButton()
         Me.BtnCloudSync = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.BtnCompanies = New System.Windows.Forms.ToolStripButton()
         Me.BtnSettings = New System.Windows.Forms.ToolStripDropDownButton()
         Me.BtnLicense = New System.Windows.Forms.ToolStripMenuItem()
@@ -59,6 +50,18 @@ Partial Class FrmMain
         Me.BtnChangeLicenseKey = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnChangePassword = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnCleanEventLog = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnSupport = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnBackupConfig = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnParameters = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TpbProgress = New CoreSuite.Controls.ColoredProgressBar()
+        Me.LblProgress = New System.Windows.Forms.Label()
+        Me.ScTaskEvent = New System.Windows.Forms.SplitContainer()
+        Me.ScTaskWarning = New System.Windows.Forms.SplitContainer()
+        Me.DgvTasks = New System.Windows.Forms.DataGridView()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.DgvWarnings = New System.Windows.Forms.DataGridView()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.DataGridViewContentCopy = New CoreSuite.Controls.DataGridViewClipboart()
         Me.CmsNotifyIcon.SuspendLayout()
         CType(Me.DgvEvents, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsTitle.SuspendLayout()
@@ -148,15 +151,183 @@ Partial Class FrmMain
         Me.TsTitle.TabIndex = 18
         Me.TsTitle.Text = "ToolStrip"
         '
+        'BtnAgentState
+        '
+        Me.BtnAgentState.AutoSize = False
+        Me.BtnAgentState.CheckOnClick = True
+        Me.BtnAgentState.Enabled = False
+        Me.BtnAgentState.Image = Global.ManagerAgent.My.Resources.Resources.Pause
+        Me.BtnAgentState.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnAgentState.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnAgentState.Margin = New System.Windows.Forms.Padding(5)
+        Me.BtnAgentState.Name = "BtnAgentState"
+        Me.BtnAgentState.Size = New System.Drawing.Size(150, 53)
+        Me.BtnAgentState.Text = "Em Pausa"
+        Me.BtnAgentState.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnAgentState.ToolTipText = "Controla as funções automáticas do sistema"
+        '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
         Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 63)
         '
+        'BtnBackup
+        '
+        Me.BtnBackup.AutoSize = False
+        Me.BtnBackup.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnOpenBackupFolder, Me.BtnExecuteBackup, Me.BtnRestoreBackup})
+        Me.BtnBackup.Enabled = False
+        Me.BtnBackup.Image = Global.ManagerAgent.My.Resources.Resources.Backup
+        Me.BtnBackup.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnBackup.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnBackup.Margin = New System.Windows.Forms.Padding(5)
+        Me.BtnBackup.Name = "BtnBackup"
+        Me.BtnBackup.Size = New System.Drawing.Size(100, 53)
+        Me.BtnBackup.Text = "Backup"
+        Me.BtnBackup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnBackup.ToolTipText = "Restaurar ou cria um backup"
+        '
+        'BtnOpenBackupFolder
+        '
+        Me.BtnOpenBackupFolder.Name = "BtnOpenBackupFolder"
+        Me.BtnOpenBackupFolder.Size = New System.Drawing.Size(145, 22)
+        Me.BtnOpenBackupFolder.Text = "Abrir Pasta"
+        '
+        'BtnExecuteBackup
+        '
+        Me.BtnExecuteBackup.Name = "BtnExecuteBackup"
+        Me.BtnExecuteBackup.Size = New System.Drawing.Size(145, 22)
+        Me.BtnExecuteBackup.Text = "Executar"
+        '
+        'BtnRestoreBackup
+        '
+        Me.BtnRestoreBackup.Name = "BtnRestoreBackup"
+        Me.BtnRestoreBackup.Size = New System.Drawing.Size(145, 22)
+        Me.BtnRestoreBackup.Text = "Restaurar"
+        '
+        'BtnClean
+        '
+        Me.BtnClean.AutoSize = False
+        Me.BtnClean.Enabled = False
+        Me.BtnClean.Image = Global.ManagerAgent.My.Resources.Resources.Garbage
+        Me.BtnClean.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnClean.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnClean.Margin = New System.Windows.Forms.Padding(5)
+        Me.BtnClean.Name = "BtnClean"
+        Me.BtnClean.Size = New System.Drawing.Size(100, 53)
+        Me.BtnClean.Text = "Limpar"
+        Me.BtnClean.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnClean.ToolTipText = "Exclui arquivos que não são necessários pelo sistema"
+        '
+        'BtnRelease
+        '
+        Me.BtnRelease.AutoSize = False
+        Me.BtnRelease.Enabled = False
+        Me.BtnRelease.Image = Global.ManagerAgent.My.Resources.Resources.Release
+        Me.BtnRelease.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnRelease.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnRelease.Margin = New System.Windows.Forms.Padding(5)
+        Me.BtnRelease.Name = "BtnRelease"
+        Me.BtnRelease.Size = New System.Drawing.Size(100, 53)
+        Me.BtnRelease.Text = "Desbloquear"
+        Me.BtnRelease.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnRelease.ToolTipText = "Desbloqueia registros que foram bloqueados por usuários mas que não estão mais se" &
+    "ndo utilizados"
+        '
+        'BtnCloudSync
+        '
+        Me.BtnCloudSync.AutoSize = False
+        Me.BtnCloudSync.Enabled = False
+        Me.BtnCloudSync.Image = Global.ManagerAgent.My.Resources.Resources.Cloud
+        Me.BtnCloudSync.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnCloudSync.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnCloudSync.Margin = New System.Windows.Forms.Padding(5)
+        Me.BtnCloudSync.Name = "BtnCloudSync"
+        Me.BtnCloudSync.Size = New System.Drawing.Size(100, 53)
+        Me.BtnCloudSync.Text = "Sincronizar"
+        Me.BtnCloudSync.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnCloudSync.ToolTipText = "Sincroniza os dados do banco de dados local, com o banco de dados na núvem"
+        '
         'ToolStripSeparator4
         '
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
         Me.ToolStripSeparator4.Size = New System.Drawing.Size(6, 63)
+        '
+        'BtnCompanies
+        '
+        Me.BtnCompanies.AutoSize = False
+        Me.BtnCompanies.Enabled = False
+        Me.BtnCompanies.Image = Global.ManagerAgent.My.Resources.Resources.Cloud
+        Me.BtnCompanies.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnCompanies.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnCompanies.Margin = New System.Windows.Forms.Padding(5)
+        Me.BtnCompanies.Name = "BtnCompanies"
+        Me.BtnCompanies.Size = New System.Drawing.Size(120, 53)
+        Me.BtnCompanies.Text = "Empresas"
+        Me.BtnCompanies.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnCompanies.ToolTipText = "Sincroniza os dados do banco de dados local, com o banco de dados na núvem"
+        '
+        'BtnSettings
+        '
+        Me.BtnSettings.AutoSize = False
+        Me.BtnSettings.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnLicense, Me.BtnChangePassword, Me.BtnCleanEventLog, Me.BtnSupport, Me.BtnBackupConfig, Me.BtnParameters})
+        Me.BtnSettings.Enabled = False
+        Me.BtnSettings.Image = Global.ManagerAgent.My.Resources.Resources.Settings
+        Me.BtnSettings.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnSettings.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnSettings.Margin = New System.Windows.Forms.Padding(5)
+        Me.BtnSettings.Name = "BtnSettings"
+        Me.BtnSettings.Size = New System.Drawing.Size(120, 53)
+        Me.BtnSettings.Text = "Configurações"
+        Me.BtnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        '
+        'BtnLicense
+        '
+        Me.BtnLicense.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnLicenseCredentials, Me.BtnChangeLicenseKey})
+        Me.BtnLicense.Name = "BtnLicense"
+        Me.BtnLicense.Size = New System.Drawing.Size(223, 22)
+        Me.BtnLicense.Text = "Licença"
+        '
+        'BtnLicenseCredentials
+        '
+        Me.BtnLicenseCredentials.Name = "BtnLicenseCredentials"
+        Me.BtnLicenseCredentials.Size = New System.Drawing.Size(180, 22)
+        Me.BtnLicenseCredentials.Text = "Credenciais"
+        '
+        'BtnChangeLicenseKey
+        '
+        Me.BtnChangeLicenseKey.Name = "BtnChangeLicenseKey"
+        Me.BtnChangeLicenseKey.Size = New System.Drawing.Size(180, 22)
+        Me.BtnChangeLicenseKey.Text = "Alterar Chave"
+        '
+        'BtnChangePassword
+        '
+        Me.BtnChangePassword.Name = "BtnChangePassword"
+        Me.BtnChangePassword.Size = New System.Drawing.Size(223, 22)
+        Me.BtnChangePassword.Text = "Alterar Senha"
+        '
+        'BtnCleanEventLog
+        '
+        Me.BtnCleanEventLog.Name = "BtnCleanEventLog"
+        Me.BtnCleanEventLog.Size = New System.Drawing.Size(223, 22)
+        Me.BtnCleanEventLog.Text = "Limpar Log de Eventos"
+        '
+        'BtnSupport
+        '
+        Me.BtnSupport.Name = "BtnSupport"
+        Me.BtnSupport.Size = New System.Drawing.Size(223, 22)
+        Me.BtnSupport.Text = "Suporte"
+        '
+        'BtnBackupConfig
+        '
+        Me.BtnBackupConfig.Name = "BtnBackupConfig"
+        Me.BtnBackupConfig.Size = New System.Drawing.Size(223, 22)
+        Me.BtnBackupConfig.Text = "Backup"
+        '
+        'BtnParameters
+        '
+        Me.BtnParameters.Name = "BtnParameters"
+        Me.BtnParameters.Size = New System.Drawing.Size(223, 22)
+        Me.BtnParameters.Text = "Parâmetros"
         '
         'TpbProgress
         '
@@ -321,156 +492,6 @@ Partial Class FrmMain
         Me.DataGridViewContentCopy.IncludeHeaderTextInRowCopy = True
         Me.DataGridViewContentCopy.ShowImages = True
         '
-        'BtnAgentState
-        '
-        Me.BtnAgentState.AutoSize = False
-        Me.BtnAgentState.CheckOnClick = True
-        Me.BtnAgentState.Enabled = False
-        Me.BtnAgentState.Image = Global.ManagerAgent.My.Resources.Resources.Pause
-        Me.BtnAgentState.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.BtnAgentState.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnAgentState.Margin = New System.Windows.Forms.Padding(5)
-        Me.BtnAgentState.Name = "BtnAgentState"
-        Me.BtnAgentState.Size = New System.Drawing.Size(150, 53)
-        Me.BtnAgentState.Text = "Em Pausa"
-        Me.BtnAgentState.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnAgentState.ToolTipText = "Controla as funções automáticas do sistema"
-        '
-        'BtnBackup
-        '
-        Me.BtnBackup.AutoSize = False
-        Me.BtnBackup.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnOpenBackupFolder, Me.BtnExecuteBackup, Me.BtnRestoreBackup})
-        Me.BtnBackup.Enabled = False
-        Me.BtnBackup.Image = Global.ManagerAgent.My.Resources.Resources.Backup
-        Me.BtnBackup.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.BtnBackup.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnBackup.Margin = New System.Windows.Forms.Padding(5)
-        Me.BtnBackup.Name = "BtnBackup"
-        Me.BtnBackup.Size = New System.Drawing.Size(100, 53)
-        Me.BtnBackup.Text = "Backup"
-        Me.BtnBackup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnBackup.ToolTipText = "Restaurar ou cria um backup"
-        '
-        'BtnOpenBackupFolder
-        '
-        Me.BtnOpenBackupFolder.Name = "BtnOpenBackupFolder"
-        Me.BtnOpenBackupFolder.Size = New System.Drawing.Size(180, 22)
-        Me.BtnOpenBackupFolder.Text = "Abrir Pasta"
-        '
-        'BtnExecuteBackup
-        '
-        Me.BtnExecuteBackup.Name = "BtnExecuteBackup"
-        Me.BtnExecuteBackup.Size = New System.Drawing.Size(180, 22)
-        Me.BtnExecuteBackup.Text = "Executar"
-        '
-        'BtnRestoreBackup
-        '
-        Me.BtnRestoreBackup.Name = "BtnRestoreBackup"
-        Me.BtnRestoreBackup.Size = New System.Drawing.Size(180, 22)
-        Me.BtnRestoreBackup.Text = "Restaurar"
-        '
-        'BtnClean
-        '
-        Me.BtnClean.AutoSize = False
-        Me.BtnClean.Enabled = False
-        Me.BtnClean.Image = Global.ManagerAgent.My.Resources.Resources.Garbage
-        Me.BtnClean.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.BtnClean.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnClean.Margin = New System.Windows.Forms.Padding(5)
-        Me.BtnClean.Name = "BtnClean"
-        Me.BtnClean.Size = New System.Drawing.Size(100, 53)
-        Me.BtnClean.Text = "Limpar"
-        Me.BtnClean.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnClean.ToolTipText = "Exclui arquivos que não são necessários pelo sistema"
-        '
-        'BtnRelease
-        '
-        Me.BtnRelease.AutoSize = False
-        Me.BtnRelease.Enabled = False
-        Me.BtnRelease.Image = Global.ManagerAgent.My.Resources.Resources.Release
-        Me.BtnRelease.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.BtnRelease.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnRelease.Margin = New System.Windows.Forms.Padding(5)
-        Me.BtnRelease.Name = "BtnRelease"
-        Me.BtnRelease.Size = New System.Drawing.Size(100, 53)
-        Me.BtnRelease.Text = "Desbloquear"
-        Me.BtnRelease.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnRelease.ToolTipText = "Desbloqueia registros que foram bloqueados por usuários mas que não estão mais se" &
-    "ndo utilizados"
-        '
-        'BtnCloudSync
-        '
-        Me.BtnCloudSync.AutoSize = False
-        Me.BtnCloudSync.Enabled = False
-        Me.BtnCloudSync.Image = Global.ManagerAgent.My.Resources.Resources.Cloud
-        Me.BtnCloudSync.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.BtnCloudSync.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnCloudSync.Margin = New System.Windows.Forms.Padding(5)
-        Me.BtnCloudSync.Name = "BtnCloudSync"
-        Me.BtnCloudSync.Size = New System.Drawing.Size(100, 53)
-        Me.BtnCloudSync.Text = "Sincronizar"
-        Me.BtnCloudSync.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnCloudSync.ToolTipText = "Sincroniza os dados do banco de dados local, com o banco de dados na núvem"
-        '
-        'BtnCompanies
-        '
-        Me.BtnCompanies.AutoSize = False
-        Me.BtnCompanies.Enabled = False
-        Me.BtnCompanies.Image = Global.ManagerAgent.My.Resources.Resources.Cloud
-        Me.BtnCompanies.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.BtnCompanies.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnCompanies.Margin = New System.Windows.Forms.Padding(5)
-        Me.BtnCompanies.Name = "BtnCompanies"
-        Me.BtnCompanies.Size = New System.Drawing.Size(120, 53)
-        Me.BtnCompanies.Text = "Empresas"
-        Me.BtnCompanies.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnCompanies.ToolTipText = "Sincroniza os dados do banco de dados local, com o banco de dados na núvem"
-        '
-        'BtnSettings
-        '
-        Me.BtnSettings.AutoSize = False
-        Me.BtnSettings.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnLicense, Me.BtnChangePassword, Me.BtnCleanEventLog})
-        Me.BtnSettings.Enabled = False
-        Me.BtnSettings.Image = Global.ManagerAgent.My.Resources.Resources.Settings
-        Me.BtnSettings.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.BtnSettings.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnSettings.Margin = New System.Windows.Forms.Padding(5)
-        Me.BtnSettings.Name = "BtnSettings"
-        Me.BtnSettings.Size = New System.Drawing.Size(120, 53)
-        Me.BtnSettings.Text = "Configurações"
-        Me.BtnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        '
-        'BtnLicense
-        '
-        Me.BtnLicense.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnLicenseCredentials, Me.BtnChangeLicenseKey})
-        Me.BtnLicense.Name = "BtnLicense"
-        Me.BtnLicense.Size = New System.Drawing.Size(223, 22)
-        Me.BtnLicense.Text = "Licença"
-        '
-        'BtnLicenseCredentials
-        '
-        Me.BtnLicenseCredentials.Name = "BtnLicenseCredentials"
-        Me.BtnLicenseCredentials.Size = New System.Drawing.Size(180, 22)
-        Me.BtnLicenseCredentials.Text = "Credenciais"
-        '
-        'BtnChangeLicenseKey
-        '
-        Me.BtnChangeLicenseKey.Name = "BtnChangeLicenseKey"
-        Me.BtnChangeLicenseKey.Size = New System.Drawing.Size(180, 22)
-        Me.BtnChangeLicenseKey.Text = "Alterar Chave"
-        '
-        'BtnChangePassword
-        '
-        Me.BtnChangePassword.Name = "BtnChangePassword"
-        Me.BtnChangePassword.Size = New System.Drawing.Size(223, 22)
-        Me.BtnChangePassword.Text = "Alterar Senha"
-        '
-        'BtnCleanEventLog
-        '
-        Me.BtnCleanEventLog.Name = "BtnCleanEventLog"
-        Me.BtnCleanEventLog.Size = New System.Drawing.Size(223, 22)
-        Me.BtnCleanEventLog.Text = "Limpar Log de Eventos"
-        '
         'FrmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
@@ -520,7 +541,7 @@ Partial Class FrmMain
     Friend WithEvents BtnOpenBackupFolder As ToolStripMenuItem
     Friend WithEvents BtnExecuteBackup As ToolStripMenuItem
     Friend WithEvents BtnRestoreBackup As ToolStripMenuItem
-    Friend WithEvents TpbProgress As ControlLibrary.TextedProgressBar
+    Friend WithEvents TpbProgress As CoreSuite.Controls.ColoredProgressBar
     Friend WithEvents BtnClean As ToolStripButton
     Friend WithEvents LblProgress As Label
     Friend WithEvents ScTaskEvent As SplitContainer
@@ -535,9 +556,12 @@ Partial Class FrmMain
     Friend WithEvents DgvWarnings As DataGridView
     Friend WithEvents Label1 As Label
     Friend WithEvents BtnCleanEventLog As ToolStripMenuItem
-    Friend WithEvents DataGridViewContentCopy As ControlLibrary.DataGridViewContentCopy
+    Friend WithEvents DataGridViewContentCopy As CoreSuite.Controls.DataGridViewClipboart
     Friend WithEvents BtnCompanies As ToolStripButton
     Friend WithEvents ToolStripSeparator4 As ToolStripSeparator
     Friend WithEvents BtnChangeLicenseKey As ToolStripMenuItem
     Friend WithEvents BtnLicenseCredentials As ToolStripMenuItem
+    Friend WithEvents BtnSupport As ToolStripMenuItem
+    Friend WithEvents BtnBackupConfig As ToolStripMenuItem
+    Friend WithEvents BtnParameters As ToolStripMenuItem
 End Class

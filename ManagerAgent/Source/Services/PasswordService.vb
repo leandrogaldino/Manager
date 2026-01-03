@@ -1,10 +1,12 @@
-﻿Imports ControlLibrary
-Imports ManagerCore
-Imports Helpers
+﻿Imports ManagerCore
+Imports CoreSuite.Helpers
+Imports CoreSuite.Controls
+Imports CoreSuite.Services
+
 Public Class PasswordService
     Private ReadOnly _LicenseService As LicenseService
     Private ReadOnly _Key As String
-    Private _SessionModel As SessionModel
+    Private ReadOnly _SessionModel As SessionModel
 
     Public Sub New(LicenseService As LicenseService, SessionModel As SessionModel, CryptoKeyService As CryptoKeyService)
         _LicenseService = LicenseService

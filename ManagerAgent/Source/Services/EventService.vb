@@ -4,7 +4,7 @@ Imports System.Text
 Imports System.Threading
 Imports ManagerCore
 Imports Newtonsoft.Json
-Imports Helpers
+Imports CoreSuite.Helpers
 Public Class EventService
     Private ReadOnly _Semaphore As SemaphoreSlim
 

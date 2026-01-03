@@ -1,7 +1,4 @@
-﻿Imports ControlLibrary
-Imports ManagerCore
-
-Public Class SetupTasks
+﻿Public Class SetupTasks
     Public Shared Sub Setup()
 
         'Locator.RegisterSingleton(Of TaskBase)(New TaskBackup(Locator.GetInstance(Of LocalDB), Locator.GetInstance(Of CompanyService), Locator.GetInstance(Of SessionModel)), TaskName.Backup)

@@ -1,27 +1,23 @@
-﻿Imports System.IO
-Imports ControlLibrary
-Imports FirebaseController
-Imports Helpers
-Imports ManagerCore
-Imports AsyncLoader
-
+﻿Imports ManagerCore
+Imports CoreSuite.Infrastructure
+Imports CoreSuite.Services
+Imports CoreSuite.Controls
 Public Class FrmLicenseCredentials
     Private _LicenseService As LicenseService
-    Private _LicenseCredentialsModel As LicenseCredentialsModel
+    Private _LicenseCredentials As LicenseRemoteDatabaseModel
     Private _LicenseCredentialsService As LicenseCredentialsService
     Private _Loading As Boolean
-    Public Sub New(LicenseCredentialsModel As LicenseCredentialsModel)
+    Public Sub New(Credentials As LicenseRemoteDatabaseModel)
         InitializeComponent()
         _Loading = True
         _LicenseService = Locator.GetInstance(Of LicenseService)
         _LicenseCredentialsService = Locator.GetInstance(Of LicenseCredentialsService)
-        _LicenseCredentialsModel = LicenseCredentialsModel
-        TxtApiKey.Text = _LicenseCredentialsModel.ApiKey
-        TxtProjectID.Text = _LicenseCredentialsModel.ProjectID
-        TxtBucketName.Text = _LicenseCredentialsModel.BucketName
-        TxtUsername.Text = _LicenseCredentialsModel.Username
-        TxtPassword.Text = _LicenseCredentialsModel.Password
-
+        _LicenseCredentials = Credentials
+        TxtApiKey.Text = _LicenseCredentials.ApiKey
+        TxtProjectID.Text = _LicenseCredentials.ProjectID
+        TxtBucketName.Text = _LicenseCredentials.BucketName
+        TxtUsername.Text = _LicenseCredentials.Username
+        TxtPassword.Text = _LicenseCredentials.Password
         _Loading = False
         AddHandler BtnTestAndOK.Click, AddressOf BtnTest_Click
     End Sub
@@ -46,64 +42,24 @@ Public Class FrmLicenseCredentials
             BtnTestAndOK.Enabled = False
         End If
     End Sub
-
-    Private Async Function TestConnectionAsync() As Task
-        Dim ErrorMessage As String = "Não foi possível conectar ao Firebase com as credenciais informadas."
-        Dim RemoteDb = Locator.GetInstance(Of FirebaseService)(CloudDatabaseType.License)
-        Dim Name As String = "connectiontest"
-        _LicenseCredentialsModel = New LicenseCredentialsModel With {
-            .ApiKey = TxtApiKey.Text,
-            .ProjectID = TxtProjectID.Text,
-            .BucketName = TxtBucketName.Text,
-            .Username = TxtUsername.Text,
-            .Password = TxtPassword.Text
-        }
-        RemoteDb.Initialize(_LicenseCredentialsModel.ApiKey, _LicenseCredentialsModel.ProjectID, _LicenseCredentialsModel.BucketName)
-        Try
-            Await RemoteDb.Auth.LoginAsync($"{_LicenseCredentialsModel.Username}@nexor.com", _LicenseCredentialsModel.Password)
-        Catch ex As Exception
-            CMessageBox.Show(ErrorMessage, CMessageBoxType.Error)
-            _TestPassed = False
-            Return
-        End Try
-        Try
-            Dim DocumentID As String = TextHelper.GetRandomFileName
-            Await RemoteDb.Firestore.SaveDocumentAsync(Name, DocumentID, New Dictionary(Of String, Object))
-            Await RemoteDb.Firestore.DeleteDocumentAsync(Name, DocumentID)
-        Catch ex As Exception
-            CMessageBox.Show(ErrorMessage, CMessageBoxType.Error)
-            _TestPassed = False
-            Return
-        End Try
-        Try
-            Dim ConnectionTestFile As String = Path.Combine(ApplicationPaths.AgentTempDirectory, Name)
-            File.WriteAllBytes(ConnectionTestFile, {})
-            Await RemoteDb.Storage.UploadFile(ConnectionTestFile, Name)
-            Await RemoteDb.Storage.DeleteFileAsync(Name)
-        Catch ex As Exception
-            CMessageBox.Show(ErrorMessage, CMessageBoxType.Error)
-            _TestPassed = False
-            Return
-        End Try
-        _TestPassed = True
-    End Function
-
     Private Async Sub BtnOK_Click(sender As Object, e As EventArgs)
-        _LicenseCredentialsService.Save(_LicenseCredentialsModel)
+        _LicenseCredentialsService.Save(_LicenseCredentials)
         Dim Result As LicenseResultModel = _LicenseService.GetLocalLicense()
         If Result.Flag = LicenseMessages.LicenseFileNotFound Then Await _LicenseService.SaveLocalLicense(New LicenseModel())
         DialogResult = DialogResult.OK
     End Sub
     Private Async Sub BtnTest_Click(sender As Object, e As EventArgs)
         Using LoaderForm As New FrmLoader(My.Resources.Loading)
-            Dim Loader As New LoaderController(Me, LoaderForm, 10, True, Color.White)
+            Dim Loader As New AsyncLoader(Me, LoaderForm, 10, True, Color.White)
             Await Loader.Start()
             Await Task.Delay(3000)
-            Await TestConnectionAsync()
-            If _TestPassed Then
+            Dim Result As DatabaseTestResultModel = Await Util.TestCloudConnectionAsync(_LicenseCredentials)
+            If Result.Success Then
                 RemoveHandler BtnTestAndOK.Click, AddressOf BtnTest_Click
                 AddHandler BtnTestAndOK.Click, AddressOf BtnOK_Click
                 BtnTestAndOK.Text = "OK"
+            Else
+                CMessageBox.Show(Result.ErrorMessage, CMessageBoxType.Error, CMessageBoxButtons.OK, Result.Exception)
             End If
             Await Loader.Stop()
         End Using

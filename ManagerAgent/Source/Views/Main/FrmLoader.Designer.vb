@@ -24,7 +24,7 @@ Partial Class FrmLoader
     Private Sub InitializeComponent()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.Viewer = New GifBox.GifBox()
+        Me.Viewer = New CoreSuite.Controls.AnimatedBox()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -54,10 +54,9 @@ Partial Class FrmLoader
         '
         Me.Viewer.BackColor = System.Drawing.Color.White
         Me.Viewer.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Viewer.GifImage = Nothing
         Me.Viewer.Location = New System.Drawing.Point(0, 0)
         Me.Viewer.Name = "Viewer"
-        Me.Viewer.ScaleMode = GifBox.GifImageScaleMode.Centrer
+        Me.Viewer.ScaleMode = CoreSuite.Controls.AnimationScaleMode.Centrer
         Me.Viewer.Size = New System.Drawing.Size(475, 211)
         Me.Viewer.TabIndex = 0
         '
@@ -76,7 +75,7 @@ Partial Class FrmLoader
 
     End Sub
 
-    Friend WithEvents Viewer As GifBox.GifBox
+    Friend WithEvents Viewer As CoreSuite.Controls.AnimatedBox
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Label1 As Label
 End Class

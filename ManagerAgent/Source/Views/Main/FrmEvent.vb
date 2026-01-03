@@ -1,5 +1,4 @@
-﻿Imports ControlLibrary
-Imports Helpers
+﻿Imports CoreSuite.Helpers
 Public Class FrmEvent
     Private _Event As EventModel
     Public Sub New([Event] As EventModel)

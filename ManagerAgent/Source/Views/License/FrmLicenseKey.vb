@@ -1,7 +1,6 @@
 ﻿Imports System.ComponentModel
-Imports ControlLibrary
 Imports ManagerCore
-
+Imports CoreSuite.Infrastructure
 Public Class FrmLicenseKey
 
     Public Sub New()

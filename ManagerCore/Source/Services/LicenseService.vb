@@ -1,8 +1,7 @@
 ﻿Imports System.IO
 Imports System.Text
-Imports ControlLibrary
-Imports FirebaseController
-Imports Helpers
+Imports CoreSuite.Services
+Imports CoreSuite.Helpers
 
 Public Class LicenseService
     Private ReadOnly _Key As String

@@ -1,17 +1,16 @@
 ﻿Imports System.Data.Common
 Imports System.IO
 Imports System.Transactions
-Imports ControlLibrary
 Imports ManagerCore
-Imports MySqlController
+Imports CoreSuite.Services
 Public Class TaskClean
     Inherits TaskBase
     Private ReadOnly _LocalDb As MySqlService
-    Private ReadOnly _CompanyService As CompanyService
-    Public Sub New(CompanyModel As CompanyModel, LocalDb As MySqlService, CompanyService As CompanyService)
-        MyBase.New(CompanyModel)
+    Private ReadOnly _PreferencesService As PreferencesService
+    Public Sub New(Preferences As PreferencesModel, PreferencesService As PreferencesService, LocalDb As MySqlService)
+        MyBase.New(Preferences)
         _LocalDb = LocalDb
-        _CompanyService = CompanyService
+        _PreferencesService = PreferencesService
     End Sub
     Public Overrides ReadOnly Property Name As TaskName
         Get
@@ -21,13 +20,13 @@ Public Class TaskClean
 
     Public Overrides ReadOnly Property RunIntervalMinutes As Integer
         Get
-            Return Company.General.Clean.Interval * (24 * 60)
+            Return Preferences.Parameters.Clean.Interval * (24 * 60)
         End Get
     End Property
 
     Public Overrides ReadOnly Property LastRun As Date
         Get
-            Return Company.LastExecution.Clean
+            Return Preferences.LastExecution.Clean
         End Get
     End Property
 
@@ -54,9 +53,9 @@ Public Class TaskClean
         Dim FileCount As Long
         Dim CurrentRow As Long
         Dim AllRows As Long
-        Dim FileManager As FileManager
         Dim TempDirectories As List(Of FileManager.DeleteDirectoryInfo)
         Dim Exception As Exception = Nothing
+        Dim IntProgress As Progress(Of Integer)
         Try
             Response.Text = "Limpeza: Iniciando"
             Progress?.Report(Response)
@@ -67,10 +66,10 @@ Public Class TaskClean
             CashDocumentDir = New DirectoryInfo(ApplicationPaths.CashDocumentDirectory)
             FileCount = EvaluationDocumentDir.GetFiles().Count() + EmailSignatureDir.GetDirectories().Count() + RequestDocumentDir.GetFiles().Count() + ProductPictureDir.GetFiles().Count() + CashDocumentDir.GetFiles().Count()
             Await Task.Delay(Constants.WaitForStart)
-            Month = Company.General.Evaluation.MonthsBeforeRecordDeletion
+            Month = Preferences.Parameters.Evaluation.MonthsBeforeRecordDeletion
             MonthStr = If(Month = 1, $"{Month} mês", $"{Month} meses")
             ResultDate = Today.AddMonths(-Month)
-            Result = Await _LocalDb.Request.ExecuteSelectAsync("evaluation", New MysqlSelectOptions() With {
+            Result = Await _LocalDb.Request.ExecuteSelectAsync("evaluation", New MySqlSelectOptions() With {
                 .Columns = {"id", "evaluationdate", "customerid"}.ToList,
                 .Where = "evaluationdate <= @evaluationdate",
                 .QueryArgs = New Dictionary(Of String, Object) From {{"@evaluationdate", ResultDate.ToString("yyyy-MM-dd")}}
@@ -86,7 +85,7 @@ Public Class TaskClean
 
             For Each Entry In Result.Data
                 Using Scope As New TransactionScope(TransactionScopeAsyncFlowOption.Enabled)
-                    Dim AgentID As Long = (Await _LocalDb.Request.ExecuteSelectAsync("user", New MysqlSelectOptions() With {
+                    Dim AgentID As Long = (Await _LocalDb.Request.ExecuteSelectAsync("user", New MySqlSelectOptions() With {
                       .Columns = {"id"}.ToList,
                       .Where = "username = @username",
                       .QueryArgs = New Dictionary(Of String, Object) From {{"@username", "SISTEMA"}},
@@ -134,7 +133,7 @@ Public Class TaskClean
             Await Task.Delay(Constants.WaitForJob)
             Response.Text = "Limpeza: Recuperando os endereços dos arquivos"
             Progress?.Report(Response)
-            Dim EvaluationResult As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("evaluation", New MysqlSelectOptions() With {
+            Dim EvaluationResult As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("evaluation", New MySqlSelectOptions() With {
                 .Columns = {"id", "documentname"}.ToList,
                 .Where = "documentname IS NOT NULL"
             })
@@ -142,7 +141,7 @@ Public Class TaskClean
             Response.Text = $"Limpeza: Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
-            Dim RequestResult As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("request", New MysqlSelectOptions() With {
+            Dim RequestResult As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("request", New MySqlSelectOptions() With {
                 .Columns = {"id", "documentname"}.ToList,
                 .Where = "documentname IS NOT NULL"
             })
@@ -150,7 +149,7 @@ Public Class TaskClean
             Response.Text = $"Limpeza: Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
-            Dim ProductResult As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("productpicture", New MysqlSelectOptions() With {
+            Dim ProductResult As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("productpicture", New MySqlSelectOptions() With {
                 .Columns = {"id", "picturename"}.ToList,
                 .Where = "picturename IS NOT NULL"
             })
@@ -158,7 +157,7 @@ Public Class TaskClean
             Response.Text = $"Limpeza: Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
-            Dim EmailResult As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("emailsignature", New MysqlSelectOptions() With {
+            Dim EmailResult As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("emailsignature", New MySqlSelectOptions() With {
                 .Columns = {"id", "directoryname"}.ToList,
                 .Where = "directoryname IS NOT NULL"
             })
@@ -166,7 +165,7 @@ Public Class TaskClean
             Response.Text = $"Limpeza: Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
-            Dim CashResult As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("cash", New MysqlSelectOptions() With {
+            Dim CashResult As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("cash", New MySqlSelectOptions() With {
                 .Columns = {"id", "documentname"}.ToList,
                 .Where = "documentname IS NOT NULL"
             })
@@ -257,7 +256,7 @@ Public Class TaskClean
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             CurrentRow = 0
-            FileManager = New FileManager()
+
             For Each EvaluationFile As FileInfo In EvaluationDocumentDir.GetFiles()
                 CurrentRow += 1
                 Response.Percent = CurrentRow / FileCount * 100
@@ -306,7 +305,7 @@ Public Class TaskClean
                 Response.Text = $"Limpeza: Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
                 Progress?.Report(Response)
                 If Not EmailResult.Data.Any(Function(x) x("directoryname").ToString = EmailDir.Name) Then
-                    Await FileManager.DeleteDirectoriesAsync(New List(Of FileManager.DeleteDirectoryInfo) From {New FileManager.DeleteDirectoryInfo(EmailDir, True)})
+                    Await FileManager.DeleteDirectoriesAsync({New FileManager.DeleteDirectoryInfo(EmailDir, True)}.ToList())
                     Response.Text = $"Limpeza: Verificando arquivos em disco não referenciados no banco de dados ({Response.Percent}%)"
                     Progress?.Report(Response)
                     Await Task.Delay(Constants.WaitForLoop)
@@ -328,17 +327,16 @@ Public Class TaskClean
             Response.Text = "Limpeza: Excluindo arquivos temporários"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
-            AddHandler FileManager.DeleteDirectoriesProgressChanged,
-                Sub(IOSender, IOEventArgs)
-                    Response.Text = $"Limpeza: Excluindo arquivos temporários ({IOEventArgs.PercentCompleted}%)"
-                    Progress?.Report(Response)
-                End Sub
             TempDirectories = New List(Of FileManager.DeleteDirectoryInfo) From {
                 New FileManager.DeleteDirectoryInfo With {.DeleteRoot = False, .Directory = New DirectoryInfo(ApplicationPaths.AgentTempDirectory)}
             }
-            Await FileManager.DeleteDirectoriesAsync(TempDirectories)
+            IntProgress = New Progress(Of Integer)(Sub(Percent)
+                                                       Response.Percent = Percent
+                                                       Response.Text = $"Limpeza: Excluindo arquivos temporários ({Percent}%)"
+                                                       Progress?.Report(Response)
+                                                   End Sub)
+            Await FileManager.DeleteDirectoriesAsync(TempDirectories, IntProgress)
             Await Task.Delay(Constants.WaitForJob)
-
             Response.Text = "Limpeza: Concluído"
             Response.Percent = 0
             Response.Event.EndTime = DateTime.Now
@@ -349,8 +347,8 @@ Public Class TaskClean
         Catch ex As Exception
             Exception = ex
         Finally
-            If Not IsManual Then Company.LastExecution.Clean = Now
-            If Not IsManual Then _CompanyService.Save(Company)
+            If Not IsManual Then Preferences.LastExecution.Clean = Now
+            If Not IsManual Then _PreferencesService.Save(Preferences)
         End Try
         If Exception IsNot Nothing Then
             Response.Percent = 0

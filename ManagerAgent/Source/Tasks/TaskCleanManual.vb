@@ -1,11 +1,11 @@
 ﻿Imports ManagerCore
-Imports MySqlController
+Imports CoreSuite.Services
 
 Public Class TaskCleanManual
     Inherits TaskClean
 
-    Public Sub New(CompanyModel As CompanyModel, LocalDb As MySqlService, CompanyService As CompanyService)
-        MyBase.New(CompanyModel, LocalDb, CompanyService)
+    Public Sub New(Preferences As PreferencesModel, PreferencesService As PreferencesService, LocalDb As MySqlService)
+        MyBase.New(Preferences, PreferencesService, LocalDb)
     End Sub
     Private _NextRun As Date = Nothing
     Public Overrides Property NextRun As Date

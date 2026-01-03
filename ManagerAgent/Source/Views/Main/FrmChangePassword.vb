@@ -1,4 +1,4 @@
-﻿Imports ControlLibrary
+﻿Imports CoreSuite.Infrastructure
 
 Public Class FrmChangePassword
     Private _PasswordService As PasswordService

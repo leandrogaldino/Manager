@@ -27,7 +27,7 @@ Partial Class FrmLogin
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TxtPassword = New System.Windows.Forms.TextBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.BtnConfirm = New ControlLibrary.NoFocusCueButton()
+        Me.BtnConfirm = New CoreSuite.Controls.NoFocusCueButton()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -127,7 +127,7 @@ Partial Class FrmLogin
 
     End Sub
 
-    Friend WithEvents BtnConfirm As ControlLibrary.NoFocusCueButton
+    Friend WithEvents BtnConfirm As CoreSuite.Controls.NoFocusCueButton
     Friend WithEvents Label1 As Label
     Friend WithEvents TxtUsername As TextBox
     Friend WithEvents Label2 As Label

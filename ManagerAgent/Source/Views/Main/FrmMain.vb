@@ -1,9 +1,10 @@
-﻿Imports ControlLibrary
-Imports ManagerCore
+﻿Imports ManagerCore
 Imports System.Collections.ObjectModel
 Imports System.IO
 Imports System.Threading
-Imports Helpers
+Imports CoreSuite.Infrastructure
+Imports CoreSuite.Helpers
+Imports CoreSuite.Controls
 Public Class FrmMain
     Private _IsWorking As Boolean
     Private _EventService As EventService
@@ -28,7 +29,7 @@ Public Class FrmMain
         _Semaphore = Locator.GetInstance(Of SemaphoreSlim)
         _StateWarnings = New ObservableCollection(Of String)
         ControlHelper.EnableControlDoubleBuffer(DgvEvents, True)
-        TsTitle.Renderer = New CustomToolStripRender()
+        TsTitle.Renderer = New CToolStripRender()
     End Sub
     Private Async Sub FrmMain_Load(sender As Object, e As EventArgs) Handles Me.Load
         AddHandler _StackTaskService.TaskProgress.ProgressChanged, AddressOf OnTaskProgressChanged
@@ -166,16 +167,16 @@ Public Class FrmMain
         Next Task
     End Sub
     Private Async Function ValidateState() As Task
-        Dim LicenseCloudPending As List(Of String) = Await _AppService.ValidateLicenseCredentials()
-        Dim CustomerCloudPending As List(Of String) = Await _AppService.ValidateCustomerCloud()
-        Dim ManagerDatabasePending As List(Of String) = Await _AppService.ValidateLocalDB()
+        Dim LicenseRemoteDatabasePending As List(Of String) = Await _AppService.ValidateLicenseRemoteDatabase()
+        Dim CustomerRemoteDatabasePending As List(Of String) = Await _AppService.ValidateCompanyRemoteDatabase()
+        Dim LocalDatabasePending As List(Of String) = Await _AppService.ValidateCompanyLocalDatabase()
         Dim BackupPending As List(Of String) = _AppService.ValidateBackup()
-        If ManagerDatabasePending.Count = 0 Then
+        If LocalDatabasePending.Count = 0 Then
             _HasDatabasePending = False
         Else
             _HasDatabasePending = True
         End If
-        If LicenseCloudPending.Count = 0 Then
+        If LicenseRemoteDatabasePending.Count = 0 Then
             _SessionModel.ManagerLicenseResult = Await _LicenseService.GetOnlineLicense()
             _HasManagerCloudPending = False
         Else
@@ -186,15 +187,15 @@ Public Class FrmMain
         If Not _SessionModel.ManagerLicenseResult.Success Then
             _StateWarnings.Add($"{Constants.SeparatorSymbol} {EnumHelper.GetEnumDescription(_SessionModel.ManagerLicenseResult.Flag)}")
         End If
-        LicenseCloudPending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
-        ManagerDatabasePending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
+        LicenseRemoteDatabasePending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
+        LocalDatabasePending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
         BackupPending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
-        CustomerCloudPending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
+        CustomerRemoteDatabasePending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
         BtnSettings.Enabled = True
         BtnLicense.Enabled = True
         BtnCompanies.Enabled = _SessionModel.ManagerLicenseResult.Success
         BtnChangePassword.Enabled = _SessionModel.ManagerLicenseResult.Success
-        BtnChangeLicenseKey.Enabled = LicenseCloudPending.Count = 0 And Not _SessionModel.ManagerLicenseResult.Flag = LicenseMessages.MissingCredentials
+        BtnChangeLicenseKey.Enabled = LicenseRemoteDatabasePending.Count = 0 And Not _SessionModel.ManagerLicenseResult.Flag = LicenseMessages.MissingCredentials
         BtnCleanEventLog.Enabled = _SessionModel.ManagerLicenseResult.Success
         If _StateWarnings.Count > 0 Then
             BtnAgentState.Enabled = False
@@ -420,12 +421,12 @@ Public Class FrmMain
     End Sub
 
     Private Async Sub BtnLicenseCredentials_Click(sender As Object, e As EventArgs) Handles BtnLicenseCredentials.Click
-        Dim Credentials As LicenseCredentialsModel = Nothing
+        Dim Credentials As LicenseRemoteDatabaseModel = Nothing
         If _SessionModel.ManagerLicenseResult.Flag <> LicenseMessages.LicenseFileNotFound Then
             Dim _LicenseCredentialsService = Locator.GetInstance(Of LicenseCredentialsService)
             Credentials = _LicenseCredentialsService.Load()
         End If
-        If Credentials Is Nothing Then Credentials = New LicenseCredentialsModel()
+        If Credentials Is Nothing Then Credentials = New LicenseRemoteDatabaseModel()
         Using Form As New FrmLicenseCredentials(Credentials)
             If Form.ShowDialog() = DialogResult.OK Then
                 Await ValidateState()

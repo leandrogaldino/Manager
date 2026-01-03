@@ -1,4 +1,4 @@
-﻿Imports ControlLibrary
+﻿Imports CoreSuite.Controls
 
 Public Class UcBackupDays
     Private _Container As ControlContainer

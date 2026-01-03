@@ -1,13 +1,14 @@
 ﻿Imports System.IO
-Imports ControlLibrary
-
+Imports CoreSuite.Controls
+Imports CoreSuite.Helpers
+Imports CoreSuite.Services
 Public Class FrmMain
     Private _FilePath As String
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CMessageBox.TitleFont = New Font("Century Gothic", 12, FontStyle.Bold)
         CMessageBox.MessageFont = New Font("Century Gothic", 11.25, FontStyle.Regular)
         TxtCryptoKey.Text = My.Settings.CryptoKey
-        TsBar.Renderer = New CustomToolstripRender
+        TsBar.Renderer = New CToolStripRender
     End Sub
     Private Sub BtnGenerateKey_Click(sender As Object, e As EventArgs) Handles BtnGenerateKey.Click
         TxtGeneratedKey.Text = TextHelper.GetRandomString(5, 5, "-", {CharFilter.UppercaseAlphabetic, CharFilter.Numeric}.ToList)

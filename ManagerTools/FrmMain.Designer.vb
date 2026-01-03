@@ -32,7 +32,7 @@ Partial Class FrmMain
         Me.BtnSaveContent = New System.Windows.Forms.Button()
         Me.TxtFileContent = New System.Windows.Forms.TextBox()
         Me.TabKey = New System.Windows.Forms.TabPage()
-        Me.BtnCopyKey = New ControlLibrary.NoFocusCueButton()
+        Me.BtnCopyKey = New CoreSuite.Controls.NoFocusCueButton()
         Me.BtnGenerateKey = New System.Windows.Forms.Button()
         Me.TxtGeneratedKey = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -217,7 +217,7 @@ Partial Class FrmMain
     Friend WithEvents Label3 As Label
     Friend WithEvents BtnSaveContent As Button
     Friend WithEvents TxtFileContent As TextBox
-    Friend WithEvents BtnCopyKey As ControlLibrary.NoFocusCueButton
+    Friend WithEvents BtnCopyKey As CoreSuite.Controls.NoFocusCueButton
     Friend WithEvents OfdFile As OpenFileDialog
     Friend WithEvents SfdFile As SaveFileDialog
     Friend WithEvents TsBar As ToolStrip

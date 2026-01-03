@@ -1,4 +1,4 @@
-﻿Public Class CompanySupportModel
+﻿Public Class PreferencesSupportModel
     Public Property EnableSSL As Boolean
     Public Property Email As String
     Public Property SMTPServer As String

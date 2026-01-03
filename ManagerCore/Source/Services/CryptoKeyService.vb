@@ -1,5 +1,5 @@
 ﻿Imports System.IO
-Imports Helpers
+Imports CoreSuite.Helpers
 
 Public Class CryptoKeyService
     Public Sub New()

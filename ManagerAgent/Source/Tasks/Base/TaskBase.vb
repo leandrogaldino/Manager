@@ -3,7 +3,8 @@
 Public MustInherit Class TaskBase
     Private _NextRun As Date
     Private _IsRunNeeded As Boolean
-    Private _Company As CompanyModel
+    Private ReadOnly _Company As CompanyModel
+    Private ReadOnly _Preferences As PreferencesModel
     MustOverride Async Function Run(Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task
     MustOverride ReadOnly Property Name As TaskName
     MustOverride ReadOnly Property RunIntervalMinutes As Integer
@@ -12,8 +13,18 @@ Public MustInherit Class TaskBase
     Public Property IsRunning As Boolean
     Public Property CancelRun As Boolean
     Public Property Waiting As Boolean
+
+    Public Sub New()
+    End Sub
     Public Sub New(Company As CompanyModel)
         _Company = Company
+    End Sub
+    Public Sub New(Preferences As PreferencesModel)
+        _Preferences = Preferences
+    End Sub
+    Public Sub New(Company As CompanyModel, Preferences As PreferencesModel)
+        _Company = Company
+        _Preferences = Preferences
     End Sub
 
     Public ReadOnly Property Company As CompanyModel
@@ -21,7 +32,11 @@ Public MustInherit Class TaskBase
             Return _Company
         End Get
     End Property
-
+    Public ReadOnly Property Preferences As PreferencesModel
+        Get
+            Return _Preferences
+        End Get
+    End Property
     Public Overridable Property NextRun As Date
         Get
             If IsManual Then

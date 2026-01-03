@@ -1,8 +1,6 @@
-﻿Imports ControlLibrary
-Imports ManagerCore
+﻿Imports ManagerCore
+Imports CoreSuite.Infrastructure
 Public Class FrmCompanies
-
-
     Private Sub OpenCompany(Model As CompanyModel)
         Using Form As New FrmCompany(Model)
             Form.ShowDialog()
@@ -17,7 +15,7 @@ Public Class FrmCompanies
                 .OnClickAction = AddressOf OpenCompany
             }
             FlpPrivilege.Controls.Add(Tile)
-        Next company
+        Next Company
     End Sub
 
     Private Sub RefreshCompanies()

@@ -60,7 +60,7 @@ Public Class FrmLogin
                                                 Else
                                                     Select Case Session.LicenseResult.Flag
                                                         Case LicenseMessages.OutdatedLocalLicenseKey
-                                                            Session.LicenseResult = ManagerCore.Util.AsyncLock(Function() License.GetOnlineLicense(License.GetLocalLicenseKey, License.GetLocalLicenseToken))
+                                                            Session.LicenseResult = Util.AsyncLock(Function() License.GetOnlineLicense(License.GetLocalLicenseKey, License.GetLocalLicenseToken))
                                                             If Session.LicenseResult.Success Then
                                                                 FrmMain.Show()
                                                             Else

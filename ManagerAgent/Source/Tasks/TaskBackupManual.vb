@@ -1,11 +1,11 @@
 ﻿Imports ManagerCore
-Imports MySqlController
+Imports CoreSuite.Services
 
 Public Class TaskBackupManual
     Inherits TaskBackup
 
-    Public Sub New(CompanyModel As CompanyModel, LocalDb As MySqlService, CompanyService As CompanyService, CryptoKeyService As CryptoKeyService)
-        MyBase.New(CompanyModel, LocalDb, CompanyService, CryptoKeyService)
+    Public Sub New(Preferences As PreferencesModel, PreferencesService As PreferencesService, LocalDb As MySqlService, CryptoKeyService As CryptoKeyService)
+        MyBase.New(Preferences, PreferencesService, LocalDb, CryptoKeyService)
     End Sub
 
     Private _NextRun As Date = Nothing

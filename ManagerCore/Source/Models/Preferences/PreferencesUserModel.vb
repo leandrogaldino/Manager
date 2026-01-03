@@ -1,3 +1,3 @@
-﻿Public Class CompanyUserModel
+﻿Public Class PreferencesUserModel
     Public Property DefaultPassword As String
 End Class

@@ -27,7 +27,7 @@ Partial Class FrmChangePassword
         Me.TxtNewPassword2 = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.BtnConfirm = New ControlLibrary.NoFocusCueButton()
+        Me.BtnConfirm = New CoreSuite.Controls.NoFocusCueButton()
         Me.TxtUsername = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -195,7 +195,7 @@ Partial Class FrmChangePassword
     Friend WithEvents TxtNewPassword2 As TextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
-    Friend WithEvents BtnConfirm As ControlLibrary.NoFocusCueButton
+    Friend WithEvents BtnConfirm As CoreSuite.Controls.NoFocusCueButton
     Friend WithEvents TxtUsername As TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents Label4 As Label

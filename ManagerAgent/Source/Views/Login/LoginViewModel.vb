@@ -1,8 +1,10 @@
 ﻿Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
-Imports ControlLibrary
 Imports ManagerCore
-Imports Helpers
+Imports CoreSuite.Infrastructure
+Imports CoreSuite.Helpers
+Imports CoreSuite.Services
+Imports CoreSuite.Controls
 Public Class LoginViewModel
     Implements INotifyPropertyChanged
     Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged

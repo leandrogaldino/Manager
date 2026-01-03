@@ -18,7 +18,7 @@ Public Class FrmCompany
         Throw New NotImplementedException
     End Sub
 
-    Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
+    Private Sub BtnSave_Click(sender As Object, e As EventArgs)
         UpdateData()
         _Service.Save(_Company)
     End Sub

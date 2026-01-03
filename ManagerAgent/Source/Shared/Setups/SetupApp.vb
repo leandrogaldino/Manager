@@ -1,7 +1,7 @@
-﻿Imports ControlLibrary
-Imports FirebaseController
-Imports ManagerCore
-Imports MySqlController
+﻿Imports ManagerCore
+Imports CoreSuite.Controls
+Imports CoreSuite.Services
+Imports CoreSuite.Infrastructure
 Public Class SetupApp
     Public Shared Sub SetupCMessageBox()
         CMessageBox.TitleFont = New Font("Century Gothic", 12, FontStyle.Bold)
@@ -11,13 +11,13 @@ Public Class SetupApp
     Public Shared Sub SetupData()
         Dim Session As SessionModel = Locator.GetInstance(Of SessionModel)
         Dim LicenseCloudService As LicenseCredentialsService = Locator.GetInstance(Of LicenseCredentialsService)
-        Dim LicenseCloudModel As LicenseCredentialsModel = LicenseCloudService.Load()
+        Dim LicenseCloudModel As LicenseRemoteDatabaseModel = LicenseCloudService.Load()
         If LicenseCloudModel IsNot Nothing Then
             Locator.GetInstance(Of FirebaseService)(CloudDatabaseType.License).Initialize(LicenseCloudModel.ApiKey, LicenseCloudModel.ProjectID, LicenseCloudModel.BucketName)
         End If
         For Each Company In Session.Companies
-            Locator.GetInstance(Of MySqlService)().Initialize(Company.Database.Server, Company.Database.Name, Company.Database.Username, Company.Database.Password)
-            Locator.GetInstance(Of FirebaseService)(CloudDatabaseType.Customer).Initialize(Company.Cloud.ApiKey, Company.Cloud.ProjectID, Company.Cloud.BucketName)
+            Locator.GetInstance(Of MySqlService)().Initialize(Company.LocalDatabase.Server, Company.LocalDatabase.Name, Company.LocalDatabase.Username, Company.LocalDatabase.Password)
+            Locator.GetInstance(Of FirebaseService)(CloudDatabaseType.Customer).Initialize(Company.RemoteDatabase.ApiKey, Company.RemoteDatabase.ProjectID, Company.RemoteDatabase.BucketName)
         Next Company
     End Sub
 End Class

@@ -4,4 +4,5 @@ Public Class SessionModel
     Public Property ManagerLicenseResult As LicenseResultModel
     Public Property IsAgentPaused As Boolean = True
     Public Property ForceAgentExit As Boolean
+    Public Property Preferences As PreferencesModel
 End Class

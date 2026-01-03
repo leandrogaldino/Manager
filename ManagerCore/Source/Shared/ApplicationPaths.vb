@@ -1,6 +1,5 @@
 ﻿Imports System.IO
 Imports System.Reflection
-Imports ControlLibrary
 
 Public Class ApplicationPaths
     Private Shared _AgentDirectory As String
@@ -67,6 +66,11 @@ Public Class ApplicationPaths
     Public Shared ReadOnly Property LicenseCredentialsFile As String
         Get
             Return Path.Combine(ConfigDirectory, ".LicenseCredentials")
+        End Get
+    End Property
+    Public Shared ReadOnly Property PreferencesFile As String
+        Get
+            Return Path.Combine(ConfigDirectory, ".Preferences")
         End Get
     End Property
     Public Shared ReadOnly Property DeployDirectory As String

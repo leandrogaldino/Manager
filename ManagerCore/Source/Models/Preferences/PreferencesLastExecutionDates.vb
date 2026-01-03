@@ -1,4 +1,4 @@
-﻿Public Class CompanyLastExecutionDates
+﻿Public Class PreferencesLastExecutionDates
 	Public Property Backup As Date
 	Public Property Clean As Date
 	Public Property Release As Date

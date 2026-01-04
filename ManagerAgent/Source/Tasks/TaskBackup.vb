@@ -110,19 +110,37 @@ Public Class TaskBackup
         Dim Files As List(Of FileInfo)
         Dim TempDatabaseDirectory As String
         Dim TargetList As List(Of String)
+
+
+
+
+
         Try
             Response.Text = $"Backup: Iniciando"
-            If Progress IsNot Nothing Then Progress.Report(Response)
+            Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForStart)
-            If Progress IsNot Nothing Then Progress.Report(Response)
-            IntProgress = New Progress(Of Integer)(Sub(Percent As Integer)
-                                                       Response.Percent = Percent
-                                                       Response.Text = $"Backup: Processando banco de dados ({Percent}%)"
-                                                       If Progress IsNot Nothing Then Progress.Report(Response)
-                                                   End Sub)
-            TempDatabaseDirectory = Path.Combine(ApplicationPaths.AgentTempDirectory, "Database")
-            If Not Directory.Exists(TempDatabaseDirectory) Then Directory.CreateDirectory(TempDatabaseDirectory)
-            Await _LocalDb.Maintenance.ExecuteBackupAsync(Path.Combine(TempDatabaseDirectory, "Database.sql"), IntProgress)
+            Progress?.Report(Response)
+
+
+            For Each RegisteredCompany In Session.Companies
+                IntProgress = New Progress(Of Integer)(Sub(Percent As Integer)
+                                                           Response.Percent = Percent
+                                                           Response.Text = $"Backup: Processando banco de dados {Constants.SeparatorSymbol} {RegisteredCompany.Register.ShortName} {Constants.SeparatorSymbol} {Percent}%"
+                                                           Progress?.Report(Response)
+                                                       End Sub)
+                TempDatabaseDirectory = Path.Combine(ApplicationPaths.AgentTempDirectory, "Database", RegisteredCompany.Register.Document.Replace(".", String.Empty).Replace("/", String.Empty).Replace("-", String.Empty)
+                If Not Directory.Exists(TempDatabaseDirectory) Then Directory.CreateDirectory(TempDatabaseDirectory)
+                Await _LocalDb.Maintenance.ExecuteBackupAsync(Path.Combine(TempDatabaseDirectory, $"{RegisteredCompany.Register.ShortName} Database.sql"), IntProgress)
+
+
+
+            Next RegisteredCompany
+
+
+
+
+
+
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
             FileName = $"Backup {DateTimeHelper.Now:dd-MM-yyyy HH.mm.ss}.bkp"
@@ -141,20 +159,20 @@ Public Class TaskBackup
             IntProgress = New Progress(Of Integer)(Sub(p)
                                                        Response.Percent = p
                                                        Response.Text = $"Backup: Processando arquivos ({p}%)"
-                                                       If Progress IsNot Nothing Then Progress.Report(Response)
+                                                       Progress?.Report(Response)
                                                    End Sub)
             Await FileMerger.MergeAsync(Path.Combine(BackupDir.FullName, FileName), TargetList, _CryptoKeyService.ReadCryptoKey, IntProgress)
             Await FileManager.DeleteDirectoriesAsync(New List(Of FileManager.DeleteDirectoryInfo) From {New FileManager.DeleteDirectoryInfo(New DirectoryInfo(TempDatabaseDirectory), True)})
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
-            If Progress IsNot Nothing Then Progress.Report(Response)
+            Progress?.Report(Response)
             BackupDir = New DirectoryInfo(Preferences.Backup.Location)
             Files = Util.GetBackupFiles()
             If Files.Count > 0 Then
                 IntProgress = New Progress(Of Integer)(Sub(Percent)
                                                            Response.Percent = Percent
                                                            Response.Text = $"Backup: Excluindo backups obsoletos ({Percent}%)"
-                                                           If Progress IsNot Nothing Then Progress.Report(Response)
+                                                           Progress?.Report(Response)
                                                        End Sub)
 
 
@@ -168,7 +186,7 @@ Public Class TaskBackup
             Response.Event.EndTime = DateTime.Now
             Response.Event.ReadyToPost = True
             Response.Event.Description = $"Backup{If(Not IsManual, String.Empty, " Manual")}"
-            If Progress IsNot Nothing Then Progress.Report(Response)
+            Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         Catch ex As Exception
             Exception = ex
@@ -185,11 +203,11 @@ Public Class TaskBackup
             Response.Event.Description = $"Backup{If(Not IsManual, String.Empty, " Manual")}"
             Response.Event.Status = TaskStatus.Error
             Response.Event.ExceptionMessage = $"{Exception.Message}{vbNewLine}{Exception.StackTrace}"
-            If Progress IsNot Nothing Then Progress.Report(Response)
+            Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             Response.Text = $"Backup: Concluído"
             Response.Event.ReadyToPost = True
-            If Progress IsNot Nothing Then Progress.Report(Response)
+            Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
         End If
     End Function

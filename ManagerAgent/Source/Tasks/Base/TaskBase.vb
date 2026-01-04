@@ -1,4 +1,5 @@
-﻿Imports ManagerCore
+﻿Imports CoreSuite.Infrastructure
+Imports ManagerCore
 
 Public MustInherit Class TaskBase
     Private _NextRun As Date
@@ -14,8 +15,6 @@ Public MustInherit Class TaskBase
     Public Property CancelRun As Boolean
     Public Property Waiting As Boolean
 
-    Public Sub New()
-    End Sub
     Public Sub New(Company As CompanyModel)
         _Company = Company
     End Sub
@@ -26,7 +25,11 @@ Public MustInherit Class TaskBase
         _Company = Company
         _Preferences = Preferences
     End Sub
-
+    Public ReadOnly Property Session As SessionModel
+        Get
+            Return Locator.GetInstance(Of SessionModel)
+        End Get
+    End Property
     Public ReadOnly Property Company As CompanyModel
         Get
             Return _Company

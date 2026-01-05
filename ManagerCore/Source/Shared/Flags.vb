@@ -14,7 +14,7 @@ Public Enum LicenseMessages
     <Description("Não foi possível acessar o servidor de validação da licença, verifique as credenciais.")> InaccessibleDestination = 11
     <Description("O banco de dados cloud de licença não foi configurado.")> MissingCredentials = 12
 End Enum
-Public Enum CloudDatabaseType
+Public Enum RemoteDatabaseType
     <Description("Cliente")> Customer = 0
-    <Description("Sistema")> License = 1
+    <Description("Sistema")> System = 1
 End Enum

@@ -14,9 +14,13 @@ Public Class FrmMain
     Private _TaskRunning As Boolean
     Private _BlockingTasks As Boolean
     Private _LicenseService As LicenseService
+
+
     Private _StateWarnings As ObservableCollection(Of String)
-    Private _HasManagerCloudPending As Boolean
-    Private _HasDatabasePending As Boolean
+    Private _HasSystemRemoteDbPending As Boolean
+    Private _HasLocalDbPending As Boolean
+    Private _HasCustomerRemoteDbPending As Boolean
+
     Private _LastLoginRequest As Date
     Private _Semaphore As SemaphoreSlim
     Public Sub New()
@@ -39,7 +43,7 @@ Public Class FrmMain
         AddHandler _StateWarnings.CollectionChanged, AddressOf OnStatePendingsChanged
         Await ValidateState()
         FillDgvTasks()
-        If Not _HasDatabasePending Then DgvEvents.DataSource = Await _EventService.Read()
+        If Not _HasLocalDbPending Then DgvEvents.DataSource = Await _EventService.Read()
     End Sub
     Private Sub OnStatePendingsChanged(sender As Object, e As EventArgs)
         DgvWarnings.Rows.Clear()
@@ -114,7 +118,7 @@ Public Class FrmMain
         If ShowFormLogin Then
             Using Frm As New FrmLogin()
                 If Frm.ShowDialog = DialogResult.OK Then
-                    If Not _HasManagerCloudPending Then _LastLoginRequest = Now
+                    If Not _HasSystemRemoteDbPending Then _LastLoginRequest = Now
                     Return True
                 Else
                     Return False
@@ -167,36 +171,31 @@ Public Class FrmMain
         Next Task
     End Sub
     Private Async Function ValidateState() As Task
-        Dim LicenseRemoteDatabasePending As List(Of String) = Await _AppService.ValidateLicenseRemoteDatabase()
-        Dim CustomerRemoteDatabasePending As List(Of String) = Await _AppService.ValidateCompanyRemoteDatabase()
-        Dim LocalDatabasePending As List(Of String) = Await _AppService.ValidateCompanyLocalDatabase()
-        Dim BackupPending As List(Of String) = _AppService.ValidateBackup()
-        If LocalDatabasePending.Count = 0 Then
-            _HasDatabasePending = False
-        Else
-            _HasDatabasePending = True
-        End If
-        If LicenseRemoteDatabasePending.Count = 0 Then
-            _SessionModel.ManagerLicenseResult = Await _LicenseService.GetOnlineLicense()
-            _HasManagerCloudPending = False
-        Else
-            _HasManagerCloudPending = True
-            _SessionModel.ManagerLicenseResult = New LicenseResultModel With {.Success = False, .Flag = LicenseMessages.InaccessibleDestination}
-        End If
+        Dim SystemRemoteDb As List(Of String) = Await _AppService.ValidateSystemRemoteDb()
+        Dim License As List(Of String) = Await _AppService.ValidateLicense()
+        Dim CustomerRemoteDb As List(Of String) = Await _AppService.ValidateCustomerRemoteDb()
+        Dim CustomerLocalDb As List(Of String) = Await _AppService.ValidateCompanyLocalDb()
+        Dim Backup As List(Of String) = _AppService.ValidateBackup()
+
+        _HasLocalDbPending = CustomerLocalDb.Count <> 0
+        _HasSystemRemoteDbPending = SystemRemoteDb.Count <> 0
+        _HasCustomerRemoteDbPending = CustomerRemoteDb.Count <> 0
+
         _StateWarnings.Clear()
-        If Not _SessionModel.ManagerLicenseResult.Success Then
-            _StateWarnings.Add($"{Constants.SeparatorSymbol} {EnumHelper.GetEnumDescription(_SessionModel.ManagerLicenseResult.Flag)}")
-        End If
-        LicenseRemoteDatabasePending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
-        LocalDatabasePending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
-        BackupPending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
-        CustomerRemoteDatabasePending.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
+
+        SystemRemoteDb.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
+        License.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
+        CustomerRemoteDb.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
+        CustomerLocalDb.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
+        Backup.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
+
         BtnSettings.Enabled = True
         BtnLicense.Enabled = True
-        BtnCompanies.Enabled = _SessionModel.ManagerLicenseResult.Success
-        BtnChangePassword.Enabled = _SessionModel.ManagerLicenseResult.Success
-        BtnChangeLicenseKey.Enabled = LicenseRemoteDatabasePending.Count = 0 And Not _SessionModel.ManagerLicenseResult.Flag = LicenseMessages.MissingCredentials
-        BtnCleanEventLog.Enabled = _SessionModel.ManagerLicenseResult.Success
+        BtnCleanEventLog.Enabled = True
+        BtnCompanies.Enabled = CustomerLocalDb.Count = 0
+        BtnChangePassword.Enabled = SystemRemoteDb.Count = 0
+        BtnChangeLicenseKey.Enabled = SystemRemoteDb.Count = 0
+
         If _StateWarnings.Count > 0 Then
             BtnAgentState.Enabled = False
             BtnBackup.Enabled = False
@@ -212,6 +211,7 @@ Public Class FrmMain
             BtnCloudSync.Enabled = True
             BtnCleanEventLog.Enabled = True
         End If
+
         FillDgvTasks()
     End Function
     Private Sub CloseApplication()
@@ -219,9 +219,13 @@ Public Class FrmMain
         Application.Exit()
     End Sub
     Private Sub NotifyIcon_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon.MouseDoubleClick
-        If RequestLogin(True) Then
-            NotifyIcon.Visible = False
+        If _StateWarnings.Count > 0 Then
             Show()
+        Else
+            If RequestLogin(True) Then
+                NotifyIcon.Visible = False
+                Show()
+            End If
         End If
     End Sub
 
@@ -315,20 +319,6 @@ Public Class FrmMain
             End Using
         End If
     End Sub
-
-    Private Async Sub BtnChangeLicenseKey_Click(sender As Object, e As EventArgs) Handles BtnChangeLicenseKey.Click
-        Dim LicenseResult = Locator.GetInstance(Of SessionModel).ManagerLicenseResult
-        Using Frm As New FrmLicenseKey()
-            If Not _HasManagerCloudPending AndAlso LicenseResult.Flag = LicenseMessages.MissingProductKey Then
-                Frm.ShowDialog()
-            Else
-                If RequestLogin() Then
-                    Frm.ShowDialog()
-                End If
-            End If
-            Await ValidateState()
-        End Using
-    End Sub
     Private Sub BtnRelease_Click(sender As Object, e As EventArgs) Handles BtnRelease.Click
         BtnRelease.Enabled = False
         Dim Task = Locator.GetInstance(Of TaskBase)(TaskName.ReleaseManual)
@@ -388,11 +378,9 @@ Public Class FrmMain
             DgvEvents.DataSource = Await _EventService.Read()
         End If
     End Sub
-
     Private Sub DgvEvents_RowsAdded(sender As Object, e As DataGridViewRowsAddedEventArgs) Handles DgvEvents.RowsAdded
         DgvEvents.FirstDisplayedScrollingRowIndex = 0
     End Sub
-
     Private Async Sub BtnCompanies_Click(sender As Object, e As EventArgs) Handles BtnCompanies.Click
         _Semaphore.Wait()
         Using Form As New FrmCompanies
@@ -401,7 +389,6 @@ Public Class FrmMain
         Await ValidateState()
         _Semaphore.Release()
     End Sub
-
     Private Sub DgvEvents_DoubleClick(sender As Object, e As EventArgs) Handles DgvEvents.DoubleClick
         Dim [Event] As New EventModel
         If DgvEvents.SelectedRows.Count = 1 Then
@@ -419,18 +406,59 @@ Public Class FrmMain
             End Using
         End If
     End Sub
-
     Private Async Sub BtnLicenseCredentials_Click(sender As Object, e As EventArgs) Handles BtnLicenseCredentials.Click
-        Dim Credentials As LicenseRemoteDatabaseModel = Nothing
+        Dim Credentials As RemoteDbCredentialsModel = Nothing
         If _SessionModel.ManagerLicenseResult.Flag <> LicenseMessages.LicenseFileNotFound Then
-            Dim _LicenseCredentialsService = Locator.GetInstance(Of LicenseCredentialsService)
-            Credentials = _LicenseCredentialsService.Load()
+            Dim _LicenseCredentialsService = Locator.GetInstance(Of RemoteDbCredentialsService)
+            Credentials = _LicenseCredentialsService.Load(RemoteDatabaseType.System)
         End If
-        If Credentials Is Nothing Then Credentials = New LicenseRemoteDatabaseModel()
+        If Credentials Is Nothing Then Credentials = New RemoteDbCredentialsModel()
         Using Form As New FrmLicenseCredentials(Credentials)
             If Form.ShowDialog() = DialogResult.OK Then
                 Await ValidateState()
             End If
         End Using
     End Sub
+    Private Async Sub BtnChangeLicenseKey_Click(sender As Object, e As EventArgs) Handles BtnChangeLicenseKey.Click
+        Dim LicenseResult = Locator.GetInstance(Of SessionModel).ManagerLicenseResult
+        Using Frm As New FrmLicenseKey()
+            If Not _HasSystemRemoteDbPending AndAlso LicenseResult.Flag = LicenseMessages.MissingProductKey Then
+                Frm.ShowDialog()
+            Else
+                If RequestLogin() Then
+                    Frm.ShowDialog()
+                End If
+            End If
+            Await ValidateState()
+        End Using
+    End Sub
+    Private Sub BtnLocalDbCredentials_Click(sender As Object, e As EventArgs) Handles BtnLocalDbCredentials.Click
+
+    End Sub
+
+    Private Sub BtnRemoteDbCredentials_Click(sender As Object, e As EventArgs) Handles BtnRemoteDbCredentials.Click
+
+    End Sub
+    Private Async Sub BtnBackupConfig_Click(sender As Object, e As EventArgs) Handles BtnBackupConfig.Click
+        Using Form As New FrmBackup()
+            If Form.ShowDialog() = DialogResult.OK Then
+                Await ValidateState()
+            End If
+        End Using
+    End Sub
+    Private Async Sub BtnSupport_Click(sender As Object, e As EventArgs) Handles BtnSupport.Click
+        Using Form As New FrmSupport()
+            If Form.ShowDialog() = DialogResult.OK Then
+                Await ValidateState()
+            End If
+        End Using
+    End Sub
+    Private async Sub BtnParameters_Click(sender As Object, e As EventArgs) Handles BtnParameters.Click
+        Using Form As New FrmParameters()
+            If Form.ShowDialog() = DialogResult.OK Then
+                Await ValidateState()
+            End If
+        End Using
+    End Sub
+
 End Class

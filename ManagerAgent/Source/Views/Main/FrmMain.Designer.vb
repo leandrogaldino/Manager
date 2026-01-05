@@ -24,9 +24,9 @@ Partial Class FrmMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmMain))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.NotifyIcon = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.CmsNotifyIcon = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.BtnClose = New System.Windows.Forms.ToolStripMenuItem()
@@ -48,11 +48,15 @@ Partial Class FrmMain
         Me.BtnLicense = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnLicenseCredentials = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnChangeLicenseKey = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BancoDeDadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnLocalDbCredentials = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnRemoteDbCredentials = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnBackupConfig = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnSupport = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnParameters = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.BtnChangePassword = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnCleanEventLog = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BtnSupport = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BtnBackupConfig = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BtnParameters = New System.Windows.Forms.ToolStripMenuItem()
         Me.TpbProgress = New CoreSuite.Controls.ColoredProgressBar()
         Me.LblProgress = New System.Windows.Forms.Label()
         Me.ScTaskEvent = New System.Windows.Forms.SplitContainer()
@@ -108,14 +112,14 @@ Partial Class FrmMain
         Me.DgvEvents.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
         Me.DgvEvents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DgvEvents.ColumnHeadersVisible = False
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Gainsboro
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer))
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DgvEvents.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.Gainsboro
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer))
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DgvEvents.DefaultCellStyle = DataGridViewCellStyle7
         Me.DgvEvents.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DgvEvents.GridColor = System.Drawing.Color.WhiteSmoke
         Me.DgvEvents.Location = New System.Drawing.Point(0, 28)
@@ -269,7 +273,7 @@ Partial Class FrmMain
         'BtnSettings
         '
         Me.BtnSettings.AutoSize = False
-        Me.BtnSettings.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnLicense, Me.BtnChangePassword, Me.BtnCleanEventLog, Me.BtnSupport, Me.BtnBackupConfig, Me.BtnParameters})
+        Me.BtnSettings.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnLicense, Me.BancoDeDadosToolStripMenuItem, Me.BtnBackupConfig, Me.BtnSupport, Me.BtnParameters, Me.ToolStripSeparator2, Me.BtnChangePassword, Me.BtnCleanEventLog})
         Me.BtnSettings.Enabled = False
         Me.BtnSettings.Image = Global.ManagerAgent.My.Resources.Resources.Settings
         Me.BtnSettings.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
@@ -299,6 +303,48 @@ Partial Class FrmMain
         Me.BtnChangeLicenseKey.Size = New System.Drawing.Size(180, 22)
         Me.BtnChangeLicenseKey.Text = "Alterar Chave"
         '
+        'BancoDeDadosToolStripMenuItem
+        '
+        Me.BancoDeDadosToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnLocalDbCredentials, Me.BtnRemoteDbCredentials})
+        Me.BancoDeDadosToolStripMenuItem.Name = "BancoDeDadosToolStripMenuItem"
+        Me.BancoDeDadosToolStripMenuItem.Size = New System.Drawing.Size(223, 22)
+        Me.BancoDeDadosToolStripMenuItem.Text = "Banco de Dados"
+        '
+        'BtnLocalDbCredentials
+        '
+        Me.BtnLocalDbCredentials.Name = "BtnLocalDbCredentials"
+        Me.BtnLocalDbCredentials.Size = New System.Drawing.Size(208, 22)
+        Me.BtnLocalDbCredentials.Text = "Credenciais Local"
+        '
+        'BtnRemoteDbCredentials
+        '
+        Me.BtnRemoteDbCredentials.Name = "BtnRemoteDbCredentials"
+        Me.BtnRemoteDbCredentials.Size = New System.Drawing.Size(208, 22)
+        Me.BtnRemoteDbCredentials.Text = "Credenciais Remoto"
+        '
+        'BtnBackupConfig
+        '
+        Me.BtnBackupConfig.Name = "BtnBackupConfig"
+        Me.BtnBackupConfig.Size = New System.Drawing.Size(223, 22)
+        Me.BtnBackupConfig.Text = "Backup"
+        '
+        'BtnSupport
+        '
+        Me.BtnSupport.Name = "BtnSupport"
+        Me.BtnSupport.Size = New System.Drawing.Size(223, 22)
+        Me.BtnSupport.Text = "Suporte"
+        '
+        'BtnParameters
+        '
+        Me.BtnParameters.Name = "BtnParameters"
+        Me.BtnParameters.Size = New System.Drawing.Size(223, 22)
+        Me.BtnParameters.Text = "Parâmetros"
+        '
+        'ToolStripSeparator2
+        '
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(220, 6)
+        '
         'BtnChangePassword
         '
         Me.BtnChangePassword.Name = "BtnChangePassword"
@@ -310,24 +356,6 @@ Partial Class FrmMain
         Me.BtnCleanEventLog.Name = "BtnCleanEventLog"
         Me.BtnCleanEventLog.Size = New System.Drawing.Size(223, 22)
         Me.BtnCleanEventLog.Text = "Limpar Log de Eventos"
-        '
-        'BtnSupport
-        '
-        Me.BtnSupport.Name = "BtnSupport"
-        Me.BtnSupport.Size = New System.Drawing.Size(223, 22)
-        Me.BtnSupport.Text = "Suporte"
-        '
-        'BtnBackupConfig
-        '
-        Me.BtnBackupConfig.Name = "BtnBackupConfig"
-        Me.BtnBackupConfig.Size = New System.Drawing.Size(223, 22)
-        Me.BtnBackupConfig.Text = "Backup"
-        '
-        'BtnParameters
-        '
-        Me.BtnParameters.Name = "BtnParameters"
-        Me.BtnParameters.Size = New System.Drawing.Size(223, 22)
-        Me.BtnParameters.Text = "Parâmetros"
         '
         'TpbProgress
         '
@@ -411,14 +439,14 @@ Partial Class FrmMain
         Me.DgvTasks.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
         Me.DgvTasks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DgvTasks.ColumnHeadersVisible = False
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Gainsboro
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer))
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DgvTasks.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.Gainsboro
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer))
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DgvTasks.DefaultCellStyle = DataGridViewCellStyle8
         Me.DgvTasks.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DgvTasks.GridColor = System.Drawing.Color.WhiteSmoke
         Me.DgvTasks.Location = New System.Drawing.Point(0, 28)
@@ -454,14 +482,14 @@ Partial Class FrmMain
         Me.DgvWarnings.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
         Me.DgvWarnings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DgvWarnings.ColumnHeadersVisible = False
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Gainsboro
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer))
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DgvWarnings.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.Gainsboro
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer), CType(CType(60, Byte), Integer))
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DgvWarnings.DefaultCellStyle = DataGridViewCellStyle9
         Me.DgvWarnings.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DgvWarnings.GridColor = System.Drawing.Color.WhiteSmoke
         Me.DgvWarnings.Location = New System.Drawing.Point(0, 28)
@@ -564,4 +592,8 @@ Partial Class FrmMain
     Friend WithEvents BtnSupport As ToolStripMenuItem
     Friend WithEvents BtnBackupConfig As ToolStripMenuItem
     Friend WithEvents BtnParameters As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
+    Friend WithEvents BancoDeDadosToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents BtnLocalDbCredentials As ToolStripMenuItem
+    Friend WithEvents BtnRemoteDbCredentials As ToolStripMenuItem
 End Class

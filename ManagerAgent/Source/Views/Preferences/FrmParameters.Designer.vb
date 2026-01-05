@@ -23,13 +23,10 @@ Partial Class FrmParameters
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.PnButtons = New System.Windows.Forms.Panel()
-        Me.BtnTestAndOK = New System.Windows.Forms.Button()
+        Me.BtnSave = New System.Windows.Forms.Button()
         Me.Panel19 = New System.Windows.Forms.Panel()
         Me.TxtUserDefaultPassword = New System.Windows.Forms.TextBox()
         Me.LblUserDefaultPassword = New System.Windows.Forms.Label()
-        Me.Panel25 = New System.Windows.Forms.Panel()
-        Me.LblReleaseRegister = New System.Windows.Forms.Label()
-        Me.TbrReleaseRegister = New System.Windows.Forms.TrackBar()
         Me.Panel7 = New System.Windows.Forms.Panel()
         Me.LblEvaluationMonthsBeforeRecordDeletion = New System.Windows.Forms.Label()
         Me.DbxEvaluationMonthsBeforeRecordDeletion = New CoreSuite.Controls.DecimalBox()
@@ -40,39 +37,56 @@ Partial Class FrmParameters
         Me.LblEvaluationDaysBeforeMaintenanceAlert = New System.Windows.Forms.Label()
         Me.DbxEvaluationDaysBeforeMaintenanceAlert = New CoreSuite.Controls.DecimalBox()
         Me.Panel24 = New System.Windows.Forms.Panel()
-        Me.LblInterval = New System.Windows.Forms.Label()
-        Me.TbrInterval = New System.Windows.Forms.TrackBar()
+        Me.LblCleanInterval = New System.Windows.Forms.Label()
+        Me.TbrCleanInterval = New System.Windows.Forms.TrackBar()
+        Me.TcParameters = New System.Windows.Forms.TabControl()
+        Me.TabEvaluation = New System.Windows.Forms.TabPage()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.TxtFooterMaintenancePlan = New System.Windows.Forms.TextBox()
+        Me.LblFooterMaintenancePlan = New System.Windows.Forms.Label()
+        Me.TabUser = New System.Windows.Forms.TabPage()
+        Me.TabRelease = New System.Windows.Forms.TabPage()
+        Me.Panel25 = New System.Windows.Forms.Panel()
+        Me.LblReleaseRegister = New System.Windows.Forms.Label()
+        Me.TbrReleaseRegister = New System.Windows.Forms.TrackBar()
+        Me.TabClean = New System.Windows.Forms.TabPage()
         Me.PnButtons.SuspendLayout()
         Me.Panel19.SuspendLayout()
-        Me.Panel25.SuspendLayout()
-        CType(Me.TbrReleaseRegister, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel7.SuspendLayout()
         Me.Panel26.SuspendLayout()
         Me.Panel23.SuspendLayout()
         Me.Panel24.SuspendLayout()
-        CType(Me.TbrInterval, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TbrCleanInterval, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TcParameters.SuspendLayout()
+        Me.TabEvaluation.SuspendLayout()
+        Me.Panel1.SuspendLayout()
+        Me.TabUser.SuspendLayout()
+        Me.TabRelease.SuspendLayout()
+        Me.Panel25.SuspendLayout()
+        CType(Me.TbrReleaseRegister, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabClean.SuspendLayout()
         Me.SuspendLayout()
         '
         'PnButtons
         '
         Me.PnButtons.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.PnButtons.Controls.Add(Me.BtnTestAndOK)
+        Me.PnButtons.Controls.Add(Me.BtnSave)
         Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PnButtons.Location = New System.Drawing.Point(0, 345)
+        Me.PnButtons.Location = New System.Drawing.Point(0, 304)
         Me.PnButtons.Name = "PnButtons"
-        Me.PnButtons.Size = New System.Drawing.Size(475, 36)
+        Me.PnButtons.Size = New System.Drawing.Size(469, 36)
         Me.PnButtons.TabIndex = 5
         '
-        'BtnTestAndOK
+        'BtnSave
         '
-        Me.BtnTestAndOK.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnTestAndOK.Enabled = False
-        Me.BtnTestAndOK.Location = New System.Drawing.Point(368, 3)
-        Me.BtnTestAndOK.Name = "BtnTestAndOK"
-        Me.BtnTestAndOK.Size = New System.Drawing.Size(95, 30)
-        Me.BtnTestAndOK.TabIndex = 0
-        Me.BtnTestAndOK.Text = "OK"
-        Me.BtnTestAndOK.UseVisualStyleBackColor = True
+        Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnSave.Enabled = False
+        Me.BtnSave.Location = New System.Drawing.Point(362, 3)
+        Me.BtnSave.Name = "BtnSave"
+        Me.BtnSave.Size = New System.Drawing.Size(95, 30)
+        Me.BtnSave.TabIndex = 0
+        Me.BtnSave.Text = "Salvar"
+        Me.BtnSave.UseVisualStyleBackColor = True
         '
         'Panel19
         '
@@ -80,7 +94,7 @@ Partial Class FrmParameters
         Me.Panel19.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel19.Controls.Add(Me.TxtUserDefaultPassword)
         Me.Panel19.Controls.Add(Me.LblUserDefaultPassword)
-        Me.Panel19.Location = New System.Drawing.Point(12, 296)
+        Me.Panel19.Location = New System.Drawing.Point(6, 13)
         Me.Panel19.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
         Me.Panel19.Name = "Panel19"
         Me.Panel19.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
@@ -106,48 +120,13 @@ Partial Class FrmParameters
         Me.LblUserDefaultPassword.Text = "Senha padrão"
         Me.LblUserDefaultPassword.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'Panel25
-        '
-        Me.Panel25.BackColor = System.Drawing.Color.White
-        Me.Panel25.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel25.Controls.Add(Me.LblReleaseRegister)
-        Me.Panel25.Controls.Add(Me.TbrReleaseRegister)
-        Me.Panel25.Location = New System.Drawing.Point(12, 222)
-        Me.Panel25.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-        Me.Panel25.Name = "Panel25"
-        Me.Panel25.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel25.Size = New System.Drawing.Size(450, 62)
-        Me.Panel25.TabIndex = 23
-        '
-        'LblReleaseRegister
-        '
-        Me.LblReleaseRegister.Location = New System.Drawing.Point(1, 1)
-        Me.LblReleaseRegister.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.LblReleaseRegister.Name = "LblReleaseRegister"
-        Me.LblReleaseRegister.Size = New System.Drawing.Size(414, 26)
-        Me.LblReleaseRegister.TabIndex = 3
-        Me.LblReleaseRegister.Text = "Liberar registros não atualizados a mais de 2 minutos"
-        Me.LblReleaseRegister.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'TbrReleaseRegister
-        '
-        Me.TbrReleaseRegister.AutoSize = False
-        Me.TbrReleaseRegister.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.TbrReleaseRegister.Location = New System.Drawing.Point(4, 29)
-        Me.TbrReleaseRegister.Maximum = 60
-        Me.TbrReleaseRegister.Minimum = 2
-        Me.TbrReleaseRegister.Name = "TbrReleaseRegister"
-        Me.TbrReleaseRegister.Size = New System.Drawing.Size(444, 31)
-        Me.TbrReleaseRegister.TabIndex = 2
-        Me.TbrReleaseRegister.Value = 2
-        '
         'Panel7
         '
         Me.Panel7.BackColor = System.Drawing.Color.White
         Me.Panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel7.Controls.Add(Me.LblEvaluationMonthsBeforeRecordDeletion)
         Me.Panel7.Controls.Add(Me.DbxEvaluationMonthsBeforeRecordDeletion)
-        Me.Panel7.Location = New System.Drawing.Point(12, 182)
+        Me.Panel7.Location = New System.Drawing.Point(6, 101)
         Me.Panel7.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
         Me.Panel7.Name = "Panel7"
         Me.Panel7.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
@@ -184,7 +163,7 @@ Partial Class FrmParameters
         Me.Panel26.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel26.Controls.Add(Me.LblEvaluationDaysBeforeVisitAlert)
         Me.Panel26.Controls.Add(Me.DbxEvaluationDaysBeforeVisitAlert)
-        Me.Panel26.Location = New System.Drawing.Point(12, 138)
+        Me.Panel26.Location = New System.Drawing.Point(6, 57)
         Me.Panel26.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
         Me.Panel26.Name = "Panel26"
         Me.Panel26.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
@@ -221,7 +200,7 @@ Partial Class FrmParameters
         Me.Panel23.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel23.Controls.Add(Me.LblEvaluationDaysBeforeMaintenanceAlert)
         Me.Panel23.Controls.Add(Me.DbxEvaluationDaysBeforeMaintenanceAlert)
-        Me.Panel23.Location = New System.Drawing.Point(12, 94)
+        Me.Panel23.Location = New System.Drawing.Point(6, 13)
         Me.Panel23.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
         Me.Panel23.Name = "Panel23"
         Me.Panel23.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
@@ -256,36 +235,161 @@ Partial Class FrmParameters
         '
         Me.Panel24.BackColor = System.Drawing.Color.White
         Me.Panel24.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel24.Controls.Add(Me.LblInterval)
-        Me.Panel24.Controls.Add(Me.TbrInterval)
-        Me.Panel24.Location = New System.Drawing.Point(12, 19)
+        Me.Panel24.Controls.Add(Me.LblCleanInterval)
+        Me.Panel24.Controls.Add(Me.TbrCleanInterval)
+        Me.Panel24.Location = New System.Drawing.Point(6, 13)
         Me.Panel24.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
         Me.Panel24.Name = "Panel24"
         Me.Panel24.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
         Me.Panel24.Size = New System.Drawing.Size(450, 62)
         Me.Panel24.TabIndex = 19
         '
-        'LblInterval
+        'LblCleanInterval
         '
-        Me.LblInterval.Location = New System.Drawing.Point(1, -1)
-        Me.LblInterval.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.LblInterval.Name = "LblInterval"
-        Me.LblInterval.Size = New System.Drawing.Size(414, 26)
-        Me.LblInterval.TabIndex = 3
-        Me.LblInterval.Text = "Executar a limpeza a cada 1 dia"
-        Me.LblInterval.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.LblCleanInterval.Location = New System.Drawing.Point(1, -1)
+        Me.LblCleanInterval.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.LblCleanInterval.Name = "LblCleanInterval"
+        Me.LblCleanInterval.Size = New System.Drawing.Size(414, 26)
+        Me.LblCleanInterval.TabIndex = 3
+        Me.LblCleanInterval.Text = "Executar a limpeza a cada 30 dias"
+        Me.LblCleanInterval.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'TbrInterval
+        'TbrCleanInterval
         '
-        Me.TbrInterval.AutoSize = False
-        Me.TbrInterval.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.TbrInterval.Location = New System.Drawing.Point(4, 29)
-        Me.TbrInterval.Maximum = 60
-        Me.TbrInterval.Minimum = 1
-        Me.TbrInterval.Name = "TbrInterval"
-        Me.TbrInterval.Size = New System.Drawing.Size(444, 31)
-        Me.TbrInterval.TabIndex = 2
-        Me.TbrInterval.Value = 2
+        Me.TbrCleanInterval.AutoSize = False
+        Me.TbrCleanInterval.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.TbrCleanInterval.Location = New System.Drawing.Point(4, 29)
+        Me.TbrCleanInterval.Maximum = 60
+        Me.TbrCleanInterval.Minimum = 1
+        Me.TbrCleanInterval.Name = "TbrCleanInterval"
+        Me.TbrCleanInterval.Size = New System.Drawing.Size(444, 31)
+        Me.TbrCleanInterval.TabIndex = 2
+        Me.TbrCleanInterval.Value = 30
+        '
+        'TcParameters
+        '
+        Me.TcParameters.Controls.Add(Me.TabEvaluation)
+        Me.TcParameters.Controls.Add(Me.TabUser)
+        Me.TcParameters.Controls.Add(Me.TabRelease)
+        Me.TcParameters.Controls.Add(Me.TabClean)
+        Me.TcParameters.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TcParameters.Location = New System.Drawing.Point(0, 0)
+        Me.TcParameters.Name = "TcParameters"
+        Me.TcParameters.SelectedIndex = 0
+        Me.TcParameters.Size = New System.Drawing.Size(469, 304)
+        Me.TcParameters.TabIndex = 25
+        '
+        'TabEvaluation
+        '
+        Me.TabEvaluation.Controls.Add(Me.Panel1)
+        Me.TabEvaluation.Controls.Add(Me.Panel23)
+        Me.TabEvaluation.Controls.Add(Me.Panel26)
+        Me.TabEvaluation.Controls.Add(Me.Panel7)
+        Me.TabEvaluation.Location = New System.Drawing.Point(4, 26)
+        Me.TabEvaluation.Name = "TabEvaluation"
+        Me.TabEvaluation.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabEvaluation.Size = New System.Drawing.Size(461, 274)
+        Me.TabEvaluation.TabIndex = 0
+        Me.TabEvaluation.Text = "Avaliação"
+        Me.TabEvaluation.UseVisualStyleBackColor = True
+        '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.Color.White
+        Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel1.Controls.Add(Me.TxtFooterMaintenancePlan)
+        Me.Panel1.Controls.Add(Me.LblFooterMaintenancePlan)
+        Me.Panel1.Location = New System.Drawing.Point(6, 141)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
+        Me.Panel1.Size = New System.Drawing.Size(450, 125)
+        Me.Panel1.TabIndex = 25
+        '
+        'TxtFooterMaintenancePlan
+        '
+        Me.TxtFooterMaintenancePlan.Location = New System.Drawing.Point(141, 3)
+        Me.TxtFooterMaintenancePlan.Multiline = True
+        Me.TxtFooterMaintenancePlan.Name = "TxtFooterMaintenancePlan"
+        Me.TxtFooterMaintenancePlan.Size = New System.Drawing.Size(304, 117)
+        Me.TxtFooterMaintenancePlan.TabIndex = 1
+        '
+        'LblFooterMaintenancePlan
+        '
+        Me.LblFooterMaintenancePlan.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LblFooterMaintenancePlan.Location = New System.Drawing.Point(4, 0)
+        Me.LblFooterMaintenancePlan.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.LblFooterMaintenancePlan.Name = "LblFooterMaintenancePlan"
+        Me.LblFooterMaintenancePlan.Size = New System.Drawing.Size(130, 123)
+        Me.LblFooterMaintenancePlan.TabIndex = 0
+        Me.LblFooterMaintenancePlan.Text = "Rodapé do Plano de Manutenção"
+        Me.LblFooterMaintenancePlan.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'TabUser
+        '
+        Me.TabUser.Controls.Add(Me.Panel19)
+        Me.TabUser.Location = New System.Drawing.Point(4, 26)
+        Me.TabUser.Name = "TabUser"
+        Me.TabUser.Size = New System.Drawing.Size(461, 274)
+        Me.TabUser.TabIndex = 2
+        Me.TabUser.Text = "Usuário"
+        Me.TabUser.UseVisualStyleBackColor = True
+        '
+        'TabRelease
+        '
+        Me.TabRelease.Controls.Add(Me.Panel25)
+        Me.TabRelease.Location = New System.Drawing.Point(4, 26)
+        Me.TabRelease.Name = "TabRelease"
+        Me.TabRelease.Size = New System.Drawing.Size(461, 274)
+        Me.TabRelease.TabIndex = 3
+        Me.TabRelease.Text = "Liberação"
+        Me.TabRelease.UseVisualStyleBackColor = True
+        '
+        'Panel25
+        '
+        Me.Panel25.BackColor = System.Drawing.Color.White
+        Me.Panel25.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel25.Controls.Add(Me.LblReleaseRegister)
+        Me.Panel25.Controls.Add(Me.TbrReleaseRegister)
+        Me.Panel25.Location = New System.Drawing.Point(6, 13)
+        Me.Panel25.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
+        Me.Panel25.Name = "Panel25"
+        Me.Panel25.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
+        Me.Panel25.Size = New System.Drawing.Size(450, 62)
+        Me.Panel25.TabIndex = 24
+        '
+        'LblReleaseRegister
+        '
+        Me.LblReleaseRegister.Location = New System.Drawing.Point(1, 1)
+        Me.LblReleaseRegister.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.LblReleaseRegister.Name = "LblReleaseRegister"
+        Me.LblReleaseRegister.Size = New System.Drawing.Size(414, 26)
+        Me.LblReleaseRegister.TabIndex = 3
+        Me.LblReleaseRegister.Text = "Liberar registros não atualizados a mais de 2 minutos"
+        Me.LblReleaseRegister.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'TbrReleaseRegister
+        '
+        Me.TbrReleaseRegister.AutoSize = False
+        Me.TbrReleaseRegister.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.TbrReleaseRegister.Location = New System.Drawing.Point(4, 29)
+        Me.TbrReleaseRegister.Maximum = 60
+        Me.TbrReleaseRegister.Minimum = 2
+        Me.TbrReleaseRegister.Name = "TbrReleaseRegister"
+        Me.TbrReleaseRegister.Size = New System.Drawing.Size(444, 31)
+        Me.TbrReleaseRegister.TabIndex = 2
+        Me.TbrReleaseRegister.Value = 2
+        '
+        'TabClean
+        '
+        Me.TabClean.Controls.Add(Me.Panel24)
+        Me.TabClean.Location = New System.Drawing.Point(4, 26)
+        Me.TabClean.Name = "TabClean"
+        Me.TabClean.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabClean.Size = New System.Drawing.Size(461, 274)
+        Me.TabClean.TabIndex = 1
+        Me.TabClean.Text = "Limpeza"
+        Me.TabClean.UseVisualStyleBackColor = True
         '
         'FrmParameters
         '
@@ -293,13 +397,8 @@ Partial Class FrmParameters
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.ClientSize = New System.Drawing.Size(475, 381)
-        Me.Controls.Add(Me.Panel19)
-        Me.Controls.Add(Me.Panel25)
-        Me.Controls.Add(Me.Panel7)
-        Me.Controls.Add(Me.Panel26)
-        Me.Controls.Add(Me.Panel23)
-        Me.Controls.Add(Me.Panel24)
+        Me.ClientSize = New System.Drawing.Size(469, 340)
+        Me.Controls.Add(Me.TcParameters)
         Me.Controls.Add(Me.PnButtons)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
@@ -311,8 +410,6 @@ Partial Class FrmParameters
         Me.PnButtons.ResumeLayout(False)
         Me.Panel19.ResumeLayout(False)
         Me.Panel19.PerformLayout()
-        Me.Panel25.ResumeLayout(False)
-        CType(Me.TbrReleaseRegister, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel7.ResumeLayout(False)
         Me.Panel7.PerformLayout()
         Me.Panel26.ResumeLayout(False)
@@ -320,18 +417,24 @@ Partial Class FrmParameters
         Me.Panel23.ResumeLayout(False)
         Me.Panel23.PerformLayout()
         Me.Panel24.ResumeLayout(False)
-        CType(Me.TbrInterval, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TbrCleanInterval, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TcParameters.ResumeLayout(False)
+        Me.TabEvaluation.ResumeLayout(False)
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        Me.TabUser.ResumeLayout(False)
+        Me.TabRelease.ResumeLayout(False)
+        Me.Panel25.ResumeLayout(False)
+        CType(Me.TbrReleaseRegister, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabClean.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents PnButtons As Panel
-    Friend WithEvents BtnTestAndOK As Button
+    Friend WithEvents BtnSave As Button
     Friend WithEvents Panel19 As Panel
     Friend WithEvents TxtUserDefaultPassword As TextBox
     Friend WithEvents LblUserDefaultPassword As Label
-    Friend WithEvents Panel25 As Panel
-    Friend WithEvents LblReleaseRegister As Label
-    Friend WithEvents TbrReleaseRegister As TrackBar
     Friend WithEvents Panel7 As Panel
     Friend WithEvents LblEvaluationMonthsBeforeRecordDeletion As Label
     Friend WithEvents DbxEvaluationMonthsBeforeRecordDeletion As CoreSuite.Controls.DecimalBox
@@ -342,6 +445,17 @@ Partial Class FrmParameters
     Friend WithEvents LblEvaluationDaysBeforeMaintenanceAlert As Label
     Friend WithEvents DbxEvaluationDaysBeforeMaintenanceAlert As CoreSuite.Controls.DecimalBox
     Friend WithEvents Panel24 As Panel
-    Friend WithEvents LblInterval As Label
-    Friend WithEvents TbrInterval As TrackBar
+    Friend WithEvents LblCleanInterval As Label
+    Friend WithEvents TbrCleanInterval As TrackBar
+    Friend WithEvents TcParameters As TabControl
+    Friend WithEvents TabEvaluation As TabPage
+    Friend WithEvents TabClean As TabPage
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents TxtFooterMaintenancePlan As TextBox
+    Friend WithEvents LblFooterMaintenancePlan As Label
+    Friend WithEvents TabUser As TabPage
+    Friend WithEvents TabRelease As TabPage
+    Friend WithEvents Panel25 As Panel
+    Friend WithEvents LblReleaseRegister As Label
+    Friend WithEvents TbrReleaseRegister As TrackBar
 End Class

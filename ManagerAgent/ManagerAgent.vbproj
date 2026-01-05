@@ -56,59 +56,59 @@
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CoreSuite.AnimatedBox">
-      <HintPath>..\..\..\source\repos\CoreSuite\AnimatedBox\bin\Debug\CoreSuite.AnimatedBox.dll</HintPath>
-    </Reference>
-    <Reference Include="CoreSuite.AsyncLoader">
-      <HintPath>..\..\..\source\repos\CoreSuite\AsyncLoader\bin\Debug\CoreSuite.AsyncLoader.dll</HintPath>
-    </Reference>
     <Reference Include="CoreSuite.CMessageBox">
-      <HintPath>..\..\..\source\repos\CoreSuite\CMessageBox\bin\Debug\CoreSuite.CMessageBox.dll</HintPath>
+      <HintPath>..\..\CoreSuite\CMessageBox\bin\Debug\CoreSuite.CMessageBox.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.ColoredProgressBar">
-      <HintPath>..\..\..\source\repos\CoreSuite\ColoredProgressBar\bin\Debug\CoreSuite.ColoredProgressBar.dll</HintPath>
+      <HintPath>..\..\CoreSuite\ColoredProgressBar\bin\Debug\CoreSuite.ColoredProgressBar.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.ControlContainer">
-      <HintPath>..\..\..\source\repos\CoreSuite\ControlContainer\bin\Debug\CoreSuite.ControlContainer.dll</HintPath>
+      <HintPath>..\..\CoreSuite\ControlContainer\bin\Debug\CoreSuite.ControlContainer.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.Cryptography">
-      <HintPath>..\..\..\source\repos\CoreSuite\Cryptography\bin\Debug\CoreSuite.Cryptography.dll</HintPath>
+      <HintPath>..\..\CoreSuite\Cryptography\bin\Debug\CoreSuite.Cryptography.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.CToolStripRender">
-      <HintPath>..\..\..\source\repos\CoreSuite\CToolStripRender\bin\Debug\CoreSuite.CToolStripRender.dll</HintPath>
+      <HintPath>..\..\CoreSuite\CToolStripRender\bin\Debug\CoreSuite.CToolStripRender.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.DataGridViewClipboart">
-      <HintPath>..\..\..\source\repos\CoreSuite\DataGridViewClipboart\bin\Debug\CoreSuite.DataGridViewClipboart.dll</HintPath>
+      <HintPath>..\..\CoreSuite\DataGridViewClipboart\bin\Debug\CoreSuite.DataGridViewClipboart.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.DataGridViewNavigator">
-      <HintPath>..\..\..\source\repos\CoreSuite\DataGridViewNavigator\bin\Debug\CoreSuite.DataGridViewNavigator.dll</HintPath>
+      <HintPath>..\..\CoreSuite\DataGridViewNavigator\bin\Debug\CoreSuite.DataGridViewNavigator.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.DecimalBox">
-      <HintPath>..\..\..\source\repos\CoreSuite\DecimalBox\bin\Debug\CoreSuite.DecimalBox.dll</HintPath>
+      <HintPath>..\..\CoreSuite\DecimalBox\bin\Debug\CoreSuite.DecimalBox.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.FileManager">
-      <HintPath>..\..\..\source\repos\CoreSuite\FileManager\bin\Debug\CoreSuite.FileManager.dll</HintPath>
+      <HintPath>..\..\CoreSuite\FileManager\bin\Debug\CoreSuite.FileManager.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.FileMerger">
-      <HintPath>..\..\..\source\repos\CoreSuite\FileMerger\bin\Debug\CoreSuite.FileMerger.dll</HintPath>
+      <HintPath>..\..\CoreSuite\FileMerger\bin\Debug\CoreSuite.FileMerger.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.FirebaseService">
-      <HintPath>..\..\..\source\repos\CoreSuite\FirebaseService\bin\Debug\CoreSuite.FirebaseService.dll</HintPath>
+      <HintPath>..\..\CoreSuite\FirebaseService\bin\Debug\CoreSuite.FirebaseService.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.FluentResizer">
+      <HintPath>..\..\CoreSuite\FluentResizer\bin\Debug\CoreSuite.FluentResizer.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.Helpers">
-      <HintPath>..\..\..\source\repos\CoreSuite\Helpers\bin\Debug\CoreSuite.Helpers.dll</HintPath>
+      <HintPath>..\..\CoreSuite\Helpers\bin\Debug\CoreSuite.Helpers.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.Locator">
-      <HintPath>..\..\..\source\repos\CoreSuite\Locator\bin\Debug\CoreSuite.Locator.dll</HintPath>
+      <HintPath>..\..\CoreSuite\Locator\bin\Debug\CoreSuite.Locator.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.MySqlService">
-      <HintPath>..\..\..\source\repos\CoreSuite\MySqlService\bin\Debug\CoreSuite.MySqlService.dll</HintPath>
+      <HintPath>..\..\CoreSuite\MySqlService\bin\Debug\CoreSuite.MySqlService.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.NoFocusCueButton">
-      <HintPath>..\..\..\source\repos\CoreSuite\NoFocusCueButton\bin\Debug\CoreSuite.NoFocusCueButton.dll</HintPath>
+      <HintPath>..\..\CoreSuite\NoFocusCueButton\bin\Debug\CoreSuite.NoFocusCueButton.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.PictureViewer">
-      <HintPath>..\..\..\source\repos\CoreSuite\PictureViewer\bin\Debug\CoreSuite.PictureViewer.dll</HintPath>
+      <HintPath>..\..\CoreSuite\PictureViewer\bin\Debug\CoreSuite.PictureViewer.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.TimeBox">
+      <HintPath>..\..\CoreSuite\TimeBox\bin\Debug\CoreSuite.TimeBox.dll</HintPath>
     </Reference>
     <Reference Include="ManagerCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -125,6 +125,7 @@
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Management" />
@@ -182,28 +183,34 @@
     <Compile Include="Source\Views\Company\FrmCompanies.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Views\FrmBackup.Designer.vb">
+    <Compile Include="Source\Views\Preferences\FrmBackup.Designer.vb">
       <DependentUpon>FrmBackup.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Views\FrmBackup.vb">
+    <Compile Include="Source\Views\Preferences\FrmBackup.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Views\FrmParameters.Designer.vb">
+    <Compile Include="Source\Views\Preferences\FrmLocalDb.Designer.vb">
+      <DependentUpon>FrmLocalDb.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Preferences\FrmLocalDb.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\Preferences\FrmParameters.Designer.vb">
       <DependentUpon>FrmParameters.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Views\FrmParameters.vb">
+    <Compile Include="Source\Views\Preferences\FrmParameters.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Views\FrmSupport.Designer.vb">
+    <Compile Include="Source\Views\Preferences\FrmRemoteDb.Designer.vb">
+      <DependentUpon>FrmRemoteDb.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Preferences\FrmRemoteDb.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\Preferences\FrmSupport.Designer.vb">
       <DependentUpon>FrmSupport.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Views\FrmSupport.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Views\Main\FrmLoader.Designer.vb">
-      <DependentUpon>FrmLoader.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Views\Main\FrmLoader.vb">
+    <Compile Include="Source\Views\Preferences\FrmSupport.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Views\License\FrmLicenseCredentials.Designer.vb">
@@ -220,10 +227,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Views\RestoreBackup\RestoreBackupViewModel.vb" />
-    <Compile Include="Source\Views\Company\UcBackupDays.Designer.vb">
+    <Compile Include="Source\Views\Preferences\UcBackupDays.Designer.vb">
       <DependentUpon>UcBackupDays.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Views\Company\UcBackupDays.vb">
+    <Compile Include="Source\Views\Preferences\UcBackupDays.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Views\Company\FrmCompany.Designer.vb">
@@ -294,17 +301,14 @@
     <EmbeddedResource Include="Source\Views\Company\FrmCompanies.resx">
       <DependentUpon>FrmCompanies.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\FrmBackup.resx">
+    <EmbeddedResource Include="Source\Views\Preferences\FrmBackup.resx">
       <DependentUpon>FrmBackup.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\FrmParameters.resx">
+    <EmbeddedResource Include="Source\Views\Preferences\FrmParameters.resx">
       <DependentUpon>FrmParameters.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\FrmSupport.resx">
+    <EmbeddedResource Include="Source\Views\Preferences\FrmSupport.resx">
       <DependentUpon>FrmSupport.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Main\FrmLoader.resx">
-      <DependentUpon>FrmLoader.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\License\FrmLicenseCredentials.resx">
       <DependentUpon>FrmLicenseCredentials.vb</DependentUpon>
@@ -312,7 +316,7 @@
     <EmbeddedResource Include="Source\Views\Main\FrmEvent.resx">
       <DependentUpon>FrmEvent.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Company\UcBackupDays.resx">
+    <EmbeddedResource Include="Source\Views\Preferences\UcBackupDays.resx">
       <DependentUpon>UcBackupDays.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Company\FrmCompany.resx">

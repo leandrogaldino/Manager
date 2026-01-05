@@ -272,21 +272,21 @@ Partial Class UcBackupDays
 
     End Sub
 
-    Friend WithEvents Panel7 As Panel
-    Friend WithEvents CbxSunday As CheckBox
-    Friend WithEvents Label6 As Label
-    Friend WithEvents CbxSaturday As CheckBox
-    Friend WithEvents Label7 As Label
-    Friend WithEvents CbxFriday As CheckBox
-    Friend WithEvents Label8 As Label
-    Friend WithEvents CbxThursday As CheckBox
-    Friend WithEvents Label2 As Label
-    Friend WithEvents CbxWednesday As CheckBox
-    Friend WithEvents Label3 As Label
-    Friend WithEvents CbxTuesday As CheckBox
-    Friend WithEvents Label1 As Label
-    Friend WithEvents CbxMonday As CheckBox
-    Friend WithEvents Label5 As Label
-    Friend WithEvents PnButtons As Panel
-    Friend WithEvents BtnOK As Button
+    Private WithEvents Panel7 As Panel
+    Private WithEvents CbxSunday As CheckBox
+    Private WithEvents Label6 As Label
+    Private WithEvents CbxSaturday As CheckBox
+    Private WithEvents Label7 As Label
+    Private WithEvents CbxFriday As CheckBox
+    Private WithEvents Label8 As Label
+    Private WithEvents CbxThursday As CheckBox
+    Private WithEvents Label2 As Label
+    Private WithEvents CbxWednesday As CheckBox
+    Private WithEvents Label3 As Label
+    Private WithEvents CbxTuesday As CheckBox
+    Private WithEvents Label1 As Label
+    Private WithEvents CbxMonday As CheckBox
+    Private WithEvents Label5 As Label
+    Private WithEvents PnButtons As Panel
+    Private WithEvents BtnOK As Button
 End Class

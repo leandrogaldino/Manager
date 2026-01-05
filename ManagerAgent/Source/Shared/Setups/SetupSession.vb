@@ -7,7 +7,7 @@ Public Class SetupSession
         Dim Session As SessionModel = Locator.GetInstance(Of SessionModel)
         Session.ManagerLicenseResult = LicenseService.GetLocalLicense()
         Dim CompanyService As CompanyService = Locator.GetInstance(Of CompanyService)
-        Session.Companies = CompanyService.LoadAll()
-        Session.Preferences = PreferencesService.Load()
+        Session.Companies = ManagerCore.Util.AsyncLock(Function() CompanyService.LoadAllAsync())
+        Session.Preferences = ManagerCore.Util.AsyncLock(Function() PreferencesService.LoadAsync())
     End Sub
 End Class

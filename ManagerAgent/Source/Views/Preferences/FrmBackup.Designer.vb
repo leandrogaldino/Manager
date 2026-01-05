@@ -23,7 +23,7 @@ Partial Class FrmBackup
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.PnButtons = New System.Windows.Forms.Panel()
-        Me.BtnTestAndOK = New System.Windows.Forms.Button()
+        Me.BtnSave = New System.Windows.Forms.Button()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.BtnBackupDays = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -38,8 +38,10 @@ Partial Class FrmBackup
         Me.LblBackupKeep = New System.Windows.Forms.Label()
         Me.DbxBackupKeep = New CoreSuite.Controls.DecimalBox()
         Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.TbxBackupTime = New CoreSuite.Controls.TimeBox()
         Me.LblBackupTime = New System.Windows.Forms.Label()
-        Me.TxtBackupTime = New System.Windows.Forms.MaskedTextBox()
+        Me.ControlContainer = New CoreSuite.Controls.ControlContainer()
+        Me.FolderBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
         Me.PnButtons.SuspendLayout()
         Me.Panel3.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -51,23 +53,23 @@ Partial Class FrmBackup
         'PnButtons
         '
         Me.PnButtons.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.PnButtons.Controls.Add(Me.BtnTestAndOK)
+        Me.PnButtons.Controls.Add(Me.BtnSave)
         Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.PnButtons.Location = New System.Drawing.Point(0, 245)
         Me.PnButtons.Name = "PnButtons"
         Me.PnButtons.Size = New System.Drawing.Size(475, 36)
         Me.PnButtons.TabIndex = 5
         '
-        'BtnTestAndOK
+        'BtnSave
         '
-        Me.BtnTestAndOK.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnTestAndOK.Enabled = False
-        Me.BtnTestAndOK.Location = New System.Drawing.Point(368, 3)
-        Me.BtnTestAndOK.Name = "BtnTestAndOK"
-        Me.BtnTestAndOK.Size = New System.Drawing.Size(95, 30)
-        Me.BtnTestAndOK.TabIndex = 0
-        Me.BtnTestAndOK.Text = "OK"
-        Me.BtnTestAndOK.UseVisualStyleBackColor = True
+        Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnSave.Enabled = False
+        Me.BtnSave.Location = New System.Drawing.Point(368, 3)
+        Me.BtnSave.Name = "BtnSave"
+        Me.BtnSave.Size = New System.Drawing.Size(95, 30)
+        Me.BtnSave.TabIndex = 0
+        Me.BtnSave.Text = "Salvar"
+        Me.BtnSave.UseVisualStyleBackColor = True
         '
         'Panel3
         '
@@ -89,7 +91,7 @@ Partial Class FrmBackup
         Me.BtnBackupDays.Name = "BtnBackupDays"
         Me.BtnBackupDays.Size = New System.Drawing.Size(203, 23)
         Me.BtnBackupDays.TabIndex = 29
-        Me.BtnBackupDays.Text = "Seg, Ter, Qua, Qui, Sex, Sáb, Dom"
+        Me.BtnBackupDays.Text = "Nenhum"
         Me.BtnBackupDays.UseVisualStyleBackColor = True
         '
         'Label2
@@ -224,14 +226,26 @@ Partial Class FrmBackup
         '
         Me.Panel5.BackColor = System.Drawing.Color.White
         Me.Panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel5.Controls.Add(Me.TbxBackupTime)
         Me.Panel5.Controls.Add(Me.LblBackupTime)
-        Me.Panel5.Controls.Add(Me.TxtBackupTime)
         Me.Panel5.Location = New System.Drawing.Point(12, 63)
         Me.Panel5.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
         Me.Panel5.Name = "Panel5"
         Me.Panel5.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
         Me.Panel5.Size = New System.Drawing.Size(450, 31)
         Me.Panel5.TabIndex = 34
+        '
+        'TbxBackupTime
+        '
+        Me.TbxBackupTime.Location = New System.Drawing.Point(241, 3)
+        Me.TbxBackupTime.MinimumSize = New System.Drawing.Size(70, 4)
+        Me.TbxBackupTime.Name = "TbxBackupTime"
+        Me.TbxBackupTime.ShowSecconds = True
+        Me.TbxBackupTime.Size = New System.Drawing.Size(203, 23)
+        Me.TbxBackupTime.TabIndex = 2
+        Me.TbxBackupTime.Text = "  :  :"
+        Me.TbxBackupTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.TbxBackupTime.Time = Nothing
         '
         'LblBackupTime
         '
@@ -244,16 +258,12 @@ Partial Class FrmBackup
         Me.LblBackupTime.Text = "Horário"
         Me.LblBackupTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'TxtBackupTime
+        'ControlContainer
         '
-        Me.TxtBackupTime.Location = New System.Drawing.Point(241, 3)
-        Me.TxtBackupTime.Mask = "00:00:00"
-        Me.TxtBackupTime.Name = "TxtBackupTime"
-        Me.TxtBackupTime.Size = New System.Drawing.Size(204, 23)
-        Me.TxtBackupTime.TabIndex = 1
-        Me.TxtBackupTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.TxtBackupTime.TextMaskFormat = System.Windows.Forms.MaskFormat.IncludePromptAndLiterals
-        Me.TxtBackupTime.ValidatingType = GetType(Date)
+        Me.ControlContainer.DropDownBorderColor = System.Drawing.SystemColors.HotTrack
+        Me.ControlContainer.DropDownControl = Nothing
+        Me.ControlContainer.DropDownEnabled = True
+        Me.ControlContainer.HostControl = Nothing
         '
         'FrmBackup
         '
@@ -288,7 +298,7 @@ Partial Class FrmBackup
 
     End Sub
     Friend WithEvents PnButtons As Panel
-    Friend WithEvents BtnTestAndOK As Button
+    Friend WithEvents BtnSave As Button
     Friend WithEvents Panel3 As Panel
     Friend WithEvents BtnBackupDays As Button
     Friend WithEvents Label2 As Label
@@ -304,5 +314,7 @@ Partial Class FrmBackup
     Friend WithEvents DbxBackupKeep As CoreSuite.Controls.DecimalBox
     Friend WithEvents Panel5 As Panel
     Friend WithEvents LblBackupTime As Label
-    Friend WithEvents TxtBackupTime As MaskedTextBox
+    Friend WithEvents ControlContainer As CoreSuite.Controls.ControlContainer
+    Friend WithEvents TbxBackupTime As CoreSuite.Controls.TimeBox
+    Friend WithEvents FolderBrowserDialog As FolderBrowserDialog
 End Class

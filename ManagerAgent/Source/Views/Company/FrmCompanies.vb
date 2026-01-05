@@ -9,7 +9,7 @@ Public Class FrmCompanies
 
     Private Sub FrmCompanies_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim Tile As UcCompanyTile
-        Dim Companies As List(Of CompanyModel) = Locator.GetInstance(Of CompanyService).LoadAll()
+        Dim Companies As List(Of CompanyModel) = ManagerCore.Util.AsyncLock(Function() Locator.GetInstance(Of CompanyService).LoadAllAsync())
         For Each Company As CompanyModel In Companies
             Tile = New UcCompanyTile(Company) With {
                 .OnClickAction = AddressOf OpenCompany

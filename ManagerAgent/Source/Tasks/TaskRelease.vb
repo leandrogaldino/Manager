@@ -105,10 +105,22 @@ Public Class TaskRelease
             End Using
         Catch ex As Exception
             Exception = ex
-        Finally
-            If Not IsManual Then Preferences.LastExecution.Release = Now
-            If Not IsManual Then _PreferencesService.Save(Preferences)
         End Try
+        If Not IsManual Then
+            Preferences.Backup.IgnoreNext = False
+            Preferences.LastExecution.Backup = Now
+            Try
+                Await _PreferencesService.SaveAsync(Preferences)
+            Catch ex As Exception
+                Response.Percent = 0
+                Response.Text = "Desbloquear: Erro na execução"
+                Response.Event.EndTime = DateTime.Now
+                Response.Event.Description = $"Desbloquear{If(Not IsManual, String.Empty, " Manual")}"
+                Response.Event.Status = TaskStatus.Error
+                Response.Event.ExceptionMessage = $"{Exception.Message}{vbNewLine}{Exception.StackTrace}"
+                Progress?.Report(Response)
+            End Try
+        End If
         If Exception IsNot Nothing Then
             Response.Percent = 0
             Response.Text = "Desbloquear: Erro na execução"

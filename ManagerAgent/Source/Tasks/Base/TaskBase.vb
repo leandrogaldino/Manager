@@ -4,7 +4,7 @@ Imports ManagerCore
 Public MustInherit Class TaskBase
     Private _NextRun As Date
     Private _IsRunNeeded As Boolean
-    Private ReadOnly _Company As CompanyModel
+
     Private ReadOnly _Preferences As PreferencesModel
     MustOverride Async Function Run(Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task
     MustOverride ReadOnly Property Name As TaskName
@@ -14,25 +14,15 @@ Public MustInherit Class TaskBase
     Public Property IsRunning As Boolean
     Public Property CancelRun As Boolean
     Public Property Waiting As Boolean
-
-    Public Sub New(Company As CompanyModel)
-        _Company = Company
+    Public Sub New()
     End Sub
     Public Sub New(Preferences As PreferencesModel)
         _Preferences = Preferences
     End Sub
-    Public Sub New(Company As CompanyModel, Preferences As PreferencesModel)
-        _Company = Company
-        _Preferences = Preferences
-    End Sub
+
     Public ReadOnly Property Session As SessionModel
         Get
             Return Locator.GetInstance(Of SessionModel)
-        End Get
-    End Property
-    Public ReadOnly Property Company As CompanyModel
-        Get
-            Return _Company
         End Get
     End Property
     Public ReadOnly Property Preferences As PreferencesModel

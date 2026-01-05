@@ -124,7 +124,7 @@ Public Class TaskRestoreBackup
 
             DatabaseDirectory = Path.Combine(ApplicationPaths.FilesDirectory, "Database")
             Await _LocalDb.Maintenance.ExecuteRestoreAsync(Path.Combine(DatabaseDirectory, "Database.sql"), IntProgress)
-            Await FileManager.DeleteDirectoriesAsync(New List(Of DeleteDirectoryInfo) From {New DeleteDirectoryInfo(New DirectoryInfo(DatabaseDirectory), True)})
+            Await DeleteDirectoriesAsync(New List(Of DeleteDirectoryInfo) From {New DeleteDirectoryInfo(New DirectoryInfo(DatabaseDirectory), True)})
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
             Response.Text = $"Restaurar Backup: Concluído - {Filename}"

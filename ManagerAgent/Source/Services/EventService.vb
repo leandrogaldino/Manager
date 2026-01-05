@@ -7,7 +7,7 @@ Imports Newtonsoft.Json
 Imports CoreSuite.Helpers
 Public Class EventService
     Private ReadOnly _Semaphore As SemaphoreSlim
-
+    Private _HasErrorOnSave As Boolean = False
     Public Sub New(Semaphore As SemaphoreSlim)
         _Semaphore = Semaphore
     End Sub
@@ -30,9 +30,6 @@ Public Class EventService
         NewRow.Item("LogMessages") = [Event].LogMessages
         Data.Rows.InsertAt(NewRow, 0)
     End Sub
-
-    Private _HasErrorOnSave As Boolean = False
-
     Public Async Function Save(Data As DataTable) As Task
         Dim EventModel As EventModel
         Dim EventList As EventList
@@ -42,7 +39,7 @@ Public Class EventService
         If Data.Rows.Cast(Of DataRow).Any(Function(x) Not CBool(x("IsSaved"))) Then
             Await _Semaphore.WaitAsync()
             Try
-                Dim JsonPath As String = Path.Combine(ApplicationPaths.FilesDirectory, "AgentEvents.json")
+                Dim JsonPath As String = Path.Combine(ApplicationPaths.AgentEventsFile)
                 If File.Exists(JsonPath) Then
                     Using fs As New FileStream(JsonPath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, useAsync:=True)
                         Using sr As New StreamReader(fs, Encoding.UTF8)
@@ -62,10 +59,11 @@ Public Class EventService
                         DateTime.ParseExact(Row("StartTime"), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture),
                         DateTime.ParseExact(Row("EndTime"), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture),
                         Convert.ToString(Row("Description"))
-                    )
-                    EventModel.Status = EnumHelper.GetEnumValue(Of TaskStatus)(Row("Status"))
-                    EventModel.ExceptionMessage = If(Row("ExceptionMessage") Is DBNull.Value, String.Empty, Row("ExceptionMessage"))
-                    EventModel.LogMessages = Row("LogMessages")
+                    ) With {
+                        .Status = EnumHelper.GetEnumValue(Of TaskStatus)(Row("Status")),
+                        .ExceptionMessage = If(Row("ExceptionMessage") Is DBNull.Value, String.Empty, Row("ExceptionMessage")),
+                        .LogMessages = Row("LogMessages")
+                    }
                     EventList.Events.Add(EventModel)
                 Next Row
                 Dim Json As String = JsonConvert.SerializeObject(EventList, Formatting.Indented)
@@ -78,10 +76,11 @@ Public Class EventService
                 Next
             Catch ex As Exception
                 _HasErrorOnSave = True
-                Dim [Event] As New EventModel(Now, "Erro ao salvar os eventos")
-                [Event].ReadyToPost = True
-                [Event].Status = TaskStatus.Error
-                [Event].ExceptionMessage = $"{ex.Message}{vbNewLine}{ex.StackTrace}"
+                Dim [Event] As New EventModel(Now, "Erro ao salvar os eventos") With {
+                    .ReadyToPost = True,
+                    .Status = TaskStatus.Error,
+                    .ExceptionMessage = $"{ex.Message}{vbNewLine}{ex.StackTrace}"
+                }
                 WriteSingle([Event], Data)
             Finally
                 _Semaphore.Release()
@@ -98,7 +97,7 @@ Public Class EventService
         Table.Columns.Add("IsSaved", GetType(Boolean))
         Table.Columns.Add("ExceptionMessage", GetType(String))
         Table.Columns.Add("LogMessages", GetType(List(Of String)))
-        Dim JsonPath As String = Path.Combine(ApplicationPaths.FilesDirectory, "AgentEvents.json")
+        Dim JsonPath As String = Path.Combine(ApplicationPaths.AgentEventsFile)
         If Not File.Exists(JsonPath) Then
             Return Table
         End If
@@ -130,10 +129,11 @@ Public Class EventService
             Next
             Return Table
         Catch ex As Exception
-            Dim [Event] As New EventModel(Now, "Erro ao carregar os eventos")
-            [Event].ReadyToPost = True
-            [Event].Status = TaskStatus.Error
-            [Event].ExceptionMessage = $"{ex.Message}{vbNewLine}{ex.StackTrace}"
+            Dim [Event] As New EventModel(Now, "Erro ao carregar os eventos") With {
+                .ReadyToPost = True,
+                .Status = TaskStatus.Error,
+                .ExceptionMessage = $"{ex.Message}{vbNewLine}{ex.StackTrace}"
+            }
             WriteSingle([Event], Table)
         Finally
             _Semaphore.Release()
@@ -142,20 +142,20 @@ Public Class EventService
     End Function
     Private Async Function CleanupOldEventsAsync(JsonPath As String, Table As DataTable, Optional months As Integer = 3) As Task
         Try
-            Dim eventList As EventList
-            Using fs As New FileStream(JsonPath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, useAsync:=True)
-                Using sr As New StreamReader(fs, Encoding.UTF8)
-                    Dim json As String = Await sr.ReadToEndAsync()
-                    eventList = JsonConvert.DeserializeObject(Of EventList)(json)
+            Dim EventList As EventList
+            Using FileStream As New FileStream(JsonPath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, useAsync:=True)
+                Using StreamReader As New StreamReader(FileStream, Encoding.UTF8)
+                    Dim Json As String = Await StreamReader.ReadToEndAsync()
+                    EventList = JsonConvert.DeserializeObject(Of EventList)(Json)
                 End Using
             End Using
-            If eventList Is Nothing OrElse eventList.Events Is Nothing Then Return
-            Dim limitDate As DateTime = DateTime.Now.AddMonths(-months)
-            eventList.Events = eventList.Events.Where(Function(e) e.EndTime >= limitDate).OrderBy(Function(e) e.EndTime).ToList()
-            Dim newJson As String = JsonConvert.SerializeObject(eventList, Formatting.Indented)
-            Using fs As New FileStream(JsonPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)
-                Dim buffer As Byte() = Encoding.UTF8.GetBytes(newJson)
-                Await fs.WriteAsync(buffer, 0, buffer.Length)
+            If EventList Is Nothing OrElse EventList.Events Is Nothing Then Return
+            Dim LimitDate As DateTime = DateTime.Now.AddMonths(-months)
+            EventList.Events = EventList.Events.Where(Function(e) e.EndTime >= LimitDate).OrderBy(Function(e) e.EndTime).ToList()
+            Dim NewJson As String = JsonConvert.SerializeObject(EventList, Formatting.Indented)
+            Using FileStream As New FileStream(JsonPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync:=True)
+                Dim Buffer As Byte() = Encoding.UTF8.GetBytes(NewJson)
+                Await FileStream.WriteAsync(Buffer, 0, Buffer.Length)
             End Using
         Catch ex As Exception
             Dim [Event] As New EventModel(Now, "Erro ao limpar os eventos")

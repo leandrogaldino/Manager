@@ -13,7 +13,7 @@ Public Class Util
             Return New List(Of FileInfo)
         End If
     End Function
-    Public Shared Async Function TestCloudConnectionAsync(Credentials As LicenseRemoteDatabaseModel) As Task(Of DatabaseTestResultModel)
+    Public Shared Async Function TestCloudConnectionAsync(Credentials As RemoteDbCredentialsModel) As Task(Of DatabaseTestResultModel)
         Dim Result As New DatabaseTestResultModel()
         Dim Name As String = "connectiontest"
         Dim TestDb As New FirebaseService(Credentials.ApiKey, Credentials.ProjectID, Credentials.BucketName)
@@ -35,7 +35,7 @@ Public Class Util
             Return Result
         End Try
     End Function
-    Public Shared Async Function TestLocalDbConnection(Credentials As CompanyLocalDatabaseModel) As Task(Of DatabaseTestResultModel)
+    Public Shared Async Function TestLocalDbConnection(Credentials As LocalDbCredentialsModel) As Task(Of DatabaseTestResultModel)
         Dim Result As New DatabaseTestResultModel()
         Dim TestDb As New MySqlService(Credentials.Server, Credentials.Name, Credentials.Username, Credentials.Password)
         Try

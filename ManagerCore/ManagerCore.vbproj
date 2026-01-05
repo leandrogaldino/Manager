@@ -47,13 +47,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CoreSuite.Cryptography">
-      <HintPath>..\..\..\source\repos\CoreSuite\Cryptography\bin\Debug\CoreSuite.Cryptography.dll</HintPath>
+      <HintPath>..\..\CoreSuite\Cryptography\bin\Debug\CoreSuite.Cryptography.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.FirebaseService">
-      <HintPath>..\..\..\source\repos\CoreSuite\FirebaseService\bin\Debug\CoreSuite.FirebaseService.dll</HintPath>
+      <HintPath>..\..\CoreSuite\FirebaseService\bin\Debug\CoreSuite.FirebaseService.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.Helpers">
-      <HintPath>..\..\..\source\repos\CoreSuite\Helpers\bin\Debug\CoreSuite.Helpers.dll</HintPath>
+      <HintPath>..\..\CoreSuite\Helpers\bin\Debug\CoreSuite.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.MySqlService">
+      <HintPath>..\..\CoreSuite\MySqlService\bin\Debug\CoreSuite.MySqlService.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -100,6 +103,7 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.1.2\lib\net462\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -135,29 +139,28 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Source\Models\Preferences\PreferencesModel.vb" />
-    <Compile Include="Source\Models\Base\RemoteDatabaseModel.vb" />
-    <Compile Include="Source\Models\Preferences\PreferencesCleanModel.vb" />
-    <Compile Include="Source\Models\Company\CompanyRemoteDatabaseModel.vb" />
-    <Compile Include="Source\Models\License\LicenseRemoteDatabaseModel.vb" />
-    <Compile Include="Source\Models\Preferences\PreferencesLastExecutionDates.vb" />
+    <Compile Include="Source\Models\Database\RemoteDbCredentialsModel.vb" />
     <Compile Include="Source\Models\Company\CompanyModel.vb" />
-    <Compile Include="Source\Models\Preferences\PreferencesBackupModel.vb" />
-    <Compile Include="Source\Models\Company\CompanyRegisterModel.vb" />
     <Compile Include="Source\Models\Company\CompanyAddressModel.vb" />
     <Compile Include="Source\Models\Company\CompanyContactModel.vb" />
-    <Compile Include="Source\Models\Company\CompanyLocalDatabaseModel.vb" />
+    <Compile Include="Source\Models\Database\LocalDbCredentialsModel.vb" />
+    <Compile Include="Source\Models\Preferences\PreferencesBackupModel.vb" />
+    <Compile Include="Source\Models\Preferences\PreferencesCleanModel.vb" />
     <Compile Include="Source\Models\Preferences\PreferencesEvaluationModel.vb" />
+    <Compile Include="Source\Models\Preferences\PreferencesLastExecutionDates.vb" />
+    <Compile Include="Source\Models\Preferences\PreferencesModel.vb" />
     <Compile Include="Source\Models\Preferences\PreferencesParametersModel.vb" />
     <Compile Include="Source\Models\Preferences\PreferencesReleaseModel.vb" />
-    <Compile Include="Source\Services\CompanyService.vb" />
     <Compile Include="Source\Models\Preferences\PreferencesSupportModel.vb" />
+    <Compile Include="Source\Models\Preferences\PreferencesSyncModel.vb" />
     <Compile Include="Source\Models\Preferences\PreferencesUserModel.vb" />
+    <Compile Include="Source\Services\CompanyService.vb" />
     <Compile Include="Source\Models\License\LicenseModel.vb" />
-    <Compile Include="Source\Services\LicenseCredentialsService.vb" />
+    <Compile Include="Source\Services\LocalDbCredentialsService.vb" />
+    <Compile Include="Source\Services\PreferencesService.vb" />
+    <Compile Include="Source\Services\RemoteDbCredentialsService.vb" />
     <Compile Include="Source\Services\LicenseService.vb" />
     <Compile Include="Source\Models\License\LicenseResultModel.vb" />
-    <Compile Include="Source\Services\PreferencesService.vb" />
     <Compile Include="Source\Shared\ApplicationPaths.vb" />
     <Compile Include="Source\Services\CryptoKeyService.vb" />
     <Compile Include="Source\Shared\Flags.vb" />
@@ -187,6 +190,7 @@
     <None Include="packages.config" />
     <None Include="Resources\Html\DefaultEmail.html" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PostBuildEvent>

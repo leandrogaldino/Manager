@@ -26,8 +26,8 @@ Public Class SetupApp
     Public Shared Sub SetupDatabases()
         Dim Session As Session = Locator.GetInstance(Of Session)
         Locator.GetInstance(Of LocalDB)().Initialize(Session.Setting.LocalDatabase)
-        Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Manager).Initialize(Session.Setting.RemoteDatabase.System)
-        Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer).Initialize(Session.Setting.RemoteDatabase.Customer)
+        Locator.GetInstance(Of RemoteDB)(RemoteDatabaseType.Manager).Initialize(Session.Setting.RemoteDatabase.System)
+        Locator.GetInstance(Of RemoteDB)(RemoteDatabaseType.Customer).Initialize(Session.Setting.RemoteDatabase.Customer)
         Locator.GetInstance(Of Storage)().Initialize(Session.Setting.RemoteDatabase.Storage)
     End Sub
     Private Shared Sub WipeTempDirectory()

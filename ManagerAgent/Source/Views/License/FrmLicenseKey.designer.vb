@@ -23,7 +23,7 @@ Partial Class FrmLicenseKey
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.PnButtons = New System.Windows.Forms.Panel()
-        Me.BtnOK = New System.Windows.Forms.Button()
+        Me.BtnSave = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TxtKeyPartA = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -34,34 +34,29 @@ Partial Class FrmLicenseKey
         Me.TxtKeyPartD = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.TxtKeyPartE = New System.Windows.Forms.TextBox()
-        Me.PbxLoading = New System.Windows.Forms.PictureBox()
-        Me.PnLicense = New System.Windows.Forms.Panel()
-        Me.LblStatus = New System.Windows.Forms.Label()
         Me.PnButtons.SuspendLayout()
-        CType(Me.PbxLoading, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.PnLicense.SuspendLayout()
         Me.SuspendLayout()
         '
         'PnButtons
         '
         Me.PnButtons.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.PnButtons.Controls.Add(Me.BtnOK)
+        Me.PnButtons.Controls.Add(Me.BtnSave)
         Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PnButtons.Location = New System.Drawing.Point(0, 87)
+        Me.PnButtons.Location = New System.Drawing.Point(0, 58)
         Me.PnButtons.Name = "PnButtons"
         Me.PnButtons.Size = New System.Drawing.Size(528, 36)
         Me.PnButtons.TabIndex = 10
         '
-        'BtnOK
+        'BtnSave
         '
-        Me.BtnOK.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnOK.Enabled = False
-        Me.BtnOK.Location = New System.Drawing.Point(421, 3)
-        Me.BtnOK.Name = "BtnOK"
-        Me.BtnOK.Size = New System.Drawing.Size(95, 30)
-        Me.BtnOK.TabIndex = 0
-        Me.BtnOK.Text = "OK"
-        Me.BtnOK.UseVisualStyleBackColor = True
+        Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnSave.Enabled = False
+        Me.BtnSave.Location = New System.Drawing.Point(421, 3)
+        Me.BtnSave.Name = "BtnSave"
+        Me.BtnSave.Size = New System.Drawing.Size(95, 30)
+        Me.BtnSave.TabIndex = 0
+        Me.BtnSave.Text = "Salvar"
+        Me.BtnSave.UseVisualStyleBackColor = True
         '
         'Label2
         '
@@ -175,32 +170,13 @@ Partial Class FrmLicenseKey
         Me.TxtKeyPartE.TabIndex = 9
         Me.TxtKeyPartE.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'PnLicense
-        '
-        Me.PnLicense.Controls.Add(Me.LblStatus)
-        Me.PnLicense.Controls.Add(Me.PbxLoading)
-        Me.PnLicense.Location = New System.Drawing.Point(0, 55)
-        Me.PnLicense.Margin = New System.Windows.Forms.Padding(0)
-        Me.PnLicense.Name = "PnLicense"
-        Me.PnLicense.Size = New System.Drawing.Size(528, 32)
-        Me.PnLicense.TabIndex = 12
-        '
-        'LblStatus
-        '
-        Me.LblStatus.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblStatus.Location = New System.Drawing.Point(43, 5)
-        Me.LblStatus.Name = "LblStatus"
-        Me.LblStatus.Size = New System.Drawing.Size(482, 24)
-        Me.LblStatus.TabIndex = 12
-        Me.LblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
         'FrmLicenseKey
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.ClientSize = New System.Drawing.Size(528, 123)
+        Me.ClientSize = New System.Drawing.Size(528, 94)
         Me.Controls.Add(Me.TxtKeyPartE)
         Me.Controls.Add(Me.TxtKeyPartD)
         Me.Controls.Add(Me.Label5)
@@ -212,7 +188,6 @@ Partial Class FrmLicenseKey
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.PnButtons)
-        Me.Controls.Add(Me.PnLicense)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Margin = New System.Windows.Forms.Padding(4)
@@ -221,14 +196,12 @@ Partial Class FrmLicenseKey
         Me.Name = "FrmLicenseKey"
         Me.Text = "Chave do Gerenciador"
         Me.PnButtons.ResumeLayout(False)
-        CType(Me.PbxLoading, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.PnLicense.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
     Friend WithEvents PnButtons As Panel
-    Friend WithEvents BtnOK As Button
+    Friend WithEvents BtnSave As Button
     Friend WithEvents Label2 As Label
     Friend WithEvents TxtKeyPartA As TextBox
     Friend WithEvents Label1 As Label
@@ -239,7 +212,4 @@ Partial Class FrmLicenseKey
     Friend WithEvents TxtKeyPartD As TextBox
     Friend WithEvents Label5 As Label
     Friend WithEvents TxtKeyPartE As TextBox
-    Friend WithEvents PbxLoading As PictureBox
-    Friend WithEvents PnLicense As Panel
-    Friend WithEvents LblStatus As Label
 End Class

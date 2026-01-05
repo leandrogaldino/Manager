@@ -53,19 +53,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CoreSuite.CMessageBox">
-      <HintPath>..\..\..\source\repos\CoreSuite\CMessageBox\bin\Debug\CoreSuite.CMessageBox.dll</HintPath>
+      <HintPath>..\..\CoreSuite\CMessageBox\bin\Debug\CoreSuite.CMessageBox.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.Cryptography">
-      <HintPath>..\..\..\source\repos\CoreSuite\Cryptography\bin\Debug\CoreSuite.Cryptography.dll</HintPath>
+      <HintPath>..\..\CoreSuite\Cryptography\bin\Debug\CoreSuite.Cryptography.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.CToolStripRender">
-      <HintPath>..\..\..\source\repos\CoreSuite\CToolStripRender\bin\Debug\CoreSuite.CToolStripRender.dll</HintPath>
+      <HintPath>..\..\CoreSuite\CToolStripRender\bin\Debug\CoreSuite.CToolStripRender.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.Helpers">
-      <HintPath>..\..\..\source\repos\CoreSuite\Helpers\bin\Debug\CoreSuite.Helpers.dll</HintPath>
+      <HintPath>..\..\CoreSuite\Helpers\bin\Debug\CoreSuite.Helpers.dll</HintPath>
     </Reference>
     <Reference Include="CoreSuite.NoFocusCueButton">
-      <HintPath>..\..\..\source\repos\CoreSuite\NoFocusCueButton\bin\Debug\CoreSuite.NoFocusCueButton.dll</HintPath>
+      <HintPath>..\..\CoreSuite\NoFocusCueButton\bin\Debug\CoreSuite.NoFocusCueButton.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

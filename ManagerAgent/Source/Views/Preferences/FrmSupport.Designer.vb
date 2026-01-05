@@ -23,7 +23,7 @@ Partial Class FrmSupport
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.PnButtons = New System.Windows.Forms.Panel()
-        Me.BtnTestAndOK = New System.Windows.Forms.Button()
+        Me.BtnSave = New System.Windows.Forms.Button()
         Me.Panel18 = New System.Windows.Forms.Panel()
         Me.TxtSupportSMTPServer = New System.Windows.Forms.TextBox()
         Me.Label19 = New System.Windows.Forms.Label()
@@ -46,23 +46,23 @@ Partial Class FrmSupport
         'PnButtons
         '
         Me.PnButtons.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.PnButtons.Controls.Add(Me.BtnTestAndOK)
+        Me.PnButtons.Controls.Add(Me.BtnSave)
         Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.PnButtons.Location = New System.Drawing.Point(0, 202)
         Me.PnButtons.Name = "PnButtons"
         Me.PnButtons.Size = New System.Drawing.Size(475, 36)
         Me.PnButtons.TabIndex = 5
         '
-        'BtnTestAndOK
+        'BtnSave
         '
-        Me.BtnTestAndOK.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnTestAndOK.Enabled = False
-        Me.BtnTestAndOK.Location = New System.Drawing.Point(368, 3)
-        Me.BtnTestAndOK.Name = "BtnTestAndOK"
-        Me.BtnTestAndOK.Size = New System.Drawing.Size(95, 30)
-        Me.BtnTestAndOK.TabIndex = 0
-        Me.BtnTestAndOK.Text = "OK"
-        Me.BtnTestAndOK.UseVisualStyleBackColor = True
+        Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnSave.Enabled = False
+        Me.BtnSave.Location = New System.Drawing.Point(368, 3)
+        Me.BtnSave.Name = "BtnSave"
+        Me.BtnSave.Size = New System.Drawing.Size(95, 30)
+        Me.BtnSave.TabIndex = 0
+        Me.BtnSave.Text = "Salvar"
+        Me.BtnSave.UseVisualStyleBackColor = True
         '
         'Panel18
         '
@@ -235,7 +235,7 @@ Partial Class FrmSupport
 
     End Sub
     Friend WithEvents PnButtons As Panel
-    Friend WithEvents BtnTestAndOK As Button
+    Friend WithEvents BtnSave As Button
     Friend WithEvents Panel18 As Panel
     Friend WithEvents TxtSupportSMTPServer As TextBox
     Friend WithEvents Label19 As Label

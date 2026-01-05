@@ -14,7 +14,6 @@ Public Class ApplicationPaths
             End If
         Next Prop
         Dim Key As String = New CryptoKeyService().ReadCryptoKey()
-        If Not File.Exists(EmailDefaultHtmlFile) Then File.WriteAllText(EmailDefaultHtmlFile, My.Resources.DefaultEmail)
     End Sub
     Public Shared Property AgentDirectory As String
         Get
@@ -43,34 +42,34 @@ Public Class ApplicationPaths
             Return Path.Combine(_AgentDirectory, "Files")
         End Get
     End Property
-    Public Shared ReadOnly Property ConfigDirectory As String
+    Public Shared ReadOnly Property DataDirectory As String
         Get
-            Return Path.Combine(FilesDirectory, "Config")
-        End Get
-    End Property
-    Public Shared ReadOnly Property CompanyDirectory As String
-        Get
-            Return Path.Combine(ConfigDirectory, "Company")
+            Return Path.Combine(FilesDirectory, "Data")
         End Get
     End Property
     Public Shared ReadOnly Property CryptoKeyFile As String
         Get
-            Return Path.Combine(ConfigDirectory, ".CryptoKey")
+            Return Path.Combine(DataDirectory, ".CryptoKey")
         End Get
     End Property
     Public Shared ReadOnly Property LicenseFile As String
         Get
-            Return Path.Combine(ConfigDirectory, ".License")
+            Return Path.Combine(DataDirectory, ".License")
         End Get
     End Property
-    Public Shared ReadOnly Property LicenseCredentialsFile As String
+    Public Shared ReadOnly Property LocalDbCredentialsFile As String
         Get
-            Return Path.Combine(ConfigDirectory, ".LicenseCredentials")
+            Return Path.Combine(DataDirectory, ".LocalDbCredentials")
         End Get
     End Property
-    Public Shared ReadOnly Property PreferencesFile As String
+    Public Shared ReadOnly Property RemoteDbCredentialsFile As String
         Get
-            Return Path.Combine(ConfigDirectory, ".Preferences")
+            Return Path.Combine(DataDirectory, ".RemoteDbCredentials")
+        End Get
+    End Property
+    Public Shared ReadOnly Property AgentEventsFile As String
+        Get
+            Return Path.Combine(DataDirectory, "AgentEvents.json")
         End Get
     End Property
     Public Shared ReadOnly Property DeployDirectory As String
@@ -80,7 +79,7 @@ Public Class ApplicationPaths
     End Property
     Public Shared ReadOnly Property LogoDirectory As String
         Get
-            Return Path.Combine(FilesDirectory, "CompanyLogo")
+            Return Path.Combine(FilesDirectory, "Logo")
         End Get
     End Property
     Public Shared ReadOnly Property EvaluationDocumentDirectory As String
@@ -121,11 +120,6 @@ Public Class ApplicationPaths
     Public Shared ReadOnly Property HelpersDirectory As String
         Get
             Return Path.Combine(FilesDirectory, "Helpers")
-        End Get
-    End Property
-    Public Shared ReadOnly Property EmailDefaultHtmlFile As String
-        Get
-            Return Path.Combine(HelpersDirectory, "EmailDefault.html")
         End Get
     End Property
 End Class

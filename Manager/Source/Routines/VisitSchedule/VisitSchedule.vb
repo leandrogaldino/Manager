@@ -16,7 +16,7 @@ Public Class VisitSchedule
     Public Property EvaluationID As Long
     Public Property Evaluation As New Lazy(Of Evaluation)
     Public Sub New()
-        _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
+        _RemoteDB = Locator.GetInstance(Of RemoteDB)(RemoteDatabaseType.Customer)
         SetRoutine(Routine.VisitSchedule)
     End Sub
     Public Sub Clear()

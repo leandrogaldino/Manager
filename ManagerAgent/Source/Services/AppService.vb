@@ -1,96 +1,97 @@
-﻿Imports ManagerCore
+﻿Imports System.Net
+Imports CoreSuite.Helpers
+Imports CoreSuite.Infrastructure
+Imports CoreSuite.Services
+Imports ManagerCore
 Public Class AppService
     Private ReadOnly _Session As SessionModel
-    Private ReadOnly _LicenseCredentialsService As LicenseCredentialsService
-    Public Sub New(Session As SessionModel, LicenseCredendialsService As LicenseCredentialsService)
+    Private ReadOnly _LocalDbCredentialsService As LocalDbCredentialsService
+    Private ReadOnly _RemoteDbCredentialsService As RemoteDbCredentialsService
+    Public Sub New(Session As SessionModel, LocalDbCredentialsService As LocalDbCredentialsService, RemoteDbCredendialsService As RemoteDbCredentialsService)
         _Session = Session
-        _LicenseCredentialsService = LicenseCredendialsService
+        _LocalDbCredentialsService = LocalDbCredentialsService
+        _RemoteDbCredentialsService = RemoteDbCredendialsService
     End Sub
-
+    Public Async Function ValidateSystemRemoteDb() As Task(Of List(Of String))
+        Dim Validations As New List(Of String)
+        Dim DbCredentials As RemoteDbCredentialsModel = _RemoteDbCredentialsService.Load(RemoteDatabaseType.System)
+        If DbCredentials Is Nothing Then Return Validations
+        If String.IsNullOrEmpty(DbCredentials.ProjectID) Then Validations.Add($"O nome do banco de dados remoto de licença não foi definido.")
+        If String.IsNullOrEmpty(DbCredentials.ApiKey) Then Validations.Add($"A Api Key do banco de dados remoto de licença não foi definida.")
+        If String.IsNullOrEmpty(DbCredentials.BucketName) Then Validations.Add($"O nome do bucket do storage do banco de dados remoto de licença não foi definido.")
+        Try
+            Dim Result As DatabaseTestResultModel = Await Util.TestCloudConnectionAsync(DbCredentials)
+            If Not Result.Success Then
+                Validations.Add($"Banco de dados remoto de licença não conectado, verifique as informações de conexão.")
+            End If
+        Catch ex As Exception
+            Validations.Add($"Erro ao conectar ou consultar no banco de dados remoto de licença: {ex.Message}")
+        End Try
+        Return Validations
+    End Function
+    Public Async Function ValidateLicense() As Task(Of List(Of String))
+        Dim Validations As New List(Of String)
+        Dim LicenseService As LicenseService = Locator.GetInstance(Of LicenseService)
+        Try
+            Dim Key As String = LicenseService.GetLocalLicenseKey
+            Dim Result = Await LicenseService.GetOnlineLicense(Key)
+            If Not _Session.ManagerLicenseResult.Success Then
+                Validations.Add($"{Constants.SeparatorSymbol} {EnumHelper.GetEnumDescription(_Session.ManagerLicenseResult.Flag)}")
+            End If
+        Catch ex As Exception
+            Validations.Add($"Erro ao consultar a licença: {ex.Message}")
+        End Try
+        Return Validations
+    End Function
+    Public Async Function ValidateCustomerRemoteDb() As Task(Of List(Of String))
+        Dim Validations As New List(Of String)
+        Dim DbCredentials As RemoteDbCredentialsModel = _RemoteDbCredentialsService.Load(RemoteDatabaseType.Customer)
+        If DbCredentials Is Nothing Then Return Validations
+        If String.IsNullOrEmpty(DbCredentials.ProjectID) Then Validations.Add($"O nome do banco de dados remoto do cliente não foi definido.")
+        If String.IsNullOrEmpty(DbCredentials.ApiKey) Then Validations.Add($"A Api Key do banco de dados remoto do cliente não foi definida.")
+        If String.IsNullOrEmpty(DbCredentials.BucketName) Then Validations.Add($"O nome do bucket do storage do banco de dados remoto do cliente não foi definido.")
+        Try
+            Dim Result As DatabaseTestResultModel = Await Util.TestCloudConnectionAsync(DbCredentials)
+            If Not Result.Success Then
+                Validations.Add($"Banco de dados remoto do cliente não conectado, verifique as informações de conexão.")
+            End If
+        Catch ex As Exception
+            Validations.Add($"Erro ao conectar ou consultar no banco de dados remoto do cliente.")
+        End Try
+        Return Validations
+    End Function
+    Public Async Function ValidateCompanyLocalDb() As Task(Of List(Of String))
+        Dim Validations As New List(Of String)
+        Dim DbCredentials As LocalDbCredentialsModel = _LocalDbCredentialsService.Load()
+        If String.IsNullOrEmpty(DbCredentials.Name) Then Validations.Add($"O nome do banco de dados local não foi definido.")
+        If String.IsNullOrEmpty(DbCredentials.Server) Then Validations.Add($"O servidor do banco de dados local não foi definido.")
+        If String.IsNullOrEmpty(DbCredentials.Username) Then Validations.Add($"O nome de usuário do banco de dados local não foi definido.")
+        If String.IsNullOrEmpty(DbCredentials.Password) Then Validations.Add($"A senha do banco de dados local não foi definida.")
+        Try
+            Dim Result As DatabaseTestResultModel = Await Util.TestLocalDbConnection(New LocalDbCredentialsModel With {
+                    .Server = DbCredentials.Server,
+                    .Name = DbCredentials.Name,
+                    .Username = DbCredentials.Username,
+                    .Password = DbCredentials.Password
+                })
+            If Not Result.Success Then
+                Validations.Add($"banco de dados local do cliete não conectado, verifique as informações de conexão.")
+            End If
+        Catch ex As Exception
+            If Validations.Count = 0 Then Validations.Add($"Erro ao conectar ou executar consulta no banco de dados local: {ex.Message}.")
+        End Try
+        Return Validations
+    End Function
     Public Function ValidateBackup() As List(Of String)
         Dim Preferences As PreferencesModel = _Session.Preferences
         Dim Validations As New List(Of String)
-        If String.IsNullOrEmpty(Preferences.Backup.Location) Then
+        If Preferences Is Nothing OrElse String.IsNullOrEmpty(Preferences.Backup.Location) Then
             Validations.Add($"O diretório de backup não foi definido.")
         Else
             If Not IO.Directory.Exists(Preferences.Backup.Location) Then
                 Validations.Add($"O direrório de backup não existe.")
             End If
         End If
-        Return Validations
-    End Function
-    Public Async Function ValidateLicenseRemoteDatabase() As Task(Of List(Of String))
-        Dim Validations As New List(Of String)
-        Dim LicenseCredentials As LicenseRemoteDatabaseModel = _LicenseCredentialsService.Load()
-        Dim ManagerValidations As New List(Of String)
-        If LicenseCredentials Is Nothing Then Return Validations
-        If String.IsNullOrEmpty(LicenseCredentials.ProjectID) Then ManagerValidations.Add($"O nome do banco de dados remoto de licença não foi definido.")
-        If String.IsNullOrEmpty(LicenseCredentials.ApiKey) Then ManagerValidations.Add($"A Api Key do banco de dados remoto de licença não foi definida.")
-        If String.IsNullOrEmpty(LicenseCredentials.BucketName) Then ManagerValidations.Add($"O nome do bucket do storage do banco de dados remoto de licença não foi definido.")
-        Try
-            Dim Result As DatabaseTestResultModel = Await Util.TestCloudConnectionAsync(LicenseCredentials)
-
-            If Not Result.Success Then
-                ManagerValidations.Add($"Banco de dados remoto de licença não conectado, verifique as informações de conexão.")
-            End If
-        Catch ex As Exception
-            ManagerValidations.Add($"Erro ao conectar ou consultar no banco de dados remoto de licença.")
-        End Try
-        Validations.AddRange(ManagerValidations)
-        Return Validations
-    End Function
-    Public Async Function ValidateCompanyRemoteDatabase() As Task(Of List(Of String))
-        Dim Validations As New List(Of String)
-        Dim Companies As List(Of CompanyModel) = _Session.Companies
-        For Each Company In Companies
-            Dim Database As CompanyRemoteDatabaseModel = Company.RemoteDatabase
-            Dim CompanyValidations As New List(Of String)
-            If String.IsNullOrEmpty(Database.ProjectID) Then CompanyValidations.Add($"O nome do banco de dados remoto do cliete {Company.Register.ShortName} não foi definido.")
-            If String.IsNullOrEmpty(Database.ApiKey) Then CompanyValidations.Add($"A Api Key do banco de dados remoto do cliente {Company.Register.ShortName} não foi definida.")
-            If String.IsNullOrEmpty(Database.BucketName) Then CompanyValidations.Add($"O nome do Bucket do storage do banco de dados remoto do cliente {Company.Register.ShortName} não foi definido.")
-            Try
-                Dim Result As DatabaseTestResultModel = Await Util.TestCloudConnectionAsync(New LicenseRemoteDatabaseModel() With {
-                    .ApiKey = Database.ApiKey,
-                    .ProjectID = Database.ProjectID,
-                    .BucketName = Database.BucketName,
-                    .Username = Database.Username,
-                    .Password = Database.Password
-                })
-                If Not Result.Success Then
-                    CompanyValidations.Add($"Banco de dados remoto do cliete {Company.Register.ShortName} não conectado, verifique as informações de conexão.")
-                End If
-            Catch ex As Exception
-                If CompanyValidations.Count = 0 Then CompanyValidations.Add($"Erro ao conectar ou consultar no banco de dados remoto do cliente: {ex.Message}.")
-            End Try
-            Validations.AddRange(CompanyValidations)
-        Next Company
-        Return Validations
-    End Function
-    Public Async Function ValidateCompanyLocalDatabase() As Task(Of List(Of String))
-        Dim Validations As New List(Of String)
-        Dim Companies As List(Of CompanyModel) = _Session.Companies
-        For Each Company In Companies
-            Dim Database As CompanyLocalDatabaseModel = Company.LocalDatabase
-            Dim CompanyValidations As New List(Of String)
-            If String.IsNullOrEmpty(Database.Name) Then CompanyValidations.Add($"O nome do banco de dados na empresa {Company.Register.ShortName} não foi definido.")
-            If String.IsNullOrEmpty(Database.Server) Then CompanyValidations.Add($"O servidor do banco de dados na empresa {Company.Register.ShortName} não foi definido.")
-            If String.IsNullOrEmpty(Database.Username) Then CompanyValidations.Add($"O nome de usuário do banco de dados na empresa {Company.Register.ShortName} não foi definido.")
-            If String.IsNullOrEmpty(Database.Password) Then CompanyValidations.Add($"A senha do banco de dados na empresa {Company.Register.ShortName} não foi definida.")
-            Try
-                Dim Result As DatabaseTestResultModel = Await Util.TestLocalDbConnection(New CompanyLocalDatabaseModel With {
-                    .Server = Database.Server,
-                    .Name = Database.Name,
-                    .Username = Database.Username,
-                    .Password = Database.Password
-                })
-                If Not Result.Success Then
-                    CompanyValidations.Add($"banco de dados local do cliete {Company.Register.ShortName} não conectado, verifique as informações de conexão.")
-                End If
-            Catch ex As Exception
-                If Validations.Count = 0 Then Validations.Add($"Erro ao conectar ou executar consulta no banco de dados local do cliente {Company.Register.ShortName}: {ex.Message}.")
-            End Try
-            Validations.AddRange(CompanyValidations)
-        Next Company
         Return Validations
     End Function
 End Class

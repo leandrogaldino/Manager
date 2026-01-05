@@ -22,7 +22,7 @@ Public Class FrmEvaluationImport
     Private Sub InitializeDatabases()
         _Session = Locator.GetInstance(Of Session)
         _Storage = Locator.GetInstance(Of Storage)
-        _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
+        _RemoteDB = Locator.GetInstance(Of RemoteDB)(RemoteDatabaseType.Customer)
         _LocalDB = Locator.GetInstance(Of LocalDB)
     End Sub
     Private Sub InitializeDbListener()

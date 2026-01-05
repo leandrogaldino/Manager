@@ -109,42 +109,27 @@ Public Class TaskBackup
         Dim Exception As Exception = Nothing
         Dim Files As List(Of FileInfo)
         Dim TempDatabaseDirectory As String
-        Dim TargetList As List(Of String)
-
-
-
-
-
+        Dim TargetList As New List(Of String)
         Try
             Response.Text = $"Backup: Iniciando"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForStart)
             Progress?.Report(Response)
 
+            TempDatabaseDirectory = Path.Combine(ApplicationPaths.AgentTempDirectory, "Database")
 
-            For Each RegisteredCompany In Session.Companies
-                IntProgress = New Progress(Of Integer)(Sub(Percent As Integer)
-                                                           Response.Percent = Percent
-                                                           Response.Text = $"Backup: Processando banco de dados {Constants.SeparatorSymbol} {RegisteredCompany.Register.ShortName} {Constants.SeparatorSymbol} {Percent}%"
-                                                           Progress?.Report(Response)
-                                                       End Sub)
-                TempDatabaseDirectory = Path.Combine(ApplicationPaths.AgentTempDirectory, "Database", RegisteredCompany.Register.Document.Replace(".", String.Empty).Replace("/", String.Empty).Replace("-", String.Empty)
-                If Not Directory.Exists(TempDatabaseDirectory) Then Directory.CreateDirectory(TempDatabaseDirectory)
-                Await _LocalDb.Maintenance.ExecuteBackupAsync(Path.Combine(TempDatabaseDirectory, $"{RegisteredCompany.Register.ShortName} Database.sql"), IntProgress)
+            If Not Directory.Exists(TempDatabaseDirectory) Then Directory.CreateDirectory(TempDatabaseDirectory)
 
+            IntProgress = New Progress(Of Integer)(Sub(Percent As Integer)
+                                                       Response.Percent = Percent
+                                                       Response.Text = $"Backup: Processando banco de dados ({Percent}%)"
+                                                       Progress?.Report(Response)
+                                                   End Sub)
 
-
-            Next RegisteredCompany
-
-
-
-
-
+            Await _LocalDb.Maintenance.ExecuteBackupAsync(Path.Combine(TempDatabaseDirectory, "Database.sql"), IntProgress)
 
             Await Task.Delay(Constants.WaitForJob)
-            Response.Percent = 0
-            FileName = $"Backup {DateTimeHelper.Now:dd-MM-yyyy HH.mm.ss}.bkp"
-            BackupDir = New DirectoryInfo(Preferences.Backup.Location)
+
             TargetList = New List(Of String) From {
                 ApplicationPaths.CashDocumentDirectory,
                 ApplicationPaths.EmailSignatureDirectory,
@@ -153,9 +138,13 @@ Public Class TaskBackup
                 ApplicationPaths.EvaluationSignatureDirectory,
                 ApplicationPaths.HelpersDirectory,
                 ApplicationPaths.ProductPictureDirectory,
-                ApplicationPaths.RequestDocumentDirectory,
-                TempDatabaseDirectory
+                ApplicationPaths.RequestDocumentDirectory
             }
+
+
+            Response.Percent = 0
+            FileName = $"Backup {DateTimeHelper.Now:dd-MM-yyyy HH.mm.ss}.bkp"
+            BackupDir = New DirectoryInfo(Preferences.Backup.Location)
             IntProgress = New Progress(Of Integer)(Sub(p)
                                                        Response.Percent = p
                                                        Response.Text = $"Backup: Processando arquivos ({p}%)"
@@ -190,11 +179,22 @@ Public Class TaskBackup
             Await Task.Delay(Constants.WaitForFinish)
         Catch ex As Exception
             Exception = ex
-        Finally
-            If Not IsManual Then Preferences.Backup.IgnoreNext = False
-            If Not IsManual Then Preferences.LastExecution.Backup = Now
-            If Not IsManual Then _PreferencesService.Save(Preferences)
         End Try
+        If Not IsManual Then
+            Preferences.Backup.IgnoreNext = False
+            Preferences.LastExecution.Backup = Now
+            Try
+                Await _PreferencesService.SaveAsync(Preferences)
+            Catch ex As Exception
+                Response.Percent = 0
+                Response.Text = "Backup: Erro na execução"
+                Response.Event.EndTime = DateTime.Now
+                Response.Event.Description = $"Backup{If(Not IsManual, String.Empty, " Manual")}"
+                Response.Event.Status = TaskStatus.Error
+                Response.Event.ExceptionMessage = $"{Exception.Message}{vbNewLine}{Exception.StackTrace}"
+                Progress?.Report(Response)
+            End Try
+        End If
         If Exception IsNot Nothing Then
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0

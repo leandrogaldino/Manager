@@ -20,7 +20,8 @@ Public Class FrmCompany
 
     Private Sub BtnSave_Click(sender As Object, e As EventArgs)
         UpdateData()
-        _Service.Save(_Company)
+        ManagerCore.Util.AsyncLock(Function() _Service.SaveAsync(_Company))
     End Sub
+
 End Class
 

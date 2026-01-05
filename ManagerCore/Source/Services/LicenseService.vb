@@ -66,7 +66,8 @@ Public Class LicenseService
         Return Result
     End Function
     Public Async Function IsValidLicenseKey(LicenseKey As String) As Task(Of Boolean)
-        Dim Result = Await _Database.Firestore.QueryCompositeAsync("licenses", {New FirestoreFilter("license_key", FirestoreOperator.Equal, LicenseKey)}.ToList)
+        Dim Key As String = If(String.IsNullOrEmpty(LicenseKey), String.Empty, LicenseKey)
+        Dim Result = Await _Database.Firestore.QueryCompositeAsync("licenses", {New FirestoreFilter("license_key", FirestoreOperator.Equal, Key)}.ToList)
         If Result IsNot Nothing AndAlso Result.Count = 1 Then
             Return True
         Else
@@ -74,12 +75,11 @@ Public Class LicenseService
         End If
     End Function
 
-    Public Async Function GetOnlineLicense() As Task(Of LicenseResultModel)
+    Public Async Function GetOnlineLicense(Optional LicenseKey As String = Nothing) As Task(Of LicenseResultModel)
         Dim Result As New LicenseResultModel
-        Dim LicenseKey As String = GetLocalLicenseKey()
-        Dim LicenseToken As String = GetLocalLicenseToken()
-        'Verifica se o arquivo de credenciais da núvem de licença existe
-        If Not File.Exists(ApplicationPaths.LicenseCredentialsFile) Then
+        Dim Key As String = If(String.IsNullOrEmpty(LicenseKey), GetLocalLicenseKey(), LicenseKey)
+        Dim Token As String = GetLocalLicenseToken()
+        If Not File.Exists(ApplicationPaths.RemoteDbCredentialsFile) Then
             Result.Flag = LicenseMessages.MissingCredentials
             Return Result
         End If
@@ -89,7 +89,7 @@ Public Class LicenseService
             Return Result
         End If
         ' Verifica se a chave de licença foi fornecida
-        If String.IsNullOrEmpty(LicenseKey) Then
+        If String.IsNullOrEmpty(Key) Then
             Result.Flag = LicenseMessages.MissingProductKey
             Return Result
         End If
@@ -99,7 +99,7 @@ Public Class LicenseService
             Return Result
         End If
         ' Realiza a consulta ao banco de dados
-        Dim DBResult = Await _Database.Firestore.QueryCompositeAsync("licenses", {New FirestoreFilter("license_key", FirestoreOperator.Equal, LicenseKey)}.ToList)
+        Dim DBResult = Await _Database.Firestore.QueryCompositeAsync("licenses", {New FirestoreFilter("license_key", FirestoreOperator.Equal, Key)}.ToList)
         If DBResult.Count = 1 Then
             Result.License = If(DBResult(0) Is Nothing, Nothing, LicenseModel.FromCloud(DBResult(0)))
         ElseIf DBResult.Count > 1 Then
@@ -115,14 +115,14 @@ Public Class LicenseService
         Result.License.LastOnlineValidation = Now
         Result.Success = True
         ' Verifica se o token da licença é válido
-        If Not String.IsNullOrEmpty(Result.License.LicenseToken) AndAlso Result.License.LicenseToken <> LicenseToken Then
+        If Not String.IsNullOrEmpty(Result.License.LicenseToken) AndAlso Result.License.LicenseToken <> Token Then
             Result.License = Nothing
             Result.Success = False
             Result.Flag = LicenseMessages.ProductKeyAlreadyActivatedOnAnother
             Return Result
         End If
         ' Atualiza o token da licença se necessário
-        If String.IsNullOrEmpty(LicenseToken) AndAlso String.IsNullOrEmpty(LicenseToken) AndAlso String.IsNullOrEmpty(Result.License.LicenseToken) Then
+        If String.IsNullOrEmpty(Token) AndAlso String.IsNullOrEmpty(Token) AndAlso String.IsNullOrEmpty(Result.License.LicenseToken) Then
             Dim NewToken As String = TextHelper.GetRandomString(1, 256, Nothing, {CharFilter.Alphanumeric, CharFilter.Numeric, CharFilter.SpecialCharacters}.ToList).Replace("=", String.Empty).Replace("+", String.Empty).Replace("/", String.Empty)
             Result.License = Await UpdateLicenseToken(Result.License, NewToken)
             Await SaveLocalLicense(Result.License)

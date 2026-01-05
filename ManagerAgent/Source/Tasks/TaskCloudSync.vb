@@ -19,7 +19,7 @@ Public Class TaskCloudSync
     End Property
     Public Overrides ReadOnly Property RunIntervalMinutes As Integer
         Get
-            Return Company.RemoteDatabase.SyncInterval
+            Return Preferences.Parameters.Sync.Interval
         End Get
     End Property
     Public Overrides ReadOnly Property LastRun As Date
@@ -46,7 +46,7 @@ Public Class TaskCloudSync
             SyncedToCloud = Await SyncFromLocalToCloud(Response, Progress)
             HasSynced = SyncedFromCloud OrElse SyncedToCloud
             Preferences.LastExecution.CloudSync = Now.ToString("yyyy-MM-dd HH:mm:ss")
-            _PreferencesService.Save(Preferences)
+            Await _PreferencesService.SaveAsync(Preferences)
             If _Started Then
                 Response.Text = "Sincronização: Concluído"
                 Response.Percent = 0

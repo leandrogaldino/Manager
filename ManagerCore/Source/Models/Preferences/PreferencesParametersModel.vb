@@ -3,4 +3,5 @@
     Public Property Release As New PreferencesReleaseModel
     Public Property Evaluation As New PreferencesEvaluationModel
     Public Property User As New PreferencesUserModel
+    Public Property Sync As New PreferencesSyncModel
 End Class

@@ -1,5 +1,5 @@
 ﻿
-Public Class CompanyLocalDatabaseModel
+Public Class LocalDbCredentialsModel
     Public Property Server As String
     Public Property Name As String
     Public Property Username As String

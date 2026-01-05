@@ -38,22 +38,61 @@ INSERT INTO preferences (`group`, `key`, `value`) VALUES
 ('LastExecution', 'Release', NULL),
 ('LastExecution', 'CloudSync', NULL);
 
--- Parameters.Clean
+-- Clean
 INSERT INTO preferences (`group`, `key`, `value`) VALUES
 ('Clean', 'Interval', '30');
 
--- Parameters.Release
+-- Release
 INSERT INTO preferences (`group`, `key`, `value`) VALUES
 ('Release', 'RefreshBlockedRegistryInterval', '1'),
 ('Release', 'ReleaseBlockedRegisterInterval', '2');
 
--- Parameters.Evaluation
+-- Evaluation
 INSERT INTO preferences (`group`, `key`, `value`) VALUES
 ('Evaluation', 'DaysBeforeMaintenanceAlert', '15'),
 ('Evaluation', 'DaysBeforeVisitAlert', '30'),
 ('Evaluation', 'MonthsBeforeRecordDeletion', '48'),
 ('Evaluation', 'FooterMaintenancePlan', NULL);
 
--- Parameters.User
+-- User
 INSERT INTO preferences (`group`, `key`, `value`) VALUES
 ('User', 'DefaultPassword', '');
+
+-- Sync
+INSERT INTO preferences (`group`, `key`, `value`) VALUES
+('Sync', 'Interval', '10');
+
+CREATE TABLE company (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    document VARCHAR(20) NOT NULL UNIQUE,
+    name VARCHAR(255),
+    shortname VARCHAR(255),
+    logoname VARCHAR(500),
+    citydocument VARCHAR(20),
+    statedocument VARCHAR(20)
+) ENGINE=InnoDB;
+
+CREATE TABLE companyaddress (
+    companyid INT PRIMARY KEY,
+    zipcode VARCHAR(20),
+    street VARCHAR(255),
+    number VARCHAR(20),
+    complement VARCHAR(255),
+    district VARCHAR(255),
+    city VARCHAR(255),
+    state VARCHAR(50),
+    FOREIGN KEY (companyid) REFERENCES company(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE companycontact (
+    companyid INT PRIMARY KEY,
+    phone1 VARCHAR(50),
+    phone2 VARCHAR(50),
+    cellphone VARCHAR(50),
+    email VARCHAR(255),
+    facebook VARCHAR(255),
+    instagram VARCHAR(255),
+    linkedin VARCHAR(255),
+    site VARCHAR(255),
+    FOREIGN KEY (companyid) REFERENCES company(id) ON DELETE CASCADE
+) ENGINE=InnoDB;

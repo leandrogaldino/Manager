@@ -136,11 +136,11 @@ Public Class TaskBackup
                 ApplicationPaths.EvaluationDocumentDirectory,
                 ApplicationPaths.EvaluationPictureDirectory,
                 ApplicationPaths.EvaluationSignatureDirectory,
-                ApplicationPaths.HelpersDirectory,
+                ApplicationPaths.DataDirectory,
                 ApplicationPaths.ProductPictureDirectory,
-                ApplicationPaths.RequestDocumentDirectory
+                ApplicationPaths.RequestDocumentDirectory,
+                ApplicationPaths.LogoDirectory
             }
-
 
             Response.Percent = 0
             FileName = $"Backup {DateTimeHelper.Now:dd-MM-yyyy HH.mm.ss}.bkp"

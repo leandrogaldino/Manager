@@ -63,45 +63,63 @@ Public Class TaskRestoreBackup
                 New DeleteDirectoryInfo(New DirectoryInfo(ApplicationPaths.RequestDocumentDirectory), True),
                 New DeleteDirectoryInfo(New DirectoryInfo(ApplicationPaths.EmailSignatureDirectory), True),
                 New DeleteDirectoryInfo(New DirectoryInfo(ApplicationPaths.CashDocumentDirectory), True),
-                New DeleteDirectoryInfo(New DirectoryInfo(ApplicationPaths.HelpersDirectory), True)
+                New DeleteDirectoryInfo(New DirectoryInfo(ApplicationPaths.DataDirectory), True),
+                New DeleteDirectoryInfo(New DirectoryInfo(ApplicationPaths.LogoDirectory), True)
             }.ToList(), IntProgress)
+
             Response.Percent = 0
             Response.Text = "Restaurar Backup: Validando diretórios"
             If Not Directory.Exists(ApplicationPaths.ProductPictureDirectory) Then Directory.CreateDirectory(ApplicationPaths.ProductPictureDirectory)
-            Response.Percent = 14
+            Response.Percent = 12
             Response.Text = $"Restaurar Backup: Validando diretórios ({Response.Percent}%)"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
+
             If Not Directory.Exists(ApplicationPaths.EvaluationDocumentDirectory) Then Directory.CreateDirectory(ApplicationPaths.EvaluationDocumentDirectory)
-            Response.Percent = 29
+            Response.Percent = 25
             Response.Text = $"Restaurar Backup: Validando diretórios ({Response.Percent}%)"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
+
             If Not Directory.Exists(ApplicationPaths.EvaluationPictureDirectory) Then Directory.CreateDirectory(ApplicationPaths.EvaluationPictureDirectory)
-            Response.Percent = 43
+            Response.Percent = 37
             Response.Text = $"Restaurar Backup: Validando diretórios ({Response.Percent}%)"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
             If Not Directory.Exists(ApplicationPaths.RequestDocumentDirectory) Then Directory.CreateDirectory(ApplicationPaths.RequestDocumentDirectory)
-            Response.Percent = 58
+
+            Response.Percent = 50
             Response.Text = $"Restaurar Backup: Validando diretórios ({Response.Percent}%)"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
+
             If Not Directory.Exists(ApplicationPaths.EmailSignatureDirectory) Then Directory.CreateDirectory(ApplicationPaths.EmailSignatureDirectory)
-            Response.Percent = 72
+            Response.Percent = 62
             Response.Text = $"Restaurar Backup: Validando diretórios ({Response.Percent}%)"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
+
             If Not Directory.Exists(ApplicationPaths.CashDocumentDirectory) Then Directory.CreateDirectory(ApplicationPaths.CashDocumentDirectory)
+            Response.Percent = 75
+            Response.Text = $"Restaurar Backup: Validando diretórios ({Response.Percent}%)"
+            Progress?.Report(Response)
+            Await Task.Delay(Constants.WaitForJob)
+
+            If Not Directory.Exists(ApplicationPaths.DataDirectory) Then Directory.CreateDirectory(ApplicationPaths.DataDirectory)
             Response.Percent = 87
             Response.Text = $"Restaurar Backup: Validando diretórios ({Response.Percent}%)"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
-            If Not Directory.Exists(ApplicationPaths.HelpersDirectory) Then Directory.CreateDirectory(ApplicationPaths.HelpersDirectory)
+
+            If Not Directory.Exists(ApplicationPaths.DataDirectory) Then Directory.CreateDirectory(ApplicationPaths.LogoDirectory)
             Response.Percent = 100
             Response.Text = $"Restaurar Backup: Validando diretórios ({Response.Percent}%)"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
+
+
+
+
             Response.Percent = 0
             Response.Text = "Restaurar Backup: Processando os dados"
             Progress?.Report(Response)

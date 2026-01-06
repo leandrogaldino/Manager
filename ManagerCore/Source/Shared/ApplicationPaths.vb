@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports System.Net.Http.Headers
 Imports System.Reflection
 
 Public Class ApplicationPaths
@@ -122,11 +121,6 @@ Public Class ApplicationPaths
     Public Shared ReadOnly Property CashDocumentDirectory As String
         Get
             Return Path.Combine(FilesDirectory, "CashDocument")
-        End Get
-    End Property
-    Public Shared ReadOnly Property HelpersDirectory As String
-        Get
-            Return Path.Combine(FilesDirectory, "Helpers")
         End Get
     End Property
 End Class

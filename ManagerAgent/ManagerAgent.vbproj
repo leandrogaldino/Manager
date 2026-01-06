@@ -160,6 +160,7 @@
     <Compile Include="Source\Models\RegistryModel.vb" />
     <Compile Include="Source\Services\AppService.vb" />
     <Compile Include="Source\Shared\Flags.vb" />
+    <Compile Include="Source\Shared\Setups\SetupDatabase.vb" />
     <Compile Include="Source\Tasks\TaskBackup.vb" />
     <Compile Include="Source\Tasks\TaskBackupManual.vb" />
     <Compile Include="Source\Tasks\TaskClean.vb" />

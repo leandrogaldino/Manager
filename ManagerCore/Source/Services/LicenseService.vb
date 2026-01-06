@@ -79,7 +79,7 @@ Public Class LicenseService
         Dim Result As New LicenseResultModel
         Dim Key As String = If(String.IsNullOrEmpty(LicenseKey), GetLocalLicenseKey(), LicenseKey)
         Dim Token As String = GetLocalLicenseToken()
-        If Not File.Exists(ApplicationPaths.RemoteDbCredentialsFile) Then
+        If Not File.Exists(ApplicationPaths.RemoteSystemDbCredentialsFile) Then
             Result.Flag = LicenseMessages.MissingCredentials
             Return Result
         End If

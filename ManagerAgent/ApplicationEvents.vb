@@ -9,12 +9,12 @@ Namespace My
     ' NetworkAvailabilityChanged: Ocorre quando a conexão de rede é conectada ou desconectada.
 
     Partial Friend Class MyApplication
-        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+        Private Async Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             SetupPaths.Setup()
             SetupLocator.Setup()
+            Await SetupDatabase.Setup()
             SetupSession.Setup()
             SetupApp.SetupCMessageBox()
-            SetupApp.SetupData()
             SetupTasks.Setup()
         End Sub
     End Class

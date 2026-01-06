@@ -11,7 +11,6 @@ Public Class SetupLocator
         Locator.RegisterSingleton(New FirebaseService(), RemoteDatabaseType.Customer)
         Locator.RegisterSingleton(New FirebaseService(), RemoteDatabaseType.System)
         Locator.RegisterSingleton(New CompanyService(Locator.GetInstance(Of MySqlService)))
-        Locator.RegisterSingleton(New CompanyService(Locator.GetInstance(Of MySqlService)))
         Locator.RegisterSingleton(New LicenseService(Locator.GetInstance(Of FirebaseService)(RemoteDatabaseType.System), Locator.GetInstance(Of CryptoKeyService)))
         Locator.RegisterSingleton(New EventService(Locator.GetInstance(Of SemaphoreSlim)))
         Locator.RegisterSingleton(New PasswordService(Locator.GetInstance(Of LicenseService), Locator.GetInstance(Of SessionModel), Locator.GetInstance(Of CryptoKeyService)))

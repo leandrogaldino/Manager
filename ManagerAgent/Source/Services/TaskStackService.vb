@@ -47,8 +47,8 @@ Public Class TaskStackService
         Await _Semaphore.WaitAsync()
         For Each AddedTask In _TaskStack
             If AddedTask IsNot Nothing AndAlso AddedTask.IsRunNeeded Then
-                SetupApp.SetupData()
-                SetupSession.Setup()
+                'Await SetupDatabase.Setup()
+                'SetupSession.Setup()
                 AddedTask.IsRunning = True
                 RaiseEvent TaskWillRun(Me, AddedTask)
                 If Not AddedTask.CancelRun Then

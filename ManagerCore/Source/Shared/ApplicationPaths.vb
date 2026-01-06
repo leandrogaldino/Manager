@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Net.Http.Headers
 Imports System.Reflection
 
 Public Class ApplicationPaths
@@ -13,7 +14,8 @@ Public Class ApplicationPaths
                 Directory.CreateDirectory(PropPath)
             End If
         Next Prop
-        Dim Key As String = New CryptoKeyService().ReadCryptoKey()
+
+
     End Sub
     Public Shared Property AgentDirectory As String
         Get
@@ -62,9 +64,14 @@ Public Class ApplicationPaths
             Return Path.Combine(DataDirectory, ".LocalDbCredentials")
         End Get
     End Property
-    Public Shared ReadOnly Property RemoteDbCredentialsFile As String
+    Public Shared ReadOnly Property RemoteSystemDbCredentialsFile As String
         Get
-            Return Path.Combine(DataDirectory, ".RemoteDbCredentials")
+            Return Path.Combine(DataDirectory, ".RemoteSystemDbCredentials")
+        End Get
+    End Property
+    Public Shared ReadOnly Property RemoteCustomerDbCredentialsFile As String
+        Get
+            Return Path.Combine(DataDirectory, ".RemoteCustomerDbCredentials")
         End Get
     End Property
     Public Shared ReadOnly Property AgentEventsFile As String

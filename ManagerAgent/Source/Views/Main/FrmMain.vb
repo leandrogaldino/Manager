@@ -190,6 +190,7 @@ Public Class FrmMain
         Backup.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
 
         BtnSettings.Enabled = True
+
         BtnLicense.Enabled = True
         BtnCleanEventLog.Enabled = True
         BtnCompanies.Enabled = CustomerLocalDb.Count = 0

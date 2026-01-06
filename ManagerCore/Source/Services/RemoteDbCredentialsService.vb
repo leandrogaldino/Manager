@@ -11,9 +11,9 @@ Public Class RemoteDbCredentialsService
         Dim Model As RemoteDbCredentialsModel = Nothing
         Dim DbFile As String
         If DatabaseType = RemoteDatabaseType.System Then
-            DbFile = ApplicationPaths.RemoteDbCredentialsFile
+            DbFile = ApplicationPaths.RemoteSystemDbCredentialsFile
         Else
-            DbFile = ApplicationPaths.LocalDbCredentialsFile
+            DbFile = ApplicationPaths.RemoteCustomerDbCredentialsFile
         End If
         If File.Exists(DbFile) Then
             Dim Json As String = Cryptography.Decrypt(File.ReadAllText(DbFile), _Key)
@@ -25,9 +25,9 @@ Public Class RemoteDbCredentialsService
         Dim Json As String = Cryptography.Encrypt(JsonConvert.SerializeObject(Model, Formatting.Indented), _Key)
         Dim DbFile As String
         If DatabaseType = RemoteDatabaseType.System Then
-            DbFile = ApplicationPaths.RemoteDbCredentialsFile
+            DbFile = ApplicationPaths.RemoteSystemDbCredentialsFile
         Else
-            DbFile = ApplicationPaths.LocalDbCredentialsFile
+            DbFile = ApplicationPaths.RemoteCustomerDbCredentialsFile
         End If
         File.WriteAllText(DbFile, Json)
         Return Model

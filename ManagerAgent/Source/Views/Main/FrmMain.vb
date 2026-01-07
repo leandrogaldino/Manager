@@ -10,7 +10,7 @@ Public Class FrmMain
     Private _EventService As EventService
     Private _StackTaskService As TaskStackService
     Private _AppService As AppService
-    Private _SessionModel As SessionModel
+    Private _Session As SessionModel
     Private _TaskRunning As Boolean
     Private _BlockingTasks As Boolean
     Private _LicenseService As LicenseService
@@ -20,13 +20,14 @@ Public Class FrmMain
     Private _HasSystemRemoteDbPending As Boolean
     Private _HasLocalDbPending As Boolean
     Private _HasCustomerRemoteDbPending As Boolean
+    Private _HasLicensePending As Boolean
 
     Private _LastLoginRequest As Date
     Private _Semaphore As SemaphoreSlim
     Public Sub New()
         InitializeComponent()
         _LicenseService = Locator.GetInstance(Of LicenseService)
-        _SessionModel = Locator.GetInstance(Of SessionModel)
+        _Session = Locator.GetInstance(Of SessionModel)
         _EventService = Locator.GetInstance(Of EventService)
         _StackTaskService = Locator.GetInstance(Of TaskStackService)
         _AppService = Locator.GetInstance(Of AppService)
@@ -105,7 +106,7 @@ Public Class FrmMain
         If Force Then
             ShowFormLogin = True
         Else
-            If _SessionModel.ManagerLicenseResult IsNot Nothing Then
+            If _Session.ManagerLicenseResult IsNot Nothing Then
                 If Minutes >= 5 Then
                     ShowFormLogin = True
                 Else
@@ -177,9 +178,7 @@ Public Class FrmMain
         Dim CustomerLocalDb As List(Of String) = Await _AppService.ValidateCompanyLocalDb()
         Dim Backup As List(Of String) = _AppService.ValidateBackup()
 
-        _HasLocalDbPending = CustomerLocalDb.Count <> 0
-        _HasSystemRemoteDbPending = SystemRemoteDb.Count <> 0
-        _HasCustomerRemoteDbPending = CustomerRemoteDb.Count <> 0
+
 
         _StateWarnings.Clear()
 
@@ -190,9 +189,13 @@ Public Class FrmMain
         Backup.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
 
         BtnSettings.Enabled = True
-
         BtnLicense.Enabled = True
+        BtnDatabase.Enabled = License.Count = 0
+        BtnBackupConfig.Enabled = CustomerLocalDb.Count = 0
+        BtnSupport.Enabled = CustomerLocalDb.Count = 0
+        BtnParameters.Enabled = CustomerLocalDb.Count = 0
         BtnCleanEventLog.Enabled = True
+
         BtnCompanies.Enabled = CustomerLocalDb.Count = 0
         BtnChangePassword.Enabled = SystemRemoteDb.Count = 0
         BtnChangeLicenseKey.Enabled = SystemRemoteDb.Count = 0
@@ -216,7 +219,7 @@ Public Class FrmMain
         FillDgvTasks()
     End Function
     Private Sub CloseApplication()
-        _SessionModel.ForceAgentExit = True
+        _Session.ForceAgentExit = True
         Application.Exit()
     End Sub
     Private Sub NotifyIcon_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon.MouseDoubleClick
@@ -230,21 +233,21 @@ Public Class FrmMain
         End If
     End Sub
 
-    'QUAL EMPRESA?
+
     Private Sub BtnOpenBackupFolder_Click(sender As Object, e As EventArgs) Handles BtnOpenBackupFolder.Click
-        'Process.Start(_SessionModel.ManagerSetting.Backup.Location)
+        Process.Start(_Session.Preferences.Backup.Location)
     End Sub
     Private Sub BtnAgentState_CheckedChanged(sender As Object, e As EventArgs) Handles BtnAgentState.CheckedChanged
         If BtnAgentState.Checked Then
             _StackTaskService.Start()
             BtnAgentState.Image = My.Resources.Execute
             BtnAgentState.Text = "Em Execução"
-            _SessionModel.IsAgentPaused = False
+            _Session.IsAgentPaused = False
         Else
             _StackTaskService.Stop()
             BtnAgentState.Image = My.Resources.Pause
             BtnAgentState.Text = "Em Pausa"
-            _SessionModel.IsAgentPaused = True
+            _Session.IsAgentPaused = True
         End If
     End Sub
     Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
@@ -255,7 +258,7 @@ Public Class FrmMain
     Private Async Sub FrmMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         Dim RunningTask As TaskBase = _StackTaskService.GetTaskStack().FirstOrDefault(Function(x) x.IsRunning)
         If RunningTask Is Nothing Then
-            If Not _SessionModel.ForceAgentExit Then
+            If Not _Session.ForceAgentExit Then
                 e.Cancel = True
                 NotifyIcon.Visible = True
                 Hide()
@@ -350,7 +353,6 @@ Public Class FrmMain
         FillDgvTasks()
     End Sub
 
-    'QUAL EMPRESA?
     Private Sub BtnRestoreBackup_Click(sender As Object, e As EventArgs) Handles BtnRestoreBackup.Click
         _StackTaskService.Stop()
         BtnExecuteBackup.Enabled = False
@@ -409,7 +411,7 @@ Public Class FrmMain
     End Sub
     Private Async Sub BtnLicenseCredentials_Click(sender As Object, e As EventArgs) Handles BtnLicenseCredentials.Click
         Dim Credentials As RemoteDbCredentialsModel = Nothing
-        If _SessionModel.ManagerLicenseResult.Flag <> LicenseMessages.LicenseFileNotFound Then
+        If _Session.ManagerLicenseResult.Flag <> LicenseMessages.LicenseFileNotFound Then
             Dim _LicenseCredentialsService = Locator.GetInstance(Of RemoteDbCredentialsService)
             Credentials = _LicenseCredentialsService.Load(RemoteDatabaseType.System)
         End If

@@ -308,6 +308,9 @@
     <EmbeddedResource Include="Source\Views\Preferences\FrmParameters.resx">
       <DependentUpon>FrmParameters.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Preferences\FrmRemoteDb.resx">
+      <DependentUpon>FrmRemoteDb.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Preferences\FrmSupport.resx">
       <DependentUpon>FrmSupport.vb</DependentUpon>
     </EmbeddedResource>

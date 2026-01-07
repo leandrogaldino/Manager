@@ -55,6 +55,7 @@ Public Class FrmSupport
             Cursor = Cursors.WaitCursor
             FillModelWithForm()
             ManagerCore.Util.AsyncLock(Function() _PreferencesService.SaveAsync(_Preferences))
+            SetupApp.SetupCMessageBox()
             DialogResult = DialogResult.OK
         Catch ex As Exception
             CMessageBox.Show("Ocorreu um erro ao salvar.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

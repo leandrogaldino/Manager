@@ -1,9 +1,12 @@
-﻿Imports CoreSuite.Infrastructure
+﻿Imports System.Drawing.Text
+Imports CoreSuite.Infrastructure
 Imports CoreSuite.Services
 Imports ManagerCore
 
 Public Class SetupDatabase
+    Private Const Suffix As String = "@nexor.com"
     Public Shared Async Function Setup() As Task
+
         Dim LocalDbCredentialsService As LocalDbCredentialsService = Locator.GetInstance(Of LocalDbCredentialsService)
         Dim RemoteSystemDbCredentialsService As RemoteDbCredentialsService = Locator.GetInstance(Of RemoteDbCredentialsService)
         Dim RemoteCustomerDbCredentialsService As RemoteDbCredentialsService = Locator.GetInstance(Of RemoteDbCredentialsService)
@@ -25,7 +28,7 @@ Public Class SetupDatabase
             If Not String.IsNullOrEmpty(RemoteSystemDbCredentials.RefreshToken) Then
                 Await RemoteSystemDb.Auth.RefreshSessionAsync(RemoteSystemDbCredentials.RefreshToken)
             Else
-                Await RemoteSystemDb.Auth.LoginAsync(RemoteSystemDbCredentials.Username, RemoteSystemDbCredentials.Password)
+                Await RemoteSystemDb.Auth.LoginAsync($"{RemoteSystemDbCredentials.Username}{Suffix}", RemoteSystemDbCredentials.Password)
             End If
         End If
 
@@ -35,7 +38,7 @@ Public Class SetupDatabase
             If Not String.IsNullOrEmpty(RemoteCustomerDbCredentials.RefreshToken) Then
                 Await RemoteCustomerDb.Auth.RefreshSessionAsync(RemoteCustomerDbCredentials.RefreshToken)
             Else
-                Await RemoteCustomerDb.Auth.LoginAsync(RemoteCustomerDbCredentials.Username, RemoteCustomerDbCredentials.Password)
+                Await RemoteCustomerDb.Auth.LoginAsync($"{RemoteCustomerDbCredentials.Username}{Suffix}", RemoteCustomerDbCredentials.Password)
             End If
         End If
     End Function

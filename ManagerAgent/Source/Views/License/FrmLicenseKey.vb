@@ -18,14 +18,11 @@ Public Class FrmLicenseKey
     End Sub
 
 
-    Private Sub BuildKey()
-        '_Key = $"{TxtKeyPartA.Text}-{TxtKeyPartB.Text}-{TxtKeyPartC.Text}-{TxtKeyPartD.Text}-{TxtKeyPartE.Text}"
-    End Sub
-
-
 
     Private Async Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
-        Await _LicenseService.GetOnlineLicense()
+
+        Await _LicenseService.GetOnlineLicense($"{TxtKeyPartA.Text}-{TxtKeyPartB.Text}-{TxtKeyPartC.Text}-{TxtKeyPartD.Text}-{TxtKeyPartE.Text}")
+        DialogResult = DialogResult.OK
     End Sub
 
     Private Sub TxtKey_TextChanged(sender As Object, e As EventArgs) Handles TxtKeyPartA.TextChanged, TxtKeyPartB.TextChanged, TxtKeyPartC.TextChanged, TxtKeyPartD.TextChanged, TxtKeyPartE.TextChanged

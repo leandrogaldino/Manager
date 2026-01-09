@@ -224,7 +224,6 @@ Public Class TaskCloudSync
 
             ScheduleData("performeddate") = If(ScheduleData("performeddate") Is DBNull.Value, Nothing, DateTimeHelper.MillisecondsFromDate(ScheduleData("performeddate")))
             ScheduleData("instructions") = If(ScheduleData("instructions") Is DBNull.Value, Nothing, ScheduleData("instructions"))
-
             'ScheduleData("performeddate") = Nothing
             ScheduleData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
             ScheduleData("visible") = If(ScheduleData("statusid") = 0, 1, 0)

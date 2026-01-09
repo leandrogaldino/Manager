@@ -1077,7 +1077,7 @@ Public Class Evaluation
         Dim Session = Locator.GetInstance(Of Session)
         If CreationType <> EvaluationSource.Manual Then
             Do Until IsUnique
-                Reference = TextHelper.GetRandomString(1, 8, Nothing, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+                Reference = TextHelper.GetRandomString(1, 8, Nothing, {CharFilter.UppercaseAlphabetic}.ToList())
                 If CreationType = EvaluationSource.Automatic Then
                     Reference = $"A-{Reference}"
                 ElseIf CreationType = EvaluationSource.Imported Then

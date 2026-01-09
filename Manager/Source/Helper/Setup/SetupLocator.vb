@@ -6,7 +6,7 @@ Public Class SetupLocator
         Locator.RegisterSingleton(New CryptoKeyService)
         Locator.RegisterSingleton(New SettingService(Locator.GetInstance(Of CryptoKeyService)))
         Locator.RegisterSingleton(New Session())
-        Locator.RegisterSingleton(Of LocalDB)(New MySqlService)
+        Locator.RegisterSingleton(Of LocalDB)(New ManagerCore.MySqlService)
         Locator.RegisterSingleton(Of RemoteDB)(New FirestoreService(), CloudDatabaseType.Customer)
         Locator.RegisterSingleton(Of RemoteDB)(New FirestoreService(), CloudDatabaseType.Manager)
         Locator.RegisterSingleton(Of Storage)(New StorageService())

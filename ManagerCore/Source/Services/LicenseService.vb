@@ -184,7 +184,7 @@ Public Class LicenseService
     Public Async Function UpdateLicenseToken(License As LicenseModel, NewToken As String) As Task(Of LicenseModel)
         Dim Data As Dictionary(Of String, Object) = License.ToDictionary
         Data("license_token") = NewToken
-        Await _Database.ExecutePut("licenses", Data, License.CustomerDocument)
+        Await _Database.ExecutePut("licenses", Data, License.CustomerDocument.Replace("/", String.Empty).Replace("-", String.Empty).Replace(".", String.Empty))
         License.LicenseToken = NewToken
         Return License
     End Function
@@ -192,7 +192,7 @@ Public Class LicenseService
     Public Async Function UpdateManagerAgentPassword(License As LicenseModel, NewPassword As String) As Task(Of LicenseModel)
         Dim Data As Dictionary(Of String, Object) = License.ToDictionary
         Data("manager_agent_password") = NewPassword
-        Await _Database.ExecutePut("licenses", Data, License.CustomerDocument)
+        Await _Database.ExecutePut("licenses", Data, License.CustomerDocument.Replace("/", String.Empty).Replace("-", String.Empty).Replace(".", String.Empty))
         License.ManagerAgentPassword = NewPassword
         Return License
     End Function

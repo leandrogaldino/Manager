@@ -89,6 +89,6 @@
 		<Backup>0001-01-01 00:00:00</Backup>
 		<Clean>0001-01-01 00:00:00</Clean>
 		<Release>0001-01-01 00:00:00</Release>		
-		<CoundSync>0001-01-01 00:00:00</CoundSync>
+		<CloudSync>0001-01-01 00:00:00</CloudSync>
 	</LastExecutionDates>
 </Setting>

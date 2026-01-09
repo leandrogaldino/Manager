@@ -63,7 +63,7 @@ Public Class LicenseModel
             Await WriteElementAsync(Writer, "ExpirationDate", ExpirationDate)
             Await WriteElementAsync(Writer, "ManagerAgentPassword", ManagerAgentPassword)
             Await WriteElementAsync(Writer, "ManagerAgentUsername", ManagerAgentUsername)
-            Await WriteElementAsync(Writer, "LastOnlineValidation", LastOnlineValidation.ToString("dd/MM/yyyy HH:mm:ss"))
+            Await WriteElementAsync(Writer, "LastOnlineValidation", LastOnlineValidation.ToString("yyyy-MM-dd HH:mm:ss"))
             Await Writer.WriteEndElementAsync()
             Await Writer.WriteEndDocumentAsync()
         End Using
@@ -88,7 +88,7 @@ Public Class LicenseModel
         }
         Dim LastValidationString As String = GetElementValue(Doc, "LastOnlineValidation")
         If Not String.IsNullOrEmpty(LastValidationString) Then
-            Model.LastOnlineValidation = DateTime.ParseExact(LastValidationString, "dd/MM/yyyy HH:mm:ss", Globalization.CultureInfo.InvariantCulture)
+            Model.LastOnlineValidation = DateTime.ParseExact(LastValidationString, "yyyy-MM-dd HH:mm:ss", Globalization.CultureInfo.InvariantCulture)
         End If
         Return Model
     End Function

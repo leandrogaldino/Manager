@@ -480,6 +480,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Controls\AnimatedBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Source\Main\UcReport.Designer.vb">
       <DependentUpon>UcReport.vb</DependentUpon>
     </Compile>
@@ -506,6 +514,7 @@
     </Compile>
     <None Include="Resources\Image\PriceTable.png" />
     <None Include="Resources\Icon\icon.ico" />
+    <Content Include="Resources\Image\Downloading.gif" />
     <Content Include="Resources\SQL\Compressor\CompressorSellableDelete.sql" />
     <Content Include="Resources\SQL\Compressor\CompressorSellableInsert.sql" />
     <Content Include="Resources\SQL\Compressor\CompressorSellableSelect.sql" />
@@ -542,11 +551,6 @@
     <Content Include="Resources\SQL\Product\ProductPriceSelect.sql" />
     <Content Include="Resources\SQL\Service\ServicePriceIndicatorDetailSelect.sql" />
     <Content Include="Resources\SQL\Service\ServicePriceIndicatorSelect.sql" />
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Source\Routines\EmailSent\UcEmailSentGrid.Designer.vb">
       <DependentUpon>UcEmailSentGrid.vb</DependentUpon>
     </Compile>
@@ -1720,7 +1724,6 @@
     <None Include="Resources\Image\DeleteSmall2.png" />
     <None Include="Resources\Image\Pending.png" />
     <None Include="Resources\Image\Import.png" />
-    <None Include="Resources\Html\Loading.html" />
     <None Include="Resources\Image\EvaluationSmall.png" />
     <None Include="Resources\Image\VisitSchedule.png" />
     <None Include="Resources\Image\Service.png" />

@@ -1,5 +1,4 @@
-﻿Imports CefSharp
-Imports ControlLibrary
+﻿Imports ControlLibrary
 Imports ControlLibrary.Extensions
 Public Class FrmPersonCompressorSellableWorkedHour
     Private _PersonCompressorForm As FrmPersonCompressor

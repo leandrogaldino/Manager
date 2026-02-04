@@ -51,9 +51,14 @@ Public Class FrmEvaluationImport
             DgvEvaluations.Columns.Add("Data", "Data")
             DgvEvaluations.Columns.Add("Cliente", "Cliente")
             DgvEvaluations.Columns.Add("Compressor", "Compressor")
+            DgvEvaluations.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+            DgvEvaluations.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+            DgvEvaluations.Columns(2).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            DgvEvaluations.Columns(3).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
         End If
         DgvEvaluations.Rows.Clear()
         If Docs IsNot Nothing AndAlso Docs.Count > 0 Then
+            Dim Rows As New List(Of DataGridViewRow)
             For Each doc In Docs
                 Dim Status As String
                 Dim Result As LocalDB.QueryResult = Await _LocalDB.ExecuteRawQueryAsync("SELECT c.id, c.name, pc.serialnumber, pc.sector FROM compressor c LEFT JOIN personcompressor pc ON c.id = pc.compressorid WHERE pc.id = @id", New Dictionary(Of String, Object) From {{"@id", doc("compressorid")}})
@@ -75,13 +80,10 @@ Public Class FrmEvaluationImport
                 row.Cells(2).Value = CustomerName
                 row.Cells(3).Value = $"{CompressorName}{SerialNumber}{Sector}"
                 row.Tag = doc
-                DgvEvaluations.Rows.Add(row)
+                Rows.Add(row)
             Next
+            DgvEvaluations.Rows.AddRange(Rows.ToArray())
         End If
-        DgvEvaluations.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-        DgvEvaluations.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-        DgvEvaluations.Columns(2).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-        DgvEvaluations.Columns(3).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
     End Sub
     Private Async Sub DgvEvaluations_CellMouseDoubleClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DgvEvaluations.CellMouseDoubleClick
         Await Import()

@@ -32,7 +32,7 @@ Partial Class FrmLoader
         Me.AnimatedBox.Location = New System.Drawing.Point(0, 0)
         Me.AnimatedBox.Name = "AnimatedBox"
         Me.AnimatedBox.ScaleMode = CoreSuite.Controls.AnimationScaleMode.Centrer
-        Me.AnimatedBox.Size = New System.Drawing.Size(353, 191)
+        Me.AnimatedBox.Size = New System.Drawing.Size(353, 139)
         Me.AnimatedBox.TabIndex = 0
         '
         'LblMessage
@@ -52,8 +52,8 @@ Partial Class FrmLoader
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(353, 191)
-        Me.Controls.Add(Me.LblMessage)
         Me.Controls.Add(Me.AnimatedBox)
+        Me.Controls.Add(Me.LblMessage)
         Me.Name = "FrmLoader"
         Me.Text = "FrmLoader"
         Me.ResumeLayout(False)

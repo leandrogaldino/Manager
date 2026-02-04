@@ -1015,9 +1015,6 @@
   <data name="Import" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Import.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Loading" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Html\Loading.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="EvaluationPictureDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\Evaluation\EvaluationPictureDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -1266,5 +1263,8 @@
   </data>
   <data name="EvaluationLastReplacedSellableCapacitySelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\Evaluation\EvaluationLastReplacedSellableCapacitySelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Downloading" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Image\Downloading.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

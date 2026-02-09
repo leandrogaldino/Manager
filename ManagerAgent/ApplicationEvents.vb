@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ApplicationServices
+﻿Imports ManagerCore
+Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace My
     ' Os seguintes eventos estão disponíveis para MyApplication:
@@ -16,6 +17,11 @@ Namespace My
             SetupSession.Setup()
             SetupApp.SetupCMessageBox()
             SetupTasks.Setup()
+            If Not IO.File.Exists(ApplicationPaths.RemoteSystemDbCredentialsFile) Then
+                Dim Frm As New FrmConfigurationWizard()
+                Frm.Show()
+                Me.MainForm = Frm
+            End If
         End Sub
     End Class
 End Namespace

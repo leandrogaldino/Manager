@@ -110,6 +110,9 @@
     <Reference Include="CoreSuite.TimeBox">
       <HintPath>..\..\CoreSuite\TimeBox\bin\Debug\CoreSuite.TimeBox.dll</HintPath>
     </Reference>
+    <Reference Include="ManagerAgent">
+      <HintPath>obj\Debug\ManagerAgent.exe</HintPath>
+    </Reference>
     <Reference Include="ManagerCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ManagerCore\bin\Debug\ManagerCore.dll</HintPath>
@@ -155,12 +158,14 @@
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Source\Models\AsyncResponseModel.vb" />
     <Compile Include="Source\Models\BackupFileModel.vb" />
+    <Compile Include="Source\Models\ConfigurationPageModel.vb" />
     <Compile Include="Source\Models\DatabaseTestResultModel.vb" />
     <Compile Include="Source\Models\CloudTestResultModel.vb" />
     <Compile Include="Source\Models\RegistryModel.vb" />
     <Compile Include="Source\Services\AppService.vb" />
     <Compile Include="Source\Shared\Flags.vb" />
     <Compile Include="Source\Shared\Setups\SetupDatabase.vb" />
+    <Compile Include="Source\Shared\Validation.vb" />
     <Compile Include="Source\Tasks\TaskBackup.vb" />
     <Compile Include="Source\Tasks\TaskBackupManual.vb" />
     <Compile Include="Source\Tasks\TaskClean.vb" />
@@ -183,6 +188,18 @@
     </Compile>
     <Compile Include="Source\Views\Company\FrmCompanies.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\ConfigurationWizard\FrmConfigurationWizard.Designer.vb">
+      <DependentUpon>FrmConfigurationWizard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\ConfigurationWizard\FrmConfigurationWizard.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Views\ConfigurationWizard\UcLicense.Designer.vb">
+      <DependentUpon>UcLicense.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\ConfigurationWizard\UcLicense.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Views\Preferences\FrmBackup.Designer.vb">
       <DependentUpon>FrmBackup.vb</DependentUpon>
@@ -301,6 +318,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Source\Views\Company\FrmCompanies.resx">
       <DependentUpon>FrmCompanies.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\ConfigurationWizard\FrmConfigurationWizard.resx">
+      <DependentUpon>FrmConfigurationWizard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\ConfigurationWizard\UcLicense.resx">
+      <DependentUpon>UcLicense.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Preferences\FrmBackup.resx">
       <DependentUpon>FrmBackup.vb</DependentUpon>

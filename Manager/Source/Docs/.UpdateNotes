@@ -1,3 +1,5 @@
+#2.0.8
+• Corrigido problema em que a tela de login permanecia visível após o login.
 #2.0.7
 • Correção na tela de carregamento durante a importação de avaliações.
 #2.0.6

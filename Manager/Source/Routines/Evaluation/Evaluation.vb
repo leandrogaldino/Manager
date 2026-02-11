@@ -292,7 +292,7 @@ Public Class Evaluation
                     Using CmdPicture As New MySqlCommand(My.Resources.EvaluationPictureInsert, Con)
                         CmdPicture.Parameters.AddWithValue("@creation", Picture.Creation)
                         CmdPicture.Parameters.AddWithValue("@evaluationid", ID)
-                        CmdPicture.Parameters.AddWithValue("@picturenamename", Path.GetFileName(Picture.Picture.CurrentFile))
+                        CmdPicture.Parameters.AddWithValue("@picturename", Path.GetFileName(Picture.Picture.CurrentFile))
                         CmdPicture.Parameters.AddWithValue("@userid", Picture.User.ID)
                         CmdPicture.ExecuteNonQuery()
                         Picture.SetID(CmdPicture.LastInsertedId)

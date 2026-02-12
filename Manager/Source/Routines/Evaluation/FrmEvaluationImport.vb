@@ -27,7 +27,7 @@ Public Class FrmEvaluationImport
     End Sub
     Private Sub InitializeDbListener()
         Dim Condition As New List(Of RemoteDB.Condition) From {
-            New RemoteDB.WhereEqualToCondition("info.importedid", Nothing)
+            New RemoteDB.WhereEqualToCondition("info.importedby", Nothing)
         }
         _RemoteDB.StartListening("evaluations", Condition)
         AddHandler _RemoteDB.OnFirestoreChanged, Async Sub(Args)

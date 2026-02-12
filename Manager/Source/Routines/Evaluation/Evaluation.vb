@@ -288,7 +288,8 @@ Public Class Evaluation
                         ReplacedSellable.SetID(CmdReplacedSellable.LastInsertedId)
                     End Using
                 Next ReplacedSellable
-                For Each Picture As EvaluationPicture In Pictures
+
+                For Each Picture As EvaluationPicture In Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing)
                     Using CmdPicture As New MySqlCommand(My.Resources.EvaluationPictureInsert, Con)
                         CmdPicture.Parameters.AddWithValue("@creation", Picture.Creation)
                         CmdPicture.Parameters.AddWithValue("@evaluationid", ID)

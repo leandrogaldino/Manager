@@ -66,7 +66,6 @@ Public Class FrmProduct
         DgvNavigator.DataGridView = _ProductsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
-        PvPicture.TempDirectory = ManagerCore.ApplicationPaths.ManagerTempDirectory
         BtnLog.Visible = _User.CanAccess(Routine.Log)
     End Sub
     Private Sub LoadData()
@@ -219,9 +218,21 @@ Public Class FrmProduct
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
-    Private Sub PvPicture_PictureChanged(Path As String) Handles PvPicture.PictureAdded, PvPicture.PictureRemoved
+    Private Sub PvPicture_PictureAdded(Path As String) Handles PvPicture.PictureAdded
         EprValidation.Clear()
-        If Not _Loading Then BtnSave.Enabled = True
+        If Not _Loading Then
+            Dim ProductPicture As New ProductPicture
+            ProductPicture.Picture.SetCurrentFile(Path)
+            _Product.Pictures.Add(ProductPicture)
+            BtnSave.Enabled = True
+        End If
+    End Sub
+    Private Sub PvPicture_PictureRemoved(Path As String) Handles PvPicture.PictureRemoved
+        EprValidation.Clear()
+        If Not _Loading Then
+            _Product.Pictures.First(Function(x) x.Picture.CurrentFile = Path).Picture.SetCurrentFile(Nothing)
+            BtnSave.Enabled = True
+        End If
     End Sub
     Private Sub TxtNote_LinkClicked(sender As Object, e As LinkClickedEventArgs) Handles TxtNote.LinkClicked
         Process.Start(e.LinkText)
@@ -422,18 +433,18 @@ Public Class FrmProduct
                     _Product.Dimensions = TxtDimensions.Text
                     _Product.SKU = TxtSKU.Text
                     _Product.Note = TxtNote.Text
-                    PvPicture.Pictures.ToList().ForEach(Sub(x)
-                                                            If Not _Product.Pictures.Any(Function(y) y.Picture.CurrentFile = x) Then
-                                                                Dim ProductPircture As New ProductPicture
-                                                                ProductPircture.Picture.SetCurrentFile(x)
-                                                                _Product.Pictures.Add(ProductPircture)
-                                                            End If
-                                                        End Sub)
-                    _Product.Pictures.ForEach(Sub(x)
-                                                  If Not PvPicture.Pictures.Any(Function(y) y = x.Picture.CurrentFile) Then
-                                                      x.Picture.SetCurrentFile(Nothing)
-                                                  End If
-                                              End Sub)
+                    'PvPicture.Pictures.ToList().ForEach(Sub(x)
+                    '                                        If Not _Product.Pictures.Any(Function(y) y.Picture.CurrentFile = x) Then
+                    '                                            Dim ProductPircture As New ProductPicture
+                    '                                            ProductPircture.Picture.SetCurrentFile(x)
+                    '                                            _Product.Pictures.Add(ProductPircture)
+                    '                                        End If
+                    '                                    End Sub)
+                    '_Product.Pictures.ForEach(Sub(x)
+                    '                              If Not PvPicture.Pictures.Any(Function(y) y = x.Picture.CurrentFile) Then
+                    '                                  x.Picture.SetCurrentFile(Nothing)
+                    '                              End If
+                    '                          End Sub)
                     _Product.SaveChanges()
                     _Product.Lock()
                     LblIDValue.Text = _Product.ID

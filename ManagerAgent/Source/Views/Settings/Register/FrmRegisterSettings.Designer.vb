@@ -561,7 +561,6 @@ Partial Class FrmRegisterSettings
         Me.PictureViewer.ShowCounterBar = False
         Me.PictureViewer.Size = New System.Drawing.Size(141, 69)
         Me.PictureViewer.TabIndex = 55
-        Me.PictureViewer.TempDirectory = "C:\Users\leand\AppData\Local\Temp\"
         '
         'FrmRegisterSettings
         '

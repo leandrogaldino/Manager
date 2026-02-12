@@ -1,15 +1,9 @@
-SELECT
-    IFNULL(evaluation.id, 0)
+SELECT id
 FROM evaluation
-WHERE 
+WHERE
+    statusid = 1 AND
     evaluation.id <> @evaluationid AND
-    evaluation.statusid = 1 AND
-	evaluation.personcompressorid = @personcompressorid AND
-    evaluation.evaluationdate = (
-                                  SELECT
-                                    MAX(evaluation.evaluationdate)
-                                  FROM evaluation
-                                  WHERE evaluation.evaluationdate <= @evaluationdate AND
-                                    evaluation.personcompressorid = @personcompressorid AND
-                                    evaluation.id <> @evaluationid
-                                 );
+    personcompressorid = @personcompressorid AND
+    evaluationdate <= @evaluationdate
+ORDER BY evaluationdate DESC
+LIMIT 1;

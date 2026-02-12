@@ -1,5 +1,4 @@
 ﻿Imports ControlLibrary
-Imports ManagerCore
 Imports System.ComponentModel
 Imports System.IO
 
@@ -14,7 +13,6 @@ Public Class FrmRegisterSettings
         CbxState.SelectedIndex = 0
         InitializeBindings()
         AddHandler _ViewModel.PropertyChanged, AddressOf OnViewModelPropertychanged
-        PictureViewer.TempDirectory = ApplicationPaths.AgentTempDirectory()
         If File.Exists(_ViewModel.LogoLocation) Then
             PictureViewer.AddPicture(_ViewModel.LogoLocation)
             BtnIncludeLogo.Enabled = False

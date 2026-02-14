@@ -23,9 +23,9 @@ Partial Class FrmProduct
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim OtherField2 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim OtherField1 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmProduct))
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
@@ -827,11 +827,11 @@ Partial Class FrmProduct
         '
         Me.QbxUnit.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxUnit.CharactersToQuery = 1
-        Condition2.FieldName = "statusid"
-        Condition2.Operator = "="
-        Condition2.TableNameOrAlias = "productunit"
-        Condition2.Value = "@statusid"
-        Me.QbxUnit.Conditions.Add(Condition2)
+        Condition1.FieldName = "statusid"
+        Condition1.Operator = "="
+        Condition1.TableNameOrAlias = "productunit"
+        Condition1.Value = "@statusid"
+        Me.QbxUnit.Conditions.Add(Condition1)
         Me.QbxUnit.DebugOnTextChanged = False
         Me.QbxUnit.DisplayFieldAlias = "Sigla"
         Me.QbxUnit.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
@@ -849,20 +849,20 @@ Partial Class FrmProduct
         Me.QbxUnit.MainTableAlias = Nothing
         Me.QbxUnit.MainTableName = "productunit"
         Me.QbxUnit.Name = "QbxUnit"
-        OtherField2.DisplayFieldAlias = "Unidade"
-        OtherField2.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField2.DisplayFieldName = "name"
-        OtherField2.DisplayMainFieldName = "id"
-        OtherField2.DisplayTableAlias = Nothing
-        OtherField2.DisplayTableName = "productunit"
-        OtherField2.Freeze = False
-        OtherField2.IfNull = Nothing
-        OtherField2.Prefix = Nothing
-        OtherField2.Suffix = Nothing
-        Me.QbxUnit.OtherFields.Add(OtherField2)
-        Parameter2.ParameterName = "@statusid"
-        Parameter2.ParameterValue = "0"
-        Me.QbxUnit.Parameters.Add(Parameter2)
+        OtherField1.DisplayFieldAlias = "Unidade"
+        OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField1.DisplayFieldName = "name"
+        OtherField1.DisplayMainFieldName = "id"
+        OtherField1.DisplayTableAlias = Nothing
+        OtherField1.DisplayTableName = "productunit"
+        OtherField1.Freeze = False
+        OtherField1.IfNull = Nothing
+        OtherField1.Prefix = Nothing
+        OtherField1.Suffix = Nothing
+        Me.QbxUnit.OtherFields.Add(OtherField1)
+        Parameter1.ParameterName = "@statusid"
+        Parameter1.ParameterValue = "0"
+        Me.QbxUnit.Parameters.Add(Parameter1)
         Me.QbxUnit.Prefix = Nothing
         Me.QbxUnit.Size = New System.Drawing.Size(50, 23)
         Me.QbxUnit.Suffix = Nothing
@@ -1126,10 +1126,10 @@ Partial Class FrmProduct
         'TabPicture
         '
         Me.TabPicture.Controls.Add(Me.PvPicture)
-        Me.TabPicture.Location = New System.Drawing.Point(4, 22)
+        Me.TabPicture.Location = New System.Drawing.Point(4, 26)
         Me.TabPicture.Name = "TabPicture"
         Me.TabPicture.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPicture.Size = New System.Drawing.Size(606, 196)
+        Me.TabPicture.Size = New System.Drawing.Size(606, 192)
         Me.TabPicture.TabIndex = 8
         Me.TabPicture.Text = "Fotos"
         Me.TabPicture.UseVisualStyleBackColor = True
@@ -1151,11 +1151,10 @@ Partial Class FrmProduct
         Me.PvPicture.PreviousButtonImage = CType(resources.GetObject("PvPicture.PreviousButtonImage"), System.Drawing.Image)
         Me.PvPicture.RemoveButtonImage = CType(resources.GetObject("PvPicture.RemoveButtonImage"), System.Drawing.Image)
         Me.PvPicture.SaveButtonImage = CType(resources.GetObject("PvPicture.SaveButtonImage"), System.Drawing.Image)
-        Me.PvPicture.ShowControlBar = False
+        Me.PvPicture.ShowControlBar = True
         Me.PvPicture.ShowCounterBar = True
-        Me.PvPicture.Size = New System.Drawing.Size(600, 190)
+        Me.PvPicture.Size = New System.Drawing.Size(600, 186)
         Me.PvPicture.TabIndex = 0
-        Me.PvPicture.TempDirectory = ""
         '
         'TmrQueriedBoxFamily
         '

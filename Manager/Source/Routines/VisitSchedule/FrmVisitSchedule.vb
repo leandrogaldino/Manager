@@ -267,21 +267,13 @@ Public Class FrmVisitSchedule
             EprValidation.SetIconAlignment(LblScheduledDate, ErrorIconAlignment.MiddleRight)
             DbxScheduledDate.Select()
             Return False
-        ElseIf IsDate(DbxScheduledDate.Text) AndAlso CDate(DbxScheduledDate.Date) < Today Then
-            EprValidation.SetError(LblScheduledDate, "A data da visita precisa ser maior que hoje.")
-            EprValidation.SetIconAlignment(LblScheduledDate, ErrorIconAlignment.MiddleRight)
-            DbxScheduledDate.Select()
-            Return False
+
         ElseIf Not TbxScheduledTime.Time.HasValue Then
             EprValidation.SetError(LblScheduledDate, "Hora inválida.")
             EprValidation.SetIconAlignment(LblScheduledDate, ErrorIconAlignment.MiddleRight)
             TbxScheduledTime.Select()
             Return False
-        ElseIf DbxScheduledDate.Date = Today And Not TbxScheduledTime.Time > Now.TimeOfDay Then
-            EprValidation.SetError(LblScheduledDate, "A hora da visita deve ser posterior ao momento atual.")
-            EprValidation.SetIconAlignment(LblScheduledDate, ErrorIconAlignment.MiddleRight)
-            TbxScheduledTime.Select()
-            Return False
+
         ElseIf String.IsNullOrWhiteSpace(QbxCustomer.Text) Then
             EprValidation.SetError(LblCustomer, "Campo obrigatório.")
             EprValidation.SetIconAlignment(LblCustomer, ErrorIconAlignment.MiddleRight)

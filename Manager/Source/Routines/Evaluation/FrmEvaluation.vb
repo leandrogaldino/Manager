@@ -145,7 +145,6 @@ Public Class FrmEvaluation
         CcoCallTypeHasRepairNeedProposal.DropDownControl = _UcCallTypeHasRepairNeedProposal
         _UcUnitTemperaturePressure = New UcEvaluationUnitTemperaturePressure()
         CcoUnitTemperaturePressure.DropDownControl = _UcUnitTemperaturePressure
-        PvPicture.TempDirectory = ApplicationPaths.ManagerTempDirectory
         _TabPageSignature = TcEvaluation.TabPages("TabSignature")
         _TabPageDocument = TcEvaluation.TabPages("TabDocument")
         _TabPagePictures = TcEvaluation.TabPages("TabPicture")
@@ -272,6 +271,8 @@ Public Class FrmEvaluation
         _Loading = False
     End Sub
 #End Region
+
+
 #Region "Validation & Calculation"
     Private Function IsValidFieldsToSave() As Boolean
         If _UcCallTypeHasRepairNeedProposal.CallType = CallType.None Then
@@ -441,18 +442,25 @@ Public Class FrmEvaluation
                     _Evaluation.ManualAverageWorkLoad = CbxManualAverageWorkLoad.Checked
                     _Evaluation.AverageWorkLoad = DbxAverageWorkLoad.Text
                     _Evaluation.TechnicalAdvice = TxtTechnicalAdvice.Text
-                    PvPicture.Pictures.ToList().ForEach(Sub(x)
-                                                            If Not _Evaluation.Pictures.Any(Function(y) y.Picture.CurrentFile = x) Then
-                                                                Dim EvaluationPicture As New EvaluationPicture
-                                                                EvaluationPicture.Picture.SetCurrentFile(x)
-                                                                _Evaluation.Pictures.Add(EvaluationPicture)
-                                                            End If
-                                                        End Sub)
-                    _Evaluation.Pictures.ForEach(Sub(x)
-                                                     If Not PvPicture.Pictures.Any(Function(y) y = x.Picture.CurrentFile) Then
-                                                         x.Picture.SetCurrentFile(Nothing)
-                                                     End If
-                                                 End Sub)
+
+
+
+                    'PvPicture.Pictures.ToList().ForEach(Sub(x)
+                    '                                        If Not _Evaluation.Pictures.Any(Function(y) y.Picture.CurrentFile = x) Then
+                    '                                            Dim EvaluationPicture As New EvaluationPicture
+                    '                                            EvaluationPicture.Picture.SetCurrentFile(x)
+                    '                                            _Evaluation.Pictures.Add(EvaluationPicture)
+                    '                                        End If
+                    '                                    End Sub)
+                    '_Evaluation.Pictures.ForEach(Sub(x)
+                    '                                 If Not PvPicture.Pictures.Any(Function(y) y = x.Picture.CurrentFile) Then
+                    '                                     x.Picture.SetCurrentFile(Nothing)
+                    '                                 End If
+                    '                             End Sub)
+
+
+
+
                     _Evaluation.SaveChanges()
                     If _Evaluation.ID = 0 AndAlso _User.CanAccess(Routine.EvaluationApproveOrReject) Then BtnApprove.PerformClick()
                     _Evaluation.Lock()
@@ -1204,9 +1212,21 @@ Public Class FrmEvaluation
     End Sub
 #End Region
 #Region "PictureViewer Events"
-    Private Sub PvPicture_PictureChanged(Path As String) Handles PvPicture.PictureAdded, PvPicture.PictureRemoved
+    Private Sub PvPicture_PictureAdded(Path As String) Handles PvPicture.PictureAdded
         EprValidation.Clear()
-        If Not _Loading Then BtnSave.Enabled = True
+        If Not _Loading Then
+            Dim EvaluationPicture As New EvaluationPicture
+            EvaluationPicture.Picture.SetCurrentFile(Path)
+            _Evaluation.Pictures.Add(EvaluationPicture)
+            BtnSave.Enabled = True
+        End If
+    End Sub
+    Private Sub PvPicture_PictureRemoved(Path As String) Handles  PvPicture.PictureRemoved
+        EprValidation.Clear()
+        If Not _Loading Then
+            _Evaluation.Pictures.First(Function(x) x.Picture.CurrentFile = Path).Picture.SetCurrentFile(Nothing)
+            BtnSave.Enabled = True
+        End If
     End Sub
 #End Region
 #Region "QueriedBox Events"

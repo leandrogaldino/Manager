@@ -1,7 +1,8 @@
-﻿Imports CefSharp
-Public Class FrmLoader
+﻿Public Class FrmLoader
     Public Sub New(Optional Message As String = "Carregando")
         InitializeComponent()
-        WbLoader.LoadHtml(My.Resources.Loading.Replace("@LoadingMessage", Message), False)
+        LblMessage.Text = Message
+        AnimatedBox.LoadGif(My.Resources.Downloading)
+        AnimatedBox.StartAnimation()
     End Sub
 End Class

@@ -1,3 +1,10 @@
+#2.0.8
+• Corrigido problema em que a tela de login permanecia visível após o login.
+• Correções na rotina de importação de avaliações.
+#2.0.7
+• Correção na tela de carregamento durante a importação de avaliações.
+#2.0.6
+• Ajustes e correções na rotina de agendamento de visita.
 #2.0.5
 • Ajustes e correções na rotina de sincronização com a núvem.
 #2.0.4

@@ -1583,6 +1583,16 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property Downloading() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Downloading", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property Edit() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Edit", resourceCulture)
@@ -2133,7 +2143,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;Evaluation&quot; Version=&quot;2&quot;&gt;
+        '''&lt;Routine Id=&quot;Evaluation&quot; Version=&quot;3&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -2183,6 +2193,8 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO evaluation
         '''(
+        '''	cloudid,
+        '''	visitscheduleid,
         '''	creation,
         '''    statusid,
         '''	sourceid,
@@ -2195,7 +2207,7 @@ Namespace My.Resources
         '''	evaluationdate,
         '''	starttime,
         '''	endtime,
-        '''	evaluationnumber,
+        '''	reference,
         '''	customerid,
         '''	responsible,
         '''	personcompressorid,
@@ -2210,13 +2222,12 @@ Namespace My.Resources
         ''')
         '''VALUES
         '''(
+        '''	@cloudid,
+        '''	@visitscheduleid,
         '''	@creation,
         '''	@statusid,
         '''	@sourceid,
-        '''	@calltypeid,
-        '''	@needproposalid,
-        '''	@hasrepairid,
-        '''	@unitname [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	@cal [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationInsert() As String
             Get
@@ -2242,9 +2253,9 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT IFNULL(e.evaluationdate, &apos;&apos;) evaluationdate FROM evaluation e
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT ecs.currentcapacity FROM evaluation e
         '''JOIN evaluationcontrolledsellable ecs ON ecs.evaluationid = e.id
-        '''WHERE ecs.personcompressorsellableid = @personcompressorsellableid  AND (sold = 1 OR lost =1) AND e.evaluationdate &lt;= @refevaluationdate
+        '''WHERE ecs.personcompressorsellableid =  @personcompressorsellableid  AND (sold = 1 OR lost =1) AND e.evaluationdate &lt;= @refevaluationdate
         '''ORDER BY e.evaluationdate DESC
         '''LIMIT 1;.
         '''</summary>
@@ -2255,7 +2266,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT IFNULL(e.evaluationdate, &apos;&apos;) evaluationdate FROM evaluation e
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT e.evaluationdate FROM evaluation e
         '''JOIN evaluationcontrolledsellable ecs ON ecs.evaluationid = e.id
         '''WHERE ecs.personcompressorsellableid = @personcompressorsellableid  AND (sold = 1 OR lost =1) AND e.evaluationdate &lt;= @refevaluationdate
         '''ORDER BY e.evaluationdate DESC
@@ -2716,6 +2727,8 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	evaluation.id,
+        '''	evaluation.cloudid,
+        '''	evaluation.visitscheduleid,
         '''	evaluation.creation,
         '''	evaluation.sourceid,
         '''    evaluation.statusid,
@@ -2728,13 +2741,12 @@ Namespace My.Resources
         '''	evaluation.evaluationdate,
         '''	evaluation.starttime,
         '''	evaluation.endtime,
-        '''	evaluation.evaluationnumber,
+        '''	evaluation.reference,
         '''	evaluation.customerid,
         '''	evaluation.responsible,
         '''	evaluation.personcompressorid,
         '''	evaluation.horimeter,
-        '''	evaluation.manualaverageworkload,
-        '''	evaluation.a [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	eva [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationSelect() As String
             Get
@@ -2862,11 +2874,12 @@ Namespace My.Resources
         '''    evaluationdate = @evaluationdate,
         '''    starttime = @starttime,
         '''    endtime = @endtime,
-        '''    evaluationnumber = @evaluationnumber,
+        '''    reference = @reference,
         '''    customerid = @customerid,
         '''    responsible = @responsible,
         '''    personcompressorid = @personcompressorid,
-        '''    horimeter = @horimet [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''    horimeter = @horimeter,
+        '''    manua [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationUpdate() As String
             Get
@@ -2981,33 +2994,6 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("information", resourceCulture)
                 Return CType(obj,System.Drawing.Icon)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;!DOCTYPE html&gt;
-        '''&lt;html lang=&quot;pt-BR&quot;&gt;
-        '''&lt;head&gt;
-        '''    &lt;meta charset=&quot;UTF-8&quot;&gt;
-        '''    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-        '''    &lt;title&gt;Loading&lt;/title&gt;
-        '''    &lt;style&gt;
-        '''        body, html {
-        '''            margin: 0;
-        '''            height: 100%;
-        '''            display: flex;
-        '''            justify-content: center; 
-        '''            align-items: center; 
-        '''            background-color: transparent
-        '''        }
-        '''
-        '''        .loading-container {
-        '''            display: flex;
-        '''            flex-direction: colu [o restante da cadeia de caracteres foi truncado]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property Loading() As String
-            Get
-                Return ResourceManager.GetString("Loading", resourceCulture)
             End Get
         End Property
         
@@ -6629,8 +6615,8 @@ Namespace My.Resources
         '''    visitschedule.scheduleddate As &apos;Data Agendada&apos;,
         '''    visitschedule.performeddate As &apos;Data Realizada&apos;,
         '''    CASE
-        '''        WHEN visitschedule.calltypeid = 0 THEN &quot;LEVANTAMENTO&quot;
-        '''        WHEN visitschedule.calltypeid = 1 THEN &quot;PREVENTIVA&quot;
+        '''        WHEN visitschedule.calltypeid = 1 THEN &quot;LEVANTAMENTO&quot;
+        '''        WHEN visitschedule.calltypeid = 2 THEN &quot;PREVENTIVA&quot;
         ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property VisitScheduleFilter() As String
@@ -6678,8 +6664,6 @@ Namespace My.Resources
         '''    technicianid,
         '''    instructions,
         '''    evaluationid,
-        '''    overridedvisitscheduleid,
-        '''    lastupdate,
         '''    userid
         ''')
         '''VALUES
@@ -6694,7 +6678,8 @@ Namespace My.Resources
         '''    @technicianid,
         '''    @instructions,
         '''    @evaluationid,
-        '''    @overridedvisitschedul [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''    @userid
+        ''');.
         '''</summary>
         Friend ReadOnly Property VisitScheduleInsert() As String
             Get
@@ -6714,9 +6699,7 @@ Namespace My.Resources
         '''	visitschedule.personcompressorid,
         '''	visitschedule.technicianid,
         '''	visitschedule.instructions,
-        '''	visitschedule.evaluationid,
-        '''	visitschedule.overridedvisitscheduleid,
-        '''	visitschedule.lastupdate
+        '''	visitschedule.evaluationid
         '''FROM visitschedule
         '''WHERE visitschedule.id = @id;.
         '''</summary>
@@ -6737,8 +6720,6 @@ Namespace My.Resources
         '''    technicianid = @technicianid,
         '''    instructions = @instructions,
         '''    evaluationid = @evaluationid,
-        '''    overridedvisitscheduleid = @overridedvisitscheduleid,
-        '''    lastupdate = @lastupdate,
         '''    userid = @userid
         '''WHERE visitschedule.id = @id;.
         '''</summary>

@@ -162,7 +162,7 @@ Public Class Product
                     CmdProduct.ExecuteNonQuery()
                     SetID(CmdProduct.LastInsertedId)
                 End Using
-                For Each Picture As ProductPicture In Pictures
+                For Each Picture As ProductPicture In Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing)
                     Using CmdPicture As New MySqlCommand(My.Resources.ProductPictureInsert, Con)
                         CmdPicture.Parameters.AddWithValue("@productid", ID)
                         CmdPicture.Parameters.AddWithValue("@creation", Picture.Creation)

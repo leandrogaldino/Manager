@@ -22,30 +22,44 @@ Partial Class FrmLoader
     'Não o modifique usando o editor de códigos.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.WbLoader = New CefSharp.WinForms.ChromiumWebBrowser()
+        Me.AnimatedBox = New CoreSuite.Controls.AnimatedBox()
+        Me.LblMessage = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
-        'WbLoader
+        'AnimatedBox
         '
-        Me.WbLoader.ActivateBrowserOnCreation = False
-        Me.WbLoader.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WbLoader.Location = New System.Drawing.Point(0, 0)
-        Me.WbLoader.Name = "WbLoader"
-        Me.WbLoader.Size = New System.Drawing.Size(284, 161)
-        Me.WbLoader.TabIndex = 0
+        Me.AnimatedBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.AnimatedBox.Location = New System.Drawing.Point(0, 0)
+        Me.AnimatedBox.Name = "AnimatedBox"
+        Me.AnimatedBox.ScaleMode = CoreSuite.Controls.AnimationScaleMode.Centrer
+        Me.AnimatedBox.Size = New System.Drawing.Size(353, 139)
+        Me.AnimatedBox.TabIndex = 0
+        '
+        'LblMessage
+        '
+        Me.LblMessage.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.LblMessage.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblMessage.Location = New System.Drawing.Point(0, 139)
+        Me.LblMessage.Name = "LblMessage"
+        Me.LblMessage.Size = New System.Drawing.Size(353, 52)
+        Me.LblMessage.TabIndex = 1
+        Me.LblMessage.Text = "Mensagem"
+        Me.LblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'FrmLoader
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(284, 161)
-        Me.Controls.Add(Me.WbLoader)
+        Me.ClientSize = New System.Drawing.Size(353, 191)
+        Me.Controls.Add(Me.AnimatedBox)
+        Me.Controls.Add(Me.LblMessage)
         Me.Name = "FrmLoader"
         Me.Text = "FrmLoader"
         Me.ResumeLayout(False)
 
     End Sub
 
-    Friend WithEvents WbLoader As CefSharp.WinForms.ChromiumWebBrowser
+    Friend WithEvents AnimatedBox As CoreSuite.Controls.AnimatedBox
+    Friend WithEvents LblMessage As Label
 End Class

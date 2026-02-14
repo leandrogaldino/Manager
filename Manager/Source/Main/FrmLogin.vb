@@ -62,6 +62,7 @@ Public Class FrmLogin
                                                         Case LicenseMessages.OutdatedLocalLicenseKey
                                                             Session.LicenseResult = Util.AsyncLock(Function() License.GetOnlineLicense(License.GetLocalLicenseKey, License.GetLocalLicenseToken))
                                                             If Session.LicenseResult.Success Then
+                                                                Hide()
                                                                 FrmMain.Show()
                                                             Else
                                                                 CMessageBox.Show(EnumHelper.GetEnumDescription(Session.LicenseResult.Flag), CMessageBoxType.Warning)

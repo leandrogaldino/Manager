@@ -106,7 +106,7 @@ Public Class FrmMain
         If Force Then
             ShowFormLogin = True
         Else
-            If _Session.ManagerLicenseResult IsNot Nothing Then
+            If _Session.ManagerLicenseResult IsNot Nothing AndAlso _Session.ManagerLicenseResult.License IsNot Nothing Then
                 If Minutes >= 5 Then
                     ShowFormLogin = True
                 Else
@@ -409,7 +409,7 @@ Public Class FrmMain
             End Using
         End If
     End Sub
-    Private Async Sub BtnLicenseCredentials_Click(sender As Object, e As EventArgs) Handles BtnLicenseCredentials.Click
+    Private Async Sub BtnLicenseCredentials_Click(sender As Object, e As EventArgs)
         Dim Credentials As RemoteDbCredentialsModel = Nothing
         If _Session.ManagerLicenseResult.Flag <> LicenseMessages.LicenseFileNotFound Then
             Dim _LicenseCredentialsService = Locator.GetInstance(Of RemoteDbCredentialsService)

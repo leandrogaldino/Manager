@@ -113,9 +113,6 @@
     <Reference Include="CoreSuite.TimeBox">
       <HintPath>..\..\CoreSuite\TimeBox\bin\Debug\CoreSuite.TimeBox.dll</HintPath>
     </Reference>
-    <Reference Include="ManagerAgent">
-      <HintPath>obj\Debug\ManagerAgent.exe</HintPath>
-    </Reference>
     <Reference Include="ManagerCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ManagerCore\bin\Debug\ManagerCore.dll</HintPath>

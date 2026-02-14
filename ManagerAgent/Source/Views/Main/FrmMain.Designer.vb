@@ -46,7 +46,6 @@ Partial Class FrmMain
         Me.BtnCompanies = New System.Windows.Forms.ToolStripButton()
         Me.BtnSettings = New System.Windows.Forms.ToolStripDropDownButton()
         Me.BtnLicense = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BtnLicenseCredentials = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnChangeLicenseKey = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnDatabase = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnLocalDbCredentials = New System.Windows.Forms.ToolStripMenuItem()
@@ -286,21 +285,15 @@ Partial Class FrmMain
         '
         'BtnLicense
         '
-        Me.BtnLicense.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnLicenseCredentials, Me.BtnChangeLicenseKey})
+        Me.BtnLicense.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnChangeLicenseKey})
         Me.BtnLicense.Name = "BtnLicense"
         Me.BtnLicense.Size = New System.Drawing.Size(223, 22)
         Me.BtnLicense.Text = "Licença"
         '
-        'BtnLicenseCredentials
-        '
-        Me.BtnLicenseCredentials.Name = "BtnLicenseCredentials"
-        Me.BtnLicenseCredentials.Size = New System.Drawing.Size(166, 22)
-        Me.BtnLicenseCredentials.Text = "Credenciais"
-        '
         'BtnChangeLicenseKey
         '
         Me.BtnChangeLicenseKey.Name = "BtnChangeLicenseKey"
-        Me.BtnChangeLicenseKey.Size = New System.Drawing.Size(166, 22)
+        Me.BtnChangeLicenseKey.Size = New System.Drawing.Size(180, 22)
         Me.BtnChangeLicenseKey.Text = "Alterar Chave"
         '
         'BtnDatabase
@@ -588,7 +581,6 @@ Partial Class FrmMain
     Friend WithEvents BtnCompanies As ToolStripButton
     Friend WithEvents ToolStripSeparator4 As ToolStripSeparator
     Friend WithEvents BtnChangeLicenseKey As ToolStripMenuItem
-    Friend WithEvents BtnLicenseCredentials As ToolStripMenuItem
     Friend WithEvents BtnSupport As ToolStripMenuItem
     Friend WithEvents BtnBackupConfig As ToolStripMenuItem
     Friend WithEvents BtnParameters As ToolStripMenuItem

@@ -20,12 +20,14 @@ Public Class FrmLicenseKey
 
 
     Private Async Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
-
-        Await _LicenseService.GetOnlineLicense($"{TxtKeyPartA.Text}-{TxtKeyPartB.Text}-{TxtKeyPartC.Text}-{TxtKeyPartD.Text}-{TxtKeyPartE.Text}")
+        Dim s = Await _LicenseService.GetOnlineLicense($"{TxtKeyPartA.Text}-{TxtKeyPartB.Text}-{TxtKeyPartC.Text}-{TxtKeyPartD.Text}-{TxtKeyPartE.Text}")
         DialogResult = DialogResult.OK
     End Sub
 
     Private Sub TxtKey_TextChanged(sender As Object, e As EventArgs) Handles TxtKeyPartA.TextChanged, TxtKeyPartB.TextChanged, TxtKeyPartC.TextChanged, TxtKeyPartD.TextChanged, TxtKeyPartE.TextChanged
+        If _IsValidKey Then
+            BtnSave.Text = "Concluir"
+        End If
         BtnSave.Enabled = True
     End Sub
 

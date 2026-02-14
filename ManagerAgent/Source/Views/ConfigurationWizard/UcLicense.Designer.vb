@@ -64,6 +64,7 @@ Partial Class UcLicense
         '
         'LblDescription
         '
+        Me.LblDescription.BackColor = System.Drawing.Color.White
         Me.LblDescription.Dock = System.Windows.Forms.DockStyle.Fill
         Me.LblDescription.ForeColor = System.Drawing.Color.White
         Me.LblDescription.Location = New System.Drawing.Point(0, 41)
@@ -247,7 +248,7 @@ Partial Class UcLicense
         '
         'PnButtons
         '
-        Me.PnButtons.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.PnButtons.BackColor = System.Drawing.Color.White
         Me.PnButtons.Controls.Add(Me.BtnSave)
         Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.PnButtons.Location = New System.Drawing.Point(165, 226)

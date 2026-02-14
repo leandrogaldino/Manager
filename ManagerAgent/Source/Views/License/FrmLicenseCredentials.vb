@@ -1,46 +1,50 @@
 ﻿Imports ManagerCore
 Imports CoreSuite.Infrastructure
+Imports CoreSuite.Controls
 Public Class FrmLicenseCredentials
     Private _LicenseService As LicenseService
-    Private _RemoteDbCredentials As RemoteDbCredentialsModel
     Private _RemoteDbCredentialsService As RemoteDbCredentialsService
-    Private _Loading As Boolean
-    Public Sub New(Credentials As RemoteDbCredentialsModel)
-        InitializeComponent()
-        _Loading = True
-        _LicenseService = Locator.GetInstance(Of LicenseService)
-        _RemoteDbCredentialsService = Locator.GetInstance(Of RemoteDbCredentialsService)
-        _RemoteDbCredentials = Credentials
-        TxtApiKey.Text = _RemoteDbCredentials.ApiKey
-        TxtProjectID.Text = _RemoteDbCredentials.ProjectID
-        TxtBucketName.Text = _RemoteDbCredentials.BucketName
-        TxtUsername.Text = _RemoteDbCredentials.Username
-        TxtPassword.Text = _RemoteDbCredentials.Password
-        _Loading = False
-    End Sub
-    Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtApiKey.TextChanged, TxtBucketName.TextChanged, TxtProjectID.TextChanged, TxtPassword.TextChanged, TxtUsername.TextChanged
-        If _Loading Then Return
-        Dim ApiKey As String = TxtApiKey.Text
-        Dim ProjectID As String = TxtProjectID.Text
-        Dim BucketName As String = TxtBucketName.Text
-        Dim Username As String = TxtUsername.Text
-        Dim Password As String = TxtPassword.Text
-        BtnSave.Enabled = False
-        If Not String.IsNullOrEmpty(ApiKey) And Not String.IsNullOrEmpty(ProjectID) And Not String.IsNullOrEmpty(BucketName) And Not String.IsNullOrEmpty(Username) And Not String.IsNullOrEmpty(Password) Then
-            BtnSave.Enabled = True
+    Private _IsValid As Boolean
+    Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
+        Dim Message As String
+        If _IsValid Then
+            _RemoteDbCredentialsService.Save(New RemoteDbCredentialsModel With {
+                .ApiKey = TxtApiKey.Text,
+                .ProjectID = TxtProjectID.Text,
+                .BucketName = TxtBucketName.Text,
+                .Username = TxtUsername.Text,
+                .Password = TxtPassword.Text
+            }, RemoteDatabaseType.System)
+            Application.Restart()
         Else
-            BtnSave.Enabled = False
+            Message = IsValid()
+            If Message Is Nothing Then
+                _IsValid = True
+                BtnSave.Text = "Concluir"
+                CMessageBox.Show("Sucesso", "Dados da base de licenciamento validados com sucesso. Clique em concluir para continuar.", CMessageBoxType.Done)
+            Else
+                _IsValid = False
+                BtnSave.Text = "Validar"
+                CMessageBox.Show("Erro", Message, CMessageBoxType.Error)
+            End If
         End If
     End Sub
-    Private Async Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
-        _RemoteDbCredentials.ApiKey = TxtApiKey.Text
-        _RemoteDbCredentials.ProjectID = TxtProjectID.Text
-        _RemoteDbCredentials.BucketName = TxtBucketName.Text
-        _RemoteDbCredentials.Username = TxtUsername.Text
-        _RemoteDbCredentials.Password = TxtPassword.Text
-        _RemoteDbCredentialsService.Save(_RemoteDbCredentials, RemoteDatabaseType.System)
-        Dim Result As LicenseResultModel = _LicenseService.GetLocalLicense()
-        If Result.Flag = LicenseMessages.LicenseFileNotFound Then Await _LicenseService.SaveLocalLicense(New LicenseModel())
-        DialogResult = DialogResult.OK
+    Private Function IsValid() As String
+        Return Validation.ValidateLicense(New RemoteDbCredentialsModel With {
+            .ApiKey = TxtApiKey.Text,
+            .ProjectID = TxtProjectID.Text,
+            .BucketName = TxtBucketName.Text,
+            .Username = TxtUsername.Text,
+            .Password = TxtPassword.Text
+        })
+    End Function
+    Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtUsername.TextChanged, TxtProjectID.TextChanged, TxtPassword.TextChanged, TxtBucketName.TextChanged, TxtApiKey.TextChanged
+        BtnSave.Text = "Validar"
+        _IsValid = False
+    End Sub
+    Public Sub New()
+        InitializeComponent()
+        _LicenseService = Locator.GetInstance(Of LicenseService)
+        _RemoteDbCredentialsService = Locator.GetInstance(Of RemoteDbCredentialsService)
     End Sub
 End Class

@@ -107,6 +107,9 @@
     <Reference Include="CoreSuite.PictureViewer">
       <HintPath>..\..\CoreSuite\PictureViewer\bin\Debug\CoreSuite.PictureViewer.dll</HintPath>
     </Reference>
+    <Reference Include="CoreSuite.Separator">
+      <HintPath>..\..\CoreSuite\Separator\bin\Debug\CoreSuite.Separator.dll</HintPath>
+    </Reference>
     <Reference Include="CoreSuite.TimeBox">
       <HintPath>..\..\CoreSuite\TimeBox\bin\Debug\CoreSuite.TimeBox.dll</HintPath>
     </Reference>
@@ -187,12 +190,6 @@
       <DependentUpon>FrmCompanies.vb</DependentUpon>
     </Compile>
     <Compile Include="Source\Views\Company\FrmCompanies.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Views\ConfigurationWizard\FrmConfigurationWizard.Designer.vb">
-      <DependentUpon>FrmConfigurationWizard.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Views\ConfigurationWizard\FrmConfigurationWizard.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Views\ConfigurationWizard\UcLicense.Designer.vb">
@@ -318,9 +315,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Source\Views\Company\FrmCompanies.resx">
       <DependentUpon>FrmCompanies.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\ConfigurationWizard\FrmConfigurationWizard.resx">
-      <DependentUpon>FrmConfigurationWizard.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\ConfigurationWizard\UcLicense.resx">
       <DependentUpon>UcLicense.vb</DependentUpon>

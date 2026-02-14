@@ -416,7 +416,7 @@ Public Class FrmMain
             Credentials = _LicenseCredentialsService.Load(RemoteDatabaseType.System)
         End If
         If Credentials Is Nothing Then Credentials = New RemoteDbCredentialsModel()
-        Using Form As New FrmLicenseCredentials(Credentials)
+        Using Form As New FrmLicenseCredentials()
             If Form.ShowDialog() = DialogResult.OK Then
                 Await ValidateState()
             End If

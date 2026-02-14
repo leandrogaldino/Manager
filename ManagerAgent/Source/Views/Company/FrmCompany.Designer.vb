@@ -507,7 +507,6 @@ Partial Class FrmCompany
         Me.PictureViewer.ShowCounterBar = False
         Me.PictureViewer.Size = New System.Drawing.Size(141, 69)
         Me.PictureViewer.TabIndex = 98
-        Me.PictureViewer.TempDirectory = "C:\Users\leand\AppData\Local\Temp\"
         '
         'Label1
         '

@@ -18,7 +18,7 @@ Namespace My
             SetupApp.SetupCMessageBox()
             SetupTasks.Setup()
             If Not IO.File.Exists(ApplicationPaths.RemoteSystemDbCredentialsFile) Then
-                Dim Frm As New FrmConfigurationWizard()
+                Dim Frm As New FrmLicenseCredentials()
                 Frm.Show()
                 Me.MainForm = Frm
             End If

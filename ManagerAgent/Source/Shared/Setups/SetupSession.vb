@@ -5,7 +5,7 @@ Public Class SetupSession
     Public Shared Sub Setup()
         Dim LicenseService As LicenseService = Locator.GetInstance(Of LicenseService)
         Dim Session As SessionModel = Locator.GetInstance(Of SessionModel)
-        Session.ManagerLicenseResult = LicenseService.GetLocalLicense()
+        Session.ManagerLicenseResult = ManagerCore.Util.AsyncLock(Function() LicenseService.GetLocalLicense())
         Dim LocalDb As MySqlService = Locator.GetInstance(Of MySqlService)
         If LocalDb.Client IsNot Nothing Then
             Dim PreferencesService As PreferencesService = Locator.GetInstance(Of PreferencesService)

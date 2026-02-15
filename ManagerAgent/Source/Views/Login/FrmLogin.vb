@@ -25,21 +25,19 @@ Public Class FrmLogin
         End If
     End Sub
     Private Async Sub BtnConfirm_Click(sender As Object, e As EventArgs) Handles BtnConfirm.Click
-        Dim Result = _ViewModel.Login()
+        Dim Result = Await _ViewModel.Login()
         Select Case Result
             Case LicenseMessages.None
                 DialogResult = DialogResult.OK
-            Case LicenseMessages.BadPassword
+            Case LicenseMessages.BadUserOrPassword
                 CMessageBox.Show("Usuário e/ou senha incorretos. Por favor, verifique suas credenciais e tente novamente.", CMessageBoxType.Warning)
-            Case LicenseMessages.ExpiredProductKey, LicenseMessages.InvalidProductKey, LicenseMessages.MissingProductKey
+            Case LicenseMessages.Expired, LicenseMessages.InvalidCustomerLinkToken, LicenseMessages.EmptyCustomerLinkToken
                 CMessageBox.Show(EnumHelper.GetEnumDescription(Result), CMessageBoxType.Warning)
-                Using Frm As New FrmLicenseKey
+                Using Frm As New FrmCustomerLinkToken
                     If Frm.ShowDialog() = DialogResult.OK AndAlso _ViewModel.IsValidCredentials() Then
                         DialogResult = DialogResult.OK
                     End If
                 End Using
-            Case LicenseMessages.OutdatedLocalLicenseKey
-                Await _ViewModel.RenewLicense()
         End Select
     End Sub
 

@@ -1,9 +1,13 @@
 ﻿Imports System.IO
+Imports CoreSuite.Helpers
 Imports CoreSuite.Infrastructure
 Imports ManagerCore
 
 Public Class Validation
-    Public Shared Function ValidateLicense(Credentials As RemoteDbCredentialsModel) As String
+
+
+
+    Public Shared Function ValidateLicenseDatabase(Credentials As RemoteDbCredentialsModel) As String
         Dim CredService As RemoteDbCredentialsService = Locator.GetInstance(Of RemoteDbCredentialsService)
         Dim LicenseService As LicenseService = Locator.GetInstance(Of LicenseService)
         Dim s = New CoreSuite.Services.FirebaseService(Credentials.ApiKey, Credentials.ProjectID, Credentials.BucketName)
@@ -11,7 +15,7 @@ Public Class Validation
             'Testa usuário e senha
             ManagerCore.Util.AsyncLock(Function() s.Auth.LoginAsync(Credentials.Username & "@nexor.com", Credentials.Password))
         Catch ex As Exception
-            Return "Erro no login, verifique o usuário e senha informados ."
+            Return "Erro no login, verifique o usuário e senha informados."
         End Try
         Try
             'Testa a conexao com o banco

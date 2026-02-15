@@ -10,18 +10,6 @@ Namespace My
     ' NetworkAvailabilityChanged: Ocorre quando a conexão de rede é conectada ou desconectada.
 
     Partial Friend Class MyApplication
-        Private Async Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
-            SetupPaths.Setup()
-            SetupLocator.Setup()
-            Await SetupDatabase.Setup()
-            SetupSession.Setup()
-            SetupApp.SetupCMessageBox()
-            SetupTasks.Setup()
-            If Not IO.File.Exists(ApplicationPaths.RemoteSystemDbCredentialsFile) Then
-                Dim Frm As New FrmLicenseCredentials()
-                Frm.Show()
-                Me.MainForm = Frm
-            End If
-        End Sub
+
     End Class
 End Namespace

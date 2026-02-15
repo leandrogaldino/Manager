@@ -189,12 +189,6 @@
     <Compile Include="Source\Views\Company\FrmCompanies.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Views\ConfigurationWizard\UcLicense.Designer.vb">
-      <DependentUpon>UcLicense.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Views\ConfigurationWizard\UcLicense.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Source\Views\Preferences\FrmBackup.Designer.vb">
       <DependentUpon>FrmBackup.vb</DependentUpon>
     </Compile>
@@ -263,10 +257,10 @@
     <Compile Include="Source\Views\Main\FrmChangePassword.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Views\License\FrmLicenseKey.designer.vb">
-      <DependentUpon>FrmLicenseKey.vb</DependentUpon>
+    <Compile Include="Source\Views\License\FrmCustomerLinkToken.designer.vb">
+      <DependentUpon>FrmCustomerLinkToken.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Views\License\FrmLicenseKey.vb">
+    <Compile Include="Source\Views\License\FrmCustomerLinkToken.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Views\Main\FrmMain.Designer.vb">
@@ -308,13 +302,16 @@
     <Compile Include="Source\Shared\Setups\SetupSession.vb" />
     <Compile Include="Source\Shared\Setups\SetupPaths.vb" />
     <Compile Include="Source\Shared\Util.vb" />
+    <Compile Include="Source\Views\Main\SplashScreen.Designer.vb">
+      <DependentUpon>SplashScreen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Main\SplashScreen.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Source\Views\Company\FrmCompanies.resx">
       <DependentUpon>FrmCompanies.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\ConfigurationWizard\UcLicense.resx">
-      <DependentUpon>UcLicense.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Preferences\FrmBackup.resx">
       <DependentUpon>FrmBackup.vb</DependentUpon>
@@ -346,8 +343,8 @@
     <EmbeddedResource Include="Source\Views\Main\FrmChangePassword.resx">
       <DependentUpon>FrmChangePassword.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\License\FrmLicenseKey.resx">
-      <DependentUpon>FrmLicenseKey.vb</DependentUpon>
+    <EmbeddedResource Include="Source\Views\License\FrmCustomerLinkToken.resx">
+      <DependentUpon>FrmCustomerLinkToken.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Main\FrmMain.resx">
       <DependentUpon>FrmMain.vb</DependentUpon>
@@ -363,6 +360,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Main\SplashScreen.resx">
+      <DependentUpon>SplashScreen.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -388,6 +388,7 @@
     <Content Include="Resources\Images\Execute.png" />
     <Content Include="Resources\Images\ImageInclude.png" />
     <Content Include="Resources\Images\Loading.gif" />
+    <None Include="Resources\Images\Logo.png" />
     <Content Include="Resources\Images\Pause.png" />
     <None Include="Resources\Images\Release.png" />
     <Content Include="Resources\Images\Settings.png" />

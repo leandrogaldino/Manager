@@ -16,8 +16,8 @@ Public Class AppService
         Dim Validations As New List(Of String)
         Dim LicenseService As LicenseService = Locator.GetInstance(Of LicenseService)
         Try
-            Dim Key As String = LicenseService.GetLocalLicenseKey
-            Dim Result = Await LicenseService.GetOnlineLicense(Key)
+            Dim Token As String = LicenseService.GetLocalCustomerLinkToken
+            _Session.ManagerLicenseResult = Await LicenseService.GetOnlineLicense(Token)
             If Not _Session.ManagerLicenseResult.Success Then
                 Validations.Add(EnumHelper.GetEnumDescription(_Session.ManagerLicenseResult.Flag))
             End If

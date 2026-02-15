@@ -15,7 +15,7 @@ Public Class PasswordService
     End Sub
 
     Public Async Function ChangePassword(Username As String, OldPassword As String, NewPassword As String, ConfirmPassword As String) As Task(Of Boolean)
-        Dim TempLicenseResult As LicenseResultModel = _LicenseService.GetLocalLicense()
+        Dim TempLicenseResult As LicenseResultModel = Await _LicenseService.GetLocalLicense()
         If Not TempLicenseResult.Success Then
             CMessageBox.Show(EnumHelper.GetEnumDescription(TempLicenseResult.Flag), CMessageBoxType.Warning)
             Return False

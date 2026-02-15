@@ -301,6 +301,7 @@ Partial Class FrmLicenseCredentials
         Me.MinimizeBox = False
         Me.Name = "FrmLicenseCredentials"
         Me.ShowIcon = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Credenciais da base de Licenciamento"
         Me.PnLeft.ResumeLayout(False)
         Me.Panel4.ResumeLayout(False)

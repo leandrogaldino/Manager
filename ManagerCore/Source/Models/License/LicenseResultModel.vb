@@ -2,7 +2,7 @@
     Implements ICloneable
 
     Public Property Success As Boolean
-    Public Property License As New LicenseModel
+    Public Property License As LicenseModel
     Public Property Flag As LicenseMessages
     Public Function Clone() As Object Implements ICloneable.Clone
         Return New LicenseResultModel With {

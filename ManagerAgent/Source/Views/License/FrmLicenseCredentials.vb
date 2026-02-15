@@ -4,33 +4,26 @@ Imports CoreSuite.Controls
 Public Class FrmLicenseCredentials
     Private _LicenseService As LicenseService
     Private _RemoteDbCredentialsService As RemoteDbCredentialsService
-    Private _IsValid As Boolean
-    Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
-        Dim Message As String
-        If _IsValid Then
+    Private Async Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
+        Dim Message As String = ValidateCredentials()
+
+        If Message = Nothing Then
             _RemoteDbCredentialsService.Save(New RemoteDbCredentialsModel With {
-                .ApiKey = TxtApiKey.Text,
-                .ProjectID = TxtProjectID.Text,
-                .BucketName = TxtBucketName.Text,
-                .Username = TxtUsername.Text,
-                .Password = TxtPassword.Text
-            }, RemoteDatabaseType.System)
-            Application.Restart()
+               .ApiKey = TxtApiKey.Text,
+               .ProjectID = TxtProjectID.Text,
+               .BucketName = TxtBucketName.Text,
+               .Username = TxtUsername.Text,
+               .Password = TxtPassword.Text
+           }, RemoteDatabaseType.System)
+            CMessageBox.Show("Sucesso", "Dados da base de licenciamento validados com sucesso.", CMessageBoxType.Done)
+            Await SetupDatabase.Setup()
+            DialogResult = DialogResult.OK
         Else
-            Message = IsValid()
-            If Message Is Nothing Then
-                _IsValid = True
-                BtnSave.Text = "Concluir"
-                CMessageBox.Show("Sucesso", "Dados da base de licenciamento validados com sucesso. Clique em concluir para continuar.", CMessageBoxType.Done)
-            Else
-                _IsValid = False
-                BtnSave.Text = "Validar"
-                CMessageBox.Show("Erro", Message, CMessageBoxType.Error)
-            End If
+            CMessageBox.Show("Erro", Message, CMessageBoxType.Error)
         End If
     End Sub
-    Private Function IsValid() As String
-        Return Validation.ValidateLicense(New RemoteDbCredentialsModel With {
+    Private Function ValidateCredentials() As String
+        Return Validation.ValidateLicenseDatabase(New RemoteDbCredentialsModel With {
             .ApiKey = TxtApiKey.Text,
             .ProjectID = TxtProjectID.Text,
             .BucketName = TxtBucketName.Text,
@@ -38,10 +31,6 @@ Public Class FrmLicenseCredentials
             .Password = TxtPassword.Text
         })
     End Function
-    Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles TxtUsername.TextChanged, TxtProjectID.TextChanged, TxtPassword.TextChanged, TxtBucketName.TextChanged, TxtApiKey.TextChanged
-        BtnSave.Text = "Validar"
-        _IsValid = False
-    End Sub
     Public Sub New()
         InitializeComponent()
         _LicenseService = Locator.GetInstance(Of LicenseService)

@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ApplicationServices
+﻿Imports System.CodeDom.Compiler
+Imports Microsoft.VisualBasic.ApplicationServices
 Namespace My
     ' Os seguintes eventos estão disponíveis para MyApplication:
     ' Inicialização: Ocorre quando o aplicativo é iniciado, antes da criação do formulário de inicialização.
@@ -37,6 +38,10 @@ Namespace My
                     End Try
                 End If
             End If
+        End Sub
+
+        Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
+            Controllibrary.CMessageBox.Show("Ocorreu um erro inesperado:" & vbCrLf & e.Exception.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Sub
     End Class
 End Namespace

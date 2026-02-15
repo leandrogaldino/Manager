@@ -189,7 +189,6 @@ Public Class FrmMain
         Backup.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
 
         BtnSettings.Enabled = True
-        BtnLicense.Enabled = True
         BtnDatabase.Enabled = License.Count = 0
         BtnBackupConfig.Enabled = CustomerLocalDb.Count = 0
         BtnSupport.Enabled = CustomerLocalDb.Count = 0
@@ -198,7 +197,6 @@ Public Class FrmMain
 
         BtnCompanies.Enabled = CustomerLocalDb.Count = 0
         BtnChangePassword.Enabled = SystemRemoteDb.Count = 0
-        BtnChangeLicenseKey.Enabled = SystemRemoteDb.Count = 0
 
         If _StateWarnings.Count > 0 Then
             BtnAgentState.Enabled = False
@@ -410,31 +408,31 @@ Public Class FrmMain
         End If
     End Sub
     Private Async Sub BtnLicenseCredentials_Click(sender As Object, e As EventArgs)
-        Dim Credentials As RemoteDbCredentialsModel = Nothing
-        If _Session.ManagerLicenseResult.Flag <> LicenseMessages.LicenseFileNotFound Then
-            Dim _LicenseCredentialsService = Locator.GetInstance(Of RemoteDbCredentialsService)
-            Credentials = _LicenseCredentialsService.Load(RemoteDatabaseType.System)
-        End If
-        If Credentials Is Nothing Then Credentials = New RemoteDbCredentialsModel()
+        'Dim Credentials As RemoteDbCredentialsModel = Nothing
+        'If _Session.ManagerLicenseResult.Flag <> LicenseMessages.LicenseFileNotFound Then
+        '    Dim _LicenseCredentialsService = Locator.GetInstance(Of RemoteDbCredentialsService)
+        '    Credentials = _LicenseCredentialsService.Load(RemoteDatabaseType.System)
+        'End If
+        'If Credentials Is Nothing Then Credentials = New RemoteDbCredentialsModel()
         Using Form As New FrmLicenseCredentials()
             If Form.ShowDialog() = DialogResult.OK Then
                 Await ValidateState()
             End If
         End Using
     End Sub
-    Private Async Sub BtnChangeLicenseKey_Click(sender As Object, e As EventArgs) Handles BtnChangeLicenseKey.Click
-        Dim LicenseResult = Locator.GetInstance(Of SessionModel).ManagerLicenseResult
-        Using Frm As New FrmLicenseKey()
-            If Not _HasSystemRemoteDbPending AndAlso LicenseResult.Flag = LicenseMessages.MissingProductKey Then
-                Frm.ShowDialog()
-            Else
-                If RequestLogin() Then
-                    Frm.ShowDialog()
-                End If
-            End If
-            Await ValidateState()
-        End Using
-    End Sub
+    'Private Async Sub BtnChangeLicenseKey_Click(sender As Object, e As EventArgs) Handles BtnChangeLicenseKey.Click
+    '    Dim LicenseResult = Locator.GetInstance(Of SessionModel).ManagerLicenseResult
+    '    Using Frm As New FrmLicenseKey()
+    '        If Not _HasSystemRemoteDbPending AndAlso LicenseResult.Flag = LicenseMessages.MissingProductKey Then
+    '            Frm.ShowDialog()
+    '        Else
+    '            If RequestLogin() Then
+    '                Frm.ShowDialog()
+    '            End If
+    '        End If
+    '        Await ValidateState()
+    '    End Using
+    'End Sub
     Private Sub BtnLocalDbCredentials_Click(sender As Object, e As EventArgs) Handles BtnLocalDbCredentials.Click
 
     End Sub

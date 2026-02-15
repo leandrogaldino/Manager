@@ -2,42 +2,35 @@
 
 Public Class LicenseModel
     Implements ICloneable
-    Public Property LicenseKey As String
-    Public Property LicenseToken As String
+    Public Property CustomerLinkToken As String
     Public Property CustomerDocument As String
     Public Property CustomerName As String
     Public Property ExpirationDate As String
     Public Property ManagerAgentPassword As String
     Public Property ManagerAgentUsername As String
-    <JsonIgnore>
-    Public LastOnlineValidation As Date
     Public Function Clone() As Object Implements ICloneable.Clone
         Return New LicenseModel With {
-            .LicenseKey = Me.LicenseKey,
-            .LicenseToken = Me.LicenseToken,
+            .CustomerLinkToken = Me.CustomerLinkToken,
             .CustomerDocument = Me.CustomerDocument,
             .CustomerName = Me.CustomerName,
             .ExpirationDate = Me.ExpirationDate,
             .ManagerAgentPassword = Me.ManagerAgentPassword,
-            .ManagerAgentUsername = Me.ManagerAgentUsername,
-            .LastOnlineValidation = Me.LastOnlineValidation
+            .ManagerAgentUsername = Me.ManagerAgentUsername
         }
     End Function
     Public Shared Function FromCloud(Data As Dictionary(Of String, Object)) As LicenseModel
         Dim Model As New LicenseModel()
-        If Data.ContainsKey("license_key") Then Model.LicenseKey = TryCast(Data("license_key"), String)
-        If Data.ContainsKey("license_token") Then Model.LicenseToken = TryCast(Data("license_token"), String)
-        If Data.ContainsKey("customer_document") Then Model.CustomerDocument = TryCast(Data("customer_document"), String)
-        If Data.ContainsKey("customer_name") Then Model.CustomerName = TryCast(Data("customer_name"), String)
-        If Data.ContainsKey("expiration_date") Then Model.ExpirationDate = TryCast(Data("expiration_date"), String)
-        If Data.ContainsKey("manager_agent_password") Then Model.ManagerAgentPassword = TryCast(Data("manager_agent_password"), String)
-        If Data.ContainsKey("manager_agent_username") Then Model.ManagerAgentUsername = TryCast(Data("manager_agent_username"), String)
+        If Data.ContainsKey("customer_link_token") Then Model.CustomerLinkToken = Convert.ToString(Data("customer_link_token"))
+        If Data.ContainsKey("customer_document") Then Model.CustomerDocument = Convert.ToString(Data("customer_document"))
+        If Data.ContainsKey("customer_name") Then Model.CustomerName = Convert.ToString(Data("customer_name"))
+        If Data.ContainsKey("expiration_date") Then Model.ExpirationDate = Convert.ToString(Data("expiration_date"))
+        If Data.ContainsKey("manager_agent_password") Then Model.ManagerAgentPassword = Convert.ToString(Data("manager_agent_password"))
+        If Data.ContainsKey("manager_agent_username") Then Model.ManagerAgentUsername = Convert.ToString(Data("manager_agent_username"))
         Return Model
     End Function
     Public Function ToCloud() As Dictionary(Of String, Object)
         Dim Dictionary As New Dictionary(Of String, Object) From {
-            {"license_key", LicenseKey},
-            {"license_token", LicenseToken},
+            {"customer_link_token", CustomerLinkToken},
             {"customer_document", CustomerDocument},
             {"customer_name", CustomerName},
             {"expiration_date", ExpirationDate},

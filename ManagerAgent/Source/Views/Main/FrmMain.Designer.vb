@@ -45,8 +45,6 @@ Partial Class FrmMain
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.BtnCompanies = New System.Windows.Forms.ToolStripButton()
         Me.BtnSettings = New System.Windows.Forms.ToolStripDropDownButton()
-        Me.BtnLicense = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BtnChangeLicenseKey = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnDatabase = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnLocalDbCredentials = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnRemoteDbCredentials = New System.Windows.Forms.ToolStripMenuItem()
@@ -272,7 +270,7 @@ Partial Class FrmMain
         'BtnSettings
         '
         Me.BtnSettings.AutoSize = False
-        Me.BtnSettings.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnLicense, Me.BtnDatabase, Me.BtnBackupConfig, Me.BtnSupport, Me.BtnParameters, Me.ToolStripSeparator2, Me.BtnChangePassword, Me.BtnCleanEventLog})
+        Me.BtnSettings.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnDatabase, Me.BtnBackupConfig, Me.BtnSupport, Me.BtnParameters, Me.ToolStripSeparator2, Me.BtnChangePassword, Me.BtnCleanEventLog})
         Me.BtnSettings.Enabled = False
         Me.BtnSettings.Image = Global.ManagerAgent.My.Resources.Resources.Settings
         Me.BtnSettings.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
@@ -282,19 +280,6 @@ Partial Class FrmMain
         Me.BtnSettings.Size = New System.Drawing.Size(120, 53)
         Me.BtnSettings.Text = "Configurações"
         Me.BtnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        '
-        'BtnLicense
-        '
-        Me.BtnLicense.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnChangeLicenseKey})
-        Me.BtnLicense.Name = "BtnLicense"
-        Me.BtnLicense.Size = New System.Drawing.Size(223, 22)
-        Me.BtnLicense.Text = "Licença"
-        '
-        'BtnChangeLicenseKey
-        '
-        Me.BtnChangeLicenseKey.Name = "BtnChangeLicenseKey"
-        Me.BtnChangeLicenseKey.Size = New System.Drawing.Size(180, 22)
-        Me.BtnChangeLicenseKey.Text = "Alterar Chave"
         '
         'BtnDatabase
         '
@@ -531,6 +516,7 @@ Partial Class FrmMain
         Me.MinimizeBox = False
         Me.Name = "FrmMain"
         Me.ShowIcon = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Agente Gerenciador"
         Me.CmsNotifyIcon.ResumeLayout(False)
         CType(Me.DgvEvents, System.ComponentModel.ISupportInitialize).EndInit()
@@ -567,7 +553,6 @@ Partial Class FrmMain
     Friend WithEvents LblProgress As Label
     Friend WithEvents ScTaskEvent As SplitContainer
     Friend WithEvents BtnSettings As ToolStripDropDownButton
-    Friend WithEvents BtnLicense As ToolStripMenuItem
     Friend WithEvents BtnChangePassword As ToolStripMenuItem
     Friend WithEvents BtnCloudSync As ToolStripButton
     Friend WithEvents BtnRelease As ToolStripButton
@@ -580,7 +565,6 @@ Partial Class FrmMain
     Friend WithEvents DataGridViewContentCopy As CoreSuite.Controls.DataGridViewClipboart
     Friend WithEvents BtnCompanies As ToolStripButton
     Friend WithEvents ToolStripSeparator4 As ToolStripSeparator
-    Friend WithEvents BtnChangeLicenseKey As ToolStripMenuItem
     Friend WithEvents BtnSupport As ToolStripMenuItem
     Friend WithEvents BtnBackupConfig As ToolStripMenuItem
     Friend WithEvents BtnParameters As ToolStripMenuItem

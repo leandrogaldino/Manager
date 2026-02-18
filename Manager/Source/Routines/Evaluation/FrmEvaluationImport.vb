@@ -67,6 +67,7 @@ Public Class FrmEvaluationImport
     End Sub
 
     '================ GRID INCREMENTAL =================
+    Private _isSyncing As Boolean = False
 
     Private Async Function SyncGrid(Docs As List(Of Dictionary(Of String, Object))) As Task
 
@@ -74,20 +75,36 @@ Public Class FrmEvaluationImport
 
         If Docs Is Nothing Then Return
 
+        ' ===== Snapshot das linhas existentes =====
         Dim existing As New Dictionary(Of String, DataGridViewRow)
 
-        For Each row As DataGridViewRow In DgvEvaluations.Rows
-            If row.Tag IsNot Nothing Then
-                Dim data = DirectCast(row.Tag, Dictionary(Of String, Object))
-                existing(data("id").ToString()) = row
+        For Each r As DataGridViewRow In DgvEvaluations.Rows
+            If r.Tag IsNot Nothing Then
+                Dim data = DirectCast(r.Tag, Dictionary(Of String, Object))
+                existing(data("id").ToString()) = r
             End If
         Next
 
         Dim processedIds As New HashSet(Of String)
 
-        For Each doc In Docs
+        ' ===== Buscar dados FORA da grid =====
+        Dim rowDataList As New List(Of (Doc As Dictionary(Of String, Object),
+                                     Status As String,
+                                     EvalDate As String,
+                                     Customer As String,
+                                     Compressor As String))
 
+        For Each doc In Docs
+            Dim rowData = Await BuildRowData(doc)
+            rowDataList.Add((doc, rowData.Status, rowData.EvalDate, rowData.Customer, rowData.Compressor))
+        Next
+
+        ' ===== Atualizar grid (SEM awaits aqui) =====
+        For Each item In rowDataList
+
+            Dim doc = item.Doc
             Dim docId = doc("id").ToString()
+
             processedIds.Add(docId)
 
             Dim row As DataGridViewRow = Nothing
@@ -95,29 +112,40 @@ Public Class FrmEvaluationImport
             If existing.ContainsKey(docId) Then
                 row = existing(docId)
             Else
-                row = New DataGridViewRow()
-                row.CreateCells(DgvEvaluations)
-                DgvEvaluations.Rows.Add(row)
+                ' 🔥 FORMA CORRETA DE CRIAR LINHA
+                Dim rowIndex As Integer = DgvEvaluations.Rows.Add()
+                row = DgvEvaluations.Rows(rowIndex)
             End If
 
-            Await FillRow(row, doc)
+            ' Segurança extra
+            If row Is Nothing OrElse row.DataGridView Is Nothing Then Continue For
+            If row.Cells.Count < 4 Then Continue For
+
+            row.Cells(0).Value = item.Status
+            row.Cells(1).Value = item.EvalDate
+            row.Cells(2).Value = item.Customer
+            row.Cells(3).Value = item.Compressor
+            row.Tag = doc
 
         Next
 
-        For Each row As DataGridViewRow In DgvEvaluations.Rows.Cast(Of DataGridViewRow).ToList()
+        ' ===== Remover linhas que não existem mais =====
+        For Each r As DataGridViewRow In DgvEvaluations.Rows.Cast(Of DataGridViewRow).ToList()
 
-            If row.Tag Is Nothing Then Continue For
+            If r.Tag Is Nothing Then Continue For
 
-            Dim data = DirectCast(row.Tag, Dictionary(Of String, Object))
+            Dim data = DirectCast(r.Tag, Dictionary(Of String, Object))
             Dim id = data("id").ToString()
 
             If Not processedIds.Contains(id) Then
-                DgvEvaluations.Rows.Remove(row)
+                DgvEvaluations.Rows.Remove(r)
             End If
 
         Next
 
     End Function
+
+
 
     Private Sub EnsureColumns()
 
@@ -135,51 +163,60 @@ Public Class FrmEvaluationImport
 
     End Sub
 
-    Private Async Function FillRow(row As DataGridViewRow, doc As Dictionary(Of String, Object)) As Task
+    Private Async Function BuildRowData(doc As Dictionary(Of String, Object)) _
+    As Task(Of (Status As String, EvalDate As String, Customer As String, Compressor As String))
 
+        ' ===== QUERY 1 =====
         Dim Result As LocalDB.QueryResult = Await _LocalDB.ExecuteRawQueryAsync(
-            "SELECT c.name, pc.serialnumber, pc.sector 
-             FROM compressor c
-             LEFT JOIN personcompressor pc ON c.id = pc.compressorid
-             WHERE pc.id = @id",
-            New Dictionary(Of String, Object) From {{"@id", doc("compressorid")}}
-        )
+        "SELECT c.name, pc.serialnumber, pc.sector 
+         FROM compressor c
+         LEFT JOIN personcompressor pc ON c.id = pc.compressorid
+         WHERE pc.id = @id",
+        New Dictionary(Of String, Object) From {{"@id", doc("compressorid")}}
+    )
+
+        If Result.Data.Count = 0 Then
+            Return ("-", "-", "-", "-")
+        End If
 
         Dim compressorName = Result.Data(0)("name").ToString()
         Dim serial = $" {Result.Data(0)("serialnumber")}"
         Dim sector = $" {Result.Data(0)("sector")}"
 
+        ' ===== QUERY 2 =====
         Result = Await _LocalDB.ExecuteRawQueryAsync(
-            "SELECT p.shortname
-             FROM person p
-             LEFT JOIN personcompressor pc ON p.id = pc.personid
-             WHERE pc.id = @id",
-            New Dictionary(Of String, Object) From {{"@id", doc("compressorid")}}
-        )
+        "SELECT p.shortname
+         FROM person p
+         LEFT JOIN personcompressor pc ON p.id = pc.personid
+         WHERE pc.id = @id",
+        New Dictionary(Of String, Object) From {{"@id", doc("compressorid")}}
+    )
 
-        Dim customer = Result.Data(0)("shortname").ToString()
+        Dim customer As String = "-"
+
+        If Result.Data.Count > 0 Then
+            customer = Result.Data(0)("shortname").ToString()
+        End If
 
         Dim evalDate = DateTimeHelper.DateFromMilliseconds(doc("creationdate")).ToString("dd/MM/yyyy")
 
         Dim status As String
 
         If IsDate(doc("info")("importingdate")) AndAlso
-           Now < CDate(doc("info")("importingdate")).AddMinutes(10) Then
+       Now < CDate(doc("info")("importingdate")).AddMinutes(10) Then
 
             status = EnumHelper.GetEnumDescription(CloudSyncStatus.Importing)
 
         Else
+
             status = EnumHelper.GetEnumDescription(CloudSyncStatus.NotImported)
+
         End If
 
-        row.Cells(0).Value = status
-        row.Cells(1).Value = evalDate
-        row.Cells(2).Value = customer
-        row.Cells(3).Value = $"{compressorName}{serial}{sector}"
-
-        row.Tag = doc
+        Return (status, evalDate, customer, $"{compressorName}{serial}{sector}")
 
     End Function
+
 
     '================ TIMERS =================
 

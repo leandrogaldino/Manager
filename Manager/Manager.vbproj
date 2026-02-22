@@ -488,6 +488,7 @@
     <Compile Include="Source\Controls\AnimatedBox.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Source\Helper\DataGridViewDecimalColumn.vb" />
     <Compile Include="Source\Main\UcReport.Designer.vb">
       <DependentUpon>UcReport.vb</DependentUpon>
     </Compile>
@@ -515,6 +516,7 @@
     <None Include="Resources\Image\PriceTable.png" />
     <None Include="Resources\Icon\icon.ico" />
     <Content Include="Resources\Image\Downloading.gif" />
+    <Content Include="Resources\Image\Updating.gif" />
     <Content Include="Resources\SQL\Compressor\CompressorSellableDelete.sql" />
     <Content Include="Resources\SQL\Compressor\CompressorSellableInsert.sql" />
     <Content Include="Resources\SQL\Compressor\CompressorSellableSelect.sql" />
@@ -580,6 +582,18 @@
     </Compile>
     <Compile Include="Source\Routines\Evaluation\UcEvaluationUnitTemperaturePressure.vb">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\Request\FrmRequestImport.Designer.vb">
+      <DependentUpon>FrmRequestImport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Request\FrmRequestImport.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\Request\FrmRequestImportBalance.Designer.vb">
+      <DependentUpon>FrmRequestImportBalance.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Request\FrmRequestImportBalance.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Routines\Request\UcRequestGrid.Designer.vb">
       <DependentUpon>UcRequestGrid.vb</DependentUpon>
@@ -1343,6 +1357,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\UcEvaluationUnitTemperaturePressure.resx">
       <DependentUpon>UcEvaluationUnitTemperaturePressure.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Request\FrmRequestImport.resx">
+      <DependentUpon>FrmRequestImport.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Request\FrmRequestImportBalance.resx">
+      <DependentUpon>FrmRequestImportBalance.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Request\UcRequestGrid.resx">
       <DependentUpon>UcRequestGrid.vb</DependentUpon>

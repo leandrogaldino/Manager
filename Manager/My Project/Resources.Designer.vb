@@ -2609,19 +2609,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
-        '''    IFNULL(evaluation.id, 0)
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT id
         '''FROM evaluation
-        '''WHERE 
+        '''WHERE
+        '''    statusid = 1 AND
         '''    evaluation.id &lt;&gt; @evaluationid AND
-        '''    evaluation.statusid = 1 AND
-        '''	evaluation.personcompressorid = @personcompressorid AND
-        '''    evaluation.evaluationdate = (
-        '''                                  SELECT
-        '''                                    MAX(evaluation.evaluationdate)
-        '''                                  FROM evaluation
-        '''                                  WHERE evaluation.evaluationdate &lt;= @evaluationdate AND
-        '''                                 [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''    personcompressorid = @personcompressorid AND
+        '''    evaluationdate &lt;= @evaluationdate
+        '''ORDER BY evaluationdate DESC
+        '''LIMIT 1;.
         '''</summary>
         Friend ReadOnly Property EvaluationPreviousEvaluationIDSelect() As String
             Get
@@ -6209,6 +6205,16 @@ Namespace My.Resources
         Friend ReadOnly Property StateSelect() As String
             Get
                 Return ResourceManager.GetString("StateSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property Updating() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Updating", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         

@@ -55,6 +55,7 @@ Partial Class UcRequestGrid
         Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
         Me.DgvCcRequestItem = New ControlLibrary.DataGridViewContentCopy()
         Me.DgvlRequest = New Manager.DataGridViewLayout()
+        Me.BtnImport = New System.Windows.Forms.ToolStripButton()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -79,7 +80,7 @@ Partial Class UcRequestGrid
         Me.TsMenu.BackColor = System.Drawing.Color.White
         Me.TsMenu.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TsMenu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.TsMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnEdit, Me.BtnDelete, Me.BtnRefresh, Me.BtnFilter, Me.BtnDetails, Me.BtnClose, Me.BtnExport})
+        Me.TsMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnInclude, Me.BtnEdit, Me.BtnDelete, Me.BtnRefresh, Me.BtnFilter, Me.BtnDetails, Me.BtnClose, Me.BtnExport, Me.BtnImport})
         Me.TsMenu.Location = New System.Drawing.Point(0, 0)
         Me.TsMenu.Name = "TsMenu"
         Me.TsMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -410,17 +411,29 @@ Partial Class UcRequestGrid
         Me.DgvCcData.DataGridView = Me.DgvData
         Me.DgvCcData.IncludeHeaderTextInCellCopy = False
         Me.DgvCcData.IncludeHeaderTextInRowCopy = True
+        Me.DgvCcData.ShowImages = True
         '
         'DgvCcRequestItem
         '
         Me.DgvCcRequestItem.DataGridView = Me.DgvItem
         Me.DgvCcRequestItem.IncludeHeaderTextInCellCopy = False
         Me.DgvCcRequestItem.IncludeHeaderTextInRowCopy = True
+        Me.DgvCcRequestItem.ShowImages = True
         '
         'DgvlRequest
         '
         Me.DgvlRequest.DataGridView = Me.DgvData
         Me.DgvlRequest.Routine = Manager.Routine.Request
+        '
+        'BtnImport
+        '
+        Me.BtnImport.AutoToolTip = False
+        Me.BtnImport.Image = Global.Manager.My.Resources.Resources.Import
+        Me.BtnImport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.BtnImport.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnImport.Name = "BtnImport"
+        Me.BtnImport.Size = New System.Drawing.Size(100, 36)
+        Me.BtnImport.Text = "Importar"
         '
         'UcRequestGrid
         '
@@ -496,4 +509,5 @@ Partial Class UcRequestGrid
     Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
     Friend WithEvents DgvCcRequestItem As ControlLibrary.DataGridViewContentCopy
     Friend WithEvents DgvlRequest As DataGridViewLayout
+    Friend WithEvents BtnImport As ToolStripButton
 End Class

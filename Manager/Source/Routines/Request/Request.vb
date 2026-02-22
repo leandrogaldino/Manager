@@ -251,4 +251,26 @@ Public Class Request
         Return Cloned
     End Function
 
+    Public Sub UpdateStatus()
+        If Not Items.Any() Then
+            Status = RequestStatus.Pending
+            Exit Sub
+        End If
+        For Each Item In Items
+            If Item.Pending = 0 Then
+                Item.Status = RequestStatus.Concluded
+            ElseIf Item.Pending = Item.Taked Then
+                Item.Status = RequestStatus.Pending
+            Else
+                Item.Status = RequestStatus.Partial
+            End If
+        Next Item
+        If Items.All(Function(x) x.Status = RequestStatus.Concluded) Then
+            Status = RequestStatus.Concluded
+        ElseIf Items.All(Function(x) x.Status = RequestStatus.Pending) Then
+            Status = RequestStatus.Pending
+        Else
+            Status = RequestStatus.Partial
+        End If
+    End Sub
 End Class

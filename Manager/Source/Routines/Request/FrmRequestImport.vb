@@ -1,11 +1,10 @@
-﻿Imports ManagerCore
+﻿Imports System.IO
 Imports ControlLibrary
-Imports System.IO
+Imports ManagerCore
 
-Public Class FrmEvaluationImport
-
+Public Class FrmRequestImport
     Private _EvaluationData As Dictionary(Of String, Object) = Nothing
-    Private _GridControl As UcEvaluationGrid
+    Private _GridControl As UcRequestGrid
     Private _RemoteDB As RemoteDB
     Private _LocalDB As LocalDB
     Private _Storage As Storage
@@ -17,7 +16,7 @@ Public Class FrmEvaluationImport
         InitializeDbListener()
     End Sub
 
-    Public Sub New(GridControl As UcEvaluationGrid)
+    Public Sub New(GridControl As UcRequestGrid)
         InitializeComponent()
         InitializeDatabases()
         InitializeDbListener()
@@ -27,15 +26,15 @@ Public Class FrmEvaluationImport
     Private Sub InitializeDatabases()
         _Session = Locator.GetInstance(Of Session)
         _Storage = Locator.GetInstance(Of Storage)
-        _RemoteDB = Locator.GetInstance(Of RemoteDB)(RemoteDatabaseType.Customer)
+        _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
         _LocalDB = Locator.GetInstance(Of LocalDB)
     End Sub
 
     Private Sub InitializeDbListener()
 
         Dim Condition As New List(Of RemoteDB.Condition) From {
-            New RemoteDB.WhereEqualToCondition("info.importedby", Nothing),
-            New RemoteDB.WhereEqualToCondition("info.requestprocessed", True)
+            New RemoteDB.WhereEqualToCondition("info.hasreplacedproducts", True),
+            New RemoteDB.WhereEqualToCondition("info.requestprocessed", False)
         }
 
         _RemoteDB.StartListening("evaluations", Condition)
@@ -169,12 +168,12 @@ Public Class FrmEvaluationImport
 
         ' ===== QUERY 1 =====
         Dim Result As LocalDB.QueryResult = Await _LocalDB.ExecuteRawQueryAsync(
-            "SELECT c.name, pc.serialnumber, pc.sector 
-             FROM compressor c
-             LEFT JOIN personcompressor pc ON c.id = pc.compressorid
-             WHERE pc.id = @id",
-            New Dictionary(Of String, Object) From {{"@id", doc("compressorid")}}
-        )
+        "SELECT c.name, pc.serialnumber, pc.sector 
+         FROM compressor c
+         LEFT JOIN personcompressor pc ON c.id = pc.compressorid
+         WHERE pc.id = @id",
+        New Dictionary(Of String, Object) From {{"@id", doc("compressorid")}}
+    )
 
         If Result.Data.Count = 0 Then
             Return ("-", "-", "-", "-")
@@ -287,16 +286,13 @@ Public Class FrmEvaluationImport
 
     Private Async Function Import() As Task
 
-        Dim TempPath As String
-        Dim TempSignature As String
-        Dim TempPictures As New List(Of String)
-        Dim EvaluationForm As FrmEvaluation
+
+
         Dim SelectedRow As DataGridViewRow
-        Dim SignatureData As Byte()
-        Dim PictureData As Byte()
+
         Dim AsyncLoader As AsyncLoader
 
-        Using LoaderForm As New FrmLoader(My.Resources.Downloading, "Importando Avaliação")
+        Using LoaderForm As New FrmLoader(My.Resources.Downloading, "Importando Produtos da Avaliação")
 
             AsyncLoader = New AsyncLoader(Me, LoaderForm, 20, True, Color.White)
 
@@ -312,8 +308,7 @@ Public Class FrmEvaluationImport
 
                     _EvaluationData = DirectCast(SelectedRow.Tag, Dictionary(Of String, Object))
 
-                    If Not SelectedRow.Cells("Status").Value =
-                        EnumHelper.GetEnumDescription(CloudSyncStatus.Importing) Then
+                    If Not SelectedRow.Cells("Status").Value = EnumHelper.GetEnumDescription(CloudSyncStatus.Importing) Then
 
                         _EvaluationData("info")("importingdate") = Now.ToString("yyyy-MM-dd HH:mm:ss")
                         _EvaluationData("info")("importingby") = _Session.User.Username
@@ -322,72 +317,35 @@ Public Class FrmEvaluationImport
 
                         SyncTimer.Start()
 
-                        SignatureData = Await _Storage.DownloadFile(_EvaluationData("signaturepath"))
 
-                        TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, TextHelper.GetRandomFileName(".png"))
+                        Dim ReplacedProducts As List(Of Object) = _EvaluationData("replacedproducts")
 
-                        Using SignatureStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, True)
-                            Await SignatureStream.WriteAsync(SignatureData, 0, SignatureData.Length)
-                        End Using
+                        Dim ProductIds As List(Of Long) = ReplacedProducts.OfType(Of Dictionary(Of String, Object))().Select(Function(d) Convert.ToInt64(d("productid"))).ToList()
 
-                        TempSignature = TempPath
 
-                        For Each Picture As Dictionary(Of String, Object) In _EvaluationData("photos")
 
-                            PictureData = Await _Storage.DownloadFile(Picture("path"))
 
-                            TempPath = Path.Combine(ApplicationPaths.ManagerTempDirectory, TextHelper.GetRandomFileName(".jpg"))
 
-                            Using PictureStream As New FileStream(TempPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, True)
-                                Await PictureStream.WriteAsync(PictureData, 0, PictureData.Length)
-                            End Using
 
-                            TempPictures.Add(TempPath)
 
-                        Next
+                        Using RequestImportBalanceForm = New FrmRequestImportBalance(_EvaluationData)
 
-                        Using EvaluationSourceForm = New FrmEvaluationSource(_EvaluationData, TempSignature, TempPictures)
-
-                            If EvaluationSourceForm.ShowDialog() = DialogResult.OK Then
-
-                                If _GridControl IsNot Nothing Then
-                                    EvaluationForm = New FrmEvaluation(EvaluationSourceForm.ResultEvaluation, _GridControl)
-                                Else
-                                    EvaluationForm = New FrmEvaluation(EvaluationSourceForm.ResultEvaluation)
-                                End If
-
-                                EvaluationForm.BtnSave.Enabled = True
-                                EvaluationForm.ShowDialog()
-                                EvaluationForm.Dispose()
-
+                            If RequestImportBalanceForm.ShowDialog() = DialogResult.OK Then
+                                _EvaluationData("info")("requestprocessed") = True
                             End If
 
-                            If EvaluationSourceForm Is Nothing OrElse
-                               EvaluationSourceForm.ResultEvaluation.ID = 0 Then
+                            _EvaluationData("info")("importingby") = Nothing
+                            _EvaluationData("info")("importingdate") = Nothing
 
-                                _EvaluationData("info")("importingby") = Nothing
-                                _EvaluationData("info")("importingdate") = Nothing
+                            Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
 
-                                Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
 
-                            Else
-
-                                _EvaluationData("info")("importedby") = _Session.User.Username
-                                _EvaluationData("info")("importeddate") = Now.ToString("dd/MM/yyyy HH:mm:ss")
-                                _EvaluationData("info")("importingby") = Nothing
-                                _EvaluationData("info")("importingdate") = Nothing
-
-                                Await _RemoteDB.ExecutePut("evaluations", _EvaluationData, _EvaluationData("id"))
-
-                            End If
 
                         End Using
 
                     Else
 
-                        CMessageBox.Show(
-                            $"Essa avaliação esta sendo importada por {_EvaluationData("info")("importingby")}.",
-                            CMessageBoxType.Information)
+                        CMessageBox.Show($"Os itens dessa avaliação estão sendo importados por {_EvaluationData("info")("importingby")}.", CMessageBoxType.Information)
 
                     End If
 
@@ -414,5 +372,4 @@ Public Class FrmEvaluationImport
         End Using
 
     End Function
-
 End Class

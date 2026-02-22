@@ -235,4 +235,11 @@ Public Class UcRequestGrid
         Dim Result As ReportResult = ExportGrid.Export({New ExportGrid.ExportGridInfo With {.Title = "Requisições", .Grid = DgvData}})
         FrmMain.OpenTab(New UcReport(Result), "Grade Exportada")
     End Sub
+
+    Private Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
+        Using Form As New FrmRequestImport(Me)
+            Form.ShowDialog()
+            BtnRefresh.PerformClick()
+        End Using
+    End Sub
 End Class

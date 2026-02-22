@@ -1449,10 +1449,10 @@ Partial Class FrmEvaluation
         'TabPicture
         '
         Me.TabPicture.Controls.Add(Me.PvPicture)
-        Me.TabPicture.Location = New System.Drawing.Point(4, 26)
+        Me.TabPicture.Location = New System.Drawing.Point(4, 22)
         Me.TabPicture.Name = "TabPicture"
         Me.TabPicture.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPicture.Size = New System.Drawing.Size(1031, 407)
+        Me.TabPicture.Size = New System.Drawing.Size(1031, 411)
         Me.TabPicture.TabIndex = 8
         Me.TabPicture.Text = "Fotos"
         Me.TabPicture.UseVisualStyleBackColor = True
@@ -1474,9 +1474,9 @@ Partial Class FrmEvaluation
         Me.PvPicture.PreviousButtonImage = CType(resources.GetObject("PvPicture.PreviousButtonImage"), System.Drawing.Image)
         Me.PvPicture.RemoveButtonImage = CType(resources.GetObject("PvPicture.RemoveButtonImage"), System.Drawing.Image)
         Me.PvPicture.SaveButtonImage = CType(resources.GetObject("PvPicture.SaveButtonImage"), System.Drawing.Image)
-        Me.PvPicture.ShowControlBar = True
+        Me.PvPicture.ShowControlBar = False
         Me.PvPicture.ShowCounterBar = True
-        Me.PvPicture.Size = New System.Drawing.Size(1025, 401)
+        Me.PvPicture.Size = New System.Drawing.Size(1025, 405)
         Me.PvPicture.TabIndex = 0
         '
         'TabSignature

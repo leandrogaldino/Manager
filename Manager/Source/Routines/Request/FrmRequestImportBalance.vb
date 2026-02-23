@@ -145,12 +145,8 @@ Public Class FrmRequestImportBalance
             MsgBox(ex.Message)
         End Try
     End Function
-
-
     Private Function ConvertToDataTable(data As List(Of Dictionary(Of String, Object))) As DataTable
-
         Dim dt As New DataTable()
-
         If data Is Nothing OrElse data.Count = 0 Then
             Return dt
         End If
@@ -159,20 +155,15 @@ Public Class FrmRequestImportBalance
         For Each key In data(0).Keys
             dt.Columns.Add(key)
         Next
-
-        ' Adicionar linhas
         For Each rowDict In data
             Dim row = dt.NewRow()
 
             For Each key In rowDict.Keys
                 row(key) = If(rowDict(key), DBNull.Value)
             Next
-
             dt.Rows.Add(row)
         Next
-
         Return dt
-
     End Function
     Private Async Sub FrmRequestImportBalance_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Await FillRequestsProductsDataGridView()
@@ -187,8 +178,6 @@ Public Class FrmRequestImportBalance
             DgvRequestsProducts.SelectedRows(0).Cells("ToImport").Selected = True
         End If
     End Sub
-
-
 
     Private Sub DgvRequestsProducts_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles DgvRequestsProducts.CellValueChanged
         If Not DgvRequestsProducts.Columns.Contains("ToImport") Then Exit Sub
@@ -217,18 +206,24 @@ Public Class FrmRequestImportBalance
 
             DgvEvaluationProducts.SelectedRows(0).Cells("Quantity").Value = Result
 
-
-            If DgvEvaluationProducts.Rows.Cast(Of DataGridViewRow).All(Function(x) x.Cells("Quantity").Value = 0) Then
-                BtnImport.Enabled = True
+            If Not _Ignore Then
+                If DgvEvaluationProducts.Rows.Cast(Of DataGridViewRow).All(Function(x) x.Cells("Quantity").Value = 0) Then
+                    BtnImport.Enabled = True
+                Else
+                    BtnImport.Enabled = False
+                End If
             Else
-                BtnImport.Enabled = False
+                BtnImport.Enabled = True
             End If
+
+
 
 
         End If
 
     End Sub
 
+    Private _Ignore As Boolean
 
 
     Private Async Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
@@ -279,4 +274,8 @@ Public Class FrmRequestImportBalance
     End Sub
 
 
+    Private Sub CbxIgnore_CheckedChanged(sender As Object, e As EventArgs) Handles CbxIgnore.CheckedChanged
+        _Ignore = CbxIgnore.Checked
+        BtnImport.Enabled = _Ignore
+    End Sub
 End Class

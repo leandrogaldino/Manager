@@ -1,3 +1,6 @@
+#2.0.9
+• Ajuste no fluxo de importação de avaliações: avaliações com produtos substituídos devem ser previamente baixadas na requisição antes de ficarem disponíveis para importação.
+• Correção de bug que impedia a abertura do compressor através do ícone de visualização nas caixas de busca.
 #2.0.8
 • Corrigido problema em que a tela de login permanecia visível após o login.
 • Correções na rotina de importação de avaliações.

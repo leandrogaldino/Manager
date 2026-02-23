@@ -84,6 +84,9 @@ Public Class FrmRequestImportBalance
                 sql,
                 Params
             )
+
+            If Not Result.HasData Then Return
+
             DgvRequestsProducts.DataSource = ConvertToDataTable(Result.Data)
 
 

@@ -91,6 +91,10 @@ Partial Class FrmPersonCompressor
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.DgvlWorkedHourSellable = New Manager.DataGridViewLayout()
         Me.DgvlElapsedDaySellable = New Manager.DataGridViewLayout()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.TsMain.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.TsData.SuspendLayout()
@@ -114,7 +118,7 @@ Partial Class FrmPersonCompressor
         '
         Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnClose.Location = New System.Drawing.Point(352, 7)
+        Me.BtnClose.Location = New System.Drawing.Point(232, 7)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(95, 30)
         Me.BtnClose.TabIndex = 1
@@ -125,7 +129,7 @@ Partial Class FrmPersonCompressor
         '
         Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnSave.Enabled = False
-        Me.BtnSave.Location = New System.Drawing.Point(251, 7)
+        Me.BtnSave.Location = New System.Drawing.Point(131, 7)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(95, 30)
         Me.BtnSave.TabIndex = 0
@@ -142,7 +146,7 @@ Partial Class FrmPersonCompressor
         Me.TsMain.Location = New System.Drawing.Point(0, 0)
         Me.TsMain.Name = "TsMain"
         Me.TsMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsMain.Size = New System.Drawing.Size(459, 25)
+        Me.TsMain.Size = New System.Drawing.Size(339, 25)
         Me.TsMain.TabIndex = 0
         Me.TsMain.Text = "ToolStrip2"
         '
@@ -233,15 +237,15 @@ Partial Class FrmPersonCompressor
         Me.Panel1.Controls.Add(Me.BtnSave)
         Me.Panel1.Controls.Add(Me.BtnClose)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 182)
+        Me.Panel1.Location = New System.Drawing.Point(0, 227)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(459, 44)
+        Me.Panel1.Size = New System.Drawing.Size(339, 44)
         Me.Panel1.TabIndex = 3
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(178, 52)
+        Me.Label3.Location = New System.Drawing.Point(218, 92)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(40, 17)
         Me.Label3.TabIndex = 9
@@ -250,7 +254,7 @@ Partial Class FrmPersonCompressor
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(92, 50)
+        Me.Label8.Location = New System.Drawing.Point(112, 92)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(79, 17)
         Me.Label8.TabIndex = 7
@@ -259,7 +263,7 @@ Partial Class FrmPersonCompressor
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(6, 52)
+        Me.Label1.Location = New System.Drawing.Point(6, 94)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(77, 17)
         Me.Label1.TabIndex = 5
@@ -284,7 +288,7 @@ Partial Class FrmPersonCompressor
         Me.TsData.Location = New System.Drawing.Point(0, 25)
         Me.TsData.Name = "TsData"
         Me.TsData.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsData.Size = New System.Drawing.Size(459, 25)
+        Me.TsData.Size = New System.Drawing.Size(339, 25)
         Me.TsData.TabIndex = 1
         Me.TsData.Text = "ToolStrip1"
         '
@@ -380,7 +384,7 @@ Partial Class FrmPersonCompressor
         Parameter1.ParameterValue = "0"
         Me.QbxCompressor.Parameters.Add(Parameter1)
         Me.QbxCompressor.Prefix = Nothing
-        Me.QbxCompressor.Size = New System.Drawing.Size(327, 23)
+        Me.QbxCompressor.Size = New System.Drawing.Size(206, 23)
         Me.QbxCompressor.Suffix = Nothing
         Me.QbxCompressor.TabIndex = 1
         '
@@ -392,29 +396,29 @@ Partial Class FrmPersonCompressor
         'TxtSector
         '
         Me.TxtSector.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtSector.Location = New System.Drawing.Point(181, 70)
+        Me.TxtSector.Location = New System.Drawing.Point(221, 112)
         Me.TxtSector.MaxLength = 50
         Me.TxtSector.Name = "TxtSector"
-        Me.TxtSector.Size = New System.Drawing.Size(155, 23)
+        Me.TxtSector.Size = New System.Drawing.Size(100, 23)
         Me.TxtSector.TabIndex = 10
         '
         'TxtPatrimony
         '
         Me.TxtPatrimony.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtPatrimony.Location = New System.Drawing.Point(95, 70)
+        Me.TxtPatrimony.Location = New System.Drawing.Point(115, 112)
         Me.TxtPatrimony.MaxLength = 50
         Me.TxtPatrimony.Name = "TxtPatrimony"
-        Me.TxtPatrimony.Size = New System.Drawing.Size(80, 23)
+        Me.TxtPatrimony.Size = New System.Drawing.Size(100, 23)
         Me.TxtPatrimony.TabIndex = 8
         Me.TxtPatrimony.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'TxtSerialNumber
         '
         Me.TxtSerialNumber.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtSerialNumber.Location = New System.Drawing.Point(9, 70)
+        Me.TxtSerialNumber.Location = New System.Drawing.Point(9, 112)
         Me.TxtSerialNumber.MaxLength = 50
         Me.TxtSerialNumber.Name = "TxtSerialNumber"
-        Me.TxtSerialNumber.Size = New System.Drawing.Size(80, 23)
+        Me.TxtSerialNumber.Size = New System.Drawing.Size(100, 23)
         Me.TxtSerialNumber.TabIndex = 6
         Me.TxtSerialNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -429,7 +433,7 @@ Partial Class FrmPersonCompressor
         Me.TcPersonCompressor.Multiline = True
         Me.TcPersonCompressor.Name = "TcPersonCompressor"
         Me.TcPersonCompressor.SelectedIndex = 0
-        Me.TcPersonCompressor.Size = New System.Drawing.Size(459, 132)
+        Me.TcPersonCompressor.Size = New System.Drawing.Size(339, 177)
         Me.TcPersonCompressor.TabIndex = 2
         '
         'TabMain
@@ -443,7 +447,11 @@ Partial Class FrmPersonCompressor
         Me.TabMain.Controls.Add(Me.LblUnitCapacity)
         Me.TabMain.Controls.Add(Me.Label8)
         Me.TabMain.Controls.Add(Me.QbxCompressor)
+        Me.TabMain.Controls.Add(Me.TextBox2)
+        Me.TabMain.Controls.Add(Me.TextBox1)
         Me.TabMain.Controls.Add(Me.TxtSerialNumber)
+        Me.TabMain.Controls.Add(Me.Label4)
+        Me.TabMain.Controls.Add(Me.Label2)
         Me.TabMain.Controls.Add(Me.Label1)
         Me.TabMain.Controls.Add(Me.TxtSector)
         Me.TabMain.Controls.Add(Me.TxtPatrimony)
@@ -451,7 +459,7 @@ Partial Class FrmPersonCompressor
         Me.TabMain.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabMain.Name = "TabMain"
         Me.TabMain.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabMain.Size = New System.Drawing.Size(451, 102)
+        Me.TabMain.Size = New System.Drawing.Size(331, 147)
         Me.TabMain.TabIndex = 0
         Me.TabMain.Text = "Identificação"
         Me.TabMain.UseVisualStyleBackColor = True
@@ -461,7 +469,7 @@ Partial Class FrmPersonCompressor
         Me.CbxControlled.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.CbxControlled.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CbxControlled.FormattingEnabled = True
-        Me.CbxControlled.Location = New System.Drawing.Point(342, 23)
+        Me.CbxControlled.Location = New System.Drawing.Point(221, 23)
         Me.CbxControlled.Name = "CbxControlled"
         Me.CbxControlled.Size = New System.Drawing.Size(100, 24)
         Me.CbxControlled.TabIndex = 4
@@ -471,7 +479,7 @@ Partial Class FrmPersonCompressor
         Me.DbxUnitCapacity.DecimalOnly = True
         Me.DbxUnitCapacity.DecimalPlaces = 0
         Me.DbxUnitCapacity.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxUnitCapacity.Location = New System.Drawing.Point(342, 70)
+        Me.DbxUnitCapacity.Location = New System.Drawing.Point(221, 68)
         Me.DbxUnitCapacity.Name = "DbxUnitCapacity"
         Me.DbxUnitCapacity.Size = New System.Drawing.Size(100, 23)
         Me.DbxUnitCapacity.TabIndex = 12
@@ -484,7 +492,7 @@ Partial Class FrmPersonCompressor
         Me.FlpCompressor.Controls.Add(Me.BtnView)
         Me.FlpCompressor.Controls.Add(Me.BtnNew)
         Me.FlpCompressor.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-        Me.FlpCompressor.Location = New System.Drawing.Point(266, 3)
+        Me.FlpCompressor.Location = New System.Drawing.Point(145, 3)
         Me.FlpCompressor.Name = "FlpCompressor"
         Me.FlpCompressor.Size = New System.Drawing.Size(69, 21)
         Me.FlpCompressor.TabIndex = 2
@@ -540,7 +548,7 @@ Partial Class FrmPersonCompressor
         'LblControlled
         '
         Me.LblControlled.AutoSize = True
-        Me.LblControlled.Location = New System.Drawing.Point(339, 4)
+        Me.LblControlled.Location = New System.Drawing.Point(218, 3)
         Me.LblControlled.Name = "LblControlled"
         Me.LblControlled.Size = New System.Drawing.Size(84, 17)
         Me.LblControlled.TabIndex = 3
@@ -549,7 +557,7 @@ Partial Class FrmPersonCompressor
         'LblUnitCapacity
         '
         Me.LblUnitCapacity.AutoSize = True
-        Me.LblUnitCapacity.Location = New System.Drawing.Point(339, 50)
+        Me.LblUnitCapacity.Location = New System.Drawing.Point(218, 48)
         Me.LblUnitCapacity.Name = "LblUnitCapacity"
         Me.LblUnitCapacity.Size = New System.Drawing.Size(74, 17)
         Me.LblUnitCapacity.TabIndex = 11
@@ -674,7 +682,7 @@ Partial Class FrmPersonCompressor
         Me.TabElapsedDaySellable.Location = New System.Drawing.Point(4, 22)
         Me.TabElapsedDaySellable.Name = "TabElapsedDaySellable"
         Me.TabElapsedDaySellable.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabElapsedDaySellable.Size = New System.Drawing.Size(437, 70)
+        Me.TabElapsedDaySellable.Size = New System.Drawing.Size(437, 74)
         Me.TabElapsedDaySellable.TabIndex = 7
         Me.TabElapsedDaySellable.Text = "Dia Corrido"
         Me.TabElapsedDaySellable.UseVisualStyleBackColor = True
@@ -697,7 +705,7 @@ Partial Class FrmPersonCompressor
         Me.DgvElapsedDaySellable.RowHeadersVisible = False
         Me.DgvElapsedDaySellable.RowTemplate.Height = 26
         Me.DgvElapsedDaySellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(431, 39)
+        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(431, 43)
         Me.DgvElapsedDaySellable.TabIndex = 5
         '
         'TsElapsedDaySellable
@@ -815,11 +823,49 @@ Partial Class FrmPersonCompressor
         Me.DgvlElapsedDaySellable.DataGridView = Me.DgvElapsedDaySellable
         Me.DgvlElapsedDaySellable.Routine = Manager.Routine.PersonCompressorSellable
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(112, 48)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(62, 17)
+        Me.Label2.TabIndex = 5
+        Me.Label2.Text = "Unidade"
+        '
+        'TextBox1
+        '
+        Me.TextBox1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TextBox1.Location = New System.Drawing.Point(115, 68)
+        Me.TextBox1.MaxLength = 50
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(100, 23)
+        Me.TextBox1.TabIndex = 6
+        Me.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(6, 50)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(65, 17)
+        Me.Label4.TabIndex = 5
+        Me.Label4.Text = "Interface"
+        '
+        'TextBox2
+        '
+        Me.TextBox2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TextBox2.Location = New System.Drawing.Point(9, 68)
+        Me.TextBox2.MaxLength = 50
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.Size = New System.Drawing.Size(100, 23)
+        Me.TextBox2.TabIndex = 6
+        Me.TextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'FrmPersonCompressor
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(459, 226)
+        Me.ClientSize = New System.Drawing.Size(339, 271)
         Me.Controls.Add(Me.TcPersonCompressor)
         Me.Controls.Add(Me.TsData)
         Me.Controls.Add(Me.TsMain)
@@ -925,4 +971,8 @@ Partial Class FrmPersonCompressor
     Friend WithEvents DbxUnitCapacity As ControlLibrary.DecimalBox
     Friend WithEvents CbxControlled As ControlLibrary.CentralizedComboBox
     Friend WithEvents LblControlled As Label
+    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label2 As Label
 End Class

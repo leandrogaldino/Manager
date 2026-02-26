@@ -824,3 +824,28 @@ ALTER TABLE evaluation ADD COLUMN visitscheduleid INT AFTER rejectreason;
 ALTER TABLE evaluation ADD COLUMN cloudid VARCHAR(255) AFTER id;
 
 ALTER TABLE `manager`.`agentevent` CHANGE COLUMN `description` `description` TEXT NULL DEFAULT NULL ;
+
+
+
+
+
+
+/*A PARTIR DAQUI*/
+
+
+CREATE TABLE `compressorunit` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `creation` date NOT NULL,
+  `statusid` int NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `productid` INT NOT NULL,
+  `userid` int NOT NULL,
+  `lastupdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  KEY `userid` (`userid`),
+  CONSTRAINT `productunit_product` FOREIGN KEY (`productid`) REFERENCES `product` (`id`) ON DELETE RESTRICT,
+  CONSTRAINT `productunit_user` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT
+);
+
+

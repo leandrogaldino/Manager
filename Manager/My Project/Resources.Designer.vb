@@ -1091,6 +1091,89 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM route
+        '''WHERE route.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property CompressorInterfaceDelete() As String
+            Get
+                Return ResourceManager.GetString("CompressorInterfaceDelete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
+        '''	route.id AS &apos;ID&apos;,
+        '''    route.creation AS &apos;Criação&apos;,
+        '''    CASE 
+        '''		WHEN route.statusid = 0 THEN &quot;ATIVO&quot;
+        '''        WHEN route.statusid = 1 THEN &quot;INATIVO&quot;
+        '''	END AS &apos;Status&apos;,
+        '''    route.name AS &apos;Nome&apos;
+        '''FROM route
+        '''WHERE
+        '''	IFNULL(route.id, &apos;&apos;) LIKE @id AND
+        '''    IFNULL(route.statusid, &apos;&apos;) LIKE @statusid AND
+        '''    IFNULL(route.name, &apos;&apos;) LIKE CONCAT(&apos;%&apos;, @name, &apos;%&apos;)
+        '''GROUP BY route.id
+        '''ORDER BY route.id;.
+        '''</summary>
+        Friend ReadOnly Property CompressorInterfaceFilter() As String
+            Get
+                Return ResourceManager.GetString("CompressorInterfaceFilter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO route
+        '''(
+        '''    creation,
+        '''    statusid,
+        '''    name,
+        '''    userid
+        ''')
+        '''VALUES
+        '''(
+        '''    @creation,
+        '''    @statusid,
+        '''    @name,
+        '''    @userid
+        ''');.
+        '''</summary>
+        Friend ReadOnly Property CompressorInterfaceInsert() As String
+            Get
+                Return ResourceManager.GetString("CompressorInterfaceInsert", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	route.id,
+        '''	route.creation,
+        '''    route.statusid,
+        '''	route.name
+        '''FROM route
+        '''WHERE route.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property CompressorInterfaceSelect() As String
+            Get
+                Return ResourceManager.GetString("CompressorInterfaceSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE route SET
+        '''    statusid =  @statusid,
+        '''    name = @name,
+        '''    userid = @userid
+        '''WHERE route.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property CompressorInterfaceUpdate() As String
+            Get
+                Return ResourceManager.GetString("CompressorInterfaceUpdate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	compressor.id,
         '''	compressor.creation,

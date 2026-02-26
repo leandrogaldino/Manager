@@ -120,6 +120,10 @@ Public Enum Routine
     ServicePrice = 2302
     ServiceCode = 2303
     ServicePriceIndicator = 2304
+    <Description("Interface")> <TriStatePrivilege> <RoutineDependency(Person)>
+    CompressorInterface = 24
+    <Description("Unidade Compressora")> <TriStatePrivilege> <RoutineDependency(Person)>
+    CompressorInit = 25
     <Description("Exportar as grades")> <BiStatePrivilege>
     ExportGrid = 9901
     <Description("Acessar o histórico")> <BiStatePrivilege>

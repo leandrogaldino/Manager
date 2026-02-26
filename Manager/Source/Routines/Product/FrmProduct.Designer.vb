@@ -695,7 +695,7 @@ Partial Class FrmProduct
         Me.Label2.Location = New System.Drawing.Point(500, 142)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(30, 17)
-        Me.Label2.TabIndex = 20
+        Me.Label2.TabIndex = 24
         Me.Label2.Text = "SKU"
         '
         'Label1
@@ -704,7 +704,7 @@ Partial Class FrmProduct
         Me.Label1.Location = New System.Drawing.Point(367, 142)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(77, 17)
-        Me.Label1.TabIndex = 20
+        Me.Label1.TabIndex = 22
         Me.Label1.Text = "Dimensões"
         '
         'DbxNetWeight
@@ -803,7 +803,7 @@ Partial Class FrmProduct
         Me.TxtSKU.MaxLength = 45
         Me.TxtSKU.Name = "TxtSKU"
         Me.TxtSKU.Size = New System.Drawing.Size(98, 23)
-        Me.TxtSKU.TabIndex = 13
+        Me.TxtSKU.TabIndex = 25
         '
         'TxtDimensions
         '
@@ -812,7 +812,7 @@ Partial Class FrmProduct
         Me.TxtDimensions.MaxLength = 20
         Me.TxtDimensions.Name = "TxtDimensions"
         Me.TxtDimensions.Size = New System.Drawing.Size(126, 23)
-        Me.TxtDimensions.TabIndex = 13
+        Me.TxtDimensions.TabIndex = 23
         '
         'TxtLocation
         '
@@ -1126,10 +1126,10 @@ Partial Class FrmProduct
         'TabPicture
         '
         Me.TabPicture.Controls.Add(Me.PvPicture)
-        Me.TabPicture.Location = New System.Drawing.Point(4, 26)
+        Me.TabPicture.Location = New System.Drawing.Point(4, 22)
         Me.TabPicture.Name = "TabPicture"
         Me.TabPicture.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPicture.Size = New System.Drawing.Size(606, 192)
+        Me.TabPicture.Size = New System.Drawing.Size(606, 196)
         Me.TabPicture.TabIndex = 8
         Me.TabPicture.Text = "Fotos"
         Me.TabPicture.UseVisualStyleBackColor = True
@@ -1151,9 +1151,9 @@ Partial Class FrmProduct
         Me.PvPicture.PreviousButtonImage = CType(resources.GetObject("PvPicture.PreviousButtonImage"), System.Drawing.Image)
         Me.PvPicture.RemoveButtonImage = CType(resources.GetObject("PvPicture.RemoveButtonImage"), System.Drawing.Image)
         Me.PvPicture.SaveButtonImage = CType(resources.GetObject("PvPicture.SaveButtonImage"), System.Drawing.Image)
-        Me.PvPicture.ShowControlBar = True
+        Me.PvPicture.ShowControlBar = False
         Me.PvPicture.ShowCounterBar = True
-        Me.PvPicture.Size = New System.Drawing.Size(600, 186)
+        Me.PvPicture.Size = New System.Drawing.Size(600, 190)
         Me.PvPicture.TabIndex = 0
         '
         'TmrQueriedBoxFamily

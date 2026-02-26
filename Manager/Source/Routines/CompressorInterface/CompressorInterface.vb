@@ -1,13 +1,17 @@
 ﻿Imports ControlLibrary
 Imports MySql.Data.MySqlClient
+
 ''' <summary>
-''' Representa uma unidade de medida de um produto.
+''' Representa um modelo de interface de um compressor.
 ''' </summary>
-Public Class ProductUnit
+Public Class CompressorInterface
     Inherits ParentModel
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
-    Public Property ShortName As String
+    Public Property ProductID As Long
+    Public Property ProductName As String
+    Public Property Product As New Lazy(Of Product)
+
     Public Sub New()
         SetRoutine(Routine.ProductUnit)
     End Sub
@@ -17,18 +21,20 @@ Public Class ProductUnit
         SetCreation(Today)
         Status = SimpleStatus.Active
         Name = Nothing
-        ShortName = Nothing
+        ProductID = 0
+        ProductName = Nothing
+        Product = New Lazy(Of Product)
         If LockInfo.IsLocked Then Unlock()
     End Sub
-    Public Function Load(Identity As Long, LockMe As Boolean) As ProductUnit
+    Public Function Load(Identity As Long, LockMe As Boolean) As CompressorInterface
         Dim TableResult As DataTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
-                Using CmdProductUnitSelect As New MySqlCommand(My.Resources.ProductUnitSelect, Con)
-                    CmdProductUnitSelect.Transaction = Tra
-                    CmdProductUnitSelect.Parameters.AddWithValue("@id", Identity)
-                    Using Adp As New MySqlDataAdapter(CmdProductUnitSelect)
+                Using Cmd As New MySqlCommand(My.Resources.CompressorInterfaceSelect, Con)
+                    Cmd.Transaction = Tra
+                    Cmd.Parameters.AddWithValue("@id", Identity)
+                    Using Adp As New MySqlDataAdapter(Cmd)
                         TableResult = New DataTable
                         Adp.Fill(TableResult)
                     End Using
@@ -38,12 +44,14 @@ Public Class ProductUnit
                     ElseIf TableResult.Rows.Count = 1 Then
                         Clear()
                         Unlock(Tra)
-                        SetID(TableResult.Rows(0).Item("id"))
-                        SetCreation(TableResult.Rows(0).Item("creation"))
+                        SetID(Convert.ToInt64(TableResult.Rows(0).Item("id")))
+                        SetCreation(Convert.ToDateTime(TableResult.Rows(0).Item("creation")))
                         SetIsSaved(True)
-                        Status = TableResult.Rows(0).Item("statusid")
-                        Name = TableResult.Rows(0).Item("name").ToString
-                        ShortName = TableResult.Rows(0).Item("shortname").ToString
+                        Status = Convert.ToInt32(TableResult.Rows(0).Item("statusid"))
+                        Name = Convert.ToString(TableResult.Rows(0).Item("name"))
+                        ProductID = Convert.ToInt64(TableResult.Rows(0).Item("productid"))
+                        ProductName = Convert.ToString(TableResult.Rows(0).Item("productname"))
+                        Product = New Lazy(Of Product)(Function() New Product().Load(ProductID, False))
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
                     Else
@@ -55,9 +63,9 @@ Public Class ProductUnit
         End Using
         Return Me
     End Function
-    Public Function Load(Identity As Long, Transaction As MySqlTransaction, LockMe As Boolean) As ProductUnit
+    Public Function Load(Identity As Long, Transaction As MySqlTransaction, LockMe As Boolean) As CompressorInterface
         Dim TableResult As DataTable
-        Using CmdProductUnitSelect As New MySqlCommand(My.Resources.ProductUnitSelect, Transaction.Connection)
+        Using CmdProductUnitSelect As New MySqlCommand(My.Resources.CompressorInterfaceSelect, Transaction.Connection)
             CmdProductUnitSelect.Transaction = Transaction
             CmdProductUnitSelect.Parameters.AddWithValue("@id", Identity)
             Using Adp As New MySqlDataAdapter(CmdProductUnitSelect)
@@ -68,12 +76,15 @@ Public Class ProductUnit
                 Clear()
             ElseIf TableResult.Rows.Count = 1 Then
                 Clear()
-                SetID(TableResult.Rows(0).Item("id"))
-                SetCreation(TableResult.Rows(0).Item("creation"))
+                Unlock(Transaction)
+                SetID(Convert.ToInt64(TableResult.Rows(0).Item("id")))
+                SetCreation(Convert.ToDateTime(TableResult.Rows(0).Item("creation")))
                 SetIsSaved(True)
-                Status = TableResult.Rows(0).Item("statusid")
-                Name = TableResult.Rows(0).Item("name").ToString
-                ShortName = TableResult.Rows(0).Item("shortname").ToString
+                Status = Convert.ToInt32(TableResult.Rows(0).Item("statusid"))
+                Name = Convert.ToString(TableResult.Rows(0).Item("name"))
+                ProductID = Convert.ToInt64(TableResult.Rows(0).Item("productid"))
+                ProductName = Convert.ToString(TableResult.Rows(0).Item("productname"))
+                Product = New Lazy(Of Product)(Function() New Product().Load(ProductID, False))
                 LockInfo = GetLockInfo(Transaction)
                 If LockMe And Not LockInfo.IsLocked Then Lock(Transaction)
             Else
@@ -95,7 +106,7 @@ Public Class ProductUnit
             Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
                 UpdateUser(Con, Tra)
-                Using CmdProductUnitDelete As New MySqlCommand(My.Resources.ProductUnitDelete, Con, Tra)
+                Using CmdProductUnitDelete As New MySqlCommand(My.Resources.CompressorInterfaceDelete, Con, Tra)
                     CmdProductUnitDelete.Parameters.AddWithValue("@id", ID)
                     CmdProductUnitDelete.ExecuteNonQuery()
                     Clear()
@@ -109,12 +120,12 @@ Public Class ProductUnit
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
-                Using CmdProductUnitInsert As New MySqlCommand(My.Resources.ProductUnitInsert, Con)
+                Using CmdProductUnitInsert As New MySqlCommand(My.Resources.CompressorInterfaceInsert, Con)
                     CmdProductUnitInsert.Transaction = Tra
                     CmdProductUnitInsert.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     CmdProductUnitInsert.Parameters.AddWithValue("@statusid", CInt(Status))
                     CmdProductUnitInsert.Parameters.AddWithValue("@name", Name)
-                    CmdProductUnitInsert.Parameters.AddWithValue("@shortname", ShortName)
+                    CmdProductUnitInsert.Parameters.AddWithValue("@productid", ProductID)
                     CmdProductUnitInsert.Parameters.AddWithValue("@userid", User.ID)
                     CmdProductUnitInsert.ExecuteNonQuery()
                     SetID(CmdProductUnitInsert.LastInsertedId)
@@ -126,24 +137,34 @@ Public Class ProductUnit
     Private Sub Update()
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
-            Using CmdProductUnitUpdate As New MySqlCommand(My.Resources.ProductUnitUpdate, Con)
+            Using CmdProductUnitUpdate As New MySqlCommand(My.Resources.CompressorInterfaceUpdate, Con)
                 CmdProductUnitUpdate.Parameters.AddWithValue("@id", ID)
                 CmdProductUnitUpdate.Parameters.AddWithValue("@statusid", CInt(Status))
                 CmdProductUnitUpdate.Parameters.AddWithValue("@name", Name)
-                CmdProductUnitUpdate.Parameters.AddWithValue("@shortname", ShortName)
+                CmdProductUnitUpdate.Parameters.AddWithValue("@productid", ProductID)
                 CmdProductUnitUpdate.Parameters.AddWithValue("@userid", User.ID)
                 CmdProductUnitUpdate.ExecuteNonQuery()
             End Using
         End Using
     End Sub
     Public Overrides Function ToString() As String
-        Return ShortName
+        Return Name
     End Function
     Public Overrides Function Clone() As BaseModel
-        Dim Cloned As New ProductUnit With {
+        Dim Cloned As New CompressorInterface With {
             .Name = Name,
-            .ShortName = ShortName,
-            .Status = Status
+            .ProductID = ProductID,
+            .ProductName = ProductName,
+            .Status = Status,
+            .Product = New Lazy(Of Product)(
+                Function()
+                    If Product.IsValueCreated Then
+                        Return CType(Product.Value.Clone(), Product)
+                    Else
+                        Return New Product().Load(ProductID, False)
+                    End If
+                End Function
+            )
         }
         Cloned.SetCreation(Creation)
         Cloned.SetID(ID)

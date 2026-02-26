@@ -96,6 +96,9 @@
     <Reference Include="CoreSuite.AnimatedBox">
       <HintPath>..\..\CoreSuite\AnimatedBox\bin\Debug\CoreSuite.AnimatedBox.dll</HintPath>
     </Reference>
+    <Reference Include="CoreSuite.QueriedBox">
+      <HintPath>..\..\CoreSuite\QueriedBox\bin\Debug\CoreSuite.QueriedBox.dll</HintPath>
+    </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=3.0.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.3.0.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
@@ -489,6 +492,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Source\Helper\DataGridViewDecimalColumn.vb" />
+    <Compile Include="Source\Helper\FilterExpandable\ProductExpandable.vb" />
     <Compile Include="Source\Main\UcReport.Designer.vb">
       <DependentUpon>UcReport.vb</DependentUpon>
     </Compile>
@@ -517,6 +521,11 @@
     <None Include="Resources\Icon\icon.ico" />
     <Content Include="Resources\Image\Downloading.gif" />
     <Content Include="Resources\Image\Updating.gif" />
+    <Content Include="Resources\SQL\CompressorInterface\CompressorInterfaceDelete.sql" />
+    <Content Include="Resources\SQL\CompressorInterface\CompressorInterfaceFilter.sql" />
+    <Content Include="Resources\SQL\CompressorInterface\CompressorInterfaceInsert.sql" />
+    <Content Include="Resources\SQL\CompressorInterface\CompressorInterfaceSelect.sql" />
+    <Content Include="Resources\SQL\CompressorInterface\CompressorInterfaceUpdate.sql" />
     <Content Include="Resources\SQL\Compressor\CompressorSellableDelete.sql" />
     <Content Include="Resources\SQL\Compressor\CompressorSellableInsert.sql" />
     <Content Include="Resources\SQL\Compressor\CompressorSellableSelect.sql" />
@@ -553,6 +562,20 @@
     <Content Include="Resources\SQL\Product\ProductPriceSelect.sql" />
     <Content Include="Resources\SQL\Service\ServicePriceIndicatorDetailSelect.sql" />
     <Content Include="Resources\SQL\Service\ServicePriceIndicatorSelect.sql" />
+    <Compile Include="Source\Routines\CompressorInterface\CompressorInterface.vb" />
+    <Compile Include="Source\Routines\CompressorInterface\CompressorInterfaceFilter.vb" />
+    <Compile Include="Source\Routines\CompressorInterface\FrmCompressorInterface.Designer.vb">
+      <DependentUpon>FrmCompressorInterface.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\CompressorInterface\FrmCompressorInterface.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\CompressorInterface\UcCompressorInterfaceGrid.Designer.vb">
+      <DependentUpon>UcCompressorInterfaceGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\CompressorInterface\UcCompressorInterfaceGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Source\Routines\EmailSent\UcEmailSentGrid.Designer.vb">
       <DependentUpon>UcEmailSentGrid.vb</DependentUpon>
     </Compile>
@@ -1342,6 +1365,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Cash\UcCashGrid.resx">
       <DependentUpon>UcCashGrid.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\CompressorInterface\FrmCompressorInterface.resx">
+      <DependentUpon>FrmCompressorInterface.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\CompressorInterface\UcCompressorInterfaceGrid.resx">
+      <DependentUpon>UcCompressorInterfaceGrid.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\EmailSent\UcEmailSentGrid.resx">
       <DependentUpon>UcEmailSentGrid.vb</DependentUpon>

@@ -1,3 +1,7 @@
+#2.1.0
+• Inclusão de rotina de cadastro de modelos de interfaces.
+• Inclusão de rotina de cadastro de modelos unidades compressoras.
+• Ajuste na rotina de cadastro do compressor da pessoa, onde agora é obrigatório o preenchimento do modelo de interface e do modelo de unidade compressora.
 #2.0.9
 • Ajuste no fluxo de importação de avaliações: avaliações com produtos substituídos devem ser previamente baixadas na requisição antes de ficarem disponíveis para importação.
 • Correção de bug que impedia a abertura do compressor através do ícone de visualização nas caixas de busca.

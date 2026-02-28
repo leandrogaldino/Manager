@@ -175,7 +175,7 @@ Public Class FrmPersonCompressor
     End Sub
     Private Sub TcPersonCompressor_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcPersonCompressor.SelectedIndexChanged
         If TcPersonCompressor.SelectedTab Is TabMain Then
-            Size = New Size(475, 265)
+            Size = New Size(355, 310)
             FormBorderStyle = FormBorderStyle.FixedSingle
             WindowState = FormWindowState.Normal
             MaximizeBox = False
@@ -202,7 +202,7 @@ Public Class FrmPersonCompressor
         EprValidation.Clear()
         BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
-    Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles QbxCompressor.TextChanged, TxtSerialNumber.TextChanged, TxtPatrimony.TextChanged, TxtSector.TextChanged, DbxUnitCapacity.TextChanged, TxtNote.TextChanged
+    Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles QbxCompressor.TextChanged, TxtSerialNumber.TextChanged, TxtPatrimony.TextChanged, TxtSector.TextChanged, DbxUnitCapacity.TextChanged, TxtNote.TextChanged, TextBox2.TextChanged, TextBox1.TextChanged
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
@@ -253,7 +253,7 @@ Public Class FrmPersonCompressor
             EprValidation.SetIconAlignment(LblCompressor, ErrorIconAlignment.MiddleRight)
             QbxCompressor.Select()
             Return False
-        ElseIf String.IsNullOrEmpty(CbxControlled.text) Then
+        ElseIf String.IsNullOrEmpty(CbxControlled.Text) Then
             TcPersonCompressor.SelectedTab = TabMain
             EprValidation.SetError(LblControlled, $"Campo obrigatório")
             EprValidation.SetIconAlignment(LblControlled, ErrorIconAlignment.MiddleRight)
@@ -647,5 +647,9 @@ Public Class FrmPersonCompressor
         Else
             DgvlElapsedDaySellable.Load()
         End If
+    End Sub
+
+    Private Sub TabMain_Click(sender As Object, e As EventArgs) Handles TabMain.Click
+
     End Sub
 End Class

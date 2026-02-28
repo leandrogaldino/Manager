@@ -1091,6 +1091,134 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property CompressorInterface() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CompressorInterface", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM compressorinterface
+        '''WHERE compressorinterface.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property CompressorInterfaceDelete() As String
+            Get
+                Return ResourceManager.GetString("CompressorInterfaceDelete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
+        '''	compressorinterface.id AS &apos;ID&apos;,
+        '''    compressorinterface.creation AS &apos;Criação&apos;,
+        '''    CASE 
+        '''		WHEN compressorinterface.statusid = 0 THEN &quot;ATIVO&quot;
+        '''        WHEN compressorinterface.statusid = 1 THEN &quot;INATIVO&quot;
+        '''	END AS &apos;Status&apos;,
+        '''    compressorinterface.name AS &apos;Nome&apos;,
+        '''    CASE
+        '''        WHEN productprovidercode.code IS NOT NULL 
+        '''             AND productprovidercode.code &lt;&gt; &apos;&apos;
+        '''        THEN CONCAT(productprovidercode.code, &apos; - &apos;, product.name)
+        '''        ELSE product.name
+        '''    END AS &apos;Produto&apos;,
+        '''    C [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property CompressorInterfaceFilter() As String
+            Get
+                Return ResourceManager.GetString("CompressorInterfaceFilter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;CompressorInterface&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''	&lt;Column Index=&quot;0&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;ID&lt;/Name&gt;
+        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''    &lt;/Column&gt;    
+        '''    &lt;Column Index=&quot;1&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;Criação&lt;/Name&gt;
+        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''    &lt;/Column&gt;
+        '''    &lt;Column Index=&quot; [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property CompressorInterfaceGrid() As String
+            Get
+                Return ResourceManager.GetString("CompressorInterfaceGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO compressorinterface
+        '''(
+        '''    creation,
+        '''    statusid,
+        '''    name,
+        '''    productid,
+        '''    directionid,
+        '''    userid
+        ''')
+        '''VALUES
+        '''(
+        '''    @creation,
+        '''    @statusid,
+        '''    @name,
+        '''    @productid,
+        '''    @directionid,
+        '''    @userid
+        ''');.
+        '''</summary>
+        Friend ReadOnly Property CompressorInterfaceInsert() As String
+            Get
+                Return ResourceManager.GetString("CompressorInterfaceInsert", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	compressorinterface.id,
+        '''	compressorinterface.creation,
+        '''    compressorinterface.statusid,
+        '''	compressorinterface.name,
+        '''	product.id AS productid,
+        '''	product.name AS productname,
+        '''	compressorinterface.directionid
+        '''FROM compressorinterface
+        '''LEFT JOIN product ON compressorinterface.productid = product.id
+        '''WHERE compressorinterface.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property CompressorInterfaceSelect() As String
+            Get
+                Return ResourceManager.GetString("CompressorInterfaceSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE compressorinterface SET
+        '''    statusid =  @statusid,
+        '''    name = @name,
+        '''    productid = @productid,
+        '''    directionid = @directionid,
+        '''    userid = @userid
+        '''WHERE compressorinterface.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property CompressorInterfaceUpdate() As String
+            Get
+                Return ResourceManager.GetString("CompressorInterfaceUpdate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''	compressor.id,
         '''	compressor.creation,
@@ -1208,6 +1336,132 @@ Namespace My.Resources
         Friend ReadOnly Property CompressorSellableUpdate() As String
             Get
                 Return ResourceManager.GetString("CompressorSellableUpdate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property CompressorUnit() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CompressorUnit", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a DELETE FROM compressorunit
+        '''WHERE compressorunit.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property CompressorUnitDelete() As String
+            Get
+                Return ResourceManager.GetString("CompressorUnitDelete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT 
+        '''	compressorunit.id AS &apos;ID&apos;,
+        '''    compressorunit.creation AS &apos;Criação&apos;,
+        '''    CASE 
+        '''		WHEN compressorunit.statusid = 0 THEN &quot;ATIVO&quot;
+        '''        WHEN compressorunit.statusid = 1 THEN &quot;INATIVO&quot;
+        '''	END AS &apos;Status&apos;,
+        '''    compressorunit.name AS &apos;Nome&apos;,
+        '''    CASE
+        '''        WHEN productprovidercode.code IS NOT NULL 
+        '''             AND productprovidercode.code &lt;&gt; &apos;&apos;
+        '''        THEN CONCAT(productprovidercode.code, &apos; - &apos;, product.name)
+        '''        ELSE product.name
+        '''    END AS &apos;Produto&apos;
+        '''FROM compressorunit
+        '''LEFT JOIN  [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property CompressorUnitFilter() As String
+            Get
+                Return ResourceManager.GetString("CompressorUnitFilter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;Routine Id=&quot;CompressorUnit&quot; Version=&quot;1&quot;&gt;
+        '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
+        '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
+        '''	&lt;Column Index=&quot;0&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;ID&lt;/Name&gt;
+        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''    &lt;/Column&gt;    
+        '''    &lt;Column Index=&quot;1&quot;&gt;
+        '''        &lt;Visible&gt;True&lt;/Visible&gt;
+        '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+        '''        &lt;Name&gt;Criação&lt;/Name&gt;
+        '''        &lt;Width&gt;100&lt;/Width&gt;
+        '''    &lt;/Column&gt;
+        '''    &lt;Column Index=&quot;2&quot;&gt;
+        ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property CompressorUnitGrid() As String
+            Get
+                Return ResourceManager.GetString("CompressorUnitGrid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a INSERT INTO compressorunit
+        '''(
+        '''    creation,
+        '''    statusid,
+        '''    name,
+        '''    productid,
+        '''    userid
+        ''')
+        '''VALUES
+        '''(
+        '''    @creation,
+        '''    @statusid,
+        '''    @name,
+        '''    @productid,
+        '''    @userid
+        ''');.
+        '''</summary>
+        Friend ReadOnly Property CompressorUnitInsert() As String
+            Get
+                Return ResourceManager.GetString("CompressorUnitInsert", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''	compressorunit.id,
+        '''	compressorunit.creation,
+        '''    compressorunit.statusid,
+        '''	compressorunit.name,
+        '''	product.id AS productid,
+        '''	product.name AS productname
+        '''FROM compressorunit
+        '''LEFT JOIN product ON compressorunit.productid = product.id
+        '''WHERE compressorunit.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property CompressorUnitSelect() As String
+            Get
+                Return ResourceManager.GetString("CompressorUnitSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE compressorunit SET
+        '''    statusid =  @statusid,
+        '''    name = @name,
+        '''    productid = @productid,
+        '''    userid = @userid
+        '''WHERE compressorunit.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property CompressorUnitUpdate() As String
+            Get
+                Return ResourceManager.GetString("CompressorUnitUpdate", resourceCulture)
             End Get
         End Property
         

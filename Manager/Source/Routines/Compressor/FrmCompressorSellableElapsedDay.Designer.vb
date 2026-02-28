@@ -348,7 +348,6 @@ Partial Class FrmCompressorSellableElapsedDay
         'QbxSellable
         '
         Me.QbxSellable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.QbxSellable.CharactersToQuery = 1
         Condition1.FieldName = "statusid"
         Condition1.Operator = "="
         Condition1.TableNameOrAlias = "product"

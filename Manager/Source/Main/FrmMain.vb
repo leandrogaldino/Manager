@@ -1,6 +1,5 @@
 ﻿Imports ControlLibrary
 Imports ManagerCore
-Imports ZstdSharp
 Public Class FrmMain
     Private _User As User
     Public Sub New()
@@ -18,6 +17,7 @@ Public Class FrmMain
         CreateCashButton()
         CreateFirstSeparator()
         CreatePersonButton()
+        CreateCompressorButton()
         CreateProductButton()
         CreateUserButton()
     End Sub
@@ -79,17 +79,29 @@ Public Class FrmMain
             End If
         End If
     End Sub
+
+    Private Sub CreateCompressorButton()
+        If _User.CanAccess(Routine.Compressor) Then
+            If _User.CanAccess(Routine.CompressorInterface) Or
+                _User.CanAccess(Routine.CompressorUnit) Then
+                TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripSplitButton("Compressor", "Cadastro de Cmpressores", My.Resources.Compressor, AddressOf CompressorClick))
+                If _User.CanAccess(Routine.CompressorInterface) Then
+                    TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Compressor").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Interface", "Cadastro de Interfaces de Compressores", My.Resources.CompressorInterface, AddressOf CompressorInterfaceClick))
+                End If
+                If _User.CanAccess(Routine.CompressorUnit) Then
+                    TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Compressor").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Unidade Compressora", "Cadastro de Unidades Compressoras", My.Resources.CompressorUnit, AddressOf CompressorUnitClick))
+                End If
+            End If
+        End If
+    End Sub
+
     Private Sub CreatePersonButton()
         If _User.CanAccess(Routine.Person) Then
-            If _User.CanAccess(Routine.Compressor) Or
-                _User.CanAccess(Routine.City) Or
+            If _User.CanAccess(Routine.City) Or
                 _User.CanAccess(Routine.Route) Or
                 _User.CanAccess(Routine.PersonRegistrationFormReport) Or
                 _User.CanAccess(Routine.PersonMaintenancePlanReport) Then
                 TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripSplitButton("Pessoa", "Cadastro de Pessoas", My.Resources.Person, AddressOf PersonClick))
-                If _User.CanAccess(Routine.Compressor) Then
-                    TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Pessoa").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Compressor", "Cadastro de Compressores", My.Resources.Compressor, AddressOf CompressorClick))
-                End If
                 If _User.CanAccess(Routine.City) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Pessoa").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Cidade", "Cadastro de Cidades", My.Resources.City, AddressOf CityClick))
                 End If
@@ -172,6 +184,20 @@ Public Class FrmMain
             OpenTab(New UcCompressorGrid, EnumHelper.GetEnumDescription(Routine.Compressor))
         Else
             SelectTab(Routine.Compressor)
+        End If
+    End Sub
+    Private Sub CompressorInterfaceClick()
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.CompressorInterface)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New UcCompressorInterfaceGrid, EnumHelper.GetEnumDescription(Routine.CompressorInterface))
+        Else
+            SelectTab(Routine.CompressorInterface)
+        End If
+    End Sub
+    Private Sub CompressorUnitClick()
+        If Not TcWindows.TabPages.Cast(Of TabPage).Any(Function(x) x.Text = EnumHelper.GetEnumDescription(Routine.CompressorUnit)) Or Control.ModifierKeys = Keys.Shift Then
+            OpenTab(New UcCompressorUnitGrid, EnumHelper.GetEnumDescription(Routine.CompressorUnit))
+        Else
+            SelectTab(Routine.CompressorUnit)
         End If
     End Sub
     Private Sub RouteClick()

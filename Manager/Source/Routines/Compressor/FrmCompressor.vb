@@ -48,6 +48,7 @@ Public Class FrmCompressor
         BtnStatusValue.Enabled = False
         TcCompressor.Top -= TsNavigation.Height
         Height -= TsNavigation.Height
+        _User = Locator.GetInstance(Of Session).User
         LoadData()
         LoadForm()
     End Sub

@@ -36,6 +36,7 @@ Partial Class FrmRequestImportBalance
         Me.Label1 = New System.Windows.Forms.Label()
         Me.DgvRequestsProducts = New System.Windows.Forms.DataGridView()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.CbxIgnore = New System.Windows.Forms.CheckBox()
         Me.PnBottomBar.SuspendLayout()
         CType(Me.DgvEvaluationProducts, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DgvRequestsProducts, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -175,11 +176,22 @@ Partial Class FrmRequestImportBalance
         Me.Label2.TabIndex = 25
         Me.Label2.Text = "Produtos Pendentes nas Requisições"
         '
+        'CbxIgnore
+        '
+        Me.CbxIgnore.AutoSize = True
+        Me.CbxIgnore.Location = New System.Drawing.Point(467, 5)
+        Me.CbxIgnore.Name = "CbxIgnore"
+        Me.CbxIgnore.Size = New System.Drawing.Size(300, 21)
+        Me.CbxIgnore.TabIndex = 26
+        Me.CbxIgnore.Text = "Ignorar produtos com saldo na avaliação"
+        Me.CbxIgnore.UseVisualStyleBackColor = True
+        '
         'FrmRequestImportBalance
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(784, 561)
+        Me.Controls.Add(Me.CbxIgnore)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.DgvRequestsProducts)
         Me.Controls.Add(Me.Label1)
@@ -214,4 +226,5 @@ Partial Class FrmRequestImportBalance
     Friend WithEvents Label1 As Label
     Friend WithEvents DgvRequestsProducts As DataGridView
     Friend WithEvents Label2 As Label
+    Friend WithEvents CbxIgnore As CheckBox
 End Class

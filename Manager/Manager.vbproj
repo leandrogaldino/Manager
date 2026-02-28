@@ -493,6 +493,8 @@
     </Compile>
     <Compile Include="Source\Helper\DataGridViewDecimalColumn.vb" />
     <Compile Include="Source\Helper\FilterExpandable\ProductExpandable.vb" />
+    <Compile Include="Source\Helper\FiltrerConverter\CompressorInterfaceDirectionConverter.vb" />
+    <Compile Include="Source\Helper\Flags\CompressorInterfaceDirection.vb" />
     <Compile Include="Source\Main\UcReport.Designer.vb">
       <DependentUpon>UcReport.vb</DependentUpon>
     </Compile>
@@ -519,6 +521,8 @@
     </Compile>
     <None Include="Resources\Image\PriceTable.png" />
     <None Include="Resources\Icon\icon.ico" />
+    <None Include="Resources\Image\CompressorInterface.png" />
+    <None Include="Resources\Image\CompressorUnit.png" />
     <Content Include="Resources\Image\Downloading.gif" />
     <Content Include="Resources\Image\Updating.gif" />
     <Content Include="Resources\SQL\CompressorInterface\CompressorInterfaceDelete.sql" />
@@ -526,6 +530,11 @@
     <Content Include="Resources\SQL\CompressorInterface\CompressorInterfaceInsert.sql" />
     <Content Include="Resources\SQL\CompressorInterface\CompressorInterfaceSelect.sql" />
     <Content Include="Resources\SQL\CompressorInterface\CompressorInterfaceUpdate.sql" />
+    <Content Include="Resources\SQL\CompressorUnit\CompressorUnitDelete.sql" />
+    <Content Include="Resources\SQL\CompressorUnit\CompressorUnitFilter.sql" />
+    <Content Include="Resources\SQL\CompressorUnit\CompressorUnitInsert.sql" />
+    <Content Include="Resources\SQL\CompressorUnit\CompressorUnitSelect.sql" />
+    <Content Include="Resources\SQL\CompressorUnit\CompressorUnitUpdate.sql" />
     <Content Include="Resources\SQL\Compressor\CompressorSellableDelete.sql" />
     <Content Include="Resources\SQL\Compressor\CompressorSellableInsert.sql" />
     <Content Include="Resources\SQL\Compressor\CompressorSellableSelect.sql" />
@@ -574,6 +583,20 @@
       <DependentUpon>UcCompressorInterfaceGrid.vb</DependentUpon>
     </Compile>
     <Compile Include="Source\Routines\CompressorInterface\UcCompressorInterfaceGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\CompressorUnit\CompressorUnit.vb" />
+    <Compile Include="Source\Routines\CompressorUnit\CompressorUnitFilter.vb" />
+    <Compile Include="Source\Routines\CompressorUnit\FrmCompressorUnit.Designer.vb">
+      <DependentUpon>FrmCompressorUnit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\CompressorUnit\FrmCompressorUnit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\CompressorUnit\UcCompressorUnitGrid.Designer.vb">
+      <DependentUpon>UcCompressorUnitGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\CompressorUnit\UcCompressorUnitGrid.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Source\Routines\EmailSent\UcEmailSentGrid.Designer.vb">
@@ -1372,6 +1395,12 @@
     <EmbeddedResource Include="Source\Routines\CompressorInterface\UcCompressorInterfaceGrid.resx">
       <DependentUpon>UcCompressorInterfaceGrid.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\CompressorUnit\FrmCompressorUnit.resx">
+      <DependentUpon>FrmCompressorUnit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\CompressorUnit\UcCompressorUnitGrid.resx">
+      <DependentUpon>UcCompressorUnitGrid.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\EmailSent\UcEmailSentGrid.resx">
       <DependentUpon>UcEmailSentGrid.vb</DependentUpon>
     </EmbeddedResource>
@@ -1831,6 +1860,8 @@
     <Content Include="Resources\SQL\User\UserPersonShortNameSelect.sql" />
     <Content Include="Resources\XML\CashFlowAuthorizedGrid.xml" />
     <Content Include="Resources\XML\CashFlowGrid.xml" />
+    <Content Include="Resources\XML\CompressorUnitGrid.xml" />
+    <Content Include="Resources\XML\CompressorInterfaceGrid.xml" />
     <Content Include="Resources\XML\EmailSignatureGrid.xml" />
     <Content Include="Resources\XML\EvaluationControlledSellableGrid.xml" />
     <Content Include="Resources\XML\EvaluationReplacedSellableGrid.xml" />

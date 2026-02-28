@@ -123,7 +123,7 @@ Public Enum Routine
     <Description("Interface")> <TriStatePrivilege> <RoutineDependency(Person)>
     CompressorInterface = 24
     <Description("Unidade Compressora")> <TriStatePrivilege> <RoutineDependency(Person)>
-    CompressorInit = 25
+    CompressorUnit = 25
     <Description("Exportar as grades")> <BiStatePrivilege>
     ExportGrid = 9901
     <Description("Acessar o histórico")> <BiStatePrivilege>

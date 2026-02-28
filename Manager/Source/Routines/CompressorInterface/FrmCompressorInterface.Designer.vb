@@ -29,7 +29,7 @@ Partial Class FrmCompressorInterface
         Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
         Dim Relation1 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
         Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.PnButtons = New System.Windows.Forms.Panel()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
         Me.TsTitle = New System.Windows.Forms.ToolStrip()
@@ -49,32 +49,40 @@ Partial Class FrmCompressorInterface
         Me.BtnLog = New System.Windows.Forms.ToolStripButton()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.LblName = New System.Windows.Forms.Label()
-        Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
+        Me.LblProduct = New System.Windows.Forms.Label()
+        Me.TmrQueriedBox = New System.Windows.Forms.Timer(Me.components)
+        Me.FlpProduct = New System.Windows.Forms.FlowLayoutPanel()
+        Me.BtnFilter = New ControlLibrary.NoFocusCueButton()
+        Me.BtnView = New ControlLibrary.NoFocusCueButton()
+        Me.BtnNew = New ControlLibrary.NoFocusCueButton()
         Me.TxtName = New System.Windows.Forms.TextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.QbxSellable = New ControlLibrary.QueriedBox()
-        Me.Panel1.SuspendLayout()
+        Me.CbxDirection = New System.Windows.Forms.ComboBox()
+        Me.LblDirection = New System.Windows.Forms.Label()
+        Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
+        Me.QbxProduct = New ControlLibrary.QueriedBox()
+        Me.PnButtons.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.FlpProduct.SuspendLayout()
         Me.SuspendLayout()
         '
-        'Panel1
+        'PnButtons
         '
-        Me.Panel1.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.Panel1.Controls.Add(Me.BtnClose)
-        Me.Panel1.Controls.Add(Me.BtnSave)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 103)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(379, 44)
-        Me.Panel1.TabIndex = 6
+        Me.PnButtons.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.PnButtons.Controls.Add(Me.BtnClose)
+        Me.PnButtons.Controls.Add(Me.BtnSave)
+        Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.PnButtons.Location = New System.Drawing.Point(0, 101)
+        Me.PnButtons.Name = "PnButtons"
+        Me.PnButtons.Size = New System.Drawing.Size(576, 44)
+        Me.PnButtons.TabIndex = 9
         '
         'BtnClose
         '
-        Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnClose.Location = New System.Drawing.Point(275, 7)
+        Me.BtnClose.Location = New System.Drawing.Point(469, 7)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(95, 30)
         Me.BtnClose.TabIndex = 1
@@ -83,9 +91,9 @@ Partial Class FrmCompressorInterface
         '
         'BtnSave
         '
-        Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnSave.Enabled = False
-        Me.BtnSave.Location = New System.Drawing.Point(174, 7)
+        Me.BtnSave.Location = New System.Drawing.Point(368, 7)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(95, 30)
         Me.BtnSave.TabIndex = 0
@@ -102,7 +110,7 @@ Partial Class FrmCompressorInterface
         Me.TsTitle.Location = New System.Drawing.Point(0, 25)
         Me.TsTitle.Name = "TsTitle"
         Me.TsTitle.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsTitle.Size = New System.Drawing.Size(379, 25)
+        Me.TsTitle.Size = New System.Drawing.Size(576, 25)
         Me.TsTitle.TabIndex = 1
         Me.TsTitle.Text = "ToolStrip1"
         '
@@ -166,7 +174,7 @@ Partial Class FrmCompressorInterface
         Me.TsNavigation.Location = New System.Drawing.Point(0, 0)
         Me.TsNavigation.Name = "TsNavigation"
         Me.TsNavigation.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsNavigation.Size = New System.Drawing.Size(379, 25)
+        Me.TsNavigation.Size = New System.Drawing.Size(576, 25)
         Me.TsNavigation.TabIndex = 0
         Me.TsNavigation.Text = "ToolStrip2"
         '
@@ -178,7 +186,7 @@ Partial Class FrmCompressorInterface
         Me.BtnInclude.Margin = New System.Windows.Forms.Padding(1, 1, 0, 2)
         Me.BtnInclude.Name = "BtnInclude"
         Me.BtnInclude.Size = New System.Drawing.Size(23, 22)
-        Me.BtnInclude.Text = "Incluir Unidade de Medida"
+        Me.BtnInclude.Text = "Incluir Compressor"
         '
         'BtnDelete
         '
@@ -188,7 +196,7 @@ Partial Class FrmCompressorInterface
         Me.BtnDelete.Margin = New System.Windows.Forms.Padding(0, 1, 10, 2)
         Me.BtnDelete.Name = "BtnDelete"
         Me.BtnDelete.Size = New System.Drawing.Size(23, 22)
-        Me.BtnDelete.Text = "Excluir Unidade de Medida"
+        Me.BtnDelete.Text = "Excluir Compressor"
         '
         'BtnFirst
         '
@@ -198,7 +206,7 @@ Partial Class FrmCompressorInterface
         Me.BtnFirst.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnFirst.Name = "BtnFirst"
         Me.BtnFirst.Size = New System.Drawing.Size(23, 22)
-        Me.BtnFirst.Text = "Primeira Unidade de Medida"
+        Me.BtnFirst.Text = "Primeiro Compressor"
         '
         'BtnPrevious
         '
@@ -208,7 +216,7 @@ Partial Class FrmCompressorInterface
         Me.BtnPrevious.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnPrevious.Name = "BtnPrevious"
         Me.BtnPrevious.Size = New System.Drawing.Size(23, 22)
-        Me.BtnPrevious.Text = "Unidade de Medida Anterior"
+        Me.BtnPrevious.Text = "Compressor Anterior"
         '
         'BtnNext
         '
@@ -218,7 +226,7 @@ Partial Class FrmCompressorInterface
         Me.BtnNext.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnNext.Name = "BtnNext"
         Me.BtnNext.Size = New System.Drawing.Size(23, 22)
-        Me.BtnNext.Text = "Próxima Unidade de Medida"
+        Me.BtnNext.Text = "Próximo Compressor"
         '
         'BtnLast
         '
@@ -228,7 +236,7 @@ Partial Class FrmCompressorInterface
         Me.BtnLast.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnLast.Name = "BtnLast"
         Me.BtnLast.Size = New System.Drawing.Size(23, 22)
-        Me.BtnLast.Text = "Última Unidade de Medida"
+        Me.BtnLast.Text = "Último Compressor"
         '
         'BtnLog
         '
@@ -248,11 +256,112 @@ Partial Class FrmCompressorInterface
         'LblName
         '
         Me.LblName.AutoSize = True
-        Me.LblName.Location = New System.Drawing.Point(9, 50)
+        Me.LblName.Location = New System.Drawing.Point(12, 50)
         Me.LblName.Name = "LblName"
         Me.LblName.Size = New System.Drawing.Size(48, 17)
         Me.LblName.TabIndex = 2
         Me.LblName.Text = "Nome"
+        '
+        'LblProduct
+        '
+        Me.LblProduct.AutoSize = True
+        Me.LblProduct.Location = New System.Drawing.Point(138, 50)
+        Me.LblProduct.Name = "LblProduct"
+        Me.LblProduct.Size = New System.Drawing.Size(60, 17)
+        Me.LblProduct.TabIndex = 4
+        Me.LblProduct.Text = "Produto"
+        '
+        'TmrQueriedBox
+        '
+        Me.TmrQueriedBox.Enabled = True
+        Me.TmrQueriedBox.Interval = 300
+        '
+        'FlpProduct
+        '
+        Me.FlpProduct.Controls.Add(Me.BtnFilter)
+        Me.FlpProduct.Controls.Add(Me.BtnView)
+        Me.FlpProduct.Controls.Add(Me.BtnNew)
+        Me.FlpProduct.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
+        Me.FlpProduct.Location = New System.Drawing.Point(371, 49)
+        Me.FlpProduct.Name = "FlpProduct"
+        Me.FlpProduct.Size = New System.Drawing.Size(69, 21)
+        Me.FlpProduct.TabIndex = 6
+        '
+        'BtnFilter
+        '
+        Me.BtnFilter.BackColor = System.Drawing.Color.Transparent
+        Me.BtnFilter.BackgroundImage = Global.Manager.My.Resources.Resources.Magnifier
+        Me.BtnFilter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnFilter.FlatAppearance.BorderSize = 0
+        Me.BtnFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnFilter.Location = New System.Drawing.Point(49, 3)
+        Me.BtnFilter.Name = "BtnFilter"
+        Me.BtnFilter.Size = New System.Drawing.Size(17, 17)
+        Me.BtnFilter.TabIndex = 2
+        Me.BtnFilter.TabStop = False
+        Me.BtnFilter.TooltipText = ""
+        Me.BtnFilter.UseVisualStyleBackColor = False
+        Me.BtnFilter.Visible = False
+        '
+        'BtnView
+        '
+        Me.BtnView.BackColor = System.Drawing.Color.Transparent
+        Me.BtnView.BackgroundImage = Global.Manager.My.Resources.Resources.View
+        Me.BtnView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnView.FlatAppearance.BorderSize = 0
+        Me.BtnView.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnView.Location = New System.Drawing.Point(26, 3)
+        Me.BtnView.Name = "BtnView"
+        Me.BtnView.Size = New System.Drawing.Size(17, 17)
+        Me.BtnView.TabIndex = 1
+        Me.BtnView.TabStop = False
+        Me.BtnView.TooltipText = ""
+        Me.BtnView.UseVisualStyleBackColor = False
+        Me.BtnView.Visible = False
+        '
+        'BtnNew
+        '
+        Me.BtnNew.BackColor = System.Drawing.Color.Transparent
+        Me.BtnNew.BackgroundImage = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnNew.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnNew.FlatAppearance.BorderSize = 0
+        Me.BtnNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnNew.Location = New System.Drawing.Point(3, 3)
+        Me.BtnNew.Name = "BtnNew"
+        Me.BtnNew.Size = New System.Drawing.Size(17, 17)
+        Me.BtnNew.TabIndex = 0
+        Me.BtnNew.TabStop = False
+        Me.BtnNew.TooltipText = ""
+        Me.BtnNew.UseVisualStyleBackColor = False
+        Me.BtnNew.Visible = False
+        '
+        'TxtName
+        '
+        Me.TxtName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtName.Location = New System.Drawing.Point(15, 70)
+        Me.TxtName.Margin = New System.Windows.Forms.Padding(3, 3, 3, 6)
+        Me.TxtName.MaxLength = 100
+        Me.TxtName.Name = "TxtName"
+        Me.TxtName.Size = New System.Drawing.Size(120, 23)
+        Me.TxtName.TabIndex = 3
+        '
+        'CbxDirection
+        '
+        Me.CbxDirection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CbxDirection.FormattingEnabled = True
+        Me.CbxDirection.Location = New System.Drawing.Point(447, 68)
+        Me.CbxDirection.Name = "CbxDirection"
+        Me.CbxDirection.Size = New System.Drawing.Size(118, 25)
+        Me.CbxDirection.TabIndex = 8
+        '
+        'LblDirection
+        '
+        Me.LblDirection.AutoSize = True
+        Me.LblDirection.Location = New System.Drawing.Point(444, 50)
+        Me.LblDirection.Name = "LblDirection"
+        Me.LblDirection.Size = New System.Drawing.Size(59, 17)
+        Me.LblDirection.TabIndex = 7
+        Me.LblDirection.Text = "Direção"
         '
         'DgvNavigator
         '
@@ -262,52 +371,31 @@ Partial Class FrmCompressorInterface
         Me.DgvNavigator.NextButton = Me.BtnNext
         Me.DgvNavigator.PreviousButton = Me.BtnPrevious
         '
-        'TxtName
+        'QbxProduct
         '
-        Me.TxtName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtName.Location = New System.Drawing.Point(12, 70)
-        Me.TxtName.Margin = New System.Windows.Forms.Padding(3, 3, 3, 6)
-        Me.TxtName.MaxLength = 20
-        Me.TxtName.Name = "TxtName"
-        Me.TxtName.Size = New System.Drawing.Size(120, 23)
-        Me.TxtName.TabIndex = 3
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(138, 50)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(60, 17)
-        Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Produto"
-        '
-        'QbxSellable
-        '
-        Me.QbxSellable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.QbxSellable.CharactersToQuery = 1
+        Me.QbxProduct.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Condition1.FieldName = "statusid"
         Condition1.Operator = "="
         Condition1.TableNameOrAlias = "product"
         Condition1.Value = "@statusid"
-        Me.QbxSellable.Conditions.Add(Condition1)
-        Me.QbxSellable.DebugOnTextChanged = True
-        Me.QbxSellable.DisplayFieldAlias = "Código"
-        Me.QbxSellable.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        Me.QbxSellable.DisplayFieldName = "code"
-        Me.QbxSellable.DisplayMainFieldName = "id"
-        Me.QbxSellable.DisplayTableAlias = ""
-        Me.QbxSellable.DisplayTableName = "productprovidercode"
-        Me.QbxSellable.Distinct = False
-        Me.QbxSellable.DropDownAutoStretchRight = False
-        Me.QbxSellable.DropDownStretchLeft = 106
-        Me.QbxSellable.DropDownStretchRight = 97
-        Me.QbxSellable.GridHeaderBackColor = System.Drawing.SystemColors.Window
-        Me.QbxSellable.IfNull = Nothing
-        Me.QbxSellable.Location = New System.Drawing.Point(138, 70)
-        Me.QbxSellable.MainReturnFieldName = "id"
-        Me.QbxSellable.MainTableAlias = Nothing
-        Me.QbxSellable.MainTableName = "product"
-        Me.QbxSellable.Name = "QbxSellable"
+        Me.QbxProduct.Conditions.Add(Condition1)
+        Me.QbxProduct.DebugOnTextChanged = True
+        Me.QbxProduct.DisplayFieldAlias = "Código"
+        Me.QbxProduct.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        Me.QbxProduct.DisplayFieldName = "code"
+        Me.QbxProduct.DisplayMainFieldName = "id"
+        Me.QbxProduct.DisplayTableAlias = ""
+        Me.QbxProduct.DisplayTableName = "productprovidercode"
+        Me.QbxProduct.Distinct = False
+        Me.QbxProduct.DropDownAutoStretchRight = False
+        Me.QbxProduct.DropDownStretchRight = 97
+        Me.QbxProduct.GridHeaderBackColor = System.Drawing.SystemColors.Window
+        Me.QbxProduct.IfNull = Nothing
+        Me.QbxProduct.Location = New System.Drawing.Point(141, 70)
+        Me.QbxProduct.MainReturnFieldName = "id"
+        Me.QbxProduct.MainTableAlias = Nothing
+        Me.QbxProduct.MainTableName = "product"
+        Me.QbxProduct.Name = "QbxProduct"
         OtherField1.DisplayFieldAlias = "Produto"
         OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
         OtherField1.DisplayFieldName = "name"
@@ -318,14 +406,14 @@ Partial Class FrmCompressorInterface
         OtherField1.IfNull = Nothing
         OtherField1.Prefix = Nothing
         OtherField1.Suffix = Nothing
-        Me.QbxSellable.OtherFields.Add(OtherField1)
+        Me.QbxProduct.OtherFields.Add(OtherField1)
         Parameter1.ParameterName = "@statusid"
         Parameter1.ParameterValue = "0"
         Parameter2.ParameterName = "@ismainprovider"
         Parameter2.ParameterValue = "1"
-        Me.QbxSellable.Parameters.Add(Parameter1)
-        Me.QbxSellable.Parameters.Add(Parameter2)
-        Me.QbxSellable.Prefix = Nothing
+        Me.QbxProduct.Parameters.Add(Parameter1)
+        Me.QbxProduct.Parameters.Add(Parameter2)
+        Me.QbxProduct.Prefix = Nothing
         Condition2.FieldName = "ismainprovider"
         Condition2.Operator = "="
         Condition2.TableNameOrAlias = "productprovidercode"
@@ -339,22 +427,25 @@ Partial Class FrmCompressorInterface
         Relation1.WithFieldName = "id"
         Relation1.WithTableAlias = Nothing
         Relation1.WithTableName = "product"
-        Me.QbxSellable.Relations.Add(Relation1)
-        Me.QbxSellable.Size = New System.Drawing.Size(229, 23)
-        Me.QbxSellable.Suffix = Nothing
-        Me.QbxSellable.TabIndex = 7
+        Me.QbxProduct.Relations.Add(Relation1)
+        Me.QbxProduct.Size = New System.Drawing.Size(300, 23)
+        Me.QbxProduct.Suffix = Nothing
+        Me.QbxProduct.TabIndex = 5
         '
         'FrmCompressorInterface
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(379, 147)
-        Me.Controls.Add(Me.QbxSellable)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.TxtName)
+        Me.ClientSize = New System.Drawing.Size(576, 145)
+        Me.Controls.Add(Me.QbxProduct)
+        Me.Controls.Add(Me.CbxDirection)
+        Me.Controls.Add(Me.LblDirection)
+        Me.Controls.Add(Me.FlpProduct)
+        Me.Controls.Add(Me.PnButtons)
         Me.Controls.Add(Me.LblName)
-        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.LblProduct)
         Me.Controls.Add(Me.TsTitle)
+        Me.Controls.Add(Me.TxtName)
         Me.Controls.Add(Me.TsNavigation)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -363,19 +454,18 @@ Partial Class FrmCompressorInterface
         Me.MinimizeBox = False
         Me.Name = "FrmCompressorInterface"
         Me.ShowIcon = False
-        Me.Text = "Unidade de Medida"
-        Me.Panel1.ResumeLayout(False)
+        Me.Text = "Interface"
+        Me.PnButtons.ResumeLayout(False)
         Me.TsTitle.ResumeLayout(False)
         Me.TsTitle.PerformLayout()
         Me.TsNavigation.ResumeLayout(False)
         Me.TsNavigation.PerformLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.FlpProduct.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-
-    Friend WithEvents Panel1 As Panel
     Friend WithEvents BtnClose As Button
     Friend WithEvents BtnSave As Button
     Friend WithEvents TsTitle As ToolStrip
@@ -394,9 +484,17 @@ Partial Class FrmCompressorInterface
     Friend WithEvents BtnLast As ToolStripButton
     Friend WithEvents BtnLog As ToolStripButton
     Friend WithEvents EprValidation As ErrorProvider
-    Friend WithEvents DgvNavigator As ControlLibrary.DataGridViewNavigator
     Friend WithEvents TxtName As TextBox
     Friend WithEvents LblName As Label
-    Friend WithEvents Label1 As Label
-    Friend WithEvents QbxSellable As ControlLibrary.QueriedBox
+    Friend WithEvents LblProduct As Label
+    Friend WithEvents BtnNew As ControlLibrary.NoFocusCueButton
+    Friend WithEvents BtnView As ControlLibrary.NoFocusCueButton
+    Friend WithEvents BtnFilter As ControlLibrary.NoFocusCueButton
+    Friend WithEvents TmrQueriedBox As Timer
+    Friend WithEvents PnButtons As Panel
+    Friend WithEvents FlpProduct As FlowLayoutPanel
+    Friend WithEvents CbxDirection As ComboBox
+    Friend WithEvents LblDirection As Label
+    Friend WithEvents DgvNavigator As ControlLibrary.DataGridViewNavigator
+    Friend WithEvents QbxProduct As ControlLibrary.QueriedBox
 End Class

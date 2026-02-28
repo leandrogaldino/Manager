@@ -839,6 +839,7 @@ CREATE TABLE `compressorinterface` (
   `statusid` int NOT NULL,
   `name` varchar(20) NOT NULL UNIQUE,
   `productid` INT NOT NULL,
+  `directionid` INT NOT NULL,
   `userid` int NOT NULL,
   `lastupdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -846,18 +847,6 @@ CREATE TABLE `compressorinterface` (
   CONSTRAINT `compressorinterface_user` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `compressorunit` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `creation` date NOT NULL,
-  `statusid` int NOT NULL,
-  `name` varchar(20) NOT NULL UNIQUE,
-  `productid` INT NOT NULL,
-  `userid` int NOT NULL,
-  `lastupdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `compressorunit_product` FOREIGN KEY (`productid`) REFERENCES `product` (`id`) ON DELETE RESTRICT,
-  CONSTRAINT `compressorunit_user` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT
-);
 
 DROP TRIGGER IF EXISTS `manager`.`compressorinterfaceinsert`;
 DROP TRIGGER IF EXISTS `manager`.`compressorinterfacedelete`;
@@ -874,7 +863,45 @@ END$$
 CREATE TRIGGER `compressorinterfaceupdate` AFTER UPDATE ON `compressorinterface` FOR EACH ROW BEGIN
 IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 24, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'ATIVO' WHEN OLD.statusid = 1 THEN 'INATIVO' END, CASE WHEN NEW.statusid = 0 THEN 'ATIVO' WHEN NEW.statusid = 1 THEN 'INATIVO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.name <> NEW.name THEN INSERT INTO log VALUES (NULL, 24, NEW.id, 'Nome', OLD.name, NEW.name, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-IF OLD.productid <> NEW.productid THEN INSERT INTO log VALUES (NULL, 24, NEW.id, 'Produto', CONCAT(OLD.productid, ' - ', (SELECT product.name FROM product WHERE product.id = OLD.productid)), CONCAT(NEW.productid, ' - ', (SELECT product.name FROM product WHERE route.id = NEW.productid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.productid <> NEW.productid THEN INSERT INTO log VALUES (NULL, 24, NEW.id, 'Produto', CONCAT(OLD.productid, ' - ', (SELECT product.name FROM product WHERE product.id = OLD.productid)), CONCAT(NEW.productid, ' - ', (SELECT product.name FROM product WHERE product.id = NEW.productid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.directionid <> NEW.directionid THEN INSERT INTO log VALUES (NULL, 24, NEW.id, 'Direção', CASE WHEN OLD.directionid = 0 THEN 'CRESCENTE' WHEN OLD.directionid = 1 THEN 'DECRESCENTE' END, CASE WHEN NEW.directionid = 0 THEN 'CRESCENTE' WHEN NEW.directionid = 1 THEN 'DECRESCENTE' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+END$$
+
+DELIMITER ;
+
+
+
+
+CREATE TABLE `compressorunit` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `creation` date NOT NULL,
+  `statusid` int NOT NULL,
+  `name` varchar(20) NOT NULL UNIQUE,
+  `productid` INT NOT NULL,
+  `userid` int NOT NULL,
+  `lastupdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `compressorunit_product` FOREIGN KEY (`productid`) REFERENCES `product` (`id`) ON DELETE RESTRICT,
+  CONSTRAINT `compressorunit_user` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT
+);
+
+
+DROP TRIGGER IF EXISTS `manager`.`compressorunitinsert`;
+DROP TRIGGER IF EXISTS `manager`.`compressorunitdelete`;
+DROP TRIGGER IF EXISTS `manager`.`compressorunitupdate`;
+
+
+DELIMITER $$
+CREATE TRIGGER `compressorunitinsert` AFTER INSERT ON `compressorunit` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 25, NEW.id, 'Criação', NULL, NULL, NOW(), CONCAT(NEW.userid , ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid)));
+END$$
+CREATE TRIGGER `compressorunitdelete` AFTER DELETE ON `compressorunit` FOR EACH ROW BEGIN
+INSERT INTO log VALUES (NULL, 25, OLD.id, 'Deleção', NULL, NULL, NOW(), CONCAT(OLD.userid, ' - ',  (SELECT user.username FROM user WHERE user.id = OLD.userid)));
+END$$
+CREATE TRIGGER `compressorunitupdate` AFTER UPDATE ON `compressorunit` FOR EACH ROW BEGIN
+IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 25, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'ATIVO' WHEN OLD.statusid = 1 THEN 'INATIVO' END, CASE WHEN NEW.statusid = 0 THEN 'ATIVO' WHEN NEW.statusid = 1 THEN 'INATIVO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.name <> NEW.name THEN INSERT INTO log VALUES (NULL, 25, NEW.id, 'Nome', OLD.name, NEW.name, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF OLD.productid <> NEW.productid THEN INSERT INTO log VALUES (NULL, 25, NEW.id, 'Produto', CONCAT(OLD.productid, ' - ', (SELECT product.name FROM product WHERE product.id = OLD.productid)), CONCAT(NEW.productid, ' - ', (SELECT product.name FROM product WHERE product.id = NEW.productid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 
 DELIMITER ;

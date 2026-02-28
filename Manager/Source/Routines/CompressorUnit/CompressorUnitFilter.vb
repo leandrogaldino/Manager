@@ -3,9 +3,9 @@ Imports ControlLibrary
 Imports MySql.Data.MySqlClient
 
 ''' <summary>
-''' Representa o filtro das interfaces de compressores.
+''' Representa o filtro das unidades compressoras.
 ''' </summary>
-Public Class CompressorInterfaceFilter
+Public Class CompressorUnitFilter
     <Browsable(False)>
     Public Property DataGridView As DataGridView
     <Browsable(False)>
@@ -26,11 +26,6 @@ Public Class CompressorInterfaceFilter
     <DisplayName("Produto")>
     <TypeConverter(GetType(ExpandableObjectConverter))>
     Public Property Product As New ProductExpandable
-    <NotifyParentProperty(True)>
-    <RefreshProperties(RefreshProperties.All)>
-    <TypeConverter(GetType(CompressorInterfaceDirectionConverter))>
-    <DisplayName("Direção")>
-    Public Overridable Property Direction As String
     Public Sub New(Dgv As DataGridView, Pg As PropertyGrid)
         DataGridView = Dgv
         PropertyGrid = Pg
@@ -51,14 +46,13 @@ Public Class CompressorInterfaceFilter
         End If
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
-            Using Cmd As New MySqlCommand(My.Resources.CompressorInterfaceFilter, Con)
+            Using Cmd As New MySqlCommand(My.Resources.CompressorUnitFilter, Con)
                 If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
                 If Status <> Nothing Then Cmd.Parameters.AddWithValue("@statusid", If(Status = EnumHelper.GetEnumDescription(SimpleStatus.Active), CInt(SimpleStatus.Active), CInt(SimpleStatus.Inactive))) : Filtering = True Else Cmd.Parameters.AddWithValue("@statusid", "%")
                 If Name <> Nothing Then Cmd.Parameters.AddWithValue("@name", Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@name", "%")
                 If Product.ID <> Nothing Then Cmd.Parameters.AddWithValue("@productid", Product.ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@productid", "%")
                 If Product.Code <> Nothing Then Cmd.Parameters.AddWithValue("@productcode", Product.Code) : Filtering = True Else Cmd.Parameters.AddWithValue("@productcode", "%")
                 If Product.Name <> Nothing Then Cmd.Parameters.AddWithValue("@productname", Product.Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@productname", "%")
-                If Direction <> Nothing Then Cmd.Parameters.AddWithValue("@directionid", If(Direction = EnumHelper.GetEnumDescription(CompressorInterfaceDirection.Ascending), CInt(CompressorInterfaceDirection.Ascending), CInt(CompressorInterfaceDirection.Descending))) : Filtering = True Else Cmd.Parameters.AddWithValue("@directionid", "%")
                 Using Adp As New MySqlDataAdapter(Cmd)
                     Adp.Fill(Table)
                     DataGridView.DataSource = Nothing
@@ -91,6 +85,5 @@ Public Class CompressorInterfaceFilter
         Status = Nothing
         Name = Nothing
         Product = New ProductExpandable
-        Direction = Nothing
     End Sub
 End Class

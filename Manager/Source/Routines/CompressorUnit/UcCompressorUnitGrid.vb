@@ -1,9 +1,9 @@
 ﻿Imports ControlLibrary
 Imports MySql.Data.MySqlClient
 Imports ControlLibrary.Extensions
-Public Class UcCompressorInterfaceGrid
-    Private _CompressorInterface As New CompressorInterface
-    Private _Filter As CompressorInterfaceFilter
+Public Class UcCompressorUnitGrid
+    Private _CompressorUnit As New CompressorUnit
+    Private _Filter As CompressorUnitFilter
     Private _User As User
     Public Sub New()
         InitializeComponent()
@@ -12,20 +12,20 @@ Public Class UcCompressorInterfaceGrid
         SplitContainer1.SplitterDistance = 250
         SplitContainer2.Panel1Collapsed = True
         SplitContainer2.SplitterDistance = 800
-        _Filter = New CompressorInterfaceFilter(DgvData, PgFilter)
+        _Filter = New CompressorUnitFilter(DgvData, PgFilter)
         _Filter.Filter()
         _User = Locator.GetInstance(Of Session).User
         PgFilter.SelectedObject = _Filter
-        BtnInclude.Visible = _User.CanWrite(Routine.CompressorInterface)
-        BtnEdit.Visible = _User.CanWrite(Routine.CompressorInterface)
-        BtnDelete.Visible = _User.CanDelete(Routine.CompressorInterface)
+        BtnInclude.Visible = _User.CanWrite(Routine.CompressorUnit)
+        BtnEdit.Visible = _User.CanWrite(Routine.CompressorUnit)
+        BtnDelete.Visible = _User.CanDelete(Routine.CompressorUnit)
         BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvlCompressorInterface.Load()
+        DgvlCompressorUnit.Load()
     End Sub
     Private Sub BtnInclude_Click(sender As Object, e As EventArgs) Handles BtnInclude.Click
-        Using Form As New FrmCompressorInterface(New CompressorInterface, Me)
+        Using Form As New FrmCompressorUnit(New CompressorUnit, Me)
             Form.ShowDialog()
         End Using
     End Sub
@@ -33,8 +33,8 @@ Public Class UcCompressorInterfaceGrid
         If DgvData.SelectedRows.Count = 1 Then
             Try
                 Cursor = Cursors.WaitCursor
-                _CompressorInterface = New CompressorInterface().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
-                Using Form As New FrmCompressorInterface(_CompressorInterface, Me)
+                _CompressorUnit = New CompressorUnit().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
+                Using Form As New FrmCompressorUnit(_CompressorUnit, Me)
                     Form.ShowDialog()
                 End Using
             Catch ex As Exception
@@ -48,13 +48,13 @@ Public Class UcCompressorInterfaceGrid
         If DgvData.SelectedRows.Count = 1 Then
             Try
                 Cursor = Cursors.WaitCursor
-                _CompressorInterface.Load(DgvData.SelectedRows(0).Cells("id").Value, False)
-                If Not _CompressorInterface.LockInfo.IsLocked Then
+                _CompressorUnit.Load(DgvData.SelectedRows(0).Cells("id").Value, False)
+                If Not _CompressorUnit.LockInfo.IsLocked Then
                     If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                         Try
-                            _CompressorInterface.Delete()
+                            _CompressorUnit.Delete()
                             _Filter.Filter()
-                            DgvlCompressorInterface.Load()
+                            DgvlCompressorUnit.Load()
                             DgvData.ClearSelection()
                         Catch ex As MySqlException
                             If ex.Number = 1451 Then
@@ -65,7 +65,7 @@ Public Class UcCompressorInterfaceGrid
                         End Try
                     End If
                 Else
-                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _CompressorInterface.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
+                    CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _CompressorUnit.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                 End If
             Catch ex As Exception
                 CMessageBox.Show("ERRO PU006", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
@@ -76,11 +76,11 @@ Public Class UcCompressorInterfaceGrid
     End Sub
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         _Filter.Filter()
-        DgvlCompressorInterface.Load()
+        DgvlCompressorUnit.Load()
         DgvData.ClearSelection()
     End Sub
     Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
-        SplitContainer1.Panel1Collapsed = If(BtnFilter.Checked, False, True)
+        SplitContainer1.Panel1Collapsed = Not BtnFilter.Checked
         SplitContainer1.SplitterDistance = 350
     End Sub
     Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
@@ -109,7 +109,7 @@ Public Class UcCompressorInterfaceGrid
         _Filter.Clean()
         _Filter.Filter()
         PgFilter.Refresh()
-        DgvlCompressorInterface.Load()
+        DgvlCompressorUnit.Load()
         LblStatus.Text = Nothing
         LblStatus.ForeColor = Color.Black
         LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
@@ -158,7 +158,7 @@ Public Class UcCompressorInterfaceGrid
             LblStatus.ForeColor = Color.Black
             LblStatus.Font = New Font(LblStatus.Font, FontStyle.Regular)
         End If
-        DgvlCompressorInterface.Load()
+        DgvlCompressorUnit.Load()
     End Sub
     Private Sub DgvData_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvData.KeyDown
         If e.KeyCode = Keys.Enter Then

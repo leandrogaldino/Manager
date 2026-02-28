@@ -1,20 +1,20 @@
-﻿Imports ControlLibrary
+﻿
+Imports ControlLibrary
 Imports MySql.Data.MySqlClient
 
 ''' <summary>
-''' Representa um modelo de interface de um compressor.
+''' Representa um modelo de unidade compressora.
 ''' </summary>
-Public Class CompressorInterface
+Public Class CompressorUnit
     Inherits ParentModel
     Public Property Status As SimpleStatus = SimpleStatus.Active
     Public Property Name As String
     Public Property ProductID As Long
     Public Property ProductName As String
     Public Property Product As New Lazy(Of Product)
-    Public Property Direction As CompressorInterfaceDirection = CompressorInterfaceDirection.Ascending
 
     Public Sub New()
-        SetRoutine(Routine.CompressorInterface)
+        SetRoutine(Routine.CompressorUnit)
     End Sub
     Public Sub Clear()
         SetIsSaved(False)
@@ -25,15 +25,14 @@ Public Class CompressorInterface
         ProductID = 0
         ProductName = Nothing
         Product = New Lazy(Of Product)
-        Direction = CompressorInterfaceDirection.Ascending
         If LockInfo.IsLocked Then Unlock()
     End Sub
-    Public Function Load(Identity As Long, LockMe As Boolean) As CompressorInterface
+    Public Function Load(Identity As Long, LockMe As Boolean) As CompressorUnit
         Dim TableResult As DataTable
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
-                Using Cmd As New MySqlCommand(My.Resources.CompressorInterfaceSelect, Con)
+                Using Cmd As New MySqlCommand(My.Resources.CompressorUnitSelect, Con)
                     Cmd.Transaction = Tra
                     Cmd.Parameters.AddWithValue("@id", Identity)
                     Using Adp As New MySqlDataAdapter(Cmd)
@@ -54,7 +53,6 @@ Public Class CompressorInterface
                         ProductID = Convert.ToInt64(TableResult.Rows(0).Item("productid"))
                         ProductName = Convert.ToString(TableResult.Rows(0).Item("productname"))
                         Product = New Lazy(Of Product)(Function() New Product().Load(ProductID, False))
-                        Direction = Convert.ToInt32(TableResult.Rows(0).Item("directionid"))
                         LockInfo = GetLockInfo(Tra)
                         If LockMe And Not LockInfo.IsLocked Then Lock(Tra)
                     Else
@@ -66,12 +64,12 @@ Public Class CompressorInterface
         End Using
         Return Me
     End Function
-    Public Function Load(Identity As Long, Transaction As MySqlTransaction, LockMe As Boolean) As CompressorInterface
+    Public Function Load(Identity As Long, Transaction As MySqlTransaction, LockMe As Boolean) As CompressorUnit
         Dim TableResult As DataTable
-        Using CmdProductUnitSelect As New MySqlCommand(My.Resources.CompressorInterfaceSelect, Transaction.Connection)
-            CmdProductUnitSelect.Transaction = Transaction
-            CmdProductUnitSelect.Parameters.AddWithValue("@id", Identity)
-            Using Adp As New MySqlDataAdapter(CmdProductUnitSelect)
+        Using Cmd As New MySqlCommand(My.Resources.CompressorUnitSelect, Transaction.Connection)
+            Cmd.Transaction = Transaction
+            Cmd.Parameters.AddWithValue("@id", Identity)
+            Using Adp As New MySqlDataAdapter(Cmd)
                 TableResult = New DataTable
                 Adp.Fill(TableResult)
             End Using
@@ -88,7 +86,6 @@ Public Class CompressorInterface
                 ProductID = Convert.ToInt64(TableResult.Rows(0).Item("productid"))
                 ProductName = Convert.ToString(TableResult.Rows(0).Item("productname"))
                 Product = New Lazy(Of Product)(Function() New Product().Load(ProductID, False))
-                Direction = Convert.ToInt32(TableResult.Rows(0).Item("directionid"))
                 LockInfo = GetLockInfo(Transaction)
                 If LockMe And Not LockInfo.IsLocked Then Lock(Transaction)
             Else
@@ -110,7 +107,7 @@ Public Class CompressorInterface
             Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
                 UpdateUser(Con, Tra)
-                Using CmdProductUnitDelete As New MySqlCommand(My.Resources.CompressorInterfaceDelete, Con, Tra)
+                Using CmdProductUnitDelete As New MySqlCommand(My.Resources.CompressorUnitDelete, Con, Tra)
                     CmdProductUnitDelete.Parameters.AddWithValue("@id", ID)
                     CmdProductUnitDelete.ExecuteNonQuery()
                     Clear()
@@ -124,13 +121,12 @@ Public Class CompressorInterface
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
             Using Tra As MySqlTransaction = Con.BeginTransaction(IsolationLevel.Serializable)
-                Using CmdProductUnitInsert As New MySqlCommand(My.Resources.CompressorInterfaceInsert, Con)
+                Using CmdProductUnitInsert As New MySqlCommand(My.Resources.CompressorUnitInsert, Con)
                     CmdProductUnitInsert.Transaction = Tra
                     CmdProductUnitInsert.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     CmdProductUnitInsert.Parameters.AddWithValue("@statusid", Convert.ToInt32(Status))
                     CmdProductUnitInsert.Parameters.AddWithValue("@name", Name)
                     CmdProductUnitInsert.Parameters.AddWithValue("@productid", ProductID)
-                    CmdProductUnitInsert.Parameters.AddWithValue("@directionid", Convert.ToInt32(Direction))
                     CmdProductUnitInsert.Parameters.AddWithValue("@userid", User.ID)
                     CmdProductUnitInsert.ExecuteNonQuery()
                     SetID(CmdProductUnitInsert.LastInsertedId)
@@ -142,12 +138,11 @@ Public Class CompressorInterface
     Private Sub Update()
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
-            Using CmdProductUnitUpdate As New MySqlCommand(My.Resources.CompressorInterfaceUpdate, Con)
+            Using CmdProductUnitUpdate As New MySqlCommand(My.Resources.CompressorUnitUpdate, Con)
                 CmdProductUnitUpdate.Parameters.AddWithValue("@id", ID)
                 CmdProductUnitUpdate.Parameters.AddWithValue("@statusid", Convert.ToInt32(Status))
                 CmdProductUnitUpdate.Parameters.AddWithValue("@name", Name)
                 CmdProductUnitUpdate.Parameters.AddWithValue("@productid", ProductID)
-                CmdProductUnitUpdate.Parameters.AddWithValue("@directionid", Convert.ToInt32(Direction))
                 CmdProductUnitUpdate.Parameters.AddWithValue("@userid", User.ID)
                 CmdProductUnitUpdate.ExecuteNonQuery()
             End Using
@@ -157,7 +152,7 @@ Public Class CompressorInterface
         Return Name
     End Function
     Public Overrides Function Clone() As BaseModel
-        Dim Cloned As New CompressorInterface With {
+        Dim Cloned As New CompressorUnit With {
             .Name = Name,
             .ProductID = ProductID,
             .ProductName = ProductName,
@@ -170,8 +165,7 @@ Public Class CompressorInterface
                         Return New Product().Load(ProductID, False)
                     End If
                 End Function
-            ),
-            .Direction = Direction
+            )
         }
         Cloned.SetCreation(Creation)
         Cloned.SetID(ID)

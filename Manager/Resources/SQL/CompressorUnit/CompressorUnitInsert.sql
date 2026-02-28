@@ -1,10 +1,9 @@
-INSERT INTO compressorinterface
+INSERT INTO compressorunit
 (
     creation,
     statusid,
     name,
     productid,
-    directionid,
     userid
 )
 VALUES
@@ -13,6 +12,5 @@ VALUES
     @statusid,
     @name,
     @productid,
-    @directionid,
     @userid
 );

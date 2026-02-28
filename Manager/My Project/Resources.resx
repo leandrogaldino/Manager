@@ -1285,4 +1285,31 @@
   <data name="CompressorInterfaceUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\CompressorInterface\CompressorInterfaceUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="CompressorInterface" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Image\CompressorInterface.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CompressorInterfaceGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XML\CompressorInterfaceGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="CompressorUnit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Image\CompressorUnit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CompressorUnitDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\CompressorUnit\CompressorUnitDelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="CompressorUnitFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\CompressorUnit\CompressorUnitFilter.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="CompressorUnitInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\CompressorUnit\CompressorUnitInsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="CompressorUnitSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\CompressorUnit\CompressorUnitSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="CompressorUnitUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\CompressorUnit\CompressorUnitUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="CompressorUnitGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XML\CompressorUnitGrid.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

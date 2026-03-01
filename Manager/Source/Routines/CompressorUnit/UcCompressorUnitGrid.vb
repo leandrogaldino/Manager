@@ -38,7 +38,7 @@ Public Class UcCompressorUnitGrid
                     Form.ShowDialog()
                 End Using
             Catch ex As Exception
-                CMessageBox.Show("ERRO PU004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                CMessageBox.Show("ERRO CU004", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
                 Cursor = Cursors.Default
             End Try
@@ -60,7 +60,7 @@ Public Class UcCompressorUnitGrid
                             If ex.Number = 1451 Then
                                 CMessageBox.Show("Esse registro não pode ser excluído pois já foi referenciado em outras rotinas.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                             Else
-                                CMessageBox.Show("ERRO PU005", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                                CMessageBox.Show("ERRO CU005", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                             End If
                         End Try
                     End If
@@ -68,7 +68,7 @@ Public Class UcCompressorUnitGrid
                     CMessageBox.Show(String.Format("Esse registro não pode ser excluído no momento pois está sendo utilizado por {0}.", _CompressorUnit.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
                 End If
             Catch ex As Exception
-                CMessageBox.Show("ERRO PU006", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                CMessageBox.Show("ERRO CU006", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
             Finally
                 Cursor = Cursors.Default
             End Try

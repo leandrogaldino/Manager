@@ -48,11 +48,11 @@ Public Class FrmCompressorUnit
         BtnStatusValue.Visible = False
         BtnStatusValue.Enabled = False
         Height -= TsNavigation.Height
-        LblName.Height -= TsNavigation.Height
-        TxtName.Height -= TsNavigation.Height
-        LblProduct.Height -= TsNavigation.Height
-        QbxProduct.Height -= TsNavigation.Height
-        FlpProduct.Height -= TsNavigation.Height
+        LblName.Top -= TsNavigation.Height
+        TxtName.Top -= TsNavigation.Height
+        LblProduct.Top -= TsNavigation.Height
+        QbxProduct.Top -= TsNavigation.Height
+        FlpProduct.Top -= TsNavigation.Height
         _User = Locator.GetInstance(Of Session).User
         LoadForm()
         LoadData()

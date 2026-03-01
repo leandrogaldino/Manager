@@ -230,7 +230,10 @@ Public Class FrmPersonCompressor
         QbxCompressor.Freeze(_PersonCompressor.CompressorID)
 
         QbxInterface.Unfreeze()
-        QbxInterface.Freeze(_PersonCompressor.InterfaceID)
+
+
+
+        QbxInterface.Freeze(_PersonCompressor.CompressorInterfaceID)
 
         QbxUnit.Unfreeze()
         QbxUnit.Freeze(_PersonCompressor.CompressorUnitID)
@@ -373,9 +376,12 @@ Public Class FrmPersonCompressor
                     .Compressor = New Lazy(Of Compressor)(Function() New Compressor().Load(QbxCompressor.FreezedPrimaryKey, False))
                     .CompressorID = QbxCompressor.FreezedPrimaryKey
                     .CompressorName = QbxCompressor.Text
-
-                    .Inter
-
+                    .CompressorInterface = New Lazy(Of CompressorInterface)(Function() New CompressorInterface().Load(QbxInterface.FreezedPrimaryKey, False))
+                    .CompressorInterfaceID = QbxInterface.FreezedPrimaryKey
+                    .CompressorInterfaceName = QbxInterface.Text
+                    .CompressorUnit = New Lazy(Of CompressorUnit)(Function() New CompressorUnit().Load(QbxUnit.FreezedPrimaryKey, False))
+                    .CompressorUnitID = QbxUnit.FreezedPrimaryKey
+                    .CompressorUnitName = QbxUnit.Text
                     .Controlled = EnumHelper.GetEnumValue(Of ConfirmationType)(CbxControlled.Text)
                     .SerialNumber = TxtSerialNumber.Text
                     .Patrimony = TxtPatrimony.Text
@@ -389,6 +395,12 @@ Public Class FrmPersonCompressor
                     .Compressor = New Lazy(Of Compressor)(Function() New Compressor().Load(QbxCompressor.FreezedPrimaryKey, False))
                     .CompressorID = QbxCompressor.FreezedPrimaryKey
                     .CompressorName = QbxCompressor.Text
+                    .CompressorInterface = New Lazy(Of CompressorInterface)(Function() New CompressorInterface().Load(QbxInterface.FreezedPrimaryKey, False))
+                    .CompressorInterfaceID = QbxInterface.FreezedPrimaryKey
+                    .CompressorInterfaceName = QbxInterface.Text
+                    .CompressorUnit = New Lazy(Of CompressorUnit)(Function() New CompressorUnit().Load(QbxUnit.FreezedPrimaryKey, False))
+                    .CompressorUnitID = QbxUnit.FreezedPrimaryKey
+                    .CompressorUnitName = QbxUnit.Text
                     .Controlled = EnumHelper.GetEnumValue(Of ConfirmationType)(CbxControlled.Text)
                     .SerialNumber = TxtSerialNumber.Text
                     .Patrimony = TxtPatrimony.Text

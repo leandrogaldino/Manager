@@ -615,7 +615,7 @@ Partial Class FrmPersonCompressor
         Me.QbxUnit.DisplayFieldName = "Name"
         Me.QbxUnit.DisplayMainFieldName = "id"
         Me.QbxUnit.DisplayTableAlias = ""
-        Me.QbxUnit.DisplayTableName = ""
+        Me.QbxUnit.DisplayTableName = "compressorunit"
         Me.QbxUnit.Distinct = False
         Me.QbxUnit.DropDownAutoStretchRight = False
         Me.QbxUnit.DropDownStretchRight = 182
@@ -649,7 +649,7 @@ Partial Class FrmPersonCompressor
         Me.QbxInterface.DisplayFieldName = "name"
         Me.QbxInterface.DisplayMainFieldName = "id"
         Me.QbxInterface.DisplayTableAlias = ""
-        Me.QbxInterface.DisplayTableName = ""
+        Me.QbxInterface.DisplayTableName = "compressorinterface"
         Me.QbxInterface.Distinct = False
         Me.QbxInterface.DropDownAutoStretchRight = False
         Me.QbxInterface.DropDownStretchRight = 182

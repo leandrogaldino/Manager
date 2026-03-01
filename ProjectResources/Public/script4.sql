@@ -906,4 +906,26 @@ END$$
 
 DELIMITER ;
 
+# CADASTRA UMA UNIDADE E UMA INTERFACE COM ID 1.
+
+ALTER TABLE manager.personcompressor
+ADD COLUMN compressorinterfaceid INT NOT NULL DEFAULT 1 AFTER compressorid,
+ADD COLUMN compressorunitid INT NOT NULL DEFAULT 1 AFTER compressorinterfaceid,
+ADD INDEX personcompressor_unit_idx (compressorunitid),
+ADD INDEX personcompressor_interface_idx (compressorinterfaceid),
+ADD CONSTRAINT personcompressor_interface
+  FOREIGN KEY (compressorinterfaceid)
+  REFERENCES manager.compressorinterface (id)
+  ON DELETE RESTRICT
+  ON UPDATE RESTRICT,
+ADD CONSTRAINT personcompressor_unit
+  FOREIGN KEY (compressorunitid)
+  REFERENCES manager.compressorunit (id)
+  ON DELETE RESTRICT
+  ON UPDATE RESTRICT;
+  
+  ALTER TABLE manager.personcompressor
+ALTER compressorinterfaceid DROP DEFAULT,
+ALTER compressorunitid DROP DEFAULT;
+
 

@@ -311,7 +311,7 @@ Public Class TaskCloudSync
     End Function
     Private Async Function FetchCompressorInterface(Change As Dictionary(Of String, Object)) As Task
         Dim Result As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("compressorinterface", New MySqlSelectOptions() With {
-            .Columns = {"id", "name", "statusid", "directionid"}.ToList(),
+            .Columns = {"id", "name", "statusid", "directionid", "productid"}.ToList(),
             .Where = "id = @id",
             .QueryArgs = New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
             .Limit = 1
@@ -334,7 +334,7 @@ Public Class TaskCloudSync
     End Function
     Private Async Function FetchCompressorUnit(Change As Dictionary(Of String, Object)) As Task
         Dim Result As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("compressorunit", New MySqlSelectOptions() With {
-            .Columns = {"id", "name", "statusid"}.ToList(),
+            .Columns = {"id", "name", "statusid", "productid"}.ToList(),
             .Where = "id = @id",
             .QueryArgs = New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
             .Limit = 1

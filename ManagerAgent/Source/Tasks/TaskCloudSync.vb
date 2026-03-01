@@ -291,7 +291,7 @@ Public Class TaskCloudSync
     End Function
     Private Async Function FetchCompressorInterface(Change As Dictionary(Of String, Object)) As Task
         Dim Result = Await _LocalDB.ExecuteSelectAsync("compressorinterface",
-                                                  New List(Of String) From {"id", "name", "statusid", "directionid"},
+                                                  New List(Of String) From {"id", "name", "statusid", "directionid", "productid"},
                                                   "id = @id",
                                                   New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
                                                   Limit:=1)
@@ -311,7 +311,7 @@ Public Class TaskCloudSync
     End Function
     Private Async Function FetchCompressorUnit(Change As Dictionary(Of String, Object)) As Task
         Dim Result = Await _LocalDB.ExecuteSelectAsync("compressorunit",
-                                                  New List(Of String) From {"id", "name", "statusid"},
+                                                  New List(Of String) From {"id", "name", "statusid", "productid"},
                                                   "id = @id",
                                                   New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
                                                   Limit:=1)

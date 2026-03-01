@@ -23,8 +23,12 @@ Partial Class FrmPersonCompressor
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim Condition3 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Parameter3 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
         Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
         Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmPersonCompressor))
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
@@ -52,20 +56,32 @@ Partial Class FrmPersonCompressor
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.QbxCompressor = New ControlLibrary.QueriedBox()
-        Me.TmrQueriedBox = New System.Windows.Forms.Timer(Me.components)
+        Me.TmrQueriedBoxCompressor = New System.Windows.Forms.Timer(Me.components)
         Me.TxtSector = New System.Windows.Forms.TextBox()
         Me.TxtPatrimony = New System.Windows.Forms.TextBox()
         Me.TxtSerialNumber = New System.Windows.Forms.TextBox()
         Me.TcPersonCompressor = New System.Windows.Forms.TabControl()
         Me.TabMain = New System.Windows.Forms.TabPage()
+        Me.FlpUnit = New System.Windows.Forms.FlowLayoutPanel()
+        Me.BtnFilterUnit = New ControlLibrary.NoFocusCueButton()
+        Me.BtnViewUnit = New ControlLibrary.NoFocusCueButton()
+        Me.BtnNewUnit = New ControlLibrary.NoFocusCueButton()
+        Me.FlpInterface = New System.Windows.Forms.FlowLayoutPanel()
+        Me.BtnFiltrerInterface = New ControlLibrary.NoFocusCueButton()
+        Me.BtnViewInterface = New ControlLibrary.NoFocusCueButton()
+        Me.BtnNewInterface = New ControlLibrary.NoFocusCueButton()
+        Me.QbxUnit = New ControlLibrary.QueriedBox()
+        Me.QbxInterface = New ControlLibrary.QueriedBox()
         Me.CbxControlled = New ControlLibrary.CentralizedComboBox()
         Me.DbxUnitCapacity = New ControlLibrary.DecimalBox()
         Me.FlpCompressor = New System.Windows.Forms.FlowLayoutPanel()
-        Me.BtnFilter = New ControlLibrary.NoFocusCueButton()
-        Me.BtnView = New ControlLibrary.NoFocusCueButton()
-        Me.BtnNew = New ControlLibrary.NoFocusCueButton()
+        Me.BtnFilterCompressor = New ControlLibrary.NoFocusCueButton()
+        Me.BtnViewCompressor = New ControlLibrary.NoFocusCueButton()
+        Me.BtnNewCompressor = New ControlLibrary.NoFocusCueButton()
         Me.LblControlled = New System.Windows.Forms.Label()
         Me.LblUnitCapacity = New System.Windows.Forms.Label()
+        Me.LblUnit = New System.Windows.Forms.Label()
+        Me.LblInterface = New System.Windows.Forms.Label()
         Me.TabMaintenance = New System.Windows.Forms.TabPage()
         Me.TcMaintenance = New System.Windows.Forms.TabControl()
         Me.TabWorkedHourSellable = New System.Windows.Forms.TabPage()
@@ -91,16 +107,16 @@ Partial Class FrmPersonCompressor
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.DgvlWorkedHourSellable = New Manager.DataGridViewLayout()
         Me.DgvlElapsedDaySellable = New Manager.DataGridViewLayout()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.TmrQueriedBoxInterface = New System.Windows.Forms.Timer(Me.components)
+        Me.TmrQueriedBoxUnit = New System.Windows.Forms.Timer(Me.components)
         Me.TsMain.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.TsData.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TcPersonCompressor.SuspendLayout()
         Me.TabMain.SuspendLayout()
+        Me.FlpUnit.SuspendLayout()
+        Me.FlpInterface.SuspendLayout()
         Me.FlpCompressor.SuspendLayout()
         Me.TabMaintenance.SuspendLayout()
         Me.TcMaintenance.SuspendLayout()
@@ -118,7 +134,7 @@ Partial Class FrmPersonCompressor
         '
         Me.BtnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.BtnClose.Location = New System.Drawing.Point(232, 7)
+        Me.BtnClose.Location = New System.Drawing.Point(307, 7)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(95, 30)
         Me.BtnClose.TabIndex = 1
@@ -129,7 +145,7 @@ Partial Class FrmPersonCompressor
         '
         Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnSave.Enabled = False
-        Me.BtnSave.Location = New System.Drawing.Point(131, 7)
+        Me.BtnSave.Location = New System.Drawing.Point(206, 7)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(95, 30)
         Me.BtnSave.TabIndex = 0
@@ -146,7 +162,7 @@ Partial Class FrmPersonCompressor
         Me.TsMain.Location = New System.Drawing.Point(0, 0)
         Me.TsMain.Name = "TsMain"
         Me.TsMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsMain.Size = New System.Drawing.Size(339, 25)
+        Me.TsMain.Size = New System.Drawing.Size(414, 25)
         Me.TsMain.TabIndex = 0
         Me.TsMain.Text = "ToolStrip2"
         '
@@ -239,13 +255,13 @@ Partial Class FrmPersonCompressor
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel1.Location = New System.Drawing.Point(0, 227)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(339, 44)
+        Me.Panel1.Size = New System.Drawing.Size(414, 44)
         Me.Panel1.TabIndex = 3
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(218, 92)
+        Me.Label3.Location = New System.Drawing.Point(268, 94)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(40, 17)
         Me.Label3.TabIndex = 9
@@ -254,7 +270,7 @@ Partial Class FrmPersonCompressor
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(112, 92)
+        Me.Label8.Location = New System.Drawing.Point(137, 94)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(79, 17)
         Me.Label8.TabIndex = 7
@@ -263,7 +279,7 @@ Partial Class FrmPersonCompressor
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(6, 94)
+        Me.Label1.Location = New System.Drawing.Point(6, 96)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(77, 17)
         Me.Label1.TabIndex = 5
@@ -288,7 +304,7 @@ Partial Class FrmPersonCompressor
         Me.TsData.Location = New System.Drawing.Point(0, 25)
         Me.TsData.Name = "TsData"
         Me.TsData.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsData.Size = New System.Drawing.Size(339, 25)
+        Me.TsData.Size = New System.Drawing.Size(414, 25)
         Me.TsData.TabIndex = 1
         Me.TsData.Text = "ToolStrip1"
         '
@@ -359,11 +375,11 @@ Partial Class FrmPersonCompressor
         '
         Me.QbxCompressor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxCompressor.CharactersToQuery = 1
-        Condition1.FieldName = "statusid"
-        Condition1.Operator = "="
-        Condition1.TableNameOrAlias = "compressor"
-        Condition1.Value = "@statusid"
-        Me.QbxCompressor.Conditions.Add(Condition1)
+        Condition3.FieldName = "statusid"
+        Condition3.Operator = "="
+        Condition3.TableNameOrAlias = "compressor"
+        Condition3.Value = "@statusid"
+        Me.QbxCompressor.Conditions.Add(Condition3)
         Me.QbxCompressor.DebugOnTextChanged = False
         Me.QbxCompressor.DisplayFieldAlias = "NOME"
         Me.QbxCompressor.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
@@ -380,45 +396,45 @@ Partial Class FrmPersonCompressor
         Me.QbxCompressor.MainTableAlias = Nothing
         Me.QbxCompressor.MainTableName = "compressor"
         Me.QbxCompressor.Name = "QbxCompressor"
-        Parameter1.ParameterName = "@statusid"
-        Parameter1.ParameterValue = "0"
-        Me.QbxCompressor.Parameters.Add(Parameter1)
+        Parameter3.ParameterName = "@statusid"
+        Parameter3.ParameterValue = "0"
+        Me.QbxCompressor.Parameters.Add(Parameter3)
         Me.QbxCompressor.Prefix = Nothing
-        Me.QbxCompressor.Size = New System.Drawing.Size(206, 23)
+        Me.QbxCompressor.Size = New System.Drawing.Size(283, 23)
         Me.QbxCompressor.Suffix = Nothing
         Me.QbxCompressor.TabIndex = 1
         '
-        'TmrQueriedBox
+        'TmrQueriedBoxCompressor
         '
-        Me.TmrQueriedBox.Enabled = True
-        Me.TmrQueriedBox.Interval = 300
+        Me.TmrQueriedBoxCompressor.Enabled = True
+        Me.TmrQueriedBoxCompressor.Interval = 300
         '
         'TxtSector
         '
         Me.TxtSector.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtSector.Location = New System.Drawing.Point(221, 112)
+        Me.TxtSector.Location = New System.Drawing.Point(271, 114)
         Me.TxtSector.MaxLength = 50
         Me.TxtSector.Name = "TxtSector"
-        Me.TxtSector.Size = New System.Drawing.Size(100, 23)
+        Me.TxtSector.Size = New System.Drawing.Size(127, 23)
         Me.TxtSector.TabIndex = 10
         '
         'TxtPatrimony
         '
         Me.TxtPatrimony.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtPatrimony.Location = New System.Drawing.Point(115, 112)
+        Me.TxtPatrimony.Location = New System.Drawing.Point(140, 114)
         Me.TxtPatrimony.MaxLength = 50
         Me.TxtPatrimony.Name = "TxtPatrimony"
-        Me.TxtPatrimony.Size = New System.Drawing.Size(100, 23)
+        Me.TxtPatrimony.Size = New System.Drawing.Size(125, 23)
         Me.TxtPatrimony.TabIndex = 8
         Me.TxtPatrimony.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'TxtSerialNumber
         '
         Me.TxtSerialNumber.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtSerialNumber.Location = New System.Drawing.Point(9, 112)
+        Me.TxtSerialNumber.Location = New System.Drawing.Point(9, 114)
         Me.TxtSerialNumber.MaxLength = 50
         Me.TxtSerialNumber.Name = "TxtSerialNumber"
-        Me.TxtSerialNumber.Size = New System.Drawing.Size(100, 23)
+        Me.TxtSerialNumber.Size = New System.Drawing.Size(125, 23)
         Me.TxtSerialNumber.TabIndex = 6
         Me.TxtSerialNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -433,11 +449,15 @@ Partial Class FrmPersonCompressor
         Me.TcPersonCompressor.Multiline = True
         Me.TcPersonCompressor.Name = "TcPersonCompressor"
         Me.TcPersonCompressor.SelectedIndex = 0
-        Me.TcPersonCompressor.Size = New System.Drawing.Size(339, 177)
+        Me.TcPersonCompressor.Size = New System.Drawing.Size(414, 177)
         Me.TcPersonCompressor.TabIndex = 2
         '
         'TabMain
         '
+        Me.TabMain.Controls.Add(Me.FlpUnit)
+        Me.TabMain.Controls.Add(Me.FlpInterface)
+        Me.TabMain.Controls.Add(Me.QbxUnit)
+        Me.TabMain.Controls.Add(Me.QbxInterface)
         Me.TabMain.Controls.Add(Me.CbxControlled)
         Me.TabMain.Controls.Add(Me.DbxUnitCapacity)
         Me.TabMain.Controls.Add(Me.FlpCompressor)
@@ -447,11 +467,9 @@ Partial Class FrmPersonCompressor
         Me.TabMain.Controls.Add(Me.LblUnitCapacity)
         Me.TabMain.Controls.Add(Me.Label8)
         Me.TabMain.Controls.Add(Me.QbxCompressor)
-        Me.TabMain.Controls.Add(Me.TextBox2)
-        Me.TabMain.Controls.Add(Me.TextBox1)
+        Me.TabMain.Controls.Add(Me.LblUnit)
         Me.TabMain.Controls.Add(Me.TxtSerialNumber)
-        Me.TabMain.Controls.Add(Me.Label4)
-        Me.TabMain.Controls.Add(Me.Label2)
+        Me.TabMain.Controls.Add(Me.LblInterface)
         Me.TabMain.Controls.Add(Me.Label1)
         Me.TabMain.Controls.Add(Me.TxtSector)
         Me.TabMain.Controls.Add(Me.TxtPatrimony)
@@ -459,17 +477,203 @@ Partial Class FrmPersonCompressor
         Me.TabMain.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabMain.Name = "TabMain"
         Me.TabMain.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabMain.Size = New System.Drawing.Size(331, 147)
+        Me.TabMain.Size = New System.Drawing.Size(406, 147)
         Me.TabMain.TabIndex = 0
         Me.TabMain.Text = "Identificação"
         Me.TabMain.UseVisualStyleBackColor = True
+        '
+        'FlpUnit
+        '
+        Me.FlpUnit.Controls.Add(Me.BtnFilterUnit)
+        Me.FlpUnit.Controls.Add(Me.BtnViewUnit)
+        Me.FlpUnit.Controls.Add(Me.BtnNewUnit)
+        Me.FlpUnit.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
+        Me.FlpUnit.Location = New System.Drawing.Point(222, 49)
+        Me.FlpUnit.Name = "FlpUnit"
+        Me.FlpUnit.Size = New System.Drawing.Size(69, 21)
+        Me.FlpUnit.TabIndex = 14
+        '
+        'BtnFilterUnit
+        '
+        Me.BtnFilterUnit.BackColor = System.Drawing.Color.Transparent
+        Me.BtnFilterUnit.BackgroundImage = Global.Manager.My.Resources.Resources.Magnifier
+        Me.BtnFilterUnit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnFilterUnit.FlatAppearance.BorderSize = 0
+        Me.BtnFilterUnit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnFilterUnit.Location = New System.Drawing.Point(49, 3)
+        Me.BtnFilterUnit.Name = "BtnFilterUnit"
+        Me.BtnFilterUnit.Size = New System.Drawing.Size(17, 17)
+        Me.BtnFilterUnit.TabIndex = 2
+        Me.BtnFilterUnit.TabStop = False
+        Me.BtnFilterUnit.TooltipText = ""
+        Me.BtnFilterUnit.UseVisualStyleBackColor = False
+        Me.BtnFilterUnit.Visible = False
+        '
+        'BtnViewUnit
+        '
+        Me.BtnViewUnit.BackColor = System.Drawing.Color.Transparent
+        Me.BtnViewUnit.BackgroundImage = Global.Manager.My.Resources.Resources.View
+        Me.BtnViewUnit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnViewUnit.FlatAppearance.BorderSize = 0
+        Me.BtnViewUnit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnViewUnit.Location = New System.Drawing.Point(26, 3)
+        Me.BtnViewUnit.Name = "BtnViewUnit"
+        Me.BtnViewUnit.Size = New System.Drawing.Size(17, 17)
+        Me.BtnViewUnit.TabIndex = 0
+        Me.BtnViewUnit.TabStop = False
+        Me.BtnViewUnit.TooltipText = ""
+        Me.BtnViewUnit.UseVisualStyleBackColor = False
+        Me.BtnViewUnit.Visible = False
+        '
+        'BtnNewUnit
+        '
+        Me.BtnNewUnit.BackColor = System.Drawing.Color.Transparent
+        Me.BtnNewUnit.BackgroundImage = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnNewUnit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnNewUnit.FlatAppearance.BorderSize = 0
+        Me.BtnNewUnit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnNewUnit.Location = New System.Drawing.Point(3, 3)
+        Me.BtnNewUnit.Name = "BtnNewUnit"
+        Me.BtnNewUnit.Size = New System.Drawing.Size(17, 17)
+        Me.BtnNewUnit.TabIndex = 1
+        Me.BtnNewUnit.TabStop = False
+        Me.BtnNewUnit.TooltipText = ""
+        Me.BtnNewUnit.UseVisualStyleBackColor = False
+        Me.BtnNewUnit.Visible = False
+        '
+        'FlpInterface
+        '
+        Me.FlpInterface.Controls.Add(Me.BtnFiltrerInterface)
+        Me.FlpInterface.Controls.Add(Me.BtnViewInterface)
+        Me.FlpInterface.Controls.Add(Me.BtnNewInterface)
+        Me.FlpInterface.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
+        Me.FlpInterface.Location = New System.Drawing.Point(76, 49)
+        Me.FlpInterface.Name = "FlpInterface"
+        Me.FlpInterface.Size = New System.Drawing.Size(69, 21)
+        Me.FlpInterface.TabIndex = 14
+        '
+        'BtnFiltrerInterface
+        '
+        Me.BtnFiltrerInterface.BackColor = System.Drawing.Color.Transparent
+        Me.BtnFiltrerInterface.BackgroundImage = Global.Manager.My.Resources.Resources.Magnifier
+        Me.BtnFiltrerInterface.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnFiltrerInterface.FlatAppearance.BorderSize = 0
+        Me.BtnFiltrerInterface.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnFiltrerInterface.Location = New System.Drawing.Point(49, 3)
+        Me.BtnFiltrerInterface.Name = "BtnFiltrerInterface"
+        Me.BtnFiltrerInterface.Size = New System.Drawing.Size(17, 17)
+        Me.BtnFiltrerInterface.TabIndex = 2
+        Me.BtnFiltrerInterface.TabStop = False
+        Me.BtnFiltrerInterface.TooltipText = ""
+        Me.BtnFiltrerInterface.UseVisualStyleBackColor = False
+        Me.BtnFiltrerInterface.Visible = False
+        '
+        'BtnViewInterface
+        '
+        Me.BtnViewInterface.BackColor = System.Drawing.Color.Transparent
+        Me.BtnViewInterface.BackgroundImage = Global.Manager.My.Resources.Resources.View
+        Me.BtnViewInterface.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnViewInterface.FlatAppearance.BorderSize = 0
+        Me.BtnViewInterface.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnViewInterface.Location = New System.Drawing.Point(26, 3)
+        Me.BtnViewInterface.Name = "BtnViewInterface"
+        Me.BtnViewInterface.Size = New System.Drawing.Size(17, 17)
+        Me.BtnViewInterface.TabIndex = 0
+        Me.BtnViewInterface.TabStop = False
+        Me.BtnViewInterface.TooltipText = ""
+        Me.BtnViewInterface.UseVisualStyleBackColor = False
+        Me.BtnViewInterface.Visible = False
+        '
+        'BtnNewInterface
+        '
+        Me.BtnNewInterface.BackColor = System.Drawing.Color.Transparent
+        Me.BtnNewInterface.BackgroundImage = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnNewInterface.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnNewInterface.FlatAppearance.BorderSize = 0
+        Me.BtnNewInterface.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnNewInterface.Location = New System.Drawing.Point(3, 3)
+        Me.BtnNewInterface.Name = "BtnNewInterface"
+        Me.BtnNewInterface.Size = New System.Drawing.Size(17, 17)
+        Me.BtnNewInterface.TabIndex = 1
+        Me.BtnNewInterface.TabStop = False
+        Me.BtnNewInterface.TooltipText = ""
+        Me.BtnNewInterface.UseVisualStyleBackColor = False
+        Me.BtnNewInterface.Visible = False
+        '
+        'QbxUnit
+        '
+        Me.QbxUnit.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.QbxUnit.CharactersToQuery = 1
+        Condition1.FieldName = "statusid"
+        Condition1.Operator = "="
+        Condition1.TableNameOrAlias = "compressorunit"
+        Condition1.Value = "@statusid"
+        Me.QbxUnit.Conditions.Add(Condition1)
+        Me.QbxUnit.DebugOnTextChanged = False
+        Me.QbxUnit.DisplayFieldAlias = "Nome"
+        Me.QbxUnit.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        Me.QbxUnit.DisplayFieldName = "Name"
+        Me.QbxUnit.DisplayMainFieldName = "id"
+        Me.QbxUnit.DisplayTableAlias = ""
+        Me.QbxUnit.DisplayTableName = "compressorunit"
+        Me.QbxUnit.Distinct = False
+        Me.QbxUnit.DropDownAutoStretchRight = False
+        Me.QbxUnit.DropDownStretchRight = 182
+        Me.QbxUnit.GridHeaderBackColor = System.Drawing.SystemColors.Window
+        Me.QbxUnit.IfNull = Nothing
+        Me.QbxUnit.Location = New System.Drawing.Point(152, 70)
+        Me.QbxUnit.MainReturnFieldName = "id"
+        Me.QbxUnit.MainTableAlias = Nothing
+        Me.QbxUnit.MainTableName = "compressorunit"
+        Me.QbxUnit.Name = "QbxUnit"
+        Parameter1.ParameterName = "@statusid"
+        Parameter1.ParameterValue = "0"
+        Me.QbxUnit.Parameters.Add(Parameter1)
+        Me.QbxUnit.Prefix = Nothing
+        Me.QbxUnit.Size = New System.Drawing.Size(140, 23)
+        Me.QbxUnit.Suffix = Nothing
+        Me.QbxUnit.TabIndex = 13
+        '
+        'QbxInterface
+        '
+        Me.QbxInterface.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.QbxInterface.CharactersToQuery = 1
+        Condition2.FieldName = "statusid"
+        Condition2.Operator = "="
+        Condition2.TableNameOrAlias = "compressorinterface"
+        Condition2.Value = "@statusid"
+        Me.QbxInterface.Conditions.Add(Condition2)
+        Me.QbxInterface.DebugOnTextChanged = False
+        Me.QbxInterface.DisplayFieldAlias = "Nome"
+        Me.QbxInterface.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        Me.QbxInterface.DisplayFieldName = "name"
+        Me.QbxInterface.DisplayMainFieldName = "id"
+        Me.QbxInterface.DisplayTableAlias = ""
+        Me.QbxInterface.DisplayTableName = "compressorinterface"
+        Me.QbxInterface.Distinct = False
+        Me.QbxInterface.DropDownAutoStretchRight = False
+        Me.QbxInterface.DropDownStretchRight = 182
+        Me.QbxInterface.GridHeaderBackColor = System.Drawing.SystemColors.Window
+        Me.QbxInterface.IfNull = Nothing
+        Me.QbxInterface.Location = New System.Drawing.Point(6, 70)
+        Me.QbxInterface.MainReturnFieldName = "id"
+        Me.QbxInterface.MainTableAlias = Nothing
+        Me.QbxInterface.MainTableName = "compressorinterface"
+        Me.QbxInterface.Name = "QbxInterface"
+        Parameter2.ParameterName = "@statusid"
+        Parameter2.ParameterValue = "0"
+        Me.QbxInterface.Parameters.Add(Parameter2)
+        Me.QbxInterface.Prefix = Nothing
+        Me.QbxInterface.Size = New System.Drawing.Size(140, 23)
+        Me.QbxInterface.Suffix = Nothing
+        Me.QbxInterface.TabIndex = 13
         '
         'CbxControlled
         '
         Me.CbxControlled.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.CbxControlled.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CbxControlled.FormattingEnabled = True
-        Me.CbxControlled.Location = New System.Drawing.Point(221, 23)
+        Me.CbxControlled.Location = New System.Drawing.Point(298, 24)
         Me.CbxControlled.Name = "CbxControlled"
         Me.CbxControlled.Size = New System.Drawing.Size(100, 24)
         Me.CbxControlled.TabIndex = 4
@@ -479,7 +683,7 @@ Partial Class FrmPersonCompressor
         Me.DbxUnitCapacity.DecimalOnly = True
         Me.DbxUnitCapacity.DecimalPlaces = 0
         Me.DbxUnitCapacity.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxUnitCapacity.Location = New System.Drawing.Point(221, 68)
+        Me.DbxUnitCapacity.Location = New System.Drawing.Point(298, 70)
         Me.DbxUnitCapacity.Name = "DbxUnitCapacity"
         Me.DbxUnitCapacity.Size = New System.Drawing.Size(100, 23)
         Me.DbxUnitCapacity.TabIndex = 12
@@ -488,67 +692,67 @@ Partial Class FrmPersonCompressor
         '
         'FlpCompressor
         '
-        Me.FlpCompressor.Controls.Add(Me.BtnFilter)
-        Me.FlpCompressor.Controls.Add(Me.BtnView)
-        Me.FlpCompressor.Controls.Add(Me.BtnNew)
+        Me.FlpCompressor.Controls.Add(Me.BtnFilterCompressor)
+        Me.FlpCompressor.Controls.Add(Me.BtnViewCompressor)
+        Me.FlpCompressor.Controls.Add(Me.BtnNewCompressor)
         Me.FlpCompressor.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-        Me.FlpCompressor.Location = New System.Drawing.Point(145, 3)
+        Me.FlpCompressor.Location = New System.Drawing.Point(222, 3)
         Me.FlpCompressor.Name = "FlpCompressor"
         Me.FlpCompressor.Size = New System.Drawing.Size(69, 21)
         Me.FlpCompressor.TabIndex = 2
         '
-        'BtnFilter
+        'BtnFilterCompressor
         '
-        Me.BtnFilter.BackColor = System.Drawing.Color.Transparent
-        Me.BtnFilter.BackgroundImage = Global.Manager.My.Resources.Resources.Magnifier
-        Me.BtnFilter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnFilter.FlatAppearance.BorderSize = 0
-        Me.BtnFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnFilter.Location = New System.Drawing.Point(49, 3)
-        Me.BtnFilter.Name = "BtnFilter"
-        Me.BtnFilter.Size = New System.Drawing.Size(17, 17)
-        Me.BtnFilter.TabIndex = 2
-        Me.BtnFilter.TabStop = False
-        Me.BtnFilter.TooltipText = ""
-        Me.BtnFilter.UseVisualStyleBackColor = False
-        Me.BtnFilter.Visible = False
+        Me.BtnFilterCompressor.BackColor = System.Drawing.Color.Transparent
+        Me.BtnFilterCompressor.BackgroundImage = Global.Manager.My.Resources.Resources.Magnifier
+        Me.BtnFilterCompressor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnFilterCompressor.FlatAppearance.BorderSize = 0
+        Me.BtnFilterCompressor.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnFilterCompressor.Location = New System.Drawing.Point(49, 3)
+        Me.BtnFilterCompressor.Name = "BtnFilterCompressor"
+        Me.BtnFilterCompressor.Size = New System.Drawing.Size(17, 17)
+        Me.BtnFilterCompressor.TabIndex = 2
+        Me.BtnFilterCompressor.TabStop = False
+        Me.BtnFilterCompressor.TooltipText = ""
+        Me.BtnFilterCompressor.UseVisualStyleBackColor = False
+        Me.BtnFilterCompressor.Visible = False
         '
-        'BtnView
+        'BtnViewCompressor
         '
-        Me.BtnView.BackColor = System.Drawing.Color.Transparent
-        Me.BtnView.BackgroundImage = Global.Manager.My.Resources.Resources.View
-        Me.BtnView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnView.FlatAppearance.BorderSize = 0
-        Me.BtnView.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnView.Location = New System.Drawing.Point(26, 3)
-        Me.BtnView.Name = "BtnView"
-        Me.BtnView.Size = New System.Drawing.Size(17, 17)
-        Me.BtnView.TabIndex = 1
-        Me.BtnView.TabStop = False
-        Me.BtnView.TooltipText = ""
-        Me.BtnView.UseVisualStyleBackColor = False
-        Me.BtnView.Visible = False
+        Me.BtnViewCompressor.BackColor = System.Drawing.Color.Transparent
+        Me.BtnViewCompressor.BackgroundImage = Global.Manager.My.Resources.Resources.View
+        Me.BtnViewCompressor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnViewCompressor.FlatAppearance.BorderSize = 0
+        Me.BtnViewCompressor.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnViewCompressor.Location = New System.Drawing.Point(26, 3)
+        Me.BtnViewCompressor.Name = "BtnViewCompressor"
+        Me.BtnViewCompressor.Size = New System.Drawing.Size(17, 17)
+        Me.BtnViewCompressor.TabIndex = 1
+        Me.BtnViewCompressor.TabStop = False
+        Me.BtnViewCompressor.TooltipText = ""
+        Me.BtnViewCompressor.UseVisualStyleBackColor = False
+        Me.BtnViewCompressor.Visible = False
         '
-        'BtnNew
+        'BtnNewCompressor
         '
-        Me.BtnNew.BackColor = System.Drawing.Color.Transparent
-        Me.BtnNew.BackgroundImage = Global.Manager.My.Resources.Resources.IncludeSmall
-        Me.BtnNew.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnNew.FlatAppearance.BorderSize = 0
-        Me.BtnNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnNew.Location = New System.Drawing.Point(3, 3)
-        Me.BtnNew.Name = "BtnNew"
-        Me.BtnNew.Size = New System.Drawing.Size(17, 17)
-        Me.BtnNew.TabIndex = 0
-        Me.BtnNew.TabStop = False
-        Me.BtnNew.TooltipText = ""
-        Me.BtnNew.UseVisualStyleBackColor = False
-        Me.BtnNew.Visible = False
+        Me.BtnNewCompressor.BackColor = System.Drawing.Color.Transparent
+        Me.BtnNewCompressor.BackgroundImage = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnNewCompressor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnNewCompressor.FlatAppearance.BorderSize = 0
+        Me.BtnNewCompressor.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnNewCompressor.Location = New System.Drawing.Point(3, 3)
+        Me.BtnNewCompressor.Name = "BtnNewCompressor"
+        Me.BtnNewCompressor.Size = New System.Drawing.Size(17, 17)
+        Me.BtnNewCompressor.TabIndex = 0
+        Me.BtnNewCompressor.TabStop = False
+        Me.BtnNewCompressor.TooltipText = ""
+        Me.BtnNewCompressor.UseVisualStyleBackColor = False
+        Me.BtnNewCompressor.Visible = False
         '
         'LblControlled
         '
         Me.LblControlled.AutoSize = True
-        Me.LblControlled.Location = New System.Drawing.Point(218, 3)
+        Me.LblControlled.Location = New System.Drawing.Point(295, 4)
         Me.LblControlled.Name = "LblControlled"
         Me.LblControlled.Size = New System.Drawing.Size(84, 17)
         Me.LblControlled.TabIndex = 3
@@ -557,11 +761,29 @@ Partial Class FrmPersonCompressor
         'LblUnitCapacity
         '
         Me.LblUnitCapacity.AutoSize = True
-        Me.LblUnitCapacity.Location = New System.Drawing.Point(218, 48)
+        Me.LblUnitCapacity.Location = New System.Drawing.Point(295, 50)
         Me.LblUnitCapacity.Name = "LblUnitCapacity"
         Me.LblUnitCapacity.Size = New System.Drawing.Size(74, 17)
         Me.LblUnitCapacity.TabIndex = 11
         Me.LblUnitCapacity.Text = "Cap. Und."
+        '
+        'LblUnit
+        '
+        Me.LblUnit.AutoSize = True
+        Me.LblUnit.Location = New System.Drawing.Point(152, 50)
+        Me.LblUnit.Name = "LblUnit"
+        Me.LblUnit.Size = New System.Drawing.Size(62, 17)
+        Me.LblUnit.TabIndex = 5
+        Me.LblUnit.Text = "Unidade"
+        '
+        'LblInterface
+        '
+        Me.LblInterface.AutoSize = True
+        Me.LblInterface.Location = New System.Drawing.Point(6, 50)
+        Me.LblInterface.Name = "LblInterface"
+        Me.LblInterface.Size = New System.Drawing.Size(65, 17)
+        Me.LblInterface.TabIndex = 5
+        Me.LblInterface.Text = "Interface"
         '
         'TabMaintenance
         '
@@ -569,7 +791,7 @@ Partial Class FrmPersonCompressor
         Me.TabMaintenance.Location = New System.Drawing.Point(4, 22)
         Me.TabMaintenance.Name = "TabMaintenance"
         Me.TabMaintenance.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabMaintenance.Size = New System.Drawing.Size(451, 106)
+        Me.TabMaintenance.Size = New System.Drawing.Size(406, 151)
         Me.TabMaintenance.TabIndex = 8
         Me.TabMaintenance.Text = "Manutenção"
         Me.TabMaintenance.UseVisualStyleBackColor = True
@@ -582,7 +804,7 @@ Partial Class FrmPersonCompressor
         Me.TcMaintenance.Location = New System.Drawing.Point(3, 3)
         Me.TcMaintenance.Name = "TcMaintenance"
         Me.TcMaintenance.SelectedIndex = 0
-        Me.TcMaintenance.Size = New System.Drawing.Size(445, 100)
+        Me.TcMaintenance.Size = New System.Drawing.Size(400, 145)
         Me.TcMaintenance.TabIndex = 0
         '
         'TabWorkedHourSellable
@@ -592,7 +814,7 @@ Partial Class FrmPersonCompressor
         Me.TabWorkedHourSellable.Location = New System.Drawing.Point(4, 26)
         Me.TabWorkedHourSellable.Name = "TabWorkedHourSellable"
         Me.TabWorkedHourSellable.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabWorkedHourSellable.Size = New System.Drawing.Size(437, 70)
+        Me.TabWorkedHourSellable.Size = New System.Drawing.Size(392, 115)
         Me.TabWorkedHourSellable.TabIndex = 6
         Me.TabWorkedHourSellable.Text = "Hora Trabalhada"
         Me.TabWorkedHourSellable.UseVisualStyleBackColor = True
@@ -615,7 +837,7 @@ Partial Class FrmPersonCompressor
         Me.DgvWorkedHourSellable.RowHeadersVisible = False
         Me.DgvWorkedHourSellable.RowTemplate.Height = 26
         Me.DgvWorkedHourSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvWorkedHourSellable.Size = New System.Drawing.Size(431, 39)
+        Me.DgvWorkedHourSellable.Size = New System.Drawing.Size(386, 84)
         Me.DgvWorkedHourSellable.TabIndex = 4
         '
         'TsWorkedHourSellable
@@ -627,7 +849,7 @@ Partial Class FrmPersonCompressor
         Me.TsWorkedHourSellable.Location = New System.Drawing.Point(3, 3)
         Me.TsWorkedHourSellable.Name = "TsWorkedHourSellable"
         Me.TsWorkedHourSellable.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsWorkedHourSellable.Size = New System.Drawing.Size(431, 25)
+        Me.TsWorkedHourSellable.Size = New System.Drawing.Size(386, 25)
         Me.TsWorkedHourSellable.TabIndex = 2
         Me.TsWorkedHourSellable.Text = "ToolStrip2"
         '
@@ -682,7 +904,7 @@ Partial Class FrmPersonCompressor
         Me.TabElapsedDaySellable.Location = New System.Drawing.Point(4, 22)
         Me.TabElapsedDaySellable.Name = "TabElapsedDaySellable"
         Me.TabElapsedDaySellable.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabElapsedDaySellable.Size = New System.Drawing.Size(437, 74)
+        Me.TabElapsedDaySellable.Size = New System.Drawing.Size(392, 119)
         Me.TabElapsedDaySellable.TabIndex = 7
         Me.TabElapsedDaySellable.Text = "Dia Corrido"
         Me.TabElapsedDaySellable.UseVisualStyleBackColor = True
@@ -705,7 +927,7 @@ Partial Class FrmPersonCompressor
         Me.DgvElapsedDaySellable.RowHeadersVisible = False
         Me.DgvElapsedDaySellable.RowTemplate.Height = 26
         Me.DgvElapsedDaySellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(431, 43)
+        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(386, 88)
         Me.DgvElapsedDaySellable.TabIndex = 5
         '
         'TsElapsedDaySellable
@@ -717,7 +939,7 @@ Partial Class FrmPersonCompressor
         Me.TsElapsedDaySellable.Location = New System.Drawing.Point(3, 3)
         Me.TsElapsedDaySellable.Name = "TsElapsedDaySellable"
         Me.TsElapsedDaySellable.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsElapsedDaySellable.Size = New System.Drawing.Size(431, 25)
+        Me.TsElapsedDaySellable.Size = New System.Drawing.Size(386, 25)
         Me.TsElapsedDaySellable.TabIndex = 4
         Me.TsElapsedDaySellable.Text = "ToolStrip2"
         '
@@ -771,7 +993,7 @@ Partial Class FrmPersonCompressor
         Me.TabNote.Location = New System.Drawing.Point(4, 22)
         Me.TabNote.Name = "TabNote"
         Me.TabNote.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabNote.Size = New System.Drawing.Size(451, 106)
+        Me.TabNote.Size = New System.Drawing.Size(406, 151)
         Me.TabNote.TabIndex = 5
         Me.TabNote.Text = "Observação"
         Me.TabNote.UseVisualStyleBackColor = True
@@ -783,7 +1005,7 @@ Partial Class FrmPersonCompressor
         Me.TxtNote.Location = New System.Drawing.Point(3, 3)
         Me.TxtNote.MaxLength = 1000000
         Me.TxtNote.Name = "TxtNote"
-        Me.TxtNote.Size = New System.Drawing.Size(445, 100)
+        Me.TxtNote.Size = New System.Drawing.Size(400, 145)
         Me.TxtNote.TabIndex = 0
         Me.TxtNote.Text = ""
         '
@@ -823,49 +1045,21 @@ Partial Class FrmPersonCompressor
         Me.DgvlElapsedDaySellable.DataGridView = Me.DgvElapsedDaySellable
         Me.DgvlElapsedDaySellable.Routine = Manager.Routine.PersonCompressorSellable
         '
-        'Label2
+        'TmrQueriedBoxInterface
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(112, 48)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(62, 17)
-        Me.Label2.TabIndex = 5
-        Me.Label2.Text = "Unidade"
+        Me.TmrQueriedBoxInterface.Enabled = True
+        Me.TmrQueriedBoxInterface.Interval = 300
         '
-        'TextBox1
+        'TmrQueriedBoxUnit
         '
-        Me.TextBox1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TextBox1.Location = New System.Drawing.Point(115, 68)
-        Me.TextBox1.MaxLength = 50
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(100, 23)
-        Me.TextBox1.TabIndex = 6
-        Me.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(6, 50)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(65, 17)
-        Me.Label4.TabIndex = 5
-        Me.Label4.Text = "Interface"
-        '
-        'TextBox2
-        '
-        Me.TextBox2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TextBox2.Location = New System.Drawing.Point(9, 68)
-        Me.TextBox2.MaxLength = 50
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(100, 23)
-        Me.TextBox2.TabIndex = 6
-        Me.TextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.TmrQueriedBoxUnit.Enabled = True
+        Me.TmrQueriedBoxUnit.Interval = 300
         '
         'FrmPersonCompressor
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(339, 271)
+        Me.ClientSize = New System.Drawing.Size(414, 271)
         Me.Controls.Add(Me.TcPersonCompressor)
         Me.Controls.Add(Me.TsData)
         Me.Controls.Add(Me.TsMain)
@@ -888,6 +1082,8 @@ Partial Class FrmPersonCompressor
         Me.TcPersonCompressor.ResumeLayout(False)
         Me.TabMain.ResumeLayout(False)
         Me.TabMain.PerformLayout()
+        Me.FlpUnit.ResumeLayout(False)
+        Me.FlpInterface.ResumeLayout(False)
         Me.FlpCompressor.ResumeLayout(False)
         Me.TabMaintenance.ResumeLayout(False)
         Me.TcMaintenance.ResumeLayout(False)
@@ -934,10 +1130,10 @@ Partial Class FrmPersonCompressor
     Friend WithEvents LblCreationValue As ToolStripLabel
     Friend WithEvents LblOrder As ToolStripLabel
     Friend WithEvents LblOrderValue As ToolStripLabel
-    Friend WithEvents TmrQueriedBox As Timer
-    Friend WithEvents BtnNew As ControlLibrary.NoFocusCueButton
-    Friend WithEvents BtnView As ControlLibrary.NoFocusCueButton
-    Friend WithEvents BtnFilter As ControlLibrary.NoFocusCueButton
+    Friend WithEvents TmrQueriedBoxCompressor As Timer
+    Friend WithEvents BtnNewCompressor As ControlLibrary.NoFocusCueButton
+    Friend WithEvents BtnViewCompressor As ControlLibrary.NoFocusCueButton
+    Friend WithEvents BtnFilterCompressor As ControlLibrary.NoFocusCueButton
     Friend WithEvents TcPersonCompressor As TabControl
     Friend WithEvents TabMain As TabPage
     Friend WithEvents TabWorkedHourSellable As TabPage
@@ -971,8 +1167,18 @@ Partial Class FrmPersonCompressor
     Friend WithEvents DbxUnitCapacity As ControlLibrary.DecimalBox
     Friend WithEvents CbxControlled As ControlLibrary.CentralizedComboBox
     Friend WithEvents LblControlled As Label
-    Friend WithEvents TextBox2 As TextBox
-    Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents Label4 As Label
-    Friend WithEvents Label2 As Label
+    Friend WithEvents LblInterface As Label
+    Friend WithEvents QbxInterface As ControlLibrary.QueriedBox
+    Friend WithEvents FlpUnit As FlowLayoutPanel
+    Friend WithEvents BtnFilterUnit As ControlLibrary.NoFocusCueButton
+    Friend WithEvents BtnViewUnit As ControlLibrary.NoFocusCueButton
+    Friend WithEvents BtnNewUnit As ControlLibrary.NoFocusCueButton
+    Friend WithEvents FlpInterface As FlowLayoutPanel
+    Friend WithEvents BtnFiltrerInterface As ControlLibrary.NoFocusCueButton
+    Friend WithEvents BtnViewInterface As ControlLibrary.NoFocusCueButton
+    Friend WithEvents BtnNewInterface As ControlLibrary.NoFocusCueButton
+    Friend WithEvents QbxUnit As ControlLibrary.QueriedBox
+    Friend WithEvents LblUnit As Label
+    Friend WithEvents TmrQueriedBoxInterface As Timer
+    Friend WithEvents TmrQueriedBoxUnit As Timer
 End Class

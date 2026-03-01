@@ -40,7 +40,7 @@ Partial Class FrmUpdateNotes
         Me.TvVersions.Margin = New System.Windows.Forms.Padding(4)
         Me.TvVersions.Name = "TvVersions"
         Me.TvVersions.ShowRootLines = False
-        Me.TvVersions.Size = New System.Drawing.Size(51, 351)
+        Me.TvVersions.Size = New System.Drawing.Size(80, 351)
         Me.TvVersions.TabIndex = 0
         '
         'LblTitle
@@ -59,13 +59,13 @@ Partial Class FrmUpdateNotes
         'TxtUpdates
         '
         Me.TxtUpdates.Font = New System.Drawing.Font("Century Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TxtUpdates.Location = New System.Drawing.Point(58, 32)
+        Me.TxtUpdates.Location = New System.Drawing.Point(85, 32)
         Me.TxtUpdates.Margin = New System.Windows.Forms.Padding(1)
         Me.TxtUpdates.Multiline = True
         Me.TxtUpdates.Name = "TxtUpdates"
         Me.TxtUpdates.ReadOnly = True
         Me.TxtUpdates.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TxtUpdates.Size = New System.Drawing.Size(396, 336)
+        Me.TxtUpdates.Size = New System.Drawing.Size(369, 336)
         Me.TxtUpdates.TabIndex = 2
         '
         'FrmUpdateNotes

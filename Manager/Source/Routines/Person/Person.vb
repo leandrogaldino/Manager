@@ -135,7 +135,6 @@ Public Class Person
         _Shadow = Clone()
         Return Me
     End Function
-
     Public Sub SaveChanges()
         If Not IsSaved Then
             Insert()
@@ -238,6 +237,8 @@ Public Class Person
                         CmdCompressor.Parameters.AddWithValue("@creation", PersonCompressor.Creation)
                         CmdCompressor.Parameters.AddWithValue("@statusid", Convert.ToInt32(PersonCompressor.Status))
                         CmdCompressor.Parameters.AddWithValue("@compressorid", PersonCompressor.CompressorID)
+                        CmdCompressor.Parameters.AddWithValue("@compressorinterfaceid", PersonCompressor.CompressorInterfaceID)
+                        CmdCompressor.Parameters.AddWithValue("@compressorunitid", PersonCompressor.CompressorUnitID)
                         CmdCompressor.Parameters.AddWithValue("@controlledid", Convert.ToInt32(PersonCompressor.Controlled))
                         CmdCompressor.Parameters.AddWithValue("@serialnumber", If(String.IsNullOrEmpty(PersonCompressor.SerialNumber), DBNull.Value, PersonCompressor.SerialNumber))
                         CmdCompressor.Parameters.AddWithValue("@patrimony", If(String.IsNullOrEmpty(PersonCompressor.Patrimony), DBNull.Value, PersonCompressor.Patrimony))
@@ -439,6 +440,8 @@ Public Class Person
                             CmdCompressor.Parameters.AddWithValue("@creation", PersonCompressor.Creation)
                             CmdCompressor.Parameters.AddWithValue("@statusid", Convert.ToInt32(PersonCompressor.Status))
                             CmdCompressor.Parameters.AddWithValue("@compressorid", PersonCompressor.CompressorID)
+                            CmdCompressor.Parameters.AddWithValue("@compressorinterfaceid", PersonCompressor.CompressorInterfaceID)
+                            CmdCompressor.Parameters.AddWithValue("@compressorunitid", PersonCompressor.CompressorUnitID)
                             CmdCompressor.Parameters.AddWithValue("@controlledid", Convert.ToInt32(PersonCompressor.Controlled))
                             CmdCompressor.Parameters.AddWithValue("@serialnumber", If(String.IsNullOrEmpty(PersonCompressor.SerialNumber), DBNull.Value, PersonCompressor.SerialNumber))
                             CmdCompressor.Parameters.AddWithValue("@patrimony", If(String.IsNullOrEmpty(PersonCompressor.Patrimony), DBNull.Value, PersonCompressor.Patrimony))
@@ -489,6 +492,8 @@ Public Class Person
                             CmdCompressor.Parameters.AddWithValue("@id", PersonCompressor.ID)
                             CmdCompressor.Parameters.AddWithValue("@statusid", Convert.ToInt32(PersonCompressor.Status))
                             CmdCompressor.Parameters.AddWithValue("@compressorid", PersonCompressor.CompressorID)
+                            CmdCompressor.Parameters.AddWithValue("@compressorinterfaceid", PersonCompressor.CompressorInterfaceID)
+                            CmdCompressor.Parameters.AddWithValue("@compressorunitid", PersonCompressor.CompressorUnitID)
                             CmdCompressor.Parameters.AddWithValue("@controlledid", Convert.ToInt32(PersonCompressor.Controlled))
                             CmdCompressor.Parameters.AddWithValue("@serialnumber", If(String.IsNullOrEmpty(PersonCompressor.SerialNumber), DBNull.Value, PersonCompressor.SerialNumber))
                             CmdCompressor.Parameters.AddWithValue("@patrimony", If(String.IsNullOrEmpty(PersonCompressor.Patrimony), DBNull.Value, PersonCompressor.Patrimony))
@@ -648,13 +653,19 @@ Public Class Person
                         .Status = Convert.ToInt32(Row.Item("statusid")),
                         .Controlled = Convert.ToInt32(Row.Item("controlledid")),
                         .Compressor = New Lazy(Of Compressor)(Function() New Compressor().Load(Row.Item("compressorid"), False)),
-                        .CompressorID = Convert.ToInt32(Row.Item("compressorid")),
+                        .CompressorID = Convert.ToInt64(Row.Item("compressorid")),
                         .CompressorName = Convert.ToString(Row.Item("compressorname")),
                         .SerialNumber = Convert.ToString(Row.Item("serialnumber")),
                         .Patrimony = Convert.ToString(Row.Item("patrimony")),
                         .Sector = Convert.ToString(Row.Item("sector")),
                         .UnitCapacity = Convert.ToInt32(Row.Item("unitcapacity")),
-                        .Note = Convert.ToString(Row.Item("note"))
+                        .Note = Convert.ToString(Row.Item("note")),
+                        .CompressorInterface = New Lazy(Of CompressorInterface)(Function() New CompressorInterface().Load(Row.Item("compressorinterfaceid"), False)),
+                        .CompressorInterfaceID = Convert.ToInt64(Row.Item("compressorinterfaceid")),
+                        .CompressorInterfaceName = Convert.ToString(Row.Item("compressorinterfacename")),
+                        .CompressorUnit = New Lazy(Of CompressorUnit)(Function() New CompressorUnit().Load(Row.Item("compressorunitid"), False)),
+                        .CompressorUnitID = Convert.ToInt64(Row.Item("compressorunitid")),
+                        .CompressorUnitName = Convert.ToString(Row.Item("compressorunitname"))
                     }
                     Compressor.SetIsSaved(True)
                     Compressor.SetID(Convert.ToInt32(Row.Item("id")))

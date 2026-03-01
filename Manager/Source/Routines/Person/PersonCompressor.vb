@@ -10,6 +10,12 @@ Public Class PersonCompressor
     Public Property Compressor As New Lazy(Of Compressor)
     Public Property CompressorID As Long
     Public Property CompressorName As String
+    Public Property CompressorInterface As New Lazy(Of CompressorInterface)
+    Public Property CompressorInterfaceID As Long
+    Public Property CompressorInterfaceName As String
+    Public Property CompressorUnit As New Lazy(Of CompressorUnit)
+    Public Property CompressorUnitID As Long
+    Public Property CompressorUnitName As String
     Public Property SerialNumber As String
     Public Property Patrimony As String
     Public Property Sector As String
@@ -28,6 +34,10 @@ Public Class PersonCompressor
             .Controlled = Controlled,
             .CompressorID = CompressorID,
             .CompressorName = CompressorName,
+            .CompressorInterfaceID = CompressorInterfaceID,
+            .CompressorInterfaceName = CompressorInterfaceName,
+            .CompressorUnitID = CompressorUnitID,
+            .CompressorUnitName = CompressorUnitName,
             .Note = Note,
             .Status = Status,
             .Sector = Sector,
@@ -42,6 +52,24 @@ Public Class PersonCompressor
                         Return CType(Compressor.Value.Clone(), Compressor)
                     Else
                         Return New Compressor().Load(CompressorID, False)
+                    End If
+                End Function
+            ),
+            .CompressorInterface = New Lazy(Of CompressorInterface)(
+                Function()
+                    If CompressorInterface.IsValueCreated Then
+                        Return CType(CompressorInterface.Value.Clone(), CompressorInterface)
+                    Else
+                        Return New CompressorInterface().Load(CompressorInterfaceID, False)
+                    End If
+                End Function
+            ),
+            .CompressorUnit = New Lazy(Of CompressorUnit)(
+                Function()
+                    If CompressorUnit.IsValueCreated Then
+                        Return CType(CompressorUnit.Value.Clone(), CompressorUnit)
+                    Else
+                        Return New CompressorUnit().Load(CompressorUnitID, False)
                     End If
                 End Function
             )

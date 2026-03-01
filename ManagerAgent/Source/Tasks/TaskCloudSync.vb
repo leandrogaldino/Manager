@@ -80,7 +80,7 @@ Public Class TaskCloudSync
             Dim Result As QueryResult = Await _LocalDB.ExecuteSelectAsync(
                 "log",
                 New List(Of String) From {"id", "routineid", "registryid", "fieldname", "oldvalue", "newvalue", "changedate"},
-                "changedate > @changedate AND routineid IN (@person, @compressor, @personcompressor, @personcompressorsellable, @product, @productprovidercode, @service, @visitschedule, @evaluation)",
+                "changedate > @changedate AND routineid IN (@person, @compressor, @personcompressor, @personcompressorsellable, @product, @productprovidercode, @service, @visitschedule, @evaluation, @compressorinterface, @compressorunit)",
                 New Dictionary(Of String, Object) From {
                     {"@changedate", LastSyncTime},
                     {"@person", 2},
@@ -91,7 +91,9 @@ Public Class TaskCloudSync
                     {"@productprovidercode", 601},
                     {"@service", 23},
                     {"@visitschedule", 22},
-                    {"@evaluation", 13}
+                    {"@evaluation", 13},
+                    {"@compressorinterface", 24},
+                    {"@compressorunit", 25}
                 },
                 "id ASC"
             )
@@ -111,23 +113,38 @@ Public Class TaskCloudSync
                 For Each Change In Result.Data
                     Select Case Change("routineid")
                         Case 12
+                            Debug.Print($"Sincronizando Compressor ID {Change("id")}")
                             Await FetchCompressor(Change)
                         Case 13
+                            Debug.Print($"Sincronizando Avaliação ID {Change("id")}")
                             Await FetchEvaluation(Change)
                         Case 2
+                            Debug.Print($"Sincronizando Pessoa ID {Change("id")}")
                             Await FetchPerson(Change)
                         Case 203
+                            Debug.Print($"Sincronizando Compressor da Pessoa ID {Change("id")}")
                             Await FetchPersonCompressor(Change)
                         Case 204
+                            Debug.Print($"Sincronizando Coalescente ID {Change("id")}")
                             Await FetchPersonCompressorCoalescents(Change)
                         Case 6
+                            Debug.Print($"Sincronizando Produto ID {Change("id")}")
                             Await FetchProduct(Change)
                         Case 601
+                            Debug.Print($"Sincronizando Código de Produto ID {Change("id")}")
                             Await FetchProductProviderCode(Change)
                         Case 23
+                            Debug.Print($"Sincronizando Serviço ID {Change("id")}")
                             Await FetchService(Change)
                         Case 22
+                            Debug.Print($"Sincronizando Agendamento de Visita ID {Change("id")}")
                             Await FetchVisitSchedule(Change)
+                        Case 24
+                            Debug.Print($"Sincronizando Interface ID {Change("id")}")
+                            Await FetchCompressorInterface(Change)
+                        Case 25
+                            Debug.Print($"Sincronizando Unidade Compressora ID {Change("id")}")
+                            Await FetchCompressorUnit(Change)
                     End Select
                     PerformedOperations += 1
                     Response.Percent = CInt((PerformedOperations / TotalChanges) * 100)
@@ -272,6 +289,46 @@ Public Class TaskCloudSync
                                           New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
         End If
     End Function
+    Private Async Function FetchCompressorInterface(Change As Dictionary(Of String, Object)) As Task
+        Dim Result = Await _LocalDB.ExecuteSelectAsync("compressorinterface",
+                                                  New List(Of String) From {"id", "name", "statusid", "directionid"},
+                                                  "id = @id",
+                                                  New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
+                                                  Limit:=1)
+        If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
+            Dim InterfaceData As Dictionary(Of String, Object)
+            InterfaceData = Result.Data(0)
+            InterfaceData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
+            InterfaceData("visible") = If(InterfaceData("statusid") = 0, 1, 0)
+            InterfaceData.Remove("statusid")
+            Await _RemoteDB.ExecutePut("compressorinterfaces", InterfaceData, InterfaceData("id"))
+        End If
+        If Change("fieldname") = "Deleção" Then
+            Await _RemoteDB.ExecuteUpdate("compressorinterfaces",
+                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}},
+                                          New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
+        End If
+    End Function
+    Private Async Function FetchCompressorUnit(Change As Dictionary(Of String, Object)) As Task
+        Dim Result = Await _LocalDB.ExecuteSelectAsync("compressorunit",
+                                                  New List(Of String) From {"id", "name", "statusid"},
+                                                  "id = @id",
+                                                  New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
+                                                  Limit:=1)
+        If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
+            Dim UnitData As Dictionary(Of String, Object)
+            UnitData = Result.Data(0)
+            UnitData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
+            UnitData("visible") = If(UnitData("statusid") = 0, 1, 0)
+            UnitData.Remove("statusid")
+            Await _RemoteDB.ExecutePut("compressorunits", UnitData, UnitData("id"))
+        End If
+        If Change("fieldname") = "Deleção" Then
+            Await _RemoteDB.ExecuteUpdate("compressorunits",
+                                          New Dictionary(Of String, Object) From {{"visible", 0}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}},
+                                          New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
+        End If
+    End Function
     Private Async Function FetchPersonCompressorCoalescents(Change As Dictionary(Of String, Object)) As Task
         Dim Result = Await _LocalDB.ExecuteSelectAsync("personcompressorsellable",
                                                   New List(Of String) From {"id", "personcompressorid", "productid", "statusid", "sellablebindid"},
@@ -296,9 +353,8 @@ Public Class TaskCloudSync
         End If
     End Function
     Private Async Function FetchPersonCompressor(Change As Dictionary(Of String, Object)) As Task
-
         Dim Result = Await _LocalDB.ExecuteSelectAsync("personcompressor",
-                                                 New List(Of String) From {"id", "statusid", "personid", "compressorid", "serialnumber", "patrimony", "sector"},
+                                                 New List(Of String) From {"id", "statusid", "personid", "compressorid", "serialnumber", "patrimony", "sector", "compressorinterfaceid", "compressorunitid"},
                                                  "id = @id",
                                                  New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
                                                  Limit:=1)

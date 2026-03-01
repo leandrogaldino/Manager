@@ -908,26 +908,12 @@ DELIMITER ;
 
 # CADASTRA UMA UNIDADE E UMA INTERFACE COM ID 1.
 
-ALTER TABLE manager.personcompressor
-ADD COLUMN compressorinterfaceid INT NOT NULL DEFAULT 1 AFTER compressorid,
-ADD COLUMN compressorunitid INT NOT NULL DEFAULT 1 AFTER compressorinterfaceid,
-ADD INDEX personcompressor_unit_idx (compressorunitid),
-ADD INDEX personcompressor_interface_idx (compressorinterfaceid),
-ADD CONSTRAINT personcompressor_interface
-  FOREIGN KEY (compressorinterfaceid)
-  REFERENCES manager.compressorinterface (id)
-  ON DELETE RESTRICT
-  ON UPDATE RESTRICT,
-ADD CONSTRAINT personcompressor_unit
-  FOREIGN KEY (compressorunitid)
-  REFERENCES manager.compressorunit (id)
-  ON DELETE RESTRICT
-  ON UPDATE RESTRICT;
-  
-  ALTER TABLE manager.personcompressor
-ALTER compressorinterfaceid DROP DEFAULT,
-ALTER compressorunitid DROP DEFAULT;
 
+ALTER TABLE manager.personcompressor
+ADD COLUMN compressorinterfaceid INT NULL AFTER compressorid,
+ADD COLUMN compressorunitid INT NULL AFTER compressorinterfaceid,
+ADD INDEX personcompressor_unit_idx (compressorunitid),
+ADD INDEX personcompressor_interface_idx (compressorinterfaceid);
 
 
 DROP TRIGGER IF EXISTS `manager`.`personcompressorupdate`;
@@ -938,8 +924,8 @@ CREATE TRIGGER `personcompressorupdate` AFTER UPDATE ON `personcompressor` FOR E
 IF OLD.statusid <> NEW.statusid THEN INSERT INTO log VALUES (NULL, 203, NEW.id, 'Status', CASE WHEN OLD.statusid = 0 THEN 'ATIVO' WHEN OLD.statusid = 1 THEN 'INATIVO' END, CASE WHEN NEW.statusid = 0 THEN 'ATIVO' WHEN NEW.statusid = 1 THEN 'INATIVO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.controlledid <> NEW.controlledid THEN INSERT INTO log VALUES (NULL, 203, NEW.id, 'Controlado', CASE WHEN OLD.controlledid = 0 THEN 'SIM' WHEN OLD.controlledid = 1 THEN 'NÃO' END, CASE WHEN NEW.controlledid = 0 THEN 'SIM' WHEN NEW.controlledid = 1 THEN 'NÃO' END, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF OLD.compressorid <> NEW.compressorid THEN INSERT INTO log VALUES (NULL, 203, NEW.id, 'Compressor', CONCAT(OLD.compressorid, ' - ', (SELECT compressor.name FROM compressor WHERE compressor.id = OLD.compressorid)), CONCAT(NEW.compressorid, ' - ', (SELECT compressor.name FROM compressor WHERE compressor.id = NEW.compressorid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-IF OLD.compressorinterfaceid <> NEW.compressorinterfaceid THEN INSERT INTO log VALUES (NULL, 203, NEW.id, 'Interface', CONCAT(OLD.compressorinterfaceid, ' - ', (SELECT compressorinterface.name FROM compressorinterface WHERE compressorinterface.id = OLD.compressorinterfaceid)), CONCAT(NEW.compressorinterfaceid, ' - ', (SELECT compressorinterface.name FROM compressorinterface WHERE compressorinterface.id = NEW.compressorinterfaceid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
-IF OLD.compressorunitid <> NEW.compressorunitid THEN INSERT INTO log VALUES (NULL, 203, NEW.id, 'Unidade', CONCAT(OLD.compressorunitid, ' - ', (SELECT compressorunit.name FROM compressorunit WHERE compressorunit.id = OLD.compressorunitid)), CONCAT(NEW.compressorunitid, ' - ', (SELECT compressorunit.name FROM compressorunit WHERE compressorunit.id = NEW.compressorunitid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF IFNULL(OLD.compressorinterfaceid, 0) <> IFNULL(NEW.compressorinterfaceid, 0) THEN INSERT INTO log VALUES (NULL, 203, NEW.id, 'Interface', CONCAT(OLD.compressorinterfaceid, ' - ', (SELECT compressorinterface.name FROM compressorinterface WHERE compressorinterface.id = OLD.compressorinterfaceid)), CONCAT(NEW.compressorinterfaceid, ' - ', (SELECT compressorinterface.name FROM compressorinterface WHERE compressorinterface.id = NEW.compressorinterfaceid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
+IF IFNULL(OLD.compressorunitid, 0) <> IFNULL(NEW.compressorunitid, 0) THEN INSERT INTO log VALUES (NULL, 203, NEW.id, 'Unidade', CONCAT(OLD.compressorunitid, ' - ', (SELECT compressorunit.name FROM compressorunit WHERE compressorunit.id = OLD.compressorunitid)), CONCAT(NEW.compressorunitid, ' - ', (SELECT compressorunit.name FROM compressorunit WHERE compressorunit.id = NEW.compressorunitid)), NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF IFNULL(OLD.serialnumber, '') <> IFNULL(NEW.serialnumber, '') THEN INSERT INTO log VALUES (NULL, 203, NEW.id, 'Nº de Série', OLD.serialnumber, NEW.serialnumber, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF IFNULL(OLD.patrimony, '') <> IFNULL(NEW.patrimony, '') THEN INSERT INTO log VALUES (NULL, 203, NEW.id, 'Patrimônio', OLD.patrimony, NEW.patrimony, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 IF IFNULL(OLD.sector, '') <> IFNULL(NEW.sector, '') THEN INSERT INTO log VALUES (NULL, 203, NEW.id, 'Setor', OLD.sector, NEW.sector, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
@@ -947,4 +933,18 @@ IF OLD.unitcapacity <> NEW.unitcapacity THEN INSERT INTO log VALUES (NULL, 203, 
 IF IFNULL(OLD.note, '') <> IFNULL(NEW.note, '') THEN INSERT INTO log VALUES (NULL, 203, NEW.id, 'Observação', OLD.note, NEW.note, NOW(), CONCAT(NEW.userid, ' - ', (SELECT user.username FROM user WHERE user.id = NEW.userid))); END IF;
 END$$
 DELIMITER ;
+
+SET SQL_SAFE_UPDATES = 0;
+
+UPDATE manager.personcompressor
+SET compressorinterfaceid = 1,
+    compressorunitid = 1;
+
+SET SQL_SAFE_UPDATES = 1;
+
+
+
+
+
+
 

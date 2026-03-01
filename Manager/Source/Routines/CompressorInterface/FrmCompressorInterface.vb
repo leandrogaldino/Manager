@@ -97,7 +97,7 @@ Public Class FrmCompressorInterface
             _CompressorInterface.Load(_Grid.SelectedRows(0).Cells("id").Value, True)
             LoadData()
         Catch ex As Exception
-            CMessageBox.Show("ERRO CP001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+            CMessageBox.Show("ERRO CI001", "Ocorreu um erro ao carregar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally
             Cursor = Cursors.Default
         End Try
@@ -143,7 +143,7 @@ Public Class FrmCompressorInterface
                 If ex.Number = MysqlError.ForeignKey Then
                     CMessageBox.Show("Esse registro não pode ser excluído pois já foi referenciado em outras rotinas.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                 Else
-                    CMessageBox.Show("ERRO CP002", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                    CMessageBox.Show("ERRO CI002", "Ocorreu um erro ao excluir o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                 End If
             Finally
                 Cursor = Cursors.Default
@@ -236,7 +236,7 @@ Public Class FrmCompressorInterface
                     If ex.Number = MysqlError.UniqueKey Then
                         CMessageBox.Show("Já existe uma interface cadastrada com esse nome.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                     Else
-                        CMessageBox.Show("ERRO CP003", "Ocorreu um erro salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+                        CMessageBox.Show("ERRO CI003", "Ocorreu um erro salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
                     End If
                     Return False
                 Finally

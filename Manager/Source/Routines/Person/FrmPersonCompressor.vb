@@ -175,7 +175,7 @@ Public Class FrmPersonCompressor
     End Sub
     Private Sub TcPersonCompressor_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcPersonCompressor.SelectedIndexChanged
         If TcPersonCompressor.SelectedTab Is TabMain Then
-            Size = New Size(355, 310)
+            Size = New Size(430, 310)
             FormBorderStyle = FormBorderStyle.FixedSingle
             WindowState = FormWindowState.Normal
             MaximizeBox = False
@@ -202,7 +202,14 @@ Public Class FrmPersonCompressor
         EprValidation.Clear()
         BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
-    Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles QbxCompressor.TextChanged, TxtSerialNumber.TextChanged, TxtPatrimony.TextChanged, TxtSector.TextChanged, DbxUnitCapacity.TextChanged, TxtNote.TextChanged, TextBox2.TextChanged, TextBox1.TextChanged
+    Private Sub Txt_TextChanged(sender As Object, e As EventArgs) Handles QbxCompressor.TextChanged,
+                                                                            TxtSerialNumber.TextChanged,
+                                                                            TxtPatrimony.TextChanged,
+                                                                            TxtSector.TextChanged,
+                                                                            DbxUnitCapacity.TextChanged,
+                                                                            TxtNote.TextChanged,
+                                                                            QbxInterface.TextChanged,
+                                                                            QbxUnit.TextChanged
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
@@ -221,6 +228,13 @@ Public Class FrmPersonCompressor
         LblCreationValue.Text = _PersonCompressor.Creation
         QbxCompressor.Unfreeze()
         QbxCompressor.Freeze(_PersonCompressor.CompressorID)
+
+        QbxInterface.Unfreeze()
+        QbxInterface.Freeze(_PersonCompressor.InterfaceID)
+
+        QbxUnit.Unfreeze()
+        QbxUnit.Freeze(_PersonCompressor.CompressorUnitID)
+
         CbxControlled.Text = EnumHelper.GetEnumDescription(_PersonCompressor.Controlled)
         TxtSerialNumber.Text = _PersonCompressor.SerialNumber
         TxtPatrimony.Text = _PersonCompressor.Patrimony
@@ -253,6 +267,35 @@ Public Class FrmPersonCompressor
             EprValidation.SetIconAlignment(LblCompressor, ErrorIconAlignment.MiddleRight)
             QbxCompressor.Select()
             Return False
+
+
+        ElseIf String.IsNullOrWhiteSpace(QbxInterface.Text) Then
+            TcPersonCompressor.SelectedTab = TabMain
+            EprValidation.SetError(LblInterface, "Campo obrigatório.")
+            EprValidation.SetIconAlignment(LblInterface, ErrorIconAlignment.MiddleRight)
+            QbxInterface.Select()
+            Return False
+        ElseIf Not QbxInterface.IsFreezed Then
+            TcPersonCompressor.SelectedTab = TabMain
+            EprValidation.SetError(LblInterface, "Interface não encontrada.")
+            EprValidation.SetIconAlignment(LblInterface, ErrorIconAlignment.MiddleRight)
+            QbxInterface.Select()
+            Return False
+
+
+        ElseIf String.IsNullOrWhiteSpace(QbxUnit.Text) Then
+            TcPersonCompressor.SelectedTab = TabMain
+            EprValidation.SetError(LblUnit, "Campo obrigatório.")
+            EprValidation.SetIconAlignment(LblUnit, ErrorIconAlignment.MiddleRight)
+            QbxUnit.Select()
+            Return False
+        ElseIf Not QbxUnit.IsFreezed Then
+            TcPersonCompressor.SelectedTab = TabMain
+            EprValidation.SetError(LblUnit, "Unidade Compressora não encontrada.")
+            EprValidation.SetIconAlignment(LblUnit, ErrorIconAlignment.MiddleRight)
+            QbxUnit.Select()
+            Return False
+
         ElseIf String.IsNullOrEmpty(CbxControlled.Text) Then
             TcPersonCompressor.SelectedTab = TabMain
             EprValidation.SetError(LblControlled, $"Campo obrigatório")
@@ -330,6 +373,9 @@ Public Class FrmPersonCompressor
                     .Compressor = New Lazy(Of Compressor)(Function() New Compressor().Load(QbxCompressor.FreezedPrimaryKey, False))
                     .CompressorID = QbxCompressor.FreezedPrimaryKey
                     .CompressorName = QbxCompressor.Text
+
+                    .Inter
+
                     .Controlled = EnumHelper.GetEnumValue(Of ConfirmationType)(CbxControlled.Text)
                     .SerialNumber = TxtSerialNumber.Text
                     .Patrimony = TxtPatrimony.Text
@@ -350,7 +396,6 @@ Public Class FrmPersonCompressor
                     .UnitCapacity = DbxUnitCapacity.Text
                     .Note = TxtNote.Text
                 End With
-
                 _PersonCompressor.SetIsSaved(True)
                 _Person.Compressors.Add(_PersonCompressor)
             End If
@@ -375,31 +420,31 @@ Public Class FrmPersonCompressor
             Return False
         End If
     End Function
-    Private Sub TmrQueriedBox_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBox.Tick
-        BtnView.Visible = False
-        BtnNew.Visible = False
-        BtnFilter.Visible = False
-        TmrQueriedBox.Stop()
-    End Sub
-    Private Sub QbxCompressor_Enter(sender As Object, e As EventArgs) Handles QbxCompressor.Enter
-        TmrQueriedBox.Stop()
-        BtnView.Visible = QbxCompressor.IsFreezed And _User.CanWrite(Routine.Compressor)
-        BtnNew.Visible = _User.CanWrite(Routine.Compressor)
-        BtnFilter.Visible = _User.CanAccess(Routine.Compressor)
-    End Sub
-    Private Sub QbxCompressor_Leave(sender As Object, e As EventArgs) Handles QbxCompressor.Leave
-        TmrQueriedBox.Stop()
-        TmrQueriedBox.Start()
-    End Sub
-    Private Sub QbxCompressor_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxCompressor.FreezedPrimaryKeyChanged
-        If Not _Loading Then BtnView.Visible = QbxCompressor.IsFreezed And _User.CanWrite(Routine.Compressor)
-        If Not _Loading Then BtnImport.Visible = QbxCompressor.IsFreezed
-    End Sub
     Private Sub CbxControlled_TextChanged(sender As Object, e As EventArgs) Handles CbxControlled.SelectedIndexChanged
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
-    Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
+    Private Sub TmrQueriedBoxCompressor_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBoxCompressor.Tick
+        BtnViewCompressor.Visible = False
+        BtnNewCompressor.Visible = False
+        BtnFilterCompressor.Visible = False
+        TmrQueriedBoxCompressor.Stop()
+    End Sub
+    Private Sub QbxCompressor_Enter(sender As Object, e As EventArgs) Handles QbxCompressor.Enter
+        TmrQueriedBoxCompressor.Stop()
+        BtnViewCompressor.Visible = QbxCompressor.IsFreezed And _User.CanWrite(Routine.Compressor)
+        BtnNewCompressor.Visible = _User.CanWrite(Routine.Compressor)
+        BtnFilterCompressor.Visible = _User.CanAccess(Routine.Compressor)
+    End Sub
+    Private Sub QbxCompressor_Leave(sender As Object, e As EventArgs) Handles QbxCompressor.Leave
+        TmrQueriedBoxCompressor.Stop()
+        TmrQueriedBoxCompressor.Start()
+    End Sub
+    Private Sub QbxCompressor_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxCompressor.FreezedPrimaryKeyChanged
+        If Not _Loading Then BtnViewCompressor.Visible = QbxCompressor.IsFreezed And _User.CanWrite(Routine.Compressor)
+        If Not _Loading Then BtnImport.Visible = QbxCompressor.IsFreezed
+    End Sub
+    Private Sub BtnNewCompressor_Click(sender As Object, e As EventArgs) Handles BtnNewCompressor.Click
         Dim Compressor As Compressor
         Compressor = New Compressor
         Using Form As New FrmCompressor(Compressor)
@@ -411,14 +456,14 @@ Public Class FrmPersonCompressor
         End If
         QbxCompressor.Select()
     End Sub
-    Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
+    Private Sub BtnViewCompressor_Click(sender As Object, e As EventArgs) Handles BtnViewCompressor.Click
         Using Form As New FrmCompressor(New Compressor().Load(QbxCompressor.FreezedPrimaryKey, True))
             Form.ShowDialog()
         End Using
         QbxCompressor.Freeze(QbxCompressor.FreezedPrimaryKey)
         QbxCompressor.Select()
     End Sub
-    Private Sub BtnFilter_Click(sender As Object, e As EventArgs) Handles BtnFilter.Click
+    Private Sub BtnFilterCompressor_Click(sender As Object, e As EventArgs) Handles BtnFilterCompressor.Click
         Using Form As New FrmFilter(New CompressorQueriedBoxFilter(), QbxCompressor) With {.Text = "Filtro de Compressores"}
             Form.ShowDialog()
         End Using
@@ -649,7 +694,119 @@ Public Class FrmPersonCompressor
         End If
     End Sub
 
-    Private Sub TabMain_Click(sender As Object, e As EventArgs) Handles TabMain.Click
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Private Sub TmrQueriedBoxInterface_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBoxInterface.Tick
+        BtnViewInterface.Visible = False
+        BtnNewInterface.Visible = False
+        BtnFiltrerInterface.Visible = False
+        TmrQueriedBoxInterface.Stop()
+    End Sub
+    Private Sub QbxInterfaceEnter(sender As Object, e As EventArgs) Handles QbxInterface.Enter
+        TmrQueriedBoxInterface.Stop()
+        BtnViewInterface.Visible = QbxInterface.IsFreezed And _User.CanWrite(Routine.CompressorInterface)
+        BtnNewInterface.Visible = _User.CanWrite(Routine.CompressorInterface)
+        BtnFiltrerInterface.Visible = _User.CanAccess(Routine.CompressorInterface)
+    End Sub
+    Private Sub QbxInterface_Leave(sender As Object, e As EventArgs) Handles QbxInterface.Leave
+        TmrQueriedBoxInterface.Stop()
+        TmrQueriedBoxInterface.Start()
+    End Sub
+    Private Sub QbxInterface_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxInterface.FreezedPrimaryKeyChanged
+        If Not _Loading Then BtnViewInterface.Visible = QbxInterface.IsFreezed And _User.CanWrite(Routine.CompressorInterface)
+    End Sub
+    Private Sub BtnNewInterface_Click(sender As Object, e As EventArgs) Handles BtnNewInterface.Click
+        Dim CompressorInterface As CompressorInterface
+        CompressorInterface = New CompressorInterface
+        Using Form As New FrmCompressorInterface(CompressorInterface)
+            Form.ShowDialog()
+        End Using
+        EprValidation.Clear()
+        If CompressorInterface.ID > 0 Then
+            QbxInterface.Freeze(CompressorInterface.ID)
+        End If
+        QbxInterface.Select()
+    End Sub
+    Private Sub BtnViewInterface_Click(sender As Object, e As EventArgs) Handles BtnViewInterface.Click
+        Using Form As New FrmCompressorInterface(New CompressorInterface().Load(QbxInterface.FreezedPrimaryKey, True))
+            Form.ShowDialog()
+        End Using
+        QbxInterface.Freeze(QbxInterface.FreezedPrimaryKey)
+        QbxInterface.Select()
+    End Sub
+    Private Sub BtnFiltrerInterface_Click(sender As Object, e As EventArgs) Handles BtnFiltrerInterface.Click
+        Using Form As New FrmFilter(New CompressorInterfaceQueriedBoxFilter(), QbxInterface) With {.Text = "Filtro de Interfaces"}
+            Form.ShowDialog()
+        End Using
+        QbxInterface.Select()
+    End Sub
+    Private Sub TmrQueriedBoxUnit_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBoxUnit.Tick
+        BtnViewUnit.Visible = False
+        BtnNewUnit.Visible = False
+        BtnFilterUnit.Visible = False
+        TmrQueriedBoxUnit.Stop()
+    End Sub
+    Private Sub QbxUnitEnter(sender As Object, e As EventArgs) Handles QbxUnit.Enter
+        TmrQueriedBoxUnit.Stop()
+        BtnViewUnit.Visible = QbxUnit.IsFreezed And _User.CanWrite(Routine.CompressorUnit)
+        BtnNewUnit.Visible = _User.CanWrite(Routine.CompressorUnit)
+        BtnFilterUnit.Visible = _User.CanAccess(Routine.CompressorUnit)
+    End Sub
+    Private Sub QbxUnit_Leave(sender As Object, e As EventArgs) Handles QbxUnit.Leave
+        TmrQueriedBoxUnit.Stop()
+        TmrQueriedBoxUnit.Start()
+    End Sub
+    Private Sub QbxUnit_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxUnit.FreezedPrimaryKeyChanged
+        If Not _Loading Then BtnViewUnit.Visible = QbxUnit.IsFreezed And _User.CanWrite(Routine.CompressorUnit)
+    End Sub
+    Private Sub BtnNewUnit_Click(sender As Object, e As EventArgs) Handles BtnNewUnit.Click
+        Dim CompressorUnit As CompressorUnit
+        CompressorUnit = New CompressorUnit
+        Using Form As New FrmCompressorUnit(CompressorUnit)
+            Form.ShowDialog()
+        End Using
+        EprValidation.Clear()
+        If CompressorUnit.ID > 0 Then
+            QbxUnit.Freeze(CompressorUnit.ID)
+        End If
+        QbxUnit.Select()
+    End Sub
+    Private Sub BtnViewUnit_Click(sender As Object, e As EventArgs) Handles BtnViewUnit.Click
+        Using Form As New FrmCompressorUnit(New CompressorUnit().Load(QbxUnit.FreezedPrimaryKey, True))
+            Form.ShowDialog()
+        End Using
+        QbxUnit.Freeze(QbxUnit.FreezedPrimaryKey)
+        QbxUnit.Select()
+    End Sub
+    Private Sub BtnFilterUnit_Click(sender As Object, e As EventArgs) Handles BtnFilterUnit.Click
+        Using Form As New FrmFilter(New CompressorUnitQueriedBoxFilter(), QbxUnit) With {.Text = "Filtro de Unidades Compressoras"}
+            Form.ShowDialog()
+        End Using
+        QbxUnit.Select()
     End Sub
 End Class

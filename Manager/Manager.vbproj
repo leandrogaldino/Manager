@@ -493,6 +493,8 @@
     </Compile>
     <Compile Include="Source\Helper\DataGridViewDecimalColumn.vb" />
     <Compile Include="Source\Helper\FilterExpandable\ProductExpandable.vb" />
+    <Compile Include="Source\Helper\FilterQueriedBox\CompressorInterfaceQueriedBoxFilter.vb" />
+    <Compile Include="Source\Helper\FilterQueriedBox\CompressorUnitQueriedBoxFilter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\CompressorInterfaceDirectionConverter.vb" />
     <Compile Include="Source\Helper\Flags\CompressorInterfaceDirection.vb" />
     <Compile Include="Source\Main\UcReport.Designer.vb">

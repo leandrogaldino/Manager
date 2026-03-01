@@ -294,15 +294,15 @@
 </value>
   </data>
   <metadata name="DgvlProviderCode.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 54</value>
+    <value>142, 54</value>
   </metadata>
   <metadata name="DgvlCode.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>167, 54</value>
+    <value>292, 54</value>
   </metadata>
   <metadata name="DgvlIndicator.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1273, 17</value>
+    <value>17, 54</value>
   </metadata>
   <metadata name="DgvlPrice.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>273, 54</value>
+    <value>398, 54</value>
   </metadata>
 </root>

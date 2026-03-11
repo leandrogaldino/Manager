@@ -386,4 +386,7 @@
   <metadata name="CcoUnitTemperaturePressure.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>604, 54</value>
   </metadata>
+  <metadata name="ErpInterfaceDirection.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>682, 91</value>
+  </metadata>
 </root>

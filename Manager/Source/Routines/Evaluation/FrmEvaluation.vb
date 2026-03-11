@@ -1260,12 +1260,19 @@ Public Class FrmEvaluation
     Private Sub QbxCompressor_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxCompressor.FreezedPrimaryKeyChanged
         If QbxCompressor.IsFreezed Then
             _UcUnitTemperaturePressure.Unit = QbxCompressor.GetRawFreezedValueOf("compressorunit", "name")
-            MsgBox(QbxCompressor.GetRawFreezedValueOf("compressorinterface", "name"))
+            '           MsgBox(QbxCompressor.GetRawFreezedValueOf("compressorinterface", "name"))
             Dim dir As CompressorInterfaceDirection = QbxCompressor.GetRawFreezedValueOf("compressorinterface", "directionid")
-            MsgBox(EnumHelper.GetEnumDescription(dir))
+            '            MsgBox(EnumHelper.GetEnumDescription(dir))
+            Dim bmp As New Bitmap(My.Resources.ArrowUp)
+            Dim icon As Icon = Icon.FromHandle(bmp.GetHicon())
+            ErpInterfaceDirection.Icon = icon
+            ErpInterfaceDirection.SetError(LblCompressor, "AAAAAAAAAAAAAA")
+            ErpInterfaceDirection.SetIconPadding(LblCompressor, 5)
         Else
             _UcUnitTemperaturePressure.Unit = Nothing
+            ErpInterfaceDirection.Clear()
         End If
+
     End Sub
 #End Region
 #Region "Timer Events"

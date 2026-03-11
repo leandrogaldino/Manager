@@ -525,6 +525,8 @@
     <None Include="Resources\Icon\icon.ico" />
     <None Include="Resources\Image\CompressorInterface.png" />
     <None Include="Resources\Image\CompressorUnit.png" />
+    <None Include="Resources\Image\ArrowDown.png" />
+    <None Include="Resources\Image\ArrowUp.png" />
     <Content Include="Resources\Image\Downloading.gif" />
     <Content Include="Resources\Image\Updating.gif" />
     <Content Include="Resources\SQL\CompressorInterface\CompressorInterfaceDelete.sql" />

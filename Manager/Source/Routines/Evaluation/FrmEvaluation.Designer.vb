@@ -24,9 +24,6 @@ Partial Class FrmEvaluation
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmEvaluation))
-        Dim MessageBoxSettings1 As Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings = New Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings()
-        Dim PdfViewerPrinterSettings1 As Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings = New Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings()
-        Dim TextSearchSettings1 As Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings = New Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings()
         Dim RichTextPart1 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
         Dim RichTextPart2 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
         Dim RichTextPart3 As ControlLibrary.RichTextButton.RichTextPart = New ControlLibrary.RichTextButton.RichTextPart()
@@ -65,6 +62,9 @@ Partial Class FrmEvaluation
         Dim Relation4 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
         Dim Relation5 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
         Dim Relation6 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim MessageBoxSettings1 As Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings = New Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings()
+        Dim PdfViewerPrinterSettings1 As Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings = New Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings()
+        Dim TextSearchSettings1 As Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings = New Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings()
         Me.PnBottom = New System.Windows.Forms.Panel()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnCalculate = New System.Windows.Forms.Button()
@@ -104,19 +104,31 @@ Partial Class FrmEvaluation
         Me.GbxWorkedHourSellable = New System.Windows.Forms.GroupBox()
         Me.DgvWorkedHourSellable = New System.Windows.Forms.DataGridView()
         Me.GbxMain = New System.Windows.Forms.GroupBox()
+        Me.TbxEndTime = New ControlLibrary.TimeBox()
+        Me.TbxStartTime = New ControlLibrary.TimeBox()
+        Me.BtnCallTypeHasRepairNeedProposal = New ControlLibrary.RichTextButton()
+        Me.BtnUnitTemperaturePressure = New ControlLibrary.RichTextButton()
+        Me.QbxCustomer = New ControlLibrary.QueriedBox()
         Me.TxtReference = New System.Windows.Forms.TextBox()
         Me.LblEndTime = New System.Windows.Forms.Label()
         Me.LblStartTime = New System.Windows.Forms.Label()
         Me.CbxManualAverageWorkLoad = New System.Windows.Forms.CheckBox()
         Me.FlpCustomer = New System.Windows.Forms.FlowLayoutPanel()
+        Me.BtnFilterCustomer = New ControlLibrary.NoFocusCueButton()
+        Me.BtnViewCustomer = New ControlLibrary.NoFocusCueButton()
+        Me.BtnNewCustomer = New ControlLibrary.NoFocusCueButton()
+        Me.DbxAverageWorkLoad = New ControlLibrary.DecimalBox()
+        Me.DbxHorimeter = New ControlLibrary.DecimalBox()
         Me.LblEvaluationDate = New System.Windows.Forms.Label()
         Me.LblCustomer = New System.Windows.Forms.Label()
         Me.LblAverageWorkLoad = New System.Windows.Forms.Label()
         Me.LblReference = New System.Windows.Forms.Label()
         Me.LblResponsible = New System.Windows.Forms.Label()
         Me.TxtResponsible = New System.Windows.Forms.TextBox()
+        Me.DbxEvaluationDate = New ControlLibrary.DateBox()
         Me.LblHorimeter = New System.Windows.Forms.Label()
         Me.LblCompressor = New System.Windows.Forms.Label()
+        Me.QbxCompressor = New ControlLibrary.QueriedBox()
         Me.TabTechnicalAdvice = New System.Windows.Forms.TabPage()
         Me.TlpAdvice = New System.Windows.Forms.TableLayoutPanel()
         Me.TlpReplaced = New System.Windows.Forms.TableLayoutPanel()
@@ -141,6 +153,7 @@ Partial Class FrmEvaluation
         Me.BtnZoomOut = New System.Windows.Forms.ToolStripButton()
         Me.LblDocumentPage = New System.Windows.Forms.ToolStripLabel()
         Me.TabPicture = New System.Windows.Forms.TabPage()
+        Me.PvPicture = New ControlLibrary.PictureViewer()
         Me.TabSignature = New System.Windows.Forms.TabPage()
         Me.PnSignature = New System.Windows.Forms.Panel()
         Me.PbxSignature = New System.Windows.Forms.PictureBox()
@@ -155,24 +168,12 @@ Partial Class FrmEvaluation
         Me.DgvlWorkedHourSellable = New Manager.DataGridViewLayout()
         Me.DgvlElapsedDaySellable = New Manager.DataGridViewLayout()
         Me.DgvlReplacedSellable = New Manager.DataGridViewLayout()
-        Me.TbxEndTime = New ControlLibrary.TimeBox()
-        Me.TbxStartTime = New ControlLibrary.TimeBox()
-        Me.BtnCallTypeHasRepairNeedProposal = New ControlLibrary.RichTextButton()
-        Me.BtnUnitTemperaturePressure = New ControlLibrary.RichTextButton()
-        Me.QbxCustomer = New ControlLibrary.QueriedBox()
-        Me.BtnFilterCustomer = New ControlLibrary.NoFocusCueButton()
-        Me.BtnViewCustomer = New ControlLibrary.NoFocusCueButton()
-        Me.BtnNewCustomer = New ControlLibrary.NoFocusCueButton()
-        Me.DbxAverageWorkLoad = New ControlLibrary.DecimalBox()
-        Me.DbxHorimeter = New ControlLibrary.DecimalBox()
-        Me.DbxEvaluationDate = New ControlLibrary.DateBox()
-        Me.QbxCompressor = New ControlLibrary.QueriedBox()
-        Me.PvPicture = New ControlLibrary.PictureViewer()
         Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.NavWorkedHourSellable = New ControlLibrary.DataGridViewNavigator()
         Me.NavElapsedDaySellable = New ControlLibrary.DataGridViewNavigator()
         Me.CcoCallTypeHasRepairNeedProposal = New ControlLibrary.ControlContainer()
         Me.CcoUnitTemperaturePressure = New ControlLibrary.ControlContainer()
+        Me.ErpInterfaceDirection = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.PnBottom.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -203,6 +204,7 @@ Partial Class FrmEvaluation
         CType(Me.PbxSignature, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NudHourPerDay, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ErpInterfaceDirection, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PnBottom
@@ -662,6 +664,231 @@ Partial Class FrmEvaluation
         Me.GbxMain.TabStop = False
         Me.GbxMain.Text = "Identificação"
         '
+        'TbxEndTime
+        '
+        Me.TbxEndTime.Location = New System.Drawing.Point(313, 101)
+        Me.TbxEndTime.MinimumSize = New System.Drawing.Size(50, 0)
+        Me.TbxEndTime.Name = "TbxEndTime"
+        Me.TbxEndTime.ShowSecconds = False
+        Me.TbxEndTime.Size = New System.Drawing.Size(75, 23)
+        Me.TbxEndTime.TabIndex = 9
+        Me.TbxEndTime.Text = "  :"
+        Me.TbxEndTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.TbxEndTime.Time = Nothing
+        '
+        'TbxStartTime
+        '
+        Me.TbxStartTime.Location = New System.Drawing.Point(232, 101)
+        Me.TbxStartTime.MinimumSize = New System.Drawing.Size(50, 0)
+        Me.TbxStartTime.Name = "TbxStartTime"
+        Me.TbxStartTime.ShowSecconds = False
+        Me.TbxStartTime.Size = New System.Drawing.Size(75, 23)
+        Me.TbxStartTime.TabIndex = 7
+        Me.TbxStartTime.Text = "  :"
+        Me.TbxStartTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.TbxStartTime.Time = Nothing
+        '
+        'BtnCallTypeHasRepairNeedProposal
+        '
+        Me.BtnCallTypeHasRepairNeedProposal.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnCallTypeHasRepairNeedProposal.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.BtnCallTypeHasRepairNeedProposal.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnCallTypeHasRepairNeedProposal.Location = New System.Drawing.Point(6, 22)
+        Me.BtnCallTypeHasRepairNeedProposal.Name = "BtnCallTypeHasRepairNeedProposal"
+        Me.BtnCallTypeHasRepairNeedProposal.Size = New System.Drawing.Size(382, 25)
+        Me.BtnCallTypeHasRepairNeedProposal.TabIndex = 0
+        RichTextPart1.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart1.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart1.Text = "Tipo:"
+        RichTextPart2.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart2.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart2.Text = "N/A"
+        RichTextPart3.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        RichTextPart3.Text = "    "
+        RichTextPart4.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart4.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
+        RichTextPart4.Text = "Reparo:"
+        RichTextPart5.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart5.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart5.Text = "N/A"
+        RichTextPart6.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        RichTextPart6.Text = "    "
+        RichTextPart7.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart7.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
+        RichTextPart7.Text = "Proposta:"
+        RichTextPart8.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart8.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart8.Text = "N/A"
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart1)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart2)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart3)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart4)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart5)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart6)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart7)
+        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart8)
+        Me.BtnCallTypeHasRepairNeedProposal.TooltipText = ""
+        Me.BtnCallTypeHasRepairNeedProposal.UseVisualStyleBackColor = True
+        '
+        'BtnUnitTemperaturePressure
+        '
+        Me.BtnUnitTemperaturePressure.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnUnitTemperaturePressure.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.BtnUnitTemperaturePressure.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnUnitTemperaturePressure.Location = New System.Drawing.Point(6, 53)
+        Me.BtnUnitTemperaturePressure.Name = "BtnUnitTemperaturePressure"
+        Me.BtnUnitTemperaturePressure.Size = New System.Drawing.Size(382, 25)
+        Me.BtnUnitTemperaturePressure.TabIndex = 1
+        RichTextPart9.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart9.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart9.Text = "Unidade:"
+        RichTextPart10.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart10.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart10.Text = "N/A"
+        RichTextPart11.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        RichTextPart11.Text = "    "
+        RichTextPart12.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart12.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
+        RichTextPart12.Text = "Temperatura:"
+        RichTextPart13.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart13.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart13.Text = "N/A"
+        RichTextPart14.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart14.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        RichTextPart14.Text = "    "
+        RichTextPart15.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart15.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
+        RichTextPart15.Text = "Pressão:"
+        RichTextPart16.Color = System.Drawing.SystemColors.WindowText
+        RichTextPart16.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        RichTextPart16.Text = "N/A"
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart9)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart10)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart11)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart12)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart13)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart14)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart15)
+        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart16)
+        Me.BtnUnitTemperaturePressure.TooltipText = ""
+        Me.BtnUnitTemperaturePressure.UseVisualStyleBackColor = True
+        '
+        'QbxCustomer
+        '
+        Me.QbxCustomer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.QbxCustomer.CharactersToQuery = 1
+        Condition1.FieldName = "iscustomer"
+        Condition1.Operator = "="
+        Condition1.TableNameOrAlias = "person"
+        Condition1.Value = "@iscustomer"
+        Condition2.FieldName = "statusid"
+        Condition2.Operator = "="
+        Condition2.TableNameOrAlias = "person"
+        Condition2.Value = "@statusid"
+        Me.QbxCustomer.Conditions.Add(Condition1)
+        Me.QbxCustomer.Conditions.Add(Condition2)
+        Me.QbxCustomer.DebugOnTextChanged = False
+        Me.QbxCustomer.DisplayFieldAlias = "Nome Curto"
+        Me.QbxCustomer.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        Me.QbxCustomer.DisplayFieldName = "shortname"
+        Me.QbxCustomer.DisplayMainFieldName = "id"
+        Me.QbxCustomer.DisplayTableAlias = Nothing
+        Me.QbxCustomer.DisplayTableName = "person"
+        Me.QbxCustomer.Distinct = True
+        Me.QbxCustomer.DropDownAutoStretchRight = False
+        Me.QbxCustomer.GridHeaderBackColor = System.Drawing.SystemColors.Window
+        Me.QbxCustomer.IfNull = Nothing
+        Me.QbxCustomer.Limit = 0
+        Me.QbxCustomer.Location = New System.Drawing.Point(6, 147)
+        Me.QbxCustomer.MainReturnFieldName = "id"
+        Me.QbxCustomer.MainTableAlias = Nothing
+        Me.QbxCustomer.MainTableName = "person"
+        Me.QbxCustomer.Name = "QbxCustomer"
+        OtherField1.DisplayFieldAlias = "Nome"
+        OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField1.DisplayFieldName = "name"
+        OtherField1.DisplayMainFieldName = "id"
+        OtherField1.DisplayTableAlias = Nothing
+        OtherField1.DisplayTableName = "person"
+        OtherField1.Freeze = False
+        OtherField1.IfNull = Nothing
+        OtherField1.Prefix = Nothing
+        OtherField1.Suffix = Nothing
+        OtherField2.DisplayFieldAlias = "CNPJ/CPF"
+        OtherField2.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField2.DisplayFieldName = "document"
+        OtherField2.DisplayMainFieldName = "id"
+        OtherField2.DisplayTableAlias = Nothing
+        OtherField2.DisplayTableName = "person"
+        OtherField2.Freeze = False
+        OtherField2.IfNull = Nothing
+        OtherField2.Prefix = Nothing
+        OtherField2.Suffix = Nothing
+        OtherField3.DisplayFieldAlias = "Cidade"
+        OtherField3.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField3.DisplayFieldName = "name"
+        OtherField3.DisplayMainFieldName = "id"
+        OtherField3.DisplayTableAlias = Nothing
+        OtherField3.DisplayTableName = "city"
+        OtherField3.Freeze = False
+        OtherField3.IfNull = Nothing
+        OtherField3.Prefix = Nothing
+        OtherField3.Suffix = Nothing
+        OtherField4.DisplayFieldAlias = "Estado"
+        OtherField4.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField4.DisplayFieldName = "name"
+        OtherField4.DisplayMainFieldName = "id"
+        OtherField4.DisplayTableAlias = Nothing
+        OtherField4.DisplayTableName = "state"
+        OtherField4.Freeze = False
+        OtherField4.IfNull = Nothing
+        OtherField4.Prefix = Nothing
+        OtherField4.Suffix = Nothing
+        Me.QbxCustomer.OtherFields.Add(OtherField1)
+        Me.QbxCustomer.OtherFields.Add(OtherField2)
+        Me.QbxCustomer.OtherFields.Add(OtherField3)
+        Me.QbxCustomer.OtherFields.Add(OtherField4)
+        Parameter1.ParameterName = "@iscustomer"
+        Parameter1.ParameterValue = "1"
+        Parameter2.ParameterName = "@statusid"
+        Parameter2.ParameterValue = "0"
+        Me.QbxCustomer.Parameters.Add(Parameter1)
+        Me.QbxCustomer.Parameters.Add(Parameter2)
+        Me.QbxCustomer.Prefix = Nothing
+        Relation1.Operator = "="
+        Relation1.RelateFieldName = "personid"
+        Relation1.RelateTableAlias = Nothing
+        Relation1.RelateTableName = "personaddress"
+        Relation1.RelationType = "LEFT"
+        Relation1.WithFieldName = "id"
+        Relation1.WithTableAlias = Nothing
+        Relation1.WithTableName = "person"
+        Relation2.Operator = "="
+        Relation2.RelateFieldName = "id"
+        Relation2.RelateTableAlias = Nothing
+        Relation2.RelateTableName = "city"
+        Relation2.RelationType = "LEFT"
+        Relation2.WithFieldName = "cityid"
+        Relation2.WithTableAlias = Nothing
+        Relation2.WithTableName = "personaddress"
+        Relation3.Operator = "="
+        Relation3.RelateFieldName = "id"
+        Relation3.RelateTableAlias = Nothing
+        Relation3.RelateTableName = "state"
+        Relation3.RelationType = "LEFT"
+        Relation3.WithFieldName = "stateid"
+        Relation3.WithTableAlias = Nothing
+        Relation3.WithTableName = "city"
+        Me.QbxCustomer.Relations.Add(Relation1)
+        Me.QbxCustomer.Relations.Add(Relation2)
+        Me.QbxCustomer.Relations.Add(Relation3)
+        Me.QbxCustomer.Size = New System.Drawing.Size(382, 23)
+        Me.QbxCustomer.Suffix = Nothing
+        Me.QbxCustomer.TabIndex = 11
+        '
         'TxtReference
         '
         Me.TxtReference.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
@@ -709,6 +936,81 @@ Partial Class FrmEvaluation
         Me.FlpCustomer.Name = "FlpCustomer"
         Me.FlpCustomer.Size = New System.Drawing.Size(69, 21)
         Me.FlpCustomer.TabIndex = 12
+        '
+        'BtnFilterCustomer
+        '
+        Me.BtnFilterCustomer.BackColor = System.Drawing.Color.Transparent
+        Me.BtnFilterCustomer.BackgroundImage = Global.Manager.My.Resources.Resources.Magnifier
+        Me.BtnFilterCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnFilterCustomer.FlatAppearance.BorderSize = 0
+        Me.BtnFilterCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnFilterCustomer.Location = New System.Drawing.Point(49, 3)
+        Me.BtnFilterCustomer.Name = "BtnFilterCustomer"
+        Me.BtnFilterCustomer.Size = New System.Drawing.Size(17, 17)
+        Me.BtnFilterCustomer.TabIndex = 2
+        Me.BtnFilterCustomer.TabStop = False
+        Me.BtnFilterCustomer.TooltipText = ""
+        Me.BtnFilterCustomer.UseVisualStyleBackColor = False
+        Me.BtnFilterCustomer.Visible = False
+        '
+        'BtnViewCustomer
+        '
+        Me.BtnViewCustomer.BackColor = System.Drawing.Color.Transparent
+        Me.BtnViewCustomer.BackgroundImage = Global.Manager.My.Resources.Resources.View
+        Me.BtnViewCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnViewCustomer.FlatAppearance.BorderSize = 0
+        Me.BtnViewCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnViewCustomer.Location = New System.Drawing.Point(26, 3)
+        Me.BtnViewCustomer.Name = "BtnViewCustomer"
+        Me.BtnViewCustomer.Size = New System.Drawing.Size(17, 17)
+        Me.BtnViewCustomer.TabIndex = 1
+        Me.BtnViewCustomer.TabStop = False
+        Me.BtnViewCustomer.TooltipText = ""
+        Me.BtnViewCustomer.UseVisualStyleBackColor = False
+        Me.BtnViewCustomer.Visible = False
+        '
+        'BtnNewCustomer
+        '
+        Me.BtnNewCustomer.BackColor = System.Drawing.Color.Transparent
+        Me.BtnNewCustomer.BackgroundImage = Global.Manager.My.Resources.Resources.IncludeSmall
+        Me.BtnNewCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnNewCustomer.FlatAppearance.BorderSize = 0
+        Me.BtnNewCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnNewCustomer.Location = New System.Drawing.Point(3, 3)
+        Me.BtnNewCustomer.Name = "BtnNewCustomer"
+        Me.BtnNewCustomer.Size = New System.Drawing.Size(17, 17)
+        Me.BtnNewCustomer.TabIndex = 0
+        Me.BtnNewCustomer.TabStop = False
+        Me.BtnNewCustomer.TooltipText = ""
+        Me.BtnNewCustomer.UseVisualStyleBackColor = False
+        Me.BtnNewCustomer.Visible = False
+        '
+        'DbxAverageWorkLoad
+        '
+        Me.DbxAverageWorkLoad.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.DbxAverageWorkLoad.DecimalOnly = True
+        Me.DbxAverageWorkLoad.DecimalPlaces = 2
+        Me.DbxAverageWorkLoad.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
+        Me.DbxAverageWorkLoad.Location = New System.Drawing.Point(306, 239)
+        Me.DbxAverageWorkLoad.Name = "DbxAverageWorkLoad"
+        Me.DbxAverageWorkLoad.ReadOnly = True
+        Me.DbxAverageWorkLoad.Size = New System.Drawing.Size(82, 23)
+        Me.DbxAverageWorkLoad.TabIndex = 20
+        Me.DbxAverageWorkLoad.Text = "0,00"
+        Me.DbxAverageWorkLoad.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'DbxHorimeter
+        '
+        Me.DbxHorimeter.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.DbxHorimeter.DecimalOnly = True
+        Me.DbxHorimeter.DecimalPlaces = 0
+        Me.DbxHorimeter.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
+        Me.DbxHorimeter.Location = New System.Drawing.Point(200, 239)
+        Me.DbxHorimeter.Name = "DbxHorimeter"
+        Me.DbxHorimeter.Size = New System.Drawing.Size(100, 23)
+        Me.DbxHorimeter.TabIndex = 18
+        Me.DbxHorimeter.Text = "0"
+        Me.DbxHorimeter.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'LblEvaluationDate
         '
@@ -764,6 +1066,17 @@ Partial Class FrmEvaluation
         Me.TxtResponsible.Size = New System.Drawing.Size(188, 23)
         Me.TxtResponsible.TabIndex = 16
         '
+        'DbxEvaluationDate
+        '
+        Me.DbxEvaluationDate.ButtonImage = CType(resources.GetObject("DbxEvaluationDate.ButtonImage"), System.Drawing.Image)
+        Me.DbxEvaluationDate.Date = Nothing
+        Me.DbxEvaluationDate.Location = New System.Drawing.Point(117, 101)
+        Me.DbxEvaluationDate.MinimumSize = New System.Drawing.Size(100, 0)
+        Me.DbxEvaluationDate.Name = "DbxEvaluationDate"
+        Me.DbxEvaluationDate.Size = New System.Drawing.Size(109, 23)
+        Me.DbxEvaluationDate.TabIndex = 5
+        Me.DbxEvaluationDate.Text = "  /  /"
+        '
         'LblHorimeter
         '
         Me.LblHorimeter.AutoSize = True
@@ -781,6 +1094,133 @@ Partial Class FrmEvaluation
         Me.LblCompressor.Size = New System.Drawing.Size(85, 17)
         Me.LblCompressor.TabIndex = 13
         Me.LblCompressor.Text = "Compressor"
+        '
+        'QbxCompressor
+        '
+        Me.QbxCompressor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.QbxCompressor.CharactersToQuery = 1
+        Condition3.FieldName = "statusid"
+        Condition3.Operator = "="
+        Condition3.TableNameOrAlias = "personcompressor"
+        Condition3.Value = "@statusid"
+        Me.QbxCompressor.Conditions.Add(Condition3)
+        Me.QbxCompressor.DebugOnTextChanged = False
+        Me.QbxCompressor.DisplayFieldAlias = "Compressor"
+        Me.QbxCompressor.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        Me.QbxCompressor.DisplayFieldName = "name"
+        Me.QbxCompressor.DisplayMainFieldName = "id"
+        Me.QbxCompressor.DisplayTableAlias = Nothing
+        Me.QbxCompressor.DisplayTableName = "compressor"
+        Me.QbxCompressor.Distinct = False
+        Me.QbxCompressor.DropDownAutoStretchRight = False
+        Me.QbxCompressor.Enabled = False
+        Me.QbxCompressor.GridHeaderBackColor = System.Drawing.SystemColors.Window
+        Me.QbxCompressor.IfNull = Nothing
+        Me.QbxCompressor.Location = New System.Drawing.Point(6, 193)
+        Me.QbxCompressor.MainReturnFieldName = "id"
+        Me.QbxCompressor.MainTableAlias = Nothing
+        Me.QbxCompressor.MainTableName = "personcompressor"
+        Me.QbxCompressor.Name = "QbxCompressor"
+        OtherField5.DisplayFieldAlias = "Nº de Série"
+        OtherField5.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField5.DisplayFieldName = "serialnumber"
+        OtherField5.DisplayMainFieldName = "id"
+        OtherField5.DisplayTableAlias = Nothing
+        OtherField5.DisplayTableName = "personcompressor"
+        OtherField5.Freeze = True
+        OtherField5.IfNull = Nothing
+        OtherField5.Prefix = " NS: "
+        OtherField5.Suffix = Nothing
+        OtherField6.DisplayFieldAlias = "Patrimônio"
+        OtherField6.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField6.DisplayFieldName = "patrimony"
+        OtherField6.DisplayMainFieldName = "id"
+        OtherField6.DisplayTableAlias = Nothing
+        OtherField6.DisplayTableName = "personcompressor"
+        OtherField6.Freeze = True
+        OtherField6.IfNull = Nothing
+        OtherField6.Prefix = " PAT: "
+        OtherField6.Suffix = Nothing
+        OtherField7.DisplayFieldAlias = "Setor"
+        OtherField7.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField7.DisplayFieldName = "sector"
+        OtherField7.DisplayMainFieldName = "id"
+        OtherField7.DisplayTableAlias = Nothing
+        OtherField7.DisplayTableName = "personcompressor"
+        OtherField7.Freeze = True
+        OtherField7.IfNull = Nothing
+        OtherField7.Prefix = " SETOR: "
+        OtherField7.Suffix = Nothing
+        OtherField8.DisplayFieldAlias = Nothing
+        OtherField8.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField8.DisplayFieldName = "name"
+        OtherField8.DisplayMainFieldName = "id"
+        OtherField8.DisplayTableAlias = Nothing
+        OtherField8.DisplayTableName = "compressorunit"
+        OtherField8.Freeze = False
+        OtherField8.IfNull = Nothing
+        OtherField8.Prefix = Nothing
+        OtherField8.Suffix = Nothing
+        OtherField9.DisplayFieldAlias = Nothing
+        OtherField9.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField9.DisplayFieldName = "name"
+        OtherField9.DisplayMainFieldName = "id"
+        OtherField9.DisplayTableAlias = Nothing
+        OtherField9.DisplayTableName = "compressorinterface"
+        OtherField9.Freeze = False
+        OtherField9.IfNull = Nothing
+        OtherField9.Prefix = Nothing
+        OtherField9.Suffix = Nothing
+        OtherField10.DisplayFieldAlias = Nothing
+        OtherField10.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField10.DisplayFieldName = "directionid"
+        OtherField10.DisplayMainFieldName = "id"
+        OtherField10.DisplayTableAlias = Nothing
+        OtherField10.DisplayTableName = "compressorinterface"
+        OtherField10.Freeze = False
+        OtherField10.IfNull = Nothing
+        OtherField10.Prefix = Nothing
+        OtherField10.Suffix = Nothing
+        Me.QbxCompressor.OtherFields.Add(OtherField5)
+        Me.QbxCompressor.OtherFields.Add(OtherField6)
+        Me.QbxCompressor.OtherFields.Add(OtherField7)
+        Me.QbxCompressor.OtherFields.Add(OtherField8)
+        Me.QbxCompressor.OtherFields.Add(OtherField9)
+        Me.QbxCompressor.OtherFields.Add(OtherField10)
+        Parameter3.ParameterName = "@statusid"
+        Parameter3.ParameterValue = "0"
+        Me.QbxCompressor.Parameters.Add(Parameter3)
+        Me.QbxCompressor.Prefix = Nothing
+        Relation4.Operator = "="
+        Relation4.RelateFieldName = "id"
+        Relation4.RelateTableAlias = Nothing
+        Relation4.RelateTableName = "compressor"
+        Relation4.RelationType = "INNER"
+        Relation4.WithFieldName = "compressorid"
+        Relation4.WithTableAlias = Nothing
+        Relation4.WithTableName = "personcompressor"
+        Relation5.Operator = "="
+        Relation5.RelateFieldName = "id"
+        Relation5.RelateTableAlias = Nothing
+        Relation5.RelateTableName = "compressorunit"
+        Relation5.RelationType = "LEFT"
+        Relation5.WithFieldName = "compressorunitid"
+        Relation5.WithTableAlias = Nothing
+        Relation5.WithTableName = "personcompressor"
+        Relation6.Operator = "="
+        Relation6.RelateFieldName = "id"
+        Relation6.RelateTableAlias = Nothing
+        Relation6.RelateTableName = "compressorinterface"
+        Relation6.RelationType = "LEFT"
+        Relation6.WithFieldName = "compressorinterfaceid"
+        Relation6.WithTableAlias = Nothing
+        Relation6.WithTableName = "personcompressor"
+        Me.QbxCompressor.Relations.Add(Relation4)
+        Me.QbxCompressor.Relations.Add(Relation5)
+        Me.QbxCompressor.Relations.Add(Relation6)
+        Me.QbxCompressor.Size = New System.Drawing.Size(382, 23)
+        Me.QbxCompressor.Suffix = Nothing
+        Me.QbxCompressor.TabIndex = 14
         '
         'TabTechnicalAdvice
         '
@@ -1075,6 +1515,28 @@ Partial Class FrmEvaluation
         Me.TabPicture.Text = "Fotos"
         Me.TabPicture.UseVisualStyleBackColor = True
         '
+        'PvPicture
+        '
+        Me.PvPicture.ControlBarBackColor = System.Drawing.Color.White
+        Me.PvPicture.CounterBarBackColor = System.Drawing.Color.White
+        Me.PvPicture.CounterMask = "Foto {0} de {1} - Max: {2}"
+        Me.PvPicture.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PvPicture.FirstButtonImage = CType(resources.GetObject("PvPicture.FirstButtonImage"), System.Drawing.Image)
+        Me.PvPicture.IncludeButtonImage = CType(resources.GetObject("PvPicture.IncludeButtonImage"), System.Drawing.Image)
+        Me.PvPicture.LastButtonImage = CType(resources.GetObject("PvPicture.LastButtonImage"), System.Drawing.Image)
+        Me.PvPicture.Location = New System.Drawing.Point(3, 3)
+        Me.PvPicture.MaximumPictures = 6
+        Me.PvPicture.Name = "PvPicture"
+        Me.PvPicture.NextButtonImage = CType(resources.GetObject("PvPicture.NextButtonImage"), System.Drawing.Image)
+        Me.PvPicture.Padding = New System.Windows.Forms.Padding(1)
+        Me.PvPicture.PreviousButtonImage = CType(resources.GetObject("PvPicture.PreviousButtonImage"), System.Drawing.Image)
+        Me.PvPicture.RemoveButtonImage = CType(resources.GetObject("PvPicture.RemoveButtonImage"), System.Drawing.Image)
+        Me.PvPicture.SaveButtonImage = CType(resources.GetObject("PvPicture.SaveButtonImage"), System.Drawing.Image)
+        Me.PvPicture.ShowControlBar = False
+        Me.PvPicture.ShowCounterBar = True
+        Me.PvPicture.Size = New System.Drawing.Size(1025, 405)
+        Me.PvPicture.TabIndex = 0
+        '
         'TabSignature
         '
         Me.TabSignature.Controls.Add(Me.PnSignature)
@@ -1164,466 +1626,6 @@ Partial Class FrmEvaluation
         Me.DgvlReplacedSellable.DataGridView = Me.DgvReplacedSellable
         Me.DgvlReplacedSellable.Routine = Manager.Routine.EvaluationReplacedSellable
         '
-        'TbxEndTime
-        '
-        Me.TbxEndTime.Location = New System.Drawing.Point(313, 101)
-        Me.TbxEndTime.MinimumSize = New System.Drawing.Size(50, 0)
-        Me.TbxEndTime.Name = "TbxEndTime"
-        Me.TbxEndTime.ShowSecconds = False
-        Me.TbxEndTime.Size = New System.Drawing.Size(75, 23)
-        Me.TbxEndTime.TabIndex = 9
-        Me.TbxEndTime.Text = "  :"
-        Me.TbxEndTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.TbxEndTime.Time = Nothing
-        '
-        'TbxStartTime
-        '
-        Me.TbxStartTime.Location = New System.Drawing.Point(232, 101)
-        Me.TbxStartTime.MinimumSize = New System.Drawing.Size(50, 0)
-        Me.TbxStartTime.Name = "TbxStartTime"
-        Me.TbxStartTime.ShowSecconds = False
-        Me.TbxStartTime.Size = New System.Drawing.Size(75, 23)
-        Me.TbxStartTime.TabIndex = 7
-        Me.TbxStartTime.Text = "  :"
-        Me.TbxStartTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.TbxStartTime.Time = Nothing
-        '
-        'BtnCallTypeHasRepairNeedProposal
-        '
-        Me.BtnCallTypeHasRepairNeedProposal.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.BtnCallTypeHasRepairNeedProposal.FlatAppearance.BorderColor = System.Drawing.Color.Silver
-        Me.BtnCallTypeHasRepairNeedProposal.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnCallTypeHasRepairNeedProposal.Location = New System.Drawing.Point(6, 22)
-        Me.BtnCallTypeHasRepairNeedProposal.Name = "BtnCallTypeHasRepairNeedProposal"
-        Me.BtnCallTypeHasRepairNeedProposal.Size = New System.Drawing.Size(382, 25)
-        Me.BtnCallTypeHasRepairNeedProposal.TabIndex = 0
-        RichTextPart1.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart1.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        RichTextPart1.Text = "Tipo:"
-        RichTextPart2.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart2.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        RichTextPart2.Text = "N/A"
-        RichTextPart3.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        RichTextPart3.Text = "    "
-        RichTextPart4.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart4.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
-        RichTextPart4.Text = "Reparo:"
-        RichTextPart5.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart5.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        RichTextPart5.Text = "N/A"
-        RichTextPart6.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        RichTextPart6.Text = "    "
-        RichTextPart7.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart7.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
-        RichTextPart7.Text = "Proposta:"
-        RichTextPart8.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart8.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        RichTextPart8.Text = "N/A"
-        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart1)
-        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart2)
-        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart3)
-        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart4)
-        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart5)
-        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart6)
-        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart7)
-        Me.BtnCallTypeHasRepairNeedProposal.TextParts.Add(RichTextPart8)
-        Me.BtnCallTypeHasRepairNeedProposal.TooltipText = ""
-        Me.BtnCallTypeHasRepairNeedProposal.UseVisualStyleBackColor = True
-        '
-        'BtnUnitTemperaturePressure
-        '
-        Me.BtnUnitTemperaturePressure.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.BtnUnitTemperaturePressure.FlatAppearance.BorderColor = System.Drawing.Color.Silver
-        Me.BtnUnitTemperaturePressure.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnUnitTemperaturePressure.Location = New System.Drawing.Point(6, 53)
-        Me.BtnUnitTemperaturePressure.Name = "BtnUnitTemperaturePressure"
-        Me.BtnUnitTemperaturePressure.Size = New System.Drawing.Size(382, 25)
-        Me.BtnUnitTemperaturePressure.TabIndex = 1
-        RichTextPart9.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart9.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        RichTextPart9.Text = "Unidade:"
-        RichTextPart10.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart10.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        RichTextPart10.Text = "N/A"
-        RichTextPart11.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        RichTextPart11.Text = "    "
-        RichTextPart12.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart12.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
-        RichTextPart12.Text = "Temperatura:"
-        RichTextPart13.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart13.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        RichTextPart13.Text = "N/A"
-        RichTextPart14.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart14.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        RichTextPart14.Text = "    "
-        RichTextPart15.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart15.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold)
-        RichTextPart15.Text = "Pressão:"
-        RichTextPart16.Color = System.Drawing.SystemColors.WindowText
-        RichTextPart16.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        RichTextPart16.Text = "N/A"
-        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart9)
-        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart10)
-        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart11)
-        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart12)
-        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart13)
-        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart14)
-        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart15)
-        Me.BtnUnitTemperaturePressure.TextParts.Add(RichTextPart16)
-        Me.BtnUnitTemperaturePressure.TooltipText = ""
-        Me.BtnUnitTemperaturePressure.UseVisualStyleBackColor = True
-        '
-        'QbxCustomer
-        '
-        Me.QbxCustomer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.QbxCustomer.CharactersToQuery = 1
-        Condition1.FieldName = "iscustomer"
-        Condition1.Operator = "="
-        Condition1.TableNameOrAlias = "person"
-        Condition1.Value = "@iscustomer"
-        Condition2.FieldName = "statusid"
-        Condition2.Operator = "="
-        Condition2.TableNameOrAlias = "person"
-        Condition2.Value = "@statusid"
-        Me.QbxCustomer.Conditions.Add(Condition1)
-        Me.QbxCustomer.Conditions.Add(Condition2)
-        Me.QbxCustomer.DebugOnTextChanged = False
-        Me.QbxCustomer.DisplayFieldAlias = "Nome Curto"
-        Me.QbxCustomer.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        Me.QbxCustomer.DisplayFieldName = "shortname"
-        Me.QbxCustomer.DisplayMainFieldName = "id"
-        Me.QbxCustomer.DisplayTableAlias = Nothing
-        Me.QbxCustomer.DisplayTableName = "person"
-        Me.QbxCustomer.Distinct = True
-        Me.QbxCustomer.DropDownAutoStretchRight = False
-        Me.QbxCustomer.GridHeaderBackColor = System.Drawing.SystemColors.Window
-        Me.QbxCustomer.IfNull = Nothing
-        Me.QbxCustomer.Limit = 0
-        Me.QbxCustomer.Location = New System.Drawing.Point(6, 147)
-        Me.QbxCustomer.MainReturnFieldName = "id"
-        Me.QbxCustomer.MainTableAlias = Nothing
-        Me.QbxCustomer.MainTableName = "person"
-        Me.QbxCustomer.Name = "QbxCustomer"
-        OtherField1.DisplayFieldAlias = "Nome"
-        OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField1.DisplayFieldName = "name"
-        OtherField1.DisplayMainFieldName = "id"
-        OtherField1.DisplayTableAlias = Nothing
-        OtherField1.DisplayTableName = "person"
-        OtherField1.Freeze = False
-        OtherField1.IfNull = Nothing
-        OtherField1.Prefix = Nothing
-        OtherField1.Suffix = Nothing
-        OtherField2.DisplayFieldAlias = "CNPJ/CPF"
-        OtherField2.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField2.DisplayFieldName = "document"
-        OtherField2.DisplayMainFieldName = "id"
-        OtherField2.DisplayTableAlias = Nothing
-        OtherField2.DisplayTableName = "person"
-        OtherField2.Freeze = False
-        OtherField2.IfNull = Nothing
-        OtherField2.Prefix = Nothing
-        OtherField2.Suffix = Nothing
-        OtherField3.DisplayFieldAlias = "Cidade"
-        OtherField3.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField3.DisplayFieldName = "name"
-        OtherField3.DisplayMainFieldName = "id"
-        OtherField3.DisplayTableAlias = Nothing
-        OtherField3.DisplayTableName = "city"
-        OtherField3.Freeze = False
-        OtherField3.IfNull = Nothing
-        OtherField3.Prefix = Nothing
-        OtherField3.Suffix = Nothing
-        OtherField4.DisplayFieldAlias = "Estado"
-        OtherField4.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField4.DisplayFieldName = "name"
-        OtherField4.DisplayMainFieldName = "id"
-        OtherField4.DisplayTableAlias = Nothing
-        OtherField4.DisplayTableName = "state"
-        OtherField4.Freeze = False
-        OtherField4.IfNull = Nothing
-        OtherField4.Prefix = Nothing
-        OtherField4.Suffix = Nothing
-        Me.QbxCustomer.OtherFields.Add(OtherField1)
-        Me.QbxCustomer.OtherFields.Add(OtherField2)
-        Me.QbxCustomer.OtherFields.Add(OtherField3)
-        Me.QbxCustomer.OtherFields.Add(OtherField4)
-        Parameter1.ParameterName = "@iscustomer"
-        Parameter1.ParameterValue = "1"
-        Parameter2.ParameterName = "@statusid"
-        Parameter2.ParameterValue = "0"
-        Me.QbxCustomer.Parameters.Add(Parameter1)
-        Me.QbxCustomer.Parameters.Add(Parameter2)
-        Me.QbxCustomer.Prefix = Nothing
-        Relation1.Operator = "="
-        Relation1.RelateFieldName = "personid"
-        Relation1.RelateTableAlias = Nothing
-        Relation1.RelateTableName = "personaddress"
-        Relation1.RelationType = "LEFT"
-        Relation1.WithFieldName = "id"
-        Relation1.WithTableAlias = Nothing
-        Relation1.WithTableName = "person"
-        Relation2.Operator = "="
-        Relation2.RelateFieldName = "id"
-        Relation2.RelateTableAlias = Nothing
-        Relation2.RelateTableName = "city"
-        Relation2.RelationType = "LEFT"
-        Relation2.WithFieldName = "cityid"
-        Relation2.WithTableAlias = Nothing
-        Relation2.WithTableName = "personaddress"
-        Relation3.Operator = "="
-        Relation3.RelateFieldName = "id"
-        Relation3.RelateTableAlias = Nothing
-        Relation3.RelateTableName = "state"
-        Relation3.RelationType = "LEFT"
-        Relation3.WithFieldName = "stateid"
-        Relation3.WithTableAlias = Nothing
-        Relation3.WithTableName = "city"
-        Me.QbxCustomer.Relations.Add(Relation1)
-        Me.QbxCustomer.Relations.Add(Relation2)
-        Me.QbxCustomer.Relations.Add(Relation3)
-        Me.QbxCustomer.Size = New System.Drawing.Size(382, 23)
-        Me.QbxCustomer.Suffix = Nothing
-        Me.QbxCustomer.TabIndex = 11
-        '
-        'BtnFilterCustomer
-        '
-        Me.BtnFilterCustomer.BackColor = System.Drawing.Color.Transparent
-        Me.BtnFilterCustomer.BackgroundImage = Global.Manager.My.Resources.Resources.Magnifier
-        Me.BtnFilterCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnFilterCustomer.FlatAppearance.BorderSize = 0
-        Me.BtnFilterCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnFilterCustomer.Location = New System.Drawing.Point(49, 3)
-        Me.BtnFilterCustomer.Name = "BtnFilterCustomer"
-        Me.BtnFilterCustomer.Size = New System.Drawing.Size(17, 17)
-        Me.BtnFilterCustomer.TabIndex = 2
-        Me.BtnFilterCustomer.TabStop = False
-        Me.BtnFilterCustomer.TooltipText = ""
-        Me.BtnFilterCustomer.UseVisualStyleBackColor = False
-        Me.BtnFilterCustomer.Visible = False
-        '
-        'BtnViewCustomer
-        '
-        Me.BtnViewCustomer.BackColor = System.Drawing.Color.Transparent
-        Me.BtnViewCustomer.BackgroundImage = Global.Manager.My.Resources.Resources.View
-        Me.BtnViewCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnViewCustomer.FlatAppearance.BorderSize = 0
-        Me.BtnViewCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnViewCustomer.Location = New System.Drawing.Point(26, 3)
-        Me.BtnViewCustomer.Name = "BtnViewCustomer"
-        Me.BtnViewCustomer.Size = New System.Drawing.Size(17, 17)
-        Me.BtnViewCustomer.TabIndex = 1
-        Me.BtnViewCustomer.TabStop = False
-        Me.BtnViewCustomer.TooltipText = ""
-        Me.BtnViewCustomer.UseVisualStyleBackColor = False
-        Me.BtnViewCustomer.Visible = False
-        '
-        'BtnNewCustomer
-        '
-        Me.BtnNewCustomer.BackColor = System.Drawing.Color.Transparent
-        Me.BtnNewCustomer.BackgroundImage = Global.Manager.My.Resources.Resources.IncludeSmall
-        Me.BtnNewCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnNewCustomer.FlatAppearance.BorderSize = 0
-        Me.BtnNewCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnNewCustomer.Location = New System.Drawing.Point(3, 3)
-        Me.BtnNewCustomer.Name = "BtnNewCustomer"
-        Me.BtnNewCustomer.Size = New System.Drawing.Size(17, 17)
-        Me.BtnNewCustomer.TabIndex = 0
-        Me.BtnNewCustomer.TabStop = False
-        Me.BtnNewCustomer.TooltipText = ""
-        Me.BtnNewCustomer.UseVisualStyleBackColor = False
-        Me.BtnNewCustomer.Visible = False
-        '
-        'DbxAverageWorkLoad
-        '
-        Me.DbxAverageWorkLoad.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.DbxAverageWorkLoad.DecimalOnly = True
-        Me.DbxAverageWorkLoad.DecimalPlaces = 2
-        Me.DbxAverageWorkLoad.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxAverageWorkLoad.Location = New System.Drawing.Point(306, 239)
-        Me.DbxAverageWorkLoad.Name = "DbxAverageWorkLoad"
-        Me.DbxAverageWorkLoad.ReadOnly = True
-        Me.DbxAverageWorkLoad.Size = New System.Drawing.Size(82, 23)
-        Me.DbxAverageWorkLoad.TabIndex = 20
-        Me.DbxAverageWorkLoad.Text = "0,00"
-        Me.DbxAverageWorkLoad.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'DbxHorimeter
-        '
-        Me.DbxHorimeter.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.DbxHorimeter.DecimalOnly = True
-        Me.DbxHorimeter.DecimalPlaces = 0
-        Me.DbxHorimeter.IncludeThousandSeparator = Microsoft.VisualBasic.TriState.[True]
-        Me.DbxHorimeter.Location = New System.Drawing.Point(200, 239)
-        Me.DbxHorimeter.Name = "DbxHorimeter"
-        Me.DbxHorimeter.Size = New System.Drawing.Size(100, 23)
-        Me.DbxHorimeter.TabIndex = 18
-        Me.DbxHorimeter.Text = "0"
-        Me.DbxHorimeter.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'DbxEvaluationDate
-        '
-        Me.DbxEvaluationDate.ButtonImage = CType(resources.GetObject("DbxEvaluationDate.ButtonImage"), System.Drawing.Image)
-        Me.DbxEvaluationDate.Date = Nothing
-        Me.DbxEvaluationDate.Location = New System.Drawing.Point(117, 101)
-        Me.DbxEvaluationDate.MinimumSize = New System.Drawing.Size(100, 0)
-        Me.DbxEvaluationDate.Name = "DbxEvaluationDate"
-        Me.DbxEvaluationDate.Size = New System.Drawing.Size(109, 23)
-        Me.DbxEvaluationDate.TabIndex = 5
-        Me.DbxEvaluationDate.Text = "  /  /"
-        '
-        'QbxCompressor
-        '
-        Me.QbxCompressor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.QbxCompressor.CharactersToQuery = 1
-        Condition3.FieldName = "statusid"
-        Condition3.Operator = "="
-        Condition3.TableNameOrAlias = "personcompressor"
-        Condition3.Value = "@statusid"
-        Me.QbxCompressor.Conditions.Add(Condition3)
-        Me.QbxCompressor.DebugOnTextChanged = False
-        Me.QbxCompressor.DisplayFieldAlias = "Compressor"
-        Me.QbxCompressor.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        Me.QbxCompressor.DisplayFieldName = "name"
-        Me.QbxCompressor.DisplayMainFieldName = "id"
-        Me.QbxCompressor.DisplayTableAlias = Nothing
-        Me.QbxCompressor.DisplayTableName = "compressor"
-        Me.QbxCompressor.Distinct = False
-        Me.QbxCompressor.DropDownAutoStretchRight = False
-        Me.QbxCompressor.Enabled = False
-        Me.QbxCompressor.GridHeaderBackColor = System.Drawing.SystemColors.Window
-        Me.QbxCompressor.IfNull = Nothing
-        Me.QbxCompressor.Location = New System.Drawing.Point(6, 193)
-        Me.QbxCompressor.MainReturnFieldName = "id"
-        Me.QbxCompressor.MainTableAlias = Nothing
-        Me.QbxCompressor.MainTableName = "personcompressor"
-        Me.QbxCompressor.Name = "QbxCompressor"
-        OtherField5.DisplayFieldAlias = "Nº de Série"
-        OtherField5.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField5.DisplayFieldName = "serialnumber"
-        OtherField5.DisplayMainFieldName = "id"
-        OtherField5.DisplayTableAlias = Nothing
-        OtherField5.DisplayTableName = "personcompressor"
-        OtherField5.Freeze = True
-        OtherField5.IfNull = Nothing
-        OtherField5.Prefix = " NS: "
-        OtherField5.Suffix = Nothing
-        OtherField6.DisplayFieldAlias = "Patrimônio"
-        OtherField6.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField6.DisplayFieldName = "patrimony"
-        OtherField6.DisplayMainFieldName = "id"
-        OtherField6.DisplayTableAlias = Nothing
-        OtherField6.DisplayTableName = "personcompressor"
-        OtherField6.Freeze = True
-        OtherField6.IfNull = Nothing
-        OtherField6.Prefix = " PAT: "
-        OtherField6.Suffix = Nothing
-        OtherField7.DisplayFieldAlias = "Setor"
-        OtherField7.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField7.DisplayFieldName = "sector"
-        OtherField7.DisplayMainFieldName = "id"
-        OtherField7.DisplayTableAlias = Nothing
-        OtherField7.DisplayTableName = "personcompressor"
-        OtherField7.Freeze = True
-        OtherField7.IfNull = Nothing
-        OtherField7.Prefix = " SETOR: "
-        OtherField7.Suffix = Nothing
-        OtherField8.DisplayFieldAlias = Nothing
-        OtherField8.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField8.DisplayFieldName = "name"
-        OtherField8.DisplayMainFieldName = "id"
-        OtherField8.DisplayTableAlias = Nothing
-        OtherField8.DisplayTableName = "compressorunit"
-        OtherField8.Freeze = False
-        OtherField8.IfNull = Nothing
-        OtherField8.Prefix = Nothing
-        OtherField8.Suffix = Nothing
-        OtherField9.DisplayFieldAlias = Nothing
-        OtherField9.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField9.DisplayFieldName = "name"
-        OtherField9.DisplayMainFieldName = "id"
-        OtherField9.DisplayTableAlias = Nothing
-        OtherField9.DisplayTableName = "compressorinterface"
-        OtherField9.Freeze = False
-        OtherField9.IfNull = Nothing
-        OtherField9.Prefix = Nothing
-        OtherField9.Suffix = Nothing
-        OtherField10.DisplayFieldAlias = Nothing
-        OtherField10.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField10.DisplayFieldName = "directionid"
-        OtherField10.DisplayMainFieldName = "id"
-        OtherField10.DisplayTableAlias = Nothing
-        OtherField10.DisplayTableName = "compressorinterface"
-        OtherField10.Freeze = False
-        OtherField10.IfNull = Nothing
-        OtherField10.Prefix = Nothing
-        OtherField10.Suffix = Nothing
-        Me.QbxCompressor.OtherFields.Add(OtherField5)
-        Me.QbxCompressor.OtherFields.Add(OtherField6)
-        Me.QbxCompressor.OtherFields.Add(OtherField7)
-        Me.QbxCompressor.OtherFields.Add(OtherField8)
-        Me.QbxCompressor.OtherFields.Add(OtherField9)
-        Me.QbxCompressor.OtherFields.Add(OtherField10)
-        Parameter3.ParameterName = "@statusid"
-        Parameter3.ParameterValue = "0"
-        Me.QbxCompressor.Parameters.Add(Parameter3)
-        Me.QbxCompressor.Prefix = Nothing
-        Relation4.Operator = "="
-        Relation4.RelateFieldName = "id"
-        Relation4.RelateTableAlias = Nothing
-        Relation4.RelateTableName = "compressor"
-        Relation4.RelationType = "INNER"
-        Relation4.WithFieldName = "compressorid"
-        Relation4.WithTableAlias = Nothing
-        Relation4.WithTableName = "personcompressor"
-        Relation5.Operator = "="
-        Relation5.RelateFieldName = "id"
-        Relation5.RelateTableAlias = Nothing
-        Relation5.RelateTableName = "compressorunit"
-        Relation5.RelationType = "LEFT"
-        Relation5.WithFieldName = "compressorunitid"
-        Relation5.WithTableAlias = Nothing
-        Relation5.WithTableName = "personcompressor"
-        Relation6.Operator = "="
-        Relation6.RelateFieldName = "id"
-        Relation6.RelateTableAlias = Nothing
-        Relation6.RelateTableName = "compressorinterface"
-        Relation6.RelationType = "LEFT"
-        Relation6.WithFieldName = "compressorinterfaceid"
-        Relation6.WithTableAlias = Nothing
-        Relation6.WithTableName = "personcompressor"
-        Me.QbxCompressor.Relations.Add(Relation4)
-        Me.QbxCompressor.Relations.Add(Relation5)
-        Me.QbxCompressor.Relations.Add(Relation6)
-        Me.QbxCompressor.Size = New System.Drawing.Size(382, 23)
-        Me.QbxCompressor.Suffix = Nothing
-        Me.QbxCompressor.TabIndex = 14
-        '
-        'PvPicture
-        '
-        Me.PvPicture.ControlBarBackColor = System.Drawing.Color.White
-        Me.PvPicture.CounterBarBackColor = System.Drawing.Color.White
-        Me.PvPicture.CounterMask = "Foto {0} de {1} - Max: {2}"
-        Me.PvPicture.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PvPicture.FirstButtonImage = CType(resources.GetObject("PvPicture.FirstButtonImage"), System.Drawing.Image)
-        Me.PvPicture.IncludeButtonImage = CType(resources.GetObject("PvPicture.IncludeButtonImage"), System.Drawing.Image)
-        Me.PvPicture.LastButtonImage = CType(resources.GetObject("PvPicture.LastButtonImage"), System.Drawing.Image)
-        Me.PvPicture.Location = New System.Drawing.Point(3, 3)
-        Me.PvPicture.MaximumPictures = 6
-        Me.PvPicture.Name = "PvPicture"
-        Me.PvPicture.NextButtonImage = CType(resources.GetObject("PvPicture.NextButtonImage"), System.Drawing.Image)
-        Me.PvPicture.Padding = New System.Windows.Forms.Padding(1)
-        Me.PvPicture.PreviousButtonImage = CType(resources.GetObject("PvPicture.PreviousButtonImage"), System.Drawing.Image)
-        Me.PvPicture.RemoveButtonImage = CType(resources.GetObject("PvPicture.RemoveButtonImage"), System.Drawing.Image)
-        Me.PvPicture.SaveButtonImage = CType(resources.GetObject("PvPicture.SaveButtonImage"), System.Drawing.Image)
-        Me.PvPicture.ShowControlBar = False
-        Me.PvPicture.ShowCounterBar = True
-        Me.PvPicture.Size = New System.Drawing.Size(1025, 405)
-        Me.PvPicture.TabIndex = 0
-        '
         'DgvNavigator
         '
         Me.DgvNavigator.CancelNextMove = False
@@ -1663,6 +1665,10 @@ Partial Class FrmEvaluation
         Me.CcoUnitTemperaturePressure.DropDownControl = Nothing
         Me.CcoUnitTemperaturePressure.DropDownEnabled = True
         Me.CcoUnitTemperaturePressure.HostControl = Me.BtnUnitTemperaturePressure
+        '
+        'ErpInterfaceDirection
+        '
+        Me.ErpInterfaceDirection.ContainerControl = Me
         '
         'FrmEvaluation
         '
@@ -1718,6 +1724,7 @@ Partial Class FrmEvaluation
         CType(Me.PbxSignature, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NudHourPerDay, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ErpInterfaceDirection, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1829,4 +1836,5 @@ Partial Class FrmEvaluation
     Friend WithEvents TbxStartTime As ControlLibrary.TimeBox
     Friend WithEvents PvPicture As ControlLibrary.PictureViewer
     Friend WithEvents BtnEvaluationTreatment As ToolStripButton
+    Friend WithEvents ErpInterfaceDirection As ErrorProvider
 End Class

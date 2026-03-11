@@ -1,33 +1,44 @@
 #2.1.1
-• Correçoes na importação de avaliações.
-• Inclusão de indicador na avaliação, que avisa quando as horas da intterface do compressor é crescente.
+@11/03/2026
+• Correções na importação de avaliações.
+• Inclusão de indicador na avaliação, que avisa quando as horas da interface do compressor é crescente ou decrescente.
 • Correções e melhorias internas.
 #2.1.0
+@20/12/2025
 • Inclusão de rotina de cadastro de modelos de interfaces.
 • Inclusão de rotina de cadastro de modelos unidades compressoras.
 • Ajuste na rotina de cadastro do compressor da pessoa, onde agora é obrigatório o preenchimento do modelo de interface e do modelo de unidade compressora.
 #2.0.9
+@05/10/2025
 • Ajuste no fluxo de importação de avaliações: avaliações com produtos substituídos devem ser previamente baixadas na requisição antes de ficarem disponíveis para importação.
 • Correção de bug que impedia a abertura do compressor através do ícone de visualização nas caixas de busca.
 #2.0.8
+@12/07/2025
 • Corrigido problema em que a tela de login permanecia visível após o login.
 • Correções na rotina de importação de avaliações.
 #2.0.7
+@28/05/2025
 • Correção na tela de carregamento durante a importação de avaliações.
 #2.0.6
+@14/03/2025
 • Ajustes e correções na rotina de agendamento de visita.
 #2.0.5
+@18/01/2025
 • Ajustes e correções na rotina de sincronização com a núvem.
 #2.0.4
+@30/11/2024
 • Correções e melhorias internas.
 #2.0.3
+@10/09/2024
 • Inclusão da opção de copiar os dados dos grids para a área de transferência ao clicar em uma linha com o botão direito do mouse.
 • Inclusão de vinculo do engraxamento no cadastro do compressor da pessoa.
 • Inclusão do relatório de atendimento da avaliação de compressor.
 • Correções e melhorias internas.
 #2.0.2
+@22/06/2024
 • Correção nas telas de peças do compressor, peças do compressor do cliente, itens da tabela de preços e peças e serviços substituídos na avaliação. O sistema estava interpretando itens de serviço como produtos ao serem abertos.
 #2.0.1
+@03/04/2024
 • Correção no ciclo de vida dos formulários embutidos: eventos não são mais disparados após fechar uma rotina.
 • Correção de validação no cadastro das peças do compressor da pessoa, onde acusava servico vinculado mesmo incluindo um produto.
 • Correção na validação do cadastro do compressor da pessoa e do item de caixa, que não era aplicada ao incluir um novo item e salvar o atual.
@@ -38,6 +49,7 @@
 • O controle de manutenção agora é feito por compressor, e não mais por pessoa.
 • Correções e melhorias técnicas internas para aprimorar a estabilidade e desempenho do sistema.
 #2.0.0
+@15/01/2024
 • Incluída integração com a núvem para avaliações online.
 • Inclusão do módulo de Agendamento de Visitas.
 • Inclusão da opção de lançar visitas diretamente na tela do gerenciamento de avaliações.
@@ -51,33 +63,42 @@
 • Correção no grafico do plano de manutenção que fazia os dados ficarem truncados ao gerar plano para muitos compressores.
 • Diversas melhorias e ajustes técnicos internos realizados para aprimorar a estabilidade e desempenho do sistema.
 #1.1.6
+@20/11/2023
 • Corrigido um bug que fazia a avaliação automática vencer no mesmo dia em que era criada.
 #1.1.5
+@05/10/2023
 • Adicionada a opção de realizar avaliação automática diretamente na interface de gerenciamento.
 • O plano de manutenção agora exibe datas com precisão, sem variação superior ou inferior a 1 ano.
 • Introduzido o recurso de geração de relatórios em lote para a folha de caixa.
 #1.1.4
+@18/08/2023
 • Incluída a coluna "A Acertar" no relatório da requisição.
 • Foi inserido um aviso ao tentar adicionar itens duplicados à requisição.
 #1.1.3
+@02/07/2023
 • Agora é possível liberar e/ou restringir os fluxos de caixa para os usuários de acordo com a necessidade.
 #1.1.2
+@15/05/2023
 • O problema que causava a geração incorreta do plano de manutenção, incluindo a repetição de compressores ou a inclusão de compressores que não pertenciam ao cliente selecionado, foi devidamente corrigida.
 • Incluída a coluna "A Acertar" na grade dos itens da Requisição.
 • O problema relacionado ao salvamento incorreto do histórico quando o status de um item da Requisição era modificado foi resolvido.
 • Clientes que não controlam manutenção agora não aparecem mais na caixa de busca de clientes da Avaliação.
 #1.1.1
+@28/03/2023
 • Corrigido um problema que fazia com que o mês de março no gráfico do painel de visitas aparecesse como "MMARÇO".
 • Corrigido um problema que fazia com que o sistema apresentasse um erro caso o caminho do Gerenciador não fosse encontrado.
 • Corrigido um problema que fazia com que o plano de manutenção fosse gerado com base na última avaliação lançada, e não com base na última data de avaliação.
 #1.1.0
+@10/02/2023
 • Inclusão do módulo CRM.
 • Corrigido problema que permitia que usuários sem permissão excluísse registros.
 • Correção de erro ao exportar grades.
 #1.0.1
+@20/01/2023
 • Inclusão de gráfico no plano de manutenção.
 • Inclusão de documentos no caixa.
 • Correção de erro no relatório de peças pendentes na requisição, agora os campos de data inicial e final não ficam em branco.
 • Alteração na tela de login.
 #1.0.0
+@05/01/2023
 • Lançamento do sistema.

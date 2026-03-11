@@ -171,7 +171,7 @@ Public Class FrmEvaluation
         _UcCallTypeHasRepairNeedProposal.CallType = _Evaluation.CallType
         _UcCallTypeHasRepairNeedProposal.HasRepair = _Evaluation.HasRepair
         _UcCallTypeHasRepairNeedProposal.NeedProposal = _Evaluation.NeedProposal
-        _UcUnitTemperaturePressure.Unit = _Evaluation.UnitName
+        _UcUnitTemperaturePressure.Unit = _Evaluation.Compressor.CompressorUnitName
         _UcUnitTemperaturePressure.Temperature = _Evaluation.Temperature
         _UcUnitTemperaturePressure.Pressure = _Evaluation.Pressure
         DbxEvaluationDate.Text = _Evaluation.EvaluationDate
@@ -1256,6 +1256,16 @@ Public Class FrmEvaluation
     Private Sub QbxCustomer_Leave(sender As Object, e As EventArgs) Handles QbxCustomer.Leave
         TmrCustomer.Stop()
         TmrCustomer.Start()
+    End Sub
+    Private Sub QbxCompressor_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxCompressor.FreezedPrimaryKeyChanged
+        If QbxCompressor.IsFreezed Then
+            _UcUnitTemperaturePressure.Unit = QbxCompressor.GetRawFreezedValueOf("compressorunit", "name")
+            MsgBox(QbxCompressor.GetRawFreezedValueOf("compressorinterface", "name"))
+            Dim dir As CompressorInterfaceDirection = QbxCompressor.GetRawFreezedValueOf("compressorinterface", "directionid")
+            MsgBox(EnumHelper.GetEnumDescription(dir))
+        Else
+            _UcUnitTemperaturePressure.Unit = Nothing
+        End If
     End Sub
 #End Region
 #Region "Timer Events"

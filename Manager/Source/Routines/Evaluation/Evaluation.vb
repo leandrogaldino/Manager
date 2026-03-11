@@ -966,7 +966,6 @@ Public Class Evaluation
         Evaluation.CallType = Convert.ToInt32(Data("calltypeid"))
         Evaluation.HasRepair = ConfirmationType.None
         Evaluation.NeedProposal = If(Data("needproposal") = 1, ConfirmationType.Yes, ConfirmationType.No)
-        Evaluation.UnitName = Convert.ToString(Data("unitname"))
         Evaluation.Temperature = Convert.ToInt32(Data("temperature"))
         Evaluation.Pressure = Convert.ToDecimal(Data("pressure"))
         Evaluation.TechnicalAdvice = Data("advice")

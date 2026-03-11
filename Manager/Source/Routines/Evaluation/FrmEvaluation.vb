@@ -462,6 +462,25 @@ Public Class FrmEvaluation
 
 
                     _Evaluation.SaveChanges()
+
+
+
+
+                    'Dim em = _User.Emails.FirstOrDefault(Function(x) x.IsMainEmail)
+                    'Dim m As New EmailModel
+                    'm.Subject = $"Avaliação de Compressor - {_Evaluation.Compressor.CompressorName} - {DbxEvaluationDate.Text}"
+                    'Dim sig = EmailSignature.GetSignatures(_User.ID).FirstOrDefault()
+                    'm.Signature = sig
+                    'm.Body = "corpo"
+                    'Dim result = EvaluationReport.EvaluationTreatment(_Evaluation)
+                    'result.
+                    'If em IsNot Nothing Then
+                    '    Email.Send(em, m,)
+                    'End If
+
+
+
+
                     If _Evaluation.ID = 0 AndAlso _User.CanAccess(Routine.EvaluationApproveOrReject) Then BtnApprove.PerformClick()
                     _Evaluation.Lock()
                     LblIDValue.Text = _Evaluation.ID
@@ -1258,21 +1277,29 @@ Public Class FrmEvaluation
         TmrCustomer.Start()
     End Sub
     Private Sub QbxCompressor_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxCompressor.FreezedPrimaryKeyChanged
+        Dim Message As String
+        Dim Bitmap As Bitmap
+        Dim Icon As Icon
+        Dim Direction As CompressorInterfaceDirection
         If QbxCompressor.IsFreezed Then
             _UcUnitTemperaturePressure.Unit = QbxCompressor.GetRawFreezedValueOf("compressorunit", "name")
-            '           MsgBox(QbxCompressor.GetRawFreezedValueOf("compressorinterface", "name"))
-            Dim dir As CompressorInterfaceDirection = QbxCompressor.GetRawFreezedValueOf("compressorinterface", "directionid")
-            '            MsgBox(EnumHelper.GetEnumDescription(dir))
-            Dim bmp As New Bitmap(My.Resources.ArrowUp)
-            Dim icon As Icon = Icon.FromHandle(bmp.GetHicon())
-            ErpInterfaceDirection.Icon = icon
-            ErpInterfaceDirection.SetError(LblCompressor, "AAAAAAAAAAAAAA")
+            Direction = QbxCompressor.GetRawFreezedValueOf("compressorinterface", "directionid")
             ErpInterfaceDirection.SetIconPadding(LblCompressor, 5)
+            If Direction = CompressorInterfaceDirection.Ascending Then
+                Bitmap = New Bitmap(My.Resources.ArrowUp)
+                Icon = Icon.FromHandle(Bitmap.GetHicon())
+                Message = "Essa interface utiliza horímetro crescente. Ao trocar uma peça o técnico configura para zero."
+            Else
+                Bitmap = New Bitmap(My.Resources.ArrowDown)
+                Icon = Icon.FromHandle(Bitmap.GetHicon())
+                Message = "Essa interface utiliza horímetro decrescente. Ao trocar uma peça o técnico configura para a capacidade total."
+            End If
+            ErpInterfaceDirection.Icon = Icon
+            ErpInterfaceDirection.SetError(LblCompressor, Message)
         Else
             _UcUnitTemperaturePressure.Unit = Nothing
             ErpInterfaceDirection.Clear()
         End If
-
     End Sub
 #End Region
 #Region "Timer Events"

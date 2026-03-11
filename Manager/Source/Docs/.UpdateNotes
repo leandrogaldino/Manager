@@ -1,3 +1,6 @@
+#2.1.1
+• Correçoes na importação de avaliações.
+• Inclusão de indicador na avaliação, que avisa quando as horas da intterface do compressor é crescente.
 #2.1.0
 • Inclusão de rotina de cadastro de modelos de interfaces.
 • Inclusão de rotina de cadastro de modelos unidades compressoras.

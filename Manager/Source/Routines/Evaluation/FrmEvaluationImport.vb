@@ -40,6 +40,7 @@ Public Class FrmEvaluationImport
 
         _RemoteDB.StartListening("evaluations", Condition)
 
+
         AddHandler _RemoteDB.OnFirestoreChanged,
             Async Sub(args)
 
@@ -143,6 +144,8 @@ Public Class FrmEvaluationImport
             End If
 
         Next
+
+        DgvEvaluations.Sort(DgvEvaluations.Columns(1), ComponentModel.ListSortDirection.Ascending)
 
     End Function
 

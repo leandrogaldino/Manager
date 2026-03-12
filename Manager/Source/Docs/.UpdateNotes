@@ -1,3 +1,11 @@
+#2.2.0
+@13/03/2026
+• Apos o salvamento de uma avaliação, o sistema agora exibe uma pergunta, oferecendo a opção de enviar o relatório de atendimento para o cliente.
+#2.1.2
+@12/03/2026
+• Correções no relatório de atendimento da avaliação de compressor, onde a referência da avaliação estava sendo exibida truncada.
+• Correções na tabulação da tela de cadastro do compressor da pessoa.
+• Correções e melhorias internas.
 #2.1.1
 @11/03/2026
 • Correções na importação de avaliações.

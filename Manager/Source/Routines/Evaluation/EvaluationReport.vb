@@ -31,15 +31,10 @@ Public Class EvaluationReport
         WsReport.Range(1, 1, 1, 5).SetValue("RELATÓRIO DE ATENDIMENTO".PadLeft(85, " "))
         WsReport.Range(1, 1, 1, 5).Style.Font.SetBold(True)
         WsReport.Range(1, 1, 1, 5).Style.Font.SetFontSize(14)
-
-        WsReport.Range(1, 6, 1, 7).Merge()
-
-
+        WsReport.Range(1, 6, 1, 7).Merge().Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right)
         WsReport.Cell(1, 6).CreateRichText.
-            AddText("REF: ").SetBold(True).SetFontSize(14).
-            AddText(ReportingEvaluation.Reference).SetFontSize(12)
-
-
+            AddText("REF: ").SetBold(True).SetFontSize(10).
+            AddText(ReportingEvaluation.Reference).SetFontSize(10)
         WsReport.Range(1, 7, 1, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
         Dim LogoLocation As String = Path.Combine(ApplicationPaths.LogoDirectory, Path.GetFileName(Session.Setting.Company.LogoLocation))
         If File.Exists(LogoLocation) Then

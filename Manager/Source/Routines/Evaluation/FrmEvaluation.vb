@@ -465,22 +465,6 @@ Public Class FrmEvaluation
 
 
 
-
-                    'Dim em = _User.Emails.FirstOrDefault(Function(x) x.IsMainEmail)
-                    'Dim m As New EmailModel
-                    'm.Subject = $"Avaliação de Compressor - {_Evaluation.Compressor.CompressorName} - {DbxEvaluationDate.Text}"
-                    'Dim sig = EmailSignature.GetSignatures(_User.ID).FirstOrDefault()
-                    'm.Signature = sig
-                    'm.Body = "corpo"
-                    'Dim result = EvaluationReport.EvaluationTreatment(_Evaluation)
-                    'result.
-                    'If em IsNot Nothing Then
-                    '    Email.Send(em, m,)
-                    'End If
-
-
-
-
                     If _Evaluation.ID = 0 AndAlso _User.CanAccess(Routine.EvaluationApproveOrReject) Then BtnApprove.PerformClick()
                     _Evaluation.Lock()
                     LblIDValue.Text = _Evaluation.ID
@@ -514,6 +498,22 @@ Public Class FrmEvaluation
                         DgvNavigator.RefreshButtons()
                     End If
                     Success = True
+
+
+                    If CMessageBox.Show("Deseja enviar o relatório para o cliente?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+                        Dim Result = EvaluationReport.EvaluationTreatment(_Evaluation)
+                        Using Frm As New FrmEmail(Result.Attachments)
+                            Frm.TxtSubject.Text = $"Avaliação Técnica de Compressor - {_Evaluation.Compressor}"
+                            Frm.TxtTo.Text = String.Join("; ", _Evaluation.Customer.Contacts.Select(Function(c) c.Email))
+                            If Frm.CbxSignature.Items.Count > 1 Then
+                                Frm.CbxSignature.SelectedIndex = 1
+                            End If
+                            Frm.TxtBody.Text = $"Segue avaliação do compressor {_Evaluation.Compressor}, realizada no dia {_Evaluation.EvaluationDate:dd/MM/yyyy}.{vbNewLine}{vbNewLine}Qualquer dúvida estamos à disposição."
+                            Frm.ShowDialog()
+                        End Using
+                    End If
+
+
                 Catch ex As MySqlException
                     If ex.Number = MysqlError.UniqueKey Then
                         CMessageBox.Show("Já existe uma avaliação lançada para esse compressor com essa data.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
@@ -1240,7 +1240,7 @@ Public Class FrmEvaluation
             BtnSave.Enabled = True
         End If
     End Sub
-    Private Sub PvPicture_PictureRemoved(Path As String) Handles  PvPicture.PictureRemoved
+    Private Sub PvPicture_PictureRemoved(Path As String) Handles PvPicture.PictureRemoved
         EprValidation.Clear()
         If Not _Loading Then
             _Evaluation.Pictures.First(Function(x) x.Picture.CurrentFile = Path).Picture.SetCurrentFile(Nothing)

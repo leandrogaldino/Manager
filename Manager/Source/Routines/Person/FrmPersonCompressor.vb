@@ -582,7 +582,7 @@ Public Class FrmPersonCompressor
         If DgvWorkedHourSellable.DataSource IsNot Nothing Then
             Table = DgvWorkedHourSellable.DataSource
             View = Table.DefaultView
-            If TxtFilterWorkedHourSellable.Text <> Nothing Then
+            If Not String.IsNullOrWhiteSpace(TxtFilterWorkedHourSellable.Text) Then
                 Filter = Filter.Replace("@VALUE", TxtFilterWorkedHourSellable.Text.Replace("%", Nothing).Replace("*", Nothing))
                 View.RowFilter = Filter
             Else

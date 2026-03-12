@@ -1517,6 +1517,7 @@ Partial Class FrmEvaluation
         '
         'PvPicture
         '
+        Me.PvPicture.BackColor = System.Drawing.Color.White
         Me.PvPicture.ControlBarBackColor = System.Drawing.Color.White
         Me.PvPicture.CounterBarBackColor = System.Drawing.Color.White
         Me.PvPicture.CounterMask = "Foto {0} de {1} - Max: {2}"

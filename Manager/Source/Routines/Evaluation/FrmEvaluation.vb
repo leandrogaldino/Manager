@@ -271,8 +271,6 @@ Public Class FrmEvaluation
         _Loading = False
     End Sub
 #End Region
-
-
 #Region "Validation & Calculation"
     Private Function IsValidFieldsToSave() As Boolean
         If _UcCallTypeHasRepairNeedProposal.CallType = CallType.None Then
@@ -497,9 +495,6 @@ Public Class FrmEvaluation
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()
                     End If
-                    Success = True
-
-
                     If CMessageBox.Show("Deseja enviar o relatório para o cliente?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                         Dim Result = EvaluationReport.EvaluationTreatment(_Evaluation)
                         Using Frm As New FrmEmail(Result.Attachments)
@@ -512,8 +507,7 @@ Public Class FrmEvaluation
                             Frm.ShowDialog()
                         End Using
                     End If
-
-
+                    Success = True
                 Catch ex As MySqlException
                     If ex.Number = MysqlError.UniqueKey Then
                         CMessageBox.Show("Já existe uma avaliação lançada para esse compressor com essa data.", CMessageBoxType.Warning, CMessageBoxButtons.OK)

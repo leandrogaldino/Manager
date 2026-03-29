@@ -500,7 +500,7 @@
     <value>..\Resources\SQL\Route\RouteUpdate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="SetBrazilianDatabaseMonthNames" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SQL\Misc\SetBrazilianDatabaseMonthNames.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Resources\SQL\Shared\SetBrazilianDatabaseMonthNames.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="StateSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\State\StateSelect.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -1317,5 +1317,14 @@
   </data>
   <data name="ArrowUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\ArrowUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RequestSelectPendingItems" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Request\RequestSelectPendingItems.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="SelectCompressorData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Shared\SelectCompressorData.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="SelectCustomerData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\Shared\SelectCustomerData.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

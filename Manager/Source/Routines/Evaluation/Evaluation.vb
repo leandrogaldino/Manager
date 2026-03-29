@@ -1024,7 +1024,11 @@ Public Class Evaluation
 
         For Each ReplacedProductData In Data("replacedproducts")
             Product = New Product().Load(ReplacedProductData("productid"), False)
-            ProductCode = Product.ProviderCodes.FirstOrDefault(Function(x) x.IsMainProvider).Code
+
+            ProductCode = If(Product.ProviderCodes.FirstOrDefault(Function(x) x.IsMainProvider)?.Code, Product.ProviderCodes.FirstOrDefault()?.Code)
+
+
+
             EvaluationSellable = New EvaluationReplacedSellable() With {
                 .Code = ProductCode,
                 .Name = Product.Name,

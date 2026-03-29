@@ -1,3 +1,6 @@
+#2.2.1
+@29/03/2026
+• Correção na tela de item do caixa onde a categoria da despesa não estava sendo exibida corretamente.
 #2.2.0
 @13/03/2026
 • Apos o salvamento de uma avaliação, o sistema agora exibe uma pergunta, oferecendo a opção de enviar o relatório de atendimento para o cliente.

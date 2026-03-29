@@ -555,6 +555,8 @@
     <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableInsert.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableSelect.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableUpdate.sql" />
+    <Content Include="Resources\SQL\Shared\SelectCompressorData.sql" />
+    <Content Include="Resources\SQL\Shared\SelectCustomerData.sql" />
     <Content Include="Resources\SQL\Person\PersonCompressorSellableDelete.sql" />
     <Content Include="Resources\SQL\Person\PersonCompressorSellableInsert.sql" />
     <Content Include="Resources\SQL\Person\PersonCompressorSellableSelect.sql" />
@@ -573,6 +575,7 @@
     <Content Include="Resources\SQL\Product\ProductPriceIndicatorDetailSelect.sql" />
     <Content Include="Resources\SQL\Product\ProductPriceIndicatorSelect.sql" />
     <Content Include="Resources\SQL\Product\ProductPriceSelect.sql" />
+    <Content Include="Resources\SQL\Request\RequestSelectPendingItems.sql" />
     <Content Include="Resources\SQL\Service\ServicePriceIndicatorDetailSelect.sql" />
     <Content Include="Resources\SQL\Service\ServicePriceIndicatorSelect.sql" />
     <Compile Include="Source\Routines\CompressorInterface\CompressorInterface.vb" />
@@ -2109,7 +2112,7 @@
     <Content Include="Resources\SQL\Route\RouteInsert.sql" />
     <Content Include="Resources\SQL\Route\RouteSelect.sql" />
     <Content Include="Resources\SQL\Route\RouteUpdate.sql" />
-    <Content Include="Resources\SQL\Misc\SetBrazilianDatabaseMonthNames.sql" />
+    <Content Include="Resources\SQL\Shared\SetBrazilianDatabaseMonthNames.sql" />
     <Content Include="Resources\SQL\State\StateSelect.sql" />
     <Content Include="Resources\SQL\User\UserDelete.sql" />
     <Content Include="Resources\SQL\User\UserFilter.sql" />

@@ -209,13 +209,11 @@ Public Class FrmCashItem
     End Sub
     Private Sub Rbt_CheckedChanged(sender As Object, e As EventArgs) Handles RbExpense.CheckedChanged, RbIncome.CheckedChanged
         Dim Radio As RadioButton = CType(sender, RadioButton)
-
         If Radio.Equals(RbExpense) Then
-                CbxCategory.DataSource = _CategoryList.Where(Function(x) x <> "REEMBOLSO").ToList()
-            Else
-                CbxCategory.DataSource = _CategoryList.Where(Function(x) x = "REEMBOLSO").ToList()
-            End If
-
+            CbxCategory.DataSource = _CategoryList.Where(Function(x) x <> "REEMBOLSO").ToArray()
+        Else
+            CbxCategory.DataSource = _CategoryList.Where(Function(x) x = "REEMBOLSO").ToArray()
+        End If
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
@@ -242,12 +240,12 @@ Public Class FrmCashItem
         LblCreationValue.Text = _CashItem.Creation
         RbExpense.Checked = _CashItem.ItemType = CashItemType.Expense
         RbIncome.Checked = _CashItem.ItemType = CashItemType.Income
-        'If RbExpense.Checked Then
-        '    CbxCategory.DataSource = _CategoryList.Where(Function(x) x <> "REEMBOLSO").ToList
-        'Else
-        '    CbxCategory.DataSource = _CategoryList.Where(Function(x) x = "REEMBOLSO").ToList
-        'End If
-        CbxCategory.SelectedIndex = CbxCategory.FindStringExact(EnumHelper.GetEnumDescription(_CashItem.ItemCategory))
+        If _CashItem.ItemType = CashItemType.Expense Then
+            CbxCategory.DataSource = _CategoryList.Where(Function(x) x <> "REEMBOLSO").ToArray()
+        Else
+            CbxCategory.DataSource = _CategoryList.Where(Function(x) x = "REEMBOLSO").ToArray()
+        End If
+        CbxCategory.SelectedItem = EnumHelper.GetEnumDescription(_CashItem.ItemCategory)
         TxtDescription.Text = _CashItem.Description
         TxtDocumentNumber.Text = _CashItem.DocumentNumber
         DbxDocumentDate.Text = _CashItem.DocumentDate

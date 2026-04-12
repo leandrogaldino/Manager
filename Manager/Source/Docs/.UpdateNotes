@@ -1,3 +1,9 @@
+#2.2.2
+@13/04/2026
+• Correção no processo de salvamento da avaliação: avaliações agora são aprovadas automaticamente quando o usuário possui permissão para aprovação.
+• Melhoria no lançamento automático de avaliações: passa a solicitar uma observação ao criar uma nova avaliação.
+• Correção de erro ao alterar um produto para serviço no parecer técnico da avaliação.
+• Correção de falha que ocasionava a ocultação de itens de requisições pendentes durante o processo de importação.
 #2.2.1
 @29/03/2026
 • Correção na tela de item do caixa onde a categoria da despesa não estava sendo exibida corretamente.

@@ -497,6 +497,12 @@
     <Compile Include="Source\Helper\FilterQueriedBox\CompressorUnitQueriedBoxFilter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\CompressorInterfaceDirectionConverter.vb" />
     <Compile Include="Source\Helper\Flags\CompressorInterfaceDirection.vb" />
+    <Compile Include="Source\Main\FrmInputText.Designer.vb">
+      <DependentUpon>FrmInputText.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Main\FrmInputText.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Source\Main\UcReport.Designer.vb">
       <DependentUpon>UcReport.vb</DependentUpon>
     </Compile>
@@ -1043,12 +1049,6 @@
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationManagementPanelExport.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Evaluation\FrmEvaluationRejectReason.Designer.vb">
-      <DependentUpon>FrmEvaluationRejectReason.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\Evaluation\FrmEvaluationRejectReason.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationSource.Designer.vb">
       <DependentUpon>FrmEvaluationSource.vb</DependentUpon>
     </Compile>
@@ -1390,6 +1390,9 @@
     <Compile Include="Source\Routines\VisitSchedule\VisitScheduleFilter.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Source\Main\FrmInputText.resx">
+      <DependentUpon>FrmInputText.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\CashFlow\UcCashFlowGrid.resx">
       <DependentUpon>UcCashFlowGrid.vb</DependentUpon>
     </EmbeddedResource>
@@ -1516,9 +1519,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationManagementPanelExport.resx">
       <DependentUpon>FrmEvaluationManagementPanelExport.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationRejectReason.resx">
-      <DependentUpon>FrmEvaluationRejectReason.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationReplacedSellable.resx">
       <DependentUpon>FrmEvaluationReplacedSellable.vb</DependentUpon>

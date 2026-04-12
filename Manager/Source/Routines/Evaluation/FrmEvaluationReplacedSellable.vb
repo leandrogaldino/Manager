@@ -152,7 +152,7 @@ Public Class FrmEvaluationReplacedSellable
                         .Code = QbxSellable.GetRawFreezedValueOf("productprovidercode", "code")
                     End With
                 Else
-                    With _Evaluation.ReplacedSellables.Single(Function(x) x.Guid)
+                    With _Evaluation.ReplacedSellables.Single(Function(x) x.Guid = _ReplacedSellable.Guid)
                         .Sellable = New Lazy(Of Sellable)(Function() New Service().Load(QbxSellable.FreezedPrimaryKey, False))
                         .SellableType = SellableType.Service
                         .Name = QbxSellable.GetRawFreezedValueOf("service", "name")

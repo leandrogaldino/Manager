@@ -1226,10 +1226,10 @@ Partial Class FrmEvaluation
         '
         Me.TabTechnicalAdvice.BackColor = System.Drawing.Color.White
         Me.TabTechnicalAdvice.Controls.Add(Me.TlpAdvice)
-        Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 22)
+        Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 26)
         Me.TabTechnicalAdvice.Name = "TabTechnicalAdvice"
         Me.TabTechnicalAdvice.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1031, 411)
+        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1031, 407)
         Me.TabTechnicalAdvice.TabIndex = 6
         Me.TabTechnicalAdvice.Text = "Parecer Técnico"
         '
@@ -1245,7 +1245,7 @@ Partial Class FrmEvaluation
         Me.TlpAdvice.RowCount = 2
         Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.0!))
         Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.0!))
-        Me.TlpAdvice.Size = New System.Drawing.Size(1025, 405)
+        Me.TlpAdvice.Size = New System.Drawing.Size(1025, 401)
         Me.TlpAdvice.TabIndex = 2
         '
         'TlpReplaced
@@ -1259,7 +1259,7 @@ Partial Class FrmEvaluation
         Me.TlpReplaced.Name = "TlpReplaced"
         Me.TlpReplaced.RowCount = 1
         Me.TlpReplaced.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TlpReplaced.Size = New System.Drawing.Size(1019, 237)
+        Me.TlpReplaced.Size = New System.Drawing.Size(1019, 234)
         Me.TlpReplaced.TabIndex = 1
         '
         'GbxReplacedSellable
@@ -1269,7 +1269,7 @@ Partial Class FrmEvaluation
         Me.GbxReplacedSellable.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GbxReplacedSellable.Location = New System.Drawing.Point(3, 3)
         Me.GbxReplacedSellable.Name = "GbxReplacedSellable"
-        Me.GbxReplacedSellable.Size = New System.Drawing.Size(1013, 231)
+        Me.GbxReplacedSellable.Size = New System.Drawing.Size(1013, 228)
         Me.GbxReplacedSellable.TabIndex = 2
         Me.GbxReplacedSellable.TabStop = False
         Me.GbxReplacedSellable.Text = "Peças Substituídas/Serviços Executados"
@@ -1293,7 +1293,7 @@ Partial Class FrmEvaluation
         Me.DgvReplacedSellable.RowHeadersVisible = False
         Me.DgvReplacedSellable.RowTemplate.Height = 26
         Me.DgvReplacedSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvReplacedSellable.Size = New System.Drawing.Size(1007, 184)
+        Me.DgvReplacedSellable.Size = New System.Drawing.Size(1007, 181)
         Me.DgvReplacedSellable.TabIndex = 1
         Me.DgvReplacedSellable.TabStop = False
         '
@@ -1358,9 +1358,9 @@ Partial Class FrmEvaluation
         '
         Me.GbxAdvice.Controls.Add(Me.TxtTechnicalAdvice)
         Me.GbxAdvice.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GbxAdvice.Location = New System.Drawing.Point(3, 246)
+        Me.GbxAdvice.Location = New System.Drawing.Point(3, 243)
         Me.GbxAdvice.Name = "GbxAdvice"
-        Me.GbxAdvice.Size = New System.Drawing.Size(1019, 156)
+        Me.GbxAdvice.Size = New System.Drawing.Size(1019, 155)
         Me.GbxAdvice.TabIndex = 0
         Me.GbxAdvice.TabStop = False
         Me.GbxAdvice.Text = "Observação"
@@ -1372,7 +1372,7 @@ Partial Class FrmEvaluation
         Me.TxtTechnicalAdvice.Location = New System.Drawing.Point(3, 19)
         Me.TxtTechnicalAdvice.MaxLength = 1000000
         Me.TxtTechnicalAdvice.Name = "TxtTechnicalAdvice"
-        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1013, 134)
+        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1013, 133)
         Me.TxtTechnicalAdvice.TabIndex = 1
         Me.TxtTechnicalAdvice.Text = ""
         '
@@ -1507,10 +1507,10 @@ Partial Class FrmEvaluation
         'TabPicture
         '
         Me.TabPicture.Controls.Add(Me.PvPicture)
-        Me.TabPicture.Location = New System.Drawing.Point(4, 26)
+        Me.TabPicture.Location = New System.Drawing.Point(4, 22)
         Me.TabPicture.Name = "TabPicture"
         Me.TabPicture.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPicture.Size = New System.Drawing.Size(1031, 407)
+        Me.TabPicture.Size = New System.Drawing.Size(1031, 411)
         Me.TabPicture.TabIndex = 8
         Me.TabPicture.Text = "Fotos"
         Me.TabPicture.UseVisualStyleBackColor = True
@@ -1533,9 +1533,9 @@ Partial Class FrmEvaluation
         Me.PvPicture.PreviousButtonImage = CType(resources.GetObject("PvPicture.PreviousButtonImage"), System.Drawing.Image)
         Me.PvPicture.RemoveButtonImage = CType(resources.GetObject("PvPicture.RemoveButtonImage"), System.Drawing.Image)
         Me.PvPicture.SaveButtonImage = CType(resources.GetObject("PvPicture.SaveButtonImage"), System.Drawing.Image)
-        Me.PvPicture.ShowControlBar = True
+        Me.PvPicture.ShowControlBar = False
         Me.PvPicture.ShowCounterBar = True
-        Me.PvPicture.Size = New System.Drawing.Size(1025, 401)
+        Me.PvPicture.Size = New System.Drawing.Size(1025, 405)
         Me.PvPicture.TabIndex = 0
         '
         'TabSignature

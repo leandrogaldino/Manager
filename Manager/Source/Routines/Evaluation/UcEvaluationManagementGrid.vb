@@ -244,38 +244,39 @@ Public Class UcEvaluationManagementGrid
             If DgvData.SelectedRows.Count = 1 Then
                 If CMessageBox.Show("Confirma o lançamento automático para esse compressor?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
                     Dim SelectedEvaluation As Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("evaluation").Value, False)
-                    Dim NewEvaluation As New Evaluation With {
-                        .Source = EvaluationSource.Automatic,
-                        .Reference = Evaluation.GetEvaluationReference(EvaluationSource.Automatic),
-                        .AverageWorkLoad = SelectedEvaluation.AverageWorkLoad,
-                        .Compressor = SelectedEvaluation.Compressor,
-                        .Customer = SelectedEvaluation.Customer,
-                        .StartTime = New TimeSpan(0, 1, 0),
-                        .EndTime = New TimeSpan(0, 2, 0),
-                        .EvaluationDate = Today,
-                        .Horimeter = SelectedEvaluation.Horimeter + ((Today - SelectedEvaluation.EvaluationDate).Days * SelectedEvaluation.AverageWorkLoad),
-                        .CallType = CallType.Contract,
-                        .Responsible = SelectedEvaluation.Responsible,
-                        .TechnicalAdvice = SelectedEvaluation.TechnicalAdvice
-                    }
-                    SelectedEvaluation.Technicians.ToList().ForEach(Sub(x) NewEvaluation.Technicians.Add(x))
 
-
-
-                    NewEvaluation.WorkedHourControlledSelables.ToList().ForEach(Sub(x)
-                                                                                   x.Lost = False
-                                                                                   x.Sold = False
-                                                                                   x.CurrentCapacity = x.PersonCompressorSellable.Capacity
-                                                                               End Sub
-                                                                   )
-                    NewEvaluation.ElapsedDayControlledSellables.ToList().ForEach(Sub(x)
-                                                                                    x.Lost = False
-                                                                                    x.Sold = False
-                                                                                    x.CurrentCapacity = x.PersonCompressorSellable.Capacity
-                                                                                End Sub
-                                                                   )
-                    NewEvaluation.SaveChanges()
-                    NewEvaluation.SetStatus(EvaluationStatus.Approved)
+                    Using Form As New FrmInputText("Lançamento Automático", "Informe a Observação da Nova Avaliação")
+                        Form.ShowDialog()
+                        Dim NewEvaluation As New Evaluation With {
+                            .Source = EvaluationSource.Automatic,
+                            .Reference = Evaluation.GetEvaluationReference(EvaluationSource.Automatic),
+                            .AverageWorkLoad = SelectedEvaluation.AverageWorkLoad,
+                            .Compressor = SelectedEvaluation.Compressor,
+                            .Customer = SelectedEvaluation.Customer,
+                            .StartTime = New TimeSpan(0, 1, 0),
+                            .EndTime = New TimeSpan(0, 2, 0),
+                            .EvaluationDate = Today,
+                            .Horimeter = SelectedEvaluation.Horimeter + ((Today - SelectedEvaluation.EvaluationDate).Days * SelectedEvaluation.AverageWorkLoad),
+                            .CallType = CallType.Contract,
+                            .Responsible = SelectedEvaluation.Responsible,
+                            .TechnicalAdvice = Form.GetText()
+                        }
+                        SelectedEvaluation.Technicians.ToList().ForEach(Sub(x) NewEvaluation.Technicians.Add(x))
+                        NewEvaluation.WorkedHourControlledSelables.ToList().ForEach(Sub(x)
+                                                                                        x.Lost = False
+                                                                                        x.Sold = False
+                                                                                        x.CurrentCapacity = x.PersonCompressorSellable.Capacity
+                                                                                    End Sub
+                                                                       )
+                        NewEvaluation.ElapsedDayControlledSellables.ToList().ForEach(Sub(x)
+                                                                                         x.Lost = False
+                                                                                         x.Sold = False
+                                                                                         x.CurrentCapacity = x.PersonCompressorSellable.Capacity
+                                                                                     End Sub
+                                                                       )
+                        NewEvaluation.SaveChanges()
+                        NewEvaluation.SetStatus(EvaluationStatus.Approved)
+                    End Using
                     BtnRefresh.PerformClick()
                 End If
             End If

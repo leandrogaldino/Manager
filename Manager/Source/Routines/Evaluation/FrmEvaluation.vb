@@ -410,6 +410,7 @@ Public Class FrmEvaluation
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
         Dim Success As Boolean
+        Dim Approve As Boolean
         QbxCustomer.Text = QbxCustomer.Text.Trim.ToUnaccented()
         TxtResponsible.Text = TxtResponsible.Text.Trim.ToUnaccented()
         QbxCompressor.Text = QbxCompressor.Text.Trim.ToUnaccented()
@@ -457,13 +458,20 @@ Public Class FrmEvaluation
                     '                             End Sub)
 
 
-
+                    If _Evaluation.ID = 0 Then
+                        Approve = _User.CanAccess(Routine.EvaluationApproveOrReject)
+                    Else
+                        Approve = False
+                    End If
 
                     _Evaluation.SaveChanges()
 
+                    If Approve Then BtnApprove.PerformClick()
 
 
-                    If _Evaluation.ID = 0 AndAlso _User.CanAccess(Routine.EvaluationApproveOrReject) Then BtnApprove.PerformClick()
+
+
+
                     _Evaluation.Lock()
                     LblIDValue.Text = _Evaluation.ID
                     DgvTechnician.Fill(_Evaluation.Technicians)
@@ -857,11 +865,11 @@ Public Class FrmEvaluation
     Private Sub BtnReject_Click(sender As Object, e As EventArgs) Handles BtnReject.Click
         Dim Row As DataGridViewRow
         If _Evaluation.ID > 0 Then
-            Using Form As New FrmEvaluationRejectReason
+            Using Form As New FrmInputText("Rejeitar Avaliação", "Motivo da Rejeição")
                 If Form.ShowDialog = DialogResult.OK Then
                     Try
                         Cursor = Cursors.WaitCursor
-                        _Evaluation.SetStatus(EvaluationStatus.Rejected, Form.TxtReason.Text)
+                        _Evaluation.SetStatus(EvaluationStatus.Rejected, Form.GetText())
                         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
                         BtnStatusValue.ToolTipText = If(String.IsNullOrEmpty(_Evaluation.RejectReason), Nothing, "MOTIVO:" & vbNewLine & _Evaluation.RejectReason)
                         LblStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)

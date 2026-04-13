@@ -55,8 +55,13 @@ Partial Class FrmEvaluation
         Dim OtherField5 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
         Dim OtherField6 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
         Dim OtherField7 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField8 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField9 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
+        Dim OtherField10 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
         Dim Parameter3 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
         Dim Relation4 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Relation5 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
+        Dim Relation6 As ControlLibrary.QueriedBox.Relation = New ControlLibrary.QueriedBox.Relation()
         Dim MessageBoxSettings1 As Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings = New Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings()
         Dim PdfViewerPrinterSettings1 As Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings = New Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings()
         Dim TextSearchSettings1 As Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings = New Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings()
@@ -152,7 +157,6 @@ Partial Class FrmEvaluation
         Me.TabSignature = New System.Windows.Forms.TabPage()
         Me.PnSignature = New System.Windows.Forms.Panel()
         Me.PbxSignature = New System.Windows.Forms.PictureBox()
-        Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
         Me.NudHourPerDay = New System.Windows.Forms.NumericUpDown()
         Me.TmrCustomer = New System.Windows.Forms.Timer(Me.components)
         Me.OfdDocument = New System.Windows.Forms.OpenFileDialog()
@@ -160,14 +164,16 @@ Partial Class FrmEvaluation
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.Tip = New System.Windows.Forms.ToolTip(Me.components)
         Me.TmrResize = New System.Windows.Forms.Timer(Me.components)
-        Me.NavWorkedHourSellable = New ControlLibrary.DataGridViewNavigator()
         Me.DgvlTechnician = New Manager.DataGridViewLayout()
         Me.DgvlWorkedHourSellable = New Manager.DataGridViewLayout()
         Me.DgvlElapsedDaySellable = New Manager.DataGridViewLayout()
+        Me.DgvlReplacedSellable = New Manager.DataGridViewLayout()
+        Me.DgvNavigator = New ControlLibrary.DataGridViewNavigator()
+        Me.NavWorkedHourSellable = New ControlLibrary.DataGridViewNavigator()
         Me.NavElapsedDaySellable = New ControlLibrary.DataGridViewNavigator()
         Me.CcoCallTypeHasRepairNeedProposal = New ControlLibrary.ControlContainer()
         Me.CcoUnitTemperaturePressure = New ControlLibrary.ControlContainer()
-        Me.DgvlReplacedSellable = New Manager.DataGridViewLayout()
+        Me.ErpInterfaceDirection = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.PnBottom.SuspendLayout()
         Me.TsTitle.SuspendLayout()
         Me.TsNavigation.SuspendLayout()
@@ -198,6 +204,7 @@ Partial Class FrmEvaluation
         CType(Me.PbxSignature, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NudHourPerDay, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ErpInterfaceDirection, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PnBottom
@@ -1144,9 +1151,42 @@ Partial Class FrmEvaluation
         OtherField7.IfNull = Nothing
         OtherField7.Prefix = " SETOR: "
         OtherField7.Suffix = Nothing
+        OtherField8.DisplayFieldAlias = Nothing
+        OtherField8.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField8.DisplayFieldName = "name"
+        OtherField8.DisplayMainFieldName = "id"
+        OtherField8.DisplayTableAlias = Nothing
+        OtherField8.DisplayTableName = "compressorunit"
+        OtherField8.Freeze = False
+        OtherField8.IfNull = Nothing
+        OtherField8.Prefix = Nothing
+        OtherField8.Suffix = Nothing
+        OtherField9.DisplayFieldAlias = Nothing
+        OtherField9.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField9.DisplayFieldName = "name"
+        OtherField9.DisplayMainFieldName = "id"
+        OtherField9.DisplayTableAlias = Nothing
+        OtherField9.DisplayTableName = "compressorinterface"
+        OtherField9.Freeze = False
+        OtherField9.IfNull = Nothing
+        OtherField9.Prefix = Nothing
+        OtherField9.Suffix = Nothing
+        OtherField10.DisplayFieldAlias = Nothing
+        OtherField10.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField10.DisplayFieldName = "directionid"
+        OtherField10.DisplayMainFieldName = "id"
+        OtherField10.DisplayTableAlias = Nothing
+        OtherField10.DisplayTableName = "compressorinterface"
+        OtherField10.Freeze = False
+        OtherField10.IfNull = Nothing
+        OtherField10.Prefix = Nothing
+        OtherField10.Suffix = Nothing
         Me.QbxCompressor.OtherFields.Add(OtherField5)
         Me.QbxCompressor.OtherFields.Add(OtherField6)
         Me.QbxCompressor.OtherFields.Add(OtherField7)
+        Me.QbxCompressor.OtherFields.Add(OtherField8)
+        Me.QbxCompressor.OtherFields.Add(OtherField9)
+        Me.QbxCompressor.OtherFields.Add(OtherField10)
         Parameter3.ParameterName = "@statusid"
         Parameter3.ParameterValue = "0"
         Me.QbxCompressor.Parameters.Add(Parameter3)
@@ -1159,7 +1199,25 @@ Partial Class FrmEvaluation
         Relation4.WithFieldName = "compressorid"
         Relation4.WithTableAlias = Nothing
         Relation4.WithTableName = "personcompressor"
+        Relation5.Operator = "="
+        Relation5.RelateFieldName = "id"
+        Relation5.RelateTableAlias = Nothing
+        Relation5.RelateTableName = "compressorunit"
+        Relation5.RelationType = "LEFT"
+        Relation5.WithFieldName = "compressorunitid"
+        Relation5.WithTableAlias = Nothing
+        Relation5.WithTableName = "personcompressor"
+        Relation6.Operator = "="
+        Relation6.RelateFieldName = "id"
+        Relation6.RelateTableAlias = Nothing
+        Relation6.RelateTableName = "compressorinterface"
+        Relation6.RelationType = "LEFT"
+        Relation6.WithFieldName = "compressorinterfaceid"
+        Relation6.WithTableAlias = Nothing
+        Relation6.WithTableName = "personcompressor"
         Me.QbxCompressor.Relations.Add(Relation4)
+        Me.QbxCompressor.Relations.Add(Relation5)
+        Me.QbxCompressor.Relations.Add(Relation6)
         Me.QbxCompressor.Size = New System.Drawing.Size(382, 23)
         Me.QbxCompressor.Suffix = Nothing
         Me.QbxCompressor.TabIndex = 14
@@ -1168,10 +1226,10 @@ Partial Class FrmEvaluation
         '
         Me.TabTechnicalAdvice.BackColor = System.Drawing.Color.White
         Me.TabTechnicalAdvice.Controls.Add(Me.TlpAdvice)
-        Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 22)
+        Me.TabTechnicalAdvice.Location = New System.Drawing.Point(4, 26)
         Me.TabTechnicalAdvice.Name = "TabTechnicalAdvice"
         Me.TabTechnicalAdvice.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1031, 411)
+        Me.TabTechnicalAdvice.Size = New System.Drawing.Size(1031, 407)
         Me.TabTechnicalAdvice.TabIndex = 6
         Me.TabTechnicalAdvice.Text = "Parecer Técnico"
         '
@@ -1187,7 +1245,7 @@ Partial Class FrmEvaluation
         Me.TlpAdvice.RowCount = 2
         Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.0!))
         Me.TlpAdvice.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.0!))
-        Me.TlpAdvice.Size = New System.Drawing.Size(1025, 405)
+        Me.TlpAdvice.Size = New System.Drawing.Size(1025, 401)
         Me.TlpAdvice.TabIndex = 2
         '
         'TlpReplaced
@@ -1201,7 +1259,7 @@ Partial Class FrmEvaluation
         Me.TlpReplaced.Name = "TlpReplaced"
         Me.TlpReplaced.RowCount = 1
         Me.TlpReplaced.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TlpReplaced.Size = New System.Drawing.Size(1019, 237)
+        Me.TlpReplaced.Size = New System.Drawing.Size(1019, 234)
         Me.TlpReplaced.TabIndex = 1
         '
         'GbxReplacedSellable
@@ -1211,7 +1269,7 @@ Partial Class FrmEvaluation
         Me.GbxReplacedSellable.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GbxReplacedSellable.Location = New System.Drawing.Point(3, 3)
         Me.GbxReplacedSellable.Name = "GbxReplacedSellable"
-        Me.GbxReplacedSellable.Size = New System.Drawing.Size(1013, 231)
+        Me.GbxReplacedSellable.Size = New System.Drawing.Size(1013, 228)
         Me.GbxReplacedSellable.TabIndex = 2
         Me.GbxReplacedSellable.TabStop = False
         Me.GbxReplacedSellable.Text = "Peças Substituídas/Serviços Executados"
@@ -1235,7 +1293,7 @@ Partial Class FrmEvaluation
         Me.DgvReplacedSellable.RowHeadersVisible = False
         Me.DgvReplacedSellable.RowTemplate.Height = 26
         Me.DgvReplacedSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvReplacedSellable.Size = New System.Drawing.Size(1007, 184)
+        Me.DgvReplacedSellable.Size = New System.Drawing.Size(1007, 181)
         Me.DgvReplacedSellable.TabIndex = 1
         Me.DgvReplacedSellable.TabStop = False
         '
@@ -1300,9 +1358,9 @@ Partial Class FrmEvaluation
         '
         Me.GbxAdvice.Controls.Add(Me.TxtTechnicalAdvice)
         Me.GbxAdvice.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GbxAdvice.Location = New System.Drawing.Point(3, 246)
+        Me.GbxAdvice.Location = New System.Drawing.Point(3, 243)
         Me.GbxAdvice.Name = "GbxAdvice"
-        Me.GbxAdvice.Size = New System.Drawing.Size(1019, 156)
+        Me.GbxAdvice.Size = New System.Drawing.Size(1019, 155)
         Me.GbxAdvice.TabIndex = 0
         Me.GbxAdvice.TabStop = False
         Me.GbxAdvice.Text = "Observação"
@@ -1314,7 +1372,7 @@ Partial Class FrmEvaluation
         Me.TxtTechnicalAdvice.Location = New System.Drawing.Point(3, 19)
         Me.TxtTechnicalAdvice.MaxLength = 1000000
         Me.TxtTechnicalAdvice.Name = "TxtTechnicalAdvice"
-        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1013, 134)
+        Me.TxtTechnicalAdvice.Size = New System.Drawing.Size(1013, 133)
         Me.TxtTechnicalAdvice.TabIndex = 1
         Me.TxtTechnicalAdvice.Text = ""
         '
@@ -1459,6 +1517,7 @@ Partial Class FrmEvaluation
         '
         'PvPicture
         '
+        Me.PvPicture.BackColor = System.Drawing.Color.White
         Me.PvPicture.ControlBarBackColor = System.Drawing.Color.White
         Me.PvPicture.CounterBarBackColor = System.Drawing.Color.White
         Me.PvPicture.CounterMask = "Foto {0} de {1} - Max: {2}"
@@ -1511,14 +1570,6 @@ Partial Class FrmEvaluation
         Me.PbxSignature.TabIndex = 11
         Me.PbxSignature.TabStop = False
         '
-        'DgvNavigator
-        '
-        Me.DgvNavigator.CancelNextMove = False
-        Me.DgvNavigator.FirstButton = Me.BtnFirst
-        Me.DgvNavigator.LastButton = Me.BtnLast
-        Me.DgvNavigator.NextButton = Me.BtnNext
-        Me.DgvNavigator.PreviousButton = Me.BtnPrevious
-        '
         'NudHourPerDay
         '
         Me.NudHourPerDay.DecimalPlaces = 2
@@ -1556,15 +1607,6 @@ Partial Class FrmEvaluation
         '
         Me.TmrResize.Interval = 10
         '
-        'NavWorkedHourSellable
-        '
-        Me.NavWorkedHourSellable.CancelNextMove = False
-        Me.NavWorkedHourSellable.DataGridView = Me.DgvWorkedHourSellable
-        Me.NavWorkedHourSellable.FirstButton = Nothing
-        Me.NavWorkedHourSellable.LastButton = Nothing
-        Me.NavWorkedHourSellable.NextButton = Nothing
-        Me.NavWorkedHourSellable.PreviousButton = Nothing
-        '
         'DgvlTechnician
         '
         Me.DgvlTechnician.DataGridView = Me.DgvTechnician
@@ -1579,6 +1621,28 @@ Partial Class FrmEvaluation
         '
         Me.DgvlElapsedDaySellable.DataGridView = Me.DgvElapsedDaySellable
         Me.DgvlElapsedDaySellable.Routine = Manager.Routine.EvaluationControlledSellable
+        '
+        'DgvlReplacedSellable
+        '
+        Me.DgvlReplacedSellable.DataGridView = Me.DgvReplacedSellable
+        Me.DgvlReplacedSellable.Routine = Manager.Routine.EvaluationReplacedSellable
+        '
+        'DgvNavigator
+        '
+        Me.DgvNavigator.CancelNextMove = False
+        Me.DgvNavigator.FirstButton = Me.BtnFirst
+        Me.DgvNavigator.LastButton = Me.BtnLast
+        Me.DgvNavigator.NextButton = Me.BtnNext
+        Me.DgvNavigator.PreviousButton = Me.BtnPrevious
+        '
+        'NavWorkedHourSellable
+        '
+        Me.NavWorkedHourSellable.CancelNextMove = False
+        Me.NavWorkedHourSellable.DataGridView = Me.DgvWorkedHourSellable
+        Me.NavWorkedHourSellable.FirstButton = Nothing
+        Me.NavWorkedHourSellable.LastButton = Nothing
+        Me.NavWorkedHourSellable.NextButton = Nothing
+        Me.NavWorkedHourSellable.PreviousButton = Nothing
         '
         'NavElapsedDaySellable
         '
@@ -1603,10 +1667,9 @@ Partial Class FrmEvaluation
         Me.CcoUnitTemperaturePressure.DropDownEnabled = True
         Me.CcoUnitTemperaturePressure.HostControl = Me.BtnUnitTemperaturePressure
         '
-        'DgvlReplacedSellable
+        'ErpInterfaceDirection
         '
-        Me.DgvlReplacedSellable.DataGridView = Me.DgvReplacedSellable
-        Me.DgvlReplacedSellable.Routine = Manager.Routine.EvaluationReplacedSellable
+        Me.ErpInterfaceDirection.ContainerControl = Me
         '
         'FrmEvaluation
         '
@@ -1662,6 +1725,7 @@ Partial Class FrmEvaluation
         CType(Me.PbxSignature, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NudHourPerDay, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EprInformation, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ErpInterfaceDirection, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1773,4 +1837,5 @@ Partial Class FrmEvaluation
     Friend WithEvents TbxStartTime As ControlLibrary.TimeBox
     Friend WithEvents PvPicture As ControlLibrary.PictureViewer
     Friend WithEvents BtnEvaluationTreatment As ToolStripButton
+    Friend WithEvents ErpInterfaceDirection As ErrorProvider
 End Class

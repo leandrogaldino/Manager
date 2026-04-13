@@ -264,7 +264,7 @@ Partial Class FrmPersonCompressor
         Me.Label3.Location = New System.Drawing.Point(268, 94)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(40, 17)
-        Me.Label3.TabIndex = 9
+        Me.Label3.TabIndex = 17
         Me.Label3.Text = "Setor"
         '
         'Label8
@@ -273,7 +273,7 @@ Partial Class FrmPersonCompressor
         Me.Label8.Location = New System.Drawing.Point(137, 94)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(79, 17)
-        Me.Label8.TabIndex = 7
+        Me.Label8.TabIndex = 15
         Me.Label8.Text = "Patrimônio"
         '
         'Label1
@@ -282,7 +282,7 @@ Partial Class FrmPersonCompressor
         Me.Label1.Location = New System.Drawing.Point(6, 96)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(77, 17)
-        Me.Label1.TabIndex = 5
+        Me.Label1.TabIndex = 13
         Me.Label1.Text = "Nº de Série"
         '
         'LblCompressor
@@ -416,7 +416,7 @@ Partial Class FrmPersonCompressor
         Me.TxtSector.MaxLength = 50
         Me.TxtSector.Name = "TxtSector"
         Me.TxtSector.Size = New System.Drawing.Size(127, 23)
-        Me.TxtSector.TabIndex = 10
+        Me.TxtSector.TabIndex = 18
         '
         'TxtPatrimony
         '
@@ -425,7 +425,7 @@ Partial Class FrmPersonCompressor
         Me.TxtPatrimony.MaxLength = 50
         Me.TxtPatrimony.Name = "TxtPatrimony"
         Me.TxtPatrimony.Size = New System.Drawing.Size(125, 23)
-        Me.TxtPatrimony.TabIndex = 8
+        Me.TxtPatrimony.TabIndex = 16
         Me.TxtPatrimony.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'TxtSerialNumber
@@ -435,7 +435,7 @@ Partial Class FrmPersonCompressor
         Me.TxtSerialNumber.MaxLength = 50
         Me.TxtSerialNumber.Name = "TxtSerialNumber"
         Me.TxtSerialNumber.Size = New System.Drawing.Size(125, 23)
-        Me.TxtSerialNumber.TabIndex = 6
+        Me.TxtSerialNumber.TabIndex = 14
         Me.TxtSerialNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'TcPersonCompressor
@@ -491,7 +491,7 @@ Partial Class FrmPersonCompressor
         Me.FlpUnit.Location = New System.Drawing.Point(222, 49)
         Me.FlpUnit.Name = "FlpUnit"
         Me.FlpUnit.Size = New System.Drawing.Size(69, 21)
-        Me.FlpUnit.TabIndex = 14
+        Me.FlpUnit.TabIndex = 10
         '
         'BtnFilterUnit
         '
@@ -519,7 +519,7 @@ Partial Class FrmPersonCompressor
         Me.BtnViewUnit.Location = New System.Drawing.Point(26, 3)
         Me.BtnViewUnit.Name = "BtnViewUnit"
         Me.BtnViewUnit.Size = New System.Drawing.Size(17, 17)
-        Me.BtnViewUnit.TabIndex = 0
+        Me.BtnViewUnit.TabIndex = 1
         Me.BtnViewUnit.TabStop = False
         Me.BtnViewUnit.TooltipText = ""
         Me.BtnViewUnit.UseVisualStyleBackColor = False
@@ -535,7 +535,7 @@ Partial Class FrmPersonCompressor
         Me.BtnNewUnit.Location = New System.Drawing.Point(3, 3)
         Me.BtnNewUnit.Name = "BtnNewUnit"
         Me.BtnNewUnit.Size = New System.Drawing.Size(17, 17)
-        Me.BtnNewUnit.TabIndex = 1
+        Me.BtnNewUnit.TabIndex = 0
         Me.BtnNewUnit.TabStop = False
         Me.BtnNewUnit.TooltipText = ""
         Me.BtnNewUnit.UseVisualStyleBackColor = False
@@ -550,7 +550,7 @@ Partial Class FrmPersonCompressor
         Me.FlpInterface.Location = New System.Drawing.Point(76, 49)
         Me.FlpInterface.Name = "FlpInterface"
         Me.FlpInterface.Size = New System.Drawing.Size(69, 21)
-        Me.FlpInterface.TabIndex = 14
+        Me.FlpInterface.TabIndex = 7
         '
         'BtnFiltrerInterface
         '
@@ -578,7 +578,7 @@ Partial Class FrmPersonCompressor
         Me.BtnViewInterface.Location = New System.Drawing.Point(26, 3)
         Me.BtnViewInterface.Name = "BtnViewInterface"
         Me.BtnViewInterface.Size = New System.Drawing.Size(17, 17)
-        Me.BtnViewInterface.TabIndex = 0
+        Me.BtnViewInterface.TabIndex = 1
         Me.BtnViewInterface.TabStop = False
         Me.BtnViewInterface.TooltipText = ""
         Me.BtnViewInterface.UseVisualStyleBackColor = False
@@ -594,7 +594,7 @@ Partial Class FrmPersonCompressor
         Me.BtnNewInterface.Location = New System.Drawing.Point(3, 3)
         Me.BtnNewInterface.Name = "BtnNewInterface"
         Me.BtnNewInterface.Size = New System.Drawing.Size(17, 17)
-        Me.BtnNewInterface.TabIndex = 1
+        Me.BtnNewInterface.TabIndex = 0
         Me.BtnNewInterface.TabStop = False
         Me.BtnNewInterface.TooltipText = ""
         Me.BtnNewInterface.UseVisualStyleBackColor = False
@@ -632,7 +632,7 @@ Partial Class FrmPersonCompressor
         Me.QbxUnit.Prefix = Nothing
         Me.QbxUnit.Size = New System.Drawing.Size(140, 23)
         Me.QbxUnit.Suffix = Nothing
-        Me.QbxUnit.TabIndex = 13
+        Me.QbxUnit.TabIndex = 9
         '
         'QbxInterface
         '
@@ -666,7 +666,7 @@ Partial Class FrmPersonCompressor
         Me.QbxInterface.Prefix = Nothing
         Me.QbxInterface.Size = New System.Drawing.Size(140, 23)
         Me.QbxInterface.Suffix = Nothing
-        Me.QbxInterface.TabIndex = 13
+        Me.QbxInterface.TabIndex = 6
         '
         'CbxControlled
         '
@@ -773,7 +773,7 @@ Partial Class FrmPersonCompressor
         Me.LblUnit.Location = New System.Drawing.Point(152, 50)
         Me.LblUnit.Name = "LblUnit"
         Me.LblUnit.Size = New System.Drawing.Size(62, 17)
-        Me.LblUnit.TabIndex = 5
+        Me.LblUnit.TabIndex = 8
         Me.LblUnit.Text = "Unidade"
         '
         'LblInterface

@@ -31,7 +31,9 @@ Public Class FrmUpdateNotes
     Private Sub TvVersions_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TvVersions.AfterSelect
         Dim SelectedNode As String = e.Node.Text.Trim
         Dim SelectedUpdate As List(Of String) = _Updates.Single(Function(x) x.First.Replace("#", Nothing).Trim = SelectedNode)
-        TxtUpdates.Text = Join(SelectedUpdate.Skip(1).ToArray, vbNewLine & vbNewLine)
+        SelectedNode &= $" ({SelectedUpdate(1)})"
+        SelectedNode = SelectedNode.Replace("@", Nothing)
+        TxtUpdates.Text = Join(SelectedUpdate.Skip(2).ToArray, vbNewLine & vbNewLine)
         LblTitle.Text = $"Notas da Versão {SelectedNode}"
     End Sub
 End Class

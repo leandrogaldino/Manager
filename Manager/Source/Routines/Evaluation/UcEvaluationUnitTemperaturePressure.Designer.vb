@@ -63,6 +63,7 @@ Partial Class UcEvaluationUnitTemperaturePressure
         Me.TxtUnit.Margin = New System.Windows.Forms.Padding(7)
         Me.TxtUnit.MaxLength = 10
         Me.TxtUnit.Name = "TxtUnit"
+        Me.TxtUnit.ReadOnly = True
         Me.TxtUnit.Size = New System.Drawing.Size(100, 23)
         Me.TxtUnit.TabIndex = 2
         Me.TxtUnit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center

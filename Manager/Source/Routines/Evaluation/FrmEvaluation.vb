@@ -171,7 +171,7 @@ Public Class FrmEvaluation
         _UcCallTypeHasRepairNeedProposal.CallType = _Evaluation.CallType
         _UcCallTypeHasRepairNeedProposal.HasRepair = _Evaluation.HasRepair
         _UcCallTypeHasRepairNeedProposal.NeedProposal = _Evaluation.NeedProposal
-        _UcUnitTemperaturePressure.Unit = _Evaluation.UnitName
+        _UcUnitTemperaturePressure.Unit = _Evaluation.Compressor.CompressorUnitName
         _UcUnitTemperaturePressure.Temperature = _Evaluation.Temperature
         _UcUnitTemperaturePressure.Pressure = _Evaluation.Pressure
         DbxEvaluationDate.Text = _Evaluation.EvaluationDate
@@ -271,8 +271,6 @@ Public Class FrmEvaluation
         _Loading = False
     End Sub
 #End Region
-
-
 #Region "Validation & Calculation"
     Private Function IsValidFieldsToSave() As Boolean
         If _UcCallTypeHasRepairNeedProposal.CallType = CallType.None Then
@@ -412,6 +410,7 @@ Public Class FrmEvaluation
     Private Function Save() As Boolean
         Dim Row As DataGridViewRow
         Dim Success As Boolean
+        Dim Approve As Boolean
         QbxCustomer.Text = QbxCustomer.Text.Trim.ToUnaccented()
         TxtResponsible.Text = TxtResponsible.Text.Trim.ToUnaccented()
         QbxCompressor.Text = QbxCompressor.Text.Trim.ToUnaccented()
@@ -459,10 +458,20 @@ Public Class FrmEvaluation
                     '                             End Sub)
 
 
-
+                    If _Evaluation.ID = 0 Then
+                        Approve = _User.CanAccess(Routine.EvaluationApproveOrReject)
+                    Else
+                        Approve = False
+                    End If
 
                     _Evaluation.SaveChanges()
-                    If _Evaluation.ID = 0 AndAlso _User.CanAccess(Routine.EvaluationApproveOrReject) Then BtnApprove.PerformClick()
+
+                    If Approve Then BtnApprove.PerformClick()
+
+
+
+
+
                     _Evaluation.Lock()
                     LblIDValue.Text = _Evaluation.ID
                     DgvTechnician.Fill(_Evaluation.Technicians)
@@ -493,6 +502,18 @@ Public Class FrmEvaluation
                         Row = _EvaluationsGrid.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("ID").Value = LblIDValue.Text)
                         If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
                         DgvNavigator.RefreshButtons()
+                    End If
+                    If CMessageBox.Show("Deseja enviar o relatório para o cliente?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
+                        Dim Result = EvaluationReport.EvaluationTreatment(_Evaluation)
+                        Using Frm As New FrmEmail(Result.Attachments)
+                            Frm.TxtSubject.Text = $"Avaliação Técnica de Compressor - {_Evaluation.Compressor}"
+                            Frm.TxtTo.Text = String.Join("; ", _Evaluation.Customer.Contacts.Select(Function(c) c.Email))
+                            If Frm.CbxSignature.Items.Count > 1 Then
+                                Frm.CbxSignature.SelectedIndex = 1
+                            End If
+                            Frm.TxtBody.Text = $"Segue avaliação do compressor {_Evaluation.Compressor}, realizada no dia {_Evaluation.EvaluationDate:dd/MM/yyyy}.{vbNewLine}{vbNewLine}Qualquer dúvida estamos à disposição."
+                            Frm.ShowDialog()
+                        End Using
                     End If
                     Success = True
                 Catch ex As MySqlException
@@ -844,11 +865,11 @@ Public Class FrmEvaluation
     Private Sub BtnReject_Click(sender As Object, e As EventArgs) Handles BtnReject.Click
         Dim Row As DataGridViewRow
         If _Evaluation.ID > 0 Then
-            Using Form As New FrmEvaluationRejectReason
+            Using Form As New FrmInputText("Rejeitar Avaliação", "Motivo da Rejeição")
                 If Form.ShowDialog = DialogResult.OK Then
                     Try
                         Cursor = Cursors.WaitCursor
-                        _Evaluation.SetStatus(EvaluationStatus.Rejected, Form.TxtReason.Text)
+                        _Evaluation.SetStatus(EvaluationStatus.Rejected, Form.GetText())
                         BtnStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
                         BtnStatusValue.ToolTipText = If(String.IsNullOrEmpty(_Evaluation.RejectReason), Nothing, "MOTIVO:" & vbNewLine & _Evaluation.RejectReason)
                         LblStatusValue.Text = EnumHelper.GetEnumDescription(_Evaluation.Status)
@@ -1221,7 +1242,7 @@ Public Class FrmEvaluation
             BtnSave.Enabled = True
         End If
     End Sub
-    Private Sub PvPicture_PictureRemoved(Path As String) Handles  PvPicture.PictureRemoved
+    Private Sub PvPicture_PictureRemoved(Path As String) Handles PvPicture.PictureRemoved
         EprValidation.Clear()
         If Not _Loading Then
             _Evaluation.Pictures.First(Function(x) x.Picture.CurrentFile = Path).Picture.SetCurrentFile(Nothing)
@@ -1256,6 +1277,31 @@ Public Class FrmEvaluation
     Private Sub QbxCustomer_Leave(sender As Object, e As EventArgs) Handles QbxCustomer.Leave
         TmrCustomer.Stop()
         TmrCustomer.Start()
+    End Sub
+    Private Sub QbxCompressor_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxCompressor.FreezedPrimaryKeyChanged
+        Dim Message As String
+        Dim Bitmap As Bitmap
+        Dim Icon As Icon
+        Dim Direction As CompressorInterfaceDirection
+        If QbxCompressor.IsFreezed Then
+            _UcUnitTemperaturePressure.Unit = QbxCompressor.GetRawFreezedValueOf("compressorunit", "name")
+            Direction = QbxCompressor.GetRawFreezedValueOf("compressorinterface", "directionid")
+            ErpInterfaceDirection.SetIconPadding(LblCompressor, 5)
+            If Direction = CompressorInterfaceDirection.Ascending Then
+                Bitmap = New Bitmap(My.Resources.ArrowUp)
+                Icon = Icon.FromHandle(Bitmap.GetHicon())
+                Message = "Essa interface utiliza horímetro crescente. Ao trocar uma peça o técnico configura para zero."
+            Else
+                Bitmap = New Bitmap(My.Resources.ArrowDown)
+                Icon = Icon.FromHandle(Bitmap.GetHicon())
+                Message = "Essa interface utiliza horímetro decrescente. Ao trocar uma peça o técnico configura para a capacidade total."
+            End If
+            ErpInterfaceDirection.Icon = Icon
+            ErpInterfaceDirection.SetError(LblCompressor, Message)
+        Else
+            _UcUnitTemperaturePressure.Unit = Nothing
+            ErpInterfaceDirection.Clear()
+        End If
     End Sub
 #End Region
 #Region "Timer Events"

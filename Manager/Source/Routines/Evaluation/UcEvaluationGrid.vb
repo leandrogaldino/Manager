@@ -240,12 +240,12 @@ Public Class UcEvaluationGrid
         End Try
     End Sub
     Private Sub BtnReject_Click(sender As Object, e As EventArgs) Handles BtnReject.Click
-        Using Form As New FrmEvaluationRejectReason
+        Using Form As New FrmInputText("Rejeitar Avaliação", "Motivo da Rejeição")
             If Form.ShowDialog = DialogResult.OK Then
                 Try
                     Cursor = Cursors.WaitCursor
                     _Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("id").Value, False)
-                    _Evaluation.SetStatus(EvaluationStatus.Rejected, Form.TxtReason.Text)
+                    _Evaluation.SetStatus(EvaluationStatus.Rejected, Form.GetText())
                     _Filter.Filter()
                     DgvlEvaluation.Load()
                 Catch ex As Exception

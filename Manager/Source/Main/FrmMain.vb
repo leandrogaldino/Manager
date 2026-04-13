@@ -84,13 +84,15 @@ Public Class FrmMain
         If _User.CanAccess(Routine.Compressor) Then
             If _User.CanAccess(Routine.CompressorInterface) Or
                 _User.CanAccess(Routine.CompressorUnit) Then
-                TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripSplitButton("Compressor", "Cadastro de Cmpressores", My.Resources.Compressor, AddressOf CompressorClick))
+                TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripSplitButton("Compressor", "Cadastro de Compressores", My.Resources.Compressor, AddressOf CompressorClick))
                 If _User.CanAccess(Routine.CompressorInterface) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Compressor").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Interface", "Cadastro de Interfaces de Compressores", My.Resources.CompressorInterface, AddressOf CompressorInterfaceClick))
                 End If
                 If _User.CanAccess(Routine.CompressorUnit) Then
                     TsRoutine.Items.OfType(Of ToolStripSplitButton).Single(Function(x) x.Text = "Compressor").DropDownItems.Add(ToolStripItemFactory.GetToolStripMenuItem("Unidade Compressora", "Cadastro de Unidades Compressoras", My.Resources.CompressorUnit, AddressOf CompressorUnitClick))
                 End If
+            Else
+                TsRoutine.Items.Add(ToolStripItemFactory.GetToolStripButton("Compressor", "Cadastro de Compressores", My.Resources.Compressor, AddressOf CompressorClick))
             End If
         End If
     End Sub

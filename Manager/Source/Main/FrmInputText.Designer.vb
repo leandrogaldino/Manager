@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class FrmEvaluationRejectReason
+Partial Class FrmInputText
     Inherits System.Windows.Forms.Form
 
     'Descartar substituições de formulário para limpar a lista de componentes.
@@ -27,8 +27,8 @@ Partial Class FrmEvaluationRejectReason
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.LblReason = New System.Windows.Forms.Label()
-        Me.TxtReason = New System.Windows.Forms.TextBox()
+        Me.LblCaption = New System.Windows.Forms.Label()
+        Me.TxtText = New System.Windows.Forms.TextBox()
         Me.Panel1.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -71,53 +71,52 @@ Partial Class FrmEvaluationRejectReason
         Me.EprValidation.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink
         Me.EprValidation.ContainerControl = Me
         '
-        'LblReason
+        'LblCaption
         '
-        Me.LblReason.AutoSize = True
-        Me.LblReason.Location = New System.Drawing.Point(9, 9)
-        Me.LblReason.Name = "LblReason"
-        Me.LblReason.Size = New System.Drawing.Size(135, 17)
-        Me.LblReason.TabIndex = 0
-        Me.LblReason.Text = "Motivo da Rejeição"
+        Me.LblCaption.AutoSize = True
+        Me.LblCaption.Location = New System.Drawing.Point(9, 9)
+        Me.LblCaption.Name = "LblCaption"
+        Me.LblCaption.Size = New System.Drawing.Size(62, 17)
+        Me.LblCaption.TabIndex = 0
+        Me.LblCaption.Text = "Caption"
         '
-        'TxtReason
+        'TxtText
         '
-        Me.TxtReason.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TxtReason.Location = New System.Drawing.Point(12, 29)
-        Me.TxtReason.Margin = New System.Windows.Forms.Padding(3, 3, 3, 6)
-        Me.TxtReason.MaxLength = 100
-        Me.TxtReason.Multiline = True
-        Me.TxtReason.Name = "TxtReason"
-        Me.TxtReason.Size = New System.Drawing.Size(334, 115)
-        Me.TxtReason.TabIndex = 1
+        Me.TxtText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtText.Location = New System.Drawing.Point(12, 29)
+        Me.TxtText.Margin = New System.Windows.Forms.Padding(3, 3, 3, 6)
+        Me.TxtText.MaxLength = 100
+        Me.TxtText.Multiline = True
+        Me.TxtText.Name = "TxtText"
+        Me.TxtText.Size = New System.Drawing.Size(334, 115)
+        Me.TxtText.TabIndex = 1
         '
-        'FrmEvaluationRejectReason
+        'FrmInputText
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(358, 197)
-        Me.Controls.Add(Me.TxtReason)
-        Me.Controls.Add(Me.LblReason)
+        Me.Controls.Add(Me.TxtText)
+        Me.Controls.Add(Me.LblCaption)
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "FrmEvaluationRejectReason"
+        Me.Name = "FrmInputText"
         Me.ShowIcon = False
-        Me.Text = "Rejeitar Avaliação"
+        Me.Text = "Title"
         Me.Panel1.ResumeLayout(False)
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-
-    Friend WithEvents Panel1 As Panel
-    Friend WithEvents BtnClose As Button
-    Friend WithEvents BtnSave As Button
     Friend WithEvents EprValidation As ErrorProvider
-    Friend WithEvents TxtReason As TextBox
-    Friend WithEvents LblReason As Label
+    Private WithEvents Panel1 As Panel
+    Private WithEvents BtnClose As Button
+    Private WithEvents BtnSave As Button
+    Private WithEvents TxtText As TextBox
+    Private WithEvents LblCaption As Label
 End Class

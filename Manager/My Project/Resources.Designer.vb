@@ -73,6 +73,26 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property ArrowDown() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("ArrowDown", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property ArrowUp() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("ArrowUp", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property Cash() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Cash", resourceCulture)
@@ -1248,7 +1268,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;CompressorSellable&quot; Version=&quot;1&quot;&gt;
+        '''&lt;Routine Id=&quot;CompressorSellable&quot; Version=&quot;2&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''	&lt;Column Index=&quot;0&quot;&gt;
@@ -3661,7 +3681,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;PersonCompressor&quot; Version=&quot;2&quot;&gt;
+        '''&lt;Routine Id=&quot;PersonCompressor&quot; Version=&quot;3&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -3691,6 +3711,8 @@ Namespace My.Resources
         '''	creation,
         '''	statusid,
         '''	compressorid,
+        '''	compressorinterfaceid,
+        '''	compressorunitid,
         '''	controlledid,
         '''	serialnumber,
         '''	patrimony,
@@ -3705,6 +3727,8 @@ Namespace My.Resources
         '''	@creation,
         '''	@statusid,
         '''	@compressorid,
+        '''	@compressorinterfaceid,
+        '''	@compressorunitid,
         '''	@controlledid,
         '''	@serialnumber,
         '''	@patrimony,
@@ -3727,16 +3751,17 @@ Namespace My.Resources
         '''	personcompressor.creation,
         '''	personcompressor.statusid,
         '''	personcompressor.compressorid,
+        '''	personcompressor.compressorinterfaceid,
+        '''	personcompressor.compressorunitid,
         '''	personcompressor.controlledid,
         '''	compressor.name AS compressorname,
+        '''	compressorinterface.name AS compressorinterfacename,
+        '''	compressorunit.name AS compressorunitname,
         '''    personcompressor.serialnumber,
         '''	personcompressor.patrimony,
         '''	personcompressor.sector,
         '''	personcompressor.unitcapacity,
-        '''	personcompressor.note
-        '''FROM personcompressor
-        '''LEFT JOIN compressor ON compressor.id = personcompressor.compressorid
-        '''WHERE personcompressor.personid = @personid;.
+        '''	personcompress [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PersonCompressorSelect() As String
             Get
@@ -3857,6 +3882,8 @@ Namespace My.Resources
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE personcompressor SET
         '''	statusid = @statusid,
         '''    compressorid = @compressorid,
+        '''	compressorinterfaceid = @compressorinterfaceid,
+        '''	compressorunitid = @compressorunitid,
         '''	controlledid = @controlledid,
         '''	serialnumber = @serialnumber,
         '''	patrimony = @patrimony,
@@ -5824,6 +5851,31 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''    r.id requestid,
+        '''    r.responsible,
+        '''    r.destination,
+        '''    ri.id itemid,
+        '''    ri.productid,
+        '''    pc.code,
+        '''    p.name,
+        '''    ri.taked - ri.returned - ri.applied - ri.lossed AS pending
+        '''FROM requestitem ri
+        '''JOIN product p ON p.id = ri.productid
+        '''JOIN request r ON r.id = ri.requestid
+        '''LEFT join productprovidercode pc on pc.productid = p.id AND pc.ismainprovider = 1
+        '''WHERE
+        '''    ri.statusid = 0
+        '''    AND ri.productid IN (@inclause)
+        '''ORDER BY r.id DESC.
+        '''</summary>
+        Friend ReadOnly Property RequestSelectPendingItems() As String
+            Get
+                Return ResourceManager.GetString("RequestSelectPendingItems", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE request SET
         '''    statusid =  @statusid,
         '''    destination = @destination,
@@ -5996,6 +6048,34 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("SaveSmall", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''    c.name,
+        '''    pc.serialnumber,
+        '''    pc.sector 
+        '''FROM compressor c
+        '''LEFT JOIN personcompressor pc ON c.id = pc.compressorid
+        '''WHERE pc.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property SelectCompressorData() As String
+            Get
+                Return ResourceManager.GetString("SelectCompressorData", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''    p.shortname
+        '''FROM person p
+        '''LEFT JOIN personcompressor pc ON p.id = pc.personid
+        '''WHERE pc.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property SelectCustomerData() As String
+            Get
+                Return ResourceManager.GetString("SelectCustomerData", resourceCulture)
             End Get
         End Property
         

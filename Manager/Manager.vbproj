@@ -497,6 +497,12 @@
     <Compile Include="Source\Helper\FilterQueriedBox\CompressorUnitQueriedBoxFilter.vb" />
     <Compile Include="Source\Helper\FiltrerConverter\CompressorInterfaceDirectionConverter.vb" />
     <Compile Include="Source\Helper\Flags\CompressorInterfaceDirection.vb" />
+    <Compile Include="Source\Main\FrmInputText.Designer.vb">
+      <DependentUpon>FrmInputText.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Main\FrmInputText.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Source\Main\UcReport.Designer.vb">
       <DependentUpon>UcReport.vb</DependentUpon>
     </Compile>
@@ -525,6 +531,8 @@
     <None Include="Resources\Icon\icon.ico" />
     <None Include="Resources\Image\CompressorInterface.png" />
     <None Include="Resources\Image\CompressorUnit.png" />
+    <None Include="Resources\Image\ArrowDown.png" />
+    <None Include="Resources\Image\ArrowUp.png" />
     <Content Include="Resources\Image\Downloading.gif" />
     <Content Include="Resources\Image\Updating.gif" />
     <Content Include="Resources\SQL\CompressorInterface\CompressorInterfaceDelete.sql" />
@@ -553,6 +561,8 @@
     <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableInsert.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableSelect.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableUpdate.sql" />
+    <Content Include="Resources\SQL\Shared\SelectCompressorData.sql" />
+    <Content Include="Resources\SQL\Shared\SelectCustomerData.sql" />
     <Content Include="Resources\SQL\Person\PersonCompressorSellableDelete.sql" />
     <Content Include="Resources\SQL\Person\PersonCompressorSellableInsert.sql" />
     <Content Include="Resources\SQL\Person\PersonCompressorSellableSelect.sql" />
@@ -571,6 +581,7 @@
     <Content Include="Resources\SQL\Product\ProductPriceIndicatorDetailSelect.sql" />
     <Content Include="Resources\SQL\Product\ProductPriceIndicatorSelect.sql" />
     <Content Include="Resources\SQL\Product\ProductPriceSelect.sql" />
+    <Content Include="Resources\SQL\Request\RequestSelectPendingItems.sql" />
     <Content Include="Resources\SQL\Service\ServicePriceIndicatorDetailSelect.sql" />
     <Content Include="Resources\SQL\Service\ServicePriceIndicatorSelect.sql" />
     <Compile Include="Source\Routines\CompressorInterface\CompressorInterface.vb" />
@@ -1038,12 +1049,6 @@
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationManagementPanelExport.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Routines\Evaluation\FrmEvaluationRejectReason.Designer.vb">
-      <DependentUpon>FrmEvaluationRejectReason.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Routines\Evaluation\FrmEvaluationRejectReason.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Source\Routines\Evaluation\FrmEvaluationSource.Designer.vb">
       <DependentUpon>FrmEvaluationSource.vb</DependentUpon>
     </Compile>
@@ -1385,6 +1390,9 @@
     <Compile Include="Source\Routines\VisitSchedule\VisitScheduleFilter.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Source\Main\FrmInputText.resx">
+      <DependentUpon>FrmInputText.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\CashFlow\UcCashFlowGrid.resx">
       <DependentUpon>UcCashFlowGrid.vb</DependentUpon>
     </EmbeddedResource>
@@ -1511,9 +1519,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationManagementPanelExport.resx">
       <DependentUpon>FrmEvaluationManagementPanelExport.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationRejectReason.resx">
-      <DependentUpon>FrmEvaluationRejectReason.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationReplacedSellable.resx">
       <DependentUpon>FrmEvaluationReplacedSellable.vb</DependentUpon>
@@ -2107,7 +2112,7 @@
     <Content Include="Resources\SQL\Route\RouteInsert.sql" />
     <Content Include="Resources\SQL\Route\RouteSelect.sql" />
     <Content Include="Resources\SQL\Route\RouteUpdate.sql" />
-    <Content Include="Resources\SQL\Misc\SetBrazilianDatabaseMonthNames.sql" />
+    <Content Include="Resources\SQL\Shared\SetBrazilianDatabaseMonthNames.sql" />
     <Content Include="Resources\SQL\State\StateSelect.sql" />
     <Content Include="Resources\SQL\User\UserDelete.sql" />
     <Content Include="Resources\SQL\User\UserFilter.sql" />

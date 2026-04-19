@@ -4,7 +4,7 @@ Public Enum LicenseMessages
     <Description("O token de vínculo do cliente está vazio ou não foi informado.")> EmptyCustomerLinkToken
     <Description("A rede não está disponível. Verifique sua conexão.")> NetworkNotAvailable
     <Description("O token de vínculo do cliente é inválido.")> InvalidCustomerLinkToken
-    <Description("A licença ou o token expirou.")> Expired
+    <Description("A licença expirou. Entre em contato com o administrador do sistema para regularizar.")> Expired
     <Description("Usuário ou senha inválidos.")> BadUserOrPassword
 End Enum
 

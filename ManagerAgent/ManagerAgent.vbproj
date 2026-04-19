@@ -107,6 +107,9 @@
     <Reference Include="CoreSuite.PictureViewer">
       <HintPath>..\..\CoreSuite\PictureViewer\bin\Debug\CoreSuite.PictureViewer.dll</HintPath>
     </Reference>
+    <Reference Include="CoreSuite.RichTextButton">
+      <HintPath>..\..\CoreSuite\RichTextButton\bin\Debug\CoreSuite.RichTextButton.dll</HintPath>
+    </Reference>
     <Reference Include="CoreSuite.Separator">
       <HintPath>..\..\CoreSuite\Separator\bin\Debug\CoreSuite.Separator.dll</HintPath>
     </Reference>

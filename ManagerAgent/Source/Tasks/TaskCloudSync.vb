@@ -49,11 +49,11 @@ Public Class TaskCloudSync
             _Session.Preferences.LastExecution.CloudSync = Now.ToString("yyyy-MM-dd HH:mm:ss")
             _PreferencesService.SaveAsync(_Session.Preferences)
             If _Started Then
-                Response.Text = "Sincronização: Concluído"
                 Response.Percent = 0
+                Response.Text = "Sincronização: Concluído"
                 Response.Event.EndTime = DateTime.Now
                 If HasSynced Then Response.Event.ReadyToPost = True
-                Response.Event.Description = $"Sincronização{If(Not IsManual, String.Empty, " Manual")}"
+                Response.Event.Description = $"Sincronização de Dados{If(Not IsManual, String.Empty, " Manual")}"
                 Progress?.Report(Response)
             End If
             Await Task.Delay(Constants.WaitForFinish)
@@ -65,7 +65,7 @@ Public Class TaskCloudSync
             Response.Percent = 0
             Response.Text = $"Sincronização: [ERRO] = {Exception.Message}"
             Response.Event.EndTime = DateTime.Now
-            Response.Event.Description = $"Sincronização{If(Not IsManual, String.Empty, " Manual")}"
+            Response.Event.Description = $"Sincronização de Dados{If(Not IsManual, String.Empty, " Manual")}"
             Response.Event.Status = TaskStatus.Error
             Response.Event.ExceptionMessage = $"{Exception.Message}{vbNewLine}{Exception.StackTrace}"
             Progress?.Report(Response)
@@ -108,6 +108,7 @@ Public Class TaskCloudSync
             If TotalChanges > 0 Then
                 If Not _Started Then
                     HasSynced = True
+                    _Started = True
                     Response.Percent = 0
                     Response.Text = $"Sincronização: Iniciando"
                     Progress?.Report(Response)

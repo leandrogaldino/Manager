@@ -89,7 +89,7 @@ Public Class TaskRelease
                     InitialMessagePosted = True
                     For Each Registry In BloquedList
                         Await UnlockRegistry(Registry)
-                        Dim Message As String = $"Desbloqueado: Rotina {Registry.RoutineID}, Registro {Registry.RegistryID}, Usuário {Registry.UserID} ({BloquedList.IndexOf(Registry) + 1} de {BloquedList.Count})"
+                        Dim Message As String = $"Desbloqueado: Rotina {Registry.RoutineID}, Registro {Registry.RegistryID}, Usuário {Registry.UserID}"
                         Response.SetTextAndLog(Message)
                         Progress?.Report(Response)
                         Await Task.Delay(Constants.WaitForJob)
@@ -115,7 +115,7 @@ Public Class TaskRelease
                 Response.Percent = 0
                 Response.Text = "Desbloquear: Erro na execução"
                 Response.Event.EndTime = DateTime.Now
-                Response.Event.Description = $"Desbloquear{If(Not IsManual, String.Empty, " Manual")}"
+                Response.Event.Description = $"Desbloqueio de Usuário{If(Not IsManual, String.Empty, " Manual")}"
                 Response.Event.Status = TaskStatus.Error
                 Response.Event.ExceptionMessage = $"{Exception.Message}{vbNewLine}{Exception.StackTrace}"
                 Progress?.Report(Response)
@@ -126,7 +126,7 @@ Public Class TaskRelease
             Response.Text = "Desbloquear: Erro na execução"
             Response.Percent = 0
             Response.Event.EndTime = DateTime.Now
-            Response.Event.Description = $"Desbloquear{If(Not IsManual, String.Empty, " Manual")}"
+            Response.Event.Description = $"Desbloqueio de Usuário{If(Not IsManual, String.Empty, " Manual")}"
             Response.Event.Status = TaskStatus.Error
             Response.Event.ExceptionMessage = $"{Exception.Message}{vbNewLine}{Exception.StackTrace}"
             Progress?.Report(Response)

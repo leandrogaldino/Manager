@@ -356,7 +356,7 @@ Public Class TaskClean
                 Response.Percent = 0
                 Response.Text = "Limpeza: Erro na execução"
                 Response.Event.EndTime = DateTime.Now
-                Response.Event.Description = $"Limpeza{If(Not IsManual, String.Empty, " Manual")}"
+                Response.Event.Description = $"Limpeza do Sistema{If(Not IsManual, String.Empty, " Manual")}"
                 Response.Event.Status = TaskStatus.Error
                 Response.Event.ExceptionMessage = $"{Exception.Message}{vbNewLine}{Exception.StackTrace}"
                 Progress?.Report(Response)
@@ -367,7 +367,7 @@ Public Class TaskClean
             Response.Text = "Limpeza: Erro na execução"
             Response.Percent = 0
             Response.Event.EndTime = DateTime.Now
-            Response.Event.Description = $"Limpeza{If(Not IsManual, String.Empty, " Manual")}"
+            Response.Event.Description = $"Limpeza do Sistema{If(Not IsManual, String.Empty, " Manual")}"
             Response.Event.Status = TaskStatus.Error
             Response.Event.ExceptionMessage = $"{Exception.Message}{vbNewLine}{Exception.StackTrace}"
             Progress?.Report(Response)

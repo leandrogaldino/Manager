@@ -137,12 +137,11 @@ Public Class TaskBackup
                 ApplicationPaths.EvaluationDocumentDirectory,
                 ApplicationPaths.EvaluationPictureDirectory,
                 ApplicationPaths.EvaluationSignatureDirectory,
-                ApplicationPaths.DataDirectory,
                 ApplicationPaths.ProductPictureDirectory,
                 ApplicationPaths.RequestDocumentDirectory,
-                ApplicationPaths.LogoDirectory
+                ApplicationPaths.LogoDirectory,
+                TempDatabaseDirectory
             }
-
             Response.Percent = 0
             FileName = $"Backup {DateTimeHelper.Now:dd-MM-yyyy HH.mm.ss}.bkp"
             BackupDir = New DirectoryInfo(_Session.Preferences.Backup.Location)
@@ -151,7 +150,6 @@ Public Class TaskBackup
                                                        Response.Text = $"Backup: Processando arquivos ({p}%)"
                                                        Progress?.Report(Response)
                                                    End Sub)
-            Dim k = _CryptoKeyService.ReadCryptoKey
             Await FileMerger.MergeAsync(Path.Combine(BackupDir.FullName, FileName), TargetList, _CryptoKeyService.ReadCryptoKey, IntProgress)
             Await FileManager.DeleteDirectoriesAsync(New List(Of FileManager.DeleteDirectoryInfo) From {New FileManager.DeleteDirectoryInfo(New DirectoryInfo(TempDatabaseDirectory), True)})
             Await Task.Delay(Constants.WaitForJob)
@@ -191,7 +189,7 @@ Public Class TaskBackup
                 Response.Percent = 0
                 Response.Text = "Backup: Erro na execução"
                 Response.Event.EndTime = DateTime.Now
-                Response.Event.Description = $"Backup{If(Not IsManual, String.Empty, " Manual")}"
+                Response.Event.Description = $"Criação de Backup{If(Not IsManual, String.Empty, " Manual")}"
                 Response.Event.Status = TaskStatus.Error
                 Response.Event.ExceptionMessage = $"{Exception.Message}{vbNewLine}{Exception.StackTrace}"
                 Progress?.Report(Response)
@@ -202,7 +200,7 @@ Public Class TaskBackup
             Response.Percent = 0
             Response.Text = "Backup: Erro na execução"
             Response.Event.EndTime = DateTime.Now
-            Response.Event.Description = $"Backup{If(Not IsManual, String.Empty, " Manual")}"
+            Response.Event.Description = $"Criação de Backup{If(Not IsManual, String.Empty, " Manual")}"
             Response.Event.Status = TaskStatus.Error
             Response.Event.ExceptionMessage = $"{Exception.Message}{vbNewLine}{Exception.StackTrace}"
             Progress?.Report(Response)

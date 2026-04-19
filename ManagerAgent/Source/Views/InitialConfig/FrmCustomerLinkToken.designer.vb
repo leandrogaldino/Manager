@@ -26,10 +26,10 @@ Partial Class FrmCustomerLinkToken
         Me.LblDescription = New System.Windows.Forms.Label()
         Me.LblTitle = New System.Windows.Forms.Label()
         Me.Panel21 = New System.Windows.Forms.Panel()
-        Me.TxtLinkToken = New System.Windows.Forms.TextBox()
         Me.LblLinkToken = New System.Windows.Forms.Label()
         Me.BtnSave = New CoreSuite.Controls.NoFocusCueButton()
         Me.PnButtons = New System.Windows.Forms.Panel()
+        Me.TxtLinkToken = New System.Windows.Forms.TextBox()
         Me.PnLeft.SuspendLayout()
         Me.Panel21.SuspendLayout()
         Me.PnButtons.SuspendLayout()
@@ -43,7 +43,7 @@ Partial Class FrmCustomerLinkToken
         Me.PnLeft.Dock = System.Windows.Forms.DockStyle.Left
         Me.PnLeft.Location = New System.Drawing.Point(0, 0)
         Me.PnLeft.Name = "PnLeft"
-        Me.PnLeft.Size = New System.Drawing.Size(165, 225)
+        Me.PnLeft.Size = New System.Drawing.Size(165, 170)
         Me.PnLeft.TabIndex = 10
         '
         'LblDescription
@@ -54,7 +54,7 @@ Partial Class FrmCustomerLinkToken
         Me.LblDescription.Location = New System.Drawing.Point(0, 41)
         Me.LblDescription.Name = "LblDescription"
         Me.LblDescription.Padding = New System.Windows.Forms.Padding(5, 15, 5, 15)
-        Me.LblDescription.Size = New System.Drawing.Size(165, 184)
+        Me.LblDescription.Size = New System.Drawing.Size(165, 129)
         Me.LblDescription.TabIndex = 0
         Me.LblDescription.Text = "Informe aqui o token que faz a ligação do cliente com a base de dados de licencia" &
     "mento."
@@ -82,19 +82,8 @@ Partial Class FrmCustomerLinkToken
         Me.Panel21.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
         Me.Panel21.Name = "Panel21"
         Me.Panel21.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
-        Me.Panel21.Size = New System.Drawing.Size(450, 209)
+        Me.Panel21.Size = New System.Drawing.Size(505, 153)
         Me.Panel21.TabIndex = 11
-        '
-        'TxtLinkToken
-        '
-        Me.TxtLinkToken.ForeColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
-        Me.TxtLinkToken.Location = New System.Drawing.Point(131, 3)
-        Me.TxtLinkToken.Multiline = True
-        Me.TxtLinkToken.Name = "TxtLinkToken"
-        Me.TxtLinkToken.Size = New System.Drawing.Size(314, 201)
-        Me.TxtLinkToken.TabIndex = 1
-        Me.TxtLinkToken.Text = "eerg16e5r1g5ew1gr6e1r9gh41ert63h1rt9h41r65th165"
-        Me.TxtLinkToken.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'LblLinkToken
         '
@@ -103,7 +92,7 @@ Partial Class FrmCustomerLinkToken
         Me.LblLinkToken.Location = New System.Drawing.Point(4, 0)
         Me.LblLinkToken.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
         Me.LblLinkToken.Name = "LblLinkToken"
-        Me.LblLinkToken.Size = New System.Drawing.Size(120, 207)
+        Me.LblLinkToken.Size = New System.Drawing.Size(74, 151)
         Me.LblLinkToken.TabIndex = 0
         Me.LblLinkToken.Text = "Link Token"
         Me.LblLinkToken.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -114,7 +103,7 @@ Partial Class FrmCustomerLinkToken
         Me.BtnSave.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro
         Me.BtnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BtnSave.ForeColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
-        Me.BtnSave.Location = New System.Drawing.Point(527, 9)
+        Me.BtnSave.Location = New System.Drawing.Point(582, 9)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(90, 32)
         Me.BtnSave.TabIndex = 0
@@ -127,17 +116,27 @@ Partial Class FrmCustomerLinkToken
         Me.PnButtons.BackColor = System.Drawing.Color.WhiteSmoke
         Me.PnButtons.Controls.Add(Me.BtnSave)
         Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PnButtons.Location = New System.Drawing.Point(0, 225)
+        Me.PnButtons.Location = New System.Drawing.Point(0, 170)
         Me.PnButtons.Name = "PnButtons"
-        Me.PnButtons.Size = New System.Drawing.Size(629, 48)
+        Me.PnButtons.Size = New System.Drawing.Size(684, 48)
         Me.PnButtons.TabIndex = 16
+        '
+        'TxtLinkToken
+        '
+        Me.TxtLinkToken.ForeColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
+        Me.TxtLinkToken.Location = New System.Drawing.Point(96, 64)
+        Me.TxtLinkToken.Name = "TxtLinkToken"
+        Me.TxtLinkToken.Size = New System.Drawing.Size(404, 23)
+        Me.TxtLinkToken.TabIndex = 1
+        Me.TxtLinkToken.Text = "eerg16e5r1g5ew1gr6e1r9gh41ert63h1rt9h41r65th165"
+        Me.TxtLinkToken.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'FrmCustomerLinkToken
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(629, 273)
+        Me.ClientSize = New System.Drawing.Size(684, 218)
         Me.Controls.Add(Me.PnLeft)
         Me.Controls.Add(Me.PnButtons)
         Me.Controls.Add(Me.Panel21)
@@ -160,8 +159,8 @@ Partial Class FrmCustomerLinkToken
     Friend WithEvents LblDescription As Label
     Friend WithEvents LblTitle As Label
     Friend WithEvents Panel21 As Panel
-    Friend WithEvents TxtLinkToken As TextBox
     Friend WithEvents LblLinkToken As Label
     Friend WithEvents BtnSave As CoreSuite.Controls.NoFocusCueButton
     Friend WithEvents PnButtons As Panel
+    Friend WithEvents TxtLinkToken As TextBox
 End Class

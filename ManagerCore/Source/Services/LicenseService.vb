@@ -50,6 +50,8 @@ Public Class LicenseService
             Return Result
         End If
 
+        Result.Success = True
+
         Return Result
     End Function
 

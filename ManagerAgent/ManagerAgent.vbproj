@@ -227,7 +227,6 @@
     <Compile Include="Source\Views\InitialConfig\FrmRemoteDbCredentials.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Views\Login\LoginViewModel.vb" />
     <Compile Include="Source\Views\Main\FrmEvent.Designer.vb">
       <DependentUpon>FrmEvent.vb</DependentUpon>
     </Compile>

@@ -234,7 +234,6 @@
     <Compile Include="Source\Views\Main\FrmEvent.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Views\RestoreBackup\RestoreBackupViewModel.vb" />
     <Compile Include="Source\Views\Preferences\UcBackupDays.Designer.vb">
       <DependentUpon>UcBackupDays.vb</DependentUpon>
     </Compile>

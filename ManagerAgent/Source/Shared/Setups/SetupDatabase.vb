@@ -1,5 +1,4 @@
-﻿Imports System.Drawing.Text
-Imports CoreSuite.Infrastructure
+﻿Imports CoreSuite.Infrastructure
 Imports CoreSuite.Services
 Imports ManagerCore
 
@@ -20,11 +19,7 @@ Public Class SetupDatabase
         Dim RemoteSystemDb As FirebaseService = Locator.GetInstance(Of FirebaseService)(RemoteDatabaseType.System)
         If RemoteSystemDbCredentials IsNot Nothing Then
             RemoteSystemDb.Initialize(RemoteSystemDbCredentials.ApiKey, RemoteSystemDbCredentials.ProjectID, RemoteSystemDbCredentials.BucketName)
-            If Not String.IsNullOrEmpty(RemoteSystemDbCredentials.RefreshToken) Then
-                Await RemoteSystemDb.Auth.RefreshSessionAsync(RemoteSystemDbCredentials.RefreshToken)
-            Else
-                Await RemoteSystemDb.Auth.LoginAsync($"{RemoteSystemDbCredentials.Username}{Suffix}", RemoteSystemDbCredentials.Password)
-            End If
+            Await RemoteSystemDb.Auth.LoginAsync($"{RemoteSystemDbCredentials.Username}{Suffix}", RemoteSystemDbCredentials.Password)
         End If
     End Function
     Public Shared Async Function SetupCustomer() As Task
@@ -33,11 +28,7 @@ Public Class SetupDatabase
         Dim RemoteCustomerDb As FirebaseService = Locator.GetInstance(Of FirebaseService)(RemoteDatabaseType.Customer)
         If RemoteCustomerDbCredentials IsNot Nothing Then
             RemoteCustomerDb.Initialize(RemoteCustomerDbCredentials.ApiKey, RemoteCustomerDbCredentials.ProjectID, RemoteCustomerDbCredentials.BucketName)
-            If Not String.IsNullOrEmpty(RemoteCustomerDbCredentials.RefreshToken) Then
-                Await RemoteCustomerDb.Auth.RefreshSessionAsync(RemoteCustomerDbCredentials.RefreshToken)
-            Else
-                Await RemoteCustomerDb.Auth.LoginAsync($"{RemoteCustomerDbCredentials.Username}{Suffix}", RemoteCustomerDbCredentials.Password)
-            End If
+            Await RemoteCustomerDb.Auth.LoginAsync($"{RemoteCustomerDbCredentials.Username}{Suffix}", RemoteCustomerDbCredentials.Password)
         End If
     End Function
 End Class

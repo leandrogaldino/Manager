@@ -8,11 +8,11 @@ Public Class FrmEvent
 
     Private Sub FrmEvent_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim Sb As New Text.StringBuilder
+        Sb.AppendLine($"Descrição: {_Event.Description}")
         Sb.AppendLine($"ID: {_Event.ID}")
         Sb.AppendLine($"Status: {EnumHelper.GetEnumDescription(_Event.Status)}")
         Sb.AppendLine($"Início: {_Event.StartTime:dd/MM/yyyy HH:mm:ss}")
         Sb.AppendLine($"Fim: {_Event.EndTime:dd/MM/yyyy HH:mm:ss}")
-        Sb.AppendLine($"Descrição: {_Event.Description}")
         If Not String.IsNullOrEmpty(_Event.ExceptionMessage) Then
             Sb.AppendLine()
             Sb.AppendLine("Mensagem de Erro:")

@@ -189,6 +189,10 @@ Public Class TaskCloudSync
         Do While ContinueSync
             ContinueSync = False
             Dim StartTime As Long = DateTimeHelper.MillisecondsFromDate(Now)
+            Debug.Print(_RemoteDb.Auth.IsLoggedIn)
+            If Not _RemoteDb.Auth.IsLoggedIn Then
+                MsgBox("nao logado")
+            End If
             Dim RemoteResult As List(Of Dictionary(Of String, Object)) = Await _RemoteDb.Firestore.QueryCompositeAsync("visitschedules", {
                 New FirestoreFilter("lastupdate", FirestoreOperator.GreaterThan, DateTimeHelper.MillisecondsFromDate(LastSyncLimit)),
                 New FirestoreFilter("performeddate", FirestoreOperator.NotEqual, Nothing)

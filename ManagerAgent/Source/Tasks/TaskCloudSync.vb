@@ -6,8 +6,9 @@ Public Class TaskCloudSync
     Private ReadOnly _LocalDb As MySqlService
     Private ReadOnly _RemoteDb As FirebaseService
     Private ReadOnly _PreferencesService As PreferencesService
-    Public Sub New(Preferences As PreferencesModel, PreferencesService As PreferencesService, LocalDb As MySqlService, RemoteDb As FirebaseService)
-        MyBase.New(Preferences)
+    Private ReadOnly _Session As SessionModel
+    Public Sub New(Session As SessionModel, PreferencesService As PreferencesService, LocalDb As MySqlService, RemoteDb As FirebaseService)
+        _Session = Session
         _LocalDb = LocalDb
         _RemoteDb = RemoteDb
         _PreferencesService = PreferencesService
@@ -19,12 +20,12 @@ Public Class TaskCloudSync
     End Property
     Public Overrides ReadOnly Property RunIntervalMinutes As Integer
         Get
-            Return Preferences.Parameters.Sync.Interval
+            Return _Session.Preferences.Parameters.Sync.Interval
         End Get
     End Property
     Public Overrides ReadOnly Property LastRun As Date
         Get
-            Return Preferences.LastExecution.CloudSync
+            Return _Session.Preferences.LastExecution.CloudSync
         End Get
     End Property
     Public Overrides ReadOnly Property IsManual As Boolean
@@ -45,8 +46,8 @@ Public Class TaskCloudSync
             SyncedFromCloud = Await FetchSchedulesFromCloudToLocal(Response, Progress)
             SyncedToCloud = Await SyncFromLocalToCloud(Response, Progress)
             HasSynced = SyncedFromCloud OrElse SyncedToCloud
-            Preferences.LastExecution.CloudSync = Now.ToString("yyyy-MM-dd HH:mm:ss")
-            Await _PreferencesService.SaveAsync(Preferences)
+            _Session.Preferences.LastExecution.CloudSync = Now.ToString("yyyy-MM-dd HH:mm:ss")
+            _PreferencesService.SaveAsync(_Session.Preferences)
             If _Started Then
                 Response.Text = "Sincronização: Concluído"
                 Response.Percent = 0
@@ -77,7 +78,7 @@ Public Class TaskCloudSync
     End Function
     Private Async Function SyncFromLocalToCloud(Response As AsyncResponseModel, Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task(Of Boolean)
         Dim PerformedOperations As Long
-        Dim LastSyncTime As Date = Preferences.LastExecution.CloudSync
+        Dim LastSyncTime As Date = _Session.Preferences.LastExecution.CloudSync
         Dim ContinueSync As Boolean = True
         Dim HasSynced As Boolean
         Do While ContinueSync
@@ -181,7 +182,7 @@ Public Class TaskCloudSync
     Private Async Function FetchSchedulesFromCloudToLocal(Response As AsyncResponseModel, Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task(Of Boolean)
         Dim PerformedOperations As Integer
         Dim TotalChanges As Integer
-        Dim LastSyncLimit As Date = Preferences.LastExecution.CloudSync
+        Dim LastSyncLimit As Date = _Session.Preferences.LastExecution.CloudSync
         Dim ContinueSync As Boolean = True
         Dim HasSynced As Boolean
         Do While ContinueSync
@@ -205,7 +206,7 @@ Public Class TaskCloudSync
                 PerformedOperations = 0
                 For Each Schedule In RemoteResult
                     Await _LocalDb.Request.ExecuteUpdateAsync("visitschedule",
-                    New Dictionary(Of String, String) From {
+                    New Dictionary(Of String, Object) From {
                         {"statusid", "@statusid"},
                         {"performeddate", "@performeddate"},
                         {"lastupdate", "@lastupdate"},
@@ -282,7 +283,7 @@ Public Class TaskCloudSync
                 Await _RemoteDb.Firestore.SaveDocumentAsync("evaluations",
                                                             EvaluationData("cloudid"),
                                                             New Dictionary(Of String, Object) From {{"info.importedid", EvaluationData("id")}, {"lastupdate", DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)}})
-                Await _LocalDb.Request.ExecuteUpdateAsync("visitschedule", New Dictionary(Of String, String) From {{"evaluationid", "@evaluationid"}}, "id = @id", New Dictionary(Of String, Object) From {{"@evaluationid", EvaluationData("id")}, {"@id", EvaluationData("visitscheduleid")}})
+                Await _LocalDb.Request.ExecuteUpdateAsync("visitschedule", New Dictionary(Of String, Object) From {{"evaluationid", "@evaluationid"}}, "id = @id", New Dictionary(Of String, Object) From {{"@evaluationid", EvaluationData("id")}, {"@id", EvaluationData("visitscheduleid")}})
             End If
         End If
     End Function

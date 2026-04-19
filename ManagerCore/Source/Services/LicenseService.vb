@@ -45,7 +45,7 @@ Public Class LicenseService
 
 
         If Result.License.ExpirationDate < Today Then
-            Result.Success = True
+            Result.Success = False
             Result.Flag = LicenseMessages.Expired
             Return Result
         End If

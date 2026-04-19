@@ -26,6 +26,7 @@ Public Class Util
             File.WriteAllBytes(TempFile, Array.Empty(Of Byte))
             Await TestDb.Storage.UploadFile(TempFile, Name)
             Await TestDb.Storage.DeleteFileAsync(Name)
+            TestDb.Auth.Logout()
             Result.Success = True
             Return Result
         Catch ex As Exception

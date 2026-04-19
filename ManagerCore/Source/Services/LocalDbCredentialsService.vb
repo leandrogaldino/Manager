@@ -14,6 +14,8 @@ Public Class LocalDbCredentialsService
         If File.Exists(_DbFile) Then
             Dim Json As String = Cryptography.Decrypt(File.ReadAllText(_DbFile), _Key)
             Model = JsonConvert.DeserializeObject(Of LocalDbCredentialsModel)(Json)
+        Else
+            Model = New LocalDbCredentialsModel()
         End If
         Return Model
     End Function

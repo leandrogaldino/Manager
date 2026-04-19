@@ -45,9 +45,6 @@ Partial Class FrmMain
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.BtnCompanies = New System.Windows.Forms.ToolStripButton()
         Me.BtnSettings = New System.Windows.Forms.ToolStripDropDownButton()
-        Me.BtnDatabase = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BtnLocalDbCredentials = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BtnRemoteDbCredentials = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnBackupConfig = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnSupport = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnParameters = New System.Windows.Forms.ToolStripMenuItem()
@@ -270,7 +267,7 @@ Partial Class FrmMain
         'BtnSettings
         '
         Me.BtnSettings.AutoSize = False
-        Me.BtnSettings.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnDatabase, Me.BtnBackupConfig, Me.BtnSupport, Me.BtnParameters, Me.ToolStripSeparator2, Me.BtnChangePassword, Me.BtnCleanEventLog})
+        Me.BtnSettings.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnBackupConfig, Me.BtnSupport, Me.BtnParameters, Me.ToolStripSeparator2, Me.BtnChangePassword, Me.BtnCleanEventLog})
         Me.BtnSettings.Enabled = False
         Me.BtnSettings.Image = Global.ManagerAgent.My.Resources.Resources.Settings
         Me.BtnSettings.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
@@ -280,25 +277,6 @@ Partial Class FrmMain
         Me.BtnSettings.Size = New System.Drawing.Size(120, 53)
         Me.BtnSettings.Text = "Configurações"
         Me.BtnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        '
-        'BtnDatabase
-        '
-        Me.BtnDatabase.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnLocalDbCredentials, Me.BtnRemoteDbCredentials})
-        Me.BtnDatabase.Name = "BtnDatabase"
-        Me.BtnDatabase.Size = New System.Drawing.Size(223, 22)
-        Me.BtnDatabase.Text = "Banco de Dados"
-        '
-        'BtnLocalDbCredentials
-        '
-        Me.BtnLocalDbCredentials.Name = "BtnLocalDbCredentials"
-        Me.BtnLocalDbCredentials.Size = New System.Drawing.Size(208, 22)
-        Me.BtnLocalDbCredentials.Text = "Credenciais Local"
-        '
-        'BtnRemoteDbCredentials
-        '
-        Me.BtnRemoteDbCredentials.Name = "BtnRemoteDbCredentials"
-        Me.BtnRemoteDbCredentials.Size = New System.Drawing.Size(208, 22)
-        Me.BtnRemoteDbCredentials.Text = "Credenciais Remoto"
         '
         'BtnBackupConfig
         '
@@ -569,7 +547,4 @@ Partial Class FrmMain
     Friend WithEvents BtnBackupConfig As ToolStripMenuItem
     Friend WithEvents BtnParameters As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
-    Friend WithEvents BtnDatabase As ToolStripMenuItem
-    Friend WithEvents BtnLocalDbCredentials As ToolStripMenuItem
-    Friend WithEvents BtnRemoteDbCredentials As ToolStripMenuItem
 End Class

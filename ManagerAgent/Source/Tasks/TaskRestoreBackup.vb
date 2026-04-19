@@ -128,6 +128,7 @@ Public Class TaskRestoreBackup
                                                        Response.Text = $"Restaurar Backup: Processando os dados ({Percent}%)"
                                                        Progress?.Report(Response)
                                                    End Sub)
+            Dim k = _CryptoKeyService.ReadCryptoKey
             Await FileMerger.UnMergeAsync(BackupLocation, TargetDirectory, _CryptoKeyService.ReadCryptoKey, IntProgress)
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0

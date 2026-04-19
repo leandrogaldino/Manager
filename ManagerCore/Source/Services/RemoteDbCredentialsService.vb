@@ -18,6 +18,8 @@ Public Class RemoteDbCredentialsService
         If File.Exists(DbFile) Then
             Dim Json As String = Cryptography.Decrypt(File.ReadAllText(DbFile), _Key)
             Model = JsonConvert.DeserializeObject(Of RemoteDbCredentialsModel)(Json)
+        Else
+            Model = New RemoteDbCredentialsModel()
         End If
         Return Model
     End Function

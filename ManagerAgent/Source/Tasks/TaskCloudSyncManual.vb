@@ -4,8 +4,8 @@ Imports CoreSuite.Services
 Public Class TaskCloudSyncManual
     Inherits TaskCloudSync
 
-    Public Sub New(Preferences As PreferencesModel, PreferencesService As PreferencesService, LocalDb As MySqlService, RemoteDb As FirebaseService)
-        MyBase.New(Preferences, PreferencesService, LocalDb, RemoteDb)
+    Public Sub New(Session As SessionModel, PreferencesService As PreferencesService, LocalDb As MySqlService, RemoteDb As FirebaseService)
+        MyBase.New(Session, PreferencesService, LocalDb, RemoteDb)
     End Sub
     Private _NextRun As Date = Nothing
     Public Overrides Property NextRun As Date

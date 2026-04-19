@@ -63,7 +63,7 @@ Partial Class FrmCustomerLinkToken
         '
         Me.LblTitle.BackColor = System.Drawing.Color.WhiteSmoke
         Me.LblTitle.Dock = System.Windows.Forms.DockStyle.Top
-        Me.LblTitle.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblTitle.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
         Me.LblTitle.Location = New System.Drawing.Point(0, 0)
         Me.LblTitle.Name = "LblTitle"
@@ -93,6 +93,8 @@ Partial Class FrmCustomerLinkToken
         Me.TxtLinkToken.Name = "TxtLinkToken"
         Me.TxtLinkToken.Size = New System.Drawing.Size(314, 201)
         Me.TxtLinkToken.TabIndex = 1
+        Me.TxtLinkToken.Text = "eerg16e5r1g5ew1gr6e1r9gh41ert63h1rt9h41r65th165"
+        Me.TxtLinkToken.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'LblLinkToken
         '

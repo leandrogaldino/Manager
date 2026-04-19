@@ -17,7 +17,7 @@ Public Class SetupLocator
         Locator.RegisterSingleton(New TaskStackService(Locator.GetInstance(Of SemaphoreSlim)))
         Locator.RegisterSingleton(New RemoteDbCredentialsService(Locator.GetInstance(Of CryptoKeyService)))
         Locator.RegisterSingleton(New LocalDbCredentialsService(Locator.GetInstance(Of CryptoKeyService)))
-        Locator.RegisterSingleton(New AppService(Locator.GetInstance(Of SessionModel), Locator.GetInstance(Of LocalDbCredentialsService), Locator.GetInstance(Of RemoteDbCredentialsService)))
+        Locator.RegisterSingleton(New AppService(Locator.GetInstance(Of SessionModel)))
         Locator.RegisterSingleton(New PreferencesService(Locator.GetInstance(Of MySqlService)))
     End Sub
 End Class

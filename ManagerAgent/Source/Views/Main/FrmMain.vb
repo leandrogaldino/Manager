@@ -14,14 +14,11 @@ Public Class FrmMain
     Private _TaskRunning As Boolean
     Private _BlockingTasks As Boolean
     Private _LicenseService As LicenseService
-
-
     Private _StateWarnings As ObservableCollection(Of String)
     Private _HasSystemRemoteDbPending As Boolean
     Private _HasLocalDbPending As Boolean
     Private _HasCustomerRemoteDbPending As Boolean
     Private _HasLicensePending As Boolean
-
     Private _LastLoginRequest As Date
     Private _Semaphore As SemaphoreSlim
     Public Sub New()
@@ -172,32 +169,13 @@ Public Class FrmMain
         Next Task
     End Sub
     Private Async Function ValidateState() As Task
-        Dim SystemRemoteDb As List(Of String) = Await _AppService.ValidateSystemRemoteDb()
         Dim License As List(Of String) = Await _AppService.ValidateLicense()
-        Dim CustomerRemoteDb As List(Of String) = Await _AppService.ValidateCustomerRemoteDb()
-        Dim CustomerLocalDb As List(Of String) = Await _AppService.ValidateCompanyLocalDb()
         Dim Backup As List(Of String) = _AppService.ValidateBackup()
-
-
-
         _StateWarnings.Clear()
-
-        SystemRemoteDb.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
         License.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
-        CustomerRemoteDb.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
-        CustomerLocalDb.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
         Backup.ForEach(Sub(x) _StateWarnings.Add($"{Constants.SeparatorSymbol} {x}"))
-
         BtnSettings.Enabled = True
-        BtnDatabase.Enabled = License.Count = 0
-        BtnBackupConfig.Enabled = CustomerLocalDb.Count = 0
-        BtnSupport.Enabled = CustomerLocalDb.Count = 0
-        BtnParameters.Enabled = CustomerLocalDb.Count = 0
         BtnCleanEventLog.Enabled = True
-
-        BtnCompanies.Enabled = CustomerLocalDb.Count = 0
-        BtnChangePassword.Enabled = SystemRemoteDb.Count = 0
-
         If _StateWarnings.Count > 0 Then
             BtnAgentState.Enabled = False
             BtnBackup.Enabled = False
@@ -213,7 +191,6 @@ Public Class FrmMain
             BtnCloudSync.Enabled = True
             BtnCleanEventLog.Enabled = True
         End If
-
         FillDgvTasks()
     End Function
     Private Sub CloseApplication()
@@ -414,11 +391,11 @@ Public Class FrmMain
         '    Credentials = _LicenseCredentialsService.Load(RemoteDatabaseType.System)
         'End If
         'If Credentials Is Nothing Then Credentials = New RemoteDbCredentialsModel()
-        Using Form As New FrmLicenseCredentials()
-            If Form.ShowDialog() = DialogResult.OK Then
-                Await ValidateState()
-            End If
-        End Using
+        'Using Form As New FrmRemoteDbCredentials()
+        '    If Form.ShowDialog() = DialogResult.OK Then
+        '        Await ValidateState()
+        '    End If
+        'End Using
     End Sub
     'Private Async Sub BtnChangeLicenseKey_Click(sender As Object, e As EventArgs) Handles BtnChangeLicenseKey.Click
     '    Dim LicenseResult = Locator.GetInstance(Of SessionModel).ManagerLicenseResult
@@ -433,11 +410,11 @@ Public Class FrmMain
     '        Await ValidateState()
     '    End Using
     'End Sub
-    Private Sub BtnLocalDbCredentials_Click(sender As Object, e As EventArgs) Handles BtnLocalDbCredentials.Click
+    Private Sub BtnLocalDbCredentials_Click(sender As Object, e As EventArgs)
 
     End Sub
 
-    Private Sub BtnRemoteDbCredentials_Click(sender As Object, e As EventArgs) Handles BtnRemoteDbCredentials.Click
+    Private Sub BtnRemoteDbCredentials_Click(sender As Object, e As EventArgs)
 
     End Sub
     Private Async Sub BtnBackupConfig_Click(sender As Object, e As EventArgs) Handles BtnBackupConfig.Click

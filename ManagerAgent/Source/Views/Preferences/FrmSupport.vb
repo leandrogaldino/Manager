@@ -54,7 +54,7 @@ Public Class FrmSupport
         Try
             Cursor = Cursors.WaitCursor
             FillModelWithForm()
-            ManagerCore.Util.AsyncLock(Function() _PreferencesService.SaveAsync(_Preferences))
+            _PreferencesService.SaveAsync(_Preferences)
             SetupApp.SetupCMessageBox()
             DialogResult = DialogResult.OK
         Catch ex As Exception

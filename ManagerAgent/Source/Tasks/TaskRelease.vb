@@ -5,21 +5,22 @@ Public Class TaskRelease
     Inherits TaskBase
     Private ReadOnly _LocalDb As MySqlService
     Private ReadOnly _PreferencesService As PreferencesService
-    Public Sub New(Preferences As PreferencesModel, PreferencesService As PreferencesService, LocalDb As MySqlService)
-        MyBase.New(Preferences)
+    Private ReadOnly _Session As SessionModel
+    Public Sub New(Session As SessionModel, PreferencesService As PreferencesService, LocalDb As MySqlService)
+        _Session = Session
         _LocalDb = LocalDb
         _PreferencesService = PreferencesService
     End Sub
 
     Public Overrides ReadOnly Property RunIntervalMinutes As Integer
         Get
-            Return Preferences.Parameters.Release.ReleaseBlockedRegisterInterval
+            Return _Session.Preferences.Parameters.Release.ReleaseBlockedRegisterInterval
         End Get
     End Property
 
     Public Overrides ReadOnly Property LastRun As Date
         Get
-            Return Preferences.LastExecution.Release
+            Return _Session.Preferences.LastExecution.Release
         End Get
     End Property
 
@@ -42,7 +43,7 @@ Public Class TaskRelease
         Dim Result As MySqlResponse = Await _LocalDb.Request.ExecuteSelectAsync("lockedregistry", New MySqlSelectOptions() With {
             .Columns = {"session", "locktime", "routineid", "registryid", "userid"}.ToList(),
             .Where = "NOW() > DATE_ADD(lockedregistry.locktime, INTERVAL @min MINUTE);",
-            .QueryArgs = New Dictionary(Of String, Object) From {{"@min", Preferences.Parameters.Release.ReleaseBlockedRegisterInterval}}
+            .QueryArgs = New Dictionary(Of String, Object) From {{"@min", _Session.Preferences.Parameters.Release.ReleaseBlockedRegisterInterval}}
         })
         If Result.HasData Then
             ReleasedList = New List(Of RegistryModel)
@@ -67,7 +68,7 @@ Public Class TaskRelease
             {"@routineid", Registry.RoutineID},
             {"@registryid", Registry.RegistryID},
             {"@userid", Registry.UserID},
-            {"@min", Preferences.Parameters.Release.ReleaseBlockedRegisterInterval}
+            {"@min", _Session.Preferences.Parameters.Release.ReleaseBlockedRegisterInterval}
         }
         Await _LocalDb.Request.ExecuteDeleteAsync("lockedregistry", Where, Args)
         Await Task.Delay(Constants.WaitForJob)
@@ -107,10 +108,9 @@ Public Class TaskRelease
             Exception = ex
         End Try
         If Not IsManual Then
-            Preferences.Backup.IgnoreNext = False
-            Preferences.LastExecution.Backup = Now
+            _Session.Preferences.LastExecution.Release = Now
             Try
-                Await _PreferencesService.SaveAsync(Preferences)
+                _PreferencesService.SaveAsync(_Session.Preferences)
             Catch ex As Exception
                 Response.Percent = 0
                 Response.Text = "Desbloquear: Erro na execução"

@@ -7,8 +7,9 @@ Public Class TaskClean
     Inherits TaskBase
     Private ReadOnly _LocalDb As MySqlService
     Private ReadOnly _PreferencesService As PreferencesService
-    Public Sub New(Preferences As PreferencesModel, PreferencesService As PreferencesService, LocalDb As MySqlService)
-        MyBase.New(Preferences)
+    Private ReadOnly _Session As SessionModel
+    Public Sub New(Session As SessionModel, PreferencesService As PreferencesService, LocalDb As MySqlService)
+        _Session = Session
         _LocalDb = LocalDb
         _PreferencesService = PreferencesService
     End Sub
@@ -20,13 +21,13 @@ Public Class TaskClean
 
     Public Overrides ReadOnly Property RunIntervalMinutes As Integer
         Get
-            Return Preferences.Parameters.Clean.Interval * (24 * 60)
+            Return _Session.Preferences.Parameters.Clean.Interval * (24 * 60)
         End Get
     End Property
 
     Public Overrides ReadOnly Property LastRun As Date
         Get
-            Return Preferences.LastExecution.Clean
+            Return _Session.Preferences.LastExecution.Clean
         End Get
     End Property
 
@@ -66,7 +67,7 @@ Public Class TaskClean
             CashDocumentDir = New DirectoryInfo(ApplicationPaths.CashDocumentDirectory)
             FileCount = EvaluationDocumentDir.GetFiles().Count() + EmailSignatureDir.GetDirectories().Count() + RequestDocumentDir.GetFiles().Count() + ProductPictureDir.GetFiles().Count() + CashDocumentDir.GetFiles().Count()
             Await Task.Delay(Constants.WaitForStart)
-            Month = Preferences.Parameters.Evaluation.MonthsBeforeRecordDeletion
+            Month = _Session.Preferences.Parameters.Evaluation.MonthsBeforeRecordDeletion
             MonthStr = If(Month = 1, $"{Month} mês", $"{Month} meses")
             ResultDate = Today.AddMonths(-Month)
             Result = Await _LocalDb.Request.ExecuteSelectAsync("evaluation", New MySqlSelectOptions() With {
@@ -92,27 +93,27 @@ Public Class TaskClean
                       .Limit = 1
                     })).Data(0)("id")
                     Await _LocalDb.Request.ExecuteUpdateAsync("evaluation",
-                                                              New Dictionary(Of String, String) From {{"userid", "@userid"}},
+                                                              New Dictionary(Of String, Object) From {{"userid", "@userid"}},
                                                               "id = @id",
                                                               New Dictionary(Of String, Object) From {{"@id", Entry("id")}, {"@userid", AgentID}},
                                                               Connection)
                     Await _LocalDb.Request.ExecuteUpdateAsync("evaluationcontrolledsellable",
-                                                              New Dictionary(Of String, String) From {{"userid", "@userid"}},
+                                                              New Dictionary(Of String, Object) From {{"userid", "@userid"}},
                                                               "evaluationid = @evaluationid",
                                                               New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}, {"@userid", AgentID}},
                                                               Connection)
                     Await _LocalDb.Request.ExecuteUpdateAsync("evaluationpicture",
-                                                              New Dictionary(Of String, String) From {{"userid", "@userid"}},
+                                                              New Dictionary(Of String, Object) From {{"userid", "@userid"}},
                                                               "evaluationid = @evaluationid",
                                                               New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}, {"@userid", AgentID}},
                                                               Connection)
                     Await _LocalDb.Request.ExecuteUpdateAsync("evaluationreplacedsellable",
-                                                              New Dictionary(Of String, String) From {{"userid", "@userid"}},
+                                                              New Dictionary(Of String, Object) From {{"userid", "@userid"}},
                                                               "evaluationid = @evaluationid",
                                                               New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}, {"@userid", AgentID}},
                                                               Connection)
                     Await _LocalDb.Request.ExecuteUpdateAsync("evaluationtechnician",
-                                                              New Dictionary(Of String, String) From {{"userid", "@userid"}},
+                                                              New Dictionary(Of String, Object) From {{"userid", "@userid"}},
                                                               "evaluationid = @evaluationid",
                                                               New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}, {"@userid", AgentID}},
                                                               Connection)
@@ -348,10 +349,9 @@ Public Class TaskClean
             Exception = ex
         End Try
         If Not IsManual Then
-            Preferences.Backup.IgnoreNext = False
-            Preferences.LastExecution.Backup = Now
+            _Session.Preferences.LastExecution.Clean = Now
             Try
-                Await _PreferencesService.SaveAsync(Preferences)
+                _PreferencesService.SaveAsync(_Session.Preferences)
             Catch ex As Exception
                 Response.Percent = 0
                 Response.Text = "Limpeza: Erro na execução"

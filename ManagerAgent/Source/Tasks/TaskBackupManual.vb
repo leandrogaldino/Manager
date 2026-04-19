@@ -3,11 +3,9 @@ Imports CoreSuite.Services
 
 Public Class TaskBackupManual
     Inherits TaskBackup
-
-    Public Sub New(Preferences As PreferencesModel, PreferencesService As PreferencesService, LocalDb As MySqlService, CryptoKeyService As CryptoKeyService)
-        MyBase.New(Preferences, PreferencesService, LocalDb, CryptoKeyService)
+    Public Sub New(Session As SessionModel, PreferencesService As PreferencesService, LocalDb As MySqlService, CryptoKeyService As CryptoKeyService)
+        MyBase.New(Session, PreferencesService, LocalDb, CryptoKeyService)
     End Sub
-
     Private _NextRun As Date = Nothing
     Public Overrides Property NextRun As Date
         Get

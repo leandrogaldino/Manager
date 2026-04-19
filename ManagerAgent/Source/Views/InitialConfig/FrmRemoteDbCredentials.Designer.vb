@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class FrmLicenseCredentials
+Partial Class FrmRemoteDbCredentials
     Inherits System.Windows.Forms.Form
 
     'Descartar substituições de formulário para limpar a lista de componentes.
@@ -79,13 +79,13 @@ Partial Class FrmLicenseCredentials
         '
         Me.LblTitle.BackColor = System.Drawing.Color.WhiteSmoke
         Me.LblTitle.Dock = System.Windows.Forms.DockStyle.Top
-        Me.LblTitle.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblTitle.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
         Me.LblTitle.Location = New System.Drawing.Point(0, 0)
         Me.LblTitle.Name = "LblTitle"
         Me.LblTitle.Size = New System.Drawing.Size(165, 41)
         Me.LblTitle.TabIndex = 0
-        Me.LblTitle.Text = "Licença"
+        Me.LblTitle.Text = "Base de Dados de Licença"
         Me.LblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Panel4
@@ -282,7 +282,7 @@ Partial Class FrmLicenseCredentials
         Me.PnButtons.Size = New System.Drawing.Size(629, 48)
         Me.PnButtons.TabIndex = 16
         '
-        'FrmLicenseCredentials
+        'FrmRemoteDbCredentials
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -299,10 +299,10 @@ Partial Class FrmLicenseCredentials
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "FrmLicenseCredentials"
+        Me.Name = "FrmRemoteDbCredentials"
         Me.ShowIcon = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Credenciais da base de Licenciamento"
+        Me.Text = "Credenciais da Base de Dados de Licenciamento"
         Me.PnLeft.ResumeLayout(False)
         Me.Panel4.ResumeLayout(False)
         Me.Panel4.PerformLayout()

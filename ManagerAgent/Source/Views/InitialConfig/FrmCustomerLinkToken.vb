@@ -15,7 +15,6 @@ Public Class FrmCustomerLinkToken
             If _Result.Success Then
                 ManagerCore.Util.AsyncLock(Function() _LicenseService.SaveLocalLicense(_Result.License))
                 CMessageBox.Show("Sucesso", "Licença validada com sucesso..", CMessageBoxType.Done)
-                SetupSession.Setup()
                 DialogResult = DialogResult.OK
             Else
                 CMessageBox.Show("Falha", EnumHelper.GetEnumDescription(_Result.Flag), CMessageBoxType.Information)

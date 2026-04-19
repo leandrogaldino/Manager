@@ -28,7 +28,7 @@ Public Class CompanyService
     Public Async Function LoadAllAsync() As Task(Of List(Of CompanyModel))
         Dim Result = Await _LocalDb.Request.ExecuteRawQueryAsync(
             "SELECT c.*, a.*, ct.*
-             FROM companies c
+             FROM company c
              LEFT JOIN companyaddress a ON a.companyid = c.id
              LEFT JOIN companycontact ct ON ct.companyid = c.id")
         Dim Companies As New List(Of CompanyModel)
@@ -49,8 +49,8 @@ Public Class CompanyService
             If Existing.Data Is Nothing OrElse Existing.Data.Count = 0 Then
                 Using Transaction As New TransactionScope(TransactionScopeAsyncFlowOption.Enabled)
                     Dim Insert = Await _LocalDb.Request.ExecuteInsertAsync(
-                        "companies",
-                        New Dictionary(Of String, String) From {
+                        "company",
+                        New Dictionary(Of String, Object) From {
                             {"document", "@document"},
                             {"name", "@name"},
                             {"shortname", "@shortname"},
@@ -75,7 +75,7 @@ Public Class CompanyService
                 Using Transaction As New TransactionScope(TransactionScopeAsyncFlowOption.Enabled)
                     CompanyId = Convert.ToInt32(Existing.Data(0)("id"))
                     Await _LocalDb.Request.ExecuteRawQueryAsync(
-                "UPDATE companies SET 
+                "UPDATE company SET 
                     name = @name,
                     shortname = @shortname,
                     logoname = @logoname,

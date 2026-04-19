@@ -4,8 +4,8 @@ Imports CoreSuite.Services
 Public Class TaskCleanManual
     Inherits TaskClean
 
-    Public Sub New(Preferences As PreferencesModel, PreferencesService As PreferencesService, LocalDb As MySqlService)
-        MyBase.New(Preferences, PreferencesService, LocalDb)
+    Public Sub New(Session As SessionModel, PreferencesService As PreferencesService, LocalDb As MySqlService)
+        MyBase.New(Session, PreferencesService, LocalDb)
     End Sub
     Private _NextRun As Date = Nothing
     Public Overrides Property NextRun As Date

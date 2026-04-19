@@ -1,6 +1,4 @@
-﻿Imports ManagerCore
-Imports Microsoft.VisualBasic.ApplicationServices
-
+﻿
 Namespace My
     ' Os seguintes eventos estão disponíveis para MyApplication:
     ' Inicialização: Ocorre quando o aplicativo é iniciado, antes da criação do formulário de inicialização.

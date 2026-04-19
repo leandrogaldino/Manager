@@ -7,11 +7,12 @@ Public Class TaskBackup
     Private ReadOnly _LocalDb As MySqlService
     Private ReadOnly _PreferencesService As PreferencesService
     Private ReadOnly _CryptoKeyService As CryptoKeyService
-    Public Sub New(Preferences As PreferencesModel, PreferencesService As PreferencesService, LocalDb As MySqlService, CryptoKeyService As CryptoKeyService)
-        MyBase.New(Preferences)
+    Private ReadOnly _Session As SessionModel
+    Public Sub New(Session As SessionModel, PreferencesService As PreferencesService, LocalDb As MySqlService, CryptoKeyService As CryptoKeyService)
         _LocalDb = LocalDb
         _PreferencesService = PreferencesService
         _CryptoKeyService = CryptoKeyService
+        _Session = Session
     End Sub
     Public Overrides ReadOnly Property Name As TaskName
         Get
@@ -23,8 +24,8 @@ Public Class TaskBackup
         Get
             Dim BackupDays As Boolean() = GetBackupDays()
             If GetBackupDays.Where(Function(Day) Day).Count > 0 Then
-                Dim BackupTime As TimeSpan = Preferences.Backup.Time
-                Dim LastBackup As Date = Preferences.LastExecution.Backup
+                Dim BackupTime As TimeSpan = _Session.Preferences.Backup.Time
+                Dim LastBackup As Date = _Session.Preferences.LastExecution.Backup
                 Dim NextAvailableDay As Date = GetNextAvailableDay(LastBackup, BackupDays, BackupTime)
                 If IsManual Then
                     Return MyBase.NextRun
@@ -65,7 +66,7 @@ Public Class TaskBackup
     End Property
     Public Overrides ReadOnly Property LastRun As Date
         Get
-            Return Preferences.LastExecution.Backup
+            Return _Session.Preferences.LastExecution.Backup
         End Get
     End Property
 
@@ -76,13 +77,13 @@ Public Class TaskBackup
     End Property
 
     Private Function GetBackupDays() As Boolean()
-        Dim Sunday As Boolean = Preferences.Backup.Sunday
-        Dim Monday As Boolean = Preferences.Backup.Monday
-        Dim Tuesday As Boolean = Preferences.Backup.Tuesday
-        Dim Wednesday As Boolean = Preferences.Backup.Wednesday
-        Dim Thursday As Boolean = Preferences.Backup.Thursday
-        Dim Friday As Boolean = Preferences.Backup.Friday
-        Dim Saturday As Boolean = Preferences.Backup.Saturday
+        Dim Sunday As Boolean = _Session.Preferences.Backup.Sunday
+        Dim Monday As Boolean = _Session.Preferences.Backup.Monday
+        Dim Tuesday As Boolean = _Session.Preferences.Backup.Tuesday
+        Dim Wednesday As Boolean = _Session.Preferences.Backup.Wednesday
+        Dim Thursday As Boolean = _Session.Preferences.Backup.Thursday
+        Dim Friday As Boolean = _Session.Preferences.Backup.Friday
+        Dim Saturday As Boolean = _Session.Preferences.Backup.Saturday
         Return {Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday}
     End Function
 
@@ -144,18 +145,19 @@ Public Class TaskBackup
 
             Response.Percent = 0
             FileName = $"Backup {DateTimeHelper.Now:dd-MM-yyyy HH.mm.ss}.bkp"
-            BackupDir = New DirectoryInfo(Preferences.Backup.Location)
+            BackupDir = New DirectoryInfo(_Session.Preferences.Backup.Location)
             IntProgress = New Progress(Of Integer)(Sub(p)
                                                        Response.Percent = p
                                                        Response.Text = $"Backup: Processando arquivos ({p}%)"
                                                        Progress?.Report(Response)
                                                    End Sub)
+            Dim k = _CryptoKeyService.ReadCryptoKey
             Await FileMerger.MergeAsync(Path.Combine(BackupDir.FullName, FileName), TargetList, _CryptoKeyService.ReadCryptoKey, IntProgress)
             Await FileManager.DeleteDirectoriesAsync(New List(Of FileManager.DeleteDirectoryInfo) From {New FileManager.DeleteDirectoryInfo(New DirectoryInfo(TempDatabaseDirectory), True)})
             Await Task.Delay(Constants.WaitForJob)
             Response.Percent = 0
             Progress?.Report(Response)
-            BackupDir = New DirectoryInfo(Preferences.Backup.Location)
+            BackupDir = New DirectoryInfo(_Session.Preferences.Backup.Location)
             Files = Util.GetBackupFiles()
             If Files.Count > 0 Then
                 IntProgress = New Progress(Of Integer)(Sub(Percent)
@@ -166,7 +168,7 @@ Public Class TaskBackup
 
 
 
-                Files = Files.Take(Files.Count - Preferences.Backup.Keep).ToList
+                Files = Files.Take(Files.Count - _Session.Preferences.Backup.Keep).ToList
                 Await FileManager.DeleteFilesAsync(Files, IntProgress)
             End If
             Await Task.Delay(Constants.WaitForJob)
@@ -181,10 +183,10 @@ Public Class TaskBackup
             Exception = ex
         End Try
         If Not IsManual Then
-            Preferences.Backup.IgnoreNext = False
-            Preferences.LastExecution.Backup = Now
+            _Session.Preferences.Backup.IgnoreNext = False
+            _Session.Preferences.LastExecution.Backup = Now
             Try
-                Await _PreferencesService.SaveAsync(Preferences)
+                _PreferencesService.SaveAsync(_Session.Preferences)
             Catch ex As Exception
                 Response.Percent = 0
                 Response.Text = "Backup: Erro na execução"

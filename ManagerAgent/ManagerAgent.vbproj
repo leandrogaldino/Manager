@@ -165,7 +165,6 @@
     <Compile Include="Source\Services\AppService.vb" />
     <Compile Include="Source\Shared\Flags.vb" />
     <Compile Include="Source\Shared\Setups\SetupDatabase.vb" />
-    <Compile Include="Source\Shared\Validation.vb" />
     <Compile Include="Source\Tasks\TaskBackup.vb" />
     <Compile Include="Source\Tasks\TaskBackupManual.vb" />
     <Compile Include="Source\Tasks\TaskClean.vb" />
@@ -195,10 +194,10 @@
     <Compile Include="Source\Views\Preferences\FrmBackup.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Views\Preferences\FrmLocalDb.Designer.vb">
-      <DependentUpon>FrmLocalDb.vb</DependentUpon>
+    <Compile Include="Source\Views\InitialConfig\FrmLocalDbCredentials.Designer.vb">
+      <DependentUpon>FrmLocalDbCredentials.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Views\Preferences\FrmLocalDb.vb">
+    <Compile Include="Source\Views\InitialConfig\FrmLocalDbCredentials.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Views\Preferences\FrmParameters.Designer.vb">
@@ -219,10 +218,10 @@
     <Compile Include="Source\Views\Preferences\FrmSupport.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Views\License\FrmLicenseCredentials.Designer.vb">
-      <DependentUpon>FrmLicenseCredentials.vb</DependentUpon>
+    <Compile Include="Source\Views\InitialConfig\FrmRemoteDbCredentials.Designer.vb">
+      <DependentUpon>FrmRemoteDbCredentials.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Views\License\FrmLicenseCredentials.vb">
+    <Compile Include="Source\Views\InitialConfig\FrmRemoteDbCredentials.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Views\Login\LoginViewModel.vb" />
@@ -257,10 +256,10 @@
     <Compile Include="Source\Views\Main\FrmChangePassword.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Views\License\FrmCustomerLinkToken.designer.vb">
+    <Compile Include="Source\Views\InitialConfig\FrmCustomerLinkToken.designer.vb">
       <DependentUpon>FrmCustomerLinkToken.vb</DependentUpon>
     </Compile>
-    <Compile Include="Source\Views\License\FrmCustomerLinkToken.vb">
+    <Compile Include="Source\Views\InitialConfig\FrmCustomerLinkToken.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Views\Main\FrmMain.Designer.vb">
@@ -313,6 +312,9 @@
     <EmbeddedResource Include="Source\Views\Company\FrmCompanies.resx">
       <DependentUpon>FrmCompanies.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\InitialConfig\FrmLocalDbCredentials.resx">
+      <DependentUpon>FrmLocalDbCredentials.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Preferences\FrmBackup.resx">
       <DependentUpon>FrmBackup.vb</DependentUpon>
     </EmbeddedResource>
@@ -325,8 +327,8 @@
     <EmbeddedResource Include="Source\Views\Preferences\FrmSupport.resx">
       <DependentUpon>FrmSupport.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\License\FrmLicenseCredentials.resx">
-      <DependentUpon>FrmLicenseCredentials.vb</DependentUpon>
+    <EmbeddedResource Include="Source\Views\InitialConfig\FrmRemoteDbCredentials.resx">
+      <DependentUpon>FrmRemoteDbCredentials.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Main\FrmEvent.resx">
       <DependentUpon>FrmEvent.vb</DependentUpon>
@@ -343,7 +345,7 @@
     <EmbeddedResource Include="Source\Views\Main\FrmChangePassword.resx">
       <DependentUpon>FrmChangePassword.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\License\FrmCustomerLinkToken.resx">
+    <EmbeddedResource Include="Source\Views\InitialConfig\FrmCustomerLinkToken.resx">
       <DependentUpon>FrmCustomerLinkToken.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Main\FrmMain.resx">

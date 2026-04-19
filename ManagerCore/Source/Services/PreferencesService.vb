@@ -76,51 +76,51 @@ Public Class PreferencesService
         Next Row
         Return Model
     End Function
-    Public Async Function SaveAsync(Model As PreferencesModel) As Task
+    Public Sub SaveAsync(Model As PreferencesModel)
         Using Connection As DbConnection = _LocalDb.Client.CreateDatabaseConnection()
             Using Transaction As New TransactionScope(TransactionScopeAsyncFlowOption.Enabled)
-                Await SaveValue("Backup", "Monday", Model.Backup.Monday, Connection)
-                Await SaveValue("Backup", "Tuesday", Model.Backup.Tuesday, Connection)
-                Await SaveValue("Backup", "Wednesday", Model.Backup.Wednesday, Connection)
-                Await SaveValue("Backup", "Thursday", Model.Backup.Thursday, Connection)
-                Await SaveValue("Backup", "Friday", Model.Backup.Friday, Connection)
-                Await SaveValue("Backup", "Saturday", Model.Backup.Saturday, Connection)
-                Await SaveValue("Backup", "Sunday", Model.Backup.Sunday, Connection)
-                Await SaveValue("Backup", "Time", Model.Backup.Time.ToString(), Connection)
-                Await SaveValue("Backup", "Keep", Model.Backup.Keep, Connection)
-                Await SaveValue("Backup", "IgnoreNext", Model.Backup.IgnoreNext, Connection)
-                Await SaveValue("Backup", "Location", Model.Backup.Location, Connection)
-                Await SaveValue("Support", "EnableSSL", Model.Support.EnableSSL, Connection)
-                Await SaveValue("Support", "Email", Model.Support.Email, Connection)
-                Await SaveValue("Support", "SMTPServer", Model.Support.SMTPServer, Connection)
-                Await SaveValue("Support", "Port", Model.Support.Port, Connection)
-                Await SaveValue("Support", "Password", Model.Support.Password, Connection)
-                Await SaveValue("LastExecution", "Backup", Model.LastExecution.Backup, Connection)
-                Await SaveValue("LastExecution", "Clean", Model.LastExecution.Clean, Connection)
-                Await SaveValue("LastExecution", "Release", Model.LastExecution.Release, Connection)
-                Await SaveValue("LastExecution", "CloudSync", Model.LastExecution.CloudSync, Connection)
-                Await SaveValue("Clean", "Interval", Model.Parameters.Clean.Interval, Connection)
-                Await SaveValue("Release", "RefreshBlockedRegistryInterval", Model.Parameters.Release.RefreshBlockedRegistryInterval, Connection)
-                Await SaveValue("Release", "ReleaseBlockedRegisterInterval", Model.Parameters.Release.ReleaseBlockedRegisterInterval, Connection)
-                Await SaveValue("Evaluation", "DaysBeforeMaintenanceAlert", Model.Parameters.Evaluation.DaysBeforeMaintenanceAlert, Connection)
-                Await SaveValue("Evaluation", "DaysBeforeVisitAlert", Model.Parameters.Evaluation.DaysBeforeVisitAlert, Connection)
-                Await SaveValue("Evaluation", "MonthsBeforeRecordDeletion", Model.Parameters.Evaluation.MonthsBeforeRecordDeletion, Connection)
-                Await SaveValue("Evaluation", "FooterMaintenancePlan", Model.Parameters.Evaluation.FooterMaintenancePlan, Connection)
-                Await SaveValue("User", "DefaultPassword", Model.Parameters.User.DefaultPassword, Connection)
-                Await SaveValue("Sync", "Interval", Model.Parameters.Sync.Interval, Connection)
+                SaveValue("Backup", "Monday", Model.Backup.Monday, Connection)
+                SaveValue("Backup", "Tuesday", Model.Backup.Tuesday, Connection)
+                SaveValue("Backup", "Wednesday", Model.Backup.Wednesday, Connection)
+                SaveValue("Backup", "Thursday", Model.Backup.Thursday, Connection)
+                SaveValue("Backup", "Friday", Model.Backup.Friday, Connection)
+                SaveValue("Backup", "Saturday", Model.Backup.Saturday, Connection)
+                SaveValue("Backup", "Sunday", Model.Backup.Sunday, Connection)
+                SaveValue("Backup", "Time", Model.Backup.Time.ToString(), Connection)
+                SaveValue("Backup", "Keep", Model.Backup.Keep, Connection)
+                SaveValue("Backup", "IgnoreNext", Model.Backup.IgnoreNext, Connection)
+                SaveValue("Backup", "Location", Model.Backup.Location, Connection)
+                SaveValue("Support", "EnableSSL", Model.Support.EnableSSL, Connection)
+                SaveValue("Support", "Email", Model.Support.Email, Connection)
+                SaveValue("Support", "SMTPServer", Model.Support.SMTPServer, Connection)
+                SaveValue("Support", "Port", Model.Support.Port, Connection)
+                SaveValue("Support", "Password", Model.Support.Password, Connection)
+                SaveValue("LastExecution", "Backup", Model.LastExecution.Backup, Connection)
+                SaveValue("LastExecution", "Clean", Model.LastExecution.Clean, Connection)
+                SaveValue("LastExecution", "Release", Model.LastExecution.Release, Connection)
+                SaveValue("LastExecution", "CloudSync", Model.LastExecution.CloudSync, Connection)
+                SaveValue("Clean", "Interval", Model.Parameters.Clean.Interval, Connection)
+                SaveValue("Release", "RefreshBlockedRegistryInterval", Model.Parameters.Release.RefreshBlockedRegistryInterval, Connection)
+                SaveValue("Release", "ReleaseBlockedRegisterInterval", Model.Parameters.Release.ReleaseBlockedRegisterInterval, Connection)
+                SaveValue("Evaluation", "DaysBeforeMaintenanceAlert", Model.Parameters.Evaluation.DaysBeforeMaintenanceAlert, Connection)
+                SaveValue("Evaluation", "DaysBeforeVisitAlert", Model.Parameters.Evaluation.DaysBeforeVisitAlert, Connection)
+                SaveValue("Evaluation", "MonthsBeforeRecordDeletion", Model.Parameters.Evaluation.MonthsBeforeRecordDeletion, Connection)
+                SaveValue("Evaluation", "FooterMaintenancePlan", Model.Parameters.Evaluation.FooterMaintenancePlan, Connection)
+                SaveValue("User", "DefaultPassword", Model.Parameters.User.DefaultPassword, Connection)
+                SaveValue("Sync", "Interval", Model.Parameters.Sync.Interval, Connection)
                 Transaction.Complete()
             End Using
         End Using
-    End Function
-    Private Async Function SaveValue(Group As String, Key As String, Value As Object, Connection As DbConnection) As Task
-        Await _LocalDb.Request.ExecuteRawQueryAsync(
+    End Sub
+    Private Sub SaveValue(Group As String, Key As String, Value As Object, Connection As DbConnection)
+        _LocalDb.Request.ExecuteRawQuery(
             "UPDATE preferences SET `value` = @value WHERE `group` = @group AND `key` = @key",
             New Dictionary(Of String, Object) From {
                 {"@group", Group},
                 {"@key", Key},
                 {"@value", If(Value Is Nothing, DBNull.Value, Value.ToString())}
             }, Connection)
-    End Function
+    End Sub
     Private Function ToBool(Value As String) As Boolean
         Return Not String.IsNullOrEmpty(Value) AndAlso Value.Equals("true", StringComparison.OrdinalIgnoreCase)
     End Function
@@ -132,7 +132,7 @@ Public Class PreferencesService
     End Function
     Private Function ToDate(Value As String) As Date
         Dim d As Date
-        Date.TryParse(Value, CultureInfo.InvariantCulture, DateTimeStyles.None, d)
+        Date.TryParseExact(Value, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, d)
         Return d
     End Function
     Private Function ToTimeSpan(Value As String) As TimeSpan

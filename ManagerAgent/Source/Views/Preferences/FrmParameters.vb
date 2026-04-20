@@ -9,6 +9,7 @@ Public Class FrmParameters
     Private Const EvaluationHeight = 380
     Private Const UserHeight = 160
     Private Const ReleaseHeight = 190
+    Private Const SyncHeight = 190
     Private Const CleanHeight = 190
     Private _Loading As Boolean
     Public Sub New()
@@ -28,6 +29,7 @@ Public Class FrmParameters
         DbxEvaluationMonthsBeforeRecordDeletion.Text = _Preferences.Parameters.Evaluation.MonthsBeforeRecordDeletion
         TxtFooterMaintenancePlan.Text = _Preferences.Parameters.Evaluation.FooterMaintenancePlan
         TbrReleaseRegister.Value = _Preferences.Parameters.Release.ReleaseBlockedRegisterInterval
+        TbrCloudSync.Value = _Preferences.Parameters.Sync.Interval
         TxtUserDefaultPassword.Text = _Preferences.Parameters.User.DefaultPassword
         _Loading = False
     End Sub
@@ -40,6 +42,7 @@ Public Class FrmParameters
         _Preferences.Parameters.Evaluation.FooterMaintenancePlan = TxtFooterMaintenancePlan.Text
         _Preferences.Parameters.Release.ReleaseBlockedRegisterInterval = TbrReleaseRegister.Value
         _Preferences.Parameters.Release.RefreshBlockedRegistryInterval = TbrReleaseRegister.Value - 1
+        _Preferences.Parameters.Sync.Interval = TbrCloudSync.Value
         _Preferences.Parameters.User.DefaultPassword = TxtUserDefaultPassword.Text
     End Sub
 
@@ -65,6 +68,12 @@ Public Class FrmParameters
         If Not _Loading Then BtnSave.Enabled = True
         Dim Value As Integer = TbrReleaseRegister.Value
         LblReleaseRegister.Text = $"Liberar registros não atualizados a mais de {Value} minuto{If(Value > 1, "s", String.Empty)}"
+    End Sub
+
+    Private Sub TbrCloudSync_ValueChanged(sender As Object, e As EventArgs) Handles TbrCloudSync.ValueChanged
+        If Not _Loading Then BtnSave.Enabled = True
+        Dim Value As Integer = TbrCloudSync.Value
+        LblCloudSync.Text = $"Sincronizar com a nuvem a cada {Value} minuto{If(Value > 1, "s", String.Empty)}"
     End Sub
 
     Private Sub TxtUserDefaultPassword_TextChanged(sender As Object, e As EventArgs) Handles TxtUserDefaultPassword.TextChanged
@@ -96,6 +105,7 @@ Public Class FrmParameters
         If SelectedTab Is TabEvaluation Then _Resizer.SetSize(New Size() With {.Width = Me.Width, .Height = EvaluationHeight})
         If SelectedTab Is TabUser Then _Resizer.SetSize(New Size() With {.Width = Me.Width, .Height = UserHeight})
         If SelectedTab Is TabRelease Then _Resizer.SetSize(New Size() With {.Width = Me.Width, .Height = ReleaseHeight})
+        If SelectedTab Is TabSync Then _Resizer.SetSize(New Size() With {.Width = Me.Width, .Height = SyncHeight})
         If SelectedTab Is TabClean Then _Resizer.SetSize(New Size() With {.Width = Me.Width, .Height = CleanHeight})
     End Sub
 

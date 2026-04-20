@@ -209,12 +209,6 @@
     <Compile Include="Source\Views\Preferences\FrmParameters.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Views\Preferences\FrmRemoteDb.Designer.vb">
-      <DependentUpon>FrmRemoteDb.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Views\Preferences\FrmRemoteDb.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Source\Views\Preferences\FrmSupport.Designer.vb">
       <DependentUpon>FrmSupport.vb</DependentUpon>
     </Compile>
@@ -321,9 +315,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Preferences\FrmParameters.resx">
       <DependentUpon>FrmParameters.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Views\Preferences\FrmRemoteDb.resx">
-      <DependentUpon>FrmRemoteDb.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Preferences\FrmSupport.resx">
       <DependentUpon>FrmSupport.vb</DependentUpon>

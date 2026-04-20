@@ -50,6 +50,10 @@ Partial Class FrmParameters
         Me.LblReleaseRegister = New System.Windows.Forms.Label()
         Me.TbrReleaseRegister = New System.Windows.Forms.TrackBar()
         Me.TabClean = New System.Windows.Forms.TabPage()
+        Me.TabSync = New System.Windows.Forms.TabPage()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.LblCloudSync = New System.Windows.Forms.Label()
+        Me.TbrCloudSync = New System.Windows.Forms.TrackBar()
         Me.PnButtons.SuspendLayout()
         Me.Panel19.SuspendLayout()
         Me.Panel7.SuspendLayout()
@@ -65,6 +69,9 @@ Partial Class FrmParameters
         Me.Panel25.SuspendLayout()
         CType(Me.TbrReleaseRegister, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabClean.SuspendLayout()
+        Me.TabSync.SuspendLayout()
+        Me.Panel2.SuspendLayout()
+        CType(Me.TbrCloudSync, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PnButtons
@@ -271,6 +278,7 @@ Partial Class FrmParameters
         Me.TcParameters.Controls.Add(Me.TabEvaluation)
         Me.TcParameters.Controls.Add(Me.TabUser)
         Me.TcParameters.Controls.Add(Me.TabRelease)
+        Me.TcParameters.Controls.Add(Me.TabSync)
         Me.TcParameters.Controls.Add(Me.TabClean)
         Me.TcParameters.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TcParameters.Location = New System.Drawing.Point(0, 0)
@@ -391,6 +399,52 @@ Partial Class FrmParameters
         Me.TabClean.Text = "Limpeza"
         Me.TabClean.UseVisualStyleBackColor = True
         '
+        'TabSync
+        '
+        Me.TabSync.Controls.Add(Me.Panel2)
+        Me.TabSync.Location = New System.Drawing.Point(4, 26)
+        Me.TabSync.Name = "TabSync"
+        Me.TabSync.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabSync.Size = New System.Drawing.Size(461, 274)
+        Me.TabSync.TabIndex = 4
+        Me.TabSync.Text = "Sincronização"
+        Me.TabSync.UseVisualStyleBackColor = True
+        '
+        'Panel2
+        '
+        Me.Panel2.BackColor = System.Drawing.Color.White
+        Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel2.Controls.Add(Me.LblCloudSync)
+        Me.Panel2.Controls.Add(Me.TbrCloudSync)
+        Me.Panel2.Location = New System.Drawing.Point(6, 13)
+        Me.Panel2.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
+        Me.Panel2.Size = New System.Drawing.Size(450, 62)
+        Me.Panel2.TabIndex = 25
+        '
+        'LblCloudSync
+        '
+        Me.LblCloudSync.Location = New System.Drawing.Point(1, 1)
+        Me.LblCloudSync.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.LblCloudSync.Name = "LblCloudSync"
+        Me.LblCloudSync.Size = New System.Drawing.Size(414, 26)
+        Me.LblCloudSync.TabIndex = 3
+        Me.LblCloudSync.Text = "Sincronizar com a núvem a cada 10 minutos."
+        Me.LblCloudSync.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'TbrCloudSync
+        '
+        Me.TbrCloudSync.AutoSize = False
+        Me.TbrCloudSync.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.TbrCloudSync.Location = New System.Drawing.Point(4, 29)
+        Me.TbrCloudSync.Maximum = 60
+        Me.TbrCloudSync.Minimum = 2
+        Me.TbrCloudSync.Name = "TbrCloudSync"
+        Me.TbrCloudSync.Size = New System.Drawing.Size(444, 31)
+        Me.TbrCloudSync.TabIndex = 2
+        Me.TbrCloudSync.Value = 2
+        '
         'FrmParameters
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
@@ -427,6 +481,9 @@ Partial Class FrmParameters
         Me.Panel25.ResumeLayout(False)
         CType(Me.TbrReleaseRegister, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabClean.ResumeLayout(False)
+        Me.TabSync.ResumeLayout(False)
+        Me.Panel2.ResumeLayout(False)
+        CType(Me.TbrCloudSync, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -458,4 +515,8 @@ Partial Class FrmParameters
     Friend WithEvents Panel25 As Panel
     Friend WithEvents LblReleaseRegister As Label
     Friend WithEvents TbrReleaseRegister As TrackBar
+    Friend WithEvents TabSync As TabPage
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents LblCloudSync As Label
+    Friend WithEvents TbrCloudSync As TrackBar
 End Class

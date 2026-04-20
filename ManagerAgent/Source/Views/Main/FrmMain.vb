@@ -352,7 +352,8 @@ Public Class FrmMain
                 CMessageBox.Show("Tarefa em andamento, aguarde o término.", CMessageBoxType.Information, CMessageBoxButtons.OK)
                 Exit Sub
             End If
-            File.Delete(Path.Combine(ApplicationPaths.FilesDirectory, "AgentEvents.json"))
+            Dim FilePath As String = Path.Combine(ApplicationPaths.DataDirectory, "AgentEvents.json")
+            File.Delete(FilePath)
             DgvEvents.DataSource = Await _EventService.Read()
         End If
     End Sub

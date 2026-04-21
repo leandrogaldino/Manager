@@ -26,10 +26,10 @@ Partial Class FrmCustomerLinkToken
         Me.LblDescription = New System.Windows.Forms.Label()
         Me.LblTitle = New System.Windows.Forms.Label()
         Me.Panel21 = New System.Windows.Forms.Panel()
+        Me.TxtLinkToken = New System.Windows.Forms.TextBox()
         Me.LblLinkToken = New System.Windows.Forms.Label()
         Me.BtnSave = New CoreSuite.Controls.NoFocusCueButton()
         Me.PnButtons = New System.Windows.Forms.Panel()
-        Me.TxtLinkToken = New System.Windows.Forms.TextBox()
         Me.PnLeft.SuspendLayout()
         Me.Panel21.SuspendLayout()
         Me.PnButtons.SuspendLayout()
@@ -85,6 +85,15 @@ Partial Class FrmCustomerLinkToken
         Me.Panel21.Size = New System.Drawing.Size(505, 153)
         Me.Panel21.TabIndex = 11
         '
+        'TxtLinkToken
+        '
+        Me.TxtLinkToken.ForeColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
+        Me.TxtLinkToken.Location = New System.Drawing.Point(96, 64)
+        Me.TxtLinkToken.Name = "TxtLinkToken"
+        Me.TxtLinkToken.Size = New System.Drawing.Size(404, 23)
+        Me.TxtLinkToken.TabIndex = 1
+        Me.TxtLinkToken.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'LblLinkToken
         '
         Me.LblLinkToken.Dock = System.Windows.Forms.DockStyle.Left
@@ -120,16 +129,6 @@ Partial Class FrmCustomerLinkToken
         Me.PnButtons.Name = "PnButtons"
         Me.PnButtons.Size = New System.Drawing.Size(684, 48)
         Me.PnButtons.TabIndex = 16
-        '
-        'TxtLinkToken
-        '
-        Me.TxtLinkToken.ForeColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
-        Me.TxtLinkToken.Location = New System.Drawing.Point(96, 64)
-        Me.TxtLinkToken.Name = "TxtLinkToken"
-        Me.TxtLinkToken.Size = New System.Drawing.Size(404, 23)
-        Me.TxtLinkToken.TabIndex = 1
-        Me.TxtLinkToken.Text = "eerg16e5r1g5ew1gr6e1r9gh41ert63h1rt9h41r65th165"
-        Me.TxtLinkToken.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'FrmCustomerLinkToken
         '

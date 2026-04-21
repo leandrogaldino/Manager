@@ -191,6 +191,12 @@
     <Compile Include="Source\Views\Company\FrmCompanies.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Source\Views\Main\FrmAbout.Designer.vb">
+      <DependentUpon>FrmAbout.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Views\Main\FrmAbout.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Source\Views\Preferences\FrmBackup.Designer.vb">
       <DependentUpon>FrmBackup.vb</DependentUpon>
     </Compile>
@@ -309,6 +315,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\InitialConfig\FrmLocalDbCredentials.resx">
       <DependentUpon>FrmLocalDbCredentials.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Views\Main\FrmAbout.resx">
+      <DependentUpon>FrmAbout.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Views\Preferences\FrmBackup.resx">
       <DependentUpon>FrmBackup.vb</DependentUpon>

@@ -51,6 +51,7 @@ Partial Class FrmMain
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.BtnChangePassword = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnCleanEventLog = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnAbout = New System.Windows.Forms.ToolStripMenuItem()
         Me.TpbProgress = New CoreSuite.Controls.ColoredProgressBar()
         Me.LblProgress = New System.Windows.Forms.Label()
         Me.ScTaskEvent = New System.Windows.Forms.SplitContainer()
@@ -267,7 +268,7 @@ Partial Class FrmMain
         'BtnSettings
         '
         Me.BtnSettings.AutoSize = False
-        Me.BtnSettings.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnBackupConfig, Me.BtnSupport, Me.BtnParameters, Me.ToolStripSeparator2, Me.BtnChangePassword, Me.BtnCleanEventLog})
+        Me.BtnSettings.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnParameters, Me.BtnBackupConfig, Me.BtnSupport, Me.ToolStripSeparator2, Me.BtnCleanEventLog, Me.BtnChangePassword, Me.BtnAbout})
         Me.BtnSettings.Enabled = False
         Me.BtnSettings.Image = Global.ManagerAgent.My.Resources.Resources.Settings
         Me.BtnSettings.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
@@ -312,6 +313,12 @@ Partial Class FrmMain
         Me.BtnCleanEventLog.Name = "BtnCleanEventLog"
         Me.BtnCleanEventLog.Size = New System.Drawing.Size(223, 22)
         Me.BtnCleanEventLog.Text = "Limpar Log de Eventos"
+        '
+        'BtnAbout
+        '
+        Me.BtnAbout.Name = "BtnAbout"
+        Me.BtnAbout.Size = New System.Drawing.Size(223, 22)
+        Me.BtnAbout.Text = "Sobre"
         '
         'TpbProgress
         '
@@ -547,4 +554,5 @@ Partial Class FrmMain
     Friend WithEvents BtnBackupConfig As ToolStripMenuItem
     Friend WithEvents BtnParameters As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
+    Friend WithEvents BtnAbout As ToolStripMenuItem
 End Class

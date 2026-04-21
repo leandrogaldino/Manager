@@ -62,6 +62,7 @@ Public Class LicenseService
             Json = File.ReadAllText(ApplicationPaths.LicenseFile)
             Json = Cryptography.Decrypt(Json, _Key)
             Result.License = LicenseModel.FromJson(Json)
+            Result.Success = True
             If Result.License.ExpirationDate < Today Then
                 Dim OnlineLicense As LicenseResultModel = Await GetOnlineLicense(Result.License.CustomerLinkToken)
                 If OnlineLicense.Flag <> LicenseMessages.Expired Then

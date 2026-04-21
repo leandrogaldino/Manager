@@ -1,10 +1,10 @@
-﻿Imports ManagerCore
-Imports System.Collections.ObjectModel
+﻿Imports System.Collections.ObjectModel
 Imports System.IO
 Imports System.Threading
-Imports CoreSuite.Infrastructure
-Imports CoreSuite.Helpers
 Imports CoreSuite.Controls
+Imports CoreSuite.Helpers
+Imports CoreSuite.Infrastructure
+Imports ManagerCore
 Public Class FrmMain
     Private _IsWorking As Boolean
     Private _EventService As EventService
@@ -13,7 +13,6 @@ Public Class FrmMain
     Private _Session As SessionModel
     Private _TaskRunning As Boolean
     Private _BlockingTasks As Boolean
-    Private _LicenseService As LicenseService
     Private _StateWarnings As ObservableCollection(Of String)
     Private _HasSystemRemoteDbPending As Boolean
     Private _HasLocalDbPending As Boolean
@@ -23,7 +22,6 @@ Public Class FrmMain
     Private _Semaphore As SemaphoreSlim
     Public Sub New()
         InitializeComponent()
-        _LicenseService = Locator.GetInstance(Of LicenseService)
         _Session = Locator.GetInstance(Of SessionModel)
         _EventService = Locator.GetInstance(Of EventService)
         _StackTaskService = Locator.GetInstance(Of TaskStackService)
@@ -283,14 +281,7 @@ Public Class FrmMain
     Private Sub DgvWarnings_SelectionChanged(sender As Object, e As EventArgs) Handles DgvWarnings.SelectionChanged
         DgvWarnings.ClearSelection()
     End Sub
-    Private Sub BtnChangePassword_Click(sender As Object, e As EventArgs) Handles BtnChangePassword.Click
-        If RequestLogin() Then
-            Using Frm As New FrmChangePassword
-                Frm.ShowDialog()
-            End Using
-        End If
-    End Sub
-    Private Async Sub BtnSettingsChangePassword_Click(sender As Object, e As EventArgs) Handles BtnChangePassword.Click
+    Private Async Sub BtnChangePassword_Click(sender As Object, e As EventArgs) Handles BtnChangePassword.Click
         If RequestLogin() Then
             Using Frm As New FrmChangePassword()
                 Frm.ShowDialog()
@@ -385,39 +376,6 @@ Public Class FrmMain
             End Using
         End If
     End Sub
-    Private Async Sub BtnLicenseCredentials_Click(sender As Object, e As EventArgs)
-        'Dim Credentials As RemoteDbCredentialsModel = Nothing
-        'If _Session.ManagerLicenseResult.Flag <> LicenseMessages.LicenseFileNotFound Then
-        '    Dim _LicenseCredentialsService = Locator.GetInstance(Of RemoteDbCredentialsService)
-        '    Credentials = _LicenseCredentialsService.Load(RemoteDatabaseType.System)
-        'End If
-        'If Credentials Is Nothing Then Credentials = New RemoteDbCredentialsModel()
-        'Using Form As New FrmRemoteDbCredentials()
-        '    If Form.ShowDialog() = DialogResult.OK Then
-        '        Await ValidateState()
-        '    End If
-        'End Using
-    End Sub
-    'Private Async Sub BtnChangeLicenseKey_Click(sender As Object, e As EventArgs) Handles BtnChangeLicenseKey.Click
-    '    Dim LicenseResult = Locator.GetInstance(Of SessionModel).ManagerLicenseResult
-    '    Using Frm As New FrmLicenseKey()
-    '        If Not _HasSystemRemoteDbPending AndAlso LicenseResult.Flag = LicenseMessages.MissingProductKey Then
-    '            Frm.ShowDialog()
-    '        Else
-    '            If RequestLogin() Then
-    '                Frm.ShowDialog()
-    '            End If
-    '        End If
-    '        Await ValidateState()
-    '    End Using
-    'End Sub
-    Private Sub BtnLocalDbCredentials_Click(sender As Object, e As EventArgs)
-
-    End Sub
-
-    Private Sub BtnRemoteDbCredentials_Click(sender As Object, e As EventArgs)
-
-    End Sub
     Private Async Sub BtnBackupConfig_Click(sender As Object, e As EventArgs) Handles BtnBackupConfig.Click
         Using Form As New FrmBackup()
             If Form.ShowDialog() = DialogResult.OK Then
@@ -432,7 +390,7 @@ Public Class FrmMain
             End If
         End Using
     End Sub
-    Private async Sub BtnParameters_Click(sender As Object, e As EventArgs) Handles BtnParameters.Click
+    Private Async Sub BtnParameters_Click(sender As Object, e As EventArgs) Handles BtnParameters.Click
         Using Form As New FrmParameters()
             If Form.ShowDialog() = DialogResult.OK Then
                 Await ValidateState()
@@ -440,4 +398,10 @@ Public Class FrmMain
         End Using
     End Sub
 
+    Private Sub BtnAbout_Click(sender As Object, e As EventArgs) Handles BtnAbout.Click
+        Dim License As LicenseModel = _Session.ManagerLicenseResult.License
+        Using Frm As New FrmAbout(License)
+            Frm.ShowDialog()
+        End Using
+    End Sub
 End Class

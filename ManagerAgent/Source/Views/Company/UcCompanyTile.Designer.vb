@@ -26,6 +26,7 @@ Partial Class UcCompanyTile
         Me.LblCompanyDocument = New System.Windows.Forms.Label()
         Me.LblCompanyLocation = New System.Windows.Forms.Label()
         Me.PbxLogo = New System.Windows.Forms.PictureBox()
+        Me.LblStatus = New System.Windows.Forms.Label()
         CType(Me.PbxLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -74,9 +75,21 @@ Partial Class UcCompanyTile
         Me.PbxLogo.Margin = New System.Windows.Forms.Padding(7)
         Me.PbxLogo.Name = "PbxLogo"
         Me.PbxLogo.Size = New System.Drawing.Size(140, 70)
-        Me.PbxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PbxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PbxLogo.TabIndex = 2
         Me.PbxLogo.TabStop = False
+        '
+        'LblStatus
+        '
+        Me.LblStatus.AutoSize = True
+        Me.LblStatus.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.LblStatus.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblStatus.ForeColor = System.Drawing.Color.DodgerBlue
+        Me.LblStatus.Location = New System.Drawing.Point(424, 34)
+        Me.LblStatus.Name = "LblStatus"
+        Me.LblStatus.Size = New System.Drawing.Size(48, 19)
+        Me.LblStatus.TabIndex = 1
+        Me.LblStatus.Text = "Ativo"
         '
         'UcCompanyTile
         '
@@ -86,6 +99,7 @@ Partial Class UcCompanyTile
         Me.Controls.Add(Me.PbxLogo)
         Me.Controls.Add(Me.LblCompanyLocation)
         Me.Controls.Add(Me.LblCompanyDocument)
+        Me.Controls.Add(Me.LblStatus)
         Me.Controls.Add(Me.LblCompanyName)
         Me.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -100,4 +114,5 @@ Partial Class UcCompanyTile
     Private WithEvents LblCompanyDocument As Label
     Private WithEvents LblCompanyLocation As Label
     Friend WithEvents PbxLogo As PictureBox
+    Private WithEvents LblStatus As Label
 End Class

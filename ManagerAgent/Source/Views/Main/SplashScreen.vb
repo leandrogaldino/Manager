@@ -2,7 +2,6 @@
 Imports ManagerCore
 Public Class SplashScreen
     Private Async Sub SplashScreen_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Await Task.Delay(2000)
         SetupPaths.Setup()
         SetupLocator.Setup()
         If Not IO.File.Exists(ApplicationPaths.RemoteSystemDbCredentialsFile) Then

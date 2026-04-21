@@ -22,12 +22,10 @@ Partial Class FrmCompanies
     'Não o modifique usando o editor de códigos.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmCompanies))
         Me.FlpPrivilege = New System.Windows.Forms.FlowLayoutPanel()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
-        Me.RegisterCompany = New System.Windows.Forms.ToolStripButton()
-        Me.EditCompany = New System.Windows.Forms.ToolStripButton()
-        Me.DisableCompany = New System.Windows.Forms.ToolStripButton()
+        Me.BtnIncludeCompany = New System.Windows.Forms.ToolStripButton()
+        Me.BtnEditCompany = New System.Windows.Forms.ToolStripButton()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -42,36 +40,30 @@ Partial Class FrmCompanies
         'ToolStrip1
         '
         Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RegisterCompany, Me.EditCompany, Me.DisableCompany})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnIncludeCompany, Me.BtnEditCompany})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
+        Me.ToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.ToolStrip1.Size = New System.Drawing.Size(553, 25)
         Me.ToolStrip1.TabIndex = 4
         Me.ToolStrip1.Text = "ToolStrip1"
         '
-        'RegisterCompany
+        'BtnIncludeCompany
         '
-        Me.RegisterCompany.Image = CType(resources.GetObject("RegisterCompany.Image"), System.Drawing.Image)
-        Me.RegisterCompany.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.RegisterCompany.Name = "RegisterCompany"
-        Me.RegisterCompany.Size = New System.Drawing.Size(73, 22)
-        Me.RegisterCompany.Text = "Registrar"
+        Me.BtnIncludeCompany.Image = Global.ManagerAgent.My.Resources.Resources.Include
+        Me.BtnIncludeCompany.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnIncludeCompany.Margin = New System.Windows.Forms.Padding(10, 1, 0, 2)
+        Me.BtnIncludeCompany.Name = "BtnIncludeCompany"
+        Me.BtnIncludeCompany.Size = New System.Drawing.Size(60, 22)
+        Me.BtnIncludeCompany.Text = "Incluir"
         '
-        'EditCompany
+        'BtnEditCompany
         '
-        Me.EditCompany.Image = CType(resources.GetObject("EditCompany.Image"), System.Drawing.Image)
-        Me.EditCompany.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.EditCompany.Name = "EditCompany"
-        Me.EditCompany.Size = New System.Drawing.Size(57, 22)
-        Me.EditCompany.Text = "Editar"
-        '
-        'DisableCompany
-        '
-        Me.DisableCompany.Image = CType(resources.GetObject("DisableCompany.Image"), System.Drawing.Image)
-        Me.DisableCompany.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.DisableCompany.Name = "DisableCompany"
-        Me.DisableCompany.Size = New System.Drawing.Size(75, 22)
-        Me.DisableCompany.Text = "Desativar"
+        Me.BtnEditCompany.Image = Global.ManagerAgent.My.Resources.Resources.Edit
+        Me.BtnEditCompany.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnEditCompany.Name = "BtnEditCompany"
+        Me.BtnEditCompany.Size = New System.Drawing.Size(57, 22)
+        Me.BtnEditCompany.Text = "Editar"
         '
         'FrmCompanies
         '
@@ -96,7 +88,6 @@ Partial Class FrmCompanies
 
     Friend WithEvents FlpPrivilege As FlowLayoutPanel
     Friend WithEvents ToolStrip1 As ToolStrip
-    Friend WithEvents RegisterCompany As ToolStripButton
-    Friend WithEvents EditCompany As ToolStripButton
-    Friend WithEvents DisableCompany As ToolStripButton
+    Friend WithEvents BtnIncludeCompany As ToolStripButton
+    Friend WithEvents BtnEditCompany As ToolStripButton
 End Class

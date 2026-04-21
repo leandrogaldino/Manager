@@ -139,7 +139,7 @@ Public Class TaskBackup
                 ApplicationPaths.EvaluationSignatureDirectory,
                 ApplicationPaths.ProductPictureDirectory,
                 ApplicationPaths.RequestDocumentDirectory,
-                ApplicationPaths.LogoDirectory,
+                ApplicationPaths.CompanyLogoDirectory,
                 TempDatabaseDirectory
             }
             Response.Percent = 0

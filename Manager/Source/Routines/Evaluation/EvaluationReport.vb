@@ -36,7 +36,7 @@ Public Class EvaluationReport
             AddText("REF: ").SetBold(True).SetFontSize(10).
             AddText(ReportingEvaluation.Reference).SetFontSize(10)
         WsReport.Range(1, 7, 1, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
-        Dim LogoLocation As String = Path.Combine(ApplicationPaths.LogoDirectory, Path.GetFileName(Session.Setting.Register.LogoLocation))
+        Dim LogoLocation As String = Path.Combine(ApplicationPaths.CompanyLogoDirectory, Path.GetFileName(Session.Setting.Register.LogoLocation))
         If File.Exists(LogoLocation) Then
             Using Stream As New MemoryStream(File.ReadAllBytes(LogoLocation))
                 Logo = WsReport.AddPicture(Stream)

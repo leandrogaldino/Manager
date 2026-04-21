@@ -83,9 +83,9 @@ Public Class ApplicationPaths
             Return Path.Combine(FilesDirectory, "Deploy")
         End Get
     End Property
-    Public Shared ReadOnly Property LogoDirectory As String
+    Public Shared ReadOnly Property CompanyLogoDirectory As String
         Get
-            Return Path.Combine(FilesDirectory, "Logo")
+            Return Path.Combine(FilesDirectory, "CompanyLogo")
         End Get
     End Property
     Public Shared ReadOnly Property EvaluationDocumentDirectory As String

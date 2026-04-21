@@ -63,7 +63,7 @@ Public Class TaskRestoreBackup
                 New DeleteDirectoryInfo(New DirectoryInfo(ApplicationPaths.RequestDocumentDirectory), True),
                 New DeleteDirectoryInfo(New DirectoryInfo(ApplicationPaths.EmailSignatureDirectory), True),
                 New DeleteDirectoryInfo(New DirectoryInfo(ApplicationPaths.CashDocumentDirectory), True),
-                New DeleteDirectoryInfo(New DirectoryInfo(ApplicationPaths.LogoDirectory), True)
+                New DeleteDirectoryInfo(New DirectoryInfo(ApplicationPaths.CompanyLogoDirectory), True)
             }.ToList(), IntProgress)
 
             Response.Percent = 0
@@ -104,7 +104,7 @@ Public Class TaskRestoreBackup
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
 
-            If Not Directory.Exists(ApplicationPaths.LogoDirectory) Then Directory.CreateDirectory(ApplicationPaths.LogoDirectory)
+            If Not Directory.Exists(ApplicationPaths.CompanyLogoDirectory) Then Directory.CreateDirectory(ApplicationPaths.CompanyLogoDirectory)
             Response.Percent = 100
             Response.Text = $"Restaurar Backup: Validando diretórios ({Response.Percent}%)"
             Progress?.Report(Response)

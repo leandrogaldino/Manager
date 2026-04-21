@@ -20,6 +20,7 @@ Public Class FrmMain
     Private _HasLicensePending As Boolean
     Private _LastLoginRequest As Date
     Private _Semaphore As SemaphoreSlim
+    Private _CompanyService As CompanyService
     Public Sub New()
         InitializeComponent()
         _Session = Locator.GetInstance(Of SessionModel)
@@ -27,6 +28,7 @@ Public Class FrmMain
         _StackTaskService = Locator.GetInstance(Of TaskStackService)
         _AppService = Locator.GetInstance(Of AppService)
         _Semaphore = Locator.GetInstance(Of SemaphoreSlim)
+        _CompanyService = Locator.GetInstance(Of CompanyService)
         _StateWarnings = New ObservableCollection(Of String)
         ControlHelper.EnableControlDoubleBuffer(DgvEvents, True)
         TsTitle.Renderer = New CToolStripRender()
@@ -181,6 +183,7 @@ Public Class FrmMain
             BtnRelease.Enabled = False
             BtnCloudSync.Enabled = False
             BtnCleanEventLog.Enabled = False
+            BtnCompanies.Enabled = False
         Else
             BtnAgentState.Enabled = True
             BtnBackup.Enabled = True
@@ -188,6 +191,7 @@ Public Class FrmMain
             BtnRelease.Enabled = True
             BtnCloudSync.Enabled = True
             BtnCleanEventLog.Enabled = True
+            BtnCompanies.Enabled = True
         End If
         FillDgvTasks()
     End Function
@@ -353,7 +357,7 @@ Public Class FrmMain
     End Sub
     Private Async Sub BtnCompanies_Click(sender As Object, e As EventArgs) Handles BtnCompanies.Click
         _Semaphore.Wait()
-        Using Form As New FrmCompanies
+        Using Form As New FrmCompanies(_CompanyService)
             Form.ShowDialog()
         End Using
         Await ValidateState()

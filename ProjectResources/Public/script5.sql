@@ -64,9 +64,10 @@ INSERT INTO preferences (`group`, `key`, `value`) VALUES
 
 CREATE TABLE company (
     id INT AUTO_INCREMENT PRIMARY KEY,
+	isactive INT NOT NULL,
     document VARCHAR(20) NOT NULL UNIQUE,
-    name VARCHAR(255),
-    shortname VARCHAR(255),
+    name VARCHAR(255) NOT NULL,
+    shortname VARCHAR(255) NOT NULL,
     logoname VARCHAR(500),
     citydocument VARCHAR(20),
     statedocument VARCHAR(20)

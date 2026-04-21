@@ -50,6 +50,9 @@
     <Reference Include="CoreSuite.Cryptography">
       <HintPath>..\..\CoreSuite\Cryptography\bin\Debug\CoreSuite.Cryptography.dll</HintPath>
     </Reference>
+    <Reference Include="CoreSuite.FileStateManager">
+      <HintPath>..\..\CoreSuite\FileStateManager\bin\Debug\CoreSuite.FileStateManager.dll</HintPath>
+    </Reference>
     <Reference Include="CoreSuite.FirebaseService">
       <HintPath>..\..\CoreSuite\FirebaseService\bin\Debug\CoreSuite.FirebaseService.dll</HintPath>
     </Reference>

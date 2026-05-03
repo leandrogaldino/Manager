@@ -29,6 +29,7 @@ Partial Class FrmAbout
         Me.LblExpirationDate = New System.Windows.Forms.Label()
         Me.LblTitle = New System.Windows.Forms.Label()
         Me.Separator = New CoreSuite.Controls.Separator()
+        Me.LblCloudBase = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'LblVersion
@@ -97,10 +98,20 @@ Partial Class FrmAbout
         Me.Separator.TabIndex = 7
         Me.Separator.Text = "Separator1"
         '
+        'LblCloudBase
+        '
+        Me.LblCloudBase.AutoSize = True
+        Me.LblCloudBase.Location = New System.Drawing.Point(25, 205)
+        Me.LblCloudBase.Name = "LblCloudBase"
+        Me.LblCloudBase.Size = New System.Drawing.Size(198, 17)
+        Me.LblCloudBase.TabIndex = 8
+        Me.LblCloudBase.Text = "Base Cloud: manager-mobile"
+        '
         'FrmAbout
         '
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(475, 226)
+        Me.ClientSize = New System.Drawing.Size(475, 247)
+        Me.Controls.Add(Me.LblCloudBase)
         Me.Controls.Add(Me.Separator)
         Me.Controls.Add(Me.LblTitle)
         Me.Controls.Add(Me.LblVersion)
@@ -125,4 +136,5 @@ Partial Class FrmAbout
     Friend WithEvents LblExpirationDate As Label
     Friend WithEvents LblTitle As Label
     Friend WithEvents Separator As CoreSuite.Controls.Separator
+    Friend WithEvents LblCloudBase As Label
 End Class

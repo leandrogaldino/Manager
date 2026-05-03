@@ -8,13 +8,13 @@ Public Class RemoteDbCredentialsService
         _Key = CryptoKeyService.ReadCryptoKey()
     End Sub
     Public Function Load(DatabaseType As RemoteDatabaseType) As RemoteDbCredentialsModel
-        Dim Model As RemoteDbCredentialsModel = Nothing
         Dim DbFile As String
         If DatabaseType = RemoteDatabaseType.System Then
             DbFile = ApplicationPaths.RemoteSystemDbCredentialsFile
         Else
             DbFile = ApplicationPaths.RemoteCustomerDbCredentialsFile
         End If
+        Dim Model As RemoteDbCredentialsModel
         If File.Exists(DbFile) Then
             Dim Json As String = Cryptography.Decrypt(File.ReadAllText(DbFile), _Key)
             Model = JsonConvert.DeserializeObject(Of RemoteDbCredentialsModel)(Json)

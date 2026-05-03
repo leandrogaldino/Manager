@@ -21,6 +21,7 @@ Public Class FrmMain
     Private _LastLoginRequest As Date
     Private _Semaphore As SemaphoreSlim
     Private _CompanyService As CompanyService
+    Private _RemoteCredentialsService As RemoteDbCredentialsService
     Public Sub New()
         InitializeComponent()
         _Session = Locator.GetInstance(Of SessionModel)
@@ -30,6 +31,7 @@ Public Class FrmMain
         _Semaphore = Locator.GetInstance(Of SemaphoreSlim)
         _CompanyService = Locator.GetInstance(Of CompanyService)
         _StateWarnings = New ObservableCollection(Of String)
+        _RemoteCredentialsService = Locator.GetInstance(Of RemoteDbCredentialsService)
         ControlHelper.EnableControlDoubleBuffer(DgvEvents, True)
         TsTitle.Renderer = New CToolStripRender()
     End Sub
@@ -404,7 +406,7 @@ Public Class FrmMain
 
     Private Sub BtnAbout_Click(sender As Object, e As EventArgs) Handles BtnAbout.Click
         Dim License As LicenseModel = _Session.ManagerLicenseResult.License
-        Using Frm As New FrmAbout(License)
+        Using Frm As New FrmAbout(License, _RemoteCredentialsService)
             Frm.ShowDialog()
         End Using
     End Sub

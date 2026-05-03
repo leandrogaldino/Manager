@@ -9,7 +9,6 @@ CREATE TABLE preferences (
     UNIQUE KEY uq_preferences_group_key (`group`, `key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
 -- Backup
 INSERT INTO preferences (`group`, `key`, `value`) VALUES
 ('Backup', 'Monday', 'false'),
@@ -201,6 +200,7 @@ ALTER TABLE evaluationtechnician MODIFY companyid INT NOT NULL;
 ALTER TABLE evaluationtechnician ADD CONSTRAINT fk_evaluationtechnician_company FOREIGN KEY (companyid) REFERENCES company(id);
 
 ALTER TABLE lockedregistry ADD COLUMN companyid INT FIRST;
+
 UPDATE lockedregistry SET companyid=1;
 ALTER TABLE lockedregistry MODIFY companyid INT NOT NULL;
 
@@ -348,6 +348,70 @@ UPDATE visitschedule SET companyid=1;
 ALTER TABLE visitschedule MODIFY companyid INT NOT NULL;
 ALTER TABLE visitschedule ADD CONSTRAINT fk_visitschedule_company FOREIGN KEY (companyid) REFERENCES company(id);
 
-
-
 SET SQL_SAFE_UPDATES = 1;
+
+CREATE TABLE routine (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    description VARCHAR(255) NULL,
+    isbistate BOOLEAN NOT NULL DEFAULT 0,
+    istristate BOOLEAN NOT NULL DEFAULT 0,
+    dependencyid INT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_routine_name (name),
+    KEY idx_dependency_id (dependencyid),
+    CONSTRAINT fk_routine_dependency FOREIGN KEY (dependencyid) REFERENCES routine(id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+INSERT INTO routine (id, name, description, isbistate, istristate, dependencyid) VALUES
+(1, 'User', 'Usuário', 0, 1, NULL),
+(101, 'UserEmail', NULL, 0, 0, NULL),
+(102, 'UserResetPassword', 'Permite Resetar Senha', 1, 0, 1),
+(103, 'UserPrivilege', NULL, 0, 0, NULL),
+(2, 'Person', 'Pessoa', 0, 1, NULL),
+(201, 'PersonAddress', NULL, 0, 0, NULL),
+(202, 'PersonContact', NULL, 0, 0, NULL),
+(203, 'PersonCompressor', NULL, 0, 0, NULL),
+(204, 'PersonCompressorSellable', NULL, 0, 0, NULL),
+(206, 'PersonChangeDocument', 'Alterar o documento da Pessoa', 1, 0, 2),
+(207, 'PersonRegistrationFormReport', 'Gerar o relatório de ficha cadastral da pessoa', 1, 0, 2),
+(208, 'PersonMaintenancePlanReport', 'Gerar o relatório de plano de manutenção', 1, 0, 2);
+INSERT INTO routine (id, name, description, isbistate, istristate, dependencyid) VALUES
+(3, 'City', 'Cidade', 0, 1, 2),
+(301, 'CityRoute', NULL, 0, 0, NULL),
+(4, 'State', 'Estado', 0, 1, NULL),
+(5, 'Route', 'Rota', 0, 1, 2);
+INSERT INTO routine VALUES
+(6, 'Product', 'Produto', 0, 1, NULL),
+(601, 'ProductProviderCode', NULL, 0, 0, NULL),
+(602, 'ProductCode', NULL, 0, 0, NULL),
+(604, 'ProductPicture', NULL, 0, 0, NULL),
+(605, 'ProductPriceIndicator', NULL, 0, 0, NULL),
+(606, 'ProductPrice', NULL, 0, 0, NULL),
+(7, 'ProductUnit', 'Unidade de Medida', 0, 1, 6),
+(8, 'PriceTable', 'Tabela de Preços', 0, 1, 6),
+(801, 'PriceTableSellable', NULL, 0, 0, NULL),
+(9, 'ProductFamily', 'Família de Produtos', 0, 1, 6),
+(10, 'ProductGroup', 'Grupo de Produtos', 0, 1, 6);
+INSERT INTO routine VALUES
+(11, 'Cash', 'Caixa', 0, 1, NULL),
+(1101, 'CashItem', NULL, 0, 0, NULL),
+(1102, 'CashItemResponsible', NULL, 0, 0, NULL),
+(12, 'Compressor', 'Compressor', 0, 1, 2),
+(1201, 'CompressorSellable', NULL, 0, 0, NULL),
+(13, 'Evaluation', 'Avaliação de Compressor', 0, 1, NULL),
+(1301, 'EvaluationManagement', 'Gerenciamento de Avaliações', 1, 0, 13),
+(1302, 'EvaluationManagementSellable', NULL, 0, 0, NULL),
+(1304, 'EvaluationManagementPanel', 'Painel de Compressores', 1, 0, 13),
+(1305, 'EvaluationExportManagementPanel', 'Exportar imagem do painel de compressores', 1, 0, 13),
+(1306, 'EvaluationControlledSellable', NULL, 0, 0, NULL),
+(1307, 'EvaluationTechnician', NULL, 0, 0, NULL),
+(1308, 'EvaluationPicture', NULL, 0, 0, NULL),
+(1309, 'EvaluationApproveOrReject', 'Aprovar e rejeitar uma avaliação', 1, 0, 13),
+(1310, 'EvaluationCreateAutomaticRecord', 'Criar avaliações automáticas', 1, 0, 13),
+(1311, 'EvaluationImport', 'Importar avaliações da núvem', 1, 0, 13),
+(1312, 'EvaluationReplacedSellable', NULL, 0, 0, NULL),
+(1313, 'EvaluationTreatmentReport', 'Gerar o relatório de atendimento da avaliação', 1, 0, 13);
+INSERT INTO routine VALUES
+(9901, 'ExportGrid', 'Exportar as grades', 1, 0, NULL),
+(9902, 'Log', 'Acessar o histórico', 1, 0, NULL);

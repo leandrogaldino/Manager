@@ -1,0 +1,462 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <StartupObject>Nexor.My.MyApplication</StartupObject>
+    <UseWindowsForms>true</UseWindowsForms>
+    <MyType>WindowsForms</MyType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Html\CrmCards.html" />
+    <Content Include="Resources\Image\Approve.png" />
+    <Content Include="Resources\Image\Cash.png" />
+    <Content Include="Resources\Image\Chart.png" />
+    <Content Include="Resources\Image\City.png" />
+    <Content Include="Resources\Image\Clean.png" />
+    <Content Include="Resources\Image\Close.png" />
+    <Content Include="Resources\Image\Compressor.png" />
+    <Content Include="Resources\Image\Delete.png" />
+    <Content Include="Resources\Image\DeleteSmall.png" />
+    <Content Include="Resources\Image\Detail.png" />
+    <Content Include="Resources\Image\Disapprove.png" />
+    <Content Include="Resources\Image\Document.png" />
+    <Content Include="Resources\Image\Downloading.gif" />
+    <Content Include="Resources\Image\Edit.png" />
+    <Content Include="Resources\Image\EditSmall.png" />
+    <Content Include="Resources\Image\Email.png" />
+    <Content Include="Resources\Image\EmailModel.png" />
+    <Content Include="Resources\Image\EmailSent.png" />
+    <Content Include="Resources\Image\EvaluationManagement.png" />
+    <Content Include="Resources\Image\Export.png" />
+    <Content Include="Resources\Image\Filter.png" />
+    <Content Include="Resources\Image\ImageDelete.png" />
+    <Content Include="Resources\Image\ImageInclude.png" />
+    <Content Include="Resources\Image\ImageSave.png" />
+    <Content Include="Resources\Image\ImportSmall.png" />
+    <Content Include="Resources\Image\Include.png" />
+    <Content Include="Resources\Image\IncludeSmall.png" />
+    <Content Include="Resources\Image\Log.png" />
+    <Content Include="Resources\Image\LoginPassword.png" />
+    <Content Include="Resources\Image\LoginUser.png" />
+    <Content Include="Resources\Image\Logo.png" />
+    <Content Include="Resources\Image\Logoff.png" />
+    <Content Include="Resources\Image\Magnifier.png" />
+    <Content Include="Resources\Image\NavFirst.png" />
+    <Content Include="Resources\Image\NavLast.png" />
+    <Content Include="Resources\Image\NavNext.png" />
+    <Content Include="Resources\Image\NavPrevious.png" />
+    <Content Include="Resources\Image\Person.png" />
+    <Content Include="Resources\Image\Print.png" />
+    <Content Include="Resources\Image\PrintSmall.png" />
+    <Content Include="Resources\Image\Product.png" />
+    <Content Include="Resources\Image\ProductFamily.png" />
+    <Content Include="Resources\Image\ProductGroup.png" />
+    <Content Include="Resources\Image\ProductUnit.png" />
+    <Content Include="Resources\Image\Refresh.png" />
+    <Content Include="Resources\Image\Reject.png" />
+    <Content Include="Resources\Image\Report.png" />
+    <Content Include="Resources\Image\ReportSmall.png" />
+    <Content Include="Resources\Image\Request.png" />
+    <Content Include="Resources\Image\ResetPassword.png" />
+    <Content Include="Resources\Image\Route.png" />
+    <Content Include="Resources\Image\Save.png" />
+    <Content Include="Resources\Image\SaveSmall.png" />
+    <Content Include="Resources\Image\Updating.gif" />
+    <Content Include="Resources\Image\User.png" />
+    <Content Include="Resources\Image\UserPrivilegePreset.png" />
+    <Content Include="Resources\Image\View.png" />
+    <Content Include="Resources\Image\ZoomIn.png" />
+    <Content Include="Resources\Image\ZoomOut.png" />
+    <Content Include="Resources\SQL\Cash\CashCount.sql" />
+    <Content Include="Resources\SQL\Cash\CashDelete.sql" />
+    <Content Include="Resources\SQL\Cash\CashDetailSelect.sql" />
+    <Content Include="Resources\SQL\Cash\CashFilter.sql" />
+    <Content Include="Resources\SQL\Cash\CashFlowAuthorizedDelete.sql" />
+    <Content Include="Resources\SQL\Cash\CashFlowAuthorizedInsert.sql" />
+    <Content Include="Resources\SQL\Cash\CashFlowAuthorizedSelect.sql" />
+    <Content Include="Resources\SQL\Cash\CashFlowAuthorizedUpdate.sql" />
+    <Content Include="Resources\SQL\Cash\CashFlowDelete.sql" />
+    <Content Include="Resources\SQL\Cash\CashFlowFilter.sql" />
+    <Content Include="Resources\SQL\Cash\CashFlowInsert.sql" />
+    <Content Include="Resources\SQL\Cash\CashFlowSelect.sql" />
+    <Content Include="Resources\SQL\Cash\CashFlowsIDSelect.sql" />
+    <Content Include="Resources\SQL\Cash\CashFlowUpdate.sql" />
+    <Content Include="Resources\SQL\Cash\CashInsert.sql" />
+    <Content Include="Resources\SQL\Cash\CashItemDelete.sql" />
+    <Content Include="Resources\SQL\Cash\CashItemInsert.sql" />
+    <Content Include="Resources\SQL\Cash\CashItemResponsibleDelete.sql" />
+    <Content Include="Resources\SQL\Cash\CashItemResponsibleInsert.sql" />
+    <Content Include="Resources\SQL\Cash\CashItemResponsibleSelect.sql" />
+    <Content Include="Resources\SQL\Cash\CashItemResponsibleUpdate.sql" />
+    <Content Include="Resources\SQL\Cash\CashItemSelect.sql" />
+    <Content Include="Resources\SQL\Cash\CashItemUpdate.sql" />
+    <Content Include="Resources\SQL\Cash\CashLastBalanceSelect.sql" />
+    <Content Include="Resources\SQL\Cash\CashPreviousBalanceSelect.sql" />
+    <Content Include="Resources\SQL\Cash\CashReportCashSheet.sql" />
+    <Content Include="Resources\SQL\Cash\CashReportExpensesPerResponsible.sql" />
+    <Content Include="Resources\SQL\Cash\CashSelect.sql" />
+    <Content Include="Resources\SQL\Cash\CashSetStatus.sql" />
+    <Content Include="Resources\SQL\Cash\CashUpdate.sql" />
+    <Content Include="Resources\SQL\City\CityDelete.sql" />
+    <Content Include="Resources\SQL\City\CityFilter.sql" />
+    <Content Include="Resources\SQL\City\CityInsert.sql" />
+    <Content Include="Resources\SQL\City\CityRouteDelete.sql" />
+    <Content Include="Resources\SQL\City\CityRouteInsert.sql" />
+    <Content Include="Resources\SQL\City\CityRouteSelect.sql" />
+    <Content Include="Resources\SQL\City\CityRouteUpdate.sql" />
+    <Content Include="Resources\SQL\City\CitySelect.sql" />
+    <Content Include="Resources\SQL\City\CityUpdate.sql" />
+    <Content Include="Resources\SQL\CompressorInterface\CompressorInterfaceDelete.sql" />
+    <Content Include="Resources\SQL\CompressorInterface\CompressorInterfaceFilter.sql" />
+    <Content Include="Resources\SQL\CompressorInterface\CompressorInterfaceInsert.sql" />
+    <Content Include="Resources\SQL\CompressorInterface\CompressorInterfaceSelect.sql" />
+    <Content Include="Resources\SQL\CompressorInterface\CompressorInterfaceUpdate.sql" />
+    <Content Include="Resources\SQL\CompressorUnit\CompressorUnitDelete.sql" />
+    <Content Include="Resources\SQL\CompressorUnit\CompressorUnitFilter.sql" />
+    <Content Include="Resources\SQL\CompressorUnit\CompressorUnitInsert.sql" />
+    <Content Include="Resources\SQL\CompressorUnit\CompressorUnitSelect.sql" />
+    <Content Include="Resources\SQL\CompressorUnit\CompressorUnitUpdate.sql" />
+    <Content Include="Resources\SQL\Compressor\CompressorDelete.sql" />
+    <Content Include="Resources\SQL\Compressor\CompressorDetailSelect.sql" />
+    <Content Include="Resources\SQL\Compressor\CompressorFilter.sql" />
+    <Content Include="Resources\SQL\Compressor\CompressorInsert.sql" />
+    <Content Include="Resources\SQL\Compressor\CompressorSelect.sql" />
+    <Content Include="Resources\SQL\Compressor\CompressorSellableDelete.sql" />
+    <Content Include="Resources\SQL\Compressor\CompressorSellableInsert.sql" />
+    <Content Include="Resources\SQL\Compressor\CompressorSellableSelect.sql" />
+    <Content Include="Resources\SQL\Compressor\CompressorSellableUpdate.sql" />
+    <Content Include="Resources\SQL\Compressor\CompressorUpdate.sql" />
+    <Content Include="Resources\SQL\CRM\CrmDelete.sql" />
+    <Content Include="Resources\SQL\CRM\CrmDetailSelect.sql" />
+    <Content Include="Resources\SQL\CRM\CrmFilter.sql" />
+    <Content Include="Resources\SQL\CRM\CrmInsert.sql" />
+    <Content Include="Resources\SQL\CRM\CrmSelect.sql" />
+    <Content Include="Resources\SQL\CRM\CrmSetStatus.sql" />
+    <Content Include="Resources\SQL\CRM\CrmTreatmentDelete.sql" />
+    <Content Include="Resources\SQL\CRM\CrmTreatmentInsert.sql" />
+    <Content Include="Resources\SQL\CRM\CrmTreatmentSelect.sql" />
+    <Content Include="Resources\SQL\CRM\CrmTreatmentUpdate.sql" />
+    <Content Include="Resources\SQL\CRM\CrmUpdate.sql" />
+    <Content Include="Resources\SQL\EmailModel\EmailModelDelete.sql" />
+    <Content Include="Resources\SQL\EmailModel\EmailModelFilter.sql" />
+    <Content Include="Resources\SQL\EmailModel\EmailModelInsert.sql" />
+    <Content Include="Resources\SQL\EmailModel\EmailModelSelect.sql" />
+    <Content Include="Resources\SQL\EmailModel\EmailModelUpdate.sql" />
+    <Content Include="Resources\SQL\EmailSent\EmailSentFilter.sql" />
+    <Content Include="Resources\SQL\EmailSent\EmailSentInsert.sql" />
+    <Content Include="Resources\SQL\EmailSignature\EmailSignatureDelete.sql" />
+    <Content Include="Resources\SQL\EmailSignature\EmailSignatureFilter.sql" />
+    <Content Include="Resources\SQL\EmailSignature\EmailSignatureInsert.sql" />
+    <Content Include="Resources\SQL\EmailSignature\EmailSignatureSelect.sql" />
+    <Content Include="Resources\SQL\EmailSignature\EmailSignaturesSelectByUser.sql" />
+    <Content Include="Resources\SQL\EmailSignature\EmailSignatureUpdate.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationControlledSellableDelete.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationControlledSellableInsert.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationControlledSellableSelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationControlledSellableUpdate.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationCount.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationDelete.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationDetailSelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationFilter.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationFirstEvaluationDateSelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationHasPreviousEvaluationSelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationInsert.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationLastEvaluationSelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationLastReplacedSellableCapacitySelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationLastReplacedSellableDateSelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationManagementControlledSellableFilter .sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationManagementFilter.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationManagementPanelCustomerToVisit.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationManagementPanelDatesSelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationManagementPanelFillChartProductivityChartSelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationManagementPanelNoVisited.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationManagementPanelUnitOverdue .sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationManagementPanelVisitsChartSelect .sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationManagementUnit.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationPictureDelete.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationPictureInsert.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationPictureSelect .sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationPictureUpdate .sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationPreviousEvaluationDateSelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationPreviousEvaluationHorimeterSelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationPreviousEvaluationIDSelect .sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableDelete.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableInsert.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableSelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableUpdate.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationSelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationSetStatus.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationTechnicianDelete.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationTechnicianInsert.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationTechnicianSelect.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationTechnicianUpdate.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationUpdate.sql" />
+    <Content Include="Resources\SQL\LockedRegistry\LockedRegistryDelete.sql" />
+    <Content Include="Resources\SQL\LockedRegistry\LockedRegistryInsert.sql" />
+    <Content Include="Resources\SQL\LockedRegistry\LockedRegistrySelect.sql" />
+    <Content Include="Resources\SQL\LockedRegistry\LockedRegistryUpdate.sql" />
+    <Content Include="Resources\SQL\Log\LogSelect.sql" />
+    <Content Include="Resources\SQL\Person\PersonAddressDelete .sql" />
+    <Content Include="Resources\SQL\Person\PersonAddressDetailSelect.sql" />
+    <Content Include="Resources\SQL\Person\PersonAddressInsert.sql" />
+    <Content Include="Resources\SQL\Person\PersonAddressSelect.sql" />
+    <Content Include="Resources\SQL\Person\PersonAddressUpdate.sql" />
+    <Content Include="Resources\SQL\Person\PersonCompressorDelete.sql" />
+    <Content Include="Resources\SQL\Person\PersonCompressorDetailSelect.sql" />
+    <Content Include="Resources\SQL\Person\PersonCompressorInsert.sql" />
+    <Content Include="Resources\SQL\Person\PersonCompressorSelect.sql" />
+    <Content Include="Resources\SQL\Person\PersonCompressorSellableDelete.sql" />
+    <Content Include="Resources\SQL\Person\PersonCompressorSellableInsert.sql" />
+    <Content Include="Resources\SQL\Person\PersonCompressorSellableSelect.sql" />
+    <Content Include="Resources\SQL\Person\PersonCompressorSellableUpdate.sql" />
+    <Content Include="Resources\SQL\Person\PersonCompressorUpdate.sql" />
+    <Content Include="Resources\SQL\Person\PersonContactDelete.sql" />
+    <Content Include="Resources\SQL\Person\PersonContactDetailSelect.sql" />
+    <Content Include="Resources\SQL\Person\PersonContactInsert.sql" />
+    <Content Include="Resources\SQL\Person\PersonContactSelect.sql" />
+    <Content Include="Resources\SQL\Person\PersonContactUpdate.sql" />
+    <Content Include="Resources\SQL\Person\PersonDelete.sql" />
+    <Content Include="Resources\SQL\Person\PersonFilter.sql" />
+    <Content Include="Resources\SQL\Person\PersonInsert.sql" />
+    <Content Include="Resources\SQL\Person\PersonIsCompressorControlled.sql" />
+    <Content Include="Resources\SQL\Person\PersonSelect.sql" />
+    <Content Include="Resources\SQL\Person\PersonSelectByDocument.sql" />
+    <Content Include="Resources\SQL\Person\PersonUpdate.sql" />
+    <Content Include="Resources\SQL\PriceTable\PriceTableDelete.sql" />
+    <Content Include="Resources\SQL\PriceTable\PriceTableFilter.sql" />
+    <Content Include="Resources\SQL\PriceTable\PriceTableGetPriceTableName.sql" />
+    <Content Include="Resources\SQL\PriceTable\PriceTableInsert.sql" />
+    <Content Include="Resources\SQL\PriceTable\PriceTableItemDelete.sql" />
+    <Content Include="Resources\SQL\PriceTable\PriceTableItemDetailSelect.sql" />
+    <Content Include="Resources\SQL\PriceTable\PriceTableItemInsert.sql" />
+    <Content Include="Resources\SQL\PriceTable\PriceTableItemSelect.sql" />
+    <Content Include="Resources\SQL\PriceTable\PriceTableItemUpdate.sql" />
+    <Content Include="Resources\SQL\PriceTable\PriceTableSelect.sql" />
+    <Content Include="Resources\SQL\PriceTable\PriceTableUpdate.sql" />
+    <Content Include="Resources\SQL\PrivilegePreset\PrivilegePresetDelete.sql" />
+    <Content Include="Resources\SQL\PrivilegePreset\PrivilegePresetFilter.sql" />
+    <Content Include="Resources\SQL\PrivilegePreset\PrivilegePresetInsert.sql" />
+    <Content Include="Resources\SQL\PrivilegePreset\PrivilegePresetPrivilegeDelete.sql" />
+    <Content Include="Resources\SQL\PrivilegePreset\PrivilegePresetPrivilegeInsert.sql" />
+    <Content Include="Resources\SQL\PrivilegePreset\PrivilegePresetPrivilegeSelect.sql" />
+    <Content Include="Resources\SQL\PrivilegePreset\PrivilegePresetSelect.sql" />
+    <Content Include="Resources\SQL\PrivilegePreset\PrivilegePresetUpdate.sql" />
+    <Content Include="Resources\SQL\Product\ProductCodeDelete.sql" />
+    <Content Include="Resources\SQL\Product\ProductCodeDetailSelect.sql" />
+    <Content Include="Resources\SQL\Product\ProductCodeInsert.sql" />
+    <Content Include="Resources\SQL\Product\ProductCodeSelect.sql" />
+    <Content Include="Resources\SQL\Product\ProductCodeUpdate.sql" />
+    <Content Include="Resources\SQL\Product\ProductDelete.sql" />
+    <Content Include="Resources\SQL\Product\ProductFamilyDelete.sql" />
+    <Content Include="Resources\SQL\Product\ProductFamilyFilter.sql" />
+    <Content Include="Resources\SQL\Product\ProductFamilyInsert.sql" />
+    <Content Include="Resources\SQL\Product\ProductFamilySelect.sql" />
+    <Content Include="Resources\SQL\Product\ProductFamilyUpdate.sql" />
+    <Content Include="Resources\SQL\Product\ProductFilter.sql" />
+    <Content Include="Resources\SQL\Product\ProductGroupDelete.sql" />
+    <Content Include="Resources\SQL\Product\ProductGroupFilter.sql" />
+    <Content Include="Resources\SQL\Product\ProductGroupInsert.sql" />
+    <Content Include="Resources\SQL\Product\ProductGroupSelect.sql" />
+    <Content Include="Resources\SQL\Product\ProductGroupUpdate.sql" />
+    <Content Include="Resources\SQL\Product\ProductInsert.sql" />
+    <Content Include="Resources\SQL\Product\ProductPictureDelete.sql" />
+    <Content Include="Resources\SQL\Product\ProductPictureInsert.sql" />
+    <Content Include="Resources\SQL\Product\ProductPictureSelect.sql" />
+    <Content Include="Resources\SQL\Product\ProductPictureUpdate.sql" />
+    <Content Include="Resources\SQL\Product\ProductPriceDetailSelect.sql" />
+    <Content Include="Resources\SQL\Product\ProductPriceIndicatorDetailSelect.sql" />
+    <Content Include="Resources\SQL\Product\ProductPriceIndicatorSelect.sql" />
+    <Content Include="Resources\SQL\Product\ProductPriceSelect.sql" />
+    <Content Include="Resources\SQL\Product\ProductProviderCodeDelete.sql" />
+    <Content Include="Resources\SQL\Product\ProductProviderCodeDetailSelect.sql" />
+    <Content Include="Resources\SQL\Product\ProductProviderCodeInsert.sql" />
+    <Content Include="Resources\SQL\Product\ProductProviderCodeSelect.sql" />
+    <Content Include="Resources\SQL\Product\ProductProviderCodeUpdate.sql" />
+    <Content Include="Resources\SQL\Product\ProductSelect.sql" />
+    <Content Include="Resources\SQL\Product\ProductUnitDelete.sql" />
+    <Content Include="Resources\SQL\Product\ProductUnitFilter.sql" />
+    <Content Include="Resources\SQL\Product\ProductUnitInsert.sql" />
+    <Content Include="Resources\SQL\Product\ProductUnitSelect.sql" />
+    <Content Include="Resources\SQL\Product\ProductUnitUpdate.sql" />
+    <Content Include="Resources\SQL\Product\ProductUpdate.sql" />
+    <Content Include="Resources\SQL\Request\RequestDelete.sql" />
+    <Content Include="Resources\SQL\Request\RequestDetailSelect.sql" />
+    <Content Include="Resources\SQL\Request\RequestFilter.sql" />
+    <Content Include="Resources\SQL\Request\RequestInsert.sql" />
+    <Content Include="Resources\SQL\Request\RequestItemDelete.sql" />
+    <Content Include="Resources\SQL\Request\RequestItemInsert.sql" />
+    <Content Include="Resources\SQL\Request\RequestItemSelect.sql" />
+    <Content Include="Resources\SQL\Request\RequestItemUpdate.sql" />
+    <Content Include="Resources\SQL\Request\RequestReportPendingItems.sql" />
+    <Content Include="Resources\SQL\Request\RequestSelect.sql" />
+    <Content Include="Resources\SQL\Request\RequestSelectPendingItems.sql" />
+    <Content Include="Resources\SQL\Request\RequestUpdate.sql" />
+    <Content Include="Resources\SQL\Route\RouteDelete.sql" />
+    <Content Include="Resources\SQL\Route\RouteFilter.sql" />
+    <Content Include="Resources\SQL\Route\RouteFilterConverterSelect.sql" />
+    <Content Include="Resources\SQL\Route\RouteInsert.sql" />
+    <Content Include="Resources\SQL\Route\RouteSelect.sql" />
+    <Content Include="Resources\SQL\Route\RouteUpdate.sql" />
+    <Content Include="Resources\SQL\Service\ServiceCodeDelete.sql" />
+    <Content Include="Resources\SQL\Service\ServiceCodeDetailSelect.sql" />
+    <Content Include="Resources\SQL\Service\ServiceCodeInsert.sql" />
+    <Content Include="Resources\SQL\Service\ServiceCodeSelect.sql" />
+    <Content Include="Resources\SQL\Service\ServiceCodeUpdate.sql" />
+    <Content Include="Resources\SQL\Service\ServiceComplementDelete.sql" />
+    <Content Include="Resources\SQL\Service\ServiceComplementDetailSelect.sql" />
+    <Content Include="Resources\SQL\Service\ServiceComplementInsert.sql" />
+    <Content Include="Resources\SQL\Service\ServiceComplementSelect.sql" />
+    <Content Include="Resources\SQL\Service\ServiceComplementUpdate.sql" />
+    <Content Include="Resources\SQL\Service\ServiceDelete.sql" />
+    <Content Include="Resources\SQL\Service\ServiceFilter.sql" />
+    <Content Include="Resources\SQL\Service\ServiceInsert.sql" />
+    <Content Include="Resources\SQL\Service\ServicePriceDetailSelect.sql" />
+    <Content Include="Resources\SQL\Service\ServicePriceIndicatorDetailSelect.sql" />
+    <Content Include="Resources\SQL\Service\ServicePriceIndicatorSelect.sql" />
+    <Content Include="Resources\SQL\Service\ServicePriceSelect.sql" />
+    <Content Include="Resources\SQL\Service\ServiceSelect.sql" />
+    <Content Include="Resources\SQL\Service\ServiceUpdate.sql" />
+    <Content Include="Resources\SQL\Shared\SelectCompressorData.sql" />
+    <Content Include="Resources\SQL\Shared\SelectCustomerData.sql" />
+    <Content Include="Resources\SQL\Shared\SetBrazilianDatabaseMonthNames.sql" />
+    <Content Include="Resources\SQL\State\StateSelect.sql" />
+    <Content Include="Resources\SQL\User\UserChangePassword.sql" />
+    <Content Include="Resources\SQL\User\UserDelete.sql" />
+    <Content Include="Resources\SQL\User\UserEmailDelete.sql" />
+    <Content Include="Resources\SQL\User\UserEmailInsert .sql" />
+    <Content Include="Resources\SQL\User\UserEmailSelect.sql" />
+    <Content Include="Resources\SQL\User\UserEmailUpdate.sql" />
+    <Content Include="Resources\SQL\User\UserFilter.sql" />
+    <Content Include="Resources\SQL\User\UserHasPersonSelect.sql" />
+    <Content Include="Resources\SQL\User\UserInsert.sql" />
+    <Content Include="Resources\SQL\User\UserLoginSelect.sql" />
+    <Content Include="Resources\SQL\User\UserPersonShortNameSelect.sql" />
+    <Content Include="Resources\SQL\User\UserPrivilegeDelete.sql" />
+    <Content Include="Resources\SQL\User\UserPrivilegeInsert.sql" />
+    <Content Include="Resources\SQL\User\UserPrivilegeSelect.sql" />
+    <Content Include="Resources\SQL\User\UserSelect.sql" />
+    <Content Include="Resources\SQL\User\UserUpdate.sql" />
+    <Content Include="Resources\SQL\VisitSchedule\VisitScheduleDelete .sql" />
+    <Content Include="Resources\SQL\VisitSchedule\VisitScheduleFilter.sql" />
+    <Content Include="Resources\SQL\VisitSchedule\VisitScheduleInsert.sql" />
+    <Content Include="Resources\SQL\VisitSchedule\VisitScheduleSelect.sql" />
+    <Content Include="Resources\SQL\VisitSchedule\VisitScheduleUpdate.sql" />
+    <Content Include="Resources\XML\CashFlowAuthorizedGrid.xml" />
+    <Content Include="Resources\XML\CashFlowGrid.xml" />
+    <Content Include="Resources\XML\CashGrid.xml" />
+    <Content Include="Resources\XML\CashItemGrid.xml" />
+    <Content Include="Resources\XML\CashItemResponsibleGrid.xml" />
+    <Content Include="Resources\XML\CityGrid.xml" />
+    <Content Include="Resources\XML\CityRouteGrid.xml" />
+    <Content Include="Resources\XML\CompressorGrid.xml" />
+    <Content Include="Resources\XML\CompressorInterfaceGrid.xml" />
+    <Content Include="Resources\XML\CompressorSellableGrid.xml" />
+    <Content Include="Resources\XML\CompressorUnitGrid.xml" />
+    <Content Include="Resources\XML\CrmGrid.xml" />
+    <Content Include="Resources\XML\EmailModelGrid.xml" />
+    <Content Include="Resources\XML\EmailSentGrid.xml" />
+    <Content Include="Resources\XML\EmailSignatureGrid.xml" />
+    <Content Include="Resources\XML\EvaluationControlledSellableGrid.xml" />
+    <Content Include="Resources\XML\EvaluationGrid.xml" />
+    <Content Include="Resources\XML\EvaluationManagementGrid.xml" />
+    <Content Include="Resources\XML\EvaluationReplacedSellableGrid.xml" />
+    <Content Include="Resources\XML\EvaluationTechnicianGrid.xml" />
+    <Content Include="Resources\XML\MaintenancePlan.xml" />
+    <Content Include="Resources\XML\PersonAddressGrid.xml" />
+    <Content Include="Resources\XML\PersonCompressorGrid.xml" />
+    <Content Include="Resources\XML\PersonCompressorSellableGrid.xml" />
+    <Content Include="Resources\XML\PersonContactGrid.xml" />
+    <Content Include="Resources\XML\PersonGrid.xml" />
+    <Content Include="Resources\XML\PriceTableGrid.xml" />
+    <Content Include="Resources\XML\PriceTableSellableGrid.xml" />
+    <Content Include="Resources\XML\PrivilegePresetGrid.xml" />
+    <Content Include="Resources\XML\ProductCodeGrid.xml" />
+    <Content Include="Resources\XML\ProductFamilyGrid.xml" />
+    <Content Include="Resources\XML\ProductGrid.xml" />
+    <Content Include="Resources\XML\ProductGroupGrid.xml" />
+    <Content Include="Resources\XML\ProductPriceGrid.xml" />
+    <Content Include="Resources\XML\ProductPriceIndicatorGrid.xml" />
+    <Content Include="Resources\XML\ProductProviderCodeGrid.xml" />
+    <Content Include="Resources\XML\ProductUnitGrid.xml" />
+    <Content Include="Resources\XML\RequestGrid.xml" />
+    <Content Include="Resources\XML\RequestItemGrid.xml" />
+    <Content Include="Resources\XML\RouteGrid.xml" />
+    <Content Include="Resources\XML\ServiceCodeGrid.xml" />
+    <Content Include="Resources\XML\ServiceComplementGrid.xml" />
+    <Content Include="Resources\XML\ServiceGrid.xml" />
+    <Content Include="Resources\XML\ServicePriceGrid.xml" />
+    <Content Include="Resources\XML\ServicePriceIndicatorGrid.xml" />
+    <Content Include="Resources\XML\UserEmailGrid.xml" />
+    <Content Include="Resources\XML\UserGrid.xml" />
+    <Content Include="Resources\XML\VisitScheduleGrid.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ManagerCore\ManagerCore.vbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CoreSuite.CMessageBox">
+      <HintPath>..\..\CoreSuite\CMessageBox\bin\Debug\CoreSuite.CMessageBox.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.Extensions">
+      <HintPath>..\..\CoreSuite\Extensions\bin\Debug\CoreSuite.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.Helpers">
+      <HintPath>..\..\CoreSuite\Helpers\bin\Debug\CoreSuite.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.Locator">
+      <HintPath>..\..\CoreSuite\Locator\bin\Debug\CoreSuite.Locator.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreSuite.MySqlService">
+      <HintPath>..\..\CoreSuite\MySqlService\bin\Debug\CoreSuite.MySqlService.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Main\FrmLogin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Main\FrmUpdateNotes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="My Project\Application.Designer.vb">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Update="My Project\Settings.Designer.vb">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Docs\.UpdateNotes">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Update="My Project\Settings.settings">
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\Flags\" />
+  </ItemGroup>
+
+</Project>

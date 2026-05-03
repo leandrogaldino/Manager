@@ -163,6 +163,7 @@
     <Compile Include="Source\Models\Preferences\PreferencesSupportModel.vb" />
     <Compile Include="Source\Models\Preferences\PreferencesSyncModel.vb" />
     <Compile Include="Source\Models\Preferences\PreferencesUserModel.vb" />
+    <Compile Include="Source\Models\Routine\RoutineModel.vb" />
     <Compile Include="Source\Services\CompanyService.vb" />
     <Compile Include="Source\Models\License\LicenseModel.vb" />
     <Compile Include="Source\Services\LocalDbCredentialsService.vb" />
@@ -170,6 +171,7 @@
     <Compile Include="Source\Services\RemoteDbCredentialsService.vb" />
     <Compile Include="Source\Services\LicenseService.vb" />
     <Compile Include="Source\Models\License\LicenseResultModel.vb" />
+    <Compile Include="Source\Services\RoutineService.vb" />
     <Compile Include="Source\Shared\ApplicationPaths.vb" />
     <Compile Include="Source\Services\CryptoKeyService.vb" />
     <Compile Include="Source\Shared\Flags.vb" />

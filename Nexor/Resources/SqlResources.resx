@@ -1,0 +1,940 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="CashCount" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashCount.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashDetailSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashFlowAuthorizedDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashFlowAuthorizedDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashFlowAuthorizedInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashFlowAuthorizedInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashFlowAuthorizedSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashFlowAuthorizedSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashFlowAuthorizedUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashFlowAuthorizedUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashFlowDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashFlowDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashFlowFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashFlowFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashFlowInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashFlowInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashFlowSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashFlowSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashFlowsIDSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashFlowsIDSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashFlowUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashFlowUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashItemDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashItemDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashItemInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashItemInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashItemResponsibleDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashItemResponsibleDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashItemResponsibleInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashItemResponsibleInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashItemResponsibleSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashItemResponsibleSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashItemResponsibleUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashItemResponsibleUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashItemSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashItemSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashItemUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashItemUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashLastBalanceSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashLastBalanceSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashPreviousBalanceSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashPreviousBalanceSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashReportCashSheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashReportCashSheet.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashReportExpensesPerResponsible" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashReportExpensesPerResponsible.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashSetStatus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashSetStatus.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CashUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Cash\CashUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CityDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\City\CityDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CityFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\City\CityFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CityInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\City\CityInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CityRouteDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\City\CityRouteDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CityRouteInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\City\CityRouteInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CityRouteSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\City\CityRouteSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CityRouteUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\City\CityRouteUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CitySelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\City\CitySelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CityUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\City\CityUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Compressor\CompressorDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Compressor\CompressorDetailSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Compressor\CompressorFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Compressor\CompressorInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorInterfaceDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CompressorInterface\CompressorInterfaceDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorInterfaceFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CompressorInterface\CompressorInterfaceFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorInterfaceInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CompressorInterface\CompressorInterfaceInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorInterfaceSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CompressorInterface\CompressorInterfaceSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorInterfaceUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CompressorInterface\CompressorInterfaceUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Compressor\CompressorSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorSellableDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Compressor\CompressorSellableDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorSellableInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Compressor\CompressorSellableInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorSellableSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Compressor\CompressorSellableSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorSellableUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Compressor\CompressorSellableUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorUnitDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CompressorUnit\CompressorUnitDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorUnitFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CompressorUnit\CompressorUnitFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorUnitInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CompressorUnit\CompressorUnitInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorUnitSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CompressorUnit\CompressorUnitSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorUnitUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CompressorUnit\CompressorUnitUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompressorUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Compressor\CompressorUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CrmDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CRM\CrmDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CrmDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CRM\CrmDetailSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CrmFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CRM\CrmFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CrmInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CRM\CrmInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CrmSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CRM\CrmSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CrmSetStatus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CRM\CrmSetStatus.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CrmTreatmentDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CRM\CrmTreatmentDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CrmTreatmentInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CRM\CrmTreatmentInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CrmTreatmentSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CRM\CrmTreatmentSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CrmTreatmentUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CRM\CrmTreatmentUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CrmUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\CRM\CrmUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EmailModelDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\EmailModel\EmailModelDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EmailModelFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\EmailModel\EmailModelFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EmailModelInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\EmailModel\EmailModelInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EmailModelSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\EmailModel\EmailModelSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EmailModelUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\EmailModel\EmailModelUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EmailSentFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\EmailSent\EmailSentFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EmailSentInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\EmailSent\EmailSentInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EmailSignatureDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\EmailSignature\EmailSignatureDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EmailSignatureFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\EmailSignature\EmailSignatureFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EmailSignatureInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\EmailSignature\EmailSignatureInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EmailSignatureSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\EmailSignature\EmailSignatureSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EmailSignaturesSelectByUser" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\EmailSignature\EmailSignaturesSelectByUser.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EmailSignatureUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\EmailSignature\EmailSignatureUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationControlledSellableDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationControlledSellableDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationControlledSellableInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationControlledSellableInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationControlledSellableSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationControlledSellableSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationControlledSellableUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationControlledSellableUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationCount" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationCount.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationDetailSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationFirstEvaluationDateSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationFirstEvaluationDateSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationHasPreviousEvaluationSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationHasPreviousEvaluationSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationLastEvaluationSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationLastEvaluationSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationLastReplacedSellableCapacitySelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationLastReplacedSellableCapacitySelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationLastReplacedSellableDateSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationLastReplacedSellableDateSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationManagementControlledSellableFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationManagementControlledSellableFilter .sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationManagementFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationManagementFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationManagementPanelCustomerToVisit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationManagementPanelCustomerToVisit.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationManagementPanelDatesSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationManagementPanelDatesSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationManagementPanelFillChartProductivityChartSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationManagementPanelFillChartProductivityChartSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationManagementPanelNoVisited" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationManagementPanelNoVisited.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationManagementPanelUnitOverdue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationManagementPanelUnitOverdue .sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationManagementPanelVisitsChartSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationManagementPanelVisitsChartSelect .sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationManagementUnit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationManagementUnit.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationPictureDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationPictureDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationPictureInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationPictureInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationPictureSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationPictureSelect .sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationPictureUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationPictureUpdate .sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationPreviousEvaluationDateSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationPreviousEvaluationDateSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationPreviousEvaluationHorimeterSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationPreviousEvaluationHorimeterSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationPreviousEvaluationIDSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationPreviousEvaluationIDSelect .sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationReplacedSellableDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationReplacedSellableDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationReplacedSellableInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationReplacedSellableInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationReplacedSellableSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationReplacedSellableSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationReplacedSellableUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationReplacedSellableUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationSetStatus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationSetStatus.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationTechnicianDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationTechnicianDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationTechnicianInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationTechnicianInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationTechnicianSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationTechnicianSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationTechnicianUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationTechnicianUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EvaluationUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Evaluation\EvaluationUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LockedRegistryDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\LockedRegistry\LockedRegistryDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LockedRegistryInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\LockedRegistry\LockedRegistryInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LockedRegistrySelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\LockedRegistry\LockedRegistrySelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LockedRegistryUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\LockedRegistry\LockedRegistryUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonAddressDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonAddressDelete .sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonAddressDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonAddressDetailSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonAddressInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonAddressInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonAddressSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonAddressSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonAddressUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonAddressUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonCompressorDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonCompressorDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonCompressorDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonCompressorDetailSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonCompressorInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonCompressorInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonCompressorSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonCompressorSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonCompressorSellableDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonCompressorSellableDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonCompressorSellableInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonCompressorSellableInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonCompressorSellableSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonCompressorSellableSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonCompressorSellableUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonCompressorSellableUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonCompressorUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonCompressorUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonContactDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonContactDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonContactDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonContactDetailSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonContactInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonContactInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonContactSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonContactSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonContactUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonContactUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonIsCompressorControlled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonIsCompressorControlled.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonSelectByDocument" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonSelectByDocument.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PersonUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Person\PersonUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PriceTableDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PriceTable\PriceTableDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PriceTableFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PriceTable\PriceTableFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PriceTableGetPriceTableName" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PriceTable\PriceTableGetPriceTableName.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PriceTableInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PriceTable\PriceTableInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PriceTableItemDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PriceTable\PriceTableItemDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PriceTableItemDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PriceTable\PriceTableItemDetailSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PriceTableItemInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PriceTable\PriceTableItemInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PriceTableItemSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PriceTable\PriceTableItemSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PriceTableItemUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PriceTable\PriceTableItemUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PriceTableSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PriceTable\PriceTableSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PriceTableUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PriceTable\PriceTableUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PrivilegePresetDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PrivilegePreset\PrivilegePresetDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PrivilegePresetFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PrivilegePreset\PrivilegePresetFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PrivilegePresetInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PrivilegePreset\PrivilegePresetInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PrivilegePresetPrivilegeDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PrivilegePreset\PrivilegePresetPrivilegeDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PrivilegePresetPrivilegeInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PrivilegePreset\PrivilegePresetPrivilegeInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PrivilegePresetPrivilegeSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PrivilegePreset\PrivilegePresetPrivilegeSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PrivilegePresetSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PrivilegePreset\PrivilegePresetSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PrivilegePresetUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\PrivilegePreset\PrivilegePresetUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductCodeDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductCodeDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductCodeDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductCodeDetailSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductCodeInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductCodeInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductCodeSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductCodeSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductCodeUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductCodeUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductFamilyDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductFamilyDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductFamilyFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductFamilyFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductFamilyInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductFamilyInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductFamilySelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductFamilySelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductFamilyUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductFamilyUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductGroupDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductGroupDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductGroupFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductGroupFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductGroupInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductGroupInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductGroupSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductGroupSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductGroupUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductGroupUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductPictureDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductPictureDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductPictureInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductPictureInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductPictureSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductPictureSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductPictureUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductPictureUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductPriceDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductPriceDetailSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductPriceIndicatorDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductPriceIndicatorDetailSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductPriceIndicatorSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductPriceIndicatorSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductPriceSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductPriceSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductProviderCodeDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductProviderCodeDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductProviderCodeDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductProviderCodeDetailSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductProviderCodeInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductProviderCodeInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductProviderCodeSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductProviderCodeSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductProviderCodeUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductProviderCodeUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductUnitDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductUnitDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductUnitFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductUnitFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductUnitInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductUnitInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductUnitSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductUnitSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductUnitUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductUnitUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProductUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Product\ProductUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RequestDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Request\RequestDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RequestDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Request\RequestDetailSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RequestFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Request\RequestFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RequestInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Request\RequestInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RequestItemDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Request\RequestItemDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RequestItemInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Request\RequestItemInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RequestItemSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Request\RequestItemSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RequestItemUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Request\RequestItemUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RequestReportPendingItems" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Request\RequestReportPendingItems.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RequestSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Request\RequestSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RequestSelectPendingItems" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Request\RequestSelectPendingItems.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RequestUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Request\RequestUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RouteDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Route\RouteDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RouteFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Route\RouteFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RouteFilterConverterSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Route\RouteFilterConverterSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RouteInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Route\RouteInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RouteSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Route\RouteSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RouteUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Route\RouteUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SelectCompressorData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Shared\SelectCompressorData.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SelectCustomerData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Shared\SelectCustomerData.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServiceCodeDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServiceCodeDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServiceCodeDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServiceCodeDetailSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServiceCodeInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServiceCodeInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServiceCodeSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServiceCodeSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServiceCodeUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServiceCodeUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServiceComplementDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServiceComplementDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServiceComplementDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServiceComplementDetailSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServiceComplementInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServiceComplementInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServiceComplementSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServiceComplementSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServiceComplementUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServiceComplementUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServiceDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServiceDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServiceFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServiceFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServiceInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServiceInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServicePriceDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServicePriceDetailSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServicePriceIndicatorDetailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServicePriceIndicatorDetailSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServicePriceIndicatorSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServicePriceIndicatorSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServicePriceSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServicePriceSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServiceSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServiceSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ServiceUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Service\ServiceUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SetBrazilianDatabaseMonthNames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\Shared\SetBrazilianDatabaseMonthNames.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="StateSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\State\StateSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UserChangePassword" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\User\UserChangePassword.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UserDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\User\UserDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UserEmailDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\User\UserEmailDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UserEmailInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\User\UserEmailInsert .sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UserEmailSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\User\UserEmailSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UserEmailUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\User\UserEmailUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UserFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\User\UserFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UserHasPersonSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\User\UserHasPersonSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UserInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\User\UserInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UserLoginSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\User\UserLoginSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UserPersonShortNameSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\User\UserPersonShortNameSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UserPrivilegeDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\User\UserPrivilegeDelete.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UserPrivilegeInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\User\UserPrivilegeInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UserPrivilegeSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\User\UserPrivilegeSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UserSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\User\UserSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UserUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\User\UserUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="VisitScheduleDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\VisitSchedule\VisitScheduleDelete .sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="VisitScheduleFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\VisitSchedule\VisitScheduleFilter.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="VisitScheduleInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\VisitSchedule\VisitScheduleInsert.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="VisitScheduleSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\VisitSchedule\VisitScheduleSelect.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="VisitScheduleUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\SQL\VisitSchedule\VisitScheduleUpdate.sql;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

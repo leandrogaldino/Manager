@@ -1,0 +1,20 @@
+INSERT INTO request
+(
+    creation,
+    statusid,
+    destination,
+    responsible,
+    note,
+    documentname,
+    userid
+)
+VALUES
+(
+    @creation,
+    @statusid,
+    @destination,
+    @responsible,
+    @note,
+    @documentname,
+    @userid
+);

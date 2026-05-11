@@ -1,0 +1,38 @@
+INSERT INTO personaddress
+(
+	personid,
+	ismainaddress,
+	creation,
+	statusid,
+	name,
+	zipcode,
+	street,
+	number,
+	complement,
+	district,
+	cityid,
+	citydocument,
+	statedocument,
+	contributiontypeid,
+	carrierid,
+	userid
+)
+VALUES
+(
+	@personid,
+	@ismainaddress,
+	@creation,
+	@statusid,
+	@name,
+	@zipcode,
+	@street,
+	@number,
+	@complement,
+	@district,
+	@cityid,
+	@citydocument,
+	@statedocument,
+	@contributiontypeid,
+	@carrierid,
+	@userid
+);

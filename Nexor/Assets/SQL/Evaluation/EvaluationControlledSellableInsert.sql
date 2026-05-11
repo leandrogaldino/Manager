@@ -1,0 +1,22 @@
+INSERT INTO evaluationcontrolledsellable
+(
+	creation,
+	evaluationid,
+	personcompressorid,
+	personcompressorsellableid,
+	currentcapacity,
+	sold,
+	lost,
+	userid
+)
+VALUES
+(
+	@creation,
+	@evaluationid,
+	@personcompressorid,
+	@personcompressorsellableid,
+	@currentcapacity,
+	@sold,
+	@lost,
+	@userid
+);

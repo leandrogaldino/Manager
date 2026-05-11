@@ -26,7 +26,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ManagerLaucher", "ManagerLa
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ManagerCore", "ManagerCore\ManagerCore.vbproj", "{1F654C34-02FF-4AA4-9D4D-F2084FD32BE3}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Nexor", "Nexor\Nexor.vbproj", "{B9D35CE6-227A-46F6-A8DB-33408E11B5C4}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Nexor", "Nexor\Nexor.vbproj", "{6667D1FB-2892-4245-B770-48A606B7DA1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,10 +54,10 @@ Global
 		{1F654C34-02FF-4AA4-9D4D-F2084FD32BE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F654C34-02FF-4AA4-9D4D-F2084FD32BE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F654C34-02FF-4AA4-9D4D-F2084FD32BE3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B9D35CE6-227A-46F6-A8DB-33408E11B5C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B9D35CE6-227A-46F6-A8DB-33408E11B5C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B9D35CE6-227A-46F6-A8DB-33408E11B5C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B9D35CE6-227A-46F6-A8DB-33408E11B5C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6667D1FB-2892-4245-B770-48A606B7DA1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6667D1FB-2892-4245-B770-48A606B7DA1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6667D1FB-2892-4245-B770-48A606B7DA1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6667D1FB-2892-4245-B770-48A606B7DA1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

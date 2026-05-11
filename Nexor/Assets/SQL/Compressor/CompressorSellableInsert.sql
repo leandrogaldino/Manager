@@ -1,0 +1,22 @@
+INSERT INTO compressorsellable
+(
+    compressorid,
+    creation,
+    statusid,
+    controltypeid,
+    productid,
+    serviceid,
+    quantity,
+    userid
+)
+VALUES
+(
+    @compressorid,
+    @creation,
+    @statusid,
+    @controltypeid,
+    @productid,
+    @serviceid,
+    @quantity,
+    @userid
+);

@@ -1,0 +1,14 @@
+SELECT
+	evaluationcontrolledsellable.id,
+	evaluationcontrolledsellable.creation,
+	evaluationcontrolledsellable.personcompressorid,
+	evaluationcontrolledsellable.personcompressorsellableid,
+	evaluationcontrolledsellable.currentcapacity,
+	evaluationcontrolledsellable.sold,
+	evaluationcontrolledsellable.lost,
+	evaluationcontrolledsellable.userid
+FROM evaluationcontrolledsellable
+LEFT JOIN personcompressorsellable ON personcompressorsellable.id = evaluationcontrolledsellable.personcompressorsellableid
+WHERE 
+	evaluationcontrolledsellable.evaluationid = @evaluationid AND
+	personcompressorsellable.controltypeid = @controltypeid;

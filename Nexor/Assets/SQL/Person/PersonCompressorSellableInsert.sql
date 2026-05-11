@@ -1,0 +1,26 @@
+INSERT INTO personcompressorsellable
+(
+	personcompressorid,
+	creation,
+	statusid,
+	sellablebindid,
+	controltypeid,
+	productid,
+	serviceid,
+	quantity,
+	capacity,
+	userid
+)
+VALUES
+(
+	@personcompressorid,
+	@creation,
+	@statusid,
+	@sellablebindid,
+	@controltypeid,
+	@productid,
+	@serviceid,
+	@quantity,
+	@capacity,
+	@userid
+);

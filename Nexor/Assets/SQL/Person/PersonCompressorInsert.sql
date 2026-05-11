@@ -1,0 +1,32 @@
+INSERT INTO personcompressor
+(
+	personid,
+	creation,
+	statusid,
+	compressorid,
+	compressorinterfaceid,
+	compressorunitid,
+	controlledid,
+	serialnumber,
+	patrimony,
+	sector,
+	unitcapacity,
+	note,
+	userid
+)
+VALUES
+(
+	@personid,
+	@creation,
+	@statusid,
+	@compressorid,
+	@compressorinterfaceid,
+	@compressorunitid,
+	@controlledid,
+	@serialnumber,
+	@patrimony,
+	@sector,
+	@unitcapacity,
+	@note,
+	@userid
+);

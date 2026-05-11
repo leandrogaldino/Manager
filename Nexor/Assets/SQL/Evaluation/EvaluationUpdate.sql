@@ -1,0 +1,25 @@
+
+UPDATE evaluation SET
+    statusid =  @statusid,
+    calltypeid = @calltypeid,
+    needproposalid = @needproposalid,
+    hasrepairid = @hasrepairid,
+    unitname = @unitname,
+    temperature = @temperature,
+    pressure = @pressure,
+    evaluationdate = @evaluationdate,
+    starttime = @starttime,
+    endtime = @endtime,
+    reference = @reference,
+    customerid = @customerid,
+    responsible = @responsible,
+    personcompressorid = @personcompressorid,
+    horimeter = @horimeter,
+    manualaverageworkload = @manualaverageworkload,
+    averageworkload = @averageworkload,
+    technicaladvice = @technicaladvice,
+    documentname = @documentname,
+    signaturename = @signaturename,
+    rejectreason = @rejectreason,
+    userid = @userid
+WHERE evaluation.id = @id;

@@ -1,0 +1,24 @@
+INSERT INTO useremail
+(
+    ofuserid,
+    ismainemail,
+    creation,
+    host,
+    port,
+    email,
+    password,
+    enablessl,
+    userid
+)
+VALUES
+(
+    @ofuserid,
+    @ismainemail,
+    @creation,
+    @host,
+    @port,
+    @email,
+    @password,
+    @enablessl,
+    @userid
+);

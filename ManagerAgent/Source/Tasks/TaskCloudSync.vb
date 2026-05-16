@@ -359,11 +359,11 @@ Public Class TaskCloudSync
                                                  New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
                                                  Limit:=1)
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
-                Dim PersonCompressorData As Dictionary(Of String, Object)
-                PersonCompressorData = Result.Data(0)
-                PersonCompressorData("serialnumber") = If(PersonCompressorData("serialnumber") Is DBNull.Value, String.Empty, PersonCompressorData("serialnumber"))
-                PersonCompressorData("patrimony") = If(PersonCompressorData("patrimony") Is DBNull.Value, String.Empty, PersonCompressorData("patrimony"))
-                PersonCompressorData("sector") = If(PersonCompressorData("sector") Is DBNull.Value, String.Empty, PersonCompressorData("sector"))
+            Dim PersonCompressorData As Dictionary(Of String, Object)
+            PersonCompressorData = Result.Data(0)
+            PersonCompressorData("serialnumber") = If(PersonCompressorData("serialnumber") Is DBNull.Value, String.Empty, PersonCompressorData("serialnumber"))
+            PersonCompressorData("patrimony") = If(PersonCompressorData("patrimony") Is DBNull.Value, String.Empty, PersonCompressorData("patrimony"))
+            PersonCompressorData("sector") = If(PersonCompressorData("sector") Is DBNull.Value, String.Empty, PersonCompressorData("sector"))
             PersonCompressorData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
             PersonCompressorData("visible") = If(PersonCompressorData("statusid") = 0, 1, 0)
             PersonCompressorData.Remove("statusid")

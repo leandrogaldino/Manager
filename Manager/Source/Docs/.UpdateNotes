@@ -1,3 +1,7 @@
+#2.2.3
+@??/??/2026
+• Setor do compressor incluído no relatório de atendimento do compressor.
+• O valor do engraxamento informado pelo técnico agora é exibido corretamente na importação da avaliação.
 #2.2.2
 @13/04/2026
 • Correção no processo de salvamento da avaliação: avaliações agora são aprovadas automaticamente quando o usuário possui permissão para aprovação.

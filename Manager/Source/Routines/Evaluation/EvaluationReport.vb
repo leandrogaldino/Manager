@@ -50,7 +50,8 @@ Public Class EvaluationReport
         WsReport.Range(3, 1, 3, 7).Style.Border.SetOutsideBorderColor(XLColor.DimGray)
         WsReport.Cell(3, 1).CreateRichText().
             AddText("CLIENTE: ").SetBold().
-            AddText(ReportingEvaluation.Customer.ShortName)
+            AddText(ReportingEvaluation.Customer.ShortName).
+            AddText(If(String.IsNullOrEmpty(ReportingEvaluation.Compressor.Sector), String.Empty, $" - {ReportingEvaluation.Compressor.Sector}"))
         WsReport.Range(4, 1, 4, 7).Merge()
         WsReport.Range(4, 1, 4, 7).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin)
         WsReport.Range(4, 1, 4, 7).Style.Border.SetOutsideBorderColor(XLColor.DimGray)

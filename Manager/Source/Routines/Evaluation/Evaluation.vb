@@ -984,6 +984,8 @@ Public Class Evaluation
         Dim OilFilter As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelables.Where(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.OilFilter).ToList
         Dim Separator As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelables.Where(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Separator).ToList
         Dim Oil As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelables.Where(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Oil).ToList
+        Dim Greasing As List(Of EvaluationControlledSellable) = Evaluation.WorkedHourControlledSelables.Where(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Greasing).ToList
+
         Evaluation.WorkedHourControlledSelables.ToList.ForEach(Sub(x)
                                                                    x.SetIsSaved(True)
                                                                End Sub)
@@ -1012,6 +1014,12 @@ Public Class Evaluation
                         x.Lost = False
                         x.SetIsSaved(True)
                     End Sub)
+        Greasing.ForEach(Sub(x)
+                             x.CurrentCapacity = Data("greasing")
+                             x.Sold = False
+                             x.Lost = False
+                             x.SetIsSaved(True)
+                         End Sub)
         For Each CoalescentData As Dictionary(Of String, Object) In Data("coalescents")
             Coalescent = Evaluation.ElapsedDayControlledSellables.Where(Function(y) y.PersonCompressorSellable.IsSellableBinded).FirstOrDefault(Function(x) x.PersonCompressorSellable.ID = CoalescentData("coalescentid"))
             If Coalescent IsNot Nothing Then

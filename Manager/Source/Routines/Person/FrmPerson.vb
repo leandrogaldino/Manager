@@ -432,6 +432,17 @@ Public Class FrmPerson
                 Case Is = ConfirmationType.No
                     e.Value = EnumHelper.GetEnumDescription(ConfirmationType.No).ToUpper()
             End Select
+        ElseIf e.ColumnIndex = Dgv.Columns("OilType").Index Then
+            Select Case e.Value
+                Case Is = OilType.None
+                    e.Value = EnumHelper.GetEnumDescription(OilType.None)
+                Case Is = OilType.Mineral
+                    e.Value = EnumHelper.GetEnumDescription(OilType.Mineral)
+                Case Is = OilType.SemiSynthetic
+                    e.Value = EnumHelper.GetEnumDescription(OilType.SemiSynthetic)
+                Case Is = OilType.Synthetic
+                    e.Value = EnumHelper.GetEnumDescription(OilType.Synthetic)
+            End Select
         End If
     End Sub
     <DebuggerStepThrough>

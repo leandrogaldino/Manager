@@ -1,5 +1,7 @@
-#2.2.3
+#2.3.0
 @??/??/2026
+• Inclusão do tipo de óleo no compressor da pessoa.
+• Correção na legenda do Grid dos compressores da pessoa.
 • Setor do compressor incluído no relatório de atendimento do compressor.
 • O valor do engraxamento informado pelo técnico agora é exibido corretamente na importação da avaliação.
 #2.2.2

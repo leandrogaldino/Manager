@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Routine Id="PersonCompressor" Version="3">
+<Routine Id="PersonCompressor" Version="4">
 	<SortedColumn>-1</SortedColumn>
 	<SortDirection>0</SortDirection>
     <Column Index="0">
@@ -20,123 +20,129 @@
 		<Name>Controlado</Name>
 		<Width>100</Width>
 	</Column>
-    <Column Index="3" ButtonState="Hidden">
+	<Column Index="3">
+		<Visible>True</Visible>
+		<DisplayIndex>3</DisplayIndex>
+		<Name>Tipo Óleo</Name>
+		<Width>100</Width>
+	</Column>
+    <Column Index="4" ButtonState="Hidden">
         <Visible>False</Visible>
-        <DisplayIndex>3</DisplayIndex>
+        <DisplayIndex>4</DisplayIndex>
         <Name>Compressor Obj</Name>
         <Width>100</Width>
     </Column>
-	<Column Index="4" ButtonState="Hidden">
+	<Column Index="5" ButtonState="Hidden">
 		<Visible>False</Visible>
-		<DisplayIndex>4</DisplayIndex>
+		<DisplayIndex>5</DisplayIndex>
 		<Name>ID Compressor</Name>
 		<Width>100</Width>
 	</Column>
-	<Column Index="5">
+	<Column Index="6">
 		<Visible>True</Visible>
-		<DisplayIndex>5</DisplayIndex>
+		<DisplayIndex>6</DisplayIndex>
 		<Name>Compressor</Name>
 		<Width>200</Width>
-	</Column>
-	<Column Index="6" ButtonState="Hidden">
-		<Visible>False</Visible>
-		<DisplayIndex>6</DisplayIndex>
-		<Name>Compressor Interface Obj</Name>
-		<Width>100</Width>
 	</Column>
 	<Column Index="7" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>7</DisplayIndex>
+		<Name>Compressor Interface Obj</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="8" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>8</DisplayIndex>
 		<Name>ID Compressor Interface</Name>
 		<Width>100</Width>
 	</Column>
-	<Column Index="8">
+	<Column Index="9">
 		<Visible>True</Visible>
-		<DisplayIndex>8</DisplayIndex>
+		<DisplayIndex>9</DisplayIndex>
 		<Name>Interface</Name>
 		<Width>200</Width>
-	</Column>
-	<Column Index="9" ButtonState="Hidden">
-		<Visible>False</Visible>
-		<DisplayIndex>9</DisplayIndex>
-		<Name>Unidade Compressora Obj</Name>
-		<Width>100</Width>
 	</Column>
 	<Column Index="10" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>10</DisplayIndex>
+		<Name>Unidade Compressora Obj</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="11" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>11</DisplayIndex>
 		<Name>ID Unidade Compressora</Name>
 		<Width>100</Width>
 	</Column>
-	<Column Index="11">
+	<Column Index="12">
 		<Visible>True</Visible>
-		<DisplayIndex>11</DisplayIndex>
+		<DisplayIndex>12</DisplayIndex>
 		<Name>Unidade</Name>
 		<Width>200</Width>
 	</Column>	
-    <Column Index="12">
+    <Column Index="13">
         <Visible>True</Visible>
-        <DisplayIndex>12</DisplayIndex>
+        <DisplayIndex>13</DisplayIndex>
         <Name>Nº de Série</Name>
         <Width>120</Width>
     </Column>
-	<Column Index="13">
-		<Visible>True</Visible>
-		<DisplayIndex>13</DisplayIndex>
-		<Name>Patrimônio</Name>
-		<Width>120</Width>
-	</Column>
 	<Column Index="14">
 		<Visible>True</Visible>
 		<DisplayIndex>14</DisplayIndex>
+		<Name>Patrimônio</Name>
+		<Width>120</Width>
+	</Column>
+	<Column Index="15">
+		<Visible>True</Visible>
+		<DisplayIndex>15</DisplayIndex>
 		<Name>Setor</Name>
 		<Width>200</Width>
 	</Column>
-	<Column Index="15" ButtonState="Hidden">
+	<Column Index="16" ButtonState="Hidden">
 		<Visible>True</Visible>
-		<DisplayIndex>15</DisplayIndex>
+		<DisplayIndex>16</DisplayIndex>
 		<Name>Cap. Und.</Name>
 		<Width>100</Width>
 	</Column>
-	<Column Index="16">
+	<Column Index="17">
 		<Visible>True</Visible>
-		<DisplayIndex>16</DisplayIndex>
+		<DisplayIndex>17</DisplayIndex>
 		<Name>Observação</Name>
 		<Width>350</Width>
-	</Column>
-	<Column Index="17" ButtonState="Hidden">
-		<Visible>False</Visible>
-		<DisplayIndex>17</DisplayIndex>
-		<Name>Guid</Name>
-		<Width>100</Width>
 	</Column>
 	<Column Index="18" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>18</DisplayIndex>
+		<Name>Guid</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="19" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>19</DisplayIndex>
 		<Name>ID</Name>
 		<Width>100</Width>
 	</Column>
-	<Column Index="19">
+	<Column Index="20">
 		<Visible>True</Visible>
-		<DisplayIndex>19</DisplayIndex>
-		<Name>Criação</Name>
-		<Width>100</Width>
-	</Column>
-	<Column Index="20" ButtonState="Hidden">
-		<Visible>False</Visible>
 		<DisplayIndex>20</DisplayIndex>
-		<Name>Rotina</Name>
+		<Name>Criação</Name>
 		<Width>100</Width>
 	</Column>
 	<Column Index="21" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>21</DisplayIndex>
-		<Name>Salvo</Name>
+		<Name>Rotina</Name>
 		<Width>100</Width>
 	</Column>
 	<Column Index="22" ButtonState="Hidden">
 		<Visible>False</Visible>
 		<DisplayIndex>22</DisplayIndex>
+		<Name>Salvo</Name>
+		<Width>100</Width>
+	</Column>
+	<Column Index="23" ButtonState="Hidden">
+		<Visible>False</Visible>
+		<DisplayIndex>23</DisplayIndex>
 		<Name>Usuário</Name>
 		<Width>100</Width>
 	</Column>

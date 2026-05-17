@@ -1,10 +1,15 @@
-﻿Imports ControlLibrary
+﻿Imports System.Threading
+Imports ControlLibrary
 Imports ManagerCore
 Public Class FrmMain
     Private _User As User
+    Private _RemoteDB As RemoteDB
+    Private _CancelationToken As New CancellationTokenSource()
+    Private _Session As Session
     Public Sub New()
         InitializeComponent()
-        _User = Locator.GetInstance(Of Session).User
+        _Session = Locator.GetInstance(Of Session)
+        _User = _Session.User
         LblCompany.Text = Locator.GetInstance(Of Session).Setting.Company.ShortName
         BtnVersion.Text = Locator.GetInstance(Of Session).ManagerVersion
         BtnUser.Text = _User.Username
@@ -443,18 +448,10 @@ Public Class FrmMain
     Private Sub BtnExit_Click(sender As Object, e As EventArgs) Handles BtnExit.Click
         If TcWindows.TabPages.Count > 0 Then
             If CMessageBox.Show("Todas as janelas serão fechadas, deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Dispose()
-                FrmLogin.TxtUsername.Text = Nothing
-                FrmLogin.TxtPassword.Text = Nothing
-                FrmLogin.TxtUsername.Select()
-                FrmLogin.Show()
+                CloseMe()
             End If
         Else
-            Dispose()
-            FrmLogin.TxtUsername.Text = Nothing
-            FrmLogin.TxtPassword.Text = Nothing
-            FrmLogin.TxtUsername.Select()
-            FrmLogin.Show()
+            CloseMe()
         End If
     End Sub
     <DebuggerStepThrough>
@@ -474,6 +471,7 @@ Public Class FrmMain
         End If
     End Sub
     Private Sub CloseMe()
+        _CancelationToken.Cancel()
         Locator.GetInstance(Of Session).AutoCloseApp = True
         Dispose()
         FrmLogin.TxtUsername.Text = Nothing
@@ -507,5 +505,53 @@ Public Class FrmMain
             Form.ShowDialog()
         End Using
     End Sub
+    Private Async Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
+        Await CheckEvaluationImport(_CancelationToken.Token)
+        Await CheckRequestImport(_CancelationToken.Token)
+    End Sub
+    Private Async Sub TimerImportEvaluation_Tick(sender As Object, e As EventArgs) Handles TimerEvaluationImport.Tick
+        Await CheckEvaluationImport(_CancelationToken.Token)
+    End Sub
+    Private Async Sub TimerRequestImport_Tick(sender As Object, e As EventArgs) Handles TimerRequestImport.Tick
+        Await CheckRequestImport(_CancelationToken.Token)
+    End Sub
+    Private Async Function CheckEvaluationImport(Token As CancellationToken) As Task
+        If Not _User.CanAccess(Routine.EvaluationImport) Then Return
+        Dim HasInternet = Await InternetHelper.IsInternetAvailableAsync()
+        If HasInternet Then
+            Dim Condition As New List(Of RemoteDB.Condition) From {
+                New RemoteDB.WhereEqualToCondition("info.importedby", Nothing),
+                New RemoteDB.WhereEqualToCondition("info.requestprocessed", True)
+            }
+            Dim Evaluations As List(Of Dictionary(Of String, Object)) = Await _RemoteDB.ExecuteGet("evaluations", Condition)
+            If Token.IsCancellationRequested Then Return
+            If Evaluations.Count > 0 AndAlso _Session.ShowImportEvaluationMessage Then
+                _Session.ShowImportEvaluationMessage = False
+                CMessageBox.Show("Existem avaliações pendentes de importação.", CMessageBoxType.Information)
+                _Session.ShowImportEvaluationMessage = True
+            End If
+        End If
+    End Function
+
+
+
+    Private Async Function CheckRequestImport(Token As CancellationToken) As Task
+        If Not _User.CanAccess(Routine.Request) Then Return
+        Dim HasInternet = Await InternetHelper.IsInternetAvailableAsync()
+        If HasInternet Then
+            Dim Condition As New List(Of RemoteDB.Condition) From {
+                New RemoteDB.WhereEqualToCondition("info.hasreplacedproducts", True),
+                New RemoteDB.WhereEqualToCondition("info.requestprocessed", False)
+            }
+            Dim Evaluations As List(Of Dictionary(Of String, Object)) = Await _RemoteDB.ExecuteGet("evaluations", Condition)
+            If Token.IsCancellationRequested Then Return
+            If Evaluations.Count > 0 AndAlso _Session.ShowImportEvaluationMessage Then
+                _Session.ShowImportEvaluationMessage = False
+                CMessageBox.Show("Existem requisições pendentes de importação.", CMessageBoxType.Information)
+                _Session.ShowImportEvaluationMessage = True
+            End If
+        End If
+    End Function
 End Class
 

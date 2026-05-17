@@ -6,5 +6,6 @@ Public Class Session
     Public Property Setting As New SettingModel
     Public Property LicenseResult As New LicenseResultModel
     Public Property AutoCloseApp As Boolean
+    Public Property ShowImportEvaluationMessage As Boolean = True
     Public Property ManagerVersion As String
 End Class

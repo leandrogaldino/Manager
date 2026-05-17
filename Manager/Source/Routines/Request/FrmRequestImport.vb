@@ -12,17 +12,21 @@ Public Class FrmRequestImport
     Private _isSyncing As Boolean = False
     Public Sub New()
         InitializeComponent()
+        _Session = Locator.GetInstance(Of Session)
+        _Session.ShowImportEvaluationMessage = False
         InitializeDatabases()
         InitializeDbListener()
     End Sub
     Public Sub New(GridControl As UcRequestGrid)
         InitializeComponent()
+        _Session = Locator.GetInstance(Of Session)
+        _Session.ShowImportEvaluationMessage = False
         InitializeDatabases()
         InitializeDbListener()
         _GridControl = GridControl
     End Sub
     Private Sub InitializeDatabases()
-        _Session = Locator.GetInstance(Of Session)
+
         _Storage = Locator.GetInstance(Of Storage)
         _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
         _LocalDB = Locator.GetInstance(Of LocalDB)
@@ -216,4 +220,7 @@ Public Class FrmRequestImport
             Cursor = Cursors.Default
         End Using
     End Function
+    Private Sub FrmRequestImport_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        _Session.ShowImportEvaluationMessage = True
+    End Sub
 End Class

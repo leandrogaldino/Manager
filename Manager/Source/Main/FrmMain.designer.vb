@@ -41,6 +41,8 @@ Partial Class FrmMain
         Me.BtnExit = New System.Windows.Forms.ToolStripButton()
         Me.TcMenu = New System.Windows.Forms.TabControl()
         Me.TimerAccess = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerEvaluationImport = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerRequestImport = New System.Windows.Forms.Timer(Me.components)
         Me.TsBotMenu.SuspendLayout()
         Me.TabRoutine.SuspendLayout()
         Me.TsRoutine.SuspendLayout()
@@ -218,6 +220,16 @@ Partial Class FrmMain
         Me.TimerAccess.Enabled = True
         Me.TimerAccess.Interval = 10000
         '
+        'TimerEvaluationImport
+        '
+        Me.TimerEvaluationImport.Enabled = True
+        Me.TimerEvaluationImport.Interval = 1800000
+        '
+        'TimerRequestImport
+        '
+        Me.TimerRequestImport.Enabled = True
+        Me.TimerRequestImport.Interval = 1800000
+        '
         'FrmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
@@ -263,4 +275,6 @@ Partial Class FrmMain
     Friend WithEvents BtnEmailSign As ToolStripMenuItem
     Friend WithEvents BtnEmailSent As ToolStripMenuItem
     Friend WithEvents BtnVersion As ToolStripButton
+    Friend WithEvents TimerEvaluationImport As Timer
+    Friend WithEvents TimerRequestImport As Timer
 End Class

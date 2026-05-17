@@ -361,7 +361,7 @@ Public Class TaskCloudSync
 
 
         Dim PersonCompressorResult = Await _LocalDB.ExecuteSelectAsync("personcompressor",
-                                                 New List(Of String) From {"id", "statusid", "personid", "compressorid", "serialnumber", "patrimony", "sector", "compressorinterfaceid", "compressorunitid"},
+                                                 New List(Of String) From {"id", "statusid", "personid", "compressorid", "serialnumber", "patrimony", "sector", "compressorinterfaceid", "compressorunitid", "oiltypeid"},
                                                  "id = @id",
                                                  New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
                                                  Limit:=1)

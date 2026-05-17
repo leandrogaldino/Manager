@@ -28,6 +28,7 @@ Public Class FrmPersonCompressor
         _PersonForm = PersonForm
         _User = Locator.GetInstance(Of Session).User
         CbxControlled.Items.AddRange(EnumHelper.GetEnumDescriptions(Of ConfirmationType).ToArray())
+        CbxOilType.Items.AddRange(EnumHelper.GetEnumDescriptions(Of OilType).ToArray())
         LoadForm()
         DgvNavigator.DataGridView = _PersonForm.DgvCompressor
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
@@ -175,7 +176,7 @@ Public Class FrmPersonCompressor
     End Sub
     Private Sub TcPersonCompressor_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TcPersonCompressor.SelectedIndexChanged
         If TcPersonCompressor.SelectedTab Is TabMain Then
-            Size = New Size(430, 310)
+            Size = New Size(593, 310)
             FormBorderStyle = FormBorderStyle.FixedSingle
             WindowState = FormWindowState.Normal
             MaximizeBox = False
@@ -239,6 +240,9 @@ Public Class FrmPersonCompressor
         QbxUnit.Freeze(_PersonCompressor.CompressorUnitID)
 
         CbxControlled.Text = EnumHelper.GetEnumDescription(_PersonCompressor.Controlled)
+
+        CbxOilType.Text = EnumHelper.GetEnumDescription(_PersonCompressor.OilType)
+
         TxtSerialNumber.Text = _PersonCompressor.SerialNumber
         TxtPatrimony.Text = _PersonCompressor.Patrimony
         TxtSector.Text = _PersonCompressor.Sector
@@ -305,6 +309,15 @@ Public Class FrmPersonCompressor
             EprValidation.SetIconAlignment(LblControlled, ErrorIconAlignment.MiddleRight)
             CbxControlled.Select()
             Return False
+
+        ElseIf String.IsNullOrEmpty(CbxOilType.Text) Then
+            TcPersonCompressor.SelectedTab = TabMain
+            EprValidation.SetError(LblOilType, $"Campo obrigatório")
+            EprValidation.SetIconAlignment(LblOilType, ErrorIconAlignment.MiddleRight)
+            CbxOilType.Select()
+            Return False
+
+
         ElseIf DbxUnitCapacity.DecimalValue <= 0 Then
             TcPersonCompressor.SelectedTab = TabMain
             EprValidation.SetError(LblUnitCapacity, "A capacidade da unidade deve ser maior que 0.")
@@ -383,6 +396,7 @@ Public Class FrmPersonCompressor
                     .CompressorUnitID = QbxUnit.FreezedPrimaryKey
                     .CompressorUnitName = QbxUnit.Text
                     .Controlled = EnumHelper.GetEnumValue(Of ConfirmationType)(CbxControlled.Text)
+                    .OilType = EnumHelper.GetEnumValue(Of OilType)(CbxOilType.Text)
                     .SerialNumber = TxtSerialNumber.Text
                     .Patrimony = TxtPatrimony.Text
                     .Sector = TxtSector.Text
@@ -402,6 +416,7 @@ Public Class FrmPersonCompressor
                     .CompressorUnitID = QbxUnit.FreezedPrimaryKey
                     .CompressorUnitName = QbxUnit.Text
                     .Controlled = EnumHelper.GetEnumValue(Of ConfirmationType)(CbxControlled.Text)
+                    .OilType = EnumHelper.GetEnumValue(Of OilType)(CbxOilType.Text)
                     .SerialNumber = TxtSerialNumber.Text
                     .Patrimony = TxtPatrimony.Text
                     .Sector = TxtSector.Text
@@ -432,10 +447,12 @@ Public Class FrmPersonCompressor
             Return False
         End If
     End Function
-    Private Sub CbxControlled_TextChanged(sender As Object, e As EventArgs) Handles CbxControlled.SelectedIndexChanged
+    Private Sub CbxControlled_TextChanged(sender As Object, e As EventArgs) Handles CbxControlled.SelectedIndexChanged, CbxOilType.SelectedIndexChanged
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub
+
+
     Private Sub TmrQueriedBoxCompressor_Tick(sender As Object, e As EventArgs) Handles TmrQueriedBoxCompressor.Tick
         BtnViewCompressor.Visible = False
         BtnNewCompressor.Visible = False

@@ -240,6 +240,7 @@ Public Class Person
                         CmdCompressor.Parameters.AddWithValue("@compressorinterfaceid", PersonCompressor.CompressorInterfaceID)
                         CmdCompressor.Parameters.AddWithValue("@compressorunitid", PersonCompressor.CompressorUnitID)
                         CmdCompressor.Parameters.AddWithValue("@controlledid", Convert.ToInt32(PersonCompressor.Controlled))
+                        CmdCompressor.Parameters.AddWithValue("@oiltypeid", Convert.ToInt32(PersonCompressor.OilType))
                         CmdCompressor.Parameters.AddWithValue("@serialnumber", If(String.IsNullOrEmpty(PersonCompressor.SerialNumber), DBNull.Value, PersonCompressor.SerialNumber))
                         CmdCompressor.Parameters.AddWithValue("@patrimony", If(String.IsNullOrEmpty(PersonCompressor.Patrimony), DBNull.Value, PersonCompressor.Patrimony))
                         CmdCompressor.Parameters.AddWithValue("@sector", If(String.IsNullOrEmpty(PersonCompressor.Sector), DBNull.Value, PersonCompressor.Sector))
@@ -443,6 +444,7 @@ Public Class Person
                             CmdCompressor.Parameters.AddWithValue("@compressorinterfaceid", PersonCompressor.CompressorInterfaceID)
                             CmdCompressor.Parameters.AddWithValue("@compressorunitid", PersonCompressor.CompressorUnitID)
                             CmdCompressor.Parameters.AddWithValue("@controlledid", Convert.ToInt32(PersonCompressor.Controlled))
+                            CmdCompressor.Parameters.AddWithValue("@oiltypeid", Convert.ToInt32(PersonCompressor.OilType))
                             CmdCompressor.Parameters.AddWithValue("@serialnumber", If(String.IsNullOrEmpty(PersonCompressor.SerialNumber), DBNull.Value, PersonCompressor.SerialNumber))
                             CmdCompressor.Parameters.AddWithValue("@patrimony", If(String.IsNullOrEmpty(PersonCompressor.Patrimony), DBNull.Value, PersonCompressor.Patrimony))
                             CmdCompressor.Parameters.AddWithValue("@sector", If(String.IsNullOrEmpty(PersonCompressor.Sector), DBNull.Value, PersonCompressor.Sector))
@@ -495,6 +497,7 @@ Public Class Person
                             CmdCompressor.Parameters.AddWithValue("@compressorinterfaceid", PersonCompressor.CompressorInterfaceID)
                             CmdCompressor.Parameters.AddWithValue("@compressorunitid", PersonCompressor.CompressorUnitID)
                             CmdCompressor.Parameters.AddWithValue("@controlledid", Convert.ToInt32(PersonCompressor.Controlled))
+                            CmdCompressor.Parameters.AddWithValue("@oiltypeid", Convert.ToInt32(PersonCompressor.OilType))
                             CmdCompressor.Parameters.AddWithValue("@serialnumber", If(String.IsNullOrEmpty(PersonCompressor.SerialNumber), DBNull.Value, PersonCompressor.SerialNumber))
                             CmdCompressor.Parameters.AddWithValue("@patrimony", If(String.IsNullOrEmpty(PersonCompressor.Patrimony), DBNull.Value, PersonCompressor.Patrimony))
                             CmdCompressor.Parameters.AddWithValue("@sector", If(String.IsNullOrEmpty(PersonCompressor.Sector), DBNull.Value, PersonCompressor.Sector))
@@ -652,6 +655,7 @@ Public Class Person
                     Compressor = New PersonCompressor With {
                         .Status = Convert.ToInt32(Row.Item("statusid")),
                         .Controlled = Convert.ToInt32(Row.Item("controlledid")),
+                        .OilType = Convert.ToInt32(Row.Item("oiltypeid")),
                         .Compressor = New Lazy(Of Compressor)(Function() New Compressor().Load(Row.Item("compressorid"), False)),
                         .CompressorID = Convert.ToInt64(Row.Item("compressorid")),
                         .CompressorName = Convert.ToString(Row.Item("compressorname")),

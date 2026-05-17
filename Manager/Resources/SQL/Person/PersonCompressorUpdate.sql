@@ -4,6 +4,7 @@ UPDATE personcompressor SET
 	compressorinterfaceid = @compressorinterfaceid,
 	compressorunitid = @compressorunitid,
 	controlledid = @controlledid,
+	oiltypeid = @oiltypeid,
 	serialnumber = @serialnumber,
 	patrimony = @patrimony,
 	sector = @sector,

@@ -6,6 +6,7 @@ SELECT
 	personcompressor.compressorinterfaceid,
 	personcompressor.compressorunitid,
 	personcompressor.controlledid,
+	personcompressor.oiltypeid,
 	compressor.name AS compressorname,
 	compressorinterface.name AS compressorinterfacename,
 	compressorunit.name AS compressorunitname,

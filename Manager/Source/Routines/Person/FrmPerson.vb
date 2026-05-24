@@ -588,7 +588,7 @@ Public Class FrmPerson
                         If RbtIsNaturalEntity.Checked Then
                             CMessageBox.Show("Já existe uma pessoa cadastrada com esse CPF. Caso o cadastro tenha sido importado será necessário excluir o endereço e contato manualmente.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                         Else
-                            CMessageBox.Show("Já existe uma pessoa cadastrada com esse CNPJ. Caso o cadastro tenha sido importado será necessário excluir o endereço e contato manualmente", CMessageBoxType.Warning, CMessageBoxButtons.OK)
+                            CMessageBox.Show("Já existe uma pessoa cadastrada com esse CNPJ. Caso o cadastro tenha sido importado será necessário excluir o endereço e contato manualmente.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
                         End If
                     ElseIf ex.Number = MysqlError.ForeignKey AndAlso ex.Message.Contains("evaluation_personcompressor") Then
                         CMessageBox.Show("Existe avaliação para um ou mais compressores excluídos. Todos os compressores excluídos serão restaurados.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
@@ -600,18 +600,26 @@ Public Class FrmPerson
                         DgvCompressor.Fill(_Person.Compressors)
                     ElseIf ex.Number = MysqlError.ForeignKey AndAlso ex.Message.Contains("evaluationsellable_personcompressorsellable") Then
                         CMessageBox.Show("Existe avaliação para um ou mais itens excluídos. Todos os itens excluídos serão restaurados.", CMessageBoxType.Warning, CMessageBoxButtons.OK)
+                        _Person.Compressors.Clear()
                         For Each Compressor As PersonCompressor In _CompressorsShadow
-                            For Each WorkedHourSellable As PersonCompressorSellable In Compressor.WorkedHourSellables
-                                If Not _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).WorkedHourSellables.Any(Function(y) y.ID = WorkedHourSellable.ID) Then
-                                    _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).WorkedHourSellables.Add(Compressor.WorkedHourSellables.Single(Function(y) y.ID = WorkedHourSellable.ID))
-                                End If
-                            Next WorkedHourSellable
-                            For Each ElapsedDaySellable As PersonCompressorSellable In Compressor.ElapsedDaySellables
-                                If Not _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).ElapsedDaySellables.Any(Function(y) y.ID = ElapsedDaySellable.ID) Then
-                                    _Person.Compressors.Single(Function(x) x.ID = Compressor.ID).ElapsedDaySellables.Add(Compressor.ElapsedDaySellables.Single(Function(y) y.ID = ElapsedDaySellable.ID))
-                                End If
-                            Next ElapsedDaySellable
-                        Next
+                            _Person.Compressors.Add(Compressor.Clone)
+                        Next Compressor
+                        'For Each Compressor As PersonCompressor In _CompressorsShadow
+                        '    Dim CurrentCompressor As PersonCompressor = _Person.Compressors.FirstOrDefault(Function(x) x.ID = Compressor.ID)
+                        '    If CurrentCompressor Is Nothing Then
+                        '        Continue For
+                        '    End If
+                        '    For Each WorkedHourSellable As PersonCompressorSellable In Compressor.WorkedHourSellables
+                        '        If Not CurrentCompressor.WorkedHourSellables.Any(Function(y) y.ID = WorkedHourSellable.ID) Then
+                        '            CurrentCompressor.WorkedHourSellables.Add(WorkedHourSellable.Clone)
+                        '        End If
+                        '    Next
+                        '    For Each ElapsedDaySellable As PersonCompressorSellable In Compressor.ElapsedDaySellables
+                        '        If Not CurrentCompressor.ElapsedDaySellables.Any(Function(y) y.ID = ElapsedDaySellable.ID) Then
+                        '            CurrentCompressor.ElapsedDaySellables.Add(ElapsedDaySellable.Clone)
+                        '        End If
+                        '    Next
+                        'Next
                         DgvCompressor.Fill(_Person.Compressors)
                     Else
                         CMessageBox.Show("ERRO PS004", "Ocorreu um erro salvar o registro.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

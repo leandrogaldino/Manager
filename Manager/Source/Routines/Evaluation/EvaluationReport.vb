@@ -224,23 +224,65 @@ Public Class EvaluationReport
                 Row += 1
             Next ReplacedSellable
         End If
-        If Not String.IsNullOrEmpty(ReportingEvaluation.TechnicalAdvice) Then
+        If Not String.IsNullOrWhiteSpace(ReportingEvaluation.TechnicalAdvice) Then
             WsReport.Rows(Row).Height = 5
             Row += 1
             CreateHeader(WsReport, Row, "PARECER TÉCNICO")
             Row += 1
-            WsReport.Range(Row, 1, Row + 3, 7).Merge()
-            WsReport.Range(Row, 1, Row + 3, 7).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin)
-            WsReport.Range(Row, 1, Row + 3, 7).Style.Border.SetOutsideBorderColor(XLColor.DimGray)
-            WsReport.Range(Row, 1, Row, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left)
-            WsReport.Range(Row, 1, Row, 7).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Top)
-            WsReport.Range(Row, 1, Row, 7).Style.Alignment.SetWrapText(True)
-            WsReport.Cell(Row, 1).SetValue(ReportingEvaluation.TechnicalAdvice)
-            Row += 4
+            Dim MaxCharsPerLine As Integer = 90
+
+            Dim Lines As New List(Of String)
+
+            Dim Paragraphs = ReportingEvaluation.TechnicalAdvice.Replace(vbCrLf, vbLf).Split(vbLf)
+            For Each Paragraph In Paragraphs
+                If String.IsNullOrWhiteSpace(Paragraph) Then
+                    Lines.Add("")
+                    Continue For
+                End If
+                Dim Words = Paragraph.Split(" "c)
+                Dim CurrentLine As String = ""
+                For Each Word In Words
+                    Dim TestLine As String
+                    If String.IsNullOrWhiteSpace(CurrentLine) Then
+                        TestLine = Word
+                    Else
+                        TestLine = $"{CurrentLine} {Word}"
+                    End If
+                    If TestLine.Length > MaxCharsPerLine Then
+                        Lines.Add(CurrentLine)
+                        CurrentLine = Word
+                    Else
+                        CurrentLine = TestLine
+                    End If
+                Next
+                If Not String.IsNullOrWhiteSpace(CurrentLine) Then
+                    Lines.Add(CurrentLine)
+                End If
+            Next Paragraph
+            Dim StartRow As Integer = Row
+            For Each Line In Lines
+                WsReport.Range(Row, 1, Row, 7).Merge()
+                With WsReport.Range(Row, 1, Row, 7)
+                    .Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left
+                    .Style.Alignment.Vertical = XLAlignmentVerticalValues.Top
+                    .Style.Alignment.WrapText = False
+                    .Style.Border.LeftBorder = XLBorderStyleValues.Thin
+                    .Style.Border.RightBorder = XLBorderStyleValues.Thin
+                    .Style.Border.LeftBorderColor = XLColor.DimGray
+                    .Style.Border.RightBorderColor = XLColor.DimGray
+                End With
+                WsReport.Cell(Row, 1).Value = Line
+                WsReport.Row(Row).Height = 18
+                Row += 1
+            Next Line
+            WsReport.Range(StartRow, 1, StartRow, 7).Style.Border.TopBorder = XLBorderStyleValues.Thin
+            WsReport.Range(StartRow, 1, StartRow, 7).Style.Border.TopBorderColor = XLColor.DimGray
+            WsReport.Range(Row - 1, 1, Row - 1, 7).Style.Border.BottomBorder = XLBorderStyleValues.Thin
+            WsReport.Range(Row - 1, 1, Row - 1, 7).Style.Border.BottomBorderColor = XLColor.DimGray
             WsReport.Rows(Row).Height = 5
         End If
         Row += 1
-        Dim Culture As New System.Globalization.CultureInfo("pt-BR")
+        Dim Culture As New Globalization.CultureInfo("pt-BR")
         Dim MonthName As String = DateAndTime.MonthName(ReportingEvaluation.EvaluationDate.Month, False)
         MonthName = MonthName.ToUpper(Culture)
         WsReport.Range(Row, 1, Row, 7).Merge()
@@ -251,52 +293,28 @@ Public Class EvaluationReport
         WsReport.Range(Row, 1, Row + 2, 4).Merge()
         WsReport.Range(Row, 1, Row + 2, 4).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
         WsReport.Range(Row, 1, Row + 2, 4).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center)
-
         'WsReport.Range(1, 4, 100, 4).Style.Border.RightBorder = XLBorderStyleValues.Medium
-
-
         If File.Exists(ReportingEvaluation.Signature.CurrentFile) Then
-
-            Using img As Image = Image.FromFile(ReportingEvaluation.Signature.CurrentFile)
-
-                Dim maxHeight As Double = 60
-                Dim maxWidth As Double = 440
-
-                ' Calcula proporção baseada na altura
-                Dim ratio As Double = maxHeight / img.Height
-                Dim newWidth As Double = img.Width * ratio
-                Dim newHeight As Double = maxHeight
-
-                ' Se passar do limite horizontal, recalcula baseado na largura
-                If newWidth > maxWidth Then
-                    ratio = maxWidth / img.Width
-                    newWidth = maxWidth
-                    newHeight = img.Height * ratio
+            Using Img As Image = Image.FromFile(ReportingEvaluation.Signature.CurrentFile)
+                Dim MaxHeight As Double = 60
+                Dim MaxWidth As Double = 440
+                Dim Ratio As Double = MaxHeight / Img.Height
+                Dim NewWidth As Double = Img.Width * Ratio
+                Dim NewHeight As Double = MaxHeight
+                If NewWidth > MaxWidth Then
+                    Ratio = MaxWidth / Img.Width
+                    NewWidth = MaxWidth
+                    NewHeight = Img.Height * Ratio
                 End If
-
-                ' Espaço sobrando para centralizar
-                Dim offsetX As Double = (maxWidth - newWidth) / 2
-
-                Using stream As New MemoryStream(File.ReadAllBytes(ReportingEvaluation.Signature.CurrentFile))
-
-                    Dim picture = WsReport.AddPicture(stream)
-
+                Dim OffsetX As Double = (MaxWidth - NewWidth) / 2
+                Using Stream As New MemoryStream(File.ReadAllBytes(ReportingEvaluation.Signature.CurrentFile))
+                    Dim picture = WsReport.AddPicture(Stream)
                     picture.WithPlacement(XLPicturePlacement.FreeFloating)
-                    picture.WithSize(CInt(newWidth), CInt(newHeight))
-
-                    picture.MoveTo(WsReport.Cell(Row, 1), New Point(CInt(offsetX), 0))
-
+                    picture.WithSize(CInt(NewWidth), CInt(NewHeight))
+                    picture.MoveTo(WsReport.Cell(Row, 1), New Point(CInt(OffsetX), 0))
                 End Using
             End Using
-
         End If
-
-
-
-
-
-
-
         WsReport.Range(Row, 5, Row + 2, 7).Merge()
         WsReport.Range(Row, 5, Row + 2, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
         WsReport.Range(Row, 5, Row + 2, 7).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center)
@@ -335,57 +353,37 @@ Public Class EvaluationReport
         WsReport.Cell(Row, 1).SetValue($"{Session.Setting.Company.Contact.Email}{If(Not String.IsNullOrEmpty(Session.Setting.Company.Contact.Site), $" - {Session.Setting.Company.Contact.Site}", String.Empty)}")
 
 
-        'If ReportingEvaluation.Pictures.Count > 0 Then
-
-        '    Row += 1
-        '    WsReport.PageSetup.AddHorizontalPageBreak(Row)
-
-        '    WsReport.Range(Row, 1, Row, 7).Merge()
-        '    WsReport.Range(Row, 1, Row, 7).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center
-        '    WsReport.Cell(Row, 1).Value = "FOTOS"
-
-        '    Row += 2
-
-        '    Dim picturesPerPage As Integer = 0
-
-        '    For Each picPath In ReportingEvaluation.Pictures
-
-        '        If File.Exists(picPath.Picture.CurrentFile) Then
-
-        '            ' Se já colocou 2 fotos, quebra página
-        '            If picturesPerPage = 2 Then
-        '                WsReport.PageSetup.AddHorizontalPageBreak(Row)
-        '                Row += 1
-        '                picturesPerPage = 0
-        '            End If
-
-        '            Using img As Image = Image.FromFile(picPath.Picture.CurrentFile)
-
-        '                Dim maxWidth As Double = 500
-        '                Dim ratio As Double = maxWidth / img.Width
-        '                Dim newHeight As Double = img.Height * ratio
-
-        '                Using stream As New MemoryStream(File.ReadAllBytes(picPath.Picture.CurrentFile))
-
-        '                    Dim picture = WsReport.AddPicture(stream)
-
-        '                    picture.WithPlacement(XLPicturePlacement.Move)
-        '                    picture.WithSize(CInt(maxWidth), CInt(newHeight))
-
-        '                    picture.MoveTo(WsReport.Cell(Row, 1))
-
-        '                End Using
-        '            End Using
-
-        '            ' Espaço abaixo da imagem
-        '            Row += 25
-        '            picturesPerPage += 1
-
-        '        End If
-
-        '    Next
-
-        'End If
+        If ReportingEvaluation.Pictures.Count > 0 Then
+            WsReport.PageSetup.AddHorizontalPageBreak(Row)
+            Row += 1
+            WsReport.Range(Row, 1, Row, 7).Merge()
+            WsReport.Range(Row, 1, Row, 7).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center
+            WsReport.Cell(Row, 1).Value = "FOTOS"
+            Row += 2
+            For Each picPath In ReportingEvaluation.Pictures
+                If File.Exists(picPath.Picture.CurrentFile) Then
+                    Using Img As Image = Image.FromFile(picPath.Picture.CurrentFile)
+                        Dim MaxHeight As Double = 500
+                        Dim MaxWidth As Double = 500
+                        Dim Ratio As Double = MaxHeight / Img.Height
+                        Dim NewWidth As Double = Img.Width * Ratio
+                        Dim NewHeight As Double = MaxHeight
+                        If NewWidth > MaxWidth Then
+                            Ratio = MaxWidth / Img.Width
+                            NewWidth = MaxWidth
+                            NewHeight = Img.Height * Ratio
+                        End If
+                        Dim OffsetX As Double = (MaxWidth - NewWidth) / 2
+                        Using Stream As New MemoryStream(File.ReadAllBytes(picPath.Picture.CurrentFile))
+                            Dim picture = WsReport.AddPicture(Stream)
+                            picture.WithPlacement(XLPicturePlacement.FreeFloating)
+                            picture.WithSize(CInt(NewWidth), CInt(NewHeight))
+                            picture.MoveTo(WsReport.Cell(Row, 1), New Point(CInt(OffsetX), 0))
+                        End Using
+                    End Using
+                End If
+            Next
+        End If
 
 
 

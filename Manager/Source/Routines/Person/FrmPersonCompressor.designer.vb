@@ -23,12 +23,12 @@ Partial Class FrmPersonCompressor
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim Condition6 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Parameter6 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Condition4 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Parameter4 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Condition5 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Parameter5 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Condition3 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Parameter3 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmPersonCompressor))
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
@@ -377,11 +377,11 @@ Partial Class FrmPersonCompressor
         '
         Me.QbxCompressor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxCompressor.CharactersToQuery = 1
-        Condition6.FieldName = "statusid"
-        Condition6.Operator = "="
-        Condition6.TableNameOrAlias = "compressor"
-        Condition6.Value = "@statusid"
-        Me.QbxCompressor.Conditions.Add(Condition6)
+        Condition3.FieldName = "statusid"
+        Condition3.Operator = "="
+        Condition3.TableNameOrAlias = "compressor"
+        Condition3.Value = "@statusid"
+        Me.QbxCompressor.Conditions.Add(Condition3)
         Me.QbxCompressor.DebugOnTextChanged = False
         Me.QbxCompressor.DisplayFieldAlias = "NOME"
         Me.QbxCompressor.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
@@ -398,9 +398,9 @@ Partial Class FrmPersonCompressor
         Me.QbxCompressor.MainTableAlias = Nothing
         Me.QbxCompressor.MainTableName = "compressor"
         Me.QbxCompressor.Name = "QbxCompressor"
-        Parameter6.ParameterName = "@statusid"
-        Parameter6.ParameterValue = "0"
-        Me.QbxCompressor.Parameters.Add(Parameter6)
+        Parameter3.ParameterName = "@statusid"
+        Parameter3.ParameterValue = "0"
+        Me.QbxCompressor.Parameters.Add(Parameter3)
         Me.QbxCompressor.Prefix = Nothing
         Me.QbxCompressor.Size = New System.Drawing.Size(555, 23)
         Me.QbxCompressor.Suffix = Nothing
@@ -608,11 +608,11 @@ Partial Class FrmPersonCompressor
         '
         Me.QbxUnit.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxUnit.CharactersToQuery = 1
-        Condition4.FieldName = "statusid"
-        Condition4.Operator = "="
-        Condition4.TableNameOrAlias = "compressorunit"
-        Condition4.Value = "@statusid"
-        Me.QbxUnit.Conditions.Add(Condition4)
+        Condition1.FieldName = "statusid"
+        Condition1.Operator = "="
+        Condition1.TableNameOrAlias = "compressorunit"
+        Condition1.Value = "@statusid"
+        Me.QbxUnit.Conditions.Add(Condition1)
         Me.QbxUnit.DebugOnTextChanged = False
         Me.QbxUnit.DisplayFieldAlias = "Nome"
         Me.QbxUnit.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
@@ -630,9 +630,9 @@ Partial Class FrmPersonCompressor
         Me.QbxUnit.MainTableAlias = Nothing
         Me.QbxUnit.MainTableName = "compressorunit"
         Me.QbxUnit.Name = "QbxUnit"
-        Parameter4.ParameterName = "@statusid"
-        Parameter4.ParameterValue = "0"
-        Me.QbxUnit.Parameters.Add(Parameter4)
+        Parameter1.ParameterName = "@statusid"
+        Parameter1.ParameterValue = "0"
+        Me.QbxUnit.Parameters.Add(Parameter1)
         Me.QbxUnit.Prefix = Nothing
         Me.QbxUnit.Size = New System.Drawing.Size(140, 23)
         Me.QbxUnit.Suffix = Nothing
@@ -642,11 +642,11 @@ Partial Class FrmPersonCompressor
         '
         Me.QbxInterface.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxInterface.CharactersToQuery = 1
-        Condition5.FieldName = "statusid"
-        Condition5.Operator = "="
-        Condition5.TableNameOrAlias = "compressorinterface"
-        Condition5.Value = "@statusid"
-        Me.QbxInterface.Conditions.Add(Condition5)
+        Condition2.FieldName = "statusid"
+        Condition2.Operator = "="
+        Condition2.TableNameOrAlias = "compressorinterface"
+        Condition2.Value = "@statusid"
+        Me.QbxInterface.Conditions.Add(Condition2)
         Me.QbxInterface.DebugOnTextChanged = False
         Me.QbxInterface.DisplayFieldAlias = "Nome"
         Me.QbxInterface.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
@@ -664,9 +664,9 @@ Partial Class FrmPersonCompressor
         Me.QbxInterface.MainTableAlias = Nothing
         Me.QbxInterface.MainTableName = "compressorinterface"
         Me.QbxInterface.Name = "QbxInterface"
-        Parameter5.ParameterName = "@statusid"
-        Parameter5.ParameterValue = "0"
-        Me.QbxInterface.Parameters.Add(Parameter5)
+        Parameter2.ParameterName = "@statusid"
+        Parameter2.ParameterValue = "0"
+        Me.QbxInterface.Parameters.Add(Parameter2)
         Me.QbxInterface.Prefix = Nothing
         Me.QbxInterface.Size = New System.Drawing.Size(140, 23)
         Me.QbxInterface.Suffix = Nothing
@@ -719,7 +719,7 @@ Partial Class FrmPersonCompressor
         Me.FlpCompressor.Controls.Add(Me.BtnViewCompressor)
         Me.FlpCompressor.Controls.Add(Me.BtnNewCompressor)
         Me.FlpCompressor.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-        Me.FlpCompressor.Location = New System.Drawing.Point(328, 3)
+        Me.FlpCompressor.Location = New System.Drawing.Point(494, 3)
         Me.FlpCompressor.Name = "FlpCompressor"
         Me.FlpCompressor.Size = New System.Drawing.Size(69, 21)
         Me.FlpCompressor.TabIndex = 2
@@ -927,7 +927,7 @@ Partial Class FrmPersonCompressor
         Me.TabElapsedDaySellable.Location = New System.Drawing.Point(4, 22)
         Me.TabElapsedDaySellable.Name = "TabElapsedDaySellable"
         Me.TabElapsedDaySellable.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabElapsedDaySellable.Size = New System.Drawing.Size(883, 350)
+        Me.TabElapsedDaySellable.Size = New System.Drawing.Size(555, 119)
         Me.TabElapsedDaySellable.TabIndex = 7
         Me.TabElapsedDaySellable.Text = "Dia Corrido"
         Me.TabElapsedDaySellable.UseVisualStyleBackColor = True
@@ -950,7 +950,7 @@ Partial Class FrmPersonCompressor
         Me.DgvElapsedDaySellable.RowHeadersVisible = False
         Me.DgvElapsedDaySellable.RowTemplate.Height = 26
         Me.DgvElapsedDaySellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(877, 319)
+        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(549, 88)
         Me.DgvElapsedDaySellable.TabIndex = 5
         '
         'TsElapsedDaySellable
@@ -962,7 +962,7 @@ Partial Class FrmPersonCompressor
         Me.TsElapsedDaySellable.Location = New System.Drawing.Point(3, 3)
         Me.TsElapsedDaySellable.Name = "TsElapsedDaySellable"
         Me.TsElapsedDaySellable.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.TsElapsedDaySellable.Size = New System.Drawing.Size(877, 25)
+        Me.TsElapsedDaySellable.Size = New System.Drawing.Size(549, 25)
         Me.TsElapsedDaySellable.TabIndex = 4
         Me.TsElapsedDaySellable.Text = "ToolStrip2"
         '

@@ -96,6 +96,9 @@
     <Reference Include="CoreSuite.AnimatedBox">
       <HintPath>..\..\CoreSuite\AnimatedBox\bin\Debug\CoreSuite.AnimatedBox.dll</HintPath>
     </Reference>
+    <Reference Include="CoreSuite.CentralizedComboBox">
+      <HintPath>..\..\CoreSuite\CentralizedComboBox\bin\Debug\CoreSuite.CentralizedComboBox.dll</HintPath>
+    </Reference>
     <Reference Include="CoreSuite.QueriedBox">
       <HintPath>..\..\CoreSuite\QueriedBox\bin\Debug\CoreSuite.QueriedBox.dll</HintPath>
     </Reference>
@@ -664,6 +667,12 @@
     </Compile>
     <Compile Include="Source\Routines\EmailSignature\UcEmailSignatureGrid.vb">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationTreatment.Designer.vb">
+      <DependentUpon>FrmEvaluationTreatment.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Routines\Evaluation\FrmEvaluationTreatment.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\Routines\Evaluation\UcEvaluationCallTypeHasRepairNeedProposal.Designer.vb">
       <DependentUpon>UcEvaluationCallTypeHasRepairNeedProposal.vb</DependentUpon>
@@ -1457,6 +1466,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\EmailSignature\UcEmailSignatureGrid.resx">
       <DependentUpon>UcEmailSignatureGrid.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Routines\Evaluation\FrmEvaluationTreatment.resx">
+      <DependentUpon>FrmEvaluationTreatment.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Routines\Evaluation\UcEvaluationCallTypeHasRepairNeedProposal.resx">
       <DependentUpon>UcEvaluationCallTypeHasRepairNeedProposal.vb</DependentUpon>

@@ -1,14 +1,8 @@
 #2.3.1
-@??/05/2026
-• Correção de um erro que era lançado quando tentava-se excluir um compressor de uma pessoa que possuía avaliações vinculadas.
-• Em compressores já salvos não estavam aparecendo os botões de controle do campo (Visualizar, Editar e Incluir).
-
-
-
-
-
-
-
+@26/05/2026
+• Correção de erro ao excluir um compressor de uma pessoa com avaliações vinculadas.
+• Correção de falha em que os botões de controle do campo (Visualizar, Editar e Incluir) não eram exibidos em compressores já salvos.
+• Remodelação do relatório de atendimento, com opção de exibir fotos e escolher entre mostrar o código do fabricante ou o ID do produto substituído.
 #2.3.0
 @18/05/2026
 • Inclusão do tipo de óleo no cadastro do compressor da pessoa.

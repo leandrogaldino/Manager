@@ -59,7 +59,7 @@ Public Class EvaluationReport
         End Function
     End Class
 
-    Public Shared Function EvaluationTreatment(ReportingEvaluation As Evaluation, Pictures As List(Of EvaluationPicture)) As ReportResult
+    Public Shared Function EvaluationTreatment(ReportingEvaluation As Evaluation, ShowIdAsCode As Boolean, Pictures As List(Of String)) As ReportResult
         GlobalFontSettings.FontResolver = New CustomFontResolver()
         Const Separator As String = "   •   "
         Dim NormalColor As Color = Color.FromRgb(255, 255, 255)
@@ -74,6 +74,7 @@ Public Class EvaluationReport
         Dim Cols As Integer
         Dim ColWidth As Double
         Dim Result As New ReportResult
+        Dim Cell As Cell
         Document = New Document()
         Dim Style As Style = Document.Styles("Normal")
         Style.Font.Size = 10
@@ -199,13 +200,21 @@ Public Class EvaluationReport
             Row = Table.AddRow()
             AddTitleCell(Row, "PEÇAS SUBSTITUÍDAS/SERVIÇOS EXECUTADOS")
             Row = Table.AddRow()
-            AddSubtitleCell(Row, 0, 0, ParagraphAlignment.Center, "CÓDIGO", 8)
-            AddSubtitleCell(Row, 1, 4, ParagraphAlignment.Center, "PEÇAS/SERVIÇOS", 8)
+            AddSubtitleCell(Row, 0, 1, ParagraphAlignment.Center, "CÓDIGO", 8)
+            AddSubtitleCell(Row, 2, 3, ParagraphAlignment.Center, "PEÇAS/SERVIÇOS", 8)
             AddSubtitleCell(Row, 6, 0, ParagraphAlignment.Center, "QTD.", 8)
             For Each ReplacedSellable In ReportingEvaluation.ReplacedSellables
                 Row = Table.AddRow()
-                AddContentCell(Row, 0, 0, ParagraphAlignment.Center, $"{If(ReplacedSellable.SellableType = SellableType.Product, "P", "S")}{ReplacedSellable.SellableID}")
-                AddContentCell(Row, 1, 4, ParagraphAlignment.Center, ReplacedSellable.Name)
+                If ReplacedSellable.SellableType = SellableType.Product Then
+                    If ShowIdAsCode Then
+                        AddContentCell(Row, 0, 1, ParagraphAlignment.Center, $"P{ReplacedSellable.SellableID}")
+                    Else
+                        Cell = AddContentCell(Row, 0, 1, ParagraphAlignment.Center, ReplacedSellable.Code)
+                    End If
+                Else
+                    AddContentCell(Row, 0, 1, ParagraphAlignment.Center, $"S{ReplacedSellable.SellableID}")
+                End If
+                AddContentCell(Row, 2, 3, ParagraphAlignment.Left, ReplacedSellable.Name)
                 AddContentCell(Row, 6, 0, ParagraphAlignment.Center, ReplacedSellable.Quantity)
             Next ReplacedSellable
         End If
@@ -242,11 +251,11 @@ Public Class EvaluationReport
         End If
         AddContentCell(Row, 1, 0, ParagraphAlignment.Center, ReportingEvaluation.Technicians(0).Technician.ShortName.ToTitle(), 24, 0, "Cookie")
         Row = Table.AddRow()
-        Dim Cell = AddContentCell(Row, 0, 0, ParagraphAlignment.Center, "CLIENTE", 8, 0)
+        Cell = AddContentCell(Row, 0, 0, ParagraphAlignment.Center, "CLIENTE", 8, 0)
         Cell.Format.Font.Bold = True
         Cell = AddContentCell(Row, 1, 0, ParagraphAlignment.Center, "TÉCNICO", 8, 0)
         Cell.Format.Font.Bold = True
-        If ReportingEvaluation.Pictures.Count > 0 Then
+        If Pictures.Count > 0 Then
             Section.AddPageBreak()
             Cols = 1
             ColWidth = TotalWidth / Cols
@@ -255,7 +264,7 @@ Public Class EvaluationReport
                 Dim Col = Table.AddColumn()
                 Col.Width = Unit.FromCentimeter(ColWidth)
             Next i
-            For Each Picture In ReportingEvaluation.Pictures
+            For Each Picture In Pictures
                 Row = Table.AddRow()
                 Row.Height = Unit.FromCentimeter(12)
                 Row.HeightRule = RowHeightRule.Exactly
@@ -265,10 +274,10 @@ Public Class EvaluationReport
                 Cell.Borders.Width = 0.5
                 Paragraph = Cell.AddParagraph()
                 Paragraph.Format.Alignment = ParagraphAlignment.Center
-                Dim DrawingImage = Image.FromFile(Picture.Picture.CurrentFile)
+                Dim DrawingImage = Image.FromFile(Picture)
                 Dim IsPortrait As Boolean = DrawingImage.Height > DrawingImage.Width
                 DrawingImage.Dispose()
-                Dim Img = Paragraph.AddImage(Picture.Picture.CurrentFile)
+                Dim Img = Paragraph.AddImage(Picture)
                 Img.LockAspectRatio = True
                 If IsPortrait Then
                     Img.Height = Unit.FromCentimeter(10.5)

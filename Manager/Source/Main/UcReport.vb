@@ -37,7 +37,6 @@ Public Class UcReport
         Else
             SfdDocument.Filter = "Arquivo PDF (*.pdf*)|*.pdf"
         End If
-
         SfdDocument.FileName = _Result.ReportName
         If SfdDocument.ShowDialog = DialogResult.OK Then
             Try

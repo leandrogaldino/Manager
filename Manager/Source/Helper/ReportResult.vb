@@ -2,6 +2,7 @@
     Public Property FilePath As String
     Public Property ReportName As String
     Public Property Attachments As New List(Of ReportAttachment)
+    Public Property hasExcelFile As Boolean = True
     Public Class ReportAttachment
         Public Sub New(AttachmentPath As String, AttachmentAlias As String)
             Me.AttachmentPath = AttachmentPath

@@ -295,7 +295,7 @@ Public Class UcEvaluationGrid
         Try
             Cursor = Cursors.WaitCursor
             _Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("id").Value, False)
-            Dim Retult As ReportResult = EvaluationReport.EvaluationTreatment(_Evaluation)
+            Dim Retult As ReportResult = EvaluationReport.EvaluationTreatment(_Evaluation, Nothing)
             FrmMain.OpenTab(New UcReport(Retult), "Relatório de Atendimento")
         Catch ex As Exception
             CMessageBox.Show("ERRO EV027", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

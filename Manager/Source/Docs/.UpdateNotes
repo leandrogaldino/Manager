@@ -1,5 +1,5 @@
 #2.3.1
-@25/05/2026
+@??/05/2026
 • Correção de um erro que era lançado quando tentava-se excluir um compressor de uma pessoa que possuía avaliações vinculadas.
 • Em compressores já salvos não estavam aparecendo os botões de controle do campo (Visualizar, Editar e Incluir).
 

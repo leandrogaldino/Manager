@@ -9,9 +9,9 @@ Public Class FrmLogin
         LblVersion.Text = Locator.GetInstance(Of Session).ManagerVersion
         BtnLogin.Enabled = False
 
-
-        EvaluationReport.EvaluationTreatmentMigra()
-        Application.Exit()
+        'Dim ReportingEvaluation = New Evaluation().Load(918, False)
+        'EvaluationReport.EvaluationTreatmentMigra(ReportingEvaluation, Nothing)
+        'Application.Exit()
     End Sub
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)

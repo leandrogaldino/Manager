@@ -32,7 +32,12 @@ Public Class UcReport
     End Sub
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
         SfdDocument.Title = "Salvar Relatório"
-        SfdDocument.Filter = "Arquivo PDF (*.pdf*)|*.pdf|Planilha do Excel (*.xlsx*)|*.xlsx"
+        If _Result.hasExcelFile Then
+            SfdDocument.Filter = "Arquivo PDF (*.pdf*)|*.pdf|Planilha do Excel (*.xlsx*)|*.xlsx"
+        Else
+            SfdDocument.Filter = "Arquivo PDF (*.pdf*)|*.pdf"
+        End If
+
         SfdDocument.FileName = _Result.ReportName
         If SfdDocument.ShowDialog = DialogResult.OK Then
             Try

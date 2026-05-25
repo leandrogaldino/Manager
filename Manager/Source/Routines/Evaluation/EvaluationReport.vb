@@ -3,8 +3,15 @@ Imports ClosedXML.Excel
 Imports ClosedXML.Excel.Drawings
 Imports ControlLibrary
 Imports ControlLibrary.Extensions
+Imports Google.Api
 Imports ManagerCore
+Imports MigraDoc.DocumentObjectModel
+Imports MigraDoc.DocumentObjectModel.Tables
+Imports MigraDoc.Rendering
+Imports PdfSharp.Fonts
 Imports Syncfusion.ExcelToPdfConverter
+Imports ZstdSharp
+
 Public Class EvaluationReport
     Public Shared Function EvaluationTreatment(ReportingEvaluation As Evaluation) As ReportResult
         Dim Session = Locator.GetInstance(Of Session)
@@ -409,4 +416,446 @@ Public Class EvaluationReport
         Sheet.Range(Row, 1, Row, 7).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin)
         Sheet.Range(Row, 1, Row, 7).Style.Border.SetOutsideBorderColor(XLColor.DimGray)
     End Sub
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Public Class CustomFontResolver
+        Implements IFontResolver
+
+        Public Function ResolveTypeface(familyName As String, isBold As Boolean, isItalic As Boolean) As FontResolverInfo Implements IFontResolver.ResolveTypeface
+
+            If familyName.ToLower().Contains("century gothic") Then
+
+                If isBold And isItalic Then
+                    Return New FontResolverInfo("CG_BI")
+
+                ElseIf isBold Then
+                    Return New FontResolverInfo("CG_B")
+
+                ElseIf isItalic Then
+                    Return New FontResolverInfo("CG_I")
+
+                Else
+                    Return New FontResolverInfo("CG_R")
+                End If
+
+
+            ElseIf familyName.ToLower().Contains("cookie") Then
+
+                ' Cookie normalmente é só regular (sem bold/italic real)
+                Return New FontResolverInfo("COOKIE_R")
+
+            End If
+
+            Return New FontResolverInfo("CG_R")
+        End Function
+
+        Private Function LoadFont(fileName As String) As Byte()
+
+            Dim userPath = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+        "Microsoft\Windows\Fonts"
+    )
+
+            Dim systemPath = "C:\Windows\Fonts\"
+
+            Dim fullUser = Path.Combine(userPath, fileName)
+            If File.Exists(fullUser) Then
+                Return File.ReadAllBytes(fullUser)
+            End If
+
+            Dim fullSystem = Path.Combine(systemPath, fileName)
+            If File.Exists(fullSystem) Then
+                Return File.ReadAllBytes(fullSystem)
+            End If
+
+            Throw New FileNotFoundException("Fonte não encontrada: " & fileName)
+
+        End Function
+
+        Public Function GetFont(faceName As String) As Byte() Implements IFontResolver.GetFont
+
+            Dim path = "C:\Windows\Fonts\"
+
+            Select Case faceName
+
+                Case "CG_R"
+                    Return LoadFont("GOTHIC.TTF")
+
+                Case "CG_B"
+                    Return LoadFont("GOTHICB.TTF")
+
+                Case "CG_I"
+                    Return LoadFont("GOTHICI.TTF")
+
+                Case "CG_BI"
+                    Return LoadFont("GOTHICBI.TTF")
+                Case "COOKIE_R"
+
+                    Return LoadFont("Cookie-Regular.ttf")
+
+            End Select
+
+            Return Nothing
+        End Function
+
+    End Class
+
+
+
+
+
+
+    Public Shared Sub EvaluationTreatmentMigra()
+
+        Dim ReportingEvaluation = New Evaluation().Load(918, False)
+
+
+        GlobalFontSettings.FontResolver = New CustomFontResolver()
+        Const Separator As String = "   •   "
+        Dim NormalColor As Color = Color.FromRgb(255, 255, 255)
+        Dim HeaderColor As Color = Color.FromRgb(250, 250, 250)
+        Dim SuperHeaderColor As Color = Color.FromRgb(220, 220, 220)
+        Dim Table As Table
+        Dim Row As Row
+        Dim Paragraph As Paragraph
+        Dim Section As Section
+        Dim Document As Document
+        Dim TotalWidth As Double
+        Dim Cols As Integer
+        Dim ColWidth As Double
+        Document = New Document()
+        Dim Style As Style = Document.Styles("Normal")
+        Style.Font.Size = 10
+        Style.Font.Name = "Century Gothic"
+        Section = Document.AddSection()
+        Paragraph = Section.AddParagraph()
+        Paragraph.AddFormattedText("RELATÓRIO DE ATENDIMENTO", TextFormat.Bold)
+        Paragraph.Format.Font.Size = 12
+        Paragraph.Format.Alignment = ParagraphAlignment.Center
+        Paragraph.Format.SpaceAfter = Unit.FromCentimeter(0.25)
+        Paragraph = Section.AddParagraph()
+        Paragraph.AddFormattedText("REF: ", TextFormat.Bold)
+        Paragraph.AddText(ReportingEvaluation.Reference)
+        Paragraph.Format.Alignment = ParagraphAlignment.Center
+        Paragraph.Format.Font.Size = 8
+        Paragraph.Format.SpaceAfter = Unit.FromCentimeter(0.5)
+        Table = Section.AddTable()
+        Table.Rows.VerticalAlignment = VerticalAlignment.Center
+        Table.Rows.Height = Unit.FromCentimeter(0.55)
+        Table.Rows.HeightRule = RowHeightRule.Exactly
+        TotalWidth = 16
+        Cols = 7
+        ColWidth = TotalWidth / Cols
+        For i As Integer = 1 To Cols
+            Dim Col = Table.AddColumn()
+            Col.Width = Unit.FromCentimeter(ColWidth)
+        Next i
+        Row = Table.AddRow()
+        AddRichTextCell(Row, 0, 6, ParagraphAlignment.Left, 0.5, NormalColor,
+                        {
+                            ("CLIENTE: ", TextFormat.Bold), (ReportingEvaluation.Customer.ShortName & If(String.IsNullOrEmpty(ReportingEvaluation.Compressor.Sector), String.Empty, $" {Separator} {ReportingEvaluation.Compressor.Sector}"), Nothing)
+                        })
+        Row = Table.AddRow()
+        AddRichTextCell(Row, 0, 6, ParagraphAlignment.Left, 0.5, NormalColor,
+                        {
+                            ("CIDADE: ", TextFormat.Bold), ("GOIÂNIA", Nothing),
+                            (Separator, Nothing),
+                            ("UF: ", TextFormat.Bold), ("GO", Nothing),
+                            (Separator, Nothing),
+                            ("CONTATO: ", TextFormat.Bold), ("FULANO", Nothing),
+                            (Separator, Nothing),
+                            ("FONE: ", TextFormat.Bold), ("(00) 0000-0000", Nothing)
+                        })
+        Row = Table.AddRow()
+        AddRichTextCell(Row, 0, 6, ParagraphAlignment.Left, 0.5, NormalColor,
+                        {
+                            ("TIPO DE VISITA: ", TextFormat.Bold), ("PREVENTIVA", Nothing),
+                            (Separator, Nothing),
+                            ("DATA: ", TextFormat.Bold), ("00/00/0000", Nothing),
+                            (Separator, Nothing),
+                            ("INICIO: ", TextFormat.Bold), ("00:00", Nothing),
+                            (Separator, Nothing),
+                            ("FIM: ", TextFormat.Bold), ("00:00", Nothing)
+                        })
+
+
+        AddSeparatorRow(Table)
+
+        Row = Table.AddRow()
+        AddTitleCell(Row, "INFORMAÇÕES DO COMPRESSOR")
+        Row = Table.AddRow()
+        AddSubtitleCell(Row, 0, 0, ParagraphAlignment.Center, "COMPRESSOR", 8)
+        AddSubtitleCell(Row, 1, 0, ParagraphAlignment.Center, "HORÍMETRO", 8)
+        AddSubtitleCell(Row, 2, 0, ParagraphAlignment.Center, "Nº SÉRIE/PAT", 8)
+        AddSubtitleCell(Row, 3, 0, ParagraphAlignment.Center, "PRESSÃO TRAB.", 8)
+        AddSubtitleCell(Row, 4, 0, ParagraphAlignment.Center, "TEMPERATURA", 8)
+        AddSubtitleCell(Row, 5, 0, ParagraphAlignment.Center, "UND. COMP.", 8)
+        AddSubtitleCell(Row, 6, 0, ParagraphAlignment.Center, "REGIME TRAB.", 8)
+        Row = Table.AddRow()
+        AddContentCell(Row, 0, 0, ParagraphAlignment.Center, "SRP 4100")
+        AddContentCell(Row, 1, 0, ParagraphAlignment.Center, "10.469")
+        AddContentCell(Row, 2, 0, ParagraphAlignment.Center, "13458")
+        AddContentCell(Row, 3, 0, ParagraphAlignment.Center, "7.5BAR")
+        AddContentCell(Row, 4, 0, ParagraphAlignment.Center, "85ºC")
+        AddContentCell(Row, 5, 0, ParagraphAlignment.Center, "EVO9")
+        AddContentCell(Row, 6, 0, ParagraphAlignment.Center, "24 H/DIA")
+
+        AddSeparatorRow(Table)
+
+        Row = Table.AddRow()
+        AddTitleCell(Row, "HORAS RESTANTES PARA SUBSTITUIÇÃO")
+        Row = Table.AddRow()
+        AddSubtitleCell(Row, 0, 0, ParagraphAlignment.Center, "RECONSTRUIR UND.", 6)
+        AddSubtitleCell(Row, 1, 0, ParagraphAlignment.Center, "FILTRO AR", 8)
+        AddSubtitleCell(Row, 2, 0, ParagraphAlignment.Center, "FILTRO ÓLEO", 8)
+        AddSubtitleCell(Row, 3, 0, ParagraphAlignment.Center, "SEPARADOR", 8)
+        AddSubtitleCell(Row, 4, 0, ParagraphAlignment.Center, "LUB. MOTOR", 8)
+        AddSubtitleCell(Row, 5, 0, ParagraphAlignment.Center, "ÓLEO", 8)
+        AddSubtitleCell(Row, 6, 0, ParagraphAlignment.Center, "TIPO ÓLEO", 8)
+        Row = Table.AddRow()
+        AddContentCell(Row, 0, 0, ParagraphAlignment.Center, "NÃO")
+        AddContentCell(Row, 1, 0, ParagraphAlignment.Center, "1.000")
+        AddContentCell(Row, 2, 0, ParagraphAlignment.Center, "1.000")
+        AddContentCell(Row, 3, 0, ParagraphAlignment.Center, "1.000")
+        AddContentCell(Row, 4, 0, ParagraphAlignment.Center, "1.000")
+        AddContentCell(Row, 5, 0, ParagraphAlignment.Center, "1.000")
+        AddContentCell(Row, 6, 0, ParagraphAlignment.Center, "SEMI-SINTÉTICO", 6)
+
+        If ReportingEvaluation.ElapsedDayControlledSellables.Any(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Coalescent) Then
+            AddSeparatorRow(Table)
+            Row = Table.AddRow()
+            AddTitleCell(Row, "FILTROS COALESCENTES")
+            Row = Table.AddRow()
+            AddSubtitleCell(Row, 0, 2, ParagraphAlignment.Center, "ELEMENTO", 8)
+            AddSubtitleCell(Row, 3, 0, ParagraphAlignment.Center, "ÚLTIMA TROCA", 8)
+            AddSubtitleCell(Row, 4, 0, ParagraphAlignment.Center, "PROX. TROCA", 8)
+            AddSubtitleCell(Row, 5, 0, ParagraphAlignment.Center, "CAPACIDADE", 8)
+            AddSubtitleCell(Row, 6, 0, ParagraphAlignment.Center, "UTILIZADO", 8)
+            Dim FirstEvaluationDate = Evaluation.GetFirstEvaluationDate(ReportingEvaluation.Compressor)
+            For Each Coalescent In ReportingEvaluation.ElapsedDayControlledSellables.Where(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Coalescent)
+                Dim LastReplace = Evaluation.GetLastEvaluationReplacedSellableDate(Coalescent.PersonCompressorSellable.ID, ReportingEvaluation.EvaluationDate)
+                Dim LastReplaceCapacity = Evaluation.GetLastEvaluationReplacedSellableCapacity(Coalescent.PersonCompressorSellable.ID, ReportingEvaluation.EvaluationDate)
+                Dim CurrentCapacityOnReplace = Evaluation.GetLastEvaluationReplacedSellableCapacity(Coalescent.PersonCompressorSellable.ID, ReportingEvaluation.EvaluationDate)
+                Row = Table.AddRow()
+                AddContentCell(Row, 0, 2, ParagraphAlignment.Center, Coalescent.Name, 8)
+                If LastReplace.HasValue Then
+                    AddContentCell(Row, 3, 0, ParagraphAlignment.Center, LastReplace.Value.ToString("dd/MM/yyyy"))
+                    AddContentCell(Row, 4, 0, ParagraphAlignment.Center, ReportingEvaluation.EvaluationDate.AddDays(Coalescent.CurrentCapacity).ToString("dd/MM/yyyy"))
+                Else
+                    AddContentCell(Row, 3, 0, ParagraphAlignment.Center, "N/A")
+                    AddContentCell(Row, 4, 0, ParagraphAlignment.Center, FirstEvaluationDate.AddDays(Coalescent.CurrentCapacity).ToString("dd/MM/yyyy"))
+                End If
+                AddContentCell(Row, 5, 0, ParagraphAlignment.Center, Coalescent.CurrentCapacity)
+                If CurrentCapacityOnReplace.HasValue Then
+                    AddContentCell(Row, 6, 0, ParagraphAlignment.Center, CurrentCapacityOnReplace.Value - Coalescent.CurrentCapacity)
+                Else
+                    AddContentCell(Row, 6, 0, ParagraphAlignment.Center, (ReportingEvaluation.EvaluationDate - FirstEvaluationDate).Days)
+                End If
+            Next Coalescent
+        End If
+        If ReportingEvaluation.ReplacedSellables.Any() Then
+            AddSeparatorRow(Table)
+            Row = Table.AddRow()
+            AddTitleCell(Row, "PEÇAS SUBSTITUÍDAS/SERVIÇOS EXECUTADOS")
+            Row = Table.AddRow()
+            AddSubtitleCell(Row, 0, 0, ParagraphAlignment.Center, "CÓDIGO", 8)
+            AddSubtitleCell(Row, 1, 4, ParagraphAlignment.Center, "PEÇAS/SERVIÇOS", 8)
+            AddSubtitleCell(Row, 6, 0, ParagraphAlignment.Center, "QTD.", 8)
+            For Each ReplacedSellable In ReportingEvaluation.ReplacedSellables
+                Row = Table.AddRow()
+                AddContentCell(Row, 0, 0, ParagraphAlignment.Center, $"{If(ReplacedSellable.SellableType = SellableType.Product, "P", "S")}{ReplacedSellable.SellableID}")
+                AddContentCell(Row, 1, 4, ParagraphAlignment.Center, ReplacedSellable.Name)
+                AddContentCell(Row, 6, 0, ParagraphAlignment.Center, ReplacedSellable.Quantity)
+            Next ReplacedSellable
+        End If
+        If Not String.IsNullOrWhiteSpace(ReportingEvaluation.TechnicalAdvice) Then
+            AddSeparatorRow(Table)
+            Row = Table.AddRow()
+            AddTitleCell(Row, "PARECER TÉCNICO")
+            Row = Table.AddRow()
+            Row.HeightRule = RowHeightRule.Auto
+            AddContentCell(Row, 0, 6, ParagraphAlignment.Left, ReportingEvaluation.TechnicalAdvice)
+        End If
+
+
+
+        Dim Culture As New Globalization.CultureInfo("pt-BR")
+        Dim MonthName As String = DateAndTime.MonthName(ReportingEvaluation.EvaluationDate.Month, False)
+        MonthName = MonthName.ToUpper(Culture)
+
+        Paragraph = Section.AddParagraph()
+        Paragraph.Format.Font.Size = 9
+        Paragraph.Format.SpaceBefore = Unit.FromCentimeter(0.5)
+        Paragraph.AddText($"AS PARTES DECLARAM ESTAR DE ARCORDO COM ESTE RELATÓRIO, EM {ReportingEvaluation.EvaluationDate.Day} DE {MonthName} DE {ReportingEvaluation.EvaluationDate.Year}.")
+
+
+        Cols = 2
+        ColWidth = TotalWidth / Cols
+
+        Table = Section.AddTable()
+        For i As Integer = 1 To Cols
+            Dim Col = Table.AddColumn()
+            Col.Width = Unit.FromCentimeter(ColWidth)
+        Next i
+
+        AddSeparatorRow(Table, 1.5)
+
+        Row = Table.AddRow()
+        Row.Height = Unit.FromCentimeter(1)
+        Row.VerticalAlignment = VerticalAlignment.Center
+        If File.Exists(ReportingEvaluation.Signature.CurrentFile) Then
+            AddImageCell(Row, 0, 0, ReportingEvaluation.Signature.CurrentFile)
+        End If
+        AddContentCell(Row, 1, 0, ParagraphAlignment.Center, ReportingEvaluation.Technicians(0).Technician.ShortName.ToTitle(), 24, 0, "Cookie")
+
+
+
+        Row = Table.AddRow()
+        Dim Cell = AddContentCell(Row, 0, 0, ParagraphAlignment.Center, "CLIENTE", 8, 0)
+        Cell.Format.Font.Bold = True
+        Cell = AddContentCell(Row, 1, 0, ParagraphAlignment.Center, "TÉCNICO", 8, 0)
+        Cell.Format.Font.Bold = True
+
+
+        If ReportingEvaluation.Pictures.Count > 0 Then
+            Paragraph = Section.AddParagraph()
+            Paragraph.Format.PageBreakBefore = True
+
+            For Each pic In ReportingEvaluation.Pictures
+
+                Row = Table.AddRow()
+
+                Row.Height = Unit.FromCentimeter(12)
+                Row.HeightRule = RowHeightRule.Exactly
+
+                Cell = Row.Cells(0)
+                Cell.MergeRight = Table.Columns.Count - 1
+                Cell.Format.Alignment = ParagraphAlignment.Center
+                Cell.VerticalAlignment = VerticalAlignment.Center
+
+                Cell.Borders.Width = 0.5
+
+                Paragraph = Cell.AddParagraph()
+                Paragraph.Format.Alignment = ParagraphAlignment.Center
+
+                Dim img = Paragraph.AddImage(pic.Picture.CurrentFile)
+                img.LockAspectRatio = True
+
+                img.Height = Unit.FromCentimeter(10.5)
+                img.Width = Unit.FromCentimeter(15)
+
+                img.RelativeVertical = Shapes.RelativeVertical.Line
+                img.RelativeHorizontal = Shapes.RelativeHorizontal.Margin
+
+            Next
+        End If
+
+
+
+        Dim Render As New PdfDocumentRenderer With {
+            .Document = Document
+        }
+        Render.RenderDocument()
+        Dim FilePath As String = "C:\Users\leand\Desktop\relatorio.pdf"
+        Render.PdfDocument.Save(FilePath)
+        Process.Start(FilePath)
+    End Sub
+
+    Private Shared Sub AddSeparatorRow(Table As Table, Optional Height As Double = 0.25)
+        Dim Row = Table.AddRow()
+        Row.Height = Unit.FromCentimeter(Height)
+    End Sub
+
+    Private Shared Function AddRichTextCell(Row As Row, CellIndex As Integer, MergeRight As Integer, Alignment As ParagraphAlignment, BorderWidth As Double, BackColor As Color, TextParts As (Text As String, Format As TextFormat?)()) As Cell
+        Dim Cell = Row.Cells(CellIndex)
+        Cell.MergeRight = MergeRight
+        Cell.Borders.Width = BorderWidth
+        Cell.Format.Alignment = Alignment
+        Cell.Shading.Color = BackColor
+        Dim Paragraph = Cell.AddParagraph()
+        For i As Integer = 0 To TextParts.Length - 1
+            Dim Part = TextParts(i)
+            If Part.Format.HasValue Then
+                Paragraph.AddFormattedText(Part.Text, Part.Format.Value)
+            Else
+                Paragraph.AddText(Part.Text)
+            End If
+        Next i
+        Return Cell
+    End Function
+
+
+    Private Shared Function AddTitleCell(Row As Row, Text As String, Optional FontSize As Integer = 10) As Cell
+        Dim Cell = Row.Cells(0)
+        Cell.MergeRight = Cell.Table.Columns.Count - 1
+        Cell.Borders.Width = 0.5
+        Cell.Format.Alignment = ParagraphAlignment.Center
+        Cell.Format.Font.Size = FontSize
+        Cell.Shading.Color = Color.FromRgb(220, 220, 220)
+        Dim Paragraph = Cell.AddParagraph()
+        Paragraph.AddFormattedText(Text, TextFormat.Bold)
+        Return Cell
+    End Function
+
+    Private Shared Function AddSubtitleCell(Row As Row, CellIndex As Integer, MergeRight As Integer, Alignment As ParagraphAlignment, Text As String, Optional FontSize As Integer = 10, Optional BorderSize As Double = 0.5) As Cell
+        Dim Cell = Row.Cells(CellIndex)
+        Cell.MergeRight = MergeRight
+        Cell.Borders.Width = Unit.FromPoint(BorderSize)
+        Cell.Format.Alignment = Alignment
+        Cell.Format.Font.Size = FontSize
+        Cell.Shading.Color = Color.FromRgb(245, 245, 245)
+        Dim Paragraph = Cell.AddParagraph()
+        Paragraph.AddFormattedText(Text, TextFormat.Bold)
+        Return Cell
+    End Function
+
+    Private Shared Function AddContentCell(Row As Row, CellIndex As Integer, MergeRight As Integer, Alignment As ParagraphAlignment, Text As String, Optional FontSize As Integer = 10, Optional BorderSize As Double = 0.5, Optional FontName As String = Nothing) As Cell
+        Dim Cell = Row.Cells(CellIndex)
+        Cell.MergeRight = MergeRight
+        Cell.Borders.Width = Unit.FromPoint(BorderSize)
+        Cell.Format.Alignment = Alignment
+        Cell.Format.Font.Size = FontSize
+        Cell.Shading.Color = Color.FromRgb(255, 255, 255)
+        If Not String.IsNullOrEmpty(FontName) Then
+            Cell.Format.Font.Name = FontName
+        End If
+        Dim Paragraph = Cell.AddParagraph()
+        Paragraph.AddText(Text)
+        Return Cell
+    End Function
+
+    Private Shared Function AddImageCell(Row As Row, CellIndex As Integer, MergeRight As Integer, ImagePath As String)
+        Dim Cell = Row.Cells(CellIndex)
+        Cell.MergeRight = MergeRight
+        Cell.Borders.Width = 0
+        Cell.Format.Alignment = ParagraphAlignment.Center
+        Cell.VerticalAlignment = VerticalAlignment.Center
+        Cell.Shading.Color = Color.FromRgb(255, 255, 255)
+        Dim Paragraph = Cell.AddParagraph()
+        Paragraph.Format.Alignment = ParagraphAlignment.Center
+        Dim Image = Paragraph.AddImage(ImagePath)
+        Image.LockAspectRatio = True
+        Image.Width = Unit.FromCentimeter(7)
+        Return Cell
+    End Function
 End Class

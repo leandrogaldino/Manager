@@ -8,6 +8,10 @@ Public Class FrmLogin
         Locator.GetInstance(Of Session).ManagerVersion = $"Versão: {FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileMajorPart}.{FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileMinorPart}.{FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileBuildPart}"
         LblVersion.Text = Locator.GetInstance(Of Session).ManagerVersion
         BtnLogin.Enabled = False
+
+
+        EvaluationReport.EvaluationTreatmentMigra()
+        Application.Exit()
     End Sub
     <DebuggerStepThrough>
     Protected Overrides Sub DefWndProc(ByRef m As Message)

@@ -58,10 +58,11 @@ Partial Class UcEvaluationGrid
         Me.BtnApprove = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnReject = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnDisapprove = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BtnEvaluationTreatment = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnSimpleEvaluationTreatment = New System.Windows.Forms.ToolStripMenuItem()
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
         Me.DgvlEvaluation = New Manager.DataGridViewLayout()
+        Me.BtnCompleteEvaluationTreatment = New System.Windows.Forms.ToolStripMenuItem()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -471,37 +472,37 @@ Partial Class UcEvaluationGrid
         '
         'CmsMenu
         '
-        Me.CmsMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnApprove, Me.BtnReject, Me.BtnDisapprove, Me.BtnEvaluationTreatment})
+        Me.CmsMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnApprove, Me.BtnReject, Me.BtnDisapprove, Me.BtnSimpleEvaluationTreatment, Me.BtnCompleteEvaluationTreatment})
         Me.CmsMenu.Name = "CmsApproval"
-        Me.CmsMenu.Size = New System.Drawing.Size(211, 92)
+        Me.CmsMenu.Size = New System.Drawing.Size(267, 136)
         '
         'BtnApprove
         '
         Me.BtnApprove.Image = Global.Manager.My.Resources.Resources.Approve
         Me.BtnApprove.Name = "BtnApprove"
-        Me.BtnApprove.Size = New System.Drawing.Size(210, 22)
+        Me.BtnApprove.Size = New System.Drawing.Size(266, 22)
         Me.BtnApprove.Text = "Aprovar"
         '
         'BtnReject
         '
         Me.BtnReject.Image = Global.Manager.My.Resources.Resources.Reject
         Me.BtnReject.Name = "BtnReject"
-        Me.BtnReject.Size = New System.Drawing.Size(210, 22)
+        Me.BtnReject.Size = New System.Drawing.Size(266, 22)
         Me.BtnReject.Text = "Rejeitar"
         '
         'BtnDisapprove
         '
         Me.BtnDisapprove.Image = Global.Manager.My.Resources.Resources.Disapprove
         Me.BtnDisapprove.Name = "BtnDisapprove"
-        Me.BtnDisapprove.Size = New System.Drawing.Size(210, 22)
+        Me.BtnDisapprove.Size = New System.Drawing.Size(266, 22)
         Me.BtnDisapprove.Text = "Desaprovar"
         '
-        'BtnEvaluationTreatment
+        'BtnSimpleEvaluationTreatment
         '
-        Me.BtnEvaluationTreatment.Image = Global.Manager.My.Resources.Resources.ReportSmall
-        Me.BtnEvaluationTreatment.Name = "BtnEvaluationTreatment"
-        Me.BtnEvaluationTreatment.Size = New System.Drawing.Size(210, 22)
-        Me.BtnEvaluationTreatment.Text = "Relatório de Atendimento"
+        Me.BtnSimpleEvaluationTreatment.Image = Global.Manager.My.Resources.Resources.ReportSmall
+        Me.BtnSimpleEvaluationTreatment.Name = "BtnSimpleEvaluationTreatment"
+        Me.BtnSimpleEvaluationTreatment.Size = New System.Drawing.Size(266, 22)
+        Me.BtnSimpleEvaluationTreatment.Text = "Relatório de Atendimento Simples"
         '
         'TmrLoadDetails
         '
@@ -512,11 +513,19 @@ Partial Class UcEvaluationGrid
         Me.DgvCcData.DataGridView = Me.DgvData
         Me.DgvCcData.IncludeHeaderTextInCellCopy = False
         Me.DgvCcData.IncludeHeaderTextInRowCopy = True
+        Me.DgvCcData.ShowImages = True
         '
         'DgvlEvaluation
         '
         Me.DgvlEvaluation.DataGridView = Me.DgvData
         Me.DgvlEvaluation.Routine = Manager.Routine.Evaluation
+        '
+        'BtnCompleteEvaluationTreatment
+        '
+        Me.BtnCompleteEvaluationTreatment.Image = Global.Manager.My.Resources.Resources.ReportSmall
+        Me.BtnCompleteEvaluationTreatment.Name = "BtnCompleteEvaluationTreatment"
+        Me.BtnCompleteEvaluationTreatment.Size = New System.Drawing.Size(266, 22)
+        Me.BtnCompleteEvaluationTreatment.Text = "Relatório de Atendimento Completo"
         '
         'UcEvaluationGrid
         '
@@ -602,5 +611,6 @@ Partial Class UcEvaluationGrid
     Friend WithEvents BtnImport As ToolStripButton
     Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
     Friend WithEvents DgvlEvaluation As DataGridViewLayout
-    Friend WithEvents BtnEvaluationTreatment As ToolStripMenuItem
+    Friend WithEvents BtnSimpleEvaluationTreatment As ToolStripMenuItem
+    Friend WithEvents BtnCompleteEvaluationTreatment As ToolStripMenuItem
 End Class

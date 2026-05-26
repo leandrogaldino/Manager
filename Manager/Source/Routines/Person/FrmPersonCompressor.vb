@@ -471,7 +471,7 @@ Public Class FrmPersonCompressor
     End Sub
     Private Sub QbxCompressor_FreezedPrimaryKeyChanged(sender As Object, e As EventArgs) Handles QbxCompressor.FreezedPrimaryKeyChanged
         If Not _Loading Then BtnViewCompressor.Visible = QbxCompressor.IsFreezed And _User.CanWrite(Routine.Compressor)
-        If Not _Loading Then BtnImport.Visible = QbxCompressor.IsFreezed
+        BtnImport.Visible = QbxCompressor.IsFreezed
     End Sub
     Private Sub BtnNewCompressor_Click(sender As Object, e As EventArgs) Handles BtnNewCompressor.Click
         Dim Compressor As Compressor

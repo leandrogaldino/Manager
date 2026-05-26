@@ -504,7 +504,7 @@ Public Class FrmEvaluation
                         DgvNavigator.RefreshButtons()
                     End If
                     If CMessageBox.Show("Deseja enviar o relatório para o cliente?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                        Dim Result = EvaluationReport.EvaluationTreatment(_Evaluation)
+                        Dim Result = EvaluationReport.EvaluationTreatment(_Evaluation, True, Nothing)
                         Using Frm As New FrmEmail(Result.Attachments)
                             Frm.TxtSubject.Text = $"Avaliação Técnica de Compressor - {_Evaluation.Compressor}"
                             Frm.TxtTo.Text = String.Join("; ", _Evaluation.Customer.Contacts.Select(Function(c) c.Email))
@@ -1098,7 +1098,7 @@ Public Class FrmEvaluation
         If BtnSave.Enabled Then CMessageBox.Show("A avaliação foi modificada sem ser salva. O relatório será gerado com base nos dados previamente salvos.", CMessageBoxType.Information)
         Try
             Cursor = Cursors.WaitCursor
-            Result = EvaluationReport.EvaluationTreatment(_Evaluation)
+            Result = EvaluationReport.EvaluationTreatment(_Evaluation, True, Nothing)
             FrmMain.OpenTab(New UcReport(Result), "Relatório de Atendimento")
             CMessageBox.Show("O Relátório foi gerado na tela inicial.", CMessageBoxType.Information)
         Catch ex As Exception

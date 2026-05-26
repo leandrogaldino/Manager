@@ -291,12 +291,26 @@ Public Class UcEvaluationGrid
             Form.ShowDialog()
         End Using
     End Sub
-    Private Sub BtnEvaluationTreatment_Click(sender As Object, e As EventArgs) Handles BtnEvaluationTreatment.Click
+    Private Sub BtnEvaluationTreatment_Click(sender As Object, e As EventArgs) Handles BtnSimpleEvaluationTreatment.Click
         Try
             Cursor = Cursors.WaitCursor
             _Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("id").Value, False)
-            Dim Retult As ReportResult = EvaluationReport.EvaluationTreatment(_Evaluation)
+            Dim Retult As ReportResult = EvaluationReport.EvaluationTreatment(_Evaluation, True, Nothing)
             FrmMain.OpenTab(New UcReport(Retult), "Relatório de Atendimento")
+        Catch ex As Exception
+            CMessageBox.Show("ERRO EV027", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+        Finally
+            Cursor = Cursors.Default
+        End Try
+    End Sub
+
+    Private Sub BtnCompleteEvaluationTreatment_Click(sender As Object, e As EventArgs) Handles BtnCompleteEvaluationTreatment.Click
+        Try
+            Cursor = Cursors.WaitCursor
+            _Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("id").Value, False)
+            Using Form As New FrmEvaluationTreatment(_Evaluation)
+                Form.ShowDialog()
+            End Using
         Catch ex As Exception
             CMessageBox.Show("ERRO EV027", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally

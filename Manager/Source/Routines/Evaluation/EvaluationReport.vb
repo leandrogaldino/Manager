@@ -255,7 +255,7 @@ Public Class EvaluationReport
         Cell.Format.Font.Bold = True
         Cell = AddContentCell(Row, 1, 0, ParagraphAlignment.Center, "TÉCNICO", 8, 0)
         Cell.Format.Font.Bold = True
-        If Pictures.Count > 0 Then
+        If Pictures IsNot Nothing AndAlso Pictures.Count > 0 Then
             Section.AddPageBreak()
             Cols = 1
             ColWidth = TotalWidth / Cols
@@ -372,7 +372,7 @@ Public Class EvaluationReport
         Paragraph.Format.Alignment = ParagraphAlignment.Center
         Dim Image = Paragraph.AddImage(ImagePath)
         Image.LockAspectRatio = True
-        Image.Width = Unit.FromCentimeter(7)
+        Image.Height = Unit.FromCentimeter(1)
         Return Cell
     End Function
     'Public Shared Function EvaluationTreatment(ReportingEvaluation As Evaluation) As ReportResult

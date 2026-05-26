@@ -5,6 +5,7 @@
 • Inclusão do setor do compressor no relatório de atendimento do compressor.
 • Correção na importação da avaliação: o valor do engraxamento informado pelo técnico agora é exibido corretamente.
 • Inclusão de aviso periódico para avaliações ou requisições pendentes de importação.
+• Correções na geração do relatório de atendimento.
 #2.2.2
 @13/04/2026
 • Correção no processo de salvamento da avaliação: avaliações agora são aprovadas automaticamente quando o usuário possui permissão para aprovação.

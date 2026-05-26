@@ -127,13 +127,34 @@ Public Class EvaluationReport
         WsReport.Range(12, 1, 12, 7).Style.Border.SetInsideBorder(XLBorderStyleValues.Thin)
         WsReport.Range(12, 1, 12, 7).Style.Border.SetInsideBorderColor(XLColor.DimGray)
         WsReport.Cell(13, 1).SetValue(If(ReportingEvaluation.Compressor.UnitCapacity <= ReportingEvaluation.Horimeter, "SIM", "NÃO"))
-        WsReport.Cell(13, 2).SetValue(FormatNumber(ReportingEvaluation.WorkedHourControlledSelables.First(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.AirFilter).CurrentCapacity, 0, TriState.True))
-        WsReport.Cell(13, 3).SetValue(FormatNumber(ReportingEvaluation.WorkedHourControlledSelables.First(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.OilFilter).CurrentCapacity, 0, TriState.True))
-        WsReport.Cell(13, 4).SetValue(FormatNumber(ReportingEvaluation.WorkedHourControlledSelables.First(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Separator).CurrentCapacity, 0, TriState.True))
-        Dim HasGreasing As Boolean = ReportingEvaluation.WorkedHourControlledSelables.Any(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Greasing)
-        WsReport.Cell(13, 5).SetValue(If(HasGreasing, FormatNumber(ReportingEvaluation.WorkedHourControlledSelables.First(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Greasing).CurrentCapacity, 0, TriState.True), "N/A"))
-        WsReport.Cell(13, 6).SetValue(FormatNumber(ReportingEvaluation.WorkedHourControlledSelables.First(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Oil).CurrentCapacity, 0, TriState.True))
-        Dim OilCapacity As Integer = ReportingEvaluation.WorkedHourControlledSelables.First(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Oil).PersonCompressorSellable.Capacity
+
+        WsReport.Cell(13, 2).SetValue(FormatNumber(
+    If(ReportingEvaluation.WorkedHourControlledSelables.FirstOrDefault(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.AirFilter)?.CurrentCapacity, 0),
+    0, TriState.True))
+
+        WsReport.Cell(13, 3).SetValue(FormatNumber(
+    If(ReportingEvaluation.WorkedHourControlledSelables.FirstOrDefault(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.OilFilter)?.CurrentCapacity, 0),
+    0, TriState.True))
+
+        WsReport.Cell(13, 4).SetValue(FormatNumber(
+    If(ReportingEvaluation.WorkedHourControlledSelables.FirstOrDefault(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Separator)?.CurrentCapacity, 0),
+    0, TriState.True))
+
+        Dim greasingItem = ReportingEvaluation.WorkedHourControlledSelables.FirstOrDefault(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Greasing)
+        WsReport.Cell(13, 5).SetValue(
+    If(greasingItem IsNot Nothing,
+       FormatNumber(greasingItem.CurrentCapacity, 0, TriState.True),
+       "N/A"))
+
+        WsReport.Cell(13, 6).SetValue(FormatNumber(
+    If(ReportingEvaluation.WorkedHourControlledSelables.FirstOrDefault(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Oil)?.CurrentCapacity, 0),
+    0, TriState.True))
+
+        Dim oilItem = ReportingEvaluation.WorkedHourControlledSelables.FirstOrDefault(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Oil)
+        Dim OilCapacity As Integer = If(oilItem?.PersonCompressorSellable.Capacity, 0)
+
+
+
         Dim OilType As String = If(OilCapacity <= 1000, "MINERAL", If(OilCapacity <= 4000, "SEMI SINTÉTICO", "SINTÉTICO"))
         WsReport.Cell(13, 7).SetValue(OilType)
         WsReport.Range(13, 1, 13, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)

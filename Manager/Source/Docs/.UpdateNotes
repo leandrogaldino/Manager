@@ -1,5 +1,8 @@
-#2.3.1
+#2.3.2
 @26/05/2026
+• Correções na geração do relatório de atendimento.
+#2.3.1
+@25/05/2026
 • Correção de erro ao excluir um compressor de uma pessoa com avaliações vinculadas.
 • Correção de falha em que os botões de controle do campo (Visualizar, Editar e Incluir) não eram exibidos em compressores já salvos.
 • Remodelação do relatório de atendimento, com opção de exibir fotos e escolher entre mostrar o código do fabricante ou o ID do produto substituído.
@@ -10,6 +13,7 @@
 • Inclusão do setor do compressor no relatório de atendimento do compressor.
 • Correção na importação da avaliação: o valor do engraxamento informado pelo técnico agora é exibido corretamente.
 • Inclusão de aviso periódico para avaliações ou requisições pendentes de importação.
+• Correções na geração do relatório de atendimento.
 #2.2.2
 @13/04/2026
 • Correção no processo de salvamento da avaliação: avaliações agora são aprovadas automaticamente quando o usuário possui permissão para aprovação.

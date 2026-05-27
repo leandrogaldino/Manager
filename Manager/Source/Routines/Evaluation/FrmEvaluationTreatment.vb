@@ -12,8 +12,7 @@ Public Class FrmEvaluationTreatment
     <DllImport("user32.dll")>
     Private Shared Function SendMessage(hWnd As IntPtr, msg As Integer, wParam As Integer, lParam As Integer) As Integer
     End Function
-
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FrmEvaluationTreatment_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CbxCode.SelectedIndex = 0
         LvPictures.View = View.LargeIcon
         LvPictures.CheckBoxes = True
@@ -23,44 +22,43 @@ Public Class FrmEvaluationTreatment
         _LargeImageList.ImageSize = New Size(200, 200)
         _LargeImageList.ColorDepth = ColorDepth.Depth32Bit
         LvPictures.LargeImageList = _LargeImageList
-        Dim pasta As String = "C:\Users\leand\Downloads"
-        Dim index As Integer = 0
-        For Each arquivo In IO.Directory.GetFiles(pasta)
+        Dim Directory As String = ManagerCore.ApplicationPaths.EvaluationPictureDirectory
+        Dim Index As Integer = 0
+        For Each EvaluationPicture In _Evaluation.Pictures
             Try
-                Dim img As Image = Image.FromFile(arquivo)
-                Dim thumb = CriarThumbnail(img, 200, 200)
-                _LargeImageList.Images.Add(thumb)
-                Dim item As New ListViewItem With {
-                    .Tag = arquivo,
-                    .ImageIndex = index
+                Dim Img As Image = Image.FromFile(EvaluationPicture.Picture.CurrentFile)
+                Dim Thumb = CreateThumbnail(Img, 200, 200)
+                _LargeImageList.Images.Add(Thumb)
+                Dim Item As New ListViewItem With {
+                    .Tag = EvaluationPicture,
+                    .ImageIndex = Index
                 }
-                LvPictures.Items.Add(item)
-                index += 1
+                LvPictures.Items.Add(Item)
+                Index += 1
             Catch
             End Try
-            Dim spacingX As Integer = 205
-            Dim spacingY As Integer = 205
-            Dim lParam As Integer = spacingX Or (spacingY << 16)
-            SendMessage(LvPictures.Handle, LVM_SETICONSPACING, 0, lParam)
+            Dim SpacingX As Integer = 205
+            Dim SpacingY As Integer = 205
+            Dim LParam As Integer = SpacingX Or (SpacingY << 16)
+            SendMessage(LvPictures.Handle, LVM_SETICONSPACING, 0, LParam)
         Next
     End Sub
-
-    Private Function CriarThumbnail(img As Image, largura As Integer, altura As Integer) As Image
-        Dim bmp As New Bitmap(largura, altura)
-        Using g As Graphics = Graphics.FromImage(bmp)
+    Private Function CreateThumbnail(Img As Image, Width As Integer, Height As Integer) As Image
+        Dim Bmp As New Bitmap(Width, Height)
+        Using g As Graphics = Graphics.FromImage(Bmp)
             g.Clear(Color.Transparent)
             g.InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
             g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
-            Dim ratioX = largura / img.Width
-            Dim ratioY = altura / img.Height
-            Dim ratio = Math.Min(ratioX, ratioY)
-            Dim novaLargura = CInt(img.Width * ratio)
-            Dim novaAltura = CInt(img.Height * ratio)
-            Dim posX = (largura - novaLargura) \ 2
-            Dim posY = (altura - novaAltura) \ 2
-            g.DrawImage(img, posX, posY, novaLargura, novaAltura)
+            Dim RatioX = Width / Img.Width
+            Dim RatioY = Height / Img.Height
+            Dim Ratio = Math.Min(RatioX, RatioY)
+            Dim NewWidth = CInt(Img.Width * Ratio)
+            Dim NewHeight = CInt(Img.Height * Ratio)
+            Dim PosX = (Width - NewWidth) \ 2
+            Dim PosY = (Height - NewHeight) \ 2
+            g.DrawImage(Img, PosX, PosY, NewWidth, NewHeight)
         End Using
-        Return bmp
+        Return Bmp
     End Function
     Private Sub CbxAll_CheckedChanged(sender As Object, e As EventArgs) Handles CbxAll.CheckedChanged
         If CbxAll.Checked Then
@@ -73,18 +71,15 @@ Public Class FrmEvaluationTreatment
             Next
         End If
     End Sub
-
     Private Sub BtnGenerate_Click(sender As Object, e As EventArgs) Handles BtnGenerate.Click
         Dim SelectedPictures As New List(Of String)
         Dim ShowIdAsCode As Boolean = CbxCode.SelectedIndex = 0
         For Each SelectedItem As ListViewItem In LvPictures.CheckedItems
-            SelectedPictures.Add(SelectedItem.Tag.ToString())
+            SelectedPictures.Add(CType(SelectedItem.Tag, EvaluationPicture).Picture.CurrentFile)
         Next SelectedItem
-
         Dim Result As ReportResult
         Try
             Cursor = Cursors.WaitCursor
-            BtnGenerate.Enabled = False
             Result = EvaluationReport.EvaluationTreatment(_Evaluation, ShowIdAsCode, SelectedPictures)
             DialogResult = DialogResult.OK
             FrmMain.OpenTab(New UcReport(Result), "Relatório de Ficha Cadastral da Pessoa")

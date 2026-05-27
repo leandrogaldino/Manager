@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports ControlLibrary
 Imports ControlLibrary.Extensions
 Imports ManagerCore
 Imports MigraDoc.DocumentObjectModel
@@ -108,26 +109,28 @@ Public Class EvaluationReport
                             ("CLIENTE: ", TextFormat.Bold), (ReportingEvaluation.Customer.ShortName & If(String.IsNullOrEmpty(ReportingEvaluation.Compressor.Sector), String.Empty, $" {Separator} {ReportingEvaluation.Compressor.Sector}"), Nothing)
                         })
         Row = Table.AddRow()
+        Dim Address As PersonAddress = ReportingEvaluation.Customer.Addresses.First(Function(x) x.IsMainAddress)
+        Dim Contact As PersonContact = ReportingEvaluation.Customer.Contacts.First(Function(x) x.IsMainContact)
         AddRichTextCell(Row, 0, 6, ParagraphAlignment.Left, 0.5, NormalColor,
                         {
-                            ("CIDADE: ", TextFormat.Bold), ("GOIÂNIA", Nothing),
+                            ("CIDADE: ", TextFormat.Bold), (Address.City.Name, Nothing),
                             (Separator, Nothing),
-                            ("UF: ", TextFormat.Bold), ("GO", Nothing),
+                            ("UF: ", TextFormat.Bold), (Address.City.State.ShortName, Nothing),
                             (Separator, Nothing),
-                            ("CONTATO: ", TextFormat.Bold), ("FULANO", Nothing),
+                            ("CONTATO: ", TextFormat.Bold), (Contact.Name, Nothing),
                             (Separator, Nothing),
-                            ("FONE: ", TextFormat.Bold), ("(00) 0000-0000", Nothing)
+                            ("FONE: ", TextFormat.Bold), (Contact.Phone, Nothing)
                         })
         Row = Table.AddRow()
         AddRichTextCell(Row, 0, 6, ParagraphAlignment.Left, 0.5, NormalColor,
                         {
-                            ("TIPO DE VISITA: ", TextFormat.Bold), ("PREVENTIVA", Nothing),
+                            ("TIPO DE VISITA: ", TextFormat.Bold), (EnumHelper.GetEnumDescription(ReportingEvaluation.CallType), Nothing),
                             (Separator, Nothing),
-                            ("DATA: ", TextFormat.Bold), ("00/00/0000", Nothing),
+                            ("DATA: ", TextFormat.Bold), (ReportingEvaluation.EvaluationDate.ToString("dd/MM/yyyy"), Nothing),
                             (Separator, Nothing),
-                            ("INICIO: ", TextFormat.Bold), ("00:00", Nothing),
+                            ("INICIO: ", TextFormat.Bold), (ReportingEvaluation.StartTime.ToString("hh\:mm"), Nothing),
                             (Separator, Nothing),
-                            ("FIM: ", TextFormat.Bold), ("00:00", Nothing)
+                            ("FIM: ", TextFormat.Bold), (ReportingEvaluation.EndTime.ToString("hh\:mm"), Nothing)
                         })
         AddSeparatorRow(Table)
         Row = Table.AddRow()
@@ -141,13 +144,13 @@ Public Class EvaluationReport
         AddSubtitleCell(Row, 5, 0, ParagraphAlignment.Center, "UND. COMP.", 8)
         AddSubtitleCell(Row, 6, 0, ParagraphAlignment.Center, "REGIME TRAB.", 8)
         Row = Table.AddRow()
-        AddContentCell(Row, 0, 0, ParagraphAlignment.Center, "SRP 4100")
-        AddContentCell(Row, 1, 0, ParagraphAlignment.Center, "10.469")
-        AddContentCell(Row, 2, 0, ParagraphAlignment.Center, "13458")
-        AddContentCell(Row, 3, 0, ParagraphAlignment.Center, "7.5BAR")
-        AddContentCell(Row, 4, 0, ParagraphAlignment.Center, "85ºC")
-        AddContentCell(Row, 5, 0, ParagraphAlignment.Center, "EVO9")
-        AddContentCell(Row, 6, 0, ParagraphAlignment.Center, "24 H/DIA")
+        AddContentCell(Row, 0, 0, ParagraphAlignment.Center, ReportingEvaluation.Compressor.CompressorName)
+        AddContentCell(Row, 1, 0, ParagraphAlignment.Center, ReportingEvaluation.Horimeter)
+        AddContentCell(Row, 2, 0, ParagraphAlignment.Center, ReportingEvaluation.Compressor.SerialNumber)
+        AddContentCell(Row, 3, 0, ParagraphAlignment.Center, $"{ReportingEvaluation.Pressure}BAR")
+        AddContentCell(Row, 4, 0, ParagraphAlignment.Center, $"{ReportingEvaluation.Temperature}ºC")
+        AddContentCell(Row, 5, 0, ParagraphAlignment.Center, ReportingEvaluation.Compressor.CompressorUnitName)
+        AddContentCell(Row, 6, 0, ParagraphAlignment.Center, $"{ReportingEvaluation.AverageWorkLoad}H/DIA")
         AddSeparatorRow(Table)
         Row = Table.AddRow()
         AddTitleCell(Row, "HORAS RESTANTES PARA SUBSTITUIÇÃO")
@@ -160,13 +163,45 @@ Public Class EvaluationReport
         AddSubtitleCell(Row, 5, 0, ParagraphAlignment.Center, "ÓLEO", 8)
         AddSubtitleCell(Row, 6, 0, ParagraphAlignment.Center, "TIPO ÓLEO", 8)
         Row = Table.AddRow()
-        AddContentCell(Row, 0, 0, ParagraphAlignment.Center, "NÃO")
-        AddContentCell(Row, 1, 0, ParagraphAlignment.Center, "1.000")
-        AddContentCell(Row, 2, 0, ParagraphAlignment.Center, "1.000")
-        AddContentCell(Row, 3, 0, ParagraphAlignment.Center, "1.000")
-        AddContentCell(Row, 4, 0, ParagraphAlignment.Center, "1.000")
-        AddContentCell(Row, 5, 0, ParagraphAlignment.Center, "1.000")
+        AddContentCell(Row, 0, 0, ParagraphAlignment.Center, If(ReportingEvaluation.Horimeter > ReportingEvaluation.Compressor.UnitCapacity, "SIM", "NÃO"))
+
+        Dim AirFilter = ReportingEvaluation.WorkedHourControlledSelables.FirstOrDefault(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.AirFilter)
+        If AirFilter IsNot Nothing Then
+            AddContentCell(Row, 1, 0, ParagraphAlignment.Center, AirFilter.CurrentCapacity)
+        Else
+            AddContentCell(Row, 1, 0, ParagraphAlignment.Center, "N/A")
+        End If
+
+        Dim OilFilter = ReportingEvaluation.WorkedHourControlledSelables.FirstOrDefault(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.OilFilter)
+        If OilFilter IsNot Nothing Then
+            AddContentCell(Row, 2, 0, ParagraphAlignment.Center, OilFilter.CurrentCapacity)
+        Else
+            AddContentCell(Row, 2, 0, ParagraphAlignment.Center, "N/A")
+        End If
+
+        Dim SeparatorFilter = ReportingEvaluation.WorkedHourControlledSelables.FirstOrDefault(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Separator)
+        If SeparatorFilter IsNot Nothing Then
+            AddContentCell(Row, 3, 0, ParagraphAlignment.Center, SeparatorFilter.CurrentCapacity)
+        Else
+            AddContentCell(Row, 3, 0, ParagraphAlignment.Center, "N/A")
+        End If
+
+        Dim Greasing = ReportingEvaluation.WorkedHourControlledSelables.FirstOrDefault(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Greasing)
+        If Greasing IsNot Nothing Then
+            AddContentCell(Row, 4, 0, ParagraphAlignment.Center, Greasing.CurrentCapacity)
+        Else
+            AddContentCell(Row, 4, 0, ParagraphAlignment.Center, "N/A")
+        End If
+
+        Dim Oil = ReportingEvaluation.WorkedHourControlledSelables.FirstOrDefault(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Oil)
+        If Oil IsNot Nothing Then
+            AddContentCell(Row, 5, 0, ParagraphAlignment.Center, Oil.CurrentCapacity)
+        Else
+            AddContentCell(Row, 5, 0, ParagraphAlignment.Center, "N/A")
+        End If
+
         AddContentCell(Row, 6, 0, ParagraphAlignment.Center, "SEMI-SINTÉTICO", 6)
+
         If ReportingEvaluation.ElapsedDayControlledSellables.Any(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Coalescent) Then
             AddSeparatorRow(Table)
             Row = Table.AddRow()
@@ -232,6 +267,7 @@ Public Class EvaluationReport
         Paragraph = Section.AddParagraph()
         Paragraph.Format.Font.Size = 9
         Paragraph.Format.SpaceBefore = Unit.FromCentimeter(0.5)
+        Paragraph.Format.Alignment = ParagraphAlignment.Center
         Paragraph.AddText($"AS PARTES DECLARAM ESTAR DE ARCORDO COM ESTE RELATÓRIO, EM {ReportingEvaluation.EvaluationDate.Day} DE {MonthName} DE {ReportingEvaluation.EvaluationDate.Year}.")
         Cols = 2
         ColWidth = TotalWidth / Cols
@@ -264,7 +300,7 @@ Public Class EvaluationReport
                 Dim Col = Table.AddColumn()
                 Col.Width = Unit.FromCentimeter(ColWidth)
             Next i
-            For Each Picture In Pictures
+            For Each PicturePath In Pictures
                 Row = Table.AddRow()
                 Row.Height = Unit.FromCentimeter(12)
                 Row.HeightRule = RowHeightRule.Exactly
@@ -274,10 +310,10 @@ Public Class EvaluationReport
                 Cell.Borders.Width = 0.5
                 Paragraph = Cell.AddParagraph()
                 Paragraph.Format.Alignment = ParagraphAlignment.Center
-                Dim DrawingImage = Image.FromFile(Picture)
+                Dim DrawingImage = Image.FromFile(PicturePath)
                 Dim IsPortrait As Boolean = DrawingImage.Height > DrawingImage.Width
                 DrawingImage.Dispose()
-                Dim Img = Paragraph.AddImage(Picture)
+                Dim Img = Paragraph.AddImage(PicturePath)
                 Img.LockAspectRatio = True
                 If IsPortrait Then
                     Img.Height = Unit.FromCentimeter(10.5)

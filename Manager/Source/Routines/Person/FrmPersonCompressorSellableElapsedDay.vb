@@ -61,6 +61,8 @@ Public Class FrmPersonCompressorSellableElapsedDay
         End If
         BtnSave.Enabled = False
         QbxSellable.Select()
+        AddHandler CbxSellableBind.ComboBox.PreviewKeyDown, AddressOf Combo_PreviewKeyDown
+        AddHandler CbxSellableBind.ComboBox.KeyDown, AddressOf Combo_KeyDown
         _Loading = False
     End Sub
     Private Sub BeforeDataGridViewRowMove()
@@ -453,5 +455,28 @@ Public Class FrmPersonCompressorSellableElapsedDay
             .TableNameOrAlias = "product",
             .Value = "@statusid"
         })
+    End Sub
+    Private Sub Combo_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
+        If e.KeyCode = Keys.Tab Then
+            e.IsInputKey = True
+        End If
+    End Sub
+    Private Sub Combo_KeyDown(sender As Object, e As KeyEventArgs)
+        If e.KeyCode = Keys.Tab Then
+            e.SuppressKeyPress = True
+            RbtProduct.Select()
+        End If
+    End Sub
+
+    Private Sub BtnClose_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles BtnClose.PreviewKeyDown
+        If e.KeyCode = Keys.Tab Then
+            e.IsInputKey = True
+        End If
+    End Sub
+    Private Sub BtnClose_KeyDown(sender As Object, e As KeyEventArgs) Handles BtnClose.KeyDown
+        If e.KeyCode = Keys.Tab Then
+            e.SuppressKeyPress = True
+            CbxSellableBind.ComboBox.Select()
+        End If
     End Sub
 End Class

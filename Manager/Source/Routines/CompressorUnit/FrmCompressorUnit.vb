@@ -192,7 +192,12 @@ Public Class FrmCompressorUnit
             EprValidation.SetIconAlignment(LblName, ErrorIconAlignment.MiddleRight)
             TxtName.Select()
             Return False
-        ElseIf Not String.IsNullOrWhiteSpace(QbxProduct.Text) And Not QbxProduct.IsFreezed Then
+        ElseIf String.IsNullOrWhiteSpace(QbxProduct.Text) Then
+            EprValidation.SetError(LblProduct, "Campo obrigatório.")
+            EprValidation.SetIconAlignment(LblProduct, ErrorIconAlignment.MiddleRight)
+            QbxProduct.Select()
+            Return False
+        ElseIf Not QbxProduct.IsFreezed Then
             EprValidation.SetError(LblProduct, "Produto não encontrado.")
             EprValidation.SetIconAlignment(LblProduct, ErrorIconAlignment.MiddleRight)
             QbxProduct.Select()

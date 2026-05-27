@@ -23,12 +23,12 @@ Partial Class FrmPersonCompressor
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim Condition3 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Parameter3 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Condition4 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Parameter4 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Condition5 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Parameter5 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
+        Dim Condition6 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
+        Dim Parameter6 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmPersonCompressor))
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
@@ -377,11 +377,11 @@ Partial Class FrmPersonCompressor
         '
         Me.QbxCompressor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxCompressor.CharactersToQuery = 1
-        Condition3.FieldName = "statusid"
-        Condition3.Operator = "="
-        Condition3.TableNameOrAlias = "compressor"
-        Condition3.Value = "@statusid"
-        Me.QbxCompressor.Conditions.Add(Condition3)
+        Condition4.FieldName = "statusid"
+        Condition4.Operator = "="
+        Condition4.TableNameOrAlias = "compressor"
+        Condition4.Value = "@statusid"
+        Me.QbxCompressor.Conditions.Add(Condition4)
         Me.QbxCompressor.DebugOnTextChanged = False
         Me.QbxCompressor.DisplayFieldAlias = "NOME"
         Me.QbxCompressor.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
@@ -398,9 +398,9 @@ Partial Class FrmPersonCompressor
         Me.QbxCompressor.MainTableAlias = Nothing
         Me.QbxCompressor.MainTableName = "compressor"
         Me.QbxCompressor.Name = "QbxCompressor"
-        Parameter3.ParameterName = "@statusid"
-        Parameter3.ParameterValue = "0"
-        Me.QbxCompressor.Parameters.Add(Parameter3)
+        Parameter4.ParameterName = "@statusid"
+        Parameter4.ParameterValue = "0"
+        Me.QbxCompressor.Parameters.Add(Parameter4)
         Me.QbxCompressor.Prefix = Nothing
         Me.QbxCompressor.Size = New System.Drawing.Size(555, 23)
         Me.QbxCompressor.Suffix = Nothing
@@ -495,7 +495,7 @@ Partial Class FrmPersonCompressor
         Me.FlpUnit.Location = New System.Drawing.Point(222, 49)
         Me.FlpUnit.Name = "FlpUnit"
         Me.FlpUnit.Size = New System.Drawing.Size(69, 21)
-        Me.FlpUnit.TabIndex = 10
+        Me.FlpUnit.TabIndex = 8
         '
         'BtnFilterUnit
         '
@@ -554,7 +554,7 @@ Partial Class FrmPersonCompressor
         Me.FlpInterface.Location = New System.Drawing.Point(76, 49)
         Me.FlpInterface.Name = "FlpInterface"
         Me.FlpInterface.Size = New System.Drawing.Size(69, 21)
-        Me.FlpInterface.TabIndex = 7
+        Me.FlpInterface.TabIndex = 5
         '
         'BtnFiltrerInterface
         '
@@ -608,11 +608,11 @@ Partial Class FrmPersonCompressor
         '
         Me.QbxUnit.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxUnit.CharactersToQuery = 1
-        Condition1.FieldName = "statusid"
-        Condition1.Operator = "="
-        Condition1.TableNameOrAlias = "compressorunit"
-        Condition1.Value = "@statusid"
-        Me.QbxUnit.Conditions.Add(Condition1)
+        Condition5.FieldName = "statusid"
+        Condition5.Operator = "="
+        Condition5.TableNameOrAlias = "compressorunit"
+        Condition5.Value = "@statusid"
+        Me.QbxUnit.Conditions.Add(Condition5)
         Me.QbxUnit.DebugOnTextChanged = False
         Me.QbxUnit.DisplayFieldAlias = "Nome"
         Me.QbxUnit.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
@@ -630,23 +630,23 @@ Partial Class FrmPersonCompressor
         Me.QbxUnit.MainTableAlias = Nothing
         Me.QbxUnit.MainTableName = "compressorunit"
         Me.QbxUnit.Name = "QbxUnit"
-        Parameter1.ParameterName = "@statusid"
-        Parameter1.ParameterValue = "0"
-        Me.QbxUnit.Parameters.Add(Parameter1)
+        Parameter5.ParameterName = "@statusid"
+        Parameter5.ParameterValue = "0"
+        Me.QbxUnit.Parameters.Add(Parameter5)
         Me.QbxUnit.Prefix = Nothing
         Me.QbxUnit.Size = New System.Drawing.Size(140, 23)
         Me.QbxUnit.Suffix = Nothing
-        Me.QbxUnit.TabIndex = 9
+        Me.QbxUnit.TabIndex = 7
         '
         'QbxInterface
         '
         Me.QbxInterface.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.QbxInterface.CharactersToQuery = 1
-        Condition2.FieldName = "statusid"
-        Condition2.Operator = "="
-        Condition2.TableNameOrAlias = "compressorinterface"
-        Condition2.Value = "@statusid"
-        Me.QbxInterface.Conditions.Add(Condition2)
+        Condition6.FieldName = "statusid"
+        Condition6.Operator = "="
+        Condition6.TableNameOrAlias = "compressorinterface"
+        Condition6.Value = "@statusid"
+        Me.QbxInterface.Conditions.Add(Condition6)
         Me.QbxInterface.DebugOnTextChanged = False
         Me.QbxInterface.DisplayFieldAlias = "Nome"
         Me.QbxInterface.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
@@ -664,13 +664,13 @@ Partial Class FrmPersonCompressor
         Me.QbxInterface.MainTableAlias = Nothing
         Me.QbxInterface.MainTableName = "compressorinterface"
         Me.QbxInterface.Name = "QbxInterface"
-        Parameter2.ParameterName = "@statusid"
-        Parameter2.ParameterValue = "0"
-        Me.QbxInterface.Parameters.Add(Parameter2)
+        Parameter6.ParameterName = "@statusid"
+        Parameter6.ParameterValue = "0"
+        Me.QbxInterface.Parameters.Add(Parameter6)
         Me.QbxInterface.Prefix = Nothing
         Me.QbxInterface.Size = New System.Drawing.Size(140, 23)
         Me.QbxInterface.Suffix = Nothing
-        Me.QbxInterface.TabIndex = 6
+        Me.QbxInterface.TabIndex = 4
         '
         'CbxOilType
         '
@@ -680,7 +680,7 @@ Partial Class FrmPersonCompressor
         Me.CbxOilType.Location = New System.Drawing.Point(444, 114)
         Me.CbxOilType.Name = "CbxOilType"
         Me.CbxOilType.Size = New System.Drawing.Size(120, 24)
-        Me.CbxOilType.TabIndex = 4
+        Me.CbxOilType.TabIndex = 20
         '
         'CbxControlled
         '
@@ -690,7 +690,7 @@ Partial Class FrmPersonCompressor
         Me.CbxControlled.Location = New System.Drawing.Point(444, 70)
         Me.CbxControlled.Name = "CbxControlled"
         Me.CbxControlled.Size = New System.Drawing.Size(120, 24)
-        Me.CbxControlled.TabIndex = 4
+        Me.CbxControlled.TabIndex = 12
         '
         'DbxUnitCapacity
         '
@@ -700,7 +700,7 @@ Partial Class FrmPersonCompressor
         Me.DbxUnitCapacity.Location = New System.Drawing.Point(298, 70)
         Me.DbxUnitCapacity.Name = "DbxUnitCapacity"
         Me.DbxUnitCapacity.Size = New System.Drawing.Size(140, 23)
-        Me.DbxUnitCapacity.TabIndex = 12
+        Me.DbxUnitCapacity.TabIndex = 10
         Me.DbxUnitCapacity.Text = "0"
         Me.DbxUnitCapacity.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -710,7 +710,7 @@ Partial Class FrmPersonCompressor
         Me.LblOilType.Location = New System.Drawing.Point(441, 94)
         Me.LblOilType.Name = "LblOilType"
         Me.LblOilType.Size = New System.Drawing.Size(69, 17)
-        Me.LblOilType.TabIndex = 3
+        Me.LblOilType.TabIndex = 19
         Me.LblOilType.Text = "Tipo Óleo"
         '
         'FlpCompressor
@@ -778,7 +778,7 @@ Partial Class FrmPersonCompressor
         Me.LblControlled.Location = New System.Drawing.Point(441, 50)
         Me.LblControlled.Name = "LblControlled"
         Me.LblControlled.Size = New System.Drawing.Size(84, 17)
-        Me.LblControlled.TabIndex = 3
+        Me.LblControlled.TabIndex = 11
         Me.LblControlled.Text = "Controlado"
         '
         'LblUnitCapacity
@@ -787,7 +787,7 @@ Partial Class FrmPersonCompressor
         Me.LblUnitCapacity.Location = New System.Drawing.Point(295, 50)
         Me.LblUnitCapacity.Name = "LblUnitCapacity"
         Me.LblUnitCapacity.Size = New System.Drawing.Size(74, 17)
-        Me.LblUnitCapacity.TabIndex = 11
+        Me.LblUnitCapacity.TabIndex = 9
         Me.LblUnitCapacity.Text = "Cap. Und."
         '
         'LblUnit
@@ -796,7 +796,7 @@ Partial Class FrmPersonCompressor
         Me.LblUnit.Location = New System.Drawing.Point(152, 50)
         Me.LblUnit.Name = "LblUnit"
         Me.LblUnit.Size = New System.Drawing.Size(62, 17)
-        Me.LblUnit.TabIndex = 8
+        Me.LblUnit.TabIndex = 6
         Me.LblUnit.Text = "Unidade"
         '
         'LblInterface
@@ -805,16 +805,16 @@ Partial Class FrmPersonCompressor
         Me.LblInterface.Location = New System.Drawing.Point(6, 50)
         Me.LblInterface.Name = "LblInterface"
         Me.LblInterface.Size = New System.Drawing.Size(65, 17)
-        Me.LblInterface.TabIndex = 5
+        Me.LblInterface.TabIndex = 3
         Me.LblInterface.Text = "Interface"
         '
         'TabMaintenance
         '
         Me.TabMaintenance.Controls.Add(Me.TcMaintenance)
-        Me.TabMaintenance.Location = New System.Drawing.Point(4, 22)
+        Me.TabMaintenance.Location = New System.Drawing.Point(4, 26)
         Me.TabMaintenance.Name = "TabMaintenance"
         Me.TabMaintenance.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabMaintenance.Size = New System.Drawing.Size(569, 151)
+        Me.TabMaintenance.Size = New System.Drawing.Size(569, 147)
         Me.TabMaintenance.TabIndex = 8
         Me.TabMaintenance.Text = "Manutenção"
         Me.TabMaintenance.UseVisualStyleBackColor = True
@@ -827,7 +827,7 @@ Partial Class FrmPersonCompressor
         Me.TcMaintenance.Location = New System.Drawing.Point(3, 3)
         Me.TcMaintenance.Name = "TcMaintenance"
         Me.TcMaintenance.SelectedIndex = 0
-        Me.TcMaintenance.Size = New System.Drawing.Size(563, 145)
+        Me.TcMaintenance.Size = New System.Drawing.Size(563, 141)
         Me.TcMaintenance.TabIndex = 0
         '
         'TabWorkedHourSellable
@@ -837,7 +837,7 @@ Partial Class FrmPersonCompressor
         Me.TabWorkedHourSellable.Location = New System.Drawing.Point(4, 26)
         Me.TabWorkedHourSellable.Name = "TabWorkedHourSellable"
         Me.TabWorkedHourSellable.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabWorkedHourSellable.Size = New System.Drawing.Size(555, 115)
+        Me.TabWorkedHourSellable.Size = New System.Drawing.Size(555, 111)
         Me.TabWorkedHourSellable.TabIndex = 6
         Me.TabWorkedHourSellable.Text = "Hora Trabalhada"
         Me.TabWorkedHourSellable.UseVisualStyleBackColor = True
@@ -860,7 +860,7 @@ Partial Class FrmPersonCompressor
         Me.DgvWorkedHourSellable.RowHeadersVisible = False
         Me.DgvWorkedHourSellable.RowTemplate.Height = 26
         Me.DgvWorkedHourSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvWorkedHourSellable.Size = New System.Drawing.Size(549, 84)
+        Me.DgvWorkedHourSellable.Size = New System.Drawing.Size(549, 80)
         Me.DgvWorkedHourSellable.TabIndex = 4
         '
         'TsWorkedHourSellable
@@ -1013,10 +1013,10 @@ Partial Class FrmPersonCompressor
         'TabNote
         '
         Me.TabNote.Controls.Add(Me.TxtNote)
-        Me.TabNote.Location = New System.Drawing.Point(4, 22)
+        Me.TabNote.Location = New System.Drawing.Point(4, 26)
         Me.TabNote.Name = "TabNote"
         Me.TabNote.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabNote.Size = New System.Drawing.Size(569, 151)
+        Me.TabNote.Size = New System.Drawing.Size(569, 147)
         Me.TabNote.TabIndex = 5
         Me.TabNote.Text = "Observação"
         Me.TabNote.UseVisualStyleBackColor = True
@@ -1028,7 +1028,7 @@ Partial Class FrmPersonCompressor
         Me.TxtNote.Location = New System.Drawing.Point(3, 3)
         Me.TxtNote.MaxLength = 1000000
         Me.TxtNote.Name = "TxtNote"
-        Me.TxtNote.Size = New System.Drawing.Size(563, 145)
+        Me.TxtNote.Size = New System.Drawing.Size(563, 141)
         Me.TxtNote.TabIndex = 0
         Me.TxtNote.Text = ""
         '

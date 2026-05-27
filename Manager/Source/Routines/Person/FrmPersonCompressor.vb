@@ -229,20 +229,12 @@ Public Class FrmPersonCompressor
         LblCreationValue.Text = _PersonCompressor.Creation
         QbxCompressor.Unfreeze()
         QbxCompressor.Freeze(_PersonCompressor.CompressorID)
-
         QbxInterface.Unfreeze()
-
-
-
         QbxInterface.Freeze(_PersonCompressor.CompressorInterfaceID)
-
         QbxUnit.Unfreeze()
         QbxUnit.Freeze(_PersonCompressor.CompressorUnitID)
-
         CbxControlled.Text = EnumHelper.GetEnumDescription(_PersonCompressor.Controlled)
-
         CbxOilType.Text = EnumHelper.GetEnumDescription(_PersonCompressor.OilType)
-
         TxtSerialNumber.Text = _PersonCompressor.SerialNumber
         TxtPatrimony.Text = _PersonCompressor.Patrimony
         TxtSector.Text = _PersonCompressor.Sector
@@ -274,8 +266,6 @@ Public Class FrmPersonCompressor
             EprValidation.SetIconAlignment(LblCompressor, ErrorIconAlignment.MiddleRight)
             QbxCompressor.Select()
             Return False
-
-
         ElseIf String.IsNullOrWhiteSpace(QbxInterface.Text) Then
             TcPersonCompressor.SelectedTab = TabMain
             EprValidation.SetError(LblInterface, "Campo obrigatório.")

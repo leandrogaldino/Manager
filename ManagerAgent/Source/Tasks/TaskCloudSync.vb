@@ -357,7 +357,7 @@ Public Class TaskCloudSync
         Dim OilFilterCapacity As Integer
         Dim SeparatorCapacity As Integer
         Dim OilCapacity As Integer
-        Dim GreasingCapacity As Integer
+        Dim GreasingCapacity As Integer?
         Dim PersonCompressorResult = Await _LocalDB.ExecuteSelectAsync("personcompressor",
                                                  New List(Of String) From {"id", "statusid", "personid", "compressorid", "serialnumber", "patrimony", "sector", "compressorinterfaceid", "compressorunitid", "oiltypeid"},
                                                  "id = @id",
@@ -410,8 +410,8 @@ Public Class TaskCloudSync
                 GreasingCapacity =
                 PartCapacityResult.Data.
                 Where(Function(x) Convert.ToInt32(x("sellablebindid")) = 6).
-                Select(Function(x) Convert.ToInt32(x("capacity"))).
-                DefaultIfEmpty(0).
+                Select(Function(x) CType(Convert.ToInt32(x("capacity")), Integer?)).
+                DefaultIfEmpty(Nothing).
                 Max()
             End If
             PersonCompressorData.Add("airfiltercapacity", AirFilterCapacity)

@@ -126,7 +126,7 @@ Public Class TaskCloudSync
                             Await FetchPersonCompressor(Change)
                         Case 204
                             Debug.Print($"Sincronizando Coalescente ID {Change("id")}")
-                            Await FetchPersonCompressorCoalescents(Change)
+                            Await FetchPersonCompressorSellable(Change)
                         Case 6
                             Debug.Print($"Sincronizando Produto ID {Change("id")}")
                             Await FetchProduct(Change)
@@ -329,22 +329,27 @@ Public Class TaskCloudSync
                                           New List(Of Condition) From {New WhereEqualToCondition("id", Change("registryid"))})
         End If
     End Function
-    Private Async Function FetchPersonCompressorCoalescents(Change As Dictionary(Of String, Object)) As Task
+    Private Async Function FetchPersonCompressorSellable(Change As Dictionary(Of String, Object)) As Task
         Dim Result = Await _LocalDB.ExecuteSelectAsync("personcompressorsellable",
-                                                  New List(Of String) From {"id", "personcompressorid", "productid", "statusid", "sellablebindid"},
-                                                  "id = @id AND controltypeid = @controltypeid",
-                                                  New Dictionary(Of String, Object) From {{"@id", Change("registryid")}, {"@controltypeid", 1}},
+                                                  New List(Of String) From {"id", "personcompressorid", "productid", "statusid", "sellablebindid", "controltypeid"},
+                                                  "id = @id",
+                                                  New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
                                                   Limit:=1)
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
             Dim CoalescentData As Dictionary(Of String, Object)
             CoalescentData = Result.Data(0)
-            CoalescentData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
-            Dim SellableBindID = Convert.ToInt32(CoalescentData("sellablebindid"))
-            If SellableBindID <> 5 Then CoalescentData("statusid") = 1
-            CoalescentData("visible") = If(CoalescentData("statusid") = 0, 1, 0)
-            CoalescentData.Remove("statusid")
-            CoalescentData.Remove("sellablebindid")
-            Await _RemoteDB.ExecutePut("personcompressorcoalescents", CoalescentData, CoalescentData("id"))
+            If CoalescentData("controltypeid") = 1 Then
+                CoalescentData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
+                Dim SellableBindID = Convert.ToInt32(CoalescentData("sellablebindid"))
+                If SellableBindID <> 5 Then CoalescentData("statusid") = 1
+                CoalescentData("visible") = If(CoalescentData("statusid") = 0, 1, 0)
+                CoalescentData.Remove("statusid")
+                CoalescentData.Remove("sellablebindid")
+                CoalescentData.Remove("controltypeid")
+                Await _RemoteDB.ExecutePut("personcompressorcoalescents", CoalescentData, CoalescentData("id"))
+            Else
+                Await FetchPersonCompressor(New Dictionary(Of String, Object) From {{"registryid", CoalescentData("personcompressorid")}, {"fieldname", ""}})
+            End If
         End If
         If Change("fieldname") = "Deleção" Then
             Await _RemoteDB.ExecuteUpdate("personcompressorcoalescents",
@@ -372,7 +377,7 @@ Public Class TaskCloudSync
             PersonCompressorData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
             PersonCompressorData("visible") = If(PersonCompressorData("statusid") = 0, 1, 0)
             Dim PartCapacityResult = Await _LocalDB.ExecuteSelectAsync("personcompressorsellable",
-                                                  New List(Of String) From {"sellablebindid", "capacity"},
+                                                  New List(Of String) From {"sellablebindid", "capacity", "statusid"},
                                                   "personcompressorid = @personcompressorid AND sellablebindid IN (@airfilter, @oilfilter, @separator, @oil, @greasing)",
                                                   New Dictionary(Of String, Object) From {
                                                       {"@personcompressorid", PersonCompressorData("id")},
@@ -408,11 +413,15 @@ Public Class TaskCloudSync
                 DefaultIfEmpty(0).
                 Max()
                 GreasingCapacity =
-                PartCapacityResult.Data.
-                Where(Function(x) Convert.ToInt32(x("sellablebindid")) = 6).
-                Select(Function(x) CType(Convert.ToInt32(x("capacity")), Integer?)).
-                DefaultIfEmpty(Nothing).
-                Max()
+                If(
+                    PartCapacityResult.Data.Any(Function(x) Convert.ToInt32(x("statusid")) = 1),
+                    Nothing,
+                    PartCapacityResult.Data.
+                        Where(Function(x) Convert.ToInt32(x("sellablebindid")) = 6).
+                        Select(Function(x) CType(Convert.ToInt32(x("capacity")), Integer?)).
+                        DefaultIfEmpty(Nothing).
+                        Max()
+                )
             End If
             PersonCompressorData.Add("airfiltercapacity", AirFilterCapacity)
             PersonCompressorData.Add("oilfiltercapacity", OilFilterCapacity)

@@ -338,7 +338,7 @@ Partial Class FrmCompressorUnit
         Me.TxtName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.TxtName.Location = New System.Drawing.Point(15, 70)
         Me.TxtName.Margin = New System.Windows.Forms.Padding(3, 3, 3, 6)
-        Me.TxtName.MaxLength = 100
+        Me.TxtName.MaxLength = 20
         Me.TxtName.Name = "TxtName"
         Me.TxtName.Size = New System.Drawing.Size(120, 23)
         Me.TxtName.TabIndex = 3

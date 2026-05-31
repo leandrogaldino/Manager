@@ -1,5 +1,4 @@
-﻿Imports System.ComponentModel
-Imports ControlLibrary
+﻿Imports ControlLibrary
 Imports ManagerCore
 Imports ManagerCore.LocalDB
 Imports ManagerCore.RemoteDB
@@ -336,19 +335,19 @@ Public Class TaskCloudSync
                                                   New Dictionary(Of String, Object) From {{"@id", Change("registryid")}},
                                                   Limit:=1)
         If Result.Data IsNot Nothing AndAlso Result.Data.Count > 0 Then
-            Dim CoalescentData As Dictionary(Of String, Object)
-            CoalescentData = Result.Data(0)
-            If CoalescentData("controltypeid") = 1 Then
-                CoalescentData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
-                Dim SellableBindID = Convert.ToInt32(CoalescentData("sellablebindid"))
-                If SellableBindID <> 5 Then CoalescentData("statusid") = 1
-                CoalescentData("visible") = If(CoalescentData("statusid") = 0, 1, 0)
-                CoalescentData.Remove("statusid")
-                CoalescentData.Remove("sellablebindid")
-                CoalescentData.Remove("controltypeid")
-                Await _RemoteDB.ExecutePut("personcompressorcoalescents", CoalescentData, CoalescentData("id"))
+            Dim SellableData As Dictionary(Of String, Object)
+            SellableData = Result.Data(0)
+            If SellableData("controltypeid") = 1 Then
+                SellableData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
+                Dim SellableBindID = Convert.ToInt32(SellableData("sellablebindid"))
+                If SellableBindID <> 5 Then SellableData("statusid") = 1
+                SellableData("visible") = If(SellableData("statusid") = 0, 1, 0)
+                SellableData.Remove("statusid")
+                SellableData.Remove("sellablebindid")
+                SellableData.Remove("controltypeid")
+                Await _RemoteDB.ExecutePut("personcompressorcoalescents", SellableData, SellableData("id"))
             Else
-                Await FetchPersonCompressor(New Dictionary(Of String, Object) From {{"registryid", CoalescentData("personcompressorid")}, {"fieldname", ""}})
+                Await FetchPersonCompressor(New Dictionary(Of String, Object) From {{"registryid", SellableData("personcompressorid")}, {"fieldname", ""}})
             End If
         End If
         If Change("fieldname") = "Deleção" Then

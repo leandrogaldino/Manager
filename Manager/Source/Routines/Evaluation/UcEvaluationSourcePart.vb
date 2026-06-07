@@ -12,6 +12,10 @@ Public Class UcEvaluationSourcePart
         CbxItem2.Text = item2
         UcSoldLost = New UcEvaluationSoldLost(CcSoldLost)
         CcSoldLost.DropDownControl = UcSoldLost
+        If String.IsNullOrEmpty(Item1) Then
+            CbxItem1.Text = "Ignorado"
+            CbxItem1.Enabled = False
+        End If
     End Sub
     Public Sub New()
         InitializeComponent()

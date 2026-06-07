@@ -1023,20 +1023,18 @@ Public Class Evaluation
         For Each CoalescentData As Dictionary(Of String, Object) In Data("coalescents")
             Coalescent = Evaluation.ElapsedDayControlledSellables.Where(Function(y) y.PersonCompressorSellable.IsSellableBinded).FirstOrDefault(Function(x) x.PersonCompressorSellable.ID = CoalescentData("coalescentid"))
             If Coalescent IsNot Nothing Then
+
+                Debug.Print(DateTimeHelper.DateFromMilliseconds((CoalescentData("nextchange"))))
+
                 Coalescent.CurrentCapacity = DateDiff(DateInterval.Day, Today, DateTimeHelper.DateFromMilliseconds((CoalescentData("nextchange"))))
                 Coalescent.Sold = False
                 Coalescent.Lost = False
             End If
         Next CoalescentData
         Evaluation.ElapsedDayControlledSellables.ForEach(Sub(x) x.SetIsSaved(True))
-
         For Each ReplacedProductData In Data("replacedproducts")
             Product = New Product().Load(ReplacedProductData("productid"), False)
-
             ProductCode = If(Product.ProviderCodes.FirstOrDefault(Function(x) x.IsMainProvider)?.Code, Product.ProviderCodes.FirstOrDefault()?.Code)
-
-
-
             EvaluationSellable = New EvaluationReplacedSellable() With {
                 .Code = ProductCode,
                 .Name = Product.Name,

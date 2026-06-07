@@ -2,9 +2,10 @@
 
 Public Class UcEvaluationSoldLost
     Private _Container As ControlContainer
-    Public Sub New(Container As ControlContainer)
+    Public Sub New(Container As ControlContainer, Optional CheckIsNA As Boolean = False)
         InitializeComponent()
         _Container = Container
+        CbxNA.Checked = CheckIsNA
     End Sub
 
     Public ReadOnly Property IsSold As Boolean

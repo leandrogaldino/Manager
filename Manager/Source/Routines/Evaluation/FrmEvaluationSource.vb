@@ -1,4 +1,5 @@
-﻿Public Class FrmEvaluationSource
+﻿
+Public Class FrmEvaluationSource
     Public Property ResultEvaluation As Evaluation
     Public Sub New(EvaluationData As Dictionary(Of String, Object), Signature As String, Pictures As List(Of String))
         InitializeComponent()
@@ -18,7 +19,18 @@
             FlpContainer.Controls.Add(PartTile)
         Next p
         For Each p In CalculatedEvaluation.ElapsedDayControlledSellables.Where(Function(x) x.PersonCompressorSellable.SellableBind)
-            PartTile = New UcEvaluationSourcePart(p.PersonCompressorSellable.ToString, ImportedEvaluation.ElapsedDayControlledSellables.First(Function(x) x.PersonCompressorSellable.ID = p.PersonCompressorSellable.ID).CurrentCapacity, p.CurrentCapacity) With {.Tag = p}
+            Dim Sellable As EvaluationControlledSellable = ImportedEvaluation.ElapsedDayControlledSellables.First(Function(x) x.PersonCompressorSellable.ID = p.PersonCompressorSellable.ID)
+            Dim Coalescents = CType(EvaluationData("coalescents"), List(Of Object))
+            Dim CoalescentData As Dictionary(Of String, Object) = Nothing
+            For Each Item In Coalescents
+                Dim Dict = CType(Item, Dictionary(Of String, Object))
+                If Dict("coalescentid") = Sellable.PersonCompressorSellable.ID Then
+                    CoalescentData = Dict
+                    Exit For
+                End If
+            Next Item
+            Dim Ignore As Boolean = CoalescentData IsNot Nothing AndAlso CInt(CoalescentData("ignorenextchange")) = 1
+            PartTile = New UcEvaluationSourcePart(p.PersonCompressorSellable.ToString, If(Ignore, String.Empty, ImportedEvaluation.ElapsedDayControlledSellables.First(Function(x) x.PersonCompressorSellable.ID = p.PersonCompressorSellable.ID).CurrentCapacity), p.CurrentCapacity) With {.Tag = p}
             AddHandler PartTile.ValidateRequired, AddressOf Control_Click
             FlpContainer.Controls.Add(PartTile)
         Next p

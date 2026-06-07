@@ -36,7 +36,7 @@ Partial Class FrmEvaluationSource
         Me.Panel1.Controls.Add(Me.BtnCancel)
         Me.Panel1.Controls.Add(Me.BtnAccept)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 301)
+        Me.Panel1.Location = New System.Drawing.Point(0, 467)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(494, 44)
         Me.Panel1.TabIndex = 4
@@ -84,14 +84,14 @@ Partial Class FrmEvaluationSource
         Me.FlpContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.FlpContainer.Location = New System.Drawing.Point(12, 29)
         Me.FlpContainer.Name = "FlpContainer"
-        Me.FlpContainer.Size = New System.Drawing.Size(470, 266)
+        Me.FlpContainer.Size = New System.Drawing.Size(470, 432)
         Me.FlpContainer.TabIndex = 6
         '
         'FrmEvaluationSource
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(494, 345)
+        Me.ClientSize = New System.Drawing.Size(494, 511)
         Me.Controls.Add(Me.FlpContainer)
         Me.Controls.Add(Me.LblCompressor)
         Me.Controls.Add(Me.Panel1)

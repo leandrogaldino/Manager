@@ -181,7 +181,6 @@ Public Class FrmRequestImportBalance
             End Try
             If AsyncLoader.IsRunning Then Await AsyncLoader.Stop()
             _EvaluationData = Nothing
-            SyncTimer.Stop()
             Cursor = Cursors.Default
         End Using
         DialogResult = DialogResult.OK

@@ -22,13 +22,10 @@ Partial Class FrmRequestImportBalance
     'Não o modifique usando o editor de códigos.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Me.PnBottomBar = New System.Windows.Forms.Panel()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.BtnImport = New System.Windows.Forms.Button()
         Me.DgvEvaluationProducts = New System.Windows.Forms.DataGridView()
-        Me.SyncTimer = New System.Windows.Forms.Timer(Me.components)
-        Me.RefreshTimer = New System.Windows.Forms.Timer(Me.components)
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStripDropDownButton1 = New System.Windows.Forms.ToolStripDropDownButton()
@@ -97,16 +94,6 @@ Partial Class FrmRequestImportBalance
         Me.DgvEvaluationProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DgvEvaluationProducts.Size = New System.Drawing.Size(755, 226)
         Me.DgvEvaluationProducts.TabIndex = 24
-        '
-        'SyncTimer
-        '
-        Me.SyncTimer.Enabled = True
-        Me.SyncTimer.Interval = 10000
-        '
-        'RefreshTimer
-        '
-        Me.RefreshTimer.Enabled = True
-        Me.RefreshTimer.Interval = 10000
         '
         'ToolStripButton1
         '
@@ -217,8 +204,6 @@ Partial Class FrmRequestImportBalance
     Friend WithEvents BtnImport As Button
     Friend WithEvents PnBottomBar As Panel
     Friend WithEvents DgvEvaluationProducts As DataGridView
-    Friend WithEvents SyncTimer As Timer
-    Friend WithEvents RefreshTimer As Timer
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
     Friend WithEvents ToolStripDropDownButton1 As ToolStripDropDownButton

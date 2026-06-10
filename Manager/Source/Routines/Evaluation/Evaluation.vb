@@ -1023,9 +1023,6 @@ Public Class Evaluation
         For Each CoalescentData As Dictionary(Of String, Object) In Data("coalescents")
             Coalescent = Evaluation.ElapsedDayControlledSellables.Where(Function(y) y.PersonCompressorSellable.IsSellableBinded).FirstOrDefault(Function(x) x.PersonCompressorSellable.ID = CoalescentData("coalescentid"))
             If Coalescent IsNot Nothing Then
-
-                Debug.Print(DateTimeHelper.DateFromMilliseconds((CoalescentData("nextchange"))))
-
                 Coalescent.CurrentCapacity = DateDiff(DateInterval.Day, Today, DateTimeHelper.DateFromMilliseconds((CoalescentData("nextchange"))))
                 Coalescent.Sold = False
                 Coalescent.Lost = False

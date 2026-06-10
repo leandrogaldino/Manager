@@ -26,7 +26,6 @@ Public Class FrmRequestImport
         _GridControl = GridControl
     End Sub
     Private Sub InitializeDatabases()
-
         _Storage = Locator.GetInstance(Of Storage)
         _RemoteDB = Locator.GetInstance(Of RemoteDB)(CloudDatabaseType.Customer)
         _LocalDB = Locator.GetInstance(Of LocalDB)

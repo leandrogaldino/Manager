@@ -3681,7 +3681,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;PersonCompressor&quot; Version=&quot;3&quot;&gt;
+        '''&lt;Routine Id=&quot;PersonCompressor&quot; Version=&quot;4&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
         '''    &lt;Column Index=&quot;0&quot;&gt;
@@ -3714,6 +3714,7 @@ Namespace My.Resources
         '''	compressorinterfaceid,
         '''	compressorunitid,
         '''	controlledid,
+        '''	oiltypeid,
         '''	serialnumber,
         '''	patrimony,
         '''	sector,
@@ -3730,6 +3731,7 @@ Namespace My.Resources
         '''	@compressorinterfaceid,
         '''	@compressorunitid,
         '''	@controlledid,
+        '''	@oiltypeid,
         '''	@serialnumber,
         '''	@patrimony,
         '''	@sector,
@@ -3754,14 +3756,14 @@ Namespace My.Resources
         '''	personcompressor.compressorinterfaceid,
         '''	personcompressor.compressorunitid,
         '''	personcompressor.controlledid,
+        '''	personcompressor.oiltypeid,
         '''	compressor.name AS compressorname,
         '''	compressorinterface.name AS compressorinterfacename,
         '''	compressorunit.name AS compressorunitname,
         '''    personcompressor.serialnumber,
         '''	personcompressor.patrimony,
         '''	personcompressor.sector,
-        '''	personcompressor.unitcapacity,
-        '''	personcompress [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	personcompressor. [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property PersonCompressorSelect() As String
             Get
@@ -3885,6 +3887,7 @@ Namespace My.Resources
         '''	compressorinterfaceid = @compressorinterfaceid,
         '''	compressorunitid = @compressorunitid,
         '''	controlledid = @controlledid,
+        '''	oiltypeid = @oiltypeid,
         '''	serialnumber = @serialnumber,
         '''	patrimony = @patrimony,
         '''	sector = @sector,
@@ -5865,9 +5868,10 @@ Namespace My.Resources
         '''JOIN request r ON r.id = ri.requestid
         '''LEFT join productprovidercode pc on pc.productid = p.id AND pc.ismainprovider = 1
         '''WHERE
-        '''    ri.statusid = 0
-        '''    AND ri.productid IN (@inclause)
-        '''ORDER BY r.id DESC.
+        '''	(r.statusid = 0 OR r.statusid = 1)  AND
+        '''    (ri.statusid = 0 OR ri.statusid  = 1) AND
+        '''    ri.productid IN (@inclause)
+        '''ORD [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property RequestSelectPendingItems() As String
             Get
@@ -6076,6 +6080,19 @@ Namespace My.Resources
         Friend ReadOnly Property SelectCustomerData() As String
             Get
                 Return ResourceManager.GetString("SelectCustomerData", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''    p.shortname
+        '''FROM person p
+        '''LEFT JOIN personcompressor pc ON p.id = pc.personid
+        '''WHERE pc.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property SelectTechnicianData() As String
+            Get
+                Return ResourceManager.GetString("SelectTechnicianData", resourceCulture)
             End Get
         End Property
         

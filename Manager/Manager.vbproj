@@ -606,6 +606,7 @@
     <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableSelect.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableUpdate.sql" />
     <Content Include="Resources\SQL\Shared\SelectCompressorData.sql" />
+    <Content Include="Resources\SQL\Shared\SelectTechnicianData.sql" />
     <Content Include="Resources\SQL\Shared\SelectCustomerData.sql" />
     <Content Include="Resources\SQL\Person\PersonCompressorSellableDelete.sql" />
     <Content Include="Resources\SQL\Person\PersonCompressorSellableInsert.sql" />

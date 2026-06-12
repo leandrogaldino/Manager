@@ -64,10 +64,10 @@ Public Class FrmEvaluationImport
             End If
         Next Row
         Dim ProcessedIds As New HashSet(Of String)
-        Dim RowDataList As New List(Of (Doc As Dictionary(Of String, Object), Status As String, EvalDate As String, Customer As String, Compressor As String))
+        Dim RowDataList As New List(Of (Doc As Dictionary(Of String, Object), Status As String, EvalDate As String, Customer As String, Compressor As String, Technician As String))
         For Each Doc In Docs
             Dim RowData = Await BuildRowData(Doc)
-            RowDataList.Add((Doc, RowData.Status, RowData.EvalDate, RowData.Customer, RowData.Compressor))
+            RowDataList.Add((Doc, RowData.Status, RowData.EvalDate, RowData.Customer, RowData.Compressor, RowData.Technician))
         Next Doc
         For Each Item In RowDataList
             Dim Doc = Item.Doc
@@ -86,6 +86,7 @@ Public Class FrmEvaluationImport
             Row.Cells(1).Value = Item.EvalDate
             Row.Cells(2).Value = Item.Customer
             Row.Cells(3).Value = Item.Compressor
+            Row.Cells(4).Value = Item.Technician
             Row.Tag = Doc
         Next Item
         For Each Row As DataGridViewRow In DgvEvaluations.Rows.Cast(Of DataGridViewRow).ToList()
@@ -99,24 +100,25 @@ Public Class FrmEvaluationImport
         DgvEvaluations.Sort(DgvEvaluations.Columns(1), ComponentModel.ListSortDirection.Ascending)
     End Function
     Private Sub EnsureColumns()
-        If DgvEvaluations.Columns.Count > 0 Then Return
+        If DgvEvaluations.Columns.Count > 5 Then Return
         DgvEvaluations.Columns.Add("Status", "Status")
         DgvEvaluations.Columns.Add("Data", "Data")
         DgvEvaluations.Columns.Add("Cliente", "Cliente")
         DgvEvaluations.Columns.Add("Compressor", "Compressor")
+        DgvEvaluations.Columns.Add("Técnico", "Técnico")
         DgvEvaluations.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
         DgvEvaluations.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
         DgvEvaluations.Columns(2).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         DgvEvaluations.Columns(3).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+        DgvEvaluations.Columns(4).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
     End Sub
-    Private Async Function BuildRowData(doc As Dictionary(Of String, Object)) _
-    As Task(Of (Status As String, EvalDate As String, Customer As String, Compressor As String))
+    Private Async Function BuildRowData(doc As Dictionary(Of String, Object)) As Task(Of (Status As String, EvalDate As String, Customer As String, Compressor As String, Technician As String))
         Dim Result As LocalDB.QueryResult = Await _LocalDB.ExecuteRawQueryAsync(
             My.Resources.SelectCompressorData,
             New Dictionary(Of String, Object) From {{"@id", doc("compressorid")}}
         )
         If Result.Data.Count = 0 Then
-            Return ("-", "-", "-", "-")
+            Return ("-", "-", "-", "-", "-")
         End If
         Dim CompressorName = Result.Data(0)("name").ToString()
         Dim Serial = $" {Result.Data(0)("serialnumber")}"
@@ -137,7 +139,15 @@ Public Class FrmEvaluationImport
         Else
             Status = EnumHelper.GetEnumDescription(CloudSyncStatus.NotImported)
         End If
-        Return (Status, EvaluationDate, Customer, $"{CompressorName}{Serial}{Sector}")
+        Result = Await _LocalDB.ExecuteRawQueryAsync(
+            My.Resources.SelectTechnicianData,
+            New Dictionary(Of String, Object) From {{"@id", doc("technicians")(0)("personid")}}
+        )
+        Dim Technician As String = "-"
+        If Result.Data.Count > 0 Then
+            Technician = Result.Data(0)("shortname").ToString()
+        End If
+        Return (Status, EvaluationDate, Customer, $"{CompressorName}{Serial}{Sector}", Technician)
     End Function
     Private Async Sub SyncTimer_Tick(sender As Object, e As EventArgs) Handles SyncTimer.Tick
         If _EvaluationData Is Nothing Then Return

@@ -164,7 +164,7 @@ Public Class FrmCompressorUnit
         EprValidation.Clear()
         BtnStatusValue.ForeColor = If(BtnStatusValue.Text = EnumHelper.GetEnumDescription(SimpleStatus.Active), Color.DarkBlue, Color.DarkRed)
     End Sub
-    Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles TxtName.TextChanged
+    Private Sub TxtTextChanged(sender As Object, e As EventArgs) Handles TxtName.TextChanged, QbxProduct.TextChanged
         EprValidation.Clear()
         If Not _Loading Then BtnSave.Enabled = True
     End Sub

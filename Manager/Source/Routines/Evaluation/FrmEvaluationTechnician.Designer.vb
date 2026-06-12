@@ -25,8 +25,6 @@ Partial Class FrmEvaluationTechnician
         Me.components = New System.ComponentModel.Container()
         Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
         Dim Condition2 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
-        Dim OtherField1 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
-        Dim OtherField2 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
         Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
         Dim Parameter2 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
         Me.Panel1 = New System.Windows.Forms.Panel()
@@ -325,34 +323,13 @@ Partial Class FrmEvaluationTechnician
         Me.QbxTechnician.Distinct = False
         Me.QbxTechnician.DropDownAutoStretchRight = False
         Me.QbxTechnician.GridHeaderBackColor = System.Drawing.SystemColors.Window
+        Me.QbxTechnician.GridHeaderVisible = False
         Me.QbxTechnician.IfNull = Nothing
         Me.QbxTechnician.Location = New System.Drawing.Point(15, 68)
         Me.QbxTechnician.MainReturnFieldName = "id"
         Me.QbxTechnician.MainTableAlias = Nothing
         Me.QbxTechnician.MainTableName = "person"
         Me.QbxTechnician.Name = "QbxTechnician"
-        OtherField1.DisplayFieldAlias = "Nome Curto"
-        OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField1.DisplayFieldName = "shortname"
-        OtherField1.DisplayMainFieldName = "id"
-        OtherField1.DisplayTableAlias = Nothing
-        OtherField1.DisplayTableName = "person"
-        OtherField1.Freeze = False
-        OtherField1.IfNull = Nothing
-        OtherField1.Prefix = Nothing
-        OtherField1.Suffix = Nothing
-        OtherField2.DisplayFieldAlias = "CPF/CNPJ"
-        OtherField2.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField2.DisplayFieldName = "document"
-        OtherField2.DisplayMainFieldName = "id"
-        OtherField2.DisplayTableAlias = Nothing
-        OtherField2.DisplayTableName = "person"
-        OtherField2.Freeze = False
-        OtherField2.IfNull = Nothing
-        OtherField2.Prefix = Nothing
-        OtherField2.Suffix = Nothing
-        Me.QbxTechnician.OtherFields.Add(OtherField1)
-        Me.QbxTechnician.OtherFields.Add(OtherField2)
         Parameter1.ParameterName = "@statusid"
         Parameter1.ParameterValue = "0"
         Parameter2.ParameterName = "@istechnician"

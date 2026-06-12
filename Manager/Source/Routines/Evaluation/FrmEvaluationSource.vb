@@ -29,7 +29,7 @@ Public Class FrmEvaluationSource
                     Exit For
                 End If
             Next Item
-            Dim Ignore As Boolean = CoalescentData IsNot Nothing AndAlso CInt(CoalescentData("ignorenextchange")) = 1
+            Dim Ignore As Boolean = CoalescentData IsNot Nothing AndAlso CoalescentData("ignorenextchange")
             PartTile = New UcEvaluationSourcePart(p.PersonCompressorSellable.ToString, If(Ignore, String.Empty, ImportedEvaluation.ElapsedDayControlledSellables.First(Function(x) x.PersonCompressorSellable.ID = p.PersonCompressorSellable.ID).CurrentCapacity), p.CurrentCapacity) With {.Tag = p}
             AddHandler PartTile.ValidateRequired, AddressOf Control_Click
             FlpContainer.Controls.Add(PartTile)

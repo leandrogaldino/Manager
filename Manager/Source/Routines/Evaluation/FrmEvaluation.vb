@@ -428,9 +428,9 @@ Public Class FrmEvaluation
                     _Evaluation.CallType = _UcCallTypeHasRepairNeedProposal.CallType
                     _Evaluation.HasRepair = _UcCallTypeHasRepairNeedProposal.HasRepair
                     _Evaluation.NeedProposal = _UcCallTypeHasRepairNeedProposal.NeedProposal
-                    _Evaluation.UnitName = _Evaluation.UnitName
-                    _Evaluation.Temperature = _Evaluation.Temperature
-                    _Evaluation.Pressure = _Evaluation.Pressure
+                    _Evaluation.UnitName = _UcUnitTemperaturePressure.Unit
+                    _Evaluation.Temperature = _UcUnitTemperaturePressure.Temperature
+                    _Evaluation.Pressure = _UcUnitTemperaturePressure.Pressure
                     _Evaluation.EvaluationDate = DbxEvaluationDate.Text
                     _Evaluation.StartTime = TbxStartTime.Time
                     _Evaluation.EndTime = TbxEndTime.Time

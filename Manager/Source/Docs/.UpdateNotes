@@ -1,7 +1,8 @@
 #2.3.5
-@??/??/2026
+@22/06/2026
 • Inclusão do nome do técnico na tela de importação de avaliações.
 • Correção na reatividade das telas de unidade e interface de compressor.
+• Correção na reatividade das informações: pressão, unidade e temperatura na avaliação.
 #2.3.4
 @12/06/2026
 • Ajuste na importação de avaliações para recebimento de coalescentes ignorados.

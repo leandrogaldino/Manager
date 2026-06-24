@@ -1,3 +1,9 @@
+#2.3.7
+@??/??/2026
+• Correção na tela de importação de requisições e avaliações onde o ouvinte não era encerrado no fechamento do formulário.
+#2.3.6
+@23/06/2026
+• Correção do relatório de atendimento onde o tipo de óleo estava fixo como semi-sintético.
 #2.3.5
 @22/06/2026
 • Inclusão do nome do técnico na tela de importação de avaliações.

@@ -268,5 +268,6 @@ Public Class FrmEvaluationImport
     End Function
     Private Sub FrmEvaluationImport_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         _Session.ShowImportEvaluationMessage = True
+        _RemoteDB.StopListening()
     End Sub
 End Class

@@ -200,7 +200,9 @@ Public Class EvaluationReport
             AddContentCell(Row, 5, 0, ParagraphAlignment.Center, "N/A")
         End If
 
-        AddContentCell(Row, 6, 0, ParagraphAlignment.Center, "SEMI-SINTÉTICO", 6)
+
+
+        AddContentCell(Row, 6, 0, ParagraphAlignment.Center, EnumHelper.GetEnumDescription(ReportingEvaluation.Compressor.OilType), If(ReportingEvaluation.Compressor.OilType = OilType.SemiSynthetic, 7, 10))
 
         If ReportingEvaluation.ElapsedDayControlledSellables.Any(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Coalescent) Then
             AddSeparatorRow(Table)
@@ -393,7 +395,7 @@ Public Class EvaluationReport
             Cell.Format.Font.Name = FontName
         End If
         Dim Paragraph = Cell.AddParagraph()
-        Paragraph.AddText(Text)
+        Paragraph.AddText(If(Text, ""))
         Return Cell
     End Function
 

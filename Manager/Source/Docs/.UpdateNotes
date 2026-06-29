@@ -1,5 +1,5 @@
 #2.3.7
-@??/??/2026
+@29/06/2026
 • Correção na tela de importação de requisições e avaliações onde o ouvinte não era encerrado no fechamento do formulário.
 #2.3.6
 @23/06/2026

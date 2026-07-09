@@ -61,7 +61,7 @@ Partial Class UcEvaluationUnitTemperaturePressure
         Me.TxtUnit.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.TxtUnit.Location = New System.Drawing.Point(265, 7)
         Me.TxtUnit.Margin = New System.Windows.Forms.Padding(7)
-        Me.TxtUnit.MaxLength = 10
+        Me.TxtUnit.MaxLength = 20
         Me.TxtUnit.Name = "TxtUnit"
         Me.TxtUnit.ReadOnly = True
         Me.TxtUnit.Size = New System.Drawing.Size(100, 23)

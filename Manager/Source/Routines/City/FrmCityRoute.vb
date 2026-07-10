@@ -145,7 +145,8 @@ Public Class FrmCityRoute
             End If
             Row = _CityForm.DgvRoute.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _CityRoute.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _CityForm.DgvRoute.SelectedRows(0).Cells("Order").Value
+            Dim Table = CType(_CityForm.DgvRoute.DataSource, DataTable)
+            LblOrderValue.Text = Table.Rows.Cast(Of DataRow).First(Function(x) x("Guid") = _CityRoute.Guid)("Order")
             _CityForm.EprValidation.Clear()
             _CityForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()

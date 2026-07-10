@@ -4,6 +4,7 @@
 ''' Utilizado para sinalizar se a interface do compressor conta as horas de trabalho de forma crescente ou decrescente.
 ''' </summary>
 Public Enum CompressorInterfaceDirection
-    <Description("CRESCENTE")> Ascending = 0
-    <Description("DECRESCENTE")> Descending = 1
+    <Description("")> None = 0
+    <Description("CRESCENTE")> Ascending = 1
+    <Description("DECRESCENTE")> Descending = 2
 End Enum

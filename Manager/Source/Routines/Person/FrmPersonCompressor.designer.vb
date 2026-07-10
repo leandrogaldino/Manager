@@ -811,10 +811,10 @@ Partial Class FrmPersonCompressor
         'TabMaintenance
         '
         Me.TabMaintenance.Controls.Add(Me.TcMaintenance)
-        Me.TabMaintenance.Location = New System.Drawing.Point(4, 22)
+        Me.TabMaintenance.Location = New System.Drawing.Point(4, 26)
         Me.TabMaintenance.Name = "TabMaintenance"
         Me.TabMaintenance.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabMaintenance.Size = New System.Drawing.Size(569, 151)
+        Me.TabMaintenance.Size = New System.Drawing.Size(569, 147)
         Me.TabMaintenance.TabIndex = 8
         Me.TabMaintenance.Text = "Manutenção"
         Me.TabMaintenance.UseVisualStyleBackColor = True
@@ -827,7 +827,7 @@ Partial Class FrmPersonCompressor
         Me.TcMaintenance.Location = New System.Drawing.Point(3, 3)
         Me.TcMaintenance.Name = "TcMaintenance"
         Me.TcMaintenance.SelectedIndex = 0
-        Me.TcMaintenance.Size = New System.Drawing.Size(563, 145)
+        Me.TcMaintenance.Size = New System.Drawing.Size(563, 141)
         Me.TcMaintenance.TabIndex = 0
         '
         'TabWorkedHourSellable
@@ -837,7 +837,7 @@ Partial Class FrmPersonCompressor
         Me.TabWorkedHourSellable.Location = New System.Drawing.Point(4, 26)
         Me.TabWorkedHourSellable.Name = "TabWorkedHourSellable"
         Me.TabWorkedHourSellable.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabWorkedHourSellable.Size = New System.Drawing.Size(555, 115)
+        Me.TabWorkedHourSellable.Size = New System.Drawing.Size(555, 111)
         Me.TabWorkedHourSellable.TabIndex = 6
         Me.TabWorkedHourSellable.Text = "Hora Trabalhada"
         Me.TabWorkedHourSellable.UseVisualStyleBackColor = True
@@ -860,7 +860,7 @@ Partial Class FrmPersonCompressor
         Me.DgvWorkedHourSellable.RowHeadersVisible = False
         Me.DgvWorkedHourSellable.RowTemplate.Height = 26
         Me.DgvWorkedHourSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvWorkedHourSellable.Size = New System.Drawing.Size(549, 84)
+        Me.DgvWorkedHourSellable.Size = New System.Drawing.Size(549, 80)
         Me.DgvWorkedHourSellable.TabIndex = 4
         '
         'TsWorkedHourSellable
@@ -927,7 +927,7 @@ Partial Class FrmPersonCompressor
         Me.TabElapsedDaySellable.Location = New System.Drawing.Point(4, 22)
         Me.TabElapsedDaySellable.Name = "TabElapsedDaySellable"
         Me.TabElapsedDaySellable.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabElapsedDaySellable.Size = New System.Drawing.Size(555, 115)
+        Me.TabElapsedDaySellable.Size = New System.Drawing.Size(555, 119)
         Me.TabElapsedDaySellable.TabIndex = 7
         Me.TabElapsedDaySellable.Text = "Dia Corrido"
         Me.TabElapsedDaySellable.UseVisualStyleBackColor = True
@@ -950,7 +950,7 @@ Partial Class FrmPersonCompressor
         Me.DgvElapsedDaySellable.RowHeadersVisible = False
         Me.DgvElapsedDaySellable.RowTemplate.Height = 26
         Me.DgvElapsedDaySellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(549, 84)
+        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(549, 88)
         Me.DgvElapsedDaySellable.TabIndex = 5
         '
         'TsElapsedDaySellable

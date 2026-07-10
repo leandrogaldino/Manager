@@ -54,10 +54,10 @@ Public Class FrmRequest
         LoadForm()
     End Sub
     Private Sub Frm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DgvRequestItem.Load()
+        DgvlRequestItem.Load()
     End Sub
     Private Sub LoadForm()
-        ControlHelper.EnableControlDoubleBuffer(DgvItem, True)
+        ControlHelper.EnableControlDoubleBuffer(DgvRequestItem, True)
         DgvNavigator.DataGridView = _RequestsGrid
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
@@ -97,7 +97,7 @@ Public Class FrmRequest
             BtnZoomOut.Enabled = False
         End If
         TxtFilterItem.Clear()
-        If _Request.Items IsNot Nothing Then DgvItem.Fill(_Request.Items)
+        If _Request.Items IsNot Nothing Then DgvRequestItem.Fill(_Request.Items)
         BtnDelete.Enabled = _Request.ID > 0 And _User.CanDelete(Routine.Request)
         Text = "Requisição"
         If _Request.LockInfo.IsLocked And Not _Request.LockInfo.LockedBy.Equals(Locator.GetInstance(Of Session).User) And Not _Request.LockInfo.SessionToken = Locator.GetInstance(Of Session).Token Then
@@ -138,7 +138,7 @@ Public Class FrmRequest
                 End If
             End If
             If _GridControl IsNot Nothing Then
-                DgvItem.Fill(_Request.Items)
+                DgvRequestItem.Fill(_Request.Items)
             End If
             _Deleting = False
         End If
@@ -216,8 +216,8 @@ Public Class FrmRequest
     End Sub
     Private Sub BtnEditItem_Click(sender As Object, e As EventArgs) Handles BtnEditItem.Click
         Dim Item As RequestItem
-        If DgvItem.SelectedRows.Count = 1 Then
-            Item = _Request.Items.Single(Function(x) x.Guid = DgvItem.SelectedRows(0).Cells("Guid").Value)
+        If DgvRequestItem.SelectedRows.Count = 1 Then
+            Item = _Request.Items.Single(Function(x) x.Guid = DgvRequestItem.SelectedRows(0).Cells("Guid").Value)
             Using Form As New FrmRequestItem(_Request, Item, Me)
                 Form.ShowDialog()
             End Using
@@ -225,12 +225,12 @@ Public Class FrmRequest
     End Sub
     Private Sub BtnDeleteItem_Click(sender As Object, e As EventArgs) Handles BtnDeleteItem.Click
         Dim Item As RequestItem
-        If DgvItem.SelectedRows.Count = 1 Then
+        If DgvRequestItem.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                Item = _Request.Items.Single(Function(x) x.Guid = DgvItem.SelectedRows(0).Cells("Guid").Value)
+                Item = _Request.Items.Single(Function(x) x.Guid = DgvRequestItem.SelectedRows(0).Cells("Guid").Value)
                 _Request.Items.Remove(Item)
-                DgvItem.Fill(_Request.Items)
-                DgvRequestItem.Load()
+                DgvRequestItem.Fill(_Request.Items)
+                DgvlRequestItem.Load()
                 BtnSave.Enabled = True
             End If
         End If
@@ -248,7 +248,7 @@ Public Class FrmRequest
         End If
     End Sub
     <DebuggerStepThrough>
-    Private Sub DgvItem_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvItem.CellFormatting
+    Private Sub DgvRequestItem_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DgvRequestItem.CellFormatting
         Dim Dgv As DataGridView = sender
         If e.ColumnIndex = Dgv.Columns("Status").Index Then
             Select Case e.Value
@@ -276,8 +276,8 @@ Public Class FrmRequest
             e.CellStyle.Format = "N2"
         End If
     End Sub
-    Private Sub DgvItem_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvItem.MouseDoubleClick
-        Dim ClickPlace As DataGridView.HitTestInfo = DgvItem.HitTest(e.X, e.Y)
+    Private Sub DgvRequestItem_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DgvRequestItem.MouseDoubleClick
+        Dim ClickPlace As DataGridView.HitTestInfo = DgvRequestItem.HitTest(e.X, e.Y)
         If ClickPlace.Type = DataGridViewHitTestType.Cell Then
             BtnEditItem.PerformClick()
         End If
@@ -329,7 +329,7 @@ Public Class FrmRequest
                     _Request.SaveChanges()
                     _Request.Lock()
                     LblIDValue.Text = _Request.ID
-                    DgvItem.Fill(_Request.Items)
+                    DgvRequestItem.Fill(_Request.Items)
                     BtnSave.Enabled = False
                     BtnDelete.Enabled = _User.CanDelete(Routine.Request)
                     BtnRequestSheet.Enabled = True
@@ -420,7 +420,7 @@ Public Class FrmRequest
             End If
         End Using
     End Sub
-    Private Sub DgvItemLayout_Loaded(sender As Object, e As EventArgs) Handles DgvRequestItem.Loaded
+    Private Sub DgvlRequestItemLayout_Loaded(sender As Object, e As EventArgs) Handles DgvlRequestItem.Loaded
         If _Request.Items.All(Function(x) x.Status = RequestStatus.Pending) Then
             LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Pending)
         ElseIf _Request.Items.All(Function(x) x.Status = RequestStatus.Concluded) Then
@@ -464,8 +464,8 @@ Public Class FrmRequest
         Dim Table As DataTable
         Dim View As DataView
         Dim Filter As String = "ItemNameOrProduct LIKE '%@value%' OR Code LIKE '%@value%'"
-        If DgvItem.DataSource IsNot Nothing Then
-            Table = DgvItem.DataSource
+        If DgvRequestItem.DataSource IsNot Nothing Then
+            Table = DgvRequestItem.DataSource
             View = Table.DefaultView
             If TxtFilterItem.Text <> Nothing Then
                 Filter = Filter.Replace("@value", TxtFilterItem.Text.Replace("%", Nothing).Replace("*", Nothing))
@@ -475,7 +475,7 @@ Public Class FrmRequest
             End If
         End If
     End Sub
-    Private Sub DgvItem_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvItem.DataSourceChanged
+    Private Sub DgvRequestItem_DataSourceChanged(sender As Object, e As EventArgs) Handles DgvRequestItem.DataSourceChanged
         If _Request.Items.All(Function(x) x.Status = RequestStatus.Pending) Then
             LblStatusValue.Text = EnumHelper.GetEnumDescription(RequestStatus.Pending)
         ElseIf _Request.Items.All(Function(x) x.Status = RequestStatus.Concluded) Then

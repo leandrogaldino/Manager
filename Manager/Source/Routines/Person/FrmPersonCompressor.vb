@@ -428,7 +428,8 @@ Public Class FrmPersonCompressor
             End If
             Row = _PersonForm.DgvCompressor.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _PersonCompressor.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _PersonForm.DgvCompressor.SelectedRows(0).Cells("Order").Value
+            Dim Table = CType(_PersonForm.DgvCompressor.DataSource, DataTable)
+            LblOrderValue.Text = Table.Rows.Cast(Of DataRow).First(Function(x) x("Guid") = _PersonCompressor.Guid)("Order")
             _PersonForm.EprValidation.Clear()
             _PersonForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()

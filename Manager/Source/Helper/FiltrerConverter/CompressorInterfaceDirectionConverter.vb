@@ -11,7 +11,7 @@ Public Class CompressorInterfaceDirectionConverter
     End Function
     Public Overrides Function GetStandardValues(ByVal context As ITypeDescriptorContext) As StandardValuesCollection
         Dim List As New List(Of String) From {
-            "",
+            EnumHelper.GetEnumDescription(CompressorInterfaceDirection.None),
             EnumHelper.GetEnumDescription(CompressorInterfaceDirection.Ascending),
             EnumHelper.GetEnumDescription(CompressorInterfaceDirection.Descending)
         }

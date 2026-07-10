@@ -2,8 +2,8 @@ SELECT
 	compressorinterface.id AS 'ID',
     compressorinterface.creation AS 'Criação',
     CASE 
-		WHEN compressorinterface.statusid = 0 THEN "ATIVO"
-        WHEN compressorinterface.statusid = 1 THEN "INATIVO"
+		WHEN compressorinterface.statusid = 0 THEN 'ATIVO'
+        WHEN compressorinterface.statusid = 1 THEN 'INATIVO'
 	END AS 'Status',
     compressorinterface.name AS 'Nome',
     CASE
@@ -13,8 +13,9 @@ SELECT
         ELSE product.name
     END AS 'Produto',
     CASE 
-		WHEN compressorinterface.directionid = 0 THEN "CRESCENTE"
-        WHEN compressorinterface.directionid = 1 THEN "DECRESCENTE"
+		WHEN compressorinterface.directionid = 0 THEN ''
+        WHEN compressorinterface.directionid = 1 THEN 'CRESCENTE'
+        WHEN compressorinterface.directionid = 2 THEN 'DECRESCENTE'
 	END AS 'Direção'
 FROM compressorinterface
 LEFT JOIN product ON compressorinterface.productid = product.id

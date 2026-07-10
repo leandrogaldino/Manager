@@ -212,7 +212,8 @@ Public Class FrmCompressorSellableWorkedHour
             End If
             Row = _CompressorForm.DgvCompressorWorkedHourSellable.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _WorkedHourSellable.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _CompressorForm.DgvCompressorWorkedHourSellable.SelectedRows(0).Cells("Order").Value
+            Dim Table = CType(_CompressorForm.DgvCompressorWorkedHourSellable.DataSource, DataTable)
+            LblOrderValue.Text = Table.Rows.Cast(Of DataRow).First(Function(x) x("Guid") = _WorkedHourSellable.Guid)("Order")
             _CompressorForm.EprValidation.Clear()
             _CompressorForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()

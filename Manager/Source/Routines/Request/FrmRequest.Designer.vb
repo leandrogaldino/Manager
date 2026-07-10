@@ -55,7 +55,7 @@ Partial Class FrmRequest
         Me.TxtDestination = New System.Windows.Forms.TextBox()
         Me.TxtResponsible = New System.Windows.Forms.TextBox()
         Me.TabItems = New System.Windows.Forms.TabPage()
-        Me.DgvItem = New System.Windows.Forms.DataGridView()
+        Me.DgvRequestItem = New System.Windows.Forms.DataGridView()
         Me.TsItem = New System.Windows.Forms.ToolStrip()
         Me.BtnIncludeItem = New System.Windows.Forms.ToolStripButton()
         Me.BtnEditItem = New System.Windows.Forms.ToolStripButton()
@@ -79,7 +79,7 @@ Partial Class FrmRequest
         Me.OfdDocument = New System.Windows.Forms.OpenFileDialog()
         Me.SfdDocument = New System.Windows.Forms.SaveFileDialog()
         Me.TmrDocumentPage = New System.Windows.Forms.Timer(Me.components)
-        Me.DgvRequestItem = New Manager.DataGridViewLayout()
+        Me.DgvlRequestItem = New Manager.DataGridViewLayout()
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.Panel1.SuspendLayout()
         Me.TsTitle.SuspendLayout()
@@ -89,7 +89,7 @@ Partial Class FrmRequest
         Me.TabMain.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.TabItems.SuspendLayout()
-        CType(Me.DgvItem, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DgvRequestItem, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsItem.SuspendLayout()
         Me.TabNote.SuspendLayout()
         Me.TabDocument.SuspendLayout()
@@ -370,36 +370,36 @@ Partial Class FrmRequest
         '
         'TabItems
         '
-        Me.TabItems.Controls.Add(Me.DgvItem)
+        Me.TabItems.Controls.Add(Me.DgvRequestItem)
         Me.TabItems.Controls.Add(Me.TsItem)
-        Me.TabItems.Location = New System.Drawing.Point(4, 22)
+        Me.TabItems.Location = New System.Drawing.Point(4, 26)
         Me.TabItems.Name = "TabItems"
         Me.TabItems.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabItems.Size = New System.Drawing.Size(536, 89)
+        Me.TabItems.Size = New System.Drawing.Size(536, 85)
         Me.TabItems.TabIndex = 8
         Me.TabItems.Text = "Itens"
         Me.TabItems.UseVisualStyleBackColor = True
         '
-        'DgvItem
+        'DgvRequestItem
         '
-        Me.DgvItem.AllowUserToAddRows = False
-        Me.DgvItem.AllowUserToDeleteRows = False
-        Me.DgvItem.AllowUserToOrderColumns = True
-        Me.DgvItem.AllowUserToResizeRows = False
-        Me.DgvItem.BackgroundColor = System.Drawing.Color.WhiteSmoke
-        Me.DgvItem.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DgvItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvItem.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvItem.Location = New System.Drawing.Point(3, 28)
-        Me.DgvItem.MultiSelect = False
-        Me.DgvItem.Name = "DgvItem"
-        Me.DgvItem.ReadOnly = True
-        Me.DgvItem.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.DgvItem.RowHeadersVisible = False
-        Me.DgvItem.RowTemplate.Height = 26
-        Me.DgvItem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvItem.Size = New System.Drawing.Size(530, 58)
-        Me.DgvItem.TabIndex = 1
+        Me.DgvRequestItem.AllowUserToAddRows = False
+        Me.DgvRequestItem.AllowUserToDeleteRows = False
+        Me.DgvRequestItem.AllowUserToOrderColumns = True
+        Me.DgvRequestItem.AllowUserToResizeRows = False
+        Me.DgvRequestItem.BackgroundColor = System.Drawing.Color.WhiteSmoke
+        Me.DgvRequestItem.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DgvRequestItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvRequestItem.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvRequestItem.Location = New System.Drawing.Point(3, 28)
+        Me.DgvRequestItem.MultiSelect = False
+        Me.DgvRequestItem.Name = "DgvRequestItem"
+        Me.DgvRequestItem.ReadOnly = True
+        Me.DgvRequestItem.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvRequestItem.RowHeadersVisible = False
+        Me.DgvRequestItem.RowTemplate.Height = 26
+        Me.DgvRequestItem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvRequestItem.Size = New System.Drawing.Size(530, 54)
+        Me.DgvRequestItem.TabIndex = 1
         '
         'TsItem
         '
@@ -641,10 +641,10 @@ Partial Class FrmRequest
         '
         Me.TmrDocumentPage.Enabled = True
         '
-        'DgvRequestItem
+        'DgvlRequestItem
         '
-        Me.DgvRequestItem.DataGridView = Me.DgvItem
-        Me.DgvRequestItem.Routine = Manager.Routine.RequestItem
+        Me.DgvlRequestItem.DataGridView = Me.DgvRequestItem
+        Me.DgvlRequestItem.Routine = Manager.Routine.RequestItem
         '
         'EprInformation
         '
@@ -681,7 +681,7 @@ Partial Class FrmRequest
         Me.GroupBox1.PerformLayout()
         Me.TabItems.ResumeLayout(False)
         Me.TabItems.PerformLayout()
-        CType(Me.DgvItem, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DgvRequestItem, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsItem.ResumeLayout(False)
         Me.TsItem.PerformLayout()
         Me.TabNote.ResumeLayout(False)
@@ -736,14 +736,14 @@ Partial Class FrmRequest
     Friend WithEvents LblDestination As Label
     Friend WithEvents TxtDestination As TextBox
     Friend WithEvents TabItems As TabPage
-    Friend WithEvents DgvItem As DataGridView
+    Friend WithEvents DgvRequestItem As DataGridView
     Friend WithEvents TsItem As ToolStrip
     Friend WithEvents BtnIncludeItem As ToolStripButton
     Friend WithEvents BtnEditItem As ToolStripButton
     Friend WithEvents BtnDeleteItem As ToolStripButton
     Friend WithEvents ToolStripLabel3 As ToolStripLabel
     Friend WithEvents TxtFilterItem As ToolStripTextBox
-    Friend WithEvents DgvRequestItem As DataGridViewLayout
+    Friend WithEvents DgvlRequestItem As DataGridViewLayout
     Friend WithEvents LblStatusValue As ToolStripLabel
     Friend WithEvents EprInformation As ErrorProvider
     Friend WithEvents BtnRequestSheet As ToolStripButton

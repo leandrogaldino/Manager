@@ -100,7 +100,7 @@ Public Class FrmEvaluationImport
         DgvEvaluations.Sort(DgvEvaluations.Columns(1), ComponentModel.ListSortDirection.Ascending)
     End Function
     Private Sub EnsureColumns()
-        If DgvEvaluations.Columns.Count > 5 Then Return
+        If DgvEvaluations.Columns.Count > 0 Then Return
         DgvEvaluations.Columns.Add("Status", "Status")
         DgvEvaluations.Columns.Add("Data", "Data")
         DgvEvaluations.Columns.Add("Cliente", "Cliente")

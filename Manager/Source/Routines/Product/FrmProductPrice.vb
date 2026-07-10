@@ -168,7 +168,8 @@ Public Class FrmProductPrice
             End If
             Row = _ProductForm.DgvPrice.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ProductPrice.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _ProductForm.DgvPrice.SelectedRows(0).Cells("Order").Value
+            Dim Table = CType(_ProductForm.DgvProviderCode.DataSource, DataTable)
+            LblOrderValue.Text = Table.Rows.Cast(Of DataRow).First(Function(x) x("Guid") = _ProductPrice.Guid)("Order")
             _ProductForm.EprValidation.Clear()
             _ProductForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()

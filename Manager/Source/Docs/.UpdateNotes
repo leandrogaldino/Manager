@@ -1,3 +1,9 @@
+#2.3.8
+@10/07/2026
+• Correção de uma falha que ocorria após a edição de elementos em listas filtradas.
+• Correção de uma falha que ocasionava a duplicação das colunas na tela de importação de avaliações.
+• Agora o sistema permite que seja cadastrada uma interface de compressor sem vincular produto.
+• Agora o sistema permite que seja cadastrada uma unidade compressora de compressor sem vincular produto.
 #2.3.7
 @29/06/2026
 • Correção na tela de importação de requisições e avaliações onde o ouvinte não era encerrado no fechamento do formulário.

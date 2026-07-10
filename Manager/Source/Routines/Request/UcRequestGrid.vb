@@ -43,7 +43,7 @@ Public Class UcRequestGrid
                 Cursor = Cursors.WaitCursor
                 _Request = New Request().Load(DgvData.SelectedRows(0).Cells("id").Value, True)
                 Using Form As New FrmRequest(_Request, Me)
-                    Form.DgvItem.Fill(_Request.Items)
+                    Form.DgvRequestItem.Fill(_Request.Items)
                     Form.ShowDialog()
                 End Using
             Catch ex As Exception

@@ -58,7 +58,7 @@ Public Class CompressorInterfaceFilter
                 If Product.ID <> Nothing Then Cmd.Parameters.AddWithValue("@productid", Product.ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@productid", "%")
                 If Product.Code <> Nothing Then Cmd.Parameters.AddWithValue("@productcode", Product.Code) : Filtering = True Else Cmd.Parameters.AddWithValue("@productcode", "%")
                 If Product.Name <> Nothing Then Cmd.Parameters.AddWithValue("@productname", Product.Name) : Filtering = True Else Cmd.Parameters.AddWithValue("@productname", "%")
-                If Direction <> Nothing Then Cmd.Parameters.AddWithValue("@directionid", If(Direction = EnumHelper.GetEnumDescription(CompressorInterfaceDirection.Ascending), CInt(CompressorInterfaceDirection.Ascending), CInt(CompressorInterfaceDirection.Descending))) : Filtering = True Else Cmd.Parameters.AddWithValue("@directionid", "%")
+                If Direction <> Nothing Then Cmd.Parameters.AddWithValue("@directionid", CInt(EnumHelper.GetEnumValue(Of CompressorInterfaceDirection)(Direction))) : Filtering = True Else Cmd.Parameters.AddWithValue("@directionid", "%")
                 Using Adp As New MySqlDataAdapter(Cmd)
                     Adp.Fill(Table)
                     DataGridView.DataSource = Nothing

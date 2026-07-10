@@ -164,7 +164,8 @@ Public Class FrmServiceCode
             End If
             Row = _ServiceForm.DgvCode.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ServiceCode.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _ServiceForm.DgvCode.SelectedRows(0).Cells("Order").Value
+            Dim Table = CType(_ServiceForm.DgvCode.DataSource, DataTable)
+            LblOrderValue.Text = Table.Rows.Cast(Of DataRow).First(Function(x) x("Guid") = _ServiceCode.Guid)("Order")
             _ServiceForm.EprValidation.Clear()
             _ServiceForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()

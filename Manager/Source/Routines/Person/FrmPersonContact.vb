@@ -212,7 +212,8 @@ Public Class FrmPersonContact
             End If
             Row = _PersonForm.DgvContact.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _PersonContact.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _PersonForm.DgvContact.SelectedRows(0).Cells("Order").Value
+            Dim Table = CType(_PersonForm.DgvContact.DataSource, DataTable)
+            LblOrderValue.Text = Table.Rows.Cast(Of DataRow).First(Function(x) x("Guid") = _PersonContact.Guid)("Order")
             _PersonForm.EprValidation.Clear()
             _PersonForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()

@@ -155,7 +155,8 @@ Public Class FrmServiceComplement
             End If
             Row = _ServiceForm.DgvComplement.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ServiceComplement.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _ServiceForm.DgvComplement.SelectedRows(0).Cells("Order").Value
+            Dim Table = CType(_ServiceForm.DgvComplement.DataSource, DataTable)
+            LblOrderValue.Text = Table.Rows.Cast(Of DataRow).First(Function(x) x("Guid") = _ServiceComplement.Guid)("Order")
             _ServiceForm.EprValidation.Clear()
             _ServiceForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()

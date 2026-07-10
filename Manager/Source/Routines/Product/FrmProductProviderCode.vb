@@ -209,7 +209,8 @@ Public Class FrmProductProviderCode
             End If
             Row = _ProductForm.DgvProviderCode.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _ProductProviderCode.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _ProductForm.DgvProviderCode.SelectedRows(0).Cells("Order").Value
+            Dim Table = CType(_ProductForm.DgvProviderCode.DataSource, DataTable)
+            LblOrderValue.Text = Table.Rows.Cast(Of DataRow).First(Function(x) x("Guid") = _ProductProviderCode.Guid)("Order")
             _ProductForm.EprValidation.Clear()
             _ProductForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()

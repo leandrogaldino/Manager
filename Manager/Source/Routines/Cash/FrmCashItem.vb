@@ -335,7 +335,8 @@ Public Class FrmCashItem
             End If
             Row = _CashForm.DgvCashItem.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _CashItem.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _CashForm.DgvCashItem.SelectedRows(0).Cells("Order").Value
+            Dim Table = CType(_CashForm.DgvCashItem.DataSource, DataTable)
+            LblOrderValue.Text = Table.Rows.Cast(Of DataRow).First(Function(x) x("Guid") = _CashItem.Guid)("Order")
             _CashForm.EprValidation.Clear()
             _CashForm.CalculateValues()
             _CashForm.BtnSave.Enabled = True

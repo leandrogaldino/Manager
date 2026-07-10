@@ -254,10 +254,10 @@ Partial Class FrmService
         'TabNote
         '
         Me.TabNote.Controls.Add(Me.TxtNote)
-        Me.TabNote.Location = New System.Drawing.Point(4, 22)
+        Me.TabNote.Location = New System.Drawing.Point(4, 26)
         Me.TabNote.Name = "TabNote"
         Me.TabNote.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabNote.Size = New System.Drawing.Size(516, 66)
+        Me.TabNote.Size = New System.Drawing.Size(516, 62)
         Me.TabNote.TabIndex = 5
         Me.TabNote.Text = "Observação"
         Me.TabNote.UseVisualStyleBackColor = True
@@ -269,7 +269,7 @@ Partial Class FrmService
         Me.TxtNote.Location = New System.Drawing.Point(3, 3)
         Me.TxtNote.MaxLength = 1000000
         Me.TxtNote.Name = "TxtNote"
-        Me.TxtNote.Size = New System.Drawing.Size(510, 60)
+        Me.TxtNote.Size = New System.Drawing.Size(510, 56)
         Me.TxtNote.TabIndex = 0
         Me.TxtNote.Text = ""
         '
@@ -286,10 +286,10 @@ Partial Class FrmService
         '
         Me.TabComplement.Controls.Add(Me.DgvComplement)
         Me.TabComplement.Controls.Add(Me.TsComplement)
-        Me.TabComplement.Location = New System.Drawing.Point(4, 22)
+        Me.TabComplement.Location = New System.Drawing.Point(4, 26)
         Me.TabComplement.Name = "TabComplement"
         Me.TabComplement.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabComplement.Size = New System.Drawing.Size(516, 66)
+        Me.TabComplement.Size = New System.Drawing.Size(516, 62)
         Me.TabComplement.TabIndex = 7
         Me.TabComplement.Text = "Complementos"
         Me.TabComplement.UseVisualStyleBackColor = True
@@ -312,7 +312,7 @@ Partial Class FrmService
         Me.DgvComplement.RowHeadersVisible = False
         Me.DgvComplement.RowTemplate.Height = 26
         Me.DgvComplement.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvComplement.Size = New System.Drawing.Size(510, 35)
+        Me.DgvComplement.Size = New System.Drawing.Size(510, 31)
         Me.DgvComplement.TabIndex = 1
         '
         'TsComplement
@@ -433,10 +433,10 @@ Partial Class FrmService
         '
         Me.TabCode.Controls.Add(Me.DgvCode)
         Me.TabCode.Controls.Add(Me.TsCode)
-        Me.TabCode.Location = New System.Drawing.Point(4, 22)
+        Me.TabCode.Location = New System.Drawing.Point(4, 26)
         Me.TabCode.Name = "TabCode"
         Me.TabCode.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabCode.Size = New System.Drawing.Size(516, 66)
+        Me.TabCode.Size = New System.Drawing.Size(516, 62)
         Me.TabCode.TabIndex = 9
         Me.TabCode.Text = "Códigos"
         Me.TabCode.UseVisualStyleBackColor = True
@@ -459,7 +459,7 @@ Partial Class FrmService
         Me.DgvCode.RowHeadersVisible = False
         Me.DgvCode.RowTemplate.Height = 26
         Me.DgvCode.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvCode.Size = New System.Drawing.Size(510, 35)
+        Me.DgvCode.Size = New System.Drawing.Size(510, 31)
         Me.DgvCode.TabIndex = 4
         '
         'TsCode
@@ -525,10 +525,10 @@ Partial Class FrmService
         '
         Me.TabPrice.Controls.Add(Me.DgvPrice)
         Me.TabPrice.Controls.Add(Me.TsPrice)
-        Me.TabPrice.Location = New System.Drawing.Point(4, 22)
+        Me.TabPrice.Location = New System.Drawing.Point(4, 26)
         Me.TabPrice.Name = "TabPrice"
         Me.TabPrice.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPrice.Size = New System.Drawing.Size(516, 66)
+        Me.TabPrice.Size = New System.Drawing.Size(516, 62)
         Me.TabPrice.TabIndex = 8
         Me.TabPrice.Text = "Preços"
         Me.TabPrice.UseVisualStyleBackColor = True
@@ -551,7 +551,7 @@ Partial Class FrmService
         Me.DgvPrice.RowHeadersVisible = False
         Me.DgvPrice.RowTemplate.Height = 26
         Me.DgvPrice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPrice.Size = New System.Drawing.Size(510, 35)
+        Me.DgvPrice.Size = New System.Drawing.Size(510, 31)
         Me.DgvPrice.TabIndex = 2
         '
         'TsPrice
@@ -616,10 +616,10 @@ Partial Class FrmService
         'TabIndicator
         '
         Me.TabIndicator.Controls.Add(Me.DgvIndicator)
-        Me.TabIndicator.Location = New System.Drawing.Point(4, 22)
+        Me.TabIndicator.Location = New System.Drawing.Point(4, 26)
         Me.TabIndicator.Name = "TabIndicator"
         Me.TabIndicator.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabIndicator.Size = New System.Drawing.Size(516, 66)
+        Me.TabIndicator.Size = New System.Drawing.Size(516, 62)
         Me.TabIndicator.TabIndex = 10
         Me.TabIndicator.Text = "Indicadores"
         Me.TabIndicator.UseVisualStyleBackColor = True
@@ -642,7 +642,7 @@ Partial Class FrmService
         Me.DgvIndicator.RowHeadersVisible = False
         Me.DgvIndicator.RowTemplate.Height = 26
         Me.DgvIndicator.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvIndicator.Size = New System.Drawing.Size(510, 60)
+        Me.DgvIndicator.Size = New System.Drawing.Size(510, 56)
         Me.DgvIndicator.TabIndex = 3
         '
         'EprInformation

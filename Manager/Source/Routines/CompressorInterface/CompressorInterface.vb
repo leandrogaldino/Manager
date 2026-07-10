@@ -11,7 +11,7 @@ Public Class CompressorInterface
     Public Property ProductID As Long
     Public Property ProductName As String
     Public Property Product As New Lazy(Of Product)
-    Public Property Direction As CompressorInterfaceDirection = CompressorInterfaceDirection.Ascending
+    Public Property Direction As CompressorInterfaceDirection = CompressorInterfaceDirection.None
 
     Public Sub New()
         SetRoutine(Routine.CompressorInterface)
@@ -25,7 +25,7 @@ Public Class CompressorInterface
         ProductID = 0
         ProductName = Nothing
         Product = New Lazy(Of Product)
-        Direction = CompressorInterfaceDirection.Ascending
+        Direction = CompressorInterfaceDirection.None
         If LockInfo.IsLocked Then Unlock()
     End Sub
     Public Function Load(Identity As Long, LockMe As Boolean) As CompressorInterface
@@ -51,7 +51,7 @@ Public Class CompressorInterface
                         SetIsSaved(True)
                         Status = Convert.ToInt32(TableResult.Rows(0).Item("statusid"))
                         Name = Convert.ToString(TableResult.Rows(0).Item("name"))
-                        ProductID = Convert.ToInt64(TableResult.Rows(0).Item("productid"))
+                        ProductID = If(TableResult.Rows(0).Item("productid") Is DBNull.Value, 0, Convert.ToInt64(TableResult.Rows(0).Item("productid")))
                         ProductName = Convert.ToString(TableResult.Rows(0).Item("productname"))
                         Product = New Lazy(Of Product)(Function() New Product().Load(ProductID, False))
                         Direction = Convert.ToInt32(TableResult.Rows(0).Item("directionid"))
@@ -85,7 +85,7 @@ Public Class CompressorInterface
                 SetIsSaved(True)
                 Status = Convert.ToInt32(TableResult.Rows(0).Item("statusid"))
                 Name = Convert.ToString(TableResult.Rows(0).Item("name"))
-                ProductID = Convert.ToInt64(TableResult.Rows(0).Item("productid"))
+                ProductID = If(TableResult.Rows(0).Item("productid") Is DBNull.Value, 0, Convert.ToInt64(TableResult.Rows(0).Item("productid")))
                 ProductName = Convert.ToString(TableResult.Rows(0).Item("productname"))
                 Product = New Lazy(Of Product)(Function() New Product().Load(ProductID, False))
                 Direction = Convert.ToInt32(TableResult.Rows(0).Item("directionid"))
@@ -129,7 +129,7 @@ Public Class CompressorInterface
                     CmdProductUnitInsert.Parameters.AddWithValue("@creation", Creation.ToString("yyyy-MM-dd"))
                     CmdProductUnitInsert.Parameters.AddWithValue("@statusid", Convert.ToInt32(Status))
                     CmdProductUnitInsert.Parameters.AddWithValue("@name", Name)
-                    CmdProductUnitInsert.Parameters.AddWithValue("@productid", ProductID)
+                    CmdProductUnitInsert.Parameters.AddWithValue("@productid", If(ProductID = 0, DBNull.Value, ProductID))
                     CmdProductUnitInsert.Parameters.AddWithValue("@directionid", Convert.ToInt32(Direction))
                     CmdProductUnitInsert.Parameters.AddWithValue("@userid", User.ID)
                     CmdProductUnitInsert.ExecuteNonQuery()
@@ -146,7 +146,7 @@ Public Class CompressorInterface
                 CmdProductUnitUpdate.Parameters.AddWithValue("@id", ID)
                 CmdProductUnitUpdate.Parameters.AddWithValue("@statusid", Convert.ToInt32(Status))
                 CmdProductUnitUpdate.Parameters.AddWithValue("@name", Name)
-                CmdProductUnitUpdate.Parameters.AddWithValue("@productid", ProductID)
+                CmdProductUnitUpdate.Parameters.AddWithValue("@productid", If(ProductID = 0, DBNull.Value, ProductID))
                 CmdProductUnitUpdate.Parameters.AddWithValue("@directionid", Convert.ToInt32(Direction))
                 CmdProductUnitUpdate.Parameters.AddWithValue("@userid", User.ID)
                 CmdProductUnitUpdate.ExecuteNonQuery()

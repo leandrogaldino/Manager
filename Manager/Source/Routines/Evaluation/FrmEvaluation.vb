@@ -1291,13 +1291,15 @@ Public Class FrmEvaluation
                 Bitmap = New Bitmap(My.Resources.ArrowUp)
                 Icon = Icon.FromHandle(Bitmap.GetHicon())
                 Message = "Essa interface utiliza horímetro crescente. Ao trocar uma peça o técnico configura para zero."
-            Else
+                ErpInterfaceDirection.Icon = Icon
+                ErpInterfaceDirection.SetError(LblCompressor, Message)
+            ElseIf Direction = CompressorInterfaceDirection.Descending Then
                 Bitmap = New Bitmap(My.Resources.ArrowDown)
                 Icon = Icon.FromHandle(Bitmap.GetHicon())
                 Message = "Essa interface utiliza horímetro decrescente. Ao trocar uma peça o técnico configura para a capacidade total."
+                ErpInterfaceDirection.Icon = Icon
+                ErpInterfaceDirection.SetError(LblCompressor, Message)
             End If
-            ErpInterfaceDirection.Icon = Icon
-            ErpInterfaceDirection.SetError(LblCompressor, Message)
         Else
             _UcUnitTemperaturePressure.Unit = Nothing
             ErpInterfaceDirection.Clear()

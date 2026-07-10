@@ -27,14 +27,14 @@ Public Class FrmRequestItem
         _User = Locator.GetInstance(Of Session).User
         Height = 235
         LoadForm()
-        DgvNavigator.DataGridView = _RequestForm.DgvItem
+        DgvNavigator.DataGridView = _RequestForm.DgvRequestItem
         DgvNavigator.ActionBeforeMove = New Action(AddressOf BeforeDataGridViewRowMove)
         DgvNavigator.ActionAfterMove = New Action(AddressOf AfterDataGridViewRowMove)
         BtnLog.Visible = _User.CanAccess(Routine.Log)
     End Sub
     Private Sub LoadForm()
         _Loading = True
-        LblOrderValue.Text = If(_RequestItem.IsSaved, _RequestForm.DgvItem.SelectedRows(0).Cells("Order").Value, 0)
+        LblOrderValue.Text = If(_RequestItem.IsSaved, _RequestForm.DgvRequestItem.SelectedRows(0).Cells("Order").Value, 0)
         LblStatusValue.Text = EnumHelper.GetEnumDescription(_RequestItem.Status)
         LblCreationValue.Text = _RequestItem.Creation
         QbxItem.Unfreeze()
@@ -72,9 +72,9 @@ Public Class FrmRequestItem
         End If
     End Sub
     Private Sub AfterDataGridViewRowMove()
-        If _RequestForm.DgvItem.SelectedRows.Count = 1 Then
+        If _RequestForm.DgvRequestItem.SelectedRows.Count = 1 Then
             Cursor = Cursors.WaitCursor
-            _RequestItem = _Request.Items.Single(Function(x) x.Guid = _RequestForm.DgvItem.SelectedRows(0).Cells("Guid").Value)
+            _RequestItem = _Request.Items.Single(Function(x) x.Guid = _RequestForm.DgvRequestItem.SelectedRows(0).Cells("Guid").Value)
             LoadForm()
             Cursor = Cursors.Default
         End If
@@ -224,8 +224,8 @@ Public Class FrmRequestItem
                 _RequestItem.SetIsSaved(True)
                 _Request.Items.Add(_RequestItem)
             End If
-            _RequestForm.DgvItem.Fill(_Request.Items)
-            _RequestForm.DgvRequestItem.Load()
+            _RequestForm.DgvRequestItem.Fill(_Request.Items)
+            _RequestForm.DgvlRequestItem.Load()
             BtnSave.Enabled = False
             If Not _RequestItem.IsSaved Then
                 BtnSave.Text = "Incluir"
@@ -234,9 +234,10 @@ Public Class FrmRequestItem
                 BtnSave.Text = "Alterar"
                 BtnDelete.Enabled = True
             End If
-            Row = _RequestForm.DgvItem.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _RequestItem.Guid)
+            Row = _RequestForm.DgvRequestItem.Rows.Cast(Of DataGridViewRow).FirstOrDefault(Function(x) x.Cells("Guid").Value = _RequestItem.Guid)
             If Row IsNot Nothing Then DgvNavigator.EnsureVisibleRow(Row.Index)
-            LblOrderValue.Text = _RequestForm.DgvItem.SelectedRows(0).Cells("Order").Value
+            Dim Table = CType(_RequestForm.DgvRequestItem.DataSource, DataTable)
+            LblOrderValue.Text = Table.Rows.Cast(Of DataRow).First(Function(x) x("Guid") = _RequestItem.Guid)("Order")
             _RequestForm.EprValidation.Clear()
             _RequestForm.BtnSave.Enabled = True
             DgvNavigator.RefreshButtons()
@@ -316,12 +317,12 @@ Public Class FrmRequestItem
         LoadForm()
     End Sub
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
-        If _RequestForm.DgvItem.SelectedRows.Count = 1 Then
+        If _RequestForm.DgvRequestItem.SelectedRows.Count = 1 Then
             If CMessageBox.Show("O registro selecionado será excluído. Deseja continuar?", CMessageBoxType.Question, CMessageBoxButtons.YesNo) = DialogResult.Yes Then
-                _RequestItem = _Request.Items.Single(Function(x) x.Guid = _RequestForm.DgvItem.SelectedRows(0).Cells("Guid").Value)
+                _RequestItem = _Request.Items.Single(Function(x) x.Guid = _RequestForm.DgvRequestItem.SelectedRows(0).Cells("Guid").Value)
                 _Request.Items.Remove(_RequestItem)
-                _RequestForm.DgvItem.Fill(_Request.Items)
-                _RequestForm.DgvRequestItem.Load()
+                _RequestForm.DgvRequestItem.Fill(_Request.Items)
+                _RequestForm.DgvlRequestItem.Load()
                 _Deleting = True
                 Dispose()
                 _RequestForm.BtnSave.Enabled = True

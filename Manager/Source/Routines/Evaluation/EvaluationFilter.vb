@@ -9,10 +9,12 @@ Public Class EvaluationFilter
     Public Property DataGridView As DataGridView
     <Browsable(False)>
     Public Property PropertyGrid As PropertyGrid
+
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
-    <TypeConverter(GetType(UpperNoAccentConverter))>
-    Public Property ID As String
+    <TypeConverter(GetType(ExpandableObjectConverter))>
+    <DisplayName("Faturado")>
+    Public Overridable Property Invoiced As New EvaluationInvoicedExpandable
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(ExpandableObjectConverter))>
@@ -24,10 +26,13 @@ Public Class EvaluationFilter
     Public Overridable Property Source As New EvaluationSourceExpandable
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
+    <TypeConverter(GetType(UpperNoAccentConverter))>
+    Public Property ID As String
+    <NotifyParentProperty(True)>
+    <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(EvaluationCallTypeConverter))>
     <DisplayName("Tipo")>
     Public Overridable Property CallType As String
-
     <NotifyParentProperty(True)>
     <RefreshProperties(RefreshProperties.All)>
     <TypeConverter(GetType(UpperNoAccentConverter))>
@@ -75,6 +80,7 @@ Public Class EvaluationFilter
         Dim FirstRow As Long = 0
         Dim StatusList As New List(Of String)
         Dim SourceList As New List(Of String)
+        Dim InvoicedList As New List(Of String)
         If DataGridView IsNot Nothing Then
             If DataGridView.SelectedRows.Count = 1 Then
                 SelectedRow = DataGridView.SelectedRows(0).Index
@@ -84,6 +90,10 @@ Public Class EvaluationFilter
         Using Con As New MySqlConnection(Locator.GetInstance(Of Session).Setting.Database.GetConnectionString())
             Con.Open()
             Using Cmd As New MySqlCommand(My.Resources.EvaluationFilter, Con)
+                If Invoiced.Invoiced = "Sim" Or Invoiced.Invoiced = Nothing Then InvoicedList.Add(CInt(ConfirmationType.Yes))
+                If Invoiced.NotInvoiced = "Sim" Or Invoiced.NotInvoiced = Nothing Then InvoicedList.Add(CInt(ConfirmationType.No))
+                If Invoiced.None = "Sim" Or Invoiced.None = Nothing Then InvoicedList.Add(CInt(ConfirmationType.None))
+                Cmd.Parameters.AddWithValue("@isinvoicedid", String.Join(",", InvoicedList)) : Filtering = True
                 If ID <> Nothing Then Cmd.Parameters.AddWithValue("@id", ID) : Filtering = True Else Cmd.Parameters.AddWithValue("@id", "%")
                 If Status.Disapproved = "Sim" Or Status.Disapproved = Nothing Then StatusList.Add(CInt(EvaluationStatus.Disapproved))
                 If Status.Approved = "Sim" Or Status.Approved = Nothing Then StatusList.Add(CInt(EvaluationStatus.Approved))

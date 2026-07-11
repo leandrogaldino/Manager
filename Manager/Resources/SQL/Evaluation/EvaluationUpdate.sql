@@ -3,6 +3,7 @@ UPDATE evaluation SET
     calltypeid = @calltypeid,
     needproposalid = @needproposalid,
     hasrepairid = @hasrepairid,
+    isinvoicedid = @isinvoicedid,
     unitname = @unitname,
     temperature = @temperature,
     pressure = @pressure,

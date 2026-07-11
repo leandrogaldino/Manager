@@ -5,7 +5,7 @@ Public Class UcEvaluationGrid
     Private _Evaluation As New Evaluation
     Private _Filter As EvaluationFilter
     Private _CmsPoint As Point
-    Private _ShowApproval As Boolean
+    Private _ShowContextMenu As Boolean
     Private _User As User
     Public Sub New()
         InitializeComponent()
@@ -25,9 +25,6 @@ Public Class UcEvaluationGrid
         BtnDelete.Visible = _User.CanDelete(Routine.Evaluation)
         BtnExport.Visible = _User.CanAccess(Routine.ExportGrid)
         BtnImport.Visible = _User.CanAccess(Routine.EvaluationImport)
-        If Not _User.CanAccess(Routine.EvaluationTreatmentReport) Then
-            CmsMenu.Items.Remove(CmsMenu.Items.Cast(Of ToolStripItem).Single(Function(x) x.Name = "BtnEvaluationTreatment"))
-        End If
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvlEvaluation.Load()
@@ -149,6 +146,15 @@ Public Class UcEvaluationGrid
                     e.CellStyle.ForeColor = Color.DarkRed
                 Case Else
                     e.CellStyle.ForeColor = Color.Chocolate
+            End Select
+        ElseIf e.ColumnIndex = Dgv.Columns("Faturado").Index Then
+            Select Case e.Value
+                Case Is = UCase(EnumHelper.GetEnumDescription(ConfirmationType.Yes))
+                    e.CellStyle.ForeColor = Color.DarkGreen
+                Case Is = UCase(EnumHelper.GetEnumDescription(ConfirmationType.No))
+                    e.CellStyle.ForeColor = Color.DarkRed
+                Case Else
+                    e.CellStyle.ForeColor = Color.Black
             End Select
         ElseIf e.ColumnIndex = Dgv.Columns("Horímetro").Index Then
             e.CellStyle.Format = "N0"
@@ -272,17 +278,24 @@ Public Class UcEvaluationGrid
         Dim Click As DataGridView.HitTestInfo = DgvData.HitTest(e.X, e.Y)
         If Click.Type = DataGridViewHitTestType.Cell And e.Button = MouseButtons.Right Then
             DgvData.Rows(Click.RowIndex).Selected = True
-            _ShowApproval = True
+            _ShowContextMenu = True
             _CmsPoint = e.Location
         End If
     End Sub
     Private Sub DgvData_MouseUp(sender As Object, e As MouseEventArgs) Handles DgvData.MouseUp
-        If _ShowApproval And _User.CanAccess(Routine.EvaluationApproveOrReject) Then
-            BtnApprove.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> EnumHelper.GetEnumDescription(EvaluationStatus.Approved)
-            BtnReject.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> EnumHelper.GetEnumDescription(EvaluationStatus.Rejected)
-            BtnDisapprove.Visible = DgvData.SelectedRows(0).Cells("Status").Value <> EnumHelper.GetEnumDescription(EvaluationStatus.Disapproved)
+        Dim CanApproveOrReject As Boolean = _User.CanAccess(Routine.EvaluationApproveOrReject)
+        Dim CanAccessTreatmentReport As Boolean = _User.CanAccess(Routine.EvaluationTreatmentReport)
+        Dim CanSetInvoiced As Boolean = _User.CanAccess(Routine.EvaluationSetInvoiced)
+        BtnApprove.Visible = CanApproveOrReject AndAlso DgvData.SelectedRows(0).Cells("Status").Value <> EnumHelper.GetEnumDescription(EvaluationStatus.Approved)
+        BtnReject.Visible = CanApproveOrReject AndAlso DgvData.SelectedRows(0).Cells("Status").Value <> EnumHelper.GetEnumDescription(EvaluationStatus.Rejected)
+        BtnDisapprove.Visible = CanApproveOrReject AndAlso DgvData.SelectedRows(0).Cells("Status").Value <> EnumHelper.GetEnumDescription(EvaluationStatus.Disapproved)
+        BtnSimpleTreatment.Visible = CanAccessTreatmentReport
+        BtnCustomTreatment.Visible = CanAccessTreatmentReport
+        BtnInvoiced.Visible = CanSetInvoiced AndAlso DgvData.SelectedRows(0).Cells("Faturado").Value = UCase(EnumHelper.GetEnumDescription(ConfirmationType.No))
+        BtnNotInvoiced.Visible = CanSetInvoiced AndAlso DgvData.SelectedRows(0).Cells("Faturado").Value = UCase(EnumHelper.GetEnumDescription(ConfirmationType.Yes))
+        If _ShowContextMenu Then
             CmsMenu.Show(DgvData.PointToScreen(_CmsPoint))
-            _ShowApproval = False
+            _ShowContextMenu = False
         End If
     End Sub
     Private Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
@@ -290,7 +303,7 @@ Public Class UcEvaluationGrid
             Form.ShowDialog()
         End Using
     End Sub
-    Private Sub BtnEvaluationTreatment_Click(sender As Object, e As EventArgs) Handles BtnSimpleEvaluationTreatment.Click
+    Private Sub BtnEvaluationTreatment_Click(sender As Object, e As EventArgs) Handles BtnSimpleTreatment.Click
         Try
             Cursor = Cursors.WaitCursor
             _Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("id").Value, False)
@@ -303,7 +316,7 @@ Public Class UcEvaluationGrid
         End Try
     End Sub
 
-    Private Sub BtnCompleteEvaluationTreatment_Click(sender As Object, e As EventArgs) Handles BtnCompleteEvaluationTreatment.Click
+    Private Sub BtnCompleteEvaluationTreatment_Click(sender As Object, e As EventArgs) Handles BtnCustomTreatment.Click
         Try
             Cursor = Cursors.WaitCursor
             _Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("id").Value, False)
@@ -312,6 +325,34 @@ Public Class UcEvaluationGrid
             End Using
         Catch ex As Exception
             CMessageBox.Show("ERRO EV027", "Ocorreu um erro ao gerar o relatório.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+        Finally
+            Cursor = Cursors.Default
+        End Try
+    End Sub
+
+    Private Sub BtnInvoiced_Click(sender As Object, e As EventArgs) Handles BtnInvoiced.Click
+        Try
+            Cursor = Cursors.WaitCursor
+            _Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("id").Value, False)
+            _Evaluation.SetIsInvoiced(ConfirmationType.Yes)
+            _Filter.Filter()
+            DgvlEvaluation.Load()
+        Catch ex As Exception
+            CMessageBox.Show("ERRO EV028", "Ocorreu um erro ao marcar a avaliação como faturada.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
+        Finally
+            Cursor = Cursors.Default
+        End Try
+    End Sub
+
+    Private Sub BtnNotInvoiced_Click(sender As Object, e As EventArgs) Handles BtnNotInvoiced.Click
+        Try
+            Cursor = Cursors.WaitCursor
+            _Evaluation = New Evaluation().Load(DgvData.SelectedRows(0).Cells("id").Value, False)
+            _Evaluation.SetIsInvoiced(ConfirmationType.No)
+            _Filter.Filter()
+            DgvlEvaluation.Load()
+        Catch ex As Exception
+            CMessageBox.Show("ERRO EV029", "Ocorreu um erro ao marcar a avaliação como não faturada.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)
         Finally
             Cursor = Cursors.Default
         End Try

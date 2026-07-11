@@ -1135,8 +1135,8 @@ Namespace My.Resources
         '''	compressorinterface.id AS &apos;ID&apos;,
         '''    compressorinterface.creation AS &apos;Criação&apos;,
         '''    CASE 
-        '''		WHEN compressorinterface.statusid = 0 THEN &quot;ATIVO&quot;
-        '''        WHEN compressorinterface.statusid = 1 THEN &quot;INATIVO&quot;
+        '''		WHEN compressorinterface.statusid = 0 THEN &apos;ATIVO&apos;
+        '''        WHEN compressorinterface.statusid = 1 THEN &apos;INATIVO&apos;
         '''	END AS &apos;Status&apos;,
         '''    compressorinterface.name AS &apos;Nome&apos;,
         '''    CASE
@@ -2381,6 +2381,11 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
+        '''    CASE
+        '''        WHEN evaluation.isinvoicedid = 0 THEN &quot;SIM&quot;
+        '''        WHEN evaluation.isinvoicedid = 1 THEN &quot;NÃO&quot;
+        '''        WHEN evaluation.isinvoicedid = 2 THEN &quot;N/A&quot;
+        '''    END AS &apos;Faturado&apos;,
         '''    evaluation.id,
         '''    evaluation.creation As &apos;Criação&apos;,
         '''    CASE 
@@ -2389,13 +2394,7 @@ Namespace My.Resources
         '''        WHEN evaluation.statusid = 2 THEN &quot;REJEITADA&quot;
         '''        WHEN evaluation.statusid = 3 THEN &quot;REVISADA&quot;
         '''	END AS &apos;Status&apos;,
-        '''        CASE 
-        '''		WHEN evaluation.sourceid = 0 THEN &quot;MANUAL&quot;
-        '''        WHEN evaluation.sourceid = 1 THEN &quot;AUTOMÁTICA&quot;
-        '''        WHEN evaluation.sourceid = 2 THEN &quot;IMPORTADA&quot;
-        '''	END AS &apos;Fonte&apos;,
-        '''    CASE
-        '''  [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''         [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationFilter() As String
             Get
@@ -2417,23 +2416,21 @@ Namespace My.Resources
         
         '''<summary>
         '''  Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;Routine Id=&quot;Evaluation&quot; Version=&quot;3&quot;&gt;
+        '''&lt;Routine Id=&quot;Evaluation&quot; Version=&quot;4&quot;&gt;
         '''	&lt;SortedColumn&gt;-1&lt;/SortedColumn&gt;
         '''	&lt;SortDirection&gt;0&lt;/SortDirection&gt;
-        '''    &lt;Column Index=&quot;0&quot;&gt;
-        '''        &lt;Visible&gt;True&lt;/Visible&gt;
-        '''        &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
-        '''        &lt;Name&gt;ID&lt;/Name&gt;
-        '''        &lt;Width&gt;70&lt;/Width&gt;
-        '''    &lt;/Column&gt;    
-        '''    &lt;Column Index=&quot;1&quot;&gt;
+        '''	&lt;Column Index=&quot;0&quot; CellAlignment=&quot;MiddleCenter&quot; HeaderAlignment=&quot;MiddleCenter&quot;&gt;
+        '''		&lt;Visible&gt;True&lt;/Visible&gt;
+        '''		&lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+        '''		&lt;Name&gt;Faturado&lt;/Name&gt;
+        '''		&lt;Width&gt;80&lt;/Width&gt;
+        '''	&lt;/Column&gt;
+        '''	&lt;Column Index=&quot;1&quot;&gt;
         '''        &lt;Visible&gt;True&lt;/Visible&gt;
         '''        &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
-        '''        &lt;Name&gt;Criação&lt;/Name&gt;
-        '''        &lt;Width&gt;100&lt;/Width&gt;
-        '''    &lt;/Column&gt;
-        '''    &lt;Column Index=&quot;2&quot;&gt;
-        '''   [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''        &lt;Name&gt;ID&lt;/Name&gt;
+        '''        &lt;Width&gt;70&lt;/Width&gt;
+        '''    &lt;/Column&gt;            ''' [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationGrid() As String
             Get
@@ -2475,6 +2472,7 @@ Namespace My.Resources
         '''	calltypeid,
         '''	needproposalid,
         '''	hasrepairid,
+        '''	isinvoicedid,
         '''	unitname,
         '''	temperature,
         '''	pressure,
@@ -2500,8 +2498,7 @@ Namespace My.Resources
         '''	@visitscheduleid,
         '''	@creation,
         '''	@statusid,
-        '''	@sourceid,
-        '''	@cal [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	@ [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationInsert() As String
             Get
@@ -3005,6 +3002,7 @@ Namespace My.Resources
         '''	evaluation.calltypeid,
         '''	evaluation.needproposalid,
         '''	evaluation.hasrepairid,
+        '''	evaluation.isinvoicedid,
         '''	evaluation.unitname,
         '''	evaluation.temperature,
         '''	evaluation.pressure,
@@ -3015,12 +3013,23 @@ Namespace My.Resources
         '''	evaluation.customerid,
         '''	evaluation.responsible,
         '''	evaluation.personcompressorid,
-        '''	evaluation.horimeter,
-        '''	eva [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''	 [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationSelect() As String
             Get
                 Return ResourceManager.GetString("EvaluationSelect", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta uma cadeia de caracteres localizada semelhante a UPDATE evaluation SET
+        '''    isinvoicedid =  isinvoicedid,
+        '''    userid = @userid
+        '''WHERE evaluation.id = @id;.
+        '''</summary>
+        Friend ReadOnly Property EvaluationSetInvoiced() As String
+            Get
+                Return ResourceManager.GetString("EvaluationSetInvoiced", resourceCulture)
             End Get
         End Property
         
@@ -3138,6 +3147,7 @@ Namespace My.Resources
         '''    calltypeid = @calltypeid,
         '''    needproposalid = @needproposalid,
         '''    hasrepairid = @hasrepairid,
+        '''    isinvoicedid = @isinvoicedid,
         '''    unitname = @unitname,
         '''    temperature = @temperature,
         '''    pressure = @pressure,
@@ -3148,8 +3158,7 @@ Namespace My.Resources
         '''    customerid = @customerid,
         '''    responsible = @responsible,
         '''    personcompressorid = @personcompressorid,
-        '''    horimeter = @horimeter,
-        '''    manua [o restante da cadeia de caracteres foi truncado]&quot;;.
+        '''    [o restante da cadeia de caracteres foi truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property EvaluationUpdate() As String
             Get
@@ -3264,6 +3273,16 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("information", resourceCulture)
                 Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property Invoiced() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Invoiced", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
@@ -6087,8 +6106,7 @@ Namespace My.Resources
         '''  Consulta uma cadeia de caracteres localizada semelhante a SELECT
         '''    p.shortname
         '''FROM person p
-        '''LEFT JOIN personcompressor pc ON p.id = pc.personid
-        '''WHERE pc.id = @id;.
+        '''WHERE p.id = @id;.
         '''</summary>
         Friend ReadOnly Property SelectTechnicianData() As String
             Get

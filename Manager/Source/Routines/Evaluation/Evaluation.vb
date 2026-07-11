@@ -9,6 +9,7 @@ Public Class Evaluation
     Private _Compressor As New PersonCompressor
     Private _Status As EvaluationStatus = EvaluationStatus.Disapproved
     Private _RejectReason As String
+    Private _IsInvoiced As ConfirmationType = ConfirmationType.None
     Public Property CloudID As String = Nothing
     Public Property VisitScheduleID As Long = 0
     Public ReadOnly Property Status As EvaluationStatus
@@ -20,6 +21,11 @@ Public Class Evaluation
     Public Property CallType As CallType = CallType.None
     Public Property NeedProposal As ConfirmationType = ConfirmationType.None
     Public Property HasRepair As ConfirmationType = ConfirmationType.None
+    Public ReadOnly Property IsInvoiced As ConfirmationType
+        Get
+            Return _IsInvoiced
+        End Get
+    End Property
     Public Property UnitName As String
     Public Property Temperature As Integer
     Public Property Pressure As Decimal
@@ -67,6 +73,7 @@ Public Class Evaluation
         CallType = CallType.None
         NeedProposal = ConfirmationType.None
         HasRepair = ConfirmationType.None
+        _IsInvoiced = ConfirmationType.None
         UnitName = Nothing
         Temperature = 0
         Pressure = 0
@@ -118,6 +125,7 @@ Public Class Evaluation
                         CallType = Convert.ToInt32(TableResult.Rows(0).Item("calltypeid"))
                         NeedProposal = Convert.ToInt32(TableResult.Rows(0).Item("needproposalid"))
                         HasRepair = Convert.ToInt32(TableResult.Rows(0).Item("hasrepairid"))
+                        _IsInvoiced = Convert.ToInt32(TableResult.Rows(0).Item("isinvoicedid"))
                         UnitName = Convert.ToString(TableResult.Rows(0).Item("unitname"))
                         Temperature = Convert.ToInt32(TableResult.Rows(0).Item("temperature"))
                         Pressure = Convert.ToDecimal(TableResult.Rows(0).Item("pressure"))
@@ -205,6 +213,7 @@ Public Class Evaluation
     End Sub
     Private Sub Insert()
         Dim Session = Locator.GetInstance(Of Session)
+        _IsInvoiced = If(ReplacedSellables.Count() > 0, ConfirmationType.No, ConfirmationType.None)
         Using Transaction As New Transactions.TransactionScope()
             Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
                 Con.Open()
@@ -217,6 +226,7 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@calltypeid", Convert.ToInt32(CallType))
                     CmdEvaluation.Parameters.AddWithValue("@needproposalid", Convert.ToInt32(NeedProposal))
                     CmdEvaluation.Parameters.AddWithValue("@hasrepairid", Convert.ToInt32(HasRepair))
+                    CmdEvaluation.Parameters.AddWithValue("@isinvoicedid", Convert.ToInt32(IsInvoiced))
                     CmdEvaluation.Parameters.AddWithValue("@unitname", UnitName)
                     CmdEvaluation.Parameters.AddWithValue("@temperature", Temperature)
                     CmdEvaluation.Parameters.AddWithValue("@pressure", Pressure)
@@ -288,7 +298,6 @@ Public Class Evaluation
                         ReplacedSellable.SetID(CmdReplacedSellable.LastInsertedId)
                     End Using
                 Next ReplacedSellable
-
                 For Each Picture As EvaluationPicture In Pictures.Where(Function(x) x.Picture.CurrentFile IsNot Nothing)
                     Using CmdPicture As New MySqlCommand(My.Resources.EvaluationPictureInsert, Con)
                         CmdPicture.Parameters.AddWithValue("@creation", Picture.Creation)
@@ -308,6 +317,11 @@ Public Class Evaluation
     End Sub
     Private Sub Update()
         Dim Session = Locator.GetInstance(Of Session)
+        If IsInvoiced = ConfirmationType.Yes Then
+            _IsInvoiced = If(ReplacedSellables.Count() > 0, ConfirmationType.Yes, ConfirmationType.None)
+        Else
+            _IsInvoiced = If(ReplacedSellables.Count() > 0, ConfirmationType.No, ConfirmationType.None)
+        End If
         Using Transaction As New Transactions.TransactionScope()
             Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
                 Con.Open()
@@ -317,6 +331,7 @@ Public Class Evaluation
                     CmdEvaluation.Parameters.AddWithValue("@calltypeid", Convert.ToInt32(CallType))
                     CmdEvaluation.Parameters.AddWithValue("@needproposalid", Convert.ToInt32(NeedProposal))
                     CmdEvaluation.Parameters.AddWithValue("@hasrepairid", Convert.ToInt32(HasRepair))
+                    CmdEvaluation.Parameters.AddWithValue("@isinvoicedid", Convert.ToInt32(IsInvoiced))
                     CmdEvaluation.Parameters.AddWithValue("@unitname", UnitName)
                     CmdEvaluation.Parameters.AddWithValue("@temperature", Temperature)
                     CmdEvaluation.Parameters.AddWithValue("@pressure", Pressure)
@@ -557,6 +572,19 @@ Public Class Evaluation
                 Cmd.ExecuteNonQuery()
                 _Status = Status
                 _RejectReason = Reason
+            End Using
+        End Using
+    End Sub
+    Public Sub SetIsInvoiced(Invoiced As ConfirmationType)
+        Dim Session = Locator.GetInstance(Of Session)
+        Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
+            Con.Open()
+            Using Cmd As New MySqlCommand(My.Resources.EvaluationSetInvoiced, Con)
+                Cmd.Parameters.AddWithValue("@id", ID)
+                Cmd.Parameters.AddWithValue("@isinvoicedid", CInt(Invoiced))
+                Cmd.Parameters.AddWithValue("@userid", Session.User.ID)
+                Cmd.ExecuteNonQuery()
+                _IsInvoiced = Invoiced
             End Using
         End Using
     End Sub

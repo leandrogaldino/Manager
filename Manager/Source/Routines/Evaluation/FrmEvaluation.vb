@@ -418,8 +418,11 @@ Public Class FrmEvaluation
         If _Evaluation.LockInfo.IsLocked And _Evaluation.LockInfo.SessionToken <> Locator.GetInstance(Of Session).Token Then
             CMessageBox.Show(String.Format("Não foi possível salvar, esse registro foi aberto em modo somente leitura pois estava sendo utilizado por {0}.", _Evaluation.LockInfo.LockedBy.Value.Username.ToTitle()), CMessageBoxType.Information)
             Success = False
-        ElseIf _Evaluation.Status = EvaluationStatus.Approved AndAlso Not _User.CanAccess(Routine.EvaluationApproveOrReject) Then
+        ElseIf _Evaluation.Status = EvaluationStatus.Approved Then
             CMessageBox.Show("Esta avaliação já foi aprovada e não pode mais ser alterada.", CMessageBoxType.Information)
+            Success = False
+        ElseIf _Evaluation.IsInvoiced = ConfirmationType.Yes Then
+            CMessageBox.Show("Esta avaliação já foi faturada e não pode mais ser alterada.", CMessageBoxType.Information)
             Success = False
         Else
             If IsValidFieldsToSave() Then

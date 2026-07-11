@@ -60,10 +60,12 @@ Partial Class UcEvaluationGrid
         Me.DgvData = New System.Windows.Forms.DataGridView()
         Me.CmsMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.BtnApprove = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BtnReject = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnDisapprove = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BtnSimpleEvaluationTreatment = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BtnCompleteEvaluationTreatment = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnReject = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnSimpleTreatment = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnCustomTreatment = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnInvoiced = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnNotInvoiced = New System.Windows.Forms.ToolStripMenuItem()
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
         Me.DgvlEvaluation = New Manager.DataGridViewLayout()
@@ -453,10 +455,10 @@ Partial Class UcEvaluationGrid
         'TpReplaced
         '
         Me.TpReplaced.Controls.Add(Me.DgvReplacedSellables)
-        Me.TpReplaced.Location = New System.Drawing.Point(4, 22)
+        Me.TpReplaced.Location = New System.Drawing.Point(4, 26)
         Me.TpReplaced.Name = "TpReplaced"
         Me.TpReplaced.Padding = New System.Windows.Forms.Padding(3)
-        Me.TpReplaced.Size = New System.Drawing.Size(261, 384)
+        Me.TpReplaced.Size = New System.Drawing.Size(262, 382)
         Me.TpReplaced.TabIndex = 0
         Me.TpReplaced.Text = "Peças Substituídas"
         Me.TpReplaced.UseVisualStyleBackColor = True
@@ -479,7 +481,7 @@ Partial Class UcEvaluationGrid
         Me.DgvReplacedSellables.RowHeadersVisible = False
         Me.DgvReplacedSellables.RowTemplate.Height = 26
         Me.DgvReplacedSellables.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvReplacedSellables.Size = New System.Drawing.Size(255, 378)
+        Me.DgvReplacedSellables.Size = New System.Drawing.Size(256, 380)
         Me.DgvReplacedSellables.TabIndex = 3
         '
         'TsDetails
@@ -534,44 +536,58 @@ Partial Class UcEvaluationGrid
         '
         'CmsMenu
         '
-        Me.CmsMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnApprove, Me.BtnReject, Me.BtnDisapprove, Me.BtnSimpleEvaluationTreatment, Me.BtnCompleteEvaluationTreatment})
+        Me.CmsMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnApprove, Me.BtnDisapprove, Me.BtnReject, Me.BtnSimpleTreatment, Me.BtnCustomTreatment, Me.BtnInvoiced, Me.BtnNotInvoiced})
         Me.CmsMenu.Name = "CmsApproval"
-        Me.CmsMenu.Size = New System.Drawing.Size(267, 114)
+        Me.CmsMenu.Size = New System.Drawing.Size(287, 158)
         '
         'BtnApprove
         '
         Me.BtnApprove.Image = Global.Manager.My.Resources.Resources.Approve
         Me.BtnApprove.Name = "BtnApprove"
-        Me.BtnApprove.Size = New System.Drawing.Size(266, 22)
+        Me.BtnApprove.Size = New System.Drawing.Size(286, 22)
         Me.BtnApprove.Text = "Aprovar"
-        '
-        'BtnReject
-        '
-        Me.BtnReject.Image = Global.Manager.My.Resources.Resources.Reject
-        Me.BtnReject.Name = "BtnReject"
-        Me.BtnReject.Size = New System.Drawing.Size(266, 22)
-        Me.BtnReject.Text = "Rejeitar"
         '
         'BtnDisapprove
         '
         Me.BtnDisapprove.Image = Global.Manager.My.Resources.Resources.Disapprove
         Me.BtnDisapprove.Name = "BtnDisapprove"
-        Me.BtnDisapprove.Size = New System.Drawing.Size(266, 22)
+        Me.BtnDisapprove.Size = New System.Drawing.Size(286, 22)
         Me.BtnDisapprove.Text = "Desaprovar"
         '
-        'BtnSimpleEvaluationTreatment
+        'BtnReject
         '
-        Me.BtnSimpleEvaluationTreatment.Image = Global.Manager.My.Resources.Resources.ReportSmall
-        Me.BtnSimpleEvaluationTreatment.Name = "BtnSimpleEvaluationTreatment"
-        Me.BtnSimpleEvaluationTreatment.Size = New System.Drawing.Size(266, 22)
-        Me.BtnSimpleEvaluationTreatment.Text = "Relatório de Atendimento Simples"
+        Me.BtnReject.Image = Global.Manager.My.Resources.Resources.Reject
+        Me.BtnReject.Name = "BtnReject"
+        Me.BtnReject.Size = New System.Drawing.Size(286, 22)
+        Me.BtnReject.Text = "Rejeitar"
         '
-        'BtnCompleteEvaluationTreatment
+        'BtnSimpleTreatment
         '
-        Me.BtnCompleteEvaluationTreatment.Image = Global.Manager.My.Resources.Resources.ReportSmall
-        Me.BtnCompleteEvaluationTreatment.Name = "BtnCompleteEvaluationTreatment"
-        Me.BtnCompleteEvaluationTreatment.Size = New System.Drawing.Size(266, 22)
-        Me.BtnCompleteEvaluationTreatment.Text = "Relatório de Atendimento Completo"
+        Me.BtnSimpleTreatment.Image = Global.Manager.My.Resources.Resources.ReportSmall
+        Me.BtnSimpleTreatment.Name = "BtnSimpleTreatment"
+        Me.BtnSimpleTreatment.Size = New System.Drawing.Size(286, 22)
+        Me.BtnSimpleTreatment.Text = "Relatório de Atendimento Simples"
+        '
+        'BtnCustomTreatment
+        '
+        Me.BtnCustomTreatment.Image = Global.Manager.My.Resources.Resources.ReportSmall
+        Me.BtnCustomTreatment.Name = "BtnCustomTreatment"
+        Me.BtnCustomTreatment.Size = New System.Drawing.Size(286, 22)
+        Me.BtnCustomTreatment.Text = "Relatório de Atendimento Personalizado"
+        '
+        'BtnInvoiced
+        '
+        Me.BtnInvoiced.Image = Global.Manager.My.Resources.Resources.Invoiced
+        Me.BtnInvoiced.Name = "BtnInvoiced"
+        Me.BtnInvoiced.Size = New System.Drawing.Size(286, 22)
+        Me.BtnInvoiced.Text = "Faturado"
+        '
+        'BtnNotInvoiced
+        '
+        Me.BtnNotInvoiced.Image = Global.Manager.My.Resources.Resources.Invoiced
+        Me.BtnNotInvoiced.Name = "BtnNotInvoiced"
+        Me.BtnNotInvoiced.Size = New System.Drawing.Size(286, 22)
+        Me.BtnNotInvoiced.Text = "Não Faturado"
         '
         'TmrLoadDetails
         '
@@ -672,8 +688,8 @@ Partial Class UcEvaluationGrid
     Friend WithEvents BtnImport As ToolStripButton
     Friend WithEvents DgvCcData As ControlLibrary.DataGridViewContentCopy
     Friend WithEvents DgvlEvaluation As DataGridViewLayout
-    Friend WithEvents BtnSimpleEvaluationTreatment As ToolStripMenuItem
-    Friend WithEvents BtnCompleteEvaluationTreatment As ToolStripMenuItem
+    Friend WithEvents BtnSimpleTreatment As ToolStripMenuItem
+    Friend WithEvents BtnCustomTreatment As ToolStripMenuItem
     Friend WithEvents TcDetails As TabControl
     Friend WithEvents TpReplaced As TabPage
     Friend WithEvents TbControlled As TabPage
@@ -683,4 +699,6 @@ Partial Class UcEvaluationGrid
     Friend WithEvents DgvElapsedDaySellable As DataGridView
     Friend WithEvents Label2 As Label
     Friend WithEvents DgvReplacedSellables As DataGridView
+    Friend WithEvents BtnInvoiced As ToolStripMenuItem
+    Friend WithEvents BtnNotInvoiced As ToolStripMenuItem
 End Class

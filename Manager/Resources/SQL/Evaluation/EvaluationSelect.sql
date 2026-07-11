@@ -8,6 +8,7 @@ SELECT
 	evaluation.calltypeid,
 	evaluation.needproposalid,
 	evaluation.hasrepairid,
+	evaluation.isinvoicedid,
 	evaluation.unitname,
 	evaluation.temperature,
 	evaluation.pressure,

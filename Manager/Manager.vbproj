@@ -535,6 +535,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Source\Helper\DataGridViewDecimalColumn.vb" />
+    <Compile Include="Source\Helper\FilterExpandable\EvaluationInvoicedExpandable.vb" />
     <Compile Include="Source\Helper\FilterExpandable\ProductExpandable.vb" />
     <Compile Include="Source\Helper\FilterQueriedBox\CompressorInterfaceQueriedBoxFilter.vb" />
     <Compile Include="Source\Helper\FilterQueriedBox\CompressorUnitQueriedBoxFilter.vb" />
@@ -578,6 +579,7 @@
     <None Include="Resources\Image\ArrowDown.png" />
     <None Include="Resources\Image\ArrowUp.png" />
     <Content Include="Resources\Image\Downloading.gif" />
+    <Content Include="Resources\Image\Invoiced.png" />
     <Content Include="Resources\Image\Updating.gif" />
     <Content Include="Resources\SQL\CompressorInterface\CompressorInterfaceDelete.sql" />
     <Content Include="Resources\SQL\CompressorInterface\CompressorInterfaceFilter.sql" />
@@ -605,6 +607,7 @@
     <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableInsert.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableSelect.sql" />
     <Content Include="Resources\SQL\Evaluation\EvaluationReplacedSellableUpdate.sql" />
+    <Content Include="Resources\SQL\Evaluation\EvaluationSetInvoiced.sql" />
     <Content Include="Resources\SQL\Shared\SelectCompressorData.sql" />
     <Content Include="Resources\SQL\Shared\SelectTechnicianData.sql" />
     <Content Include="Resources\SQL\Shared\SelectCustomerData.sql" />

@@ -1,4 +1,9 @@
 SELECT
+    CASE
+        WHEN evaluation.isinvoicedid = 0 THEN "SIM"
+        WHEN evaluation.isinvoicedid = 1 THEN "NÃO"
+        WHEN evaluation.isinvoicedid = 2 THEN "N/A"
+    END AS 'Faturado',
     evaluation.id,
     evaluation.creation As 'Criação',
     CASE 
@@ -42,6 +47,7 @@ INNER JOIN evaluationtechnician ON evaluationtechnician.evaluationid = evaluatio
 LEFT JOIN person AS technician ON technician.id = evaluationtechnician.technicianid
 LEFT JOIN person AS customer ON customer.id = evaluation.customerid
 WHERE
+    FIND_IN_SET(evaluation.isinvoicedid, @isinvoicedid) AND
     IFNULL(evaluation.id, '') LIKE @id AND
     FIND_IN_SET(evaluation.statusid, @statusid) AND
     FIND_IN_SET(evaluation.sourceid, @sourceid) AND

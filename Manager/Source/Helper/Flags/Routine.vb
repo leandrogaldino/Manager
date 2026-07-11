@@ -74,6 +74,8 @@ Public Enum Routine
     EvaluationReplacedSellable = 1312
     <Description("Gerar o relatório de atendimento da avaliação")> <BiStatePrivilege> <RoutineDependency(Evaluation)>
     EvaluationTreatmentReport = 1313
+    <Description("Definir se a avaliação foi faturada")> <BiStatePrivilege> <RoutineDependency(Evaluation)>
+    EvaluationSetInvoiced = 1314
     <Description("Predefinição de Permissões")> <TriStatePrivilege> <RoutineDependency(User)>
     PrivilegePreset = 14
     PrivilegePresetPrivilege = 1401

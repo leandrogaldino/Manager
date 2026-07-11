@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class UcEvaluationGrid
     Inherits System.Windows.Forms.UserControl
 
     'O UserControl substitui o descarte para limpar a lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -45,11 +45,15 @@ Partial Class UcEvaluationGrid
         Me.TsFilterBot = New System.Windows.Forms.ToolStrip()
         Me.BtnClean = New System.Windows.Forms.ToolStripButton()
         Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
+        Me.TcDetails = New System.Windows.Forms.TabControl()
+        Me.TbControlled = New System.Windows.Forms.TabPage()
         Me.SplitContainer3 = New System.Windows.Forms.SplitContainer()
         Me.DgvWorkedHourSellable = New System.Windows.Forms.DataGridView()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.DgvElapsedDaySellable = New System.Windows.Forms.DataGridView()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.TpReplaced = New System.Windows.Forms.TabPage()
+        Me.DgvReplacedSellables = New System.Windows.Forms.DataGridView()
         Me.TsDetails = New System.Windows.Forms.ToolStrip()
         Me.BtnCloseDetails = New System.Windows.Forms.ToolStripButton()
         Me.LblView = New System.Windows.Forms.ToolStripLabel()
@@ -59,10 +63,10 @@ Partial Class UcEvaluationGrid
         Me.BtnReject = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnDisapprove = New System.Windows.Forms.ToolStripMenuItem()
         Me.BtnSimpleEvaluationTreatment = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnCompleteEvaluationTreatment = New System.Windows.Forms.ToolStripMenuItem()
         Me.TmrLoadDetails = New System.Windows.Forms.Timer(Me.components)
         Me.DgvCcData = New ControlLibrary.DataGridViewContentCopy()
         Me.DgvlEvaluation = New Manager.DataGridViewLayout()
-        Me.BtnCompleteEvaluationTreatment = New System.Windows.Forms.ToolStripMenuItem()
         Me.TsMenu.SuspendLayout()
         Me.SsInformation.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -75,12 +79,16 @@ Partial Class UcEvaluationGrid
         Me.SplitContainer2.Panel1.SuspendLayout()
         Me.SplitContainer2.Panel2.SuspendLayout()
         Me.SplitContainer2.SuspendLayout()
+        Me.TcDetails.SuspendLayout()
+        Me.TbControlled.SuspendLayout()
         CType(Me.SplitContainer3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer3.Panel1.SuspendLayout()
         Me.SplitContainer3.Panel2.SuspendLayout()
         Me.SplitContainer3.SuspendLayout()
         CType(Me.DgvWorkedHourSellable, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DgvElapsedDaySellable, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TpReplaced.SuspendLayout()
+        CType(Me.DgvReplacedSellables, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TsDetails.SuspendLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CmsMenu.SuspendLayout()
@@ -319,7 +327,7 @@ Partial Class UcEvaluationGrid
         '
         'SplitContainer2.Panel1
         '
-        Me.SplitContainer2.Panel1.Controls.Add(Me.SplitContainer3)
+        Me.SplitContainer2.Panel1.Controls.Add(Me.TcDetails)
         Me.SplitContainer2.Panel1.Controls.Add(Me.TsDetails)
         Me.SplitContainer2.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         '
@@ -332,10 +340,32 @@ Partial Class UcEvaluationGrid
         Me.SplitContainer2.SplitterDistance = 272
         Me.SplitContainer2.TabIndex = 0
         '
+        'TcDetails
+        '
+        Me.TcDetails.Controls.Add(Me.TbControlled)
+        Me.TcDetails.Controls.Add(Me.TpReplaced)
+        Me.TcDetails.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TcDetails.Location = New System.Drawing.Point(0, 25)
+        Me.TcDetails.Name = "TcDetails"
+        Me.TcDetails.SelectedIndex = 0
+        Me.TcDetails.Size = New System.Drawing.Size(270, 412)
+        Me.TcDetails.TabIndex = 1
+        '
+        'TbControlled
+        '
+        Me.TbControlled.Controls.Add(Me.SplitContainer3)
+        Me.TbControlled.Location = New System.Drawing.Point(4, 26)
+        Me.TbControlled.Name = "TbControlled"
+        Me.TbControlled.Padding = New System.Windows.Forms.Padding(3)
+        Me.TbControlled.Size = New System.Drawing.Size(262, 382)
+        Me.TbControlled.TabIndex = 1
+        Me.TbControlled.Text = "Peças Controladas"
+        Me.TbControlled.UseVisualStyleBackColor = True
+        '
         'SplitContainer3
         '
         Me.SplitContainer3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer3.Location = New System.Drawing.Point(0, 25)
+        Me.SplitContainer3.Location = New System.Drawing.Point(3, 3)
         Me.SplitContainer3.Name = "SplitContainer3"
         Me.SplitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal
         '
@@ -350,9 +380,9 @@ Partial Class UcEvaluationGrid
         Me.SplitContainer3.Panel2.Controls.Add(Me.DgvElapsedDaySellable)
         Me.SplitContainer3.Panel2.Controls.Add(Me.Label2)
         Me.SplitContainer3.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.SplitContainer3.Size = New System.Drawing.Size(270, 412)
-        Me.SplitContainer3.SplitterDistance = 206
-        Me.SplitContainer3.TabIndex = 2
+        Me.SplitContainer3.Size = New System.Drawing.Size(256, 376)
+        Me.SplitContainer3.SplitterDistance = 188
+        Me.SplitContainer3.TabIndex = 3
         '
         'DgvWorkedHourSellable
         '
@@ -372,7 +402,7 @@ Partial Class UcEvaluationGrid
         Me.DgvWorkedHourSellable.RowHeadersVisible = False
         Me.DgvWorkedHourSellable.RowTemplate.Height = 26
         Me.DgvWorkedHourSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvWorkedHourSellable.Size = New System.Drawing.Size(270, 180)
+        Me.DgvWorkedHourSellable.Size = New System.Drawing.Size(256, 162)
         Me.DgvWorkedHourSellable.TabIndex = 2
         '
         'Label1
@@ -382,7 +412,7 @@ Partial Class UcEvaluationGrid
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(0, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(270, 26)
+        Me.Label1.Size = New System.Drawing.Size(256, 26)
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "Controla Hora Trabalhada"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -405,7 +435,7 @@ Partial Class UcEvaluationGrid
         Me.DgvElapsedDaySellable.RowHeadersVisible = False
         Me.DgvElapsedDaySellable.RowTemplate.Height = 26
         Me.DgvElapsedDaySellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(270, 176)
+        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(256, 158)
         Me.DgvElapsedDaySellable.TabIndex = 3
         '
         'Label2
@@ -415,10 +445,42 @@ Partial Class UcEvaluationGrid
         Me.Label2.ForeColor = System.Drawing.Color.White
         Me.Label2.Location = New System.Drawing.Point(0, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(270, 26)
+        Me.Label2.Size = New System.Drawing.Size(256, 26)
         Me.Label2.TabIndex = 1
         Me.Label2.Text = "Controla Dia Corrido"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'TpReplaced
+        '
+        Me.TpReplaced.Controls.Add(Me.DgvReplacedSellables)
+        Me.TpReplaced.Location = New System.Drawing.Point(4, 22)
+        Me.TpReplaced.Name = "TpReplaced"
+        Me.TpReplaced.Padding = New System.Windows.Forms.Padding(3)
+        Me.TpReplaced.Size = New System.Drawing.Size(261, 384)
+        Me.TpReplaced.TabIndex = 0
+        Me.TpReplaced.Text = "Peças Substituídas"
+        Me.TpReplaced.UseVisualStyleBackColor = True
+        '
+        'DgvReplacedSellables
+        '
+        Me.DgvReplacedSellables.AllowUserToAddRows = False
+        Me.DgvReplacedSellables.AllowUserToDeleteRows = False
+        Me.DgvReplacedSellables.AllowUserToResizeColumns = False
+        Me.DgvReplacedSellables.AllowUserToResizeRows = False
+        Me.DgvReplacedSellables.BackgroundColor = System.Drawing.Color.White
+        Me.DgvReplacedSellables.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.DgvReplacedSellables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvReplacedSellables.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvReplacedSellables.Location = New System.Drawing.Point(3, 3)
+        Me.DgvReplacedSellables.MultiSelect = False
+        Me.DgvReplacedSellables.Name = "DgvReplacedSellables"
+        Me.DgvReplacedSellables.ReadOnly = True
+        Me.DgvReplacedSellables.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DgvReplacedSellables.RowHeadersVisible = False
+        Me.DgvReplacedSellables.RowTemplate.Height = 26
+        Me.DgvReplacedSellables.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvReplacedSellables.Size = New System.Drawing.Size(255, 378)
+        Me.DgvReplacedSellables.TabIndex = 3
         '
         'TsDetails
         '
@@ -474,7 +536,7 @@ Partial Class UcEvaluationGrid
         '
         Me.CmsMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnApprove, Me.BtnReject, Me.BtnDisapprove, Me.BtnSimpleEvaluationTreatment, Me.BtnCompleteEvaluationTreatment})
         Me.CmsMenu.Name = "CmsApproval"
-        Me.CmsMenu.Size = New System.Drawing.Size(267, 136)
+        Me.CmsMenu.Size = New System.Drawing.Size(267, 114)
         '
         'BtnApprove
         '
@@ -504,6 +566,13 @@ Partial Class UcEvaluationGrid
         Me.BtnSimpleEvaluationTreatment.Size = New System.Drawing.Size(266, 22)
         Me.BtnSimpleEvaluationTreatment.Text = "Relatório de Atendimento Simples"
         '
+        'BtnCompleteEvaluationTreatment
+        '
+        Me.BtnCompleteEvaluationTreatment.Image = Global.Manager.My.Resources.Resources.ReportSmall
+        Me.BtnCompleteEvaluationTreatment.Name = "BtnCompleteEvaluationTreatment"
+        Me.BtnCompleteEvaluationTreatment.Size = New System.Drawing.Size(266, 22)
+        Me.BtnCompleteEvaluationTreatment.Text = "Relatório de Atendimento Completo"
+        '
         'TmrLoadDetails
         '
         '
@@ -519,13 +588,6 @@ Partial Class UcEvaluationGrid
         '
         Me.DgvlEvaluation.DataGridView = Me.DgvData
         Me.DgvlEvaluation.Routine = Manager.Routine.Evaluation
-        '
-        'BtnCompleteEvaluationTreatment
-        '
-        Me.BtnCompleteEvaluationTreatment.Image = Global.Manager.My.Resources.Resources.ReportSmall
-        Me.BtnCompleteEvaluationTreatment.Name = "BtnCompleteEvaluationTreatment"
-        Me.BtnCompleteEvaluationTreatment.Size = New System.Drawing.Size(266, 22)
-        Me.BtnCompleteEvaluationTreatment.Text = "Relatório de Atendimento Completo"
         '
         'UcEvaluationGrid
         '
@@ -557,12 +619,16 @@ Partial Class UcEvaluationGrid
         Me.SplitContainer2.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer2.ResumeLayout(False)
+        Me.TcDetails.ResumeLayout(False)
+        Me.TbControlled.ResumeLayout(False)
         Me.SplitContainer3.Panel1.ResumeLayout(False)
         Me.SplitContainer3.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer3.ResumeLayout(False)
         CType(Me.DgvWorkedHourSellable, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DgvElapsedDaySellable, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TpReplaced.ResumeLayout(False)
+        CType(Me.DgvReplacedSellables, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TsDetails.ResumeLayout(False)
         Me.TsDetails.PerformLayout()
         CType(Me.DgvData, System.ComponentModel.ISupportInitialize).EndInit()
@@ -597,11 +663,6 @@ Partial Class UcEvaluationGrid
     Friend WithEvents LblStatus As ToolStripStatusLabel
     Friend WithEvents LblCounter As ToolStripStatusLabel
     Friend WithEvents BtnDetails As ToolStripButton
-    Friend WithEvents SplitContainer3 As SplitContainer
-    Friend WithEvents Label1 As Label
-    Friend WithEvents DgvWorkedHourSellable As DataGridView
-    Friend WithEvents DgvElapsedDaySellable As DataGridView
-    Friend WithEvents Label2 As Label
     Friend WithEvents BtnExport As ToolStripButton
     Friend WithEvents CmsMenu As ContextMenuStrip
     Friend WithEvents BtnApprove As ToolStripMenuItem
@@ -613,4 +674,13 @@ Partial Class UcEvaluationGrid
     Friend WithEvents DgvlEvaluation As DataGridViewLayout
     Friend WithEvents BtnSimpleEvaluationTreatment As ToolStripMenuItem
     Friend WithEvents BtnCompleteEvaluationTreatment As ToolStripMenuItem
+    Friend WithEvents TcDetails As TabControl
+    Friend WithEvents TpReplaced As TabPage
+    Friend WithEvents TbControlled As TabPage
+    Friend WithEvents SplitContainer3 As SplitContainer
+    Friend WithEvents DgvWorkedHourSellable As DataGridView
+    Friend WithEvents Label1 As Label
+    Friend WithEvents DgvElapsedDaySellable As DataGridView
+    Friend WithEvents Label2 As Label
+    Friend WithEvents DgvReplacedSellables As DataGridView
 End Class

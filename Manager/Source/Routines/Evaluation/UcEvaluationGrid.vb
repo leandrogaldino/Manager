@@ -1,7 +1,6 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Extensions
 Imports MySql.Data.MySqlClient
-Imports Mysqlx.XDevAPI.Common
 Public Class UcEvaluationGrid
     Private _Evaluation As New Evaluation
     Private _Filter As EvaluationFilter
@@ -29,7 +28,6 @@ Public Class UcEvaluationGrid
         If Not _User.CanAccess(Routine.EvaluationTreatmentReport) Then
             CmsMenu.Items.Remove(CmsMenu.Items.Cast(Of ToolStripItem).Single(Function(x) x.Name = "BtnEvaluationTreatment"))
         End If
-
     End Sub
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DgvlEvaluation.Load()
@@ -199,6 +197,7 @@ Public Class UcEvaluationGrid
                 Try
                     Evaluation.FillControlledSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvWorkedHourSellable, CompressorSellableControlType.WorkedHour)
                     Evaluation.FillControlledSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvElapsedDaySellable, CompressorSellableControlType.ElapsedDay)
+                    Evaluation.FillReplacedSellableDataGridView(DgvData.SelectedRows(0).Cells("id").Value, DgvReplacedSellables)
                 Catch ex As Exception
                     TmrLoadDetails.Stop()
                     CMessageBox.Show("ERRO EV009", "Ocorreu um erro ao consultar os detalhes do registro selecionado.", CMessageBoxType.Error, CMessageBoxButtons.OK, ex)

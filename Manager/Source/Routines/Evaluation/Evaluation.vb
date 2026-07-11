@@ -848,6 +848,40 @@ Public Class Evaluation
             End Using
         End Using
     End Sub
+
+    Public Shared Sub FillReplacedSellableDataGridView(EvaluationID As Long, Dgv As DataGridView)
+        Dim Session = Locator.GetInstance(Of Session)
+        Dim TableResult As New DataTable
+        Using Con As New MySqlConnection(Session.Setting.Database.GetConnectionString())
+            Using Cmd As New MySqlCommand(My.Resources.EvaluationReplacedSellableSelect, Con)
+                Cmd.Parameters.AddWithValue("@evaluationid", EvaluationID)
+                Using Adp As New MySqlDataAdapter(Cmd)
+                    Adp.Fill(TableResult)
+                    Dgv.AutoGenerateColumns = False
+                    Dgv.Columns.Clear()
+                    Dgv.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "ID", .HeaderText = "ID", .DataPropertyName = "id", .CellTemplate = New DataGridViewTextBoxCell})
+                    Dgv.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "Creation", .HeaderText = "Criação", .DataPropertyName = "creation", .CellTemplate = New DataGridViewTextBoxCell})
+                    Dgv.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "SellableType", .HeaderText = "Tipo", .DataPropertyName = "sellabletypeid", .CellTemplate = New DataGridViewTextBoxCell})
+                    Dgv.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "ProductID", .HeaderText = "ID Produto", .DataPropertyName = "productid", .CellTemplate = New DataGridViewTextBoxCell})
+                    Dgv.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "ServiceID", .HeaderText = "ID Serviço", .DataPropertyName = "serviceid", .CellTemplate = New DataGridViewTextBoxCell})
+                    Dgv.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "Qty", .HeaderText = "Qtd.", .DataPropertyName = "quantity", .CellTemplate = New DataGridViewDecimalCell, .DisplayIndex = 1, .Width = 80})
+                    Dgv.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "Name", .HeaderText = "Produto/Serviço", .DataPropertyName = "name", .CellTemplate = New DataGridViewTextBoxCell, .AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill, .DisplayIndex = 2})
+                    Dgv.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "Code", .HeaderText = "Código", .DataPropertyName = "code", .CellTemplate = New DataGridViewTextBoxCell, .DisplayIndex = 0, .Width = 120})
+                    Dgv.DataSource = TableResult
+                    Dgv.Columns(0).Visible = False
+                    Dgv.Columns(1).Visible = False
+                    Dgv.Columns(2).Visible = False
+                    Dgv.Columns(3).Visible = False
+                    Dgv.Columns(4).Visible = False
+                    Dgv.Columns(5).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Dgv.Columns(5).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Dgv.Columns(7).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Dgv.Columns(7).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                End Using
+            End Using
+        End Using
+    End Sub
+
     Public Shared Function CountEvaluation(PersonCompressorID As Long, StatusFilter As List(Of EvaluationStatus), Optional IgnoreEvaluation As Long = 0) As Long
         Dim Session = Locator.GetInstance(Of Session)
         Dim StatusIntList As New List(Of Integer)

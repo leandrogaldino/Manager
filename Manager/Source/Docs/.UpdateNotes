@@ -2,6 +2,7 @@
 @13/07/2026
 • Adicionada uma aba para visualização dos produtos e serviços substituídos diretamente na listagem de avaliações, sem a necessidade de abrir o registro.
 • Adicionada a opção de marcar avaliações como faturadas ou não faturadas.
+• Correções e melhorias internas.
 #2.3.8
 @10/07/2026
 • Correção de uma falha que ocorria após a edição de elementos em listas filtradas.

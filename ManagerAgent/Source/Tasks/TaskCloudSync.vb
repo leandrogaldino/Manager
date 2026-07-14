@@ -299,6 +299,7 @@ Public Class TaskCloudSync
             InterfaceData = Result.Data(0)
             InterfaceData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
             InterfaceData("visible") = If(InterfaceData("statusid") = 0, 1, 0)
+            InterfaceData("productid") = If(InterfaceData("productid") Is DBNull.Value, Nothing, InterfaceData("productid"))
             InterfaceData.Remove("statusid")
             Await _RemoteDB.ExecutePut("compressorinterfaces", InterfaceData, InterfaceData("id"))
         End If
@@ -319,6 +320,7 @@ Public Class TaskCloudSync
             UnitData = Result.Data(0)
             UnitData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
             UnitData("visible") = If(UnitData("statusid") = 0, 1, 0)
+            UnitData("productid") = If(UnitData("productid") Is DBNull.Value, Nothing, UnitData("productid"))
             UnitData.Remove("statusid")
             Await _RemoteDB.ExecutePut("compressorunits", UnitData, UnitData("id"))
         End If

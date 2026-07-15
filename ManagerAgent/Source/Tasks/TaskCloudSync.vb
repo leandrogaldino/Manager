@@ -378,9 +378,10 @@ Public Class TaskCloudSync
             PersonCompressorData("lastupdate") = DateTimeHelper.MillisecondsFromDate(DateTimeHelper.Now)
             PersonCompressorData("visible") = If(PersonCompressorData("statusid") = 0, 1, 0)
             Dim PartCapacityResult = Await _LocalDB.ExecuteSelectAsync("personcompressorsellable",
-                                                  New List(Of String) From {"sellablebindid", "capacity", "statusid"},
-                                                  "personcompressorid = @personcompressorid AND sellablebindid IN (@airfilter, @oilfilter, @separator, @oil, @greasing)",
+                                                  New List(Of String) From {"sellablebindid", "capacity"},
+                                                  "statusid = @statusid AND personcompressorid = @personcompressorid AND sellablebindid IN (@airfilter, @oilfilter, @separator, @oil, @greasing)",
                                                   New Dictionary(Of String, Object) From {
+                                                      {"@statusid", 0},
                                                       {"@personcompressorid", PersonCompressorData("id")},
                                                       {"@airfilter", 1},
                                                       {"@oilfilter", 2},
@@ -414,15 +415,11 @@ Public Class TaskCloudSync
                 DefaultIfEmpty(0).
                 Max()
                 GreasingCapacity =
-                If(
-                    PartCapacityResult.Data.Any(Function(x) Convert.ToInt32(x("statusid")) = 1),
-                    Nothing,
-                    PartCapacityResult.Data.
-                        Where(Function(x) Convert.ToInt32(x("sellablebindid")) = 6).
-                        Select(Function(x) CType(Convert.ToInt32(x("capacity")), Integer?)).
-                        DefaultIfEmpty(Nothing).
-                        Max()
-                )
+                PartCapacityResult.Data.
+                Where(Function(x) Convert.ToInt32(x("sellablebindid")) = 6).
+                Select(Function(x) CType(Convert.ToInt32(x("capacity")), Integer?)).
+                DefaultIfEmpty(Nothing).
+                Max()
             End If
             PersonCompressorData.Add("airfiltercapacity", AirFilterCapacity)
             PersonCompressorData.Add("oilfiltercapacity", OilFilterCapacity)

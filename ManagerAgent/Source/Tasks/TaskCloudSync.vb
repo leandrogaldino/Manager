@@ -52,7 +52,9 @@ Public Class TaskCloudSync
             End If
             _SessionModel.ManagerSetting.LastExecution.CloudSync = Now.ToString("yyyy-MM-dd HH:mm:ss")
             _SettingsService.Save(_SessionModel.ManagerSetting)
+            If Not IsManual Then HasException = False
         Catch ex As Exception
+            If Not IsManual Then HasException = True
             Exception = ex
         End Try
         If Exception IsNot Nothing Then

@@ -12,6 +12,7 @@ Public Class SuportSettingsViewModel
     Private _Email As String
     Private _SmtpServer As String
     Private _Port As Integer
+    Private _Password As String
 
     Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
 
@@ -58,11 +59,21 @@ Public Class SuportSettingsViewModel
             OnPropertyChanged()
         End Set
     End Property
+    Public Property Password As String
+        Get
+            Return _Password
+        End Get
+        Set(value As String)
+            _Password = value
+            OnPropertyChanged()
+        End Set
+    End Property
     Private Sub LoadData()
         EnableSSL = _SessionModel.ManagerSetting.Support.EnableSSL
         Email = _SessionModel.ManagerSetting.Support.Email
         SmtpServer = _SessionModel.ManagerSetting.Support.SMTPServer
         Port = _SessionModel.ManagerSetting.Support.Port
+        Password = _SessionModel.ManagerSetting.Support.Password
     End Sub
 
     Public Function Save() As Boolean
@@ -70,6 +81,7 @@ Public Class SuportSettingsViewModel
         _SessionModel.ManagerSetting.Support.Email = Email
         _SessionModel.ManagerSetting.Support.SMTPServer = SmtpServer
         _SessionModel.ManagerSetting.Support.Port = Port
+        _SessionModel.ManagerSetting.Support.Password = Password
         _SettingService.Save(_SessionModel.ManagerSetting)
         Return True
     End Function

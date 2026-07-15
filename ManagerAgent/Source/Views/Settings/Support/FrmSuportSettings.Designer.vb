@@ -39,12 +39,16 @@ Partial Class FrmSuportSettings
         Me.Panel12 = New System.Windows.Forms.Panel()
         Me.CbxEnableSSL = New System.Windows.Forms.CheckBox()
         Me.Label12 = New System.Windows.Forms.Label()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.TxtSupportPassword = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.PnButtons.SuspendLayout()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel18.SuspendLayout()
         Me.Panel16.SuspendLayout()
         Me.Panel13.SuspendLayout()
         Me.Panel12.SuspendLayout()
+        Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'PnButtons
@@ -53,7 +57,7 @@ Partial Class FrmSuportSettings
         Me.PnButtons.Controls.Add(Me.BtnClose)
         Me.PnButtons.Controls.Add(Me.BtnSave)
         Me.PnButtons.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PnButtons.Location = New System.Drawing.Point(0, 191)
+        Me.PnButtons.Location = New System.Drawing.Point(0, 233)
         Me.PnButtons.Name = "PnButtons"
         Me.PnButtons.Size = New System.Drawing.Size(474, 44)
         Me.PnButtons.TabIndex = 8
@@ -225,11 +229,45 @@ Partial Class FrmSuportSettings
         Me.Label12.Text = "Habilita SSL"
         Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.Color.White
+        Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel1.Controls.Add(Me.TxtSupportPassword)
+        Me.Panel1.Controls.Add(Me.Label1)
+        Me.Panel1.Location = New System.Drawing.Point(12, 191)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Padding = New System.Windows.Forms.Padding(4, 0, 0, 0)
+        Me.Panel1.Size = New System.Drawing.Size(450, 31)
+        Me.Panel1.TabIndex = 11
+        '
+        'TxtSupportPassword
+        '
+        Me.TxtSupportPassword.Location = New System.Drawing.Point(162, 3)
+        Me.TxtSupportPassword.Name = "TxtSupportPassword"
+        Me.TxtSupportPassword.Size = New System.Drawing.Size(283, 23)
+        Me.TxtSupportPassword.TabIndex = 1
+        Me.TxtSupportPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.TxtSupportPassword.UseSystemPasswordChar = True
+        '
+        'Label1
+        '
+        Me.Label1.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Label1.Location = New System.Drawing.Point(4, 0)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 15, 0)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(120, 29)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "Senha"
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'FrmSuportSettings
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(474, 235)
+        Me.ClientSize = New System.Drawing.Size(474, 277)
+        Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.Panel18)
         Me.Controls.Add(Me.Panel16)
         Me.Controls.Add(Me.Panel13)
@@ -251,6 +289,8 @@ Partial Class FrmSuportSettings
         Me.Panel13.ResumeLayout(False)
         Me.Panel13.PerformLayout()
         Me.Panel12.ResumeLayout(False)
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -270,4 +310,7 @@ Partial Class FrmSuportSettings
     Friend WithEvents Panel12 As Panel
     Friend WithEvents Label12 As Label
     Friend WithEvents CbxEnableSSL As CheckBox
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents TxtSupportPassword As TextBox
+    Friend WithEvents Label1 As Label
 End Class

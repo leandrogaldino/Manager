@@ -1,10 +1,14 @@
-﻿Imports ControlLibrary
+﻿Imports System.Collections.ObjectModel
+Imports System.IO
+Imports System.Net.Mail
+Imports System.Text
+Imports ControlLibrary
+Imports Google.Rpc.Context.AttributeContext.Types
 Imports ManagerCore
-Imports System.Collections.ObjectModel
+Imports MySql.Data.MySqlClient
 
 
 Public Class FrmMain
-    Private _IsWorking As Boolean
     Private _EventService As EventService
     Private _StackTaskService As TaskStackService
     Private _AppService As AppService
@@ -25,7 +29,7 @@ Public Class FrmMain
         _AppService = Locator.GetInstance(Of AppService)
         _StateWarnings = New ObservableCollection(Of String)
         ControlHelper.EnableControlDoubleBuffer(DgvEvents, True)
-        TsTitle.Renderer = New CustomToolstripRender()
+        TsTitle.Renderer = New CustomToolStripRender()
     End Sub
     Private Async Sub FrmMain_Load(sender As Object, e As EventArgs) Handles Me.Load
         AddHandler _StackTaskService.TaskProgress.ProgressChanged, AddressOf OnTaskProgressChanged
@@ -53,6 +57,7 @@ Public Class FrmMain
             BtnAgentState.Checked = False
         End If
     End Sub
+    Dim ExceptionCount As Integer = 0
     Private Async Sub OnTaskRunned(sender As Object, Task As TaskBase)
         Invoke(Sub()
                    LblProgress.Visible = False
@@ -61,8 +66,60 @@ Public Class FrmMain
                    TpbProgress.Value = 0
                    BtnCleanEventLog.Enabled = True
                    OnTask()
+                   If Not Task.IsManual Then
+                       If Task.HasException Then
+                           ExceptionCount += 1
+                       Else
+                           ExceptionCount = 0
+                       End If
+                       If ExceptionCount >= 3 Then
+                           BtnAgentState.Checked = False
+                           Dim Builder As New EventBuilder()
+                           Builder.SetInitialEvent("As tarefas do agente foram interrompidas devido a falhas consecutivas.")
+                           _EventService.Write(Builder, DgvEvents.DataSource)
+
+
+
+
+
+                           Dim Support As SettingSupportModel = _SessionModel.ManagerSetting.Support
+
+                           Dim SendEmail As Boolean = True
+
+                           If Support Is Nothing Then SendEmail = False
+
+                           If String.IsNullOrWhiteSpace(Support.SMTPServer) Then SendEmail = False
+                           If String.IsNullOrWhiteSpace(Support.Email) Then SendEmail = False
+                           If String.IsNullOrWhiteSpace(Support.Password) Then SendEmail = False
+                           If Support.Port <= 0 OrElse Support.Port > 65535 Then SendEmail = False
+
+                           If SendEmail Then
+                               Dim Credential As Net.NetworkCredential
+                               Using Client As New SmtpClient(Support.SMTPServer, Support.Port)
+                                   Client.DeliveryMethod = SmtpDeliveryMethod.Network
+                                   Client.UseDefaultCredentials = False
+                                   Client.Credentials = New Net.NetworkCredential(Support.Email, Support.Password)
+                                   Client.EnableSsl = Support.EnableSSL
+                                   Credential = Client.Credentials
+                                   Using Message As New MailMessage()
+                                       Message.From = New MailAddress(Credential.UserName)
+                                       Message.To.Add(New MailAddress(Credential.UserName))
+                                       Message.Subject = "Falhas no Agente do Gerenciador"
+                                       Message.IsBodyHtml = False
+                                       Message.BodyEncoding = Encoding.UTF8
+                                       Message.Body = "As tarefas do agente foram interrompidas devido a falhas consecutivas."
+                                       Client.Send(Message)
+                                   End Using
+                               End Using
+                           End If
+                           aqui
+
+
+                       End If
+                   End If
                End Sub)
         Await _EventService.Save(DgvEvents.DataSource)
+        Debug.Print(_SessionModel.IsAgentPaused)
     End Sub
     Private Sub OnTaskWillRun(sender As Object, Task As TaskBase)
         Invoke(Sub()
@@ -233,11 +290,13 @@ Public Class FrmMain
             _StackTaskService.Start()
             BtnAgentState.Image = My.Resources.Execute
             BtnAgentState.Text = "Em Execução"
+            BtnAgentState.Checked = True
             _SessionModel.IsAgentPaused = False
         Else
             _StackTaskService.Stop()
             BtnAgentState.Image = My.Resources.Pause
             BtnAgentState.Text = "Em Pausa"
+            BtnAgentState.Checked = False
             _SessionModel.IsAgentPaused = True
         End If
     End Sub

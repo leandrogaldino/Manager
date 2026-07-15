@@ -9,6 +9,7 @@
     Public Property IsRunning As Boolean
     Public Property CancelRun As Boolean
     Public Property Waiting As Boolean
+    Public Property HasException As Boolean
     Public Overridable Property NextRun As Date
         Get
             If IsManual Then
@@ -34,10 +35,6 @@
             _IsRunNeeded = value
         End Set
     End Property
-
-
-
-
     Public Overrides Function ToString() As String
         Return Name
     End Function

@@ -3,9 +3,9 @@ Imports ManagerCore
 Imports ManagerCore.LocalDB
 Public Class TaskRelease
     Inherits TaskBase
-    Private _DatabaseService As LocalDB
-    Private _SettingsService As SettingService
-    Private _SessionModel As SessionModel
+    Private ReadOnly _DatabaseService As LocalDB
+    Private ReadOnly _SettingsService As SettingService
+    Private ReadOnly _SessionModel As SessionModel
     Public Sub New(DatabaseService As LocalDB, SettingsService As SettingService, SessionModel As SessionModel)
         _DatabaseService = DatabaseService
         _SettingsService = SettingsService
@@ -80,6 +80,7 @@ Public Class TaskRelease
         Dim InitialMessagePosted As Boolean
         Dim Response As New AsyncResponseModel
         Try
+            Throw New Exception("GENERICO")
             Using Scope As New TransactionScope(TransactionScopeAsyncFlowOption.Enabled)
                 Await Task.Delay(Constants.WaitForStart)
                 Dim BloquedList As List(Of RegistryModel) = Await GetBloquedList()
@@ -108,8 +109,10 @@ Public Class TaskRelease
                 If Not IsManual Then _SessionModel.ManagerSetting.LastExecution.Release = Now
                 If Not IsManual Then _SettingsService.Save(_SessionModel.ManagerSetting)
                 Scope.Complete()
+                If Not IsManual Then HasException = False
             End Using
         Catch ex As Exception
+            If Not IsManual Then HasException = True
             If Not InitialMessagePosted Then
                 Response.Text = "Desbloqueador de registros iniciado"
                 Response.Event.SetInitialEvent("Desbloqueador de registros iniciado")

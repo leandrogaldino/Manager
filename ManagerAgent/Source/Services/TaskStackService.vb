@@ -6,14 +6,17 @@ Public Class TaskStackService
     Public Event TaskRunned As EventHandler(Of TaskBase)
     Public Event TaskListChanged As EventHandler(Of TaskBase)
     Private ReadOnly _Semaphore As SemaphoreSlim
+    Private _Enabled As Boolean
     Public Function GetTaskStack() As List(Of TaskBase)
         Return _TaskStack
     End Function
     Public ReadOnly TaskProgress As Progress(Of AsyncResponseModel)
     Public Sub Start()
+        _Enabled = True
         _Timer.Start()
     End Sub
     Public Sub [Stop]()
+        _Enabled = False
         _Timer.Stop()
     End Sub
     Public Sub New(Semaphore As SemaphoreSlim)
@@ -60,7 +63,7 @@ Public Class TaskStackService
             End If
         Next AddedTask
         _Semaphore.Release()
-        _Timer.Start()
+        If _Enabled Then _Timer.Start()
     End Sub
 End Class
 

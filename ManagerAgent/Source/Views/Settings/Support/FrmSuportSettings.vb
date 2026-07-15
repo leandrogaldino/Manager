@@ -30,6 +30,7 @@ Public Class FrmSuportSettings
         TxtSupportEmail.DataBindings.Add("Text", _ViewModel, "Email", False, DataSourceUpdateMode.OnPropertyChanged)
         TxtSupportSMTPServer.DataBindings.Add("Text", _ViewModel, "SmtpServer", False, DataSourceUpdateMode.OnPropertyChanged)
         DbxSupportPort.DataBindings.Add("Text", _ViewModel, "Port", False, DataSourceUpdateMode.OnPropertyChanged)
+        TxtSupportPassword.DataBindings.Add("Text", _ViewModel, "Password", False, DataSourceUpdateMode.OnPropertyChanged)
     End Sub
     Private Sub Form_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If e.KeyCode = Keys.S And e.Control Then

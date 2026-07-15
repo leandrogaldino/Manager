@@ -311,7 +311,9 @@ Public Class TaskClean
             Response.Event.SetFinalEvent("Limpeza - Finalizado")
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
+            If Not IsManual Then HasException = False
         Catch ex As Exception
+            If Not IsManual Then HasException = True
             Exception = ex
         Finally
             If Not IsManual Then _SessionModel.ManagerSetting.LastExecution.Clean = Now

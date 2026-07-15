@@ -169,7 +169,9 @@ Public Class TaskBackup
             Response.Event.SetFinalEvent($"Backup {If(Not IsManual, "automático", "manual")} concluído")
             If Progress IsNot Nothing Then Progress.Report(Response)
             Await Task.Delay(Constants.WaitForFinish)
+            If Not IsManual Then HasException = False
         Catch ex As Exception
+            If Not IsManual Then HasException = True
             Exception = ex
         Finally
             If Not IsManual Then _SessionModel.ManagerSetting.Backup.IgnoreNext = False

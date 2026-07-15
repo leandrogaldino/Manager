@@ -86,12 +86,14 @@ Public Class FrmMain
 
                            Dim SendEmail As Boolean = True
 
-                           If Support Is Nothing Then SendEmail = False
-
-                           If String.IsNullOrWhiteSpace(Support.SMTPServer) Then SendEmail = False
-                           If String.IsNullOrWhiteSpace(Support.Email) Then SendEmail = False
-                           If String.IsNullOrWhiteSpace(Support.Password) Then SendEmail = False
-                           If Support.Port <= 0 OrElse Support.Port > 65535 Then SendEmail = False
+                           If Support Is Nothing Then
+                               SendEmail = False
+                           Else
+                               If String.IsNullOrWhiteSpace(Support.SMTPServer) Then SendEmail = False
+                               If String.IsNullOrWhiteSpace(Support.Email) Then SendEmail = False
+                               If String.IsNullOrWhiteSpace(Support.Password) Then SendEmail = False
+                               If Support.Port <= 0 OrElse Support.Port > 65535 Then SendEmail = False
+                           End If
 
                            If SendEmail Then
                                Dim Credential As Net.NetworkCredential
@@ -112,7 +114,7 @@ Public Class FrmMain
                                    End Using
                                End Using
                            End If
-                           aqui
+
 
 
                        End If

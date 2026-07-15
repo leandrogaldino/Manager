@@ -1,3 +1,6 @@
+#2.4.1
+@??/07/2026
+• Corrigido um problema que lançava uma exceção ao buscar um cep inexistente.
 #2.4.0
 @13/07/2026
 • Adicionada uma aba para visualização dos produtos e serviços substituídos diretamente na listagem de avaliações, sem a necessidade de abrir o registro.

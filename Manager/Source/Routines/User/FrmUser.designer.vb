@@ -431,7 +431,7 @@ Partial Class FrmUser
         Me.QbxPerson.CharactersToQuery = 1
         Me.QbxPerson.DebugOnTextChanged = False
         Me.QbxPerson.DisplayFieldAlias = "Nome"
-        Me.QbxPerson.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        Me.QbxPerson.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
         Me.QbxPerson.DisplayFieldName = "name"
         Me.QbxPerson.DisplayMainFieldName = "id"
         Me.QbxPerson.DisplayTableAlias = Nothing
@@ -455,10 +455,10 @@ Partial Class FrmUser
         '
         Me.TabPrivilege.Controls.Add(Me.FlpPrivilege)
         Me.TabPrivilege.Controls.Add(Me.TlpFilter)
-        Me.TabPrivilege.Location = New System.Drawing.Point(4, 26)
+        Me.TabPrivilege.Location = New System.Drawing.Point(4, 22)
         Me.TabPrivilege.Name = "TabPrivilege"
         Me.TabPrivilege.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPrivilege.Size = New System.Drawing.Size(451, 67)
+        Me.TabPrivilege.Size = New System.Drawing.Size(451, 71)
         Me.TabPrivilege.TabIndex = 8
         Me.TabPrivilege.Text = "Permissões"
         Me.TabPrivilege.UseVisualStyleBackColor = True
@@ -469,7 +469,7 @@ Partial Class FrmUser
         Me.FlpPrivilege.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FlpPrivilege.Location = New System.Drawing.Point(3, 38)
         Me.FlpPrivilege.Name = "FlpPrivilege"
-        Me.FlpPrivilege.Size = New System.Drawing.Size(445, 26)
+        Me.FlpPrivilege.Size = New System.Drawing.Size(445, 30)
         Me.FlpPrivilege.TabIndex = 0
         '
         'TlpFilter
@@ -517,10 +517,10 @@ Partial Class FrmUser
         '
         Me.TabEmail.Controls.Add(Me.DgvUserEmail)
         Me.TabEmail.Controls.Add(Me.TsEmail)
-        Me.TabEmail.Location = New System.Drawing.Point(4, 26)
+        Me.TabEmail.Location = New System.Drawing.Point(4, 22)
         Me.TabEmail.Name = "TabEmail"
         Me.TabEmail.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabEmail.Size = New System.Drawing.Size(451, 67)
+        Me.TabEmail.Size = New System.Drawing.Size(451, 71)
         Me.TabEmail.TabIndex = 11
         Me.TabEmail.Text = "E-Mails"
         Me.TabEmail.UseVisualStyleBackColor = True
@@ -543,7 +543,7 @@ Partial Class FrmUser
         Me.DgvUserEmail.RowHeadersVisible = False
         Me.DgvUserEmail.RowTemplate.Height = 26
         Me.DgvUserEmail.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvUserEmail.Size = New System.Drawing.Size(445, 36)
+        Me.DgvUserEmail.Size = New System.Drawing.Size(445, 40)
         Me.DgvUserEmail.TabIndex = 3
         '
         'TsEmail

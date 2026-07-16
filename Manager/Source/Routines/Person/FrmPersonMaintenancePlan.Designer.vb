@@ -23,11 +23,11 @@ Partial Class FrmPersonMaintenancePlan
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmPersonMaintenancePlan))
         Dim Condition1 As ControlLibrary.QueriedBox.Condition = New ControlLibrary.QueriedBox.Condition()
         Dim OtherField1 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
         Dim OtherField2 As ControlLibrary.QueriedBox.OtherField = New ControlLibrary.QueriedBox.OtherField()
         Dim Parameter1 As ControlLibrary.QueriedBox.Parameter = New ControlLibrary.QueriedBox.Parameter()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmPersonMaintenancePlan))
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.EprValidation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TmrQueriedBox = New System.Windows.Forms.Timer(Me.components)
@@ -35,7 +35,6 @@ Partial Class FrmPersonMaintenancePlan
         Me.BtnFilterPerson = New ControlLibrary.NoFocusCueButton()
         Me.BtnViewPerson = New ControlLibrary.NoFocusCueButton()
         Me.BtnNewPerson = New ControlLibrary.NoFocusCueButton()
-        Me.QbxPerson = New ControlLibrary.QueriedBox()
         Me.LblInitialDate = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.BtnGenerate = New System.Windows.Forms.Button()
@@ -44,6 +43,7 @@ Partial Class FrmPersonMaintenancePlan
         Me.EprInformation = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.CbxShowTechnicalAdvice = New System.Windows.Forms.CheckBox()
         Me.CbxShowMDHT = New System.Windows.Forms.CheckBox()
+        Me.QbxPerson = New ControlLibrary.QueriedBox()
         CType(Me.EprValidation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FlpPerson.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -130,62 +130,6 @@ Partial Class FrmPersonMaintenancePlan
         Me.BtnNewPerson.TooltipText = ""
         Me.BtnNewPerson.UseVisualStyleBackColor = False
         Me.BtnNewPerson.Visible = False
-        '
-        'QbxPerson
-        '
-        Me.QbxPerson.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Condition1.FieldName = "statusid"
-        Condition1.Operator = "="
-        Condition1.TableNameOrAlias = "person"
-        Condition1.Value = "@statusid"
-        Me.QbxPerson.Conditions.Add(Condition1)
-        Me.QbxPerson.DebugOnTextChanged = False
-        Me.QbxPerson.DisplayFieldAlias = "Nome Curto"
-        Me.QbxPerson.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        Me.QbxPerson.DisplayFieldName = "shortname"
-        Me.QbxPerson.DisplayMainFieldName = "id"
-        Me.QbxPerson.DisplayTableAlias = Nothing
-        Me.QbxPerson.DisplayTableName = "person"
-        Me.QbxPerson.Distinct = False
-        Me.QbxPerson.DropDownAutoStretchRight = False
-        Me.QbxPerson.DropDownStretchDown = 200
-        Me.QbxPerson.GridHeaderBackColor = System.Drawing.SystemColors.Window
-        Me.QbxPerson.GridHeaderVisible = False
-        Me.QbxPerson.IfNull = Nothing
-        Me.QbxPerson.Location = New System.Drawing.Point(12, 37)
-        Me.QbxPerson.MainReturnFieldName = "id"
-        Me.QbxPerson.MainTableAlias = Nothing
-        Me.QbxPerson.MainTableName = "person"
-        Me.QbxPerson.Name = "QbxPerson"
-        OtherField1.DisplayFieldAlias = "Nome"
-        OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField1.DisplayFieldName = "name"
-        OtherField1.DisplayMainFieldName = "id"
-        OtherField1.DisplayTableAlias = Nothing
-        OtherField1.DisplayTableName = "person"
-        OtherField1.Freeze = False
-        OtherField1.IfNull = Nothing
-        OtherField1.Prefix = Nothing
-        OtherField1.Suffix = Nothing
-        OtherField2.DisplayFieldAlias = "CPF/CNPJ"
-        OtherField2.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
-        OtherField2.DisplayFieldName = "document"
-        OtherField2.DisplayMainFieldName = "id"
-        OtherField2.DisplayTableAlias = Nothing
-        OtherField2.DisplayTableName = "person"
-        OtherField2.Freeze = False
-        OtherField2.IfNull = Nothing
-        OtherField2.Prefix = Nothing
-        OtherField2.Suffix = Nothing
-        Me.QbxPerson.OtherFields.Add(OtherField1)
-        Me.QbxPerson.OtherFields.Add(OtherField2)
-        Parameter1.ParameterName = "@statusid"
-        Parameter1.ParameterValue = "0"
-        Me.QbxPerson.Parameters.Add(Parameter1)
-        Me.QbxPerson.Prefix = Nothing
-        Me.QbxPerson.Size = New System.Drawing.Size(460, 23)
-        Me.QbxPerson.Suffix = Nothing
-        Me.QbxPerson.TabIndex = 1
         '
         'LblInitialDate
         '
@@ -277,6 +221,64 @@ Partial Class FrmPersonMaintenancePlan
         Me.CbxShowMDHT.TabIndex = 6
         Me.CbxShowMDHT.Text = "Mostrar média diária de horas trabalhadas"
         Me.CbxShowMDHT.UseVisualStyleBackColor = True
+        '
+        'QbxPerson
+        '
+        Me.QbxPerson.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Condition1.FieldName = "statusid"
+        Condition1.Operator = "="
+        Condition1.TableNameOrAlias = "person"
+        Condition1.Value = "@statusid"
+        Me.QbxPerson.Conditions.Add(Condition1)
+        Me.QbxPerson.DebugOnTextChanged = False
+        Me.QbxPerson.DisplayFieldAlias = "Nome Curto"
+        Me.QbxPerson.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.QbxPerson.DisplayFieldName = "shortname"
+        Me.QbxPerson.DisplayMainFieldName = "id"
+        Me.QbxPerson.DisplayTableAlias = Nothing
+        Me.QbxPerson.DisplayTableName = "person"
+        Me.QbxPerson.Distinct = False
+        Me.QbxPerson.DropDownAutoStretchRight = False
+        Me.QbxPerson.DropDownStretchDown = 200
+        Me.QbxPerson.GridHeaderBackColor = System.Drawing.SystemColors.Window
+        Me.QbxPerson.GridHeaderVisible = False
+        Me.QbxPerson.IfNull = Nothing
+        Me.QbxPerson.Location = New System.Drawing.Point(12, 37)
+        Me.QbxPerson.MainReturnFieldName = "id"
+        Me.QbxPerson.MainTableAlias = Nothing
+        Me.QbxPerson.MainTableName = "person"
+        Me.QbxPerson.Name = "QbxPerson"
+        OtherField1.Display = False
+        OtherField1.DisplayFieldAlias = "Nome"
+        OtherField1.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField1.DisplayFieldName = "name"
+        OtherField1.DisplayMainFieldName = "id"
+        OtherField1.DisplayTableAlias = Nothing
+        OtherField1.DisplayTableName = "person"
+        OtherField1.Freeze = False
+        OtherField1.IfNull = Nothing
+        OtherField1.Prefix = Nothing
+        OtherField1.Suffix = Nothing
+        OtherField2.Display = False
+        OtherField2.DisplayFieldAlias = "CPF/CNPJ"
+        OtherField2.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        OtherField2.DisplayFieldName = "document"
+        OtherField2.DisplayMainFieldName = "id"
+        OtherField2.DisplayTableAlias = Nothing
+        OtherField2.DisplayTableName = "person"
+        OtherField2.Freeze = False
+        OtherField2.IfNull = Nothing
+        OtherField2.Prefix = Nothing
+        OtherField2.Suffix = Nothing
+        Me.QbxPerson.OtherFields.Add(OtherField1)
+        Me.QbxPerson.OtherFields.Add(OtherField2)
+        Parameter1.ParameterName = "@statusid"
+        Parameter1.ParameterValue = "0"
+        Me.QbxPerson.Parameters.Add(Parameter1)
+        Me.QbxPerson.Prefix = Nothing
+        Me.QbxPerson.Size = New System.Drawing.Size(460, 23)
+        Me.QbxPerson.Suffix = Nothing
+        Me.QbxPerson.TabIndex = 1
         '
         'FrmPersonMaintenancePlan
         '

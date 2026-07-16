@@ -384,7 +384,7 @@ Partial Class FrmPersonCompressor
         Me.QbxCompressor.Conditions.Add(Condition3)
         Me.QbxCompressor.DebugOnTextChanged = False
         Me.QbxCompressor.DisplayFieldAlias = "NOME"
-        Me.QbxCompressor.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        Me.QbxCompressor.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
         Me.QbxCompressor.DisplayFieldName = "name"
         Me.QbxCompressor.DisplayMainFieldName = "id"
         Me.QbxCompressor.DisplayTableAlias = Nothing
@@ -392,6 +392,7 @@ Partial Class FrmPersonCompressor
         Me.QbxCompressor.Distinct = False
         Me.QbxCompressor.DropDownAutoStretchRight = False
         Me.QbxCompressor.GridHeaderBackColor = System.Drawing.SystemColors.Window
+        Me.QbxCompressor.GridHeaderVisible = False
         Me.QbxCompressor.IfNull = Nothing
         Me.QbxCompressor.Location = New System.Drawing.Point(9, 24)
         Me.QbxCompressor.MainReturnFieldName = "id"
@@ -615,7 +616,7 @@ Partial Class FrmPersonCompressor
         Me.QbxUnit.Conditions.Add(Condition1)
         Me.QbxUnit.DebugOnTextChanged = False
         Me.QbxUnit.DisplayFieldAlias = "Nome"
-        Me.QbxUnit.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        Me.QbxUnit.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
         Me.QbxUnit.DisplayFieldName = "Name"
         Me.QbxUnit.DisplayMainFieldName = "id"
         Me.QbxUnit.DisplayTableAlias = ""
@@ -624,6 +625,7 @@ Partial Class FrmPersonCompressor
         Me.QbxUnit.DropDownAutoStretchRight = False
         Me.QbxUnit.DropDownStretchRight = 182
         Me.QbxUnit.GridHeaderBackColor = System.Drawing.SystemColors.Window
+        Me.QbxUnit.GridHeaderVisible = False
         Me.QbxUnit.IfNull = Nothing
         Me.QbxUnit.Location = New System.Drawing.Point(152, 70)
         Me.QbxUnit.MainReturnFieldName = "id"
@@ -649,7 +651,7 @@ Partial Class FrmPersonCompressor
         Me.QbxInterface.Conditions.Add(Condition2)
         Me.QbxInterface.DebugOnTextChanged = False
         Me.QbxInterface.DisplayFieldAlias = "Nome"
-        Me.QbxInterface.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet
+        Me.QbxInterface.DisplayFieldAutoSizeColumnMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
         Me.QbxInterface.DisplayFieldName = "name"
         Me.QbxInterface.DisplayMainFieldName = "id"
         Me.QbxInterface.DisplayTableAlias = ""
@@ -658,6 +660,7 @@ Partial Class FrmPersonCompressor
         Me.QbxInterface.DropDownAutoStretchRight = False
         Me.QbxInterface.DropDownStretchRight = 182
         Me.QbxInterface.GridHeaderBackColor = System.Drawing.SystemColors.Window
+        Me.QbxInterface.GridHeaderVisible = False
         Me.QbxInterface.IfNull = Nothing
         Me.QbxInterface.Location = New System.Drawing.Point(6, 70)
         Me.QbxInterface.MainReturnFieldName = "id"
@@ -811,10 +814,10 @@ Partial Class FrmPersonCompressor
         'TabMaintenance
         '
         Me.TabMaintenance.Controls.Add(Me.TcMaintenance)
-        Me.TabMaintenance.Location = New System.Drawing.Point(4, 26)
+        Me.TabMaintenance.Location = New System.Drawing.Point(4, 22)
         Me.TabMaintenance.Name = "TabMaintenance"
         Me.TabMaintenance.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabMaintenance.Size = New System.Drawing.Size(569, 147)
+        Me.TabMaintenance.Size = New System.Drawing.Size(569, 151)
         Me.TabMaintenance.TabIndex = 8
         Me.TabMaintenance.Text = "Manutenção"
         Me.TabMaintenance.UseVisualStyleBackColor = True
@@ -827,7 +830,7 @@ Partial Class FrmPersonCompressor
         Me.TcMaintenance.Location = New System.Drawing.Point(3, 3)
         Me.TcMaintenance.Name = "TcMaintenance"
         Me.TcMaintenance.SelectedIndex = 0
-        Me.TcMaintenance.Size = New System.Drawing.Size(563, 141)
+        Me.TcMaintenance.Size = New System.Drawing.Size(563, 145)
         Me.TcMaintenance.TabIndex = 0
         '
         'TabWorkedHourSellable
@@ -837,7 +840,7 @@ Partial Class FrmPersonCompressor
         Me.TabWorkedHourSellable.Location = New System.Drawing.Point(4, 26)
         Me.TabWorkedHourSellable.Name = "TabWorkedHourSellable"
         Me.TabWorkedHourSellable.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabWorkedHourSellable.Size = New System.Drawing.Size(555, 111)
+        Me.TabWorkedHourSellable.Size = New System.Drawing.Size(555, 115)
         Me.TabWorkedHourSellable.TabIndex = 6
         Me.TabWorkedHourSellable.Text = "Hora Trabalhada"
         Me.TabWorkedHourSellable.UseVisualStyleBackColor = True
@@ -860,7 +863,7 @@ Partial Class FrmPersonCompressor
         Me.DgvWorkedHourSellable.RowHeadersVisible = False
         Me.DgvWorkedHourSellable.RowTemplate.Height = 26
         Me.DgvWorkedHourSellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvWorkedHourSellable.Size = New System.Drawing.Size(549, 80)
+        Me.DgvWorkedHourSellable.Size = New System.Drawing.Size(549, 84)
         Me.DgvWorkedHourSellable.TabIndex = 4
         '
         'TsWorkedHourSellable
@@ -927,7 +930,7 @@ Partial Class FrmPersonCompressor
         Me.TabElapsedDaySellable.Location = New System.Drawing.Point(4, 22)
         Me.TabElapsedDaySellable.Name = "TabElapsedDaySellable"
         Me.TabElapsedDaySellable.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabElapsedDaySellable.Size = New System.Drawing.Size(555, 119)
+        Me.TabElapsedDaySellable.Size = New System.Drawing.Size(555, 115)
         Me.TabElapsedDaySellable.TabIndex = 7
         Me.TabElapsedDaySellable.Text = "Dia Corrido"
         Me.TabElapsedDaySellable.UseVisualStyleBackColor = True
@@ -950,7 +953,7 @@ Partial Class FrmPersonCompressor
         Me.DgvElapsedDaySellable.RowHeadersVisible = False
         Me.DgvElapsedDaySellable.RowTemplate.Height = 26
         Me.DgvElapsedDaySellable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(549, 88)
+        Me.DgvElapsedDaySellable.Size = New System.Drawing.Size(549, 84)
         Me.DgvElapsedDaySellable.TabIndex = 5
         '
         'TsElapsedDaySellable

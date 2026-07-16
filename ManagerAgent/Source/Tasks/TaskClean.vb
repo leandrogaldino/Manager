@@ -1,18 +1,20 @@
 ﻿Imports System.IO
 Imports System.Transactions
-Imports System.Windows.Forms.Design
 Imports ControlLibrary
+Imports Google.Cloud.Firestore
 Imports ManagerCore
 Imports ManagerCore.LocalDB
 
 Public Class TaskClean
     Inherits TaskBase
 
-    Private _DatabaseService As LocalDB
-    Private _SettingsService As SettingService
-    Private _SessionModel As SessionModel
-    Public Sub New(DatabaseService As LocalDB, SettingsService As SettingService, SessionModel As SessionModel)
-        _DatabaseService = DatabaseService
+    Private ReadOnly _LocalDB As LocalDB
+    Private ReadOnly _RemoteDB As RemoteDB
+    Private ReadOnly _SettingsService As SettingService
+    Private ReadOnly _SessionModel As SessionModel
+    Public Sub New(LocalDB As LocalDB, RemoteDB As RemoteDB, SettingsService As SettingService, SessionModel As SessionModel)
+        _LocalDB = LocalDB
+        _RemoteDB = RemoteDB
         _SettingsService = SettingsService
         _SessionModel = SessionModel
     End Sub
@@ -39,6 +41,7 @@ Public Class TaskClean
             Return False
         End Get
     End Property
+
 
     Public Overrides Async Function Run(Optional Progress As IProgress(Of AsyncResponseModel) = Nothing) As Task
         Dim Response As New AsyncResponseModel
@@ -74,7 +77,7 @@ Public Class TaskClean
             Month = _SessionModel.ManagerSetting.General.Evaluation.MonthsBeforeRecordDeletion
             MonthStr = If(Month = 1, $"{Month} mês", $"{Month} meses")
             ResultDate = Today.AddMonths(-Month)
-            Result = Await _DatabaseService.ExecuteSelectAsync("evaluation", {"id", "evaluationdate", "customerid"}.ToList, $"evaluationdate <= '{ResultDate:yyyy-MM-dd}'")
+            Result = Await _LocalDB.ExecuteSelectAsync("evaluation", {"id", "evaluationdate", "customerid"}.ToList, $"evaluationdate <= '{ResultDate:yyyy-MM-dd}'")
             AllRows = Result.Data.Count
             Response.Text = $"Limpeza - Verificando se há avaliações antigas ({MonthStr})"
             Response.Event.AddChildEvent($"Verificando se há avaliações antigas ({MonthStr})")
@@ -82,13 +85,13 @@ Public Class TaskClean
             Await Task.Delay(Constants.WaitForJob)
             For Each Entry In Result.Data
                 Using Scope As New TransactionScope(TransactionScopeAsyncFlowOption.Enabled)
-                    Dim AgentID As Long = (Await _DatabaseService.ExecuteSelectAsync("user", New List(Of String) From {"id"}, "username = 'SISTEMA'", Limit:=1)).Data(0)("id")
-                    Await _DatabaseService.ExecuteUpdateAsync("evaluation", New Dictionary(Of String, String) From {{"userid", AgentID}}, "id = @id", New Dictionary(Of String, Object) From {{"@id", Entry("id")}})
-                    Await _DatabaseService.ExecuteUpdateAsync("evaluationcontrolledsellable", New Dictionary(Of String, String) From {{"userid", AgentID}}, "evaluationid = @evaluationid", New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}})
-                    Await _DatabaseService.ExecuteUpdateAsync("evaluationpicture", New Dictionary(Of String, String) From {{"userid", AgentID}}, "evaluationid = @evaluationid", New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}})
-                    Await _DatabaseService.ExecuteUpdateAsync("evaluationreplacedsellable", New Dictionary(Of String, String) From {{"userid", AgentID}}, "evaluationid = @evaluationid", New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}})
-                    Await _DatabaseService.ExecuteUpdateAsync("evaluationtechnician", New Dictionary(Of String, String) From {{"userid", AgentID}}, "evaluationid = @evaluationid", New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}})
-                    Await _DatabaseService.ExecuteDeleteAsync("evaluation", $"id = {Entry("id")}")
+                    Dim AgentID As Long = (Await _LocalDB.ExecuteSelectAsync("user", New List(Of String) From {"id"}, "username = 'SISTEMA'", Limit:=1)).Data(0)("id")
+                    Await _LocalDB.ExecuteUpdateAsync("evaluation", New Dictionary(Of String, String) From {{"userid", AgentID}}, "id = @id", New Dictionary(Of String, Object) From {{"@id", Entry("id")}})
+                    Await _LocalDB.ExecuteUpdateAsync("evaluationcontrolledsellable", New Dictionary(Of String, String) From {{"userid", AgentID}}, "evaluationid = @evaluationid", New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}})
+                    Await _LocalDB.ExecuteUpdateAsync("evaluationpicture", New Dictionary(Of String, String) From {{"userid", AgentID}}, "evaluationid = @evaluationid", New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}})
+                    Await _LocalDB.ExecuteUpdateAsync("evaluationreplacedsellable", New Dictionary(Of String, String) From {{"userid", AgentID}}, "evaluationid = @evaluationid", New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}})
+                    Await _LocalDB.ExecuteUpdateAsync("evaluationtechnician", New Dictionary(Of String, String) From {{"userid", AgentID}}, "evaluationid = @evaluationid", New Dictionary(Of String, Object) From {{"@evaluationid", Entry("id")}})
+                    Await _LocalDB.ExecuteDeleteAsync("evaluation", $"id = {Entry("id")}")
                     CurrentRow += 1
                     Response.Percent = CurrentRow / AllRows * 100
                     Response.Text = $"Limpeza - Excluindo avaliações antigas ({Response.Percent}%)"
@@ -104,27 +107,27 @@ Public Class TaskClean
             Response.Text = "Limpeza - Recuperando os endereços dos arquivos"
             Response.Event.AddChildEvent("Recuperando os endereços dos arquivos")
             Progress?.Report(Response)
-            Dim EvaluationResult As QueryResult = Await _DatabaseService.ExecuteSelectAsync("evaluation", {"id", "documentname"}.ToList, "documentname IS NOT NULL")
+            Dim EvaluationResult As QueryResult = Await _LocalDB.ExecuteSelectAsync("evaluation", {"id", "documentname"}.ToList, "documentname IS NOT NULL")
             Response.Percent = 20
             Response.Text = $"Limpeza - Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
-            Dim RequestResult As QueryResult = Await _DatabaseService.ExecuteSelectAsync("request", {"id", "documentname"}.ToList, "documentname IS NOT NULL")
+            Dim RequestResult As QueryResult = Await _LocalDB.ExecuteSelectAsync("request", {"id", "documentname"}.ToList, "documentname IS NOT NULL")
             Response.Percent = 40
             Response.Text = $"Limpeza - Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
-            Dim ProductResult As QueryResult = Await _DatabaseService.ExecuteSelectAsync("productpicture", {"id", "picturename"}.ToList, "picturename IS NOT NULL")
+            Dim ProductResult As QueryResult = Await _LocalDB.ExecuteSelectAsync("productpicture", {"id", "picturename"}.ToList, "picturename IS NOT NULL")
             Response.Percent = 60
             Response.Text = $"Limpeza - Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
-            Dim EmailResult As QueryResult = Await _DatabaseService.ExecuteSelectAsync("emailsignature", {"id", "directoryname"}.ToList, "directoryname IS NOT NULL")
+            Dim EmailResult As QueryResult = Await _LocalDB.ExecuteSelectAsync("emailsignature", {"id", "directoryname"}.ToList, "directoryname IS NOT NULL")
             Response.Percent = 80
             Response.Text = $"Limpeza - Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
             Await Task.Delay(Constants.WaitForJob)
-            Dim CashResult As QueryResult = Await _DatabaseService.ExecuteSelectAsync("cash", {"id", "documentname"}.ToList, "documentname IS NOT NULL")
+            Dim CashResult As QueryResult = Await _LocalDB.ExecuteSelectAsync("cash", {"id", "documentname"}.ToList, "documentname IS NOT NULL")
             Response.Percent = 100
             Response.Text = $"Limpeza - Recuperando os endereços dos arquivos {(Response.Percent)}%"
             Progress?.Report(Response)
@@ -331,4 +334,13 @@ Public Class TaskClean
             Await Task.Delay(Constants.WaitForFinish)
         End If
     End Function
+    Private Class FileReferences
+
+        Public Property Evaluation As QueryResult
+        Public Property Request As QueryResult
+        Public Property Product As QueryResult
+        Public Property Email As QueryResult
+        Public Property Cash As QueryResult
+
+    End Class
 End Class

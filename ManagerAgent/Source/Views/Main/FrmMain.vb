@@ -1,12 +1,8 @@
 ﻿Imports System.Collections.ObjectModel
-Imports System.IO
 Imports System.Net.Mail
 Imports System.Text
 Imports ControlLibrary
-Imports Google.Rpc.Context.AttributeContext.Types
 Imports ManagerCore
-Imports MySql.Data.MySqlClient
-
 
 Public Class FrmMain
     Private _EventService As EventService
@@ -77,52 +73,60 @@ Public Class FrmMain
                            Dim Builder As New EventBuilder()
                            Builder.SetInitialEvent("As tarefas do agente foram interrompidas devido a falhas consecutivas.")
                            _EventService.Write(Builder, DgvEvents.DataSource)
-
-
-
-
-
-                           Dim Support As SettingSupportModel = _SessionModel.ManagerSetting.Support
-
-                           Dim SendEmail As Boolean = True
-
-                           If Support Is Nothing Then
-                               SendEmail = False
-                           Else
-                               If String.IsNullOrWhiteSpace(Support.SMTPServer) Then SendEmail = False
-                               If String.IsNullOrWhiteSpace(Support.Email) Then SendEmail = False
-                               If String.IsNullOrWhiteSpace(Support.Password) Then SendEmail = False
-                               If Support.Port <= 0 OrElse Support.Port > 65535 Then SendEmail = False
-                           End If
-
-                           If SendEmail Then
-                               Dim Credential As Net.NetworkCredential
-                               Using Client As New SmtpClient(Support.SMTPServer, Support.Port)
-                                   Client.DeliveryMethod = SmtpDeliveryMethod.Network
-                                   Client.UseDefaultCredentials = False
-                                   Client.Credentials = New Net.NetworkCredential(Support.Email, Support.Password)
-                                   Client.EnableSsl = Support.EnableSSL
-                                   Credential = Client.Credentials
-                                   Using Message As New MailMessage()
-                                       Message.From = New MailAddress(Credential.UserName)
-                                       Message.To.Add(New MailAddress(Credential.UserName))
-                                       Message.Subject = "Falhas no Agente do Gerenciador"
-                                       Message.IsBodyHtml = False
-                                       Message.BodyEncoding = Encoding.UTF8
-                                       Message.Body = "As tarefas do agente foram interrompidas devido a falhas consecutivas."
-                                       Client.Send(Message)
-                                   End Using
-                               End Using
-                           End If
-
-
-
+                           ConsecutiveExceptionHandler()
                        End If
                    End If
                End Sub)
         Await _EventService.Save(DgvEvents.DataSource)
         Debug.Print(_SessionModel.IsAgentPaused)
     End Sub
+
+
+    Public Sub ConsecutiveExceptionHandler()
+        Dim Support As SettingSupportModel = _SessionModel.ManagerSetting.Support
+        Dim Company As String = If(
+            String.IsNullOrEmpty(_SessionModel.ManagerSetting.Company.ShortName),
+            "SEM NOME",
+            _SessionModel.ManagerSetting.Company.ShortName
+        )
+        Dim SendEmail As Boolean = True
+        If Support Is Nothing Then
+            SendEmail = False
+        Else
+            If String.IsNullOrWhiteSpace(Support.SMTPServer) Then SendEmail = False
+            If String.IsNullOrWhiteSpace(Support.Email) Then SendEmail = False
+            If String.IsNullOrWhiteSpace(Support.Password) Then SendEmail = False
+            If Support.Port <= 0 OrElse Support.Port > 65535 Then SendEmail = False
+        End If
+
+        If SendEmail Then
+            Dim Credential As Net.NetworkCredential
+            Using Client As New SmtpClient(Support.SMTPServer, Support.Port)
+                Client.DeliveryMethod = SmtpDeliveryMethod.Network
+                Client.UseDefaultCredentials = False
+                Client.Credentials = New Net.NetworkCredential(Support.Email, Support.Password)
+                Client.EnableSsl = Support.EnableSSL
+                Client.Timeout = 10000
+                Credential = Client.Credentials
+                Using Message As New MailMessage()
+                    Message.From = New MailAddress(Credential.UserName)
+                    Message.To.Add(New MailAddress(Credential.UserName))
+                    Message.Subject = "Falhas no Agente do Gerenciador"
+                    Message.IsBodyHtml = False
+                    Message.BodyEncoding = Encoding.UTF8
+                    Message.Body = $"As tarefas do agente da empresa {Company} foram interrompidas devido a falhas consecutivas."
+                    Try
+                        Client.Send(Message)
+                    Catch ex As Exception
+                        Dim Builder As New EventBuilder()
+                        Builder.SetInitialEvent($"Não foi possível enviar o alerta para o suporte, por favor entre em contato.")
+                        _EventService.Write(Builder, DgvEvents.DataSource)
+                    End Try
+                End Using
+            End Using
+        End If
+    End Sub
+
     Private Sub OnTaskWillRun(sender As Object, Task As TaskBase)
         Invoke(Sub()
                    Task.CancelRun = _StateWarnings.Count > 0

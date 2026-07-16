@@ -245,13 +245,13 @@ Public Class FrmPerson
         End If
     End Sub
     Private Sub TxtDocument_Leave(sender As Object, e As EventArgs) Handles TxtDocument.Leave
-        TxtDocument.Text = BrazilianFormatHelper.GetFormatedDocument(TxtDocument.Text)
+        TxtDocument.Text = BrazilianFormatHelper.GetFormatedDocument(TxtDocument.Text.Trim())
     End Sub
     Private Sub BtnDocument_Click(sender As Object, e As EventArgs) Handles BtnDocument.Click
         Dim DataSearch As Consulta.CNPJ.Services.CNPJService
         Dim SearchResult As Consulta.CNPJ.Models.CNPJResult
         Dim Person As Person
-        TxtDocument.Text = BrazilianFormatHelper.GetFormatedDocument(TxtDocument.Text)
+        TxtDocument.Text = BrazilianFormatHelper.GetFormatedDocument(TxtDocument.Text.Trim())
         Try
             Cursor = Cursors.WaitCursor
             If InternetHelper.IsInternetAvailable() Then

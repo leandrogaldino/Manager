@@ -217,8 +217,8 @@ Public Class EvaluationReport
             Dim FirstEvaluationDate = Evaluation.GetFirstEvaluationDate(ReportingEvaluation.Compressor)
             For Each Coalescent In ReportingEvaluation.ElapsedDayControlledSellables.Where(Function(x) x.PersonCompressorSellable.SellableBind = CompressorSellableBindType.Coalescent)
                 Dim LastReplace = Evaluation.GetLastEvaluationReplacedSellableDate(Coalescent.PersonCompressorSellable.ID, ReportingEvaluation.EvaluationDate)
-                Dim LastReplaceCapacity = Evaluation.GetLastEvaluationReplacedSellableCapacity(Coalescent.PersonCompressorSellable.ID, ReportingEvaluation.EvaluationDate)
-                Dim CurrentCapacityOnReplace = Evaluation.GetLastEvaluationReplacedSellableCapacity(Coalescent.PersonCompressorSellable.ID, ReportingEvaluation.EvaluationDate)
+                'Dim LastReplaceCapacity = Evaluation.GetLastEvaluationReplacedSellableCapacity(Coalescent.PersonCompressorSellable.ID, ReportingEvaluation.EvaluationDate)
+                'Dim CurrentCapacityOnReplace = Evaluation.GetLastEvaluationReplacedSellableCapacity(Coalescent.PersonCompressorSellable.ID, ReportingEvaluation.EvaluationDate)
                 Row = Table.AddRow()
                 AddContentCell(Row, 0, 2, ParagraphAlignment.Center, Coalescent.Name, 8)
                 If LastReplace.HasValue Then
@@ -226,7 +226,7 @@ Public Class EvaluationReport
                     AddContentCell(Row, 4, 0, ParagraphAlignment.Center, ReportingEvaluation.EvaluationDate.AddDays(Coalescent.CurrentCapacity).ToString("dd/MM/yyyy"))
                 Else
                     AddContentCell(Row, 3, 0, ParagraphAlignment.Center, "N/A")
-                    AddContentCell(Row, 4, 0, ParagraphAlignment.Center, FirstEvaluationDate.AddDays(Coalescent.CurrentCapacity).ToString("dd/MM/yyyy"))
+                    AddContentCell(Row, 4, 0, ParagraphAlignment.Center, ReportingEvaluation.EvaluationDate.AddDays(Coalescent.CurrentCapacity).ToString("dd/MM/yyyy"))
                 End If
                 AddContentCell(Row, 5, 0, ParagraphAlignment.Center, Coalescent.CurrentCapacity)
                 AddContentCell(Row, 6, 0, ParagraphAlignment.Center, Coalescent.PersonCompressorSellable.Capacity - Coalescent.CurrentCapacity)

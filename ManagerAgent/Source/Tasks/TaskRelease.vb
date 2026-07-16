@@ -80,7 +80,6 @@ Public Class TaskRelease
         Dim InitialMessagePosted As Boolean
         Dim Response As New AsyncResponseModel
         Try
-            Throw New Exception("GENERICO")
             Using Scope As New TransactionScope(TransactionScopeAsyncFlowOption.Enabled)
                 Await Task.Delay(Constants.WaitForStart)
                 Dim BloquedList As List(Of RegistryModel) = Await GetBloquedList()

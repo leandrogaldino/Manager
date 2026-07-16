@@ -148,7 +148,9 @@ Partial Class FrmPersonMaintenancePlan
         Me.QbxPerson.DisplayTableName = "person"
         Me.QbxPerson.Distinct = False
         Me.QbxPerson.DropDownAutoStretchRight = False
+        Me.QbxPerson.DropDownStretchDown = 200
         Me.QbxPerson.GridHeaderBackColor = System.Drawing.SystemColors.Window
+        Me.QbxPerson.GridHeaderVisible = False
         Me.QbxPerson.IfNull = Nothing
         Me.QbxPerson.Location = New System.Drawing.Point(12, 37)
         Me.QbxPerson.MainReturnFieldName = "id"

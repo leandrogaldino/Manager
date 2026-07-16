@@ -1,6 +1,7 @@
 #2.4.1
 @??/07/2026
 • Corrigido um problema que lançava uma exceção ao buscar um cep inexistente.
+• Correção no grid de seleção dos compressores para geração do plano de manutenção, que estava desconfigurado.
 • Correção na seção de coalescentes do relatório de atendimento, onde apresentava data errada para próxima troca em alguns casos.
 #2.4.0
 @13/07/2026

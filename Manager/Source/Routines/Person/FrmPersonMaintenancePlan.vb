@@ -60,6 +60,13 @@ Public Class FrmPersonMaintenancePlan
             DgvCompressor.Columns("User").Visible = False
             DgvCompressor.Columns("Creation").Visible = False
             DgvCompressor.Columns("Status").Visible = False
+            DgvCompressor.Columns("OilType").Visible = False
+            DgvCompressor.Columns("CompressorInterface").Visible = False
+            DgvCompressor.Columns("CompressorInterfaceID").Visible = False
+            DgvCompressor.Columns("CompressorInterfaceName").Visible = False
+            DgvCompressor.Columns("CompressorUnit").Visible = False
+            DgvCompressor.Columns("CompressorUnitID").Visible = False
+            DgvCompressor.Columns("CompressorUnitName").Visible = False
             DgvCompressor.Columns("Controlled").Visible = False
             DgvCompressor.Columns("Note").Visible = False
             DgvCompressor.Columns("Compressor").Visible = False

@@ -412,7 +412,9 @@ INSERT INTO routine VALUES
 (1310, 'EvaluationCreateAutomaticRecord', 'Criar avaliações automáticas', 1, 0, 13),
 (1311, 'EvaluationImport', 'Importar avaliações da núvem', 1, 0, 13),
 (1312, 'EvaluationReplacedSellable', NULL, 0, 0, NULL),
-(1313, 'EvaluationTreatmentReport', 'Gerar o relatório de atendimento da avaliação', 1, 0, 13);
+(1313, 'EvaluationTreatmentReport', 'Gerar o relatório de atendimento da avaliação', 1, 0, 13),
+(1314, 'EvaluationSetInvoiced', 'Definir se a avaliação foi faturada', 1, 0, 13);
+
 INSERT INTO routine VALUES
 (9901, 'ExportGrid', 'Exportar as grades', 1, 0, NULL),
 (9902, 'Log', 'Acessar o histórico', 1, 0, NULL);

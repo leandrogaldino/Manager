@@ -51,7 +51,8 @@ INSERT INTO preferences (`group`, `key`, `value`) VALUES
 INSERT INTO preferences (`group`, `key`, `value`) VALUES
 ('Evaluation', 'DaysBeforeMaintenanceAlert', '15'),
 ('Evaluation', 'DaysBeforeVisitAlert', '30'),
-('Evaluation', 'MonthsBeforeRecordDeletion', '48'),
+('Evaluation', 'MonthsBeforeLocalDeletion', '48'),
+('Evaluation', 'MonthsBeforeCloudDeletion', '6'),
 ('Evaluation', 'FooterMaintenancePlan', NULL);
 
 -- User

@@ -64,6 +64,20 @@ Public Class TaskClean
         Dim TempDirectories As List(Of FileManager.DeleteDirectoryInfo)
         Dim Exception As Exception = Nothing
         Try
+
+            'Como fazer com as imagens? e se apagar e apos isso a pessoa tentar baixar a imagem no celular?
+            'talvez aqui sempre deva ser um mes a mais que no celular.
+            Dim LngTime As Long = DateTimeHelper.MillisecondsFromDate(Now)
+
+            Dim dbresult = Await _RemoteDB.ExecuteGet("evaluations", New List(Of RemoteDB.Condition) From {
+                New RemoteDB.WhereLessThanOrEqualToCondition("creationdate", LngTime)
+            })
+
+
+
+            Exit Function
+
+
             Response.Text = "Limpeza - Iniciando"
             Response.Event.SetInitialEvent("Limpeza - Iniciando")
             Progress?.Report(Response)
